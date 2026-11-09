@@ -1,0 +1,208 @@
+{
+  "id": "la1-loesungsmenge",
+  "title": "Lösungsmengen linearer Gleichungssysteme",
+  "subtitle": "Keine, eine oder unendlich viele Lösungen, und woran man es sieht",
+  "source": "Lehrbuchstandard Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Lineare Gleichungssysteme.md",
+      "title": "Lineare Gleichungssysteme"
+    },
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Kern und Bild.md",
+      "title": "Kern und Bild"
+    },
+    {
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Gauß-Algorithmus.md",
+      "title": "Gauß-Algorithmus"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Drei Gleichungen, drei Unbekannte, und trotzdem keine eindeutige Lösung. Wie kann das sein?",
+      "widget": "gauss",
+      "params": {
+        "matrix": [
+          [
+            1,
+            2,
+            -1,
+            3
+          ],
+          [
+            2,
+            4,
+            1,
+            9
+          ],
+          [
+            3,
+            6,
+            0,
+            12
+          ]
+        ],
+        "manual": false
+      },
+      "timeline": [
+        {
+          "caption": "Das System $x + 2y - z = 3$, $2x + 4y + z = 9$, $3x + 6y = 12$ als erweiterte Koeffizientenmatrix."
+        },
+        {
+          "caption": "Wir eliminieren wie gewohnt unter dem ersten Eintrag. Weil die zweite Spalte das Doppelte der ersten ist, verschwindet mit dem $x$ auch das $y$.",
+          "do": {
+            "step": true
+          },
+          "hold": 5500
+        },
+        {
+          "caption": "Auch in der dritten Zeile bleibt nur noch etwas für $z$ übrig.",
+          "do": {
+            "step": true
+          },
+          "hold": 4500
+        },
+        {
+          "caption": "Die beiden unteren Zeilen sagen dasselbe. Nach dem Abziehen bleibt eine **Nullzeile**: $0 = 0$. Sie ist immer wahr und legt nichts fest.",
+          "do": {
+            "step": true
+          },
+          "hold": 6000
+        },
+        {
+          "caption": "Am Ende: $z = 1$ und $x + 2y = 4$. Für $y$ gibt es keine Stufe, $y$ ist **frei**. Jede Wahl von $y$ gibt eine Lösung: unendlich viele, eine ganze Gerade im Raum.",
+          "do": {
+            "finish": true
+          },
+          "hold": 9000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Jede Gleichung mit drei Unbekannten beschreibt eine Ebene im Raum. Die Lösungen des Systems sind die Punkte, die auf allen Ebenen zugleich liegen. Drei Ebenen schneiden sich meist in genau einem Punkt. Sie können sich aber auch in einer Geraden treffen, wie im Film, oder gar keinen gemeinsamen Punkt haben, etwa wenn zwei davon parallel sind.\n\nDas Gauß-Verfahren macht das sichtbar, ohne zu zeichnen. Nach der Elimination steht die Matrix in Stufenform. Jede Stufe legt eine Unbekannte fest. Unbekannte ohne Stufe sind **frei** und machen die Lösung unendlich vieldeutig. Und eine Zeile $0 = c$ mit $c \\ne 0$ ist ein Widerspruch: Dann gibt es gar keine Lösung.\n\nDahinter steckt eine schöne Struktur. Kennt man eine Lösung $x_p$, bekommt man alle anderen, indem man Lösungen des homogenen Systems $Ax = 0$ addiert. Die Lösungsmenge ist also der Kern von $A$, verschoben um eine einzige Lösung."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Rang\n> Der **Rang** einer Matrix ist die Zahl der Stufen nach dem Gauß-Verfahren, gleichwertig die Dimension ihres Spaltenraums.\n\n> [!satz] Lösbarkeit\n> $Ax = b$ ist genau dann lösbar, wenn $\\operatorname{Rang} A = \\operatorname{Rang}(A \\mid b)$. Ist es lösbar und hat $A$ genau $n$ Spalten, so hat die Lösungsmenge $n - \\operatorname{Rang} A$ freie Parameter.\n\n> [!satz] Struktur\n> Ist $x_p$ eine Lösung, dann ist die Lösungsmenge $x_p + \\ker A = \\{x_p + v : Av = 0\\}$."
+    },
+    {
+      "id": "widerspruch",
+      "type": "widget",
+      "label": "Selbst rechnen",
+      "md": "**Bringe das System in Stufenform.** Achte auf die letzte Zeile.",
+      "widget": "gauss",
+      "params": {
+        "matrix": [
+          [
+            1,
+            1,
+            2,
+            3
+          ],
+          [
+            2,
+            2,
+            5,
+            8
+          ],
+          [
+            1,
+            1,
+            3,
+            4
+          ]
+        ],
+        "auto": false
+      },
+      "goal": {
+        "when": "echelon == 1",
+        "message": "Noch nicht in Stufenform. Erzeuge Nullen unter dem ersten Eintrag von Zeile 1, dann unter der nächsten Stufe."
+      },
+      "explain": "Z2 $-$ 2·Z1 ergibt $(0, 0, 1 \\mid 2)$, Z3 $-$ Z1 ergibt $(0, 0, 1 \\mid 1)$, dann Z3 $-$ Z2 ergibt $(0, 0, 0 \\mid -1)$."
+    },
+    {
+      "id": "folgerung",
+      "type": "choice",
+      "md": "Nach der Elimination lautet die letzte Zeile $(0 \\;\\; 0 \\;\\; 0 \\mid -1)$. Was folgt?",
+      "options": [
+        {
+          "md": "Das System hat keine Lösung.",
+          "correct": true
+        },
+        {
+          "md": "Eine Unbekannte ist frei, es gibt unendlich viele Lösungen.",
+          "why": "Das gilt bei einer Nullzeile $0 = 0$. Hier steht $0 = -1$."
+        },
+        {
+          "md": "Die letzte Unbekannte ist $-1$.",
+          "why": "Dafür müsste in der Zeile links etwas ungleich $0$ stehen."
+        }
+      ],
+      "explain": "Die Zeile bedeutet $0 \\cdot x + 0 \\cdot y + 0 \\cdot z = -1$, ein Widerspruch. Es ist $\\operatorname{Rang} A = 2 < 3 = \\operatorname{Rang}(A \\mid b)$."
+    },
+    {
+      "id": "parameter",
+      "type": "numeric",
+      "label": "Zählen",
+      "md": "Ein homogenes System hat $5$ Unbekannte. Nach dem Gauß-Verfahren gibt es $3$ Stufen. Wie viele freie Parameter hat die Lösungsmenge?",
+      "answer": 2,
+      "tolerance": 1e-06,
+      "placeholder": "Zahl",
+      "explain": "$n - \\operatorname{Rang} A = 5 - 3 = 2$. Die Lösungsmenge ist eine Ebene durch den Ursprung im $\\R^5$."
+    },
+    {
+      "id": "zwei-loesungen",
+      "type": "truefalse",
+      "md": "Hat ein lineares Gleichungssystem zwei verschiedene Lösungen, dann hat es unendlich viele.",
+      "answer": true,
+      "whyNot": "Mit zwei Lösungen $x_1 \\ne x_2$ liegt $x_2 - x_1 \\ne 0$ im Kern, und jedes $x_1 + t(x_2 - x_1)$ ist eine Lösung.",
+      "explain": "Über $\\R$ gibt es deshalb nur drei Möglichkeiten: keine, genau eine oder unendlich viele Lösungen."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "la-loesungsmenge",
+      "level": 1,
+      "label": "Rang und Lösungen"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "la-loesungsmenge",
+      "level": 2,
+      "label": "Dimension"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "la-loesungsmenge",
+      "level": 3,
+      "label": "Stufenform lesen"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "la-loesungsmenge",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Lösbar genau dann, wenn $\\operatorname{Rang} A = \\operatorname{Rang}(A \\mid b)$.",
+        "Eine Zeile $0 = c$ mit $c \\ne 0$ heißt: keine Lösung. Eine Nullzeile legt nichts fest.",
+        "Unbekannte ohne Stufe sind frei; es gibt $n - \\operatorname{Rang} A$ freie Parameter.",
+        "Alle Lösungen: eine Lösung plus der Kern, $x_p + \\ker A$."
+      ]
+    }
+  ]
+}

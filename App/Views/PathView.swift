@@ -55,37 +55,3 @@ struct PathView: View {
         }
     }
 }
-
-/// Entry to the learning path on the home screen.
-struct PathTeaser: View {
-    @Environment(AppModel.self) private var model
-
-    var body: some View {
-        let all = model.courses.reduce(0) { $0 + $1.readyLessons.count }
-        let done = model.courses.reduce(0) { $0 + model.state.completedCount(in: $1) }
-        NavigationLink(value: PathRoute(subject: nil)) {
-            HStack(spacing: 12) {
-                Image(systemName: "point.3.connected.trianglepath.dotted")
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        LinearGradient(colors: [Color(hex: "#26A65B"), Color(hex: "#E8930C"), Color(hex: "#E5484D"), Color(hex: "#8E4EC6")],
-                                       startPoint: .topLeading, endPoint: .bottomTrailing),
-                        in: .rect(cornerRadius: 12, style: .continuous))
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Dein Lernpfad")
-                        .font(.headline)
-                    Text("\(done) von \(all) Lektionen · alle Fächer als Baum")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer(minLength: 0)
-                Image(systemName: "chevron.right").foregroundStyle(.tertiary)
-            }
-            .card(padding: 14)
-        }
-        .buttonStyle(PressableStyle())
-        .accessibilityLabel("Lernpfad, \(done) von \(all) Lektionen")
-    }
-}

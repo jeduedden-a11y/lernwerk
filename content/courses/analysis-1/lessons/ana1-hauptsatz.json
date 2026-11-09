@@ -1,0 +1,272 @@
+{
+  "id": "ana1-hauptsatz",
+  "title": "Der Hauptsatz der Differential- und Integralrechnung",
+  "subtitle": "Warum Integrieren das Ableiten umkehrt",
+  "source": "Gliederung nach dem Skript Analysis (Sven Jarohs, Goethe-Universität Frankfurt), Kapitel 13; Lehrbuchstandard Analysis I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Integralbegriff und Hauptsatz.md",
+      "title": "Integralbegriff und Hauptsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Riemann-Integral.md",
+      "title": "Riemann-Integral"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "title": "Ableitung"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wir sammeln Fläche unter einer Kurve. Wie schnell wächst sie?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.1,
+          2.15
+        ],
+        "y": [
+          -0.2,
+          4.4
+        ],
+        "vars": [
+          {
+            "name": "b",
+            "min": 0,
+            "max": 2,
+            "value": 0.3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "expr": "x^2",
+            "domain": [
+              0,
+              2.05
+            ],
+            "label": "f",
+            "labelAt": 1.85
+          },
+          {
+            "expr": "x^3/3",
+            "domain": [
+              0,
+              2.05
+            ],
+            "label": "F",
+            "labelAt": 1.95,
+            "color": "orange"
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": "b",
+            "color": "accent",
+            "opacity": 0.28
+          }
+        ],
+        "readout": "$b = {b|2}$: Fläche $F(b) = {b^3/3|3}$, Steigung von $F$ bei $b$: ${b^2|3} = f(b)$"
+      },
+      "timeline": [
+        {
+          "caption": "Unter $f(x) = x^2$ sammeln wir Fläche, von $0$ bis zu einer beweglichen Grenze $b$.",
+          "set": {
+            "b": 0.3
+          }
+        },
+        {
+          "caption": "Wir schieben $b$ nach rechts. Die Fläche wächst, erst langsam, dann immer schneller, weil $f$ steigt.",
+          "to": {
+            "b": 1.2
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Die orange Kurve $F$ trägt die gesammelte Fläche als Höhe auf: $F(b) = \\int_0^b x^2\\,dx$. Bei $b = 2$ sind es $\\tfrac83$.",
+          "to": {
+            "b": 2
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Wie schnell wächst die Fläche? Schiebt man $b$ ein winziges Stück $h$ weiter, kommt ein Streifen dazu, der ungefähr $h \\cdot f(b)$ groß ist. Also hat $F$ an der Stelle $b$ die Steigung $f(b)$. **Das ist der Hauptsatz: $F' = f$.**",
+          "to": {
+            "b": 1.5
+          },
+          "dur": 1200,
+          "hold": 9000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Stell dir vor, $f(t)$ ist die Geschwindigkeit eines Autos und $F(x)$ die bis zur Zeit $x$ gefahrene Strecke. Die Strecke wächst genau so schnell, wie das Auto fährt: $F' = f$. Fläche unter der Geschwindigkeit ist Weg, und die Ableitung des Wegs ist die Geschwindigkeit.\n\nFür die Mathematik ist das eine Befreiung. Ein Integral über Ober- und Untersummen auszurechnen ist mühsam. Der Hauptsatz sagt: Finde irgendeine Funktion $F$ mit $F' = f$, eine **Stammfunktion**. Dann ist $\\int_a^b f(x)\\,dx = F(b) - F(a)$. Aus einem Grenzwertproblem wird Rückwärtsableiten.\n\nWarum gilt das? Der Zuwachs $F(b + h) - F(b)$ ist der schmale Streifen unter $f$ zwischen $b$ und $b + h$. Weil $f$ stetig ist, ist der Streifen fast ein Rechteck der Höhe $f(b)$. Teilt man durch $h$ und lässt $h$ gegen $0$ gehen, bleibt $f(b)$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Stammfunktion\n> $F$ heißt Stammfunktion von $f$ auf einem Intervall, wenn $F' = f$ gilt. Zwei Stammfunktionen unterscheiden sich nur um eine Konstante.\n\n> [!satz] Hauptsatz, erster Teil\n> Ist $f$ stetig auf $[a, b]$, dann ist $F(x) = \\displaystyle\\int_a^x f(t)\\,dt$ differenzierbar mit $F'(x) = f(x)$.\n\n> [!satz] Hauptsatz, zweiter Teil\n> Ist $F$ eine Stammfunktion der stetigen Funktion $f$, dann gilt $\\displaystyle\\int_a^b f(x)\\,dx = F(b) - F(a)$.\n\n> [!warning] Variable Grenzen\n> Steht oben eine Funktion von $x$, kommt die Kettenregel dazu: $\\dfrac{d}{dx}\\displaystyle\\int_0^{g(x)} f(t)\\,dt = f(g(x)) \\cdot g'(x)$."
+    },
+    {
+      "id": "flaeche-eins",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Stelle die obere Grenze $b$ so ein, dass die Fläche unter $x^2$ von $0$ bis $b$ genau $1$ beträgt.**",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.1,
+          2.15
+        ],
+        "y": [
+          -0.2,
+          4.4
+        ],
+        "vars": [
+          {
+            "name": "b",
+            "label": "obere Grenze $b$",
+            "min": 0,
+            "max": 2,
+            "step": 0.01,
+            "value": 0.5,
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "expr": "x^2",
+            "domain": [
+              0,
+              2.05
+            ],
+            "label": "f",
+            "labelAt": 1.85
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": "b",
+            "color": "accent",
+            "opacity": 0.3
+          }
+        ],
+        "readout": "Fläche $\\int_0^b x^2\\,dx = {b^3/3|3}$"
+      },
+      "goal": {
+        "when": "abs(b^3/3 - 1) < 0.02",
+        "hints": [
+          {
+            "when": "b^3/3 < 1",
+            "text": "Erst {b^3/3|3}. Schiebe die Grenze weiter nach rechts."
+          },
+          {
+            "when": "b^3/3 > 1",
+            "text": "Schon {b^3/3|3}, das ist zu viel."
+          }
+        ],
+        "solve": {
+          "b": 1.44
+        }
+      },
+      "explain": "Mit der Stammfunktion $\\tfrac{x^3}{3}$: $\\tfrac{b^3}{3} = 1 \\iff b = \\sqrt[3]{3} \\approx 1{,}442$. Dafür braucht man keine einzige Riemann-Summe."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_1^3 (2x + 1)\\,dx$ mit einer Stammfunktion.",
+      "answer": 10,
+      "tolerance": 1e-06,
+      "placeholder": "Zahl",
+      "hint": "Eine Stammfunktion von $2x + 1$ ist $x^2 + x$.",
+      "explain": "$F(x) = x^2 + x$: $F(3) - F(1) = 12 - 2 = 10$."
+    },
+    {
+      "id": "kettenregel",
+      "type": "choice",
+      "md": "$G(x) = \\displaystyle\\int_0^{x^2} \\cos t\\,dt$. Was ist $G'(x)$?",
+      "options": [
+        {
+          "md": "$2x \\cos(x^2)$",
+          "correct": true
+        },
+        {
+          "md": "$\\cos(x^2)$",
+          "why": "Die obere Grenze ist $x^2$, die Kettenregel liefert noch den Faktor $2x$."
+        },
+        {
+          "md": "$\\sin(x^2)$",
+          "why": "Das ist $G(x)$ selbst, nicht seine Ableitung."
+        },
+        {
+          "md": "$-2x \\sin(x^2)$",
+          "why": "Das wäre die Ableitung von $\\cos(x^2)$."
+        }
+      ],
+      "explain": "$G(x) = F(x^2)$ mit $F(u) = \\int_0^u \\cos t\\,dt = \\sin u$. Also $G'(x) = \\cos(x^2) \\cdot 2x$."
+    },
+    {
+      "id": "schritte",
+      "type": "order",
+      "md": "Bringe die Schritte zur Berechnung von $\\int_0^{\\pi} \\sin x\\,dx$ in die richtige Reihenfolge.",
+      "items": [
+        "Eine Stammfunktion suchen: $F(x) = -\\cos x$",
+        "Obere Grenze einsetzen: $F(\\pi) = 1$",
+        "Untere Grenze einsetzen: $F(0) = -1$",
+        "Differenz bilden: $F(\\pi) - F(0) = 2$"
+      ],
+      "explain": "Die Fläche unter einem Sinusbogen ist genau $2$."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-hauptsatz",
+      "level": 1,
+      "label": "Integralfunktion"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-hauptsatz",
+      "level": 2,
+      "label": "Stammfunktion"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-hauptsatz",
+      "level": 3,
+      "label": "Variable Grenzen"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-hauptsatz",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Die Integralfunktion $F(x) = \\int_a^x f(t)\\,dt$ einer stetigen Funktion hat die Ableitung $f$.",
+        "Mit jeder Stammfunktion $F$ gilt $\\int_a^b f = F(b) - F(a)$, Integrieren wird Rückwärtsableiten.",
+        "Stammfunktionen sind bis auf eine Konstante eindeutig.",
+        "Bei variablen Grenzen die Kettenregel nicht vergessen: $f(g(x)) \\cdot g'(x)$."
+      ]
+    }
+  ]
+}

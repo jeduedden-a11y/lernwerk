@@ -256,6 +256,32 @@
     }
     return errs;
   }
+  /** Visualisations with a goal: the starting state must not satisfy it, the sample solution must. */
+  function goalErrors(L, LW) {
+    const errs = [];
+    const D = frame.contentWindow.document;
+    (L.steps || []).forEach((s, i) => {
+      if (s.type !== "widget" || !s.goal || !LW.widgets[s.widget]) return;
+      const at = "Schritt " + (i + 1) + " (widget " + s.widget + ")";
+      const host = D.createElement("div");
+      host.style.cssText = "position:absolute;left:-9999px;width:360px";
+      D.body.append(host);
+      try {
+        const wctx = { theme: {}, seed: "check" + s.id, md: LW.md, math: LW.math, el: LW.el, expr: LW.expr, changed() {}, color: () => "#888" };
+        const inst = LW.widgets[s.widget].mount(host, JSON.parse(JSON.stringify(s.params || {})), wctx) || {};
+        if (typeof inst.check === "function") {
+          if ((inst.check(s.goal) || {}).correct && !s.goal.allowUntouched) errs.push(at + ": Ausgangslage erfüllt das Ziel schon");
+          if (typeof inst.solve === "function") {
+            inst.solve(s.goal);
+            if (!(inst.check(s.goal) || {}).correct) errs.push(at + ": Musterlösung erfüllt das Ziel nicht");
+          }
+        }
+      } catch (e) { errs.push(at + ": " + e.message); }
+      host.remove();
+    });
+    return errs;
+  }
+
   // every generator, every level, many seeds
   $("gens").onclick = async () => {
     const LW = frame.contentWindow.LW;
@@ -272,6 +298,23 @@
           const e = checkStep(made, "Stufe " + level + " Variante " + seed + " (" + made.type + ")", LW);
           if (e.length) { errs.push(...e.slice(0, 2)); break; }
         }
+      }
+      // every extra task from LW.extend, fixed ones once, templates with twelve seeds
+      const ext = (LW.extensions || {})[name];
+      for (let level = 1; ext && level <= 4; level++) {
+        (ext[level] || []).forEach((x, k) => {
+          const runs = typeof x === "function" ? 12 : 1;
+          for (let seed = 0; seed < runs; seed++) {
+            total++;
+            let made;
+            try {
+              made = typeof x === "function" ? x(level, LW.genKit(LW.rng(LW.hash(name + "|x" + level + "." + k + "|" + seed))), {}) : JSON.parse(JSON.stringify(x));
+              made = Object.assign({ gen: name, level }, made);
+            } catch (e) { errs.push("Zusatz Stufe " + level + " Nr. " + (k + 1) + ": wirft " + e.message); break; }
+            const e = checkStep(made, "Zusatz Stufe " + level + " Nr. " + (k + 1) + " (" + made.type + ")", LW);
+            if (e.length) { errs.push(...e.slice(0, 2)); break; }
+          }
+        });
       }
       const d = document.createElement("div");
       d.className = errs.length ? "err" : "ok";
@@ -293,7 +336,7 @@
         if (l.status === "soon") continue;
         total++;
         let errs;
-        try { errs = checkLesson(await fetchJSON("../courses/" + id + "/lessons/" + l.id + ".json"), LW); }
+        try { const lesson = await fetchJSON("../courses/" + id + "/lessons/" + l.id + ".json"); errs = checkLesson(lesson, LW).concat(goalErrors(lesson, LW)); }
         catch (e) { errs = [String(e.message || e)]; }
         const d = document.createElement("div");
         d.className = errs.length ? "err" : "ok";

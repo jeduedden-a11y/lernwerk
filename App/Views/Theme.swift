@@ -114,8 +114,9 @@ struct TintBackground: View {
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        let strong = scheme == .dark ? 0.42 : 0.24
-        let soft = scheme == .dark ? 0.22 : 0.12
+        // Kept light so the monochrome glass bars stay legible over it (HIG: Liquid Glass color).
+        let strong = scheme == .dark ? 0.32 : 0.18
+        let soft = scheme == .dark ? 0.16 : 0.09
         let a = tints.first ?? .accentColor
         let b = tints.count > 1 ? tints[1] : a
         let c = tints.count > 2 ? tints[2] : b

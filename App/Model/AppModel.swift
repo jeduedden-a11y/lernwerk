@@ -42,6 +42,13 @@ enum AppTab: String, Hashable {
     case learn, review, notes, stats, search
 }
 
+/// One card of the "Als Nächstes" shelf on the home screen.
+struct UpNextItem: Identifiable, Hashable {
+    var course: Course
+    var lesson: LessonRef
+    var id: String { lesson.id }
+}
+
 @MainActor
 @Observable
 final class AppModel {
@@ -187,6 +194,18 @@ final class AppModel {
             if let next = c.readyLessons.first(where: { state.lessons[$0.id]?.isCompleted != true }) { return (c, next) }
         }
         return nil
+    }
+
+    /// The home shelf: the lesson to continue first, then the next unfinished lesson of every other course.
+    var upNext: [UpNextItem] {
+        var list: [UpNextItem] = []
+        if let first = continueTarget { list.append(UpNextItem(course: first.course, lesson: first.lesson)) }
+        for c in courses where !list.contains(where: { $0.course.id == c.id }) {
+            if let next = c.readyLessons.first(where: { state.lessons[$0.id]?.isCompleted != true }) {
+                list.append(UpNextItem(course: c, lesson: next))
+            }
+        }
+        return Array(list.prefix(6))
     }
 
     func start(_ course: Course, _ lesson: LessonRef, fromStart: Bool = false) {

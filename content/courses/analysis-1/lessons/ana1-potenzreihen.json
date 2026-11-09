@@ -1,0 +1,302 @@
+{
+  "id": "ana1-potenzreihen",
+  "title": "Potenzreihen und Konvergenzradius",
+  "subtitle": "Unendliche Polynome und wo sie gelten",
+  "source": "Gliederung nach dem Skript Analysis (Sven Jarohs, Goethe-Universität Frankfurt), Kapitel 10; Lehrbuchstandard Analysis I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Potenzreihen.md",
+      "title": "Potenzreihen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenzkriterien für Reihen.md",
+      "title": "Konvergenzkriterien für Reihen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md",
+      "title": "Exponentialfunktion"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Potenzreihe ist ein Polynom, das nie aufhört. Für welche $x$ darf man damit rechnen?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.6,
+          1.6
+        ],
+        "y": [
+          -3,
+          8
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "expr": "1/(1 - x)",
+            "domain": [
+              -1.6,
+              0.96
+            ],
+            "label": "f",
+            "labelAt": 0.8,
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "expr": "(1 - x^(n+1))/(1 - x)",
+            "domain": [
+              -1.6,
+              1.6
+            ],
+            "label": "s",
+            "labelAt": -1.3,
+            "color": "orange"
+          }
+        ],
+        "readout": "$n = {n|0}$: $s_n(0{,}5) = {(1 - 0.5^(n+1))/(1 - 0.5)|4}$ (Ziel $2$), $s_n(1{,}2) = {(1 - 1.2^(n+1))/(1 - 1.2)|1}$"
+      },
+      "int": [
+        "n"
+      ],
+      "timeline": [
+        {
+          "caption": "Die **geometrische Reihe** $1 + x + x^2 + \\dots$ als Funktion von $x$. Die gestrichelte Kurve $f$ ist ihr Grenzwert $\\tfrac{1}{1 - x}$, die orange Kurve $s$ die Teilsumme bis $x^n$. Für $n = 1$ ist das nur die Gerade $1 + x$.",
+          "set": {
+            "n": 1
+          }
+        },
+        {
+          "caption": "Bis $x^4$: Zwischen $-1$ und $1$ schmiegt sich die Teilsumme schon an $f$.",
+          "to": {
+            "n": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bis $x^{12}$: Innen ist kaum noch ein Unterschied zu sehen. Rechts von $1$ und links von $-1$ laufen die Teilsummen dagegen davon.",
+          "to": {
+            "n": 12
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Bis $x^{30}$: Für $\\abs{x} < 1$ konvergiert die Reihe, für $\\abs{x} > 1$ nicht. Die Grenze $R = 1$ heißt **Konvergenzradius**. Jede Potenzreihe hat so eine Grenze, manche $0$, manche $\\infty$.",
+          "to": {
+            "n": 30
+          },
+          "dur": 2000,
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Ein Polynom wie $1 + x + \\tfrac{x^2}{2}$ hört nach endlich vielen Gliedern auf. Eine **Potenzreihe** macht immer weiter: $a_0 + a_1 x + a_2 x^2 + \\dots$ Damit lassen sich Funktionen wie $e^x$, $\\sin x$ oder $\\tfrac{1}{1 - x}$ als »unendliche Polynome« schreiben, mit denen man fast so bequem rechnet wie mit gewöhnlichen.\n\nDer Haken: Eine unendliche Summe muss konvergieren. Bei Potenzreihen geschieht das in einem symmetrischen Bereich um den Entwicklungspunkt. Stell dir eine Lampe vor, die einen Lichtkreis wirft: Innen ist alles hell, die Reihe konvergiert, und zwar sogar absolut. Außen ist es dunkel, die Glieder wachsen und die Reihe divergiert. Nur am Rand des Kreises muss man jeden Punkt einzeln prüfen.\n\nDen Radius bestimmt allein, wie schnell die Koeffizienten $a_n$ wachsen oder schrumpfen. Schrumpfen sie wie $\\tfrac{1}{n!}$, also schneller als jede geometrische Folge, ist der Radius unendlich. Wachsen sie wie $n!$, bleibt nur der Entwicklungspunkt selbst."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Potenzreihe\n> $\\displaystyle\\sum_{n=0}^{\\infty} a_n (x - x_0)^n$ mit Koeffizienten $a_n$ und **Entwicklungspunkt** $x_0$.\n\n> [!satz] Konvergenzradius\n> Zu jeder Potenzreihe gibt es ein $R \\in [0, \\infty]$: Für $\\abs{x - x_0} < R$ konvergiert sie absolut, für $\\abs{x - x_0} > R$ divergiert sie. Für $\\abs{x - x_0} = R$ ist ohne weitere Prüfung nichts bekannt.\n\n> [!satz] Berechnung\n> $R = \\dfrac{1}{\\limsup \\sqrt[n]{\\abs{a_n}}}$ (Cauchy-Hadamard). Existiert der Grenzwert, gilt auch $R = \\lim \\left\\lvert \\dfrac{a_n}{a_{n+1}} \\right\\rvert$.\n\n> [!tip] Faustregel\n> Polynomiale Faktoren wie $n$ oder $n^2$ ändern den Radius nicht. Faktoren $c^n$ teilen ihn durch $c$, Fakultäten machen ihn $0$ oder $\\infty$."
+    },
+    {
+      "id": "naeher",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Bei $x = 0{,}9$ liegt der Grenzwert bei $\\tfrac{1}{1 - 0{,}9} = 10$. **Stelle den Grad $n$ so ein, dass die Teilsumme bis auf weniger als $0{,}1$ an $10$ herankommt.**",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          1
+        ],
+        "y": [
+          -1,
+          12
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "label": "Grad $n$",
+            "min": 0,
+            "max": 60,
+            "step": 1,
+            "value": 5,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "expr": "1/(1 - x)",
+            "domain": [
+              -1,
+              0.95
+            ],
+            "label": "f",
+            "labelAt": 0.6,
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "expr": "(1 - x^(n+1))/(1 - x)",
+            "domain": [
+              -1,
+              0.99
+            ],
+            "label": "s",
+            "labelAt": -0.7,
+            "color": "orange"
+          }
+        ],
+        "readout": "$s_n(0{,}9) = {(1 - 0.9^(n+1))/(1 - 0.9)|4}$, Abstand zu $10$: ${10*0.9^(n+1)|4}$"
+      },
+      "goal": {
+        "when": "10*0.9^(n+1) < 0.1",
+        "hints": [
+          {
+            "when": "10*0.9^(n+1) >= 0.1",
+            "text": "Noch {10*0.9^(n+1)|3} entfernt. Nahe am Rand konvergiert die Reihe langsam."
+          }
+        ],
+        "solve": {
+          "n": 43
+        }
+      },
+      "explain": "Der Abstand ist $10 \\cdot 0{,}9^{n+1}$. Er fällt erst ab $n = 43$ unter $0{,}1$. Je näher $x$ am Rand des Konvergenzbereichs liegt, desto langsamer konvergiert die Reihe."
+    },
+    {
+      "id": "radius",
+      "type": "choice",
+      "label": "Rechnen",
+      "md": "Welchen Konvergenzradius hat $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{3^n}{n}\\, x^n$?",
+      "options": [
+        {
+          "md": "$R = \\tfrac13$",
+          "correct": true
+        },
+        {
+          "md": "$R = 3$",
+          "why": "Die Koeffizienten wachsen wie $3^n$, das macht den Radius kleiner, nicht größer."
+        },
+        {
+          "md": "$R = 1$",
+          "why": "Der Faktor $\\tfrac1n$ ändert nichts, der Faktor $3^n$ aber schon."
+        },
+        {
+          "md": "$R = \\infty$",
+          "why": "Dafür müssten die Koeffizienten schneller als jede geometrische Folge fallen."
+        }
+      ],
+      "explain": "$\\sqrt[n]{\\tfrac{3^n}{n}} = \\tfrac{3}{\\sqrt[n]{n}} \\to 3$, also $R = \\tfrac13$."
+    },
+    {
+      "id": "intervall",
+      "type": "cloze",
+      "md": "Die Reihe $\\displaystyle\\sum_{n=0}^{\\infty} \\frac{(x - 2)^n}{4^n}$ konvergiert genau für $x$ zwischen {{0}} und {{1}} (Ränder ausgeschlossen).",
+      "blanks": [
+        {
+          "accept": [
+            -2
+          ],
+          "numeric": true,
+          "tolerance": 1e-06,
+          "placeholder": "links"
+        },
+        {
+          "accept": [
+            6
+          ],
+          "numeric": true,
+          "tolerance": 1e-06,
+          "placeholder": "rechts"
+        }
+      ],
+      "explain": "Entwicklungspunkt $2$, Radius $4$: Konvergenz für $\\abs{x - 2} < 4$, also $-2 < x < 6$. An beiden Rändern haben die Glieder den Betrag $1$, dort divergiert sie."
+    },
+    {
+      "id": "rand",
+      "type": "truefalse",
+      "md": "$\\displaystyle\\sum_{n=1}^{\\infty} \\frac{x^n}{n}$ konvergiert bei $x = -1$.",
+      "answer": true,
+      "whyNot": "Bei $x = -1$ entsteht die alternierende harmonische Reihe, und die konvergiert nach dem Leibniz-Kriterium.",
+      "explain": "Bei $x = 1$ entsteht dagegen die harmonische Reihe, die divergiert. Am Rand entscheidet jede Reihe für sich."
+    },
+    {
+      "id": "eigenschaften",
+      "type": "multi",
+      "md": "Eine Potenzreihe um $x_0 = 0$ hat den Konvergenzradius $R = 2$. Was folgt daraus?",
+      "options": [
+        {
+          "md": "Bei $x = 1{,}9$ konvergiert sie absolut.",
+          "correct": true
+        },
+        {
+          "md": "Bei $x = -3$ divergiert sie.",
+          "correct": true
+        },
+        {
+          "md": "Bei $x = 2$ konvergiert sie sicher.",
+          "why": "Am Rand ist ohne weitere Prüfung nichts bekannt."
+        },
+        {
+          "md": "Die gliedweise abgeleitete Reihe hat den Radius $1$.",
+          "why": "Gliedweises Ableiten ändert den Radius nicht."
+        }
+      ],
+      "explain": "Innen absolute Konvergenz, außen Divergenz, am Rand offen. Ableiten und Integrieren gliedweise erhalten den Radius."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-potenzreihen",
+      "level": 1,
+      "label": "Radius"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-potenzreihen",
+      "level": 2,
+      "label": "Intervall"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-potenzreihen",
+      "level": 3,
+      "label": "Radius erkennen"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-potenzreihen",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine Potenzreihe $\\sum a_n (x - x_0)^n$ ist ein Polynom ohne Ende.",
+        "Sie konvergiert absolut für $\\abs{x - x_0} < R$ und divergiert für $\\abs{x - x_0} > R$. Am Rand muss man einzeln prüfen.",
+        "$R$ berechnet man mit Wurzel- oder Quotientenkriterium aus den Koeffizienten.",
+        "Nahe am Rand konvergiert eine Reihe langsam, im Inneren darf man gliedweise ableiten."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "id": "oek-arbeitsmarkt",
+  "title": "Arbeitsmarkt und Mindestlohn",
+  "subtitle": "Was ein Lohn über dem Gleichgewicht bewirkt, und was nicht",
+  "source": "Lehrbuchstandard der Mikroökonomik; David Card und Alan B. Krueger, American Economic Review (1994)",
+  "vault": [
+    {
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Arbeitsmarkt.md",
+      "title": "Arbeitsmarkt"
+    },
+    {
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Marktgleichgewicht.md",
+      "title": "Marktgleichgewicht"
+    },
+    {
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Konsumenten- und Produzentenrente.md",
+      "title": "Konsumenten- und Produzentenrente"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Auf dem Arbeitsmarkt sind die Rollen vertauscht: Die Betriebe fragen nach, die Haushalte bieten an.",
+      "widget": "curves",
+      "params": {
+        "x": [
+          0,
+          14
+        ],
+        "y": [
+          0,
+          15
+        ],
+        "xLabel": "Arbeit L",
+        "yLabel": "Lohn w",
+        "vars": [
+          {
+            "name": "w",
+            "min": 0,
+            "max": 13,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "lines": [
+          {
+            "id": "N",
+            "label": "Nachfrage",
+            "a": 14,
+            "m": -1,
+            "color": "accent"
+          },
+          {
+            "id": "A",
+            "label": "Angebot",
+            "a": 2,
+            "m": 1,
+            "color": "orange"
+          }
+        ],
+        "intersections": [
+          {
+            "id": "E",
+            "of": [
+              "N",
+              "A"
+            ],
+            "label": "E"
+          }
+        ],
+        "hlines": [
+          {
+            "when": "w > 8",
+            "y": "w",
+            "color": "red",
+            "label": "Mindestlohn"
+          }
+        ],
+        "readout": "Lohn {max(w, 8)|1}: nachgefragt {14 - max(w, 8)|1}, angeboten {max(w, 8) - 2|1}, ohne Stelle **{max(0, 2*w - 16)|1}**"
+      },
+      "timeline": [
+        {
+          "caption": "Die Betriebe fragen umso mehr Arbeit nach, je billiger sie ist. Mehr Menschen wollen arbeiten, je höher der Lohn. Im Gleichgewicht E: Lohn 8, Arbeit 6.",
+          "set": {
+            "w": 0
+          }
+        },
+        {
+          "caption": "Ein Mindestlohn von 7 liegt unter dem Gleichgewicht. Er bindet nicht, nichts ändert sich.",
+          "to": {
+            "w": 7
+          },
+          "dur": 1500,
+          "hold": 6000
+        },
+        {
+          "caption": "Ein Mindestlohn von 10 bindet. Die Betriebe fragen nur noch 4 nach, angeboten werden 8. Die Lücke von 4 sind Menschen, die zu diesem Lohn arbeiten wollen, aber keine Stelle finden.",
+          "to": {
+            "w": 10
+          },
+          "dur": 1800,
+          "hold": 9000
+        },
+        {
+          "caption": "Je höher der Mindestlohn über dem Gleichgewicht, desto größer die Lücke im einfachen Modell. Wie stark der Effekt in der Wirklichkeit ist, ist eine empirische Frage, und die Antworten überraschen.",
+          "to": {
+            "w": 12
+          },
+          "dur": 1800,
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Der Arbeitsmarkt funktioniert im einfachsten Modell wie jeder andere Markt, nur mit vertauschten Rollen: Unternehmen **fragen** Arbeit nach, Haushalte **bieten** sie an, und der Lohn ist der Preis. Wird Arbeit produktiver, lohnt sich jede Stunde mehr, und die Nachfrage steigt.\n\nEin **Mindestlohn** ist ein Mindestpreis. Liegt er unter dem Gleichgewichtslohn, passiert nichts. Liegt er darüber, sinkt im Modell die nachgefragte Arbeit, während mehr Menschen arbeiten wollen. Die Differenz ist Arbeitslosigkeit, und wer weiter arbeitet, verdient mehr.\n\nDie Wirklichkeit ist verwickelter. Card und Krueger verglichen 1992 Fast-Food-Restaurants in New Jersey, wo der Mindestlohn stieg, mit solchen im benachbarten Pennsylvania und fanden keinen Rückgang der Beschäftigung. Eine Erklärung: Wenn wenige Arbeitgeber den Markt beherrschen (**Monopson**), drücken sie Löhne und Beschäftigung unter das Wettbewerbsniveau. Ein Mindestlohn kann dann sogar mehr Beschäftigung bringen."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Arbeitsmarkt\n> **Arbeitsnachfrage**: Wie viel Arbeit Unternehmen bei jedem Lohn einsetzen wollen, fallend im Lohn. **Arbeitsangebot**: Wie viel Haushalte arbeiten wollen, steigend im Lohn. Im Schnittpunkt liegt der Gleichgewichtslohn.\n\n> [!satz] Bindender Mindestlohn\n> Liegt der Mindestlohn $\\bar w$ über dem Gleichgewichtslohn, gilt im Wettbewerbsmodell: Beschäftigung $= L_N(\\bar w)$, Arbeitslosigkeit $= L_A(\\bar w) - L_N(\\bar w)$.\n\n> [!definition] Arten der Arbeitslosigkeit\n> **Friktionell**: bei der Suche zwischen zwei Stellen. **Strukturell**: Qualifikationen und Stellen passen nicht zusammen. **Konjunkturell**: Die Gesamtnachfrage fehlt."
+    },
+    {
+      "id": "beschaeftigung",
+      "type": "widget",
+      "label": "Einzeichnen",
+      "md": "Mindestlohn 10 (rote Linie). **Tippe den Punkt (Arbeit, Lohn) an, der die tatsächliche Beschäftigung beschreibt.**",
+      "widget": "curves",
+      "params": {
+        "x": [
+          0,
+          14
+        ],
+        "y": [
+          0,
+          15
+        ],
+        "xLabel": "Arbeit L",
+        "yLabel": "Lohn w",
+        "lines": [
+          {
+            "id": "N",
+            "label": "Nachfrage",
+            "a": 14,
+            "m": -1,
+            "color": "accent"
+          },
+          {
+            "id": "A",
+            "label": "Angebot",
+            "a": 2,
+            "m": 1,
+            "color": "orange"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 10,
+            "color": "red",
+            "label": "Mindestlohn"
+          }
+        ],
+        "place": {
+          "snap": 0.5,
+          "label": "Beschäftigung"
+        }
+      },
+      "goal": {
+        "place": true,
+        "when": "abs(place_x - 4) < 0.01 && abs(place_y - 10) < 0.01",
+        "hints": [
+          {
+            "when": "abs(place_y - 10) >= 0.01",
+            "text": "Der Lohn ist der Mindestlohn, also 10."
+          },
+          {
+            "when": "abs(place_x - 8) < 0.01",
+            "text": "So viele wollen arbeiten. Eingestellt wird aber nur, was die Betriebe nachfragen."
+          }
+        ],
+        "message": "Gesucht ist der Punkt auf der Nachfragekurve beim Lohn 10.",
+        "solve": {
+          "place": [
+            4,
+            10
+          ]
+        }
+      },
+      "explain": "Beim Lohn 10 fragen die Betriebe 14 − 10 = 4 nach. Angeboten werden 10 − 2 = 8. Die kürzere Marktseite bestimmt, was tatsächlich gehandelt wird."
+    },
+    {
+      "id": "luecke",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Nachfrage $w = 20 - 2L$, Angebot $w = 5 + L$. Wie viele Einheiten Arbeit finden bei einem Mindestlohn von $12$ keine Stelle?",
+      "answer": 3,
+      "tolerance": 1e-06,
+      "placeholder": "Zahl",
+      "explain": "Gleichgewicht: $20 - 2L = 5 + L$, also $L = 5$, $w = 10$. Bei $12$: nachgefragt $L_N = \\tfrac{20 - 12}{2} = 4$, angeboten $L_A = 12 - 5 = 7$. Lücke: $3$."
+    },
+    {
+      "id": "arten",
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Ordne die Fälle der Art der Arbeitslosigkeit zu.",
+      "categories": [
+        "friktionell",
+        "strukturell",
+        "konjunkturell"
+      ],
+      "items": [
+        {
+          "md": "Ein Koch wechselt die Stadt und sucht zwei Monate eine neue Küche.",
+          "cat": "friktionell"
+        },
+        {
+          "md": "Druckereien schließen, weil Zeitungen online gelesen werden.",
+          "cat": "strukturell"
+        },
+        {
+          "md": "In einer Rezession entlassen viele Betriebe gleichzeitig.",
+          "cat": "konjunkturell"
+        },
+        {
+          "md": "Eine Absolventin sucht ihre erste Stelle.",
+          "cat": "friktionell"
+        }
+      ],
+      "explain": "Suche ist friktionell, ein dauerhafter Wandel der Wirtschaft strukturell, ein Nachfrageeinbruch konjunkturell."
+    },
+    {
+      "id": "monopson",
+      "type": "truefalse",
+      "md": "Beherrscht ein einziger Arbeitgeber den Arbeitsmarkt einer Region, kann ein Mindestlohn die Beschäftigung erhöhen.",
+      "answer": true,
+      "whyNot": "Ein Monopsonist stellt weniger ein, um den Lohn niedrig zu halten. Ein Mindestlohn nimmt ihm diesen Grund.",
+      "explain": "Im Monopson liegt die Beschäftigung unter dem Wettbewerbsniveau. Ein maßvoller Mindestlohn kann Lohn und Beschäftigung zugleich erhöhen."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "oek-arbeitsmarkt",
+      "level": 1,
+      "label": "Gleichgewichtslohn"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "oek-arbeitsmarkt",
+      "level": 2,
+      "label": "Mindestlohn"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "oek-arbeitsmarkt",
+      "level": 3,
+      "label": "Bindet er?"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "oek-arbeitsmarkt",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Unternehmen fragen Arbeit nach, Haushalte bieten sie an; der Lohn ist der Preis.",
+        "Ein Mindestlohn unter dem Gleichgewicht bindet nicht. Darüber entsteht im Wettbewerbsmodell eine Lücke zwischen Angebot und Nachfrage.",
+        "Empirisch ist der Effekt oft kleiner als gedacht; im Monopson kann ein Mindestlohn sogar Beschäftigung schaffen.",
+        "Arbeitslosigkeit ist friktionell, strukturell oder konjunkturell."
+      ]
+    }
+  ]
+}

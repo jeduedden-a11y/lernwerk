@@ -150,6 +150,28 @@ LW.generator("stoch-binom", {
 - `G` ist ein Zufallsbaukasten mit festem Startwert: `int(a, b)`, `pick(liste)`, `pickN(liste, n)`, `chance(p)`, `shuffle`, `fact`, `binom`, `gcd`, `round`, `fmt(x, stellen)` für Fließtext, `tex(x, stellen)` für Formeln (Dezimalkomma als `{,}`), `frac(p, q)` (gekürzter Bruch), `term(c)` (»+ 3«, »- 2«), `options(richtig, [falsch…])` für Auswahlaufgaben.
 - Der Startwert setzt sich aus Lektion, Schritt und Durchgang zusammen. In der Wiederholung kommt dieselbe Aufgabenart mit neuen Werten wieder.
 - Unter jeder generierten Aufgabe bietet die App **»Noch eine Aufgabe dieser Art«** an.
+- **Keine Wiederholungen**: Die Laufzeit vergleicht jede erzeugte Aufgabe über einen Fingerabdruck. Innerhalb einer Runde kommt keine Aufgabe zweimal, solange der Generator andere hat; über Runden hinweg merkt sie sich je Generator und Stufe die letzten 48 und weicht ihnen aus. Im Training wechselt sie notfalls zu einem anderen Generator des Themas. Damit das greift, braucht jede Stufe genug verschiedene Aufgaben: Ziel sind mindestens 12 aus 40 Versuchen.
+
+### Mehr Aufgaben für einen Generator
+
+`LW.extend(name, { 1: [...], 2: [...], 3: [...], 4: [...], any: [...] })` hängt an einen bestehenden Generator weitere Aufgaben je Stufe. Ein Objekt ist eine feste Aufgabe, eine Funktion `(level, G, params) => schritt` eine Vorlage mit eigenen Zufallswerten. Die Laufzeit mischt die eigene `make`-Funktion und die Zusätze (Gewicht 3 für `make` und jede Vorlage, 1 für jede feste Aufgabe).
+
+Für Wissensfragen gibt es `LW.forms`, das aus einem Pool viele verschiedene Aufgabenformen baut:
+
+```js
+LW.extend("eth-ritual", LW.forms.statements([
+  { lv: 1, ok: true,  md: "Übergangsriten haben drei Phasen …", why: "So beschreibt es van Gennep." },
+  { lv: 2, ok: false, md: "In der Schwellenphase …", why: "Begründung, warum die Aussage falsch ist." },
+], { 1: ["tf"], 2: ["tf", "sort"], 3: ["multi", "sort"], 4: ["spot", "multi"] }));
+```
+
+| Baustein | Pool | Formen |
+|---|---|---|
+| `LW.forms.statements` | `{ md, ok, why, lv }` | `tf` (Richtig/Falsch), `multi` (welche stimmen?), `spot` (die eine falsche finden), `sort` (stimmt / stimmt nicht) |
+| `LW.forms.pairs` | `{ a, b, why, lv }` | `match` (vier Paare zuordnen), `choice` (was passt zu a?), `reverse` (wozu passt b?) |
+| `LW.forms.groups` | `{ md, cat, why, lv }`, dazu `cats` | `sort` (einordnen), `choice` (in welche Kategorie?) |
+
+`lv` ist die niedrigste Stufe, zu der ein Eintrag passt; jede Stufe nimmt vor allem Einträge ihrer eigenen und der Stufe darunter. Jede Aussage braucht ein `why`, es erscheint als Erklärung. Die Zusätze liegen in `generators/extra-*.js`, die Generatoren der neueren Lektionen in `generators/neue-themen.js`. **Generatoren prüfen** testet jede feste Zusatzaufgabe einmal und jede Vorlage mit zwölf Startwerten.
 - **Generatoren prüfen** in der Testumgebung erzeugt je Generator und Stufe 40 Aufgaben und meldet Formelfehler, `NaN`, fehlende Erklärungen und doppelte Antwortoptionen.
 
 ## Visualisierungen mit Ziel

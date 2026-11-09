@@ -11,9 +11,9 @@ struct SubjectCard: View {
         VStack(alignment: .leading, spacing: 10) {
             NavigationLink(value: subject) {
                 HStack(spacing: 12) {
-                    SubjectBadge(subject: subject, size: 48)
+                    SubjectBadge(subject: subject, size: 44)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(subject.title).font(.title3.bold())
+                        Text(subject.title).font(.headline)
                         Text(summary(courses))
                             .font(.footnote)
                             .foregroundStyle(.secondary)

@@ -1,0 +1,224 @@
+{
+  "id": "stoch-geometrisch",
+  "title": "Warten auf den ersten Erfolg",
+  "subtitle": "Die geometrische Verteilung",
+  "source": "Lehrbuchstandard Stochastik",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Geometrische Verteilung.md",
+      "title": "Geometrische Verteilung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bernoulli-Kette.md",
+      "title": "Bernoulli-Kette"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsgröße und Erwartungswert.md",
+      "title": "Zufallsgröße und Erwartungswert"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wie lange muss man auf eine Sechs warten?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          30
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "vars": [
+          {
+            "name": "p",
+            "min": 0.02,
+            "max": 0.9,
+            "value": 0.1667,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "expr": "1 - (1 - p)^x",
+            "domain": [
+              0,
+              30
+            ],
+            "label": "P(X ≤ k)",
+            "labelAt": 24
+          }
+        ],
+        "readout": "$p = {p|3}$: $P(X \\le 6) = {1 - (1 - p)^6|3}$, mittlere Wartezeit $\\tfrac1p = {1/p|2}$ Versuche"
+      },
+      "timeline": [
+        {
+          "caption": "Wir würfeln, bis die erste Sechs fällt. Die Kurve zeigt, wie wahrscheinlich die Sechs **spätestens** im $k$-ten Wurf gekommen ist, $P(X \\le k) = 1 - \\left(\\tfrac56\\right)^k$."
+        },
+        {
+          "caption": "Nach sechs Würfen ist das nur zu $66{,}5\\,\\%$ der Fall, obwohl im Mittel jeder sechste Wurf eine Sechs ist. Ein Drittel aller Spieler wartet länger.",
+          "hold": 7500
+        },
+        {
+          "caption": "Eine Münze ($p = \\tfrac12$): Schon nach drei Würfen hatte man zu $87{,}5\\,\\%$ Kopf. Im Mittel braucht man zwei Würfe.",
+          "to": {
+            "p": 0.5
+          },
+          "dur": 1800,
+          "hold": 6500
+        },
+        {
+          "caption": "Ein seltenes Ereignis ($p = 0{,}05$): Die Kurve steigt flach, im Mittel wartet man $20$ Versuche, und selbst nach $30$ ist der Erfolg nicht sicher.",
+          "to": {
+            "p": 0.05
+          },
+          "dur": 2200,
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Viele Fragen haben die Form »Wie lange dauert es, bis …?«: bis zur ersten Sechs, bis ein Los gewinnt, bis ein Bauteil ausfällt. Jeder Versuch gelingt unabhängig mit derselben Wahrscheinlichkeit $p$. Die Zahl $X$ der Versuche bis zum ersten Erfolg ist dann **geometrisch verteilt**.\n\nDamit der erste Erfolg genau beim $k$-ten Versuch kommt, müssen zuerst $k - 1$ Fehlschläge passieren und dann ein Erfolg: $P(X = k) = (1 - p)^{k-1} p$. Jeder weitere Schritt multipliziert mit $1 - p$, die Wahrscheinlichkeiten fallen wie eine geometrische Folge, daher der Name.\n\nZwei Dinge überraschen fast alle. Erstens ist der **wahrscheinlichste** Wert immer $k = 1$, auch wenn man im Mittel $\\tfrac1p$ Versuche braucht. Zweitens hat der Zufall kein Gedächtnis: Nach zehn Würfen ohne Sechs ist die nächste Sechs kein bisschen wahrscheinlicher als vorher."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Geometrische Verteilung\n> $X$ zählt die Versuche bis zum ersten Erfolg in einer Bernoulli-Kette mit Trefferwahrscheinlichkeit $p$: $P(X = k) = (1 - p)^{k-1} p$ für $k = 1, 2, 3, \\dots$\n\n> [!satz] Kennzahlen\n> $P(X \\le k) = 1 - (1 - p)^k$, $\\quad E(X) = \\dfrac1p$, $\\quad V(X) = \\dfrac{1 - p}{p^2}$.\n\n> [!satz] Gedächtnislosigkeit\n> $P(X > m + n \\mid X > m) = P(X > n)$: Wer schon $m$-mal gescheitert ist, steht wieder ganz am Anfang."
+    },
+    {
+      "id": "mittel-vier",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Stelle $p$ so ein, dass man im Mittel vier Versuche bis zum ersten Erfolg braucht.**",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          30
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "vars": [
+          {
+            "name": "p",
+            "label": "Erfolgswahrscheinlichkeit $p$",
+            "min": 0.05,
+            "max": 0.9,
+            "step": 0.01,
+            "value": 0.5,
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "expr": "1 - (1 - p)^x",
+            "domain": [
+              0,
+              30
+            ],
+            "label": "P(X ≤ k)",
+            "labelAt": 24
+          }
+        ],
+        "readout": "Mittlere Wartezeit $\\tfrac1p = {1/p|2}$, $P(X \\le 4) = {1 - (1 - p)^4|3}$"
+      },
+      "goal": {
+        "when": "abs(1/p - 4) < 0.05",
+        "hints": [
+          {
+            "when": "1/p < 4",
+            "text": "Im Mittel erst {1/p|2} Versuche. Mit kleinerem p dauert es länger."
+          },
+          {
+            "when": "1/p > 4",
+            "text": "Im Mittel schon {1/p|2} Versuche. Mit größerem p geht es schneller."
+          }
+        ],
+        "solve": {
+          "p": 0.25
+        }
+      },
+      "explain": "$E(X) = \\tfrac1p = 4 \\iff p = 0{,}25$. Trotzdem ist der Erfolg nach vier Versuchen nur zu $1 - 0{,}75^4 \\approx 68\\,\\%$ eingetreten."
+    },
+    {
+      "id": "dritter",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie wahrscheinlich fällt die erste Sechs genau im **dritten** Wurf? (vier Nachkommastellen)",
+      "answer": 0.1157,
+      "tolerance": 0.0006,
+      "answerText": "25/216",
+      "placeholder": "Bruch oder Dezimalzahl",
+      "explain": "Zwei Nicht-Sechsen, dann eine Sechs: $\\left(\\tfrac56\\right)^2 \\cdot \\tfrac16 = \\tfrac{25}{216} \\approx 0{,}1157$."
+    },
+    {
+      "id": "zehn",
+      "type": "estimate",
+      "label": "Schätzen",
+      "md": "Erst schätzen: **Wie wahrscheinlich ist es, in zehn Würfen keine einzige Sechs zu werfen?**",
+      "min": 0,
+      "max": 100,
+      "answer": 16.2,
+      "tolerance": 8,
+      "unit": "%",
+      "start": 50,
+      "explain": "$\\left(\\tfrac56\\right)^{10} \\approx 0{,}162$. Gut jeder sechste Spieler wartet länger als zehn Würfe."
+    },
+    {
+      "id": "gedaechtnis",
+      "type": "truefalse",
+      "md": "Nach zehn Würfen ohne Sechs ist eine Sechs im elften Wurf wahrscheinlicher als sonst.",
+      "answer": false,
+      "whyNot": "Die Würfe sind unabhängig: Die Chance bleibt $\\tfrac16$. Der Irrtum heißt Spielerfehlschluss.",
+      "explain": "Gedächtnislosigkeit: Wer zehnmal gescheitert ist, wartet ab jetzt im Mittel wieder sechs Würfe."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-geometrisch",
+      "level": 1,
+      "label": "Genau beim k-ten Mal"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-geometrisch",
+      "level": 2,
+      "label": "Spätestens"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-geometrisch",
+      "level": 3,
+      "label": "Mittlere Wartezeit"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "stoch-geometrisch",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Versuche bis zum ersten Erfolg: $P(X = k) = (1 - p)^{k-1} p$.",
+        "Spätestens beim $k$-ten Mal: $1 - (1 - p)^k$, über das Gegenereignis.",
+        "Im Mittel wartet man $\\tfrac1p$ Versuche, am wahrscheinlichsten ist trotzdem $k = 1$.",
+        "Der Zufall hat kein Gedächtnis: Frühere Fehlschläge ändern nichts."
+      ]
+    }
+  ]
+}

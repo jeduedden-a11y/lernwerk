@@ -1,0 +1,233 @@
+{
+  "id": "cs50-transformer",
+  "title": "Attention und Transformer",
+  "subtitle": "Wie Sprachmodelle Bezüge im Satz finden",
+  "source": "Nach den Themen von CS50's Introduction to Artificial Intelligence with Python, Lecture 6 (Harvard, edX); Vaswani u. a., Attention Is All You Need (2017); eigene Darstellung",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Transformer.md",
+      "title": "Transformer"
+    },
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md",
+      "title": "Sprachverarbeitung"
+    },
+    {
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md",
+      "title": "Lecture 6 - Language (Kurs)"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "»Die Katze jagte die Maus, weil sie hungrig war.« Wer war hungrig?",
+      "widget": "attention",
+      "params": {
+        "tokens": [
+          "Die",
+          "Katze",
+          "jagte",
+          "die",
+          "Maus,",
+          "weil",
+          "sie",
+          "hungrig",
+          "war."
+        ],
+        "weights": {
+          "6": [
+            0.02,
+            0.48,
+            0.08,
+            0.02,
+            0.22,
+            0.03,
+            0.05,
+            0.08,
+            0.02
+          ],
+          "7": [
+            0.02,
+            0.3,
+            0.05,
+            0.02,
+            0.08,
+            0.03,
+            0.4,
+            0.05,
+            0.05
+          ],
+          "2": [
+            0.02,
+            0.4,
+            0.1,
+            0.02,
+            0.38,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ]
+        },
+        "focus": 6
+      },
+      "timeline": [
+        {
+          "caption": "Ein Transformer betrachtet alle Wörter zugleich. Für jedes Wort berechnet er, wie stark es auf die anderen achten soll: die **Attention**."
+        },
+        {
+          "caption": "»sie« ist mehrdeutig, Katze und Maus sind beide weiblich. Die Gewichte zeigen, worauf »sie« achtet: vor allem auf »Katze«. Gelernt hat das Modell es aus sehr vielen Sätzen, in denen Hunger und Jagen zusammenhängen.",
+          "do": {
+            "focus": 6,
+            "reveal": true
+          },
+          "hold": 8000
+        },
+        {
+          "caption": "»hungrig« achtet auf »sie« und »Katze«: Die Eigenschaft wird mit dem richtigen Tier verknüpft.",
+          "do": {
+            "focus": 7,
+            "reveal": true
+          },
+          "hold": 6500
+        },
+        {
+          "caption": "»jagte« verteilt seine Aufmerksamkeit auf Jäger und Gejagte. Jedes Wort bekommt so einen neuen Vektor, gemischt aus den Wörtern, die für es wichtig sind.",
+          "do": {
+            "focus": 2,
+            "reveal": true
+          },
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Ältere Sprachmodelle lasen einen Satz Wort für Wort und trugen eine Art Gedächtnis mit sich. Bei langen Sätzen verblasste der Anfang. Der **Transformer** macht es anders: Er schaut auf alle Wörter gleichzeitig und fragt für jedes Wort, welche anderen Wörter für seine Bedeutung wichtig sind.\n\nDafür bekommt jedes Wort drei Vektoren. Mit der **Query** fragt es, wonach es sucht. Mit dem **Key** zeigt es, wofür es steht. Der **Value** ist das, was es weitergibt. Das Skalarprodukt aus Query und Key misst, wie gut zwei Wörter zusammenpassen. Die **Softmax** macht aus diesen Punktzahlen Gewichte, die sich zu $1$ addieren, und das Wort bekommt den gewichteten Mittelwert der Values.\n\nWeil das für alle Wörter parallel geschieht, lässt sich ein Transformer auf großen Rechnern sehr schnell trainieren. Mehrere solche **Attention-Köpfe** und viele Schichten übereinander ergeben die großen Sprachmodelle von heute. Die Reihenfolge der Wörter muss man allerdings eigens hineingeben, mit einer **Positionskodierung**."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Self-Attention\n> Aus jedem Wortvektor $x_i$ entstehen $q_i = W_Q x_i$, $k_i = W_K x_i$, $v_i = W_V x_i$. Die Gewichte sind $\\alpha_{ij} = \\operatorname{softmax}_j \\dfrac{q_i \\cdot k_j}{\\sqrt d}$, die Ausgabe ist $\\sum_j \\alpha_{ij} v_j$.\n\n> [!definition] Softmax\n> $\\operatorname{softmax}(s)_j = \\dfrac{e^{s_j}}{\\sum_k e^{s_k}}$: positive Gewichte mit Summe $1$, große Punktzahlen bekommen viel Gewicht.\n\n> [!tip] Bausteine\n> Positionskodierung für die Reihenfolge, mehrere Köpfe für verschiedene Beziehungen, dazwischen gewöhnliche neuronale Schichten."
+    },
+    {
+      "id": "pokal",
+      "type": "widget",
+      "label": "Raten",
+      "md": "»Der Pokal passte nicht in den Koffer, weil er zu groß war.« **Auf welches Wort achtet »er« am meisten?** Tippe es an.",
+      "widget": "attention",
+      "params": {
+        "tokens": [
+          "Der",
+          "Pokal",
+          "passte",
+          "nicht",
+          "in",
+          "den",
+          "Koffer,",
+          "weil",
+          "er",
+          "zu",
+          "groß",
+          "war."
+        ],
+        "weights": {
+          "8": [
+            0.02,
+            0.46,
+            0.06,
+            0.02,
+            0.02,
+            0.02,
+            0.24,
+            0.02,
+            0.04,
+            0.02,
+            0.06,
+            0.02
+          ]
+        },
+        "focus": 8,
+        "select": true
+      },
+      "goal": {},
+      "explain": "»er« bezieht sich auf den Pokal: Nur ein zu großer Pokal passt nicht hinein. Hieße der Satz »weil er zu klein war«, müsste die Aufmerksamkeit auf den Koffer gehen. Solche Satzpaare prüfen, ob ein Modell Bedeutung versteht.",
+      "review": true
+    },
+    {
+      "id": "softmax",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Zwei Wörter haben die Punktzahlen $2$ und $0$. Welches Gewicht bekommt das erste nach der Softmax? (vier Nachkommastellen)",
+      "answer": 0.8808,
+      "tolerance": 0.0006,
+      "answerText": "0,8808",
+      "placeholder": "Dezimalzahl",
+      "explain": "$\\tfrac{e^2}{e^2 + e^0} = \\tfrac{7{,}389}{8{,}389} \\approx 0{,}8808$. Das zweite Wort bekommt den Rest, $0{,}1192$."
+    },
+    {
+      "id": "ablauf",
+      "type": "order",
+      "md": "Bringe die Schritte einer Self-Attention-Schicht in die richtige Reihenfolge.",
+      "items": [
+        "Wörter in Vektoren übersetzen und die Position dazugeben",
+        "Für jedes Wort Query, Key und Value berechnen",
+        "Punktzahlen aus Query mal Key bilden und durch Wurzel d teilen",
+        "Mit der Softmax in Gewichte umrechnen",
+        "Values gewichtet mitteln"
+      ],
+      "explain": "Erst Vektoren mit Position, dann die drei Projektionen, Punktzahlen, Softmax und zuletzt der gewichtete Mittelwert."
+    },
+    {
+      "id": "position",
+      "type": "truefalse",
+      "md": "Ohne Positionskodierung könnte ein Transformer »Hund beißt Mann« nicht von »Mann beißt Hund« unterscheiden.",
+      "answer": true,
+      "whyNot": "Attention behandelt die Wörter als Menge: Ohne Positionsangabe sehen beide Sätze gleich aus.",
+      "explain": "Deshalb addiert man zu jedem Wortvektor einen Vektor, der seine Stelle im Satz kodiert."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "cs-transformer",
+      "level": 1,
+      "label": "Gewichteter Mittelwert"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "cs-transformer",
+      "level": 2,
+      "label": "Softmax"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "cs-transformer",
+      "level": 3,
+      "label": "Skalarprodukt"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "cs-transformer",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Self-Attention: Jedes Wort bestimmt, wie wichtig die anderen für es sind, und mischt deren Values.",
+        "Gewichte aus $\\operatorname{softmax}\\left(\\tfrac{q \\cdot k}{\\sqrt d}\\right)$, sie addieren sich zu $1$.",
+        "Transformer rechnen parallel und brauchen eine Positionskodierung.",
+        "Viele Köpfe und Schichten ergeben große Sprachmodelle."
+      ]
+    }
+  ]
+}

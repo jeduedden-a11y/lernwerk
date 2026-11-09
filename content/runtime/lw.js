@@ -426,6 +426,122 @@
   LW.rng = rng;
   LW.hash = hash;
 
+  // More tasks for an existing generator, per level: LW.extend("oek-hayek", { 1: [step, …], 2: [(level, G, params) => step, …] }).
+  // A plain object is one fixed task, a function a template with its own random values. realize() draws from the
+  // generator's own make() and these entries together; "any" adds entries to every level.
+  LW.extensions = LW.extensions || {};
+  LW.extend = function (name, byLevel) {
+    const ext = LW.extensions[name] || (LW.extensions[name] = { 1: [], 2: [], 3: [], 4: [] });
+    for (const key of Object.keys(byLevel || {})) {
+      const items = [].concat(byLevel[key] || []);
+      const levels = key === "any" ? [1, 2, 3, 4] : [clampLevel(+key)];
+      for (const lv of levels) ext[lv].push(...items);
+    }
+  };
+
+  // Task forms from content pools: one pool of statements, term pairs or grouped items becomes several task types
+  // with many combinations. Each builder takes a plan { level: [form, …] } and returns templates for LW.extend.
+  //   statements: [{ md, ok, why, lv }]  forms tf, multi, spot, sort
+  //   pairs:      [{ a, b, why, lv }]    forms match, choice (what fits a?), reverse (which a fits b?)
+  //   groups:     [{ md, cat, why, lv }] forms sort, choice (into which category?); o.cats lists the categories
+  // lv (1 to 4, default 1) is the lowest level an entry suits; a level prefers entries of its own and the one below.
+  LW.forms = (function () {
+    const lvOf = (x) => x.lv || 1;
+    function forLevel(pool, level, need) {
+      // level 1 also takes the simple entries of level 2; every other level its own and the one below
+      const top = level === 1 ? 2 : level;
+      const near = pool.filter((x) => lvOf(x) <= top && lvOf(x) >= level - 1);
+      if (near.length >= need) return near;
+      const upTo = pool.filter((x) => lvOf(x) <= level);
+      return upTo.length >= need ? upTo : pool;
+    }
+    function mix(G, list, n, minTrue, minFalse) {
+      const t = G.shuffle(list.filter((s) => s.ok)), f = G.shuffle(list.filter((s) => !s.ok));
+      if (t.length < minTrue || f.length < minFalse) return null;
+      const out = t.slice(0, minTrue).concat(f.slice(0, minFalse));
+      const rest = G.shuffle(t.slice(minTrue).concat(f.slice(minFalse)));
+      while (out.length < n && rest.length) out.push(rest.pop());
+      return G.shuffle(out);
+    }
+    const why = (list) => list.filter((s) => !s.ok).map((s) => s.why).join(" ");
+    const statements = {
+      tf: (pool) => (level, G) => {
+        const s = G.pick(forLevel(pool, level, 1));
+        return { type: "truefalse", md: s.md, answer: !!s.ok, whyNot: s.why, explain: s.why };
+      },
+      multi: (pool, o) => (level, G) => {
+        const list = mix(G, forLevel(pool, level, 5), 4, 1, 1) || mix(G, pool, 4, 1, 1);
+        return { type: "multi", md: o.multi || "Welche Aussagen treffen zu?",
+          options: list.map((s) => ({ md: s.md, correct: !!s.ok, why: s.why })),
+          explain: why(list) || "Alle Aussagen treffen zu." };
+      },
+      spot: (pool, o) => (level, G) => {
+        const list = mix(G, forLevel(pool, level, 5), 4, 3, 1) || mix(G, pool, 4, 3, 1);
+        const answer = list.findIndex((s) => !s.ok);
+        return { type: "spot", md: o.spot || "Genau eine Aussage ist falsch. Welche?",
+          lines: list.map((s) => ({ md: s.md, why: s.why })), answer, explain: list[answer].why };
+      },
+      sort: (pool, o) => (level, G) => {
+        const list = mix(G, forLevel(pool, level, 6), 5, 2, 2) || mix(G, pool, 5, 2, 2);
+        const cats = o.cats || ["stimmt", "stimmt nicht"];
+        return { type: "sort", md: o.sort || "Stimmt die Aussage? Ordne jede ein.", categories: cats,
+          items: list.map((s) => ({ md: s.md, cat: s.ok ? cats[0] : cats[1] })), explain: why(list) };
+      },
+    };
+    const pairs = {
+      match: (pool, o) => (level, G) => {
+        // four pairs whose left and right sides are all different, so the matching is unambiguous
+        const list = [];
+        for (const p of G.shuffle(forLevel(pool, level, 4)).concat(G.shuffle(pool))) {
+          if (list.length >= 4) break;
+          if (!list.some((q) => q.a === p.a || q.b === p.b)) list.push(p);
+        }
+        return { type: "match", md: o.match || "Ordne zu.", pairs: list.map((p) => [p.a, p.b]),
+          explain: list.map((p) => p.a + ": " + p.b).join(". ") + "." };
+      },
+      choice: (pool, o) => (level, G) => {
+        const p = G.pick(forLevel(pool, level, 1));
+        const wrong = G.shuffle(pool.filter((q) => q.a !== p.a && q.b !== p.b)).map((q) => ({ md: q.b, why: "Das passt zu " + q.a + "." }));
+        return { type: "choice", md: o.ask ? o.ask(p.a) : "Was passt zu " + p.a + "?",
+          options: G.options({ md: p.b, why: p.why }, wrong), explain: p.why || p.a + ": " + p.b };
+      },
+      reverse: (pool, o) => (level, G) => {
+        const p = G.pick(forLevel(pool, level, 1));
+        const wrong = G.shuffle(pool.filter((q) => q.a !== p.a && q.b !== p.b)).map((q) => ({ md: q.a, why: q.a + ": " + q.b }));
+        return { type: "choice", md: o.askBack ? o.askBack(p.b) : "Wozu passt: " + p.b,
+          options: G.options({ md: p.a, why: p.why }, wrong), explain: p.why || p.a + ": " + p.b };
+      },
+    };
+    const groups = {
+      sort: (pool, o) => (level, G) => {
+        const cats = o.cats;
+        let list = G.shuffle(forLevel(pool, level, 6)).slice(0, o.n || 5);
+        if (new Set(list.map((x) => x.cat)).size < 2) list = G.shuffle(pool).slice(0, o.n || 5);
+        return { type: "sort", md: o.sort || "Ordne zu.", categories: cats.filter((c) => pool.some((x) => x.cat === c)),
+          items: list.map((x) => ({ md: x.md, cat: x.cat })),
+          explain: list.filter((x) => x.why).map((x) => x.why).join(" ") || list.map((x) => x.md + ": " + x.cat).join(". ") + "." };
+      },
+      choice: (pool, o) => (level, G) => {
+        const x = G.pick(forLevel(pool, level, 1));
+        const cats = o.cats.filter((c) => pool.some((y) => y.cat === c));
+        return { type: "choice", md: o.ask ? o.ask(x.md) : x.md,
+          options: cats.map((c) => ({ md: c, correct: c === x.cat, why: c === x.cat ? null : x.why || "Gehört zu " + x.cat + "." })),
+          explain: x.why || x.md + ": " + x.cat };
+      },
+    };
+    const lib = { statements, pairs, groups };
+    function build(kind, pool, plan, o) {
+      const out = {};
+      for (const lv of Object.keys(plan)) out[lv] = plan[lv].map((f) => lib[kind][f](pool, o || {}));
+      return out;
+    }
+    return {
+      statements: (pool, plan, o) => build("statements", pool, plan, o),
+      pairs: (pool, plan, o) => build("pairs", pool, plan, o),
+      groups: (pool, plan, o) => build("groups", pool, plan, o),
+    };
+  })();
+
   function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; }
 
   /** Helpers handed to generators: random numbers from the step's seed and number formatting. */
@@ -490,7 +606,26 @@
     const def = LW.generators[step.gen];
     if (!def) return null;
     const level = clampLevel(step.level || (step.params && step.params.level) || 1);
-    const made = def.make(level, genKit(rng(hash(seedStr))), step.params || {}) || {};
+    const G = genKit(rng(hash(seedStr)));
+    const params = step.params || {};
+    // The generator's own make() weighs like three entries, a template too, a fixed task like one.
+    const extra = ((LW.extensions[step.gen] || {})[level]) || [];
+    let made = null;
+    if (extra.length && !params.noExtend) {
+      const own = 3;
+      let total = own;
+      for (const x of extra) total += typeof x === "function" ? 3 : 1;
+      let t = G.r() * total;
+      if (t >= own) {
+        t -= own;
+        for (const x of extra) {
+          const w = typeof x === "function" ? 3 : 1;
+          if (t < w) { made = typeof x === "function" ? x(level, G, params) : JSON.parse(JSON.stringify(x)); break; }
+          t -= w;
+        }
+      }
+    }
+    if (!made) made = def.make(level, G, params) || {};
     return Object.assign({}, made, {
       id: step.id, lessonId: step.lessonId, lessonTitle: step.lessonTitle, from: step.from,
       level, gen: step.gen, genSource: step, review: step.review,
@@ -1586,7 +1721,59 @@
   const S = {
     lesson: null, mode: "lesson", steps: [], cur: -1, inst: null, phase: "idle", root: null,
     attempts: 0, results: [], seed: "", base: "", startedAt: 0, run: 0, practice: null, variants: 0,
+    seen: new Set(),
   };
+
+  // ---- no repeats: generated tasks are compared by a fingerprint. Within one round a task never comes twice
+  // while the generator has others; across rounds the last ones per generator and level are avoided where possible.
+
+  const RECENT_KEY = "lw.recent.v1", RECENT_MAX = 48;
+  let recentCache = null;
+  function recentStore() {
+    if (recentCache) return recentCache;
+    try { recentCache = JSON.parse(localStorage.getItem(RECENT_KEY) || "{}") || {}; } catch (e) { recentCache = {}; }
+    return recentCache;
+  }
+  function rememberTask(key, sig) {
+    const store = recentStore();
+    const list = (store[key] || []).filter((x) => x !== sig);
+    list.push(sig);
+    store[key] = list.slice(-RECENT_MAX);
+    try { localStorage.setItem(RECENT_KEY, JSON.stringify(store)); } catch (e) { /* private mode or full: memory only */ }
+  }
+  function taskSig(m) {
+    // lists the app shuffles anyway count as the same task in any order
+    const canon = (list) => (Array.isArray(list) ? list.map((x) => JSON.stringify(x)).sort() : null);
+    return hash(JSON.stringify([m.type, m.md, canon(m.options), canon(m.items), canon(m.pairs), canon(m.lines), canon(m.steps),
+      m.claim, m.given, m.type === "spot" ? null : m.answer, m.blanks, m.categories, m.widget, m.params, m.goal && m.goal.when]));
+  }
+
+  /** realize() with fresh tasks: tries other seeds (and in training the topic's other generators) until a task
+   *  turns up that this round has not shown and, if possible, that was not among the recent ones. */
+  function realizeFresh(step, seedStr) {
+    const sources = [step].concat((step.alt || []).filter((a) => a.gen !== step.gen).map((a) => Object.assign({}, step, { gen: a.gen, params: a.params })));
+    const store = recentStore();
+    let firstNew = null, first = null;
+    for (let si = 0; si < sources.length; si++) {
+      const src = sources[si];
+      const tries = si === 0 ? 10 : 5;
+      for (let k = 0; k < tries; k++) {
+        const m = realize(src, k || si ? seedStr + "#" + si + "." + k : seedStr);
+        if (!m) break;
+        const sig = taskSig(m), key = m.gen + "|" + m.level;
+        if (!first) first = { m, sig, key };
+        if (S.seen.has(sig)) continue;
+        if (!(store[key] || []).includes(sig)) { S.seen.add(sig); rememberTask(key, sig); return m; }
+        if (!firstNew) firstNew = { m, sig, key };
+      }
+    }
+    const pick = firstNew || first;
+    if (!pick) return null;
+    S.seen.add(pick.sig);
+    rememberTask(pick.key, pick.sig);
+    return pick.m;
+  }
+  LW.realizeFresh = realizeFresh;
 
   function primaryState() {
     const inst = S.inst;
@@ -1641,7 +1828,7 @@
     let inst;
     if (step.type === "gen") {
       try {
-        const made = realize(step, S.seed + "|" + step.id + "|" + S.run);
+        const made = realizeFresh(step, S.seed + "|" + step.id + "|" + S.run);
         if (made) { step = made; S.steps[i] = made; }
       } catch (e) {
         post({ type: "error", message: "Schritt " + (i + 1) + " (" + step.gen + "): " + e.message });
@@ -1787,6 +1974,7 @@
     S.run = o.seed != null ? o.seed : Date.now() % 1000003;
     S.practice = null;
     S.variants = 0;
+    S.seen = new Set();
     S.inst = null;
     LW.setTheme(o.theme || {});
     LW.setInsets(o.insets || {});
@@ -1805,7 +1993,8 @@
         while (order.length < count) order.push(...shuffled(gens.map((g, k) => k), "order" + S.run + order.length));
         S.practice = { topicId: P.topicId, courseId: P.courseId, level };
         S.lesson = { id: "practice", title: P.title || "Training" };
-        S.steps = order.slice(0, count).map((k, i) => ({ id: "p" + (i + 1), type: "gen", gen: gens[k].gen, params: gens[k].params, level, lessonId: null, review: false }));
+        // alt: when a generator runs out of new tasks on this level, the round switches to another of the topic
+        S.steps = order.slice(0, count).map((k, i) => ({ id: "p" + (i + 1), type: "gen", gen: gens[k].gen, params: gens[k].params, level, lessonId: null, review: false, alt: gens }));
         S.base = "";
         const head = el("header", { class: "lw-head practice lv" + level }, [
           el("div", { class: "lw-level-band", "aria-hidden": "true" }),

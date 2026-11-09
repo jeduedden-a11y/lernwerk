@@ -1,0 +1,214 @@
+{
+  "id": "stoch-zgws",
+  "title": "Summen und der zentrale Grenzwertsatz",
+  "subtitle": "Warum so vieles glockenförmig verteilt ist",
+  "source": "Lehrbuchstandard Stochastik; Galtonbrett nach Francis Galton",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zentraler Grenzwertsatz.md",
+      "title": "Zentraler Grenzwertsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Varianz und Standardabweichung (Stochastik).md",
+      "title": "Varianz und Standardabweichung (Stochastik)"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Aus schiefen Verteilungen wird eine Glocke, wenn man nur genug addiert.",
+      "widget": "galton",
+      "params": {
+        "modes": [
+          "histogram"
+        ],
+        "mode": "histogram",
+        "rows": 6,
+        "p": 0.2,
+        "n": 3,
+        "k": 1,
+        "rel": "eq",
+        "nMax": 60
+      },
+      "timeline": [
+        {
+          "caption": "Drei Versuche mit Trefferwahrscheinlichkeit $0{,}2$. Die Zahl der Treffer ist eine **Summe** von drei Nullen und Einsen. Die Verteilung ist schief, die $0$ ist am häufigsten."
+        },
+        {
+          "caption": "Zehn Versuche: Der Berg wandert nach rechts und wird runder.",
+          "to": {
+            "n": 10
+          },
+          "int": [
+            "n"
+          ],
+          "dur": 1800
+        },
+        {
+          "caption": "Vierzig Versuche: Fast eine symmetrische Glocke, obwohl jeder einzelne Summand so schief verteilt ist wie zuvor.",
+          "to": {
+            "n": 40
+          },
+          "int": [
+            "n"
+          ],
+          "dur": 2200,
+          "hold": 7000
+        },
+        {
+          "caption": "Das ist der **zentrale Grenzwertsatz**: Summen vieler unabhängiger Zufallsgrößen sind näherungsweise normalverteilt, fast egal, wie die einzelnen Summanden verteilt sind.",
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Körpergröße, Messfehler, die Augensumme vieler Würfel: Erstaunlich vieles folgt der Glockenkurve. Der Grund ist fast immer derselbe. Das Ergebnis ist eine Summe vieler kleiner, unabhängiger Einflüsse, und beim Addieren gleichen sich die Zufälle teilweise aus. Extreme brauchen, dass sehr viele Einflüsse in dieselbe Richtung zeigen, und das ist selten.\n\nZwei Zahlen beschreiben eine Summe von $n$ gleichartigen Summanden. Ihr Erwartungswert wächst wie $n$: $E = n \\mu$. Ihre Streuung wächst nur wie die Wurzel: $\\sigma_{\\text{Summe}} = \\sqrt n\\, \\sigma$. Teilt man durch $n$, bekommt man den Mittelwert, und dessen Streuung **schrumpft** wie $\\tfrac{\\sigma}{\\sqrt n}$.\n\nDas ist der Grund, warum Mittelwerte vieler Messungen so verlässlich sind. Für die halbe Unsicherheit braucht man allerdings viermal so viele Messungen."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!satz] Summen unabhängiger Zufallsgrößen\n> Für unabhängige $X_1, \\dots, X_n$ mit Erwartungswert $\\mu$ und Varianz $\\sigma^2$ gilt für die Summe $S_n$: $E(S_n) = n\\mu$ und $V(S_n) = n\\sigma^2$. Der Mittelwert $\\bar X = \\tfrac{S_n}{n}$ hat die Standardabweichung $\\tfrac{\\sigma}{\\sqrt n}$.\n\n> [!satz] Zentraler Grenzwertsatz\n> Für große $n$ ist $S_n$ näherungsweise normalverteilt mit $\\mu_S = n\\mu$ und $\\sigma_S = \\sqrt n\\, \\sigma$. Die Summanden selbst dürfen dabei fast beliebig verteilt sein.\n\n> [!tip] Spezialfall\n> Eine binomialverteilte Größe ist eine Summe von $n$ Bernoulli-Größen. Deshalb wird $B(n; p)$ für großes $n$ glockenförmig."
+    },
+    {
+      "id": "streuung",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Trefferzahl bei $p = 0{,}5$. **Wie groß muss $n$ sein, damit die Standardabweichung mindestens $3$ beträgt?**",
+      "widget": "galton",
+      "params": {
+        "modes": [
+          "histogram"
+        ],
+        "mode": "histogram",
+        "rows": 6,
+        "p": 0.5,
+        "n": 10,
+        "k": 5,
+        "rel": "eq",
+        "nMax": 60,
+        "sliders": [
+          "n"
+        ]
+      },
+      "goal": {
+        "when": "sigma >= 3",
+        "hints": [
+          {
+            "when": "sigma < 3",
+            "text": "Erst σ = {sigma|2}. Die Streuung wächst nur mit der Wurzel aus n."
+          }
+        ],
+        "solve": {
+          "n": 36
+        }
+      },
+      "explain": "$\\sigma = \\sqrt{n \\cdot 0{,}5 \\cdot 0{,}5} = \\tfrac{\\sqrt n}{2} \\ge 3 \\iff n \\ge 36$. Für die doppelte Streuung braucht man die vierfache Zahl an Versuchen."
+    },
+    {
+      "id": "augensumme",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Du wirfst $100$ faire Würfel. Welchen Erwartungswert hat die Augensumme?",
+      "answer": 350,
+      "tolerance": 1e-06,
+      "placeholder": "Zahl",
+      "explain": "$100 \\cdot 3{,}5 = 350$. Die Standardabweichung ist $\\sqrt{100 \\cdot \\tfrac{35}{12}} \\approx 17{,}1$, die Summe liegt also meist zwischen $316$ und $384$."
+    },
+    {
+      "id": "mittelwert",
+      "type": "choice",
+      "md": "Eine Messung streut mit $\\sigma = 6$. Wie stark streut der Mittelwert aus $9$ unabhängigen Messungen?",
+      "options": [
+        {
+          "md": "$2$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac23$",
+          "why": "Das wäre $\\tfrac{\\sigma}{n}$. Geteilt wird durch $\\sqrt n$."
+        },
+        {
+          "md": "$6$",
+          "why": "Mitteln verringert die Streuung."
+        },
+        {
+          "md": "$18$",
+          "why": "$\\sqrt 9 \\cdot 6 = 18$ ist die Streuung der Summe, nicht des Mittelwerts."
+        }
+      ],
+      "explain": "$\\tfrac{\\sigma}{\\sqrt n} = \\tfrac{6}{3} = 2$."
+    },
+    {
+      "id": "aussagen",
+      "type": "multi",
+      "md": "Welche Aussagen zum zentralen Grenzwertsatz stimmen?",
+      "options": [
+        {
+          "md": "Die Augensumme vieler Würfel ist näherungsweise normalverteilt, obwohl ein Würfel gleichverteilt ist.",
+          "correct": true
+        },
+        {
+          "md": "Er gilt nur, wenn die Summanden selbst normalverteilt sind.",
+          "why": "Gerade das ist nicht nötig, fast jede Verteilung mit endlicher Varianz geht."
+        },
+        {
+          "md": "Die Standardabweichung des Mittelwerts schrumpft wie eins durch Wurzel n.",
+          "correct": true
+        },
+        {
+          "md": "Verdoppelt man n, halbiert sich die Streuung des Mittelwerts.",
+          "why": "Sie sinkt nur um den Faktor $\\tfrac{1}{\\sqrt 2} \\approx 0{,}71$."
+        }
+      ],
+      "explain": "Summen und Mittelwerte vieler unabhängiger Größen werden glockenförmig; ihre Streuung wächst beziehungsweise schrumpft mit der Wurzel von n."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-zgws",
+      "level": 1,
+      "label": "Erwartungswert"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-zgws",
+      "level": 2,
+      "label": "Streuung"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-zgws",
+      "level": 3,
+      "label": "Messungen mitteln"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "stoch-zgws",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Summen: Erwartungswert $n\\mu$, Standardabweichung $\\sqrt n\\,\\sigma$.",
+        "Mittelwerte streuen mit $\\tfrac{\\sigma}{\\sqrt n}$: halbe Unsicherheit kostet vierfache Arbeit.",
+        "Zentraler Grenzwertsatz: Summen vieler unabhängiger Größen sind näherungsweise normalverteilt.",
+        "Darum ist die Binomialverteilung für großes n glockenförmig, und darum gibt es die Glocke so oft."
+      ]
+    }
+  ]
+}

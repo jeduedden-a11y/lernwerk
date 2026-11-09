@@ -1,0 +1,357 @@
+{
+  "id": "cs50-overfitting",
+  "title": "Überanpassung und Regularisierung",
+  "subtitle": "Warum ein Modell nicht alles auswendig lernen soll",
+  "source": "Nach den Themen von CS50's Introduction to Artificial Intelligence with Python, Lecture 4 (Harvard, edX); eigene Darstellung",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überanpassung.md",
+      "title": "Überanpassung"
+    },
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überwachtes Lernen.md",
+      "title": "Überwachtes Lernen"
+    },
+    {
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 4 - Learning (Kurs).md",
+      "title": "Lecture 4 - Learning (Kurs)"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein einziger falsch eingetragener Tag kann ein Modell in die Irre führen.",
+      "widget": "classifier",
+      "params": {
+        "mode": "knn",
+        "points": [
+          [
+            0.7,
+            0.3,
+            1
+          ],
+          [
+            0.78,
+            0.22,
+            1
+          ],
+          [
+            0.82,
+            0.35,
+            1
+          ],
+          [
+            0.75,
+            0.4,
+            1
+          ],
+          [
+            0.88,
+            0.28,
+            1
+          ],
+          [
+            0.68,
+            0.18,
+            1
+          ],
+          [
+            0.8,
+            0.45,
+            1
+          ],
+          [
+            0.2,
+            0.7,
+            0
+          ],
+          [
+            0.3,
+            0.8,
+            0
+          ],
+          [
+            0.25,
+            0.6,
+            0
+          ],
+          [
+            0.4,
+            0.72,
+            0
+          ],
+          [
+            0.15,
+            0.45,
+            0
+          ],
+          [
+            0.35,
+            0.5,
+            0
+          ],
+          [
+            0.5,
+            0.85,
+            0
+          ],
+          [
+            0.76,
+            0.31,
+            0
+          ]
+        ],
+        "classes": [
+          "trocken",
+          "Regen"
+        ],
+        "query": [
+          0.77,
+          0.32
+        ],
+        "k": 1
+      },
+      "timeline": [
+        {
+          "caption": "Lauter bekannte Tage: rechts unten fast nur Regentage, links oben trockene. Mitten im Regengebiet liegt aber ein trockener Tag, vielleicht ein Messfehler."
+        },
+        {
+          "caption": "Ein neuer Tag direkt daneben. Mit k = 1 entscheidet allein der nächste Nachbar, und das ist ausgerechnet der Ausreißer: Vorhersage trocken.",
+          "hold": 7000
+        },
+        {
+          "caption": "Mit k = 3 stimmen drei Nachbarn ab, zwei davon sagen Regen. Der Ausreißer wird überstimmt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 400,
+          "hold": 6500
+        },
+        {
+          "caption": "Mit k = 7 ist die Vorhersage noch ruhiger. Das Modell lernt die große Linie statt jedes Zufalls. Zu große k würden allerdings auch echte Muster glätten.",
+          "to": {
+            "k": 7
+          },
+          "dur": 400,
+          "hold": 8000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Ein Modell soll aus Beispielen ein Muster lernen, das auch für neue Fälle gilt. Die Gefahr: Es lernt die Beispiele **auswendig**, samt ihrer Zufälle und Fehler. Auf den Trainingsdaten ist es dann perfekt, auf neuen Daten aber schlecht. Das heißt **Überanpassung** (overfitting). Wie ein Schüler, der alte Klausuren auswendig kann, aber keine neue Aufgabe löst.\n\nDas Gegenteil ist **Unteranpassung**: Das Modell ist so einfach, dass es schon die Trainingsdaten schlecht trifft, etwa eine Gerade durch Daten, die deutlich einer Kurve folgen.\n\nWie erkennt man Überanpassung? Man hält einen Teil der Daten zurück und prüft das Modell nur damit. Großer Abstand zwischen Trainingsfehler und Testfehler ist das Warnsignal. Dagegen helfen mehr Daten, einfachere Modelle und **Regularisierung**: Man bestraft Komplexität, indem man zum Fehler einen Strafterm addiert, und lässt das Modell den besten Kompromiss suchen."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Verlustfunktion\n> Sie misst, wie schlecht Vorhersagen $\\hat y$ zu den wahren Werten $y$ passen. **0-1-Verlust**: zählt falsche Vorhersagen. **L1**: $\\sum \\abs{y - \\hat y}$. **L2**: $\\sum (y - \\hat y)^2$, große Fehler zählen überproportional.\n\n> [!definition] Regularisierung\n> Statt nur den Verlust zu minimieren, minimiert man $\\text{Kosten}(h) = \\text{Verlust}(h) + \\lambda \\cdot \\text{Komplexität}(h)$. Größeres $\\lambda$ bevorzugt einfachere Modelle.\n\n> [!tip] Prüfen\n> **Holdout**: Ein Teil der Daten bleibt beim Training außen vor. **Kreuzvalidierung**: Die Daten werden in $k$ Teile geteilt, und jeder Teil ist einmal die Testmenge."
+    },
+    {
+      "id": "ausreisser",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Der neue Tag liegt mitten zwischen Regentagen, aber direkt neben dem Ausreißer. **Wähle k so, dass das Modell Regen vorhersagt.**",
+      "widget": "classifier",
+      "params": {
+        "mode": "knn",
+        "points": [
+          [
+            0.7,
+            0.3,
+            1
+          ],
+          [
+            0.78,
+            0.22,
+            1
+          ],
+          [
+            0.82,
+            0.35,
+            1
+          ],
+          [
+            0.75,
+            0.4,
+            1
+          ],
+          [
+            0.88,
+            0.28,
+            1
+          ],
+          [
+            0.68,
+            0.18,
+            1
+          ],
+          [
+            0.8,
+            0.45,
+            1
+          ],
+          [
+            0.2,
+            0.7,
+            0
+          ],
+          [
+            0.3,
+            0.8,
+            0
+          ],
+          [
+            0.25,
+            0.6,
+            0
+          ],
+          [
+            0.4,
+            0.72,
+            0
+          ],
+          [
+            0.15,
+            0.45,
+            0
+          ],
+          [
+            0.35,
+            0.5,
+            0
+          ],
+          [
+            0.5,
+            0.85,
+            0
+          ],
+          [
+            0.76,
+            0.31,
+            0
+          ]
+        ],
+        "classes": [
+          "trocken",
+          "Regen"
+        ],
+        "query": [
+          0.77,
+          0.32
+        ],
+        "k": 1
+      },
+      "goal": {
+        "when": "pred == 1",
+        "hints": [
+          {
+            "when": "pred == 0",
+            "text": "Mit k = {k|0} gewinnt noch trocken. Lass mehr Nachbarn abstimmen."
+          }
+        ],
+        "solve": {
+          "k": 3
+        }
+      },
+      "explain": "Mit k = 3 stimmen der Ausreißer und zwei Regentage ab, Regen gewinnt. Ein einzelner Messfehler bestimmt die Vorhersage nicht mehr."
+    },
+    {
+      "id": "diagnose",
+      "type": "choice",
+      "label": "Erkennen",
+      "md": "Ein Modell hat auf den Trainingsdaten $0{,}5\\,\\%$ Fehler und auf den Testdaten $24\\,\\%$. Was ist das wahrscheinlichste Problem?",
+      "options": [
+        {
+          "md": "Überanpassung",
+          "correct": true
+        },
+        {
+          "md": "Unteranpassung",
+          "why": "Dann wäre schon der Trainingsfehler hoch."
+        },
+        {
+          "md": "Zu wenige Parameter",
+          "why": "Zu wenige Parameter führen eher zu Unteranpassung."
+        }
+      ],
+      "explain": "Fast perfekt auf bekannten Daten, deutlich schlechter auf neuen: Das Modell hat Zufälligkeiten auswendig gelernt."
+    },
+    {
+      "id": "massnahmen",
+      "type": "multi",
+      "md": "Welche Maßnahmen helfen gegen Überanpassung?",
+      "options": [
+        {
+          "md": "Mehr Trainingsdaten sammeln",
+          "correct": true
+        },
+        {
+          "md": "Regularisierung mit größerem λ",
+          "correct": true
+        },
+        {
+          "md": "Dropout in einem neuronalen Netz",
+          "correct": true
+        },
+        {
+          "md": "Noch mehr Parameter hinzufügen",
+          "why": "Mehr Parameter erlauben eher, Rauschen auswendig zu lernen."
+        }
+      ],
+      "explain": "Mehr Daten verdünnen den Zufall, Regularisierung und Dropout bremsen die Komplexität."
+    },
+    {
+      "id": "verlust",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wahre Werte $3, 5, 2$, Vorhersagen $4, 5, 0$. Wie groß ist der **L2-Verlust** $\\sum (y - \\hat y)^2$?",
+      "answer": 5,
+      "tolerance": 1e-06,
+      "placeholder": "Zahl",
+      "explain": "$(3 - 4)^2 + (5 - 5)^2 + (2 - 0)^2 = 1 + 0 + 4 = 5$. Der eine große Fehler zählt viermal so viel wie der kleine."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "cs-overfitting",
+      "level": 1,
+      "label": "Diagnose"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "cs-overfitting",
+      "level": 2,
+      "label": "L1-Verlust"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "cs-overfitting",
+      "level": 3,
+      "label": "L2-Verlust"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "cs-overfitting",
+      "level": 4,
+      "label": "Regularisierung"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Überanpassung: perfekt auf Trainingsdaten, schlecht auf neuen. Unteranpassung: schon auf Trainingsdaten schlecht.",
+        "Erkennen durch zurückgehaltene Testdaten oder Kreuzvalidierung.",
+        "Verlustfunktionen messen Fehler; L2 bestraft große Fehler besonders.",
+        "Regularisierung, mehr Daten und Dropout bremsen das Auswendiglernen."
+      ]
+    }
+  ]
+}

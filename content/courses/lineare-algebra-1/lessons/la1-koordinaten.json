@@ -1,0 +1,200 @@
+{
+  "id": "la1-koordinaten",
+  "title": "Koordinaten und Basiswechsel",
+  "subtitle": "Derselbe Vektor in verschiedenen Sprachen",
+  "source": "Lehrbuchstandard Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Koordinaten und Basiswechsel.md",
+      "title": "Koordinaten und Basiswechsel"
+    },
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md",
+      "title": "Basis und Dimension"
+    },
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md",
+      "title": "Matrixmultiplikation"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Der Punkt $(3, 3)$ einmal anders beschrieben: mit den Basisvektoren $b_1 = (2, 1)$ und $b_2 = (-1, 1)$.",
+      "widget": "vector-span",
+      "params": {
+        "v": [
+          2,
+          1
+        ],
+        "w": [
+          -1,
+          1
+        ],
+        "a": 0,
+        "b": 0
+      },
+      "timeline": [
+        {
+          "caption": "Zwei Basisvektoren: $b_1$ (blau) und $b_2$ (orange). Der grüne Pfeil ist $a \\cdot b_1 + b \\cdot b_2$, noch mit $a = b = 0$."
+        },
+        {
+          "caption": "Zweimal $b_1$: Der grüne Pfeil zeigt auf $(4, 2)$.",
+          "to": {
+            "a": 2
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Dazu einmal $b_2$: Wir landen bei $(4 - 1, 2 + 1) = (3, 3)$.",
+          "to": {
+            "b": 1
+          },
+          "dur": 1800,
+          "hold": 6000
+        },
+        {
+          "caption": "In der Standardbasis heißt dieser Punkt $(3, 3)$. In der Basis $B = (b_1, b_2)$ hat er die **Koordinaten** $(2, 1)$. Derselbe Pfeil, zwei Beschreibungen, wie ein Wort in zwei Sprachen.",
+          "hold": 9000
+        }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
+      "md": "Eine Basis ist ein Satz von Maßstäben. In der Standardbasis zählt man »so viel nach rechts, so viel nach oben«. Mit einer anderen Basis zählt man »so viel in Richtung $b_1$, so viel in Richtung $b_2$«. Weil eine Basis linear unabhängig ist und alles erzeugt, gibt es für jeden Vektor genau eine solche Beschreibung: seine **Koordinaten** bezüglich dieser Basis.\n\nZum Übersetzen braucht man eine Matrix. Schreibt man $b_1$ und $b_2$ als Spalten in eine Matrix $T$, dann macht $T$ aus den $B$-Koordinaten $(c_1, c_2)$ den Vektor $c_1 b_1 + c_2 b_2$ in Standardkoordinaten. Der Rückweg ist $T^{-1}$.\n\nWarum der Aufwand? Manche Abbildungen sehen in einer passenden Basis viel einfacher aus. Eine Spiegelung an einer schrägen Geraden ist in der Standardbasis unübersichtlich, in einer Basis aus Richtungs- und Normalenvektor aber einfach $\\operatorname{diag}(1, -1)$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
+      "md": "> [!definition] Koordinaten\n> Ist $B = (b_1, \\dots, b_n)$ eine Basis und $v = c_1 b_1 + \\dots + c_n b_n$, dann heißt $(c_1, \\dots, c_n)$ der **Koordinatenvektor** von $v$ bezüglich $B$. Er ist eindeutig.\n\n> [!definition] Basiswechselmatrix\n> $T = (b_1 \\mid \\dots \\mid b_n)$ hat die Basisvektoren als Spalten. Dann gilt $v_E = T\\, v_B$ und $v_B = T^{-1} v_E$.\n\n> [!satz] Abbildungen in neuer Basis\n> Hat eine lineare Abbildung in Standardkoordinaten die Matrix $A$, so hat sie bezüglich $B$ die Matrix $T^{-1} A T$. Ähnliche Matrizen haben dieselben Eigenwerte, dieselbe Determinante und dieselbe Spur."
+    },
+    {
+      "id": "ziel",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Basis $b_1 = (2, 1)$, $b_2 = (-1, 1)$. **Stelle $a$ und $b$ so ein, dass der grüne Pfeil auf $(0, 3)$ zeigt.** Das sind dann die Koordinaten von $(0, 3)$ bezüglich $B$.",
+      "widget": "vector-span",
+      "params": {
+        "v": [
+          2,
+          1
+        ],
+        "w": [
+          -1,
+          1
+        ],
+        "a": 0.5,
+        "b": -0.5,
+        "lockVectors": true,
+        "target": [
+          0,
+          3
+        ]
+      },
+      "goal": {
+        "target": [
+          0,
+          3
+        ]
+      },
+      "explain": "$1 \\cdot (2, 1) + 2 \\cdot (-1, 1) = (0, 3)$. Die Koordinaten bezüglich $B$ sind $(1, 2)$."
+    },
+    {
+      "id": "koordinaten",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Basis $b_1 = (1, 1)$, $b_2 = (1, -1)$. Schreibe $v = (5, 1)$ als $v =$ {{0}} $\\cdot\\, b_1 +$ {{1}} $\\cdot\\, b_2$.",
+      "blanks": [
+        {
+          "accept": [
+            3
+          ],
+          "numeric": true,
+          "tolerance": 1e-06,
+          "placeholder": "Zahl"
+        },
+        {
+          "accept": [
+            2
+          ],
+          "numeric": true,
+          "tolerance": 1e-06,
+          "placeholder": "Zahl"
+        }
+      ],
+      "hint": "Aus $c_1 + c_2 = 5$ und $c_1 - c_2 = 1$.",
+      "explain": "Addieren ergibt $2c_1 = 6$, also $c_1 = 3$ und $c_2 = 2$: $3 \\cdot (1, 1) + 2 \\cdot (1, -1) = (5, 1)$."
+    },
+    {
+      "id": "matrix",
+      "type": "choice",
+      "md": "Mit $b_1 = (1, 2)$ und $b_2 = (0, 1)$: Welche Matrix rechnet $B$-Koordinaten in Standardkoordinaten um?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix} 1 & 0 \\\\ 2 & 1 \\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$",
+          "why": "Die Basisvektoren gehören in die Spalten, nicht in die Zeilen."
+        },
+        {
+          "md": "$\\begin{pmatrix} 1 & 0 \\\\ -2 & 1 \\end{pmatrix}$",
+          "why": "Das ist die Inverse, sie rechnet in die andere Richtung."
+        }
+      ],
+      "explain": "$T$ bildet $(1, 0)$ auf $b_1$ und $(0, 1)$ auf $b_2$ ab, also stehen $b_1$ und $b_2$ in den Spalten."
+    },
+    {
+      "id": "aehnlich",
+      "type": "truefalse",
+      "md": "$A$ und $T^{-1} A T$ haben dieselbe Determinante.",
+      "answer": true,
+      "whyNot": "$\\det(T^{-1} A T) = \\det(T)^{-1} \\det A \\det T = \\det A$.",
+      "explain": "Beide Matrizen beschreiben dieselbe Abbildung, nur in verschiedenen Koordinaten. Größen wie Determinante, Spur und Eigenwerte hängen nicht von der Basis ab."
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "la-koordinaten",
+      "level": 1,
+      "label": "Koordinaten"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "la-koordinaten",
+      "level": 2,
+      "label": "Basiswechselmatrix"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "la-koordinaten",
+      "level": 3,
+      "label": "Dreidimensional"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "la-koordinaten",
+      "level": 4,
+      "label": "Fallen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Bezüglich einer Basis hat jeder Vektor eindeutige Koordinaten.",
+        "Die Basiswechselmatrix $T$ hat die Basisvektoren als Spalten: $v_E = T v_B$, $v_B = T^{-1} v_E$.",
+        "Eine Abbildung mit Matrix $A$ hat in der neuen Basis die Matrix $T^{-1} A T$.",
+        "Determinante, Spur und Eigenwerte ändern sich beim Basiswechsel nicht."
+      ]
+    }
+  ]
+}
