@@ -1,0 +1,90 @@
+{
+  "id": "stoch-prognose",
+  "title": "Sigma-Regeln und Prognoseintervalle",
+  "subtitle": "Vorhersagen, was eine Stichprobe zeigen wird",
+  "source": "KCGO Mathematik Hessen, Q3.4",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Prognoseintervalle.md", "title": "Prognoseintervalle" },
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md", "title": "Binomialverteilung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Anteil $p = 0{,}4$ ist bekannt, etwa der Anteil einer Partei bei der letzten Wahl. Was zeigen Stichproben von je 100 Personen?",
+      "widget": "intervals",
+      "params": { "mode": "prognose", "p": 0.4, "n": 100, "sizes": [100, 400, 1000] },
+      "timeline": [
+        { "caption": "Eine Stichprobe: Die relative Häufigkeit $h$ liegt nahe bei $0{,}4$, aber nicht genau darauf.", "do": { "sample": 1 } },
+        { "caption": "Zwanzig Stichproben: Jede Zeile eine. Die Werte streuen um $p$.", "do": { "sample": 19 } },
+        { "caption": "Der helle Streifen ist das **Prognoseintervall** $p \\pm 1{,}96\\sqrt{\\tfrac{p(1-p)}{n}}$. Etwa $95\\,\\%$ der Stichproben landen darin, die roten Punkte sind die Ausnahmen.", "do": { "sample": 80 }, "hold": 5200 },
+        { "caption": "Mit viermal so großen Stichproben ($n = 400$) wird der Streifen halb so breit: Die Breite schrumpft wie $\\tfrac{1}{\\sqrt n}$.", "set": { "n": 400 }, "do": { "sample": 60 }, "hold": 5000 }
+      ]
+    },
+    {
+      "id": "sigma",
+      "type": "text",
+      "md": "Für $X \\sim B(n; p)$ mit $\\mu = np$ und $\\sigma = \\sqrt{np(1-p)}$ gelten bei $\\sigma > 3$ die **Sigma-Regeln**:\n\n| Intervall | Wahrscheinlichkeit |\n|---|---|\n| $[\\mu - \\sigma;\\ \\mu + \\sigma]$ | $\\approx 68{,}3\\,\\%$ |\n| $[\\mu - 1{,}64\\sigma;\\ \\mu + 1{,}64\\sigma]$ | $\\approx 90\\,\\%$ |\n| $[\\mu - 1{,}96\\sigma;\\ \\mu + 1{,}96\\sigma]$ | $\\approx 95\\,\\%$ |\n| $[\\mu - 2{,}58\\sigma;\\ \\mu + 2{,}58\\sigma]$ | $\\approx 99\\,\\%$ |\n\nEin solches Intervall um $\\mu$ heißt **Prognoseintervall**: Bei bekanntem $p$ sagt es voraus, wo die Trefferzahl einer künftigen Stichprobe mit großer Wahrscheinlichkeit liegt. Teilt man durch $n$, erhält man es für die relative Häufigkeit: $p \\pm z\\sqrt{\\tfrac{p(1-p)}{n}}$."
+    },
+    {
+      "id": "verteilung",
+      "type": "widget",
+      "label": "Ansehen",
+      "md": "$B(100; 0{,}4)$: Der helle Streifen ist $\\mu \\pm \\sigma$. Schiebe $k$ und wähle $P(X \\le k)$, um Flächen zu vergleichen.",
+      "widget": "galton",
+      "params": { "modes": ["histogram"], "n": 100, "p": 0.4, "k": 45, "rel": "le", "nMax": 200 }
+    },
+    {
+      "id": "intervall",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "$n = 100$, $p = 0{,}4$. Gib das $95\\,\\%$-Prognoseintervall für die **Trefferzahl** an, $\\mu \\pm 1{,}96\\sigma$ (eine Nachkommastelle).\n\nvon {{0}} bis {{1}}",
+      "blanks": [
+        { "accept": [30.4], "numeric": true, "tolerance": 0.051 },
+        { "accept": [49.6], "numeric": true, "tolerance": 0.051 }
+      ],
+      "hint": "$\\mu = 40$, $\\sigma = \\sqrt{100 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{24}$.",
+      "explain": "$\\sigma = \\sqrt{24} \\approx 4{,}899$, $1{,}96\\sigma \\approx 9{,}60$, also $[30{,}4;\\ 49{,}6]$. Ganzzahlig: Mit etwa $95\\,\\%$ Wahrscheinlichkeit liegt die Trefferzahl zwischen $31$ und $49$."
+    },
+    {
+      "id": "schmal",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "**Wähle eine Stichprobengröße, bei der das 95-%-Prognoseintervall für die relative Häufigkeit schmaler ist als $\\pm 0{,}05$.** Ziehe dann einige Stichproben zur Kontrolle.",
+      "widget": "intervals",
+      "params": { "mode": "prognose", "p": 0.4, "n": 25, "sizes": [25, 100, 400, 1000] },
+      "goal": {
+        "when": "1.96*sqrt(p*(1-p)/n) < 0.05",
+        "hints": [{ "when": "1.96*sqrt(p*(1-p)/n) >= 0.05", "text": "Bei n = {n|0} ist die halbe Breite {1.96*sqrt(p*(1-p)/n)|3}. Größeres n." }],
+        "solve": { "n": 400 },
+        "allowUntouched": false
+      },
+      "explain": "Ab $n \\approx 369$ ist $1{,}96\\sqrt{\\tfrac{0{,}24}{n}} < 0{,}05$. Bei $n = 400$ ist die halbe Breite $0{,}048$. Genauigkeit wird teuer: Für die halbe Breite braucht man die vierfache Stichprobe."
+    },
+    {
+      "id": "deutung",
+      "type": "choice",
+      "md": "In der letzten Wahl kam eine Partei auf $40\\,\\%$. In einer Umfrage mit $n = 400$ sind es nur $33\\,\\%$. Was ist die beste Einschätzung?",
+      "options": [
+        { "md": "$0{,}33$ liegt außerhalb von $0{,}4 \\pm 0{,}048$, die Partei hat vermutlich wirklich verloren.", "correct": true },
+        { "md": "Das ist normale Schwankung, Umfragen schwanken immer.", "why": "Schwankung ja, aber typischerweise nur um etwa $\\pm 0{,}05$ bei $n = 400$. $7$ Prozentpunkte sind deutlich mehr." },
+        { "md": "Die Umfrage ist falsch, weil sie nicht $40\\,\\%$ ergibt.", "why": "Eine Stichprobe trifft $p$ fast nie genau. Die Frage ist nur, ob die Abweichung im erwartbaren Rahmen bleibt." }
+      ],
+      "explain": "Liegt ein Ergebnis außerhalb des Prognoseintervalls, ist es unter der Annahme $p = 0{,}4$ ungewöhnlich. Das ist genau der Gedanke hinter dem Hypothesentest, nur mit einem symmetrischen Bereich."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-prognose", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-prognose", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-prognose", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Sigma-Regeln: $\\mu \\pm \\sigma$, $\\mu \\pm 1{,}96\\sigma$, $\\mu \\pm 2{,}58\\sigma$ enthalten rund $68\\,\\%$, $95\\,\\%$, $99\\,\\%$, wenn $\\sigma > 3$.",
+        "Ein Prognoseintervall schließt vom bekannten $p$ auf künftige Stichproben.",
+        "Für die relative Häufigkeit: $p \\pm z\\sqrt{\\tfrac{p(1-p)}{n}}$. Die Breite schrumpft wie $\\tfrac{1}{\\sqrt n}$.",
+        "Ein Ergebnis außerhalb des Intervalls spricht gegen das angenommene $p$."
+      ]
+    }
+  ]
+}

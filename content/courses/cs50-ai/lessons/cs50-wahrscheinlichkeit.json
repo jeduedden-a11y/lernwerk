@@ -1,0 +1,89 @@
+{
+  "id": "cs50-wahrscheinlichkeit",
+  "title": "Wahrscheinlichkeit und Bayes",
+  "subtitle": "CS50 AI, Lecture 2: Uncertainty",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 2",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Wahrscheinlichkeit in der KI.md", "title": "Wahrscheinlichkeit in der KI" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 2 - Uncertainty (Kurs).md", "title": "Lecture 2 - Uncertainty (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Das Quadrat steht für alle möglichen Tage, seine Fläche ist $1$. Links die Regentage, rechts die trockenen. Dunkel gefärbt ist jeweils der Anteil der Tage, die **morgens bewölkt** waren.",
+      "widget": "mosaic",
+      "params": { "pa": 0.1, "pba": 0.8, "pbna": 0.36, "labels": { "a": "Regen", "na": "kein Regen", "b": "Wolken" }, "sliders": ["pa", "pba", "pbna"] },
+      "timeline": [
+        { "caption": "An $10\\,\\%$ der Tage regnet es: $P(\\text{Regen}) = 0{,}1$. Die Breite der linken Spalte." },
+        { "caption": "An Regentagen ist es morgens meist bewölkt: $P(\\text{Wolken} \\mid \\text{Regen}) = 0{,}8$. Das ist der Anteil **innerhalb** der Regenspalte.", "hold": 6000 },
+        { "caption": "Umgekehrt gefragt: Morgens sind Wolken da. Wie wahrscheinlich regnet es? Dafür schaut man nur noch auf die gefärbten Flächen, $0{,}08 + 0{,}32 = 0{,}4$, und davon gehören $0{,}08$ zum Regen. Also $P(\\text{Regen} \\mid \\text{Wolken}) = 0{,}2$.", "hold": 8000 },
+        { "caption": "Das ist die **Regel von Bayes**: $P(R \\mid W) = \\dfrac{P(W \\mid R)\\,P(R)}{P(W)} = \\dfrac{0{,}8 \\cdot 0{,}1}{0{,}4}$. Sie dreht eine Bedingung um. Wolken machen Regen wahrscheinlicher ($0{,}1 \\to 0{,}2$), aber längst nicht sicher.", "hold": 8000 },
+        { "caption": "Wären die Wolken in beiden Spalten gleich häufig, würden sie nichts über Regen verraten. Dann sind die Ereignisse **unabhängig**: $P(R \\mid W) = P(R)$.", "to": { "pbna": 0.8 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Ein Agent weiß selten alles sicher. Statt »es regnet« oder »es regnet nicht« rechnet er mit **möglichen Welten** $\\omega$, jede mit einer Wahrscheinlichkeit $P(\\omega)$ zwischen $0$ und $1$, zusammen genau $1$.\n\n**Bedingte Wahrscheinlichkeit** ist der Kern der ganzen Vorlesung. $P(a \\mid b)$ heißt: Wir wissen, dass $b$ gilt. Alle Welten ohne $b$ fallen weg, und unter den übrigen fragen wir nach dem Anteil von $a$. Daher\n\n$$P(a \\mid b) = \\frac{P(a \\wedge b)}{P(b)}.$$\n\nDie **Regel von Bayes** folgt direkt daraus, weil $P(a \\wedge b)$ auf zwei Arten geschrieben werden kann. Sie ist wichtig, weil man oft die »falsche Richtung« kennt: Ein Test kennt $P(\\text{positiv} \\mid \\text{krank})$, der Patient will $P(\\text{krank} \\mid \\text{positiv})$ wissen.\n\nEine **Zufallsvariable** hat mehrere mögliche Werte, etwa ein Flug: pünktlich $0{,}6$, verspätet $0{,}3$, gestrichen $0{,}1$. Diese Liste ist ihre **Verteilung**."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Rechenregeln\n> - **Negation:** $P(\\neg a) = 1 - P(a)$\n> - **Einschluss-Ausschluss:** $P(a \\vee b) = P(a) + P(b) - P(a \\wedge b)$\n> - **Marginalisierung:** $P(a) = P(a \\wedge b) + P(a \\wedge \\neg b)$\n> - **Konditionierung:** $P(a) = P(a \\mid b)P(b) + P(a \\mid \\neg b)P(\\neg b)$\n\n> [!satz] Bayes\n> $$P(b \\mid a) = \\frac{P(a \\mid b)\\,P(b)}{P(a)}$$\n\n> [!definition] Unabhängigkeit\n> $a$ und $b$ sind **unabhängig**, wenn $P(a \\wedge b) = P(a)\\,P(b)$, gleichwertig $P(a \\mid b) = P(a)$: Wissen über $b$ ändert nichts an $a$."
+    },
+    {
+      "id": "unabhaengig",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$P(\\text{Regen}) = 0{,}1$ und $P(\\text{Wolken} \\mid \\text{Regen}) = 0{,}8$ sind fest. **Stelle $P(\\text{Wolken} \\mid \\text{kein Regen})$ so ein, dass Regen und Wolken unabhängig sind.**",
+      "widget": "mosaic",
+      "params": { "pa": 0.1, "pba": 0.8, "pbna": 0.3, "labels": { "a": "Regen", "na": "kein Regen", "b": "Wolken" }, "sliders": ["pbna"] },
+      "goal": { "when": "indep == 1", "message": "Die gefärbten Anteile müssen in beiden Spalten gleich hoch sein.", "solve": { "pbna": 0.8 } },
+      "explain": "Bei $P(\\text{Wolken} \\mid \\text{kein Regen}) = 0{,}8$ sind Wolken an Regen- und Trockentagen gleich häufig. Dann ist $P(\\text{Wolken}) = 0{,}8$ und $P(\\text{Regen} \\wedge \\text{Wolken}) = 0{,}08 = 0{,}1 \\cdot 0{,}8$."
+    },
+    {
+      "id": "bayes",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Test erkennt eine seltene Krankheit (Häufigkeit $1\\,\\%$) in $99\\,\\%$ der Fälle, schlägt aber auch bei $2\\,\\%$ der Gesunden an. Der Test ist positiv. Wie wahrscheinlich ist die Krankheit? (vier Nachkommastellen)",
+      "answer": 0.3333,
+      "tolerance": 0.0006,
+      "answerText": "0,3333",
+      "hint": "$P(\\text{positiv}) = 0{,}01 \\cdot 0{,}99 + 0{,}99 \\cdot 0{,}02$.",
+      "explain": "$P(\\text{positiv}) = 0{,}0099 + 0{,}0198 = 0{,}0297$, also $P(\\text{krank} \\mid \\text{positiv}) = \\tfrac{0{,}0099}{0{,}0297} = \\tfrac13$. Obwohl der Test zu $99\\,\\%$ trifft, sind zwei Drittel der positiven Ergebnisse falscher Alarm, weil es so viel mehr Gesunde gibt."
+    },
+    {
+      "id": "richtung",
+      "type": "truefalse",
+      "md": "Für alle Ereignisse gilt $P(a \\mid b) = P(b \\mid a)$.",
+      "answer": false,
+      "whyNot": "Gegenbeispiel aus der Animation: $P(\\text{Wolken} \\mid \\text{Regen}) = 0{,}8$, aber $P(\\text{Regen} \\mid \\text{Wolken}) = 0{,}2$.",
+      "explain": "Die beiden sind nur gleich, wenn $P(a) = P(b)$. Sonst rechnet Bayes um, mit dem Faktor $\\tfrac{P(a)}{P(b)}$."
+    },
+    {
+      "id": "flug",
+      "type": "cloze",
+      "label": "Verteilung",
+      "md": "Die Variable *Flug* hat die Verteilung pünktlich $0{,}6$, verspätet $0{,}3$, gestrichen $0{,}1$. Bei Regen (Wahrscheinlichkeit $0{,}2$) wird ein Flug mit $0{,}25$ gestrichen. Bestimme\n\n$P(\\text{Regen} \\wedge \\text{gestrichen}) =$ {{0}} $\\qquad P(\\text{Regen} \\mid \\text{gestrichen}) =$ {{1}}",
+      "blanks": [{ "accept": [0.05], "numeric": true, "tolerance": 0.0001 }, { "accept": [0.5], "numeric": true, "tolerance": 0.0001 }],
+      "hint": "Erst das Produkt $P(\\text{gestrichen} \\mid \\text{Regen}) \\cdot P(\\text{Regen})$, dann durch $P(\\text{gestrichen})$ teilen.",
+      "explain": "$0{,}25 \\cdot 0{,}2 = 0{,}05$ und $\\tfrac{0{,}05}{0{,}1} = 0{,}5$: Die Hälfte aller gestrichenen Flüge fällt auf Regentage, obwohl nur ein Fünftel der Tage verregnet ist."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-wahrscheinlichkeit", "level": 1, "label": "Marginalisieren" },
+    { "id": "neu2", "type": "gen", "gen": "cs-wahrscheinlichkeit", "level": 2, "label": "Bedingen" },
+    { "id": "neu3", "type": "gen", "gen": "cs-wahrscheinlichkeit", "level": 3, "label": "Bayes" },
+    { "id": "neu4", "type": "gen", "gen": "cs-wahrscheinlichkeit", "level": 4, "label": "Unabhängig?" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$P(a \\mid b) = \\tfrac{P(a \\wedge b)}{P(b)}$: Welten ohne $b$ streichen, den Rest neu normieren.",
+        "Bayes dreht Bedingungen um: $P(b \\mid a) = \\tfrac{P(a \\mid b)P(b)}{P(a)}$.",
+        "Marginalisieren und Konditionieren berechnen Wahrscheinlichkeiten aus Teilen.",
+        "Unabhängig heißt: $P(a \\wedge b) = P(a)P(b)$, Wissen über das eine ändert nichts am anderen."
+      ]
+    }
+  ]
+}

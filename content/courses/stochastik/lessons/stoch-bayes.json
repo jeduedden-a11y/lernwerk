@@ -1,0 +1,132 @@
+{
+  "id": "stoch-bayes",
+  "title": "Bedingte Wahrscheinlichkeit und Bayes",
+  "subtitle": "Warum ein positiver Test weniger bedeutet, als er verspricht",
+  "source": "KCGO Mathematik Hessen, Q3.1; natürliche Häufigkeiten nach Gigerenzer",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Bedingte Wahrscheinlichkeit.md", "title": "Bedingte Wahrscheinlichkeit" },
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Satz von Bayes.md", "title": "Satz von Bayes" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Test ist »zu 90 Prozent zuverlässig«. Was heißt ein positives Ergebnis wirklich? Die Antwort steckt in den Anzahlen.",
+      "widget": "bayes",
+      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": [] },
+      "timeline": [
+        { "caption": "1000 Personen. Ein Prozent hat die Krankheit: das sind die 10 roten Punkte ganz oben links.", "do": { "view": "grid", "onlyPos": false } },
+        { "caption": "Der Test erkennt 9 der 10 Kranken (gefüllt rot). Einen übersieht er (roter Ring)." },
+        { "caption": "Er schlägt aber auch bei 9 Prozent der 990 Gesunden an: Die 89 orangen Punkte sind falscher Alarm." },
+        { "caption": "Jetzt nur noch die positiven Tests: 9 rote neben 89 orangen. Wer positiv getestet wurde, ist einer dieser 98 Punkte.", "do": { "onlyPos": true } },
+        { "caption": "Nur 9 der 98 sind krank, also etwa 9 Prozent. Die vielen Gesunden erzeugen mehr falsche als echte Treffer.", "hold": 3200 },
+        { "caption": "Derselbe Gedanke als Baum: Zwei Pfade enden bei »positiv«, der obere mit 9, der untere mit 89 Personen.", "do": { "view": "tree" } },
+        { "caption": "Und als Vierfeldertafel: In der Spalte »positiv« stehen 9 und 89. Bedingte Wahrscheinlichkeit heißt: nur diese Spalte betrachten.", "do": { "view": "table" } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Die Fachbegriffe zur Animation: Die Krankheit betrifft $1\\,\\%$ der Bevölkerung (**Basisrate** oder Prävalenz). Der Test erkennt $90\\,\\%$ der Kranken (**Sensitivität**) und meldet bei $91\\,\\%$ der Gesunden korrekt »negativ« (**Spezifität**). Bei den übrigen $9\\,\\%$ der Gesunden schlägt er fälschlich an.\n\nDer häufigste Denkfehler: Man verwechselt »Wie oft ist ein Kranker positiv?« mit »Wie oft ist ein Positiver krank?«. Das sind zwei verschiedene Fragen mit sehr verschiedenen Antworten."
+    },
+    {
+      "id": "schaetzen",
+      "type": "choice",
+      "label": "Verstanden?",
+      "md": "Wie wahrscheinlich bist du nach dem positiven Test tatsächlich krank?",
+      "options": [
+        { "md": "etwa $90\\,\\%$", "why": "$90\\,\\%$ ist die Wahrscheinlichkeit, **als Kranker** positiv zu testen. Gefragt ist die umgekehrte Richtung." },
+        { "md": "etwa $50\\,\\%$", "why": "Schon näher, aber die vielen Gesunden fallen noch stärker ins Gewicht." },
+        { "md": "etwa $9\\,\\%$", "correct": true },
+        { "md": "etwa $1\\,\\%$", "why": "Der Test verrät durchaus etwas: Nach dem positiven Befund ist das Risiko deutlich höher als vorher." }
+      ],
+      "explain": "Rund $9\\,\\%$. Die meisten tippen auf $90\\,\\%$, auch viele Ärztinnen und Ärzte. Warum es so wenig ist, siehst du gleich an 1000 Personen."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Die **bedingte Wahrscheinlichkeit** von $A$ unter der Bedingung $B$ ist\n\n$$P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}, \\qquad P(B) > 0.$$\n\nDu schränkst die Welt auf die Fälle ein, in denen $B$ eingetreten ist, und fragst, welcher Anteil davon auch $A$ hat. Mit **natürlichen Häufigkeiten**, also konkreten Anzahlen statt Prozenten, wird das fast von selbst klar."
+    },
+    {
+      "id": "personen",
+      "type": "widget",
+      "label": "Ansehen",
+      "md": "Jeder Punkt ist eine Person. Rot sind die Kranken, Orange die Gesunden mit falschem Alarm. Tippe auf **Nur positive Tests zeigen** und vergleiche Rot mit Orange. Die Schalter darunter zeigen dieselben Zahlen als Baum und als Vierfeldertafel.",
+      "widget": "bayes",
+      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": [] }
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Von 1000 Personen testen $9$ Kranke und $89$ Gesunde positiv. Berechne $P(\\text{krank} \\mid \\text{positiv})$.",
+      "answer": 0.0918,
+      "tolerance": 0.003,
+      "answerText": "9/98 ≈ 0,092",
+      "placeholder": "Bruch oder Dezimalzahl",
+      "hint": "Schränke auf die Positiven ein: Wie viele sind das insgesamt, und wie viele davon sind krank?",
+      "explain": "$\\dfrac{9}{9 + 89} = \\dfrac{9}{98} \\approx 0{,}092$. Unter den Positiven sind die Gesunden in der Überzahl, weil es so viel mehr Gesunde gibt: $9\\,\\%$ von 990 sind mehr als $90\\,\\%$ von 10."
+    },
+    {
+      "id": "basisrate",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Der Test bleibt derselbe, aber die Krankheit wird häufiger, etwa in einer Risikogruppe. **Ab welchem Anteil Kranker stimmt ein positiver Test mindestens in der Hälfte der Fälle?**",
+      "widget": "bayes",
+      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": ["prevalence"], "views": ["grid", "table"] },
+      "goal": {
+        "when": "post >= 0.5",
+        "hints": [{ "when": "post < 0.5", "text": "Bei {prev*100|1} % Kranken stimmt ein positiver Test erst zu {post*100|1} %. Schiebe den Anteil höher." }],
+        "solve": { "prev": 0.091 }
+      },
+      "explain": "Ab etwa $9{,}1\\,\\%$ Kranken: Dann gibt es ungefähr gleich viele richtig und falsch Positive. Die Aussagekraft eines Tests hängt also nicht nur vom Test ab, sondern von der **Basisrate**."
+    },
+    {
+      "id": "bayes",
+      "type": "reveal",
+      "label": "Satz von Bayes",
+      "md": "Ohne Häufigkeiten, nur mit Wahrscheinlichkeiten: Wie lässt sich $P(K \\mid +)$ aus $P(K) = 0{,}01$, $P(+ \\mid K) = 0{,}9$ und $P(+ \\mid \\bar K) = 0{,}09$ berechnen? Überlege, bevor du aufdeckst.",
+      "solution": "Nach der Definition ist $P(K \\mid +) = \\dfrac{P(K \\cap +)}{P(+)}$.\n\n**Zähler** mit der Pfadregel: $P(K \\cap +) = P(K) \\cdot P(+ \\mid K) = 0{,}01 \\cdot 0{,}9 = 0{,}009$.\n\n**Nenner** mit der Summenregel über beide Pfade, die auf $+$ enden: $P(+) = 0{,}009 + 0{,}99 \\cdot 0{,}09 = 0{,}0981$.\n\nZusammen ist das der **Satz von Bayes**:\n$$P(K \\mid +) = \\frac{P(K)\\, P(+ \\mid K)}{P(K)\\, P(+ \\mid K) + P(\\bar K)\\, P(+ \\mid \\bar K)} = \\frac{0{,}009}{0{,}0981} \\approx 0{,}092$$"
+    },
+    {
+      "id": "fabrik",
+      "type": "cloze",
+      "label": "Übertragen",
+      "md": "In einer Fabrik sind $2\\,\\%$ der Teile defekt. Die Endkontrolle sortiert $95\\,\\%$ der defekten Teile aus, aber auch $3\\,\\%$ der einwandfreien.\n\n$P(\\text{aussortiert}) =$ {{0}}\n\n$P(\\text{defekt} \\mid \\text{aussortiert}) \\approx$ {{1}}",
+      "blanks": [
+        { "accept": [0.0484], "numeric": true, "tolerance": 0.0002, "placeholder": "Dezimalzahl" },
+        { "accept": [0.3926], "numeric": true, "tolerance": 0.004, "placeholder": "Dezimalzahl" }
+      ],
+      "hint": "Zeichne den Baum: erst defekt oder nicht, dann aussortiert oder nicht. Für $P(\\text{aussortiert})$ addierst du zwei Pfade.",
+      "explain": "$P(\\text{aussortiert}) = 0{,}02 \\cdot 0{,}95 + 0{,}98 \\cdot 0{,}03 = 0{,}019 + 0{,}0294 = 0{,}0484$. Davon sind nur $\\tfrac{0{,}019}{0{,}0484} \\approx 0{,}39$ wirklich defekt, mehr als die Hälfte der aussortierten Teile ist in Ordnung."
+    },
+    {
+      "id": "vertauschen",
+      "type": "truefalse",
+      "md": "Für beliebige Ereignisse gilt $P(A \\mid B) = P(B \\mid A)$.",
+      "answer": false,
+      "whyNot": "Im Beispiel ist $P(+ \\mid K) = 0{,}9$, aber $P(K \\mid +) \\approx 0{,}09$.",
+      "explain": "Beide hängen über den Satz von Bayes zusammen: $P(A \\mid B) = P(B \\mid A) \\cdot \\tfrac{P(A)}{P(B)}$. Gleich sind sie nur, wenn $P(A) = P(B)$. Vor Gericht hat die Verwechslung einen eigenen Namen: **Trugschluss des Anklägers**."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-bayes", "level": 2, "label": "Neue Situation" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-bayes", "level": 3, "label": "Neue Situation" },
+    {
+      "id": "schaetzen-neu",
+      "type": "gen",
+      "gen": "stoch-schaetzen",
+      "level": 4,
+      "label": "Schätzen"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$P(A \\mid B) = \\tfrac{P(A \\cap B)}{P(B)}$: Einschränken auf die Fälle mit $B$, dann den Anteil von $A$ bestimmen.",
+        "Natürliche Häufigkeiten (»9 von 98«) machen bedingte Wahrscheinlichkeiten durchschaubar.",
+        "Satz von Bayes: Zähler ist der eine Pfad, Nenner die Summe aller Pfade zur Bedingung.",
+        "Bei seltenen Ereignissen dominieren die falsch Positiven. Die Basisrate entscheidet, was ein Befund bedeutet."
+      ]
+    }
+  ]
+}

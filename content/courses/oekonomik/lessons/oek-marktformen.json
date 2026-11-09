@@ -1,0 +1,106 @@
+{
+  "id": "oek-marktformen",
+  "title": "Wettbewerb, Monopol, Oligopol",
+  "subtitle": "Was ein Anbieter mit Marktmacht anders macht",
+  "source": "Lehrbuchstandard der Mikroökonomik; Antoine Augustin Cournot, Recherches (1838)",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Monopol.md", "title": "Monopol" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Marktformen.md", "title": "Marktformen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Blau die Nachfrage nach einem Medikament, orange die Grenzkosten der Herstellung: $2$ pro Packung. Grün der **Grenzerlös**: was eine zusätzlich verkaufte Packung dem Anbieter netto einbringt.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 11], "xLabel": "Menge Q", "yLabel": "Preis P",
+        "vars": [{ "name": "s", "min": 0, "max": 3, "value": 0, "hidden": true }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "GE", "label": "GE", "a": 10, "m": -2, "color": "green" },
+          { "id": "GK", "label": "GK", "a": 2, "m": 0, "color": "orange" }
+        ],
+        "intersections": [{ "id": "K", "of": ["N", "GK"], "label": "Wettbewerb" }, { "id": "M", "of": ["GE", "GK"], "label": "", "guides": false }],
+        "derived": [{ "name": "Pm", "expr": "10 - M_x" }],
+        "shades": [
+          { "when": "s >= 1", "points": [[0, 2], [0, "Pm"], ["M_x", "Pm"], ["M_x", 2]], "color": "green", "opacity": 0.25, "label": "Gewinn" },
+          { "when": "s >= 2", "points": [["M_x", "Pm"], ["M_x", 2], ["K_x", 2]], "color": "red", "opacity": 0.35 }
+        ],
+        "vlines": [{ "when": "s >= 1", "x": "M_x", "color": "gray", "label": "Monopol" }],
+        "hlines": [{ "when": "s >= 1", "y": "Pm", "color": "gray" }],
+        "readout": "Wettbewerb: Preis 2, Menge {K_x|0}. Monopol: Preis **{Pm|0}**, Menge **{M_x|0}**"
+      },
+      "timeline": [
+        { "caption": "Bei vielen Anbietern drückt die Konkurrenz den Preis auf die Grenzkosten: Preis $2$, Menge $8$. Wer teurer ist, verliert alle Kunden.", "set": { "s": 0 } },
+        { "caption": "Ein **Monopolist** hat keine Konkurrenz. Will er eine Packung mehr verkaufen, muss er den Preis für **alle** senken. Darum fällt sein Grenzerlös doppelt so steil wie die Nachfrage. Er produziert, bis Grenzerlös gleich Grenzkosten ist: $4$ Packungen, verkauft zum Preis $6$.", "set": { "s": 1 }, "hold": 9000 },
+        { "caption": "Grün: sein Gewinn. Rot: der Wohlfahrtsverlust. Patienten, die $3$ oder $5$ zahlen würden, mehr als die Kosten, bekommen das Medikament nicht. Der Monopolist verknappt bewusst.", "set": { "s": 2 }, "hold": 8000 },
+        { "caption": "Wenige Anbieter, ein **Oligopol**, liegen dazwischen. Absprachen würden ihnen den Monopolgewinn sichern, aber jeder hat einen Anreiz, heimlich mehr zu verkaufen. Darum sind Kartelle verboten und trotzdem instabil.", "set": { "s": 2 } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Bei **vollständiger Konkurrenz** ist jeder Anbieter zu klein, um den Preis zu beeinflussen. Er nimmt den Marktpreis hin und produziert, solange eine Einheit mehr einbringt als sie kostet. Ergebnis: Preis gleich Grenzkosten, und kein beidseitig vorteilhafter Tausch bleibt ungenutzt.\n\nEin **Monopolist** setzt den Preis selbst. Er weiß: Mehr verkaufen heißt billiger verkaufen, und zwar für alle Kunden. Darum ist sein Zusatzerlös aus einer Einheit kleiner als ihr Preis. Er hört früher auf zu produzieren und verlangt mehr. Das schadet den Kunden mehr, als es ihm nützt: Es entsteht ein Wohlfahrtsverlust.\n\nIm **Oligopol** hängt jeder Gewinn auch von den Entscheidungen der Konkurrenten ab. Das macht es zu einem Thema der **Spieltheorie**. Im Modell von Cournot wählen zwei Firmen ihre Mengen, und das Ergebnis liegt zwischen Monopol und Wettbewerb. Die Versuchung, ein Kartell zu brechen, entspricht dem **Gefangenendilemma**: Für jeden einzeln lohnt sich Abweichen, für beide zusammen ist es schlechter."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Gewinnmaximierung\n> Jeder Anbieter wählt die Menge mit **Grenzerlös = Grenzkosten**. Bei vollständiger Konkurrenz ist der Grenzerlös der Marktpreis, also $P = GK$.\n\n> [!satz] Monopol bei linearer Nachfrage\n> Bei $P = a - bQ$ ist der Umsatz $R = aQ - bQ^2$ und der Grenzerlös $GE = a - 2bQ$. Aus $GE = GK$ folgt die Monopolmenge, und der Preis liegt auf der Nachfragekurve darüber.\n\n> [!definition] Lerner-Index\n> $L = \\dfrac{P - GK}{P}$ misst die Marktmacht: $0$ bei Wettbewerb, nahe $1$ bei großer Marktmacht."
+    },
+    {
+      "id": "setzen",
+      "type": "widget",
+      "label": "Einzeichnen",
+      "md": "Nachfrage $P = 12 - Q$, Grenzerlös $12 - 2Q$, Grenzkosten $4$. **Tippe den Punkt (Menge, Preis) an, den der Monopolist wählt.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 12], "y": [0, 13], "xLabel": "Menge Q", "yLabel": "Preis P",
+        "lines": [
+          { "id": "N", "label": "N", "a": 12, "m": -1, "color": "accent" },
+          { "id": "GE", "label": "GE", "a": 12, "m": -2, "color": "green" },
+          { "id": "GK", "label": "GK", "a": 4, "m": 0, "color": "orange" }
+        ],
+        "place": { "snap": 0.5, "label": "Monopol" }
+      },
+      "goal": { "place": true, "when": "abs(place_x - 4) < 0.01 && abs(place_y - 8) < 0.01", "hints": [{ "when": "abs(place_x - 4) >= 0.01", "text": "Die Menge stimmt nicht: Wo schneiden sich Grenzerlös und Grenzkosten?" }, { "when": "abs(place_y - 8) >= 0.01", "text": "Die Menge stimmt, aber der Preis liegt auf der Nachfragekurve, nicht auf den Grenzkosten." }], "solve": { "place": [4, 8] } },
+      "explain": "$12 - 2Q = 4$ ergibt $Q = 4$. Den Preis liest man auf der **Nachfragekurve** ab: $P = 12 - 4 = 8$. Ein typischer Fehler ist, den Preis im Schnittpunkt $GE = GK$ abzulesen."
+    },
+    {
+      "id": "kartell",
+      "type": "choice",
+      "md": "Zwei Firmen haben sich abgesprochen, nur die halbe Monopolmenge anzubieten. Warum ist so ein Kartell instabil?",
+      "options": [
+        { "md": "Jede Firma kann mehr verdienen, wenn sie heimlich mehr verkauft, solange die andere sich an die Absprache hält.", "correct": true },
+        { "md": "Weil die Firmen dann Verluste machen.", "why": "Im Kartell verdienen beide zusammen den Monopolgewinn." },
+        { "md": "Weil die Nachfrage im Kartell sinkt.", "why": "Die Nachfrage hängt nicht von der Absprache ab." }
+      ],
+      "explain": "Das ist die Struktur des Gefangenendilemmas: Für jeden einzeln ist Abweichen die beste Antwort, aber wenn beide abweichen, verdienen beide weniger als im Kartell."
+    },
+    {
+      "id": "lerner",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Im Beispiel der Animation verlangt der Monopolist $6$ bei Grenzkosten $2$. Wie groß ist der Lerner-Index? (zwei Nachkommastellen)",
+      "answer": 0.6667,
+      "tolerance": 0.006,
+      "answerText": "0,67",
+      "explain": "$\\tfrac{6 - 2}{6} \\approx 0{,}67$: Zwei Drittel des Preises sind Aufschlag über den Grenzkosten."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-monopol", "level": 1, "label": "Monopolmenge" },
+    { "id": "neu2", "type": "gen", "gen": "oek-monopol", "level": 2, "label": "Monopolpreis" },
+    { "id": "neu3", "type": "gen", "gen": "oek-monopol", "level": 3, "label": "Verlust" },
+    { "id": "neu4", "type": "gen", "gen": "oek-monopol", "level": 4, "label": "Duopol" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gewinnmaximum immer bei Grenzerlös gleich Grenzkosten. Bei Konkurrenz heißt das: Preis gleich Grenzkosten.",
+        "Der Monopolist hat einen fallenden Grenzerlös, verkauft weniger und verlangt mehr.",
+        "Den Monopolpreis liest man auf der Nachfragekurve ab. Der Wohlfahrtsverlust ist das Dreieck bis zur Konkurrenzmenge.",
+        "Oligopole sind strategisch. Kartelle sind instabil wie ein Gefangenendilemma."
+      ]
+    }
+  ]
+}

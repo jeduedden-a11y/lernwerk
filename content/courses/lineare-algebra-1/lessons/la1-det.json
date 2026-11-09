@@ -1,0 +1,84 @@
+{
+  "id": "la1-det",
+  "title": "Determinante als Flächenfaktor",
+  "subtitle": "Eine Zahl, die sagt, wie stark eine Matrix Flächen verändert",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 5",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Determinante.md", "title": "Determinante" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Das blaue Quadrat hat die Fläche $1$. Was macht eine Matrix aus seiner Fläche?",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "editable": false, "areaLabel": true },
+      "timeline": [
+        { "caption": "Ohne Abbildung bleibt das Einheitsquadrat, Fläche $1$." },
+        { "caption": "Strecken wir in $x$-Richtung um $2$, wird es ein Rechteck mit Fläche $2$. Die Determinante ist $2$.", "to": { "m11": 2 }, "dur": 1800 },
+        { "caption": "Eine Scherung verschiebt nur, das Parallelogramm wird schief, aber die Fläche bleibt $2$: gleiche Grundseite, gleiche Höhe.", "to": { "m12": 1.5 }, "dur": 2000, "hold": 4800 },
+        { "caption": "Je mehr $e_2$ in Richtung $e_1$ kippt, desto flacher wird das Parallelogramm. Liegen beide Bilder auf einer Geraden, ist die Fläche $0$: $\\det A = 0$, die Abbildung ist nicht umkehrbar.", "to": { "m12": 2, "m22": 0 }, "dur": 2200, "hold": 5600 },
+        { "caption": "Geht es weiter, klappt das Parallelogramm um: Die Orientierung kehrt sich, die Determinante wird **negativ**. Ihr Betrag ist der Flächenfaktor, ihr Vorzeichen die Orientierung.", "to": { "m22": -1 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "formel",
+      "type": "text",
+      "md": "Für $2 \\times 2$-Matrizen ist\n\n$$\\det \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix} = ad - bc.$$\n\nGeometrisch ist $|\\det A|$ der Faktor, um den $A$ jede Fläche vergrößert. Im Raum ist $|\\det A|$ der Volumenfaktor. Wichtige Regeln:\n\n- $\\det(AB) = \\det A \\cdot \\det B$, Faktoren nacheinander multiplizieren sich,\n- $\\det A^T = \\det A$,\n- $\\det A \\ne 0 \\iff A$ invertierbar, und dann $\\det A^{-1} = \\tfrac{1}{\\det A}$,\n- Zeile mit $\\lambda$ multiplizieren: Determinante mal $\\lambda$. Zwei Zeilen tauschen: Vorzeichen wechselt. Vielfaches einer Zeile addieren: nichts ändert sich.\n\nFür $3 \\times 3$ entwickelt man nach einer Zeile (Laplace) oder benutzt die Regel von Sarrus."
+    },
+    {
+      "id": "drei",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Ziehe die Bilder von $e_1$ und $e_2$ so, dass $\\det A = 3$ ist.** Die Zahl im Parallelogramm zeigt die Fläche.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "range": 3, "areaLabel": true },
+      "goal": { "det": 3 },
+      "explain": "Zum Beispiel $\\begin{pmatrix}3&0\\\\0&1\\end{pmatrix}$ oder $\\begin{pmatrix}1&1\\\\-1&2\\end{pmatrix}$. Es gibt unendlich viele Matrizen mit Determinante $3$: Jedes Parallelogramm mit Fläche $3$ und positiver Orientierung."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\det \\begin{pmatrix}2&0&1\\\\1&3&-1\\\\0&1&4\\end{pmatrix}$.",
+      "answer": 27,
+      "tolerance": 0,
+      "hint": "Entwickle nach der ersten Zeile: $2 \\cdot \\det\\begin{pmatrix}3&-1\\\\1&4\\end{pmatrix} - 0 + 1 \\cdot \\det\\begin{pmatrix}1&3\\\\0&1\\end{pmatrix}$.",
+      "explain": "$2 \\cdot (12 + 1) + 1 \\cdot (1 - 0) = 26 + 1 = 27$."
+    },
+    {
+      "id": "regeln",
+      "type": "multi",
+      "md": "$A$ und $B$ sind $3 \\times 3$-Matrizen mit $\\det A = 2$ und $\\det B = 5$. Welche Aussagen stimmen?",
+      "options": [
+        { "md": "$\\det(AB) = 10$", "correct": true },
+        { "md": "$\\det(2A) = 4$", "why": "Alle drei Zeilen werden verdoppelt: $\\det(2A) = 2^3 \\cdot 2 = 16$." },
+        { "md": "$\\det(A^{-1}) = \\tfrac12$", "correct": true },
+        { "md": "$\\det(A + B) = 7$", "why": "Die Determinante ist nicht additiv. $\\det(E + E) = 8 \\ne 2$." }
+      ],
+      "explain": "Die Determinante verträgt sich mit Produkten, nicht mit Summen. Ein Faktor vor der ganzen Matrix zählt einmal pro Zeile."
+    },
+    {
+      "id": "produkt",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Warum ist $\\det(AB) = \\det A \\cdot \\det B$ geometrisch einleuchtend?",
+      "solution": "$AB$ heißt: erst $B$, dann $A$. $B$ vergrößert jede Fläche um den Faktor $|\\det B|$, danach vergrößert $A$ das Ergebnis um $|\\det A|$. Zusammen ist der Faktor $|\\det A| \\cdot |\\det B|$. Die Vorzeichen passen ebenso: Zweimal Orientierung umkehren ergibt wieder die alte Orientierung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-det", "level": 1, "label": "Neue Matrix" },
+    { "id": "neu2", "type": "gen", "gen": "la-det", "level": 2, "label": "Neue Matrix" },
+    { "id": "neu3", "type": "gen", "gen": "la-det", "level": 3, "label": "Neue Vektoren" },
+    { "id": "neu4", "type": "gen", "gen": "la-det", "level": 4, "label": "Rechenregeln" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$|\\det A|$ ist der Flächen- oder Volumenfaktor, das Vorzeichen die Orientierung.",
+        "$\\det A = 0$ genau dann, wenn $A$ eine Richtung platt drückt, also nicht invertierbar ist.",
+        "$\\det(AB) = \\det A \\det B$, $\\det A^T = \\det A$, $\\det(\\lambda A) = \\lambda^n \\det A$.",
+        "$2 \\times 2$: $ad - bc$. Größere Matrizen: Entwicklung nach einer Zeile oder Gauß-Verfahren."
+      ]
+    }
+  ]
+}

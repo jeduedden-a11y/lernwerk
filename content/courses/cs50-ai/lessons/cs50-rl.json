@@ -1,0 +1,89 @@
+{
+  "id": "cs50-rl",
+  "title": "Reinforcement Learning und Q-Learning",
+  "subtitle": "CS50 AI, Lecture 4: Learning",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 4, und das Projekt Nim",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Reinforcement Learning.md", "title": "Reinforcement Learning" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 4 - Learning (Kurs).md", "title": "Lecture 4 - Learning (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Agent startet bei $S$ und kennt die Welt nicht. Das grüne Feld bringt $+1$, das rote $-1$, die schwarze Wand ist unpassierbar. Niemand sagt ihm, was richtig ist. Er muss es durch Ausprobieren herausfinden.",
+      "widget": "gridworld",
+      "params": { "alpha": 0.5, "gamma": 0.9, "epsilon": 0.2 },
+      "int": ["episodes"],
+      "timeline": [
+        { "caption": "Noch keine Erfahrung: Alle Werte sind $0$, der Agent hat keine Ahnung, wohin." },
+        { "caption": "Nach einer Episode: Der Agent ist umhergeirrt, bis er zufällig auf ein Endfeld trat. Nur das Feld direkt davor hat etwas gelernt, denn nur dort gab es eine Belohnung.", "to": { "episodes": 1 }, "dur": 400, "hold": 6500 },
+        { "caption": "Nach zehn Episoden breitet sich das Wissen rückwärts aus: Felder, von denen man zu einem guten Feld kommt, werden selbst gut. Die Pfeile zeigen die bisher beste Aktion.", "to": { "episodes": 10 }, "dur": 1600, "hold": 7000 },
+        { "caption": "Nach $60$ Episoden kennt der Agent einen Weg zum Ziel (blaue Linie), der um die Falle herumführt. Weiter entfernte Felder haben kleinere Werte, weil spätere Belohnungen mit $\\gamma = 0{,}9$ pro Schritt abgewertet werden.", "to": { "episodes": 60 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Beim **Reinforcement Learning** gibt es keine Beispiele mit richtigen Antworten. Es gibt einen **Agenten**, der in einer **Umgebung** handelt: Er sieht einen **Zustand**, wählt eine **Aktion** und bekommt dafür eine **Belohnung** (oder Strafe) und einen neuen Zustand. Ziel ist, auf lange Sicht möglichst viel Belohnung zu sammeln.\n\nDas Schwierige: Belohnungen kommen oft spät. Beim Spiel Nim erfährt man erst am Ende, ob man gewonnen hat. Welche der vielen Züge davor waren gut?\n\n**Q-Learning** löst das, indem es für jedes Paar aus Zustand und Aktion einen Wert $Q(s, a)$ schätzt: Wie viel Belohnung kann ich erwarten, wenn ich hier diese Aktion wähle und danach gut weiterspiele? Nach jedem Schritt wird die Schätzung ein Stück in Richtung »erhaltene Belohnung plus bester Wert danach« verschoben. So wandert Wissen Schritt für Schritt vom Ziel nach hinten.\n\nUnd es gibt ein Dilemma: Soll der Agent das tun, was sich bisher bewährt hat (**Exploitation**), oder Neues ausprobieren (**Exploration**)? **$\\varepsilon$-greedy** macht meistens das Beste und mit kleiner Wahrscheinlichkeit $\\varepsilon$ etwas Zufälliges."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Markov-Entscheidungsprozess\n> Zustände $S$, Aktionen $\\text{Actions}(s)$, Übergangsmodell $P(s' \\mid s, a)$ und Belohnungsfunktion $R(s, a, s')$.\n\n> [!definition] Q-Learning\n> Anfangs $Q(s, a) = 0$. Nach jedem Schritt $s \\xrightarrow{a} s'$ mit Belohnung $r$:\n> $$Q(s, a) \\leftarrow Q(s, a) + \\alpha\\Big(\\underbrace{r + \\gamma \\max_{a'} Q(s', a')}_{\\text{neue Schätzung}} - \\underbrace{Q(s, a)}_{\\text{alte Schätzung}}\\Big)$$\n> $\\alpha$ ist die Lernrate, $\\gamma$ der Diskontfaktor für spätere Belohnungen.\n\n> [!definition] $\\varepsilon$-greedy\n> Mit Wahrscheinlichkeit $1 - \\varepsilon$ die Aktion mit dem höchsten $Q$-Wert, mit Wahrscheinlichkeit $\\varepsilon$ eine zufällige."
+    },
+    {
+      "id": "trainieren",
+      "type": "widget",
+      "label": "Trainieren",
+      "md": "Diesmal mit einer anderen Welt. **Trainiere den Agenten, bis sein gieriger Weg vom Start ins Ziel führt.**",
+      "widget": "gridworld",
+      "params": { "grid": ["...#G", ".#.#.", ".#...", "S..X."], "alpha": 0.5, "gamma": 0.9, "epsilon": 0.25 },
+      "goal": { "when": "reaches == 1", "hints": [{ "when": "episodes == 0", "text": "Lass den Agenten erst einmal ein paar Episoden spielen." }], "message": "Der gierige Weg erreicht das Ziel noch nicht. Trainiere weiter.", "solve": { "episodes": 120 } },
+      "explain": "Je länger der Weg zum Ziel, desto mehr Episoden braucht es, weil sich das Wissen nur Schritt für Schritt rückwärts ausbreitet. Ohne Exploration ($\\varepsilon = 0$) könnte der Agent auf einem frühen, schlechten Weg hängen bleiben."
+    },
+    {
+      "id": "update",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$Q(s, a) = 0{,}4$, $\\alpha = 0{,}5$, $\\gamma = 0{,}9$. Die Aktion bringt $r = 0$ und führt in einen Zustand mit den Werten $Q(s', \\cdot) = 0{,}2;\\ 0{,}8;\\ 0{,}5$. Wie lautet der neue Wert $Q(s, a)$? (drei Nachkommastellen)",
+      "answer": 0.56,
+      "tolerance": 0.0006,
+      "answerText": "0,560",
+      "explain": "Neue Schätzung: $0 + 0{,}9 \\cdot 0{,}8 = 0{,}72$. $Q = 0{,}4 + 0{,}5 \\cdot (0{,}72 - 0{,}4) = 0{,}56$. Der Wert rückt halb so weit an die neue Schätzung heran, wie er von ihr entfernt war."
+    },
+    {
+      "id": "explore",
+      "type": "choice",
+      "md": "Ein Agent wählt **immer** die Aktion mit dem höchsten $Q$-Wert ($\\varepsilon = 0$). Was ist das Risiko?",
+      "options": [
+        { "md": "Er probiert nie etwas Neues und übersieht bessere Wege, die er nie versucht hat.", "correct": true },
+        { "md": "Er lernt gar nichts, weil Q-Werte nur bei Zufallsaktionen aktualisiert werden.", "why": "Q-Werte werden nach jeder Aktion aktualisiert." },
+        { "md": "Er wird immer schlechter.", "why": "Er wird nicht schlechter, er bleibt nur bei der ersten halbwegs guten Lösung stehen." }
+      ],
+      "explain": "Das ist das Spannungsfeld von Exploration und Exploitation. Oft senkt man $\\varepsilon$ im Lauf des Trainings: erst viel erkunden, später das Gelernte nutzen."
+    },
+    {
+      "id": "gamma",
+      "type": "truefalse",
+      "md": "Mit $\\gamma = 0$ interessiert sich der Agent nur für die sofortige Belohnung des nächsten Schritts.",
+      "answer": true,
+      "explain": "Dann bleibt vom Update nur $Q \\leftarrow Q + \\alpha(r - Q)$. Ein solcher Agent würde im Gitter nie lernen, dass sich ein langer Weg zum Ziel lohnt, denn unterwegs gibt es keine Belohnung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-rl", "level": 1, "label": "Update" },
+    { "id": "neu2", "type": "gen", "gen": "cs-rl", "level": 2, "label": "Update" },
+    { "id": "neu3", "type": "gen", "gen": "cs-rl", "level": 3, "label": "Exploration" },
+    { "id": "neu4", "type": "gen", "gen": "cs-rl", "level": 4, "label": "Ertrag" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Reinforcement Learning lernt aus Belohnungen statt aus richtigen Antworten.",
+        "$Q(s, a)$ schätzt den langfristigen Wert einer Aktion. Update: $Q \\leftarrow Q + \\alpha(r + \\gamma\\max Q(s', \\cdot) - Q)$.",
+        "Wissen breitet sich Schritt für Schritt vom Ziel rückwärts aus.",
+        "$\\varepsilon$-greedy balanciert Exploration und Exploitation."
+      ]
+    }
+  ]
+}

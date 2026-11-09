@@ -1,0 +1,99 @@
+{
+  "id": "ana1-gleichmaessig",
+  "title": "Gleichmäßige Konvergenz",
+  "subtitle": "Wenn ganze Funktionen gegen eine Funktion streben",
+  "source": "Skript Jarohs, Kapitel 16",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Gleichmäßige Konvergenz.md", "title": "Gleichmäßige Konvergenz" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Funktionen $f_n(x) = x^n$ auf $[0, 1]$. Für jedes feste $x < 1$ geht $x^n \\to 0$, bei $x = 1$ bleibt der Wert $1$. Der blaue Schlauch hat die Breite $\\varepsilon = 0{,}1$ um die Nullfunktion.",
+      "widget": "plot",
+      "params": {
+        "x": [-0.05, 1.1], "y": [-0.15, 1.15],
+        "vars": [{ "name": "n", "min": 1, "max": 80, "step": 1, "value": 1, "hidden": true }, { "name": "c", "min": 0, "max": 3, "value": 3, "hidden": true }],
+        "functions": [{ "expr": "x^n", "domain": [0, 1], "samples": 400, "label": "fₙ", "labelAt": 0.93 }],
+        "hbands": [{ "y": 0, "eps": 0.1, "color": "accent" }],
+        "vlines": [{ "x": "c", "color": "green", "width": 2 }],
+        "points": [{ "x": 1, "y": 1 }],
+        "readout": "$n = {n|0}$: Auf $[0;\\ 0{,}8]$ ist der größte Abstand zur Nullfunktion ${0.8^n|4}$."
+      },
+      "int": ["n"],
+      "timeline": [
+        { "caption": "$f_1(x) = x$: eine Gerade. Nur ein kleines Stück des Graphen liegt im Schlauch." },
+        { "caption": "$n = 5$: Der Graph sinkt nach unten, der Teil im Schlauch wird länger.", "to": { "n": 5 }, "dur": 1400 },
+        { "caption": "$n = 40$: Fast der ganze Graph liegt im Schlauch. Aber kurz vor $x = 1$ schnellt er immer nach oben auf $1$. Für jedes $n$ gibt es Stellen mit $x^n > 0{,}1$, etwa $x = 0{,}1^{1/n}$.", "to": { "n": 40 }, "dur": 2400, "hold": 7000 },
+        { "caption": "Die Folge konvergiert also **punktweise**, aber nicht **gleichmäßig**: Kein $n$ bringt den **ganzen** Graphen in den Schlauch. Die Grenzfunktion (0 für $x < 1$, $1$ bei $x = 1$) springt sogar, obwohl alle $f_n$ stetig sind.", "to": { "n": 80 }, "dur": 1200, "hold": 7000 },
+        { "caption": "Schneidet man den Rand ab und betrachtet nur $[0;\\ 0{,}8]$ (links der grünen Linie), sieht es anders aus: Dort ist der größte Abstand $0{,}8^n \\to 0$. Auf $[0;\\ 0{,}8]$ ist die Konvergenz gleichmäßig.", "set": { "c": 0.8 } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Bei einer Folge von **Funktionen** kann man an jeder Stelle $x$ einzeln fragen, ob $f_n(x)$ konvergiert. Das ist **punktweise Konvergenz**. Das Problem: Das nötige $n_0$ darf von $x$ abhängen, und bei $x^n$ wird es beliebig groß, je näher $x$ an $1$ liegt.\n\n**Gleichmäßige Konvergenz** verlangt mehr: ein einziges $n_0$, das für **alle** $x$ zugleich funktioniert. Bildlich: Ab $n_0$ liegt der **ganze Graph** von $f_n$ im $\\varepsilon$-Schlauch um die Grenzfunktion. Man misst den Abstand zweier Funktionen durch den größten Abstand ihrer Werte, $\\sup_x |f_n(x) - f(x)|$, und verlangt, dass er gegen $0$ geht.\n\nWarum der Aufwand? Weil nur gleichmäßige Konvergenz gute Eigenschaften vererbt. Der gleichmäßige Grenzwert stetiger Funktionen ist stetig, und man darf Grenzwert und Integral vertauschen. Bei $x^n$ auf $[0, 1]$ geht genau das schief: Die Grenzfunktion springt."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Punktweise und gleichmäßige Konvergenz\n> $f_n: D \\to \\R$ konvergiert **punktweise** gegen $f$, wenn $f_n(x) \\to f(x)$ für jedes $x \\in D$.\n> $f_n$ konvergiert **gleichmäßig** gegen $f$, wenn\n> $$\\sup_{x \\in D} |f_n(x) - f(x)| \\to 0,$$\n> das heißt: $\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0\\ \\forall x \\in D: |f_n(x) - f(x)| < \\varepsilon$.\n\nDer Unterschied liegt nur in der Reihenfolge der Quantoren: Bei punktweiser Konvergenz steht $\\forall x$ vor $\\exists n_0$, bei gleichmäßiger dahinter.\n\n> [!satz] Stetigkeit vererbt sich\n> Sind alle $f_n$ stetig und konvergiert $f_n$ gleichmäßig gegen $f$, dann ist $f$ stetig. Außerdem gilt auf $[a, b]$: $\\int_a^b f_n\\,dx \\to \\int_a^b f\\,dx$."
+    },
+    {
+      "id": "schlauch",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$f_n(x) = x^n$ auf $[0;\\ 0{,}9]$ und ein Schlauch der Breite $\\varepsilon = 0{,}05$ um die Nullfunktion. **Wähle das kleinste $n$, bei dem der ganze Graph im Schlauch liegt.**",
+      "widget": "plot",
+      "params": {
+        "x": [-0.03, 0.95], "y": [-0.1, 1],
+        "vars": [{ "name": "n", "label": "$n$", "min": 1, "max": 60, "step": 1, "value": 5, "digits": 0 }],
+        "functions": [{ "expr": "x^n", "domain": [0, 0.9], "samples": 300 }],
+        "hbands": [{ "y": 0, "eps": 0.05, "color": "accent" }],
+        "points": [{ "x": 0.9, "on": "f", "label": "größter Wert" }],
+        "readout": "Größter Abstand: $0{,}9^n = {0.9^n|4}$"
+      },
+      "goal": {
+        "when": "0.9^n < 0.05 && n <= 29",
+        "hints": [{ "when": "0.9^n >= 0.05", "text": "Am rechten Rand ist der Wert noch {0.9^n|4}." }, { "when": "n > 29", "text": "Der Graph liegt im Schlauch, aber es geht mit kleinerem n." }],
+        "solve": { "n": 29 }
+      },
+      "explain": "$0{,}9^{28} \\approx 0{,}052$, $0{,}9^{29} \\approx 0{,}047$. Ab $n = 29$ liegt der ganze Graph im Schlauch, für alle $x \\in [0;\\ 0{,}9]$ gleichzeitig. Das ist gleichmäßige Konvergenz: ein $n_0$ für alle Stellen."
+    },
+    {
+      "id": "stetig-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise: Ist jedes $f_n$ stetig in $x_0$ und $f_n \\to f$ gleichmäßig, dann ist $f$ stetig in $x_0$. Teile $\\varepsilon$ in drei Teile.",
+      "solution": "Sei $\\varepsilon > 0$. Wähle $n$ mit $|f_n(x) - f(x)| < \\tfrac\\varepsilon3$ für **alle** $x$; hier wird die Gleichmäßigkeit gebraucht. Weil $f_n$ stetig ist, gibt es $\\delta > 0$ mit $|f_n(x) - f_n(x_0)| < \\tfrac\\varepsilon3$ für $|x - x_0| < \\delta$. Dann ist\n\n$$|f(x) - f(x_0)| \\le |f(x) - f_n(x)| + |f_n(x) - f_n(x_0)| + |f_n(x_0) - f(x_0)| < \\tfrac\\varepsilon3 + \\tfrac\\varepsilon3 + \\tfrac\\varepsilon3 = \\varepsilon.$$\n\nBei nur punktweiser Konvergenz könnte $n$ von $x$ abhängen, und der erste Summand wäre nicht für alle $x$ zugleich klein. Das ist der Grund, warum $x^n$ auf $[0, 1]$ eine springende Grenzfunktion haben darf."
+    },
+    {
+      "id": "ganz-r",
+      "type": "choice",
+      "md": "$f_n(x) = \\tfrac{x}{n}$ konvergiert punktweise gegen $0$. Auf welcher Menge ist die Konvergenz gleichmäßig?",
+      "options": [
+        { "md": "Auf $[0, 1]$, aber nicht auf ganz $\\R$.", "correct": true },
+        { "md": "Auf ganz $\\R$.", "why": "$\\sup_{x \\in \\R} \\tfrac{|x|}{n} = \\infty$ für jedes $n$." },
+        { "md": "Nirgends.", "why": "Auf $[0, 1]$ ist $\\sup \\tfrac{|x|}{n} = \\tfrac1n \\to 0$." }
+      ],
+      "explain": "Gleichmäßigkeit hängt vom Definitionsbereich ab. Auf beschränkten Mengen ist $\\tfrac{x}{n}$ harmlos, auf $\\R$ gibt es für jedes $n$ Stellen, an denen $\\tfrac xn$ riesig ist."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-glm", "level": 1, "label": "Supremum" },
+    { "id": "neu2", "type": "gen", "gen": "ana-glm", "level": 2, "label": "Schlauch" },
+    { "id": "neu3", "type": "gen", "gen": "ana-glm", "level": 3, "label": "Schlauch" },
+    { "id": "neu4", "type": "gen", "gen": "ana-glm", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Punktweise: an jeder Stelle einzeln. Gleichmäßig: $\\sup_x |f_n(x) - f(x)| \\to 0$, ein $n_0$ für alle $x$.",
+        "Bild: Ab $n_0$ liegt der ganze Graph im $\\varepsilon$-Schlauch.",
+        "Gleichmäßige Grenzwerte stetiger Funktionen sind stetig, Integral und Grenzwert dürfen vertauscht werden.",
+        "$x^n$ konvergiert auf $[0, 1]$ nur punktweise, auf $[0, a]$ mit $a < 1$ gleichmäßig."
+      ]
+    }
+  ]
+}

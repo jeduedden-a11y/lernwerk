@@ -1,0 +1,109 @@
+{
+  "id": "ana1-mengen",
+  "title": "Mengen und Relationen",
+  "subtitle": "Die Bausteine, aus denen jede mathematische Aussage besteht",
+  "source": "Skript Jarohs, Abschnitt 1.2 bis 1.3",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Mengen und Relationen.md", "title": "Mengen und Relationen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Zwei Mengen $A$ und $B$ in einer Grundmenge $\\Omega$. Jeder Punkt der Fläche ist ein mögliches Element. Die Mengenoperationen markieren einfach Teile dieser Fläche.",
+      "widget": "venn",
+      "params": { "sets": 2, "labels": ["A", "B"] },
+      "timeline": [
+        { "caption": "Links die Menge $A$, rechts die Menge $B$. Ein Element kann in keiner, in einer oder in beiden liegen. Das ergibt vier Bereiche.", "do": { "show": [] } },
+        { "caption": "Der **Durchschnitt** $A \\cap B$ enthält alles, was in $A$ **und** in $B$ liegt.", "do": { "show": ["11"] } },
+        { "caption": "Die **Vereinigung** $A \\cup B$ enthält alles, was in $A$ **oder** in $B$ liegt, auch in beiden.", "do": { "show": ["10", "01", "11"] } },
+        { "caption": "Die **Differenz** $A \\setminus B$: in $A$, aber **nicht** in $B$. Sie ist nicht symmetrisch, $B \\setminus A$ wäre die rechte Sichel.", "do": { "show": ["10"] } },
+        { "caption": "Das **Komplement** von $A \\cup B$ ist das, was in keiner der beiden Mengen liegt: der äußere Bereich.", "do": { "show": ["00"] } },
+        { "caption": "Dieselbe Fläche bekommt man als »nicht in $A$« **und** »nicht in $B$«. Das ist die Regel von **De Morgan**: $(A \\cup B)^c = A^c \\cap B^c$. Mengenlehre ist Logik, in Flächen gezeichnet.", "do": { "show": ["00"] }, "hold": 7000 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Eine **Menge** ist eine Zusammenfassung von Objekten, ihren **Elementen**. Mehr steckt zunächst nicht dahinter: Für jedes Objekt $x$ ist klar, ob $x \\in M$ gilt oder nicht. Reihenfolge und Wiederholung spielen keine Rolle, $\\set{1, 2, 2} = \\set{2, 1}$.\n\nDie Animation hat gezeigt, dass die Mengenoperationen genau den Junktoren entsprechen:\n\n| Menge | Element $x$ liegt darin, wenn … |\n|---|---|\n| $A \\cap B$ | $x \\in A \\wedge x \\in B$ |\n| $A \\cup B$ | $x \\in A \\vee x \\in B$ |\n| $A \\setminus B$ | $x \\in A \\wedge x \\notin B$ |\n| $A^c$ | $\\neg(x \\in A)$ |\n\nDarum beweist man Mengengleichungen so wie logische Äquivalenzen: Man nimmt ein **beliebiges Element** und verfolgt, wo es landet. Diese Methode heißt Elementjagd, und sie ist das wichtigste Werkzeug dieser Lektion."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Teilmenge und Gleichheit\n> $A \\subset B$, wenn jedes Element von $A$ auch in $B$ liegt: $\\forall x: x \\in A \\Rightarrow x \\in B$.\n> $A = B$ genau dann, wenn $A \\subset B$ und $B \\subset A$.\n\n> [!definition] Potenzmenge und Produkt\n> Die **Potenzmenge** $\\mathcal{P}(M)$ ist die Menge aller Teilmengen von $M$, die leere Menge $\\emptyset$ und $M$ selbst eingeschlossen.\n> Das **kartesische Produkt** $A \\times B = \\set{(a, b) : a \\in A, b \\in B}$ besteht aus geordneten Paaren. Hier kommt es auf die Reihenfolge an: $(1, 2) \\ne (2, 1)$.\n\n**Beispiel.** $M = \\set{1, 2}$ hat die Potenzmenge $\\set{\\emptyset, \\set1, \\set2, \\set{1,2}}$ mit $4 = 2^2$ Elementen. Allgemein hat eine $n$-elementige Menge $2^n$ Teilmengen, denn jedes Element ist drin oder nicht."
+    },
+    {
+      "id": "venn-aufgabe",
+      "type": "widget",
+      "label": "Markieren",
+      "md": "**Markiere die Menge $(A \\cup B) \\setminus C$**, indem du die passenden Bereiche antippst.",
+      "widget": "venn",
+      "params": { "sets": 3, "labels": ["A", "B", "C"], "select": true, "target": ["100", "010", "110"], "targetText": "(A ∪ B) \\ C" },
+      "goal": { "regions": true },
+      "explain": "Erst die Vereinigung: alles in $A$ oder $B$, das sind fünf Bereiche. Dann alles weg, was in $C$ liegt. Übrig bleiben die drei Bereiche von $A \\cup B$ außerhalb von $C$."
+    },
+    {
+      "id": "demorgan-beweis",
+      "type": "reveal",
+      "label": "Elementjagd",
+      "md": "Beweise $(A \\cup B)^c = A^c \\cap B^c$ ohne Bild, nur mit Logik. Zeige beide Inklusionen auf einmal mit einer Kette von Äquivalenzen.",
+      "solution": "Für ein beliebiges $x$ gilt:\n\n$$x \\in (A \\cup B)^c \\iff \\neg(x \\in A \\vee x \\in B) \\iff x \\notin A \\wedge x \\notin B \\iff x \\in A^c \\cap B^c.$$\n\nDer mittlere Schritt ist die De-Morgan-Regel der Logik: $\\neg(P \\vee Q) \\equiv \\neg P \\wedge \\neg Q$. Weil jede Umformung in beide Richtungen gilt, sind beide Inklusionen gezeigt."
+    },
+    {
+      "id": "relationen",
+      "type": "text",
+      "md": "Eine **Relation** auf $M$ ist eine Teilmenge $R \\subset M \\times M$. Man schreibt $x \\sim y$ statt $(x, y) \\in R$. So wird jeder Vergleich zu einem mathematischen Objekt, etwa »$\\le$« oder »hat denselben Rest bei Division durch $3$«.\n\n> [!definition] Äquivalenzrelation\n> $\\sim$ heißt Äquivalenzrelation, wenn sie\n> - **reflexiv** ist: $x \\sim x$ für alle $x$,\n> - **symmetrisch** ist: aus $x \\sim y$ folgt $y \\sim x$,\n> - **transitiv** ist: aus $x \\sim y$ und $y \\sim z$ folgt $x \\sim z$.\n\nEine Äquivalenzrelation zerlegt $M$ in **Äquivalenzklassen** $[x] = \\set{y : y \\sim x}$: Jedes Element liegt in genau einer Klasse. Beispiel: $x \\sim y :\\iff 3 \\mid (x - y)$ zerlegt $\\Z$ in die drei Restklassen $[0], [1], [2]$."
+    },
+    {
+      "id": "aequivalenz",
+      "type": "multi",
+      "md": "Welche Relationen sind Äquivalenzrelationen?",
+      "options": [
+        { "md": "Auf $\\Z$: $x \\sim y :\\iff x - y$ ist gerade.", "correct": true, "why": "Reflexiv ($0$ ist gerade), symmetrisch, und Summen gerader Zahlen sind gerade." },
+        { "md": "Auf $\\R$: $x \\sim y :\\iff x \\le y$.", "why": "Nicht symmetrisch: $1 \\le 2$, aber nicht $2 \\le 1$." },
+        { "md": "Auf $\\R$: $x \\sim y :\\iff |x - y| < 1$.", "why": "Nicht transitiv: $0 \\sim 0{,}6$ und $0{,}6 \\sim 1{,}2$, aber $|0 - 1{,}2| \\ge 1$." },
+        { "md": "Auf den Geraden der Ebene: $g \\sim h :\\iff g$ und $h$ sind parallel oder gleich.", "correct": true, "why": "Die Klassen sind genau die Richtungen." }
+      ],
+      "explain": "Bei »fast gleich« scheitert meist die Transitivität: Viele kleine Schritte ergeben einen großen. Eine Äquivalenzrelation muss Gleichheit in einem bestimmten Merkmal ausdrücken."
+    },
+    {
+      "id": "klassen",
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Ordne die ganzen Zahlen ihrer Restklasse modulo $3$ zu.",
+      "categories": ["[0]", "[1]", "[2]"],
+      "items": [
+        { "md": "$9$", "cat": "[0]" },
+        { "md": "$7$", "cat": "[1]" },
+        { "md": "$-4$", "cat": "[2]" },
+        { "md": "$-1$", "cat": "[2]" },
+        { "md": "$13$", "cat": "[1]" },
+        { "md": "$-6$", "cat": "[0]" }
+      ],
+      "explain": "Entscheidend ist, ob $x - 0$, $x - 1$ oder $x - 2$ durch $3$ teilbar ist. Bei negativen Zahlen: $-4 - 2 = -6$ ist durch $3$ teilbar, also $-4 \\in [2]$. Ebenso $-1 - 2 = -3$."
+    },
+    {
+      "id": "produkt",
+      "type": "truefalse",
+      "md": "Für alle Mengen $A$ und $B$ gilt $A \\times B = B \\times A$.",
+      "answer": false,
+      "whyNot": "Gegenbeispiel: $\\set1 \\times \\set2 = \\set{(1, 2)}$, aber $\\set2 \\times \\set1 = \\set{(2, 1)}$.",
+      "explain": "Paare sind geordnet. Gleich sind die beiden Produkte nur, wenn $A = B$ oder eine der Mengen leer ist."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-mengen", "level": 1, "label": "Neue Mengen" },
+    { "id": "neu2", "type": "gen", "gen": "ana-mengen", "level": 2, "label": "Neue Mengen" },
+    { "id": "neu3", "type": "gen", "gen": "ana-mengen", "level": 3, "label": "Zählen" },
+    { "id": "neu4", "type": "gen", "gen": "ana-mengen", "level": 4, "label": "Einschluss-Ausschluss" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\cap$, $\\cup$, $\\setminus$ und das Komplement entsprechen und, oder, und-nicht und nicht.",
+        "Mengengleichheit beweist man durch Elementjagd oder durch zwei Inklusionen.",
+        "Eine $n$-elementige Menge hat $2^n$ Teilmengen, $|A \\times B| = |A| \\cdot |B|$.",
+        "Äquivalenzrelationen sind reflexiv, symmetrisch und transitiv und zerlegen die Menge in disjunkte Klassen."
+      ]
+    }
+  ]
+}

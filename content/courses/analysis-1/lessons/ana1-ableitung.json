@@ -1,0 +1,113 @@
+{
+  "id": "ana1-ableitung",
+  "title": "Die Ableitung als lineare Näherung",
+  "subtitle": "Von der Sekante zur Tangente",
+  "source": "Skript Jarohs, Abschnitt 13.1 bis 13.11",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md", "title": "Ableitung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "$f(x) = x^2$ und die Stelle $x_0 = 1$. Die grüne Gerade ist eine **Sekante** durch die Punkte bei $x_0$ und $x_0 + h$. Was passiert, wenn $h$ immer kleiner wird?",
+      "widget": "plot",
+      "params": {
+        "x": [-0.5, 3.5], "y": [-1, 9],
+        "vars": [{ "name": "x0", "min": -1, "max": 3, "value": 1, "hidden": true }, { "name": "h", "min": 0.001, "max": 3, "value": 2, "hidden": true }],
+        "functions": [{ "expr": "x^2", "label": "f", "labelAt": 2.7 }],
+        "secants": [{ "f": "f", "from": "x0", "to": "x0 + h", "color": "green" }],
+        "points": [{ "x": "x0", "on": "f", "label": "x₀" }, { "x": "x0 + h", "on": "f", "color": "green" }],
+        "readout": "$h = {h|3}$, Steigung der Sekante ${ms|4}$"
+      },
+      "timeline": [
+        { "caption": "Bei $h = 2$ geht die Sekante durch $(1 \\mid 1)$ und $(3 \\mid 9)$. Ihre Steigung ist $\\tfrac{9 - 1}{2} = 4$, eine **mittlere** Änderungsrate." },
+        { "caption": "$h = 1$: Steigung $3$. $h = 0{,}5$: Steigung $2{,}5$. Allgemein ist sie $\\tfrac{(1 + h)^2 - 1}{h} = 2 + h$.", "to": { "h": 0.5 }, "dur": 2200 },
+        { "caption": "Für $h \\to 0$ strebt die Steigung gegen $2$, und die Sekante dreht sich in die **Tangente**. Ihr Grenzwert ist die Ableitung: $f'(1) = 2$.", "to": { "h": 0.01 }, "dur": 2600, "hold": 6500 },
+        { "caption": "Zweiter Blick: In der Nähe von $x_0$ ist der Graph von der Tangente kaum zu unterscheiden. $f(x_0 + h) \\approx f(x_0) + f'(x_0)\\,h$, und der Fehler ist hier genau $h^2$, also viel kleiner als $h$. Die Ableitung ist die **beste lineare Näherung**." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die Ableitung beantwortet die Frage: **Wie stark ändert sich $f$, wenn sich $x$ ein kleines bisschen ändert?** Eine Durchschnittsgeschwindigkeit ist Weg durch Zeit. Die Geschwindigkeit in einem Augenblick erhält man, indem man das Zeitintervall gegen $0$ schrumpfen lässt.\n\nEs gibt zwei Bilder, die beide wichtig sind:\n\n1. **Grenzwert der Sekantensteigungen:** $f'(x_0) = \\lim_{h \\to 0} \\dfrac{f(x_0 + h) - f(x_0)}{h}$.\n2. **Lineare Näherung:** Zoomt man in den Graphen hinein, sieht er aus wie eine Gerade. Deren Steigung ist $f'(x_0)$.\n\nDas zweite Bild erklärt die Rechenregeln: Bei Verkettungen werden lineare Näherungen hintereinander ausgeführt, also multiplizieren sich die Steigungen (Kettenregel). Und es zeigt, wann eine Ableitung fehlt: $|x|$ hat bei $0$ einen Knick, und kein Zoom macht daraus eine Gerade."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Differenzierbarkeit\n> $f$ heißt **differenzierbar in $x_0$**, wenn der Grenzwert\n> $$f'(x_0) = \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0}$$\n> existiert. Gleichwertig: $f(x) = f(x_0) + f'(x_0)(x - x_0) + r(x)$ mit $\\dfrac{r(x)}{x - x_0} \\to 0$.\n\n> [!satz] Rechenregeln\n> - $(f + g)' = f' + g'$, $(cf)' = cf'$\n> - Produktregel: $(fg)' = f'g + fg'$\n> - Quotientenregel: $\\left(\\tfrac fg\\right)' = \\dfrac{f'g - fg'}{g^2}$\n> - Kettenregel: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$\n\n> [!satz] Differenzierbar heißt stetig\n> Ist $f$ in $x_0$ differenzierbar, dann ist $f$ dort stetig. Die Umkehrung ist falsch."
+    },
+    {
+      "id": "tangente",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$f(x) = \\tfrac{x^3}{3} - x$ mit Tangente (orange). **Ziehe den Punkt an eine Stelle, an der die Tangente die Steigung $3$ hat.**",
+      "widget": "plot",
+      "params": {
+        "x": [-3, 3], "y": [-4, 4],
+        "vars": [{ "name": "x0", "min": -2.8, "max": 2.8, "value": 0.5, "hidden": true }],
+        "functions": [{ "expr": "x^3/3 - x", "label": "f", "labelAt": 2.2 }],
+        "tangents": [{ "f": "f", "at": "x0", "color": "orange", "length": 1.5 }],
+        "points": [{ "x": "x0", "on": "f", "drag": "x", "snap": 0.05, "label": "x₀" }],
+        "readout": "$x_0 = {x0|2}$, Tangentensteigung $f'(x_0) = {m|3}$"
+      },
+      "goal": {
+        "when": "abs(m - 3) < 0.06",
+        "hints": [{ "when": "m < 3", "text": "Die Tangente ist noch zu flach: Steigung {m|2}." }, { "when": "m > 3", "text": "Die Tangente ist zu steil: Steigung {m|2}." }],
+        "solve": { "x0": 2 }
+      },
+      "explain": "$f'(x) = x^2 - 1 = 3 \\iff x = \\pm 2$. Beide Stellen sind richtig. Bei $x = \\pm1$ ist die Tangente waagerecht, dort liegen die Extrema."
+    },
+    {
+      "id": "betrag",
+      "type": "choice",
+      "md": "Ist $f(x) = |x|$ in $x_0 = 0$ differenzierbar?",
+      "options": [
+        { "md": "Nein: Von rechts sind alle Sekantensteigungen $1$, von links $-1$. Der Grenzwert existiert nicht.", "correct": true },
+        { "md": "Ja, mit $f'(0) = 0$, denn $0$ liegt zwischen $-1$ und $1$.", "why": "Ein Grenzwert ist kein Mittelwert. Die Differenzenquotienten nähern sich keiner Zahl." },
+        { "md": "Nein, weil $|x|$ bei $0$ unstetig ist.", "why": "$|x|$ ist überall stetig. Stetigkeit reicht eben nicht für Differenzierbarkeit." }
+      ],
+      "explain": "$\\dfrac{|h| - 0}{h}$ ist $1$ für $h > 0$ und $-1$ für $h < 0$. Am Knick gibt es keine eindeutige Tangente. $|x|$ ist das Standardbeispiel für »stetig, aber nicht differenzierbar«."
+    },
+    {
+      "id": "produkt-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise die Produktregel. Schreibe den Differenzenquotienten von $fg$ um, indem du geschickt $f(x)g(x_0)$ abziehst und wieder addierst.",
+      "solution": "$$\\frac{f(x)g(x) - f(x_0)g(x_0)}{x - x_0} = f(x)\\,\\frac{g(x) - g(x_0)}{x - x_0} + g(x_0)\\,\\frac{f(x) - f(x_0)}{x - x_0}.$$\n\nFür $x \\to x_0$ geht $f(x) \\to f(x_0)$, weil $f$ als differenzierbare Funktion stetig ist, und die Brüche gehen gegen $g'(x_0)$ und $f'(x_0)$. Ergebnis: $(fg)'(x_0) = f(x_0)g'(x_0) + g(x_0)f'(x_0)$.\n\nAnschaulich: Ein Rechteck mit Seiten $f$ und $g$ wächst an beiden Seiten. Der Zuwachs ist zweimal »Seite mal Änderung der anderen Seite«, plus ein winziges Eckstück, das im Grenzwert verschwindet."
+    },
+    {
+      "id": "kette",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne die Ableitung von $f(x) = \\sin(x^2)$ an der Stelle $x = \\sqrt\\pi$ (drei Nachkommastellen).",
+      "answer": -3.5449,
+      "tolerance": 0.002,
+      "answerText": "−3,545",
+      "hint": "Kettenregel: $f'(x) = \\cos(x^2) \\cdot 2x$.",
+      "explain": "$f'(\\sqrt\\pi) = \\cos(\\pi) \\cdot 2\\sqrt\\pi = -2\\sqrt\\pi \\approx -3{,}545$."
+    },
+    {
+      "id": "fehler",
+      "type": "gen",
+      "gen": "ana-fehler",
+      "level": 2,
+      "label": "Fehler finden"
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-ableitung", "level": 1, "label": "Potenzregel" },
+    { "id": "neu2", "type": "gen", "gen": "ana-ableitung", "level": 2, "label": "Produkt und Quotient" },
+    { "id": "neu3", "type": "gen", "gen": "ana-ableitung", "level": 3, "label": "Kettenregel" },
+    { "id": "neu4", "type": "gen", "gen": "ana-ableitung", "level": 4, "label": "Tangente" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$f'(x_0)$ ist der Grenzwert der Sekantensteigungen, also die Tangentensteigung.",
+        "Gleichwertig: $f(x_0 + h) \\approx f(x_0) + f'(x_0)h$ mit einem Fehler, der schneller als $h$ verschwindet.",
+        "Produkt-, Quotienten- und Kettenregel folgen aus dieser Näherung.",
+        "Differenzierbar heißt stetig, aber $|x|$ zeigt: nicht umgekehrt."
+      ]
+    }
+  ]
+}

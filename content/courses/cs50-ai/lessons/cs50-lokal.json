@@ -1,0 +1,91 @@
+{
+  "id": "cs50-lokal",
+  "title": "Hill Climbing und Simulated Annealing",
+  "subtitle": "CS50 AI, Lecture 3: Optimization",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 3",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Lokale Suche.md", "title": "Lokale Suche" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 3 - Optimization (Kurs).md", "title": "Lecture 3 - Optimization (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Jeder Balken ist ein möglicher Zustand, seine Höhe der Wert, den wir maximieren wollen. Die ganze Reihe heißt **Zustandsraum-Landschaft**. Der blaue Balken mit dem Pfeil ist der aktuelle Zustand.",
+      "widget": "landscape",
+      "params": { "start": 1, "restart": false },
+      "timeline": [
+        { "caption": "Lokale Suche kennt keinen Weg und keinen Plan. Sie hat nur einen aktuellen Zustand und schaut auf seine **Nachbarn** (orange umrandet).", "do": { "set": 1 } },
+        { "caption": "**Hill Climbing:** Ist ein Nachbar besser, geh zum besten Nachbarn. Hier ist der rechte höher.", "do": { "set": 1, "climb": 1 } },
+        { "caption": "Weiter bergauf, bis kein Nachbar mehr besser ist. Dann bleibt das Verfahren stehen, bei Wert $7$: ein **lokales Maximum**. Rechts gibt es viel höhere Gipfel, aber dafür müsste man erst bergab.", "do": { "set": 1, "top": true }, "hold": 7000 },
+        { "caption": "**Random Restart:** Man startet an einer anderen, zufälligen Stelle neu und klettert wieder. Von hier aus geht es bis zum globalen Maximum mit Wert $14$.", "do": { "set": 11, "top": true }, "hold": 6000 },
+        { "caption": "**Simulated Annealing** geht anders vor: Am Anfang, wenn die »Temperatur« hoch ist, nimmt es auch Schritte bergab in Kauf. Später wird es immer wählerischer. So kann es aus lokalen Maxima herausfinden. Die hellen Balken zeigen, wo es unterwegs war.", "do": { "set": 1, "anneal": 160 } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Bei der Suche aus Lecture 0 ging es um den **Weg** zum Ziel. Bei Optimierung zählt nur das **Ergebnis**: die beste Lösung unter sehr vielen. Wo Krankenhäuser bauen, damit die Wege kurz sind? In welcher Reihenfolge die Städte einer Rundreise besuchen? Alle Lösungen aufzuzählen ist hoffnungslos.\n\n**Lokale Suche** behält nur einen Zustand und verbessert ihn schrittweise. Das ist schnell und braucht kaum Speicher, hat aber ein Problem: Sie sieht nur die Nachbarschaft. Auf einem **lokalen Maximum** ist kein Nachbar besser, und Hill Climbing hält dort an, obwohl woanders ein besseres Ergebnis liegt. Ebenso tückisch sind **Plateaus**, auf denen alle Nachbarn gleich gut sind.\n\nDie Auswege: oft neu starten (**Random Restart**), mehrere Zustände parallel verfolgen (**Local Beam Search**) oder gezielt auch Verschlechterungen erlauben (**Simulated Annealing**). Der Name kommt vom Glühen von Metall: Langsames Abkühlen lässt die Atome eine besonders stabile Ordnung finden."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Hill Climbing (steilster Anstieg)\n> Wiederhole: Bestimme den besten Nachbarn. Ist er nicht besser als der aktuelle Zustand, gib den aktuellen Zustand zurück. Sonst wechsle zu ihm.\n\n> [!definition] Simulated Annealing\n> Für $t = 1, \\dots, T_{\\max}$: Temperatur $T$ nach einem Abkühlplan senken, einen **zufälligen** Nachbarn wählen und $\\Delta E$ = Wert des Nachbarn minus aktueller Wert berechnen. Ist $\\Delta E > 0$, wechseln. Sonst nur mit Wahrscheinlichkeit\n> $$e^{\\Delta E / T}.$$\n\nBei hoher Temperatur ist $e^{\\Delta E / T}$ nahe $1$: fast jeder Schritt wird akzeptiert. Bei niedriger Temperatur fast nie ein schlechter. Große Verschlechterungen (sehr negatives $\\Delta E$) werden seltener akzeptiert als kleine."
+    },
+    {
+      "id": "gipfel",
+      "type": "widget",
+      "label": "Suchen",
+      "md": "**Finde das globale Maximum.** »Schritt bergauf« ist reines Hill Climbing, »Neustart« springt an eine zufällige Stelle und klettert von dort.",
+      "widget": "landscape",
+      "params": { "start": 1 },
+      "goal": { "when": "global == 1", "hints": [{ "when": "local == 1", "text": "Lokales Maximum: Von hier kommt Hill Climbing nicht weiter. Starte neu." }], "message": "Noch nicht ganz oben." },
+      "explain": "Von etwa einem Drittel aller Startpunkte führt der Anstieg zum höchsten Gipfel. Mit genug Neustarts ist es fast sicher, einmal dort anzukommen. Garantiert ist es nie."
+    },
+    {
+      "id": "temperatur",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Simulated Annealing betrachtet einen Nachbarn, der um $3$ schlechter ist ($\\Delta E = -3$). Mit welcher Wahrscheinlichkeit wird er bei $T = 2$ akzeptiert? (vier Nachkommastellen)",
+      "answer": 0.2231,
+      "tolerance": 0.0006,
+      "answerText": "0,2231",
+      "explain": "$e^{-3/2} \\approx 0{,}2231$. Bei $T = 0{,}5$ wären es nur $e^{-6} \\approx 0{,}0025$. Darum wandert das Verfahren am Anfang weit umher und wird gegen Ende zum Bergsteiger."
+    },
+    {
+      "id": "garantie",
+      "type": "truefalse",
+      "md": "Hill Climbing mit genügend vielen Schritten findet immer das globale Maximum.",
+      "answer": false,
+      "whyNot": "Es hält am ersten lokalen Maximum an, egal wie viele Schritte erlaubt wären.",
+      "explain": "Lokale Suche verspricht keine optimale Lösung, nur eine gute in kurzer Zeit. Bei vielen praktischen Problemen ist das genau der richtige Handel."
+    },
+    {
+      "id": "lp",
+      "type": "choice",
+      "md": "Zwei Maschinen kosten $50$ € und $80$ € pro Stunde. Gesucht ist der günstigste Betrieb unter Bedingungen wie »höchstens $20$ Einheiten Arbeit« und »mindestens $90$ Einheiten Ausstoß«, alle Bedingungen sind lineare Ungleichungen. Welches Verfahren ist dafür gemacht?",
+      "options": [
+        { "md": "Lineare Programmierung, etwa mit dem Simplex-Verfahren", "correct": true },
+        { "md": "Hill Climbing", "why": "Es würde funktionieren, aber ohne Garantie und ohne die Struktur auszunutzen." },
+        { "md": "Minimax", "why": "Minimax ist für Spiele mit Gegner." },
+        { "md": "Breitensuche", "why": "Die Lösungen sind reelle Zahlen, es gibt keinen endlichen Suchbaum." }
+      ],
+      "explain": "Sind Zielfunktion und Bedingungen linear, liegt das Optimum in einer Ecke des zulässigen Bereichs, und Verfahren wie Simplex finden es exakt und schnell."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-lokal", "level": 1, "label": "Klettern" },
+    { "id": "neu2", "type": "gen", "gen": "cs-lokal", "level": 2, "label": "Gipfel?" },
+    { "id": "neu3", "type": "gen", "gen": "cs-lokal", "level": 3, "label": "Abkühlen" },
+    { "id": "neu4", "type": "gen", "gen": "cs-lokal", "level": 4, "label": "Einzugsgebiet" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Lokale Suche verbessert einen einzigen Zustand schrittweise. Nur das Ergebnis zählt, nicht der Weg.",
+        "Hill Climbing bleibt in lokalen Maxima und auf Plateaus stecken.",
+        "Random Restart und Local Beam Search verteilen die Suche auf mehrere Startpunkte.",
+        "Simulated Annealing akzeptiert Verschlechterungen mit $e^{\\Delta E / T}$, anfangs oft, später selten."
+      ]
+    }
+  ]
+}

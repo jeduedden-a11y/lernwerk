@@ -1,0 +1,105 @@
+{
+  "id": "ana1-exp",
+  "title": "Die Exponentialfunktion",
+  "subtitle": "Eine unendliche Summe, die überall konvergiert",
+  "source": "Skript Jarohs, Kapitel 11",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md", "title": "Exponentialfunktion" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Grau ist $e^x$. Blau sind die Teilsummen der Reihe $\\sum \\tfrac{x^k}{k!} = 1 + x + \\tfrac{x^2}{2} + \\tfrac{x^3}{6} + \\dots$, abgebrochen nach dem Glied $x^n$.",
+      "widget": "plot",
+      "params": {
+        "x": [-4, 3], "y": [-3, 15],
+        "vars": [{ "name": "n", "min": 0, "max": 10, "step": 1, "value": 0, "hidden": true }],
+        "functions": [
+          { "expr": "exp(x)", "color": "gray", "width": 4, "label": "eˣ", "labelAt": 2.3 },
+          { "name": "T", "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)" }
+        ],
+        "readout": "Teilsumme bis $x^{{n|0}}$"
+      },
+      "int": ["n"],
+      "timeline": [
+        { "caption": "Nur der erste Summand: die Konstante $1$. Bei $x = 0$ stimmt sie schon, sonst nirgends." },
+        { "caption": "$1 + x$: eine Gerade, die Tangente an $e^x$ bei $0$.", "to": { "n": 1 }, "dur": 500 },
+        { "caption": "$1 + x + \\tfrac{x^2}{2}$: Die Parabel schmiegt sich schon auf einem größeren Bereich an.", "to": { "n": 2 }, "dur": 500 },
+        { "caption": "Mit jedem Summanden wird der Bereich größer, auf dem man keinen Unterschied mehr sieht.", "to": { "n": 4 }, "dur": 1200, "hold": 5000 },
+        { "caption": "Bei $n = 10$ ist auf dem ganzen Bild kein Unterschied mehr zu sehen. Für **jedes** feste $x$ konvergiert die Reihe, denn $k!$ wächst schneller als jede Potenz $x^k$. Diese Reihe ist die **Definition** der Exponentialfunktion.", "to": { "n": 10 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Warum gerade diese Reihe? Leite sie summandenweise ab: Aus $\\tfrac{x^k}{k!}$ wird $\\tfrac{x^{k-1}}{(k-1)!}$, also genau der vorige Summand. Die Reihe reproduziert sich beim Ableiten selbst. Sie ist die Funktion, die ihre eigene Ableitung ist und bei $0$ den Wert $1$ hat. Das macht sie zum Modell für jedes Wachstum, das proportional zum Bestand ist.\n\nDie wichtigste Eigenschaft ist die **Funktionalgleichung** $\\exp(x + y) = \\exp(x)\\exp(y)$. Man beweist sie, indem man die beiden Reihen ausmultipliziert und die Summanden geschickt ordnet, und dabei taucht genau der binomische Lehrsatz auf.\n\nAus der Funktionalgleichung folgt fast alles andere: $\\exp(-x) = \\tfrac{1}{\\exp(x)}$, also ist $\\exp$ nie $0$; $\\exp(x) = \\exp(\\tfrac x2)^2 > 0$; und mit $e = \\exp(1)$ ist $\\exp(n) = e^n$. Deshalb schreibt man $e^x$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Exponentialfunktion\n> $$\\exp(x) = \\sum_{k=0}^\\infty \\frac{x^k}{k!} \\quad\\text{für alle } x \\in \\R \\text{ (sogar } x \\in \\C).$$\n> Die Reihe konvergiert für jedes $x$ absolut, nach dem Quotientenkriterium: $\\left|\\tfrac{x^{k+1}/(k+1)!}{x^k/k!}\\right| = \\tfrac{|x|}{k+1} \\to 0$.\n\n> [!satz] Eigenschaften\n> - $\\exp(x + y) = \\exp(x)\\exp(y)$ und $\\exp(0) = 1$,\n> - $\\exp(x) > 0$, $\\exp(-x) = \\tfrac{1}{\\exp(x)}$,\n> - $\\exp$ ist streng monoton wachsend, $\\exp(x) \\ge 1 + x$,\n> - $e = \\exp(1) = \\sum \\tfrac{1}{k!} = \\lim (1 + \\tfrac1n)^n$.\n\nDie Umkehrfunktion von $\\exp: \\R \\to (0, \\infty)$ ist der **natürliche Logarithmus** $\\ln$, mit $\\ln(xy) = \\ln x + \\ln y$."
+    },
+    {
+      "id": "genau",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Wie viele Summanden braucht man für $e^2 \\approx 7{,}389$? **Stelle den Grad $n$ so ein, dass die Teilsumme bei $x = 2$ weniger als $0{,}01$ von $e^2$ abweicht.**",
+      "widget": "plot",
+      "params": {
+        "x": [-1, 3], "y": [0, 12],
+        "vars": [{ "name": "n", "label": "Grad $n$", "min": 0, "max": 10, "step": 1, "value": 2, "digits": 0 }],
+        "functions": [
+          { "expr": "exp(x)", "color": "gray", "width": 4 },
+          { "name": "T", "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)" }
+        ],
+        "points": [{ "x": 2, "on": "T", "label": "Tₙ(2)" }],
+        "readout": "$T_n(2) = {T(2)|4}$, $e^2 = {exp(2)|4}$, Abweichung ${exp(2) - T(2)|4}$"
+      },
+      "goal": {
+        "when": "abs(T(2) - exp(2)) < 0.01",
+        "hints": [{ "when": "abs(T(2) - exp(2)) >= 0.01", "text": "Die Abweichung ist noch {exp(2) - T(2)|4}." }],
+        "solve": { "n": 7 }
+      },
+      "explain": "Ab $n = 7$: $T_7(2) \\approx 7{,}3810$, Abweichung $0{,}008$. Für größere $x$ braucht man mehr Summanden, weil $\\tfrac{x^k}{k!}$ erst klein wird, wenn $k$ deutlich größer als $x$ ist."
+    },
+    {
+      "id": "positiv",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Folgere aus der Funktionalgleichung: $\\exp(x) > 0$ für alle $x \\in \\R$.",
+      "solution": "Erstens: $\\exp(x) \\cdot \\exp(-x) = \\exp(x - x) = \\exp(0) = 1$. Also ist $\\exp(x) \\ne 0$ für alle $x$.\n\nZweitens: $\\exp(x) = \\exp\\left(\\tfrac x2 + \\tfrac x2\\right) = \\exp\\left(\\tfrac x2\\right)^2 \\ge 0$.\n\nZusammen: $\\exp(x) > 0$. Für $x \\ge 0$ sieht man das auch direkt an der Reihe, denn alle Summanden sind positiv. Für negative $x$ ist die Funktionalgleichung der elegante Weg."
+    },
+    {
+      "id": "log",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $e^{\\ln 5 + \\ln 2}$.",
+      "answer": 10,
+      "tolerance": 0.0001,
+      "explain": "$e^{\\ln 5 + \\ln 2} = e^{\\ln 5} \\cdot e^{\\ln 2} = 5 \\cdot 2 = 10$. Die Funktionalgleichung macht aus Summen im Exponenten Produkte."
+    },
+    {
+      "id": "tangente",
+      "type": "truefalse",
+      "md": "Für alle $x \\in \\R$ gilt $e^x \\ge 1 + x$.",
+      "answer": true,
+      "explain": "Für $x \\ge 0$ folgt das direkt aus der Reihe, weil alle weiteren Summanden nicht negativ sind. Für $x < 0$ zeigt man es mit der Konvexität oder mit $\\left(1 + \\tfrac xn\\right)^n \\to e^x$ und Bernoulli. Geometrisch: Die Tangente $1 + x$ liegt unter dem Graphen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-exp", "level": 1, "label": "Teilsumme" },
+    { "id": "neu2", "type": "gen", "gen": "ana-exp", "level": 2, "label": "Logarithmus" },
+    { "id": "neu3", "type": "gen", "gen": "ana-exp", "level": 3, "label": "Fehler" },
+    { "id": "neu4", "type": "gen", "gen": "ana-exp", "level": 4, "label": "Eigenschaften" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\exp(x) = \\sum \\tfrac{x^k}{k!}$ konvergiert für alle $x$ absolut.",
+        "Funktionalgleichung: $\\exp(x + y) = \\exp(x)\\exp(y)$. Daraus folgen Positivität und $\\exp(-x) = 1/\\exp(x)$.",
+        "$e = \\exp(1)$, und $\\ln$ ist die Umkehrfunktion von $\\exp$.",
+        "$e^x \\ge 1 + x$: Die Tangente in $0$ liegt unter dem Graphen."
+      ]
+    }
+  ]
+}

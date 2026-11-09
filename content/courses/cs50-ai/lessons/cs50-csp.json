@@ -1,0 +1,83 @@
+{
+  "id": "cs50-csp",
+  "title": "Constraint Satisfaction",
+  "subtitle": "CS50 AI, Lecture 3: Optimization",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 3, und das Beispiel der Prüfungsplanung",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Constraint Satisfaction.md", "title": "Constraint Satisfaction" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 3 - Optimization (Kurs).md", "title": "Lecture 3 - Optimization (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Sieben Prüfungen $A$ bis $G$ sollen auf Montag, Dienstag und Mittwoch verteilt werden. Eine Linie heißt: Es gibt Studierende, die beide Prüfungen schreiben. Diese Prüfungen brauchen verschiedene Tage. Unter freien Knoten steht, welche Tage noch möglich sind.",
+      "widget": "csp",
+      "params": { "showDomains": true, "editable": false },
+      "timeline": [
+        { "caption": "Jede Prüfung ist eine **Variable**, die Tage sind ihr **Wertebereich**, jede Linie ist eine **Bedingung**. Gesucht: eine Belegung ohne verletzte Bedingung.", "do": { "assign": { "A": null, "B": null, "C": null, "D": null, "E": null, "F": null, "G": null } } },
+        { "caption": "**Backtracking** belegt eine Variable nach der anderen mit dem ersten passenden Wert: $A$ Montag, $B$ Dienstag (nicht wie $A$), $C$ Mittwoch (nicht wie $A$ und $B$).", "do": { "assign": { "A": "Mo", "B": "Di", "C": "Mi", "D": null, "E": null, "F": null, "G": null } }, "hold": 7000 },
+        { "caption": "$D$ ist nur mit $B$ verbunden, also passt Montag.", "do": { "assign": { "A": "Mo", "B": "Di", "C": "Mi", "D": "Mo", "E": null, "F": null, "G": null } } },
+        { "caption": "Sackgasse! $E$ ist mit $B$ (Dienstag), $C$ (Mittwoch) und $D$ (Montag) verbunden. Unter $E$ steht »leer«: Kein Tag ist mehr möglich.", "do": { "assign": { "A": "Mo", "B": "Di", "C": "Mi", "D": "Mo", "E": null, "F": null, "G": null } }, "hold": 6500 },
+        { "caption": "Also geht Backtracking einen Schritt zurück und gibt $D$ den nächsten Wert, Mittwoch. Jetzt ist für $E$ der Montag frei.", "do": { "assign": { "A": "Mo", "B": "Di", "C": "Mi", "D": "Mi", "E": null, "F": null, "G": null } }, "hold": 6500 },
+        { "caption": "Der Rest geht glatt: $E$ Montag, $F$ Dienstag, $G$ Mittwoch. Keine Linie verbindet zwei gleiche Farben. Das Problem ist gelöst.", "do": { "assign": { "A": "Mo", "B": "Di", "C": "Mi", "D": "Mi", "E": "Mo", "F": "Di", "G": "Mi" } } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Viele Probleme haben dieselbe Form: Variablen bekommen Werte, und dabei sind Regeln einzuhalten. Stundenpläne, Sudoku, Sitzordnungen, das Färben von Landkarten. Ein solches **Constraint Satisfaction Problem** (CSP) besteht aus Variablen, ihren Wertebereichen und Bedingungen.\n\n**Backtracking** ist eine Tiefensuche durch die Belegungen: Werte versuchen, bei einem Widerspruch die letzte Entscheidung zurücknehmen. Gut wird das Verfahren durch zwei Ideen.\n\n**Inferenz:** Nach jeder Zuweisung streicht man aus den Wertebereichen der Nachbarn alles, was nicht mehr passt (**Bogenkonsistenz**). Wird ein Bereich leer, weiß man sofort, dass man zurück muss, statt es erst viel später zu merken.\n\n**Heuristiken:** Welche Variable als Nächstes? Die mit den **wenigsten übrigen Werten** (Minimum Remaining Values), bei Gleichstand die mit den **meisten Nachbarn** (Gradheuristik). Welcher Wert zuerst? Der, der den Nachbarn am meisten Möglichkeiten lässt (**Least Constraining Value**). Man scheitert früh dort, wo es eng ist, und lässt sich dort Spielraum, wo man ihn später braucht."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Constraint Satisfaction Problem\n> Variablen $X_1, \\dots, X_n$, Wertebereiche $D_1, \\dots, D_n$ und Bedingungen $C$. **Harte** Bedingungen müssen erfüllt sein, **weiche** drücken Vorlieben aus. **Unäre** Bedingungen betreffen eine Variable ($A \\ne \\text{Montag}$), **binäre** zwei ($A \\ne B$).\n\n> [!definition] Konsistenz\n> **Knotenkonsistent:** Jeder Wert im Bereich erfüllt die unären Bedingungen.\n> **Bogenkonsistent** bezüglich $Y$: Zu jedem Wert von $X$ gibt es einen passenden Wert von $Y$. Der Algorithmus AC-3 stellt das für alle Bögen her.\n\n> [!definition] Backtracking\n> Ist die Belegung vollständig, gib sie zurück. Sonst wähle eine freie Variable, probiere ihre Werte der Reihe nach, steige bei einem passenden Wert rekursiv ab und nimm ihn zurück, wenn der Abstieg scheitert."
+    },
+    {
+      "id": "plan",
+      "type": "widget",
+      "label": "Planen",
+      "md": "**Verteile die Prüfungen selbst.** Tippe auf einen Knoten, um seinen Tag zu wechseln. Die Zahlen unter freien Knoten helfen: Dort stehen die noch möglichen Tage.",
+      "widget": "csp",
+      "params": { "showDomains": true, "assign": { "E": "Di" } },
+      "goal": { "complete": true },
+      "explain": "Wer bei $E$ beginnt, dem Knoten mit den meisten Verbindungen, hat es leichter. Das ist die Gradheuristik. Eine Lösung mit $E$ am Dienstag: $A$ Di, $B$ Mo, $C$ Mi, $D$ Mi, $F$ Mo, $G$ Mi. Prüfe, dass keine Linie zwei gleiche Tage verbindet."
+    },
+    {
+      "id": "mrv",
+      "type": "choice",
+      "md": "In der Animation waren $A$ Montag und $B$ Dienstag belegt. Welche Variable würde die Heuristik **Minimum Remaining Values** als Nächstes wählen?",
+      "options": [
+        { "md": "$C$: Nur Mittwoch ist noch möglich.", "correct": true },
+        { "md": "$D$", "why": "$D$ ist nur mit $B$ verbunden, Montag und Mittwoch bleiben möglich." },
+        { "md": "$E$", "why": "$E$ hat zwar viele Nachbarn, aber noch zwei mögliche Tage." },
+        { "md": "$G$", "why": "$G$ hat noch keinen belegten Nachbarn, alle drei Tage sind möglich." }
+      ],
+      "explain": "$C$ ist mit $A$ und $B$ verbunden, also bleibt nur Mittwoch. Wer nur noch eine Möglichkeit hat, wird zuerst belegt, denn wenn es scheitert, will man es sofort wissen."
+    },
+    {
+      "id": "bogen",
+      "type": "numeric",
+      "label": "Bogenkonsistenz",
+      "md": "$X \\in \\{1, 2, 3, 4, 5\\}$, $Y \\in \\{2, 3\\}$, Bedingung $X > Y$. Wie viele Werte bleiben für $X$ übrig, wenn man $X$ bogenkonsistent bezüglich $Y$ macht?",
+      "answer": 3,
+      "tolerance": 0,
+      "explain": "$X = 1$ und $X = 2$ haben keinen Partner $Y < X$ in $\\{2, 3\\}$. Übrig bleiben $\\{3, 4, 5\\}$. Für $X = 3$ passt $Y = 2$, für $4$ und $5$ beide."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-csp", "level": 1, "label": "Verletzungen" },
+    { "id": "neu2", "type": "gen", "gen": "cs-csp", "level": 2, "label": "Übrige Werte" },
+    { "id": "neu3", "type": "gen", "gen": "cs-csp", "level": 3, "label": "Heuristik" },
+    { "id": "neu4", "type": "gen", "gen": "cs-csp", "level": 4, "label": "Bogenkonsistenz" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ein CSP besteht aus Variablen, Wertebereichen und Bedingungen.",
+        "Backtracking probiert Werte und geht bei einem Widerspruch eine Entscheidung zurück.",
+        "Bogenkonsistenz streicht unmögliche Werte früh und erkennt Sackgassen, bevor man in sie hineinläuft.",
+        "Heuristiken: MRV und Grad für die Wahl der Variable, Least Constraining Value für den Wert."
+      ]
+    }
+  ]
+}

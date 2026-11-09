@@ -1,0 +1,102 @@
+{
+  "id": "la1-matrixprodukt",
+  "title": "Verkettung, Matrixprodukt und Inverse",
+  "subtitle": "Warum man Matrizen gerade so multipliziert",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 3",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md", "title": "Matrixmultiplikation" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Erst drehen, dann scheren, oder umgekehrt: Kommt dasselbe heraus? Die Antwort erklärt, warum das Matrixprodukt so seltsam aussieht.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "editable": false },
+      "timeline": [
+        { "caption": "Zwei Abbildungen: $D$ dreht um $90°$, $S = \\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ schert. Wir beginnen beim unveränderten Gitter." },
+        { "caption": "Zuerst $S$: $e_2$ kippt nach $(1, 1)$, das Gitter wird schief.", "to": { "m12": 1 }, "dur": 1600 },
+        { "caption": "Danach $D$: Alles dreht sich um $90°$. Zusammen ergibt das $DS = \\begin{pmatrix}0&-1\\\\1&1\\end{pmatrix}$, denn die Spalten sind die Bilder $D(S e_1)$ und $D(S e_2)$.", "to": { "m11": 0, "m12": -1, "m21": 1, "m22": 1 }, "dur": 2200, "hold": 5400 },
+        { "caption": "Jetzt in der anderen Reihenfolge: erst drehen, dann scheren. Ergebnis $SD = \\begin{pmatrix}1&-1\\\\1&0\\end{pmatrix}$, ein anderes Gitter.", "to": { "m11": 1, "m12": -1, "m21": 1, "m22": 0 }, "dur": 2200, "hold": 5400 },
+        { "caption": "Also $DS \\ne SD$: Die Reihenfolge zählt. Das Produkt $AB$ steht für **»erst $B$, dann $A$«**, gelesen von rechts nach links wie bei $f(g(x))$." }
+      ]
+    },
+    {
+      "id": "produkt",
+      "type": "text",
+      "md": "Sind $f(x) = Ax$ und $g(x) = Bx$ linear, dann ist auch $f \\circ g$ linear, mit Matrix $AB$:\n\n$$(f \\circ g)(x) = A(Bx) = (AB)x.$$\n\nDie $j$-te Spalte von $AB$ ist $A$ mal die $j$-te Spalte von $B$, denn sie ist das Bild von $e_j$: erst $B e_j$, dann $A$ darauf. Daraus folgt die Rechenregel **Zeile mal Spalte**:\n\n$$(AB)_{ij} = \\sum_k a_{ik} b_{kj}.$$\n\nDas Produkt ist assoziativ, $(AB)C = A(BC)$, denn Verkettung ist assoziativ. Kommutativ ist es im Allgemeinen nicht."
+    },
+    {
+      "id": "beispiel",
+      "type": "text",
+      "label": "Beispiel",
+      "md": "$$\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix} = \\begin{pmatrix}1\\cdot0 + 2\\cdot1 & 1\\cdot1 + 2\\cdot0\\\\ 3\\cdot0 + 4\\cdot1 & 3\\cdot1 + 4\\cdot0\\end{pmatrix} = \\begin{pmatrix}2&1\\\\4&3\\end{pmatrix}$$\n\nRechts mit der Vertauschungsmatrix multiplizieren vertauscht die **Spalten**. Links multipliziert, würde sie die **Zeilen** vertauschen."
+    },
+    {
+      "id": "spiegeln-drehen",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Gesucht ist die Matrix der Abbildung **erst an der $x$-Achse spiegeln, dann um $90°$ gegen den Uhrzeigersinn drehen**. Ziehe die Bilder von $e_1$ und $e_2$ an die richtigen Stellen.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "range": 3 },
+      "goal": { "matrix": [[0, 1], [1, 0]] },
+      "explain": "Spiegeln: $e_1 \\mapsto e_1$, $e_2 \\mapsto -e_2$. Drehen: $e_1 \\mapsto e_2$, $-e_2 \\mapsto e_1$. Zusammen $e_1 \\mapsto e_2$ und $e_2 \\mapsto e_1$: die Spiegelung an der Diagonalen $y = x$, mit Matrix $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$."
+    },
+    {
+      "id": "rechnen",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Berechne $\\begin{pmatrix}2&-1\\\\0&3\\end{pmatrix}\\begin{pmatrix}1&4\\\\2&1\\end{pmatrix}$ (zeilenweise).\n\n{{0}} {{1}} {{2}} {{3}}",
+      "blanks": [
+        { "accept": [0], "numeric": true }, { "accept": [7], "numeric": true },
+        { "accept": [6], "numeric": true }, { "accept": [3], "numeric": true }
+      ],
+      "explain": "$2\\cdot1 + (-1)\\cdot2 = 0$, $2\\cdot4 + (-1)\\cdot1 = 7$, $0\\cdot1 + 3\\cdot2 = 6$, $0\\cdot4 + 3\\cdot1 = 3$."
+    },
+    {
+      "id": "fehler",
+      "type": "gen",
+      "gen": "la-fehler",
+      "level": 1,
+      "label": "Fehler finden"
+    },
+    {
+      "id": "inverse",
+      "type": "text",
+      "md": "Eine Matrix $A$ heißt **invertierbar**, wenn es $A^{-1}$ gibt mit $AA^{-1} = A^{-1}A = E$. Geometrisch: Die Abbildung lässt sich rückgängig machen. Das geht genau dann, wenn $\\det A \\ne 0$, wenn also keine Richtung platt gedrückt wird. Für $2 \\times 2$-Matrizen gilt\n\n$$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}.$$\n\nUnd es gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst Socken, dann Schuhe anzieht, zieht zuerst die Schuhe aus."
+    },
+    {
+      "id": "invers-rechnen",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Bestimme die Inverse von $\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$ (zeilenweise).\n\n{{0}} {{1}} {{2}} {{3}}",
+      "blanks": [
+        { "accept": [1], "numeric": true }, { "accept": [-1], "numeric": true },
+        { "accept": [-1], "numeric": true }, { "accept": [2], "numeric": true }
+      ],
+      "hint": "Die Determinante ist $2 \\cdot 1 - 1 \\cdot 1 = 1$.",
+      "explain": "$A^{-1} = \\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix}$. Probe: $\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}\\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix} = \\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}$."
+    },
+    {
+      "id": "reihenfolge",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Warum ist $(AB)^{-1} = B^{-1}A^{-1}$ und nicht $A^{-1}B^{-1}$? Rechne nach, indem du $(AB)(B^{-1}A^{-1})$ vereinfachst.",
+      "solution": "$$(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AEA^{-1} = AA^{-1} = E.$$\nDie Klammern darf man wegen der Assoziativität verschieben. Mit $A^{-1}B^{-1}$ ginge das nicht, weil $B$ und $A^{-1}$ nicht nebeneinanderstünden."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-matrix", "level": 2, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "la-matrix", "level": 3, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "la-matrix", "level": 4, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$AB$ ist die Matrix der Verkettung »erst $B$, dann $A$«. Spalte $j$ von $AB$ ist $A$ mal Spalte $j$ von $B$.",
+        "Das Produkt ist assoziativ, aber nicht kommutativ.",
+        "$A$ ist invertierbar genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$: $\\tfrac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$.",
+        "$(AB)^{-1} = B^{-1}A^{-1}$, die Reihenfolge kehrt sich um."
+      ]
+    }
+  ]
+}

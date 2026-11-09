@@ -1,0 +1,81 @@
+{
+  "id": "cs50-klassifikation",
+  "title": "Nearest Neighbor und Perzeptron",
+  "subtitle": "CS50 AI, Lecture 4: Learning",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 4",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überwachtes Lernen.md", "title": "Überwachtes Lernen" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 4 - Learning (Kurs).md", "title": "Lecture 4 - Learning (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Vergangene Tage, eingetragen nach Luftfeuchtigkeit und Luftdruck. Blaue Kreise: Es hat geregnet. Orange Quadrate: Es blieb trocken. Das Fragezeichen ist ein neuer Tag. Regnet es?",
+      "widget": "classifier",
+      "params": { "mode": "knn", "query": [0.3, 0.62], "k": 1 },
+      "timeline": [
+        { "caption": "**Nearest Neighbor:** Gib dem neuen Punkt die Klasse des ähnlichsten bekannten Tages. Hier ist der nächste Nachbar ein trockener Tag, also Vorhersage: kein Regen." },
+        { "caption": "Ein anderer Tag mit hoher Luftfeuchtigkeit und niedrigem Druck. Der nächste Nachbar ist ein Regentag.", "to": { "qx": 0.62, "qy": 0.3 }, "dur": 2000 },
+        { "caption": "Im Grenzbereich wird es heikel: Ein einzelner Nachbar kann ein Ausreißer sein.", "to": { "qx": 0.55, "qy": 0.5 }, "dur": 1600 },
+        { "caption": "**k-Nearest-Neighbors** fragt deshalb die $k$ nächsten Nachbarn und lässt die Mehrheit entscheiden. Mit $k = 3$ ist die Vorhersage stabiler.", "to": { "k": 3 }, "dur": 400, "hold": 6500 },
+        { "caption": "Das ist die einfachste Form von **überwachtem Lernen**: Aus Beispielen mit bekannter Antwort wird eine Funktion, die neue Fälle einordnet. Sie hat aber einen Preis: Für jede Vorhersage muss man alle gespeicherten Beispiele durchsuchen." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "**Überwachtes Lernen** heißt: Wir haben Eingaben mit den richtigen Antworten und suchen eine Funktion $h$ (die **Hypothese**), die zu den Beispielen passt und auf neuen Fällen gut rät. Ist die Antwort eine Kategorie, heißt das **Klassifikation**, ist sie eine Zahl, **Regression**.\n\nNearest Neighbor merkt sich einfach alle Beispiele. Das **Perzeptron** lernt stattdessen eine **Trennlinie**: Es berechnet eine gewichtete Summe $w_0 + w_1 x_1 + w_2 x_2$ und sagt »Regen«, wenn sie mindestens $0$ ist. Die Gewichte bestimmen Lage und Richtung der Linie.\n\nGelernt wird mit einer erstaunlich einfachen Regel: Liegt ein Beispiel auf der falschen Seite, schiebe die Gewichte ein Stück in seine Richtung. Bei richtig eingeordneten Beispielen passiert nichts. Wenn die Daten überhaupt durch eine Linie trennbar sind, findet das Perzeptron eine solche Linie.\n\nWas ist die **beste** Trennlinie? Die **Support Vector Machine** wählt die mit dem größten Abstand zu den nächsten Punkten. Und wann lernt man zu viel? Wenn das Modell die Trainingsdaten auswendig lernt, samt Zufall und Fehlern, heißt das **Overfitting**."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Perzeptron-Lernregel\n> Hypothese $h_w(x) = 1$, falls $w \\cdot x = w_0 + w_1 x_1 + \\dots + w_n x_n \\ge 0$, sonst $0$. Für jedes Beispiel $(x, y)$:\n> $$w_i \\leftarrow w_i + \\alpha\\,\\big(y - h_w(x)\\big)\\,x_i \\qquad (x_0 = 1).$$\n\n> [!definition] Verlust und Regularisierung\n> Eine **Verlustfunktion** misst, wie schlecht eine Vorhersage ist: **0-1-Verlust** zählt Fehler, **$L_1$** summiert $|y - \\hat y|$, **$L_2$** summiert $(y - \\hat y)^2$.\n> **Regularisierung** bestraft zu komplexe Hypothesen: Kosten $= \\text{Verlust} + \\lambda \\cdot \\text{Komplexität}$.\n\n> [!definition] Kreuzvalidierung\n> Man testet auf Daten, die beim Lernen nicht benutzt wurden. Bei **$k$-facher Kreuzvalidierung** teilt man die Daten in $k$ Teile und testet nacheinander auf jedem einzelnen."
+    },
+    {
+      "id": "perzeptron",
+      "type": "widget",
+      "label": "Lernen lassen",
+      "md": "Das Perzeptron startet mit allen Gewichten $0$. Rot umrandet sind falsch eingeordnete Tage, die gestrichelte Linie ist die Trennlinie. **Lass es lernen, bis kein Tag mehr falsch eingeordnet ist.**",
+      "widget": "classifier",
+      "params": { "mode": "perceptron", "w": [0, 0, 0], "alpha": 0.5 },
+      "goal": { "when": "errors == 0", "hints": [{ "when": "errors > 0", "text": "Noch {errors|0} falsch eingeordnete Punkte." }] },
+      "explain": "Jeder Lernschritt nimmt einen falsch eingeordneten Punkt und dreht die Linie ein Stück zu seinen Gunsten. Nach gut zwanzig Updates trennt die Linie beide Klassen. Bei Daten, die keine Gerade trennen kann, würde das Perzeptron ewig weiterschieben."
+    },
+    {
+      "id": "update",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Gewichte $w = (0, 1, -1)$, Lernrate $\\alpha = 0{,}5$. Der Tag $x = (0{,}2;\\ 0{,}7)$ war **trocken** ($y = 0$), das Perzeptron sagt aber Regen? Prüfe und berechne gegebenenfalls die neuen Gewichte.\n\n$w_0 =$ {{0}} $\\quad w_1 =$ {{1}} $\\quad w_2 =$ {{2}}",
+      "blanks": [{ "accept": [0], "numeric": true, "tolerance": 0.001 }, { "accept": [1], "numeric": true, "tolerance": 0.001 }, { "accept": [-1], "numeric": true, "tolerance": 0.001 }],
+      "hint": "Berechne zuerst $w \\cdot x = 0 + 1 \\cdot 0{,}2 - 1 \\cdot 0{,}7$.",
+      "explain": "$w \\cdot x = -0{,}5 < 0$, also sagt das Perzeptron **kein** Regen, und das ist richtig. Dann ist $y - h = 0$, und die Gewichte bleiben $(0, 1, -1)$. Die Regel ändert nur etwas bei Fehlern. Die Frage hat bewusst eine falsche Behauptung enthalten."
+    },
+    {
+      "id": "overfitting",
+      "type": "choice",
+      "md": "Ein Modell ordnet alle Trainingsbeispiele perfekt ein, ist auf neuen Daten aber schlecht. Was ist passiert?",
+      "options": [
+        { "md": "Overfitting: Es hat die Trainingsdaten samt Zufall auswendig gelernt.", "correct": true },
+        { "md": "Die Lernrate war zu klein.", "why": "Eine kleine Lernrate macht das Lernen langsam, aber nicht zu genau." },
+        { "md": "Zu wenig Regularisierung ist unmöglich, also muss der Testdatensatz falsch sein.", "why": "Genau zu wenig Regularisierung ist eine typische Ursache." }
+      ],
+      "explain": "Gegenmittel sind einfachere Modelle, Regularisierung und das ehrliche Testen auf zurückgehaltenen Daten, etwa mit Kreuzvalidierung. 1-Nearest-Neighbor ist ein Extrembeispiel: Auf den Trainingsdaten ist es immer perfekt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-klassifikation", "level": 1, "label": "Nächster Nachbar" },
+    { "id": "neu2", "type": "gen", "gen": "cs-klassifikation", "level": 2, "label": "Drei Nachbarn" },
+    { "id": "neu3", "type": "gen", "gen": "cs-klassifikation", "level": 3, "label": "Perzeptron" },
+    { "id": "neu4", "type": "gen", "gen": "cs-klassifikation", "level": 4, "label": "Verlust" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Überwachtes Lernen sucht eine Funktion, die zu Beispielen mit bekannter Antwort passt und auf neue verallgemeinert.",
+        "k-Nearest-Neighbors entscheidet per Mehrheit der ähnlichsten Beispiele.",
+        "Das Perzeptron lernt eine Trennlinie: $w_i \\leftarrow w_i + \\alpha(y - h(x))x_i$, nur bei Fehlern.",
+        "Verlustfunktionen messen Fehler, Regularisierung und Kreuzvalidierung schützen vor Overfitting."
+      ]
+    }
+  ]
+}

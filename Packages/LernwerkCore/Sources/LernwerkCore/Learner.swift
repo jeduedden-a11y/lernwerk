@@ -1,0 +1,300 @@
+import Foundation
+
+/// Calendar day key "yyyy-MM-dd" in the user's time zone.
+public enum DayKey {
+    public static func key(for date: Date, calendar: Calendar = .current) -> String {
+        let c = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(format: "%04d-%02d-%02d", c.year ?? 0, c.month ?? 0, c.day ?? 0)
+    }
+
+    public static func date(_ key: String, calendar: Calendar = .current) -> Date? {
+        let parts = key.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        return calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2]))
+    }
+}
+
+public struct LessonProgress: Codable, Hashable, Sendable {
+    public var courseId: String
+    public var lastStep: Int = 0
+    public var completedAt: Date?
+    public var bestScore: Double?
+    public var timesCompleted: Int = 0
+    public var updatedAt: Date = Date()
+
+    public init(courseId: String) { self.courseId = courseId }
+
+    public var isCompleted: Bool { completedAt != nil }
+}
+
+/// One question step scheduled for spaced repetition (SM-2 family).
+public struct ReviewCard: Codable, Hashable, Sendable, Identifiable {
+    public var courseId: String
+    public var lessonId: String
+    public var stepId: String
+    public var ease: Double = 2.5
+    public var interval: Double = 0   // days
+    public var reps: Int = 0
+    public var lapses: Int = 0
+    public var due: Date
+    public var lastReviewed: Date?
+
+    public var id: String { ReviewCard.key(lessonId, stepId) }
+    public static func key(_ lesson: String, _ step: String) -> String { "\(lesson)#\(step)" }
+
+    public init(courseId: String, lessonId: String, stepId: String, due: Date) {
+        self.courseId = courseId
+        self.lessonId = lessonId
+        self.stepId = stepId
+        self.due = due
+    }
+}
+
+public enum Scheduler {
+    /// Updates a card after an answer of the given quality (0...5).
+    /// 5 = solved at the first try, 3 = solved after a mistake, 1 = not solved.
+    public static func review(_ card: ReviewCard, quality: Int, now: Date = Date()) -> ReviewCard {
+        var c = card
+        let q = Double(max(0, min(5, quality)))
+        c.lastReviewed = now
+        if q < 3 {
+            c.reps = 0
+            c.lapses += 1
+            c.interval = 0
+            c.ease = max(1.3, c.ease - 0.2)
+            c.due = now.addingTimeInterval(10 * 60)
+            return c
+        }
+        c.reps += 1
+        switch c.reps {
+        case 1: c.interval = q >= 5 ? 1 : 0.5
+        case 2: c.interval = q >= 5 ? 4 : 2
+        default: c.interval = max(1, (c.interval * c.ease).rounded())
+        }
+        c.ease = max(1.3, c.ease + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02)))
+        c.due = now.addingTimeInterval(c.interval * 86_400)
+        return c
+    }
+}
+
+public struct DayStat: Codable, Hashable, Sendable {
+    public var xp: Int = 0
+    public var lessons: Int = 0
+    public var reviews: Int = 0
+    public var seconds: Int = 0
+    /// Training tasks done that day.
+    public var practice: Int = 0
+    public init() {}
+
+    enum CodingKeys: String, CodingKey { case xp, lessons, reviews, seconds, practice }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        xp = (try? c.decode(Int.self, forKey: .xp)) ?? 0
+        lessons = (try? c.decode(Int.self, forKey: .lessons)) ?? 0
+        reviews = (try? c.decode(Int.self, forKey: .reviews)) ?? 0
+        seconds = (try? c.decode(Int.self, forKey: .seconds)) ?? 0
+        practice = (try? c.decode(Int.self, forKey: .practice)) ?? 0
+    }
+}
+
+/// Training on one topic, per level 1 (Leicht) to 4 (Experte).
+public struct PracticeStat: Codable, Hashable, Sendable {
+    public var tasks: [Int] = [0, 0, 0, 0]
+    public var correct: [Int] = [0, 0, 0, 0]
+    public var best: [Double] = [0, 0, 0, 0]
+    public var rounds: Int = 0
+    public var lastLevel: Int = 1
+    public var lastAt: Date?
+
+    public init() {}
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        func four<T: Decodable>(_ key: CodingKeys, _ fallback: T) -> [T] {
+            let v = (try? c.decode([T].self, forKey: key)) ?? []
+            return v.count == 4 ? v : [fallback, fallback, fallback, fallback]
+        }
+        tasks = four(.tasks, 0)
+        correct = four(.correct, 0)
+        best = four(.best, 0.0)
+        rounds = (try? c.decode(Int.self, forKey: .rounds)) ?? 0
+        lastLevel = (try? c.decode(Int.self, forKey: .lastLevel)) ?? 1
+        lastAt = try? c.decodeIfPresent(Date.self, forKey: .lastAt)
+    }
+
+    /// A level counts as mastered after a round with at least 80 % at the first try.
+    public func mastered(_ level: Int) -> Bool { (1...4).contains(level) && best[level - 1] >= 0.8 }
+    public var highestMastered: Int { (1...4).last { mastered($0) } ?? 0 }
+    public var totalTasks: Int { tasks.reduce(0, +) }
+
+    public static func key(course: String, topic: String) -> String { "\(course)/\(topic)" }
+}
+
+/// A note the learner wrote in the app; it goes into the vault through the Tagwerk bridge.
+public struct LearnNote: Codable, Hashable, Sendable, Identifiable {
+    public var id: String
+    public var courseId: String
+    public var lessonId: String
+    public var lessonTitle: String
+    public var stepId: String?
+    public var vaultPath: String
+    public var vaultTitle: String
+    public var text: String
+    public var createdAt: Date
+    public var updatedAt: Date
+    /// Text as last handed to the bridge; nil if never sent.
+    public var sentText: String?
+    /// Id of the outbox event that carries the current text, while it waits to be sent.
+    public var queuedEventID: String?
+
+    public init(id: String = UUID().uuidString.lowercased(), courseId: String, lessonId: String, lessonTitle: String, stepId: String?,
+                vaultPath: String, vaultTitle: String, text: String, now: Date = Date()) {
+        self.id = id
+        self.courseId = courseId
+        self.lessonId = lessonId
+        self.lessonTitle = lessonTitle
+        self.stepId = stepId
+        self.vaultPath = vaultPath
+        self.vaultTitle = vaultTitle
+        self.text = text
+        self.createdAt = now
+        self.updatedAt = now
+    }
+
+    public var isSent: Bool { sentText == text }
+}
+
+public struct LearnerState: Codable, Sendable {
+    public var lessons: [String: LessonProgress] = [:]
+    public var cards: [String: ReviewCard] = [:]
+    public var days: [String: DayStat] = [:]
+    public var notes: [LearnNote] = []
+    public var outbox: [OutgoingEvent] = []
+    /// Training per "course/topic".
+    public var practice: [String: PracticeStat] = [:]
+    public var lastLesson: String?
+    public var dailyGoal: Int = 30
+    public var bridgeFeatures: [String] = []
+    public var bridgePluginVersion: String?
+    public var lastPush: Date?
+    public var lastSyncError: String?
+    public var deviceSalt: String = TagwerkCrypto.randomBytes(16).base64EncodedString()
+
+    public init() {}
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        lessons = (try? c.decode([String: LessonProgress].self, forKey: .lessons)) ?? [:]
+        cards = (try? c.decode([String: ReviewCard].self, forKey: .cards)) ?? [:]
+        days = (try? c.decode([String: DayStat].self, forKey: .days)) ?? [:]
+        notes = (try? c.decode([LearnNote].self, forKey: .notes)) ?? []
+        outbox = (try? c.decode([OutgoingEvent].self, forKey: .outbox)) ?? []
+        practice = (try? c.decode([String: PracticeStat].self, forKey: .practice)) ?? [:]
+        lastLesson = try? c.decodeIfPresent(String.self, forKey: .lastLesson)
+        dailyGoal = (try? c.decode(Int.self, forKey: .dailyGoal)) ?? 30
+        bridgeFeatures = (try? c.decode([String].self, forKey: .bridgeFeatures)) ?? []
+        bridgePluginVersion = try? c.decodeIfPresent(String.self, forKey: .bridgePluginVersion)
+        lastPush = try? c.decodeIfPresent(Date.self, forKey: .lastPush)
+        lastSyncError = try? c.decodeIfPresent(String.self, forKey: .lastSyncError)
+        deviceSalt = (try? c.decode(String.self, forKey: .deviceSalt)) ?? TagwerkCrypto.randomBytes(16).base64EncodedString()
+    }
+
+    // MARK: derived values
+
+    public func dueCards(now: Date = Date()) -> [ReviewCard] {
+        cards.values.filter { $0.due <= now }.sorted { $0.due < $1.due }
+    }
+
+    public func xp(on day: String) -> Int { days[day]?.xp ?? 0 }
+
+    /// Consecutive days with activity, counting today only if something happened today.
+    public func streak(now: Date = Date(), calendar: Calendar = .current) -> Int {
+        var count = 0
+        var day = calendar.startOfDay(for: now)
+        if xp(on: DayKey.key(for: day, calendar: calendar)) == 0 {
+            day = calendar.date(byAdding: .day, value: -1, to: day) ?? day
+        }
+        while xp(on: DayKey.key(for: day, calendar: calendar)) > 0 {
+            count += 1
+            guard let prev = calendar.date(byAdding: .day, value: -1, to: day) else { break }
+            day = prev
+        }
+        return count
+    }
+
+    public func completedCount(in course: Course) -> Int {
+        course.readyLessons.filter { lessons[$0.id]?.isCompleted == true }.count
+    }
+
+    // MARK: recording
+
+    /// Records a finished lesson or review session and returns the XP earned.
+    @discardableResult
+    public mutating func record(_ finished: FinishedLesson, course: Course?, meta: LessonMeta?, now: Date = Date()) -> Int {
+        let dayKey = DayKey.key(for: now)
+        var stat = days[dayKey] ?? DayStat()
+        let questions = finished.results.count
+        let good = finished.results.filter { $0.quality >= 4 }.count
+        var xp = 0
+        if finished.mode == "practice" {
+            // training: no cards, the tasks are new every time; harder levels earn more
+            let level = max(1, min(4, finished.practice?.level ?? 1))
+            let first = finished.results.filter { $0.firstTry || ($0.isSelfCheck && $0.correct) }.count
+            let later = finished.results.filter { $0.correct && !$0.firstTry && !$0.isSelfCheck }.count
+            xp = first * (1 + level) + later
+            stat.practice += finished.results.count
+            if let topic = finished.practice?.topicId, let courseID = finished.practice?.courseId ?? course?.id {
+                let key = PracticeStat.key(course: courseID, topic: topic)
+                var p = practice[key] ?? PracticeStat()
+                p.tasks[level - 1] += finished.results.count
+                p.correct[level - 1] += first
+                p.best[level - 1] = max(p.best[level - 1], finished.score)
+                p.rounds += 1
+                p.lastLevel = level
+                p.lastAt = now
+                practice[key] = p
+            }
+        } else if finished.mode == "review" {
+            xp = 2 * questions + good
+            stat.reviews += questions
+            for r in finished.results {
+                guard let lesson = r.lessonId else { continue }
+                let key = ReviewCard.key(lesson, r.stepId)
+                if let card = cards[key] { cards[key] = Scheduler.review(card, quality: r.quality, now: now) }
+            }
+        } else if let lessonID = finished.lessonId, let course {
+            var p = lessons[lessonID] ?? LessonProgress(courseId: course.id)
+            let firstTime = !p.isCompleted
+            p.completedAt = p.completedAt ?? now
+            p.timesCompleted += 1
+            p.bestScore = max(p.bestScore ?? 0, finished.score)
+            p.lastStep = 0
+            p.updatedAt = now
+            lessons[lessonID] = p
+            xp = (firstTime ? 10 : 4) + 2 * good
+            stat.lessons += 1
+            // every question of the lesson becomes a card; results decide the first due date
+            let byStep = Dictionary(finished.results.map { ($0.stepId, $0) }, uniquingKeysWith: { a, _ in a })
+            for stepID in meta?.reviewableStepIDs ?? finished.results.map(\.stepId) {
+                let key = ReviewCard.key(lessonID, stepID)
+                if cards[key] != nil { continue }
+                let base = ReviewCard(courseId: course.id, lessonId: lessonID, stepId: stepID, due: now)
+                let q = byStep[stepID]?.quality ?? 4
+                cards[key] = Scheduler.review(base, quality: q, now: now)
+            }
+        }
+        stat.xp += xp
+        stat.seconds += finished.seconds ?? 0
+        days[dayKey] = stat
+        return xp
+    }
+
+    public mutating func noteProgress(lessonID: String, courseID: String, step: Int, now: Date = Date()) {
+        var p = lessons[lessonID] ?? LessonProgress(courseId: courseID)
+        if !p.isCompleted || step > 0 { p.lastStep = step }
+        p.updatedAt = now
+        lessons[lessonID] = p
+        lastLesson = lessonID
+    }
+}

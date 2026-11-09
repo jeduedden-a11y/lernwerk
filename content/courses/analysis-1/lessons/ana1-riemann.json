@@ -1,0 +1,102 @@
+{
+  "id": "ana1-riemann",
+  "title": "Ober- und Untersummen",
+  "subtitle": "Flächen zwischen zwei Treppen einklemmen",
+  "source": "Skript Jarohs, Kapitel 14",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Riemann-Integral.md", "title": "Riemann-Integral" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wie groß ist die Fläche unter $f(x) = x^2$ zwischen $0$ und $1$? Für krumme Ränder gibt es keine Formel. Also klemmen wir die Fläche zwischen zwei Treppen ein.",
+      "widget": "plot",
+      "params": {
+        "x": [-0.08, 1.1], "y": [-0.08, 1.1],
+        "vars": [{ "name": "n", "min": 1, "max": 60, "step": 1, "value": 2, "hidden": true }],
+        "functions": [{ "expr": "x^2", "domain": [0, 1.05], "label": "f", "labelAt": 0.8 }],
+        "riemann": [{ "f": "f", "from": 0, "to": 1, "n": "n", "kind": "upper", "name": "O", "color": "orange" }, { "f": "f", "from": 0, "to": 1, "n": "n", "kind": "lower", "name": "U", "color": "accent" }],
+        "readout": "$n = {n|0}$: Untersumme ${U|4}$, Obersumme ${O|4}$, Differenz ${O - U|4}$"
+      },
+      "int": ["n"],
+      "timeline": [
+        { "caption": "Zwei Streifen. Orange: Jeder Streifen so hoch wie der **größte** Funktionswert darin, die **Obersumme**. Blau: so hoch wie der **kleinste**, die **Untersumme**. Die gesuchte Fläche liegt dazwischen." },
+        { "caption": "Vier Streifen: Die Obersumme sinkt, die Untersumme steigt. Die Lücke dazwischen, die orange Treppenstufen, wird kleiner.", "to": { "n": 4 }, "dur": 800 },
+        { "caption": "Zehn Streifen: Untersumme $0{,}285$, Obersumme $0{,}385$. Die Fläche ist auf $0{,}1$ genau eingeklemmt.", "to": { "n": 10 }, "dur": 1400 },
+        { "caption": "Bei $40$ Streifen beträgt die Differenz nur noch $0{,}025$. Beide Summen streben gegen denselben Wert, $\\tfrac13$. Diesen gemeinsamen Grenzwert nennt man das **Integral** $\\int_0^1 x^2\\,dx = \\tfrac13$.", "to": { "n": 40 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die Idee ist dieselbe wie bei der Intervallschachtelung: Was man nicht direkt berechnen kann, schließt man von beiden Seiten ein. Jede Untersumme ist zu klein, jede Obersumme zu groß. Wenn sich die beiden Schätzungen beliebig nahe kommen, gibt es genau eine Zahl dazwischen, und die nennt man die Fläche.\n\nBei manchen Funktionen klappt das nicht. Die Funktion, die auf rationalen Zahlen $1$ und auf irrationalen $0$ ist, springt in jedem noch so kleinen Streifen zwischen $0$ und $1$. Jede Obersumme ist $1$, jede Untersumme $0$, und keine Verfeinerung hilft. Sie ist **nicht integrierbar**.\n\nGutartig sind dagegen **monotone** und **stetige** Funktionen: Bei ihnen werden die Treppenstufen zwischen Ober- und Untersumme mit feinerer Zerlegung beliebig klein. Und dann liefert der **Hauptsatz** einen Rechenweg: Ist $F' = f$, dann ist $\\int_a^b f\\,dx = F(b) - F(a)$. Fläche und Ableitung sind zwei Seiten derselben Sache."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Ober- und Untersumme\n> Für eine Zerlegung $a = x_0 < x_1 < \\dots < x_n = b$ und beschränktes $f$ ist\n> $$U = \\sum_{k=1}^n \\inf_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}), \\qquad O = \\sum_{k=1}^n \\sup_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}).$$\n\n> [!definition] Riemann-integrierbar\n> $f$ heißt **integrierbar**, wenn das Supremum aller Untersummen gleich dem Infimum aller Obersummen ist. Dieser gemeinsame Wert ist $\\int_a^b f(x)\\,dx$.\n\nGleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$.\n\n> [!satz] Integrierbare Funktionen\n> Monotone Funktionen und stetige Funktionen auf $[a, b]$ sind integrierbar."
+    },
+    {
+      "id": "fein",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$f(x) = x^2$ auf $[0, 2]$. **Wähle die Zahl $n$ der Streifen so, dass Obersumme minus Untersumme kleiner als $0{,}2$ ist.**",
+      "widget": "plot",
+      "params": {
+        "x": [-0.1, 2.15], "y": [-0.2, 4.4],
+        "vars": [{ "name": "n", "label": "Streifen $n$", "min": 1, "max": 60, "step": 1, "value": 4, "digits": 0 }],
+        "functions": [{ "expr": "x^2", "domain": [0, 2.1] }],
+        "riemann": [{ "f": "f", "from": 0, "to": 2, "n": "n", "kind": "upper", "name": "O", "color": "orange" }, { "f": "f", "from": 0, "to": 2, "n": "n", "kind": "lower", "name": "U", "color": "accent" }],
+        "readout": "$U = {U|4}$, $O = {O|4}$, $O - U = {O - U|4}$"
+      },
+      "goal": {
+        "when": "O - U < 0.2",
+        "hints": [{ "when": "O - U >= 0.2", "text": "Die Differenz ist noch {O - U|3}." }],
+        "solve": { "n": 41 }
+      },
+      "explain": "Für eine wachsende Funktion ist $O - U = \\big(f(2) - f(0)\\big) \\cdot \\tfrac{2}{n} = \\tfrac8n$, denn die Stufen ergeben zusammengeschoben eine Säule der Höhe $f(2) - f(0)$ und Breite $\\tfrac2n$. Also braucht man $n \\ge 41$. Der Grenzwert ist $\\int_0^2 x^2\\,dx = \\tfrac83$."
+    },
+    {
+      "id": "monoton-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum ist jede monoton wachsende Funktion $f$ auf $[a, b]$ integrierbar? Betrachte $n$ gleich breite Streifen der Breite $h = \\tfrac{b - a}{n}$.",
+      "solution": "Weil $f$ wächst, liegt das Infimum auf jedem Streifen am linken Rand, das Supremum am rechten. Also\n\n$$O - U = h\\sum_{k=1}^n \\big(f(x_k) - f(x_{k-1})\\big) = h\\,\\big(f(b) - f(a)\\big).$$\n\nDie Summe ist eine **Teleskopsumme**, fast alles hebt sich weg. Für $n \\to \\infty$ geht $h \\to 0$, also $O - U \\to 0$. Bemerkenswert: Stetigkeit wird nicht gebraucht, eine monotone Funktion darf sogar springen."
+    },
+    {
+      "id": "integral",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\int_0^2 x^2\\,dx$ mit einer Stammfunktion (drei Nachkommastellen).",
+      "answer": 2.6667,
+      "tolerance": 0.002,
+      "answerText": "2,667",
+      "hint": "$F(x) = \\tfrac{x^3}{3}$ hat die Ableitung $x^2$.",
+      "explain": "$F(2) - F(0) = \\tfrac83 \\approx 2{,}667$. Das ist der Wert, zwischen dem die Treppen im Widget eingeklemmt waren."
+    },
+    {
+      "id": "dirichlet",
+      "type": "truefalse",
+      "md": "Die Funktion mit $f(x) = 1$ für rationale und $f(x) = 0$ für irrationale $x$ ist auf $[0, 1]$ Riemann-integrierbar.",
+      "answer": false,
+      "whyNot": "In jedem Streifen liegen rationale und irrationale Zahlen. Also ist jede Obersumme $1$ und jede Untersumme $0$.",
+      "explain": "Die Lücke zwischen Ober- und Untersummen bleibt immer $1$. Hier versagt das Riemann-Integral, und spätere Integralbegriffe (Lebesgue) setzen genau dort an."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-integral", "level": 1, "label": "Stammfunktion" },
+    { "id": "neu2", "type": "gen", "gen": "ana-integral", "level": 2, "label": "Treppensumme" },
+    { "id": "neu3", "type": "gen", "gen": "ana-integral", "level": 3, "label": "Exponential" },
+    { "id": "neu4", "type": "gen", "gen": "ana-integral", "level": 4, "label": "Feinheit" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Untersummen sind zu klein, Obersummen zu groß. Integrierbar heißt: Sie lassen sich beliebig nahe zusammenbringen.",
+        "Monotone und stetige Funktionen sind integrierbar, die Dirichlet-Funktion nicht.",
+        "Für monotone $f$ ist $O - U = h\\,(f(b) - f(a))$ bei Streifenbreite $h$.",
+        "Hauptsatz: Ist $F' = f$, dann $\\int_a^b f\\,dx = F(b) - F(a)$."
+      ]
+    }
+  ]
+}

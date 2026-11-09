@@ -1,0 +1,170 @@
+name: Bauen
+
+# Lessons, widgets and the lesson runtime reach the phone over the air, so changes under content/ only run
+# the content check (inhalte.yml). This workflow builds a new IPA when the native app changes.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "content/**"
+      - "docs/**"
+      - "**.md"
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "macOS-Runner (macos-26-intel oder macos-26 für Apple Silicon)"
+        required: false
+        default: macos-26-intel
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  content:
+    name: Inhalte prüfen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_content.py
+
+  ios:
+    name: iPhone-App
+    needs: content
+    runs-on: ${{ inputs.runner || 'macos-26-intel' }}
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode 26 wählen
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then XC=/Applications/Xcode.app; fi
+          sudo xcode-select -s "$XC"
+          xcodebuild -version
+
+      - name: Kern testen (LernwerkCore)
+        id: coretests
+        continue-on-error: true
+        working-directory: Packages/LernwerkCore
+        run: swift test 2>&1 | tail -120; exit ${PIPESTATUS[0]}
+
+      - name: Inhalte und KaTeX bündeln
+        run: bash scripts/bundle-content.sh
+
+      - name: Projekt erzeugen
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: App bauen (unsigniert, für Sideloadly)
+        run: |
+          set -o pipefail
+          xcodebuild -project Lernwerk.xcodeproj -scheme Lernwerk -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log | grep -E "error:|warning: .*(deprecated|unavailable)|\*\* BUILD" || true
+          grep -q "\*\* BUILD SUCCEEDED \*\*" build.log || { grep -E "error:" -A3 build.log | head -150; exit 1; }
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/Lernwerk.app Payload/
+          zip -qry Lernwerk.ipa Payload
+          ls -la Lernwerk.ipa
+
+      - name: Testergebnisse
+        if: steps.coretests.outcome == 'failure'
+        run: |
+          echo "::error::Kern-Tests fehlgeschlagen"
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Lernwerk-ipa
+          path: Lernwerk.ipa
+
+  screenshots:
+    name: Screenshots (${{ matrix.device }})
+    needs: content
+    strategy:
+      fail-fast: false
+      matrix:
+        device: [iphone, ipad]
+    runs-on: ${{ inputs.runner || 'macos-26-intel' }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode 26 wählen
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then XC=/Applications/Xcode.app; fi
+          sudo xcode-select -s "$XC"
+
+      - name: Projekt erzeugen
+        run: |
+          bash scripts/bundle-content.sh
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Simulator-Build mit Demo-Daten
+        run: |
+          set -o pipefail
+          xcodebuild -project Lernwerk.xcodeproj -scheme Lernwerk -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build-sim \
+            build 2>&1 | tail -5
+
+      - name: Screenshots
+        timeout-minutes: 32
+        continue-on-error: true
+        run: bash scripts/screenshots.sh build-sim/Build/Products/Debug-iphonesimulator/Lernwerk.app shots 1680 ${{ matrix.device }}
+
+      - name: Screenshots in Branch ablegen
+        if: always() && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -d shots ] && [ -n "$(ls -A shots)" ] || exit 0
+          cd shots
+          git init -q -b ci-screenshots
+          git config user.name "lernwerk-ci"
+          git config user.email "lernwerk-ci@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Screenshots ${GITHUB_SHA::7} (${{ matrix.device }})"
+          git push -f -q "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:ci-screenshots-${{ matrix.device }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots-${{ matrix.device }}
+          path: shots
+          if-no-files-found: ignore
+
+  release:
+    name: Release „latest“ aktualisieren
+    needs: [ios]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: Lernwerk-ipa
+          path: dist
+      - name: Release schreiben
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest dist/Lernwerk.ipa \
+            --title "Lernwerk – neuester Stand" \
+            --notes "Automatisch gebaut aus ${GITHUB_SHA::7}. Lernwerk.ipa mit Sideloadly installieren. Neue Lektionen kommen ohne Neuinstallation." \
+            --latest

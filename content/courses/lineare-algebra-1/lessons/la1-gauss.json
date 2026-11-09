@@ -1,0 +1,77 @@
+{
+  "id": "la1-gauss",
+  "title": "Gauß-Verfahren",
+  "subtitle": "Jedes lineare Gleichungssystem in wenigen Handgriffen",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 4",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/08 Lineare Algebra/Gauß-Algorithmus.md", "title": "Gauß-Algorithmus" },
+    { "path": "02 Wiki/Mathematik/08 Lineare Algebra/Lineare Gleichungssysteme.md", "title": "Lineare Gleichungssysteme" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Drei Gleichungen, drei Unbekannte. Statt wild einzusetzen, räumen wir die Matrix Schritt für Schritt auf.",
+      "widget": "gauss",
+      "params": { "matrix": [[1, 1, 1, 6], [2, 1, -1, 1], [1, -1, 2, 5]], "manual": false },
+      "timeline": [
+        { "caption": "Das System $x + y + z = 6$, $2x + y - z = 1$, $x - y + 2z = 5$ als **erweiterte Koeffizientenmatrix**: links die Koeffizienten, rechts die rechten Seiten." },
+        { "caption": "Ziel: unter der Diagonalen nur Nullen. Erster Schritt: Zeile 2 minus das Doppelte von Zeile 1 entfernt das $x$ aus Zeile 2.", "do": { "step": true }, "hold": 5000 },
+        { "caption": "Dann Zeile 3 minus Zeile 1: Auch dort ist das $x$ weg.", "do": { "step": true } },
+        { "caption": "Jetzt nur noch das $y$ aus Zeile 3: Zeile 3 minus das Doppelte von Zeile 2. Die Matrix hat **Stufenform**, die letzte Zeile sagt $7z = 21$.", "do": { "step": true }, "hold": 5200 },
+        { "caption": "Rückwärts aufräumen: Zeilen normieren und nach oben eliminieren. Am Ende steht links die Einheitsmatrix und rechts die Lösung $x = 1$, $y = 2$, $z = 3$.", "do": { "finish": true } }
+      ]
+    },
+    {
+      "id": "idee",
+      "type": "text",
+      "md": "Drei **elementare Zeilenumformungen** verändern die Lösungsmenge eines Gleichungssystems nicht:\n\n1. zwei Zeilen vertauschen,\n2. eine Zeile mit einer Zahl $\\ne 0$ multiplizieren,\n3. ein Vielfaches einer Zeile zu einer anderen addieren.\n\nDas **Gauß-Verfahren** benutzt sie, um die Matrix in **Stufenform** zu bringen: In jeder Zeile beginnt der erste Eintrag $\\ne 0$ weiter rechts als in der Zeile darüber. Dann löst man von unten nach oben auf.\n\nAus der Stufenform liest man auch ab, **wie viele** Lösungen es gibt: Eine Nullzeile mit rechter Seite $\\ne 0$ bedeutet Widerspruch, keine Lösung. Sonst gibt es so viele freie Parameter, wie Spalten ohne Stufe sind."
+    },
+    {
+      "id": "selbst",
+      "type": "widget",
+      "label": "Selbst rechnen",
+      "md": "**Bringe die Matrix mit eigenen Umformungen in Stufenform.** Wähle eine Zielzeile, einen Faktor und die Zeile, deren Vielfaches abgezogen wird.",
+      "widget": "gauss",
+      "params": { "matrix": [[1, 2, -1, 3], [2, 5, 1, 13], [-1, 1, 4, 7]], "auto": false },
+      "goal": {
+        "when": "echelon == 1",
+        "message": "Noch nicht in Stufenform. Unter dem ersten Eintrag von Zeile 1 müssen Nullen entstehen, danach unter dem Stufeneintrag von Zeile 2."
+      },
+      "explain": "Zum Beispiel: Z2 ← Z2 − 2·Z1 ergibt $(0, 1, 3, 7)$, Z3 ← Z3 − (−1)·Z1 ergibt $(0, 3, 3, 10)$, dann Z3 ← Z3 − 3·Z2 ergibt $(0, 0, -6, -11)$."
+    },
+    {
+      "id": "warum",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Warum ändert die Umformung »Zeile 2 plus $c$ mal Zeile 1« die Lösungsmenge nicht? Zeige beide Richtungen.",
+      "solution": "Erfüllt $x$ beide alten Gleichungen, dann auch die Summe aus Gleichung 2 und $c$ mal Gleichung 1. Umgekehrt erhält man die alte Gleichung 2 zurück, indem man von der neuen $c$ mal Gleichung 1 abzieht. Jede Umformung lässt sich rückgängig machen, deshalb haben altes und neues System dieselben Lösungen."
+    },
+    {
+      "id": "anzahl",
+      "type": "choice",
+      "md": "Nach dem Gauß-Verfahren lautet die letzte Zeile der erweiterten Matrix $(0\\ \\ 0\\ \\ 0 \\mid 4)$. Was folgt?",
+      "options": [
+        { "md": "Das System hat keine Lösung.", "correct": true },
+        { "md": "$z = 4$", "why": "Links stehen nur Nullen: Die Zeile sagt $0x + 0y + 0z = 4$, also $0 = 4$." },
+        { "md": "Es gibt unendlich viele Lösungen.", "why": "Unendlich viele gäbe es bei einer Nullzeile mit rechter Seite $0$." }
+      ],
+      "explain": "$0 = 4$ ist ein Widerspruch. Ein einziger Widerspruch genügt, damit das ganze System unlösbar ist."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-gauss", "level": 1, "label": "Neues System" },
+    { "id": "neu2", "type": "gen", "gen": "la-gauss", "level": 2, "label": "Neues System" },
+    { "id": "neu3", "type": "gen", "gen": "la-gauss", "level": 3, "label": "Neues System" },
+    { "id": "neu4", "type": "gen", "gen": "la-gauss", "level": 4, "label": "Mit Parameter" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Elementare Zeilenumformungen ändern die Lösungsmenge nicht, weil sie umkehrbar sind.",
+        "Ziel ist die Stufenform, danach wird rückwärts eingesetzt.",
+        "Nullzeile mit rechter Seite $\\ne 0$: keine Lösung. Sonst gibt jede Spalte ohne Stufe einen freien Parameter.",
+        "Rang = Zahl der Stufen = Zahl der unabhängigen Gleichungen."
+      ]
+    }
+  ]
+}

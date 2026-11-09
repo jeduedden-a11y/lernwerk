@@ -1,0 +1,140 @@
+{
+  "id": "oek-ricardo",
+  "title": "Ricardo: komparative Vorteile",
+  "subtitle": "Warum Handel sich auch für den Unterlegenen lohnt",
+  "source": "David Ricardo, On the Principles of Political Economy and Taxation (1817), Kap. 7",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/David Ricardo.md", "title": "David Ricardo" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Komparativer Vorteil.md", "title": "Komparativer Vorteil" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "England (blau) und Portugal (orange) können ihre Arbeit auf Tuch und Wein verteilen. Die Linien zeigen alle Kombinationen, die jedes Land herstellen kann. Die Punkte sind die tatsächliche Produktion.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 2.6], "y": [0, 2.6], "xLabel": "Tuch", "yLabel": "Wein", "height": 300,
+        "vars": [{ "name": "sE", "min": 0, "max": 1, "value": 0.45, "hidden": true }, { "name": "sP", "min": 0, "max": 1, "value": 0.55, "hidden": true }],
+        "functions": [
+          { "name": "E", "expr": "(220 - 100x)/120", "domain": [0, 2.2], "color": "accent", "label": "England", "labelAt": 1.2 },
+          { "name": "P", "expr": "(170 - 90x)/80", "domain": [0, 1.889], "color": "orange", "label": "Portugal", "labelAt": 0.2 }
+        ],
+        "points": [
+          { "x": "2.2*sE", "y": "(220/120)*(1 - sE)", "color": "accent", "label": "E" },
+          { "x": "(170/90)*sP", "y": "(170/80)*(1 - sP)", "color": "orange", "label": "P" }
+        ],
+        "readout": "Zusammen: Tuch **{2.2*sE + (170/90)*sP|2}**, Wein **{(220/120)*(1 - sE) + (170/80)*(1 - sP)|2}**"
+      },
+      "timeline": [
+        { "caption": "Ohne Handel stellt jedes Land von beidem etwa eine Einheit her. Zusammen rund $2$ Tuch und $2$ Wein. Portugal ist bei **beiden** Gütern produktiver, seine Linie liegt aber trotzdem nicht überall weiter außen." },
+        { "caption": "Ricardos Vorschlag: England macht nur Tuch, Portugal nur Wein. Jetzt entstehen zusammen $2{,}2$ Tuch und $2{,}125$ Wein, von beidem mehr als vorher, mit derselben Arbeit.", "to": { "sE": 1, "sP": 0 }, "dur": 2600, "hold": 7500 },
+        { "caption": "Die umgekehrte Spezialisierung wäre ein Verlust: nur $1{,}89$ Tuch und $1{,}83$ Wein. Es kommt also nicht darauf an, wer etwas absolut besser kann, sondern wer **relativ** weniger dafür aufgibt.", "to": { "sE": 0, "sP": 1 }, "dur": 2600, "hold": 7500 },
+        { "caption": "Das ist der **komparative Vorteil**: Spezialisieren sich beide auf das, was sie relativ am günstigsten können, und tauschen sie dann, haben beide mehr.", "to": { "sE": 1, "sP": 0 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "David Ricardo (1772 bis 1823) war Börsenmakler und später Parlamentsabgeordneter. In *On the Principles of Political Economy and Taxation* (1817) steht sein berühmtestes Beispiel: England und Portugal stellen Tuch und Wein her. Arbeitsstunden pro Einheit:\n\n| | Tuch | Wein |\n|---|---|---|\n| England | 100 | 120 |\n| Portugal | 90 | 80 |\n\nPortugal ist bei **beiden** Gütern produktiver, hat also einen **absoluten Vorteil** in beiden. Lohnt sich Handel trotzdem?"
+    },
+    {
+      "id": "opportunitaet",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Was kostet eine Einheit Wein, gemessen in Tuch, auf das man dafür verzichten muss?\n\nIn England: {{0}} Tuch $\\qquad$ in Portugal: {{1}} Tuch",
+      "blanks": [
+        { "accept": [1.2], "numeric": true, "tolerance": 0.01 },
+        { "accept": [0.889], "numeric": true, "tolerance": 0.01 }
+      ],
+      "hint": "In England kostet Wein $120$ Stunden. In diesen Stunden hätte man $\\tfrac{120}{100}$ Tuch herstellen können.",
+      "explain": "England: $\\tfrac{120}{100} = 1{,}2$ Tuch pro Wein. Portugal: $\\tfrac{80}{90} \\approx 0{,}89$ Tuch pro Wein. Wein ist in Portugal relativ billiger: Portugal hat den **komparativen Vorteil** bei Wein, England bei Tuch."
+    },
+    {
+      "id": "vorteil",
+      "type": "choice",
+      "md": "Welche Spezialisierung empfiehlt Ricardo?",
+      "options": [
+        { "md": "England stellt Tuch her, Portugal Wein.", "correct": true },
+        { "md": "Portugal stellt beides her, England nichts.", "why": "Portugal hat begrenzt viel Arbeit. Jede Stunde für Tuch fehlt beim Wein, wo Portugal relativ noch besser ist." },
+        { "md": "England stellt Wein her, Portugal Tuch.", "why": "Das wäre jeweils die relativ teure Produktion: Ein Wein kostet England 1,2 Tuch." },
+        { "md": "Spezialisierung lohnt sich nicht, weil Portugal überall besser ist.", "why": "Genau das widerlegt Ricardo. Entscheidend sind die relativen, nicht die absoluten Kosten." }
+      ],
+      "explain": "Jedes Land spezialisiert sich auf das Gut, bei dem seine **Opportunitätskosten** niedriger sind. Absolute Vorteile spielen dafür keine Rolle."
+    },
+    {
+      "id": "aufteilung",
+      "type": "widget",
+      "label": "Im Diagramm",
+      "md": "England hat $220$, Portugal $170$ Arbeitsstunden. Ohne Handel stellt jedes Land je $1$ Tuch und $1$ Wein her, zusammen also $2$ und $2$. Die Linien zeigen, was jedes Land höchstens herstellen kann.\n\n**Verteile die Arbeit so, dass von beiden Gütern zusammen mehr entsteht als vorher.**",
+      "widget": "plot",
+      "params": {
+        "x": [0, 2.6], "y": [0, 2.6], "xLabel": "Tuch", "yLabel": "Wein", "height": 300,
+        "vars": [
+          { "name": "sE", "label": "England: Anteil Tuch", "min": 0, "max": 1, "step": 0.05, "value": 0.45, "digits": 2 },
+          { "name": "sP", "label": "Portugal: Anteil Tuch", "min": 0, "max": 1, "step": 0.05, "value": 0.55, "digits": 2 }
+        ],
+        "functions": [
+          { "name": "E", "expr": "(220 - 100x)/120", "domain": [0, 2.2], "color": "accent", "label": "England", "labelAt": 1.2 },
+          { "name": "P", "expr": "(170 - 90x)/80", "domain": [0, 1.889], "color": "orange", "label": "Portugal", "labelAt": 0.2 }
+        ],
+        "points": [
+          { "x": "2.2*sE", "y": "(220/120)*(1 - sE)", "color": "accent", "label": "E" },
+          { "x": "(170/90)*sP", "y": "(170/80)*(1 - sP)", "color": "orange", "label": "P" }
+        ],
+        "readout": "Zusammen: Tuch **{2.2*sE + (170/90)*sP|3}**, Wein **{(220/120)*(1 - sE) + (170/80)*(1 - sP)|3}** (ohne Handel 2 und 2)"
+      },
+      "goal": {
+        "when": "2.2*sE + (170/90)*sP > 2.001 && (220/120)*(1 - sE) + (170/80)*(1 - sP) > 2.001",
+        "hints": [
+          { "when": "sE < 1 && sP > 0", "text": "Lass das Land mit dem komparativen Vorteil bei Tuch mehr Tuch herstellen und das andere mehr Wein." }
+        ],
+        "message": "Noch nicht von beiden Gütern mehr als 2.",
+        "solve": { "sE": 1, "sP": 0 }
+      },
+      "explain": "Spezialisieren sich beide ganz, entstehen $2{,}2$ Tuch und $2{,}125$ Wein, also von beidem mehr als ohne Handel. Diesen Überschuss können sich die Länder über den Tausch teilen."
+    },
+    {
+      "id": "tauschverhaeltnis",
+      "type": "choice",
+      "md": "England verkauft Tuch gegen Wein. Bei welchem Tauschverhältnis gewinnen **beide** Länder?",
+      "options": [
+        { "md": "1 Tuch gegen 1 Wein", "correct": true, "why": "England zahlt für Wein nur 1 statt 1,2 Tuch, Portugal zahlt für Tuch nur 1 statt 1,125 Wein." },
+        { "md": "1 Tuch gegen 0,8 Wein", "why": "Dann zahlt England 1,25 Tuch pro Wein, mehr als die 1,2 bei eigener Herstellung." },
+        { "md": "1 Tuch gegen 1,2 Wein", "why": "Dann zahlt Portugal 1,2 Wein pro Tuch, mehr als die 1,125 bei eigener Herstellung." },
+        { "md": "Bei keinem, einer verliert immer.", "why": "Zwischen den beiden Opportunitätskosten liegt ein ganzer Bereich, in dem beide gewinnen." }
+      ],
+      "explain": "Für beide lohnt jeder Preis zwischen den Opportunitätskosten: Ein Tuch muss mehr als $0{,}83$ und weniger als $1{,}125$ Wein bringen."
+    },
+    {
+      "id": "falle",
+      "type": "truefalse",
+      "md": "Ein Land, das bei keinem Gut einen absoluten Vorteil hat, kann vom Außenhandel nicht profitieren.",
+      "answer": false,
+      "whyNot": "England hat in Ricardos Beispiel keinen einzigen absoluten Vorteil und gewinnt trotzdem.",
+      "explain": "Jedes Land hat bei irgendetwas einen komparativen Vorteil, weil Opportunitätskosten immer relativ sind. Das macht Ricardos Argument so stark und so oft missverstanden."
+    },
+    {
+      "id": "grenzen",
+      "type": "reveal",
+      "label": "Weiterdenken",
+      "md": "Das Modell hat starke Annahmen. Welche würdest du kritisieren, bevor du aufdeckst?",
+      "solution": "- **Konstante Kosten**: Die Linien sind gerade. Real steigen die Kosten oft, wenn man ein Gut stark ausweitet.\n- **Arbeit ist nur im Inland beweglich**, aber dort ohne Reibung zwischen den Branchen: Weber werden nicht über Nacht zu Winzern. Wer verliert, bekommt im Modell keine Entschädigung.\n- **Vollbeschäftigung** und keine Transportkosten.\n- Die Gewinne des Handels verteilen sich nicht von selbst gerecht: Das Modell zeigt, dass der Kuchen wächst, nicht, wer welches Stück bekommt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-ricardo", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "oek-ricardo", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "oek-ricardo", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "oek-ricardo", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Absoluter Vorteil: weniger Aufwand pro Einheit. Komparativer Vorteil: niedrigere Opportunitätskosten.",
+        "Spezialisierung nach komparativen Vorteilen vergrößert die Gesamtproduktion, auch wenn ein Land überall unterlegen ist.",
+        "Beide gewinnen bei jedem Tauschverhältnis zwischen ihren Opportunitätskosten.",
+        "Das Modell zeigt Effizienzgewinne, nicht ihre Verteilung."
+      ]
+    }
+  ]
+}

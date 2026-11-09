@@ -1,0 +1,109 @@
+{
+  "id": "cs50-inferenz",
+  "title": "Inferenzregeln und Resolution",
+  "subtitle": "CS50 AI, Lecture 1: Knowledge",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 1",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Resolution.md", "title": "Resolution" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 1 - Knowledge (Kurs).md", "title": "Lecture 1 - Knowledge (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wissensbasis: $P \\vee Q$, $\\;\\neg P \\vee R$, $\\;\\neg Q \\vee R$. Folgt $R$? Statt alle Modelle durchzugehen, leiten wir Schritt für Schritt neue Klauseln ab, bis ein Widerspruch entsteht.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          { "tex": "\\neg R", "why": "Annahme: Das Gegenteil der Anfrage wird zur Wissensbasis hinzugefügt." },
+          { "tex": "(\\neg P \\vee R),\\ \\neg R \\;\\Longrightarrow\\; \\neg P", "why": "Resolution: $R$ und $\\neg R$ heben sich auf." },
+          { "tex": "(\\neg Q \\vee R),\\ \\neg R \\;\\Longrightarrow\\; \\neg Q", "why": "Resolution, genauso." },
+          { "tex": "(P \\vee Q),\\ \\neg P \\;\\Longrightarrow\\; Q", "why": "Resolution: Wenn $P$ falsch ist, muss $Q$ stimmen." },
+          { "tex": "Q,\\ \\neg Q \\;\\Longrightarrow\\; (\\,)", "why": "Die **leere Klausel**: ein Widerspruch." },
+          { "tex": "\\text{KB} \\models R", "why": "Die Annahme $\\neg R$ war unmöglich, also folgt $R$." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Die Idee heißt **Beweis durch Widerspruch**: Wir tun so, als wäre $R$ falsch, und zeigen, dass das mit der Wissensbasis nicht zusammenpasst.", "to": { "k": 1 }, "dur": 600 },
+        { "caption": "Die einzige Regel, die wir brauchen, ist die **Resolution**: Steht in einer Klausel $X$ und in einer anderen $\\neg X$, dann darf man beide Reste zu einer neuen Klausel verbinden.", "to": { "k": 3 }, "dur": 1400, "hold": 6500 },
+        { "caption": "Aus $P \\vee Q$ und $\\neg P$ wird $Q$. Jetzt stehen $Q$ und $\\neg Q$ nebeneinander.", "to": { "k": 4 }, "dur": 600 },
+        { "caption": "Resolviert man sie, bleibt nichts übrig: die **leere Klausel**, die nie wahr sein kann. Also war $\\neg R$ unmöglich, und es gilt $\\text{KB} \\models R$.", "to": { "k": 6 }, "dur": 1200 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Model Checking prüft alle Welten. **Inferenz** geht anders vor: Sie leitet aus dem, was man weiß, mit festen Regeln neue Sätze ab, so wie ein Mensch argumentiert. Jede Regel ist so gebaut, dass aus wahren Sätzen nur wahre Sätze entstehen.\n\nIn CS50 wird das als **Suchproblem** formuliert: Der Anfangszustand ist die Wissensbasis, die Aktionen sind Inferenzregeln, und das Ziel ist ein Zustand, der die Anfrage enthält.\n\nDas Problem: Es gibt viele Regeln, und welche man wann anwendet, ist nicht klar. **Resolution** löst das elegant. Bringt man alle Sätze in eine Normalform aus Klauseln, reicht diese eine Regel, um jede Folgerung zu beweisen. Man fügt die Verneinung der Anfrage hinzu und resolviert, bis die leere Klausel entsteht. Gelingt das, ist die Anfrage bewiesen. Kommen keine neuen Klauseln mehr hinzu, folgt sie nicht."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Wichtige Inferenzregeln\n> - **Modus Ponens:** aus $\\alpha \\to \\beta$ und $\\alpha$ folgt $\\beta$.\n> - **Und-Elimination:** aus $\\alpha \\wedge \\beta$ folgt $\\alpha$.\n> - **Implikationselimination:** $\\alpha \\to \\beta$ ist gleichwertig zu $\\neg\\alpha \\vee \\beta$.\n> - **Bikonditionalelimination:** $\\alpha \\leftrightarrow \\beta$ ist $(\\alpha \\to \\beta) \\wedge (\\beta \\to \\alpha)$.\n> - **De Morgan:** $\\neg(\\alpha \\wedge \\beta) \\equiv \\neg\\alpha \\vee \\neg\\beta$ und $\\neg(\\alpha \\vee \\beta) \\equiv \\neg\\alpha \\wedge \\neg\\beta$.\n\n> [!definition] Klausel und KNF\n> Eine **Klausel** ist eine Disjunktion von Literalen, etwa $P \\vee \\neg Q \\vee R$. Eine Formel in **konjunktiver Normalform** ist eine Konjunktion von Klauseln.\n\n> [!satz] Resolution\n> Aus $P \\vee Q_1 \\vee \\dots \\vee Q_n$ und $\\neg P \\vee R_1 \\vee \\dots \\vee R_m$ folgt $Q_1 \\vee \\dots \\vee Q_n \\vee R_1 \\vee \\dots \\vee R_m$. Doppelte Literale fasst man zusammen."
+    },
+    {
+      "id": "knf",
+      "type": "order",
+      "label": "Umformen",
+      "md": "Bringe die Umformung von $(P \\vee Q) \\to R$ in konjunktive Normalform in die richtige Reihenfolge.",
+      "items": [
+        "$(P \\vee Q) \\to R$",
+        "$\\neg(P \\vee Q) \\vee R$, Implikation auflösen",
+        "$(\\neg P \\wedge \\neg Q) \\vee R$, De Morgan",
+        "$(\\neg P \\vee R) \\wedge (\\neg Q \\vee R)$, Distributivgesetz"
+      ],
+      "explain": "Die Reihenfolge ist immer dieselbe: erst $\\leftrightarrow$ und $\\to$ beseitigen, dann Negationen mit De Morgan nach innen schieben, zuletzt $\\vee$ über $\\wedge$ verteilen. Am Ende stehen zwei Klauseln."
+    },
+    {
+      "id": "regeln",
+      "type": "match",
+      "md": "Ordne jedem Schluss die Regel zu, die ihn rechtfertigt.",
+      "pairs": [
+        ["Aus »Wenn es regnet, ist Harry drinnen« und »Es regnet« folgt »Harry ist drinnen«.", "Modus Ponens"],
+        ["Aus »Harry ist mit Ron und Hermine befreundet« folgt »Harry ist mit Hermine befreundet«.", "Und-Elimination"],
+        ["»Es stimmt nicht, dass Harry Ron und Hermine getroffen hat« heißt »Er hat Ron nicht getroffen oder Hermine nicht«.", "De Morgan"],
+        ["Aus »Ron ist in der Bibliothek oder in der Halle« und »Ron ist nicht in der Bibliothek« folgt »Ron ist in der Halle«.", "Resolution"]
+      ],
+      "explain": "Der letzte Schluss ist der Kern der Resolution: Von zwei Möglichkeiten fällt eine weg, also bleibt die andere."
+    },
+    {
+      "id": "resolvente",
+      "type": "choice",
+      "md": "Was ergibt die Resolution von $P \\vee Q \\vee S$ mit $\\neg P \\vee R \\vee S$?",
+      "options": [
+        { "md": "$Q \\vee R \\vee S$", "correct": true },
+        { "md": "$Q \\vee R \\vee S \\vee S$", "why": "Doppelte Literale werden zusammengefasst (Faktorisierung)." },
+        { "md": "$Q \\wedge R \\wedge S$", "why": "Die Resolvente ist wieder eine Disjunktion." },
+        { "md": "$P \\vee \\neg P$", "why": "Gerade dieses Paar fällt weg." }
+      ],
+      "explain": "$P$ und $\\neg P$ verschwinden, der Rest wird mit $\\vee$ verbunden, und $S$ steht nur einmal da."
+    },
+    {
+      "id": "fol",
+      "type": "choice",
+      "md": "Aussagenlogik braucht für jede Person ein eigenes Symbol. Die **Prädikatenlogik** kann allgemeine Aussagen machen. Wie schreibt man »Jede Person, die in Gryffindor ist, ist kein Mitglied von Slytherin«?",
+      "options": [
+        { "md": "$\\forall x.\\ \\text{BelongsTo}(x, \\text{Gryffindor}) \\to \\neg\\text{BelongsTo}(x, \\text{Slytherin})$", "correct": true },
+        { "md": "$\\exists x.\\ \\text{BelongsTo}(x, \\text{Gryffindor}) \\wedge \\neg\\text{BelongsTo}(x, \\text{Slytherin})$", "why": "Das sagt nur: Es gibt mindestens eine solche Person." },
+        { "md": "$\\forall x.\\ \\text{BelongsTo}(x, \\text{Gryffindor}) \\wedge \\neg\\text{BelongsTo}(x, \\text{Slytherin})$", "why": "Das würde behaupten, dass **jeder** in Gryffindor ist." }
+      ],
+      "explain": "Allaussagen gehören fast immer mit $\\to$ zusammen: »Für alle $x$: wenn $x$ diese Eigenschaft hat, dann …«. Existenzaussagen mit $\\wedge$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-inferenz", "level": 1, "label": "Regel erkennen" },
+    { "id": "neu2", "type": "gen", "gen": "cs-inferenz", "level": 2, "label": "Resolvieren" },
+    { "id": "neu3", "type": "gen", "gen": "cs-inferenz", "level": 3, "label": "KNF" },
+    { "id": "neu4", "type": "gen", "gen": "cs-inferenz", "level": 4, "label": "Widerspruch?" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Inferenzregeln leiten aus wahren Sätzen nur wahre Sätze ab. Beweisen ist eine Suche im Raum der ableitbaren Sätze.",
+        "KNF: erst $\\leftrightarrow$ und $\\to$ auflösen, dann De Morgan, dann Distributivgesetz.",
+        "Resolution: $X \\vee A$ und $\\neg X \\vee B$ ergeben $A \\vee B$.",
+        "Beweis durch Widerspruch: KB plus $\\neg\\alpha$ ergibt die leere Klausel genau dann, wenn $\\text{KB} \\models \\alpha$."
+      ]
+    }
+  ]
+}

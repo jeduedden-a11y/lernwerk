@@ -1,0 +1,119 @@
+{
+  "id": "stoch-kenngroessen",
+  "title": "Mittelwert, Median und Boxplot",
+  "subtitle": "Daten mit wenigen Zahlen beschreiben",
+  "source": "KCGO Mathematik Hessen, Q3.5",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Beschreibende Statistik (Kenngrößen und Boxplot).md", "title": "Beschreibende Statistik (Kenngrößen und Boxplot)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Neun Testergebnisse, jeder Punkt eine Person. Zwei Zahlen sollen sagen, »wo die Daten liegen«. Sie verhalten sich sehr verschieden.",
+      "widget": "boxplot",
+      "params": { "data": [5, 7, 8, 9, 10, 11, 12, 13, 14], "range": [0, 30], "step": 1, "label": "Punkte im Test" },
+      "timeline": [
+        { "caption": "Das orange Dreieck ist der **Mittelwert**: Die Daten wären dort im Gleichgewicht, wie Gewichte auf einem Brett. Der blaue Strich ist der **Median**: Links und rechts davon liegen gleich viele Werte." },
+        { "caption": "Darunter der **Boxplot**: Der Kasten reicht vom unteren bis zum oberen Quartil und enthält die mittlere Hälfte der Daten." },
+        { "caption": "Jetzt ziehen wir das beste Ergebnis weit nach rechts, einen **Ausreißer**.", "to": { "x8": 26 }, "dur": 2200 },
+        { "caption": "Der Mittelwert wandert mit, er rechnet mit jedem Wert. Der Median bleibt stehen, er schaut nur auf die Reihenfolge. Man nennt ihn **robust**.", "hold": 4200 },
+        { "caption": "Auch der Kasten ändert sich nicht. Nur die rechte Antenne wird länger.", "hold": 3000 },
+        { "caption": "Zurück auf den alten Wert: Beide Maße stimmen wieder fast überein, weil die Daten ungefähr symmetrisch liegen.", "to": { "x8": 14 }, "dur": 1800 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Die beschreibende Statistik arbeitet mit **beobachteten** Daten, nicht mit einem Zufallsmodell. Sie fasst eine Datenreihe $x_1, \\dots, x_n$ in wenigen Kenngrößen zusammen.\n\n**Lagemaße** sagen, wo die Daten liegen: das **arithmetische Mittel** $\\bar x = \\tfrac1n \\sum x_i$ und der **Median** $\\tilde x$, der mittlere Wert der sortierten Reihe (bei geradem $n$ das Mittel der beiden mittleren).\n\n**Streumaße** sagen, wie weit sie auseinanderliegen: Spannweite, Quartilsabstand, Standardabweichung."
+    },
+    {
+      "id": "ausreisser",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Neun Ergebnisse eines Tests, jeder Punkt ist eine Person. Das orange Dreieck ist der Mittelwert, er sitzt wie ein Drehpunkt im Gleichgewicht. **Ziehe einen Punkt so, dass der Mittelwert über 11 steigt, der Median aber bei 10 bleibt.**",
+      "widget": "boxplot",
+      "params": { "data": [5, 7, 8, 9, 10, 11, 12, 13, 14], "range": [0, 30], "step": 1, "label": "Punkte im Test" },
+      "goal": {
+        "when": "mean > 11 && median == 10",
+        "hints": [
+          { "when": "median != 10", "text": "Der Median ist jetzt {median|1}. Lass die Mitte, wie sie ist, und verändere einen Randwert." },
+          { "when": "mean <= 11", "text": "Mittelwert {mean|2}: noch nicht über 11. Zieh einen großen Wert weit nach rechts." }
+        ],
+        "solve": { "data": [5, 7, 8, 9, 10, 11, 12, 13, 26] }
+      },
+      "explain": "Ein einzelner Ausreißer zieht den Mittelwert mit, der Median bleibt stehen. Man nennt den Median deshalb **robust**. Bei Einkommen oder Mieten berichten Statistikämter darum oft den Median."
+    },
+    {
+      "id": "median-gerade",
+      "type": "numeric",
+      "label": "Bestimmen",
+      "md": "Bestimme den Median der Werte $3, 8, 4, 10, 6, 7$.",
+      "answer": 6.5,
+      "tolerance": 0.001,
+      "placeholder": "Zahl",
+      "hint": "Erst sortieren. Bei sechs Werten gibt es keinen einzelnen mittleren.",
+      "explain": "Sortiert: $3, 4, 6, 7, 8, 10$. Die beiden mittleren sind $6$ und $7$, der Median ist $6{,}5$."
+    },
+    {
+      "id": "quartile",
+      "type": "cloze",
+      "label": "Quartile",
+      "md": "Die **Quartile** teilen die sortierten Daten in vier gleich große Teile. Hier nimmst du für $Q_1$ den Median der unteren Hälfte und für $Q_3$ den der oberen Hälfte (Schulbücher weichen davon manchmal leicht ab).\n\nDaten: $2, 4, 5, 7, 8, 9, 12, 15$\n\n$Q_1 =$ {{0}} $\\qquad Q_3 =$ {{1}} $\\qquad Q_3 - Q_1 =$ {{2}}",
+      "blanks": [
+        { "accept": [4.5], "numeric": true, "placeholder": "Zahl" },
+        { "accept": [10.5], "numeric": true, "placeholder": "Zahl" },
+        { "accept": [6], "numeric": true, "placeholder": "Zahl" }
+      ],
+      "hint": "Untere Hälfte: $2, 4, 5, 7$. Obere Hälfte: $8, 9, 12, 15$.",
+      "explain": "$Q_1 = \\tfrac{4 + 5}{2} = 4{,}5$, $Q_3 = \\tfrac{9 + 12}{2} = 10{,}5$. Der **Quartilsabstand** $6$ ist die Breite der Box im Boxplot: Dort liegt die mittlere Hälfte der Daten."
+    },
+    {
+      "id": "box-lesen",
+      "type": "choice",
+      "md": "Was liegt in einem Boxplot zwischen dem linken und dem rechten Rand der Box?",
+      "options": [
+        { "md": "Die mittleren $50\\,\\%$ der Daten.", "correct": true },
+        { "md": "Alle Daten innerhalb einer Standardabweichung vom Mittelwert.", "why": "Die Box ist aus Quartilen gebaut. Mittelwert und Standardabweichung kommen im Boxplot gar nicht vor." },
+        { "md": "Die Hälfte der Spannweite, symmetrisch um den Median.", "why": "Die Box muss nicht symmetrisch sein. Bei schiefen Daten liegt der Median nicht in ihrer Mitte." }
+      ],
+      "explain": "Von $Q_1$ bis $Q_3$ liegt die mittlere Hälfte, die Antennen reichen bis zum kleinsten und größten Wert. Eine lange rechte Antenne verrät rechtsschiefe Daten."
+    },
+    {
+      "id": "robust",
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Wie stark reagiert die Kenngröße auf einen einzelnen extremen Ausreißer?",
+      "categories": ["robust", "empfindlich"],
+      "items": [
+        { "md": "Median", "cat": "robust" },
+        { "md": "Quartilsabstand", "cat": "robust" },
+        { "md": "arithmetisches Mittel", "cat": "empfindlich" },
+        { "md": "Spannweite", "cat": "empfindlich" },
+        { "md": "Standardabweichung", "cat": "empfindlich" }
+      ],
+      "explain": "Median und Quartile hängen nur von der Reihenfolge in der Mitte ab. Mittel, Spannweite und Standardabweichung rechnen mit den Werten selbst, ein Ausreißer schlägt voll durch, bei der Standardabweichung sogar quadriert."
+    },
+    {
+      "id": "symmetrisch",
+      "type": "truefalse",
+      "md": "Liegen die Daten symmetrisch um einen Wert, dann sind Mittelwert und Median gleich.",
+      "answer": true,
+      "explain": "Bei Symmetrie heben sich die Abweichungen links und rechts auf, und der mittlere Wert liegt genau auf der Symmetrieachse. Umgekehrt ist ein großer Unterschied zwischen Mittelwert und Median ein Hinweis auf schiefe Daten."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-kenn", "level": 2, "label": "Neue Daten" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-kenn", "level": 3, "label": "Neue Daten" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-kenn", "level": 4, "label": "Neue Daten" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Mittelwert $\\bar x$ und Median $\\tilde x$ beschreiben die Lage, Spannweite, Quartilsabstand und Standardabweichung die Streuung.",
+        "Der Median und die Quartile sind robust gegen Ausreißer, der Mittelwert nicht.",
+        "Der Boxplot zeigt Minimum, $Q_1$, Median, $Q_3$ und Maximum. Die Box enthält die mittlere Hälfte der Daten.",
+        "Weichen Mittelwert und Median deutlich voneinander ab, sind die Daten schief."
+      ]
+    }
+  ]
+}

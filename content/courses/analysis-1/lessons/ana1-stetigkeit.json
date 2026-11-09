@@ -1,0 +1,106 @@
+{
+  "id": "ana1-stetigkeit",
+  "title": "Stetigkeit mit Folgen und mit ε-δ",
+  "subtitle": "Kleine Ursache, kleine Wirkung",
+  "source": "Skript Jarohs, Abschnitt 12.1 bis 12.12",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md", "title": "Stetigkeit" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Funktion $f(x) = x^2$ an der Stelle $x_0 = 1$. Der blaue Streifen ist eine Toleranz $\\varepsilon$ um den Funktionswert $f(x_0) = 1$, der orange Streifen ein Bereich $(x_0 - \\delta, x_0 + \\delta)$ um $x_0$.",
+      "widget": "plot",
+      "params": {
+        "x": [-0.5, 2.5], "y": [-0.5, 4.5],
+        "vars": [{ "name": "x0", "min": 0, "max": 2, "value": 1, "hidden": true }, { "name": "eps", "min": 0, "max": 2, "value": 1, "hidden": true }, { "name": "d", "min": 0, "max": 1, "value": 0.4, "hidden": true }, { "name": "j", "min": 0, "max": 1, "value": 0, "hidden": true }],
+        "functions": [{ "expr": "x^2 + (j > 0.5 && x > x0 ? 1 : 0)", "samples": 600, "label": "f", "labelAt": 1.8 }],
+        "hbands": [{ "y": "f(x0)", "eps": "eps", "color": "accent" }],
+        "vbands": [{ "x": "x0", "d": "d", "color": "orange" }],
+        "points": [{ "x": "x0", "on": "f", "label": "f(x₀)" }],
+        "readout": "$\\varepsilon = {eps|2}$, $\\delta = {d|3}$"
+      },
+      "timeline": [
+        { "caption": "Der Wunsch: Alle $x$ im orangen Bereich sollen Funktionswerte im blauen Streifen haben. Bei $\\varepsilon = 1$ klappt das mit $\\delta = 0{,}4$: Der Graph über dem orangen Bereich bleibt im blauen Streifen." },
+        { "caption": "Strengere Toleranz, $\\varepsilon = 0{,}5$: Dann muss der orange Bereich schmaler werden. $\\delta = 0{,}22$ reicht.", "to": { "eps": 0.5, "d": 0.22 }, "dur": 1800 },
+        { "caption": "$\\varepsilon = 0{,}2$ verlangt $\\delta = 0{,}09$. Zu **jeder** Toleranz $\\varepsilon$ gibt es ein passendes $\\delta$. Genau das heißt **stetig in $x_0$**: Kleine Änderungen von $x$ ändern $f(x)$ nur wenig.", "to": { "eps": 0.2, "d": 0.09 }, "dur": 1800, "hold": 6500 },
+        { "caption": "Jetzt springt die Funktion rechts von $x_0$ um $1$ nach oben. Bei $\\varepsilon = 0{,}5$ hilft kein $\\delta$: Rechts von $x_0$ liegen die Werte über $2$, also außerhalb des Streifens, egal wie schmal der orange Bereich wird.", "set": { "j": 1, "eps": 0.5, "d": 0.3 }, "to": { "d": 0.02 }, "dur": 2400, "hold": 7000 },
+        { "caption": "Diese Funktion ist in $x_0$ **unstetig**. Mit Folgen gesagt: Für $x_n = 1 + \\tfrac1n \\to 1$ gilt $f(x_n) \\to 2$, aber $f(1) = 1$. Der Grenzwert der Funktionswerte ist nicht der Funktionswert." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Anschaulich heißt stetig: Man kann den Graphen zeichnen, ohne den Stift abzusetzen. Für Beweise braucht man es genauer, und es gibt zwei gleichwertige Formulierungen.\n\n**Mit Folgen:** Wann immer $x_n \\to x_0$, gilt auch $f(x_n) \\to f(x_0)$. Man darf also den Grenzwert in die Funktion hineinziehen: $\\lim f(x_n) = f(\\lim x_n)$. Das ist praktisch, weil man alle Rechenregeln für Folgengrenzwerte benutzen kann.\n\n**Mit $\\varepsilon$ und $\\delta$:** Ein Spiel wie bei der Konvergenz. Der Gegner gibt eine Toleranz $\\varepsilon$ für die Funktionswerte vor, du antwortest mit einem $\\delta$ für die Argumente. Gewinnst du für jedes $\\varepsilon$, ist $f$ stetig.\n\nAus beiden folgt: Summen, Produkte, Quotienten (mit Nenner ungleich $0$) und Verkettungen stetiger Funktionen sind stetig. Polynome, $\\exp$, $\\sin$ und $\\cos$ sind überall stetig."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Stetigkeit (Folgen)\n> $f: D \\to \\R$ heißt **stetig in $x_0 \\in D$**, wenn für jede Folge $(x_n)$ in $D$ mit $x_n \\to x_0$ auch $f(x_n) \\to f(x_0)$ gilt.\n\n> [!satz] $\\varepsilon$-$\\delta$-Kriterium\n> $f$ ist genau dann stetig in $x_0$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D:\\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon.$$\n\n$f$ heißt **stetig**, wenn $f$ in jedem Punkt von $D$ stetig ist.\n\n**Unstetigkeit zeigen:** Eine einzige Folge $x_n \\to x_0$ mit $f(x_n) \\not\\to f(x_0)$ genügt. Das ist meist leichter als das Verneinen des $\\varepsilon$-$\\delta$-Satzes."
+    },
+    {
+      "id": "delta",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$f(x) = x^2$, $x_0 = 1$, $\\varepsilon = 0{,}5$ ist fest. **Wähle $\\delta$ so, dass der Graph über dem orangen Bereich ganz im blauen Streifen bleibt.**",
+      "widget": "plot",
+      "params": {
+        "x": [-0.2, 2.2], "y": [-0.2, 3.2],
+        "vars": [{ "name": "d", "label": "$\\delta$", "min": 0.02, "max": 0.6, "step": 0.01, "value": 0.5, "digits": 2 }],
+        "functions": [{ "expr": "x^2" }],
+        "hbands": [{ "y": 1, "eps": 0.5, "color": "accent" }],
+        "vbands": [{ "x": 1, "d": "d", "color": "orange" }],
+        "points": [{ "x": 1, "y": 1 }, { "x": "1 + d", "on": "f", "color": "orange" }],
+        "readout": "Rechter Rand: $f(1 + \\delta) = {(1 + d)^2|3}$, erlaubt ist höchstens $1{,}5$."
+      },
+      "goal": {
+        "when": "(1 + d)^2 <= 1.5",
+        "hints": [{ "when": "(1 + d)^2 > 1.5", "text": "Am rechten Rand ist f = {(1 + d)^2|3}, das liegt über 1,5." }],
+        "solve": { "d": 0.2 }
+      },
+      "explain": "Rechts wird es zuerst eng: $(1 + \\delta)^2 \\le 1{,}5 \\iff \\delta \\le \\sqrt{1{,}5} - 1 \\approx 0{,}2247$. Links wäre bis $1 - \\sqrt{0{,}5} \\approx 0{,}29$ Platz. Jedes kleinere $\\delta$ funktioniert auch; man muss nicht das größte finden."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise mit $\\varepsilon$ und $\\delta$, dass $f(x) = x^2$ in jedem Punkt $x_0$ stetig ist. Tipp: $|x^2 - x_0^2| = |x - x_0| \\cdot |x + x_0|$, und der zweite Faktor muss beschränkt werden.",
+      "solution": "Sei $\\varepsilon > 0$. Wähle $\\delta = \\min\\left(1, \\dfrac{\\varepsilon}{2|x_0| + 1}\\right)$.\n\nFür $|x - x_0| < \\delta \\le 1$ gilt $|x| < |x_0| + 1$, also $|x + x_0| \\le |x| + |x_0| < 2|x_0| + 1$. Damit\n\n$$|x^2 - x_0^2| = |x - x_0| \\cdot |x + x_0| < \\frac{\\varepsilon}{2|x_0| + 1} \\cdot (2|x_0| + 1) = \\varepsilon.$$\n\nDas »$\\min(1, \\dots)$« ist ein Standardtrick: Erst sorgt man dafür, dass $x$ in der Nähe von $x_0$ bleibt, dann kann man die störenden Faktoren abschätzen."
+    },
+    {
+      "id": "dirichlet",
+      "type": "choice",
+      "md": "$f(x) = x$ für rationale $x$ und $f(x) = 0$ für irrationale $x$. Wo ist $f$ stetig?",
+      "options": [
+        { "md": "Nur in $x_0 = 0$.", "correct": true },
+        { "md": "Nirgends.", "why": "Bei $0$ gilt $|f(x) - f(0)| \\le |x|$, das wird klein." },
+        { "md": "Überall, wo $x$ rational ist.", "why": "Bei rationalem $x_0 \\ne 0$ gibt es irrationale $x_n \\to x_0$ mit $f(x_n) = 0 \\ne x_0$." },
+        { "md": "Überall.", "why": "Bei $x_0 \\ne 0$ führen rationale und irrationale Folgen zu verschiedenen Grenzwerten." }
+      ],
+      "explain": "Bei $x_0 \\ne 0$ wähle Folgen beider Sorten, die gegen $x_0$ gehen: Die Funktionswerte streben gegen $x_0$ bzw. $0$. Bei $x_0 = 0$ gilt immer $|f(x)| \\le |x| \\to 0$. Stetigkeit ist also eine Eigenschaft in einem Punkt, nicht nur des ganzen Graphen."
+    },
+    {
+      "id": "verkettung",
+      "type": "truefalse",
+      "md": "Sind $f$ und $g$ stetig, dann ist auch $g \\circ f$ stetig.",
+      "answer": true,
+      "explain": "Mit Folgen ist es eine Zeile: Aus $x_n \\to x_0$ folgt $f(x_n) \\to f(x_0)$, und weil $g$ stetig ist, $g(f(x_n)) \\to g(f(x_0))$. Darum ist etwa $e^{\\sin(x^2)}$ stetig, ohne dass man ein $\\delta$ suchen muss."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-stetig", "level": 1, "label": "Stetig ergänzen" },
+    { "id": "neu2", "type": "gen", "gen": "ana-stetig", "level": 2, "label": "Lücke schließen" },
+    { "id": "neu3", "type": "gen", "gen": "ana-stetig", "level": 3, "label": "δ finden" },
+    { "id": "neu4", "type": "gen", "gen": "ana-stetig", "level": 4, "label": "δ finden" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stetig in $x_0$: Aus $x_n \\to x_0$ folgt $f(x_n) \\to f(x_0)$.",
+        "Gleichwertig: Zu jedem $\\varepsilon > 0$ gibt es ein $\\delta > 0$ mit $|x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon$.",
+        "Unstetigkeit zeigt man mit einer einzigen passenden Folge.",
+        "Summen, Produkte, Quotienten und Verkettungen stetiger Funktionen sind stetig."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "la1-kern",
+  "title": "Kern, Bild und Dimensionsformel",
+  "subtitle": "Was eine Abbildung verschluckt und was sie erreicht",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 3",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Kern und Bild.md", "title": "Kern und Bild" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Manche Abbildungen drücken die Ebene auf eine Gerade zusammen. Dabei geht etwas verloren, und zwar genau so viel, wie an Bild übrig bleibt.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "editable": false, "showKernel": true },
+      "timeline": [
+        { "caption": "Noch passiert nichts: Die Einheitsmatrix bildet jeden Punkt auf sich selbst ab." },
+        { "caption": "Wir drücken die $y$-Richtung zusammen. Das Gitter wird flacher und flacher.", "to": { "m22": 0.25 }, "dur": 2000 },
+        { "caption": "Bei $\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ ist es ganz platt: Die Ebene landet auf der $x$-Achse, dem **Bild** (grün). Die ganze $y$-Achse wird auf $0$ abgebildet, sie ist der **Kern** (rot).", "to": { "m22": 0 }, "dur": 1200, "hold": 6000 },
+        { "caption": "Ein anderes Beispiel: $\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$. Die zweite Spalte ist das Doppelte der ersten. Bild ist die Gerade durch $(1, 2)$, Kern die Gerade durch $(2, -1)$.", "to": { "m12": 2, "m21": 2, "m22": 4 }, "dur": 2200, "hold": 6000 },
+        { "caption": "Eine verschluckte Richtung, eine erreichte Richtung: $1 + 1 = 2$, die Dimension der Ebene. Das ist die **Dimensionsformel**." }
+      ]
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Für eine lineare Abbildung $f: V \\to W$ sind\n\n- der **Kern** $\\ker f = \\{v \\in V : f(v) = 0\\}$, alles, was auf null abgebildet wird,\n- das **Bild** $\\operatorname{im} f = \\{f(v) : v \\in V\\}$, alles, was erreicht wird.\n\nBeide sind Untervektorräume. Der **Rang** von $f$ ist $\\dim \\operatorname{im} f$; bei einer Matrix ist das die Zahl linear unabhängiger Spalten.\n\n**Dimensionsformel:** Ist $V$ endlichdimensional, dann\n\n$$\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f.$$"
+    },
+    {
+      "id": "platt",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Ziehe die Bilder von $e_1$ und $e_2$ so, dass die Abbildung nicht mehr umkehrbar ist.** Dann erscheinen Kern und Bild.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[2, 1], [1, 2]], "range": 3, "showKernel": true },
+      "goal": {
+        "when": "abs(det) < 0.001",
+        "hints": [{ "when": "abs(det) >= 0.001", "text": "Noch ist det A = {det|2}. Die beiden Pfeile müssen auf einer Geraden liegen." }],
+        "solve": { "matrix": [[2, 1], [4, 2]] },
+        "message": "Lege Ae₁ und Ae₂ auf eine gemeinsame Gerade durch den Ursprung."
+      },
+      "explain": "Liegen die Bilder von $e_1$ und $e_2$ auf einer Geraden, ist das ganze Bild diese Gerade. Dann muss eine Richtung auf $0$ fallen: Der Kern ist nicht mehr nur $\\{0\\}$."
+    },
+    {
+      "id": "injektiv",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Zeige: Eine lineare Abbildung $f$ ist genau dann injektiv, wenn $\\ker f = \\{0\\}$.",
+      "solution": "**$\\Rightarrow$:** Es gilt immer $f(0) = 0$. Ist $f$ injektiv, kann kein anderer Vektor auf $0$ gehen, also $\\ker f = \\{0\\}$.\n\n**$\\Leftarrow$:** Sei $f(v) = f(w)$. Dann ist $f(v - w) = f(v) - f(w) = 0$, also $v - w \\in \\ker f = \\{0\\}$ und $v = w$.\n\nDer Trick: Wegen der Linearität muss man Injektivität nur am Nullvektor prüfen."
+    },
+    {
+      "id": "kern-unterraum",
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Der Kern ist nicht nur eine Menge, sondern selbst ein Vektorraum. Baue den Beweis zusammen.",
+      "given": "$f: V \\to W$ ist linear.",
+      "claim": "$\\ker f = \\set{v \\in V : f(v) = 0}$ ist ein Untervektorraum von $V$.",
+      "steps": [
+        "$f(0) = f(0 \\cdot 0) = 0 \\cdot f(0) = 0$, also liegt der Nullvektor in $\\ker f$.",
+        "Seien $u, v \\in \\ker f$. Dann $f(u + v) = f(u) + f(v) = 0 + 0 = 0$, also $u + v \\in \\ker f$.",
+        "Sei $v \\in \\ker f$ und $\\lambda$ ein Skalar. Dann $f(\\lambda v) = \\lambda f(v) = \\lambda \\cdot 0 = 0$, also $\\lambda v \\in \\ker f$."
+      ],
+      "distractors": [
+        {
+          "md": "Seien $u, v \\in \\ker f$. Dann $f(u \\cdot v) = f(u) \\cdot f(v) = 0$.",
+          "why": "Vektoren werden im Vektorraum nicht miteinander multipliziert. Zu prüfen ist die Summe $u + v$."
+        },
+        {
+          "md": "Weil $f$ linear ist, gilt $\\ker f = V$.",
+          "why": "Linear heißt nicht, dass alles auf $0$ fällt. Die Drehung um $90°$ ist linear und hat den Kern $\\set{0}$."
+        }
+      ],
+      "explain": "Für jeden Unterraum prüft man drei Dinge: Nullvektor, Abgeschlossenheit unter Addition und unter Skalarmultiplikation. Beim Kern liefern die beiden Linearitätsregeln genau das. Ebenso zeigt man, dass das Bild ein Unterraum von $W$ ist."
+    },
+    {
+      "id": "dimensionen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine $3 \\times 5$-Matrix $A$ hat Rang $2$. Welche Dimension hat der Lösungsraum von $Ax = 0$?",
+      "answer": 3,
+      "tolerance": 0,
+      "hint": "$A$ beschreibt eine Abbildung $\\mathbb{R}^5 \\to \\mathbb{R}^3$. Der Lösungsraum von $Ax = 0$ ist der Kern.",
+      "explain": "$\\dim \\ker A = 5 - 2 = 3$. Das homogene System hat drei freie Parameter."
+    },
+    {
+      "id": "kernvektor",
+      "type": "choice",
+      "md": "Welcher Vektor liegt im Kern von $\\begin{pmatrix}1&3\\\\2&6\\end{pmatrix}$?",
+      "options": [
+        { "md": "$\\begin{pmatrix}3\\\\-1\\end{pmatrix}$", "correct": true },
+        { "md": "$\\begin{pmatrix}1\\\\3\\end{pmatrix}$", "why": "Das ist die erste Zeile selbst, ihr Bild ist $(10, 20)$." },
+        { "md": "$\\begin{pmatrix}1\\\\2\\end{pmatrix}$", "why": "Das ist die erste Spalte, sie liegt im **Bild**, nicht im Kern." }
+      ],
+      "explain": "$1 \\cdot 3 + 3 \\cdot (-1) = 0$ und $2 \\cdot 3 + 6 \\cdot (-1) = 0$. Kern ist die Gerade durch $(3, -1)$, Bild die Gerade durch $(1, 2)$."
+    },
+    {
+      "id": "quadratisch",
+      "type": "truefalse",
+      "md": "Für eine lineare Abbildung $f: \\mathbb{R}^n \\to \\mathbb{R}^n$ gilt: $f$ ist injektiv genau dann, wenn $f$ surjektiv ist.",
+      "answer": true,
+      "explain": "Injektiv heißt $\\dim \\ker f = 0$, nach der Dimensionsformel also $\\dim \\operatorname{im} f = n$, das heißt surjektiv. Bei gleicher Dimension von Start und Ziel fallen die beiden Eigenschaften zusammen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-kern", "level": 1, "label": "Neue Matrix" },
+    { "id": "neu2", "type": "gen", "gen": "la-kern", "level": 2, "label": "Neue Matrix" },
+    { "id": "neu3", "type": "gen", "gen": "la-kern", "level": 3, "label": "Neue Werte" },
+    { "id": "neu4", "type": "gen", "gen": "la-kern", "level": 4, "label": "Neue Matrix" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Kern: was auf $0$ abgebildet wird. Bild: was erreicht wird. Beide sind Unterräume.",
+        "$\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f$.",
+        "$f$ ist injektiv genau dann, wenn $\\ker f = \\{0\\}$.",
+        "Der Lösungsraum von $Ax = 0$ ist der Kern von $A$, seine Dimension ist Spaltenzahl minus Rang."
+      ]
+    }
+  ]
+}

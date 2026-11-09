@@ -1,0 +1,145 @@
+{
+  "id": "stoch-binomial",
+  "title": "Binomialverteilung und Galtonbrett",
+  "subtitle": "Treffer zählen in einer Bernoulli-Kette",
+  "source": "KCGO Mathematik Hessen, Q3.2",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md", "title": "Binomialverteilung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Viele kleine Zufallsentscheidungen nacheinander: Wie verteilt sich die Zahl der Treffer?",
+      "widget": "galton",
+      "params": { "modes": ["board", "histogram"], "mode": "board", "rows": 6, "p": 0.5, "n": 6, "k": 3, "rel": "eq", "nMax": 40 },
+      "timeline": [
+        { "caption": "Eine Kugel fällt durch 6 Reihen von Nägeln. An jedem Nagel geht sie zufällig nach links oder rechts, je mit Wahrscheinlichkeit $\\tfrac12$.", "do": { "drop": 1 }, "hold": 3200 },
+        { "caption": "Die Nummer des Fachs zählt, wie oft sie nach **rechts** ging. Sechs unabhängige Ja-Nein-Entscheidungen: eine **Bernoulli-Kette** der Länge 6.", "do": { "drop": 12 }, "hold": 4000 },
+        { "caption": "Mit vielen Kugeln entsteht ein Berg. In die Mitte führen viele Wege, an den Rand nur einer.", "do": { "drop": 150 }, "hold": 4200 },
+        { "caption": "Die gestrichelte Linie ist die Vorhersage der **Binomialverteilung** $B(6; 0{,}5)$: $P(X = k) = \\binom6k \\cdot 0{,}5^6$." },
+        { "caption": "Ohne Brett, nur die Verteilung: Jede Säule ist eine Wahrscheinlichkeit $P(X = k)$.", "do": { "mode": "histogram" } },
+        { "caption": "Ist die Trefferwahrscheinlichkeit kleiner, rückt der Berg nach links: hier $p = 0{,}2$.", "to": { "p": 0.2 }, "dur": 1800 },
+        { "caption": "Mit mehr Versuchen wird er breiter und immer glockenförmiger, hier $n = 30$. Der Erwartungswert ist $n \\cdot p$.", "to": { "n": 30 }, "int": ["n"], "dur": 2200 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Ein Zufallsexperiment mit nur zwei Ausgängen, **Treffer** mit Wahrscheinlichkeit $p$ und **Niete**, heißt Bernoulli-Experiment. Wiederholst du es $n$-mal unabhängig, entsteht eine **Bernoulli-Kette** der Länge $n$.\n\nDie Anzahl $X$ der Treffer ist dann **binomialverteilt**, kurz $X \\sim B(n; p)$:\n\n$$P(X = k) = \\binom{n}{k} \\cdot p^k \\cdot (1-p)^{n-k}$$\n\n$p^k (1-p)^{n-k}$ ist die Wahrscheinlichkeit **eines** Pfades mit $k$ Treffern, $\\binom nk$ zählt, wie viele solche Pfade es gibt."
+    },
+    {
+      "id": "galton",
+      "type": "widget",
+      "label": "Simulieren",
+      "md": "Im **Galtonbrett** prallt jede Kugel an 8 Nägeln ab, jedes Mal mit Wahrscheinlichkeit $\\tfrac12$ nach rechts. Die Nummer des Fachs zählt die Rechts-Abpraller, ist also $B(8; 0{,}5)$-verteilt. **Lass mindestens 200 Kugeln laufen.**",
+      "widget": "galton",
+      "params": { "modes": ["board"], "rows": 8, "p": 0.5 },
+      "goal": {
+        "when": "balls >= 200",
+        "hints": [{ "when": "balls < 200", "text": "Erst {balls|0} Kugeln. Mit +100 geht es schneller." }],
+        "solve": { "balls": 200 }
+      },
+      "explain": "Die Fächer füllen sich immer ähnlicher der gestrichelten Kurve, der Binomialverteilung $B(8; 0{,}5)$. Die Mitte bei $4 = n \\cdot p$ ist am vollsten."
+    },
+    {
+      "id": "warum-mitte",
+      "type": "choice",
+      "md": "Warum landen in der Mitte die meisten Kugeln?",
+      "options": [
+        { "md": "In Fach 4 führen $\\binom84 = 70$ verschiedene Wege, in Fach 0 nur einer.", "correct": true },
+        { "md": "Die Kugeln werden in der Mitte abgebremst.", "why": "Jeder Abprall ist ein faires Bernoulli-Experiment, gebremst wird nichts." },
+        { "md": "Die mittleren Wege sind wahrscheinlicher als die äußeren.", "why": "Jeder einzelne Weg hat dieselbe Wahrscheinlichkeit $\\left(\\tfrac12\\right)^8$. Es gibt nur mehr Wege zur Mitte." }
+      ],
+      "explain": "$P(X = k) = \\binom8k \\cdot \\left(\\tfrac12\\right)^8$: Alle $2^8 = 256$ Wege sind gleich wahrscheinlich, und $70$ davon enden in Fach 4, also $P(X = 4) = \\tfrac{70}{256} \\approx 0{,}27$."
+    },
+    {
+      "id": "formel",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Basketballer trifft Freiwürfe mit $p = 0{,}3$. Er wirft $10$-mal. Berechne $P(X = 3)$.",
+      "answer": 0.2668,
+      "tolerance": 0.001,
+      "answerText": "0,2668",
+      "placeholder": "Dezimalzahl",
+      "hint": "$\\binom{10}{3} = 120$. Rechne $120 \\cdot 0{,}3^3 \\cdot 0{,}7^7$.",
+      "explain": "$120 \\cdot 0{,}027 \\cdot 0{,}0824 \\approx 0{,}2668$. Drei Treffer sind hier der wahrscheinlichste Ausgang, passend zu $n \\cdot p = 3$."
+    },
+    {
+      "id": "kumuliert",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Fragen wie »**höchstens** 2 Treffer« brauchen die kumulierte Wahrscheinlichkeit $P(X \\le k)$, die Summe mehrerer Säulen. **Stelle für $B(10; 0{,}3)$ die Wahrscheinlichkeit $P(X \\le 2)$ ein.**",
+      "widget": "galton",
+      "params": { "modes": ["histogram"], "n": 10, "p": 0.3, "k": 3, "rel": "eq", "nMax": 50 },
+      "goal": {
+        "when": "n == 10 && abs(p - 0.3) < 0.001 && k == 2 && rel == 1",
+        "hints": [
+          { "when": "n != 10 || abs(p - 0.3) >= 0.001", "text": "Lass n bei 10 und p bei 0,3." },
+          { "when": "rel != 1", "text": "Wähle oben P(X ≤ k): »höchstens« schließt k mit ein." }
+        ],
+        "solve": { "n": 10, "p": 0.3, "k": 2, "rel": "le" }
+      },
+      "explain": "$P(X \\le 2) = P(X=0) + P(X=1) + P(X=2) \\approx 0{,}0282 + 0{,}1211 + 0{,}2335 = 0{,}3828$."
+    },
+    {
+      "id": "gegenereignis",
+      "type": "numeric",
+      "label": "Gegenereignis",
+      "md": "Wie groß ist für denselben Spieler $P(X \\ge 3)$, also mindestens 3 Treffer bei 10 Würfen?",
+      "answer": 0.6172,
+      "tolerance": 0.001,
+      "placeholder": "Dezimalzahl",
+      "hint": "»Mindestens 3« ist das Gegenteil von »höchstens 2«.",
+      "explain": "$P(X \\ge 3) = 1 - P(X \\le 2) \\approx 1 - 0{,}3828 = 0{,}6172$. Mit dem Gegenereignis sparst du dir acht Summanden."
+    },
+    {
+      "id": "kenngroessen",
+      "type": "text",
+      "md": "Für $X \\sim B(n; p)$ gilt\n\n$$\\mu = E(X) = n \\cdot p, \\qquad \\sigma = \\sqrt{n \\cdot p \\cdot (1 - p)}.$$\n\nIst $\\sigma > 3$ (**Laplace-Bedingung**), gelten gut die **Sigma-Regeln**: In $[\\mu - \\sigma, \\mu + \\sigma]$ liegen rund $68\\,\\%$ der Wahrscheinlichkeit, in $[\\mu - 2\\sigma, \\mu + 2\\sigma]$ rund $95\\,\\%$."
+    },
+    {
+      "id": "parameter",
+      "type": "widget",
+      "label": "Rätsel",
+      "md": "Finde $n$ und $p$ so, dass $\\mu = 12$ und $\\sigma = 3$. Der helle Streifen zeigt $\\mu \\pm \\sigma$.",
+      "widget": "galton",
+      "params": { "modes": ["histogram"], "n": 20, "p": 0.5, "k": 10, "rel": "le", "nMax": 60, "sliders": ["n", "p"] },
+      "goal": {
+        "when": "abs(mu - 12) < 0.01 && abs(sigma - 3) < 0.01",
+        "hints": [
+          { "when": "abs(mu - 12) >= 0.01", "text": "μ = {mu|2}. Es muss n · p = 12 sein." },
+          { "when": "abs(sigma - 3) >= 0.01", "text": "μ stimmt, aber σ = {sigma|2}. Zusätzlich muss n · p · (1 − p) = 9 sein. Teile die beiden Gleichungen durcheinander." }
+        ],
+        "solve": { "n": 48, "p": 0.25 }
+      },
+      "explain": "Aus $n p = 12$ und $n p (1 - p) = 9$ folgt $1 - p = \\tfrac{9}{12}$, also $p = 0{,}25$ und $n = 48$."
+    },
+    {
+      "id": "eigenschaften",
+      "type": "multi",
+      "md": "Welche Aussagen über $B(n; p)$ stimmen?",
+      "options": [
+        { "md": "Für $p = 0{,}5$ ist die Verteilung symmetrisch um $\\tfrac n2$.", "correct": true },
+        { "md": "Für $p < 0{,}5$ liegt die höchste Säule links von $\\tfrac n2$.", "correct": true },
+        { "md": "Mit wachsendem $n$ wird $\\sigma$ kleiner.", "why": "$\\sigma = \\sqrt{np(1-p)}$ wächst mit $n$. Nur die **relative** Streuung $\\tfrac{\\sigma}{n}$ nimmt ab." },
+        { "md": "Der Erwartungswert $n \\cdot p$ ist immer eine ganze Zahl.", "why": "Für $n = 10$, $p = 0{,}25$ ist $\\mu = 2{,}5$, obwohl $X$ nur ganze Werte annimmt." }
+      ],
+      "explain": "Probiere es im Diagramm aus: $p$ verschiebt den Berg, $n$ macht ihn breiter und flacher, gemessen an der ganzen Achse $0$ bis $n$ aber schmaler."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-binom", "level": 2, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-binom", "level": 3, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-binom-kenn", "level": 2, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$X \\sim B(n; p)$ zählt Treffer in $n$ unabhängigen Versuchen: $P(X = k) = \\binom nk p^k (1-p)^{n-k}$.",
+        "$\\binom nk$ ist die Zahl der Wege mit $k$ Treffern, jeder Weg hat dieselbe Wahrscheinlichkeit.",
+        "»Höchstens« und »mindestens« brauchen kumulierte Wahrscheinlichkeiten, oft geht es über das Gegenereignis schneller.",
+        "$\\mu = np$, $\\sigma = \\sqrt{np(1-p)}$; bei $\\sigma > 3$ gelten die Sigma-Regeln."
+      ]
+    }
+  ]
+}

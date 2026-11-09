@@ -1,0 +1,95 @@
+{
+  "id": "stoch-unabhaengigkeit",
+  "title": "Stochastische Unabhängigkeit",
+  "subtitle": "Wenn Wissen über das eine nichts über das andere verrät",
+  "source": "KCGO Mathematik Hessen, Q3.1",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Stochastische Unabhängigkeit.md", "title": "Stochastische Unabhängigkeit" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Rauchen und Husten, Würfel und Münze, Regen und Schirm: Manche Ereignisse hängen zusammen, andere nicht. Ein Bild zeigt den Unterschied auf einen Blick.",
+      "widget": "mosaic",
+      "params": { "pa": 0.4, "pba": 0.7, "pbna": 0.3, "labels": { "a": "A", "na": "nicht A", "b": "B" }, "sliders": [] },
+      "timeline": [
+        { "caption": "Das Quadrat ist die ganze Wahrscheinlichkeit $1$. Links der Teil, in dem $A$ eintritt ($40\\,\\%$), rechts der Rest." },
+        { "caption": "In jeder Spalte ist farbig markiert, wie oft $B$ eintritt: unter $A$ in $70\\,\\%$ der Fälle, ohne $A$ nur in $30\\,\\%$. Jede Fläche ist eine Wahrscheinlichkeit." },
+        { "caption": "Hier **verrät** $A$ etwas über $B$: Wer weiß, dass $A$ eingetreten ist, hält $B$ für viel wahrscheinlicher. $A$ und $B$ sind **abhängig**.", "hold": 4400 },
+        { "caption": "Jetzt gleichen wir die Spalten an. Ist $B$ in beiden Spalten gleich hoch, verrät $A$ nichts mehr über $B$.", "to": { "pbna": 0.7 }, "dur": 2400 },
+        { "caption": "Dann ist $P(B \\mid A) = P(B)$, und die farbige Fläche links ist genau $P(A) \\cdot P(B)$. Das ist **stochastische Unabhängigkeit**.", "hold": 4800 },
+        { "caption": "Wichtig: Unabhängig heißt nicht »haben nichts miteinander zu tun«, sondern nur: Die Wahrscheinlichkeit von $B$ ändert sich nicht, wenn man $A$ erfährt.", "to": { "pa": 0.6 }, "dur": 1600 }
+      ]
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Zwei Ereignisse $A$ und $B$ heißen **stochastisch unabhängig**, wenn\n\n$$P(A \\cap B) = P(A) \\cdot P(B).$$\n\nIst $P(A) > 0$, ist das gleichwertig mit $P(B \\mid A) = P(B)$: Das Wissen, dass $A$ eingetreten ist, ändert die Wahrscheinlichkeit von $B$ nicht. Die Definition ist symmetrisch, sie gilt dann auch umgekehrt.\n\n**Beispiel:** Ein Würfel und eine Münze. $A$: Sechs, $B$: Kopf. $P(A \\cap B) = \\tfrac{1}{12} = \\tfrac16 \\cdot \\tfrac12$, unabhängig, wie erwartet."
+    },
+    {
+      "id": "einstellen",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "$P(A) = 0{,}4$ und $P(B \\mid A) = 0{,}55$ stehen fest. **Stelle $P(B \\mid \\text{nicht } A)$ so ein, dass $A$ und $B$ unabhängig sind.**",
+      "widget": "mosaic",
+      "params": { "pa": 0.4, "pba": 0.55, "pbna": 0.2, "sliders": ["pbna"] },
+      "goal": {
+        "when": "indep == 1",
+        "hints": [{ "when": "pbna < pba", "text": "Ohne A ist B noch seltener als mit A. Erhöhe P(B | nicht A)." }, { "when": "pbna > pba", "text": "Ohne A ist B jetzt häufiger als mit A. Etwas weniger." }],
+        "solve": { "pbna": 0.55 }
+      },
+      "explain": "Bei $P(B \\mid \\text{nicht } A) = 0{,}55$ ist $B$ in beiden Spalten gleich häufig. Dann ist $P(B) = 0{,}55$ und $P(A \\cap B) = 0{,}4 \\cdot 0{,}55 = 0{,}22 = P(A) \\cdot P(B)$."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$A$ und $B$ sind unabhängig, $P(A) = 0{,}3$ und $P(B) = 0{,}5$. Wie groß ist $P(A \\cup B)$?",
+      "answer": 0.65,
+      "tolerance": 0.001,
+      "hint": "Erst $P(A \\cap B)$ mit der Unabhängigkeit, dann der Additionssatz $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+      "explain": "$P(A \\cap B) = 0{,}3 \\cdot 0{,}5 = 0{,}15$, also $P(A \\cup B) = 0{,}3 + 0{,}5 - 0{,}15 = 0{,}65$."
+    },
+    {
+      "id": "falle",
+      "type": "truefalse",
+      "md": "Zwei Ereignisse, die sich gegenseitig ausschließen und beide eine positive Wahrscheinlichkeit haben, sind unabhängig.",
+      "answer": false,
+      "whyNot": "Ausschließen heißt $P(A \\cap B) = 0$, aber $P(A) \\cdot P(B) > 0$.",
+      "explain": "Im Gegenteil: Weiß man, dass $A$ eingetreten ist, weiß man sicher, dass $B$ nicht eingetreten ist. Stärker kann eine Abhängigkeit kaum sein. »Unvereinbar« und »unabhängig« sind zwei völlig verschiedene Begriffe."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Zeige: Sind $A$ und $B$ unabhängig, dann auch $A$ und $\\bar B$. Überlege, wie sich $P(A)$ auf $B$ und $\\bar B$ aufteilt.",
+      "solution": "$A$ zerfällt in die disjunkten Teile $A \\cap B$ und $A \\cap \\bar B$. Also\n$$P(A \\cap \\bar B) = P(A) - P(A \\cap B) = P(A) - P(A)\\,P(B) = P(A)\\,(1 - P(B)) = P(A)\\,P(\\bar B).$$\nGenau das ist die Unabhängigkeit von $A$ und $\\bar B$. Anschaulich: Wenn $A$ nichts über $B$ verrät, verrät es auch nichts über das Gegenteil von $B$."
+    },
+    {
+      "id": "wuerfel",
+      "type": "choice",
+      "md": "Zwei Würfel. $A$: Der erste zeigt eine gerade Zahl. $B$: Die Augensumme ist $7$. Was gilt?",
+      "options": [
+        { "md": "$A$ und $B$ sind unabhängig.", "correct": true },
+        { "md": "$A$ und $B$ sind abhängig, weil die Augensumme vom ersten Würfel abhängt.", "why": "Die Summe hängt zwar vom ersten Würfel ab, aber $P(B)$ ändert sich durch das Wissen über $A$ nicht: Zu jeder ersten Zahl passt genau eine zweite." },
+        { "md": "Das lässt sich ohne Versuch nicht entscheiden.", "why": "Bei Laplace-Experimenten lässt es sich exakt abzählen." }
+      ],
+      "explain": "$P(A) = \\tfrac12$, $P(B) = \\tfrac{6}{36} = \\tfrac16$, $P(A \\cap B) = \\tfrac{3}{36} = \\tfrac{1}{12} = \\tfrac12 \\cdot \\tfrac16$. Unabhängigkeit ist eine Eigenschaft der Zahlen, nicht einer Ursache-Wirkungs-Beziehung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-unabh", "level": 1, "label": "Neue Tafel" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-unabh", "level": 2, "label": "Neue Tafel" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-unabh", "level": 3, "label": "Neue Ereignisse" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$A$ und $B$ sind unabhängig, wenn $P(A \\cap B) = P(A) \\cdot P(B)$, gleichwertig $P(B \\mid A) = P(B)$.",
+        "Im Mosaikdiagramm: $B$ ist in beiden Spalten gleich hoch.",
+        "Unvereinbare Ereignisse mit positiver Wahrscheinlichkeit sind immer abhängig.",
+        "Mit $A, B$ sind auch $A, \\bar B$ und $\\bar A, \\bar B$ unabhängig."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "id": "oek-marktversagen",
+  "title": "Externe Effekte und öffentliche Güter",
+  "subtitle": "Wenn der Preis nicht die ganze Wahrheit sagt",
+  "source": "Lehrbuchstandard der Mikroökonomik; Arthur C. Pigou, The Economics of Welfare (1920); Ronald Coase, The Problem of Social Cost (1960)",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Externe Effekte.md", "title": "Externe Effekte" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Öffentliche Güter.md", "title": "Öffentliche Güter" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Fabrik verkauft Dünger. Orange ihre **privaten** Kosten. Bei der Herstellung gelangt aber Nitrat ins Grundwasser, und das kostet Dritte, die am Markt gar nicht beteiligt sind. Rot gestrichelt die **gesellschaftlichen** Kosten.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis, Kosten",
+        "vars": [{ "name": "e", "min": 0, "max": 4, "value": 0, "hidden": true }, { "name": "t", "min": 0, "max": 4, "value": 0, "hidden": true }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "A", "label": "private Kosten", "a": "2 + t", "m": 1, "color": "orange" },
+          { "id": "S", "label": "soziale Kosten", "a": "2 + e", "m": 1, "color": "red", "dashed": true }
+        ],
+        "intersections": [{ "id": "M", "of": ["N", "A"], "label": "Markt" }, { "id": "O", "of": ["N", "S"], "label": "Optimum", "guides": false }],
+        "shades": [{ "when": "e > 0.05 && M_x - O_x > 0.05", "points": [["O_x", "O_y"], ["M_x", "M_y + e - t"], ["M_x", "M_y"]], "color": "red", "opacity": 0.3 }],
+        "readout": "Schaden je Einheit {e|1}, Steuer {t|1}: Marktmenge **{M_x|2}**, optimale Menge **{O_x|2}**"
+      },
+      "timeline": [
+        { "caption": "Solange niemand den Schaden mitrechnet, liegen private und soziale Kosten übereinander. Der Markt findet sein Gleichgewicht bei der Menge $4$." },
+        { "caption": "Jede Tonne Dünger verursacht aber einen Schaden von $2$ bei Dritten. Die gesellschaftlichen Grenzkosten liegen um $2$ höher. Optimal wäre die Menge $3$, wo der Nutzen der letzten Einheit ihre **vollen** Kosten deckt.", "to": { "e": 2 }, "dur": 2000, "hold": 7500 },
+        { "caption": "Der Markt produziert trotzdem $4$, weil die Fabrik den Schaden nicht bezahlt. Das rote Dreieck ist der Wohlfahrtsverlust: Einheiten, deren Kosten für die Gesellschaft höher sind als ihr Nutzen. Das ist **Marktversagen** durch einen **externen Effekt**.", "hold": 8000 },
+        { "caption": "Pigous Idee: eine Steuer genau in Höhe des Schadens, hier $2$ pro Tonne. Jetzt rechnet die Fabrik mit den vollen Kosten, und der Markt landet von selbst beim Optimum.", "to": { "t": 2 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Der Preismechanismus funktioniert, weil Preise Kosten und Nutzen widerspiegeln. Das tun sie aber nur für die Beteiligten. Ein **externer Effekt** liegt vor, wenn eine Handlung Dritten schadet (negativ: Lärm, Abgase, Überfischung) oder nützt (positiv: Impfung, Bienen für den Nachbarobstbau, Forschung), ohne dass dafür bezahlt wird.\n\nBei negativen Effekten wird zu viel produziert, bei positiven zu wenig. Lösungen:\n\n- **Pigou-Steuer** oder -Subvention in Höhe des externen Effekts. Der Markt rechnet dann mit den richtigen Preisen.\n- **Mengenregeln und Zertifikate**: Der Staat legt die Gesamtmenge fest, der Handel mit Rechten verteilt sie dorthin, wo Vermeidung am billigsten ist (Emissionshandel).\n- **Coase**: Sind Eigentumsrechte klar und Verhandlungen billig, einigen sich die Betroffenen selbst, egal wem das Recht anfangs gehört.\n\nEine zweite Quelle von Marktversagen sind **öffentliche Güter**: Niemand kann von ihnen ausgeschlossen werden, und die Nutzung durch einen schmälert nicht die der anderen, etwa ein Deich. Dann lohnt es sich, nicht zu zahlen und trotzdem zu profitieren: das **Trittbrettfahrerproblem**. Der Markt stellt solche Güter kaum bereit."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Externer Effekt\n> Eine Wirkung einer wirtschaftlichen Handlung auf Unbeteiligte, die nicht über Preise abgegolten wird. Die **sozialen Grenzkosten** sind private Grenzkosten plus externe Grenzkosten.\n\n> [!definition] Pigou-Steuer\n> Eine Steuer je Einheit in Höhe der externen Grenzkosten im Optimum. Sie **internalisiert** den externen Effekt.\n\n> [!definition] Güterarten\n> | | ausschließbar | nicht ausschließbar |\n> |---|---|---|\n> | **rival** | privates Gut | Allmendegut |\n> | **nicht rival** | Klubgut | öffentliches Gut |"
+    },
+    {
+      "id": "pigou",
+      "type": "widget",
+      "label": "Korrigieren",
+      "md": "Hier verursacht jede Einheit einen Schaden von $3$. **Verschiebe die private Kostenkurve so, wie es eine passende Pigou-Steuer tun würde**, damit der Markt beim Optimum landet.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis, Kosten",
+        "lines": [
+          { "id": "N", "label": "N", "a": 11, "m": -1, "color": "accent" },
+          { "id": "A", "label": "private Kosten", "a": 1, "m": 1, "color": "orange", "shift": true, "shiftRange": [0, 6], "shiftStep": 0.5 },
+          { "id": "S", "label": "soziale Kosten", "a": 4, "m": 1, "color": "red", "dashed": true }
+        ],
+        "intersections": [{ "id": "M", "of": ["N", "A"], "label": "Markt" }],
+        "readout": "Steuer {A_dy|1}: Marktmenge **{M_x|2}** (optimal wäre 3,5)"
+      },
+      "goal": { "when": "abs(A_dy - 3) < 0.01", "hints": [{ "when": "A_dy < 3", "text": "Noch wird zu viel produziert." }, { "when": "A_dy > 3", "text": "Jetzt wird zu wenig produziert: Die Steuer ist höher als der Schaden." }], "solve": { "A_dy": 3 } },
+      "explain": "Eine Steuer von $3$, genau dem Schaden je Einheit, legt die private Kostenkurve auf die soziale. Eine höhere Steuer wäre nicht »noch besser«: Sie würde Einheiten verhindern, deren Nutzen ihre vollen Kosten übersteigt."
+    },
+    {
+      "id": "positiv",
+      "type": "choice",
+      "md": "Impfungen schützen nicht nur Geimpfte, sondern auch andere. Was passiert ohne staatliches Eingreifen?",
+      "options": [
+        { "md": "Es wird zu wenig geimpft, weil jeder nur seinen eigenen Nutzen abwägt.", "correct": true },
+        { "md": "Es wird zu viel geimpft.", "why": "Bei positiven externen Effekten liegt der gesellschaftliche Nutzen über dem privaten, also entsteht zu wenig." },
+        { "md": "Der Markt findet genau die richtige Menge.", "why": "Den Nutzen für Dritte bezieht niemand in seine Entscheidung ein." }
+      ],
+      "explain": "Bei positiven externen Effekten ist der private Nutzen kleiner als der gesellschaftliche. Die Korrektur ist eine Subvention, oder kostenlose Impfungen."
+    },
+    {
+      "id": "gueterarten",
+      "type": "quadrant",
+      "label": "Vierfeldertafel",
+      "md": "Märkte versagen besonders bei Gütern, von deren Nutzung man niemanden ausschließen kann. Ordne die Güter ein.",
+      "xLabel": "Rivalität",
+      "yLabel": "Ausschluss",
+      "x": [
+        "rival",
+        "nicht rival"
+      ],
+      "y": [
+        "ausschließbar",
+        "nicht ausschließbar"
+      ],
+      "cells": [
+        "Privates Gut",
+        "Klubgut",
+        "Allmendegut",
+        "Öffentliches Gut"
+      ],
+      "items": [
+        {
+          "md": "Brot",
+          "cell": 0
+        },
+        {
+          "md": "Streaming-Abo",
+          "cell": 1
+        },
+        {
+          "md": "Fischbestand im offenen Meer",
+          "cell": 2
+        },
+        {
+          "md": "Landesverteidigung",
+          "cell": 3
+        },
+        {
+          "md": "Leuchtturm",
+          "cell": 3
+        },
+        {
+          "md": "Eine freie Straße im Stau",
+          "cell": 2
+        }
+      ],
+      "explain": "**Rival:** Was eine nutzt, kann der andere nicht nutzen. **Ausschließbar:** Nichtzahler lassen sich fernhalten. Bei öffentlichen Gütern fährt jeder als Trittbrettfahrer mit, deshalb finanziert sie meist der Staat. Bei Allmendegütern droht Übernutzung, die Tragik der Allmende."
+    },
+    {
+      "id": "coase",
+      "type": "reveal",
+      "label": "Coase",
+      "md": "Ein Bauer und eine Eisenbahn: Funken der Lok setzen Felder in Brand. Coase fragt: Muss man die Bahn haften lassen? Überlege, was passiert, wenn beide verhandeln können.",
+      "solution": "Wenn Rechte klar verteilt sind und Verhandeln nichts kostet, kommt es zum effizienten Ergebnis, **egal wer das Recht hat**. Darf die Bahn Funken sprühen, zahlt der Bauer ihr für Funkenschutz, sofern ihm das weniger kostet als der Schaden. Hat der Bauer das Recht auf unversehrte Felder, zahlt die Bahn ihm eine Entschädigung oder baut den Schutz.\n\nDie Verteilung der Rechte entscheidet nur, wer zahlt, nicht was passiert. In der Praxis sind Verhandlungen aber oft teuer, etwa wenn Millionen Menschen betroffen sind. Dann braucht es Steuern oder Regeln."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-extern", "level": 1, "label": "Pigou-Steuer" },
+    { "id": "neu2", "type": "gen", "gen": "oek-extern", "level": 2, "label": "Übermenge" },
+    { "id": "neu3", "type": "gen", "gen": "oek-extern", "level": 3, "label": "Verlust" },
+    { "id": "neu4", "type": "gen", "gen": "oek-extern", "level": 4, "label": "Güterarten" },
+    {
+      "id": "gueter-neu",
+      "type": "gen",
+      "gen": "oek-gueter",
+      "level": 3,
+      "label": "Güterarten"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Externe Effekte sind Kosten oder Nutzen für Dritte, die nicht im Preis stecken.",
+        "Negative Effekte führen zu einer zu großen, positive zu einer zu kleinen Menge.",
+        "Pigou-Steuer, Zertifikate oder Verhandlungen nach Coase internalisieren den Effekt.",
+        "Öffentliche Güter sind nicht rival und nicht ausschließbar, Trittbrettfahrer machen ihre Marktbereitstellung schwer."
+      ]
+    }
+  ]
+}

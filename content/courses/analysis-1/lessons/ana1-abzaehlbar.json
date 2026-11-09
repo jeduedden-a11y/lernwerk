@@ -1,0 +1,112 @@
+{
+  "id": "ana1-abzaehlbar",
+  "title": "Abzählbar und überabzählbar",
+  "subtitle": "Es gibt verschiedene Größen von Unendlich",
+  "source": "Skript Jarohs, Abschnitt 5.1 bis 5.15",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Abzählbarkeit.md", "title": "Abzählbarkeit" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md", "title": "Intervallschachtelung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Gibt es mehr positive Brüche als natürliche Zahlen? Zwischen je zwei natürlichen Zahlen liegen ja unendlich viele Brüche. Wir versuchen trotzdem, **alle** Brüche durchzunummerieren.",
+      "widget": "cantor",
+      "params": { "mode": "zigzag", "size": 6, "k": 0 },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Im Gitter steht in Zeile $p$ und Spalte $q$ der Bruch $\\tfrac pq$. Jeder positive Bruch kommt vor, sogar mehrfach: $\\tfrac12 = \\tfrac24$." },
+        { "caption": "Zeilenweise geht es nicht: In der ersten Zeile, $\\tfrac11, \\tfrac12, \\tfrac13, \\dots$, würden wir nie fertig und kämen nie zur zweiten Zeile. Also laufen wir im **Zickzack** über die Diagonalen.", "to": { "k": 3 }, "dur": 1200, "hold": 6200 },
+        { "caption": "Brüche, die wir schon in gekürzter Form hatten, werden übersprungen, etwa $\\tfrac22 = \\tfrac11$. Die anderen bekommen die nächste Nummer.", "to": { "k": 9 }, "dur": 2400 },
+        { "caption": "Jede Diagonale ist endlich lang. Deshalb erreicht der Zickzack **jeden** Bruch nach endlich vielen Schritten, und jeder bekommt eine eigene Nummer.", "to": { "k": 21 }, "dur": 3000 },
+        { "caption": "Damit ist $\\Q_{>0}$ **abzählbar**: Es gibt eine Bijektion zu $\\N$. Es gibt also nicht »mehr« Brüche als natürliche Zahlen, obwohl sie dicht liegen. Mit $\\R$ wird das anders sein.", "to": { "k": 36 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Wie vergleicht man die Größe unendlicher Mengen? Zählen geht nicht mehr. Aber man kann **paaren**: Zwei Mengen sind gleich groß, wenn es eine Bijektion zwischen ihnen gibt, so wie man ohne Zählen sieht, dass in einem vollen Kino gleich viele Gäste wie Plätze sind.\n\nMit dieser Definition passieren überraschende Dinge:\n\n- $\\N$ und die geraden Zahlen sind gleich groß: $n \\mapsto 2n$ ist eine Bijektion. Ein Teil kann so groß sein wie das Ganze.\n- $\\Z$ ist abzählbar: $0, 1, -1, 2, -2, 3, \\dots$\n- $\\Q$ ist abzählbar, wie der Zickzack zeigt.\n\nAber nicht alles ist abzählbar. Cantors **Diagonalargument** zeigt: Wie man die reellen Zahlen (oder die unendlichen 0-1-Folgen) auch auflistet, es bleibt immer eine übrig, die in der Liste fehlt. $\\R$ ist eine wirklich größere Unendlichkeit."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Gleichmächtig, abzählbar\n> $A$ und $B$ heißen **gleichmächtig**, wenn es eine Bijektion $A \\to B$ gibt.\n> $A$ heißt **abzählbar unendlich**, wenn $A$ gleichmächtig zu $\\N$ ist, und **abzählbar**, wenn $A$ endlich oder abzählbar unendlich ist. Sonst heißt $A$ **überabzählbar**.\n\n> [!satz] Rechenregeln\n> - Teilmengen abzählbarer Mengen sind abzählbar.\n> - $\\N \\times \\N$ ist abzählbar, und damit auch jede abzählbare Vereinigung abzählbarer Mengen.\n> - $\\Z$ und $\\Q$ sind abzählbar.\n> - $\\R$ ist überabzählbar, ebenso jedes Intervall $[a, b]$ mit $a < b$.\n\nWeil $\\Q$ abzählbar und $\\R$ überabzählbar ist, sind die irrationalen Zahlen überabzählbar: »Fast alle« reellen Zahlen sind irrational."
+    },
+    {
+      "id": "diagonale",
+      "type": "widget",
+      "label": "Durchführen",
+      "md": "Angenommen, die Zeilen $x_1, x_2, \\dots$ wären **alle** unendlichen 0-1-Folgen. **Baue mit »Weiter« eine Folge, die in keiner Zeile vorkommt**, mindestens bis Stelle $8$.",
+      "widget": "cantor",
+      "params": { "mode": "diagonal", "k": 0 },
+      "goal": { "when": "k >= 8", "message": "Geh weiter, bis alle acht Zeilen abgearbeitet sind.", "solve": { "k": 8 } },
+      "explain": "Die neue Folge unterscheidet sich von $x_n$ an der Stelle $n$, also von jeder Zeile. Keine Liste kann alle 0-1-Folgen enthalten. Weil man jede solche Folge als Binärdarstellung einer Zahl in $[0, 1]$ lesen kann, folgt daraus die Überabzählbarkeit von $\\R$."
+    },
+    {
+      "id": "nummer",
+      "type": "numeric",
+      "label": "Mitzählen",
+      "md": "Im Zickzack der Animation: Welche Nummer bekommt der Bruch $\\tfrac32$? (Übersprungene Brüche wie $\\tfrac22$ bekommen keine Nummer.)",
+      "answer": 8,
+      "tolerance": 0,
+      "hint": "Die Reihenfolge beginnt $\\tfrac11, \\tfrac12, \\tfrac21, \\tfrac31, (\\tfrac22), \\tfrac13, \\tfrac14, \\dots$",
+      "explain": "$\\tfrac11, \\tfrac12, \\tfrac21, \\tfrac31, \\tfrac13, \\tfrac14, \\tfrac23, \\tfrac32$: Das ist die achte Nummer. Wichtig ist nicht die genaue Zahl, sondern dass jeder Bruch irgendwann eine bekommt."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise, dass $[0, 1]$ überabzählbar ist. Nimm an, $x_1, x_2, x_3, \\dots$ sei eine Aufzählung, und benutze Intervallschachtelung.",
+      "solution": "Teile $[0, 1]$ in drei gleich lange abgeschlossene Teile. Mindestens eines enthält $x_1$ nicht, nenne es $I_1$. Teile $I_1$ wieder in drei Teile und wähle eines, $I_2$, das $x_2$ nicht enthält. Und so weiter.\n\nDie $I_n$ sind geschachtelt und abgeschlossen. Nach dem Prinzip der Intervallschachtelung gibt es ein $x$, das in allen $I_n$ liegt. Dieses $x$ ist von jedem $x_n$ verschieden, denn $x_n \\notin I_n$, aber $x \\in I_n$.\n\nAlso fehlt $x$ in der Aufzählung: Widerspruch. Hier wird die Vollständigkeit von $\\R$ entscheidend benutzt."
+    },
+    {
+      "id": "scheinbeweis",
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Scheinbeweis, dass das Intervall $(0, 1)$ abzählbar ist. **Welcher Schritt ist falsch?**",
+      "lines": [
+        {
+          "md": "Jede Zahl $x \\in (0, 1)$ hat eine Dezimaldarstellung $x = 0{,}d_1 d_2 d_3 \\dots$",
+          "why": "Stimmt. Bei Zahlen mit zwei Darstellungen wie $0{,}1\\overline{9} = 0{,}2$ wählt man eine feste."
+        },
+        {
+          "md": "Ordne $x$ die natürliche Zahl zu, deren Ziffern $d_1 d_2 d_3 \\dots$ sind.",
+          "why": "Eine natürliche Zahl hat nur endlich viele Ziffern. Für $x = \\tfrac13 = 0{,}333\\dots$ entsteht gar keine natürliche Zahl."
+        },
+        {
+          "md": "Verschiedene Zahlen haben verschiedene Ziffernfolgen, also ist die Zuordnung injektiv.",
+          "why": "Für sich genommen richtig, wenn jede Zahl eine feste Darstellung hat."
+        },
+        {
+          "md": "Eine injektive Abbildung nach $\\N$ zeigt, dass $(0, 1)$ abzählbar ist.",
+          "why": "Das Prinzip stimmt. Es scheitert nur daran, dass die Abbildung aus Schritt 2 nicht nach $\\N$ geht."
+        }
+      ],
+      "answer": 1,
+      "explain": "Unendliche Ziffernfolgen sind keine natürlichen Zahlen. Cantors Diagonalargument zeigt, dass $(0, 1)$ wirklich überabzählbar ist: Jede Liste lässt mindestens eine Zahl aus."
+    },
+    {
+      "id": "woerter",
+      "type": "truefalse",
+      "md": "Die Menge aller endlichen Wörter aus den Buchstaben $a$ bis $z$ ist abzählbar.",
+      "answer": true,
+      "explain": "Für jede Länge $\\ell$ gibt es nur $26^\\ell$ Wörter, also endlich viele. Die Menge aller Wörter ist eine abzählbare Vereinigung endlicher Mengen. Man zählt erst alle Wörter der Länge $1$, dann der Länge $2$, und so weiter. Folgerung: Es gibt nur abzählbar viele Texte, aber überabzählbar viele reelle Zahlen. Die meisten Zahlen lassen sich nicht beschreiben."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-abzaehlbar", "level": 1, "label": "Einordnen" },
+    { "id": "neu2", "type": "gen", "gen": "ana-abzaehlbar", "level": 2, "label": "Einordnen" },
+    { "id": "neu3", "type": "gen", "gen": "ana-abzaehlbar", "level": 3, "label": "Einordnen" },
+    { "id": "neu4", "type": "gen", "gen": "ana-abzaehlbar", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gleich groß heißt: Es gibt eine Bijektion. Ein Teil kann so groß sein wie das Ganze.",
+        "$\\N$, $\\Z$, $\\Q$ und $\\N \\times \\N$ sind abzählbar, der Zickzack zählt alle Brüche.",
+        "$\\R$ ist überabzählbar: Diagonalargument oder Intervallschachtelung.",
+        "Weil $\\Q$ abzählbar ist, sind die irrationalen Zahlen überabzählbar."
+      ]
+    }
+  ]
+}

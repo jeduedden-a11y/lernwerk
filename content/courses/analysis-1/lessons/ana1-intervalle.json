@@ -1,0 +1,106 @@
+{
+  "id": "ana1-intervalle",
+  "title": "Intervallschachtelung",
+  "subtitle": "Warum geschachtelte Intervalle in ℝ nie ins Leere laufen",
+  "source": "Skript Jarohs, Beweis von Satz 5.13 (Vorbemerkung); Übungsblatt 2, Aufgabe 4",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md", "title": "Intervallschachtelung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wir fangen $\\sqrt2$ ein, ohne es je auszurechnen. Wir wissen nur: $1^2 < 2 < 2^2$. Also liegt die gesuchte Zahl in $[1, 2]$. Und dann halbieren wir.",
+      "widget": "nested-intervals",
+      "params": { "a": "floor(sqrt(2)*2^(n-1))/2^(n-1)", "b": "floor(sqrt(2)*2^(n-1))/2^(n-1) + 2^(1-n)", "steps": 9, "range": [0.9, 2.1] },
+      "int": ["n"],
+      "timeline": [
+        { "caption": "$I_1 = [1, 2]$, weil $1^2 = 1 < 2$ und $2^2 = 4 > 2$." },
+        { "caption": "Mitte $1{,}5$: $1{,}5^2 = 2{,}25 > 2$. Die gesuchte Zahl liegt also links: $I_2 = [1;\\ 1{,}5]$.", "to": { "n": 2 }, "dur": 600 },
+        { "caption": "Mitte $1{,}25$: $1{,}25^2 = 1{,}5625 < 2$. Weiter rechts: $I_3 = [1{,}25;\\ 1{,}5]$.", "to": { "n": 3 }, "dur": 600 },
+        { "caption": "So geht es weiter. Jedes Intervall liegt im vorigen und ist halb so lang. Links stehen immer Zahlen mit Quadrat unter $2$, rechts mit Quadrat über $2$.", "to": { "n": 7 }, "dur": 2400 },
+        { "caption": "Die Längen $2^{1-n}$ gehen gegen $0$. In $\\R$ bleibt am Ende genau ein Punkt übrig, der in allen Intervallen liegt: $\\sqrt2$. In $\\Q$ dagegen wäre der Durchschnitt **leer**, denn $\\sqrt2$ ist nicht rational. Genau diese Lücke schließt die Vollständigkeit.", "to": { "n": 9 }, "dur": 1000 }
+      ]
+    },
+    {
+      "id": "def",
+      "type": "text",
+      "md": "Gegeben sind abgeschlossene Intervalle $I_n = [a_n, b_n]$ mit $I_{n+1} \\subset I_n$ für alle $n$, also $a_n \\le a_{n+1}$ und $b_{n+1} \\le b_n$. Jedes Intervall liegt im vorigen, wie russische Puppen.\n\n> [!satz] Behauptung\n> In $\\R$ ist der Durchschnitt $\\bigcap_{n \\in \\N} I_n$ **nie leer**.\n\nDieses Ergebnis steckt im Beweis, dass $\\R$ überabzählbar ist (Satz 5.13), und ist Aufgabe 4 auf Blatt 2."
+    },
+    {
+      "id": "wurzel2",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Die Intervalle $I_n$ sind die Dezimalabschnitte von $\\sqrt2$: $[1{,}4;\\ 1{,}5]$, $[1{,}41;\\ 1{,}42]$, … Schachtle weiter.",
+      "widget": "nested-intervals",
+      "params": { "a": "floor(sqrt(2)*10^n)/10^n", "b": "floor(sqrt(2)*10^n)/10^n + 10^(-n)", "steps": 7, "range": [1.35, 1.55] }
+    },
+    {
+      "id": "q-luecke",
+      "type": "choice",
+      "md": "Alle Randpunkte dieser Intervalle sind rational. Was wäre, wenn man nur in $\\Q$ rechnen dürfte?",
+      "options": [
+        { "md": "Der Durchschnitt aller $I_n \\cap \\Q$ wäre leer, weil der einzige gemeinsame Punkt $\\sqrt2 \\notin \\Q$ ist.", "correct": true },
+        { "md": "Der Durchschnitt enthielte $1{,}41421$.", "why": "$1{,}41421$ liegt nicht in $I_6 = [1{,}414213;\\ 1{,}414214]$." },
+        { "md": "Der Durchschnitt wäre ganz $\\Q \\cap [1, 2]$.", "why": "Die Intervalle werden beliebig klein, im Durchschnitt bleibt höchstens ein Punkt." },
+        { "md": "In $\\Q$ gibt es keine Intervalle.", "why": "Natürlich gibt es sie, nur fehlen ihnen die Lücken-Punkte." }
+      ],
+      "explain": "Die Aussage hängt also am **Vollständigkeitsaxiom**. Genau deshalb braucht der Beweis $\\sup$ und $\\inf$."
+    },
+    {
+      "id": "offen",
+      "type": "truefalse",
+      "md": "Für die offenen Intervalle $J_n = (0, \\tfrac1n)$ ist $\\bigcap_{n} J_n \\ne \\emptyset$.",
+      "answer": false,
+      "whyNot": "Jedes $x > 0$ liegt nicht mehr in $J_n$, sobald $\\tfrac1n \\le x$ (Archimedes), und $0$ liegt in keinem $J_n$.",
+      "explain": "Der Durchschnitt ist leer. Die Voraussetzung **abgeschlossen** ist also wesentlich, ebenso **beschränkt**: Die Intervalle $[n, \\infty)$ sind geschachtelt und abgeschlossen, haben aber auch einen leeren Durchschnitt."
+    },
+    {
+      "id": "struktur",
+      "type": "order",
+      "label": "Beweisplan",
+      "md": "Ordne den Beweisplan aus Blatt 2, Aufgabe 4.",
+      "items": [
+        "Zeige $I_n \\subset I_k$ für alle $n \\ge k$.",
+        "Betrachte $A = \\set{a_n}$ und $B = \\set{b_n}$ und zeige, dass $\\sup A$ und $\\inf B$ existieren.",
+        "Zeige $\\sup A \\le \\inf B$.",
+        "Folgere $[\\sup A, \\inf B] \\subset \\bigcap_n I_n$, insbesondere ist der Durchschnitt nicht leer."
+      ],
+      "explain": "Der zweite Schritt braucht das Vollständigkeitsaxiom (V) und Satz 2.15. Der dritte ist der Kern."
+    },
+    {
+      "id": "kernidee",
+      "type": "reveal",
+      "label": "Denkanstoß",
+      "md": "Für den dritten Schritt hilft eine Zwischenbehauptung: Jedes $a_n$ ist kleiner oder gleich **jedem** $b_k$, auch wenn $n \\ne k$. Warum ist das so? Unterscheide die Fälle $n \\ge k$ und $n < k$.",
+      "solution": "Für $n \\ge k$: $a_n \\le b_n \\le b_k$, weil die rechten Ränder fallen.\n\nFür $n < k$: $a_n \\le a_k \\le b_k$, weil die linken Ränder steigen.\n\nDamit ist jedes $b_k$ eine obere Schranke von $A$. Wie du daraus $\\sup A \\le \\inf B$ bekommst, ist der Rest der Aufgabe: Denk an die Definition von $\\sup$ als **kleinste** obere Schranke."
+    },
+    {
+      "id": "laenge",
+      "type": "multi",
+      "md": "Angenommen, zusätzlich gilt $b_n - a_n \\to 0$. Was folgt?",
+      "options": [
+        { "md": "$\\sup A = \\inf B$.", "correct": true },
+        { "md": "Der Durchschnitt besteht aus genau einem Punkt.", "correct": true },
+        { "md": "Der Durchschnitt ist leer.", "why": "Er ist nach dem Satz nie leer." },
+        { "md": "Die Folgen $(a_n)$ und $(b_n)$ konvergieren gegen denselben Grenzwert.", "correct": true }
+      ],
+      "explain": "Wenn die Längen gegen $0$ gehen, bleibt genau ein Punkt übrig. So definiert man zum Beispiel $\\sqrt2$ oder $e$ durch Intervallschachtelungen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-wurzel", "level": 1, "label": "Neue Wurzel" },
+    { "id": "neu2", "type": "gen", "gen": "ana-wurzel", "level": 2, "label": "Neue Wurzel" },
+    { "id": "neu3", "type": "gen", "gen": "ana-zws", "level": 2, "label": "Halbieren" },
+    { "id": "neu4", "type": "gen", "gen": "ana-wurzel", "level": 4, "label": "Wie viele Schritte?" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Abgeschlossene, beschränkte, geschachtelte Intervalle haben in $\\R$ einen nichtleeren Durchschnitt.",
+        "In $\\Q$ ist das falsch, offene oder unbeschränkte Intervalle reichen auch nicht.",
+        "Beweisidee: $\\sup A \\le \\inf B$, und alles dazwischen liegt in jedem $I_n$.",
+        "Schrumpfen die Längen gegen $0$, bleibt genau ein Punkt."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "id": "ana1-monotonie",
+  "title": "Monotone Folgen und die Zahl e",
+  "subtitle": "Konvergenz beweisen, ohne den Grenzwert zu kennen",
+  "source": "Skript Jarohs, Abschnitt 9.15 bis 9.24",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Monotone Folgen.md", "title": "Monotone Folgen" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Folge $a_n = \\left(1 + \\tfrac1n\\right)^n$. Was ist ihr Grenzwert? Man kann ihn nicht einfach ablesen, denn $1 + \\tfrac1n \\to 1$, aber der Exponent wächst.",
+      "widget": "sequence",
+      "params": { "term": "(1 + 1/n)^n", "limit": "e", "limitLabel": "e ≈ 2,71828", "nMax": 60, "n": 1, "yRange": [1.8, 3.1], "readout": "$a_{{N|0}} = {a|6}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "$a_1 = 2$. Ein Kapital, das zu $100\\,\\%$ einmal im Jahr verzinst wird, verdoppelt sich." },
+        { "caption": "$a_2 = 2{,}25$, $a_3 \\approx 2{,}37$, $a_5 \\approx 2{,}49$: Häufigeres Verzinsen bringt mehr, aber immer weniger dazu.", "to": { "N": 5 }, "dur": 1600 },
+        { "caption": "Zwei Beobachtungen: Die Folge **wächst** in jedem Schritt, und sie bleibt **unter 3**. Man kann beides beweisen, mit Bernoulli und mit dem binomischen Lehrsatz.", "to": { "N": 20 }, "dur": 2200, "hold": 6500 },
+        { "caption": "Eine wachsende Folge, die eine Decke nicht durchstößt, muss sich irgendwo **stauen**. Wegen der Vollständigkeit von $\\R$ gibt es den Punkt, an dem sie sich staut: das Supremum der Glieder. Dieser Grenzwert heißt $e \\approx 2{,}71828$.", "to": { "N": 60 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Bisher hast du Konvergenz bewiesen, indem du den Grenzwert $a$ kanntest und $|a_n - a| < \\varepsilon$ gezeigt hast. Was, wenn man den Grenzwert gar nicht kennt, wie bei $e$?\n\nDer **Monotoniesatz** hilft: Eine Folge, die nur wächst und nach oben beschränkt ist, konvergiert. Ihr Grenzwert ist das Supremum ihrer Glieder. Bild: Jemand steigt eine Treppe hinauf, die unter einer Decke endet. Er kommt nie durch die Decke, steigt aber immer weiter, also nähert er sich einer bestimmten Höhe.\n\nDas ist eine reine Existenzaussage, und sie lebt von der Vollständigkeit. In $\\Q$ wäre sie falsch: Die Dezimalnäherungen $1;\\ 1{,}4;\\ 1{,}41;\\ 1{,}414;\\ \\dots$ wachsen, sind beschränkt, aber ihr Grenzwert $\\sqrt2$ liegt nicht in $\\Q$.\n\nBesonders nützlich ist der Satz für **rekursive** Folgen $a_{n+1} = f(a_n)$: Man zeigt per Induktion Monotonie und Beschränktheit, bekommt die Konvergenz geschenkt und findet den Grenzwert $a$ dann aus der Gleichung $a = f(a)$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Monotonie\n> $(a_n)$ heißt **monoton wachsend**, wenn $a_n \\le a_{n+1}$ für alle $n$, und **streng** monoton wachsend bei $<$. Entsprechend monoton fallend.\n\n> [!satz] Monotoniesatz\n> Jede monoton wachsende, nach oben beschränkte Folge konvergiert gegen $\\sup\\set{a_n : n \\in \\N}$. Jede monoton fallende, nach unten beschränkte Folge konvergiert gegen ihr Infimum.\n\n> [!definition] Die Eulersche Zahl\n> $e = \\lim_{n\\to\\infty} \\left(1 + \\tfrac1n\\right)^n \\approx 2{,}718281828$.\n\n**Beweisidee Monotoniesatz.** Sei $s$ das Supremum und $\\varepsilon > 0$. Dann ist $s - \\varepsilon$ keine obere Schranke, es gibt also ein $a_{n_0} > s - \\varepsilon$. Weil die Folge wächst, gilt $s - \\varepsilon < a_n \\le s$ für alle $n \\ge n_0$."
+    },
+    {
+      "id": "rekursiv",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Die Folge $a_1 = 1$, $a_{n+1} = \\sqrt{2 + a_n}$ wächst und bleibt unter $2$. **Stelle $n$ auf die erste Stelle, an der $a_n$ näher als $0{,}001$ an $2$ liegt.**",
+      "widget": "sequence",
+      "params": { "rec": { "a1": 1, "next": "sqrt(2 + a)" }, "limit": 2, "nMax": 12, "n": 1, "yRange": [0.8, 2.2], "readout": "$a_{{N|0}} = {a|6}$, Abstand zu $2$: ${2 - a|6}$" },
+      "goal": {
+        "when": "N == 7",
+        "hints": [{ "when": "2 - a >= 0.001", "text": "Der Abstand ist noch {2 - a|5}, also mindestens 0,001." }, { "when": "N > 7", "text": "Hier ist der Abstand klein genug, aber es geht früher." }],
+        "solve": { "N": 7 }
+      },
+      "explain": "$a_6 \\approx 1{,}998929$ ist noch $0{,}00107$ entfernt, $a_7 \\approx 1{,}999732$ nur noch $0{,}00027$. Der Abstand zu $2$ schrumpft in jedem Schritt etwa auf ein Viertel."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise für $a_1 = 1$, $a_{n+1} = \\sqrt{2 + a_n}$: Die Folge ist durch $2$ beschränkt und wächst. Was ist der Grenzwert?",
+      "solution": "**Beschränkt** (Induktion): $a_1 = 1 < 2$. Ist $a_n < 2$, dann $a_{n+1} = \\sqrt{2 + a_n} < \\sqrt4 = 2$.\n\n**Wachsend:** Für $0 < a < 2$ ist $a^2 < a + 2$, denn $a^2 - a - 2 = (a - 2)(a + 1) < 0$. Also $a_n < \\sqrt{2 + a_n} = a_{n+1}$.\n\n**Grenzwert:** Nach dem Monotoniesatz existiert $a = \\lim a_n$. Grenzübergang in der Rekursion liefert $a = \\sqrt{2 + a}$, also $a^2 - a - 2 = 0$ und $a \\in \\set{2, -1}$. Weil alle Glieder positiv sind, ist $a = 2$."
+    },
+    {
+      "id": "fixpunkt",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Folge $a_1 = 1$, $a_{n+1} = \\sqrt{6 + a_n}$ ist wachsend und beschränkt. Gegen welche Zahl konvergiert sie?",
+      "answer": 3,
+      "tolerance": 0.001,
+      "hint": "Löse $a = \\sqrt{6 + a}$ und wähle die passende Lösung.",
+      "explain": "$a^2 = 6 + a \\iff (a - 3)(a + 2) = 0$. Der Grenzwert positiver Zahlen kann nicht $-2$ sein, also $a = 3$."
+    },
+    {
+      "id": "falle",
+      "type": "truefalse",
+      "md": "Jede monotone Folge konvergiert.",
+      "answer": false,
+      "whyNot": "$a_n = n$ ist monoton wachsend, aber unbeschränkt.",
+      "explain": "Monotonie allein reicht nicht, man braucht die Beschränktheit dazu. Umgekehrt reicht Beschränktheit allein auch nicht, wie $(-1)^n$ zeigt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-monoton", "level": 1, "label": "Heron" },
+    { "id": "neu2", "type": "gen", "gen": "ana-monoton", "level": 2, "label": "Fixpunkt" },
+    { "id": "neu3", "type": "gen", "gen": "ana-monoton", "level": 3, "label": "Zinsen" },
+    { "id": "neu4", "type": "gen", "gen": "ana-monoton", "level": 4, "label": "Monotonie" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Monoton und beschränkt heißt konvergent, der Grenzwert ist das Supremum bzw. Infimum.",
+        "Der Satz liefert Konvergenz, ohne den Grenzwert zu kennen. Er beruht auf der Vollständigkeit.",
+        "Bei rekursiven Folgen findet man den Grenzwert aus $a = f(a)$, aber erst nach dem Konvergenzbeweis.",
+        "$e = \\lim (1 + \\tfrac1n)^n \\approx 2{,}71828$."
+      ]
+    }
+  ]
+}

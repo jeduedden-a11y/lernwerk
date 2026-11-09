@@ -1,0 +1,156 @@
+{
+  "id": "ana1-induktion",
+  "title": "Vollständige Induktion",
+  "subtitle": "Unendlich viele Aussagen in zwei Schritten beweisen",
+  "source": "Skript Jarohs, Def. 3.2 bis Bsp. 3.9, Satz 3.20, Satz 3.22; Übungsblatt 2",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Vollständige Induktion.md", "title": "Vollständige Induktion" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wie beweist man unendlich viele Aussagen $A(1), A(2), A(3), \\dots$ auf einmal? Man kann sie nicht einzeln prüfen. Man braucht nur zwei Dinge, und die Dominosteine zeigen, warum.",
+      "widget": "induction",
+      "params": { "n": 8 },
+      "timeline": [
+        { "caption": "Jeder Stein ist eine Aussage: $A(1)$, $A(2)$, … Ein umgefallener Stein heißt: Diese Aussage ist bewiesen.", "do": { "ia": true, "break": 0, "reset": true } },
+        { "caption": "**Induktionsanfang:** $A(1)$ gilt, der erste Stein wird angestoßen. **Induktionsschritt:** Aus $A(n)$ folgt $A(n+1)$, jeder fallende Stein wirft den nächsten um. Zusammen fallen alle.", "do": { "ia": true, "break": 0, "run": true }, "hold": 6200 },
+        { "caption": "Fehlt der Schritt an einer einzigen Stelle, hier von $A(4)$ nach $A(5)$, dann bleiben ab dort alle Steine stehen. Der Schritt muss für **jedes** $n$ gelten.", "do": { "ia": true, "break": 4, "run": true }, "hold": 6200 },
+        { "caption": "Fehlt der Anfang, fällt gar nichts, so lückenlos der Schritt auch ist. Eine Aussage kann für alle $n$ aus der vorigen folgen und trotzdem immer falsch sein.", "do": { "ia": false, "break": 0, "run": true }, "hold": 6200 },
+        { "caption": "Anfang plus Schritt: Dann fallen nicht nur die acht gezeigten Steine, sondern alle, auch der milliardste. Das ist das **Induktionsprinzip**.", "do": { "ia": true, "break": 0, "run": true } }
+      ]
+    },
+    {
+      "id": "induktiv",
+      "type": "text",
+      "md": "Im Skript wird $\\N$ nicht durch »$1, 2, 3, \\dots$« definiert, sondern präzise:\n\n> [!definition] Induktive Mengen (Def. 3.2, 3.4)\n> $M \\subset \\R$ heißt **induktiv**, wenn $1 \\in M$ und aus $n \\in M$ stets $n + 1 \\in M$ folgt. $\\N$ ist der Schnitt **aller** induktiven Teilmengen von $\\R$, also die kleinste induktive Menge.\n\nDaraus folgt sofort das **Induktionsprinzip**: Ist $M \\subset \\N$ induktiv, dann ist $M = \\N$. Genau darauf beruht jeder Induktionsbeweis."
+    },
+    {
+      "id": "domino",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Stell dir die Aussagen $A(1), A(2), \\dots$ als Dominosteine vor. Der **Induktionsanfang** stößt den ersten Stein an. Der **Induktionsschritt** garantiert, dass jeder fallende Stein den nächsten umwirft. Schalte die beiden Bausteine an und aus und stoße an.",
+      "widget": "induction",
+      "params": { "n": 8 }
+    },
+    {
+      "id": "nur-schritt",
+      "type": "choice",
+      "md": "Betrachte $A(n)$: »$n = n + 1$«. Aus $n = n + 1$ folgt durch Addition von $1$ sofort $n + 1 = n + 2$. Was folgt daraus?",
+      "options": [
+        { "md": "Nichts: Der Induktionsschritt gilt, aber der Anfang $A(1)$ ist falsch.", "correct": true },
+        { "md": "$A(n)$ gilt für alle $n \\in \\N$.", "why": "Ohne Induktionsanfang fällt kein einziger Stein." },
+        { "md": "Der Induktionsschritt ist fehlerhaft.", "why": "Der Schritt ist korrekt, das ist ja das Tückische." },
+        { "md": "$A(n)$ gilt ab einem gewissen $n_0$.", "why": "Für kein $n$ ist $n = n + 1$." }
+      ],
+      "explain": "Ein Induktionsschritt allein beweist gar nichts. Erst zusammen mit dem Anfang entsteht eine induktive Menge $M = \\set{n : A(n)}$."
+    },
+    {
+      "id": "gauss-zahl",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Nach Beispiel 3.9 gilt $\\displaystyle\\sum_{k=1}^{n} k = \\frac{n(n+1)}{2}$. Wie groß ist $1 + 2 + \\dots + 100$?",
+      "answer": 5050,
+      "explain": "$\\tfrac{100 \\cdot 101}{2} = 5050$."
+    },
+    {
+      "id": "gauss-beweis",
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "Ordne den Induktionsbeweis von $\\sum_{k=1}^{n} k = \\frac{n(n+1)}{2}$.",
+      "items": [
+        "IA, $n = 1$: $\\sum_{k=1}^{1} k = 1 = \\frac{1 \\cdot 2}{2}$.",
+        "IV: Für ein $n \\in \\N$ gelte $\\sum_{k=1}^{n} k = \\frac{n(n+1)}{2}$.",
+        "IS: $\\sum_{k=1}^{n+1} k = \\sum_{k=1}^{n} k + (n + 1)$.",
+        "Nach IV ist das $\\frac{n(n+1)}{2} + (n+1)$.",
+        "$= \\frac{n(n+1) + 2(n+1)}{2} = \\frac{(n+1)(n+2)}{2}$, also gilt die Aussage für $n + 1$."
+      ],
+      "explain": "Typisches Muster: Den letzten Summanden abspalten, auf den Rest die Induktionsvoraussetzung anwenden, dann umformen, bis die Formel für $n + 1$ dasteht."
+    },
+    {
+      "id": "teilbar",
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Ein Induktionsbeweis für eine Teilbarkeit. Baue ihn aus den Bausteinen zusammen. Zwei Bausteine sind falsch.",
+      "given": "$n \\in \\N$",
+      "claim": "$n^3 - n$ ist durch $3$ teilbar.",
+      "steps": [
+        "**Anfang** $n = 1$: $1^3 - 1 = 0$, und $0$ ist durch $3$ teilbar.",
+        "**Annahme:** Für ein festes $n$ gilt $n^3 - n = 3k$ mit einem $k \\in \\Z$.",
+        "**Schritt:** $(n+1)^3 - (n+1) = n^3 + 3n^2 + 3n + 1 - n - 1$",
+        "$= (n^3 - n) + 3n^2 + 3n = 3k + 3(n^2 + n) = 3(k + n^2 + n)$, also durch $3$ teilbar."
+      ],
+      "distractors": [
+        {
+          "md": "**Schritt:** $(n+1)^3 - (n+1) = n^3 + 1 - n - 1 = n^3 - n$",
+          "why": "$(n+1)^3$ ist nicht $n^3 + 1$: Es fehlen die Glieder $3n^2 + 3n$."
+        },
+        {
+          "md": "**Annahme:** $n^3 - n$ ist für alle $n$ durch $3$ teilbar.",
+          "why": "Das ist schon die Behauptung. Angenommen wird sie nur für ein festes $n$, aus dem man auf $n + 1$ schließt."
+        }
+      ],
+      "explain": "Typisch für Teilbarkeitsbeweise: Den Ausdruck für $n + 1$ so umformen, dass der Ausdruck für $n$ als Summand auftaucht, und den Rest als Vielfaches von $3$ schreiben. Es geht auch ohne Induktion: $n^3 - n = (n-1)\\,n\\,(n+1)$ ist ein Produkt dreier aufeinanderfolgender Zahlen, und eine davon ist durch $3$ teilbar."
+    },
+    {
+      "id": "bernoulli-plot",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "**Bernoulli-Ungleichung (Satz 3.22):** Für $x > -1$, $x \\neq 0$ und $n \\ge 2$ gilt $(1 + x)^n > 1 + nx$. Verändere $n$ und vergleiche die Kurve mit der Geraden.",
+      "widget": "plot",
+      "params": {
+        "x": [-1, 1.5], "y": [-2, 6], "height": 250,
+        "vars": [{ "name": "n", "label": "n", "min": 2, "max": 8, "step": 1, "value": 3, "digits": 0 }],
+        "functions": [
+          { "name": "f", "expr": "(1 + x)^n", "domain": [-1, 1.5], "color": "accent", "label": "(1+x)ⁿ", "labelAt": 0.75 },
+          { "name": "g", "expr": "1 + n*x", "color": "orange", "label": "1+nx", "labelAt": 1.05 }
+        ],
+        "points": [{ "x": 0, "on": "f", "color": "label" }],
+        "readout": "Bei $x = 0$ berühren sich beide. Für $n = {n|0}$ liegt die Kurve überall sonst oberhalb der Geraden."
+      }
+    },
+    {
+      "id": "bernoulli-schritt",
+      "type": "choice",
+      "md": "Im Induktionsschritt rechnet man $(1+x)^{n+1} = (1+x)^n (1+x) > (1+nx)(1+x)$. Wo genau wird $x > -1$ gebraucht?",
+      "options": [
+        { "md": "Beim Multiplizieren der Induktionsvoraussetzung mit $1 + x$: Nur weil $1 + x > 0$ ist, bleibt das Ungleichheitszeichen erhalten.", "correct": true },
+        { "md": "Damit $nx^2 > 0$ ist.", "why": "Dafür reicht $x \\neq 0$, egal welches Vorzeichen." },
+        { "md": "Im Induktionsanfang bei $n = 2$.", "why": "Dort braucht man nur $x^2 > 0$, also $x \\neq 0$." },
+        { "md": "Gar nicht, die Voraussetzung ist überflüssig.", "why": "Für $x = -4$ und $n = 3$ ist $(1+x)^3 = -27$, aber $1 + 3x = -11$. Die Ungleichung bricht zusammen." }
+      ],
+      "explain": "Danach geht es weiter mit $(1+nx)(1+x) = 1 + (n+1)x + nx^2 > 1 + (n+1)x$, weil $nx^2 > 0$."
+    },
+    {
+      "id": "start-n0",
+      "type": "truefalse",
+      "md": "Die Ungleichung $2^n > n^2$ gilt für alle $n \\ge 5$, aber nicht für alle $n \\ge 2$.",
+      "answer": true,
+      "whyNot": "Für $n = 2, 3, 4$ gilt $4 \\not> 4$, $8 \\not> 9$, $16 \\not> 16$. Ab $n = 5$ stimmt sie: $32 > 25$.",
+      "explain": "Satz 3.20 erlaubt einen Induktionsanfang bei beliebigem $n_0$. Hier beginnt man bei $n_0 = 5$. Im Schritt: $2^{n+1} = 2 \\cdot 2^n > 2n^2 \\ge (n+1)^2$, und die letzte Ungleichung gilt für $n \\ge 3$."
+    },
+    {
+      "id": "potenz",
+      "type": "reveal",
+      "label": "Selbst beweisen",
+      "md": "Zeige $a^m \\cdot a^n = a^{m+n}$ für $a \\in \\R$ und $m, n \\in \\N$. Nach welcher Variablen machst du Induktion, und was ist der Kern des Schritts? Skizziere es, dann decke auf.",
+      "solution": "Halte $m$ fest und führe Induktion nach $n$.\n\n**IA**, $n = 1$: $a^m \\cdot a^1 = a^m \\cdot a = a^{m+1}$ nach der rekursiven Definition $a^{k+1} := a^k \\cdot a$ (Def. 3.6).\n\n**IS**: $a^m \\cdot a^{n+1} = a^m \\cdot (a^n \\cdot a) = (a^m \\cdot a^n) \\cdot a \\overset{\\text{IV}}{=} a^{m+n} \\cdot a = a^{m+n+1}$.\n\nBenutzt werden nur Assoziativität und die Definition der Potenz. Für ganze Exponenten kommen die Fälle mit negativen Zahlen über $a^{-n} := (\\tfrac1a)^n$ dazu."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-summen", "level": 1, "label": "Neue Summe" },
+    { "id": "neu2", "type": "gen", "gen": "ana-summen", "level": 2, "label": "Neue Summe" },
+    { "id": "neu3", "type": "gen", "gen": "ana-summen", "level": 3, "label": "Geometrische Summe" },
+    { "id": "neu4", "type": "gen", "gen": "ana-summen", "level": 4, "label": "Induktionsschritt" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\N$ ist die kleinste induktive Menge. Daraus folgt das Induktionsprinzip.",
+        "Ein Induktionsbeweis braucht beides: Anfang und Schritt.",
+        "Im Schritt: Fall $n + 1$ auf Fall $n$ zurückführen und die Induktionsvoraussetzung genau einmal sichtbar einsetzen.",
+        "Der Anfang darf bei jedem $n_0 \\in \\Z$ liegen (Satz 3.20)."
+      ]
+    }
+  ]
+}

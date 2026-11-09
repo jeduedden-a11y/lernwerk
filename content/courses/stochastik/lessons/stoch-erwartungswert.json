@@ -1,0 +1,129 @@
+{
+  "id": "stoch-erwartungswert",
+  "title": "Erwartungswert und Streuung",
+  "subtitle": "Wo eine Verteilung im Gleichgewicht ist, und wie breit sie streut",
+  "source": "KCGO Mathematik Hessen, Q3.2",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsgröße und Erwartungswert.md", "title": "Zufallsgröße und Erwartungswert" },
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Varianz und Standardabweichung (Stochastik).md", "title": "Varianz und Standardabweichung (Stochastik)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Würfelspiel: Bei 1, 2, 3 verlierst du 1 Euro, bei 4 oder 5 gewinnst du 1 Euro, bei der 6 gewinnst du 3 Euro. Lohnt es sich? Die Antwort ist ein Schwerpunkt.",
+      "widget": "expectation",
+      "params": { "values": [-1, 1, 3], "probs": ["1/2", "1/3", "1/6"], "range": [-2, 4], "unit": "€" },
+      "timeline": [
+        { "caption": "Jeder mögliche Gewinn steht an seiner Stelle auf der Wippe, die Wahrscheinlichkeit ist sein Gewicht: $\\tfrac12$ bei $-1$, $\\tfrac13$ bei $1$, $\\tfrac16$ bei $3$.", "set": { "f": -1.6 } },
+        { "caption": "Steht der Drehpunkt weit links, kippt die Wippe nach rechts: Rechts liegt zu viel Gewicht mal Hebel.", "to": { "f": -0.8 }, "dur": 1500 },
+        { "caption": "Steht er weit rechts, kippt sie nach links.", "to": { "f": 2.4 }, "dur": 2200 },
+        { "caption": "Genau an einer Stelle ist sie im Gleichgewicht: bei $\\tfrac13$. Das ist der **Erwartungswert** $E(X)$, der Gewinn, den man auf lange Sicht im Mittel pro Spiel macht.", "to": { "f": 0.3333 }, "dur": 2200, "hold": 4200 },
+        { "caption": "Gleichgewicht heißt rechnerisch: $\\sum (x_i - E)\\,P(X = x_i) = 0$, und umgeformt $E(X) = \\sum x_i\\,P(X = x_i)$. Die orange Klammer zeigt, wie weit die Werte typischerweise streuen." }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Eine **Zufallsgröße** $X$ ordnet jedem Ergebnis eines Zufallsexperiments eine Zahl zu, zum Beispiel den Gewinn in Euro. Ihre **Wahrscheinlichkeitsverteilung** gibt für jeden Wert $x_i$ an, wie wahrscheinlich er ist.\n\nEin Würfelspiel mit $1$ Euro Einsatz: Bei 1, 2 oder 3 ist der Einsatz weg ($X = -1$). Bei 4 oder 5 gewinnst du $1$ Euro ($X = 1$), bei der 6 gewinnst du $3$ Euro ($X = 3$).\n\n| $x_i$ | $-1$ | $1$ | $3$ |\n|---|---|---|---|\n| $P(X = x_i)$ | $\\tfrac12$ | $\\tfrac13$ | $\\tfrac16$ |"
+    },
+    {
+      "id": "wippe",
+      "type": "widget",
+      "label": "Ausbalancieren",
+      "md": "Stell dir die Wahrscheinlichkeiten als Gewichte auf einer Wippe vor, jedes an der Stelle seines Wertes. **Schiebe den Drehpunkt, bis die Wippe waagerecht steht.**",
+      "widget": "expectation",
+      "params": { "values": [-1, 1, 3], "probs": ["1/2", "1/3", "1/6"], "range": [-2, 4], "unit": "€" },
+      "goal": {
+        "when": "abs(f - E) <= tol",
+        "hints": [
+          { "when": "T > 0", "text": "Die Wippe kippt nach rechts: Rechts vom Drehpunkt wiegt Gewicht mal Hebel mehr. Schiebe ihn nach rechts." },
+          { "when": "T < 0", "text": "Die Wippe kippt nach links. Schiebe den Drehpunkt nach links." }
+        ]
+      },
+      "explain": "Waagerecht wird es bei $\\tfrac13 \\approx 0{,}33$. Der Schwerpunkt der Verteilung ist genau ihr **Erwartungswert**: $E(X) = \\sum x_i \\cdot P(X = x_i)$. Auf der Wippe heißt das: Die Momente links und rechts heben sich auf."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $E(X)$ für das Würfelspiel mit der Formel $E(X) = \\sum x_i \\cdot P(X = x_i)$.",
+      "answer": 0.33333,
+      "tolerance": 0.005,
+      "answerText": "1/3",
+      "placeholder": "Bruch oder Dezimalzahl",
+      "hint": "$(-1) \\cdot \\tfrac12 + 1 \\cdot \\tfrac13 + 3 \\cdot \\tfrac16$",
+      "explain": "$-\\tfrac12 + \\tfrac13 + \\tfrac12 = \\tfrac13$. Pro Spiel gewinnst du im Mittel gut 33 Cent, für den Anbieter ein Verlustgeschäft."
+    },
+    {
+      "id": "deutung",
+      "type": "choice",
+      "md": "Was bedeutet $E(X) = \\tfrac13$ Euro?",
+      "options": [
+        { "md": "Über viele Spiele gewinnst du im Durchschnitt etwa 33 Cent pro Spiel.", "correct": true },
+        { "md": "In jedem einzelnen Spiel gewinnst du 33 Cent.", "why": "$X$ nimmt nur die Werte $-1$, $1$ und $3$ an, den Wert $\\tfrac13$ nie." },
+        { "md": "Mit Wahrscheinlichkeit $\\tfrac13$ gewinnst du etwas.", "why": "Gewonnen wird bei 4, 5 oder 6, also mit Wahrscheinlichkeit $\\tfrac12$. Der Erwartungswert ist ein Betrag, keine Wahrscheinlichkeit." }
+      ],
+      "explain": "Der Erwartungswert ist ein Mittelwert auf lange Sicht, nach dem Gesetz der großen Zahlen nähert sich der Durchschnitt vieler Spiele diesem Wert."
+    },
+    {
+      "id": "fair",
+      "type": "widget",
+      "label": "Fair machen",
+      "md": "Ein Spiel heißt **fair**, wenn $E(X) = 0$. Der Anbieter darf nur den Gewinn bei der 6 ändern. **Ziehe den orangefarbenen Balken, bis das Spiel fair ist.** Der Drehpunkt sitzt fest bei $0$.",
+      "widget": "expectation",
+      "params": { "values": [-1, 1, 3], "probs": ["1/2", "1/3", "1/6"], "range": [-2, 4], "unit": "€", "drag": "value", "dragIndex": 2, "target": 0, "snap": 0.5, "targetText": "fair" },
+      "goal": {
+        "when": "abs(E) < 0.01",
+        "hints": [
+          { "when": "E > 0", "text": "Noch zu großzügig: E(X) = {E|3} €. Weniger Gewinn bei der 6." },
+          { "when": "E < 0", "text": "Jetzt verliert der Spieler im Mittel {abs(E)|3} € pro Spiel. Etwas mehr Gewinn bei der 6." }
+        ],
+        "solve": { "x": 1 }
+      },
+      "explain": "Bei $1$ Euro Gewinn für die 6: $-\\tfrac12 + \\tfrac13 + \\tfrac16 = 0$. Jeder Euro mehr bei der 6 verschiebt den Erwartungswert um $\\tfrac16$ Euro."
+    },
+    {
+      "id": "varianz",
+      "type": "text",
+      "md": "Zwei Spiele können denselben Erwartungswert haben und sich trotzdem anfühlen wie Tag und Nacht. Die **Varianz** misst die mittlere quadratische Abweichung vom Erwartungswert $\\mu = E(X)$:\n\n$$\\operatorname{Var}(X) = \\sum (x_i - \\mu)^2 \\cdot P(X = x_i), \\qquad \\sigma = \\sqrt{\\operatorname{Var}(X)}$$\n\nDie **Standardabweichung** $\\sigma$ hat wieder die Einheit von $X$, hier Euro. Auf der Wippe von eben war $E(X) \\pm \\sigma$ als orangefarbene Klammer eingezeichnet."
+    },
+    {
+      "id": "var-rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\operatorname{Var}(X)$ für das ursprüngliche Würfelspiel ($-1$, $1$, $3$ mit $\\tfrac12$, $\\tfrac13$, $\\tfrac16$ und $\\mu = \\tfrac13$).",
+      "answer": 2.2222,
+      "tolerance": 0.01,
+      "answerText": "20/9 ≈ 2,22",
+      "placeholder": "Dezimalzahl oder Bruch",
+      "hint": "Die Abweichungen vom Erwartungswert sind $-\\tfrac43$, $\\tfrac23$ und $\\tfrac83$. Quadriere sie und gewichte mit den Wahrscheinlichkeiten.",
+      "explain": "$\\tfrac{16}{9} \\cdot \\tfrac12 + \\tfrac{4}{9} \\cdot \\tfrac13 + \\tfrac{64}{9} \\cdot \\tfrac16 = \\tfrac{24}{27} + \\tfrac{4}{27} + \\tfrac{32}{27} = \\tfrac{20}{9} \\approx 2{,}22$, also $\\sigma \\approx 1{,}49$ Euro. Kürzer geht es mit $\\operatorname{Var}(X) = E(X^2) - \\mu^2 = \\tfrac73 - \\tfrac19$."
+    },
+    {
+      "id": "risiko",
+      "type": "choice",
+      "md": "Spiel A: Du gewinnst oder verlierst $1$ Euro, je mit Wahrscheinlichkeit $\\tfrac12$. Spiel B: dasselbe mit $10$ Euro. Was stimmt?",
+      "options": [
+        { "md": "Beide haben $E(X) = 0$, aber $\\sigma$ ist bei B zehnmal so groß.", "correct": true },
+        { "md": "B hat den größeren Erwartungswert, weil mehr zu gewinnen ist.", "why": "Es ist auch zehnmal so viel zu verlieren, beides gleicht sich exakt aus." },
+        { "md": "Beide Spiele sind gleich riskant, denn sie sind beide fair.", "why": "Fair betrifft nur den Erwartungswert. Das Risiko steckt in der Streuung." }
+      ],
+      "explain": "Bei A ist $\\sigma = 1$, bei B ist $\\sigma = 10$. Der Erwartungswert sagt, wo eine Verteilung liegt, die Standardabweichung, wie weit sie ausschlägt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-erwartung", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-erwartung", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-erwartung", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "$E(X) = \\sum x_i \\cdot P(X = x_i)$ ist der Schwerpunkt der Verteilung, der Mittelwert auf lange Sicht.",
+        "Ein Spiel ist fair, wenn der Erwartungswert des Gewinns $0$ ist.",
+        "$\\operatorname{Var}(X) = \\sum (x_i - \\mu)^2 \\cdot P(X = x_i)$, $\\sigma = \\sqrt{\\operatorname{Var}(X)}$ misst die typische Abweichung.",
+        "Gleicher Erwartungswert heißt nicht gleiches Risiko."
+      ]
+    }
+  ]
+}

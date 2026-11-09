@@ -1,0 +1,105 @@
+{
+  "id": "ana1-reihen",
+  "title": "Geometrische und harmonische Reihe",
+  "subtitle": "Wann unendlich viele Summanden eine endliche Summe ergeben",
+  "source": "Skript Jarohs, Abschnitt 10.1 bis 10.8",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md", "title": "Reihen" },
+    { "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Folgen und Konvergenz.md", "title": "Folgen und Konvergenz (Schule)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Blau sind die Summanden $1, q, q^2, q^3, \\dots$, orange die **Teilsummen** $s_n = 1 + q + \\dots + q^{n-1}$. Eine unendliche Summe ist nichts anderes als der Grenzwert dieser Teilsummen.",
+      "widget": "sequence",
+      "params": { "term": "q^(n-1)", "mode": "both", "vars": [{ "name": "q", "label": "q", "min": -0.9, "max": 0.9, "step": 0.05, "value": 0.5, "digits": 2 }], "limit": "1/(1 - q)", "limitLabel": "1/(1 − q)", "nMax": 30, "n": 1, "yRange": [-1, 5.6], "readout": "$s_{{N|0}} = {s|5}$, Grenzwert $1/(1 - q) = {L|4}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "$q = \\tfrac12$: Der erste Summand ist $1$, die erste Teilsumme auch." },
+        { "caption": "$1 + \\tfrac12 + \\tfrac14 + \\dots$: Jede neue Teilsumme halbiert den Abstand zu $2$. Wie bei einem Weg, von dem man immer die Hälfte des Rests zurücklegt.", "to": { "N": 6 }, "dur": 1800 },
+        { "caption": "Die Teilsummen kommen $2$ beliebig nahe. Genau das bedeutet $\\sum_{k=0}^\\infty \\left(\\tfrac12\\right)^k = 2$.", "to": { "N": 30 }, "dur": 2000 },
+        { "caption": "Bei $q = 0{,}8$ schrumpfen die Summanden langsamer, die Summe ist größer: $\\tfrac{1}{1 - 0{,}8} = 5$.", "to": { "q": 0.8 }, "dur": 2000, "hold": 6000 },
+        { "caption": "Bei negativem $q$ wechseln die Summanden das Vorzeichen, und die Teilsummen pendeln um den Grenzwert $\\tfrac{1}{1 + 0{,}6} = 0{,}625$. Für $|q| \\ge 1$ gehen die Summanden nicht gegen $0$, dann kann die Reihe nicht konvergieren.", "to": { "q": -0.6 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "»Unendlich viele Zahlen addieren« kann man nicht wörtlich tun. Man addiert endlich viele, schaut, ob sich die Ergebnisse einem Wert nähern, und **definiert** diesen Grenzwert als die Summe.\n\nFür die geometrische Reihe gibt es eine geschlossene Formel. Multipliziert man $s_n = 1 + q + \\dots + q^{n-1}$ mit $q$, verschiebt sich alles um eine Stelle, und beim Abziehen bleibt fast nichts übrig:\n\n$$s_n - q s_n = 1 - q^n \\quad\\Longrightarrow\\quad s_n = \\frac{1 - q^n}{1 - q}.$$\n\nFür $|q| < 1$ geht $q^n \\to 0$, also $s_n \\to \\tfrac{1}{1-q}$.\n\nEine Lehre aus dem Beispiel: Damit eine Reihe konvergiert, **müssen** die Summanden gegen $0$ gehen. Die **harmonische Reihe** $1 + \\tfrac12 + \\tfrac13 + \\dots$ zeigt aber, dass das nicht **reicht**: Ihre Summanden gehen gegen $0$, und trotzdem wachsen die Teilsummen über jede Schranke, nur sehr langsam."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Reihe\n> Zu einer Folge $(a_k)$ heißt die Folge der **Partialsummen** $s_n = \\sum_{k=1}^n a_k$ eine **Reihe**. Sie **konvergiert** gegen $s$, wenn $s_n \\to s$. Dann schreibt man $\\sum_{k=1}^\\infty a_k = s$.\n\n> [!satz] Geometrische Reihe\n> Für $|q| < 1$ ist $\\sum_{k=0}^\\infty q^k = \\dfrac{1}{1-q}$. Für $|q| \\ge 1$ divergiert die Reihe.\n\n> [!satz] Notwendiges Kriterium\n> Konvergiert $\\sum a_k$, dann gilt $a_k \\to 0$. Die Umkehrung ist falsch.\n\n> [!satz] Harmonische Reihe\n> $\\sum_{k=1}^\\infty \\dfrac1k$ divergiert.\n\nDie Bezeichnung $\\sum_{k=1}^\\infty a_k$ steht also für zweierlei: für die Folge der Partialsummen und, falls sie konvergiert, für ihren Grenzwert."
+    },
+    {
+      "id": "harmonisch",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Die Teilsummen der harmonischen Reihe $1 + \\tfrac12 + \\tfrac13 + \\dots$ **Ziehe $n$ so weit, bis die Teilsumme die Linie bei $5$ übersteigt.** Achte darauf, wie langsam sie wächst.",
+      "widget": "sequence",
+      "params": { "term": "1/n", "mode": "sums", "limit": 5, "limitLabel": "5", "nMax": 120, "n": 10, "yRange": [0, 6], "readout": "$s_{{N|0}} = {s|4}$" },
+      "goal": {
+        "when": "s > 5",
+        "hints": [{ "when": "s <= 5", "text": "s = {s|4} ist noch nicht über 5." }],
+        "solve": { "N": 83 }
+      },
+      "explain": "$s_{82} \\approx 4{,}990$, $s_{83} \\approx 5{,}002$. Für $5$ braucht man $83$ Summanden, für $10$ schon $12\\,367$, für $20$ über $272$ Millionen. Die Teilsummen wachsen ungefähr wie $\\ln n$: unbeschränkt, aber extrem langsam."
+    },
+    {
+      "id": "zehn",
+      "type": "choice",
+      "md": "Die Teilsummen der harmonischen Reihe wachsen ungefähr wie $s_n \\approx \\ln n + 0{,}577$. Wie viele Summanden braucht man ungefähr, bis die Teilsumme $10$ übersteigt?",
+      "options": [
+        { "md": "etwa $12\\,000$", "correct": true },
+        { "md": "etwa $170$", "why": "Für $5$ reichen schon $83$, aber jede weitere Einheit kostet den Faktor $e \\approx 2{,}7$ an Summanden." },
+        { "md": "etwa $1$ Million", "why": "Dann wäre $s_n \\approx \\ln(10^6) + 0{,}577 \\approx 14{,}4$." },
+        { "md": "Das passiert nie, die Reihe ist beschränkt.", "why": "Der Beweis mit den Blöcken zeigt: Die Teilsummen übersteigen jede Schranke." }
+      ],
+      "explain": "$\\ln n + 0{,}577 > 10 \\iff n > e^{9{,}423} \\approx 12\\,370$. Der genaue Wert ist $12\\,367$. Unbeschränkt heißt nicht schnell."
+    },
+    {
+      "id": "harmonisch-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise, dass die harmonische Reihe divergiert. Fasse die Summanden in Blöcke zusammen, die jeweils bis zu einer Zweierpotenz reichen.",
+      "solution": "$$1 + \\tfrac12 + \\underbrace{\\tfrac13 + \\tfrac14}_{\\ge 2 \\cdot \\frac14 = \\frac12} + \\underbrace{\\tfrac15 + \\dots + \\tfrac18}_{\\ge 4 \\cdot \\frac18 = \\frac12} + \\underbrace{\\tfrac19 + \\dots + \\tfrac1{16}}_{\\ge 8 \\cdot \\frac1{16} = \\frac12} + \\dots$$\n\nJeder Block liefert mindestens $\\tfrac12$. Also ist $s_{2^m} \\ge 1 + \\tfrac m2$, und das wächst über jede Schranke. Weil die Teilsummen monoton wachsen, divergiert die ganze Folge $s_n$ gegen $\\infty$."
+    },
+    {
+      "id": "geo",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\sum_{k=0}^{\\infty} \\left(\\tfrac23\\right)^k$.",
+      "answer": 3,
+      "tolerance": 0.001,
+      "explain": "$\\dfrac{1}{1 - \\tfrac23} = \\dfrac{1}{\\tfrac13} = 3$."
+    },
+    {
+      "id": "notwendig",
+      "type": "choice",
+      "md": "Es gilt $a_k \\to 0$. Was folgt daraus für $\\sum a_k$?",
+      "options": [
+        { "md": "Nichts: Die Reihe kann konvergieren oder divergieren.", "correct": true },
+        { "md": "Die Reihe konvergiert.", "why": "Die harmonische Reihe ist ein Gegenbeispiel." },
+        { "md": "Die Reihe divergiert.", "why": "Die geometrische Reihe mit $q = \\tfrac12$ ist ein Gegenbeispiel." }
+      ],
+      "explain": "$a_k \\to 0$ ist nur **notwendig**. Gehen die Summanden dagegen **nicht** gegen $0$, ist die Divergenz sicher. Das ist oft der schnellste Test."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-reihen", "level": 1, "label": "Geometrisch" },
+    { "id": "neu2", "type": "gen", "gen": "ana-reihen", "level": 2, "label": "Verschoben" },
+    { "id": "neu3", "type": "gen", "gen": "ana-reihen", "level": 3, "label": "Teleskop" },
+    { "id": "neu4", "type": "gen", "gen": "ana-reihen", "level": 4, "label": "Einordnen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine Reihe ist die Folge ihrer Partialsummen. Ihr Wert ist deren Grenzwert.",
+        "Geometrische Reihe: $\\sum_{k \\ge 0} q^k = \\tfrac{1}{1-q}$ für $|q| < 1$.",
+        "Konvergenz verlangt $a_k \\to 0$, aber das reicht nicht.",
+        "Die harmonische Reihe divergiert, ihre Teilsummen wachsen wie $\\ln n$."
+      ]
+    }
+  ]
+}

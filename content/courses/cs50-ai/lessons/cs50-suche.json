@@ -1,0 +1,134 @@
+{
+  "id": "cs50-suche",
+  "title": "Suchprobleme, Tiefen- und Breitensuche",
+  "subtitle": "CS50 AI, Lecture 0: Search",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 0, und der Kurscode maze.py",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Suchprobleme.md", "title": "Suchprobleme" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 0 - Search (Kurs).md", "title": "Lecture 0 - Search (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Labyrinth: $A$ ist der Start, $B$ das Ziel. Beide Suchverfahren benutzen dieselbe Schleife. Der einzige Unterschied ist, welches Feld sie als Nächstes aus der **Frontier** nehmen.",
+      "widget": "maze-search",
+      "params": { "maze": ["#########", "#A      #", "#  ###  #", "#       #", "#  ###  #", "#      B#", "#########"], "algorithm": "dfs", "algorithms": ["dfs", "bfs"] },
+      "timeline": [
+        { "caption": "Die Frontier (orange umrandet) enthält die Felder, die noch untersucht werden sollen. Am Anfang ist das nur der Start.", "do": { "alg": "dfs" } },
+        { "caption": "**Tiefensuche:** Die Frontier ist ein **Stapel**. Es wird immer das zuletzt hinzugefügte Feld genommen. Darum läuft die Suche in eine Richtung, so weit es geht.", "do": { "alg": "dfs", "step": 8 }, "hold": 6000 },
+        { "caption": "Sie erreicht das Ziel, aber über einen Umweg von $22$ Schritten. Die Tiefensuche findet **einen** Weg, nicht unbedingt den kürzesten.", "do": { "alg": "dfs", "finish": true }, "hold": 6000 },
+        { "caption": "**Breitensuche:** Die Frontier ist eine **Schlange**. Es wird immer das älteste Feld genommen. Die Suche breitet sich wie eine Welle aus: erst alle Felder im Abstand $1$, dann $2$, dann $3$ …", "do": { "alg": "bfs", "step": 12 }, "hold": 6500 },
+        { "caption": "Weil sie Schicht für Schicht vorgeht, findet sie den **kürzesten** Weg, hier $10$ Schritte. Dafür hat sie mehr Felder angeschaut: $29$ statt $23$.", "do": { "alg": "bfs", "finish": true } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Ein **Suchproblem** besteht in CS50 aus wenigen Bausteinen:\n- einem **Anfangszustand** (initial state),\n- den **Aktionen**, die in einem Zustand möglich sind,\n- einem **Übergangsmodell** $\\text{Result}(s, a)$: welcher Zustand nach Aktion $a$ in $s$ folgt,\n- einem **Zieltest** und\n- **Pfadkosten**.\n\nEine **Lösung** ist eine Folge von Aktionen vom Anfangszustand zu einem Ziel. Eine **optimale Lösung** hat die geringsten Pfadkosten."
+    },
+    {
+      "id": "begriffe",
+      "type": "match",
+      "md": "Ordne die Begriffe dem Labyrinth-Beispiel zu.",
+      "pairs": [
+        ["Zustand", "die Position $(\\text{Zeile}, \\text{Spalte})$ im Labyrinth"],
+        ["Aktion", "ein Schritt nach oben, unten, links oder rechts"],
+        ["Zieltest", "Ist die Position das Feld B?"],
+        ["Pfadkosten", "die Anzahl der Schritte"]
+      ],
+      "explain": "Der Zustandsraum ist die Menge aller erreichbaren Felder. Wände sind keine Zustände, weil man sie nie betreten kann."
+    },
+    {
+      "id": "schleife-text",
+      "type": "text",
+      "md": "Gesucht wird mit einem **Knoten**: Er speichert den Zustand, den **Elternknoten** und die Aktion, die dorthin geführt hat. So lässt sich am Ende der Weg zurückverfolgen.\n\nAlle Knoten, die noch untersucht werden müssen, liegen in der **Frontier**. Bereits untersuchte Zustände merkt man sich in der Menge **explored**, damit man nicht im Kreis läuft."
+    },
+    {
+      "id": "schleife",
+      "type": "order",
+      "label": "Algorithmus",
+      "md": "Bringe die Schritte der Suchschleife in die Reihenfolge aus der Vorlesung. Am Anfang enthält die Frontier nur den Startknoten.",
+      "items": [
+        "Ist die Frontier leer, gibt es keine Lösung.",
+        "Entferne einen Knoten aus der Frontier.",
+        "Enthält der Knoten das Ziel, verfolge die Elternknoten zurück und gib den Weg aus.",
+        "Füge den Zustand des Knotens zur Menge explored hinzu.",
+        "Füge jeden Nachbarn zur Frontier hinzu, sofern er weder in der Frontier noch in explored ist."
+      ],
+      "explain": "Diese Schleife wiederholt sich, bis ein Ziel gefunden oder die Frontier leer ist. Welche Suche entsteht, hängt nur an einer Stelle: **welcher** Knoten im zweiten Schritt entfernt wird."
+    },
+    {
+      "id": "dfs",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "**Tiefensuche** (DFS) nutzt einen **Stapel**: Es wird immer der zuletzt hinzugefügte Knoten entfernt. Hell markiert sind erkundete Felder, orange umrandet die Frontier. Lass die Suche laufen.",
+      "widget": "maze-search",
+      "params": {
+        "maze": ["#########", "#A      #", "#  ###  #", "#       #", "#  ###  #", "#      B#", "#########"],
+        "algorithm": "dfs", "algorithms": ["dfs"], "speed": 160
+      }
+    },
+    {
+      "id": "bfs",
+      "type": "widget",
+      "label": "Vergleichen",
+      "md": "**Breitensuche** (BFS) nutzt eine **Warteschlange**: Es wird immer der älteste Knoten entfernt. Sie breitet sich wie eine Welle aus. **Lass die Breitensuche bis zum Ziel laufen** und vergleiche mit der Tiefensuche.",
+      "widget": "maze-search",
+      "params": {
+        "maze": ["#########", "#A      #", "#  ###  #", "#       #", "#  ###  #", "#      B#", "#########"],
+        "algorithm": "bfs", "algorithms": ["dfs", "bfs"], "speed": 160
+      },
+      "goal": { "run": "bfs" },
+      "explain": "Die Tiefensuche fand hier einen Weg mit **22** Schritten und hat dafür **23** Zustände erkundet. Die Breitensuche fand den kürzesten Weg mit **10** Schritten, hat aber **29** Zustände erkundet."
+    },
+    {
+      "id": "frontier",
+      "type": "choice",
+      "md": "Im Kurscode erben `StackFrontier` und `QueueFrontier` fast alles voneinander. Worin unterscheiden sie sich?",
+      "options": [
+        { "md": "Nur in `remove()`: Der Stapel entfernt den letzten Knoten, die Warteschlange den ersten.", "correct": true },
+        { "md": "Die Warteschlange prüft zusätzlich, ob ein Zustand schon erkundet ist.", "why": "Diese Prüfung steckt in der Suchschleife und gilt für beide." },
+        { "md": "Der Stapel speichert keine Elternknoten.", "why": "Beide speichern dieselben Knoten mit Elternknoten." },
+        { "md": "Die Warteschlange sortiert nach Entfernung zum Ziel.", "why": "Das wäre eine Prioritätswarteschlange für informierte Suche, Thema der nächsten Lektion." }
+      ],
+      "explain": "`frontier[-1]` gegen `frontier[0]`: Eine einzige Zeile entscheidet über Tiefen- oder Breitensuche."
+    },
+    {
+      "id": "eigenschaften",
+      "type": "multi",
+      "md": "Welche Aussagen stimmen, wenn alle Schritte gleich viel kosten?",
+      "options": [
+        { "md": "Die Breitensuche findet immer einen kürzesten Weg.", "correct": true },
+        { "md": "Die Tiefensuche findet immer einen kürzesten Weg.", "why": "Im Beispiel waren es 22 statt 10 Schritte." },
+        { "md": "Die Tiefensuche kann Glück haben und sehr schnell ans Ziel kommen.", "correct": true },
+        { "md": "Mit der Menge explored finden beide in einem endlichen Labyrinth eine Lösung, wenn es eine gibt.", "correct": true }
+      ],
+      "explain": "BFS ist **optimal** bei gleichen Kosten. Beide sind in endlichen Zustandsräumen **vollständig**. Welche weniger erkundet, hängt vom Labyrinth ab."
+    },
+    {
+      "id": "zaehlen",
+      "type": "numeric",
+      "label": "Mitdenken",
+      "md": "Ein Labyrinth ist ein langer Gang ohne Abzweigungen, Start und Ziel liegen an seinen Enden, dazwischen $8$ freie Felder. Wie viele Zustände erkundet die Breitensuche einschließlich Start und Ziel?",
+      "answer": 10,
+      "hint": "Ohne Abzweigungen gibt es nur eine Reihenfolge. Zähle, wie oft ein Knoten aus der Frontier entfernt wird.",
+      "explain": "Start, die $8$ Felder und das Ziel: $10$ Entnahmen. Ohne Abzweigungen verhalten sich Tiefen- und Breitensuche gleich."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-suche", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "cs-suche", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "cs-suche", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "cs-suche", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Suchproblem: Anfangszustand, Aktionen, Übergangsmodell, Zieltest, Pfadkosten.",
+        "Die Suchschleife entfernt Knoten aus der Frontier, prüft das Ziel, merkt sich erkundete Zustände und fügt Nachbarn hinzu.",
+        "Stapel ergibt Tiefensuche, Warteschlange ergibt Breitensuche.",
+        "BFS findet bei gleichen Kosten den kürzesten Weg, DFS nicht unbedingt."
+      ]
+    }
+  ]
+}

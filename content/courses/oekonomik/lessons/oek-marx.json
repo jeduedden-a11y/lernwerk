@@ -1,0 +1,89 @@
+{
+  "id": "oek-marx",
+  "title": "Marx: Arbeitswert und Kapital",
+  "subtitle": "Woher nach Marx der Profit kommt",
+  "source": "Karl Marx, Das Kapital, Band 1 (1867), Abschnitte 1 bis 4",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/Karl Marx.md", "title": "Karl Marx" },
+    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/Arbeitswerttheorie.md", "title": "Arbeitswerttheorie" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Arbeitstag, Stunde für Stunde. Blau die Zeit, in der der Arbeiter so viel Wert schafft, wie sein Lohn kostet. Orange die Zeit darüber hinaus: Arbeit, deren Ergebnis dem Unternehmer gehört.",
+      "widget": "workday",
+      "params": { "day": 8, "nec": 8, "sliders": false },
+      "timeline": [
+        { "caption": "Angenommen, der Lohn für einen Tag entspricht dem Wert, den die Arbeit in $8$ Stunden schafft. Arbeitet der Arbeiter genau $8$ Stunden, bleibt für den Unternehmer nichts übrig. Warum sollte er dann Arbeiter beschäftigen?" },
+        { "caption": "Marx' Antwort: Der Unternehmer kauft nicht die Arbeit, sondern die **Arbeitskraft** für einen ganzen Tag, zu ihrem Wert, also den Kosten ihres Lebensunterhalts. Wenn deren Wert in $5$ Stunden geschaffen ist, …", "to": { "nec": 5 }, "dur": 2200, "hold": 7500 },
+        { "caption": "… dann arbeitet der Arbeiter die übrigen Stunden für den Unternehmer: **Mehrarbeit**, die den **Mehrwert** bildet. Hier $3$ Stunden Mehrarbeit auf $5$ notwendige: Mehrwertrate $60\\,\\%$. Niemand wurde betrogen, alles wurde zu seinem Wert getauscht.", "hold": 8000 },
+        { "caption": "Der Mehrwert wächst auf zwei Wegen. **Absolut:** Der Arbeitstag wird verlängert, etwa auf $10$ Stunden. Darum ging es in den Kämpfen um den Achtstundentag.", "to": { "day": 10 }, "dur": 2000, "hold": 7000 },
+        { "caption": "**Relativ:** Bessere Maschinen machen Lebensmittel und Kleidung billiger, und die notwendige Arbeitszeit sinkt, hier auf $4$ Stunden. Bei gleich langem Tag steigt die Mehrwertrate auf $150\\,\\%$.", "to": { "nec": 4 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Marx übernimmt von Smith und Ricardo die **Arbeitswerttheorie**: Der Wert einer Ware bemisst sich an der gesellschaftlich notwendigen Arbeitszeit für ihre Herstellung. Daraus entsteht ein Rätsel. Wenn alles zu seinem Wert getauscht wird, woher kommt dann der Profit? Wer Geld $G$ in Waren $W$ steckt, will am Ende mehr Geld $G'$ zurück, $G - W - G'$. Durch bloßes Kaufen und Verkaufen lässt sich das für die Gesellschaft als Ganzes nicht erklären.\n\nDie Lösung liegt in einer besonderen Ware: der **Arbeitskraft**. Ihr Wert ist das, was der Arbeiter zum Leben braucht. Ihr Gebrauch aber, die Arbeit, kann mehr Wert schaffen, als sie selbst kostet. Diese Differenz ist der **Mehrwert**, die Quelle von Profit, Zins und Grundrente.\n\nMarx teilt das Kapital in zwei Teile: **konstantes Kapital** $c$ (Maschinen, Rohstoffe), das seinen Wert nur auf das Produkt überträgt, und **variables Kapital** $v$ (Löhne), das neuen Wert schafft. Daraus folgt seine These vom **tendenziellen Fall der Profitrate**: Werden im Wettbewerb immer mehr Maschinen pro Arbeiter eingesetzt, wächst $c$ schneller als die Quelle des Mehrwerts.\n\nMarx' Werttheorie ist in der heutigen Ökonomik nicht Standard, die meisten Ökonomen erklären Preise über Angebot, Nachfrage und Grenznutzen. Seine Fragen nach Macht, Verteilung und Krisen des Kapitalismus prägen die Debatten bis heute."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Wert einer Ware\n> $c + v + m$: übertragener Wert der Produktionsmittel $c$, Ersatz der Löhne $v$, Mehrwert $m$.\n\n> [!definition] Mehrwertrate und Profitrate\n> **Mehrwertrate** $\\dfrac{m}{v}$ = Mehrarbeit durch notwendige Arbeit, für Marx das Maß der Ausbeutung.\n> **Profitrate** $\\dfrac{m}{c + v}$ = Mehrwert bezogen auf das gesamte vorgeschossene Kapital.\n\n> [!definition] Organische Zusammensetzung\n> $\\dfrac{c}{v}$. Steigt sie bei gleicher Mehrwertrate, fällt die Profitrate."
+    },
+    {
+      "id": "tag",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Stelle einen Arbeitstag ein, bei dem die Mehrwertrate genau $100\\,\\%$ beträgt**, Mehrarbeit und notwendige Arbeit also gleich lang sind.",
+      "widget": "workday",
+      "params": { "day": 10, "nec": 6 },
+      "goal": { "when": "abs(rate - 1) < 0.001", "hints": [{ "when": "rate < 1", "text": "Die Mehrarbeit ist noch kürzer als die notwendige Arbeit." }, { "when": "rate > 1", "text": "Jetzt ist die Mehrarbeit länger als die notwendige Arbeit." }], "solve": { "day": 10, "nec": 5 } },
+      "explain": "Zum Beispiel $10$ Stunden mit $5$ notwendigen. Die Hälfte des Tages arbeitet der Arbeiter für sich, die andere Hälfte für den Unternehmer. Jede Kombination mit doppelt so langem Tag wie notwendiger Zeit erfüllt die Aufgabe."
+    },
+    {
+      "id": "ware",
+      "type": "choice",
+      "md": "Warum ist die Arbeitskraft nach Marx eine besondere Ware?",
+      "options": [
+        { "md": "Ihr Gebrauch, die Arbeit, schafft mehr Wert, als sie selbst kostet.", "correct": true },
+        { "md": "Sie wird immer unter ihrem Wert bezahlt.", "why": "Marx nimmt gerade an, dass sie zu ihrem Wert bezahlt wird. Der Mehrwert entsteht trotzdem." },
+        { "md": "Sie kann nicht gehandelt werden.", "why": "Sie wird auf dem Arbeitsmarkt gekauft und verkauft, das ist Marx' Ausgangspunkt." },
+        { "md": "Ihr Wert hängt nur von Angebot und Nachfrage ab.", "why": "Bei Marx hängt er von den Kosten des Lebensunterhalts ab, auch kulturell bestimmt." }
+      ],
+      "explain": "Damit erklärt Marx den Profit, ohne Betrug anzunehmen: Der Tausch ist fair im Sinne der Werttheorie, die Ausbeutung liegt im Produktionsprozess."
+    },
+    {
+      "id": "profitrate",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Betrieb setzt $c = 80$ und $v = 20$ ein, die Mehrwertrate ist $100\\,\\%$. Wie hoch ist die Profitrate in Prozent?",
+      "answer": 20,
+      "tolerance": 0.05,
+      "explain": "$m = 20$, $\\tfrac{20}{80 + 20} = 20\\,\\%$. Würde $c$ auf $180$ steigen, fiele sie bei gleicher Mehrwertrate auf $10\\,\\%$."
+    },
+    {
+      "id": "kritik",
+      "type": "reveal",
+      "label": "Einordnen",
+      "md": "Was ist ein zentraler Einwand der späteren Ökonomik gegen die Arbeitswertlehre? Denke an Dinge, die wertvoll sind, aber wenig Arbeit enthalten.",
+      "solution": "Seit der **Grenznutzenschule** (Jevons, Menger, Walras, um 1870) erklärt die Ökonomik Preise aus Knappheit und Nutzen der letzten Einheit, nicht aus der enthaltenen Arbeit. Ein seltener Wein oder ein Grundstück in der Innenstadt ist teuer, ohne viel Arbeit zu enthalten.\n\nAußerdem bereitet die Umrechnung von Werten in Preise Probleme (das **Transformationsproblem**), weil sich Profitraten zwischen Branchen angleichen. Unabhängig davon bleiben Marx' Beobachtungen zu Konzentration, Krisen und Verteilung einflussreich."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-marx", "level": 1, "label": "Mehrwertrate" },
+    { "id": "neu2", "type": "gen", "gen": "oek-marx", "level": 2, "label": "Profitrate" },
+    { "id": "neu3", "type": "gen", "gen": "oek-marx", "level": 3, "label": "Fallende Rate" },
+    { "id": "neu4", "type": "gen", "gen": "oek-marx", "level": 4, "label": "Warenwert" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Der Unternehmer kauft die Arbeitskraft zu ihrem Wert, ihre Arbeit schafft aber mehr: den Mehrwert.",
+        "Mehrwertrate $m/v$, Profitrate $m/(c + v)$.",
+        "Absoluter Mehrwert durch längere Arbeitstage, relativer durch billigere Lebenshaltung dank Produktivität.",
+        "Steigt $c/v$, fällt bei gleicher Mehrwertrate die Profitrate. Die Werttheorie selbst ist heute nicht Standard."
+      ]
+    }
+  ]
+}

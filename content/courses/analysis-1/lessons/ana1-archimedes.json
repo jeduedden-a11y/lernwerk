@@ -1,0 +1,92 @@
+{
+  "id": "ana1-archimedes",
+  "title": "Archimedes und Wohlordnung",
+  "subtitle": "Warum es keine unendlich kleinen Zahlen gibt",
+  "source": "Skript Jarohs, Abschnitt 3.10 bis 3.21",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Archimedisches Prinzip.md", "title": "Archimedisches Prinzip" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Punkte sind die Zahlen $1, \\tfrac12, \\tfrac13, \\tfrac14, \\dots$ Der blaue Streifen hat die Breite $\\varepsilon$. Frage: Kommt man mit $\\tfrac1n$ unter **jede** noch so kleine positive Zahl?",
+      "widget": "sequence",
+      "params": { "term": "1/n", "limit": 0, "limitLabel": "0", "eps": "eps", "nMax": 60, "n": 2, "yRange": [-0.6, 1.05], "vars": [{ "name": "eps", "label": "ε", "min": 0.01, "max": 0.6, "step": 0.01, "value": 0.5, "digits": 2 }], "readout": "$n = {N|0}$: $\\tfrac1n = {a|4}$, $\\varepsilon = {eps|2}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "Bei $\\varepsilon = 0{,}5$ reicht schon $n = 3$: $\\tfrac13 < 0{,}5$.", "to": { "N": 3 }, "dur": 800 },
+        { "caption": "Strenger: $\\varepsilon = 0{,}2$. Dann nehmen wir $n = 6$, denn $\\tfrac16 \\approx 0{,}167$.", "to": { "eps": 0.2, "N": 6 }, "dur": 1600 },
+        { "caption": "$\\varepsilon = 0{,}05$ verlangt $n = 21$. Wir brauchen immer größere $n$.", "to": { "eps": 0.05, "N": 21 }, "dur": 1600 },
+        { "caption": "$\\varepsilon = 0{,}02$: $n = 51$ genügt. Das klappt, solange es zu jeder Zahl $\\tfrac1\\varepsilon$ eine noch größere natürliche Zahl gibt.", "to": { "eps": 0.02, "N": 51 }, "dur": 1800, "hold": 6000 },
+        { "caption": "Genau das sagt das **archimedische Prinzip**: $\\N$ ist nach oben unbeschränkt, und zu jedem $\\varepsilon > 0$ gibt es ein $n$ mit $\\tfrac1n < \\varepsilon$. Es gibt keine positive Zahl, die kleiner ist als alle $\\tfrac1n$." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Dass $\\N$ unbeschränkt ist, klingt selbstverständlich. Es folgt aber **nicht** aus den Körper- und Anordnungsaxiomen allein: Es gibt angeordnete Körper, in denen eine Zahl größer ist als alle natürlichen Zahlen. Dort gäbe es »unendlich kleine« positive Zahlen, und $\\tfrac1n \\to 0$ wäre falsch.\n\nIn $\\R$ rettet uns das Vollständigkeitsaxiom. Die Beweisidee: Wäre $\\N$ beschränkt, hätte es ein Supremum $s$. Dann wäre $s - 1$ keine obere Schranke mehr, es gäbe also ein $n > s - 1$. Aber dann ist $n + 1 > s$, und $n + 1$ ist auch eine natürliche Zahl. Widerspruch.\n\nDas Prinzip hat viele Gesichter, die alle dasselbe sagen:\n\n- Zu jedem $x \\in \\R$ gibt es $n \\in \\N$ mit $n > x$.\n- Zu jedem $\\varepsilon > 0$ gibt es $n$ mit $\\tfrac1n < \\varepsilon$.\n- Addiert man eine noch so kleine positive Zahl oft genug, überschreitet man jede Schranke."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!satz] Archimedisches Prinzip\n> Zu jedem $x \\in \\R$ gibt es ein $n \\in \\N$ mit $n > x$. Insbesondere gibt es zu jedem $\\varepsilon > 0$ ein $n$ mit $\\tfrac1n < \\varepsilon$.\n\n> [!satz] Wohlordnungsprinzip\n> Jede nichtleere Teilmenge von $\\N$ besitzt ein **kleinstes** Element.\n\nAus beiden zusammen bekommt man die **Gaußklammer**: Zu jedem $x \\in \\R$ gibt es genau eine ganze Zahl $\\lfloor x \\rfloor$ mit $\\lfloor x \\rfloor \\le x < \\lfloor x \\rfloor + 1$. Das ist die größte ganze Zahl, die nicht größer als $x$ ist.\n\n**Beispiel.** $\\lfloor 2{,}7 \\rfloor = 2$, $\\lfloor -2{,}7 \\rfloor = -3$. Bei negativen Zahlen wird also nicht einfach »abgeschnitten«."
+    },
+    {
+      "id": "beweis",
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "Bringe den Beweis, dass $\\N$ nach oben unbeschränkt ist, in die richtige Reihenfolge.",
+      "items": [
+        "Angenommen, $\\N$ ist nach oben beschränkt.",
+        "Nach dem Vollständigkeitsaxiom existiert $s = \\sup \\N$.",
+        "$s - 1$ ist kleiner als $s$, also keine obere Schranke von $\\N$.",
+        "Es gibt daher ein $n \\in \\N$ mit $n > s - 1$.",
+        "Dann ist $n + 1 \\in \\N$ und $n + 1 > s$, im Widerspruch dazu, dass $s$ obere Schranke ist."
+      ],
+      "explain": "Der entscheidende Trick ist Schritt 3: Knapp unter dem Supremum gibt es immer noch Elemente der Menge. Das ist die $\\varepsilon$-Charakterisierung des Supremums mit $\\varepsilon = 1$."
+    },
+    {
+      "id": "gauss",
+      "type": "cloze",
+      "md": "Bestimme die Gaußklammern.\n\n$\\lfloor 3{,}99 \\rfloor =$ {{0}} $\\qquad \\lfloor -0{,}5 \\rfloor =$ {{1}} $\\qquad \\lfloor -4 \\rfloor =$ {{2}}",
+      "blanks": [{ "accept": [3], "numeric": true }, { "accept": [-1], "numeric": true }, { "accept": [-4], "numeric": true }],
+      "hint": "Gesucht ist jeweils die größte ganze Zahl, die nicht größer ist als die gegebene Zahl.",
+      "explain": "$3 \\le 3{,}99 < 4$, $-1 \\le -0{,}5 < 0$ und $-4 \\le -4 < -3$. Bei ganzen Zahlen ändert die Gaußklammer nichts."
+    },
+    {
+      "id": "wohlordnung",
+      "type": "multi",
+      "md": "Welche Mengen besitzen ein kleinstes Element?",
+      "options": [
+        { "md": "$\\set{n \\in \\N : n^2 > 50}$", "correct": true, "why": "Wohlordnung: Das kleinste Element ist $8$." },
+        { "md": "$\\Z$", "why": "Zu jeder ganzen Zahl gibt es eine kleinere." },
+        { "md": "$\\set{\\tfrac1n : n \\in \\N}$", "why": "Das Infimum $0$ gehört nicht dazu, und zu jedem $\\tfrac1n$ gibt es das kleinere $\\tfrac{1}{n+1}$." },
+        { "md": "$\\set{k \\in \\Z : k \\ge -7}$", "correct": true, "why": "Nach unten beschränkte Mengen ganzer Zahlen haben ein Minimum, hier $-7$." }
+      ],
+      "explain": "Das Wohlordnungsprinzip gilt für Teilmengen von $\\N$ und allgemeiner für nach unten beschränkte Teilmengen von $\\Z$, aber nicht für Mengen reeller Zahlen."
+    },
+    {
+      "id": "dicht",
+      "type": "reveal",
+      "label": "Anwendung",
+      "md": "Zeige mit dem archimedischen Prinzip: Ist $x > 0$ und gilt $x < \\tfrac1n$ für **alle** $n \\in \\N$, dann ist das ein Widerspruch.",
+      "solution": "Wähle $\\varepsilon = x > 0$. Nach dem archimedischen Prinzip gibt es ein $n$ mit $\\tfrac1n < x$. Das widerspricht $x < \\tfrac1n$ für alle $n$.\n\nFolgerung: Ist $0 \\le x < \\tfrac1n$ für alle $n$, dann ist $x = 0$. Mit diesem Argument zeigt man, dass zwei Zahlen gleich sind, deren Abstand kleiner als jedes $\\tfrac1n$ ist. Es ist das Fundament jedes Grenzwertbeweises."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-archimedes", "level": 1, "label": "Neues ε" },
+    { "id": "neu2", "type": "gen", "gen": "ana-archimedes", "level": 2, "label": "Neues ε" },
+    { "id": "neu3", "type": "gen", "gen": "ana-archimedes", "level": 3, "label": "Zweierpotenzen" },
+    { "id": "neu4", "type": "gen", "gen": "ana-archimedes", "level": 4, "label": "Aufsummieren" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\N$ ist nach oben unbeschränkt. Das folgt aus der Vollständigkeit, nicht aus den Rechenregeln allein.",
+        "Zu jedem $\\varepsilon > 0$ gibt es $n$ mit $\\tfrac1n < \\varepsilon$: Es gibt keine unendlich kleinen positiven Zahlen.",
+        "Jede nichtleere Teilmenge von $\\N$ hat ein kleinstes Element.",
+        "$\\lfloor x \\rfloor$ ist die größte ganze Zahl $\\le x$, auch für negative $x$."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "la1-eigen",
+  "title": "Eigenvektoren und Eigenwerte",
+  "subtitle": "Die Richtungen, die eine Abbildung nur streckt",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 6",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md", "title": "Eigenwerte und Eigenvektoren" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die meisten Vektoren werden von einer Matrix gedreht und gestreckt. Ein paar besondere Richtungen werden nur gestreckt. Wir suchen sie.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[2, 1], [1, 2]], "editable": false, "probe": [2, 0], "showEigen": true },
+      "timeline": [
+        { "caption": "$A = \\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$. Der rote Pfeil $v$ ist ein Testvektor, der grüne $Av$ sein Bild. Hier zeigen sie in verschiedene Richtungen: $A$ dreht $v$." },
+        { "caption": "Wir drehen $v$ nach oben. Das Bild $Av$ dreht sich mit, aber nicht im gleichen Maß.", "to": { "px": 1.5, "py": 1 }, "dur": 2000 },
+        { "caption": "Bei $v = (1{,}5;\\ 1{,}5)$ zeigt $Av$ in **dieselbe** Richtung, nur dreimal so lang: $Av = 3v$. $v$ ist ein **Eigenvektor** zum **Eigenwert** $3$.", "to": { "px": 1.5, "py": 1.5 }, "dur": 1400, "hold": 5600 },
+        { "caption": "Eine zweite besondere Richtung: Bei $v = (1{,}5;\\ -1{,}5)$ ist $Av = 1 \\cdot v$, Eigenwert $1$. Diese Richtung bleibt unverändert.", "to": { "px": 1.5, "py": -1.5 }, "dur": 2400, "hold": 5600 },
+        { "caption": "Die gestrichelten Geraden sind die **Eigenräume**. Entlang dieser Achsen wirkt $A$ wie eine reine Streckung, um $3$ und um $1$. In dieser Basis wäre $A$ eine Diagonalmatrix." }
+      ]
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Ein Vektor $v \\ne 0$ heißt **Eigenvektor** von $A$ zum **Eigenwert** $\\lambda$, wenn\n\n$$Av = \\lambda v.$$\n\nUmgeformt: $(A - \\lambda E)v = 0$ hat eine Lösung $v \\ne 0$. Das geht genau dann, wenn $A - \\lambda E$ nicht invertierbar ist, also\n\n$$\\det(A - \\lambda E) = 0.$$\n\nDas ist das **charakteristische Polynom**. Für $2 \\times 2$-Matrizen lautet es $\\lambda^2 - (\\operatorname{Spur} A)\\,\\lambda + \\det A$, wobei die Spur die Summe der Diagonaleinträge ist. Seine Nullstellen sind die Eigenwerte; die Eigenvektoren findet man danach als Kern von $A - \\lambda E$."
+    },
+    {
+      "id": "suchen",
+      "type": "widget",
+      "label": "Suchen",
+      "md": "$A = \\begin{pmatrix}3&1\\\\0&2\\end{pmatrix}$. **Ziehe den roten Testvektor $v$, bis $Av$ genau in dieselbe oder die Gegenrichtung zeigt.**",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[3, 1], [0, 2]], "editable": false, "probe": [1, 1], "probeSnap": 0.25, "range": 4 },
+      "goal": {
+        "when": "parallel == 1",
+        "hints": [{ "when": "parallel == 0", "text": "Av = ({qx|2} | {qy|2}) zeigt noch woanders hin als v." }],
+        "solve": { "probe": [1, 0] }
+      },
+      "explain": "Eigenvektoren sind $(1, 0)$ mit Eigenwert $3$ und $(1, -1)$ mit Eigenwert $2$, und alle ihre Vielfachen. Bei einer Dreiecksmatrix stehen die Eigenwerte auf der Diagonale."
+    },
+    {
+      "id": "eigenwerte",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Bestimme die Eigenwerte von $A = \\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}$ (größerer zuerst).\n\n$\\lambda_1 =$ {{0}} $\\qquad \\lambda_2 =$ {{1}}",
+      "blanks": [{ "accept": [5], "numeric": true }, { "accept": [2], "numeric": true }],
+      "hint": "Spur $7$, Determinante $10$. Löse $\\lambda^2 - 7\\lambda + 10 = 0$.",
+      "explain": "$\\lambda^2 - 7\\lambda + 10 = (\\lambda - 5)(\\lambda - 2)$. Kontrolle: $5 + 2 = 7 = $ Spur, $5 \\cdot 2 = 10 = \\det A$."
+    },
+    {
+      "id": "eigenvektor",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Eigenvektor derselben Matrix zum Eigenwert $2$ hat die Form $\\begin{pmatrix}1\\\\y\\end{pmatrix}$. Bestimme $y$.",
+      "answer": -2,
+      "tolerance": 0.001,
+      "hint": "$A - 2E = \\begin{pmatrix}2&1\\\\2&1\\end{pmatrix}$. Löse $2 \\cdot 1 + 1 \\cdot y = 0$.",
+      "explain": "$y = -2$. Probe: $\\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}\\begin{pmatrix}1\\\\-2\\end{pmatrix} = \\begin{pmatrix}2\\\\-4\\end{pmatrix} = 2\\begin{pmatrix}1\\\\-2\\end{pmatrix}$."
+    },
+    {
+      "id": "drehung",
+      "type": "truefalse",
+      "md": "Die Drehung um $90°$, $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$, hat einen reellen Eigenwert.",
+      "answer": false,
+      "whyNot": "$\\lambda^2 + 1 = 0$ hat keine reelle Lösung.",
+      "explain": "Bei einer Vierteldrehung behält kein Vektor seine Richtung. Über $\\mathbb{C}$ gibt es die Eigenwerte $\\pm i$. Ob es Eigenwerte gibt, hängt also auch vom Körper ab."
+    },
+    {
+      "id": "warum",
+      "type": "reveal",
+      "label": "Wozu?",
+      "md": "Warum lohnt sich die Suche nach Eigenvektoren? Denke an $A^{100}v$ für einen Eigenvektor $v$.",
+      "solution": "Für einen Eigenvektor ist $A^{100}v = \\lambda^{100}v$, ohne 100 Matrixmultiplikationen. Bilden die Eigenvektoren eine Basis, zerlegt man jeden Vektor in Eigenvektoren und rechnet in jeder Richtung einzeln. Matrizen mit einer Basis aus Eigenvektoren heißen **diagonalisierbar**: $A = PDP^{-1}$ mit einer Diagonalmatrix $D$. So berechnet man Langzeitverhalten, etwa bei Populationsmodellen oder Markov-Ketten."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-eigen", "level": 1, "label": "Neue Matrix" },
+    { "id": "neu2", "type": "gen", "gen": "la-eigen", "level": 2, "label": "Neue Matrix" },
+    { "id": "neu3", "type": "gen", "gen": "la-eigen", "level": 3, "label": "Neue Matrix" },
+    { "id": "neu4", "type": "gen", "gen": "la-eigen", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Eigenvektor: $Av = \\lambda v$ mit $v \\ne 0$. Die Richtung bleibt, nur die Länge ändert sich um $\\lambda$.",
+        "Eigenwerte sind die Nullstellen von $\\det(A - \\lambda E)$, bei $2 \\times 2$: $\\lambda^2 - \\operatorname{Spur}(A)\\lambda + \\det A$.",
+        "Eigenvektoren zu $\\lambda$ bilden den Kern von $A - \\lambda E$.",
+        "Gibt es eine Basis aus Eigenvektoren, ist $A$ diagonalisierbar, und Potenzen werden leicht."
+      ]
+    }
+  ]
+}

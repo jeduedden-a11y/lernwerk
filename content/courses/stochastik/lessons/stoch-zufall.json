@@ -1,0 +1,145 @@
+{
+  "id": "stoch-zufall",
+  "title": "Zufall und das Gesetz der großen Zahlen",
+  "subtitle": "Was eine Wahrscheinlichkeit über viele Versuche verrät",
+  "source": "KCGO Mathematik Hessen, Q3.1",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md", "title": "Laplace-Wahrscheinlichkeit" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Was bedeutet eigentlich der Satz »Die Wahrscheinlichkeit für Kopf ist $\\tfrac12$«? Sieh zu, was bei vielen Würfen passiert.",
+      "widget": "lln",
+      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "views": false },
+      "timeline": [
+        { "caption": "Ein einzelner Wurf ist reiner Zufall. Nach einem Wurf ist die relative Häufigkeit von Kopf entweder $0$ oder $1$.", "do": { "run": 1 } },
+        { "caption": "Nach 10 Würfen kann sie noch irgendwo liegen, bei $0{,}3$ oder bei $0{,}7$. Zehn Würfe sind sehr wenig.", "do": { "run": 9 } },
+        { "caption": "Nach 100 Würfen pendelt die Kurve schon deutlich enger um $0{,}5$.", "do": { "run": 90 } },
+        { "caption": "Nach 1000 Würfen ist sie fast ruhig. Die relative Häufigkeit stabilisiert sich bei der Wahrscheinlichkeit: das **empirische Gesetz der großen Zahlen**.", "do": { "run": 900 } },
+        { "caption": "Wahrscheinlichkeit ist also der Wert, um den sich die relative Häufigkeit auf lange Sicht einpendelt. Über den **nächsten** Wurf sagt sie nichts Sicheres." }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Ein **Zufallsexperiment** hat mehrere mögliche Ergebnisse, und vorher weiß niemand, welches eintritt. Alle Ergebnisse zusammen bilden die **Ergebnismenge** $\\Omega$, eine Teilmenge davon heißt **Ereignis**.\n\nSind alle Ergebnisse gleich wahrscheinlich, zählt man einfach ab. Das ist die **Laplace-Wahrscheinlichkeit**:\n\n$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl aller Ergebnisse}}$$\n\nBeim fairen Würfel ist $\\Omega = \\{1, \\dots, 6\\}$. Für »gerade Zahl« $E = \\{2, 4, 6\\}$ ist $P(E) = \\tfrac36 = \\tfrac12$."
+    },
+    {
+      "id": "summe7",
+      "type": "numeric",
+      "label": "Abzählen",
+      "md": "Du wirfst zwei faire Würfel. Wie groß ist die Wahrscheinlichkeit, dass die **Augensumme 7** ist?",
+      "answer": 0.16667,
+      "tolerance": 0.002,
+      "answerText": "1/6",
+      "placeholder": "Bruch oder Dezimalzahl",
+      "hint": "Unterscheide die Würfel, etwa einen roten und einen blauen. Dann gibt es $6 \\cdot 6 = 36$ gleich wahrscheinliche Paare. Wie viele davon ergeben 7?",
+      "explain": "Die Paare $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$ sind sechs von $36$, also $P = \\tfrac{6}{36} = \\tfrac16$. Die 7 ist die häufigste Augensumme."
+    },
+    {
+      "id": "elf-zwoelf",
+      "type": "choice",
+      "md": "Ist die Augensumme **11** genauso wahrscheinlich wie die Augensumme **12**?",
+      "options": [
+        { "md": "Nein, 11 ist doppelt so wahrscheinlich wie 12.", "correct": true },
+        { "md": "Ja, beide entstehen aus genau einer Kombination: 5 und 6 bzw. 6 und 6.", "why": "Als **Paare** gezählt ergibt $(5,6)$ und $(6,5)$ zwei verschiedene Ergebnisse, $(6,6)$ nur eines." },
+        { "md": "Nein, 12 ist wahrscheinlicher, weil die 6 auf beiden Würfeln vorkommt.", "why": "Für 12 muss **jeder** Würfel eine 6 zeigen, das ist nur ein einziges der 36 Paare." }
+      ],
+      "explain": "$P(11) = \\tfrac{2}{36}$, $P(12) = \\tfrac{1}{36}$. Gleich wahrscheinlich sind nur die 36 Paare, nicht die Summen. Sogar Leibniz soll sich hier verzählt haben: Er hielt 11 und 12 für gleich wahrscheinlich."
+    },
+    {
+      "id": "haeufigkeit",
+      "type": "text",
+      "md": "Ohne Symmetrie hilft Abzählen nicht. Mit welcher Wahrscheinlichkeit landet eine Reißzwecke auf dem Rücken? Da bleibt nur: oft werfen und zählen.\n\nNach $n$ Versuchen mit $k$ Treffern ist die **relative Häufigkeit** $h_n = \\tfrac{k}{n}$. Das **empirische Gesetz der großen Zahlen** besagt: Mit wachsendem $n$ stabilisiert sich $h_n$ und liegt immer näher bei der Wahrscheinlichkeit $p$."
+    },
+    {
+      "id": "muenze",
+      "type": "widget",
+      "label": "Simulieren",
+      "md": "Eine faire Münze, $p = 0{,}5$ für Kopf. Wirf sie und beobachte die relative Häufigkeit. Die waagerechte Achse ist logarithmisch: 1, 10, 100, 1000 Würfe liegen gleich weit auseinander.\n\n**Wirf mindestens 1000-mal.**",
+      "widget": "lln",
+      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "views": false },
+      "goal": {
+        "when": "n >= 1000",
+        "hints": [{ "when": "n < 1000", "text": "Erst {n|0} Würfe. Tippe auf +1.000, die Münze ist geduldig." }],
+        "solve": { "n": 1000 }
+      },
+      "explain": "Am Anfang springt die Kurve wild, nach einem Wurf ist $h_1$ entweder $0$ oder $1$. Mit jeder Zehnerpotenz wird sie ruhiger und legt sich an die Linie $p = 0{,}5$."
+    },
+    {
+      "id": "absolut",
+      "type": "widget",
+      "label": "Genauer hinsehen",
+      "md": "Dieselbe Münze, andere Darstellung: nicht die relative Häufigkeit, sondern die Abweichung in **Treffern**, also $k - n \\cdot p$. Wirf wieder einige tausend Mal.",
+      "widget": "lln",
+      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "view": "abs" },
+      "after": "Die gestrichelten Kurven zeigen die typische Größe der Abweichung, $\\sqrt{n \\cdot p \\cdot (1-p)}$. Sie wächst mit $n$, nur langsamer als $n$ selbst."
+    },
+    {
+      "id": "ausgleich",
+      "type": "truefalse",
+      "md": "Nach 1000 Würfen liegt die Zahl der Köpfe meistens **näher an 500** als nach 100 Würfen an 50.",
+      "answer": false,
+      "whyNot": "Die absolute Abweichung wächst ungefähr wie $\\sqrt n$: typisch $\\pm 5$ nach 100 Würfen, aber $\\pm 16$ nach 1000.",
+      "explain": "Die **relative** Häufigkeit nähert sich $0{,}5$, die **absolute** Abweichung wird dabei sogar größer. Beides passt zusammen: $\\tfrac{16}{1000}$ ist viel weniger als $\\tfrac{5}{100}$. Das Gesetz der großen Zahlen gleicht nichts aus, es verdünnt nur."
+    },
+    {
+      "id": "roulette",
+      "type": "choice",
+      "md": "Beim Roulette kam achtmal hintereinander **Rot**. Was gilt für die nächste Runde? (37 Fächer: 18 rot, 18 schwarz, die Null grün.)",
+      "options": [
+        { "md": "Rot und Schwarz haben wie immer je die Wahrscheinlichkeit $\\tfrac{18}{37}$.", "correct": true },
+        { "md": "Schwarz ist jetzt wahrscheinlicher, weil sich die Farben auf lange Sicht ausgleichen müssen.", "why": "Die Kugel hat kein Gedächtnis. Lange Reihen werden nicht ausgeglichen, sondern von den vielen folgenden Runden verdünnt." },
+        { "md": "Rot ist wahrscheinlicher, der Kessel hat offenbar einen Hang zu Rot.", "why": "Acht Mal Rot passiert bei einem fairen Kessel etwa einmal in 300 Serien. Ein Indiz für einen Defekt wäre das erst bei viel längeren Beobachtungen." },
+        { "md": "Das lässt sich nicht sagen, nach so einer Serie ist alles offen.", "why": "Doch: Die Runden sind unabhängig, die Wahrscheinlichkeiten bleiben genau dieselben." }
+      ],
+      "explain": "Der Irrglaube, Zufall müsse sich bald ausgleichen, heißt **Spielerfehlschluss**. Die Wahrscheinlichkeit für Rot in Runde 9 hängt nicht von den Runden 1 bis 8 ab."
+    },
+    {
+      "id": "wuerfel",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Jetzt ein Würfel, Ereignis »Sechs«, also $p = \\tfrac16 \\approx 0{,}167$. Mit dem Regler kannst du auch andere Wahrscheinlichkeiten ausprobieren, etwa die einer Reißzwecke.",
+      "widget": "lln",
+      "params": { "p": "1/6", "pText": "1/6", "event": "eine Sechs", "unit": "Würfe", "slider": true, "views": false }
+    },
+    {
+      "id": "erwartung",
+      "type": "numeric",
+      "label": "Schätzen",
+      "md": "Wie viele Sechsen erwartest du ungefähr bei **600 Würfen**?",
+      "answer": 100,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$600 \\cdot \\tfrac16 = 100$. Genau 100 kommen allerdings selten heraus: Die typische Abweichung ist $\\sqrt{600 \\cdot \\tfrac16 \\cdot \\tfrac56} \\approx 9$ Sechsen."
+    },
+    {
+      "id": "begriffe",
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Ordne jedem Begriff seine Bedeutung zu.",
+      "pairs": [
+        ["Ergebnismenge $\\Omega$", "alle möglichen Ergebnisse"],
+        ["Ereignis", "eine Teilmenge von $\\Omega$"],
+        ["relative Häufigkeit", "$\\tfrac{k}{n}$ nach $n$ Versuchen"],
+        ["Laplace-Wahrscheinlichkeit", "$\\tfrac{|E|}{|\\Omega|}$ bei gleich wahrscheinlichen Ergebnissen"]
+      ]
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-laplace", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-laplace", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-laplace", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Bei gleich wahrscheinlichen Ergebnissen zählst du ab: $P(E) = \\tfrac{|E|}{|\\Omega|}$. Gleich wahrscheinlich müssen die Ergebnisse sein, nicht die Ereignisse.",
+        "Die relative Häufigkeit $\\tfrac kn$ stabilisiert sich bei vielen Versuchen um die Wahrscheinlichkeit $p$.",
+        "Die absolute Abweichung $k - np$ wächst dabei wie $\\sqrt n$. Ausgeglichen wird nichts, nur verdünnt.",
+        "Zufallsversuche ohne Gedächtnis kennen keine »fälligen« Ergebnisse."
+      ]
+    }
+  ]
+}

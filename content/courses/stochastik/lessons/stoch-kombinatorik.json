@@ -1,0 +1,122 @@
+{
+  "id": "stoch-kombinatorik",
+  "title": "Abzählen: Baumdiagramm, Urnen, Binomialkoeffizient",
+  "subtitle": "Wie man zählt, ohne alles aufzuschreiben",
+  "source": "KCGO Mathematik Hessen, Q3.1",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md", "title": "Kombinatorik" },
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md", "title": "Laplace-Wahrscheinlichkeit" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Drei Personen A, B und C stellen sich in eine Reihe. Wie viele Reihenfolgen gibt es? Statt zu raten, bauen wir sie Stufe für Stufe auf.",
+      "widget": "tree",
+      "params": { "mode": "perm", "items": ["A", "B", "C"], "depth": 3, "reveal": 0 },
+      "timeline": [
+        { "caption": "Für den ersten Platz kommen alle drei in Frage: drei Äste.", "do": { "reveal": 1 } },
+        { "caption": "Für den zweiten Platz bleiben an jedem Ast nur noch zwei Personen übrig.", "do": { "reveal": 2 } },
+        { "caption": "Für den letzten Platz bleibt genau eine. Jeder Weg von links nach rechts ist eine Reihenfolge.", "do": { "reveal": 3 } },
+        { "caption": "Das sind $3 \\cdot 2 \\cdot 1 = 6$ Wege. Man muss sie nicht zählen, man **multipliziert** die Zahl der Möglichkeiten pro Stufe: die **Produktregel**. Kurz schreibt man $3! = 6$.", "hold": 5200 },
+        { "caption": "Bei 10 Personen wären es $10! = 3\\,628\\,800$ Reihenfolgen. Das Baumdiagramm würde nie fertig, die Produktregel rechnet es in einer Zeile.", "do": { "highlight": ["ABC", "CBA"] } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Fast jede Abzählaufgabe ist eine Variante einer einzigen Frage: Aus $n$ Dingen werden $k$ ausgewählt. Entscheidend sind zwei Fragen:\n\n1. **Kommt es auf die Reihenfolge an?** Beim Siegerpodest ja, beim Lottotipp nein.\n2. **Darf dasselbe mehrfach vorkommen?** Bei einem Zahlenschloss ja, bei einem Team nein.\n\n| | mit Wiederholung | ohne Wiederholung |\n|---|---|---|\n| geordnet | $n^k$ | $\\dfrac{n!}{(n-k)!}$ |\n| ungeordnet | $\\binom{n+k-1}{k}$ | $\\binom nk$ |\n\nAlle Formeln folgen aus der Produktregel. Die Tabelle musst du nicht auswendig lernen, wenn du verstehst, woher sie kommt."
+    },
+    {
+      "id": "beispiel",
+      "type": "text",
+      "label": "Beispiel",
+      "md": "Ein Zahlenschloss hat 3 Rädchen mit den Ziffern 0 bis 9. Jede Stufe hat 10 Möglichkeiten, Wiederholung ist erlaubt: $10 \\cdot 10 \\cdot 10 = 10^3 = 1000$ Kombinationen.\n\nEin Siegerpodest aus 8 Läuferinnen: $8 \\cdot 7 \\cdot 6 = 336$ Möglichkeiten. Wer schon auf Platz 1 steht, kann nicht mehr Platz 2 belegen, deshalb wird es mit jeder Stufe eins weniger."
+    },
+    {
+      "id": "urne",
+      "type": "widget",
+      "label": "Ansehen",
+      "md": "Eine Urne mit 3 roten (R) und 2 blauen (B) Kugeln, zweimal ziehen **ohne Zurücklegen**. An den Ästen stehen die Wahrscheinlichkeiten, rechts das Produkt entlang des Pfades (**Pfadregel**). Markiert sind die Pfade mit **genau einer roten** Kugel.",
+      "widget": "tree",
+      "params": { "mode": "urn", "urn": { "counts": { "R": 3, "B": 2 }, "replace": false, "names": { "R": "rot", "B": "blau" } }, "depth": 2, "highlight": { "count": { "R": 1 } } },
+      "after": "Beim zweiten Zug hat sich die Urne verändert: Nach einer roten Kugel sind nur noch 2 von 4 Kugeln rot. Das macht »ohne Zurücklegen« aus."
+    },
+    {
+      "id": "genau-eine",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die Wahrscheinlichkeit, bei zwei Zügen ohne Zurücklegen **genau eine** rote Kugel zu ziehen?",
+      "answer": 0.6,
+      "tolerance": 0.001,
+      "answerText": "3/5",
+      "placeholder": "Bruch oder Dezimalzahl",
+      "hint": "Zwei Pfade: RB und BR. Pfadregel für jeden, dann addieren (**Summenregel**).",
+      "explain": "$P(RB) = \\tfrac35 \\cdot \\tfrac24 = \\tfrac{6}{20}$ und $P(BR) = \\tfrac25 \\cdot \\tfrac34 = \\tfrac{6}{20}$, zusammen $\\tfrac{12}{20} = \\tfrac35$."
+    },
+    {
+      "id": "binomialkoeffizient",
+      "type": "text",
+      "md": "Wie viele Teams aus 2 Personen lassen sich aus 5 Personen bilden? Geordnet gäbe es $5 \\cdot 4 = 20$ Paare. Aber das Team $\\{A, B\\}$ wurde dabei zweimal gezählt, als $(A, B)$ und als $(B, A)$. Also gibt es $\\tfrac{20}{2} = 10$ Teams.\n\nAllgemein: Jede Auswahl von $k$ Dingen tritt in $k!$ Reihenfolgen auf. Deshalb ist die Zahl der ungeordneten Auswahlen der **Binomialkoeffizient**\n\n$$\\binom nk = \\frac{n!}{k!\\,(n-k)!}, \\quad\\text{gelesen »n über k«.}$$\n\nEr zählt auch die Pfade mit genau $k$ Treffern in einem Baum mit $n$ Stufen. Das brauchst du später bei der Binomialverteilung."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Warum gilt $\\binom nk = \\binom{n}{n-k}$, zum Beispiel $\\binom{10}{3} = \\binom{10}{7}$? Finde eine Begründung **ohne** Formel, nur durch Zählen.",
+      "solution": "Wer aus 10 Personen die 3 auswählt, die mitfahren, hat damit zugleich die 7 ausgewählt, die zu Hause bleiben. Jede Auswahl von 3 entspricht genau einer Auswahl von 7, also gibt es gleich viele. Solche Beweise durch eine **Eins-zu-eins-Zuordnung** sind in der Kombinatorik oft eleganter als jede Rechnung."
+    },
+    {
+      "id": "modelle",
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Welche Formel passt zu welcher Situation?",
+      "pairs": [
+        ["PIN aus 4 Ziffern", "$10^4$"],
+        ["Siegerpodest aus 8 Läuferinnen", "$\\dfrac{8!}{5!}$"],
+        ["Lottotipp 6 aus 49", "$\\binom{49}{6}$"],
+        ["Sitzordnung von 5 Gästen an 5 Plätzen", "$5!$"]
+      ]
+    },
+    {
+      "id": "team",
+      "type": "choice",
+      "md": "Aus 12 Schülerinnen und Schülern werden 3 für einen Ausschuss gewählt. Wie viele Möglichkeiten gibt es?",
+      "options": [
+        { "md": "$220$", "correct": true },
+        { "md": "$1320$", "why": "Das ist $12 \\cdot 11 \\cdot 10$, die Zahl der **geordneten** Auswahlen. Im Ausschuss gibt es keine Plätze 1 bis 3." },
+        { "md": "$1728$", "why": "$12^3$ würde erlauben, dass dieselbe Person mehrfach gewählt wird." },
+        { "md": "$36$", "why": "$3 \\cdot 12$ ist keine Abzählregel, die hier passt." }
+      ],
+      "explain": "$\\binom{12}{3} = \\dfrac{12 \\cdot 11 \\cdot 10}{3!} = \\dfrac{1320}{6} = 220$."
+    },
+    {
+      "id": "geburtstag",
+      "type": "estimate",
+      "label": "Schätzen",
+      "md": "In einem Raum sind 23 Personen. **Wie wahrscheinlich ist es, dass mindestens zwei am selben Tag Geburtstag haben?** Schätze aus dem Bauch, bevor du rechnest.",
+      "min": 0,
+      "max": 100,
+      "answer": 50.7,
+      "tolerance": 8,
+      "unit": "%",
+      "start": 10,
+      "explain": "Über das Gegenereignis, alle Geburtstage verschieden: $\\tfrac{365 \\cdot 364 \\cdots 343}{365^{23}} \\approx 0{,}493$. Also rund $50{,}7\\,\\%$. Die Intuition liegt fast immer zu niedrig, weil sie an die eigene Person denkt. Es zählen aber alle $\\binom{23}{2} = 253$ Paare."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-kombi", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-kombi", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-urne", "level": 2, "label": "Neue Urne" },
+    { "id": "neu4", "type": "gen", "gen": "stoch-kombi", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "**Produktregel**: Gibt es nacheinander $m_1, m_2, \\dots$ Möglichkeiten, so gibt es insgesamt $m_1 \\cdot m_2 \\cdots$ Möglichkeiten.",
+        "Zwei Fragen entscheiden das Modell: Zählt die Reihenfolge? Ist Wiederholung erlaubt?",
+        "$\\binom nk = \\tfrac{n!}{k!(n-k)!}$ zählt ungeordnete Auswahlen, weil jede Auswahl in $k!$ Reihenfolgen vorkommt.",
+        "Im Baumdiagramm: Pfadregel (multiplizieren entlang eines Pfades), Summenregel (addieren über Pfade)."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "cs50-logik",
+  "title": "Aussagenlogik und Model Checking",
+  "subtitle": "CS50 AI, Lecture 1: Knowledge",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 1, und der Kurscode logic.py",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Wissensbasierte Agenten.md", "title": "Wissensbasierte Agenten" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 1 - Knowledge (Kurs).md", "title": "Lecture 1 - Knowledge (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Harry weiß drei Dinge: Wenn es **nicht regnet** ($\\neg R$), besucht er **Hagrid** ($H$). Er besucht **Hagrid oder Dumbledore** ($D$), aber **nicht beide**. Und heute hat er **Dumbledore** besucht. Regnet es? Ein Computer kann das durch stures Durchprobieren entscheiden.",
+      "widget": "model-check",
+      "params": {
+        "symbols": ["R", "H", "D"],
+        "kb": [{ "expr": "!R => H", "label": "\\neg R \\to H" }, { "expr": "H | D", "label": "H \\vee D" }, { "expr": "!(H & D)", "label": "\\neg(H \\wedge D)" }, { "expr": "D", "label": "D" }],
+        "query": { "expr": "R", "label": "R" },
+        "parts": false,
+        "k": 0
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Drei Symbole, jedes wahr ($w$) oder falsch ($f$): Das ergibt $2^3 = 8$ mögliche Welten, die **Modelle**. Die Spalte KB sagt, ob alle vier Sätze in dieser Welt stimmen." },
+        { "caption": "**Model Checking** geht die Modelle der Reihe nach durch. In den ersten beiden ist die Wissensbasis falsch: Im ersten hätte Harry beide besucht, im zweiten wäre er nicht bei Dumbledore gewesen.", "to": { "k": 2 }, "dur": 1400 },
+        { "caption": "Im dritten Modell ($R$ wahr, $H$ falsch, $D$ wahr) stimmt alles: grün. Und dort regnet es.", "to": { "k": 3 }, "dur": 800, "hold": 5600 },
+        { "caption": "Alle restlichen Modelle verletzen mindestens einen Satz. Das grüne Modell ist das einzige, in dem die Wissensbasis wahr ist.", "to": { "k": 8 }, "dur": 2400 },
+        { "caption": "In **jedem** Modell der Wissensbasis, hier nur einem, gilt $R$. Also **folgt** $R$ aus der KB, geschrieben $\\text{KB} \\models R$: Es regnet. Der Computer hat das ohne jedes Verständnis bewiesen, nur durch Aufzählen." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Ein **wissensbasierter Agent** speichert, was er über die Welt weiß, als Sätze, und zieht daraus Schlüsse. Damit das ein Computer kann, braucht es eine Sprache ohne Mehrdeutigkeit: die **Aussagenlogik**.\n\nDie Grundidee von Model Checking ist einfach:\n\n1. Ein **Modell** ist eine vollständige Belegung aller Symbole mit wahr oder falsch, also eine mögliche Welt.\n2. Die **Wissensbasis** (KB) schließt Welten aus: Übrig bleiben nur die Modelle, in denen alle ihre Sätze wahr sind.\n3. Eine Anfrage $\\alpha$ **folgt** aus der KB, wenn sie in **allen** übrig gebliebenen Welten wahr ist. Dann kann die Wirklichkeit, welche Welt es auch ist, $\\alpha$ nicht widersprechen.\n\nDer Haken: Bei $n$ Symbolen gibt es $2^n$ Modelle. Für $20$ Symbole sind das schon über eine Million, für $100$ mehr, als je ein Computer prüfen kann. Darum braucht man in der nächsten Lektion klügere Verfahren."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Junktoren\n> $\\neg P$ (nicht), $P \\wedge Q$ (und), $P \\vee Q$ (oder, einschließend), $P \\to Q$ (wenn, dann: nur falsch, wenn $P$ wahr und $Q$ falsch), $P \\leftrightarrow Q$ (genau dann, wenn: wahr bei gleichem Wert).\n\n> [!definition] Folgerung\n> $\\alpha \\models \\beta$ (»aus $\\alpha$ folgt $\\beta$«), wenn $\\beta$ in jedem Modell wahr ist, in dem $\\alpha$ wahr ist.\n\n> [!definition] Model Checking\n> Um $\\text{KB} \\models \\alpha$ zu prüfen: Zähle alle Modelle auf. Ist in jedem Modell, in dem die KB wahr ist, auch $\\alpha$ wahr, dann gilt die Folgerung, sonst nicht.\n\nIm Kurscode `logic.py` macht das die Funktion `model_check`: Sie belegt rekursiv ein Symbol nach dem anderen mit `True` und `False` und prüft am Ende jedes vollständige Modell."
+    },
+    {
+      "id": "modelle",
+      "type": "widget",
+      "label": "Markieren",
+      "md": "Wissensbasis: $P \\to Q$, $\\;Q \\vee R$, $\\;\\neg(P \\wedge R)$. **Tippe alle Zeilen an, in denen alle drei Sätze wahr sind.** Die Auswertung erscheint erst nach dem Prüfen.",
+      "widget": "model-check",
+      "params": {
+        "symbols": ["P", "Q", "R"],
+        "kb": [{ "expr": "P => Q", "label": "P \\to Q" }, { "expr": "Q | R", "label": "Q \\vee R" }, { "expr": "!(P & R)", "label": "\\neg(P \\wedge R)" }],
+        "select": true
+      },
+      "goal": { "models": true },
+      "explain": "Genau vier Modelle: $(w, w, f)$, $(f, w, w)$, $(f, w, f)$ und $(f, f, w)$. Ist $P$ wahr, muss $Q$ wahr sein und $R$ falsch. Ist $P$ falsch, ist nur $Q$ oder $R$ nötig."
+    },
+    {
+      "id": "folgerung",
+      "type": "choice",
+      "md": "Mit derselben Wissensbasis: Welche Anfrage **folgt** aus ihr?",
+      "options": [
+        { "md": "$Q \\vee R$", "correct": true },
+        { "md": "$Q$", "why": "Im Modell $(f, f, w)$ ist die KB wahr, aber $Q$ falsch." },
+        { "md": "$\\neg P$", "why": "Im Modell $(w, w, f)$ ist die KB wahr und $P$ wahr." },
+        { "md": "$R$", "why": "Im Modell $(w, w, f)$ ist $R$ falsch." }
+      ],
+      "explain": "$Q \\vee R$ ist selbst ein Satz der KB, und was in der KB steht, folgt natürlich aus ihr. Die anderen Anfragen scheitern jeweils an einem Modell der KB. Ein einziges Gegenbeispiel genügt."
+    },
+    {
+      "id": "explosion",
+      "type": "choice",
+      "md": "Eine Wissensbasis benutzt $30$ Symbole. Wie viele Modelle muss Model Checking im schlimmsten Fall prüfen?",
+      "options": [
+        { "md": "etwa eine Milliarde", "correct": true },
+        { "md": "$60$", "why": "Jedes Symbol verdoppelt die Zahl der Modelle, es wird nicht addiert." },
+        { "md": "$900$", "why": "$30^2$ wäre polynomiell. Es sind $2^{30}$." },
+        { "md": "etwa eine Million", "why": "Das sind $2^{20}$." }
+      ],
+      "explain": "$2^{30} = 1\\,073\\,741\\,824$. Exponentielles Wachstum macht Model Checking für große Wissensbasen unbrauchbar, obwohl es immer korrekt ist."
+    },
+    {
+      "id": "clue",
+      "type": "reveal",
+      "label": "Wissen modellieren",
+      "md": "Im Spiel Clue gibt es drei Verdächtige: Mustard ($M$), Plum ($P$) und Scarlet ($S$). Genau einer war es. Wie schreibt man »genau einer« als Sätze der Aussagenlogik?",
+      "solution": "»Mindestens einer«: $M \\vee P \\vee S$.\n\n»Höchstens einer«: $\\neg(M \\wedge P)$, $\\neg(M \\wedge S)$, $\\neg(P \\wedge S)$.\n\nDieses Übersetzen von Alltagswissen in Sätze heißt **Knowledge Engineering**. Erfährt man dann zum Beispiel $\\neg M$ und $\\neg S$, liefert Model Checking $\\text{KB} \\models P$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-logik", "level": 1, "label": "Auswerten" },
+    { "id": "neu2", "type": "gen", "gen": "cs-logik", "level": 2, "label": "Modelle zählen" },
+    { "id": "neu3", "type": "gen", "gen": "cs-logik", "level": 3, "label": "Folgerung" },
+    { "id": "neu4", "type": "gen", "gen": "cs-logik", "level": 4, "label": "Was steht fest?" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ein Modell belegt jedes Symbol mit wahr oder falsch. Die Wissensbasis lässt nur die passenden Modelle übrig.",
+        "$\\text{KB} \\models \\alpha$: In jedem Modell der KB ist $\\alpha$ wahr. Ein Gegenbeispiel widerlegt die Folgerung.",
+        "Model Checking zählt alle $2^n$ Modelle auf: immer korrekt, aber exponentiell langsam.",
+        "Knowledge Engineering übersetzt Wissen in Sätze, etwa »genau einer« in »mindestens einer« plus »keine zwei«."
+      ]
+    }
+  ]
+}

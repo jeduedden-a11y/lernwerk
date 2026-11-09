@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lernwerk Testumgebung</title>
+  <meta name="color-scheme" content="light dark">
+  <style>
+    body { margin: 0; font-family: -apple-system, system-ui, "Segoe UI", sans-serif; background: #e9e9ef; color: #111; }
+    @media (prefers-color-scheme: dark) { body:not(.light) { background: #0b0b0f; color: #eee; } body:not(.light) .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -60%, transparent 60%), #000; } }
+    body.dark { background: #0b0b0f; color: #eee; }
+    header { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 10px 14px; }
+    select, button { font: inherit; font-size: 14px; padding: 6px 10px; border-radius: 10px; border: 1px solid #c8c8d0; background: white; }
+    @media (prefers-color-scheme: dark) { body:not(.light) select, body:not(.light) button { background: #1c1c1e; color: #eee; border-color: #3a3a3c; } }
+    body.dark select, body.dark button { background: #1c1c1e; color: #eee; border-color: #3a3a3c; }
+    .stage { display: flex; gap: 18px; padding: 6px 14px 20px; align-items: flex-start; flex-wrap: wrap; }
+    .phone {
+      position: relative; width: 393px; height: 780px; border-radius: 48px; overflow: hidden; flex: none;
+      background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -40%, transparent 60%), #f2f2f7;
+      box-shadow: 0 0 0 10px #1c1c1e, 0 20px 50px rgba(0,0,0,0.3);
+    }
+    body.dark .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -60%, transparent 60%), #000; }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
+    .glass {
+      position: absolute; left: 12px; right: 12px; display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.55); -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);
+      border: 0.5px solid rgba(255,255,255,0.7); box-shadow: 0 6px 20px rgba(0,0,0,0.12); border-radius: 999px;
+    }
+    body.dark .glass { background: rgba(40,40,44,0.55); border-color: rgba(255,255,255,0.12); }
+    .top { top: 54px; padding: 8px 10px; }
+    .close { width: 32px; height: 32px; border-radius: 16px; display: grid; place-items: center; font-weight: 700; }
+    .bars { flex: 1; display: flex; gap: 4px; }
+    .bars i { flex: 1; height: 5px; border-radius: 3px; background: rgba(120,120,128,0.3); }
+    .bars i.on { background: var(--tint, #5e5ce6); }
+    .bottom { bottom: 30px; padding: 6px; }
+    .primary {
+      flex: 1; height: 52px; border-radius: 999px; border: 0; font-size: 17px; font-weight: 600; color: white;
+      background: var(--tint, #5e5ce6); transition: transform 0.15s, opacity 0.2s, background 0.2s;
+    }
+    .primary:disabled { opacity: 0.4; }
+    .primary.ok { background: #34c759; }
+    .primary.no { background: #ff3b30; }
+    .side { flex: 1; min-width: 320px; max-width: 640px; }
+    pre { background: rgba(0,0,0,0.06); border-radius: 12px; padding: 10px; font-size: 12px; max-height: 300px; overflow: auto; white-space: pre-wrap; }
+    body.dark pre { background: rgba(255,255,255,0.06); }
+    .giveup { position: absolute; right: 16px; bottom: 96px; font-size: 13px; }
+    #report div { margin: 2px 0; }
+    .err { color: #ff3b30; } .ok { color: #34c759; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Lernwerk Testumgebung</strong>
+    <select id="course"></select>
+    <select id="lesson"></select>
+    <button id="restart">Neu starten</button>
+    <button id="theme">Hell/Dunkel</button>
+    <button id="validate">Alle Lektionen prüfen</button>
+    <select id="topic" title="Trainingsthema"></select>
+    <select id="level" title="Schwierigkeit">
+      <option value="1">Leicht</option><option value="2" selected>Mittel</option><option value="3">Schwer</option><option value="4">Experte</option>
+    </select>
+    <button id="practice">Training starten</button>
+    <button id="gens">Generatoren prüfen</button>
+    <button id="path">Lernpfad</button>
+  </header>
+  <div class="stage">
+    <div class="phone" id="phone">
+      <iframe id="frame" src="dev-frame.html" title="Laufzeit"></iframe>
+      <div class="glass top"><span class="close">&times;</span><div class="bars" id="bars"></div></div>
+      <button class="giveup" id="giveup">Lösung zeigen</button>
+      <div class="glass bottom"><button class="primary" id="primary" disabled>Weiter</button></div>
+    </div>
+    <div class="side">
+      <h3>Prüfbericht</h3>
+      <div id="report">Noch nicht geprüft.</div>
+      <h3>Nachrichten an die App</h3>
+      <pre id="log"></pre>
+    </div>
+  </div>
+<script>
+(async function () {
+  const $ = (id) => document.getElementById(id);
+  const frame = $("frame");
+  const log = (o) => { $("log").textContent = JSON.stringify(o) + "\n" + $("log").textContent.slice(0, 6000); };
+  let index = null, courses = {}, dark = false;
+  const fetchJSON = async (u) => { const r = await fetch(u, { cache: "no-store" }); if (!r.ok) throw new Error(u + ": " + r.status); return r.json(); };
+
+  window.addEventListener("message", (e) => {
+    const m = e.data && e.data.lw;
+    if (!m) return;
+    log(m);
+    if (m.type === "primary") {
+      const b = $("primary");
+      b.textContent = m.label; b.disabled = !m.enabled; b.className = "primary";
+    }
+    if (m.type === "progress") {
+      const bars = $("bars"); bars.innerHTML = "";
+      for (let i = 0; i < m.total; i++) { const s = document.createElement("i"); if (i < m.index || (i === m.index && m.answered)) s.className = "on"; bars.append(s); }
+    }
+    if (m.type === "feedback") {
+      const b = $("primary"); b.classList.add(m.correct ? "ok" : "no");
+      setTimeout(() => b.classList.remove("ok", "no"), 650);
+    }
+  });
+  $("primary").onclick = () => frame.contentWindow.LW.primary();
+  $("giveup").onclick = () => frame.contentWindow.LW.giveUp();
+
+  async function loadIndex() {
+    index = await fetchJSON("../courses/index.json");
+    $("course").innerHTML = "";
+    for (const id of index.courses) {
+      try { courses[id] = await fetchJSON("../courses/" + id + "/course.json"); }
+      catch (e) { log({ fehlt: id }); continue; }
+      const o = document.createElement("option"); o.value = id; o.textContent = courses[id].title; $("course").append(o);
+    }
+    index.courses = index.courses.filter((id) => courses[id]);
+    const saved = JSON.parse(localStorage.getItem("lw-dev") || "{}");
+    if (saved.course && courses[saved.course]) $("course").value = saved.course;
+    fillLessons(saved.lesson);
+  }
+  function lessonsOf(c) { return c.chapters.flatMap((ch) => ch.lessons.map((l) => Object.assign({ chapter: ch.title }, l))); }
+  function fillLessons(sel) {
+    const c = courses[$("course").value];
+    $("lesson").innerHTML = "";
+    for (const l of lessonsOf(c)) { const o = document.createElement("option"); o.value = l.id; o.textContent = l.title + (l.status === "soon" ? " (bald)" : ""); $("lesson").append(o); }
+    if (sel) $("lesson").value = sel;
+    $("topic").innerHTML = "";
+    for (const t of c.practice || []) { const o = document.createElement("option"); o.value = t.id; o.textContent = "Training: " + t.title; $("topic").append(o); }
+    start();
+  }
+  $("practice").onclick = () => {
+    const cid = $("course").value, c = courses[cid];
+    const t = (c.practice || []).find((x) => x.id === $("topic").value);
+    if (!t) return;
+    frame.contentWindow.LW.start({
+      mode: "practice", theme: { accent: c.color }, insets: { top: 112, bottom: 120 },
+      practice: { title: t.title, kicker: c.title, topicId: t.id, courseId: cid, gens: t.gens, level: +$("level").value, count: t.count || 6 },
+    });
+  };
+  function start() {
+    const cid = $("course").value, lid = $("lesson").value;
+    if (!cid || !lid) return;
+    localStorage.setItem("lw-dev", JSON.stringify({ course: cid, lesson: lid }));
+    const c = courses[cid];
+    document.getElementById("phone").style.setProperty("--tint", c.color);
+    const go = () => frame.contentWindow.LW.start({
+      lessonUrl: "../courses/" + cid + "/lessons/" + lid + ".json",
+      kicker: c.title, theme: { accent: c.color }, insets: { top: 112, bottom: 120 },
+    });
+    if (frame.contentWindow.LW && frame.contentWindow.document.readyState === "complete") go();
+    else frame.onload = go;
+  }
+  $("course").onchange = () => fillLessons();
+  $("lesson").onchange = start;
+  $("restart").onclick = start;
+  dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  $("theme").onclick = () => {
+    dark = !dark;
+    document.body.classList.toggle("dark", dark);
+    document.body.classList.toggle("light", !dark);
+    document.documentElement.style.colorScheme = dark ? "dark" : "light";
+    frame.contentWindow.document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+  };
+
+  // ---------------------------------------------------------------- validation of every lesson
+  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant"];
+  function mdFields(step) {
+    const out = [];
+    ["md", "explain", "hint", "wrong", "solution", "after"].forEach((k) => { if (step[k]) out.push([k, step[k]]); });
+    (step.options || []).forEach((o, i) => { if (o.md) out.push(["option " + i, o.md]); if (o.why) out.push(["why " + i, o.why]); });
+    (step.items || []).forEach((t, i) => out.push(["item " + i, typeof t === "string" ? t : t.md]));
+    (step.pairs || []).forEach((p, i) => { out.push(["pair " + i + "L", p[0]]); out.push(["pair " + i + "R", p[1]]); });
+    (step.points || []).forEach((t, i) => out.push(["point " + i, t]));
+    if (step.type === "sort") (step.items || []).forEach((t, i) => out.push(["sort " + i, t.md]));
+    (step.timeline || []).forEach((t, i) => { if (t.caption) out.push(["scene " + (i + 1), t.caption]); });
+    (step.blanks || []).forEach((b, i) => { if (b.after) out.push(["blank " + i, b.after]); });
+    ["given", "claim"].forEach((k) => { if (step[k]) out.push([k, step[k]]); });
+    ["lines", "steps", "distractors"].forEach((key) => (step[key] || []).forEach((t, i) => {
+      if (typeof t === "string") out.push([key + " " + i, t]);
+      else if (t) { if (t.md) out.push([key + " " + i, t.md]); if (t.why) out.push([key + " " + i + " why", t.why]); }
+    }));
+    (step.x || []).concat(step.y || []).forEach((t, i) => out.push(["Achse " + i, t]));
+    return out;
+  }
+  function checkLesson(L, LW) {
+    const errs = [];
+    if (!L.id || !L.title) errs.push("id oder title fehlt");
+    if (!Array.isArray(L.steps) || !L.steps.length) errs.push("keine Schritte");
+    const ids = new Set();
+    (L.steps || []).forEach((s, i) => {
+      const at = "Schritt " + (i + 1) + " (" + s.type + ")";
+      const id = s.id || "s" + (i + 1);
+      if (ids.has(id)) errs.push(at + ": doppelte id " + id); ids.add(id);
+      errs.push(...checkStep(s, at, LW));
+    });
+    return errs;
+  }
+  /** Checks one step; generated steps are realised with several seeds on every level they are used on. */
+  function checkStep(s, at, LW) {
+    const errs = [];
+    if (s.type === "gen") {
+      if (!LW.generators[s.gen]) return [at + ": Generator " + s.gen + " fehlt"];
+      for (let seed = 0; seed < 6; seed++) {
+        let made;
+        try { made = LW.realize(Object.assign({ id: "t" }, s), "check|" + seed); } catch (e) { errs.push(at + ": Generator wirft " + e.message); break; }
+        const sub = checkStep(made, at + " → " + made.type + " (Variante " + seed + ")", LW);
+        if (sub.length) { errs.push(...sub); break; }
+      }
+      return errs;
+    }
+    if (s.type === "anim") {
+      if (s.widget && !LW.widgets[s.widget]) errs.push(at + ": Widget " + s.widget + " fehlt");
+      if (!Array.isArray(s.timeline) || !s.timeline.length) errs.push(at + ": timeline fehlt");
+    }
+    {
+      if (!TYPES.includes(s.type)) errs.push(at + ": unbekannter Typ");
+      if (s.gen && !s.explain && s.type !== "reveal") errs.push(at + ": generierte Aufgabe ohne explain");
+      if (s.type === "choice") { const n = (s.options || []).filter((o) => o.correct).length; if (n !== 1) errs.push(at + ": braucht genau eine richtige Option, hat " + n); }
+      if (s.type === "multi" && !(s.options || []).some((o) => o.correct)) errs.push(at + ": keine richtige Option");
+      if (s.type === "truefalse" && typeof s.answer !== "boolean") errs.push(at + ": answer muss true/false sein");
+      if (s.type === "numeric") [].concat(s.answer).forEach((a) => { if (typeof a !== "number" && isNaN(LW.parseNumber(a))) errs.push(at + ": answer keine Zahl"); });
+      if (s.type === "cloze") { const n = (String(s.md).match(/\{\{\d+\}\}/g) || []).length; if (n !== (s.blanks || []).length) errs.push(at + ": " + n + " Lücken, aber " + (s.blanks || []).length + " blanks"); }
+      if (s.type === "order" && (s.items || []).length < 2) errs.push(at + ": zu wenige items");
+      if (s.type === "match" && (s.pairs || []).length < 2) errs.push(at + ": zu wenige pairs");
+      if (s.type === "reveal" && !s.solution) errs.push(at + ": solution fehlt");
+      if (s.type === "sort") (s.items || []).forEach((it, k) => { const ci = typeof it.cat === "number" ? it.cat : (s.categories || []).indexOf(it.cat); if (ci < 0) errs.push(at + ": Kategorie von Eintrag " + (k + 1) + " unbekannt"); });
+      if (s.type === "widget" && !LW.widgets[s.widget]) errs.push(at + ": Widget " + s.widget + " fehlt");
+      if (s.type === "spot") {
+        const n = (s.lines || []).length;
+        if (n < 2) errs.push(at + ": zu wenige lines");
+        if (![].concat(s.answer).every((a) => Number.isInteger(a) && a >= 0 && a < n)) errs.push(at + ": answer zeigt auf keine Zeile");
+      }
+      if (s.type === "proof" && (s.steps || []).length < 2) errs.push(at + ": zu wenige steps");
+      if (s.type === "estimate") {
+        if (!(s.min < s.max)) errs.push(at + ": min/max fehlen");
+        else if (!(s.answer >= s.min && s.answer <= s.max)) errs.push(at + ": answer außerhalb von min bis max");
+      }
+      if (s.type === "timeline") {
+        if (!(s.start < s.end)) errs.push(at + ": start/end fehlen");
+        (s.items || []).forEach((it, k) => { if (!(it.year >= s.start && it.year <= s.end)) errs.push(at + ": Eintrag " + (k + 1) + " außerhalb des Zeitstrahls"); });
+      }
+      if (s.type === "quadrant") (s.items || []).forEach((it, k) => { if (![0, 1, 2, 3].includes(it.cell)) errs.push(at + ": Eintrag " + (k + 1) + " ohne gültiges Feld"); });
+      for (const [k, v] of mdFields(s)) {
+        const html = LW.md(v);
+        if (/katex-error|lw-error/.test(html)) {
+          const m = /title="([^"]*)"/.exec(html);
+          errs.push(at + " " + k + ": Formelfehler " + (m ? m[1] : ""));
+        }
+        if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(v) && !/[✓←-⇿]/.test(v)) errs.push(at + " " + k + ": Emoji gefunden");
+        if (/NaN|undefined|Infinity/.test(v)) errs.push(at + " " + k + ": enthält NaN, undefined oder Infinity");
+      }
+      if (s.type === "numeric") [].concat(s.answer).forEach((a) => { const v = typeof a === "number" ? a : LW.parseNumber(a); if (!isFinite(v)) errs.push(at + ": answer nicht endlich"); });
+      if ((s.type === "choice" || s.type === "multi") && new Set((s.options || []).map((o) => o.md)).size !== (s.options || []).length) errs.push(at + ": doppelte Optionen");
+      if ((s.type === "choice" || s.type === "multi") && (s.options || []).length < 2) errs.push(at + ": zu wenige Optionen");
+    }
+    return errs;
+  }
+  // every generator, every level, many seeds
+  $("gens").onclick = async () => {
+    const LW = frame.contentWindow.LW;
+    const rep = $("report"); rep.innerHTML = "";
+    let total = 0, bad = 0;
+    for (const name of Object.keys(LW.generators).sort()) {
+      const errs = [];
+      for (let level = 1; level <= 4; level++) {
+        for (let seed = 0; seed < 40; seed++) {
+          total++;
+          let made;
+          try { made = LW.realize({ id: "g", type: "gen", gen: name, level }, name + "|" + level + "|" + seed); }
+          catch (e) { errs.push("Stufe " + level + ": wirft " + e.message); break; }
+          const e = checkStep(made, "Stufe " + level + " Variante " + seed + " (" + made.type + ")", LW);
+          if (e.length) { errs.push(...e.slice(0, 2)); break; }
+        }
+      }
+      const d = document.createElement("div");
+      d.className = errs.length ? "err" : "ok";
+      d.textContent = (errs.length ? "Fehler " : "OK ") + name + (errs.length ? ": " + errs.join(" | ") : "");
+      rep.append(d);
+      if (errs.length) bad++;
+    }
+    const s = document.createElement("div");
+    s.innerHTML = "<b>" + Object.keys(LW.generators).length + " Generatoren, " + total + " Aufgaben erzeugt, " + bad + " Generatoren mit Fehlern</b>";
+    rep.prepend(s);
+    window.lwGenReport = { count: Object.keys(LW.generators).length, bad, text: rep.innerText };
+  };
+  $("validate").onclick = async () => {
+    const LW = frame.contentWindow.LW;
+    const rep = $("report"); rep.innerHTML = "";
+    let total = 0, bad = 0;
+    for (const id of index.courses) {
+      for (const l of lessonsOf(courses[id])) {
+        if (l.status === "soon") continue;
+        total++;
+        let errs;
+        try { errs = checkLesson(await fetchJSON("../courses/" + id + "/lessons/" + l.id + ".json"), LW); }
+        catch (e) { errs = [String(e.message || e)]; }
+        const d = document.createElement("div");
+        d.className = errs.length ? "err" : "ok";
+        d.textContent = (errs.length ? "Fehler " : "OK ") + id + "/" + l.id + (errs.length ? ": " + errs.join(" | ") : "");
+        rep.append(d);
+        if (errs.length) bad++;
+      }
+    }
+    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen, " + bad + " mit Fehlern</b>"; rep.prepend(s);
+    window.lwReport = { total, bad, text: rep.innerText };
+  };
+
+  // learning path with made-up progress: about every second lesson whose prerequisites are done
+  $("path").onclick = async () => {
+    const done = [], started = {}, practice = {};
+    for (const id of index.courses) {
+      const c = courses[id];
+      const refs = lessonsOf(c);
+      refs.forEach((l, i) => {
+        const ready = (l.requires || []).every((r) => done.includes(r));
+        if (ready && (i < 3 || Math.random() < 0.45)) done.push(l.id);
+        else if (ready && Math.random() < 0.3) started[l.id] = 3;
+      });
+      (c.practice || []).forEach((t) => { if (done.includes(t.after)) practice[id + "/" + t.id] = Math.floor(Math.random() * 5); });
+    }
+    frame.contentWindow.LW.start({ mode: "overview", progress: { done, started, practice, streak: 4 }, insets: { top: 112, bottom: 40 } });
+  };
+
+  const boot = () => { if (!index) loadIndex().catch((e) => { $("report").textContent = String(e); }); };
+  if (frame.contentDocument && frame.contentDocument.readyState === "complete" && frame.contentWindow.LW) boot();
+  else frame.addEventListener("load", boot, { once: true });
+})();
+</script>
+</body>
+</html>

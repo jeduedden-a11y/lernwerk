@@ -1,0 +1,106 @@
+{
+  "id": "cs50-nn",
+  "title": "Neuronen, Aktivierung, Gradientenabstieg",
+  "subtitle": "CS50 AI, Lecture 5: Neural Networks",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 5",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Neuronale Netze.md", "title": "Neuronale Netze" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 5 - Neural Networks (Kurs).md", "title": "Lecture 5 - Neural Networks (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Oben ein künstliches Neuron: Die Eingaben $x_1, x_2$ werden gewichtet, zur Summe $w_0 + w_1 x_1 + w_2 x_2$ addiert, und eine Stufenfunktion macht daraus $0$ oder $1$. Unten die vier möglichen Eingaben, beschriftet mit der gewünschten Ausgabe.",
+      "widget": "neuron",
+      "params": { "target": "or", "w": [0, 0, 0], "sliders": false, "train": false },
+      "timeline": [
+        { "caption": "Alle Gewichte sind $0$. Die Summe ist überall $0$, also gibt das Neuron überall $1$ aus. Für ODER ist das bei $(0, 0)$ falsch (rot).", "do": { "target": "or" }, "set": { "w0": 0, "w1": 0, "w2": 0 } },
+        { "caption": "Ein negativer Wert $w_0 = -1$, der **Bias**, verschiebt die Schwelle. Jetzt ist die Summe überall negativ, und das Neuron gibt überall $0$ aus.", "do": { "target": "or" }, "to": { "w0": -1 }, "dur": 1200, "hold": 6000 },
+        { "caption": "Mit $w_1 = w_2 = 2$ genügt eine einzige $1$ am Eingang, damit die Summe positiv wird: $-1 + 2 = 1 \\ge 0$. Das Neuron berechnet **ODER**. Die Grenze zwischen den Bereichen ist eine Gerade.", "do": { "target": "or" }, "to": { "w1": 2, "w2": 2 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Für **UND** legt man die Schwelle höher: Mit $w_0 = -3$ ist $-3 + 2 + 2 = 1 \\ge 0$ nur, wenn beide Eingaben $1$ sind.", "do": { "target": "and" }, "to": { "w0": -3 }, "dur": 1600, "hold": 6500 },
+        { "caption": "Und **XOR** (genau eine Eingabe $1$)? Keine Gerade trennt $(0, 1)$ und $(1, 0)$ von $(0, 0)$ und $(1, 1)$. Ein einzelnes Neuron kann es nicht. Dafür braucht man mehrere Neuronen in Schichten.", "do": { "target": "xor" } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Ein künstliches Neuron ist eine winzige Rechenregel: Eingaben gewichten, aufsummieren, durch eine **Aktivierungsfunktion** schicken. Die Stufenfunktion liefert $0$ oder $1$, der **Sigmoid** $\\sigma(z) = \\tfrac{1}{1 + e^{-z}}$ eine weiche Zahl dazwischen, **ReLU** $\\max(0, z)$ ist die Standardwahl in tiefen Netzen.\n\nEin einzelnes Neuron trennt immer mit einer Geraden (allgemein einer Ebene). Die Kraft entsteht, wenn man viele Neuronen in **Schichten** hintereinanderschaltet: Die Ausgaben der ersten Schicht sind die Eingaben der nächsten. Ein Netz mit einer **versteckten Schicht** kann XOR, und mit genug Neuronen fast jede Funktion annähern.\n\nWoher kommen die Gewichte? Man misst mit einer **Verlustfunktion**, wie falsch das Netz auf den Trainingsdaten liegt, und verändert die Gewichte in die Richtung, in der der Verlust am schnellsten sinkt: **Gradientenabstieg**. Wie man den Gradienten für alle Schichten berechnet, beschreibt **Backpropagation**: Der Fehler wird von der Ausgabe rückwärts auf die Gewichte der früheren Schichten verteilt."
+    },
+    {
+      "id": "abstieg",
+      "type": "anim",
+      "label": "Gradientenabstieg",
+      "md": "Der Verlust $L(w)$ eines einzigen Gewichts. Die orange Gerade ist die Tangente: Ihre Steigung zeigt, in welche Richtung es bergauf geht. Gradientenabstieg geht genau in die Gegenrichtung.",
+      "widget": "plot",
+      "params": {
+        "x": [-0.5, 5], "y": [0, 7],
+        "vars": [{ "name": "w", "min": -0.5, "max": 5, "value": 4.5, "hidden": true }],
+        "functions": [{ "expr": "(x - 2)^2 + 0.5", "label": "L(w)", "labelAt": 4.3 }],
+        "tangents": [{ "f": "f", "at": "w", "color": "orange", "length": 0.9 }],
+        "points": [{ "x": "w", "on": "f", "label": "w" }],
+        "readout": "$w = {w|3}$, Verlust ${(w - 2)^2 + 0.5|3}$, Steigung ${m|3}$"
+      },
+      "timeline": [
+        { "caption": "Start bei $w = 4{,}5$. Die Steigung ist $5$: Nach rechts geht es steil bergauf." },
+        { "caption": "Ein Schritt: $w \\leftarrow w - \\alpha \\cdot L'(w)$ mit Lernrate $\\alpha = 0{,}25$. Neues $w = 4{,}5 - 0{,}25 \\cdot 5 = 3{,}25$.", "to": { "w": 3.25 }, "dur": 1400 },
+        { "caption": "Die Steigung ist kleiner geworden, also auch der Schritt: $w = 2{,}625$, dann $2{,}3125$.", "to": { "w": 2.3125 }, "dur": 1800 },
+        { "caption": "Die Schritte werden immer kürzer, und $w$ nähert sich dem Minimum bei $2$. In einem echten Netz passiert das gleichzeitig für Millionen Gewichte, jedes mit seiner eigenen Steigung.", "to": { "w": 2.02 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "und",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Stelle die Gewichte so ein, dass das Neuron UND berechnet:** Ausgabe $1$ nur bei $(1, 1)$.",
+      "widget": "neuron",
+      "params": { "target": "and", "w": [0, 1, 1], "train": false },
+      "goal": { "when": "errors == 0", "hints": [{ "when": "errors > 0", "text": "Noch {errors|0} von 4 Eingaben falsch." }], "solve": { "w": [-1.5, 1, 1] } },
+      "explain": "Zum Beispiel $w = (-1{,}5;\\ 1;\\ 1)$: Die Summe ist $-1{,}5$, $-0{,}5$, $-0{,}5$ und $0{,}5$. Nur bei $(1, 1)$ ist sie nicht negativ. Jeder Bias zwischen $-2$ und $-1$ (ohne $-1$) funktioniert mit diesen Gewichten."
+    },
+    {
+      "id": "sigmoid",
+      "type": "widget",
+      "label": "Trainieren",
+      "md": "Jetzt mit Sigmoid statt Stufe. Die Ausgaben sind weiche Zahlen, und **Gradientenabstieg** verbessert alle Gewichte gleichzeitig. **Lass das Neuron ODER lernen, bis alle vier Eingaben richtig eingeordnet sind** (Ausgabe über $0{,}5$ zählt als $1$).",
+      "widget": "neuron",
+      "params": { "target": "or", "g": "sigmoid", "w": [0, 0, 0], "sliders": false, "alpha": 2 },
+      "goal": { "when": "errors == 0", "message": "Noch nicht alle richtig. Weitere Lernschritte." },
+      "explain": "Am Anfang liegen alle Ausgaben bei $0{,}5$. Jeder Schritt verkleinert den Verlust, und schon nach wenigen Schritten liegt $(0, 0)$ unter $0{,}5$ und die anderen darüber. Mit weiteren Schritten werden die Ausgaben immer eindeutiger."
+    },
+    {
+      "id": "xor",
+      "type": "reveal",
+      "label": "XOR mit zwei Schichten",
+      "md": "Ein Neuron kann XOR nicht. Wie schaffen es **drei** Neuronen in zwei Schichten? Tipp: XOR heißt »mindestens eine, aber nicht beide«.",
+      "solution": "Versteckte Schicht: Ein Neuron berechnet $\\text{ODER}(x_1, x_2)$, etwa mit $w = (-1, 2, 2)$. Ein zweites berechnet $\\text{NAND}(x_1, x_2)$, also »nicht beide«, etwa mit $w = (3, -2, -2)$.\n\nAusgabeschicht: Ein drittes Neuron berechnet $\\text{UND}$ der beiden Zwischenergebnisse, etwa mit $w = (-3, 2, 2)$.\n\nDie erste Schicht verwandelt die Eingaben in neue Merkmale, in denen das Problem plötzlich durch eine Gerade lösbar ist. Genau das lernen tiefe Netze von selbst: nützliche Zwischendarstellungen."
+    },
+    {
+      "id": "cnn",
+      "type": "match",
+      "md": "Ordne die Bausteine moderner Netze ihrer Aufgabe zu.",
+      "pairs": [
+        ["Faltung (Convolution)", "Ein kleiner Filter wandert über ein Bild und erkennt lokale Muster wie Kanten."],
+        ["Max-Pooling", "Fasst Bereiche zusammen und behält nur den größten Wert, das Bild wird kleiner."],
+        ["Dropout", "Schaltet beim Training zufällig Neuronen ab, damit das Netz nicht auswendig lernt."],
+        ["Rekurrentes Netz", "Gibt seine Ausgabe an sich selbst zurück und kann so Folgen verarbeiten."]
+      ],
+      "explain": "Faltung und Pooling bilden zusammen ein **Convolutional Neural Network** für Bilder. Rekurrente Netze waren lange der Standard für Text, bis Attention sie ablöste."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-nn", "level": 1, "label": "Stufe" },
+    { "id": "neu2", "type": "gen", "gen": "cs-nn", "level": 2, "label": "Sigmoid" },
+    { "id": "neu3", "type": "gen", "gen": "cs-nn", "level": 3, "label": "Logik" },
+    { "id": "neu4", "type": "gen", "gen": "cs-nn", "level": 4, "label": "Gradient" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Neuron: gewichtete Summe plus Bias, dann Aktivierung (Stufe, Sigmoid, ReLU).",
+        "Ein einzelnes Neuron trennt mit einer Geraden. XOR braucht eine versteckte Schicht.",
+        "Gradientenabstieg: $w \\leftarrow w - \\alpha \\nabla L$. Backpropagation berechnet den Gradienten für alle Schichten.",
+        "Faltung und Pooling für Bilder, Dropout gegen Overfitting, rekurrente Netze für Folgen."
+      ]
+    }
+  ]
+}

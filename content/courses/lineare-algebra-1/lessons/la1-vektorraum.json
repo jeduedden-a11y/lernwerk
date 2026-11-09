@@ -1,0 +1,103 @@
+{
+  "id": "la1-vektorraum",
+  "title": "Was ist ein Vektorraum?",
+  "subtitle": "Alles, was man addieren und strecken kann",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 2",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Vektorraum.md", "title": "Vektorraum" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Pfeile kann man addieren und strecken. Funktionen, Polynome und Matrizen auch. Was sie gemeinsam haben, heißt Vektorraum. Zuerst ein Bild: Welche Geraden sind selbst so ein Raum?",
+      "widget": "plot",
+      "params": {
+        "x": [-4, 4], "y": [-4, 7], "height": 260, "grid": true,
+        "vars": [{ "name": "b", "label": "Verschiebung b", "min": -3, "max": 3, "step": 0.5, "value": 0, "digits": 1 }],
+        "functions": [{ "name": "f", "expr": "0.5*x + b", "color": "accent", "label": "g" }],
+        "points": [
+          { "x": 1, "on": "f", "label": "u", "color": "accent" },
+          { "x": 2, "on": "f", "label": "v", "color": "accent" },
+          { "x": 3, "y": "f(1) + f(2)", "label": "u + v", "color": "orange" }
+        ],
+        "readout": "u + v hat die Höhe {f(1) + f(2)|1}, die Gerade bei x = 3 die Höhe {f(3)|1}."
+      },
+      "timeline": [
+        { "caption": "Eine Gerade durch den Ursprung. $u$ und $v$ liegen auf ihr, und ihre Summe $u + v$ (orange) liegt **wieder** auf ihr." },
+        { "caption": "Strecken klappt auch: Jedes Vielfache eines Punktes der Geraden liegt auf der Geraden. Sie ist in sich abgeschlossen." },
+        { "caption": "Jetzt verschieben wir die Gerade nach oben. Plötzlich fällt $u + v$ heraus: Addiert man zwei Punkte, addiert man auch die Verschiebung zweimal.", "to": { "b": 2 }, "dur": 2000, "hold": 4800 },
+        { "caption": "Außerdem fehlt der Nullvektor. Eine verschobene Gerade ist kein Vektorraum, eine Gerade durch den Ursprung schon.", "hold": 3800 },
+        { "caption": "Zurück durch den Ursprung: Summen und Vielfache bleiben wieder auf der Geraden. Genau diese Abgeschlossenheit verlangt ein **Untervektorraum**.", "to": { "b": 0 }, "dur": 1800 }
+      ]
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Ein **Vektorraum** über einem Körper $K$ ist eine Menge $V$ mit einer Addition $V \\times V \\to V$ und einer Skalarmultiplikation $K \\times V \\to V$, so dass\n\n1. $(V, +)$ eine abelsche Gruppe ist (mit Nullvektor $0$),\n2. $\\lambda(\\mu v) = (\\lambda\\mu) v$ und $1 \\cdot v = v$,\n3. $\\lambda(v + w) = \\lambda v + \\lambda w$ und $(\\lambda + \\mu)v = \\lambda v + \\mu v$.\n\nDie Elemente heißen **Vektoren**, auch wenn sie gar keine Pfeile sind. Beispiele:\n\n- $K^n$, die Spalten mit $n$ Einträgen,\n- die Polynome vom Grad höchstens $n$,\n- alle Funktionen $\\mathbb{R} \\to \\mathbb{R}$, mit $(f + g)(x) = f(x) + g(x)$,\n- die $m \\times n$-Matrizen."
+    },
+    {
+      "id": "beispiel",
+      "type": "text",
+      "label": "Beispiel",
+      "md": "Die Polynome $p(x) = 1 + 2x$ und $q(x) = 3 - x + x^2$ lassen sich addieren und strecken wie Vektoren:\n\n$$p + q = 4 + x + x^2, \\qquad 2p = 2 + 4x.$$\n\nSchreibt man nur die Koeffizienten auf, wird daraus $(1, 2, 0) + (3, -1, 1) = (4, 1, 1)$. Ein Polynom vom Grad höchstens 2 »ist« also im Grunde ein Vektor aus $\\mathbb{R}^3$. Diese Sicht wird später sehr nützlich."
+    },
+    {
+      "id": "durch-null",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Die Gerade $y = 0{,}5x + b$. **Stelle $b$ so ein, dass sie ein Untervektorraum des $\\mathbb{R}^2$ ist.**",
+      "widget": "plot",
+      "params": {
+        "x": [-4, 4], "y": [-4, 7], "height": 240, "grid": true,
+        "vars": [{ "name": "b", "label": "b", "min": -3, "max": 3, "step": 0.5, "value": 2, "digits": 1 }],
+        "functions": [{ "name": "f", "expr": "0.5*x + b", "color": "accent", "label": "g" }],
+        "points": [
+          { "x": 1, "on": "f", "label": "u", "color": "accent" },
+          { "x": 2, "on": "f", "label": "v", "color": "accent" },
+          { "x": 3, "y": "f(1) + f(2)", "label": "u + v", "color": "orange" }
+        ]
+      },
+      "goal": {
+        "when": "abs(b) < 0.01",
+        "hints": [{ "when": "abs(b) >= 0.01", "text": "Liegt u + v auf der Geraden? Und der Ursprung?" }],
+        "solve": { "b": 0 }
+      },
+      "explain": "Nur für $b = 0$ geht die Gerade durch den Ursprung. Dann ist sie $\\{t \\cdot (1, 0{,}5) : t \\in \\mathbb{R}\\}$, und Summen und Vielfache bleiben darin."
+    },
+    {
+      "id": "kriterium",
+      "type": "text",
+      "md": "Um zu prüfen, ob eine Teilmenge $U \\subseteq V$ selbst ein Vektorraum ist, muss man nicht alle Axiome nachrechnen. Es reicht das **Unterraumkriterium**:\n\n1. $0 \\in U$,\n2. $u, w \\in U \\Rightarrow u + w \\in U$,\n3. $u \\in U, \\lambda \\in K \\Rightarrow \\lambda u \\in U$.\n\nDie übrigen Axiome erbt $U$ von $V$. Meist scheitert eine Menge schon an Punkt 1, so wie die verschobene Gerade."
+    },
+    {
+      "id": "null",
+      "type": "reveal",
+      "label": "Begründen",
+      "md": "Warum enthält jeder Untervektorraum den Nullvektor, sobald er überhaupt ein Element $u$ enthält?",
+      "solution": "Mit $u$ liegt auch $0 \\cdot u$ in $U$ (Abgeschlossenheit unter Vielfachen). Und $0 \\cdot u = 0$, denn $0 \\cdot u = (0 + 0) \\cdot u = 0 \\cdot u + 0 \\cdot u$, subtrahiert man $0 \\cdot u$ auf beiden Seiten, bleibt $0 = 0 \\cdot u$. Deshalb ist »enthält die $0$?« der schnellste erste Test."
+    },
+    {
+      "id": "loesungen",
+      "type": "truefalse",
+      "md": "Die Lösungsmenge eines **homogenen** linearen Gleichungssystems $Ax = 0$ ist immer ein Untervektorraum.",
+      "answer": true,
+      "explain": "$A \\cdot 0 = 0$; aus $Ax = 0$ und $Ay = 0$ folgt $A(x + y) = 0$ und $A(\\lambda x) = \\lambda Ax = 0$. Bei $Ax = b$ mit $b \\ne 0$ ist das anders, dort fehlt schon die $0$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-unterraum", "level": 1, "label": "Neue Menge" },
+    { "id": "neu2", "type": "gen", "gen": "la-unterraum", "level": 2, "label": "Neue Menge" },
+    { "id": "neu3", "type": "gen", "gen": "la-unterraum", "level": 3, "label": "Neue Menge" },
+    { "id": "neu4", "type": "gen", "gen": "la-unterraum", "level": 4, "label": "Mehrere Mengen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Ein Vektorraum ist eine Menge, in der man addieren und mit Zahlen aus einem Körper strecken kann, nach festen Regeln.",
+        "Auch Polynome, Funktionen und Matrizen sind Vektoren.",
+        "Unterraumkriterium: Nullvektor, abgeschlossen unter Addition und unter Vielfachen.",
+        "Geraden und Ebenen sind genau dann Unterräume, wenn sie durch den Ursprung gehen."
+      ]
+    }
+  ]
+}

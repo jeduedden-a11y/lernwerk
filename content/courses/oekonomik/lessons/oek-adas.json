@@ -1,0 +1,99 @@
+{
+  "id": "oek-adas",
+  "title": "Gesamtwirtschaftliches Angebot und Nachfrage",
+  "subtitle": "Boom, Rezession und Stagflation in einem Diagramm",
+  "source": "Lehrbuchstandard der Makroökonomik (AD-AS-Modell)",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/AD-AS-Modell.md", "title": "AD-AS-Modell" },
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Konjunktur.md", "title": "Konjunktur" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Das Diagramm sieht aus wie ein Markt, zeigt aber die ganze Volkswirtschaft: waagerecht die reale Produktion $Y$, senkrecht das **Preisniveau**. Blau die gesamtwirtschaftliche **Nachfrage** (AD), orange das kurzfristige **Angebot** (AS). Grau das **Produktionspotenzial**, bei dem alle Kapazitäten normal ausgelastet sind.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 14], "xLabel": "Produktion Y", "yLabel": "Preisniveau",
+        "vars": [{ "name": "ad", "min": -4, "max": 4, "value": 0, "hidden": true }, { "name": "as", "min": -4, "max": 4, "value": 0, "hidden": true }],
+        "lines": [
+          { "id": "AD", "label": "AD", "a": "12 + ad", "m": -1, "color": "accent" },
+          { "id": "AS", "label": "AS", "a": "2 + as", "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["AD", "AS"], "label": "E" }],
+        "vlines": [{ "x": 5, "color": "gray", "label": "Potenzial" }],
+        "readout": "Produktion **{E_x|2}** (Potenzial 5), Preisniveau **{E_y|2}**"
+      },
+      "timeline": [
+        { "caption": "Im Gleichgewicht liegt die Produktion genau beim Potenzial: normale Auslastung, normale Beschäftigung." },
+        { "caption": "**Nachfrageschock:** Exporte und Investitionen boomen, AD rückt nach rechts. Produktion **und** Preise steigen. Die Wirtschaft ist überausgelastet, es droht Inflation.", "to": { "ad": 2 }, "dur": 2200, "hold": 7000 },
+        { "caption": "Umgekehrt in der Krise: AD sinkt, Produktion **und** Preise fallen, die Arbeitslosigkeit steigt. Das ist der typische Abschwung.", "to": { "ad": -2 }, "dur": 2400, "hold": 6500 },
+        { "caption": "**Angebotsschock:** Der Ölpreis explodiert, AS rückt nach oben. Jetzt steigen die Preise, **obwohl** die Produktion sinkt. Diese Kombination heißt **Stagflation**, wie in den 1970er Jahren.", "to": { "ad": 0, "as": 2 }, "dur": 2400, "hold": 8000 },
+        { "caption": "Die Politik steckt dann in der Klemme: Mehr Nachfrage hilft der Produktion, treibt aber die Preise weiter. Weniger Nachfrage bremst die Preise, vertieft aber die Krise.", "to": { "as": 2 } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die **gesamtwirtschaftliche Nachfrage** ist die Summe aller Ausgaben, $C + I + G + X - M$. Sie fällt mit dem Preisniveau, weil bei höheren Preisen das gleiche Geld weniger kauft, die Zinsen tendenziell steigen und Exporte teurer werden.\n\nDas **kurzfristige Angebot** steigt mit dem Preisniveau: Steigen die Absatzpreise schneller als die Löhne, lohnt sich mehr Produktion. **Langfristig** passen sich aber Löhne und Erwartungen an, und die Produktion kehrt zum **Potenzial** zurück, das von Arbeit, Kapital und Technik bestimmt wird.\n\nDie wichtigste Lektion des Modells: **Woher** ein Schock kommt, entscheidet über die richtige Antwort. Nachfrageschocks bewegen Preise und Produktion in dieselbe Richtung, und eine Gegensteuerung über die Nachfrage, durch Geld- oder Fiskalpolitik, stabilisiert beides zugleich. Angebotsschocks bewegen sie gegeneinander, und jede Nachfragepolitik muss zwischen Inflation und Arbeitslosigkeit abwägen."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] AD und AS\n> **AD**: Zusammenhang zwischen Preisniveau und gesamtwirtschaftlich nachgefragter Menge. Verschiebungen durch Konsum, Investitionen, Staatsausgaben, Exporte und Geldpolitik.\n> **AS (kurzfristig)**: Zusammenhang zwischen Preisniveau und angebotener Menge bei gegebenen Löhnen. Verschiebungen durch Kosten: Rohstoffe, Löhne, Produktivität.\n\n> [!definition] Produktionslücke\n> $\\dfrac{Y - Y^{pot}}{Y^{pot}}$. Negativ heißt Unterauslastung, positiv Überauslastung."
+    },
+    {
+      "id": "schock",
+      "type": "widget",
+      "label": "Schock",
+      "md": "Ein Ölpreisschock trifft die Wirtschaft. **Verschiebe die passende Kurve in die passende Richtung.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 14], "xLabel": "Produktion Y", "yLabel": "Preisniveau",
+        "lines": [
+          { "id": "AD", "label": "AD", "a": 12, "m": -1, "color": "accent", "shift": true, "shiftRange": [-3, 3], "shiftStep": 1 },
+          { "id": "AS", "label": "AS", "a": 2, "m": 1, "color": "orange", "shift": true, "shiftRange": [-3, 3], "shiftStep": 1 }
+        ],
+        "intersections": [{ "id": "E", "of": ["AD", "AS"], "label": "E" }],
+        "vlines": [{ "x": 5, "color": "gray", "label": "Potenzial" }],
+        "readout": "Produktion {E_x|1}, Preisniveau {E_y|1}"
+      },
+      "goal": { "when": "AS_dy > 0 && AD_dy == 0", "hints": [{ "when": "AD_dy != 0", "text": "Ein Ölpreisschock ist kein Nachfrageschock. Lass AD an seinem Platz." }, { "when": "AS_dy < 0", "text": "Höhere Kosten heißen: Zu jedem Preisniveau wird weniger angeboten." }], "message": "Welche Kurve hängt an den Kosten?", "solve": { "AS_dy": 2 } },
+      "explain": "Höhere Energiekosten verteuern die Produktion: AS rückt nach oben (links). Preise steigen, die Produktion sinkt. Stagflation."
+    },
+    {
+      "id": "stabilisieren",
+      "type": "widget",
+      "label": "Gegensteuern",
+      "md": "Nach dem Schock liegt die Produktion unter dem Potenzial. Die Regierung will sie mit höheren Staatsausgaben zurückholen. **Verschiebe AD so, dass die Produktion wieder beim Potenzial $5$ liegt.** Was passiert mit den Preisen?",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 14], "xLabel": "Produktion Y", "yLabel": "Preisniveau",
+        "lines": [
+          { "id": "AD", "label": "AD", "a": 12, "m": -1, "color": "accent", "shift": true, "shiftRange": [-3, 4], "shiftStep": 1 },
+          { "id": "AS", "label": "AS", "a": 4, "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["AD", "AS"], "label": "E" }],
+        "vlines": [{ "x": 5, "color": "gray", "label": "Potenzial" }],
+        "readout": "Produktion **{E_x|1}**, Preisniveau **{E_y|1}**"
+      },
+      "goal": { "when": "abs(E_x - 5) < 0.01", "hints": [{ "when": "E_x < 5", "text": "Die Produktion ist erst bei {E_x|1}." }], "solve": { "AD_dy": 2 } },
+      "explain": "Mit AD um $2$ höher ist die Produktion wieder bei $5$, aber das Preisniveau steigt von $8$ auf $9$. Die Nachfragepolitik heilt die Produktion auf Kosten zusätzlicher Inflation. Genau dieses Dilemma kennzeichnet Angebotsschocks."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-adas", "level": 1, "label": "Welche Kurve?" },
+    { "id": "neu2", "type": "gen", "gen": "oek-adas", "level": 2, "label": "Welche Kurve?" },
+    { "id": "neu3", "type": "gen", "gen": "oek-adas", "level": 3, "label": "Wirkung" },
+    { "id": "neu4", "type": "gen", "gen": "oek-adas", "level": 4, "label": "Produktionslücke" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "AD fällt mit dem Preisniveau, das kurzfristige AS steigt. Langfristig kehrt die Produktion zum Potenzial zurück.",
+        "Nachfrageschocks bewegen Preise und Produktion gleichgerichtet, Angebotsschocks gegenläufig.",
+        "Ein negativer Angebotsschock führt zu Stagflation: steigende Preise bei sinkender Produktion.",
+        "Nachfragepolitik stabilisiert bei Nachfrageschocks beides, bei Angebotsschocks muss sie abwägen."
+      ]
+    }
+  ]
+}

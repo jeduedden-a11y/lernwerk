@@ -1,0 +1,126 @@
+{
+  "id": "stoch-hypothesentest",
+  "title": "Hypothesentest und Fehlerarten",
+  "subtitle": "Entscheiden unter Unsicherheit, mit kontrolliertem Risiko",
+  "source": "KCGO Mathematik Hessen, Q3.3",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Hypothesentests (Binomialverteilung).md", "title": "Hypothesentests (für binomialverteilte Zufallsgrößen)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Münze zeigt in 50 Würfen ungewöhnlich oft Kopf. Zufall oder gezinkt? Ein Test legt vorher fest, ab wann wir der Münze nicht mehr glauben.",
+      "widget": "hypothesis",
+      "params": { "n": 50, "p0": 0.5, "side": "right", "alpha": 0.05, "k": 28, "p1": 0.65 },
+      "timeline": [
+        { "caption": "Die Säulen zeigen, wie oft eine **faire** Münze in 50 Würfen wie viele Köpfe bringt. Meist sind es um die 25, aber auch 30 kommen vor." },
+        { "caption": "Rot ist der **Ablehnungsbereich**: Landet das Ergebnis dort, glauben wir der Münze nicht mehr. Je weiter rechts die Grenze, desto seltener tun wir einer fairen Münze Unrecht.", "to": { "k": 35 }, "int": ["k"], "dur": 2200, "hold": 4200 },
+        { "caption": "Bei $k = 32$ liegt dieser Irrtum, der **Fehler 1. Art**, knapp unter $5\\,\\%$. Diese Grenze legen wir **vor** dem Werfen fest.", "to": { "k": 32 }, "int": ["k"], "dur": 1400, "hold": 4000 },
+        { "caption": "Und wenn die Münze wirklich gezinkt ist, etwa mit $p = 0{,}65$? Orange gefüllt ist der Anteil, mit dem sie trotzdem im Annahmebereich landet: der **Fehler 2. Art**.", "do": { "beta": true }, "hold": 4400 },
+        { "caption": "Schiebt man die Grenze nach rechts, sinkt der Fehler 1. Art, aber der Fehler 2. Art steigt. Beide zugleich zu verkleinern geht nur mit mehr Würfen.", "to": { "k": 35 }, "int": ["k"], "dur": 1800 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Eine Münze steht im Verdacht, zu oft **Kopf** zu zeigen. Du wirfst sie $50$-mal und zählst die Köpfe $X$.\n\n- **Nullhypothese** $H_0$: Die Münze ist fair, $p = 0{,}5$.\n- **Gegenhypothese** $H_1$: $p > 0{,}5$.\n\nUnter $H_0$ ist $X \\sim B(50; 0{,}5)$, im Mittel also $25$ Köpfe. Auch eine faire Münze zeigt mal $30$. Ab wie vielen Köpfen glaubst du ihr nicht mehr? Diese Grenze legst du **vor** dem Werfen fest: Für $X \\ge k$ lehnst du $H_0$ ab."
+    },
+    {
+      "id": "grenze",
+      "type": "widget",
+      "label": "Grenze setzen",
+      "md": "Die Säulen zeigen $B(50; 0{,}5)$, also die Verteilung, **falls $H_0$ stimmt**. Rot ist der Ablehnungsbereich. Seine Fläche $\\alpha$ ist die Wahrscheinlichkeit, eine faire Münze zu Unrecht zu verdächtigen.\n\n**Schiebe die Grenze $k$ so, dass $\\alpha \\le 5\\,\\%$ und der Ablehnungsbereich trotzdem so groß wie möglich ist.**",
+      "widget": "hypothesis",
+      "params": { "n": 50, "p0": 0.5, "side": "right", "alpha": 0.05, "k": 28, "beta": false },
+      "goal": {
+        "when": "k == kopt",
+        "hints": [
+          { "when": "alpha > level", "text": "α = {alpha*100|2} %, mehr als 5 %. Schiebe k nach rechts." },
+          { "when": "k > kopt", "text": "α = {alpha*100|2} % ist erlaubt, aber unnötig klein: Mit einem kleineren k würdest du eine unfaire Münze öfter erkennen." }
+        ]
+      },
+      "explain": "$k = 32$: $\\alpha = P(X \\ge 32) \\approx 3{,}2\\,\\%$. Bei $k = 31$ wäre $\\alpha \\approx 5{,}9\\,\\%$, zu viel. Der Ablehnungsbereich ist $\\{32, \\dots, 50\\}$, das **Signifikanzniveau** $5\\,\\%$ wird eingehalten."
+    },
+    {
+      "id": "dreissig",
+      "type": "choice",
+      "md": "Die Münze zeigt bei $50$ Würfen $30$-mal Kopf. Was folgt mit dem Ablehnungsbereich $\\{32, \\dots, 50\\}$?",
+      "options": [
+        { "md": "$H_0$ wird nicht abgelehnt, $30$ liegt nicht im Ablehnungsbereich.", "correct": true },
+        { "md": "Damit ist bewiesen, dass die Münze fair ist.", "why": "Beibehalten heißt nur: Die Daten reichen nicht, um $H_0$ zu verwerfen. Ein Beweis ist das nicht." },
+        { "md": "$H_0$ wird abgelehnt, $30$ ist deutlich mehr als $25$.", "why": "Die Grenze steht vorher fest. $30$ Köpfe kommen bei einer fairen Münze in etwa $10\\,\\%$ der Fälle oder öfter vor." }
+      ],
+      "explain": "Ein Test kann $H_0$ nur ablehnen oder beibehalten. »Beibehalten« ist ein Freispruch mangels Beweisen, kein Unschuldsbeweis."
+    },
+    {
+      "id": "fehlerarten",
+      "type": "text",
+      "md": "Jede Entscheidung kann falsch sein:\n\n| | $H_0$ stimmt | $H_0$ stimmt nicht |\n|---|---|---|\n| $H_0$ abgelehnt | **Fehler 1. Art**, Wahrscheinlichkeit $\\alpha$ | richtig |\n| $H_0$ beibehalten | richtig | **Fehler 2. Art**, Wahrscheinlichkeit $\\beta$ |\n\n$\\alpha$ hast du selbst begrenzt. $\\beta$ hängt davon ab, wie unfair die Münze **wirklich** ist, und das weißt du nicht."
+    },
+    {
+      "id": "beta",
+      "type": "widget",
+      "label": "Fehler 2. Art",
+      "md": "Die orangefarbene Linie zeigt die Verteilung für ein **wahres** $p$, das du mit dem Regler wählst. Orange gefüllt ist $\\beta$: so oft landet eine unfaire Münze trotzdem im Annahmebereich. **Lass $k = 32$ und finde, ab welchem wahren $p$ der Test die Abweichung in mindestens $80\\,\\%$ der Fälle bemerkt, also $\\beta \\le 0{,}2$.**",
+      "widget": "hypothesis",
+      "params": { "n": 50, "p0": 0.5, "side": "right", "alpha": 0.05, "k": 32, "p1": 0.6, "showBeta": true, "p1Slider": true, "range": [12, 45] },
+      "goal": {
+        "when": "k == 32 && beta <= 0.2",
+        "hints": [
+          { "when": "k != 32", "text": "Lass die Grenze bei k = 32, sonst änderst du α." },
+          { "when": "beta > 0.2", "text": "Bei wahrem p = {p1|2} rutscht die Abweichung noch in {beta*100|1} % der Fälle durch. Schiebe p höher." }
+        ],
+        "solve": { "p1": 0.69 }
+      },
+      "explain": "Erst ab etwa $p \\approx 0{,}69$ ist $\\beta \\le 20\\,\\%$. Eine Münze mit $p = 0{,}6$ würde dieser Test in den meisten Fällen nicht entlarven: Kleine Abweichungen brauchen viel mehr Würfe."
+    },
+    {
+      "id": "beide",
+      "type": "choice",
+      "md": "Wie lassen sich $\\alpha$ und $\\beta$ **gleichzeitig** verkleinern?",
+      "options": [
+        { "md": "Mit mehr Würfen, also größerem $n$.", "correct": true },
+        { "md": "Indem man $k$ verschiebt.", "why": "Nach rechts sinkt $\\alpha$, aber $\\beta$ steigt, nach links umgekehrt. Bei festem $n$ ist es ein Tauschgeschäft." },
+        { "md": "Gar nicht, $\\alpha + \\beta$ ist immer $1$.", "why": "$\\alpha$ und $\\beta$ sind Wahrscheinlichkeiten unter verschiedenen Annahmen, ihre Summe ist nicht festgelegt." }
+      ],
+      "explain": "Mit größerem $n$ werden beide Verteilungen relativ zu ihrem Abstand schmaler, sie überlappen weniger. Dann kann man $k$ so legen, dass beide Fehler klein sind."
+    },
+    {
+      "id": "ablauf",
+      "type": "order",
+      "label": "Ordnen",
+      "md": "Bringe die Schritte eines Hypothesentests in die richtige Reihenfolge.",
+      "items": [
+        "Nullhypothese $H_0$ und Gegenhypothese $H_1$ aufstellen.",
+        "Signifikanzniveau $\\alpha$ festlegen.",
+        "Ablehnungsbereich mit der Verteilung unter $H_0$ bestimmen.",
+        "Stichprobe erheben und Treffer zählen.",
+        "Entscheiden: Liegt das Ergebnis im Ablehnungsbereich, wird $H_0$ abgelehnt."
+      ],
+      "explain": "Die Entscheidungsregel steht fest, **bevor** die Daten da sind. Wer erst die Daten sieht und dann die Grenze wählt, kann fast jedes gewünschte Ergebnis herbeirechnen."
+    },
+    {
+      "id": "deutung",
+      "type": "truefalse",
+      "md": "$\\alpha = 5\\,\\%$ bedeutet: Wenn der Test $H_0$ ablehnt, stimmt $H_0$ nur noch mit $5\\,\\%$ Wahrscheinlichkeit.",
+      "answer": false,
+      "whyNot": "$\\alpha = P(\\text{Ablehnung} \\mid H_0)$, gefragt wäre aber $P(H_0 \\mid \\text{Ablehnung})$.",
+      "explain": "Das ist dieselbe Verwechslung wie beim positiven Test in der Bayes-Lektion. $\\alpha$ ist eine Wahrscheinlichkeit **unter der Annahme**, dass $H_0$ stimmt. Wie wahrscheinlich $H_0$ nach dem Test ist, hängt zusätzlich davon ab, wie plausibel $H_0$ vorher war."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-test", "level": 1, "label": "Neue Situation" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-test", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-test", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Der Ablehnungsbereich wird vorher mit der Verteilung unter $H_0$ bestimmt, sodass $P(X \\in K) \\le \\alpha$.",
+        "Fehler 1. Art: $H_0$ zu Unrecht abgelehnt ($\\le \\alpha$). Fehler 2. Art: $H_0$ zu Unrecht beibehalten ($\\beta$).",
+        "Bei festem $n$ tauscht man $\\alpha$ gegen $\\beta$. Nur ein größeres $n$ senkt beide.",
+        "$\\alpha$ ist nicht die Wahrscheinlichkeit, dass $H_0$ stimmt."
+      ]
+    }
+  ]
+}

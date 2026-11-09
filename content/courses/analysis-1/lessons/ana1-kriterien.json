@@ -1,0 +1,91 @@
+{
+  "id": "ana1-kriterien",
+  "title": "Majorante, Wurzel- und Quotientenkriterium",
+  "subtitle": "Konvergenz durch Vergleich mit Bekanntem",
+  "source": "Skript Jarohs, Abschnitt 10.9 bis 10.27",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenzkriterien für Reihen.md", "title": "Konvergenzkriterien für Reihen" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md", "title": "Reihen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Reihe $\\sum \\dfrac{n^2}{2^n}$. Blau die Summanden, orange die Teilsummen. Konvergiert sie? Die Summanden wachsen am Anfang sogar.",
+      "widget": "sequence",
+      "params": { "term": "n^2/2^n", "mode": "both", "limit": 6, "limitLabel": "Summe 6", "nMax": 30, "n": 1, "yRange": [0, 6.8], "readout": "$a_{{N|0}} = {a|4}$, $s_{{N|0}} = {s|4}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "$a_1 = \\tfrac12$, $a_2 = 1$, $a_3 = \\tfrac98$: Die Summanden werden erst größer. Kein guter Anfang für eine konvergente Reihe?", "to": { "N": 3 }, "dur": 1200 },
+        { "caption": "Ab $n = 3$ fallen sie. Der Quotient zweier Nachbarn ist $\\dfrac{a_{n+1}}{a_n} = \\dfrac{(n+1)^2}{2n^2}$, und das strebt gegen $\\tfrac12$.", "to": { "N": 8 }, "dur": 1800, "hold": 6500 },
+        { "caption": "Ab einer Stelle schrumpft also jeder Summand mindestens auf, sagen wir, $60\\,\\%$ des vorigen. Dann liegen die Summanden unter einer **geometrischen Reihe**, und die konvergiert.", "to": { "N": 15 }, "dur": 1800, "hold": 6500 },
+        { "caption": "Die Teilsummen nähern sich $6$. Das ist das **Quotientenkriterium**: Wo der Quotient unter $1$ bleibt, gewinnt das geometrische Schrumpfen gegen jedes Polynom im Zähler.", "to": { "N": 30 }, "dur": 1800 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Für die meisten Reihen kennt man keine Formel für die Partialsummen. Man fragt deshalb nur: **Konvergiert sie überhaupt?** Und beantwortet das durch Vergleich.\n\n- **Majorante:** Ist $|a_k| \\le b_k$ und konvergiert $\\sum b_k$, dann konvergiert auch $\\sum a_k$. Eine Reihe, die unter einer konvergenten liegt, kann nicht ins Unendliche wachsen.\n- **Minorante:** Ist $a_k \\ge b_k \\ge 0$ und divergiert $\\sum b_k$, dann divergiert auch $\\sum a_k$.\n\nQuotienten- und Wurzelkriterium sind fertig verpackte Vergleiche mit der **geometrischen Reihe**. Sie fragen, ob die Summanden schließlich mindestens so schnell schrumpfen wie $q^k$ mit einem $q < 1$.\n\nFür **alternierende** Reihen gibt es ein eigenes Kriterium von Leibniz: Wechseln die Vorzeichen und fallen die Beträge monoton gegen $0$, dann konvergiert die Reihe, weil sich die Teilsummen wie ein schwingendes Pendel einpendeln."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!satz] Majorantenkriterium\n> Gilt $|a_k| \\le b_k$ für fast alle $k$ und konvergiert $\\sum b_k$, dann konvergiert $\\sum a_k$ **absolut**, das heißt $\\sum |a_k|$ konvergiert.\n\n> [!satz] Quotienten- und Wurzelkriterium\n> Gilt $\\left|\\dfrac{a_{k+1}}{a_k}\\right| \\to q$ oder $\\sqrt[k]{|a_k|} \\to q$, dann:\n> - $q < 1$: $\\sum a_k$ konvergiert absolut,\n> - $q > 1$: $\\sum a_k$ divergiert,\n> - $q = 1$: keine Aussage.\n\n> [!satz] Leibniz-Kriterium\n> Ist $(a_k)$ monoton fallend mit $a_k \\to 0$, dann konvergiert $\\sum (-1)^k a_k$, und der Fehler der $n$-ten Teilsumme ist höchstens $a_{n+1}$.\n\nAbsolute Konvergenz ist stärker als Konvergenz: $\\sum \\tfrac{(-1)^{k+1}}{k}$ konvergiert, aber $\\sum \\tfrac1k$ nicht."
+    },
+    {
+      "id": "leibniz",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Die Teilsummen von $1 - \\tfrac12 + \\tfrac13 - \\tfrac14 \\pm \\dots$ pendeln um $\\ln 2 \\approx 0{,}6931$. **Stelle $n$ so ein, dass die Teilsumme weniger als $0{,}01$ von $\\ln 2$ entfernt ist.**",
+      "widget": "sequence",
+      "params": { "term": "(-1)^(n+1)/n", "mode": "sums", "limit": "ln(2)", "limitLabel": "ln 2", "eps": 0.01, "nMax": 120, "n": 5, "yRange": [0.4, 1.05], "readout": "$s_{{N|0}} = {s|5}$, Abstand zu $\\ln 2$: ${abs(s - L)|5}$" },
+      "goal": {
+        "when": "abs(s - L) < 0.01",
+        "hints": [{ "when": "abs(s - L) >= 0.01", "text": "Der Abstand ist noch {abs(s - L)|4}. Die Teilsummen müssen in den schmalen Streifen." }],
+        "solve": { "N": 60 }
+      },
+      "explain": "Ab $n = 50$ ist der Abstand kleiner als $0{,}01$. Die Leibniz-Abschätzung $|s_n - \\ln 2| \\le \\tfrac{1}{n+1}$ garantiert das erst ab $n = 100$. Sie ist sicher, aber vorsichtig."
+    },
+    {
+      "id": "quotient-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum folgt aus $\\left|\\tfrac{a_{k+1}}{a_k}\\right| \\to q < 1$ die Konvergenz? Wähle eine Zahl zwischen $q$ und $1$.",
+      "solution": "Wähle $r$ mit $q < r < 1$. Ab einem $k_0$ gilt $\\left|\\tfrac{a_{k+1}}{a_k}\\right| \\le r$, also\n\n$$|a_{k_0 + m}| \\le r \\, |a_{k_0 + m - 1}| \\le \\dots \\le r^m \\, |a_{k_0}|.$$\n\nDie Summanden liegen ab $k_0$ unter der geometrischen Reihe $|a_{k_0}| \\sum r^m$, die wegen $r < 1$ konvergiert. Nach dem Majorantenkriterium konvergiert $\\sum a_k$ absolut. Die endlich vielen Summanden vor $k_0$ ändern daran nichts."
+    },
+    {
+      "id": "grenzfall",
+      "type": "choice",
+      "md": "Was liefert das Quotientenkriterium für $\\sum \\tfrac1k$ und für $\\sum \\tfrac{1}{k^2}$?",
+      "options": [
+        { "md": "In beiden Fällen strebt der Quotient gegen $1$, also keine Aussage. Tatsächlich divergiert die erste und konvergiert die zweite.", "correct": true },
+        { "md": "Die erste divergiert, weil der Quotient gegen $1$ geht; die zweite konvergiert, weil er kleiner ist.", "why": "$\\tfrac{k^2}{(k+1)^2} \\to 1$, der Quotient der zweiten Reihe strebt ebenfalls gegen $1$." },
+        { "md": "Beide konvergieren, weil die Quotienten kleiner als $1$ sind.", "why": "Es kommt auf den Grenzwert an, und der ist $1$. Außerdem divergiert $\\sum \\tfrac1k$." }
+      ],
+      "explain": "Bei $q = 1$ versagen Quotienten- und Wurzelkriterium immer. Für $\\sum \\tfrac{1}{k^2}$ hilft die Majorante $\\tfrac{1}{k(k-1)} = \\tfrac{1}{k-1} - \\tfrac1k$, eine Teleskopsumme."
+    },
+    {
+      "id": "absolut",
+      "type": "truefalse",
+      "md": "Jede konvergente Reihe konvergiert absolut.",
+      "answer": false,
+      "whyNot": "$\\sum \\tfrac{(-1)^{k+1}}{k}$ konvergiert nach Leibniz, aber $\\sum \\tfrac1k$ divergiert.",
+      "explain": "Umgekehrt gilt: Absolut konvergente Reihen konvergieren, und man darf ihre Summanden beliebig umordnen, ohne den Wert zu ändern. Bei nur bedingt konvergenten Reihen kann eine Umordnung jeden beliebigen Wert ergeben."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-kriterien", "level": 1, "label": "Quotient" },
+    { "id": "neu2", "type": "gen", "gen": "ana-kriterien", "level": 2, "label": "Entscheiden" },
+    { "id": "neu3", "type": "gen", "gen": "ana-kriterien", "level": 3, "label": "Wurzel" },
+    { "id": "neu4", "type": "gen", "gen": "ana-kriterien", "level": 4, "label": "Werkzeug wählen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Majorante: Liegt eine Reihe betragsmäßig unter einer konvergenten, konvergiert sie absolut.",
+        "Quotient oder Wurzel mit Grenzwert $q < 1$: konvergent, $q > 1$: divergent, $q = 1$: keine Aussage.",
+        "Leibniz: alternierend mit monoton fallenden Beträgen gegen $0$ konvergiert, Fehler höchstens das nächste Glied.",
+        "Absolut konvergent ist stärker als konvergent."
+      ]
+    }
+  ]
+}

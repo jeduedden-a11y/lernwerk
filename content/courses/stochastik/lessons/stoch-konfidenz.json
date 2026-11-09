@@ -1,0 +1,89 @@
+{
+  "id": "stoch-konfidenz",
+  "title": "Konfidenzintervalle",
+  "subtitle": "Vom Stichprobenergebnis auf den unbekannten Anteil schließen",
+  "source": "KCGO Mathematik Hessen, Q3.4",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Konfidenzintervalle.md", "title": "Konfidenzintervalle" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Beim Prognoseintervall kannten wir $p$. In der Praxis ist es umgekehrt: Wir kennen nur das Ergebnis einer Umfrage und wollen etwas über das unbekannte $p$ sagen.",
+      "widget": "intervals",
+      "params": { "mode": "konfidenz", "p": 0.4, "n": 100, "sizes": [100, 400, 1000] },
+      "timeline": [
+        { "caption": "Eine Umfrage mit 100 Personen liefert eine relative Häufigkeit $h$. Um $h$ legen wir ein Intervall $h \\pm 1{,}96\\sqrt{\\tfrac{h(1-h)}{n}}$.", "do": { "sample": 1 } },
+        { "caption": "Die senkrechte Linie ist das wahre $p$. Im echten Leben siehst du sie **nicht**. Hier zeigen wir sie, um das Verfahren zu prüfen.", "hold": 4400 },
+        { "caption": "Viele Umfragen, viele Intervalle. Jedes ist anders, weil jede Stichprobe anders ausfällt. Die meisten überdecken $p$, einige nicht (rot).", "do": { "sample": 39 }, "hold": 4800 },
+        { "caption": "Nach vielen Wiederholungen überdecken rund $95\\,\\%$ der Intervalle das wahre $p$. Das meint »95-%-**Konfidenzintervall**«: eine Aussage über das Verfahren, nicht über ein einzelnes Intervall.", "do": { "sample": 160 }, "hold": 5600 },
+        { "caption": "Größere Umfragen geben schmalere Intervalle, die Trefferquote bleibt bei etwa $95\\,\\%$.", "set": { "n": 1000 }, "do": { "sample": 40 } }
+      ]
+    },
+    {
+      "id": "formel",
+      "type": "text",
+      "md": "Bei $n$ Befragten mit relativer Häufigkeit $h$ ist das **95-%-Konfidenzintervall** für den unbekannten Anteil $p$ näherungsweise\n\n$$\\left[\\ h - 1{,}96\\sqrt{\\frac{h(1-h)}{n}};\\ \\ h + 1{,}96\\sqrt{\\frac{h(1-h)}{n}}\\ \\right].$$\n\nDie Idee: $h$ liegt mit $95\\,\\%$ Wahrscheinlichkeit höchstens $1{,}96$ Standardabweichungen von $p$ entfernt. Dann liegt umgekehrt auch $p$ höchstens so weit von $h$ entfernt. Weil $p$ unbekannt ist, setzt man für die Standardabweichung $h$ ein.\n\nDas Prognoseintervall schließt von $p$ auf $h$, das Konfidenzintervall von $h$ auf $p$."
+    },
+    {
+      "id": "simulieren",
+      "type": "widget",
+      "label": "Simulieren",
+      "md": "**Erzeuge mindestens 100 Konfidenzintervalle** und prüfe, wie viele das wahre $p$ enthalten. Wechsle auch die Stichprobengröße.",
+      "widget": "intervals",
+      "params": { "mode": "konfidenz", "p": 0.3, "n": 100, "sizes": [25, 100, 400, 1000], "pSlider": true },
+      "goal": {
+        "when": "total >= 100",
+        "hints": [{ "when": "total < 100", "text": "Erst {total|0} Intervalle. Mit +100 geht es schnell." }],
+        "solve": { "samples": 100 }
+      },
+      "explain": "Die Quote liegt nahe bei $95\\,\\%$, bei kleinem $n$ und $p$ nahe $0$ oder $1$ oft etwas darunter, weil die Näherung dort grob ist."
+    },
+    {
+      "id": "umfrage",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "In einer Umfrage antworten $420$ von $1000$ Befragten mit ja. Gib das $95\\,\\%$-Konfidenzintervall für den Anteil an (drei Nachkommastellen).\n\nvon {{0}} bis {{1}}",
+      "blanks": [
+        { "accept": [0.389], "numeric": true, "tolerance": 0.0011 },
+        { "accept": [0.451], "numeric": true, "tolerance": 0.0011 }
+      ],
+      "hint": "$h = 0{,}42$, $\\sqrt{\\tfrac{0{,}42 \\cdot 0{,}58}{1000}} \\approx 0{,}0156$.",
+      "explain": "$1{,}96 \\cdot 0{,}0156 \\approx 0{,}031$, also $[0{,}389;\\ 0{,}451]$. Der wahre Anteil liegt mit dieser Methode wahrscheinlich zwischen knapp $39$ und gut $45\\,\\%$."
+    },
+    {
+      "id": "deutung",
+      "type": "truefalse",
+      "md": "Für das berechnete Intervall $[0{,}389;\\ 0{,}451]$ gilt: Mit $95\\,\\%$ Wahrscheinlichkeit liegt der wahre Anteil darin.",
+      "answer": false,
+      "whyNot": "Der wahre Anteil ist eine feste Zahl, das Intervall ist es nach der Rechnung auch. Entweder es enthält $p$ oder nicht.",
+      "explain": "Die $95\\,\\%$ gehören zum **Verfahren**: Würde man die Umfrage sehr oft wiederholen, enthielten etwa $95\\,\\%$ der Intervalle das wahre $p$. Im Alltag sagt man trotzdem oft »mit 95 % Sicherheit«, gemeint ist genau das."
+    },
+    {
+      "id": "umfang",
+      "type": "numeric",
+      "label": "Planen",
+      "md": "Wie viele Personen muss man befragen, damit das 95-%-Konfidenzintervall **in jedem Fall** höchstens $\\pm 3$ Prozentpunkte breit ist?",
+      "answer": 1068,
+      "tolerance": 1,
+      "placeholder": "n",
+      "hint": "Am breitesten ist das Intervall bei $h = 0{,}5$. Löse $1{,}96\\sqrt{\\tfrac{0{,}25}{n}} \\le 0{,}03$ nach $n$.",
+      "explain": "$n \\ge \\dfrac{1{,}96^2 \\cdot 0{,}25}{0{,}03^2} \\approx 1067{,}1$, also $n = 1068$. Deshalb befragen viele Institute rund 1000 Personen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-konfidenz", "level": 2, "label": "Neue Umfrage" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-konfidenz", "level": 3, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-konfidenz", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Konfidenzintervall: $h \\pm 1{,}96\\sqrt{\\tfrac{h(1-h)}{n}}$ schließt vom Stichprobenergebnis auf den unbekannten Anteil.",
+        "»95 %« beschreibt das Verfahren: Etwa 95 von 100 so berechneten Intervallen enthalten das wahre $p$.",
+        "Doppelte Genauigkeit kostet die vierfache Stichprobe.",
+        "Prognoseintervall: von $p$ auf $h$. Konfidenzintervall: von $h$ auf $p$."
+      ]
+    }
+  ]
+}

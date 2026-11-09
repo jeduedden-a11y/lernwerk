@@ -1,0 +1,92 @@
+{
+  "id": "cs50-bayesnetze",
+  "title": "Bayessche Netze",
+  "subtitle": "CS50 AI, Lecture 2: Uncertainty",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 2, und der Kurscode zum Netz Regen, Wartung, Zug, Termin",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Bayessche Netze.md", "title": "Bayessche Netze" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 2 - Uncertainty (Kurs).md", "title": "Lecture 2 - Uncertainty (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Das Netz aus der Vorlesung: Regen beeinflusst, ob an den Gleisen gearbeitet wird und ob der Zug pünktlich ist. Wartung beeinflusst den Zug, und der Zug entscheidet, ob man den Termin schafft.",
+      "widget": "bayesnet",
+      "params": { "mode": "joint", "hint": false, "assign": { "R": "kein", "M": "nein", "T": "pünktlich", "A": "wahrgenommen" } },
+      "timeline": [
+        { "caption": "Jeder Knoten ist eine **Zufallsvariable**. Ein Pfeil heißt: direkter Einfluss. Jeder Knoten hat eine kleine Tabelle, die seine Verteilung abhängig von seinen **Eltern** angibt, und sonst von nichts.", "do": { "assign": { "R": "kein", "M": "nein", "T": "pünktlich", "A": "wahrgenommen" } }, "hold": 7000 },
+        { "caption": "Wie wahrscheinlich ist dieser ganze Tag: kein Regen, keine Wartung, Zug pünktlich, Termin geschafft? Man multipliziert einfach die vier Faktoren über den Knoten: $0{,}7 \\cdot 0{,}6 \\cdot 0{,}9 \\cdot 0{,}9 = 0{,}3402$.", "do": { "assign": { "R": "kein", "M": "nein", "T": "pünktlich", "A": "wahrgenommen" } }, "hold": 7500 },
+        { "caption": "Ein anderer Tag: leichter Regen, keine Wartung, Zug verspätet, Termin verpasst. $0{,}2 \\cdot 0{,}8 \\cdot 0{,}3 \\cdot 0{,}4 = 0{,}0192$. Der Faktor des Zugs hängt von Regen **und** Wartung ab, der Faktor des Termins nur vom Zug.", "do": { "assign": { "R": "leicht", "M": "nein", "T": "verspätet", "A": "verpasst" } }, "hold": 8000 },
+        { "caption": "Der schlimmste Fall, starker Regen, Wartung, Verspätung, verpasster Termin, ist selten: $0{,}1 \\cdot 0{,}1 \\cdot 0{,}6 \\cdot 0{,}4 = 0{,}0024$.", "do": { "assign": { "R": "stark", "M": "ja", "T": "verspätet", "A": "verpasst" } } },
+        { "caption": "Die volle Tabelle hätte $3 \\cdot 2 \\cdot 2 \\cdot 2 = 24$ Einträge. Das Netz braucht nur seine kleinen Tabellen. Bei $30$ Ja-Nein-Variablen wären es über eine Milliarde Einträge gegen ein paar hundert. Das ist der ganze Trick.", "do": { "assign": { "R": "stark", "M": "ja", "T": "verspätet", "A": "verpasst" } } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Eine gemeinsame Verteilung über viele Variablen ist riesig. Bayessche Netze nutzen aus, dass die meisten Variablen nur von wenigen anderen **direkt** abhängen. Ob ich den Termin schaffe, hängt vom Zug ab. Der Regen spielt auch eine Rolle, aber **nur über den Zug**: Weiß ich, dass der Zug pünktlich ist, ändert die Information über Regen nichts mehr.\n\nDarum genügt es, für jeden Knoten $P(X \\mid \\text{Eltern}(X))$ zu speichern, und\n\n$$P(x_1, \\dots, x_n) = \\prod_i P(x_i \\mid \\text{Eltern}(X_i)).$$\n\n**Inferenz** heißt: Aus beobachteten Variablen (Evidenz $e$) auf eine gesuchte Variable $X$ schließen. Die exakte Methode ist die **Aufzählung**: Man summiert die gemeinsame Wahrscheinlichkeit über alle Werte der unbekannten Variablen und normiert. Bei großen Netzen ist das zu teuer, dann zieht man **Stichproben**: Man simuliert viele Tage, behält nur die, die zur Evidenz passen (**Rejection Sampling**), und zählt."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Bayessches Netz\n> Ein gerichteter Graph ohne Kreise. Jeder Knoten $X$ ist eine Zufallsvariable mit einer Tabelle $P(X \\mid \\text{Eltern}(X))$.\n\n> [!satz] Inferenz durch Aufzählung\n> Für die gesuchte Variable $X$, die Evidenz $e$ und die übrigen (versteckten) Variablen $y$ gilt\n> $$P(X \\mid e) = \\alpha \\sum_y P(X, e, y),$$\n> wobei $\\alpha$ so normiert, dass sich die Werte zu $1$ summieren.\n\n> [!definition] Rejection Sampling\n> Erzeuge viele Stichproben, Knoten für Knoten von den Eltern zu den Kindern. Verwirf alle, die der Evidenz widersprechen. Der Anteil eines Wertes unter den übrigen schätzt $P(X \\mid e)$."
+    },
+    {
+      "id": "wahrscheinlichster-tag",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Tippe die Knoten so lange an, bis die Belegung mit der größten Wahrscheinlichkeit eingestellt ist.** Unter dem Netz steht das Produkt der Faktoren.",
+      "widget": "bayesnet",
+      "params": { "mode": "joint", "assign": { "R": "stark", "M": "ja", "T": "verspätet", "A": "verpasst" } },
+      "goal": {
+        "when": "abs(p - 0.3402) < 0.0001",
+        "hints": [{ "when": "p < 0.3402", "text": "Diese Belegung hat nur {p|4}. Wähle in jedem Knoten den Wert, der gegeben die Eltern am wahrscheinlichsten ist." }],
+        "solve": { "assign": { "R": "kein", "M": "nein", "T": "pünktlich", "A": "wahrgenommen" } }
+      },
+      "explain": "Kein Regen ($0{,}7$), keine Wartung ($0{,}6$), pünktlich ($0{,}9$), wahrgenommen ($0{,}9$): $0{,}3402$. Hier führt in jedem Knoten der jeweils wahrscheinlichste Wert zum Maximum. In anderen Netzen muss das nicht so sein."
+    },
+    {
+      "id": "stichproben",
+      "type": "widget",
+      "label": "Simulieren",
+      "md": "Der Zug ist **verspätet**. Wie wahrscheinlich war welcher Regen? Blau ist das exakte Ergebnis durch Aufzählung. **Ziehe mindestens $1000$ Stichproben** und vergleiche die Schätzung (orange Striche).",
+      "widget": "bayesnet",
+      "params": { "mode": "infer", "evidence": { "T": "verspätet" }, "query": "R" },
+      "goal": { "when": "samples >= 1000", "message": "Ziehe noch mehr Stichproben.", "solve": { "samples": 1000 } },
+      "explain": "Exakt: kein Regen $46\\,\\%$, leicht $30\\,\\%$, stark $24\\,\\%$. Von $1000$ Stichproben passen nur etwa $213$ zur Evidenz, denn der Zug ist nur an rund $21\\,\\%$ der Tage verspätet. Rejection Sampling wirft also fast vier Fünftel weg, und bei seltener Evidenz wird es noch schlimmer."
+    },
+    {
+      "id": "stark",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Rechne nach: $P(\\text{Regen} = \\text{stark} \\mid \\text{Zug} = \\text{verspätet})$. Unnormiert ist der Wert für starken Regen $0{,}1 \\cdot (0{,}1 \\cdot 0{,}6 + 0{,}9 \\cdot 0{,}5)$, und $P(\\text{verspätet}) = 0{,}213$. (vier Nachkommastellen)",
+      "answer": 0.2394,
+      "tolerance": 0.0006,
+      "answerText": "0,2394",
+      "explain": "$0{,}1 \\cdot 0{,}51 = 0{,}051$ und $\\tfrac{0{,}051}{0{,}213} \\approx 0{,}2394$. Vorher hatte starker Regen nur $10\\,\\%$. Die Verspätung ist ein Indiz für schlechtes Wetter."
+    },
+    {
+      "id": "unabhaengig",
+      "type": "truefalse",
+      "md": "Man weiß, dass der Zug verspätet ist. Dann ändert die zusätzliche Information »es regnete stark« nichts mehr an der Wahrscheinlichkeit, den Termin zu verpassen.",
+      "answer": true,
+      "explain": "Der Termin hängt im Netz nur vom Zug ab. Ist der Zug bekannt, ist der Termin von Regen und Wartung **bedingt unabhängig**. $P(\\text{verpasst} \\mid \\text{verspätet}) = 0{,}4$, egal wie das Wetter war."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-bayesnetz", "level": 1, "label": "Ganzer Tag" },
+    { "id": "neu2", "type": "gen", "gen": "cs-bayesnetz", "level": 2, "label": "Summieren" },
+    { "id": "neu3", "type": "gen", "gen": "cs-bayesnetz", "level": 3, "label": "Summieren" },
+    { "id": "neu4", "type": "gen", "gen": "cs-bayesnetz", "level": 4, "label": "Rückschluss" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Jeder Knoten speichert nur $P(X \\mid \\text{Eltern})$. Die gemeinsame Wahrscheinlichkeit ist das Produkt dieser Faktoren.",
+        "Inferenz durch Aufzählung: über alle versteckten Variablen summieren, dann normieren.",
+        "Rejection Sampling schätzt dasselbe durch Simulation und verwirft Stichproben ohne passende Evidenz.",
+        "Kennt man die Eltern eines Knotens, sind weiter entfernte Vorfahren für ihn bedeutungslos."
+      ]
+    }
+  ]
+}

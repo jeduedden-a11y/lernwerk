@@ -1,0 +1,76 @@
+{
+  "id": "cs50-ai",
+  "title": "CS50 AI",
+  "subtitle": "Harvard, Introduction to AI with Python",
+  "description": "Die sieben Vorlesungen von CS50's Introduction to Artificial Intelligence with Python: Suche, Wissen, Unsicherheit, Optimierung, Lernen, neuronale Netze, Sprache. Jede Lektion beginnt mit einer Animation, in der der Algorithmus Schritt für Schritt läuft, und einer Erklärung in einfachen Worten. Danach rechnest du selbst, mit Aufgaben, die jedes Mal neu erzeugt werden.",
+  "color": "#30B0C7",
+  "symbol": "brain.head.profile",
+  "vault": "02 Wiki/Kurse/CS50 AI/CS50 AI MOC.md",
+  "chapters": [
+    {
+      "id": "l0", "title": "Suche", "ref": "Lecture 0",
+      "lessons": [
+        { "id": "cs50-suche", "title": "Suchprobleme, Tiefen- und Breitensuche", "minutes": 15, "requires": [] },
+        { "id": "cs50-informiert", "title": "Greedy-Suche und A*", "minutes": 13, "requires": ["cs50-suche"] },
+        { "id": "cs50-minimax", "title": "Adversariale Suche: Minimax", "minutes": 14, "requires": ["cs50-suche"] }
+      ]
+    },
+    {
+      "id": "l1", "title": "Wissen", "ref": "Lecture 1",
+      "lessons": [
+        { "id": "cs50-logik", "title": "Aussagenlogik und Model Checking", "minutes": 15, "requires": [], "links": ["ana1-logik"] },
+        { "id": "cs50-inferenz", "title": "Inferenzregeln und Resolution", "minutes": 15, "requires": ["cs50-logik"] }
+      ]
+    },
+    {
+      "id": "l2", "title": "Unsicherheit", "ref": "Lecture 2",
+      "lessons": [
+        { "id": "cs50-wahrscheinlichkeit", "title": "Wahrscheinlichkeit und Bayes", "minutes": 14, "requires": [], "links": ["stoch-bayes"] },
+        { "id": "cs50-bayesnetze", "title": "Bayessche Netze", "minutes": 16, "requires": ["cs50-wahrscheinlichkeit"] },
+        { "id": "cs50-markov", "title": "Markov-Ketten und Hidden Markov Models", "minutes": 15, "requires": ["cs50-bayesnetze"], "links": ["la1-matrixprodukt"] }
+      ]
+    },
+    {
+      "id": "l3", "title": "Optimierung", "ref": "Lecture 3",
+      "lessons": [
+        { "id": "cs50-lokal", "title": "Hill Climbing und Simulated Annealing", "minutes": 14, "requires": ["cs50-informiert"] },
+        { "id": "cs50-csp", "title": "Constraint Satisfaction", "minutes": 15, "requires": ["cs50-lokal", "cs50-logik"] }
+      ]
+    },
+    {
+      "id": "l4", "title": "Lernen", "ref": "Lecture 4",
+      "lessons": [
+        { "id": "cs50-klassifikation", "title": "Nearest Neighbor und Perzeptron", "minutes": 16, "requires": ["cs50-lokal"], "links": ["la1-linkomb"] },
+        { "id": "cs50-rl", "title": "Reinforcement Learning und Q-Learning", "minutes": 15, "requires": ["cs50-markov", "cs50-minimax"] }
+      ]
+    },
+    {
+      "id": "l5", "title": "Neuronale Netze", "ref": "Lecture 5",
+      "lessons": [
+        { "id": "cs50-nn", "title": "Neuronen, Aktivierung, Gradientenabstieg", "minutes": 16, "requires": ["cs50-klassifikation"], "links": ["ana1-ableitung", "la1-matrixprodukt"] }
+      ]
+    },
+    {
+      "id": "l6", "title": "Sprache", "ref": "Lecture 6",
+      "lessons": [
+        { "id": "cs50-nlp", "title": "n-Gramme, Embeddings, Attention", "minutes": 17, "requires": ["cs50-nn", "cs50-markov"] }
+      ]
+    }
+  ],
+  "practice": [
+    { "id": "suche", "title": "Tiefen- und Breitensuche", "summary": "Frontier als Stapel oder Schlange, Reihenfolgen und Wege.", "after": "cs50-suche", "gens": ["cs-suche"] },
+    { "id": "astar", "title": "Heuristische Suche", "summary": "Manhattan-Distanz, Greedy gegen A*, zulässige Heuristiken.", "after": "cs50-informiert", "gens": ["cs-astar"] },
+    { "id": "minimax", "title": "Minimax und Alpha-Beta", "summary": "Spielbäume auswerten, beste Züge, gesparte Blätter.", "after": "cs50-minimax", "gens": ["cs-minimax"] },
+    { "id": "logik", "title": "Model Checking", "summary": "Sätze auswerten, Modelle zählen, Folgerung prüfen.", "after": "cs50-logik", "gens": ["cs-logik"] },
+    { "id": "inferenz", "title": "Inferenz und Resolution", "summary": "Schlussregeln erkennen, Resolventen bilden, KNF.", "after": "cs50-inferenz", "gens": ["cs-inferenz"] },
+    { "id": "wahrscheinlichkeit", "title": "Wahrscheinlichkeiten", "summary": "Marginalisieren, Bedingen, Bayes, Unabhängigkeit.", "after": "cs50-wahrscheinlichkeit", "gens": ["cs-wahrscheinlichkeit"] },
+    { "id": "bayesnetz", "title": "Bayessche Netze", "summary": "Gemeinsame Wahrscheinlichkeiten und Inferenz durch Aufzählung.", "after": "cs50-bayesnetze", "gens": ["cs-bayesnetz"] },
+    { "id": "markov", "title": "Markov-Modelle", "summary": "Übergänge, Gleichgewicht, Filtern im HMM.", "after": "cs50-markov", "gens": ["cs-markov"] },
+    { "id": "lokal", "title": "Lokale Suche", "summary": "Hill Climbing, Einzugsgebiete, Akzeptanz beim Abkühlen.", "after": "cs50-lokal", "gens": ["cs-lokal"] },
+    { "id": "csp", "title": "Constraints", "summary": "Verletzte Bedingungen, Forward Checking, MRV, Bogenkonsistenz.", "after": "cs50-csp", "gens": ["cs-csp"] },
+    { "id": "lernen", "title": "Klassifikation und Verlust", "summary": "k-NN, Perzeptron-Regel, Verlustfunktionen.", "after": "cs50-klassifikation", "gens": ["cs-klassifikation"] },
+    { "id": "rl", "title": "Q-Learning", "summary": "Q-Werte aktualisieren, Exploration, diskontierte Erträge.", "after": "cs50-rl", "gens": ["cs-rl"] },
+    { "id": "nn", "title": "Neuronen", "summary": "Ausgaben berechnen, logische Funktionen, Gradientenschritte.", "after": "cs50-nn", "gens": ["cs-nn"] },
+    { "id": "nlp", "title": "Sprachmodelle", "summary": "Bigramme, Naive Bayes, Glättung, Vektoren, Softmax.", "after": "cs50-nlp", "gens": ["cs-nlp"] }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "ana1-konvergenz",
+  "title": "Konvergenz mit ε und n₀",
+  "subtitle": "Was »beliebig nahe« präzise heißt",
+  "source": "Skript Jarohs, Def. 9.3 bis Bem. 9.13, Korollar 3.14",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" },
+    { "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Folgen und Konvergenz.md", "title": "Folgen und Konvergenz (Schule)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Punkte sind die Folgenglieder $a_n = \\tfrac1n$. Sie rücken immer näher an $0$. Aber was heißt »immer näher« genau? Die Antwort ist ein Spiel mit einem Streifen.",
+      "widget": "epsilon-band",
+      "params": { "f": "1/n", "limit": 0, "nMax": 40, "eps": 0.5, "n0": 3, "yRange": [-0.2, 1.05] },
+      "int": ["n0"],
+      "timeline": [
+        { "caption": "Jemand gibt eine Toleranz vor, hier $\\varepsilon = 0{,}5$: Das ist der Streifen um den Grenzwert $0$. Ab $n_0 = 3$ liegen **alle** weiteren Punkte im Streifen." },
+        { "caption": "Ein strengerer Prüfer verlangt $\\varepsilon = 0{,}2$. Kein Problem, wir warten etwas länger: Ab $n_0 = 6$ passt wieder alles.", "to": { "eps": 0.2, "n0": 6 }, "dur": 1800 },
+        { "caption": "$\\varepsilon = 0{,}1$: Ab $n_0 = 11$ bleiben alle Punkte drin. Bei $n = 10$ wäre der Abstand genau $0{,}1$, also nicht **kleiner** als $\\varepsilon$.", "to": { "eps": 0.1, "n0": 11 }, "dur": 1800 },
+        { "caption": "$\\varepsilon = 0{,}05$ verlangt $n_0 = 21$. Je kleiner die Toleranz, desto später der Startpunkt. Aber es gibt **immer** einen.", "to": { "eps": 0.05, "n0": 21 }, "dur": 1800 },
+        { "caption": "Genau das ist Konvergenz: Für **jede** Toleranz $\\varepsilon > 0$ gibt es eine Stelle $n_0$, ab der die Folge den Streifen nie mehr verlässt. Endlich viele Ausreißer am Anfang sind egal." }
+      ]
+    },
+    {
+      "id": "def",
+      "type": "text",
+      "md": "> [!definition] Konvergenz (Def. 9.3, hier in $\\R$)\n> Eine Folge $(a_n)_n$ **konvergiert gegen** $a$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| < \\varepsilon.$$\n\nIn Worten: Gib mir **irgendeine** Toleranz $\\varepsilon$, so klein du willst. Dann kann ich eine Stelle $n_0$ nennen, ab der **alle** Folgenglieder näher als $\\varepsilon$ an $a$ liegen. Bildlich: Ab $n_0$ bleiben alle Punkte im **$\\varepsilon$-Streifen** um $a$."
+    },
+    {
+      "id": "band-erkunden",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Die Folge $a_n = \\tfrac1n$ mit Grenzwert $0$. Verkleinere $\\varepsilon$ und schiebe $n_0$, bis ab $n_0$ alle Punkte im Streifen liegen. Rot: Punkte ab $n_0$ außerhalb des Streifens.",
+      "widget": "epsilon-band",
+      "params": { "f": "1/n", "limit": 0, "nMax": 40, "eps": 0.3, "n0": 2, "yRange": [-0.2, 1.05], "showMinimal": true }
+    },
+    {
+      "id": "band-aufgabe",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Jetzt ist $\\varepsilon = 0{,}1$ fest. **Finde das kleinste $n_0$**, ab dem alle Glieder von $\\tfrac1n$ im Streifen liegen.",
+      "widget": "epsilon-band",
+      "params": { "f": "1/n", "limit": 0, "nMax": 40, "fixedEps": 0.1, "n0": 25, "yRange": [-0.2, 1.05] },
+      "goal": { "eps": 0.1, "minimal": true },
+      "explain": "$\\tfrac1n < 0{,}1 \\iff n > 10$. Also ist $n_0 = 11$ das kleinste. Bei $n = 10$ ist $|a_{10} - 0| = 0{,}1$, und das ist **nicht kleiner** als $\\varepsilon$."
+    },
+    {
+      "id": "n0-rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für $a_n = \\tfrac1n$ und $\\varepsilon = 0{,}003$: Wie lautet das kleinste passende $n_0$?",
+      "answer": 334,
+      "hint": "Löse $\\tfrac1n < 0{,}003$ nach $n$ auf.",
+      "explain": "$\\tfrac1n < 0{,}003 \\iff n > \\tfrac{1}{0{,}003} = 333{,}\\overline{3}$. Also $n_0 = 334$. Allgemein funktioniert jedes $n_0 > \\tfrac1\\varepsilon$."
+    },
+    {
+      "id": "alternierend",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Die Folge $a_n = \\tfrac{(-1)^n}{n}$ springt um $0$ herum. Bei $\\varepsilon = 0{,}15$: **Finde das kleinste $n_0$.**",
+      "widget": "epsilon-band",
+      "params": { "f": "(-1)^n/n", "limit": 0, "nMax": 30, "fixedEps": 0.15, "n0": 20, "yRange": [-1.1, 0.6] },
+      "goal": { "eps": 0.15, "minimal": true },
+      "explain": "$|a_n - 0| = \\tfrac1n < 0{,}15 \\iff n > 6{,}\\overline6$, also $n_0 = 7$. Das Vorzeichen spielt keine Rolle, nur der **Abstand** zum Grenzwert."
+    },
+    {
+      "id": "beweis",
+      "type": "reveal",
+      "label": "Beweisidee",
+      "md": "Beweise jetzt allgemein, dass $\\tfrac1n \\to 0$. Welches Ergebnis aus Kapitel 3 brauchst du, und wie wählst du $n_0$?",
+      "solution": "Sei $\\varepsilon > 0$ beliebig. Nach **Korollar 3.14** (eine Folgerung aus der Unbeschränktheit von $\\N$, Satz 3.13) gibt es $n_0 \\in \\N$ mit $\\tfrac{1}{n_0} < \\varepsilon$. Für alle $n \\ge n_0$ gilt dann\n$$\\left|\\tfrac1n - 0\\right| = \\tfrac1n \\le \\tfrac{1}{n_0} < \\varepsilon.$$\nDer Beweis hängt also am Vollständigkeitsaxiom: Ohne (V) wüsste man nicht, dass $\\N$ unbeschränkt ist."
+    },
+    {
+      "id": "eindeutig",
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Eine Folge kann nicht gegen zwei verschiedene Zahlen konvergieren. Baue den Widerspruchsbeweis zusammen.",
+      "given": "$\\folge{a}$ konvergiert gegen $a$ und gegen $b$.",
+      "claim": "$a = b$",
+      "steps": [
+        "Angenommen $a \\ne b$. Setze $\\eps = \\tfrac{\\abs{a - b}}{2} > 0$.",
+        "Es gibt $n_1$ mit $\\abs{a_n - a} < \\eps$ für alle $n \\ge n_1$ und $n_2$ mit $\\abs{a_n - b} < \\eps$ für alle $n \\ge n_2$.",
+        "Für $n \\ge \\max(n_1, n_2)$ gilt $\\abs{a - b} \\le \\abs{a - a_n} + \\abs{a_n - b} < 2\\eps = \\abs{a - b}$.",
+        "$\\abs{a - b} < \\abs{a - b}$ ist unmöglich. Also war die Annahme falsch: $a = b$."
+      ],
+      "distractors": [
+        {
+          "md": "Angenommen $a \\ne b$. Setze $\\eps = 2\\abs{a - b}$.",
+          "why": "Mit so großem $\\eps$ entsteht kein Widerspruch, denn $\\abs{a - b} < 4\\abs{a - b}$ ist wahr. $\\eps$ darf höchstens halb so groß sein wie der Abstand."
+        },
+        {
+          "md": "Für $n \\ge n_1$ gilt auch $\\abs{a_n - b} < \\eps$.",
+          "why": "$n_1$ gehört zur Konvergenz gegen $a$. Erst ab $\\max(n_1, n_2)$ gelten beide Abschätzungen gleichzeitig."
+        }
+      ],
+      "explain": "Wäre der Abstand $\\abs{a - b}$ positiv, könnten die Folgenglieder nicht gleichzeitig nahe an beiden Werten liegen. Die Werkzeuge: Dreiecksungleichung und die Wahl $\\eps = \\tfrac{\\abs{a - b}}{2}$. Dieses Muster kehrt in vielen Eindeutigkeitsbeweisen wieder."
+    },
+    {
+      "id": "divergent",
+      "type": "widget",
+      "label": "Erkunden",
+      "md": "Kann $a_n = (-1)^n$ gegen $a = 1$ konvergieren? Probiere verschiedene $\\varepsilon$ und $n_0$.",
+      "widget": "epsilon-band",
+      "params": { "f": "(-1)^n", "limit": 1, "limitLabel": "a = 1", "nMax": 24, "eps": 0.5, "n0": 4, "epsMax": 2.5, "yRange": [-1.6, 1.6] }
+    },
+    {
+      "id": "divergent-frage",
+      "type": "choice",
+      "md": "Was zeigt das Experiment?",
+      "options": [
+        { "md": "Für $\\varepsilon = 0{,}5$ gibt es kein $n_0$: Jedes ungerade $n$ liefert $|a_n - 1| = 2$. Also konvergiert die Folge nicht gegen $1$.", "correct": true },
+        { "md": "Die Folge konvergiert gegen $1$, weil die geraden Glieder alle gleich $1$ sind.", "why": "Konvergenz verlangt, dass ab $n_0$ **alle** Glieder nahe sind, nicht nur unendlich viele." },
+        { "md": "Bei $\\varepsilon = 2{,}5$ passt alles, also konvergiert sie.", "why": "Die Bedingung muss für **jedes** $\\varepsilon > 0$ gelten, auch für kleine." },
+        { "md": "Die Folge ist unbeschränkt.", "why": "Sie ist beschränkt durch $1$, konvergiert aber trotzdem nicht (Bem. 9.7)." }
+      ],
+      "explain": "Das passt zur Verneinung aus der Logik-Lektion: $\\exists \\varepsilon > 0\\ \\forall n_0\\ \\exists n \\ge n_0 : |a_n - a| \\ge \\varepsilon$. Hier tut es $\\varepsilon = 0{,}5$, und gegen $-1$ klappt es aus demselben Grund nicht."
+    },
+    {
+      "id": "fakten",
+      "type": "multi",
+      "md": "Welche Aussagen über Folgen in $\\R$ stimmen?",
+      "options": [
+        { "md": "Jede konvergente Folge ist beschränkt.", "correct": true, "why": "Satz 9.6." },
+        { "md": "Jede beschränkte Folge konvergiert.", "why": "Gegenbeispiel $(-1)^n$." },
+        { "md": "Ein Grenzwert ist eindeutig.", "correct": true, "why": "Zwei verschiedene Grenzwerte hätten disjunkte $\\varepsilon$-Umgebungen (Satz 8.13)." },
+        { "md": "Ändert man endlich viele Glieder, ändert sich am Konvergenzverhalten nichts.", "correct": true, "why": "Man wählt $n_0$ einfach hinter den geänderten Gliedern (Bem. 9.51)." }
+      ],
+      "explain": "Die Umkehrung von »konvergent ⇒ beschränkt« ist falsch. Sie wird erst mit Monotonie richtig (Satz 9.21), oder man bekommt nur eine konvergente **Teilfolge** (Bolzano-Weierstraß)."
+    },
+    {
+      "id": "grenzwert-rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\displaystyle\\lim_{n\\to\\infty} \\frac{2n^2 + 3}{5n^2 - n}$ mit den Rechenregeln aus Satz 9.8.",
+      "answer": 0.4,
+      "answerText": "0,4",
+      "hint": "Kürze durch die höchste Potenz $n^2$.",
+      "explain": "$\\dfrac{2n^2 + 3}{5n^2 - n} = \\dfrac{2 + \\tfrac{3}{n^2}}{5 - \\tfrac1n} \\to \\dfrac{2 + 0}{5 - 0} = \\dfrac25$. Die Rechenregeln dürfen erst angewendet werden, wenn Zähler und Nenner einzeln konvergieren und der Nenner-Grenzwert nicht $0$ ist."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-epsilon", "level": 1, "label": "Neues ε" },
+    { "id": "neu2", "type": "gen", "gen": "ana-grenzwert", "level": 2, "label": "Neuer Grenzwert" },
+    { "id": "neu3", "type": "gen", "gen": "ana-epsilon", "level": 3, "label": "Neue Folge" },
+    { "id": "neu4", "type": "gen", "gen": "ana-epsilon", "level": 4, "label": "Langsame Folge" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$a_n \\to a$ heißt: Zu jedem $\\varepsilon > 0$ gibt es ein $n_0$, ab dem alle $a_n$ im $\\varepsilon$-Streifen um $a$ liegen.",
+        "$n_0$ darf von $\\varepsilon$ abhängen, und meist wird es größer, wenn $\\varepsilon$ kleiner wird.",
+        "Nicht-Konvergenz: Ein einziges $\\varepsilon$, für das kein $n_0$ funktioniert, genügt.",
+        "Konvergent heißt beschränkt, aber nicht umgekehrt."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": "oek-bip",
+  "title": "BIP und Wirtschaftskreislauf",
+  "subtitle": "Wie man die Leistung einer ganzen Volkswirtschaft misst",
+  "source": "Volkswirtschaftliche Gesamtrechnung, Lehrbuchstandard der Makroökonomik",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Bruttoinlandsprodukt.md", "title": "Bruttoinlandsprodukt" },
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Wirtschaftskreislauf.md", "title": "Wirtschaftskreislauf" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine ganze Volkswirtschaft in vier Kästen. Die Pfeile sind Geldströme pro Jahr, in Milliarden Euro.",
+      "widget": "circular-flow",
+      "params": { "sectors": ["H", "U", "St", "B"], "values": { "Y": 1000, "C": 700, "S": 150, "I": 150, "T": 150, "G": 150 }, "show": [] },
+      "timeline": [
+        { "caption": "Haushalte und Unternehmen, sonst nichts. Die Haushalte arbeiten in den Unternehmen und bekommen dafür **Einkommen**: Löhne, Zinsen, Gewinne.", "do": { "show": ["Y"], "highlight": [] } },
+        { "caption": "Mit dem Einkommen kaufen sie die Güter der Unternehmen: **Konsum**. Gäbe es nur diese beiden Ströme, flösse das Geld im Kreis, und $Y = C$.", "do": { "show": ["Y", "C"], "highlight": [] } },
+        { "caption": "Ein Teil des Einkommens wird **gespart** und fließt über die Banken als Kredit an Unternehmen, die damit **investieren**: Maschinen, Gebäude, Software.", "do": { "show": ["Y", "C", "S", "I"], "highlight": ["S", "I"] }, "hold": 7000 },
+        { "caption": "Der **Staat** nimmt Steuern ein und kauft selbst Güter. Jetzt ist der Kreislauf vollständig: Bei jedem Sektor fließt genauso viel hinein wie hinaus.", "do": { "show": ["Y", "C", "S", "I", "T", "G"], "highlight": ["T", "G"] }, "hold": 7000 },
+        { "caption": "Das **BIP** ist der Wert aller in einem Jahr im Inland hergestellten Endprodukte. Man kann es an drei Stellen messen: als Wert der Produktion, als Summe der Ausgaben ($C + I + G$, hier $1000$) oder als Summe der Einkommen ($Y = 1000$). Alle drei ergeben dasselbe.", "do": { "show": ["Y", "C", "S", "I", "T", "G"], "highlight": ["C", "I", "G"] } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Wie viel produziert ein Land? Man kann nicht Äpfel, Haarschnitte und Software zusammenzählen, also nimmt man ihre **Marktwerte**. Damit nichts doppelt zählt, nur die **Endprodukte**: Das Mehl im Brot steckt schon im Brotpreis. Gleichwertig zählt man in jeder Stufe nur die **Wertschöpfung**, also Verkaufswert minus Vorleistungen.\n\nDer Kreislauf zeigt, warum drei Messwege dasselbe liefern: Jeder ausgegebene Euro ist für jemand anderen Einkommen, und jedes Produkt wird von jemandem gekauft (unverkaufte Ware zählt als Lagerinvestition). So entsteht die Grundgleichung der **Verwendungsrechnung**:\n\n$$Y = C + I + G + (X - M).$$\n\nExporte $X$ kommen hinzu, Importe $M$ werden abgezogen, weil sie im Ausland produziert wurden.\n\nWichtig ist der Unterschied zwischen **nominal** und **real**: Steigt das BIP, weil mehr produziert wird, oder nur, weil alles teurer ist? Das reale BIP rechnet mit festen Preisen eines Basisjahres und zeigt das echte Wachstum."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Bruttoinlandsprodukt\n> Der Marktwert aller Endprodukte, die in einem Zeitraum im Inland hergestellt werden.\n\n> [!definition] Drei Rechenwege\n> - **Entstehung:** Summe der Wertschöpfung aller Wirtschaftsbereiche.\n> - **Verwendung:** $C + I + G + X - M$.\n> - **Verteilung:** Summe der Einkommen (Arbeitnehmerentgelte und Unternehmens- und Vermögenseinkommen, plus Abschreibungen und Produktionsabgaben).\n\n> [!definition] Real und nominal\n> $\\text{reales BIP} = \\dfrac{\\text{nominales BIP}}{\\text{BIP-Deflator}} \\cdot 100$. Die Wachstumsrate ist $\\left(\\tfrac{Y_t}{Y_{t-1}} - 1\\right) \\cdot 100\\,\\%$.\n\nDas BIP misst Produktion, nicht Wohlergehen: Hausarbeit, Ehrenamt und Umweltschäden fehlen, Verteilung bleibt unsichtbar."
+    },
+    {
+      "id": "kreislauf",
+      "type": "cloze",
+      "label": "Kreislauf",
+      "md": "Einkommen $Y = 2000$, Konsum $C = 1400$, Steuern $T = 300$. Der Staat gibt $G = 350$ aus. Wie hoch ist die Ersparnis $S$ der Haushalte, und wie hoch muss die Investition $I$ sein, damit bei den Banken Zu- und Abfluss gleich sind? (Der Staat finanziert sein Defizit über die Banken.)\n\n$S =$ {{0}} $\\qquad I =$ {{1}}",
+      "blanks": [{ "accept": [300], "numeric": true }, { "accept": [250], "numeric": true }],
+      "hint": "Haushalte: $Y = C + S + T$. Banken: $S = I + (G - T)$.",
+      "explain": "$S = 2000 - 1400 - 300 = 300$. Das Staatsdefizit $G - T = 50$ wird aus der Ersparnis finanziert, für Investitionen bleiben $I = 300 - 50 = 250$. Staatsschulden konkurrieren also mit privaten Investitionen um die Ersparnis."
+    },
+    {
+      "id": "zaehlt",
+      "type": "sort",
+      "md": "Zählt das zum deutschen BIP dieses Jahres?",
+      "categories": ["zählt", "zählt nicht"],
+      "items": [
+        { "md": "Ein in Wolfsburg gebautes und nach Spanien verkauftes Auto", "cat": "zählt" },
+        { "md": "Ein gebrauchtes Fahrrad, das privat weiterverkauft wird", "cat": "zählt nicht" },
+        { "md": "Der Haarschnitt beim Friseur", "cat": "zählt" },
+        { "md": "Das Mehl, das eine Bäckerei für ihr Brot kauft", "cat": "zählt nicht" },
+        { "md": "Ein neu gebauter Lagerbestand, der erst nächstes Jahr verkauft wird", "cat": "zählt" },
+        { "md": "Selbst gekochtes Abendessen zu Hause", "cat": "zählt nicht" }
+      ],
+      "explain": "Exporte zählen, weil sie im Inland hergestellt sind. Gebrauchtes wurde in einem früheren Jahr gezählt. Vorleistungen stecken schon im Endprodukt. Lageraufbau zählt als Investition. Hausarbeit hat keinen Marktpreis und fehlt im BIP."
+    },
+    {
+      "id": "real",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Das nominale BIP steigt um $5\\,\\%$, die Preise steigen um $3\\,\\%$. Um wie viel Prozent ist das reale BIP ungefähr gewachsen?",
+      "answer": 2,
+      "tolerance": 0.1,
+      "explain": "Real $\\approx 5 - 3 = 2\\,\\%$. Genau sind es $\\tfrac{1{,}05}{1{,}03} - 1 \\approx 1{,}94\\,\\%$. Zwei Drittel des nominalen Wachstums waren nur Preissteigerung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-bip", "level": 1, "label": "Verwendung" },
+    { "id": "neu2", "type": "gen", "gen": "oek-bip", "level": 2, "label": "Real" },
+    { "id": "neu3", "type": "gen", "gen": "oek-bip", "level": 3, "label": "Wachstum" },
+    { "id": "neu4", "type": "gen", "gen": "oek-bip", "level": 4, "label": "Wertschöpfung" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Das BIP ist der Marktwert aller im Inland hergestellten Endprodukte eines Jahres.",
+        "Im Kreislauf ist jede Ausgabe ein Einkommen: Produktion, Ausgaben und Einkommen ergeben denselben Wert.",
+        "Verwendung: $Y = C + I + G + X - M$. Vorleistungen und Gebrauchtes zählen nicht.",
+        "Das reale BIP rechnet Preissteigerungen heraus und zeigt das echte Wachstum."
+      ]
+    }
+  ]
+}

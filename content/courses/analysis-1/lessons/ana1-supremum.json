@@ -1,0 +1,164 @@
+{
+  "id": "ana1-supremum",
+  "title": "Supremum, Infimum und Vollständigkeit",
+  "subtitle": "Was ℝ von ℚ unterscheidet",
+  "source": "Skript Jarohs, Def. 2.8 bis Satz 2.16, Bem. 4.10",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Supremum und Infimum.md", "title": "Supremum und Infimum" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Vollständigkeitsaxiom.md", "title": "Vollständigkeitsaxiom" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Punkte sind die Zahlen $1 - \\tfrac1n$, also $0, \\tfrac12, \\tfrac23, \\tfrac34, \\dots$ Der Schieber $s$ ist ein Kandidat für eine **obere Schranke**: eine Zahl, die von keinem Punkt überholt wird.",
+      "widget": "numberline",
+      "params": { "set": { "kind": "sequence", "f": "1 - 1/n", "n": 80 }, "range": [-0.2, 1.4], "target": "sup", "start": 1.35, "snap": 0.01, "setLabel": "M = {1 − 1/n}" },
+      "timeline": [
+        { "caption": "$s = 1{,}35$ liegt rechts von allen Punkten. Also ist $s$ eine obere Schranke. Aber offensichtlich eine großzügige." },
+        { "caption": "Wir schieben $s$ nach links. Solange kein Punkt rechts von $s$ liegt, bleibt $s$ eine obere Schranke.", "to": { "s": 1.1 }, "dur": 1800 },
+        { "caption": "Bei $s = 1$ ist immer noch kein Punkt rechts davon, denn $1 - \\tfrac1n < 1$ für jedes $n$.", "to": { "s": 1 }, "dur": 1400 },
+        { "caption": "Ein kleines Stück weiter, $s = 0{,}95$: Jetzt liegen Punkte rechts von $s$, etwa $1 - \\tfrac1{30}$. Diese Zahl ist **keine** obere Schranke mehr.", "to": { "s": 0.95 }, "dur": 1400, "hold": 5600 },
+        { "caption": "Das gilt für **jede** Zahl unter $1$, egal wie knapp: Die Punkte kommen der $1$ beliebig nahe. Also ist $1$ die kleinste obere Schranke, das **Supremum**, obwohl $1$ selbst gar nicht zur Menge gehört.", "to": { "s": 1 }, "dur": 1400 }
+      ]
+    },
+    {
+      "id": "motivation",
+      "type": "text",
+      "md": "Die rationalen Zahlen $\\Q$ erfüllen alle Körperaxiome und alle Anordnungsaxiome. Trotzdem fehlt ihnen etwas: Es gibt keine rationale Zahl $q$ mit $q^2 = 2$.\n\nAnders gesagt: Auf der rationalen Zahlengeraden ist bei $\\sqrt2$ ein **Loch**. Das Vollständigkeitsaxiom ist genau die Forderung, dass solche Löcher nicht vorkommen. Um es formulieren zu können, brauchst du einen neuen Begriff: die **kleinste obere Schranke**."
+    },
+    {
+      "id": "def-schranke",
+      "type": "text",
+      "md": "> [!definition] Schranken (Def. 2.8)\n> Sei $M \\subset \\K$ in einem angeordneten Körper $\\K$.\n> - $s$ heißt **obere Schranke** von $M$, falls $x \\le s$ für alle $x \\in M$.\n> - $s$ heißt **untere Schranke** von $M$, falls $s \\le x$ für alle $x \\in M$.\n> - $M$ heißt **nach oben beschränkt**, wenn es eine obere Schranke gibt.\n\nEine obere Schranke ist nie allein: Ist $s$ eine, dann auch $s+1$, $s+100$ und jede größere Zahl. Interessant ist deshalb die *kleinste*."
+    },
+    {
+      "id": "w-intervall",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Hier ist $M = [-1, 1)$. Der blaue Bereich rechts von $s$ ist der Bereich aller Zahlen, die größer sind als $s$.\n\n**Schiebe $s$ auf die kleinste obere Schranke von $M$.**",
+      "widget": "numberline",
+      "params": {
+        "set": { "kind": "interval", "a": -1, "b": 1, "openB": true },
+        "range": [-2, 2], "target": "sup", "start": 1.8, "snap": 0.05, "setLabel": "M = [−1, 1)"
+      },
+      "goal": { "value": 1 },
+      "explain": "$1$ ist eine obere Schranke, und jede Zahl $s < 1$ ist keine mehr: Zwischen $s$ und $1$ liegen noch Elemente von $M$. Also ist $1$ die kleinste obere Schranke, obwohl $1 \\notin M$."
+    },
+    {
+      "id": "max",
+      "type": "choice",
+      "md": "Besitzt $M = [-1, 1)$ ein **Maximum**, also ein größtes Element?",
+      "options": [
+        { "md": "Ja, das Maximum ist $1$.", "why": "$1$ gehört gar nicht zu $M$, das Intervall ist rechts offen." },
+        { "md": "Nein, $M$ hat kein Maximum.", "correct": true },
+        { "md": "Ja, das Maximum ist die größte Zahl kleiner als $1$.", "why": "Eine solche Zahl gibt es nicht: Zu jedem $x < 1$ liegt $\\tfrac{x+1}{2}$ noch dazwischen." },
+        { "md": "Ja, das Maximum ist $-1$.", "why": "$-1$ ist das Minimum, das kleinste Element." }
+      ],
+      "explain": "Für jedes $x \\in M$ ist $\\tfrac{x+1}{2} \\in M$ und größer als $x$. Kein Element ist also das größte. Das Supremum $1$ existiert trotzdem: Es muss nur nicht in $M$ liegen."
+    },
+    {
+      "id": "def-sup",
+      "type": "text",
+      "md": "> [!definition] Supremum und Infimum (Def. 2.10)\n> Eine obere Schranke $s$ von $M$ heißt **Supremum** von $M$, wenn $s \\le \\tilde s$ für jede obere Schranke $\\tilde s$ gilt. Kurz: $\\sup M$ ist die **kleinste obere Schranke**.\n> Entsprechend ist das **Infimum** $\\inf M$ die **größte untere Schranke**.\n\nWenn es existiert, ist das Supremum eindeutig (Bem. 2.11). Besitzt $M$ ein Maximum, dann ist $\\max M = \\sup M$. Umgekehrt muss ein Supremum nicht zu $M$ gehören."
+    },
+    {
+      "id": "w-folge",
+      "type": "widget",
+      "md": "Jetzt eine Menge aus Folgengliedern: $M = \\set{1 - \\tfrac1n : n \\in \\N}$. Rote Punkte liegen rechts von $s$ und verhindern, dass $s$ eine obere Schranke ist.\n\n**Finde $\\sup M$.**",
+      "widget": "numberline",
+      "params": {
+        "set": { "kind": "sequence", "f": "1 - 1/n", "n": 80 },
+        "range": [-0.2, 1.4], "target": "sup", "start": 1.3, "snap": 0.01, "setLabel": "M = {1 − 1/n}"
+      },
+      "goal": { "value": 1 },
+      "explain": "$\\sup M = 1$. Die Elemente kommen der $1$ beliebig nahe, erreichen sie aber nie. Ein Maximum gibt es nicht, das Minimum ist $0$ (für $n = 1$)."
+    },
+    {
+      "id": "beweis-sup",
+      "type": "reveal",
+      "label": "Beweisidee",
+      "md": "Warum ist $\\sup\\set{1-\\tfrac1n} = 1$ **wirklich** bewiesen und nicht nur gesehen? Du musst zwei Dinge zeigen. Überlege dir beide, bevor du aufdeckst.",
+      "solution": "**1. $1$ ist obere Schranke.** Für alle $n \\in \\N$ ist $\\tfrac1n > 0$, also $1 - \\tfrac1n < 1$.\n\n**2. Keine kleinere Zahl ist obere Schranke.** Sei $s < 1$. Nach Korollar 3.14 (Archimedes) gibt es $n$ mit $\\tfrac1n < 1 - s$. Dann ist $1 - \\tfrac1n > s$, also liegt ein Element von $M$ rechts von $s$.\n\nAus 1 und 2 folgt $1 = \\sup M$. Diese zweiteilige Struktur ist das Standardschema für jeden Supremumsbeweis."
+    },
+    {
+      "id": "q-luecke",
+      "type": "truefalse",
+      "md": "Jede nichtleere, nach oben beschränkte Teilmenge von $\\Q$ besitzt ein Supremum **in $\\Q$**.",
+      "answer": false,
+      "whyNot": "Gegenbeispiel aus Bem. 4.10: $(0, \\sqrt2) \\cap \\Q$ ist beschränkt, aber ihr Supremum $\\sqrt2$ liegt nicht in $\\Q$.",
+      "explain": "Die Menge $\\set{q \\in \\Q : q > 0,\\ q^2 < 2}$ ist nach oben beschränkt, zum Beispiel durch $2$. In $\\R$ ist ihr Supremum $\\sqrt 2$, in $\\Q$ hat sie keins. Genau das meint »$\\Q$ hat Löcher«."
+    },
+    {
+      "id": "axiom",
+      "type": "text",
+      "md": "> [!satz] Vollständigkeitsaxiom (Def. 2.13)\n> **(V)** Jede nichtleere, nach oben beschränkte Teilmenge von $\\K$ besitzt ein Supremum in $\\K$.\n\nNach Satz 2.14 gibt es bis auf strukturerhaltende Bijektion genau einen vollständig angeordneten Körper. Das ist $\\R$. Alles, was die Analysis über Grenzwerte beweist, lebt letztlich von (V): Monotone beschränkte Folgen konvergieren, Wurzeln existieren, der Zwischenwertsatz gilt."
+    },
+    {
+      "id": "unbeschraenkt",
+      "type": "choice",
+      "md": "Was gilt für $M = (-\\infty, 0)$? (Bsp. 2.12)",
+      "options": [
+        { "md": "$\\sup M = 0$, und $\\inf M$ existiert nicht als reelle Zahl.", "correct": true },
+        { "md": "$\\sup M = \\max M = 0$.", "why": "$0 \\notin M$, also ist $0$ kein Maximum." },
+        { "md": "$\\inf M = -\\infty$ ist eine reelle Zahl.", "why": "$-\\infty$ ist nur eine Schreibweise für »nach unten unbeschränkt«, keine Zahl." },
+        { "md": "$\\sup M$ existiert nicht, weil $M$ unendlich viele Elemente hat.", "why": "Unendlich viele Elemente sind kein Hindernis, nur fehlende Beschränktheit." }
+      ],
+      "explain": "$M$ ist nach oben durch $0$ beschränkt, und keine negative Zahl ist obere Schranke. Nach unten ist $M$ unbeschränkt, deshalb schreibt man formal $\\inf M = -\\infty$ (Bem. 2.11.3)."
+    },
+    {
+      "id": "beweis-inf",
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "**Satz 2.15:** Ist $M \\subset \\R$ nichtleer und nach unten beschränkt, dann existiert $\\inf M$.\n\nBringe die Beweisschritte in die richtige Reihenfolge.",
+      "items": [
+        "Setze $-M := \\set{-x : x \\in M}$.",
+        "Für $s \\in \\R$ gilt: $s$ ist untere Schranke von $M$ genau dann, wenn $-s$ obere Schranke von $-M$ ist.",
+        "Also ist $-M$ nichtleer und nach oben beschränkt.",
+        "Nach dem Vollständigkeitsaxiom (V) existiert $\\sup(-M)$.",
+        "Folglich ist $-\\sup(-M)$ die größte untere Schranke, also $\\inf M = -\\sup(-M)$."
+      ],
+      "explain": "Der Trick: Spiegeln an der $0$ macht aus unteren Schranken obere Schranken. So reicht ein einziges Axiom für Supremum **und** Infimum."
+    },
+    {
+      "id": "rechnen",
+      "type": "cloze",
+      "label": "Bestimmen",
+      "md": "Sei $M = \\set{(-1)^n + \\tfrac1n : n \\in \\N}$. Die ersten Elemente sind $0,\\ \\tfrac32,\\ -\\tfrac23,\\ \\tfrac54,\\ -\\tfrac45, \\dots$\n\n$\\sup M =$ {{0}} $\\qquad \\inf M =$ {{1}}",
+      "blanks": [
+        { "accept": [1.5], "numeric": true, "placeholder": "Zahl" },
+        { "accept": [-1], "numeric": true, "placeholder": "Zahl" }
+      ],
+      "hint": "Trenne gerade und ungerade $n$. Für gerade $n$ ist das Element $1 + \\tfrac1n$, für ungerade $-1 + \\tfrac1n$.",
+      "explain": "Gerade $n$ liefern $1 + \\tfrac1n \\le 1 + \\tfrac12$, ungerade $n$ liefern $-1 + \\tfrac1n > -1$. Also ist $\\sup M = \\max M = \\tfrac32$ (bei $n = 2$), und $\\inf M = -1$ wird nicht angenommen: Die ungeraden Glieder kommen $-1$ beliebig nahe."
+    },
+    {
+      "id": "eigenschaften",
+      "type": "multi",
+      "md": "Sei $M \\subset \\R$ nichtleer und nach oben beschränkt, $s = \\sup M$. Welche Aussagen gelten **immer**?",
+      "options": [
+        { "md": "$s$ ist eindeutig bestimmt.", "correct": true },
+        { "md": "$s \\in M$.", "why": "Gegenbeispiel $M = [-1, 1)$." },
+        { "md": "Für jedes $\\eps > 0$ gibt es ein $x \\in M$ mit $x > s - \\eps$.", "correct": true, "why": "Sonst wäre $s - \\eps$ eine kleinere obere Schranke." },
+        { "md": "Hat $M$ ein Maximum, so ist $\\max M = s$.", "correct": true },
+        { "md": "$s$ ist das größte Element von $M$.", "why": "Das wäre das Maximum, und das gibt es nicht immer." }
+      ],
+      "explain": "Die dritte Aussage ist die **$\\eps$-Charakterisierung**: $s$ ist genau dann das Supremum, wenn $s$ obere Schranke ist und für jedes $\\eps > 0$ ein Element oberhalb von $s - \\eps$ existiert. In Beweisen ist sie oft handlicher als die Definition."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-supinf", "level": 1, "label": "Neues Intervall" },
+    { "id": "neu2", "type": "gen", "gen": "ana-supinf", "level": 2, "label": "Neue Menge" },
+    { "id": "neu3", "type": "gen", "gen": "ana-supinf", "level": 3, "label": "Neue Menge" },
+    { "id": "neu4", "type": "gen", "gen": "ana-supinf", "level": 4, "label": "Lücke in ℚ" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Obere Schranken gibt es viele, das **Supremum** ist die kleinste von ihnen. Es muss nicht zu $M$ gehören.",
+        "Supremum zeigen heißt immer zweierlei: $s$ ist obere Schranke, und jedes $s' < s$ ist es nicht.",
+        "**(V)**: Jede nichtleere, nach oben beschränkte Menge hat ein Supremum. Das unterscheidet $\\R$ von $\\Q$.",
+        "Das Infimum folgt aus (V) durch Spiegelung: $\\inf M = -\\sup(-M)$."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "oek-elastizitaet",
+  "title": "Elastizität und Umsatz",
+  "subtitle": "Wie stark reagiert die Menge auf den Preis?",
+  "source": "Preiselastizität der Nachfrage, vgl. Mankiw, Grundzüge der VWL, Kap. 5",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Preiselastizität der Nachfrage.md", "title": "Preiselastizität der Nachfrage" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Nachfrage $P = 10 - Q$. Das Rechteck unter dem Punkt hat die Fläche Preis mal Menge: den **Umsatz**. Was passiert mit ihm, wenn der Preis sinkt?",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 11], "xLabel": "Menge Q", "yLabel": "Preis P",
+        "vars": [{ "name": "p", "min": 0.5, "max": 9.5, "value": 8, "hidden": true }],
+        "lines": [{ "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" }, { "id": "PL", "a": "p", "m": 0, "color": "gray", "width": 1.5, "dashed": true }],
+        "intersections": [{ "id": "X", "of": ["N", "PL"], "label": "" }],
+        "shades": [{ "points": [[0, 0], [0, "p"], ["X_x", "p"], ["X_x", 0]], "color": "orange", "opacity": 0.25, "label": "Umsatz" }],
+        "readout": "Preis {p|1}, Menge {X_x|1}, Umsatz **{p*X_x|1}**"
+      },
+      "timeline": [
+        { "caption": "Bei $P = 8$ werden nur $2$ Stück verkauft: Umsatz $16$. Ein hoher, schmaler Streifen." },
+        { "caption": "Der Preis sinkt auf $6$, die Menge steigt auf $4$: Umsatz $24$. Die Menge ist prozentual stärker gestiegen, als der Preis gefallen ist. Hier oben ist die Nachfrage **elastisch**.", "to": { "p": 6 }, "dur": 1800, "hold": 7000 },
+        { "caption": "Bei $P = 5$ ist der Umsatz mit $25$ am größten. Genau hier ist die Elastizität $-1$: Ein Prozent Preissenkung bringt ein Prozent mehr Menge.", "to": { "p": 5 }, "dur": 1200, "hold": 6500 },
+        { "caption": "Senkt man weiter auf $P = 2$, sinkt der Umsatz auf $16$. Hier unten ist die Nachfrage **unelastisch**: Die zusätzliche Menge gleicht den Preisverlust nicht mehr aus. Dieselbe Gerade hat also überall eine andere Elastizität.", "to": { "p": 2 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Dass Käufer bei höherem Preis weniger kaufen, sagt die Nachfragekurve. **Wie viel** weniger, misst die **Preiselastizität der Nachfrage**:\n\n$$\\varepsilon = \\frac{\\text{prozentuale Mengenänderung}}{\\text{prozentuale Preisänderung}} = \\frac{\\Delta Q / Q}{\\Delta P / P}$$\n\nWeil Preis und Menge gegenläufig sind, ist $\\varepsilon$ negativ. Man vergleicht deshalb meist den Betrag:\n- $|\\varepsilon| > 1$: **elastisch**, die Menge reagiert stärker als der Preis.\n- $|\\varepsilon| < 1$: **unelastisch**, die Menge reagiert schwächer."
+    },
+    {
+      "id": "umsatz",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Nachfrage $P = 10 - Q$. Ziehe den Punkt entlang der Kurve. Die Fläche des Rechtecks ist der **Umsatz** $P \\cdot Q$.\n\n**Finde den Punkt mit dem größten Umsatz.**",
+      "widget": "plot",
+      "params": {
+        "x": [0, 10], "y": [0, 11], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 270, "grid": true,
+        "vars": [{ "name": "q", "label": "Q", "min": 0.5, "max": 9.5, "step": 0.5, "value": 2, "digits": 1 }],
+        "functions": [
+          { "name": "N", "expr": "10 - x", "color": "accent", "label": "N" },
+          { "name": "R", "expr": "10 - q", "hidden": true }
+        ],
+        "areas": [{ "f": "R", "from": 0, "to": "q", "color": "orange", "opacity": 0.3 }],
+        "points": [{ "x": "q", "on": "N", "drag": "x", "snap": 0.5, "guides": true, "color": "accent" }],
+        "readout": "$Q = {q|1}$, $P = {10 - q|1}$, Umsatz **{q*(10 - q)|2}**, $|\\varepsilon| = {(10 - q)/q|2}$"
+      },
+      "goal": {
+        "when": "abs(q - 5) < 0.01",
+        "hints": [
+          { "when": "q < 5", "text": "Hier ist $|\\varepsilon| > 1$: Eine Preissenkung bringt so viel mehr Menge, dass der Umsatz steigt. Geh weiter nach rechts." },
+          { "when": "q > 5", "text": "Hier ist $|\\varepsilon| < 1$: Eine Preissenkung bringt kaum Menge, der Umsatz fällt. Geh zurück nach links." }
+        ],
+        "solve": { "q": 5 }
+      },
+      "explain": "Bei $Q = 5$, $P = 5$ ist der Umsatz mit $25$ am größten, und genau dort ist $|\\varepsilon| = 1$. Auf einer linearen Nachfragekurve ist die obere Hälfte elastisch, die untere unelastisch. Die Elastizität ist also **nicht** dasselbe wie die Steigung: Die ist überall $-1$."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Der Preis eines Gutes steigt von $4$ auf $5$ Euro, die nachgefragte Menge sinkt von $6$ auf $5$ Einheiten. Berechne die Preiselastizität mit den Ausgangswerten als Basis.",
+      "answer": -0.6667,
+      "tolerance": 0.01,
+      "answerText": "-0,67",
+      "placeholder": "zum Beispiel -1,5",
+      "hint": "Mengenänderung $\\tfrac{-1}{6}$, Preisänderung $\\tfrac{1}{4}$. Teile die erste durch die zweite.",
+      "explain": "$\\varepsilon = \\dfrac{-1/6}{1/4} = -\\tfrac{4}{6} \\approx -0{,}67$. Der Betrag ist kleiner als $1$, die Nachfrage ist in diesem Bereich **unelastisch**: Der Umsatz steigt von $24$ auf $25$."
+    },
+    {
+      "id": "vergleich",
+      "type": "widget",
+      "label": "Vergleichen",
+      "md": "Zwei Nachfragekurven gehen durch denselben Punkt $(4 \\mid 6)$. Erhöhe den Preis und vergleiche, wie stark die Menge jeweils zurückgeht.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 260,
+        "vars": [{ "name": "p", "label": "Preis", "min": 6, "max": 8, "step": 0.25, "value": 6, "digits": 2 }],
+        "functions": [
+          { "name": "S", "expr": "18 - 3x", "color": "accent", "label": "steil", "labelAt": 1.6 },
+          { "name": "F", "expr": "8 - 0.5x", "color": "orange", "label": "flach", "labelAt": 8 }
+        ],
+        "hlines": [{ "y": "p", "color": "gray" }],
+        "points": [
+          { "x": "(18 - p)/3", "on": "S", "color": "accent" },
+          { "x": "16 - 2p", "on": "F", "color": "orange" }
+        ],
+        "readout": "Steile Kurve: $Q = {(18 - p)/3|2}$ ({((18 - p)/3 - 4)/4*100|0} %). Flache Kurve: $Q = {16 - 2p|2}$ ({((16 - 2p) - 4)/4*100|0} %)."
+      }
+    },
+    {
+      "id": "vergleich-frage",
+      "type": "choice",
+      "md": "Welches Gut hat am ehesten eine Nachfrage wie die **steile** Kurve, also sehr unelastisch?",
+      "options": [
+        { "md": "Insulin für Menschen mit Diabetes", "correct": true },
+        { "md": "Eine bestimmte Schokoladenmarke", "why": "Es gibt viele Ersatzprodukte. Schon kleine Preiserhöhungen lassen Käufer wechseln." },
+        { "md": "Flugreisen in den Urlaub", "why": "Urlaubsreisen sind verschiebbar und ersetzbar, die Nachfrage ist eher elastisch." },
+        { "md": "Kinokarten", "why": "Freizeitausgaben mit vielen Alternativen reagieren eher elastisch." }
+      ],
+      "explain": "Ohne Ersatz und lebensnotwendig: Die Menge reagiert kaum auf den Preis."
+    },
+    {
+      "id": "faktoren",
+      "type": "multi",
+      "md": "Was macht die Nachfrage nach einem Gut **elastischer**?",
+      "options": [
+        { "md": "Es gibt viele gute Ersatzgüter.", "correct": true },
+        { "md": "Das Gut ist ein Luxusgut statt ein Grundbedürfnis.", "correct": true },
+        { "md": "Man betrachtet einen längeren Zeitraum.", "correct": true, "why": "Mit Zeit können Käufer Gewohnheiten und Geräte umstellen, etwa beim Heizen." },
+        { "md": "Das Gut macht nur einen winzigen Teil des Budgets aus.", "why": "Dann merkt man Preisänderungen kaum, die Nachfrage ist eher unelastisch." }
+      ],
+      "explain": "Ersatzmöglichkeiten, Verzichtbarkeit und Anpassungszeit machen die Nachfrage elastisch. Ein kleiner Budgetanteil macht sie eher unelastisch."
+    },
+    {
+      "id": "umsatz-regel",
+      "type": "truefalse",
+      "md": "Ist die Nachfrage unelastisch ($|\\varepsilon| < 1$), dann **steigt** der Umsatz, wenn der Preis steigt.",
+      "answer": true,
+      "whyNot": "Bei unelastischer Nachfrage fällt die Menge prozentual schwächer, als der Preis steigt. Der Umsatz $P \\cdot Q$ wächst also.",
+      "explain": "Unelastisch: Preis rauf, Umsatz rauf. Elastisch: Preis rauf, Umsatz runter. Bei $|\\varepsilon| = 1$ ist der Umsatz maximal."
+    },
+    {
+      "id": "ernte",
+      "type": "widget",
+      "label": "Im Diagramm",
+      "md": "Lebensmittel haben eine unelastische Nachfrage. Eine **sehr gute Ernte** verschiebt das Angebot nach rechts. **Verschiebe die Angebotskurve** und beobachte den Umsatz der Landwirte.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 21], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 280,
+        "lines": [
+          { "id": "N", "label": "N", "a": 20, "m": -3, "color": "accent" },
+          { "id": "A", "label": "A", "a": 2, "m": 1, "color": "orange", "shift": true, "shiftRange": [-6, 0], "shiftStep": 1 }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "A"], "label": "E" }],
+        "shades": [{ "points": [[0, 0], ["E_x", 0], ["E_x", "E_y"], [0, "E_y"]], "color": "orange", "opacity": 0.22 }],
+        "readout": "Menge {E_x|2}, Preis {E_y|2}, Umsatz **{E_x*E_y|2}** (vorher 29,25)"
+      },
+      "goal": { "when": "A_dy <= -2", "message": "Eine gute Ernte heißt mehr Angebot zu jedem Preis: Schiebe die Angebotskurve nach unten rechts.", "solve": { "A_dy": -3 } },
+      "explain": "Die Menge steigt nur wenig, der Preis fällt stark: Der Umsatz der Landwirte **sinkt**. Dieses Paradox der guten Ernte erklärt, warum Agrarmärkte oft politisch gestützt werden."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-elastizitaet", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "oek-elastizitaet", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "oek-elastizitaet", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "oek-elastizitaet", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\varepsilon = \\dfrac{\\Delta Q/Q}{\\Delta P/P}$ misst, wie stark die Menge prozentual auf den Preis reagiert.",
+        "Elastizität ist nicht die Steigung: Auf einer Geraden ändert sie sich von Punkt zu Punkt.",
+        "Unelastisch: Preiserhöhung steigert den Umsatz. Elastisch: Preiserhöhung senkt ihn. Maximum bei $|\\varepsilon| = 1$.",
+        "Ersatzgüter, Verzichtbarkeit und Zeit machen Nachfrage elastischer."
+      ]
+    }
+  ]
+}

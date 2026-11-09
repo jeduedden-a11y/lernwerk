@@ -1,0 +1,117 @@
+{
+  "id": "la1-matrizen",
+  "title": "Matrizen als lineare Abbildungen",
+  "subtitle": "Die Spalten verraten, was die Abbildung tut",
+  "source": "Standardstoff Lineare Algebra I: lineare Abbildungen, Darstellungsmatrix, Determinante im R²",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md", "title": "Lineare Abbildungen und Matrizen" },
+    { "path": "02 Wiki/Mathematik/08 Lineare Algebra/Matrizen als lineare Abbildungen.md", "title": "Matrizen als lineare Abbildungen (Schule)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Matrix ist keine Zahlentabelle, sondern eine Bewegung der ganzen Ebene. Schau, was mit dem Gitter passiert.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]], "editable": false },
+      "timeline": [
+        { "caption": "Die Einheitsmatrix lässt alles, wie es ist. Blau ist das Bild von $e_1 = (1, 0)$, orange das Bild von $e_2 = (0, 1)$." },
+        { "caption": "Wir ändern die erste Spalte auf $(2, 0)$: $e_1$ wird doppelt so lang, das ganze Gitter wird waagerecht gestreckt.", "to": { "m11": 2 }, "dur": 1800 },
+        { "caption": "Jetzt die zweite Spalte auf $(1, 1)$: $e_2$ kippt nach rechts, das Gitter wird **geschert**. Gitterlinien bleiben gerade und parallel, der Ursprung bleibt fest.", "to": { "m12": 1 }, "dur": 1800, "hold": 4400 },
+        { "caption": "Eine Vierteldrehung: $e_1 \\mapsto (0, 1)$ und $e_2 \\mapsto (-1, 0)$. Die Spalten der Matrix sind genau diese Bilder.", "to": { "m11": 0, "m12": -1, "m21": 1, "m22": 0 }, "dur": 2200, "hold": 4400 },
+        { "caption": "Das ist das ganze Geheimnis: **Die Spalten einer Matrix sind die Bilder der Einheitsvektoren.** Wer weiß, wohin $e_1$ und $e_2$ gehen, kennt die Abbildung überall." }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "> [!definition] Lineare Abbildung\n> Eine Abbildung $f : V \\to W$ zwischen $\\K$-Vektorräumen heißt **linear**, wenn für alle $x, y \\in V$ und $\\lambda \\in \\K$ gilt:\n> $$f(x + y) = f(x) + f(y), \\qquad f(\\lambda x) = \\lambda f(x).$$\n\nIm $\\R^2$ folgt daraus etwas Erstaunliches: Kennt man nur die Bilder der beiden Einheitsvektoren $e_1 = (1, 0)$ und $e_2 = (0, 1)$, kennt man die **ganze** Abbildung, denn $f(x, y) = x f(e_1) + y f(e_2)$.\n\nSchreibt man $f(e_1)$ und $f(e_2)$ als **Spalten** nebeneinander, erhält man die Matrix $A$ von $f$."
+    },
+    {
+      "id": "erkunden",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Ziehe die Spitzen von $Ae_1$ und $Ae_2$ oder wähle eine Vorlage. Das Gitter und das Einheitsquadrat werden mitgenommen.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0.5], [0, 1]], "presets": true }
+    },
+    {
+      "id": "drehung",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "**Baue die Drehung um $90°$ gegen den Uhrzeigersinn.** Überlege zuerst: Wohin muss $e_1$, wohin $e_2$?",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]] },
+      "goal": { "matrix": [[0, -1], [1, 0]] },
+      "explain": "$e_1 = (1,0)$ geht nach $(0, 1)$, $e_2 = (0, 1)$ nach $(-1, 0)$. Als Spalten: $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$."
+    },
+    {
+      "id": "spiegelung",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "**Baue die Spiegelung an der $x$-Achse.**",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]] },
+      "goal": { "matrix": [[1, 0], [0, -1]] },
+      "explain": "$e_1$ bleibt, $e_2$ zeigt nach unten: $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$. Die Determinante ist $-1$: Die Fläche bleibt gleich, die Orientierung kippt."
+    },
+    {
+      "id": "rechnen",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Für $A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$ ist $A \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} \\text{?} \\\\ \\text{?} \\end{pmatrix}$:\n\nerste Komponente {{0}}, zweite Komponente {{1}}",
+      "blanks": [
+        { "accept": [4], "numeric": true },
+        { "accept": [10], "numeric": true }
+      ],
+      "hint": "$A(x, y) = x \\cdot (\\text{erste Spalte}) + y \\cdot (\\text{zweite Spalte})$.",
+      "explain": "$2 \\cdot (1, 3) + 1 \\cdot (2, 4) = (4, 10)$. Matrix mal Vektor ist eine Linearkombination der Spalten."
+    },
+    {
+      "id": "reihenfolge",
+      "type": "choice",
+      "md": "$D$ ist die Drehung um $90°$, $S$ die Spiegelung an der $x$-Achse. Gilt $D \\circ S = S \\circ D$?",
+      "options": [
+        { "md": "Nein: $DS = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$, aber $SD = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$.", "correct": true },
+        { "md": "Ja, Matrizenmultiplikation ist kommutativ.", "why": "Ist sie im Allgemeinen nicht, wie diese beiden Matrizen zeigen." },
+        { "md": "Ja, weil beide Abbildungen die Fläche erhalten.", "why": "Flächenerhalt sagt nichts über die Reihenfolge." }
+      ],
+      "explain": "Die Hintereinanderausführung linearer Abbildungen entspricht dem Matrixprodukt, und das ist nicht kommutativ. $DS$ ist die Spiegelung an der Geraden $y = x$, $SD$ die an $y = -x$."
+    },
+    {
+      "id": "det-null",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Die Fläche des Bildes vom Einheitsquadrat ist $|\\det A|$. **Erzeuge eine Abbildung mit $\\det A = 0$**, die die Ebene auf eine Gerade quetscht.",
+      "widget": "matrix-transform",
+      "params": { "matrix": [[1, 0], [0, 1]] },
+      "goal": { "det": 0 },
+      "explain": "$\\det A = 0$ heißt: $Ae_1$ und $Ae_2$ sind linear abhängig. Das Quadrat wird plattgedrückt, die Abbildung ist nicht mehr umkehrbar, weil verschiedene Punkte auf denselben fallen."
+    },
+    {
+      "id": "det-fakten",
+      "type": "multi",
+      "md": "Welche Aussagen über $\\det A$ für $2 \\times 2$-Matrizen stimmen?",
+      "options": [
+        { "md": "$|\\det A|$ ist der Faktor, um den sich Flächen ändern.", "correct": true },
+        { "md": "$\\det A < 0$ heißt, die Orientierung kippt.", "correct": true },
+        { "md": "$\\det A = 0 \\iff A$ ist nicht invertierbar.", "correct": true },
+        { "md": "$\\det(A + B) = \\det A + \\det B$", "why": "Gegenbeispiel: $\\det(I + I) = \\det(2I) = 4 \\ne 2$." }
+      ],
+      "explain": "Dafür gilt $\\det(AB) = \\det A \\cdot \\det B$: Flächenfaktoren multiplizieren sich bei Hintereinanderausführung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-matrix", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "la-matrix", "level": 2, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine lineare Abbildung des $\\R^2$ ist durch die Bilder von $e_1$ und $e_2$ festgelegt. Sie bilden die Spalten der Matrix.",
+        "$Ax$ ist die Linearkombination der Spalten mit den Koeffizienten aus $x$.",
+        "Hintereinanderausführung entspricht dem Matrixprodukt, und das ist nicht kommutativ.",
+        "$|\\det A|$ misst die Flächenänderung, $\\det A = 0$ heißt nicht invertierbar."
+      ]
+    }
+  ]
+}

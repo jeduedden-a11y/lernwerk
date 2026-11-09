@@ -1,0 +1,21 @@
+name: Inhalte prüfen
+
+# Runs for every change to lessons or the lesson runtime. The app picks these files up over the air,
+# so a broken file must be caught here, before a phone downloads it.
+on:
+  push:
+    paths:
+      - "content/**"
+      - "scripts/check_content.py"
+  pull_request:
+    paths:
+      - "content/**"
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Lektionen und Runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_content.py

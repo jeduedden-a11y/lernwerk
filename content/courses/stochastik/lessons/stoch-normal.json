@@ -1,0 +1,143 @@
+{
+  "id": "stoch-normal",
+  "title": "Normalverteilung",
+  "subtitle": "Die Glockenkurve, Flächen als Wahrscheinlichkeiten und z-Werte",
+  "source": "KCGO Mathematik Hessen, Q3.5",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md", "title": "Normalverteilung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Messwerte wie Körpergrößen häufen sich um einen Mittelwert und werden zu den Rändern hin seltener. Die Form dafür ist die Glocke.",
+      "widget": "normal",
+      "params": { "mu": 0, "sigma": 1, "x": [-5, 5], "a": -1, "b": 1, "muRange": [-2, 2], "muStep": 0.1, "sigmaRange": [0.5, 2], "snap": 0.1, "rule": true },
+      "timeline": [
+        { "caption": "Die Glockenkurve der **Normalverteilung**: hoch in der Mitte, flach an den Rändern. Die ganze Fläche darunter ist genau $1$." },
+        { "caption": "Der Erwartungswert $\\mu$ verschiebt die Glocke, ihre Form bleibt gleich.", "to": { "mu": 1.5 }, "dur": 1800 },
+        { "caption": "Die Standardabweichung $\\sigma$ macht sie breiter und dafür flacher, denn die Fläche bleibt $1$.", "to": { "mu": 0, "sigma": 1.8 }, "dur": 2000 },
+        { "caption": "Kleines $\\sigma$: schmal und hoch, die Werte liegen eng beieinander.", "to": { "sigma": 0.6 }, "dur": 1800 },
+        { "caption": "Wahrscheinlichkeiten sind **Flächen**. Zwischen $\\mu - \\sigma$ und $\\mu + \\sigma$ liegen rund $68\\,\\%$.", "to": { "sigma": 1, "a": -1, "b": 1 }, "dur": 1500 },
+        { "caption": "Zwischen $\\mu - 2\\sigma$ und $\\mu + 2\\sigma$ sind es rund $95\\,\\%$. Das gilt für jede Normalverteilung, egal welche $\\mu$ und $\\sigma$.", "to": { "a": -2, "b": 2 }, "dur": 1500 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Körpergrößen, Messfehler, Punktzahlen großer Tests: Viele Größen streuen glockenförmig um einen Mittelwert. Das Modell dafür ist die **Normalverteilung** $N(\\mu; \\sigma)$ mit der Dichte\n\n$$\\varphi_{\\mu,\\sigma}(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\, e^{-\\frac12\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}.$$\n\nWichtig: Die Dichte selbst ist keine Wahrscheinlichkeit. Wahrscheinlichkeiten sind **Flächen** unter der Kurve, $P(a \\le X \\le b) = \\int_a^b \\varphi_{\\mu,\\sigma}(x)\\,dx$, und die Gesamtfläche ist $1$."
+    },
+    {
+      "id": "form",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Verändere $\\mu$ und $\\sigma$ und beobachte die Kurve. Die Griffe $a$ und $b$ markieren ein Intervall, die Fläche darüber ist seine Wahrscheinlichkeit.",
+      "widget": "normal",
+      "params": { "mu": 0, "sigma": 1, "x": [-5, 5], "a": -1, "b": 1, "muRange": [-2, 2], "muStep": 0.1, "sigmaRange": [0.5, 2], "snap": 0.1, "rule": true },
+      "after": "$\\mu$ verschiebt die Glocke, $\\sigma$ macht sie breiter und dafür flacher, denn die Fläche bleibt immer $1$."
+    },
+    {
+      "id": "iq",
+      "type": "widget",
+      "label": "Fläche finden",
+      "md": "Testwerte eines Intelligenztests sind so geeicht, dass $\\mu = 100$ und $\\sigma = 15$. **Ziehe $a$ und $b$ symmetrisch um $100$, sodass die Fläche etwa $95\\,\\%$ beträgt.**",
+      "widget": "normal",
+      "params": { "mu": 100, "sigma": 15, "x": [40, 160], "a": 90, "b": 110, "snap": 1, "rule": true },
+      "goal": {
+        "when": "abs(a - 70) <= 1 && abs(b - 130) <= 1",
+        "hints": [
+          { "when": "P < 0.93", "text": "Erst {P*100|1} %. Das Intervall muss breiter werden." },
+          { "when": "P > 0.97", "text": "Schon {P*100|1} %, zu breit." },
+          { "when": "abs((a + b)/2 - 100) > 1", "text": "Die Fläche passt fast, aber die Grenzen liegen nicht symmetrisch um 100." }
+        ],
+        "message": "Fast: {P*100|1} %. Für 95 % brauchst du auf jeder Seite zwei Standardabweichungen.",
+        "solve": { "a": 70, "b": 130 }
+      },
+      "explain": "$[70; 130] = [\\mu - 2\\sigma; \\mu + 2\\sigma]$ mit $95{,}4\\,\\%$. Das ist die **68-95-99,7-Regel**: Innerhalb von $1$, $2$, $3$ Standardabweichungen liegen rund $68{,}3\\,\\%$, $95{,}4\\,\\%$ und $99{,}7\\,\\%$."
+    },
+    {
+      "id": "ueber115",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welcher Anteil hat bei diesem Test einen Wert **über 115**? Nutze die Regel aus dem letzten Schritt und die Symmetrie.",
+      "answer": 0.1587,
+      "tolerance": 0.003,
+      "answerText": "0,159",
+      "placeholder": "Dezimalzahl",
+      "hint": "$115 = \\mu + \\sigma$. Zwischen $85$ und $115$ liegen $68{,}3\\,\\%$, der Rest verteilt sich gleich auf beide Seiten.",
+      "explain": "$\\tfrac{1 - 0{,}683}{2} \\approx 0{,}159$, also knapp $16\\,\\%$. Genauer: $P(X > 115) = 1 - \\Phi(1) \\approx 0{,}1587$."
+    },
+    {
+      "id": "standardisieren",
+      "type": "text",
+      "md": "Jede Normalverteilung lässt sich auf die **Standardnormalverteilung** $N(0; 1)$ zurückführen. Der **z-Wert**\n\n$$z = \\frac{x - \\mu}{\\sigma}$$\n\nsagt, wie viele Standardabweichungen $x$ vom Mittelwert entfernt liegt. Dann ist $P(X \\le x) = \\Phi(z)$, und $\\Phi$ steht in jeder Tabelle und in jedem Taschenrechner."
+    },
+    {
+      "id": "beste10",
+      "type": "widget",
+      "label": "Grenze finden",
+      "md": "Eine Klausur: $\\mu = 60$ Punkte, $\\sigma = 8$. Unter der Achse siehst du die z-Skala. **Schiebe $b$ so, dass links davon $90\\,\\%$ liegen.** Wer darüber liegt, gehört zu den besten $10\\,\\%$.",
+      "widget": "normal",
+      "params": { "mu": 60, "sigma": 8, "x": [28, 92], "b": 66, "show": "left", "snap": 0.5, "z": true },
+      "goal": {
+        "when": "abs(P - 0.9) < 0.006",
+        "hints": [
+          { "when": "P < 0.9", "text": "Links von b liegen erst {P*100|1} %. Weiter nach rechts." },
+          { "when": "P > 0.9", "text": "Links von b liegen schon {P*100|1} %. Etwas zurück." }
+        ],
+        "solve": { "b": 70.5 }
+      },
+      "explain": "$\\Phi(z) = 0{,}9$ gilt für $z \\approx 1{,}28$. Also $b \\approx 60 + 1{,}28 \\cdot 8 \\approx 70{,}3$ Punkte."
+    },
+    {
+      "id": "naeherung",
+      "type": "widget",
+      "label": "Näherung",
+      "md": "Die Binomialverteilung sieht für großes $n$ selbst wie eine Glocke aus. Hier ist $p = 0{,}1$, die Säulen sind schief. **Erhöhe $n$, bis die Laplace-Bedingung $\\sigma > 3$ erfüllt ist**, und vergleiche Säulen und Kurve.",
+      "widget": "normal",
+      "params": { "binomial": { "n": 30, "p": 0.1, "nRange": [10, 200] }, "a": 1, "b": 5 },
+      "goal": {
+        "when": "abs(p - 0.1) < 0.001 && sigma > 3",
+        "solve": { "n": 120 },
+        "hints": [
+          { "when": "abs(p - 0.1) >= 0.001", "text": "Lass p bei 0,1." },
+          { "when": "sigma <= 3", "text": "σ = {sigma|2}, noch zu klein. Die Säulen sind noch schief, die Glocke passt schlecht." }
+        ]
+      },
+      "explain": "$\\sigma = \\sqrt{n \\cdot 0{,}1 \\cdot 0{,}9} > 3$ gilt ab $n > 100$. Dann liegen Säulen und Glocke fast aufeinander, und die Normalverteilung mit $\\mu = np$, $\\sigma = \\sqrt{np(1-p)}$ ist eine gute Näherung."
+    },
+    {
+      "id": "nicht-normal",
+      "type": "choice",
+      "md": "Welche Größe ist am wenigsten normalverteilt?",
+      "options": [
+        { "md": "Die Einkommen aller Erwerbstätigen in Deutschland", "correct": true },
+        { "md": "Die Körpergrößen erwachsener Frauen", "why": "Ein klassisches Beispiel für eine annähernd normalverteilte Größe." },
+        { "md": "Die Messfehler einer Präzisionswaage", "why": "Messfehler setzen sich aus vielen kleinen Einflüssen zusammen, typischerweise normalverteilt." },
+        { "md": "Die Augensumme von 100 Würfeln", "why": "Summen vieler unabhängiger Zufallsgrößen sind annähernd normalverteilt, das sagt der zentrale Grenzwertsatz." }
+      ],
+      "explain": "Einkommen sind **rechtsschief**: Die meisten verdienen mittel, wenige sehr viel, und negativ wird es nicht. Eine symmetrische Glocke passt dazu nicht."
+    },
+    {
+      "id": "punkt",
+      "type": "truefalse",
+      "md": "Ist $X$ normalverteilt, dann ist $P(X = 100) = 0$.",
+      "answer": true,
+      "explain": "Über einem einzelnen Punkt hat die Fläche die Breite $0$. Bei stetigen Verteilungen haben nur Intervalle eine positive Wahrscheinlichkeit, deshalb ist auch $P(X \\le 100) = P(X < 100)$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-normal", "level": 1, "label": "Neue Werte" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-normal", "level": 2, "label": "Neue Werte" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-normal", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Bei der Normalverteilung sind Wahrscheinlichkeiten Flächen unter der Glockenkurve.",
+        "$\\mu \\pm \\sigma$, $\\mu \\pm 2\\sigma$, $\\mu \\pm 3\\sigma$ enthalten rund $68\\,\\%$, $95\\,\\%$, $99{,}7\\,\\%$.",
+        "Mit $z = \\tfrac{x - \\mu}{\\sigma}$ wird jede Normalverteilung zur Standardnormalverteilung, $P(X \\le x) = \\Phi(z)$.",
+        "Für $\\sigma > 3$ nähert die Normalverteilung die Binomialverteilung gut an."
+      ]
+    }
+  ]
+}

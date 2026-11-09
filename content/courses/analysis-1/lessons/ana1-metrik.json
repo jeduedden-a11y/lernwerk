@@ -1,0 +1,95 @@
+{
+  "id": "ana1-metrik",
+  "title": "Metrik, offene und abgeschlossene Mengen",
+  "subtitle": "Abstände allgemein denken",
+  "source": "Skript Jarohs, Kapitel 8",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Metrische Räume.md", "title": "Metrische Räume" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Blau ist die Menge $U = (0, 1)$ auf der Zahlengeraden, ohne ihre Randpunkte. Um den Punkt $x$ zeichnen wir einen grünen Streifen. Frage: Passt um **jeden** Punkt von $U$ ein Streifen ganz in $U$?",
+      "widget": "plot",
+      "params": {
+        "x": [-0.3, 1.3], "y": [-0.5, 0.5], "grid": false, "height": 170,
+        "vars": [{ "name": "x0", "min": 0, "max": 1.2, "value": 0.5, "hidden": true }, { "name": "r", "min": 0, "max": 1, "value": 0.3, "hidden": true }],
+        "lines": [{ "from": [0, 0], "to": [1, 0], "color": "accent", "width": 7 }],
+        "vbands": [{ "x": "x0", "d": "r", "color": "green" }],
+        "points": [{ "x": "x0", "y": 0, "color": "green", "label": "x" }],
+        "readout": "$x = {x0|3}$, Radius $r = {r|3}$"
+      },
+      "timeline": [
+        { "caption": "Um $x = 0{,}5$ passt der Streifen $(x - r, x + r)$ mit $r = 0{,}3$ ganz in $U$." },
+        { "caption": "Je näher $x$ am Rand liegt, desto schmaler muss der Streifen werden. Bei $x = 0{,}85$ reicht noch $r = 0{,}12$.", "to": { "x0": 0.85, "r": 0.12 }, "dur": 2000 },
+        { "caption": "Bei $x = 0{,}97$ geht es mit $r = 0{,}025$. Man wählt einfach $r$ kleiner als den Abstand zum Rand. Das klappt für **jeden** Punkt von $U$, weil die Randpunkte $0$ und $1$ nicht dazugehören. $U$ ist **offen**.", "to": { "x0": 0.97, "r": 0.025 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Nimmt man den Rand dazu, $[0, 1]$, scheitert es am Punkt $1$: Jeder Streifen um $1$ ragt nach rechts heraus, egal wie schmal. $[0, 1]$ ist nicht offen. Sie ist **abgeschlossen**, weil ihr Komplement offen ist.", "to": { "x0": 1, "r": 0.1 }, "dur": 1600 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Konvergenz, Stetigkeit, offene Mengen: Alles in der Analysis hängt nur davon ab, wie man **Abstände** misst. Eine **Metrik** ist genau das: eine Abstandsfunktion $d(x, y)$ mit drei vernünftigen Eigenschaften. Abstand $0$ nur für denselben Punkt, Symmetrie, und die Dreiecksungleichung.\n\nDer Gewinn: Man beweist einen Satz einmal für metrische Räume und hat ihn dann für Zahlen, Vektoren, Funktionen und vieles mehr.\n\nBeispiele:\n\n- $d(x, y) = |x - y|$ auf $\\R$, oder $\\|x - y\\|$ für jede Norm.\n- Die **diskrete Metrik**: $d(x, y) = 1$ für $x \\ne y$. Jeder Punkt ist von allen anderen gleich weit weg. Seltsam, aber erlaubt.\n\nDie Grundidee der Animation überträgt sich wörtlich: Eine Menge heißt **offen**, wenn um jeden ihrer Punkte eine kleine Kugel ganz in ihr liegt. Offene Mengen sind Mengen »ohne Rand«."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Metrik\n> $d: X \\times X \\to [0, \\infty)$ heißt **Metrik**, wenn für alle $x, y, z$ gilt: $d(x, y) = 0 \\iff x = y$, $d(x, y) = d(y, x)$ und $d(x, z) \\le d(x, y) + d(y, z)$.\n\n> [!definition] Kugeln, offen, abgeschlossen\n> $B_r(x) = \\set{y : d(x, y) < r}$ ist die **offene Kugel** um $x$ mit Radius $r$.\n> $U \\subset X$ heißt **offen**, wenn es zu jedem $x \\in U$ ein $r > 0$ mit $B_r(x) \\subset U$ gibt.\n> $A \\subset X$ heißt **abgeschlossen**, wenn $X \\setminus A$ offen ist.\n\n> [!satz] Folgenkriterium\n> $A$ ist genau dann abgeschlossen, wenn jeder Grenzwert einer konvergenten Folge aus $A$ wieder in $A$ liegt.\n\nAchtung: »Abgeschlossen« ist nicht das Gegenteil von »offen«. $[0, 1)$ ist weder offen noch abgeschlossen, $\\R$ und $\\emptyset$ sind beides."
+    },
+    {
+      "id": "kugeln",
+      "type": "widget",
+      "label": "Finden",
+      "md": "Hier sind die Einheitskugeln der Metriken $d_1$, $d_2$ und $d_\\infty$ in der Ebene. **Ziehe den Punkt auf den Rand der $d_\\infty$-Kugel (Quadrat), aber deutlich außerhalb der $d_2$-Kugel (Kreis).**",
+      "widget": "unitball",
+      "params": { "point": [0.3, 0.3] },
+      "goal": {
+        "when": "abs(ninf - 1) < 0.03 && n2 > 1.1",
+        "hints": [{ "when": "abs(ninf - 1) >= 0.03", "text": "d∞ = {ninf|2}: Die größere Koordinate muss 1 sein." }, { "when": "n2 <= 1.1", "text": "d₂ = {n2|2}: noch zu nah am Kreis. Geh Richtung Ecke des Quadrats." }],
+        "solve": { "point": [1, 0.8] }
+      },
+      "explain": "In den Ecken des Quadrats ist der euklidische Abstand bis zu $\\sqrt2 \\approx 1{,}41$. Trotzdem beschreiben alle drei Metriken dieselben offenen Mengen, denn jede Kugel der einen enthält eine kleinere Kugel der anderen."
+    },
+    {
+      "id": "kugel-offen",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Zeige: Jede offene Kugel $B_r(x)$ ist offen. Welchen Radius wählst du um einen Punkt $y \\in B_r(x)$?",
+      "solution": "Sei $y \\in B_r(x)$, also $d(x, y) < r$. Wähle $s = r - d(x, y) > 0$, den Abstand zum Rand.\n\nFür $z \\in B_s(y)$ gilt nach der Dreiecksungleichung\n$$d(x, z) \\le d(x, y) + d(y, z) < d(x, y) + s = r.$$\nAlso ist $B_s(y) \\subset B_r(x)$. Genau das hat die Animation gezeigt: Der Radius ist der Restabstand zum Rand."
+    },
+    {
+      "id": "diskret",
+      "type": "truefalse",
+      "md": "In der diskreten Metrik ist jede Menge offen.",
+      "answer": true,
+      "explain": "Die Kugel mit Radius $\\tfrac12$ um $x$ enthält nur $x$ selbst. Also liegt um jeden Punkt einer Menge eine Kugel in der Menge. Da jedes Komplement auch offen ist, ist dort auch jede Menge abgeschlossen."
+    },
+    {
+      "id": "folgen",
+      "type": "choice",
+      "md": "Warum ist $A = \\set{\\tfrac1n : n \\in \\N}$ nicht abgeschlossen in $\\R$?",
+      "options": [
+        { "md": "Die Folge $\\tfrac1n$ liegt in $A$, ihr Grenzwert $0$ aber nicht.", "correct": true },
+        { "md": "Weil $A$ unendlich viele Elemente hat.", "why": "$\\N$ ist unendlich und trotzdem abgeschlossen." },
+        { "md": "Weil $A$ nicht offen ist.", "why": "Nicht offen heißt nicht automatisch abgeschlossen." }
+      ],
+      "explain": "Nach dem Folgenkriterium muss eine abgeschlossene Menge alle ihre Grenzwerte enthalten. Nimmt man die $0$ dazu, wird $A \\cup \\set0$ abgeschlossen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-metrik", "level": 1, "label": "Einordnen" },
+    { "id": "neu2", "type": "gen", "gen": "ana-metrik", "level": 2, "label": "Einordnen" },
+    { "id": "neu3", "type": "gen", "gen": "ana-metrik", "level": 3, "label": "Abstände" },
+    { "id": "neu4", "type": "gen", "gen": "ana-metrik", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine Metrik ist eine Abstandsfunktion: definit, symmetrisch, Dreiecksungleichung.",
+        "Offen: Um jeden Punkt passt eine kleine Kugel in die Menge. Abgeschlossen: Das Komplement ist offen.",
+        "Abgeschlossene Mengen enthalten die Grenzwerte ihrer konvergenten Folgen.",
+        "Offen und abgeschlossen sind keine Gegensätze: Es gibt Mengen, die beides oder keines sind."
+      ]
+    }
+  ]
+}

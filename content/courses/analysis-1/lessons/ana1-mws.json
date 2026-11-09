@@ -1,0 +1,109 @@
+{
+  "id": "ana1-mws",
+  "title": "Mittelwertsatz und Monotonie",
+  "subtitle": "Irgendwann fährt man genau die Durchschnittsgeschwindigkeit",
+  "source": "Skript Jarohs, Abschnitt 13.12 bis 13.24",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Mittelwertsatz.md", "title": "Mittelwertsatz" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md", "title": "Ableitung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "$f(x) = x^3$ auf $[0, 2]$. Grün ist die Sekante durch die Endpunkte, ihre Steigung ist die **mittlere** Steigung $\\tfrac{8 - 0}{2} = 4$. Orange ist die Tangente an einer Stelle $\\xi$, die wir wandern lassen.",
+      "widget": "plot",
+      "params": {
+        "x": [-0.3, 2.4], "y": [-1, 9],
+        "vars": [{ "name": "xi", "min": 0, "max": 2, "value": 0.3, "hidden": true }],
+        "functions": [{ "expr": "x^3", "label": "f", "labelAt": 1.6 }],
+        "secants": [{ "f": "f", "from": 0, "to": 2, "color": "green" }],
+        "tangents": [{ "f": "f", "at": "xi", "color": "orange", "length": 1.2 }],
+        "points": [{ "x": 0, "on": "f" }, { "x": 2, "on": "f" }, { "x": "xi", "on": "f", "color": "orange", "label": "ξ" }],
+        "readout": "Sekante ${ms|3}$, Tangente bei $\\xi = {xi|3}$: ${m|3}$"
+      },
+      "timeline": [
+        { "caption": "Bei $\\xi = 0{,}3$ ist die Tangente fast waagerecht, ihre Steigung $0{,}27$ liegt weit unter $4$." },
+        { "caption": "Wir schieben $\\xi$ nach rechts. Die Tangente wird steiler.", "to": { "xi": 0.8 }, "dur": 1600 },
+        { "caption": "Bei $\\xi = \\tfrac{2}{\\sqrt3} \\approx 1{,}155$ ist die Tangente **parallel** zur Sekante: Steigung genau $4$.", "to": { "xi": 1.1547 }, "dur": 1400, "hold": 6000 },
+        { "caption": "Weiter rechts ist sie steiler als die Sekante. Die Tangentensteigung ist also einmal kleiner und einmal größer als $4$ gewesen, und dazwischen genau $4$.", "to": { "xi": 1.8 }, "dur": 1600, "hold": 6000 },
+        { "caption": "Der **Mittelwertsatz** sagt: Bei jeder differenzierbaren Funktion gibt es so eine Stelle. Man weiß meist nicht, wo sie liegt, aber dass sie existiert, reicht für erstaunlich viele Beweise.", "to": { "xi": 1.1547 }, "dur": 1400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Ein Auto fährt $160$ km in zwei Stunden, im Schnitt $80$ km/h. Dann zeigt der Tacho in mindestens einem Augenblick **genau** $80$ km/h. Wer immer langsamer gefahren wäre, käme nicht so weit; wer immer schneller gewesen wäre, käme weiter. Weil sich die Geschwindigkeit nicht sprunghaft ändert, muss sie den Durchschnitt irgendwann treffen.\n\nDer Spezialfall mit gleicher Start- und Endhöhe heißt **Satz von Rolle**: Wer zum Ausgangspunkt zurückkehrt, stand irgendwann still, $f'(\\xi) = 0$.\n\nDie eigentliche Stärke des Satzes: Er verbindet **lokale** Information (die Ableitung in jedem Punkt) mit **globaler** (wie sich $f$ auf einem ganzen Intervall verhält). Daraus folgen:\n\n- $f' > 0$ auf einem Intervall, dann ist $f$ dort streng wachsend.\n- $f' = 0$ auf einem Intervall, dann ist $f$ dort konstant.\n- $|f'| \\le L$, dann ist $|f(x) - f(y)| \\le L\\,|x - y|$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!satz] Satz von Rolle\n> Ist $f$ stetig auf $[a, b]$, differenzierbar auf $(a, b)$ und $f(a) = f(b)$, dann gibt es $\\xi \\in (a, b)$ mit $f'(\\xi) = 0$.\n\n> [!satz] Mittelwertsatz\n> Ist $f$ stetig auf $[a, b]$ und differenzierbar auf $(a, b)$, dann gibt es $\\xi \\in (a, b)$ mit\n> $$f'(\\xi) = \\frac{f(b) - f(a)}{b - a}.$$\n\n**Beweisidee.** Ziehe von $f$ die Sekante ab: $g(x) = f(x) - \\tfrac{f(b) - f(a)}{b - a}(x - a)$. Dann ist $g(a) = g(b)$, und Rolle liefert $g'(\\xi) = 0$, das heißt $f'(\\xi)$ ist die Sekantensteigung. Rolle selbst folgt aus dem Satz vom Maximum: An einem inneren Extremum ist die Ableitung $0$."
+    },
+    {
+      "id": "parallel",
+      "type": "widget",
+      "label": "Finden",
+      "md": "$f(x) = \\sin x$ auf $[0, 2]$. **Ziehe $\\xi$ an die Stelle, an der die Tangente parallel zur Sekante ist.**",
+      "widget": "plot",
+      "params": {
+        "x": [-0.2, 2.4], "y": [-0.4, 1.4],
+        "vars": [{ "name": "xi", "min": 0.02, "max": 1.98, "value": 0.3, "hidden": true }],
+        "functions": [{ "expr": "sin(x)", "label": "sin", "labelAt": 2.1 }],
+        "secants": [{ "f": "f", "from": 0, "to": 2, "color": "green" }],
+        "tangents": [{ "f": "f", "at": "xi", "color": "orange", "length": 0.8 }],
+        "points": [{ "x": 0, "on": "f" }, { "x": 2, "on": "f" }, { "x": "xi", "on": "f", "drag": "x", "snap": 0.01, "color": "orange", "label": "ξ" }],
+        "readout": "Sekante ${ms|3}$, Tangente ${m|3}$"
+      },
+      "goal": {
+        "when": "abs(m - ms) < 0.02",
+        "hints": [{ "when": "m > ms", "text": "Die Tangente ist steiler als die Sekante. Weiter nach rechts." }, { "when": "m < ms", "text": "Die Tangente ist flacher als die Sekante. Weiter nach links." }],
+        "solve": { "xi": 1.1 }
+      },
+      "explain": "Die Sekante hat die Steigung $\\tfrac{\\sin 2}{2} \\approx 0{,}455$. Aus $\\cos\\xi = 0{,}455$ folgt $\\xi \\approx 1{,}099$. Der Satz hat die Existenz garantiert, die Lage musste man suchen."
+    },
+    {
+      "id": "abschaetzung",
+      "type": "numeric",
+      "label": "Anwenden",
+      "md": "Für $f$ gilt $|f'(x)| \\le 3$ auf $[0, 5]$ und $f(0) = 1$. Wie groß kann $f(5)$ höchstens sein?",
+      "answer": 16,
+      "tolerance": 0,
+      "hint": "Mittelwertsatz: $f(5) - f(0) = f'(\\xi) \\cdot 5$.",
+      "explain": "$f(5) = f(0) + 5f'(\\xi) \\le 1 + 5 \\cdot 3 = 16$. Erreicht wird das von $f(x) = 1 + 3x$."
+    },
+    {
+      "id": "rolle-betrag",
+      "type": "choice",
+      "md": "$f(x) = |x|$ auf $[-1, 1]$ hat $f(-1) = f(1)$, aber nirgends eine waagerechte Tangente. Warum widerspricht das nicht dem Satz von Rolle?",
+      "options": [
+        { "md": "$f$ ist bei $0$ nicht differenzierbar, eine Voraussetzung fehlt.", "correct": true },
+        { "md": "$f$ ist nicht stetig.", "why": "$|x|$ ist überall stetig." },
+        { "md": "Rolle gilt nur für Polynome.", "why": "Rolle gilt für alle Funktionen, die die Voraussetzungen erfüllen." }
+      ],
+      "explain": "Rolle verlangt Differenzierbarkeit im ganzen offenen Intervall. Ein einziger Knick genügt, um die Folgerung zu zerstören."
+    },
+    {
+      "id": "monotonie-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise: Ist $f'(x) > 0$ für alle $x \\in (a, b)$, dann ist $f$ auf $[a, b]$ streng monoton wachsend.",
+      "solution": "Seien $a \\le x < y \\le b$. Nach dem Mittelwertsatz gibt es $\\xi \\in (x, y)$ mit\n\n$$f(y) - f(x) = f'(\\xi)\\,(y - x).$$\n\nBeide Faktoren sind positiv, also $f(y) > f(x)$. Die Umkehrung gilt nicht ganz: $x^3$ ist streng wachsend, hat aber $f'(0) = 0$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-mws", "level": 1, "label": "ξ finden" },
+    { "id": "neu2", "type": "gen", "gen": "ana-mws", "level": 2, "label": "ξ finden" },
+    { "id": "neu3", "type": "gen", "gen": "ana-mws", "level": 3, "label": "Monotonie" },
+    { "id": "neu4", "type": "gen", "gen": "ana-mws", "level": 4, "label": "Folgerungen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Mittelwertsatz: Irgendwo ist die Tangente parallel zur Sekante, $f'(\\xi) = \\tfrac{f(b) - f(a)}{b - a}$.",
+        "Rolle ist der Fall $f(a) = f(b)$; der Beweis läuft über den Satz vom Maximum.",
+        "Folgerungen: $f' > 0$ heißt streng wachsend, $f' = 0$ heißt konstant, $|f'| \\le L$ begrenzt Änderungen.",
+        "Alle Voraussetzungen sind nötig: Ein Knick genügt, um den Satz scheitern zu lassen."
+      ]
+    }
+  ]
+}

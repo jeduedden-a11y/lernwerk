@@ -1,0 +1,112 @@
+{
+  "id": "oek-multiplikator",
+  "title": "Keynesianisches Kreuz und Multiplikator",
+  "subtitle": "Warum ein Euro Staatsausgaben mehr als einen Euro Einkommen schaffen kann",
+  "source": "John Maynard Keynes, General Theory (1936); Paul Samuelson, Economics (1948), keynesianisches Kreuz",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Multiplikator.md", "title": "Multiplikator" },
+    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/John Maynard Keynes.md", "title": "John Maynard Keynes" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Waagerecht das Einkommen $Y$, senkrecht die geplanten Ausgaben, beides in Hunderten Milliarden. Die graue Diagonale ist $Y = $ Ausgaben. Die blaue Linie sagt, wie viel bei jedem Einkommen ausgegeben werden soll: ein fester Teil $A$ plus $60\\,\\%$ des Einkommens.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 10], "xLabel": "Einkommen Y", "yLabel": "Ausgaben",
+        "vars": [{ "name": "A", "min": 0, "max": 5, "value": 2, "hidden": true }],
+        "lines": [
+          { "id": "D", "label": "Y = Ausgaben", "a": 0, "m": 1, "color": "gray", "width": 2 },
+          { "id": "AE", "label": "A + 0,6Y", "a": "A", "m": 0.6, "color": "accent" }
+        ],
+        "intersections": [{ "id": "E", "of": ["D", "AE"], "label": "Y*" }],
+        "readout": "Autonome Ausgaben **{A|1}**, Gleichgewicht **Y* = {E_x|2}**"
+      },
+      "timeline": [
+        { "caption": "Im Schnittpunkt wird genau so viel ausgegeben, wie produziert wird: $Y^* = 5$. Liegt das Einkommen darüber, bleiben Waren liegen, und die Firmen drosseln die Produktion. Liegt es darunter, leeren sich die Lager." },
+        { "caption": "Der Staat gibt $1$ mehr aus: Die blaue Linie rückt um $1$ nach oben. Das neue Gleichgewicht liegt aber nicht bei $6$, sondern bei $7{,}5$.", "to": { "A": 3 }, "dur": 2400, "hold": 7000 },
+        { "caption": "Warum $2{,}5$-mal so viel? Die $1$ wird zu Einkommen. Davon werden $60\\,\\%$ wieder ausgegeben, also $0{,}6$, das wird wieder Einkommen, davon $0{,}36$ … Die Summe ist $1 + 0{,}6 + 0{,}36 + \\dots = \\tfrac{1}{1 - 0{,}6} = 2{,}5$. Das ist der **Multiplikator**.", "hold": 9000 },
+        { "caption": "Er wirkt auch nach unten: Sinken die Investitionen um $1$, fällt das Einkommen um $2{,}5$. So erklärte Keynes, wie aus kleinen Störungen tiefe Krisen werden können.", "to": { "A": 1 }, "dur": 2400 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die klassische Ökonomik vertraute darauf, dass sich Angebot seine Nachfrage selbst schafft. Keynes widersprach: Die Produktion richtet sich danach, wie viel insgesamt **ausgegeben** wird. Wird zu wenig ausgegeben, bleiben Firmen auf Waren sitzen, entlassen Leute, und das Einkommen sinkt, bis Ausgaben und Produktion wieder zusammenpassen, möglicherweise bei hoher Arbeitslosigkeit.\n\nDer Schlüssel ist, dass Haushalte von jedem zusätzlichen Euro nur einen Teil $c$ ausgeben, die **marginale Konsumquote**. Der Rest wird gespart. Eine zusätzliche Ausgabe startet deshalb eine Kette: Einkommen, Konsum, wieder Einkommen, jedes Mal kleiner. Ihre Summe ist eine **geometrische Reihe**:\n\n$$\\Delta Y = \\Delta A\\,(1 + c + c^2 + \\dots) = \\frac{\\Delta A}{1 - c}.$$\n\nJe größer $c$, desto größer der Multiplikator. Steuern und Importe dämpfen ihn, weil sie in jeder Runde einen Teil abzweigen."
+    },
+    {
+      "id": "runden",
+      "type": "anim",
+      "label": "Die Runden",
+      "md": "Blau: die Ausgaben jeder Runde, wenn der Staat einmalig $1$ ausgibt und $c$ der Anteil ist, der jeweils weitergegeben wird. Orange: die Summe aller Runden bis dahin.",
+      "widget": "sequence",
+      "params": { "term": "c^(n-1)", "mode": "both", "vars": [{ "name": "c", "label": "c", "min": 0.3, "max": 0.9, "step": 0.05, "value": 0.6, "digits": 2 }], "limit": "1/(1 - c)", "limitLabel": "Multiplikator", "nMax": 20, "n": 1, "yRange": [0, 10.5], "readout": "Runde {N|0}: Ausgabe {a|3}, Summe **{s|3}**, Grenzwert {L|2}" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "Runde $1$: Der Staat gibt $1$ aus." },
+        { "caption": "Jede Runde ist $60\\,\\%$ der vorigen. Nach fünf Runden ist die Summe schon gut $2{,}3$.", "to": { "N": 5 }, "dur": 1600 },
+        { "caption": "Die Summe nähert sich $2{,}5$, dem Multiplikator $\\tfrac{1}{1 - 0{,}6}$.", "to": { "N": 20 }, "dur": 1800 },
+        { "caption": "Geben die Haushalte $90\\,\\%$ weiter, ist der Multiplikator $10$. Kleine Änderungen von $c$ haben große Wirkung.", "to": { "c": 0.9 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "schieben",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Jetzt ist $c = 0{,}5$ und das Gleichgewicht liegt bei $4$. **Verschiebe die Ausgabenlinie so weit nach oben, dass das Gleichgewicht bei $6$ liegt.** Wie groß muss die Erhöhung sein?",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 10], "xLabel": "Einkommen Y", "yLabel": "Ausgaben",
+        "lines": [
+          { "id": "D", "label": "Y = Ausgaben", "a": 0, "m": 1, "color": "gray", "width": 2 },
+          { "id": "AE", "label": "A + 0,5Y", "a": 2, "m": 0.5, "color": "accent", "shift": true, "shiftRange": [-2, 4], "shiftStep": 0.5 }
+        ],
+        "intersections": [{ "id": "E", "of": ["D", "AE"], "label": "Y*" }],
+        "readout": "Erhöhung **{AE_dy|1}**, Gleichgewicht **{E_x|2}**"
+      },
+      "goal": { "when": "abs(E_x - 6) < 0.01", "hints": [{ "when": "E_x < 6", "text": "Das Gleichgewicht liegt erst bei {E_x|2}." }, { "when": "E_x > 6", "text": "Zu weit: Das Gleichgewicht liegt bei {E_x|2}." }], "solve": { "AE_dy": 1 } },
+      "explain": "Eine Erhöhung um $1$ genügt: Mit $c = 0{,}5$ ist der Multiplikator $2$, also $\\Delta Y = 2$. Man muss die Lücke nicht vollständig selbst füllen, den Rest erledigt die Kettenreaktion."
+    },
+    {
+      "id": "steuern",
+      "type": "choice",
+      "md": "Warum wirkt eine Steuersenkung um $10$ Mrd. schwächer als zusätzliche Staatsausgaben von $10$ Mrd.?",
+      "options": [
+        { "md": "Die Haushalte geben nur einen Teil der Entlastung aus, die erste Runde ist kleiner.", "correct": true },
+        { "md": "Steuersenkungen haben gar keine Wirkung auf das Einkommen.", "why": "Sie wirken, nur schwächer." },
+        { "md": "Weil Staatsausgaben nie gespart werden können.", "why": "Der Punkt ist richtig gedacht, aber die Begründung ist die erste Runde: Der Staat gibt alles aus, die Haushalte nur den Anteil $c$." }
+      ],
+      "explain": "Steuermultiplikator $\\tfrac{-c}{1 - c}$ gegen Ausgabenmultiplikator $\\tfrac{1}{1 - c}$. Bei $c = 0{,}8$: $4$ gegen $5$."
+    },
+    {
+      "id": "schaetzen",
+      "type": "estimate",
+      "label": "Schätzen",
+      "md": "Die Haushalte geben von jedem zusätzlichen Euro 80 Cent aus. Der Staat erhöht seine Ausgaben um 10 Mrd. Euro. **Um wie viel steigt das Einkommen am Ende?** Schätze zuerst, ohne Formel.",
+      "min": 0,
+      "max": 100,
+      "answer": 50,
+      "tolerance": 6,
+      "unit": "Mrd. €",
+      "start": 12,
+      "step": 1,
+      "explain": "Der Multiplikator ist $\\tfrac{1}{1 - 0{,}8} = 5$, also steigt das Einkommen um $5 \\cdot 10 = 50$ Mrd. Euro. Die Runden summieren sich: $10 + 8 + 6{,}4 + \\dots$, eine geometrische Reihe."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-multiplikator", "level": 1, "label": "Multiplikator" },
+    { "id": "neu2", "type": "gen", "gen": "oek-multiplikator", "level": 2, "label": "Staatsausgaben" },
+    { "id": "neu3", "type": "gen", "gen": "oek-multiplikator", "level": 3, "label": "Mit Steuern" },
+    { "id": "neu4", "type": "gen", "gen": "oek-multiplikator", "level": 4, "label": "Steuersenkung" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Im keynesianischen Kreuz bestimmt die geplante Gesamtnachfrage das Einkommen: Gleichgewicht, wo Ausgaben und Produktion gleich sind.",
+        "Eine zusätzliche Ausgabe wird zu Einkommen, das zum Teil wieder ausgegeben wird.",
+        "Multiplikator $\\tfrac{1}{1 - c}$: die Summe einer geometrischen Reihe.",
+        "Steuern, Importe und Sparen dämpfen den Multiplikator."
+      ]
+    }
+  ]
+}

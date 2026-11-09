@@ -1,0 +1,92 @@
+{
+  "id": "ana1-cauchy",
+  "title": "Teilfolgen, Bolzano-Weierstraß, Cauchy-Folgen",
+  "subtitle": "Was in jeder beschränkten Folge steckt",
+  "source": "Skript Jarohs, Abschnitt 9.26 bis 9.50",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Teilfolgen und Cauchy-Folgen.md", "title": "Teilfolgen und Cauchy-Folgen" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Folge $a_n = (-1)^n\\left(1 + \\tfrac1n\\right)$ springt hin und her. Gerade Glieder sind blau, ungerade orange.",
+      "widget": "sequence",
+      "params": { "term": "(-1)^n*(1 + 1/n)", "highlight": "parity", "nMax": 40, "n": 1, "yRange": [-2.2, 1.8], "readout": "$a_{{N|0}} = {a|4}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "$a_1 = -2$, $a_2 = 1{,}5$, $a_3 \\approx -1{,}33$ … Die Folge selbst konvergiert nicht: Sie springt immer zwischen zwei Bereichen.", "to": { "N": 6 }, "dur": 1600 },
+        { "caption": "Nimmt man aber nur die geraden Glieder, also $a_2, a_4, a_6, \\dots$, entsteht eine **Teilfolge**, die gegen $1$ konvergiert. Die ungeraden Glieder bilden eine Teilfolge, die gegen $-1$ konvergiert.", "to": { "N": 24 }, "dur": 2400, "hold": 6500 },
+        { "caption": "$1$ und $-1$ heißen **Häufungspunkte**: Grenzwerte von Teilfolgen. Der größte ist der **Limes superior**, der kleinste der **Limes inferior**.", "to": { "N": 40 }, "dur": 1600, "hold": 6000 },
+        { "caption": "Der Satz von **Bolzano-Weierstraß** sagt: Das ist kein Zufall. **Jede** beschränkte Folge in $\\R$ hat mindestens eine konvergente Teilfolge, egal wie wild sie springt." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Eine **Teilfolge** entsteht, wenn man unendlich viele Glieder auswählt und ihre Reihenfolge beibehält, etwa jedes zweite oder alle mit Primzahlindex.\n\n**Warum hat jede beschränkte Folge eine konvergente Teilfolge?** Die Glieder liegen in einem Intervall $[A, B]$. Halbiere es. Mindestens eine Hälfte enthält **unendlich viele** Glieder, denn sonst hätte die Folge insgesamt nur endlich viele. Halbiere diese Hälfte wieder, und so weiter. Die Intervalle schrumpfen auf einen Punkt zusammen, und aus jedem Intervall nimmt man ein Glied. Das gibt eine Teilfolge, die gegen diesen Punkt konvergiert. Es ist die Intervallhalbierung vom Anfang des Kurses, nur auf Folgen angewendet.\n\n**Cauchy-Folgen** lösen ein anderes Problem: Man will Konvergenz zeigen, ohne den Grenzwert zu kennen, und die Folge ist nicht monoton. Dann prüft man, ob die Glieder **untereinander** beliebig nahe zusammenrücken. In $\\R$ reicht das für Konvergenz. Es ist eine weitere Form der Vollständigkeit."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Teilfolge und Häufungspunkt\n> Ist $n_1 < n_2 < n_3 < \\dots$, dann ist $(a_{n_k})_k$ eine **Teilfolge** von $(a_n)$. Eine Zahl $h$ heißt **Häufungspunkt**, wenn eine Teilfolge gegen $h$ konvergiert.\n\n> [!satz] Bolzano-Weierstraß\n> Jede beschränkte Folge in $\\R$ besitzt eine konvergente Teilfolge.\n\n> [!definition] Cauchy-Folge\n> $(a_n)$ heißt **Cauchy-Folge**, wenn es zu jedem $\\varepsilon > 0$ ein $n_0$ gibt mit $|a_n - a_m| < \\varepsilon$ für alle $n, m \\ge n_0$.\n\n> [!satz] Cauchy-Kriterium\n> In $\\R$ konvergiert eine Folge genau dann, wenn sie eine Cauchy-Folge ist.\n\nDie Richtung »konvergent ⇒ Cauchy« gilt überall. Die Umkehrung braucht Vollständigkeit: In $\\Q$ ist die Folge der Dezimalnäherungen von $\\sqrt2$ eine Cauchy-Folge ohne Grenzwert."
+    },
+    {
+      "id": "erkunden",
+      "type": "widget",
+      "label": "Erkunden",
+      "md": "$a_n = (-1)^n \\dfrac{n}{n+1}$. Ziehe $n$ hoch und beobachte, wohin die blauen und die orangen Punkte streben.",
+      "widget": "sequence",
+      "params": { "term": "(-1)^n*n/(n+1)", "highlight": "parity", "nMax": 40, "n": 4, "yRange": [-1.2, 1.2], "readout": "$a_{{N|0}} = {a|4}$" }
+    },
+    {
+      "id": "haeufung",
+      "type": "cloze",
+      "md": "Bestimme für $a_n = (-1)^n \\dfrac{n}{n+1}$ die Häufungspunkte.\n\n$\\limsup a_n =$ {{0}} $\\qquad \\liminf a_n =$ {{1}}",
+      "blanks": [{ "accept": [1], "numeric": true }, { "accept": [-1], "numeric": true }],
+      "explain": "Gerade $n$: $\\tfrac{n}{n+1} \\to 1$. Ungerade $n$: $-\\tfrac{n}{n+1} \\to -1$. Die Werte $\\pm1$ selbst werden nie erreicht, sind aber Grenzwerte von Teilfolgen."
+    },
+    {
+      "id": "bw-beweis",
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "Ordne den Beweis von Bolzano-Weierstraß für eine Folge mit Gliedern in $[A, B]$.",
+      "items": [
+        "Setze $I_0 = [A, B]$. Es enthält alle Glieder, also unendlich viele.",
+        "Halbiere $I_k$. Eine Hälfte enthält unendlich viele Glieder, nenne sie $I_{k+1}$.",
+        "Wähle aus $I_{k+1}$ ein Glied $a_{n_{k+1}}$ mit $n_{k+1} > n_k$. Das geht, weil dort unendlich viele liegen.",
+        "Die $I_k$ sind geschachtelt mit Länge $\\tfrac{B - A}{2^k} \\to 0$, also gibt es genau einen Punkt $h$ in allen.",
+        "Wegen $|a_{n_k} - h| \\le \\tfrac{B - A}{2^k}$ konvergiert die Teilfolge gegen $h$."
+      ],
+      "explain": "Wichtig ist »unendlich viele« in Schritt 2: Nur so kann man in Schritt 3 immer einen noch späteren Index finden."
+    },
+    {
+      "id": "fakten",
+      "type": "multi",
+      "md": "Welche Aussagen gelten für Folgen in $\\R$?",
+      "options": [
+        { "md": "Jede konvergente Folge ist eine Cauchy-Folge.", "correct": true, "why": "$|a_n - a_m| \\le |a_n - a| + |a - a_m| < \\tfrac\\varepsilon2 + \\tfrac\\varepsilon2$." },
+        { "md": "Jede Teilfolge einer konvergenten Folge konvergiert gegen denselben Grenzwert.", "correct": true, "why": "Ab $n_0$ liegen alle Glieder im Streifen, also auch alle der Teilfolge." },
+        { "md": "Hat eine Folge eine konvergente Teilfolge, dann konvergiert sie.", "why": "$(-1)^n$ hat konvergente Teilfolgen, konvergiert aber nicht." },
+        { "md": "Eine unbeschränkte Folge kann eine konvergente Teilfolge haben.", "correct": true, "why": "Zum Beispiel $a_n = n$ für gerade $n$ und $a_n = 0$ für ungerade $n$." }
+      ],
+      "explain": "Bolzano-Weierstraß braucht Beschränktheit als Voraussetzung, aber auch unbeschränkte Folgen können Häufungspunkte haben."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-teilfolgen", "level": 1, "label": "Häufungspunkte" },
+    { "id": "neu2", "type": "gen", "gen": "ana-teilfolgen", "level": 2, "label": "Häufungspunkte" },
+    { "id": "neu3", "type": "gen", "gen": "ana-teilfolgen", "level": 3, "label": "Zählen" },
+    { "id": "neu4", "type": "gen", "gen": "ana-teilfolgen", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine Teilfolge wählt unendlich viele Glieder in ihrer Reihenfolge aus. Ihre Grenzwerte heißen Häufungspunkte.",
+        "Bolzano-Weierstraß: Jede beschränkte Folge hat eine konvergente Teilfolge. Beweis durch Halbieren.",
+        "Cauchy-Folge: Die Glieder rücken untereinander beliebig nahe zusammen.",
+        "In $\\R$ ist jede Cauchy-Folge konvergent, in $\\Q$ nicht."
+      ]
+    }
+  ]
+}

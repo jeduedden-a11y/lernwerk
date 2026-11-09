@@ -1,0 +1,127 @@
+{
+  "id": "cs50-minimax",
+  "title": "Adversariale Suche: Minimax",
+  "subtitle": "CS50 AI, Lecture 0: Spiele gegen einen Gegner",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 0, Projekt Tic-Tac-Toe",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Minimax.md", "title": "Minimax" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Spiel mit zwei Gegnern. **MAX** (Dreieck nach oben) will den Endwert groß machen, **MIN** (Dreieck nach unten) klein. Unten stehen die Endwerte aus Sicht von MAX.",
+      "widget": "minimax",
+      "params": { "tree": [[3, 12, 8], [2, 4, 6], [14, 5, 2]], "allowPruning": false },
+      "timeline": [
+        { "caption": "MAX ist am Zug und hat drei Züge. Nach jedem antwortet MIN. Welcher Zug ist der beste? Die Antwort rechnet man von unten nach oben aus.", "do": { "reset": true } },
+        { "caption": "Linker Teilbaum: MIN hat die Wahl zwischen $3$, $12$ und $8$ und nimmt das Schlechteste für MAX, also $3$.", "do": { "reset": true, "step": 4 } },
+        { "caption": "Mittlerer Teilbaum: MIN nimmt $2$.", "do": { "reset": true, "step": 8 } },
+        { "caption": "Rechter Teilbaum: MIN nimmt $2$, obwohl dort auch die $14$ liegt. MIN lässt MAX diesen Wert nie bekommen.", "do": { "reset": true, "step": 12 }, "hold": 6000 },
+        { "caption": "MAX wählt das Maximum der MIN-Werte: $3$. Zug $1$ garantiert mindestens $3$, egal was MIN tut. So denkt **Minimax**: Es rechnet mit einem Gegner, der immer optimal antwortet.", "do": { "reset": true, "all": true } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Bei Spielen wie Tic-Tac-Toe gibt es einen **Gegner**, der das Gegenteil will. CS50 beschreibt ein Spiel mit:\n- $S_0$: Anfangszustand,\n- $\\text{Player}(s)$: wer am Zug ist,\n- $\\text{Actions}(s)$ und $\\text{Result}(s, a)$,\n- $\\text{Terminal}(s)$: Ist das Spiel vorbei?\n- $\\text{Utility}(s)$: Wert eines Endzustands, bei Tic-Tac-Toe $1$ (X gewinnt), $0$ (Unentschieden), $-1$ (O gewinnt).\n\n**MAX** will den Wert möglichst groß machen, **MIN** möglichst klein. Im Baum zeigt ein Dreieck nach oben einen MAX-Knoten, nach unten einen MIN-Knoten."
+    },
+    {
+      "id": "baum",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "MAX zieht zuerst, dann antwortet MIN, dann ist das Spiel vorbei. Werte den Baum Schritt für Schritt aus: Jeder MIN-Knoten bekommt das **Minimum** seiner Blätter, die Wurzel das **Maximum** der MIN-Knoten.",
+      "widget": "minimax",
+      "params": { "tree": [[3, 12, 8], [2, 4, 6], [14, 5, 2]], "allowPruning": false }
+    },
+    {
+      "id": "zug",
+      "type": "widget",
+      "label": "Entscheiden",
+      "md": "Neuer Baum. **Tippe auf den Zug, den MAX wählen sollte.** Du darfst den Baum vorher auswerten.",
+      "widget": "minimax",
+      "params": { "tree": [[7, 2, 9], [6, 8, 5], [1, 15, 4]], "choose": true, "allowPruning": false },
+      "goal": {},
+      "explain": "Die MIN-Knoten haben die Werte $2$, $5$ und $1$. MAX wählt Zug $2$ und erhält sicher $5$. Die $15$ im dritten Zweig ist verlockend, aber MIN würde sie nie zulassen."
+    },
+    {
+      "id": "wert",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen Minimax-Wert hat die Wurzel für den Baum mit den Blättern $[[5, 1],\\ [4, 6],\\ [2, 9]]$? MAX ist an der Wurzel am Zug.",
+      "answer": 4,
+      "explain": "MIN-Werte: $\\min(5,1) = 1$, $\\min(4,6) = 4$, $\\min(2,9) = 2$. MAX wählt $\\max(1, 4, 2) = 4$."
+    },
+    {
+      "id": "fehler",
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "MAX ist am Zug und hat drei Züge A, B und C. Danach antwortet MIN. Die Endstände sind A: 3, 12, 8; B: 2, 4, 6; C: 14, 5, 2. **Welche Zeile der Auswertung ist falsch?**",
+      "lines": [
+        {
+          "md": "Knoten A (MIN): $\\min(3, 12, 8) = 3$",
+          "why": "Richtig, MIN wählt das Minimum."
+        },
+        {
+          "md": "Knoten B (MIN): $\\max(2, 4, 6) = 6$",
+          "why": "B ist ein MIN-Knoten. Der Gegner wählt das für MAX schlechteste Ergebnis: $\\min(2, 4, 6) = 2$."
+        },
+        {
+          "md": "Knoten C (MIN): $\\min(14, 5, 2) = 2$",
+          "why": "Richtig, MIN wählt das Minimum."
+        },
+        {
+          "md": "Wurzel (MAX): $\\max(3, 6, 2) = 6$, also Zug B.",
+          "why": "Rechnet richtig mit den Werten darüber. Mit dem korrekten Wert für B wäre es $\\max(3, 2, 2) = 3$ und Zug A."
+        }
+      ],
+      "answer": 1,
+      "explain": "Minimax wechselt mit jeder Ebene die Perspektive: MIN-Knoten nehmen das Minimum ihrer Kinder, MAX-Knoten das Maximum. Richtig ist A = 3, B = 2, C = 2, also Zug A mit dem garantierten Wert 3."
+    },
+    {
+      "id": "ab-text",
+      "type": "text",
+      "md": "Minimax schaut sich **jedes** Blatt an. Bei Tic-Tac-Toe geht das noch, bei Schach sind es mehr Partien, als es Atome im Universum gibt.\n\n**Alpha-Beta-Pruning** spart Arbeit: Man merkt sich $\\alpha$, den besten Wert, den MAX schon sicher hat, und $\\beta$, den besten für MIN. Sobald $\\alpha \\ge \\beta$, kann ein Zweig das Ergebnis nicht mehr ändern und wird abgeschnitten.\n\nZusätzlich begrenzt man oft die Suchtiefe und schätzt Zwischenstände mit einer **Bewertungsfunktion**."
+    },
+    {
+      "id": "ab",
+      "type": "widget",
+      "label": "Vergleichen",
+      "md": "Derselbe Baum wie oben, jetzt mit Alpha-Beta. Gehe Schritt für Schritt und achte darauf, was im zweiten Zweig passiert, nachdem die $2$ gelesen wurde.",
+      "widget": "minimax",
+      "params": { "tree": [[3, 12, 8], [2, 4, 6], [14, 5, 2]], "pruning": true }
+    },
+    {
+      "id": "ab-zaehlen",
+      "type": "numeric",
+      "label": "Zählen",
+      "md": "Wie viele der $9$ Blätter liest Alpha-Beta in diesem Baum?",
+      "answer": 7,
+      "hint": "Nach dem ersten Zweig weiß MAX: mindestens $3$. Im zweiten Zweig liegt das erste Blatt bei $2$.",
+      "explain": "Sobald im zweiten Zweig die $2$ gelesen ist, steht fest: MIN gibt hier höchstens $2$, MAX hat aber schon $3$. Die Blätter $4$ und $6$ werden übersprungen. Im dritten Zweig hilft das nicht, weil die $2$ erst am Ende kommt."
+    },
+    {
+      "id": "ergebnis",
+      "type": "truefalse",
+      "md": "Alpha-Beta-Pruning kann den Wert der Wurzel verändern.",
+      "answer": false,
+      "whyNot": "Abgeschnitten werden nur Zweige, die das Ergebnis beweisbar nicht beeinflussen.",
+      "explain": "Gleiches Ergebnis, weniger Arbeit. Wie viel gespart wird, hängt von der Reihenfolge ab: Werden gute Züge zuerst betrachtet, wird mehr abgeschnitten."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-minimax", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "cs-minimax", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "cs-minimax", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "cs-minimax", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Minimax nimmt an, dass beide Seiten optimal spielen: MAX maximiert, MIN minimiert.",
+        "Werte entstehen von unten nach oben aus den Utility-Werten der Endzustände.",
+        "Alpha-Beta-Pruning schneidet Zweige ab, sobald $\\alpha \\ge \\beta$, ohne das Ergebnis zu ändern.",
+        "Für große Spiele kommen Tiefenbegrenzung und Bewertungsfunktionen dazu."
+      ]
+    }
+  ]
+}

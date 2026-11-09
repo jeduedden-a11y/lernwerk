@@ -1,0 +1,106 @@
+{
+  "id": "ana1-taylor",
+  "title": "Taylorpolynome",
+  "subtitle": "Funktionen durch Polynome ersetzen, mit Garantie",
+  "source": "Skript Jarohs, Kapitel 15",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Taylorpolynome.md", "title": "Taylorpolynome" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md", "title": "Ableitung" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Grau ist $\\sin x$, blau ein Polynom, das bei $0$ so viele Ableitungen wie möglich mit $\\sin$ gemeinsam hat. Je höher der Grad, desto länger klebt es am Sinus.",
+      "widget": "plot",
+      "params": {
+        "x": [-7, 7], "y": [-3, 3],
+        "vars": [{ "name": "n", "min": 1, "max": 13, "step": 1, "value": 1, "hidden": true }],
+        "functions": [
+          { "expr": "sin(x)", "color": "gray", "width": 4, "label": "sin", "labelAt": 5.2 },
+          { "name": "T", "expr": "x - (n >= 3 ? x^3/6 : 0) + (n >= 5 ? x^5/120 : 0) - (n >= 7 ? x^7/5040 : 0) + (n >= 9 ? x^9/362880 : 0) - (n >= 11 ? x^11/39916800 : 0) + (n >= 13 ? x^13/6227020800 : 0)" }
+        ],
+        "readout": "Grad $n = {n|0}$"
+      },
+      "int": ["n"],
+      "timeline": [
+        { "caption": "Grad $1$: die Tangente $T_1(x) = x$. Bei $0$ stimmen Wert und Steigung, aber schon bei $x = 1$ ist der Fehler sichtbar." },
+        { "caption": "Grad $3$: $x - \\tfrac{x^3}{6}$. Jetzt stimmt auch die Krümmung, und die Näherung hält etwa bis $x = \\pm 1{,}5$.", "to": { "n": 3 }, "dur": 600 },
+        { "caption": "Grad $5$ und $7$: Jeder neue Summand korrigiert den Fehler des vorigen, und der Bereich guter Übereinstimmung wächst.", "to": { "n": 7 }, "dur": 1600, "hold": 6000 },
+        { "caption": "Grad $13$: Auf fast dem ganzen Bild ist kein Unterschied mehr zu sehen. Ein Polynom aus Grundrechenarten ersetzt den Sinus. So rechnen Taschenrechner, und das Restglied sagt, wie genau.", "to": { "n": 13 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die Tangente ist die beste Gerade an einer Stelle: Sie hat denselben Wert und dieselbe Steigung. Warum bei der Steigung aufhören? Ein Polynom vom Grad $n$ hat genug Freiheit, um auch die zweite, dritte, ..., $n$-te Ableitung zu treffen.\n\nWelche Koeffizienten braucht es? Leitet man $c_k x^k$ $k$-mal ab und setzt $0$ ein, bleibt $k! \\, c_k$ übrig. Soll das gleich $f^{(k)}(0)$ sein, muss $c_k = \\dfrac{f^{(k)}(0)}{k!}$ gelten. Daher die Fakultäten in jeder Taylorformel.\n\nEntscheidend ist der **Fehler**. Das Restglied von Lagrange sieht aus wie der nächste Summand, nur mit der Ableitung an einer unbekannten Zwischenstelle $\\xi$. Kann man diese Ableitung beschränken, hat man eine garantierte Genauigkeit. Beim Sinus sind alle Ableitungen höchstens $1$, also ist der Fehler höchstens $\\tfrac{|x|^{n+1}}{(n+1)!}$, und das geht für jedes feste $x$ gegen $0$."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Taylorpolynom\n> Ist $f$ an der Stelle $x_0$ $n$-mal differenzierbar, dann heißt\n> $$T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x - x_0)^k$$\n> das **Taylorpolynom** vom Grad $n$. Es ist das einzige Polynom vom Grad höchstens $n$ mit $T_n^{(k)}(x_0) = f^{(k)}(x_0)$ für $k = 0, \\dots, n$.\n\n> [!satz] Restglied nach Lagrange\n> Ist $f$ $(n+1)$-mal differenzierbar, dann gibt es $\\xi$ zwischen $x_0$ und $x$ mit\n> $$f(x) - T_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}.$$\n\nFür $n = 0$ ist das genau der Mittelwertsatz. Wichtige Beispiele um $0$: $e^x \\approx \\sum \\tfrac{x^k}{k!}$, $\\sin x \\approx x - \\tfrac{x^3}{6} + \\tfrac{x^5}{120}$, $\\cos x \\approx 1 - \\tfrac{x^2}{2} + \\tfrac{x^4}{24}$."
+    },
+    {
+      "id": "kosinus",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Grau ist $\\cos x$, blau sein Taylorpolynom um $0$. **Wähle den kleinsten Grad, bei dem $T_n(1)$ weniger als $0{,}001$ von $\\cos 1$ abweicht.**",
+      "widget": "plot",
+      "params": {
+        "x": [-4, 4], "y": [-2, 2],
+        "vars": [{ "name": "n", "label": "Grad $n$", "min": 0, "max": 10, "step": 1, "value": 2, "digits": 0 }],
+        "functions": [
+          { "expr": "cos(x)", "color": "gray", "width": 4 },
+          { "name": "T", "expr": "1 - (n >= 2 ? x^2/2 : 0) + (n >= 4 ? x^4/24 : 0) - (n >= 6 ? x^6/720 : 0) + (n >= 8 ? x^8/40320 : 0) - (n >= 10 ? x^10/3628800 : 0)" }
+        ],
+        "points": [{ "x": 1, "on": "T", "label": "Tₙ(1)" }],
+        "readout": "$T_n(1) = {T(1)|6}$, $\\cos 1 = {cos(1)|6}$, Fehler ${abs(T(1) - cos(1))|6}$"
+      },
+      "goal": {
+        "when": "abs(T(1) - cos(1)) < 0.001 && n <= 6",
+        "hints": [{ "when": "abs(T(1) - cos(1)) >= 0.001", "text": "Der Fehler ist noch {abs(T(1) - cos(1))|5}." }, { "when": "n > 6", "text": "Genau genug, aber es geht mit kleinerem Grad." }],
+        "solve": { "n": 6 }
+      },
+      "explain": "$T_4(1) \\approx 0{,}541667$ weicht um $0{,}0014$ ab, $T_6(1) \\approx 0{,}540278$ nur noch um $0{,}00002$. Grad $5$ bringt nichts Neues, weil der Kosinus nur gerade Potenzen hat. Lagrange garantiert für $n = 5$ den Fehler $\\le \\tfrac{1}{6!} \\approx 0{,}0014$, für $n = 6$ sogar $\\le \\tfrac{1}{7!} \\approx 0{,}0002$."
+    },
+    {
+      "id": "koeffizienten",
+      "type": "reveal",
+      "label": "Herleiten",
+      "md": "Bestimme die Koeffizienten von $T_3$ für $f(x) = e^x$ um $x_0 = 0$ durch Ableiten, ohne die Formel nachzuschlagen.",
+      "solution": "Alle Ableitungen von $e^x$ sind $e^x$, an der Stelle $0$ also $1$. Mit $c_k = \\tfrac{f^{(k)}(0)}{k!}$:\n\n$$T_3(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}.$$\n\nDas ist der Anfang der Exponentialreihe. Die Reihe aus Kapitel 11 ist also nichts anderes als das Taylorpolynom von unendlichem Grad, die **Taylorreihe**."
+    },
+    {
+      "id": "naeherung",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne mit dem Taylorpolynom vom Grad $2$ von $e^x$ um $0$ einen Näherungswert für $e^{0{,}1}$ (vier Nachkommastellen).",
+      "answer": 1.105,
+      "tolerance": 0.00006,
+      "answerText": "1,1050",
+      "explain": "$1 + 0{,}1 + \\tfrac{0{,}01}{2} = 1{,}105$. Der echte Wert ist $1{,}10517\\ldots$, der Fehler etwa $\\tfrac{0{,}1^3}{6} \\approx 0{,}00017$, genau wie das Restglied vorhersagt."
+    },
+    {
+      "id": "beruehrung",
+      "type": "truefalse",
+      "md": "Das Taylorpolynom $T_n$ stimmt an der Stelle $x_0$ in Funktionswert und allen Ableitungen bis zur Ordnung $n$ mit $f$ überein.",
+      "answer": true,
+      "explain": "Genau so ist es konstruiert. Über die Güte der Näherung **außerhalb** von $x_0$ sagt das allein noch nichts. Dafür braucht man das Restglied."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-taylor", "level": 1, "label": "Koeffizient" },
+    { "id": "neu2", "type": "gen", "gen": "ana-taylor", "level": 2, "label": "Auswerten" },
+    { "id": "neu3", "type": "gen", "gen": "ana-taylor", "level": 3, "label": "Logarithmus" },
+    { "id": "neu4", "type": "gen", "gen": "ana-taylor", "level": 4, "label": "Restglied" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$T_n(x) = \\sum_{k \\le n} \\tfrac{f^{(k)}(x_0)}{k!}(x - x_0)^k$ trifft Wert und Ableitungen bis $n$.",
+        "Grad $1$ ist die Tangente, höhere Grade treffen auch die Krümmung.",
+        "Lagrange: Der Fehler ist $\\tfrac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}$ für ein unbekanntes $\\xi$.",
+        "Mit beschränkten Ableitungen liefert das eine garantierte Genauigkeit."
+      ]
+    }
+  ]
+}

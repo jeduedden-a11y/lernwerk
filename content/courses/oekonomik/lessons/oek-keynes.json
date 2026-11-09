@@ -1,0 +1,102 @@
+{
+  "id": "oek-keynes",
+  "title": "Keynes: Nachfrage und Unterbeschäftigung",
+  "subtitle": "Warum Sparen in der Krise schaden kann",
+  "source": "John Maynard Keynes, The General Theory of Employment, Interest and Money (1936)",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/John Maynard Keynes.md", "title": "John Maynard Keynes" },
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Multiplikator.md", "title": "Multiplikator" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Orange die geplante **Ersparnis** der Haushalte: Je höher das Einkommen, desto mehr wird gespart. Blau die geplanten **Investitionen** der Firmen, hier fest. Im Gleichgewicht passen beide zusammen.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [-2, 4], "xLabel": "Einkommen Y", "yLabel": "Ersparnis, Investition",
+        "vars": [{ "name": "c0", "min": 0, "max": 3, "value": 1, "hidden": true }],
+        "lines": [
+          { "id": "S", "label": "Ersparnis", "a": "0 - c0", "m": 0.4, "color": "orange" },
+          { "id": "I", "label": "Investition", "a": 1, "m": 0, "color": "accent" }
+        ],
+        "intersections": [{ "id": "E", "of": ["S", "I"], "label": "E" }],
+        "vlines": [{ "x": 8, "color": "gray", "label": "Vollbeschäftigung" }],
+        "readout": "Einkommen **{E_x|2}**, gesamte Ersparnis **{E_y|2}**"
+      },
+      "timeline": [
+        { "caption": "Gleichgewicht bei $Y = 5$: Es wird genau so viel gespart, wie investiert wird. Aber Vollbeschäftigung wäre erst bei $8$. Die Wirtschaft kann in einem Gleichgewicht mit Arbeitslosigkeit **stecken bleiben**, das ist Keynes' zentrale Behauptung." },
+        { "caption": "Die Haushalte haben Angst um ihre Jobs und beschließen, mehr zu sparen: Die Sparkurve rückt nach oben. Für jeden Einzelnen ist das vernünftig.", "to": { "c0": 0.4 }, "dur": 2400, "hold": 6500 },
+        { "caption": "Aber was einer spart, gibt er nicht aus, und das fehlt einem anderen als Einkommen. Das Gleichgewicht sinkt auf $Y = 3{,}5$. Und die gesamte Ersparnis? Am Ende genau so hoch wie vorher, nämlich gleich den Investitionen.", "hold": 8500 },
+        { "caption": "Das ist das **Sparparadoxon**: Wenn alle mehr sparen wollen, sinkt das Einkommen, und gespart wird insgesamt nicht mehr. Keynes' Folgerung: In der Krise muss jemand anderes die Nachfrage tragen, notfalls der Staat." }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Die Weltwirtschaftskrise der 1930er Jahre passte nicht zur klassischen Lehre. Nach ihr hätten fallende Löhne und Zinsen Arbeitslosigkeit von selbst beseitigen müssen. Stattdessen blieb ein Viertel der Arbeiter in den USA jahrelang ohne Job.\n\nKeynes' Erklärung in der **General Theory** (1936):\n\n- **Effektive Nachfrage:** Die Firmen produzieren, was sie verkaufen zu können erwarten. Ist die Nachfrage zu schwach, ist auch die Beschäftigung niedrig, und es gibt keinen Mechanismus, der das zuverlässig behebt.\n- **Sparen und Investieren** werden von verschiedenen Menschen aus verschiedenen Gründen entschieden. Investitionen hängen an unsicheren Erwartungen, Keynes spricht von **animal spirits**, dem Wagemut der Unternehmer.\n- **Liquiditätspräferenz:** In unsicheren Zeiten halten Menschen lieber Geld. Dann sinkt der Zins nicht weit genug, um Investitionen anzuregen.\n- **Lohnsenkungen** helfen nicht unbedingt: Löhne sind auch Einkommen, und weniger Einkommen heißt weniger Nachfrage.\n\nDaraus folgt die Rolle des Staates: In der Krise die Nachfrage stützen, durch Ausgaben, die über den **Multiplikator** wirken, und im Aufschwung zurückhaltend sein."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Konsumfunktion\n> $C = C_0 + cY$ mit marginaler Konsumquote $0 < c < 1$. Gespart wird $S = Y - C = -C_0 + (1 - c)Y$.\n\n> [!satz] Gleichgewicht\n> Ohne Staat ist das Einkommen im Gleichgewicht, wenn $S = I$, also $Y^* = \\dfrac{C_0 + I}{1 - c}$. Nichts garantiert, dass $Y^*$ Vollbeschäftigung bedeutet.\n\n> [!definition] Sparparadoxon\n> Steigt die Sparneigung aller, sinkt das Gleichgewichtseinkommen um $\\dfrac{\\Delta C_0}{1 - c}$, während die gesamte Ersparnis gleich der unveränderten Investition bleibt."
+    },
+    {
+      "id": "luecke",
+      "type": "widget",
+      "label": "Gegensteuern",
+      "md": "Gleiche Ausgangslage, Vollbeschäftigung bei $Y = 8$. Der Staat kann zusätzliche Investitionen anstoßen. **Verschiebe die Investitionslinie, bis das Gleichgewicht bei Vollbeschäftigung liegt.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [-2, 4], "xLabel": "Einkommen Y", "yLabel": "Ersparnis, Investition",
+        "lines": [
+          { "id": "S", "label": "Ersparnis", "a": -1, "m": 0.4, "color": "orange" },
+          { "id": "I", "label": "Investition", "a": 1, "m": 0, "color": "accent", "shift": true, "shiftRange": [-1, 2.5], "shiftStep": 0.1 }
+        ],
+        "intersections": [{ "id": "E", "of": ["S", "I"], "label": "E" }],
+        "vlines": [{ "x": 8, "color": "gray", "label": "Vollbeschäftigung" }],
+        "readout": "Zusätzliche Investition **{I_dy|1}**, Einkommen **{E_x|2}**"
+      },
+      "goal": { "when": "abs(E_x - 8) < 0.01", "hints": [{ "when": "E_x < 8", "text": "Das Einkommen ist erst {E_x|2}." }, { "when": "E_x > 8", "text": "Über der Vollbeschäftigung droht Inflation." }], "solve": { "I_dy": 1.2 } },
+      "explain": "$1{,}2$ zusätzliche Investitionen heben das Einkommen um $3$, von $5$ auf $8$: Der Multiplikator ist $\\tfrac{1}{0{,}4} = 2{,}5$. Keynes' Pointe: Eine vergleichsweise kleine Ausgabe kann eine große Lücke schließen."
+    },
+    {
+      "id": "lohn",
+      "type": "choice",
+      "md": "Ein Klassiker hätte in der Krise empfohlen, die Löhne zu senken, damit Arbeit wieder billig genug für Neueinstellungen ist. Was wendet Keynes ein?",
+      "options": [
+        { "md": "Niedrigere Löhne senken auch die Einkommen und damit die Nachfrage, sodass Firmen nicht mehr verkaufen können.", "correct": true },
+        { "md": "Löhne können grundsätzlich nicht sinken.", "why": "Keynes hält sie für schwer beweglich, aber das ist nicht sein Hauptargument." },
+        { "md": "Niedrigere Löhne erhöhen automatisch die Investitionen.", "why": "Das wäre gerade die klassische Hoffnung, die Keynes bezweifelt." }
+      ],
+      "explain": "Für einen einzelnen Betrieb sind Löhne Kosten. Für die ganze Wirtschaft sind sie zugleich Nachfrage. Was für einen richtig ist, muss für alle zusammen nicht stimmen, ein Muster wie beim Sparparadoxon."
+    },
+    {
+      "id": "kritik",
+      "type": "match",
+      "md": "Ordne die späteren Reaktionen auf Keynes zu.",
+      "pairs": [
+        ["Langfristig bestimmt vor allem die Geldmenge die Inflation, Fiskalpolitik wirkt nur kurz.", "Monetarismus (Friedman)"],
+        ["Staatliche Eingriffe verzerren Preissignale und führen zu Fehlinvestitionen.", "Österreichische Schule (Hayek)"],
+        ["Menschen sehen künftige Steuern voraus, darum verpufft schuldenfinanzierte Nachfrage teilweise.", "Rationale Erwartungen"],
+        ["Löhne und Preise passen sich träge an, deshalb wirkt Nachfragepolitik kurzfristig.", "Neukeynesianismus"]
+      ],
+      "explain": "Die Makroökonomik nach 1936 ist zu großen Teilen eine Auseinandersetzung mit Keynes. Viele Zentralbanken arbeiten heute mit neukeynesianischen Modellen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-keynes", "level": 1, "label": "Konsum" },
+    { "id": "neu2", "type": "gen", "gen": "oek-keynes", "level": 2, "label": "Gleichgewicht" },
+    { "id": "neu3", "type": "gen", "gen": "oek-keynes", "level": 3, "label": "Sparparadoxon" },
+    { "id": "neu4", "type": "gen", "gen": "oek-keynes", "level": 4, "label": "Lücke schließen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Die effektive Nachfrage bestimmt Produktion und Beschäftigung. Ein Gleichgewicht mit Arbeitslosigkeit ist möglich.",
+        "Sparparadoxon: Wollen alle mehr sparen, sinkt das Einkommen, die Ersparnis insgesamt nicht.",
+        "Investitionen hängen an unsicheren Erwartungen, Lohnsenkungen senken auch die Nachfrage.",
+        "In der Krise soll der Staat die Nachfrage stützen, der Multiplikator verstärkt die Wirkung."
+      ]
+    }
+  ]
+}

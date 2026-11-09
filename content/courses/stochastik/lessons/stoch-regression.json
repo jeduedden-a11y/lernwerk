@@ -1,0 +1,129 @@
+{
+  "id": "stoch-regression",
+  "title": "Korrelation und Regressionsgerade",
+  "subtitle": "Die Gerade, die am wenigsten danebenliegt",
+  "source": "Methode der kleinsten Quadrate (Gauß, Legendre); KCGO Mathematik Hessen, Q3.5",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Korrelation und Regression.md", "title": "Korrelation und Regression" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Acht Personen: Lernzeit und erreichte Punkte. Welche Gerade beschreibt die Punktwolke am besten, und was heißt überhaupt »am besten«?",
+      "widget": "regression",
+      "params": {
+        "points": [[1, 2.0], [2, 3.5], [3, 3.2], [4, 5.0], [5, 5.4], [6, 6.8], [7, 6.5], [8, 8.1]],
+        "x": [0, 9], "y": [0, 10], "xLabel": "Lernzeit in h", "yLabel": "Punkte"
+      },
+      "timeline": [
+        { "caption": "Ein erster Versuch: die waagerechte Gerade auf Höhe des Mittelwerts. Sie sagt »Lernzeit spielt keine Rolle«." },
+        { "caption": "Die gestrichelten Linien sind die **Residuen**, die senkrechten Abstände der Punkte zur Geraden. Jedes orange Quadrat hat ein Residuum als Seite, seine Fläche ist der quadrierte Fehler.", "hold": 4600 },
+        { "caption": "Kippen wir die Gerade, schrumpfen die Quadrate. Ihre Gesamtfläche misst, wie schlecht die Gerade passt.", "to": { "h0": 2.26, "h1": 7.87 }, "dur": 2600, "hold": 3600 },
+        { "caption": "Die **Regressionsgerade** (blau) ist die eine Gerade mit der kleinsten Gesamtfläche: die Methode der kleinsten Quadrate. Hier liegt unsere Gerade schon fast darauf.", "do": { "ls": true } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Hängen zwei Größen zusammen, etwa Lernzeit und Testergebnis, trägt man die Paare $(x_i, y_i)$ in ein **Streudiagramm** ein. Liegen die Punkte ungefähr auf einer Geraden, sucht man die Gerade $y = a + b\\,x$, die am besten passt.\n\nAber was heißt »am besten«? Für jeden Punkt gibt es eine senkrechte Abweichung $y_i - (a + b\\,x_i)$, das **Residuum**. Die übliche Antwort: Die Summe der **quadrierten** Residuen soll so klein wie möglich sein."
+    },
+    {
+      "id": "anpassen",
+      "type": "widget",
+      "label": "Anpassen",
+      "md": "Acht Personen, ihre Lernzeit in Stunden und ihre Punkte. Jedes orange Quadrat hat das Residuum als Seitenlänge, seine Fläche ist der quadrierte Fehler. **Ziehe die zwei orangefarbenen Griffe, bis die Quadrate zusammen höchstens $10\\,\\%$ größer sind als das bestmögliche Minimum.**",
+      "widget": "regression",
+      "params": {
+        "points": [[1, 2.0], [2, 3.5], [3, 3.2], [4, 5.0], [5, 5.4], [6, 6.8], [7, 6.5], [8, 8.1]],
+        "x": [0, 9], "y": [0, 10], "xLabel": "Lernzeit in h", "yLabel": "Punkte"
+      },
+      "goal": {
+        "when": "ratio <= 1.1",
+        "hints": [
+          { "when": "ratio > 3", "text": "Summe {sse|2}, das Minimum liegt bei {sseMin|2}. Die Gerade muss noch deutlich steigen." },
+          { "when": "ratio > 1.1", "text": "Summe {sse|2}, das Minimum ist {sseMin|2}. Schon nah dran, jetzt fein justieren." }
+        ]
+      },
+      "explain": "Die **Regressionsgerade** macht die Quadratsumme minimal (Methode der kleinsten Quadrate). Hier ist sie $y \\approx 1{,}37 + 0{,}82\\,x$ mit einer Quadratsumme von etwa $1{,}46$. Sie geht immer durch den Schwerpunkt $(\\bar x, \\bar y)$ der Punktwolke."
+    },
+    {
+      "id": "vorhersage",
+      "type": "numeric",
+      "label": "Vorhersagen",
+      "md": "Mit der Regressionsgeraden $y = 1{,}37 + 0{,}82\\,x$: Wie viele Punkte sagt sie für $5$ Stunden Lernzeit voraus?",
+      "answer": 5.47,
+      "tolerance": 0.02,
+      "placeholder": "Dezimalzahl",
+      "explain": "$1{,}37 + 0{,}82 \\cdot 5 = 5{,}47$. Vorsicht beim Extrapolieren: Für $40$ Stunden sagt die Gerade $34$ Punkte voraus, der Test hat aber nur $10$."
+    },
+    {
+      "id": "korrelation",
+      "type": "text",
+      "md": "Wie gut die Gerade passt, misst der **Korrelationskoeffizient**\n\n$$r = \\frac{\\sum (x_i - \\bar x)(y_i - \\bar y)}{\\sqrt{\\sum (x_i - \\bar x)^2 \\cdot \\sum (y_i - \\bar y)^2}} \\in [-1; 1].$$\n\nDas Vorzeichen gibt die Richtung an, der Betrag die Stärke des **linearen** Zusammenhangs. Bei $r = \\pm 1$ liegen alle Punkte exakt auf einer Geraden. Im Beispiel ist $r \\approx 0{,}98$."
+    },
+    {
+      "id": "ausreisser",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Jetzt kannst du die Punkte verschieben, die Regressionsgerade folgt sofort. **Bringe $r$ unter $0{,}8$, indem du einen einzigen Punkt verschiebst.**",
+      "widget": "regression",
+      "params": {
+        "points": [[1, 2.0], [2, 3.5], [3, 3.2], [4, 5.0], [5, 5.4], [6, 6.8], [7, 6.5], [8, 8.1]],
+        "x": [0, 9], "y": [0, 10], "xLabel": "Lernzeit in h", "yLabel": "Punkte",
+        "userLine": false, "dragPoints": true
+      },
+      "goal": {
+        "when": "r < 0.8",
+        "solve": { "points": [[1, 2.0], [2, 3.5], [3, 3.2], [4, 5.0], [5, 5.4], [6, 6.8], [7, 6.5], [8, 1.0]] },
+        "hints": [{ "when": "r >= 0.8", "text": "r = {r|3}. Ein Punkt am Rand, weit weg von der Geraden, wirkt am stärksten." }]
+      },
+      "explain": "Schon ein einziger Ausreißer am Rand kann $r$ drastisch senken und die Gerade kippen. Vor jeder Rechnung lohnt deshalb der Blick ins Streudiagramm."
+    },
+    {
+      "id": "stoerche",
+      "type": "choice",
+      "md": "In einer Reihe von Gemeinden gilt: Wo mehr Störche brüten, werden mehr Kinder geboren, $r \\approx 0{,}6$. Was folgt daraus?",
+      "options": [
+        { "md": "Nichts über Ursachen: Beides kann etwa mit ländlicher Umgebung zusammenhängen.", "correct": true },
+        { "md": "Störche erhöhen die Geburtenrate.", "why": "Korrelation zeigt einen gemeinsamen Verlauf, keine Wirkungsrichtung und keine Ursache." },
+        { "md": "Der Zusammenhang muss Zufall sein, weil er biologisch unmöglich ist.", "why": "Er kann ganz real sein, nur eben über eine dritte Größe vermittelt." }
+      ],
+      "explain": "Eine **Scheinkorrelation** entsteht, wenn eine dritte Größe beide beeinflusst. Ob $x$ wirklich $y$ verursacht, kann nur ein Experiment oder ein gut begründetes Modell zeigen, nicht $r$ allein."
+    },
+    {
+      "id": "staerke",
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Ordne jedem Wert von $r$ die passende Beschreibung zu.",
+      "pairs": [
+        ["$r = 0{,}95$", "starker positiver linearer Zusammenhang"],
+        ["$r = -0{,}9$", "starker negativer linearer Zusammenhang"],
+        ["$r = 0{,}4$", "schwacher positiver linearer Zusammenhang"],
+        ["$r \\approx 0$", "kein linearer Zusammenhang"]
+      ]
+    },
+    {
+      "id": "null",
+      "type": "truefalse",
+      "md": "Ist $r = 0$, dann hängen die beiden Größen überhaupt nicht zusammen.",
+      "answer": false,
+      "whyNot": "Die Punkte $(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)$ liegen exakt auf $y = x^2$, und trotzdem ist $r = 0$.",
+      "explain": "$r$ misst nur **lineare** Zusammenhänge. Eine Parabel steigt rechts so stark, wie sie links fällt, die Beiträge heben sich auf. Deshalb gilt wieder: erst hinsehen, dann rechnen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "stoch-regr", "level": 1, "label": "Neue Daten" },
+    { "id": "neu2", "type": "gen", "gen": "stoch-regr", "level": 2, "label": "Neue Daten" },
+    { "id": "neu3", "type": "gen", "gen": "stoch-regr", "level": 3, "label": "Neue Daten" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Die Regressionsgerade minimiert die Summe der quadrierten senkrechten Abweichungen und geht durch $(\\bar x, \\bar y)$.",
+        "$r \\in [-1; 1]$ misst Richtung und Stärke eines **linearen** Zusammenhangs.",
+        "Einzelne Ausreißer können Gerade und $r$ stark verändern.",
+        "Korrelation ist keine Kausalität, und $r = 0$ heißt nicht »kein Zusammenhang«."
+      ]
+    }
+  ]
+}

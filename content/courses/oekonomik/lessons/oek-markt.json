@@ -1,0 +1,190 @@
+{
+  "id": "oek-markt",
+  "title": "Angebot, Nachfrage, Gleichgewicht",
+  "subtitle": "Wie ein Preis entsteht, ohne dass ihn jemand festlegt",
+  "source": "Standardmodell des Wettbewerbsmarkts, vgl. Mankiw, Grundzüge der VWL, Kap. 4",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Marktgleichgewicht.md", "title": "Marktgleichgewicht" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Blau die **Nachfrage**: Je billiger ein Gut, desto mehr wollen kaufen. Orange das **Angebot**: Je teurer, desto mehr wollen verkaufen. Wo sich beide schneiden, passen Kauf- und Verkaufswünsche zusammen.",
+      "widget": "market",
+      "params": { "demand": [10, 1], "supply": [2, 1] },
+      "timeline": [
+        { "caption": "Im Schnittpunkt wird zum Preis $6$ genau die Menge $4$ gehandelt. Die blaue Fläche ist die **Konsumentenrente**: Viele hätten mehr bezahlt. Die orange die **Produzentenrente**: Viele hätten billiger verkauft." },
+        { "caption": "Eine Hitzewelle, und alle wollen Eis: Die Nachfrage verschiebt sich nach rechts oben. Bei altem Preis gäbe es zu wenig Eis, also steigt der Preis, bis wieder Gleichgewicht herrscht. Preis und Menge steigen.", "to": { "demand": 2 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Zurück zum normalen Wetter, aber eine neue Maschine senkt die Kosten: Das Angebot verschiebt sich nach rechts unten. Der Preis sinkt, die Menge steigt.", "to": { "demand": 0, "supply": -2 }, "dur": 2200, "hold": 7000 },
+        { "caption": "Niemand hat diese Preise festgelegt. Sie entstehen, weil Käufer und Verkäufer auf Knappheit reagieren. Das ist der **Preismechanismus**.", "to": { "supply": 0 }, "dur": 1600 }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Auf einem Markt treffen Käufer und Verkäufer eines Gutes aufeinander. Im einfachsten Modell, dem **vollkommenen Wettbewerb**, gibt es so viele von beiden, dass niemand den Preis allein bestimmen kann.\n\nZwei Kurven beschreiben den Markt:\n- Die **Nachfragekurve** $N$ zeigt, wie viel die Käufer zu jedem Preis kaufen wollen. Sie fällt: Je teurer, desto weniger.\n- Die **Angebotskurve** $A$ zeigt, wie viel die Verkäufer zu jedem Preis anbieten. Sie steigt: Je teurer, desto lohnender.\n\nIn Diagrammen steht der Preis nach ökonomischer Tradition auf der **senkrechten** Achse."
+    },
+    {
+      "id": "mechanismus",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Hier gilt $N: P = 10 - Q$ und $A: P = 2 + Q$. Die blaue Linie ist der aktuelle Marktpreis.\n\n**Stelle den Preis ein, bei dem genau so viel angeboten wie nachgefragt wird.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 270,
+        "vars": [{ "name": "p", "label": "Preis", "min": 1, "max": 11, "step": 0.5, "value": 8.5, "digits": 1 }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "A", "label": "A", "a": 2, "m": 1, "color": "orange" },
+          { "id": "PL", "a": "p", "m": 0, "color": "blue", "width": 2, "dashed": true }
+        ],
+        "intersections": [
+          { "id": "QN", "of": ["N", "PL"], "label": "", "guides": false },
+          { "id": "QA", "of": ["A", "PL"], "label": "", "guides": false }
+        ],
+        "readout": "Bei $P = {p|1}$ wollen die Käufer **{QN_x|1}** Einheiten, die Verkäufer bieten **{QA_x|1}** an. Angebotsüberschuss: {max(QA_x - QN_x, 0)|1}, Nachfrageüberschuss: {max(QN_x - QA_x, 0)|1}"
+      },
+      "goal": { "when": "abs(p - 6) < 0.01", "hints": [{ "when": "p > 6", "text": "Bei diesem Preis wird mehr angeboten als gekauft. Die Verkäufer bleiben auf Ware sitzen und senken den Preis." }, { "when": "p < 6", "text": "Bei diesem Preis wollen mehr Leute kaufen, als Ware da ist. Der Preis steigt." }], "solve": { "p": 6 } },
+      "explain": "Bei $P = 6$ werden genau $Q = 4$ Einheiten angeboten und nachgefragt. Das ist das **Marktgleichgewicht**: Kein Käufer geht leer aus, der bereit ist, den Preis zu zahlen, und kein Verkäufer bleibt auf Ware sitzen."
+    },
+    {
+      "id": "ueberschuss",
+      "type": "choice",
+      "md": "Der Preis liegt bei $P = 8$. Was passiert, wenn niemand eingreift?",
+      "options": [
+        { "md": "Es herrscht ein **Angebotsüberschuss**, Verkäufer unterbieten sich, der Preis sinkt.", "correct": true },
+        { "md": "Es herrscht ein **Nachfrageüberschuss**, der Preis steigt.", "why": "Bei $P = 8$ wollen Käufer nur $2$ Einheiten, angeboten werden $6$." },
+        { "md": "Nichts, jeder Preis ist ein Gleichgewicht.", "why": "Ein Gleichgewicht liegt nur vor, wenn sich Angebots- und Nachfragemenge decken." },
+        { "md": "Die Nachfragekurve verschiebt sich nach rechts.", "why": "Ein anderer Preis verschiebt keine Kurve, er bewegt den Markt **entlang** der Kurven." }
+      ],
+      "explain": "Überschüsse setzen den Preis in Bewegung, bis sie verschwunden sind. Diese Selbstkorrektur ist der Kern des Marktmechanismus."
+    },
+    {
+      "id": "rechnen",
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Für $N: P = 12 - 2Q$ und $A: P = 3 + Q$ liegt das Gleichgewicht bei\n\n$Q^* =$ {{0}} $\\qquad P^* =$ {{1}}",
+      "blanks": [
+        { "accept": [3], "numeric": true },
+        { "accept": [6], "numeric": true }
+      ],
+      "hint": "Im Gleichgewicht ist der Preis auf beiden Kurven gleich: Setze $12 - 2Q = 3 + Q$.",
+      "explain": "$12 - 2Q = 3 + Q \\Rightarrow 9 = 3Q \\Rightarrow Q^* = 3$, und $P^* = 3 + 3 = 6$."
+    },
+    {
+      "id": "verschiebung",
+      "type": "text",
+      "md": "> [!important] Bewegung entlang oder Verschiebung?\n> Ändert sich der **Preis des Gutes selbst**, bewegt man sich **entlang** der Kurven. Ändert sich **etwas anderes**, verschiebt sich eine Kurve.\n\n**Nachfrage** verschiebt sich zum Beispiel bei anderem Einkommen, anderen Vorlieben, anderen Preisen von Ersatz- oder Ergänzungsgütern oder mehr Käufern.\n\n**Angebot** verschiebt sich bei anderen Inputpreisen (Rohstoffe, Löhne), neuer Technologie, mehr oder weniger Anbietern, Steuern oder Subventionen.\n\nEine Verschiebung **nach rechts** heißt: Zu jedem Preis wird mehr nachgefragt oder angeboten."
+    },
+    {
+      "id": "zuordnen",
+      "type": "match",
+      "md": "Was verschiebt welche Kurve wohin?",
+      "pairs": [
+        ["Die Einkommen steigen, das Gut ist ein normales Gut.", "Nachfrage nach rechts"],
+        ["Der Preis eines wichtigen Rohstoffs steigt.", "Angebot nach links"],
+        ["Eine neue Maschine senkt die Produktionskosten.", "Angebot nach rechts"],
+        ["Ein Ersatzgut wird deutlich billiger.", "Nachfrage nach links"]
+      ],
+      "explain": "Einkommen und Ersatzgüter betreffen die **Käufer**, also die Nachfrage. Rohstoffpreise und Technik betreffen die **Kosten** der Verkäufer, also das Angebot."
+    },
+    {
+      "id": "schieben-einkommen",
+      "type": "widget",
+      "label": "Im Diagramm",
+      "md": "Die Einkommen steigen, das Gut ist ein normales Gut. **Verschiebe die richtige Kurve** mit ihrem runden Griff.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 270,
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent", "shift": true, "shiftRange": [-4, 4] },
+          { "id": "A", "label": "A", "a": 2, "m": 1, "color": "orange", "shift": true, "shiftRange": [-4, 4] }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "A"], "label": "E" }],
+        "readout": "Gleichgewicht: $Q^* = {E_x|1}$, $P^* = {E_y|1}$"
+      },
+      "goal": {
+        "when": "N_dy > 0 && A_dy == 0",
+        "hints": [
+          { "when": "A_dy != 0", "text": "Das Einkommen betrifft die Käufer. Lass die Angebotskurve, wo sie war." },
+          { "when": "N_dy < 0", "text": "Mit mehr Einkommen wollen die Käufer zu jedem Preis **mehr** kaufen." },
+          { "when": "N_dy == 0", "text": "Ziehe den Griff auf der Nachfragekurve." }
+        ],
+        "solve": { "N_dy": 2 }
+      },
+      "explain": "Die Nachfrage verschiebt sich nach rechts. Neues Gleichgewicht: **höherer Preis und höhere Menge**. Die Verkäufer reagieren auf den höheren Preis, indem sie sich entlang ihrer Angebotskurve nach oben bewegen."
+    },
+    {
+      "id": "frost",
+      "type": "widget",
+      "label": "Punkt setzen",
+      "md": "Ein Frost vernichtet einen Teil der Ernte: Das Angebot sinkt von $A_0$ auf $A_1: P = 4 + Q$.\n\n**Tippe auf das neue Gleichgewicht.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 270,
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "A0", "label": "A₀", "a": 2, "m": 1, "color": "orange", "dashed": true, "opacity": 0.5 },
+          { "id": "A1", "label": "A₁", "a": 4, "m": 1, "color": "orange" }
+        ],
+        "place": { "label": "neu", "snap": 0.5 },
+        "readout": "Gesetzter Punkt: $Q = {place_x|1}$, $P = {place_y|1}$"
+      },
+      "goal": {
+        "place": true,
+        "when": "abs(place_x - 3) < 0.3 && abs(place_y - 7) < 0.3",
+        "hints": [
+          { "when": "abs(place_x - 4) < 0.3 && abs(place_y - 6) < 0.3", "text": "Das ist das **alte** Gleichgewicht auf $A_0$." },
+          { "when": "abs(place_y - (10 - place_x)) > 0.3", "text": "Das neue Gleichgewicht liegt auf der Nachfragekurve $N$, denn die Käufer haben sich nicht verändert." }
+        ],
+        "message": "Gesucht ist der Schnittpunkt von $N$ und $A_1$.",
+        "solve": { "place": [3, 7] }
+      },
+      "explain": "$10 - Q = 4 + Q$ ergibt $Q^* = 3$ und $P^* = 7$. Weniger Angebot heißt: **höherer Preis, geringere Menge**."
+    },
+    {
+      "id": "beides",
+      "type": "widget",
+      "label": "Erkunden",
+      "md": "Gleichzeitig steigen die Einkommen (Nachfrage nach rechts) **und** die Rohstoffpreise (Angebot nach links). Verschiebe beide Kurven unterschiedlich stark und beobachte Preis und Menge.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 14], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 270,
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent", "shift": true, "shiftRange": [0, 4] },
+          { "id": "A", "label": "A", "a": 2, "m": 1, "color": "orange", "shift": true, "shiftRange": [0, 4] }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "A"], "label": "E" }],
+        "readout": "$Q^* = {E_x|2}$ (vorher 4), $P^* = {E_y|2}$ (vorher 6)"
+      }
+    },
+    {
+      "id": "beides-frage",
+      "type": "multi",
+      "md": "Nachfrage steigt, Angebot sinkt. Welche Aussagen gelten **immer**, egal wie stark die Verschiebungen sind?",
+      "options": [
+        { "md": "Der Gleichgewichtspreis steigt.", "correct": true },
+        { "md": "Die Gleichgewichtsmenge steigt.", "why": "Ist der Angebotsrückgang stärker, sinkt die Menge. Probiere es im Diagramm aus." },
+        { "md": "Die Gleichgewichtsmenge sinkt.", "why": "Ist der Nachfrageanstieg stärker, steigt die Menge." },
+        { "md": "Wie sich die Menge ändert, hängt vom Ausmaß der Verschiebungen ab.", "correct": true }
+      ],
+      "explain": "Beide Verschiebungen treiben den Preis nach oben. Bei der Menge arbeiten sie gegeneinander, das Ergebnis ist **unbestimmt**, solange man nur die Richtungen kennt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-markt", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "oek-markt", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "oek-markt", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "oek-markt", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Im **Gleichgewicht** schneiden sich Angebot und Nachfrage. Dort wird der Markt geräumt.",
+        "Über- und Unterschüsse bewegen den Preis zurück zum Gleichgewicht.",
+        "Preisänderung des Gutes selbst: Bewegung **entlang** der Kurve. Andere Ursachen: **Verschiebung** der Kurve.",
+        "Bei zwei gleichzeitigen Verschiebungen ist nur eine der beiden Größen sicher bestimmt."
+      ]
+    }
+  ]
+}

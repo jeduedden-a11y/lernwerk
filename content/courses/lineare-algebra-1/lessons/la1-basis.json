@@ -1,0 +1,92 @@
+{
+  "id": "la1-basis",
+  "title": "Lineare Unabhängigkeit, Basis, Dimension",
+  "subtitle": "Wie viele Richtungen ein Raum wirklich hat",
+  "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 2",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md", "title": "Basis und Dimension" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Zwei Vektoren spannen manchmal die ganze Ebene auf und manchmal nur eine Gerade. Der Unterschied heißt lineare Unabhängigkeit.",
+      "widget": "vector-span",
+      "params": { "v": [2, 1], "w": [-1, 2], "a": 1, "b": 1 },
+      "timeline": [
+        { "caption": "$v$ und $w$ zeigen in verschiedene Richtungen. Mit $a \\cdot v + b \\cdot w$ erreicht man jeden Punkt der Ebene." },
+        { "caption": "Jetzt drehen wir $w$ langsam in Richtung von $v$.", "to": { "wx": 3, "wy": 1.5 }, "dur": 2600, "hold": 3000 },
+        { "caption": "Liegt $w$ auf der Geraden durch $v$, ist $w = 1{,}5 \\cdot v$. Dann bringt $w$ keine neue Richtung: Alle Kombinationen bleiben auf einer Geraden (hell markiert). $v$ und $w$ sind **linear abhängig**.", "to": { "wx": 3, "wy": 1.5, "a": 0.5, "b": 1 }, "dur": 800, "hold": 5600 },
+        { "caption": "Abhängig heißt auch: Es gibt eine Kombination mit nicht lauter Nullen, die den Nullvektor ergibt, hier $3 \\cdot v - 2 \\cdot w = 0$.", "to": { "a": 3, "b": -2 }, "dur": 1800, "hold": 5200 },
+        { "caption": "Zwei unabhängige Vektoren in der Ebene bilden eine **Basis**: Jeder Punkt hat genau eine Darstellung $a \\cdot v + b \\cdot w$. Die Zahl der Basisvektoren, hier $2$, ist die **Dimension**.", "to": { "wx": -1, "wy": 2, "a": 1, "b": 1 }, "dur": 2200 }
+      ]
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "Vektoren $v_1, \\dots, v_k$ heißen **linear unabhängig**, wenn aus\n\n$$\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0$$\n\nfolgt, dass alle $\\lambda_i = 0$ sind. Sonst heißen sie **linear abhängig**: Dann lässt sich einer der Vektoren durch die anderen ausdrücken, er ist überflüssig.\n\nEine **Basis** von $V$ ist eine Familie von Vektoren, die linear unabhängig ist und $V$ erzeugt. Jeder Vektor hat dann **genau eine** Darstellung als Linearkombination der Basis, seine **Koordinaten**.\n\nAlle Basen eines Vektorraums haben gleich viele Elemente (**Austauschsatz von Steinitz**). Diese Zahl ist die **Dimension** $\\dim V$. Beispiele: $\\dim \\mathbb{R}^n = n$, $\\dim$ der Polynome vom Grad $\\le 2$ ist $3$ (Basis $1, x, x^2$)."
+    },
+    {
+      "id": "abhaengig",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "**Ziehe $w$ so, dass $v$ und $w$ linear abhängig sind.** Achte darauf, was mit dem Spann passiert.",
+      "widget": "vector-span",
+      "params": { "v": [2, 1], "w": [-1, 2], "a": 1, "b": 1 },
+      "goal": { "dependent": true },
+      "explain": "Abhängig sind $v$ und $w$, sobald $w$ auf der Geraden durch $v$ liegt, also $w = t \\cdot v$ für ein $t$, auch $t = 0$. Dann schrumpft der Spann von der Ebene auf diese Gerade."
+    },
+    {
+      "id": "koordinaten",
+      "type": "cloze",
+      "label": "Koordinaten",
+      "md": "Bezüglich der Basis $b_1 = \\begin{pmatrix}1\\\\1\\end{pmatrix}$, $b_2 = \\begin{pmatrix}1\\\\-1\\end{pmatrix}$ hat $\\begin{pmatrix}3\\\\4\\end{pmatrix}$ die Koordinaten\n\n$\\begin{pmatrix}3\\\\4\\end{pmatrix} =$ {{0}} $\\cdot b_1 +$ {{1}} $\\cdot b_2$",
+      "blanks": [
+        { "accept": [3.5], "numeric": true, "tolerance": 0.001, "placeholder": "Zahl" },
+        { "accept": [-0.5], "numeric": true, "tolerance": 0.001, "placeholder": "Zahl" }
+      ],
+      "hint": "$a + b = 3$ und $a - b = 4$. Addiere und subtrahiere die Gleichungen.",
+      "explain": "$2a = 7$, also $a = 3{,}5$, und $b = -0{,}5$. Dieselbe Spalte $(3, 4)$ hat in einer anderen Basis andere Koordinaten. Die Standardbasis ist nur eine von unendlich vielen."
+    },
+    {
+      "id": "drei",
+      "type": "truefalse",
+      "md": "Drei Vektoren im $\\mathbb{R}^2$ sind immer linear abhängig.",
+      "answer": true,
+      "explain": "Der $\\mathbb{R}^2$ hat Dimension $2$. Eine linear unabhängige Familie kann nie mehr Elemente haben als die Dimension, sonst ließe sie sich zu einer Basis mit mehr als zwei Elementen ergänzen."
+    },
+    {
+      "id": "test",
+      "type": "reveal",
+      "label": "Werkzeug",
+      "md": "Wie prüft man schnell, ob $n$ Vektoren im $\\mathbb{R}^n$ eine Basis bilden? Überlege, was das mit der Matrix zu tun hat, die sie als Spalten hat.",
+      "solution": "Die $n$ Vektoren bilden genau dann eine Basis, wenn die Matrix $A$ mit diesen Spalten **invertierbar** ist, also $\\det A \\ne 0$. Denn $A\\lambda = \\lambda_1 v_1 + \\dots + \\lambda_n v_n$, und $A\\lambda = 0$ hat genau dann nur die Lösung $\\lambda = 0$, wenn $\\det A \\ne 0$. Bei Matrizen, die nicht quadratisch sind, zählt man stattdessen den **Rang** mit dem Gauß-Verfahren."
+    },
+    {
+      "id": "polynome",
+      "type": "choice",
+      "md": "Welche Dimension hat der Vektorraum der Polynome vom Grad höchstens $3$?",
+      "options": [
+        { "md": "$4$", "correct": true },
+        { "md": "$3$", "why": "Gezählt werden die Koeffizienten: $a_0 + a_1 x + a_2 x^2 + a_3 x^3$ hat vier davon." },
+        { "md": "unendlich", "why": "Alle Polynome zusammen hätten unendliche Dimension, mit Gradgrenze sind es endlich viele." }
+      ],
+      "explain": "Die Basis $1, x, x^2, x^3$ hat vier Elemente. Ein Polynom vom Grad $\\le 3$ entspricht seinem Koeffizientenvektor im $\\mathbb{R}^4$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "la-basis", "level": 1, "label": "Neue Vektoren" },
+    { "id": "neu2", "type": "gen", "gen": "la-basis", "level": 2, "label": "Neue Vektoren" },
+    { "id": "neu3", "type": "gen", "gen": "la-basis", "level": 3, "label": "Neue Vektoren" },
+    { "id": "neu4", "type": "gen", "gen": "la-basis", "level": 4, "label": "Mit Parameter" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste aus dieser Lektion:",
+      "points": [
+        "Linear unabhängig: Nur die triviale Kombination ergibt den Nullvektor. Abhängig: Ein Vektor ist überflüssig.",
+        "Basis: unabhängig und erzeugend. Jeder Vektor hat eindeutige Koordinaten.",
+        "Alle Basen sind gleich groß. Ihre Größe ist die Dimension.",
+        "$n$ Vektoren im $\\mathbb{R}^n$ bilden genau dann eine Basis, wenn ihre Determinante nicht null ist."
+      ]
+    }
+  ]
+}

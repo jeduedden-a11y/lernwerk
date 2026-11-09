@@ -1,0 +1,113 @@
+{
+  "id": "eth-verwandtschaft",
+  "title": "Abstammung und Lineages",
+  "subtitle": "Wer gehört zu wem, und nach welcher Regel?",
+  "source": "Klassische Verwandtschaftsethnologie: Malinowski zu den Trobriandern, Evans-Pritchard, The Nuer (1940), Lévi-Strauss, Les structures élémentaires de la parenté (1949)",
+  "vault": [
+    { "path": "02 Wiki/Ethnologie/Abstammung und Lineage.md", "title": "Abstammung und Lineage" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Verwandtschaftsdiagramm: Dreiecke sind Männer, Kreise Frauen, das Gleichheitszeichen eine Ehe. In der Mitte Ego, der Mensch, aus dessen Sicht wir schauen. Wer gehört zu seiner Gruppe?",
+      "widget": "kinship",
+      "params": { "start": "patri" },
+      "timeline": [
+        { "caption": "**Patrilinear:** Zugehörigkeit wird über den Vater weitergegeben. Ego gehört zur Gruppe seines Vaters, ebenso dessen Geschwister und die Kinder seiner Brüder. Die Kinder der Vaterschwester gehören zur Gruppe ihres eigenen Vaters.", "do": { "mode": "patri" }, "hold": 9000 },
+        { "caption": "**Matrilinear:** Zugehörigkeit läuft über die Mutter. Jetzt gehören die Mutter, ihre Geschwister und die Kinder ihrer Schwester dazu, der Vater nicht. Der wichtigste Mann für Ego ist oft der Bruder der Mutter.", "do": { "mode": "matri" }, "hold": 9000 },
+        { "caption": "**Kreuzcousins** sind die Kinder von Vaterschwester und Mutterbruder. Bei beiden Regeln gehören sie nie zu Egos eigener Gruppe, und gerade deshalb gelten sie in vielen Gesellschaften als ideale Ehepartner.", "do": { "mode": "cross" }, "hold": 8500 },
+        { "caption": "**Parallelcousins** sind die Kinder von Vaterbruder und Mutterschwester. Je nach Regel gehören sie zur eigenen Lineage und werden oft wie Geschwister angeredet. Verwandtschaft ist also keine Biologie, sondern eine soziale Ordnung.", "do": { "mode": "parallel" } }
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "md": "Verwandtschaft ist in der Ethnologie nicht einfach Biologie. Jede Gesellschaft legt fest, **wer als verwandt gilt** und was daraus folgt: wer erbt, wer wen heiraten darf, wer im Streit zu wem hält.\n\nZur Notation: Ein **Dreieck** steht für einen Mann, ein **Kreis** für eine Frau, ein Doppelstrich für eine Heirat. Personen werden aus Sicht von **Ego** benannt, mit den englischen Kürzeln F (Vater), M (Mutter), B (Bruder), Z (Schwester), S (Sohn), D (Tochter). **FZS** ist also der Sohn der Schwester des Vaters."
+    },
+    {
+      "id": "erkunden",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Schalte zwischen den Regeln um. Markiert ist, wer jeweils dazugehört.",
+      "widget": "kinship",
+      "params": { "start": "patri" }
+    },
+    {
+      "id": "patri",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Eine **Lineage** ist eine Abstammungsgruppe, deren Mitglieder sich auf einen gemeinsamen bekannten Vorfahren zurückführen. **Tippe alle Personen an, die zu Egos patrilinearer Lineage gehören.**",
+      "widget": "kinship",
+      "params": { "task": "patri", "taskText": "Patrilinear: Die Zugehörigkeit wird nur über **Männer** weitergegeben. Tippe Personen an, um sie zu markieren. Ego selbst zählt mit." },
+      "goal": { "set": "patri" },
+      "explain": "Dazu gehören Ego, seine Schwester, der Vater, dessen Bruder und Schwester, der Vatersvater und der Sohn des Vaterbruders. Die Kinder der Vaterschwester **nicht**: Sie erben die Zugehörigkeit von ihrem eigenen Vater."
+    },
+    {
+      "id": "mutter",
+      "type": "truefalse",
+      "md": "In einer patrilinearen Gesellschaft gehört Egos Mutter zu Egos Lineage.",
+      "answer": false,
+      "whyNot": "Sie gehört zur Lineage **ihres** Vaters, in die sie hineingeboren wurde. In die Lineage ihres Mannes heiratet sie ein, ohne Mitglied zu werden.",
+      "explain": "Das ist in vielen patrilinearen Gesellschaften so, etwa bei den Nuer im Südsudan, die Evans-Pritchard 1940 beschrieb. Manche Gesellschaften nehmen eingeheiratete Frauen aber durchaus auf."
+    },
+    {
+      "id": "matri",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "**Tippe alle Personen an, die zu Egos matrilinearer Lineage gehören.**",
+      "widget": "kinship",
+      "params": { "task": "matri", "taskText": "Matrilinear: Die Zugehörigkeit wird nur über **Frauen** weitergegeben. Ego selbst zählt mit." },
+      "goal": { "set": "matri" },
+      "explain": "Ego, Schwester, Mutter, Mutterbruder, Mutterschwester, Muttersmutter und die Tochter der Mutterschwester. Der Vater gehört nicht dazu."
+    },
+    {
+      "id": "trobriand",
+      "type": "choice",
+      "md": "Die Trobriander, bei denen Malinowski forschte, sind matrilinear. Wer ist dort für einen Jungen die wichtigste männliche Autorität in Fragen von Erbe und Zugehörigkeit?",
+      "options": [
+        { "md": "Der Bruder der Mutter (MB)", "correct": true },
+        { "md": "Der Vater (F)", "why": "Der Vater gehört zu einer anderen Lineage. Er ist liebevoller Erzieher, aber nicht der, von dem man erbt." },
+        { "md": "Der Vatersvater (FF)", "why": "Er gehört zur Lineage des Vaters, nicht zu Egos." },
+        { "md": "Der Bruder des Vaters (FB)", "why": "Auch er gehört zur Lineage des Vaters." }
+      ],
+      "explain": "Man nennt diese besondere Stellung des Mutterbruders das **Avunkulat**. Ein Junge erbt Land und Rang von ihm, nicht von seinem Vater."
+    },
+    {
+      "id": "kreuz",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "**Markiere Egos Kreuzcousins**: Kinder von Geschwistern der Eltern, die ein anderes Geschlecht haben als der jeweilige Elternteil.",
+      "widget": "kinship",
+      "params": { "task": "cross", "taskText": "Kreuzcousins: Kinder der Vaterschwester und des Mutterbruders." },
+      "goal": { "set": "cross" },
+      "explain": "FZS und MBD. Egal ob patri- oder matrilinear: Kreuzcousins gehören nie zu Egos eigener Lineage. Das macht sie in vielen Gesellschaften zu bevorzugten Heiratspartnern."
+    },
+    {
+      "id": "theorien",
+      "type": "match",
+      "md": "Ordne die Ansätze zu.",
+      "pairs": [
+        ["Deszendenztheorie", "Gesellschaft ist um Abstammungsgruppen wie Lineages organisiert, etwa bei den Nuer."],
+        ["Allianztheorie (Lévi-Strauss)", "Entscheidend ist der Austausch von Heiratspartnern zwischen Gruppen."],
+        ["Kritik von David Schneider", "Verwandtschaft ist ein kulturelles Konzept, nicht überall auf Biologie gegründet."]
+      ],
+      "explain": "Lévi-Strauss sah im Inzestverbot den Ursprung der Allianz: Weil man innerhalb der eigenen Gruppe nicht heiraten darf, muss man mit anderen Gruppen tauschen. Mauss' Gabe im Großen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "eth-verwandtschaft", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "eth-verwandtschaft", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "eth-verwandtschaft", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "eth-verwandtschaft", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Verwandtschaft ist sozial definiert. Notation: Dreieck, Kreis, F M B Z S D aus Sicht von Ego.",
+        "Patrilinear: Zugehörigkeit über Männer, matrilinear: über Frauen. Eingeheiratete gehören nicht automatisch dazu.",
+        "Kreuzcousins (FZ- und MB-Kinder) liegen immer außerhalb der eigenen Lineage, Parallelcousins oft innerhalb.",
+        "Deszendenz- und Allianztheorie betonen Abstammung beziehungsweise Heiratsaustausch."
+      ]
+    }
+  ]
+}

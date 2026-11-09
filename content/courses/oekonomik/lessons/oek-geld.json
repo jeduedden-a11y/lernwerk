@@ -1,0 +1,92 @@
+{
+  "id": "oek-geld",
+  "title": "Geld, Zinsen und Geldpolitik",
+  "subtitle": "Wer Geld schafft und wie die Zentralbank steuert",
+  "source": "Lehrbuchstandard der Makroökonomik; Irving Fisher, The Purchasing Power of Money (1911)",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldschöpfung.md", "title": "Geldschöpfung" },
+    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldpolitik.md", "title": "Geldpolitik" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Jemand zahlt $100$ € bei einer Bank ein. Die Bank muss einen Anteil $r$ als Reserve halten und verleiht den Rest. Der Kredit wird ausgegeben und landet als Einlage bei der nächsten Bank. Blau die neue Einlage jeder Runde, orange alle Einlagen zusammen.",
+      "widget": "sequence",
+      "params": { "term": "100*(1 - r)^(n-1)", "mode": "both", "vars": [{ "name": "r", "label": "Reservesatz r", "min": 0.05, "max": 0.5, "step": 0.05, "value": 0.2, "digits": 2 }], "limit": "100/r", "limitLabel": "Obergrenze 100/r", "nMax": 25, "n": 1, "yRange": [0, 1050], "readout": "Runde {N|0}: neue Einlage {a|1} €, Einlagen zusammen **{s|1} €**" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "Runde $1$: $100$ € Einlage. Bei $r = 20\\,\\%$ behält die Bank $20$ € und verleiht $80$ €." },
+        { "caption": "Die $80$ € werden ausgegeben und wieder eingezahlt, davon werden $64$ € verliehen, dann $51{,}20$ € … Jede Runde schafft neues **Giralgeld**: Guthaben, mit denen man bezahlen kann.", "to": { "N": 4 }, "dur": 1600, "hold": 7500 },
+        { "caption": "Zusammen können höchstens $\\tfrac{100}{0{,}2} = 500$ € Einlagen entstehen. Aus $100$ € Zentralbankgeld werden bis zu $500$ € Geld, mit dem man bezahlen kann.", "to": { "N": 25 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Je kleiner der Reservesatz, desto größer die mögliche Geldschöpfung: bei $r = 10\\,\\%$ bis zu $1000$ €. In Wirklichkeit begrenzen eher die Nachfrage nach Krediten und die Eigenkapitalregeln, wie viel Geld entsteht.", "to": { "r": 0.1 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Geld ist, womit man allgemein bezahlen kann. Es erfüllt drei Aufgaben: **Tauschmittel**, **Recheneinheit** und **Wertaufbewahrung**. Den größten Teil der Geldmenge bilden nicht Scheine, sondern **Bankguthaben**. Und diese entstehen, wenn Banken Kredite vergeben: Der Kredit wird dem Kunden als Guthaben gutgeschrieben.\n\nDie **Zentralbank** steuert das nicht direkt, sondern über den **Leitzins**, zu dem sich Banken bei ihr Geld leihen. Ein höherer Leitzins verteuert Kredite in der ganzen Wirtschaft: Es wird weniger investiert und gekauft, die Nachfrage sinkt, und mit ihr der Preisdruck. Ein niedrigerer Leitzins wirkt umgekehrt.\n\nWarum interessiert sich die Zentralbank so sehr für die Preise? Die **Quantitätsgleichung** $M \\cdot V = P \\cdot Y$ verbindet Geldmenge $M$, Umlaufgeschwindigkeit $V$, Preisniveau $P$ und reale Produktion $Y$. Wächst die Geldmenge dauerhaft schneller als die Produktion, steigen auf Dauer die Preise: **Inflation**. Für Sparer zählt deshalb der **Realzins**, der Zins nach Abzug der Inflation."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Geldschöpfung\n> Bei einem Reservesatz $r$ kann eine Einlage $D$ höchstens Einlagen von $\\dfrac{D}{r}$ nach sich ziehen: $D + (1-r)D + (1-r)^2 D + \\dots$\n\n> [!definition] Quantitätsgleichung\n> $M \\cdot V = P \\cdot Y$, in Wachstumsraten näherungsweise $\\%\\Delta M + \\%\\Delta V = \\%\\Delta P + \\%\\Delta Y$.\n\n> [!definition] Fisher-Gleichung\n> $1 + i = (1 + r)(1 + \\pi)$, näherungsweise $r \\approx i - \\pi$, mit Nominalzins $i$, Realzins $r$ und Inflation $\\pi$.\n\nDas Ziel der Europäischen Zentralbank ist eine Inflation von $2\\,\\%$ auf mittlere Sicht."
+    },
+    {
+      "id": "zins",
+      "type": "widget",
+      "label": "Einstellen",
+      "md": "Der Geldmarkt: Blau die Nachfrage nach Geld (bei hohem Zins hält man lieber Anleihen als Bargeld), rot gestrichelt das Geldangebot der Zentralbank. **Stelle die Geldmenge so ein, dass der Zins bei $3\\,\\%$ liegt.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 10], "xLabel": "Geldmenge", "yLabel": "Zins in %",
+        "vars": [{ "name": "Ms", "label": "Geldangebot", "min": 2, "max": 9, "step": 0.5, "value": 4, "digits": 1 }],
+        "lines": [{ "id": "L", "label": "Geldnachfrage", "a": 10, "m": -1, "color": "accent" }],
+        "derived": [{ "name": "i", "expr": "10 - Ms" }],
+        "vlines": [{ "x": "Ms", "color": "red", "label": "Angebot" }],
+        "hlines": [{ "y": "i", "color": "gray", "label": "Zins" }],
+        "readout": "Geldmenge {Ms|1}, Zins **{i|1} %**"
+      },
+      "goal": { "when": "abs(i - 3) < 0.01", "hints": [{ "when": "i > 3", "text": "Der Zins ist noch {i|1} %. Mehr Geld senkt den Zins." }, { "when": "i < 3", "text": "Der Zins ist auf {i|1} % gefallen. Weniger Geld." }], "solve": { "Ms": 7 } },
+      "explain": "Bei der Geldmenge $7$ trifft das Angebot die Nachfrage beim Zins $3\\,\\%$. Mehr Geld senkt den Zins, weil die Leute es nur halten, wenn das Halten von Anleihen weniger lockt."
+    },
+    {
+      "id": "real",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Das Tagesgeldkonto bringt $2\\,\\%$ Zinsen, die Inflation beträgt $6\\,\\%$. Wie hoch ist der Realzins näherungsweise (in Prozent)?",
+      "answer": -4,
+      "tolerance": 0.1,
+      "explain": "$2 - 6 = -4\\,\\%$. Genau: $\\tfrac{1{,}02}{1{,}06} - 1 \\approx -3{,}8\\,\\%$. Das Guthaben wächst nominal, verliert aber an Kaufkraft."
+    },
+    {
+      "id": "leitzins",
+      "type": "order",
+      "label": "Wirkungskette",
+      "md": "Die Zentralbank erhöht den Leitzins. Ordne die Wirkungskette.",
+      "items": [
+        "Banken leihen sich Zentralbankgeld teurer.",
+        "Kredite für Firmen und Haushalte werden teurer.",
+        "Es wird weniger investiert und auf Kredit gekauft.",
+        "Die gesamtwirtschaftliche Nachfrage sinkt.",
+        "Der Preisauftrieb lässt nach."
+      ],
+      "explain": "Das ist der **Zinskanal** der Geldpolitik. Er wirkt mit Verzögerung, oft von ein bis zwei Jahren. Darum muss eine Zentralbank auf die erwartete, nicht auf die heutige Inflation reagieren."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-geld", "level": 1, "label": "Geldschöpfung" },
+    { "id": "neu2", "type": "gen", "gen": "oek-geld", "level": 2, "label": "Quantitätsgleichung" },
+    { "id": "neu3", "type": "gen", "gen": "oek-geld", "level": 3, "label": "Realzins" },
+    { "id": "neu4", "type": "gen", "gen": "oek-geld", "level": 4, "label": "Anleihen" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Banken schaffen Giralgeld durch Kredite. Bei Reservesatz $r$ höchstens das $\\tfrac1r$-Fache einer Einlage.",
+        "Die Zentralbank steuert über den Leitzins: höhere Zinsen dämpfen Nachfrage und Inflation.",
+        "Quantitätsgleichung $MV = PY$: Dauerhaft schnelleres Geldmengenwachstum als Produktionswachstum heißt Inflation.",
+        "Realzins ungefähr Nominalzins minus Inflation."
+      ]
+    }
+  ]
+}

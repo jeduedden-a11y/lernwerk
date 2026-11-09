@@ -1,0 +1,189 @@
+{
+  "id": "oek-staat",
+  "title": "Steuern, Höchst- und Mindestpreise",
+  "subtitle": "Was passiert, wenn der Staat in den Markt eingreift",
+  "source": "Renten, Steuerinzidenz und Preiskontrollen, vgl. Mankiw, Grundzüge der VWL, Kap. 6 bis 8",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Konsumenten- und Produzentenrente.md", "title": "Konsumenten- und Produzentenrente" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Steuerinzidenz.md", "title": "Steuerinzidenz" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Der Staat erhebt auf jede verkaufte Einheit eine Steuer $t$. Für die Verkäufer wirkt das wie höhere Kosten: Die Angebotskurve rückt um $t$ nach oben.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P",
+        "vars": [{ "name": "t", "min": 0, "max": 6, "value": 0, "hidden": true }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "A0", "label": "A", "a": 2, "m": 1, "color": "orange", "dashed": true, "opacity": 0.5 },
+          { "id": "AT", "label": "A + t", "a": "2 + t", "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "AT"], "label": "" }, { "id": "E0", "of": ["N", "A0"], "label": "", "guides": false }],
+        "shades": [
+          { "when": "t > 0.05", "points": [[0, "E_y - t"], [0, "E_y"], ["E_x", "E_y"], ["E_x", "E_y - t"]], "color": "green", "opacity": 0.28, "label": "Steuer" },
+          { "when": "t > 0.05", "points": [["E_x", "E_y"], ["E_x", "E_y - t"], ["E0_x", "E0_y"]], "color": "red", "opacity": 0.35 }
+        ],
+        "readout": "Steuer {t|1}: Käufer zahlen **{E_y|2}**, Verkäufer behalten **{E_y - t|2}**, Menge {E_x|2}, Aufkommen {t*E_x|2}, Verlust {0.5*t*(4 - E_x)|2}"
+      },
+      "timeline": [
+        { "caption": "Ohne Steuer: Preis $6$, Menge $4$." },
+        { "caption": "Eine Steuer von $2$: Die Käufer zahlen jetzt $7$, die Verkäufer behalten $5$. Die Last teilen sich beide, hier je zur Hälfte, weil beide Kurven gleich steil sind. Grün: das Steueraufkommen.", "to": { "t": 2 }, "dur": 2000, "hold": 7500 },
+        { "caption": "Das rote Dreieck ist der **Wohlfahrtsverlust**: Geschäfte, die beiden Seiten genützt hätten, finden nicht mehr statt. Niemand bekommt diesen Betrag, auch der Staat nicht.", "hold": 7000 },
+        { "caption": "Bei $t = 4$ hat sich der Verlust vervierfacht, obwohl die Steuer nur doppelt so hoch ist: Er wächst mit dem Quadrat des Steuersatzes. Hohe Steuern auf einzelne Güter sind deshalb besonders teuer.", "to": { "t": 4 }, "dur": 2000 }
+      ]
+    },
+    {
+      "id": "renten",
+      "type": "text",
+      "md": "Um Eingriffe zu bewerten, braucht man ein Maß für den Nutzen eines Marktes.\n\n> [!definition] Renten\n> Die **Konsumentenrente** (KR) ist die Summe aus Zahlungsbereitschaft minus gezahltem Preis über alle Käufer: die Fläche zwischen Nachfragekurve und Preis.\n> Die **Produzentenrente** (PR) ist die Summe aus Preis minus Kosten über alle Verkäufer: die Fläche zwischen Preis und Angebotskurve.\n\nKR plus PR heißt **Wohlfahrt** oder Gesamtrente. Im Wettbewerbsgleichgewicht ist sie so groß wie möglich."
+    },
+    {
+      "id": "renten-flaeche",
+      "type": "widget",
+      "label": "Im Diagramm",
+      "md": "$N: P = 10 - Q$, $A: P = 2 + Q$. Die Nachfrage lässt sich verschieben.\n\n**Verschiebe die Nachfrage so, dass die Konsumentenrente genau $12{,}5$ beträgt.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 14], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 280,
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent", "shift": true, "shiftRange": [-4, 4] },
+          { "id": "A", "label": "A", "a": 2, "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "A"], "label": "E" }],
+        "shades": [
+          { "points": [[0, "N_a"], [0, "E_y"], ["E_x", "E_y"]], "color": "accent", "label": "KR" },
+          { "points": [[0, "E_y"], [0, "A_a"], ["E_x", "E_y"]], "color": "orange", "label": "PR" }
+        ],
+        "readout": "KR = **{0.5*E_x*(N_a - E_y)|2}**, PR = {0.5*E_x*(E_y - A_a)|2}, Wohlfahrt {0.5*E_x*(N_a - A_a)|2}"
+      },
+      "goal": {
+        "when": "abs(0.5*E_x*(N_a - E_y) - 12.5) < 0.01",
+        "hints": [{ "when": "0.5*E_x*(N_a - E_y) < 12.5", "text": "Die Konsumentenrente ist noch zu klein. Mehr Nachfrage vergrößert das obere Dreieck." }],
+        "message": "Die Konsumentenrente ist zu groß. Schiebe die Nachfrage ein Stück zurück.",
+        "solve": { "N_dy": 2 }
+      },
+      "explain": "Bei einer Verschiebung um $2$ liegt das Gleichgewicht bei $Q = 5$, $P = 7$. Die KR ist das Dreieck mit Breite $5$ und Höhe $12 - 7 = 5$: $\\tfrac12 \\cdot 5 \\cdot 5 = 12{,}5$."
+    },
+    {
+      "id": "kr-rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für $N: P = 12 - Q$ und $A: P = Q$: Wie groß ist die Konsumentenrente im Gleichgewicht?",
+      "answer": 18,
+      "hint": "Gleichgewicht: $12 - Q = Q$. Die KR ist ein Dreieck zwischen $P = 12$ (Achsenabschnitt der Nachfrage) und dem Gleichgewichtspreis.",
+      "explain": "$Q^* = 6$, $P^* = 6$. KR $= \\tfrac12 \\cdot 6 \\cdot (12 - 6) = 18$."
+    },
+    {
+      "id": "steuer-text",
+      "type": "text",
+      "md": "Eine **Mengensteuer** $t$ verlangt pro verkaufter Einheit einen festen Betrag. Die Verkäufer verlangen dann für jede Menge $t$ mehr: Die Angebotskurve verschiebt sich **um $t$ nach oben**.\n\nEs entstehen zwei Preise: Der **Käuferpreis** $P_K$ steigt, der **Verkäuferpreis** $P_V = P_K - t$ sinkt. Wer wie viel von der Steuer trägt, heißt **Steuerinzidenz**, und sie hängt nicht davon ab, wer die Steuer formal abführt."
+    },
+    {
+      "id": "steuer",
+      "type": "widget",
+      "label": "Im Diagramm",
+      "md": "Stelle eine Steuer ein. Blau sind die Steuereinnahmen, rot ist der **Wohlfahrtsverlust**: Tauschgeschäfte, die sich ohne Steuer gelohnt hätten und jetzt ausfallen.\n\n**Stelle $t = 2$ ein.**",
+      "widget": "curves",
+      "params": {
+        "x": [0, 10], "y": [0, 12], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 280,
+        "vars": [{ "name": "t", "label": "Steuer", "min": 0, "max": 6, "step": 0.5, "value": 0, "digits": 1 }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 10, "m": -1, "color": "accent" },
+          { "id": "A0", "label": "A", "a": 2, "m": 1, "color": "orange", "dashed": true, "opacity": 0.5 },
+          { "id": "AT", "label": "A+t", "a": "2 + t", "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "AT"], "label": "" }],
+        "shades": [
+          { "points": [[0, "E_y"], ["E_x", "E_y"], ["E_x", "E_y - t"], [0, "E_y - t"]], "color": "blue", "opacity": 0.28, "when": "t > 0" },
+          { "points": [["E_x", "E_y"], ["E_x", "E_y - t"], [4, 6]], "color": "red", "opacity": 0.35, "when": "t > 0" }
+        ],
+        "readout": "$P_K = {E_y|2}$, $P_V = {E_y - t|2}$, Menge {E_x|2}. Steuereinnahmen **{t*E_x|2}**, Wohlfahrtsverlust **{0.5*t*(4 - E_x)|2}**"
+      },
+      "goal": { "when": "abs(t - 2) < 0.01", "message": "Stelle den Regler auf $t = 2$.", "solve": { "t": 2 } },
+      "explain": "Bei $t = 2$: $P_K = 7$, $P_V = 5$, Menge $3$. Der Staat nimmt $6$ ein, der Wohlfahrtsverlust ist $1$. Käufer zahlen $1$ mehr, Verkäufer bekommen $1$ weniger: Hier teilen sie die Steuer genau zur Hälfte, weil beide Kurven gleich steil sind."
+    },
+    {
+      "id": "inzidenz-steil",
+      "type": "widget",
+      "label": "Vergleichen",
+      "md": "Jetzt ist die Nachfrage sehr unelastisch ($P = 16 - 3Q$). Vergleiche, wer die Steuer trägt.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 8], "y": [0, 16], "xLabel": "Menge Q", "yLabel": "Preis P", "height": 280,
+        "vars": [{ "name": "t", "label": "Steuer", "min": 0, "max": 4, "step": 0.5, "value": 2, "digits": 1 }],
+        "lines": [
+          { "id": "N", "label": "N", "a": 16, "m": -3, "color": "accent" },
+          { "id": "A0", "label": "A", "a": 2, "m": 1, "color": "orange", "dashed": true, "opacity": 0.5 },
+          { "id": "AT", "label": "A+t", "a": "2 + t", "m": 1, "color": "orange" }
+        ],
+        "intersections": [{ "id": "E", "of": ["N", "AT"], "label": "" }],
+        "shades": [{ "points": [[0, "E_y"], ["E_x", "E_y"], ["E_x", "E_y - t"], [0, "E_y - t"]], "color": "blue", "opacity": 0.28, "when": "t > 0" }],
+        "readout": "Ohne Steuer: $P = 5{,}5$. Käufer zahlen jetzt {E_y - 5.5|2} mehr, Verkäufer bekommen {5.5 - (E_y - t)|2} weniger. Anteil der Käufer: **{(E_y - 5.5)/t*100|0} %**"
+      }
+    },
+    {
+      "id": "inzidenz-frage",
+      "type": "choice",
+      "md": "Welche Regel steckt hinter dem Vergleich?",
+      "options": [
+        { "md": "Die Steuer trägt vor allem die Marktseite, die **unelastischer** reagiert.", "correct": true },
+        { "md": "Die Steuer trägt immer die Seite, die sie an das Finanzamt abführt.", "why": "Wer überweist, ist ökonomisch egal: Die Preise passen sich an, bis dieselbe Aufteilung entsteht." },
+        { "md": "Käufer und Verkäufer teilen jede Steuer immer zur Hälfte.", "why": "Nur bei gleich elastischen Kurven. Bei steiler Nachfrage tragen die Käufer hier $75\\,\\%$." },
+        { "md": "Die Steuer trägt vor allem die elastischere Seite.", "why": "Umgekehrt: Wer gut ausweichen kann, entkommt der Steuer." }
+      ],
+      "explain": "Wer schlecht ausweichen kann, trägt die Last. Deshalb treffen Steuern auf Benzin oder Tabak vor allem die Käufer."
+    },
+    {
+      "id": "kontrollen-text",
+      "type": "text",
+      "md": "Statt zu besteuern, kann der Staat Preise direkt festlegen:\n- Ein **Höchstpreis** unter dem Gleichgewichtspreis (etwa eine Mietpreisbremse) erzeugt einen **Nachfrageüberschuss**: Es wird weniger angeboten, als die Leute zu diesem Preis wollen.\n- Ein **Mindestpreis** über dem Gleichgewichtspreis (etwa ein Mindestlohn auf dem Arbeitsmarkt) erzeugt einen **Angebotsüberschuss**.\n\nGehandelt wird immer die **kleinere** der beiden Mengen."
+    },
+    {
+      "id": "kontrollen",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Wähle Höchst- oder Mindestpreis und verschiebe den Preis. Ein Eingriff wirkt nur, wenn er bindet: Höchstpreis unter, Mindestpreis über dem Gleichgewicht.",
+      "widget": "market",
+      "params": { "demand": [10, 1], "supply": [2, 1], "controls": true, "control": "ceiling", "controlPrice": 4.5, "shifts": false }
+    },
+    {
+      "id": "mindestlohn",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Arbeitsmarkt: Arbeitsnachfrage der Firmen $w = 20 - L$, Arbeitsangebot $w = 4 + L$ (Lohn $w$, Beschäftigung $L$). Ein Mindestlohn von $w = 14$ wird eingeführt. Wie groß ist der **Angebotsüberschuss** an Arbeit?",
+      "answer": 4,
+      "hint": "Berechne bei $w = 14$ getrennt, wie viel Arbeit nachgefragt und wie viel angeboten wird.",
+      "explain": "Nachfrage: $14 = 20 - L \\Rightarrow L = 6$. Angebot: $14 = 4 + L \\Rightarrow L = 10$. Überschuss $10 - 6 = 4$. Ob ein Mindestlohn real so wirkt, ist empirisch umstritten: Bei Marktmacht der Arbeitgeber (Monopson) kann er die Beschäftigung sogar erhöhen."
+    },
+    {
+      "id": "hoechstpreis-folgen",
+      "type": "multi",
+      "md": "Ein Höchstpreis liegt **unter** dem Gleichgewichtspreis. Was folgt im Modell?",
+      "options": [
+        { "md": "Es entsteht ein Nachfrageüberschuss.", "correct": true },
+        { "md": "Die gehandelte Menge sinkt.", "correct": true },
+        { "md": "Es entsteht ein Wohlfahrtsverlust.", "correct": true },
+        { "md": "Der Marktpreis steigt über das Gleichgewicht.", "why": "Der Preis darf den Höchstpreis ja gerade nicht überschreiten. Auf Schwarzmärkten kann er es trotzdem." }
+      ],
+      "explain": "Weniger Angebot, unbefriedigte Nachfrage, verlorene Tauschgewinne. In der Praxis kommen Wartelisten, Qualitätsverlust und Schwarzmärkte dazu."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-staat", "level": 1, "label": "Neue Aufgabe" },
+    { "id": "neu2", "type": "gen", "gen": "oek-staat", "level": 2, "label": "Neue Aufgabe" },
+    { "id": "neu3", "type": "gen", "gen": "oek-staat", "level": 3, "label": "Neue Aufgabe" },
+    { "id": "neu4", "type": "gen", "gen": "oek-staat", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Konsumenten- und Produzentenrente messen die Tauschgewinne. Im Wettbewerbsgleichgewicht ist ihre Summe maximal.",
+        "Eine Mengensteuer schiebt einen Keil zwischen Käufer- und Verkäuferpreis und erzeugt einen Wohlfahrtsverlust.",
+        "Die Steuer trägt die unelastischere Seite, unabhängig davon, wer sie abführt.",
+        "Bindende Höchstpreise erzeugen Knappheit, bindende Mindestpreise Überschüsse."
+      ]
+    }
+  ]
+}

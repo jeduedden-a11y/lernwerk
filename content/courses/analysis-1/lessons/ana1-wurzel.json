@@ -1,0 +1,106 @@
+{
+  "id": "ana1-wurzel",
+  "title": "Wurzeln und die Dichtheit von ℚ",
+  "subtitle": "Warum √2 existiert und trotzdem kein Bruch ist",
+  "source": "Skript Jarohs, Abschnitt 4.1 bis 4.10",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Wurzeln und Dichtheit.md", "title": "Wurzeln und Dichtheit" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Supremum und Infimum.md", "title": "Supremum und Infimum" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Rechteck mit Flächeninhalt $c$ soll zum Quadrat werden. Dessen Seite ist dann $\\sqrt c$. Das Verfahren von **Heron**: Ersetze die eine Seite $a$ durch den Mittelwert von $a$ und $\\tfrac{c}{a}$.",
+      "widget": "sequence",
+      "params": { "rec": { "a1": 1, "next": "(a + c/a)/2" }, "vars": [{ "name": "c", "label": "c", "min": 2, "max": 10, "step": 1, "value": 2, "digits": 0 }], "limit": "sqrt(c)", "limitLabel": "√c", "nMax": 8, "n": 1, "yRange": [0, 6], "readout": "$a_{{N|0}} = {a|8}$, $\\sqrt c = {sqrt(c)|8}$" },
+      "int": ["N"],
+      "timeline": [
+        { "caption": "Start mit $a_1 = 1$ für $c = 2$: Ein Rechteck mit den Seiten $1$ und $2$ hat Fläche $2$, ist aber kein Quadrat." },
+        { "caption": "Neue Seite: Mittelwert aus $1$ und $\\tfrac21 = 2$, also $a_2 = 1{,}5$. Die andere Seite ist $\\tfrac{2}{1{,}5} \\approx 1{,}333$. Schon fast quadratisch.", "to": { "N": 2 }, "dur": 600 },
+        { "caption": "$a_3 \\approx 1{,}41667$, $a_4 \\approx 1{,}4142157$. Die Zahl der richtigen Stellen verdoppelt sich ungefähr in jedem Schritt.", "to": { "N": 4 }, "dur": 1200 },
+        { "caption": "Ab hier ändert sich auf dem Bildschirm nichts mehr. Die Folge ist fallend, nach unten durch $\\sqrt2$ beschränkt und strebt gegen $\\sqrt2 \\approx 1{,}41421356$.", "to": { "N": 8 }, "dur": 1200 },
+        { "caption": "Dasselbe funktioniert für jedes $c > 0$, hier $c = 7$. Alle Glieder sind rationale Zahlen. Der Grenzwert ist es meistens nicht, und genau deshalb braucht man $\\R$.", "to": { "c": 7 }, "dur": 1800 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Dass $\\sqrt2$ existiert, ist ein **Satz**, kein Rechentrick. Die Idee: Betrachte $M = \\set{x \\ge 0 : x^2 < 2}$. Die Menge ist nicht leer und durch $2$ beschränkt, hat also nach dem Vollständigkeitsaxiom ein Supremum $s$. Man zeigt dann: $s^2 < 2$ ist unmöglich (dann läge ein etwas größeres Element in $M$) und $s^2 > 2$ auch (dann gäbe es eine kleinere obere Schranke). Also ist $s^2 = 2$.\n\nIn $\\Q$ scheitert genau dieser Schritt, denn $\\sqrt2$ ist kein Bruch. Die rationalen Zahlen haben **Löcher**.\n\nTrotzdem liegen die Brüche **dicht**: Zwischen zwei verschiedenen reellen Zahlen liegt immer ein Bruch, sogar unendlich viele. Man kann jede reelle Zahl beliebig genau durch Brüche annähern, so wie Heron es tut, auch wenn man sie nie genau trifft."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!satz] Existenz von Wurzeln\n> Zu jedem $c \\ge 0$ und $n \\in \\N$ gibt es genau ein $x \\ge 0$ mit $x^n = c$. Man schreibt $x = \\sqrt[n]{c}$.\n\n> [!satz] Irrationalität\n> $\\sqrt2 \\notin \\Q$. Allgemein ist $\\sqrt m$ für eine natürliche Zahl $m$ entweder eine natürliche Zahl oder irrational.\n\n> [!satz] Dichtheit\n> Zu reellen Zahlen $a < b$ gibt es ein $q \\in \\Q$ mit $a < q < b$. Ebenso gibt es eine irrationale Zahl dazwischen.\n\nDie Dichtheit folgt aus dem archimedischen Prinzip: Wähle $n$ mit $\\tfrac1n < b - a$. Die Brüche $\\tfrac{m}{n}$ bilden ein Gitter mit Maschenweite $\\tfrac1n$, und ein Gitterpunkt muss in das Intervall $(a, b)$ fallen, weil es breiter als die Maschenweite ist."
+    },
+    {
+      "id": "suchen",
+      "type": "widget",
+      "label": "Einkreisen",
+      "md": "Der blaue Graph ist $x^2$, die Linie die Höhe $2$. **Ziehe den Punkt so, dass $s^2$ möglichst nahe bei $2$ liegt**, auf zwei Nachkommastellen genau.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 2.2], "y": [0, 4.5],
+        "functions": [{ "expr": "x^2", "label": "x²", "labelAt": 1.85 }],
+        "hlines": [{ "y": 2, "color": "orange" }],
+        "vars": [{ "name": "s", "min": 0, "max": 2.2, "value": 1.8, "hidden": true }],
+        "points": [{ "x": "s", "on": "f", "drag": "x", "snap": 0.01, "guides": true, "label": "s" }],
+        "readout": "$s = {s|2}$, $s^2 = {s^2|4}$"
+      },
+      "goal": {
+        "when": "abs(s - sqrt(2)) < 0.006",
+        "hints": [{ "when": "s^2 > 2", "text": "s² = {s^2|4} ist noch größer als 2. Weiter nach links." }, { "when": "s^2 < 2", "text": "s² = {s^2|4} ist noch kleiner als 2. Weiter nach rechts." }],
+        "solve": { "s": 1.41 }
+      },
+      "explain": "$1{,}41^2 = 1{,}9881 < 2 < 2{,}0164 = 1{,}42^2$. Jede weitere Stelle erfordert ein feineres Gitter, aber kein Bruch trifft $2$ genau."
+    },
+    {
+      "id": "irrational",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise, dass $\\sqrt2$ irrational ist. Nimm das Gegenteil an und schreibe $\\sqrt2 = \\tfrac pq$ als **gekürzten** Bruch.",
+      "solution": "Aus $\\sqrt2 = \\tfrac pq$ folgt $p^2 = 2q^2$. Also ist $p^2$ gerade, und damit auch $p$ (das Quadrat einer ungeraden Zahl ist ungerade). Schreibe $p = 2r$.\n\nDann ist $4r^2 = 2q^2$, also $q^2 = 2r^2$. Genauso folgt: $q$ ist gerade.\n\nDann sind $p$ und $q$ beide durch $2$ teilbar, im Widerspruch zur Annahme, dass der Bruch gekürzt war. Also ist $\\sqrt2 \\notin \\Q$."
+    },
+    {
+      "id": "irrational-welche",
+      "type": "multi",
+      "md": "Welche dieser Zahlen sind irrational?",
+      "options": [
+        { "md": "$\\sqrt8$", "correct": true, "why": "$\\sqrt8 = 2\\sqrt2$, und ein rationales Vielfaches einer irrationalen Zahl ist irrational." },
+        { "md": "$\\sqrt{\\tfrac94}$", "why": "$= \\tfrac32$." },
+        { "md": "$\\sqrt2 \\cdot \\sqrt8$", "why": "$= \\sqrt{16} = 4$. Produkte irrationaler Zahlen können rational sein." },
+        { "md": "$\\sqrt2 + \\sqrt3$", "correct": true, "why": "Wäre $\\sqrt2 + \\sqrt3 = r \\in \\Q$, dann $r^2 = 5 + 2\\sqrt6$, also $\\sqrt6 \\in \\Q$. Aber $6$ ist keine Quadratzahl." }
+      ],
+      "explain": "Irrationale Zahlen sind unter Summe und Produkt nicht abgeschlossen. Man muss jeden Fall einzeln prüfen."
+    },
+    {
+      "id": "dicht-beweis",
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "Seien $a < b$ reell. Ordne den Beweis, dass ein Bruch zwischen $a$ und $b$ liegt.",
+      "items": [
+        "Nach Archimedes gibt es $n \\in \\N$ mit $\\tfrac1n < b - a$.",
+        "Sei $m$ die kleinste ganze Zahl mit $m > na$, also $m = \\lfloor na \\rfloor + 1$.",
+        "Dann ist $\\tfrac mn > a$ und $m - 1 \\le na$.",
+        "Also $\\tfrac mn \\le a + \\tfrac1n < a + (b - a) = b$.",
+        "Damit liegt $\\tfrac mn \\in \\Q$ zwischen $a$ und $b$."
+      ],
+      "explain": "Erst wird das Gitter fein genug gewählt, dann der erste Gitterpunkt rechts von $a$ genommen. Er kann $b$ nicht überspringen, weil die Maschen enger sind als das Intervall."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-wurzel", "level": 1, "label": "Einschachteln" },
+    { "id": "neu2", "type": "gen", "gen": "ana-wurzel", "level": 2, "label": "Annähern" },
+    { "id": "neu3", "type": "gen", "gen": "ana-wurzel", "level": 3, "label": "Rational?" },
+    { "id": "neu4", "type": "gen", "gen": "ana-wurzel", "level": 4, "label": "Halbieren" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Wurzeln existieren in $\\R$ wegen des Vollständigkeitsaxioms: $\\sqrt c = \\sup\\set{x \\ge 0 : x^2 < c}$.",
+        "$\\sqrt2$ ist irrational; $\\sqrt m$ ist für natürliches $m$ ganz oder irrational.",
+        "$\\Q$ ist dicht in $\\R$: Zwischen zwei reellen Zahlen liegt immer ein Bruch.",
+        "Heron: $a_{n+1} = \\tfrac12(a_n + \\tfrac{c}{a_n})$ nähert $\\sqrt c$ sehr schnell durch Brüche an."
+      ]
+    }
+  ]
+}

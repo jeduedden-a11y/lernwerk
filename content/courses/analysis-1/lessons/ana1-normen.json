@@ -1,0 +1,92 @@
+{
+  "id": "ana1-normen",
+  "title": "Normen und Skalarprodukt",
+  "subtitle": "Was eine Länge zur Länge macht",
+  "source": "Skript Jarohs, Kapitel 7",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Normen und Skalarprodukt.md", "title": "Normen und Skalarprodukt" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Jede Linie zeigt alle Punkte, die in einer bestimmten Norm die Länge $1$ haben. Je nachdem, wie man »Länge« misst, sieht der Einheitskreis ganz anders aus.",
+      "widget": "unitball",
+      "params": { "point": [0.6, 0.5], "pSlider": true, "p": 1 },
+      "timeline": [
+        { "caption": "Orange: $\\|v\\|_1 = |x| + |y|$, die Taxi-Norm. Wer nur waagerecht und senkrecht fahren darf, legt so viel Weg zurück. Ihr Einheitskreis ist eine auf die Spitze gestellte Raute." },
+        { "caption": "Blau: die gewohnte euklidische Länge $\\|v\\|_2 = \\sqrt{x^2 + y^2}$, ein echter Kreis. Grün: $\\|v\\|_\\infty = \\max(|x|, |y|)$, ein Quadrat.", "hold": 6500 },
+        { "caption": "Die türkise Kurve ist $\\|v\\|_p = (|x|^p + |y|^p)^{1/p}$. Für $p = 1$ liegt sie auf der Raute, für $p = 2$ auf dem Kreis …", "to": { "p": 2 }, "dur": 2400 },
+        { "caption": "… und für großes $p$ nähert sie sich dem Quadrat. Die Maximumsnorm ist der Grenzfall $p \\to \\infty$.", "to": { "p": 10 }, "dur": 2600 },
+        { "caption": "Für den Punkt $(0{,}7 \\mid 0{,}7)$ ergeben die drei Normen $1{,}4$, etwa $0{,}99$ und $0{,}7$. Verschiedene Zahlen, aber jede ist eine sinnvolle Länge: Alle erfüllen dieselben drei Regeln.", "to": { "px": 0.7, "py": 0.7 }, "dur": 1600 }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Was erwartet man von einer Länge? Drei Dinge:\n\n1. Nur der Nullvektor hat die Länge $0$, alle anderen sind positiv.\n2. Verdoppelt man einen Vektor, verdoppelt sich seine Länge; dreht man die Richtung um, bleibt sie gleich: $\\|\\lambda v\\| = |\\lambda| \\, \\|v\\|$.\n3. Ein Umweg ist nie kürzer: $\\|v + w\\| \\le \\|v\\| + \\|w\\|$.\n\nJede Funktion mit diesen Eigenschaften heißt **Norm**. Die Animation zeigt: Es gibt viele, und ihre Einheitskugeln sind immer **konvex**, also ohne Dellen. Das ist kein Zufall, sondern eine Folge der Dreiecksungleichung.\n\nDie euklidische Norm ist besonders, weil sie von einem **Skalarprodukt** kommt: $\\|v\\|_2 = \\sqrt{\\langle v, v\\rangle}$. Das Skalarprodukt misst zusätzlich **Winkel**. Die zentrale Ungleichung dazu ist **Cauchy-Schwarz**: $|\\langle v, w\\rangle| \\le \\|v\\| \\, \\|w\\|$. Sie garantiert, dass der Kosinus eines Winkels zwischen $-1$ und $1$ liegt."
+    },
+    {
+      "id": "definition",
+      "type": "text",
+      "md": "> [!definition] Norm\n> Eine Abbildung $\\|\\cdot\\|: \\R^n \\to [0, \\infty)$ heißt **Norm**, wenn für alle $v, w$ und $\\lambda \\in \\R$ gilt:\n> - $\\|v\\| = 0 \\iff v = 0$ (definit),\n> - $\\|\\lambda v\\| = |\\lambda|\\,\\|v\\|$ (homogen),\n> - $\\|v + w\\| \\le \\|v\\| + \\|w\\|$ (Dreiecksungleichung).\n\n> [!definition] Standardskalarprodukt\n> $\\langle v, w \\rangle = \\sum_{k=1}^n v_k w_k$. Es ist symmetrisch, linear in jedem Argument und $\\langle v, v\\rangle > 0$ für $v \\ne 0$.\n\n> [!satz] Cauchy-Schwarz\n> $|\\langle v, w \\rangle| \\le \\|v\\|_2 \\, \\|w\\|_2$, mit Gleichheit genau dann, wenn $v$ und $w$ parallel sind.\n\nDamit definiert man den Winkel durch $\\cos\\alpha = \\dfrac{\\langle v, w\\rangle}{\\|v\\|_2\\|w\\|_2}$. Insbesondere stehen $v$ und $w$ senkrecht, wenn $\\langle v, w\\rangle = 0$."
+    },
+    {
+      "id": "punkt",
+      "type": "widget",
+      "label": "Finden",
+      "md": "**Ziehe den Punkt an eine Stelle mit $\\|v\\|_1 = 1$ und $\\|v\\|_\\infty = 0{,}5$.** Er muss also auf der Raute und zugleich auf einem kleineren Quadrat liegen.",
+      "widget": "unitball",
+      "params": { "point": [0.9, 0.2] },
+      "goal": {
+        "when": "abs(n1 - 1) < 0.03 && abs(ninf - 0.5) < 0.03",
+        "hints": [{ "when": "abs(n1 - 1) >= 0.03", "text": "‖v‖₁ = {n1|2}, der Punkt liegt noch nicht auf der Raute." }, { "when": "abs(ninf - 0.5) >= 0.03", "text": "‖v‖∞ = {ninf|2}: Die größere Koordinate muss 0,5 sein." }],
+        "solve": { "point": [0.5, 0.5] }
+      },
+      "explain": "Aus $|x| + |y| = 1$ und $\\max(|x|, |y|) = 0{,}5$ folgt $|x| = |y| = 0{,}5$. Es gibt genau vier solche Punkte: $(\\pm 0{,}5 \\mid \\pm 0{,}5)$, die Mittelpunkte der Rautenseiten."
+    },
+    {
+      "id": "welche",
+      "type": "multi",
+      "md": "Welche Funktionen sind Normen auf $\\R^2$?",
+      "options": [
+        { "md": "$\\|(x, y)\\| = 2|x| + 3|y|$", "correct": true, "why": "Definit, homogen, und die Dreiecksungleichung folgt aus der für den Betrag." },
+        { "md": "$\\|(x, y)\\| = |x|$", "why": "Nicht definit: $(0, 1) \\ne 0$ hat die Länge $0$." },
+        { "md": "$\\|(x, y)\\| = (\\sqrt{|x|} + \\sqrt{|y|})^2$", "why": "Dreiecksungleichung verletzt: $(1, 0)$ und $(0, 1)$ haben Länge $1$, ihre Summe aber Länge $4$. Die Einheitskugel hat Dellen." },
+        { "md": "$\\|(x, y)\\| = \\max(|x|, |y|)$", "correct": true, "why": "Die Maximumsnorm." }
+      ],
+      "explain": "Die dritte Funktion ist die »$p$-Norm« für $p = \\tfrac12$. Für $p < 1$ ist die Einheitskugel nicht konvex, und genau das zerstört die Dreiecksungleichung."
+    },
+    {
+      "id": "cs-beweis",
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise Cauchy-Schwarz. Betrachte für $w \\ne 0$ die Zahl $f(t) = \\|v - t w\\|_2^2 \\ge 0$ und wähle $t$ geschickt.",
+      "solution": "Ausmultiplizieren: $f(t) = \\|v\\|^2 - 2t\\langle v, w\\rangle + t^2\\|w\\|^2 \\ge 0$ für alle $t$.\n\nDas Minimum dieser nach oben geöffneten Parabel liegt bei $t = \\dfrac{\\langle v, w\\rangle}{\\|w\\|^2}$. Einsetzen ergibt\n\n$$0 \\le \\|v\\|^2 - \\frac{\\langle v, w\\rangle^2}{\\|w\\|^2}, \\quad\\text{also}\\quad \\langle v, w\\rangle^2 \\le \\|v\\|^2\\,\\|w\\|^2.$$\n\nWurzelziehen liefert die Behauptung. Gleichheit gilt genau dann, wenn $v - tw = 0$, also wenn $v$ und $w$ parallel sind."
+    },
+    {
+      "id": "winkel",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen Winkel (in Grad) schließen $(1, 0)$ und $(1, 1)$ ein?",
+      "answer": 45,
+      "tolerance": 0.1,
+      "explain": "$\\cos\\alpha = \\dfrac{1}{1 \\cdot \\sqrt2} = \\dfrac{1}{\\sqrt2}$, also $\\alpha = 45°$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "ana-normen", "level": 1, "label": "Neue Normen" },
+    { "id": "neu2", "type": "gen", "gen": "ana-normen", "level": 2, "label": "Euklidisch" },
+    { "id": "neu3", "type": "gen", "gen": "ana-normen", "level": 3, "label": "Skalarprodukt" },
+    { "id": "neu4", "type": "gen", "gen": "ana-normen", "level": 4, "label": "Winkel" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Eine Norm ist definit, homogen und erfüllt die Dreiecksungleichung.",
+        "$\\|\\cdot\\|_1$, $\\|\\cdot\\|_2$ und $\\|\\cdot\\|_\\infty$ haben Raute, Kreis und Quadrat als Einheitskugeln.",
+        "Das Skalarprodukt liefert Länge und Winkel: $\\cos\\alpha = \\tfrac{\\langle v, w\\rangle}{\\|v\\|\\|w\\|}$.",
+        "Cauchy-Schwarz: $|\\langle v, w\\rangle| \\le \\|v\\|\\,\\|w\\|$, mit Gleichheit nur bei parallelen Vektoren."
+      ]
+    }
+  ]
+}

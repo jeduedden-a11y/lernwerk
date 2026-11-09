@@ -1,0 +1,97 @@
+{
+  "id": "cs50-nlp",
+  "title": "n-Gramme, Embeddings, Attention",
+  "subtitle": "CS50 AI, Lecture 6: Language",
+  "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 6",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md", "title": "Sprachverarbeitung" },
+    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md", "title": "Lecture 6 - Language (Kurs)" }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein kleiner Text über Katzen, Hunde und Mäuse. Ein **Bigramm-Modell** zählt darin nur eines: welches Wort auf welches folgt. Damit kann es neue Sätze erzeugen.",
+      "widget": "ngram",
+      "params": { "start": "die" },
+      "timeline": [
+        { "caption": "Nach »die« kam im Text viermal »katze«, zweimal »maus« und einmal »sonne«. Das sind die Wahrscheinlichkeiten für das nächste Wort.", "do": { "words": ["die"] } },
+        { "caption": "Das Modell würfelt nach diesen Häufigkeiten, hier »katze«. Nach »katze« ging es im Text auf vier verschiedene Arten weiter.", "do": { "words": ["die", "katze"] } },
+        { "caption": "Wort für Wort entsteht »die katze jagt die maus«. Jedes Wortpaar kommt so im Text vor.", "do": { "words": ["die", "katze", "jagt", "die", "maus"] } },
+        { "caption": "Weiter: »… maus schläft im garten.« Jedes Paar klingt richtig, der ganze Satz ist Unsinn. Das Modell sieht immer nur ein Wort zurück. Längere $n$-Gramme helfen etwas, aber erst Modelle mit **Attention** überblicken den ganzen Text.", "do": { "words": ["die", "katze", "jagt", "die", "maus", "schläft", "im", "garten", "."] } }
+      ]
+    },
+    {
+      "id": "intuition",
+      "type": "text",
+      "md": "Sprache ist für Computer schwer, weil sie **Syntax** (Struktur) und **Semantik** (Bedeutung) hat und beides mehrdeutig ist. Die Vorlesung geht in drei Stufen vor.\n\n**1. Zählen.** $n$-Gramme zählen Folgen von $n$ Wörtern. Ein Markov-Modell darüber erzeugt Text, der lokal plausibel ist. Für Klassifikation, etwa ob eine Rezension positiv ist, genügt oft ein **Bag of Words**: Die Reihenfolge wird ignoriert, nur gezählt, welche Wörter vorkommen. **Naive Bayes** rechnet damit nach Bayes, mit der »naiven« Annahme, dass die Wörter unabhängig sind.\n\n**2. Bedeutung als Ort.** Statt jedes Wort als eigenes Symbol zu behandeln, gibt man ihm einen Vektor, ein **Embedding**. word2vec lernt die Vektoren so, dass Wörter in ähnlichen Zusammenhängen nahe beieinander liegen. Dann tragen sogar **Richtungen** Bedeutung: König minus Mann plus Frau landet bei Königin.\n\n**3. Aufmerksamkeit.** Um ein Wort zu verstehen, muss man wissen, auf welche anderen Wörter es sich bezieht. **Attention** berechnet für jedes Wort, wie stark es jedes andere beachten soll. **Transformer** bestehen fast nur aus solchen Attention-Schichten und verarbeiten alle Wörter gleichzeitig; die Reihenfolge steckt in einer **Positionskodierung**. Auf dieser Idee beruhen heutige große Sprachmodelle."
+    },
+    {
+      "id": "vektoren",
+      "type": "anim",
+      "label": "Wortvektoren",
+      "md": "Wörter als Punkte. Ähnliche Wörter liegen nah beieinander. Die Achsen haben keine vorgegebene Bedeutung, aber bestimmte **Richtungen** schon.",
+      "widget": "embedding",
+      "params": {},
+      "timeline": [
+        { "caption": "Personen liegen auf der einen Seite, Obst auf der anderen. Männliche Wörter oben, weibliche unten: Diese Struktur hat niemand vorgegeben, sie entsteht beim Lernen aus Texten.", "do": { "analogy": null } },
+        { "caption": "Der orange Pfeil führt von »Mann« zu »Frau«. Setzt man denselben Pfeil bei »König« an (grün), landet man fast genau bei »Königin«.", "do": { "analogy": ["König", "Mann", "Frau"] }, "hold": 7000 },
+        { "caption": "Dasselbe mit Prinz, Junge und Mädchen: Der Unterschied »männlich zu weiblich« ist eine feste Richtung im Raum. Echte Embeddings haben Hunderte Dimensionen, aber die Idee ist dieselbe.", "do": { "analogy": ["Prinz", "Junge", "Mädchen"] } }
+      ]
+    },
+    {
+      "id": "analogie",
+      "type": "widget",
+      "label": "Rechnen",
+      "md": "**Tippe auf das Wort, das am nächsten bei »Junge« minus »Mann« plus »Frau« liegt.**",
+      "widget": "embedding",
+      "params": { "analogy": ["Junge", "Mann", "Frau"], "select": true, "target": "Mädchen" },
+      "goal": { "nearest": true },
+      "explain": "»Junge« $(-1{,}2;\\ 1{,}4)$ minus »Mann« $(0{,}5;\\ 2)$ plus »Frau« $(0{,}5;\\ -1{,}6)$ ergibt $(-1{,}2;\\ -2{,}2)$, und am nächsten liegt »Mädchen«. Vektorrechnung ersetzt hier das Nachdenken über Bedeutung."
+    },
+    {
+      "id": "attention",
+      "type": "widget",
+      "label": "Aufmerksamkeit",
+      "md": "»Das Tier überquerte die Straße nicht, weil es zu müde war.« **Auf welches Wort muss »es« am stärksten achten, damit der Satz verstanden wird?** Tippe es an.",
+      "widget": "attention",
+      "params": { "select": true },
+      "goal": { "attention": true },
+      "explain": "»es« ist müde, also meint es das Tier. Ein Transformer lernt solche Bezüge selbst: Die Linien zeigen, wie stark »es« die anderen Wörter gewichtet. Steht im Satz »weil es zu breit war«, verschiebt sich die Aufmerksamkeit zur Straße, ohne dass irgendwo eine Regel steht."
+    },
+    {
+      "id": "bayes",
+      "type": "numeric",
+      "label": "Naive Bayes",
+      "md": "Eine Rezension enthält »super« und »gerne«. $P(+) = 0{,}5$. In positiven Rezensionen kommen die Wörter mit $0{,}3$ und $0{,}2$ vor, in negativen mit $0{,}05$ und $0{,}1$. Wie wahrscheinlich ist die Rezension positiv? (vier Nachkommastellen)",
+      "answer": 0.9231,
+      "tolerance": 0.0006,
+      "answerText": "0,9231",
+      "hint": "Positiv: $0{,}5 \\cdot 0{,}3 \\cdot 0{,}2$. Negativ: $0{,}5 \\cdot 0{,}05 \\cdot 0{,}1$. Dann normieren.",
+      "explain": "$0{,}03$ gegen $0{,}0025$, normiert $\\tfrac{0{,}03}{0{,}0325} \\approx 0{,}9231$. Die Wörter werden einfach multipliziert, als ob sie nichts miteinander zu tun hätten. Erstaunlich oft reicht das."
+    },
+    {
+      "id": "transformer",
+      "type": "truefalse",
+      "md": "Ein Transformer liest einen Satz Wort für Wort nacheinander, wie ein rekurrentes Netz.",
+      "answer": false,
+      "whyNot": "Er verarbeitet alle Wörter gleichzeitig. Die Reihenfolge erhält er über eine Positionskodierung, die zu jedem Wortvektor addiert wird.",
+      "explain": "Gerade das gleichzeitige Verarbeiten macht Transformer auf moderner Hardware so schnell trainierbar. Jedes Wort kann über Attention direkt auf jedes andere schauen, statt Information über viele Schritte weiterzureichen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs-nlp", "level": 1, "label": "Bigramm" },
+    { "id": "neu2", "type": "gen", "gen": "cs-nlp", "level": 2, "label": "Naive Bayes" },
+    { "id": "neu3", "type": "gen", "gen": "cs-nlp", "level": 3, "label": "Glättung" },
+    { "id": "neu4", "type": "gen", "gen": "cs-nlp", "level": 4, "label": "Vektoren" },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$n$-Gramme zählen Wortfolgen. Ein Markov-Modell darüber erzeugt lokal plausiblen Text.",
+        "Bag of Words und Naive Bayes klassifizieren Texte, Laplace-Glättung verhindert Nullwahrscheinlichkeiten.",
+        "Embeddings stellen Wörter als Vektoren dar. Nähe heißt ähnliche Bedeutung, Richtungen tragen Beziehungen.",
+        "Attention gewichtet für jedes Wort alle anderen. Transformer verarbeiten alle Wörter gleichzeitig mit Positionskodierung."
+      ]
+    }
+  ]
+}
