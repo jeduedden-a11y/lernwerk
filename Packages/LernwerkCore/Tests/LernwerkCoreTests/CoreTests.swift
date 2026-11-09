@@ -85,7 +85,7 @@ final class CoreTests: XCTestCase {
     }
 
     func testCourseIndexWithSubjects() throws {
-        let json = #"{"schema":1,"courses":["analysis-1","stochastik"],"subjects":[{"id":"mathematik","title":"Mathematik","symbol":"sum","color":"#5E5CE6","tag":"Mathematik","courses":["analysis-1","stochastik"]}]}"#
+        let json = ##"{"schema":1,"courses":["analysis-1","stochastik"],"subjects":[{"id":"mathematik","title":"Mathematik","symbol":"sum","color":"#5E5CE6","tag":"Mathematik","courses":["analysis-1","stochastik"]}]}"##
         let index = try JSONDecoder().decode(CourseIndex.self, from: Data(json.utf8))
         XCTAssertEqual(index.subjects?.first?.courses, ["analysis-1", "stochastik"])
         let old = try JSONDecoder().decode(CourseIndex.self, from: Data(#"{"schema":1,"courses":["a"]}"#.utf8))
@@ -117,7 +117,7 @@ final class CoreTests: XCTestCase {
     }
 
     func testCourseWithPracticeTopics() throws {
-        let json = #"{"id":"s","title":"S","color":"#000000","symbol":"dice","chapters":[{"id":"k","title":"K","lessons":[{"id":"a","title":"A"}]}],"practice":[{"id":"t","title":"T","after":"a","gens":["g1","g2"]}]}"#
+        let json = ##"{"id":"s","title":"S","color":"#000000","symbol":"dice","chapters":[{"id":"k","title":"K","lessons":[{"id":"a","title":"A"}]}],"practice":[{"id":"t","title":"T","after":"a","gens":["g1","g2"]}]}"##
         let course = try JSONDecoder().decode(Course.self, from: Data(json.utf8))
         XCTAssertEqual(course.practiceTopics.first?.gens, ["g1", "g2"])
         XCTAssertEqual(course.practiceTopics(in: course.chapters[0]).count, 1)
