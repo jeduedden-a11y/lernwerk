@@ -6,6 +6,11 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     @AppStorage("reduceMotion") private var reduceMotion = false
+    @AppStorage("reminderOn") private var reminderOn = false
+    @AppStorage("reminderHour") private var reminderHour = 18
+    @AppStorage("reminderMinute") private var reminderMinute = 0
+    @AppStorage("badgeOn") private var badgeOn = true
+    @State private var notificationsDenied = false
 
     // Edited locally and written back on "Fertig", so a half-typed token never reaches the keychain.
     @State private var vault = VaultSettings()
@@ -39,6 +44,25 @@ struct SettingsView: View {
                 } footer: {
                     Text("Eine neue Lektion bringt 10 Punkte und 2 für jede Aufgabe, die beim ersten Versuch sitzt. In der Wiederholung gibt es 2 Punkte je Aufgabe und einen mehr, wenn sie sofort sitzt. Eine Klausur bringt 3 Punkte je richtiger Aufgabe und 10 dazu ab 80 Prozent.")
                 }
+
+                Section {
+                    Toggle("Tägliche Erinnerung", isOn: $reminderOn)
+                    if reminderOn {
+                        DatePicker("Uhrzeit", selection: reminderTime, displayedComponents: .hourAndMinute)
+                    }
+                    Toggle("Fällige Wiederholungen am App-Symbol", isOn: $badgeOn)
+                } header: {
+                    Text("Erinnerungen")
+                } footer: {
+                    Text(notificationsDenied
+                         ? "Mitteilungen sind für Lernwerk in den iOS-Einstellungen ausgeschaltet. Unter Einstellungen › Mitteilungen › Lernwerk lassen sie sich einschalten."
+                         : "Die Erinnerung nennt, wie viele Wiederholungen zu ihrer Uhrzeit fällig sind, und öffnet mit einem Tipp den Tagesmix. Alles läuft auf dem Gerät, ohne Server.")
+                }
+                .onChange(of: reminderOn) { _, _ in updateReminders(ask: true) }
+                .onChange(of: badgeOn) { _, _ in updateReminders(ask: true) }
+                .onChange(of: reminderHour) { _, _ in updateReminders(ask: false) }
+                .onChange(of: reminderMinute) { _, _ in updateReminders(ask: false) }
+                .task { notificationsDenied = await Reminders.shared.isDenied() }
 
                 Section {
                     Toggle("Weniger Bewegung", isOn: $reduceMotion)
@@ -227,5 +251,26 @@ struct SettingsView: View {
         testing = true
         testResult = await model.testVault()
         testing = false
+    }
+}
+
+extension SettingsView {
+    /// The reminder time as a date for the picker; only hour and minute are kept.
+    var reminderTime: Binding<Date> {
+        Binding {
+            Calendar.current.date(bySettingHour: reminderHour, minute: reminderMinute, second: 0, of: Date()) ?? Date()
+        } set: { date in
+            let parts = Calendar.current.dateComponents([.hour, .minute], from: date)
+            reminderHour = parts.hour ?? 18
+            reminderMinute = parts.minute ?? 0
+        }
+    }
+
+    func updateReminders(ask: Bool) {
+        Task {
+            if ask && (reminderOn || badgeOn) { _ = await Reminders.shared.requestPermission() }
+            notificationsDenied = await Reminders.shared.isDenied()
+            await Reminders.shared.refresh(state: model.state)
+        }
     }
 }

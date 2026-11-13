@@ -11,6 +11,18 @@ struct CourseView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 header
+                if let week = model.currentChapter(course) {
+                    WeekBanner(course: course, chapter: week)
+                }
+                if let papers = course.papers, !papers.isEmpty {
+                    PapersCard(course: course, papers: papers)
+                }
+                if course.mistakeLog == true {
+                    MistakeLogCard(course: course)
+                }
+                if let book = model.formulaBook(course) {
+                    FormulaCard(course: course, book: book, practiceTarget: $practiceTarget)
+                }
                 ForEach(Array(course.chapters.enumerated()), id: \.element.id) { offset, chapter in
                     ChapterSection(course: course, chapter: chapter, number: offset + 1, target: $practiceTarget) { chapter in
                         examTarget = ExamTarget(course: course, chapter: chapter)
@@ -76,7 +88,8 @@ struct ChapterSection: View {
     var onExam: ((Chapter) -> Void)? = nil
 
     var body: some View {
-        let topics = course.practiceTopics(in: chapter)
+        // the formula training belongs to the whole course and sits in the formula card
+        let topics = course.practiceTopics(in: chapter).filter { $0.id != "formeln" }
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .firstTextBaseline) {
                 if number > 0 {
@@ -86,9 +99,24 @@ struct ChapterSection: View {
                 }
                 Text(chapter.title).font(.title3.bold())
                 Spacer()
-                if let ref = chapter.ref { Text(ref).font(.footnote).foregroundStyle(.secondary) }
+                if chapter.isCurrent() {
+                    Text("Diese Woche")
+                        .font(.caption.weight(.bold))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(course.tint.opacity(0.18), in: .capsule)
+                        .foregroundStyle(course.tint)
+                } else if let ref = chapter.ref {
+                    Text(ref).font(.footnote).foregroundStyle(.secondary)
+                }
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, StageDates.range(chapter) == nil ? 10 : 2)
+            if let range = StageDates.range(chapter) {
+                Text(range + (chapter.ref.map { " · " + $0 } ?? ""))
+                    .font(.footnote.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, 10)
+            }
             VStack(spacing: 0) {
                 ForEach(Array(chapter.lessons.enumerated()), id: \.element.id) { offset, lesson in
                     LessonRow(course: course, lesson: lesson, isFirst: offset == 0, isLast: offset == chapter.lessons.count - 1)

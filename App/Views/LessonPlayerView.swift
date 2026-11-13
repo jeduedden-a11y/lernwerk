@@ -11,6 +11,11 @@ struct PrimaryState: Equatable {
     var giveUpLabel: String? = nil
 }
 
+/// What the column beside a lesson shows on the iPad.
+enum PlayerColumn: Hashable {
+    case pad, formulas
+}
+
 struct FinishedSheet: Identifiable {
     let id = UUID()
     var result: FinishedLesson
@@ -43,6 +48,10 @@ struct LessonPlayerView: View {
     @State private var trainAfterFinish: PracticeTopic?
     @State private var reviewAfterFinish = false
     @State private var showPad = false
+    @State private var column: PlayerColumn?
+    @State private var showFormulaSheet = false
+    @State private var vaultNote: VaultNoteTarget?
+    @State private var wikiPath: String?
     @State private var drawing = PKDrawing()
     @State private var keyboardUp = false
     @Namespace private var glass
@@ -52,6 +61,10 @@ struct LessonPlayerView: View {
     private var padAsColumn: Bool { sizeClass == .regular }
     private var padInline: Bool { showPad && !padAsColumn && !keyboardUp }
     private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
+    /// The course of the session has a formula book: the formula button and the formula column appear.
+    private var hasFormulas: Bool { session.course.flatMap { model.formulaBook($0) } != nil }
+    private var padOpen: Bool { padAsColumn ? column == .pad : showPad }
+    private var formulasOpen: Bool { padAsColumn ? column == .formulas : showFormulaSheet }
 
     var body: some View {
         GeometryReader { geo in
@@ -85,9 +98,26 @@ struct LessonPlayerView: View {
                 if inline { controller.revealCurrent() }
             }
         }
-        .inspector(isPresented: Binding(get: { showPad && padAsColumn }, set: { if !$0 { showPad = false } })) {
-            ScratchPad(drawing: $drawing, systemTools: isPad) { showPad = false }
+        .inspector(isPresented: Binding(get: { padAsColumn && column != nil }, set: { if !$0 { column = nil } })) {
+            sideColumn
                 .inspectorColumnWidth(min: 300, ideal: 380, max: 520)
+        }
+        .sheet(isPresented: $showFormulaSheet) {
+            if let course = session.course {
+                FormulaSheet(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex)
+                    .environment(model)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            }
+        }
+        .sheet(item: $vaultNote) { target in
+            VaultNoteSheet(path: target.path)
+                .environment(model)
+        }
+        .task {
+            if session.mode == .lesson, let course = session.course, let lesson = session.lesson {
+                wikiPath = model.wikiNote(for: course, lesson)
+            }
         }
         .sensoryFeedback(.success, trigger: success)
         .sensoryFeedback(.error, trigger: failure)
@@ -177,15 +207,50 @@ struct LessonPlayerView: View {
                     .accessibilityLabel("Schritt \(stepIndex + 1) von \(stepTotal)")
 
                 HStack(spacing: 0) {
-                    toolButton("pencil.and.scribble", label: showPad ? "Notizblatt schließen" : "Notizblatt öffnen", active: showPad) {
-                        showPad.toggle()
+                    toolButton("pencil.and.scribble", label: padOpen ? "Notizblatt schließen" : "Notizblatt öffnen", active: padOpen) {
+                        if padAsColumn { column = column == .pad ? nil : .pad } else { showPad.toggle() }
+                    }
+                    if hasFormulas {
+                        toolButton("function", label: formulasOpen ? "Formeln schließen" : "Formeln zeigen", active: formulasOpen) {
+                            if padAsColumn { column = column == .formulas ? nil : .formulas } else { showFormulaSheet = true }
+                        }
                     }
                     toolButton(speaker.isSpeaking ? "stop.fill" : "speaker.wave.2.fill", label: speaker.isSpeaking ? "Vorlesen beenden" : "Schritt vorlesen", active: speaker.isSpeaking) {
                         toggleSpeech()
                     }
                     if session.mode == .lesson {
-                        toolButton("square.and.pencil", label: "Notiz für den Vault schreiben", active: false) {
-                            showNote = true
+                        if padAsColumn || wikiPath == nil {
+                            toolButton("square.and.pencil", label: "Notiz für den Vault schreiben", active: false) {
+                                showNote = true
+                            }
+                        }
+                        if let wikiPath {
+                            if padAsColumn {
+                                toolButton("book.closed", label: "Notiz im Vault lesen", active: false) {
+                                    vaultNote = VaultNoteTarget(path: wikiPath)
+                                }
+                            } else {
+                                // narrow screens: writing and reading the vault note share one button
+                                Menu {
+                                    Button {
+                                        showNote = true
+                                    } label: {
+                                        Label("Notiz für den Vault schreiben", systemImage: "square.and.pencil")
+                                    }
+                                    Button {
+                                        vaultNote = VaultNoteTarget(path: wikiPath)
+                                    } label: {
+                                        Label("Notiz im Vault lesen", systemImage: "book.closed")
+                                    }
+                                } label: {
+                                    Image(systemName: "book.closed")
+                                        .font(.body.weight(.semibold))
+                                        .foregroundStyle(Color.primary)
+                                        .frame(width: 40, height: 44)
+                                        .contentShape(.rect)
+                                }
+                                .accessibilityLabel("Vault-Notiz")
+                            }
                         }
                     }
                 }
@@ -195,6 +260,26 @@ struct LessonPlayerView: View {
             }
         }
         .padding(.horizontal, 16)
+    }
+
+    /// iPad: notepad or formulas beside the lesson, switched with a segmented control.
+    @ViewBuilder private var sideColumn: some View {
+        VStack(spacing: 0) {
+            if hasFormulas {
+                Picker("Spalte", selection: Binding(get: { column ?? .pad }, set: { column = $0 })) {
+                    Text("Notizblatt").tag(PlayerColumn.pad)
+                    Text("Formeln").tag(PlayerColumn.formulas)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+            }
+            if column == .formulas, let course = session.course {
+                FormulaPanel(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex, topInset: 4)
+            } else {
+                ScratchPad(drawing: $drawing, systemTools: isPad) { column = nil }
+            }
+        }
     }
 
     private func toolButton(_ symbol: String, label: String, active: Bool, action: @escaping () -> Void) -> some View {
@@ -275,6 +360,8 @@ struct LessonPlayerView: View {
             "theme": ["accent": session.accentHex, "fontScale": UIFontMetrics.default.scaledValue(for: 17) / 17, "reduceMotion": reduceMotion] as [String: Any],
             "insets": ["top": top, "bottom": bottom],
             "seed": session.seed,
+            "formulaUrls": model.formulaURLs,
+            "logMistakes": session.logMistakes,
         ]
         switch session.mode {
         case .lesson:
@@ -286,7 +373,8 @@ struct LessonPlayerView: View {
         case .review:
             options["mode"] = "review"
             options["title"] = "Heute fällig"
-            options["items"] = session.reviewItems.map { ["lessonUrl": $0.lessonUrl, "stepId": $0.stepId] }
+            options["items"] = session.reviewItems.map(\.json)
+            if session.mistakeRound { options["title"] = "Fehler von früher" }
         case .practice:
             guard let course = session.course, let topic = session.topic else { return options }
             options["mode"] = "practice"
@@ -302,12 +390,16 @@ struct LessonPlayerView: View {
                 "minutes": session.minutes, "count": session.taskCount, "gens": session.picks.map(\.json),
             ]
             if let chapter = session.chapterId { exam["chapterId"] = chapter }
+            if let format = session.format {
+                exam["format"] = format
+                exam["kicker"] = course.title + " · ohne Taschenrechner"
+            }
             options["exam"] = exam
         case .mix:
             options["mode"] = "mix"
             options["mix"] = [
                 "title": "Heute gemischt",
-                "items": session.reviewItems.map { ["lessonUrl": $0.lessonUrl, "stepId": $0.stepId] },
+                "items": session.reviewItems.map(\.json),
                 "gens": session.picks.map(\.json),
             ] as [String: Any]
         }
@@ -535,7 +627,7 @@ struct CompletionView: View {
         case .review: return "Wiederholung geschafft"
         case .practice: return passed ? "Stufe sitzt" : "Runde geschafft"
         case .lesson: return "Lektion geschafft"
-        case .exam: return passed ? "Klausur sitzt" : "Klausur ausgewertet"
+        case .exam: return session.format == "tmua" ? "Paper ausgewertet" : (passed ? "Klausur sitzt" : "Klausur ausgewertet")
         case .mix: return "Tagesmix geschafft"
         }
     }
@@ -550,6 +642,10 @@ struct CompletionView: View {
             return "\(correct) von \(n) Aufgaben sofort gelöst. Ab 80 Prozent gilt eine Stufe als geschafft, jede Runde bringt neue Aufgaben."
         case .exam:
             let time = result.exam?.timeUp == true ? "Die Zeit war abgelaufen. " : ""
+            if session.format == "tmua" {
+                let score = String(format: "%.1f", TMUAScale.score(correct: correct, total: n)).replacingOccurrences(of: ".", with: ",")
+                return "\(time)\(correct) von \(n) richtig, geschätzter TMUA-Wert \(score). Falsche Aufgaben stehen im Fehlerprotokoll."
+            }
             if let weak = weakestTopic {
                 return "\(time)\(correct) von \(n) Aufgaben richtig. Am meisten Übung braucht \(weak.topic.title) (\(weak.ok) von \(weak.total))."
             }

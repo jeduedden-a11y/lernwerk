@@ -12,6 +12,9 @@ struct LernwerkApp: App {
             model.selectedTab = tab
         }
         _model = State(initialValue: model)
+        // a tapped reminder opens the daily mix
+        Reminders.shared.activate()
+        Reminders.shared.onOpen = { [weak model] url in model?.open(url) }
     }
 
     var body: some Scene {

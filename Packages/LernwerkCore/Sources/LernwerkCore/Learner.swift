@@ -155,8 +155,11 @@ public struct ExamRecord: Codable, Hashable, Sendable, Identifiable {
     public var timeUp: Bool
     /// Per training topic id.
     public var topics: [String: Tally]
+    /// "tmua" for a paper.
+    public var format: String? = nil
 
-    public init(date: Date, title: String, courseId: String?, chapterId: String?, correct: Int, total: Int, seconds: Int, timeUp: Bool, topics: [String: Tally]) {
+    public init(date: Date, title: String, courseId: String?, chapterId: String?, correct: Int, total: Int, seconds: Int, timeUp: Bool, topics: [String: Tally], format: String? = nil) {
+        self.format = format
         self.date = date
         self.title = title
         self.courseId = courseId
@@ -244,6 +247,8 @@ public struct LearnerState: Codable, Sendable {
     public var lastPush: Date?
     public var lastSyncError: String?
     public var deviceSalt: String = TagwerkCrypto.randomBytes(16).base64EncodedString()
+    /// Wrong tasks of courses with a mistake log (TMUA), newest last.
+    public var mistakes: [Mistake] = []
 
     public init() {}
 
@@ -263,6 +268,7 @@ public struct LearnerState: Codable, Sendable {
         lastPush = try? c.decodeIfPresent(Date.self, forKey: .lastPush)
         lastSyncError = try? c.decodeIfPresent(String.self, forKey: .lastSyncError)
         deviceSalt = (try? c.decode(String.self, forKey: .deviceSalt)) ?? TagwerkCrypto.randomBytes(16).base64EncodedString()
+        mistakes = (try? c.decode([Mistake].self, forKey: .mistakes)) ?? []
     }
 
     // MARK: derived values
@@ -383,7 +389,7 @@ public struct LearnerState: Codable, Sendable {
             let info = finished.exam
             exams.append(ExamRecord(date: now, title: info?.title ?? "Klausur", courseId: info?.courseId ?? course?.id, chapterId: info?.chapterId,
                                     correct: correct, total: finished.results.count, seconds: finished.seconds ?? 0,
-                                    timeUp: info?.timeUp ?? false, topics: topics))
+                                    timeUp: info?.timeUp ?? false, topics: topics, format: info?.format))
             if exams.count > 50 { exams.removeFirst(exams.count - 50) }
         } else if finished.mode == "mix" {
             // daily mix: repetitions move their cards, new tasks count towards the topic's hit rate on their level
@@ -432,11 +438,114 @@ public struct LearnerState: Codable, Sendable {
         return xp
     }
 
+    /// Keeps every wrong generated task of a session with its exact wording; at most 300, the oldest leave first.
+    @discardableResult
+    public mutating func logMistakes(_ finished: FinishedLesson, courseId: String, topicTitles: [String: String] = [:], now: Date = Date()) -> Int {
+        var added = 0
+        for r in finished.results where !r.correct {
+            guard let task = r.task, !task.isEmpty else { continue }
+            mistakes.append(Mistake(courseId: r.courseId ?? courseId, topicId: r.topicId, topicTitle: r.topicId.flatMap { topicTitles[$0] },
+                                    task: task, date: now))
+            added += 1
+        }
+        if mistakes.count > 300 { mistakes.removeFirst(mistakes.count - 300) }
+        return added
+    }
+
+    /// After a round from the mistake log: solved tasks leave it, the others stay and count one more try.
+    public mutating func resolveMistakes(_ finished: FinishedLesson, now: Date = Date()) {
+        for r in finished.results {
+            guard let i = mistakes.firstIndex(where: { $0.id == r.stepId }) else { continue }
+            if r.correct && !r.revealed {
+                mistakes.remove(at: i)
+            } else {
+                mistakes[i].retries += 1
+                mistakes[i].date = now
+            }
+        }
+    }
+
+    /// Formula cards: one per formula a finished lesson works with, first due the next day. Existing cards stay.
+    @discardableResult
+    public mutating func addFormulaCards(courseId: String, ids: [String], now: Date = Date()) -> Int {
+        let lesson = FormulaBook.lessonID(course: courseId)
+        var added = 0
+        for id in ids {
+            let key = ReviewCard.key(lesson, id)
+            guard cards[key] == nil else { continue }
+            cards[key] = ReviewCard(courseId: courseId, lessonId: lesson, stepId: id, due: now.addingTimeInterval(20 * 3600))
+            added += 1
+        }
+        return added
+    }
+
     public mutating func noteProgress(lessonID: String, courseID: String, step: Int, now: Date = Date()) {
         var p = lessons[lessonID] ?? LessonProgress(courseId: courseID)
         if !p.isCompleted || step > 0 { p.lastStep = step }
         p.updatedAt = now
         lessons[lessonID] = p
         lastLesson = lessonID
+    }
+}
+
+/// A generated task answered wrongly, kept word for word so it can be asked again exactly as it was.
+public struct Mistake: Codable, Hashable, Sendable, Identifiable {
+    public var id: String
+    public var courseId: String
+    public var topicId: String?
+    public var topicTitle: String?
+    /// The runtime step as JSON text.
+    public var task: String
+    public var date: Date
+    public var retries: Int
+
+    public init(id: String = UUID().uuidString.lowercased(), courseId: String, topicId: String?, topicTitle: String?, task: String, date: Date, retries: Int = 0) {
+        self.id = id
+        self.courseId = courseId
+        self.topicId = topicId
+        self.topicTitle = topicTitle
+        self.task = task
+        self.date = date
+        self.retries = retries
+    }
+
+    /// The question text without Markdown and formula delimiters, for lists.
+    public var preview: String {
+        guard let data = task.data(using: .utf8), let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let md = obj["md"] as? String else { return "Aufgabe" }
+        let plain = md.replacingOccurrences(of: "$$", with: " ").replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: "**", with: "").replacingOccurrences(of: "\\", with: " ")
+            .replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "\n", with: " ")
+        return plain.split(whereSeparator: { $0 == "\n" || $0 == " " }).joined(separator: " ")
+    }
+}
+
+/// How a topic area stands: not started, shaky, on the way, secure.
+public enum TrafficLight: String, Sendable, Equatable {
+    case none, red, yellow, green
+}
+
+extension LearnerState {
+    /// Traffic light of a chapter (a Themenfeld): finished lessons, the review cards of its lessons and the training of its topics.
+    /// Green: everything done and at least 80 % secure. Red: under 60 % secure. Otherwise yellow.
+    public func light(for chapter: Chapter, in course: Course) -> TrafficLight {
+        let ready = chapter.lessons.filter(\.isReady)
+        guard !ready.isEmpty else { return .none }
+        let done = ready.filter { lessons[$0.id]?.isCompleted == true }.count
+        let started = done > 0 || ready.contains { (lessons[$0.id]?.lastStep ?? 0) > 0 }
+        guard started else { return .none }
+        let ids = Set(ready.map(\.id))
+        let chapterCards = cards.values.filter { ids.contains($0.lessonId) }
+        let failing = chapterCards.filter { $0.reps == 0 && $0.lapses > 0 }.count
+        var share = chapterCards.isEmpty ? 1 : 1 - Double(failing) / Double(chapterCards.count)
+        let stats = course.practiceTopics(in: chapter).compactMap { practice[PracticeStat.key(course: course.id, topic: $0.id)] }
+        let tasks = stats.reduce(0) { $0 + $1.totalTasks }
+        if tasks >= 6 {
+            let correct = stats.reduce(0) { $0 + $1.correct.reduce(0, +) }
+            share = min(share, Double(correct) / Double(tasks))
+        }
+        if share < 0.6 { return .red }
+        if done == ready.count && share >= 0.8 { return .green }
+        return .yellow
     }
 }

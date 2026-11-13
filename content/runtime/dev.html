@@ -62,6 +62,7 @@
     </select>
     <button id="practice">Training starten</button>
     <button id="gens">Generatoren prüfen</button>
+    <button id="formulas">Formeln</button>
     <button id="path">Lernpfad</button>
   </header>
   <div class="stage">
@@ -83,7 +84,9 @@
   const $ = (id) => document.getElementById(id);
   const frame = $("frame");
   const log = (o) => { $("log").textContent = JSON.stringify(o) + "\n" + $("log").textContent.slice(0, 6000); };
-  let index = null, courses = {}, dark = false;
+  let index = null, courses = {}, books = {}, dark = false;
+  // formula books (courses/<id>/formeln.json) of the courses that have one
+  const formulaUrls = () => Object.keys(books).map((id) => "../courses/" + id + "/formeln.json");
   const fetchJSON = async (u) => { const r = await fetch(u, { cache: "no-store" }); if (!r.ok) throw new Error(u + ": " + r.status); return r.json(); };
 
   window.addEventListener("message", (e) => {
@@ -113,6 +116,7 @@
       try { courses[id] = await fetchJSON("../courses/" + id + "/course.json"); }
       catch (e) { log({ fehlt: id }); continue; }
       const o = document.createElement("option"); o.value = id; o.textContent = courses[id].title; $("course").append(o);
+      try { books[id] = await fetchJSON("../courses/" + id + "/formeln.json"); } catch (e) { /* no formula book */ }
     }
     index.courses = index.courses.filter((id) => courses[id]);
     const saved = JSON.parse(localStorage.getItem("lw-dev") || "{}");
@@ -136,6 +140,7 @@
     frame.contentWindow.LW.start({
       mode: "practice", theme: { accent: c.color }, insets: { top: 112, bottom: 120 },
       practice: { title: t.title, kicker: c.title, topicId: t.id, courseId: cid, gens: t.gens, level: +$("level").value, count: t.count || 6 },
+      formulaUrls: formulaUrls(),
     });
   };
   function start() {
@@ -146,11 +151,16 @@
     document.getElementById("phone").style.setProperty("--tint", c.color);
     const go = () => frame.contentWindow.LW.start({
       lessonUrl: "../courses/" + cid + "/lessons/" + lid + ".json",
-      kicker: c.title, theme: { accent: c.color }, insets: { top: 112, bottom: 120 },
+      kicker: c.title, theme: { accent: c.color }, insets: { top: 112, bottom: 120 }, formulaUrls: formulaUrls(),
     });
     if (frame.contentWindow.LW && frame.contentWindow.document.readyState === "complete") go();
     else frame.onload = go;
   }
+  $("formulas").onclick = () => {
+    const cid = $("course").value, c = courses[cid];
+    frame.contentWindow.LW.start({ mode: "formulas", theme: { accent: c.color }, insets: { top: 112, bottom: 40 }, formulaUrls: formulaUrls(),
+      formulas: { courses: [cid], lessonId: $("lesson").value, kicker: c.title } });
+  };
   $("course").onchange = () => fillLessons();
   $("lesson").onchange = start;
   $("restart").onclick = start;
@@ -164,7 +174,7 @@
   };
 
   // ---------------------------------------------------------------- validation of every lesson
-  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant"];
+  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade"];
   function mdFields(step) {
     const out = [];
     ["md", "explain", "hint", "wrong", "solution", "after"].forEach((k) => { if (step[k]) out.push([k, step[k]]); });
@@ -224,6 +234,9 @@
       if (s.type === "order" && (s.items || []).length < 2) errs.push(at + ": zu wenige items");
       if (s.type === "match" && (s.pairs || []).length < 2) errs.push(at + ": zu wenige pairs");
       if (s.type === "reveal" && !s.solution) errs.push(at + ": solution fehlt");
+      if (s.type === "rubric" && (!s.solution || !(s.points || (s.criteria || []).length))) errs.push(at + ": rubric braucht solution und points oder criteria");
+      if (s.type === "rubric" && s.points && (s.criteria || []).length && s.criteria.reduce((n, c) => n + (c.points || 1), 0) !== s.points) errs.push(at + ": Summe der criteria passt nicht zu points");
+      (s.criteria || []).forEach((c, i) => { if (/katex-error|lw-error/.test(LW.md(c.md || ""))) errs.push(at + " criterion " + i + ": Formelfehler"); });
       if (s.type === "sort") (s.items || []).forEach((it, k) => { const ci = typeof it.cat === "number" ? it.cat : (s.categories || []).indexOf(it.cat); if (ci < 0) errs.push(at + ": Kategorie von Eintrag " + (k + 1) + " unbekannt"); });
       if (s.type === "widget" && !LW.widgets[s.widget]) errs.push(at + ": Widget " + s.widget + " fehlt");
       if (s.type === "spot") {
@@ -287,13 +300,17 @@
     const LW = frame.contentWindow.LW;
     const rep = $("report"); rep.innerHTML = "";
     let total = 0, bad = 0;
+    await LW.preloadFormulas(formulaUrls());
+    const allFormulas = Object.keys(LW.formulas).flatMap((c) => LW.formulaList(c));
     for (const name of Object.keys(LW.generators).sort()) {
       const errs = [];
+      const card = name === "formelkarte";
       for (let level = 1; level <= 4; level++) {
-        for (let seed = 0; seed < 40; seed++) {
+        for (let seed = 0; seed < (card ? Math.max(40, allFormulas.length * 2) : 40); seed++) {
           total++;
           let made;
-          try { made = LW.realize({ id: "g", type: "gen", gen: name, level }, name + "|" + level + "|" + seed); }
+          const f = card ? allFormulas[seed % allFormulas.length] : null;
+          try { made = LW.realize({ id: "g", type: "gen", gen: name, level, params: f ? { course: f.course, id: f.id } : undefined }, name + "|" + level + "|" + seed); }
           catch (e) { errs.push("Stufe " + level + ": wirft " + e.message); break; }
           const e = checkStep(made, "Stufe " + level + " Variante " + seed + " (" + made.type + ")", LW);
           if (e.length) { errs.push(...e.slice(0, 2)); break; }
@@ -345,7 +362,22 @@
         if (errs.length) bad++;
       }
     }
-    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen, " + bad + " mit Fehlern</b>"; rep.prepend(s);
+    // formula books: every formula, rearrangement, wrong variant and symbol must render
+    for (const [cid, book] of Object.entries(books)) {
+      const errs = [];
+      (book.groups || []).forEach((g) => (g.formulas || []).forEach((f) => {
+        const texts = [["tex", f.tex]].concat(Object.entries(f.solve || {}).map(([k, v]) => ["solve " + k, v]), (f.wrong || []).map((w, i) => ["wrong " + i, w]), (f.vars || []).map((v) => ["var " + v[0], v[0]]));
+        texts.forEach(([k, v]) => { if (/katex-error|lw-error/.test(LW.math(v, true))) errs.push(f.id + " " + k + ": Formelfehler"); });
+        if (f.note && /katex-error|lw-error/.test(LW.md(f.note))) errs.push(f.id + " note: Formelfehler");
+      }));
+      total++;
+      const d = document.createElement("div");
+      d.className = errs.length ? "err" : "ok";
+      d.textContent = (errs.length ? "Fehler " : "OK ") + cid + "/formeln.json" + (errs.length ? ": " + errs.join(" | ") : "");
+      rep.append(d);
+      if (errs.length) bad++;
+    }
+    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen und Formelsammlungen, " + bad + " mit Fehlern</b>"; rep.prepend(s);
     window.lwReport = { total, bad, text: rep.innerText };
   };
 

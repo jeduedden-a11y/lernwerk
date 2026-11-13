@@ -194,6 +194,76 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(RuntimeMessage.parse(["type": "open", "courseId": "x"]), .unknown)
     }
 
+    func testFormulaBookAndCards() throws {
+        let json = #"""
+        {"id":"formeln","course":"physik","title":"Formelsammlung Physik","groups":[{"title":"Bewegungen","formulas":[
+          {"id":"gleichfoermig","name":"Gleichförmige Bewegung","tex":"s = v \\cdot t","vars":[["s","Weg","m"]],"lessons":["phy-kinematik"],"abi":"merken","solve":{"v":"v = \\frac{s}{t}"}},
+          {"id":"freier-fall","name":"Freier Fall","tex":"h = \\tfrac{1}{2} g t^2"}]}]}
+        """#
+        let book = try JSONDecoder().decode(FormulaBook.self, from: Data(json.utf8))
+        XCTAssertEqual(book.formulas.count, 2)
+        XCTAssertEqual(book.formulas(forLesson: "phy-kinematik").map(\.id), ["gleichfoermig"])
+        XCTAssertEqual(FormulaBook.lessonID(course: "physik"), "formeln-physik")
+        XCTAssertTrue(FormulaBook.isFormulaLesson("formeln-physik"))
+
+        var state = LearnerState()
+        let now = Date(timeIntervalSince1970: 1_800_000_000)
+        XCTAssertEqual(state.addFormulaCards(courseId: "physik", ids: ["gleichfoermig", "freier-fall"], now: now), 2)
+        XCTAssertEqual(state.addFormulaCards(courseId: "physik", ids: ["gleichfoermig"], now: now), 0)
+        let card = try XCTUnwrap(state.cards[ReviewCard.key("formeln-physik", "gleichfoermig")])
+        XCTAssertEqual(card.courseId, "physik")
+        XCTAssertTrue(state.dueCards(now: now).isEmpty)
+        XCTAssertEqual(state.dueCards(now: now.addingTimeInterval(86_400)).count, 2)
+    }
+
+    func testMistakeLogKeepsWrongTasks() {
+        let message: [String: Any] = ["type": "finished", "mode": "exam", "score": 0.5, "results": [
+            ["stepId": "e1", "type": "choice", "correct": false, "firstTry": false, "attempts": 1, "revealed": false, "topicId": "logik", "courseId": "tmua",
+             "task": ["type": "choice", "md": "Which of the **following** is true?", "options": [["md": "A", "correct": true], ["md": "B"]]]],
+            ["stepId": "e2", "type": "choice", "correct": true, "firstTry": true, "attempts": 1, "revealed": false, "topicId": "logik", "courseId": "tmua"],
+        ], "exam": ["title": "Paper 2", "format": "tmua", "timeUp": false]]
+        guard case .finished(let f) = RuntimeMessage.parse(message) else { return XCTFail("not parsed") }
+        XCTAssertEqual(f.exam?.format, "tmua")
+        var state = LearnerState()
+        XCTAssertEqual(state.logMistakes(f, courseId: "tmua", topicTitles: ["logik": "Logik"]), 1)
+        let m = try! XCTUnwrap(state.mistakes.first)
+        XCTAssertEqual(m.topicTitle, "Logik")
+        XCTAssertEqual(m.preview, "Which of the following is true?")
+        let retry = FinishedLesson(lessonId: nil, mode: "review", results: [StepResult(stepId: m.id, lessonId: nil, type: "choice", correct: true, firstTry: true, attempts: 1, revealed: false)], score: 1)
+        state.resolveMistakes(retry)
+        XCTAssertTrue(state.mistakes.isEmpty)
+        XCTAssertEqual(TMUAScale.score(correct: 20, total: 40), 4.6)
+        XCTAssertEqual(TMUAScale.score(correct: 20, total: 20), 9)
+    }
+
+    func testChapterWeeks() {
+        let ch = Chapter(id: "e2", title: "Etappe 2", lessons: [], from: "2026-11-09", to: "2026-11-15")
+        var parts = DateComponents()
+        parts.year = 2026; parts.month = 11; parts.day = 13; parts.hour = 12
+        let day = Calendar.current.date(from: parts)!
+        XCTAssertTrue(ch.isCurrent(on: day))
+        XCTAssertFalse(ch.isPast(on: day))
+        XCTAssertTrue(ch.isPast(on: day.addingTimeInterval(4 * 86_400)))
+    }
+
+    func testTrafficLightPerChapter() {
+        let lessons = [LessonRef(id: "a", title: "A"), LessonRef(id: "b", title: "B")]
+        let chapter = Chapter(id: "q1", title: "Q1", lessons: lessons)
+        let course = Course(id: "c", title: "C", color: "#000000", symbol: "x", chapters: [chapter])
+        var state = LearnerState()
+        XCTAssertEqual(state.light(for: chapter, in: course), .none)
+        var p = LessonProgress(courseId: "c")
+        p.completedAt = Date()
+        state.lessons["a"] = p
+        XCTAssertEqual(state.light(for: chapter, in: course), .yellow)
+        state.lessons["b"] = p
+        XCTAssertEqual(state.light(for: chapter, in: course), .green)
+        var bad = ReviewCard(courseId: "c", lessonId: "a", stepId: "s1", due: Date())
+        bad.lapses = 2
+        state.cards[ReviewCard.key("a", "s1")] = bad
+        XCTAssertEqual(state.light(for: chapter, in: course), .red)
+    }
+
     func testIgnoredFiles() {
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev.html"))
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev-frame.html"))

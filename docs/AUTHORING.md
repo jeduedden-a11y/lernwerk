@@ -289,3 +289,32 @@ Aufgabentypen sind Funktionen `R.<typ>(step, ctx)` in `runtime/lw.js`, die `{ el
 ## Lernpfad
 
 `runtime/overview.js` zeichnet die Seite »Lernpfad«: oben die Fächer mit Fortschrittsring, Trainingsstufen und der nächsten Lektion, darunter je Kurs einen Baum aus `requires`. Die App startet sie mit `LW.start({ mode: "overview", subject, progress: { done, started, practice, streak } })` und bekommt `{ type: "open", courseId, lessonId }` oder `{ type: "practice", courseId, topicId, level }` zurück. In der Testumgebung zeigt der Knopf **Lernpfad** die Seite mit ausgedachtem Fortschritt.
+
+## Formelsammlung je Kurs
+
+`courses/<kurs>/formeln.json` (liegt im Kursordner, nicht unter `lessons/`): `{ "id": "formeln", "course": "<kurs>", "title", "groups": [{ "title", "formulas": [...] }] }`. Eine Formel: `id`, `name`, `tex` (ohne `$`), `vars` (`[Symbol, Bedeutung, Einheit]`), `lessons` (Lektions-ids, die sie nutzen), `abi` (`"blatt"`: steht in der Formelsammlung, `"merken"`: Grundformel), `solve` (`{ Symbol: umgestellte Formel }`), `wrong` (plausible falsche Varianten), `note`.
+
+Daraus entstehen ohne weitere Arbeit: die Formelspalte neben jeder Lektion (iPad) bzw. das Formelblatt (iPhone), die Formelsammlung auf Kurs- und Fachseite, Formelkarten in der Wiederholung (nach jeder Lektion die Formeln aus `lessons`) und das Trainingsthema `formeln` mit dem Generator `formeln-<kurs>` (erkennen, ergänzen, umstellen, falsche finden). Für einen neuen Kurs den Generator in `generators/formeln.js` mit `LW.generator("formeln-<kurs>", training("<kurs>"))` eintragen.
+
+## Grafiken aus dem Vault
+
+`"image": "vault:Dateiname.svg"` an einem Schritt zeigt eine Grafik aus dem Vault (aufgelöst wie `![[Dateiname.svg]]`). Die App liest sie aus ihrer verschlüsselten Wiki-Kopie, die Testumgebung (`tools/serve.ps1`) direkt aus dem Vault. Vault-Inhalte kommen so nie ins öffentliche Inhalts-Repo. `caption` setzt eine Bildunterschrift.
+
+## Abitur: Klausuraufgaben mit Erwartungshorizont
+
+- `rubric`: `{ "type": "rubric", "part": "1.2", "operator": { "word", "means" }, "md", "solution", "criteria": [{ "md", "points" }], "review": false }`. Erst auf Papier lösen, dann Erwartungshorizont zeigen und abhaken; ohne `criteria` vergibt man 0 bis `points` BE.
+- `grade`: am Ende einer Probeklausur; addiert die BE und rechnet nach dem Notenschlüssel der Oberstufe in Notenpunkte um.
+- Die Ampel im Fortschritt bewertet jedes Kapitel (in der Oberstufe ein Themenfeld) aus geschafften Lektionen, Wiederholung und Training.
+
+## Chemie- und Versuchsansichten
+
+- `glucose` (Ringschluss Fischer bis Haworth, α/β), `molecule3d` (drehbare Moleküle, Sesselform, Spiegelbilder), `protein` (Primär- bis Quartärstruktur, Denaturierung), `mechanism` (`sn2`, `sn1`, `addition`, `halbacetal`, `veresterung`; Elektronenpfeile setzt die lernende Person selbst). Ziele über `goal.when`, etwa `"solved == 1"` oder `"stage == 3 && beta == 0"`.
+- `versuch` mit `exp`: `fadenstrahlrohr`, `millikan`, `photoeffekt`, `franckhertz`, `elektronenbeugung`, `gitter`, `federpendel`, `entladung`, `titration` (`acid`: `salzsaeure` oder `essigsaeure`). Aufbau bewegt sich, Messwerte streuen realistisch, Tabelle, Diagramm mit Ausgleichsgerade, Ergebnis mit Abweichung. Ziel etwa `{ "when": "n >= 5 && err < 0.08" }`.
+
+## TMUA: Etappen, Papers, Fehlerprotokoll
+
+- Kapitel mit `from`/`to` (JJJJ-MM-TT) zeigen ihre Woche; die laufende ist markiert und steht oben auf der Kursseite.
+- Trainingsthemen ohne `after` können mit `chapter` in ein Kapitel gesetzt werden; sie sind sofort offen.
+- `papers`: `{ id, title, subtitle, minutes, count, level, topics: [Trainingsthemen] }` laufen als Klausur im TMUA-Format (A bis H, kein Taschenrechner, geschätzter Wert 1 bis 9).
+- `"mistakeLog": true` am Kurs: falsch gelöste generierte Aufgaben aus Training und Papers landen mit ihrem Wortlaut im Fehlerprotokoll und werden später genau so wieder gestellt.
+- Aufgaben auf Englisch setzen `"lang": "en"`: Begriffe aus `LW.glossary` lassen sich antippen und zeigen das deutsche Wort.

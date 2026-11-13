@@ -9,7 +9,8 @@ struct NoteTarget: Identifiable {
     var note: LearnNote?
 }
 
-struct NotesView: View {
+/// The notes written in lessons, now a section of the Vault tab.
+struct LearnNotesView: View {
     @Environment(AppModel.self) private var model
     @State private var editing: NoteTarget?
     @State private var showSettings = false
@@ -32,7 +33,6 @@ struct NotesView: View {
     }
 
     var body: some View {
-        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     VaultStatusCard(showSettings: $showSettings)
@@ -70,7 +70,8 @@ struct NotesView: View {
                 .readableColumn()
             }
             .background { TintBackground(tints: [.indigo, .teal]) }
-            .navigationTitle("Notizen")
+            .navigationTitle("Lernnotizen")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
@@ -98,7 +99,6 @@ struct NotesView: View {
             .sheet(isPresented: $showSettings) {
                 SettingsView().environment(model)
             }
-        }
     }
 
     private func open(_ note: LearnNote, in course: Course?) {

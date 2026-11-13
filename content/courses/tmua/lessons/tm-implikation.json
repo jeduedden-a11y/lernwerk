@@ -1,0 +1,76 @@
+{
+  "id": "tm-implikation",
+  "title": "Wann »wenn P, dann Q« wahr ist",
+  "subtitle": "Etappe 1: Implikationen lesen, Gegenbeispiele finden, Optionen nutzen",
+  "vault": [
+    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Implikation und Äquivalenz.md", "title": "Implikation und Äquivalenz" },
+    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Wahrheitswert einer Implikation prüfen.md", "title": "Wahrheitswert einer Implikation prüfen" },
+    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aussagen und logische Verknüpfungen.md", "title": "Aussagen und logische Verknüpfungen" },
+    { "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Antwortoptionen strategisch nutzen.md", "title": "Antwortoptionen strategisch nutzen" }
+  ],
+  "steps": [
+    {
+      "id": "format", "type": "text",
+      "md": "Im TMUA hat jede Aufgabe genau eine richtige Antwort unter bis zu acht Optionen, **A** bis **H**. Falsche Antworten kosten nichts: **keine Aufgabe leer lassen**.\n\nDie Optionen sind selbst Information. Lauten sie »none of them«, »I only«, »I and II only« und so weiter, reicht es oft, **eine** der drei Aussagen sicher zu entscheiden: Ist I falsch, fallen vier der acht Optionen weg."
+    },
+    {
+      "id": "kern", "type": "text",
+      "md": "Eine **Implikation** »wenn $P$, dann $Q$« (*if P, then Q*) ist nur in einem einzigen Fall falsch: $P$ ist wahr und $Q$ ist falsch.\n\nIst $P$ falsch, gilt die Implikation, egal was $Q$ tut. Eine Aussage über **alle** reellen Zahlen, »für alle $x$: wenn $P(x)$, dann $Q(x)$«, ist deshalb schon falsch, wenn es ein einziges $x$ gibt, das $P$ erfüllt und $Q$ verletzt: ein **Gegenbeispiel**."
+    },
+    {
+      "id": "tafel", "type": "choice",
+      "md": "In welchem Fall ist »wenn $P$, dann $Q$« falsch?",
+      "options": [
+        { "md": "$P$ wahr, $Q$ falsch", "correct": true },
+        { "md": "$P$ falsch, $Q$ wahr", "why": "Ist die Voraussetzung falsch, verspricht die Implikation nichts, sie ist wahr." },
+        { "md": "$P$ falsch, $Q$ falsch", "why": "Auch hier ist die Voraussetzung falsch: die Implikation ist wahr." },
+        { "md": "$P$ wahr, $Q$ wahr", "why": "Das ist genau der Fall, den die Implikation verspricht." }
+      ],
+      "explain": "Nur »Voraussetzung erfüllt, Folgerung verletzt« widerlegt eine Implikation."
+    },
+    {
+      "id": "gegenbeispiel", "type": "choice", "lang": "en",
+      "md": "Which value of $x$ is a counterexample to the statement *if $x^2 > 4$, then $x > 2$*?",
+      "options": [
+        { "md": "$x = -3$", "correct": true },
+        { "md": "$x = 3$", "why": "Erfüllt Voraussetzung und Folgerung, bestätigt also nur." },
+        { "md": "$x = 0$", "why": "$0 > 4$ ist falsch: die Voraussetzung gilt nicht, also kein Gegenbeispiel." },
+        { "md": "$x = 2$", "why": "$4 > 4$ ist falsch: auch hier gilt die Voraussetzung nicht." },
+        { "md": "$x = -2$", "why": "$4 > 4$ ist falsch, also keine Voraussetzung." }
+      ],
+      "explain": "$x = -3$: $9 > 4$ stimmt, aber $-3 > 2$ nicht. Ein Gegenbeispiel muss die Voraussetzung **erfüllen**."
+    },
+    {
+      "id": "umkehrung", "type": "text",
+      "md": "Die **Umkehrung** (*converse*) von »wenn $P$, dann $Q$« ist »wenn $Q$, dann $P$«. Beide sind verschiedene Aussagen: »wenn $x > 2$, dann $x^2 > 4$« ist wahr, die Umkehrung »wenn $x^2 > 4$, dann $x > 2$« scheitert an $x = -3$.\n\nStehen in einer Aufgabe zwei Aussagen, die Umkehrungen voneinander sind, ist das fast immer Absicht: genau dort liegt die Falle."
+    },
+    {
+      "id": "testwerte", "type": "order", "label": "Reihenfolge",
+      "md": "Eine Allaussage über reelle Zahlen soll geprüft werden. Bringe die Testwerte in die Reihenfolge, in der sie sich am häufigsten lohnen.",
+      "items": ["negative Zahlen, etwa $-2$", "Zahlen zwischen 0 und 1, etwa $\\tfrac12$", "die Ränder der Bedingungen, etwa $0$ und $1$", "große positive Zahlen"],
+      "explain": "Quadrate, Kehrwerte und dritte Potenzen verhalten sich bei negativen Zahlen und zwischen 0 und 1 anders als gewohnt: dort kippen die meisten Aussagen. Ränder entscheiden über $<$ oder $\\le$."
+    },
+    {
+      "id": "drei", "type": "choice", "lang": "en", "shuffle": false,
+      "md": "Which of the following statements is/are true for all real numbers $x$?\n\n**I**  If $x < -1$, then $x^2 > 1$.\n\n**II**  If $x^2 > x$, then $x > 1$.\n\n**III**  If $0 < x < 1$, then $x^3 < x$.",
+      "options": [
+        { "md": "none of them" }, { "md": "I only" }, { "md": "II only" }, { "md": "III only" },
+        { "md": "I and II only" }, { "md": "I and III only", "correct": true }, { "md": "II and III only" }, { "md": "I, II and III" }
+      ],
+      "explain": "**F.** I: aus $x < -1$ folgt $|x| > 1$, also $x^2 > 1$. II scheitert an $x = -1$: $1 > -1$, aber $-1 > 1$ ist falsch. III: für $0 < x < 1$ ist $x^2 < 1$, mit $x > 0$ malgenommen $x^3 < x$. Wer II mit einer negativen Zahl testet, streicht sofort C, E, G und H."
+    },
+    { "id": "g1", "type": "gen", "gen": "tmua-implikation", "level": 1, "label": "Implications" },
+    { "id": "g2", "type": "gen", "gen": "tmua-implikation", "level": 2, "label": "Implications" },
+    { "id": "g3", "type": "gen", "gen": "tmua-implikation", "level": 3, "label": "Converse trap" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "»Wenn $P$, dann $Q$« ist nur falsch, wenn $P$ gilt und $Q$ nicht.",
+        "Eine Allaussage fällt mit einem einzigen Gegenbeispiel; es muss die Voraussetzung erfüllen.",
+        "Umkehrung und Original sind verschiedene Aussagen; Paare davon sind die klassische Falle.",
+        "Zuerst negative Zahlen, Zahlen zwischen 0 und 1 und die Ränder testen.",
+        "Optionen nutzen: eine sicher entschiedene Aussage streicht die Hälfte der Antworten."
+      ]
+    }
+  ]
+}

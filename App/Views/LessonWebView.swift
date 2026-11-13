@@ -64,6 +64,9 @@ final class LessonController {
 @MainActor
 final class ContentSchemeHandler: NSObject, WKURLSchemeHandler {
     let locator: ContentLocator
+    /// Graphics from the vault (lw://app/vault/<name>): lessons name them, the offline wiki copy has them.
+    /// The vault content never goes into the public content repository.
+    static var vaultAsset: (@MainActor (String) -> Data?)?
 
     init(locator: ContentLocator) {
         self.locator = locator
@@ -79,6 +82,7 @@ final class ContentSchemeHandler: NSObject, WKURLSchemeHandler {
         case "png": return "image/png"
         case "jpg", "jpeg": return "image/jpeg"
         case "webp": return "image/webp"
+        case "gif": return "image/gif"
         case "woff2": return "font/woff2"
         case "woff": return "font/woff"
         case "ttf": return "font/ttf"
@@ -89,7 +93,9 @@ final class ContentSchemeHandler: NSObject, WKURLSchemeHandler {
     func webView(_ webView: WKWebView, start task: any WKURLSchemeTask) {
         guard let url = task.request.url else { return }
         let rel = url.path.hasPrefix("/") ? String(url.path.dropFirst()) : url.path
-        guard url.host == "app", let data = locator.data(rel) else {
+        let fromVault = rel.hasPrefix("vault/")
+        let found = fromVault ? Self.vaultAsset?(String(rel.dropFirst(6))) : locator.data(rel)
+        guard url.host == "app", let data = found else {
             task.didFailWithError(URLError(.fileDoesNotExist))
             return
         }

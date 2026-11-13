@@ -18,6 +18,17 @@ struct VaultSettings: Codable, Equatable {
 struct ReviewItem: Codable, Equatable, Hashable {
     var lessonUrl: String
     var stepId: String
+    /// A task from the mistake log comes complete (runtime JSON) instead of being looked up in a lesson.
+    var step: String? = nil
+    var from: String? = nil
+
+    /// What the runtime gets in options.items.
+    var json: [String: Any] {
+        var d: [String: Any] = ["lessonUrl": lessonUrl, "stepId": stepId]
+        if let step, let data = step.data(using: .utf8), let obj = try? JSONSerialization.jsonObject(with: data) { d["step"] = obj }
+        if let from { d["from"] = from }
+        return d
+    }
 }
 
 /// One generator with the level and topic it is used for in an exam or the daily mix.
@@ -50,6 +61,12 @@ struct LessonSession: Identifiable, Equatable {
     var chapterId: String? = nil
     var taskCount: Int = 0
     var minutes: Int = 0
+    /// "tmua" for a paper: answers A to H, no calculator, an estimated score at the end.
+    var format: String? = nil
+    /// Wrong generated tasks come back with their wording, for the mistake log.
+    var logMistakes = false
+    /// A round of tasks from the mistake log: solved ones leave it.
+    var mistakeRound = false
     /// Seeds the generated tasks: every run of a lesson or training round brings new numbers.
     var seed: Int = Int.random(in: 1...999_983)
 }
@@ -82,12 +99,17 @@ final class AppModel {
     var presentedLesson: LessonSession?
     var selectedTab: AppTab = .learn
     var toast: String?
+    /// Read-only offline copy of the vault's wiki. Tagwerk Bridge uploads it for Tagwerk; Lernwerk reads the same copy.
+    let wiki = WikiStore()
+    /// A wiki note the Vault tab should open next, e.g. from a lesson.
+    var pendingVaultNote: String?
     private(set) var vault: VaultSettings
     private(set) var contentSource: ContentSource
     let isDemo: Bool
 
     @ObservationIgnored let locator: ContentLocator
     @ObservationIgnored private var metaCache: [String: LessonMeta] = [:]
+    @ObservationIgnored private var formulaCache: [String: FormulaBook?] = [:]
     @ObservationIgnored private var saveTask: Task<Void, Never>?
     @ObservationIgnored private let keychain = Keychain()
     @ObservationIgnored private let stateURL: URL
@@ -120,12 +142,16 @@ final class AppModel {
         reloadCourses()
         refreshSecrets()
         if demo { DemoData.fill(self) }
+        let wiki = self.wiki
+        ContentSchemeHandler.vaultAsset = { name in wiki.asset(named: name) }
     }
 
     // MARK: content
 
     func reloadCourses() {
         metaCache = [:]
+        formulaCache = [:]
+        wikiLessonIndex = nil
         guard let index = locator.decode(CourseIndex.self, "courses/index.json") else { courses = []; subjects = []; return }
         courses = index.courses.compactMap { locator.decode(Course.self, "courses/\($0)/course.json") }
         let known = Set(courses.map(\.id))
@@ -165,7 +191,83 @@ final class AppModel {
         return m
     }
 
-    func lessonURL(_ course: Course, _ lessonID: String) -> String { "lw://app/" + course.lessonPath(lessonID) }
+    /// Review cards of formulas name the formula book in place of a lesson.
+    func lessonURL(_ course: Course, _ lessonID: String) -> String {
+        FormulaBook.isFormulaLesson(lessonID) ? "lw://app/" + FormulaBook.path(course: course.id) : "lw://app/" + course.lessonPath(lessonID)
+    }
+
+    // MARK: formulas
+
+    /// courses/<id>/formeln.json, if the course has one.
+    func formulaBook(_ course: Course) -> FormulaBook? {
+        if let cached = formulaCache[course.id] { return cached }
+        let book = locator.decode(FormulaBook.self, FormulaBook.path(course: course.id))
+        formulaCache[course.id] = .some(book)
+        return book
+    }
+
+    /// Every formula book; the runtime loads them before a start, so the training and the formula cards find them.
+    var formulaURLs: [String] { courses.filter { formulaBook($0) != nil }.map { "lw://app/" + FormulaBook.path(course: $0.id) } }
+
+    /// Formula cards of a course that are due or waiting.
+    func formulaCardCount(_ course: Course) -> Int {
+        let lesson = FormulaBook.lessonID(course: course.id)
+        return state.cards.values.filter { $0.lessonId == lesson }.count
+    }
+
+    /// Puts every formula of the course into the review, not only those of finished lessons.
+    func addAllFormulaCards(_ course: Course) {
+        guard let book = formulaBook(course) else { return }
+        let added = state.addFormulaCards(courseId: course.id, ids: book.formulas.map(\.id))
+        scheduleSave()
+        toast = added == 0 ? "Alle Formeln sind schon in der Wiederholung" : (added == 1 ? "1 Formelkarte kommt morgen dran" : "\(added) Formelkarten kommen ab morgen dran")
+    }
+
+    // MARK: vault wiki
+
+    var isConnected: Bool { isVaultConfigured }
+
+    func flash(_ text: String) { toast = text }
+
+    func syncWiki(force: Bool = false) async {
+        guard isVaultConfigured else { return }
+        let gh = GitHubClient(config: GitHubConfig(owner: vault.owner, repo: vault.repo, branch: vault.branch), token: token)
+        await wiki.sync(github: gh, passphrase: passphrase, force: force)
+    }
+
+    /// Lesson links name vault paths ("02 Wiki/Physik/…/Kinematik.md"); the wiki copy starts below its root folder.
+    func wikiPath(forVaultPath vaultPath: String) -> String {
+        let root = wiki.root.hasSuffix("/") ? wiki.root : wiki.root + "/"
+        return vaultPath.hasPrefix(root) ? String(vaultPath.dropFirst(root.count)) : vaultPath
+    }
+
+    @ObservationIgnored private var wikiLessonIndex: [String: [(course: Course, lesson: LessonRef)]]?
+
+    /// Lessons that link a wiki note, in course order.
+    func lessons(forWikiPath path: String) -> [(course: Course, lesson: LessonRef)] {
+        if wikiLessonIndex == nil {
+            var index: [String: [(course: Course, lesson: LessonRef)]] = [:]
+            for course in courses {
+                for lesson in course.readyLessons {
+                    for link in meta(course, lesson)?.vault ?? [] {
+                        index[wikiPath(forVaultPath: link.path).lowercased(), default: []].append((course: course, lesson: lesson))
+                    }
+                }
+            }
+            wikiLessonIndex = index
+        }
+        return wikiLessonIndex?[path.lowercased()] ?? []
+    }
+
+    /// The first vault note of a lesson that the offline copy has, as a wiki path.
+    func wikiNote(for course: Course, _ lesson: LessonRef) -> String? {
+        wiki.loadIfNeeded()
+        for link in meta(course, lesson)?.vault ?? [] {
+            let p = wikiPath(forVaultPath: link.path)
+            if wiki.note(p) != nil { return p }
+        }
+        return nil
+    }
 
     /// Downloads new lessons and runtime files from GitHub.
     func syncContent(force: Bool = false) async {
@@ -304,8 +406,55 @@ final class AppModel {
     }
 
     func startPractice(_ course: Course, _ topic: PracticeTopic, level: Int) {
-        presentedLesson = LessonSession(mode: .practice, course: course, title: topic.title, accentHex: course.color,
-                                        topic: topic, level: max(1, min(4, level)))
+        var session = LessonSession(mode: .practice, course: course, title: topic.title, accentHex: course.color,
+                                    topic: topic, level: max(1, min(4, level)))
+        session.logMistakes = course.mistakeLog == true
+        presentedLesson = session
+    }
+
+    // MARK: papers and the mistake log (TMUA)
+
+    /// A timed paper: tasks from its topics, each generator about equally often, on the paper's level.
+    func startPaper(_ course: Course, _ paper: Paper) {
+        let topics = paper.topics.compactMap { id in course.practiceTopics.first { $0.id == id } }
+        let picks = topics.flatMap { t in
+            t.gens.map { GenPick(gen: $0, level: paper.level ?? 4, topicId: t.id, topicTitle: t.title, courseId: course.id) }
+        }
+        guard !picks.isEmpty else { return }
+        var session = LessonSession(mode: .exam, course: course, title: paper.title, accentHex: course.color, picks: picks,
+                                    taskCount: paper.count, minutes: paper.minutes)
+        session.format = "tmua"
+        session.logMistakes = course.mistakeLog == true
+        presentedLesson = session
+    }
+
+    /// Papers of a course already written, newest first.
+    func paperHistory(_ course: Course, _ paper: Paper) -> [ExamRecord] {
+        state.exams.filter { $0.courseId == course.id && $0.title == paper.title }.reversed()
+    }
+
+    func mistakes(in course: Course) -> [Mistake] { state.mistakes.filter { $0.courseId == course.id } }
+
+    /// Asks up to twelve logged tasks again, the oldest first, exactly as they were.
+    func startMistakeRound(_ course: Course) {
+        let list = mistakes(in: course).sorted { $0.date < $1.date }.prefix(12)
+        guard !list.isEmpty else { return }
+        let items = list.map { m in
+            ReviewItem(lessonUrl: "", stepId: m.id, step: m.task, from: "Fehlerprotokoll" + (m.topicTitle.map { " · " + $0 } ?? ""))
+        }
+        var session = LessonSession(mode: .review, course: course, reviewItems: Array(items), title: "Fehlerprotokoll", accentHex: course.color)
+        session.mistakeRound = true
+        presentedLesson = session
+    }
+
+    func removeMistake(_ mistake: Mistake) {
+        state.mistakes.removeAll { $0.id == mistake.id }
+        scheduleSave()
+    }
+
+    /// The stage of a dated course plan that runs this week.
+    func currentChapter(_ course: Course, on date: Date = Date()) -> Chapter? {
+        course.chapters.first { $0.isCurrent(on: date) }
     }
 
     // MARK: exams and the daily mix
@@ -410,6 +559,17 @@ final class AppModel {
     @discardableResult
     func finish(_ session: LessonSession, result: FinishedLesson) -> Int {
         let xp = state.record(result, course: session.course, meta: session.meta)
+        // the formulas of a finished lesson become cards of their own, asked in changing directions
+        if session.mode == .lesson, let course = session.course, let lesson = session.lesson, let book = formulaBook(course) {
+            state.addFormulaCards(courseId: course.id, ids: book.formulas(forLesson: lesson.id).map(\.id))
+        }
+        if session.mistakeRound {
+            state.resolveMistakes(result)
+        } else if session.logMistakes, let course = session.course {
+            let titles = Dictionary(course.practiceTopics.map { ($0.id, $0.title) }, uniquingKeysWith: { a, _ in a })
+            let added = state.logMistakes(result, courseId: course.id, topicTitles: titles)
+            if added > 0 { toast = added == 1 ? "1 Aufgabe im Fehlerprotokoll" : "\(added) Aufgaben im Fehlerprotokoll" }
+        }
         scheduleSave()
         return xp
     }

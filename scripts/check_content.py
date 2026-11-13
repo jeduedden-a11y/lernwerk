@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "content"
 TYPES = {"text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen",
-         "spot", "proof", "estimate", "timeline", "quadrant"}
+         "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade"}
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
 ALLOWED_SYMBOLS = re.compile("[✓←-⇿]")  # check mark and arrows are fine
 NUMBER = re.compile(r"^\s*[-−]?\d+([.,]\d+)?\s*(/\s*\d+([.,]\d+)?)?\s*$")
@@ -184,6 +184,63 @@ def check_step(where: str, s: dict, widgets: set[str]) -> None:
             problem(where, f"{key}: $$ nicht geschlossen")
 
 
+def balanced(tex: str) -> bool:
+    depth = 0
+    for i, ch in enumerate(tex):
+        if ch in "{}" and i and tex[i - 1] == "\\":
+            continue
+        depth += 1 if ch == "{" else -1 if ch == "}" else 0
+        if depth < 0:
+            return False
+    return depth == 0
+
+
+def check_formulas(cid: str, cdir: Path, listed: set) -> None:
+    """courses/<course>/formeln.json: the formula book behind the formula panel, the cards and the training."""
+    path = cdir / "formeln.json"
+    if not path.is_file():
+        return
+    book = load(path)
+    where = f"courses/{cid}/formeln.json"
+    if book is None:
+        return
+    if book.get("course") != cid or not book.get("title"):
+        problem(where, "course muss die Kurs-id sein, title fehlt")
+    groups = book.get("groups") or []
+    if not groups:
+        problem(where, "keine Gruppen")
+    ids = set()
+    for g in groups:
+        if not g.get("title") or not g.get("formulas"):
+            problem(where, f"Gruppe ohne title oder Formeln: {g.get('title')!r}")
+        for f in g.get("formulas") or []:
+            fid = f.get("id")
+            fwhere = f"{where} {fid}"
+            if not fid or not re.fullmatch(r"[a-z0-9-]+", fid) or fid in ids:
+                problem(fwhere, "id fehlt, ist doppelt oder enthält andere Zeichen als a-z, 0-9 und -")
+            ids.add(fid)
+            if not f.get("name") or not f.get("tex"):
+                problem(fwhere, "name oder tex fehlt")
+            texts = [f.get("tex", "")] + list((f.get("solve") or {}).values()) + list(f.get("wrong") or [])
+            texts += [v[0] for v in f.get("vars") or [] if v]
+            for t in texts:
+                if not isinstance(t, str) or "$" in t or not balanced(t):
+                    problem(fwhere, f"TeX ohne $ und mit geschlossenen Klammern erwartet: {t!r}")
+            for v in f.get("vars") or []:
+                if not isinstance(v, list) or len(v) not in (2, 3):
+                    problem(fwhere, f"vars-Eintrag braucht [Symbol, Bedeutung, Einheit]: {v!r}")
+            if f.get("abi") not in (None, "blatt", "merken"):
+                problem(fwhere, "abi ist blatt oder merken")
+            for lid in f.get("lessons") or []:
+                if lid not in listed:
+                    problem(fwhere, f"Lektion {lid} gibt es in diesem Kurs nicht")
+            for key in ("name", "note"):
+                if f.get(key) and EMOJI.search(f[key]) and not ALLOWED_SYMBOLS.search(f[key]):
+                    problem(fwhere, f"{key}: Emoji gefunden")
+    if len(ids) < 4:
+        problem(where, "mindestens vier Formeln, sonst hat das Training keine Auswahl")
+
+
 def main() -> int:
     runtime = ROOT / "runtime"
     widget_files = sorted((runtime / "widgets").glob("*.js"))
@@ -288,6 +345,24 @@ def main() -> int:
             for g in gens:
                 if g not in GENERATORS:
                     problem(where, f"Trainingsthema {tid}: Generator {g} gibt es nicht")
+            if topic.get("chapter") and topic["chapter"] not in {ch.get("id") for ch in course.get("chapters", [])}:
+                problem(where, f"Trainingsthema {tid}: Kapitel {topic['chapter']} gibt es nicht")
+        for ch in course.get("chapters", []):
+            for key in ("from", "to"):
+                if ch.get(key) is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(ch[key])):
+                    problem(where, f"Kapitel {ch.get('id')}: {key} muss JJJJ-MM-TT sein")
+            if ch.get("from") and ch.get("to") and ch["from"] > ch["to"]:
+                problem(where, f"Kapitel {ch.get('id')}: from liegt nach to")
+        for paper in course.get("papers") or []:
+            pid = paper.get("id")
+            if not pid or not paper.get("title") or not isinstance(paper.get("minutes"), int) or not isinstance(paper.get("count"), int):
+                problem(where, f"Paper {pid!r}: id, title, minutes und count sind Pflicht")
+            for tp in paper.get("topics") or []:
+                if tp not in topic_ids:
+                    problem(where, f"Paper {pid}: Trainingsthema {tp} gibt es nicht")
+            if not paper.get("topics"):
+                problem(where, f"Paper {pid}: keine Themen")
+        check_formulas(cid, cdir, listed)
 
     # learning path: prerequisites inside the course, links to existing lessons, no cycles
     for cid in index.get("courses", []):

@@ -83,10 +83,12 @@ struct CourseLine: View {
 /// All courses of one subject.
 struct SubjectView: View {
     @Environment(AppModel.self) private var model
+    @State private var showFormulas = false
     var subject: Subject
 
     var body: some View {
         let courses = model.courses(in: subject)
+        let withFormulas = courses.filter { model.formulaBook($0) != nil }
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 12) {
@@ -124,5 +126,20 @@ struct SubjectView: View {
         .background { TintBackground(tints: courses.prefix(3).map(\.tint)) }
         .navigationTitle(subject.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if !withFormulas.isEmpty {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showFormulas = true
+                    } label: {
+                        Label("Formelsammlung", systemImage: "function")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showFormulas) {
+            FormulaSheet(courses: withFormulas, accentHex: withFormulas.first?.color ?? subject.color)
+                .environment(model)
+        }
     }
 }

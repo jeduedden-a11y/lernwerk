@@ -15,8 +15,8 @@ struct RootView: View {
                 ReviewView()
             }
             .badge(model.dueCards.count)
-            Tab("Notizen", systemImage: "note.text", value: AppTab.notes) {
-                NotesView()
+            Tab("Vault", systemImage: "books.vertical", value: AppTab.notes) {
+                VaultView()
             }
             .badge(model.notesWaiting)
             Tab("Fortschritt", systemImage: "chart.bar.fill", value: AppTab.stats) {
@@ -48,11 +48,14 @@ struct RootView: View {
             switch phase {
             case .active:
                 Task {
+                    await Reminders.shared.refresh(state: model.state)
                     await model.syncContent()
                     await model.pushNotes(quiet: true)
                 }
             case .background:
                 model.saveNow()
+                // the badge and the reminders of the next days follow what was learned just now
+                Task { await Reminders.shared.refresh(state: model.state) }
             default:
                 break
             }

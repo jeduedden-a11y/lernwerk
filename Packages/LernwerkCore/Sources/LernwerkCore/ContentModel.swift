@@ -64,6 +64,78 @@ public struct Chapter: Codable, Hashable, Identifiable, Sendable {
     public var title: String
     public var ref: String?
     public var lessons: [LessonRef]
+    /// Planned week of a stage (TMUA guide), as yyyy-MM-dd; the course page marks the current one.
+    public var from: String?
+    public var to: String?
+
+    public init(id: String, title: String, ref: String? = nil, lessons: [LessonRef], from: String? = nil, to: String? = nil) {
+        self.id = id
+        self.title = title
+        self.ref = ref
+        self.lessons = lessons
+        self.from = from
+        self.to = to
+    }
+
+    private static let day: DateFormatter = {
+        let f = DateFormatter()
+        f.calendar = Calendar(identifier: .gregorian)
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = .current
+        f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+
+    public var fromDate: Date? { from.flatMap { Self.day.date(from: $0) } }
+    public var toDate: Date? { to.flatMap { Self.day.date(from: $0) } }
+
+    /// The planned week contains the given day.
+    public func isCurrent(on date: Date = Date(), calendar: Calendar = .current) -> Bool {
+        guard let a = fromDate, let b = toDate else { return false }
+        let d = calendar.startOfDay(for: date)
+        return d >= calendar.startOfDay(for: a) && d <= calendar.startOfDay(for: b)
+    }
+
+    /// The planned week lies before the given day.
+    public func isPast(on date: Date = Date(), calendar: Calendar = .current) -> Bool {
+        guard let b = toDate else { return false }
+        return calendar.startOfDay(for: date) > calendar.startOfDay(for: b)
+    }
+}
+
+/// A timed test in the style of an admission test (TMUA): a fixed number of tasks from named topics, multiple choice.
+public struct Paper: Codable, Hashable, Identifiable, Sendable {
+    public var id: String
+    public var title: String
+    public var subtitle: String?
+    public var minutes: Int
+    public var count: Int
+    public var level: Int?
+    public var topics: [String]
+
+    public init(id: String, title: String, subtitle: String? = nil, minutes: Int, count: Int, level: Int? = nil, topics: [String]) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+        self.minutes = minutes
+        self.count = count
+        self.level = level
+        self.topics = topics
+    }
+}
+
+/// TMUA scores run from 1.0 to 9.0; this estimate scales the share of correct answers to 40 questions.
+public enum TMUAScale {
+    public static func score(correct: Int, total: Int) -> Double {
+        guard total > 0 else { return 1 }
+        let raw = Double(correct) / Double(total) * 40
+        let points: [(Double, Double)] = [(0, 1), (10, 2.5), (15, 3.6), (20, 4.6), (25, 5.6), (30, 6.6), (34, 7.6), (37, 8.5), (40, 9)]
+        for i in 1..<points.count where raw <= points[i].0 {
+            let f = (raw - points[i - 1].0) / (points[i].0 - points[i - 1].0)
+            return ((points[i - 1].1 + f * (points[i].1 - points[i - 1].1)) * 10).rounded() / 10
+        }
+        return 9
+    }
 }
 
 /// A training topic: generated tasks on one theme, unlocked by finishing the lesson `after`.
@@ -75,14 +147,17 @@ public struct PracticeTopic: Codable, Hashable, Identifiable, Sendable {
     public var after: String?
     public var gens: [String]
     public var count: Int?
+    /// A topic open from the start (no `after`) can still sit in a chapter.
+    public var chapter: String?
 
-    public init(id: String, title: String, summary: String? = nil, after: String? = nil, gens: [String], count: Int? = nil) {
+    public init(id: String, title: String, summary: String? = nil, after: String? = nil, gens: [String], count: Int? = nil, chapter: String? = nil) {
         self.id = id
         self.title = title
         self.summary = summary
         self.after = after
         self.gens = gens
         self.count = count
+        self.chapter = chapter
     }
 }
 
@@ -96,6 +171,10 @@ public struct Course: Codable, Hashable, Identifiable, Sendable {
     public var vault: String?
     public var chapters: [Chapter]
     public var practice: [PracticeTopic]?
+    /// Timed papers (TMUA).
+    public var papers: [Paper]?
+    /// Wrong generated tasks of training and papers go into a mistake log.
+    public var mistakeLog: Bool?
 
     public var lessons: [LessonRef] { chapters.flatMap(\.lessons) }
     public var readyLessons: [LessonRef] { lessons.filter(\.isReady) }
@@ -104,7 +183,7 @@ public struct Course: Codable, Hashable, Identifiable, Sendable {
     /// Training topics belonging to a chapter: those unlocked by one of its lessons.
     public func practiceTopics(in chapter: Chapter) -> [PracticeTopic] {
         let ids = Set(chapter.lessons.map(\.id))
-        return practiceTopics.filter { $0.after.map(ids.contains) ?? false }
+        return practiceTopics.filter { $0.after.map(ids.contains) ?? ($0.chapter == chapter.id) }
     }
 
     public func chapter(of lessonID: String) -> Chapter? {
@@ -210,7 +289,18 @@ public enum RuntimeMessage: Sendable, Equatable {
             guard let course = dict["courseId"] as? String, let topic = dict["topicId"] as? String else { return .unknown }
             return .practice(courseId: course, topicId: topic, level: max(1, min(4, int("level"))))
         case "finished":
-            guard let data = try? JSONSerialization.data(withJSONObject: dict),
+            // a wrong generated task comes along as an object; it is kept as JSON text
+            var d = dict
+            if var results = d["results"] as? [[String: Any]] {
+                for i in results.indices {
+                    if let task = results[i]["task"], !(task is String), JSONSerialization.isValidJSONObject(task),
+                       let data = try? JSONSerialization.data(withJSONObject: task), let text = String(data: data, encoding: .utf8) {
+                        results[i]["task"] = text
+                    }
+                }
+                d["results"] = results
+            }
+            guard let data = try? JSONSerialization.data(withJSONObject: d),
                   let f = try? JSONDecoder().decode(FinishedLesson.self, from: data) else { return .unknown }
             return .finished(f)
         default: return .unknown
@@ -236,11 +326,13 @@ public struct StepResult: Codable, Sendable, Equatable {
     public var helped: Bool
     /// Not answered in an exam (skipped or out of time).
     public var skipped: Bool
+    /// A wrong generated task as runtime JSON, when the session keeps a mistake log.
+    public var task: String?
 
     enum CodingKeys: String, CodingKey {
         case stepId, lessonId, type, correct, firstTry, attempts, revealed
         case isSelfCheck = "self"
-        case topicId, courseId, level, helped, skipped
+        case topicId, courseId, level, helped, skipped, task
     }
 
     public init(stepId: String, lessonId: String?, type: String, correct: Bool, firstTry: Bool, attempts: Int, revealed: Bool, isSelfCheck: Bool = false,
@@ -275,6 +367,7 @@ public struct StepResult: Codable, Sendable, Equatable {
         level = try? c.decodeIfPresent(Int.self, forKey: .level)
         helped = (try? c.decode(Bool.self, forKey: .helped)) ?? false
         skipped = (try? c.decode(Bool.self, forKey: .skipped)) ?? false
+        task = try? c.decodeIfPresent(String.self, forKey: .task)
     }
 
     /// Quality for spaced repetition: 5 first try, 3 solved later or self-rated good, 1 failed.
@@ -304,13 +397,16 @@ public struct ExamInfo: Codable, Sendable, Equatable {
     public var chapterId: String?
     public var timeUp: Bool
     public var minutes: Int?
+    /// "tmua" for a paper.
+    public var format: String?
 
-    public init(title: String, courseId: String? = nil, chapterId: String? = nil, timeUp: Bool = false, minutes: Int? = nil) {
+    public init(title: String, courseId: String? = nil, chapterId: String? = nil, timeUp: Bool = false, minutes: Int? = nil, format: String? = nil) {
         self.title = title
         self.courseId = courseId
         self.chapterId = chapterId
         self.timeUp = timeUp
         self.minutes = minutes
+        self.format = format
     }
 
     public init(from decoder: Decoder) throws {
@@ -320,6 +416,7 @@ public struct ExamInfo: Codable, Sendable, Equatable {
         chapterId = try? c.decodeIfPresent(String.self, forKey: .chapterId)
         timeUp = (try? c.decode(Bool.self, forKey: .timeUp)) ?? false
         minutes = try? c.decodeIfPresent(Int.self, forKey: .minutes)
+        format = try? c.decodeIfPresent(String.self, forKey: .format)
     }
 }
 
@@ -343,4 +440,54 @@ public struct FinishedLesson: Codable, Sendable, Equatable {
         self.practice = practice
         self.exam = exam
     }
+}
+
+/// courses/<course>/formeln.json: the formulas of a course. The runtime renders them (formula panel, formula cards,
+/// training); the app only needs ids, names and the lessons that use them.
+public struct FormulaBook: Codable, Hashable, Sendable {
+    public struct Formula: Codable, Hashable, Sendable, Identifiable {
+        public var id: String
+        public var name: String
+        public var tex: String
+        public var lessons: [String]?
+        public var abi: String?
+
+        public init(id: String, name: String, tex: String, lessons: [String]? = nil, abi: String? = nil) {
+            self.id = id
+            self.name = name
+            self.tex = tex
+            self.lessons = lessons
+            self.abi = abi
+        }
+    }
+
+    public struct Group: Codable, Hashable, Sendable {
+        public var title: String
+        public var formulas: [Formula]
+
+        public init(title: String, formulas: [Formula]) {
+            self.title = title
+            self.formulas = formulas
+        }
+    }
+
+    public var course: String
+    public var title: String
+    public var groups: [Group]
+
+    public init(course: String, title: String, groups: [Group]) {
+        self.course = course
+        self.title = title
+        self.groups = groups
+    }
+
+    public var formulas: [Formula] { groups.flatMap(\.formulas) }
+
+    /// The formulas a lesson works with.
+    public func formulas(forLesson id: String) -> [Formula] { formulas.filter { $0.lessons?.contains(id) == true } }
+
+    /// Review cards of formulas carry this pseudo lesson id; the runtime loads the book in place of a lesson.
+    public static func lessonID(course: String) -> String { "formeln-\(course)" }
+    public static func isFormulaLesson(_ lessonID: String) -> Bool { lessonID.hasPrefix("formeln-") }
+    public static func path(course: String) -> String { "courses/\(course)/formeln.json" }
 }

@@ -14,6 +14,7 @@ struct StatsView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     SummaryGrid()
                     WeakSpotsCard(target: $practiceTarget)
+                    TrafficLightCard()
                     XPChartCard(window: $window)
                     ExamHistoryCard(target: $examTarget)
                     ForEach(model.subjects) { subject in
@@ -283,5 +284,81 @@ struct CourseProgressCard: View {
         }
         .foregroundStyle(.primary)
         .card()
+    }
+}
+
+/// Traffic lights per topic area (chapter, in the Oberstufe a Themenfeld): where the Abitur material stands.
+struct TrafficLightCard: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        let rows = model.courses.compactMap { course -> (course: Course, lights: [(chapter: Chapter, light: TrafficLight)])? in
+            let lights = course.chapters.map { (chapter: $0, light: model.state.light(for: $0, in: course)) }
+            return lights.contains { $0.light != .none } ? (course: course, lights: lights) : nil
+        }
+        if !rows.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Label("Ampel nach Themenfeldern", systemImage: "circle.grid.2x1.fill")
+                        .font(.headline)
+                    Spacer()
+                }
+                ForEach(rows, id: \.course.id) { row in
+                    NavigationLink(value: row.course) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(row.course.title).font(.subheadline.weight(.semibold))
+                            FlowChips(items: row.lights.map { (title: $0.chapter.ref ?? $0.chapter.title, detail: $0.chapter.title, light: $0.light) })
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(.rect)
+                    }
+                    .buttonStyle(.plain)
+                }
+                Text("Grün: alle Lektionen geschafft und mindestens 80 Prozent sicher. Gelb: auf dem Weg. Rot: unter 60 Prozent in Wiederholung oder Training. Grau: noch nicht begonnen.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .card()
+        }
+    }
+}
+
+private struct FlowChips: View {
+    var items: [(title: String, detail: String, light: TrafficLight)]
+
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 92), spacing: 6)], alignment: .leading, spacing: 6) {
+            ForEach(Array(items.enumerated()), id: \.offset) { _, item in
+                HStack(spacing: 6) {
+                    Circle().fill(color(item.light)).frame(width: 10, height: 10)
+                    Text(item.title).font(.caption.weight(.semibold)).lineLimit(1)
+                }
+                .padding(.horizontal, 9)
+                .padding(.vertical, 6)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(color(item.light).opacity(item.light == .none ? 0.08 : 0.16), in: .capsule)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(item.detail): \(word(item.light))")
+            }
+        }
+    }
+
+    private func color(_ light: TrafficLight) -> Color {
+        switch light {
+        case .green: return .green
+        case .yellow: return .yellow
+        case .red: return .red
+        case .none: return .gray
+        }
+    }
+
+    private func word(_ light: TrafficLight) -> String {
+        switch light {
+        case .green: return "sicher"
+        case .yellow: return "auf dem Weg"
+        case .red: return "unsicher"
+        case .none: return "nicht begonnen"
+        }
     }
 }

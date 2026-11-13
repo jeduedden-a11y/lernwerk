@@ -89,6 +89,7 @@
   // the system setting, or the switch »Weniger Bewegung« in the app (theme.reduceMotion)
   let userReduceMotion = false;
   const reduceMotion = () => userReduceMotion || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  LW.reduceMotion = reduceMotion;
 
   // ------------------------------------------------------------------ math
 
@@ -404,7 +405,7 @@
   const LABELS = {
     text: "Erklärung", widget: "Ausprobieren", choice: "Frage", multi: "Mehrfachauswahl", truefalse: "Wahr oder falsch",
     numeric: "Rechnen", cloze: "Lückentext", order: "Reihenfolge", match: "Zuordnen", sort: "Einordnen", reveal: "Selbst prüfen",
-    summary: "Zusammenfassung", anim: "Animation", gen: "Aufgabe",
+    summary: "Zusammenfassung", anim: "Animation", gen: "Aufgabe", rubric: "Klausuraufgabe", grade: "Bewertung",
     spot: "Fehler finden", proof: "Beweis bauen", estimate: "Schätzen", timeline: "Zeitstrahl", quadrant: "Vierfeldertafel",
   };
 
@@ -731,9 +732,57 @@
     card.append(head);
     if (step.from && (ctx.mode === "review" || ctx.mode === "mix")) card.append(el("div", { class: "lw-subtitle", style: "margin:-4px 0 8px;font-size:0.82em", text: step.from }));
     if (step.md) card.append(mdEl(step.md));
-    if (step.image) card.append(el("img", { src: ctx.asset(step.image), alt: step.alt || "", style: "width:100%;margin-top:10px;border-radius:14px" }));
+    // after the renderer has added options and inputs; a timer also runs when the page is in the background
+    if (step.lang === "en") setTimeout(() => glossify(card), 0);
+    if (step.image) {
+      const img = el("img", { src: ctx.asset(step.image), alt: step.alt || "", class: "lw-step-img" });
+      // a graphic from the vault shows once the vault is connected; until then a short note stands in its place
+      if (/^vault:/i.test(step.image)) img.addEventListener("error", () => img.replaceWith(el("div", { class: "lw-vault-missing", text: "Hier steht eine Grafik aus deinem Vault. Sie erscheint, sobald der Vault in den Einstellungen verbunden ist." })));
+      card.append(img);
+      if (step.caption) card.append(el("div", { class: "lw-step-caption lw-md", html: md(step.caption) }));
+    }
     return card;
   }
+
+  // ------------------------------------------------------------------ glossary for tasks in English
+  // LW.glossary maps English terms (lower case) to German; generators and lessons with lang "en" get them marked.
+  LW.glossary = LW.glossary || {};
+  function glossify(root) {
+    const terms = Object.keys(LW.glossary).sort((a, b) => b.length - a.length);
+    if (!terms.length) return;
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp("\\b(" + terms.map(esc).join("|") + ")\\b", "gi");
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement && n.parentElement.closest(".katex, .lw-gloss, .lw-option, .lw-feedback, .why, .lw-step-label") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((n) => {
+      const s = n.nodeValue;
+      re.lastIndex = 0;
+      if (!re.test(s)) return;
+      re.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while ((m = re.exec(s))) {
+        frag.append(document.createTextNode(s.slice(last, m.index)));
+        const de = LW.glossary[m[1].toLowerCase()];
+        const span = el("span", { class: "lw-gloss", role: "button", tabindex: "0", "aria-label": m[1] + ", deutsch: " + de, text: m[1] });
+        span.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const open = span.querySelector(".lw-gloss-tip");
+          document.querySelectorAll(".lw-gloss-tip").forEach((x) => x.remove());
+          if (!open) span.append(el("span", { class: "lw-gloss-tip", text: de }));
+        });
+        frag.append(span);
+        last = m.index + m[0].length;
+      }
+      frag.append(document.createTextNode(s.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  LW.glossify = glossify;
 
   function feedbackBox() {
     const box = el("div", { class: "lw-feedback", role: "status", "aria-live": "polite" });
@@ -1836,6 +1885,91 @@
     };
   };
 
+  // ------------------------------------------------------------------ exam task with a marking scheme (Abitur)
+  // { "type": "rubric", "part": "1.2", "md": "task", "points": 6, "solution": "Erwartungshorizont",
+  //   "criteria": [{ "md": "…", "points": 2 }, …] }
+  // Worked on paper or the notepad; afterwards the learner marks the own answer against the expected one.
+  R.rubric = function (step, ctx) {
+    const card = shell(step, ctx);
+    const crits = step.criteria || [];
+    const max = step.points || crits.reduce((s, c) => s + (c.points || 1), 0) || 1;
+    const label = card.querySelector(".lw-step-label");
+    if (step.part) label.append(el("span", { class: "lw-be", text: "Aufgabe " + step.part }));
+    label.append(el("span", { class: "lw-be", text: max + " BE" }));
+    if (step.operator) card.append(el("div", { class: "lw-operator lw-md", html: md("**" + step.operator.word + "**: " + step.operator.means) }));
+    const sol = el("div", { class: "lw-reveal lw-rubric-sol" }, [el("div", { class: "lw-rubric-head", text: "Erwartungshorizont" }), mdEl(step.solution || "")]);
+    const box = el("div", { class: "lw-rubric", style: "display:none" });
+    let awarded = 0, opened = false, locked = false;
+    const total = el("div", { class: "lw-rubric-total" });
+    const rows = crits.map((c) => {
+      const pts = c.points || 1;
+      const b = el("button", { class: "lw-crit", type: "button", role: "checkbox", "aria-checked": "false" }, [el("span", { class: "box" }), el("span", { class: "body lw-md", html: md(c.md) }), el("span", { class: "pts", text: pts + " BE" })]);
+      b.addEventListener("click", () => {
+        if (locked) return;
+        const on = !b.classList.contains("on");
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        tally();
+        ctx.changed();
+      });
+      box.append(b);
+      return { b, pts };
+    });
+    if (!rows.length) {
+      const pick = el("div", { class: "w-btns lw-rubric-pts" });
+      for (let k = 0; k <= max; k++) {
+        const b = el("button", { class: "w-btn", type: "button", text: String(k) });
+        b.addEventListener("click", () => { if (locked) return; awarded = k; [...pick.children].forEach((x, i) => x.classList.toggle("on", i === k)); tally(); ctx.changed(); });
+        pick.append(b);
+      }
+      box.append(el("div", { class: "lw-subtitle", text: "Wie viele Bewertungseinheiten gibst du dir?" }), pick);
+    } else {
+      box.prepend(el("div", { class: "lw-subtitle", text: "Hake ab, was deine Lösung enthält:" }));
+    }
+    box.append(total);
+    function tally() {
+      if (rows.length) awarded = rows.reduce((s, x) => s + (x.b.classList.contains("on") ? x.pts : 0), 0);
+      total.textContent = awarded + " von " + max + " BE";
+    }
+    tally();
+    card.append(sol, box);
+    const open = () => { opened = true; sol.classList.add("open"); box.style.display = ""; };
+    return {
+      el: card,
+      question: true,
+      selfCheck: true,
+      primaryLabel: () => (opened ? "Bewertung übernehmen" : "Erwartungshorizont zeigen"),
+      canCheck: () => true,
+      check() {
+        if (!opened) { open(); return { pending: true }; }
+        tally();
+        return { correct: awarded >= max / 2, self: true, points: awarded, max };
+      },
+      reveal: open,
+      lock() { locked = true; rows.forEach((x) => x.b.setAttribute("disabled", "")); },
+    };
+  };
+
+  // { "type": "grade", "md": "…" }: adds up the marked tasks of the lesson into Bewertungseinheiten and Notenpunkte
+  const NP_KEY = [[95, 15], [90, 14], [85, 13], [80, 12], [75, 11], [70, 10], [65, 9], [60, 8], [55, 7], [50, 6], [45, 5], [40, 4], [33, 3], [27, 2], [20, 1], [0, 0]];
+  LW.notenpunkte = (pct) => (NP_KEY.find(([p]) => pct >= p) || [0, 0])[1];
+  R.grade = function (step, ctx) {
+    const card = shell(step, ctx);
+    const rows = S.results.filter((r) => r.max);
+    const got = rows.reduce((s, r) => s + r.points, 0), max = rows.reduce((s, r) => s + r.max, 0);
+    const pct = max ? (100 * got) / max : 0, np = LW.notenpunkte(pct);
+    card.append(el("div", { class: "lw-exam-score", text: np + (np === 1 ? " Notenpunkt" : " Notenpunkte") }),
+      el("div", { class: "lw-subtitle", text: got + " von " + max + " BE, " + Math.round(pct) + " Prozent" }));
+    card.append(el("div", { class: "lw-exam-table" }, rows.map((r) => el("div", { class: "lw-exam-row" + (r.points / r.max < 0.5 ? " weak" : "") }, [
+      el("span", { class: "name", text: r.part ? "Aufgabe " + r.part : "Teilaufgabe" }),
+      el("span", { class: "bar" }, [el("span", { style: "width:" + Math.round((100 * r.points) / r.max) + "%" })]),
+      el("span", { class: "count", text: r.points + " / " + r.max }),
+    ]))));
+    const key = NP_KEY.filter(([, n]) => n % 3 === 0 || n === 15).map(([p, n]) => n + " NP ab " + p + " %").join(" · ");
+    card.append(el("div", { class: "lw-md lw-np-key", html: md("Notenschlüssel der Oberstufe: " + key + ". Unter 20 Prozent gibt es 0 Punkte; ab 5 Punkten gilt eine Leistung als ausreichend.") }));
+    return { el: card, question: false };
+  };
+
   R.widget = function (step, ctx) {
     const card = shell(step, ctx);
     const host = el("div", { class: "lw-widget" });
@@ -2192,13 +2326,27 @@
       el("div", { class: "lw-exam-score", text: ok + " von " + total + " richtig" }),
       el("div", { class: "lw-subtitle", text: (timeUp ? "Die Zeit ist abgelaufen. " : "") + "Gebraucht: " + fmtClock(used) + " von " + fmtClock(E.minutes * 60) + " Minuten." }),
       el("div", { class: "lw-exam-table" }, rows),
-      el("div", { class: "lw-md", html: md(ok === total ? "Alles richtig. Diese Themen sitzen." : "Unten stehen alle Aufgaben mit Lösung. Rot markierte Themen lohnen eine Trainingsrunde.") }),
+      E.format === "tmua" ? el("div", { class: "lw-md lw-tmua-score", html: md(tmuaScoreText(ok, total)) }) : null,
+      el("div", { class: "lw-md", html: md(ok === total ? "Alles richtig. Diese Themen sitzen." : "Unten stehen alle Aufgaben mit Lösung. Rot markierte Themen lohnen eine Trainingsrunde." + (S.logMistakes ? " Falsch beantwortete Aufgaben stehen im **Fehlerprotokoll** und kommen wieder." : "")) }),
     ]);
     const head = S.root.querySelector(".lw-head");
     if (head && head.nextSibling) S.root.insertBefore(summary, head.nextSibling); else S.root.append(summary);
     requestAnimationFrame(() => summary.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" }));
     E.timeUp = !!timeUp;
     finish();
+  }
+
+  /** TMUA scale 1.0 to 9.0, estimated from the share of correct answers (scaled to 40 questions). */
+  function tmuaScore(ok, total) {
+    const raw = total ? (ok / total) * 40 : 0;
+    const P = [[0, 1], [10, 2.5], [15, 3.6], [20, 4.6], [25, 5.6], [30, 6.6], [34, 7.6], [37, 8.5], [40, 9]];
+    for (let i = 1; i < P.length; i++) if (raw <= P[i][0]) { const f = (raw - P[i - 1][0]) / (P[i][0] - P[i - 1][0]); return Math.round((P[i - 1][1] + f * (P[i][1] - P[i - 1][1])) * 10) / 10; }
+    return 9;
+  }
+  LW.tmuaScore = tmuaScore;
+  function tmuaScoreText(ok, total) {
+    const s = tmuaScore(ok, total);
+    return "Geschätzter TMUA-Wert: **" + String(s).replace(".", ",") + "** von 9,0. Grobe Schätzung aus " + ok + " von " + total + " richtig; die echte Umrechnung hängt vom Jahrgang ab und rechnet beide Papers zusammen. Cambridge erwartet meist **6,5 oder mehr**.";
   }
 
   /** After a generated task: one more of the same kind, with new numbers, right after this one. */
@@ -2228,7 +2376,7 @@
       mode: S.mode, seed: S.seed, theme: S.theme,
       changed: () => { S.needsChange = false; announce(); },
       primaryFromPage: () => LW.primary(),
-      asset: (p) => (/^[a-z]+:/i.test(p) ? p : S.base + p),
+      asset: (p) => (/^vault:/i.test(p) ? LW.vaultBase + encodeURIComponent(p.slice(6)).replace(/%2F/g, "/") : /^[a-z]+:/i.test(p) ? p : S.base + p),
     };
   }
 
@@ -2284,6 +2432,14 @@
       courseId: step.courseId || (S.practice && S.practice.courseId) || null,
       level: step.level || null, gen: step.gen || null, skipped: !!result.skipped,
     });
+    if (result.max) Object.assign(S.results[S.results.length - 1], { points: result.points || 0, max: result.max, part: step.part || step.label || null });
+    if (S.logMistakes && !result.correct && step.gen) {
+      try {
+        const task = JSON.parse(JSON.stringify(step));
+        delete task.alt;
+        S.results[S.results.length - 1].task = task;
+      } catch (e) { /* a task that cannot be copied is not logged */ }
+    }
   }
 
   function finish() {
@@ -2298,7 +2454,7 @@
       seconds: Math.round((Date.now() - S.startedAt) / 1000),
     };
     if (S.practice) msg.practice = { topicId: S.practice.topicId || null, courseId: S.practice.courseId || null, level: S.practice.level };
-    if (S.exam) msg.exam = { title: S.exam.title, courseId: S.exam.courseId || null, chapterId: S.exam.chapterId || null, timeUp: !!S.exam.timeUp, minutes: S.exam.minutes };
+    if (S.exam) msg.exam = { title: S.exam.title, courseId: S.exam.courseId || null, chapterId: S.exam.chapterId || null, timeUp: !!S.exam.timeUp, minutes: S.exam.minutes, format: S.exam.format || null };
     post(msg);
     if (S.mode === "exam") announce();
   }
@@ -2450,8 +2606,105 @@
     return speakable(S.inst.el);
   };
 
+  // ------------------------------------------------------------------ formulas
+  // courses/<course>/formeln.json: { id, course, title, groups: [{ title, formulas: [{ id, name, tex, vars: [[symbol, name, unit]],
+  //   lessons: [lessonId], abi: "blatt" | "merken", solve: { symbol: tex }, wrong: [tex], note }] }] }
+  // The app names every book in options.formulaUrls; the runtime loads them before a start. The formula panel
+  // (mode "formulas"), the formula cards (generator formelkarte, review cards under the lesson id "formeln-<course>") and the
+  // training generators formeln-<course> read them from LW.formulas.
+  LW.formulas = LW.formulas || {};
+  // graphics from the vault: the app serves them from its offline wiki copy, the test server from the vault folder
+  LW.vaultBase = location.protocol === "lw:" ? "lw://app/vault/" : "/vault/";
+  async function preloadFormulas(urls) {
+    await Promise.all((urls || []).map(async (u) => {
+      try {
+        const res = await fetch(u, { cache: "no-store" });
+        if (!res.ok) return;
+        const doc = await res.json();
+        if (doc && doc.course && doc.groups) LW.formulas[doc.course] = doc;
+      } catch (e) { /* a course without formulas */ }
+    }));
+  }
+  LW.preloadFormulas = preloadFormulas;
+  /** All formulas of a course, each with its group title. */
+  function formulaList(course) {
+    const book = LW.formulas[course];
+    return book ? book.groups.flatMap((g) => (g.formulas || []).map((f) => Object.assign({ group: g.title, course }, f))) : [];
+  }
+  LW.formulaList = formulaList;
+
   function normalizeSteps(lesson, lessonUrl) {
+    // a formula book stands in for a lesson in the review: every formula is a card with fresh questions
+    if (lesson && lesson.groups && lesson.course) {
+      LW.formulas[lesson.course] = lesson;
+      return formulaList(lesson.course).map((f) => ({ id: f.id, type: "gen", gen: "formelkarte", params: { course: lesson.course, id: f.id }, lessonId: "formeln-" + lesson.course, lessonTitle: lesson.title }));
+    }
     return (lesson.steps || []).map((s, i) => Object.assign({ id: "s" + (i + 1), lessonId: lesson.id, lessonTitle: lesson.title }, s));
+  }
+
+  /** The formula panel: every formula of the given courses, searchable, those of the current lesson first. */
+  function formulaPanel(F) {
+    const courses = (F.courses || []).filter((c) => LW.formulas[c]);
+    const all = courses.flatMap(formulaList);
+    const here = new Set(F.lessonId ? all.filter((f) => (f.lessons || []).includes(F.lessonId)).map((f) => f.id) : []);
+    S.root.classList.add("lw-formulas");
+    S.root.append(el("header", { class: "lw-head" }, [
+      el("div", { class: "lw-kicker", text: F.kicker || "Formeln" }),
+      el("div", { class: "lw-title", text: F.title || (courses.length === 1 ? LW.formulas[courses[0]].title : "Formelsammlung") }),
+      el("div", { class: "lw-subtitle", text: all.length + (all.length === 1 ? " Formel" : " Formeln") + (here.size ? ", " + here.size + " davon in dieser Lektion" : "") }),
+    ]));
+    if (!all.length) {
+      S.root.append(el("div", { class: "lw-step" }, [el("div", { class: "lw-md", html: md("Für diesen Kurs gibt es noch keine Formelsammlung.") })]));
+      return;
+    }
+    const search = el("input", { class: "lw-input lw-formula-search", type: "search", placeholder: "Formel suchen", "aria-label": "Formel suchen", autocomplete: "off" });
+    let filter = here.size ? "lektion" : "alle";
+    const chips = el("div", { class: "w-btns lw-formula-filter" });
+    const opts = [["alle", "Alle"], ["lektion", "Diese Lektion"], ["blatt", "Formelsammlung"], ["merken", "Auswendig"]].filter(([k]) => k !== "lektion" || here.size);
+    const chipEls = opts.map(([k, label]) => {
+      const b = el("button", { class: "w-btn" + (k === filter ? " on" : ""), type: "button", text: label });
+      b.addEventListener("click", () => { filter = k; chipEls.forEach((x, i) => x.classList.toggle("on", opts[i][0] === k)); paint(); });
+      chips.append(b);
+      return b;
+    });
+    const list = el("div", { class: "lw-formula-list" });
+    S.root.append(el("div", { class: "lw-formula-tools" }, [search, chips]), list);
+    const fold = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    function card(f) {
+      const vars = (f.vars || []).map(([s, n, u]) => el("span", { class: "lw-formula-var", html: math(s) + " " + esc(n) + (u ? " <span class=\"unit\">in " + esc(u) + "</span>" : "") }));
+      const badges = [];
+      if (here.has(f.id)) badges.push(el("span", { class: "lw-badge lesson", text: "diese Lektion" }));
+      if (f.abi === "blatt") badges.push(el("span", { class: "lw-badge", text: "Formelsammlung" }));
+      if (f.abi === "merken") badges.push(el("span", { class: "lw-badge merken", text: "auswendig" }));
+      return el("article", { class: "lw-formula" + (here.has(f.id) ? " here" : "") }, [
+        el("div", { class: "lw-formula-name" }, [el("span", { text: f.name })].concat(badges)),
+        el("div", { class: "lw-formula-tex", html: math(f.tex, true) }),
+        vars.length ? el("div", { class: "lw-formula-vars" }, vars) : null,
+        f.note ? el("div", { class: "lw-formula-note lw-md", html: md(f.note) }) : null,
+      ]);
+    }
+    function paint() {
+      const q = fold(search.value.trim());
+      list.innerHTML = "";
+      let shown = 0;
+      const groups = new Map();
+      for (const f of all) {
+        if (filter === "lektion" && !here.has(f.id)) continue;
+        if ((filter === "blatt" || filter === "merken") && f.abi !== filter) continue;
+        if (q && !fold(f.name + " " + f.group + " " + (f.vars || []).map((v) => v[1]).join(" ")).includes(q)) continue;
+        const key = (courses.length > 1 ? LW.formulas[f.course].title + " · " : "") + f.group;
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(f);
+        shown++;
+      }
+      groups.forEach((fs, title) => {
+        list.append(el("h3", { class: "lw-formula-group", text: title }));
+        fs.forEach((f) => list.append(card(f)));
+      });
+      if (!shown) list.append(el("div", { class: "lw-formula-empty", text: "Keine Formel passt." }));
+    }
+    search.addEventListener("input", paint);
+    paint();
   }
 
   async function fetchJSON(url) {
@@ -2484,11 +2737,19 @@
     S.helped = false;
     if (S.exam && S.exam.timer) clearInterval(S.exam.timer);
     S.exam = null;
+    S.logMistakes = !!o.logMistakes;
     LW.setTheme(o.theme || {});
     LW.setInsets(o.insets || {});
     document.body.innerHTML = "";
     S.root = el("main", { class: "lw-lesson" });
     document.body.append(S.root);
+    await preloadFormulas(o.formulaUrls);
+    if (S.mode === "formulas") {
+      S.steps = [];
+      formulaPanel(o.formulas || {});
+      post({ type: "ready", steps: 0 });
+      return;
+    }
     try {
       if (S.mode === "practice") {
         const P = o.practice || {};
@@ -2528,7 +2789,7 @@
           return { id: "e" + (i + 1), type: "gen", gen: g.gen, params: g.params, level: clampLevel(g.level || 2), topicId: g.topicId, courseId: g.courseId || X.courseId, lessonId: null, review: false, alt };
         });
         const minutes = Math.max(1, X.minutes || Math.ceil(count * 1.5));
-        S.exam = { title: X.title || "Klausur", courseId: X.courseId, chapterId: X.chapterId, minutes, topics, answered: new Set(), deadline: Date.now() + minutes * 60000, timer: null, timeUp: false };
+        S.exam = { title: X.title || "Klausur", courseId: X.courseId, chapterId: X.chapterId, minutes, topics, answered: new Set(), deadline: Date.now() + minutes * 60000, timer: null, timeUp: false, format: X.format || null };
         S.lesson = { id: "exam", title: S.exam.title };
         S.base = "";
         const clock = el("div", { class: "lw-exam-clock", role: "timer", "aria-live": "off", text: fmtClock(minutes * 60) });
@@ -2536,8 +2797,11 @@
         S.root.append(el("header", { class: "lw-head exam" }, [
           el("div", { class: "lw-kicker", text: X.kicker || "Klausur" }),
           el("div", { class: "lw-title", text: S.exam.title }),
-          el("div", { class: "lw-subtitle", text: count + " Aufgaben, " + minutes + " Minuten. Rückmeldung und Lösungen gibt es erst am Ende." }),
+          el("div", { class: "lw-subtitle", text: X.format === "tmua"
+            ? count + " questions, " + minutes + " minutes, no calculator. Wie im Test: eine Antwort von A bis H, Lösungen erst am Ende."
+            : count + " Aufgaben, " + minutes + " Minuten. Rückmeldung und Lösungen gibt es erst am Ende." }),
         ]), clock);
+        if (X.format === "tmua") S.root.classList.add("lw-paper");
         const E = S.exam;
         E.timer = setInterval(() => {
           const left = (E.deadline - Date.now()) / 1000;
@@ -2580,6 +2844,8 @@
         const cache = new Map();
         const steps = [];
         for (const item of o.items || []) {
+          // a task from the mistake log comes complete; it is asked exactly as it was
+          if (item.step) { steps.push(Object.assign({}, item.step, { id: item.stepId || item.step.id, lessonId: null, review: true, from: item.from || "Fehlerprotokoll", gen: null })); continue; }
           if (!cache.has(item.lessonUrl)) cache.set(item.lessonUrl, await fetchJSON(item.lessonUrl));
           const lesson = cache.get(item.lessonUrl);
           const st = normalizeSteps(lesson).find((s) => s.id === item.stepId);
@@ -2630,7 +2896,7 @@
   };
 
   /** Collects question steps that are worth repeating later (used by the shell for spaced repetition). */
-  const QUESTION_TYPES = ["choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "gen", "spot", "proof", "estimate", "timeline", "quadrant"];
+  const QUESTION_TYPES = ["choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric"];
   LW.questionTypes = QUESTION_TYPES;
   LW.reviewable = function (lesson) {
     return normalizeSteps(lesson).filter((s) => s.review !== false && QUESTION_TYPES.includes(s.type) || (s.type === "widget" && s.goal && s.review === true)).map((s) => s.id);
