@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import PencilKit
 import LernwerkCore
 
 struct PrimaryState: Equatable {
@@ -7,6 +8,7 @@ struct PrimaryState: Equatable {
     var enabled = false
     var style = "continue"
     var canGiveUp = false
+    var giveUpLabel: String? = nil
 }
 
 struct FinishedSheet: Identifiable {
@@ -19,9 +21,12 @@ struct FinishedSheet: Identifiable {
 struct LessonPlayerView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @AppStorage("reduceMotion") private var reduceMotion = false
     let session: LessonSession
 
     @State private var controller = LessonController()
+    @StateObject private var speaker = Speaker()
     @State private var primary = PrimaryState()
     @State private var stepIndex = 0
     @State private var stepTotal = 1
@@ -35,49 +40,79 @@ struct LessonPlayerView: View {
     @State private var noteAfterFinish = false
     @State private var isFinished = false
     @State private var nextRound: Int?
+    @State private var trainAfterFinish: PracticeTopic?
+    @State private var reviewAfterFinish = false
+    @State private var showPad = false
+    @State private var drawing = PKDrawing()
+    @State private var keyboardUp = false
     @Namespace private var glass
 
     private var accent: Color { Color(hex: session.accentHex) }
+    /// iPad in full width: the scratch pad is a column beside the lesson. Otherwise a panel above the buttons.
+    private var padAsColumn: Bool { sizeClass == .regular }
+    private var padInline: Bool { showPad && !padAsColumn && !keyboardUp }
+    private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
 
     var body: some View {
         GeometryReader { geo in
+            let padHeight = min(380, max(220, geo.size.height * 0.4))
             ZStack {
                 TintBackground(tints: [accent, accent.opacity(0.6)])
                 LessonWebView(locator: model.locator, controller: controller, startOptions: startOptions(geo), onMessage: handle)
                     .ignoresSafeArea()
             }
             .overlay(alignment: .top) { topBar.padding(.top, geo.safeAreaInsets.top > 0 ? 4 : 12) }
-            .overlay(alignment: .bottom) { bottomBar.padding(.bottom, geo.safeAreaInsets.bottom > 0 ? 0 : 12) }
+            .overlay(alignment: .bottom) {
+                VStack(spacing: 10) {
+                    if padInline {
+                        ScratchPad(drawing: $drawing, systemTools: isPad) { showPad = false }
+                            .frame(height: padHeight)
+                            .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .shadow(color: .black.opacity(0.18), radius: 18, y: 6)
+                            .padding(.horizontal, 12)
+                            .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: .bottom).combined(with: .opacity))
+                    }
+                    bottomBar
+                }
+                .padding(.bottom, geo.safeAreaInsets.bottom > 0 ? 0 : 12)
+                .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: padInline)
+            }
+            .onChange(of: padInline) { _, inline in
+                // the page gets room below the last step, so nothing hides behind the pad
+                let bottom = geo.safeAreaInsets.bottom + 96 + (inline ? padHeight + 10 : 0)
+                controller.setInsets(top: geo.safeAreaInsets.top + 64, bottom: bottom)
+                if inline { controller.revealCurrent() }
+            }
+        }
+        .inspector(isPresented: Binding(get: { showPad && padAsColumn }, set: { if !$0 { showPad = false } })) {
+            ScratchPad(drawing: $drawing, systemTools: isPad) { showPad = false }
+                .inspectorColumnWidth(min: 300, ideal: 380, max: 520)
         }
         .sensoryFeedback(.success, trigger: success)
         .sensoryFeedback(.error, trigger: failure)
         .sensoryFeedback(.selection, trigger: tap)
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in keyboardUp = true }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in keyboardUp = false }
+        .onDisappear { speaker.stop() }
         .sheet(isPresented: $showNote, onDismiss: { if isFinished { dismiss() } }) {
             if let course = session.course, let lesson = session.lesson {
                 NoteEditor(course: course, lesson: lesson, meta: session.meta, stepID: session.meta?.stepIDs[safe: stepIndex], existing: model.notes(for: lesson.id).first)
                     .environment(model)
             }
         }
-        .sheet(item: $finished, onDismiss: {
-            if noteAfterFinish {
-                noteAfterFinish = false
-                showNote = true
-            } else if let level = nextRound, let course = session.course, let topic = session.topic {
-                nextRound = nil
-                dismiss()
-                Task { @MainActor in
-                    try? await Task.sleep(nanoseconds: 550_000_000)
-                    model.startPractice(course, topic, level: level)
-                }
-            } else {
-                dismiss()
-            }
-        }) { f in
+        .sheet(item: $finished, onDismiss: afterCompletion) { f in
             CompletionView(session: session, result: f.result, xp: f.xp, onNote: {
                 noteAfterFinish = true
                 finished = nil
             }, onRound: { level in
                 nextRound = level
+                finished = nil
+            }, onTrain: { topic in
+                trainAfterFinish = topic
+                finished = nil
+            }, onReview: {
+                reviewAfterFinish = true
                 finished = nil
             })
             .environment(model)
@@ -89,6 +124,32 @@ struct LessonPlayerView: View {
             Text(runtimeError ?? "")
         }
         .statusBarHidden(false)
+    }
+
+    private func afterCompletion() {
+        if noteAfterFinish {
+            noteAfterFinish = false
+            showNote = true
+        } else if let level = nextRound, let course = session.course, let topic = session.topic {
+            nextRound = nil
+            dismiss()
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 550_000_000)
+                model.startPractice(course, topic, level: level)
+            }
+        } else if let topic = trainAfterFinish, let course = session.course {
+            trainAfterFinish = nil
+            dismiss()
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 550_000_000)
+                model.startPractice(course, topic, level: model.examLevel(course, topic))
+            }
+        } else if reviewAfterFinish {
+            // the evaluated exam stays open: every task with its solution, the table per topic on top
+            reviewAfterFinish = false
+        } else {
+            dismiss()
+        }
     }
 
     // MARK: chrome
@@ -106,31 +167,65 @@ struct LessonPlayerView: View {
                 .buttonStyle(.glass)
                 .buttonBorderShape(.circle)
                 .controlSize(.large)
-                .accessibilityLabel("Lektion schließen")
+                .accessibilityLabel(session.mode == .exam ? "Klausur schließen" : "Lektion schließen")
 
-                StepBars(index: stepIndex, total: stepTotal, answered: answered, tint: accent)
+                StepBars(index: stepIndex, total: stepTotal, answered: answered, tint: accent, animated: !reduceMotion)
                     .padding(.horizontal, 14)
                     .frame(height: 44)
                     .glassEffect(.regular, in: .capsule)
                     .accessibilityElement()
                     .accessibilityLabel("Schritt \(stepIndex + 1) von \(stepTotal)")
 
-                if session.mode == .lesson {
-                    Button {
-                        showNote = true
-                    } label: {
-                        Image(systemName: "square.and.pencil")
-                            .font(.body.weight(.semibold))
-                            .frame(width: 22, height: 22)
+                HStack(spacing: 0) {
+                    toolButton("pencil.and.scribble", label: showPad ? "Notizblatt schließen" : "Notizblatt öffnen", active: showPad) {
+                        showPad.toggle()
                     }
-                    .buttonStyle(.glass)
-                    .buttonBorderShape(.circle)
-                    .controlSize(.large)
-                    .accessibilityLabel("Notiz schreiben")
+                    toolButton(speaker.isSpeaking ? "stop.fill" : "speaker.wave.2.fill", label: speaker.isSpeaking ? "Vorlesen beenden" : "Schritt vorlesen", active: speaker.isSpeaking) {
+                        toggleSpeech()
+                    }
+                    if session.mode == .lesson {
+                        toolButton("square.and.pencil", label: "Notiz für den Vault schreiben", active: false) {
+                            showNote = true
+                        }
+                    }
                 }
+                .padding(.horizontal, 4)
+                .frame(height: 44)
+                .glassEffect(.regular.interactive(), in: .capsule)
             }
         }
         .padding(.horizontal, 16)
+    }
+
+    private func toolButton(_ symbol: String, label: String, active: Bool, action: @escaping () -> Void) -> some View {
+        Button {
+            tap += 1
+            action()
+        } label: {
+            Image(systemName: symbol)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(active ? accent : Color.primary)
+                .frame(width: 40, height: 44)
+                .contentShape(.rect)
+                .contentTransition(.symbolEffect(.replace))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+        .accessibilityAddTraits(active ? .isSelected : [])
+    }
+
+    private func toggleSpeech() {
+        if speaker.isSpeaking {
+            speaker.stop()
+            return
+        }
+        controller.speech { text in
+            if text.isEmpty {
+                runtimeError = "Diese Inhaltsversion kann noch nicht vorlesen. Nach dem nächsten Abgleich der Inhalte geht es."
+            } else {
+                speaker.speak(text)
+            }
+        }
     }
 
     private var bottomBar: some View {
@@ -141,7 +236,7 @@ struct LessonPlayerView: View {
                         tap += 1
                         controller.giveUp()
                     } label: {
-                        Text("Lösung")
+                        Text(primary.giveUpLabel ?? "Lösung")
                             .font(.headline)
                             .padding(.horizontal, 6)
                     }
@@ -152,7 +247,7 @@ struct LessonPlayerView: View {
                 }
                 Button {
                     tap += 1
-                    controller.primary()
+                    if isFinished { dismiss() } else { controller.primary() }
                 } label: {
                     Text(primary.label)
                         .font(.headline)
@@ -168,7 +263,7 @@ struct LessonPlayerView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 6)
-        .animation(.smooth(duration: 0.3), value: primary)
+        .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: primary)
     }
 
     // MARK: runtime
@@ -177,7 +272,7 @@ struct LessonPlayerView: View {
         let top = geo.safeAreaInsets.top + 64
         let bottom = geo.safeAreaInsets.bottom + 96
         var options: [String: Any] = [
-            "theme": ["accent": session.accentHex, "fontScale": UIFontMetrics.default.scaledValue(for: 17) / 17],
+            "theme": ["accent": session.accentHex, "fontScale": UIFontMetrics.default.scaledValue(for: 17) / 17, "reduceMotion": reduceMotion] as [String: Any],
             "insets": ["top": top, "bottom": bottom],
             "seed": session.seed,
         ]
@@ -199,15 +294,34 @@ struct LessonPlayerView: View {
                 "title": topic.title, "kicker": course.title, "topicId": topic.id, "courseId": course.id,
                 "gens": topic.gens, "level": session.level, "count": topic.count ?? 6,
             ] as [String: Any]
+        case .exam:
+            guard let course = session.course else { return options }
+            options["mode"] = "exam"
+            var exam: [String: Any] = [
+                "title": session.title, "kicker": course.title, "courseId": course.id,
+                "minutes": session.minutes, "count": session.taskCount, "gens": session.picks.map(\.json),
+            ]
+            if let chapter = session.chapterId { exam["chapterId"] = chapter }
+            options["exam"] = exam
+        case .mix:
+            options["mode"] = "mix"
+            options["mix"] = [
+                "title": "Heute gemischt",
+                "items": session.reviewItems.map { ["lessonUrl": $0.lessonUrl, "stepId": $0.stepId] },
+                "gens": session.picks.map(\.json),
+            ] as [String: Any]
         }
         return options
     }
 
     private func handle(_ message: RuntimeMessage) {
         switch message {
-        case .primary(let label, let enabled, let style, let canGiveUp):
-            primary = PrimaryState(label: label, enabled: enabled, style: style, canGiveUp: canGiveUp)
+        case .primary(let label, let enabled, let style, let canGiveUp, let giveUpLabel):
+            // after the end the button only closes the player
+            if isFinished { return }
+            primary = PrimaryState(label: label, enabled: enabled, style: style, canGiveUp: canGiveUp, giveUpLabel: giveUpLabel)
         case .progress(let index, let total, let isAnswered):
+            if index != stepIndex { speaker.stop() }
             stepIndex = index
             stepTotal = max(1, total)
             answered = isAnswered
@@ -219,6 +333,8 @@ struct LessonPlayerView: View {
             let xp = model.finish(session, result: result)
             isFinished = true
             success += 1
+            speaker.stop()
+            primary = PrimaryState(label: "Schließen", enabled: true, style: "finish")
             finished = FinishedSheet(result: result, xp: xp)
         case .error(let text):
             runtimeError = text
@@ -234,6 +350,7 @@ struct StepBars: View {
     var total: Int
     var answered: Bool
     var tint: Color
+    var animated = true
 
     var body: some View {
         GeometryReader { geo in
@@ -248,12 +365,12 @@ struct StepBars: View {
                 }
             }
             .frame(maxHeight: .infinity)
-            .animation(.smooth(duration: 0.35), value: index)
+            .animation(animated ? .smooth(duration: 0.35) : nil, value: index)
         }
     }
 }
 
-/// Shown when the runtime reports the end of a lesson or review.
+/// Shown when the runtime reports the end of a lesson, review, training round, exam or daily mix.
 struct CompletionView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
@@ -262,11 +379,35 @@ struct CompletionView: View {
     let xp: Int
     var onNote: () -> Void
     var onRound: (Int) -> Void = { _ in }
+    var onTrain: (PracticeTopic) -> Void = { _ in }
+    var onReview: () -> Void = {}
 
     private var level: Level { Level(session.level) }
     private var accent: Color { session.mode == .practice ? level.colors[1] : Color(hex: session.accentHex) }
-    private var correct: Int { result.results.filter { $0.quality >= 4 }.count }
+    private var correct: Int {
+        session.mode == .exam ? result.results.filter(\.correct).count : result.results.filter { $0.quality >= 4 }.count
+    }
     private var passed: Bool { result.score >= 0.8 }
+
+    /// The topic of the exam with the lowest share of correct answers, when it is below 60 percent.
+    private var weakestTopic: (topic: PracticeTopic, ok: Int, total: Int)? {
+        guard session.mode == .exam, let course = session.course else { return nil }
+        var tally: [String: (ok: Int, total: Int)] = [:]
+        for r in result.results {
+            guard let id = r.topicId else { continue }
+            var t = tally[id] ?? (ok: 0, total: 0)
+            t.total += 1
+            if r.correct { t.ok += 1 }
+            tally[id] = t
+        }
+        let worst = tally.filter { Double($0.value.ok) / Double(max(1, $0.value.total)) < 0.6 }
+            .min { a, b in
+                let sa = Double(a.value.ok) / Double(a.value.total), sb = Double(b.value.ok) / Double(b.value.total)
+                return sa != sb ? sa < sb : a.value.total > b.value.total
+            }
+        guard let worst, let topic = course.practiceTopics.first(where: { $0.id == worst.key }) else { return nil }
+        return (topic: topic, ok: worst.value.ok, total: worst.value.total)
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -284,7 +425,7 @@ struct CompletionView: View {
                     Text("\(Int((result.score * 100).rounded())) %")
                         .font(.system(size: 34, weight: .bold, design: .rounded))
                         .contentTransition(.numericText())
-                    Text("beim ersten Versuch")
+                    Text(session.mode == .exam ? "richtig" : "beim ersten Versuch")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -347,6 +488,32 @@ struct CompletionView: View {
                             }
                         }
                     }
+                    if session.mode == .exam {
+                        HStack(spacing: 10) {
+                            Button {
+                                onReview()
+                            } label: {
+                                Label("Lösungen ansehen", systemImage: "doc.text.magnifyingglass")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.glass)
+                            .controlSize(.large)
+                            if let weak = weakestTopic {
+                                Button {
+                                    onTrain(weak.topic)
+                                } label: {
+                                    Label("\(weak.topic.title) üben", systemImage: "dumbbell")
+                                        .font(.headline)
+                                        .lineLimit(1)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .buttonStyle(.glass)
+                                .controlSize(.large)
+                                .accessibilityHint("\(weak.ok) von \(weak.total) richtig in der Klausur")
+                            }
+                        }
+                    }
                     Button {
                         dismiss()
                     } label: {
@@ -368,18 +535,30 @@ struct CompletionView: View {
         case .review: return "Wiederholung geschafft"
         case .practice: return passed ? "Stufe sitzt" : "Runde geschafft"
         case .lesson: return "Lektion geschafft"
+        case .exam: return passed ? "Klausur sitzt" : "Klausur ausgewertet"
+        case .mix: return "Tagesmix geschafft"
         }
     }
 
     private var summary: String {
         let n = result.results.count
         if n == 0 { return "Weiter so." }
-        if session.mode == .practice {
+        switch session.mode {
+        case .practice:
             if passed && session.level < 4 { return "\(correct) von \(n) Aufgaben sofort gelöst. Bereit für \(Level(session.level + 1).name)." }
             if passed { return "\(correct) von \(n) Aufgaben sofort gelöst, auf der höchsten Stufe." }
             return "\(correct) von \(n) Aufgaben sofort gelöst. Ab 80 Prozent gilt eine Stufe als geschafft, jede Runde bringt neue Aufgaben."
+        case .exam:
+            let time = result.exam?.timeUp == true ? "Die Zeit war abgelaufen. " : ""
+            if let weak = weakestTopic {
+                return "\(time)\(correct) von \(n) Aufgaben richtig. Am meisten Übung braucht \(weak.topic.title) (\(weak.ok) von \(weak.total))."
+            }
+            return "\(time)\(correct) von \(n) Aufgaben richtig. Unter den Aufgaben stehen alle Lösungen."
+        case .mix:
+            return "\(correct) von \(n) Aufgaben sofort gelöst. Die Wiederholungen sind neu eingeplant, die neuen Aufgaben zählen für dein Training."
+        case .lesson, .review:
+            return "\(correct) von \(n) Aufgaben sicher gelöst. Die übrigen kommen bald in der Wiederholung."
         }
-        return "\(correct) von \(n) Aufgaben sicher gelöst. Die übrigen kommen bald in der Wiederholung."
     }
 }
 

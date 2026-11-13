@@ -12,7 +12,7 @@
   "use strict";
 
   const LW = (window.LW = window.LW || {});
-  LW.version = "1.4.0";
+  LW.version = "1.6.0";
   LW.api = 1;
   LW.widgets = LW.widgets || {};
   LW.widget = function (name, def) { LW.widgets[name] = def; };
@@ -86,7 +86,9 @@
   }
   LW.shuffled = shuffled;
 
-  const reduceMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // the system setting, or the switch »Weniger Bewegung« in the app (theme.reduceMotion)
+  let userReduceMotion = false;
+  const reduceMotion = () => userReduceMotion || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
   // ------------------------------------------------------------------ math
 
@@ -99,9 +101,11 @@
   function math(tex, display) {
     if (window.katex && typeof window.katex.renderToString === "function") {
       try {
-        return window.katex.renderToString(tex, {
+        const html = window.katex.renderToString(tex, {
           displayMode: !!display, throwOnError: false, strict: "ignore", trust: false, output: "html", macros: MACROS,
         });
+        // the source stays attached, so LW.speech can read the formula in words
+        return html.replace('class="katex"', 'class="katex" data-tex="' + esc(tex) + '"');
       } catch (e) {
         return '<span class="lw-error">' + esc(tex) + "</span>";
       }
@@ -371,8 +375,12 @@
   function parseNumber(input) {
     let s = String(input || "").trim().replace(/\s+/g, "");
     if (!s) return NaN;
+    // signs from the math keys and the iOS keyboard: √2, √(x), ², ³, ×, ÷
+    s = s.replace(/√(\d+(?:[.,]\d+)?)/g, (m, n) => "sqrt(" + n.replace(",", ".") + ")").replace(/√/g, "sqrt")
+      .replace(/²/g, "^2").replace(/³/g, "^3").replace(/×/g, "*").replace(/÷/g, "/");
     if (/^-?\d{1,3}(\.\d{3})+,\d+$/.test(s)) s = s.replace(/\./g, "");
-    if (/^-?\d+,\d+$/.test(s)) s = s.replace(",", ".");
+    // decimal commas, also inside expressions such as 1,5/2
+    s = s.replace(/(\d),(\d)/g, "$1.$2");
     try {
       const v = expr(s)({});
       return typeof v === "number" ? v : NaN;
@@ -529,7 +537,84 @@
           explain: x.why || x.md + ": " + x.cat };
       },
     };
-    const lib = { statements, pairs, groups };
+    // proofs: [{ lv, kind, given, claim, idea, steps: [{ md, by, why }], distractors: [{ md, why }], flaw: { line, md, why } }]
+    // One proof becomes six kinds of task: order (build it from blocks), gaps (fill gaps), justify (a reason for
+    // every line), flaw (find the wrong line), strategy (which structure fits?), next (how does it go on?).
+    // kind names the structure (KINDS, or o.kinds for other pools such as arguments), idea the key idea in one sentence.
+    const KINDS = {
+      direkt: "Direkter Beweis", kontraposition: "Beweis durch Kontraposition", widerspruch: "Widerspruchsbeweis",
+      induktion: "Vollständige Induktion", faelle: "Fallunterscheidung", zwei: "Beide Richtungen zeigen",
+      gegenbeispiel: "Gegenbeispiel angeben", konstruktion: "Beispiel konstruieren", abschaetzung: "Abschätzung mit ε",
+    };
+    const KIND_WHY = {
+      direkt: "Ein direkter Beweis geht ohne Umweg von der Voraussetzung zur Behauptung.",
+      kontraposition: "Kontraposition heißt: aus der Verneinung der Behauptung die Verneinung der Voraussetzung folgern.",
+      widerspruch: "Ein Widerspruchsbeweis nimmt das Gegenteil der Behauptung an und führt es zu einem Widerspruch.",
+      induktion: "Induktion braucht eine Aussage über alle natürlichen Zahlen, gezeigt mit Anfang und Schritt von n auf n + 1.",
+      faelle: "Eine Fallunterscheidung zerlegt die Lage in Fälle, die zusammen alles abdecken.",
+      zwei: "Bei einer Äquivalenz oder einer Gleichheit von Mengen zeigt man beide Richtungen einzeln.",
+      gegenbeispiel: "Ein Gegenbeispiel widerlegt eine Allaussage; eine Aussage beweisen kann es nicht.",
+      konstruktion: "Eine Existenzaussage zeigt man am einfachsten mit einem konkreten Beispiel.",
+      abschaetzung: "Grenzwert- und Stetigkeitsbeweise schätzen einen Abstand gegen ein beliebig kleines ε ab.",
+    };
+    const CONFUSE = { direkt: ["abschaetzung", "konstruktion"], abschaetzung: ["direkt"], konstruktion: ["direkt"], zwei: ["direkt"], faelle: ["direkt"] };
+    const headMd = (p) => (p.given ? "**Voraussetzung:** " + p.given + "\n\n" : "") + (p.claim ? "**Behauptung:** " + p.claim : "");
+    const proofExplain = (p, o) => p.explain || ((o.kinds || KINDS)[p.kind] ? (o.kinds || KINDS)[p.kind] + ". " : "") + (p.idea || "");
+    const plain = (list) => list.map((s) => ({ md: s.md }));
+    const proofs = {
+      order: (pool, o) => (level, G) => {
+        const p = G.pick(forLevel(pool, level, 1));
+        return { type: "proof", md: o.order || "Baue den Beweis aus den Bausteinen.", given: p.given, claim: p.claim, hint: p.idea,
+          steps: plain(p.steps), distractors: G.pickN(p.distractors || [], level <= 1 ? 0 : level === 2 ? 1 : 2), explain: proofExplain(p, o) };
+      },
+      gaps: (pool, o) => (level, G) => {
+        const p = G.pick(forLevel(pool, level, 1));
+        const k = Math.max(1, Math.min(p.steps.length - 1, level <= 2 ? 2 : 3));
+        const gaps = G.pickN(p.steps.map((s, i) => i), k).sort((a, b) => a - b);
+        return { type: "proof", mode: "gaps", md: o.gaps || "Im Beweis fehlen Zeilen. Fülle die Lücken.", given: p.given, claim: p.claim, hint: p.idea,
+          steps: plain(p.steps), gaps, distractors: G.pickN(p.distractors || [], level >= 3 ? 2 : 1), explain: proofExplain(p, o) };
+      },
+      justify: (pool, o) => (level, G) => {
+        const ok = (q) => q.steps.filter((s) => s.by).length >= 2;
+        const near = forLevel(pool, level, 1).filter(ok);
+        const p = G.pick(near.length ? near : pool.filter(ok));
+        const own = new Set(p.steps.map((s) => s.by).filter(Boolean));
+        const extra = G.pickN((o.reasons || []).filter((r) => !own.has(r)), level >= 3 ? 2 : 1);
+        return { type: "proof", mode: "justify", md: o.justify || "Der Beweis steht da. Wähle für jede Zeile die Begründung.", given: p.given, claim: p.claim,
+          steps: p.steps.map((s) => ({ md: s.md, by: s.by, why: s.why })), reasons: extra, explain: proofExplain(p, o) };
+      },
+      flaw: (pool, o) => (level, G) => {
+        const near = forLevel(pool, level, 1).filter((q) => q.flaw);
+        const p = G.pick(near.length ? near : pool.filter((q) => q.flaw));
+        const f = p.flaw;
+        return { type: "spot", md: (o.flaw || "In diesem Beweis steckt genau ein Fehler. In welcher Zeile?") + "\n\n" + headMd(p),
+          lines: p.steps.map((s, i) => (i === f.line ? { md: f.md, why: f.why } : { md: s.md, why: s.why || "Diese Zeile stimmt." })),
+          answer: f.line, explain: f.why + " Richtig wäre: " + p.steps[f.line].md };
+      },
+      strategy: (pool, o) => (level, G) => {
+        const kinds = o.kinds || KINDS, why = o.kindWhy || KIND_WHY;
+        const near = forLevel(pool, level, 1).filter((q) => kinds[q.kind]);
+        const p = G.pick(near.length ? near : pool.filter((q) => kinds[q.kind]));
+        const avoid = new Set([p.kind].concat((o.confuse || CONFUSE)[p.kind] || []));
+        const wrong = G.shuffle(Object.keys(kinds).filter((k) => !avoid.has(k))).map((k) => ({ md: kinds[k], why: why[k] || null }));
+        return { type: "choice", md: (o.strategy || "Welcher Aufbau passt am besten?") + "\n\n" + headMd(p),
+          options: G.options({ md: kinds[p.kind], why: p.idea }, wrong), explain: kinds[p.kind] + ". " + (p.idea || "") };
+      },
+      next: (pool, o) => (level, G) => {
+        const ok = (q) => q.steps.length >= 3 && (q.distractors || []).length >= 2;
+        const near = forLevel(pool, level, 1).filter(ok);
+        const p = G.pick(near.length ? near : pool.filter(ok));
+        const k = G.int(1, p.steps.length - 1);
+        const shown = p.steps.slice(0, k).map((s, i) => i + 1 + ". " + s.md).join("\n");
+        const wrong = G.shuffle(p.distractors).map((d) => ({ md: d.md, why: d.why }));
+        // a line from further down: true, but it needs the missing step first
+        if (level >= 3 && k + 2 <= p.steps.length - 1) wrong.splice(1, 0, { md: p.steps[k + 2].md, why: "Diese Zeile kommt später, sie braucht den Schritt davor." });
+        const right = p.steps[k];
+        return { type: "choice", md: (o.next || "Wie geht der Beweis weiter?") + "\n\n" + headMd(p) + "\n\n" + shown,
+          options: G.options({ md: right.md, why: right.why }, wrong), explain: "Zeile " + (k + 1) + ": " + right.md + (right.why ? " " + right.why : "") };
+      },
+    };
+    const lib = { statements, pairs, groups, proofs };
     function build(kind, pool, plan, o) {
       const out = {};
       for (const lv of Object.keys(plan)) out[lv] = plan[lv].map((f) => lib[kind][f](pool, o || {}));
@@ -539,6 +624,8 @@
       statements: (pool, plan, o) => build("statements", pool, plan, o),
       pairs: (pool, plan, o) => build("pairs", pool, plan, o),
       groups: (pool, plan, o) => build("groups", pool, plan, o),
+      proofs: (pool, plan, o) => build("proofs", pool, plan, o),
+      proofKinds: KINDS,
     };
   })();
 
@@ -628,6 +715,7 @@
     if (!made) made = def.make(level, G, params) || {};
     return Object.assign({}, made, {
       id: step.id, lessonId: step.lessonId, lessonTitle: step.lessonTitle, from: step.from,
+      topicId: step.topicId, courseId: step.courseId,
       level, gen: step.gen, genSource: step, review: step.review,
       label: step.label || made.label || def.title || LABELS[made.type],
     });
@@ -641,7 +729,7 @@
     const head = el("div", { class: "lw-step-label" }, [el("span", { class: "dot" }), el("span", { text: label })]);
     if (step.level) head.append(levelChip(step.level));
     card.append(head);
-    if (step.from && ctx.mode === "review") card.append(el("div", { class: "lw-subtitle", style: "margin:-4px 0 8px;font-size:0.82em", text: step.from }));
+    if (step.from && (ctx.mode === "review" || ctx.mode === "mix")) card.append(el("div", { class: "lw-subtitle", style: "margin:-4px 0 8px;font-size:0.82em", text: step.from }));
     if (step.md) card.append(mdEl(step.md));
     if (step.image) card.append(el("img", { src: ctx.asset(step.image), alt: step.alt || "", style: "width:100%;margin-top:10px;border-radius:14px" }));
     return card;
@@ -661,11 +749,101 @@
     };
   }
 
+  // ------------------------------------------------------------------ help in stages
+  // »Tipp«: first the hints (step.hints, or step.hint), then the solution path one step at a time (step.way, or the
+  // sentences of step.explain). Using the solution path counts the task as solved with help, not at the first try.
+
+  const ABBR = /(?:^|\s)(?:z\. ?B|d\. ?h|u\. ?a|bzw|ca|vgl|Nr|Abb|Bsp|usw|etc|evtl|ggf|inkl|Mio|Mrd|Std|Prof|Dr|Jh|St)\.$/;
+  /** Sentences of a Markdown text; formulas stay whole, abbreviations and numbering do not end a sentence. */
+  function splitSentences(text) {
+    const out = [];
+    for (const para of String(text || "").trim().split(/\n{2,}/)) {
+      const keep = [];
+      const prot = para.replace(/\$\$[\s\S]+?\$\$|\$[^$\n]+\$/g, (m) => "\u0002" + (keep.push(m) - 1) + "\u0003");
+      const restore = (p) => p.replace(/\u0002(\d+)\u0003/g, (x, k) => keep[+k]);
+      const re = /[.!?](?=\s+[A-ZÄÖÜ\u0002(„»])/g;
+      let start = 0, m;
+      while ((m = re.exec(prot))) {
+        const piece = prot.slice(start, m.index + 1).trim();
+        // "z. B.", "d. h.": a single letter with a dot never ends a sentence; neither does "3." as in "am 3. Mai"
+        if (ABBR.test(piece) || /(?:^|\s)[a-zäöüA-ZÄÖÜ]\.$/.test(piece) || /(?:^|\s)\d+\.$/.test(piece)) continue;
+        out.push(restore(piece));
+        start = m.index + 1;
+      }
+      const rest = prot.slice(start).trim();
+      if (rest) out.push(restore(rest));
+    }
+    return out;
+  }
+  LW.splitSentences = splitSentences;
+
   function hintButton(step, card) {
-    if (!step.hint) return;
-    const h = el("div", { class: "lw-hint" }, [mdEl(step.hint)]);
-    const b = el("button", { class: "lw-hint-btn", text: "Hinweis anzeigen", onclick: () => { h.classList.toggle("open"); b.textContent = h.classList.contains("open") ? "Hinweis ausblenden" : "Hinweis anzeigen"; } });
-    card.append(b, h);
+    if (S.mode === "exam") return;
+    const hints = [].concat(step.hints || (step.hint ? [step.hint] : [])).filter(Boolean);
+    let way = Array.isArray(step.way) && step.way.length ? step.way : null;
+    if (!way && step.explain && step.type !== "reveal") {
+      const parts = splitSentences(step.explain);
+      if (parts.length >= 2) way = parts;
+    }
+    const items = hints.map((h, k) => ({ kind: "hint", md: h, label: hints.length > 1 ? "Tipp " + (k + 1) : "Tipp" }))
+      .concat((way || []).map((w, k) => ({ kind: "way", md: w, label: "Lösungsweg, Schritt " + (k + 1) + " von " + way.length })));
+    if (!items.length) return;
+    const box = el("div", { class: "lw-help" });
+    const b = el("button", { class: "lw-hint-btn", type: "button" });
+    let shown = 0;
+    const label = () => {
+      const next = items[shown];
+      if (!next) return "";
+      if (next.kind === "hint") return shown === 0 ? "Tipp anzeigen" : "Noch ein Tipp";
+      return items[shown - 1] && items[shown - 1].kind === "way" ? "Nächster Schritt" : "Lösungsweg Schritt für Schritt";
+    };
+    b.textContent = label();
+    b.addEventListener("click", () => {
+      const it = items[shown];
+      if (!it) return;
+      box.append(el("div", { class: "lw-help-item " + it.kind }, [el("div", { class: "lw-help-label", text: it.label }), mdEl(it.md)]));
+      shown += 1;
+      if (it.kind === "way") S.helped = true;
+      if (shown >= items.length) b.remove(); else b.textContent = label();
+    });
+    card.append(b, box);
+  }
+
+  // ------------------------------------------------------------------ math keys
+  // iOS offers only digits and a comma for inputmode="decimal". The app (from version 1.1) puts minus, plus, slash and
+  // friends right on the keyboard and calls LW.insertText. Every numeric field still gets the same keys as a row; it
+  // is hidden while the keyboard bar works (theme.nativeKeys) and comes back when the app reports that it does not.
+
+  const MATH_KEYS = [["−", "-", "minus"], ["+", "+", "plus"], ["/", "/", "geteilt durch"], ["^", "^", "hoch"], ["√", "√", "Wurzel"],
+    ["(", "(", "Klammer auf"], [")", ")", "Klammer zu"], ["π", "π", "pi"]];
+  function insertAtCaret(input, text) {
+    if (!input || input.readOnly || input.disabled) return;
+    const s = input.selectionStart != null ? input.selectionStart : input.value.length;
+    const e = input.selectionEnd != null ? input.selectionEnd : s;
+    input.value = input.value.slice(0, s) + text + input.value.slice(e);
+    const pos = s + text.length;
+    try { input.setSelectionRange(pos, pos); } catch (err) { /* number inputs have no selection */ }
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+  /** Called by the native keyboard bar: inserts into the focused field. */
+  LW.insertText = function (text) {
+    const a = document.activeElement;
+    if (a && a.tagName === "INPUT") insertAtCaret(a, String(text));
+    return 0;
+  };
+  /** A row of math keys for one or more fields; it acts on the field that had the focus last. */
+  function mathKeyRow(inputs) {
+    let target = inputs[0];
+    inputs.forEach((inp) => inp.addEventListener("focus", () => { target = inp; }));
+    const row = el("div", { class: "lw-keyrow", role: "toolbar", "aria-label": "Rechenzeichen" });
+    MATH_KEYS.forEach(([label, ins, name]) => {
+      const b = el("button", { type: "button", class: "lw-key", text: label, "aria-label": name });
+      // pointerdown with preventDefault keeps the focus, so the keyboard stays open
+      b.addEventListener("pointerdown", (e) => { e.preventDefault(); insertAtCaret(target, ins); target.focus(); });
+      b.addEventListener("click", (e) => e.preventDefault());
+      row.append(b);
+    });
+    return row;
   }
 
   const R = {};
@@ -780,6 +958,9 @@
     const fb = feedbackBox();
     const input = el("input", { class: "lw-input", type: "text", inputmode: "decimal", autocomplete: "off", autocorrect: "off", spellcheck: "false", placeholder: step.placeholder || "Zahl eingeben" });
     const row = el("div", { class: "lw-input-row" }, [step.prefix ? el("span", { class: "lw-md", html: md(step.prefix) }) : null, input, step.unit ? el("span", { class: "lw-unit", html: md(step.unit) }) : null]);
+    // the keys sit above the field, so they stay visible when the keyboard pushes the field up
+    const keys = mathKeyRow([input]);
+    if (keys) card.append(keys);
     card.append(row);
     hintButton(step, card);
     card.append(fb.el);
@@ -833,6 +1014,9 @@
       inputs[k] = inp;
       span.replaceWith(inp);
     });
+    const numericInputs = inputs.filter((inp, k) => inp && (blanks[k] || {}).numeric);
+    const keys = numericInputs.length ? mathKeyRow(numericInputs) : null;
+    if (keys) card.append(keys);
     card.append(holder);
     hintButton(step, card);
     card.append(fb.el);
@@ -1136,22 +1320,165 @@
 
   // ------------------------------------------------------------------ build a proof from blocks
   //
-  // { "type": "proof", "md": "…", "given": "…", "claim": "…", "steps": ["…", {"md": "…", "why": "…"}],
-  //   "distractors": [{"md": "…", "why": "…"}], "explain": "…" }
-  // The proof is assembled line by line from a shuffled pool that also holds plausible but wrong blocks.
-  R.proof = function (step, ctx) {
+  // { "type": "proof", "md": "…", "given": "…", "claim": "…", "steps": ["…", {"md": "…", "why": "…", "by": "…"}],
+  //   "distractors": [{"md": "…", "why": "…"}], "explain": "…", "mode": "order" | "gaps" | "justify",
+  //   "gaps": [1, 3], "reasons": ["…"] }
+  // order (default): the proof is assembled line by line from a shuffled pool that also holds plausible wrong blocks.
+  // gaps:    the proof stands there with gaps at the line numbers in gaps (from 0); each is filled from the blocks.
+  // justify: every line is there; for each line with a reason (by) the learner picks it from all reasons, plus the
+  //          extra ones in reasons. Reasons are plain text, they appear in a menu.
+  const proofBlocks = (list, prefix) => (list || []).map((s, i) => ({ md: typeof s === "string" ? s : s.md, why: s && s.why, by: s && s.by, key: prefix + i }));
+  function proofHead(step, card) {
+    if (!step.given && !step.claim) return;
+    const head = el("div", { class: "lw-proof-head" });
+    if (step.given) head.append(mdEl("**Voraussetzung:** " + step.given));
+    if (step.claim) head.append(mdEl("**Behauptung:** " + step.claim));
+    card.append(head);
+  }
+
+  function proofGaps(step, ctx) {
     const card = shell(step, ctx);
     const fb = feedbackBox();
-    const good = (step.steps || []).map((s, i) => ({ md: typeof s === "string" ? s : s.md, why: s.why, key: "s" + i }));
-    const bad = (step.distractors || []).map((s, i) => ({ md: typeof s === "string" ? s : s.md, why: s.why, key: "d" + i }));
+    proofHead(step, card);
+    const good = proofBlocks(step.steps, "s"), bad = proofBlocks(step.distractors, "d");
+    const byKey = new Map(good.concat(bad).map((x) => [x.key, x]));
+    let gaps = [...new Set((step.gaps || []).filter((i) => Number.isInteger(i) && i >= 0 && i < good.length))].sort((a, b) => a - b);
+    if (!gaps.length) gaps = good.map((g, i) => i).filter((i) => i % 2 === 1);
+    const fill = new Map();
+    let active = gaps[0], locked = false, done = false;
+    const used = () => new Set(fill.values());
+    const nextOpen = (from) => { const later = gaps.find((i) => i >= from && !fill.has(i)); return later != null ? later : gaps.find((i) => !fill.has(i)); };
+    const list = el("ol", { class: "lw-proof" });
+    const pool = el("div", { class: "lw-order-pool lw-proof-pool" });
+    const chips = new Map();
+    function render() {
+      list.innerHTML = "";
+      good.forEach((g, i) => {
+        const isGap = gaps.includes(i), key = fill.get(i);
+        const cls = "lw-proof-line " + (isGap ? "gap" + (key ? "" : " empty") + (i === active && !locked && !done ? " active" : "") : "given");
+        const body = isGap && !key
+          ? el("span", { class: "body", text: i === active && !done ? "Lücke: unten einen Baustein antippen" : "Lücke" })
+          : el("span", { class: "body lw-md", html: md(isGap ? byKey.get(key).md : g.md) });
+        const li = el("li", { class: cls }, [el("span", { class: "n", text: String(i + 1) }), body]);
+        if (isGap) li.addEventListener("click", () => {
+          if (locked) return;
+          fill.delete(i);
+          active = i;
+          render(); fb.hide(); ctx.changed();
+        });
+        list.append(li);
+      });
+      if (done) list.append(el("li", { class: "lw-proof-qed", text: "∎" }));
+      const u = used();
+      chips.forEach((c, key) => c.classList.toggle("used", u.has(key)));
+    }
+    shuffled(gaps.map((i) => good[i]).concat(bad), ctx.seed + step.id).forEach((it) => {
+      const c = el("button", { class: "lw-chip", type: "button" }, [el("span", { class: "body lw-md", html: md(it.md) })]);
+      c.addEventListener("click", () => {
+        if (locked || used().has(it.key)) return;
+        const at = active != null && !fill.has(active) ? active : nextOpen(0);
+        if (at == null) return;
+        fill.set(at, it.key);
+        active = nextOpen(at + 1);
+        render(); fb.hide(); ctx.changed();
+      });
+      chips.set(it.key, c);
+      pool.append(c);
+    });
+    card.append(list, el("div", { class: "lw-pool-label", text: bad.length ? "Bausteine für die Lücken, nicht alle passen" : "Bausteine für die Lücken" }), pool);
+    hintButton(step, card);
+    card.append(fb.el);
+    render();
+    const markAll = () => list.querySelectorAll(".lw-proof-line").forEach((l) => l.classList.add("correct"));
+    return {
+      el: card,
+      question: true,
+      canCheck: () => !locked && gaps.every((i) => fill.has(i)),
+      check() {
+        const wrong = gaps.filter((i) => fill.get(i) !== "s" + i);
+        if (!wrong.length) {
+          done = true; active = null;
+          render(); markAll();
+          fb.show(true, "Beweis vollständig", step.explain);
+          return { correct: true };
+        }
+        const lis = list.querySelectorAll(".lw-proof-line");
+        gaps.forEach((i) => lis[i].classList.add(wrong.includes(i) ? "wrong" : "correct"));
+        const it = byKey.get(fill.get(wrong[0]));
+        const why = it.key[0] === "d" ? it.why || "Dieser Baustein gehört nicht in den Beweis." : "Der Baustein gehört in den Beweis, aber in eine andere Lücke.";
+        fb.show(false, "Noch nicht schlüssig", "**Zeile " + (wrong[0] + 1) + ":** " + why);
+        return { correct: false };
+      },
+      reveal() {
+        gaps.forEach((i) => fill.set(i, "s" + i));
+        done = true; active = null;
+        render(); markAll();
+        fb.show(true, "Lösung", step.explain);
+      },
+      lock() { locked = true; list.querySelectorAll(".active").forEach((l) => l.classList.remove("active")); },
+    };
+  }
+
+  function proofJustify(step, ctx) {
+    const card = shell(step, ctx);
+    const fb = feedbackBox();
+    proofHead(step, card);
+    const lines = proofBlocks(step.steps, "s");
+    const reasons = shuffled([...new Set(lines.map((l) => l.by).filter(Boolean).concat(step.reasons || []))], ctx.seed + step.id + "|r");
+    const list = el("ol", { class: "lw-proof lw-justify" });
+    const rows = lines.map((l, i) => {
+      const li = el("li", { class: "lw-proof-line given" }, [el("span", { class: "n", text: String(i + 1) })]);
+      const right = el("div", { class: "body" }, [el("div", { class: "lw-md", html: md(l.md) })]);
+      let sel = null;
+      if (l.by) {
+        sel = el("select", { class: "lw-select", "aria-label": "Begründung für Zeile " + (i + 1) });
+        sel.append(el("option", { value: "", text: "Begründung wählen" }));
+        reasons.forEach((r) => sel.append(el("option", { value: r, text: r })));
+        sel.addEventListener("change", () => { li.classList.remove("correct", "wrong"); fb.hide(); ctx.changed(); });
+        right.append(sel);
+      }
+      li.append(right);
+      list.append(li);
+      return { l, li, sel };
+    });
+    card.append(list);
+    hintButton(step, card);
+    card.append(fb.el);
+    const asked = rows.filter((r) => r.sel);
+    return {
+      el: card,
+      question: true,
+      canCheck: () => asked.every((r) => r.sel.value && !r.sel.disabled),
+      check() {
+        const wrong = asked.filter((r) => r.sel.value !== r.l.by);
+        asked.forEach((r) => r.li.classList.add(wrong.includes(r) ? "wrong" : "correct"));
+        if (!wrong.length) {
+          fb.show(true, "Alle Schritte begründet", step.explain);
+          return { correct: true };
+        }
+        const r = wrong[0], n = rows.indexOf(r) + 1;
+        fb.show(false, wrong.length === 1 ? "Eine Begründung passt nicht" : wrong.length + " Begründungen passen nicht",
+          "**Zeile " + n + ":** " + (r.l.why || "»" + r.sel.value + "« trägt diesen Schritt nicht. Was genau wird hier benutzt?"));
+        return { correct: false };
+      },
+      reveal() {
+        asked.forEach((r) => { r.sel.value = r.l.by; r.li.classList.remove("wrong"); r.li.classList.add("correct"); });
+        fb.show(true, "Lösung", step.explain);
+      },
+      lock() { asked.forEach((r) => { r.sel.disabled = true; }); },
+    };
+  }
+
+  R.proof = function (step, ctx) {
+    if (step.mode === "gaps") return proofGaps(step, ctx);
+    if (step.mode === "justify") return proofJustify(step, ctx);
+    const card = shell(step, ctx);
+    const fb = feedbackBox();
+    const good = proofBlocks(step.steps, "s");
+    const bad = proofBlocks(step.distractors, "d");
     const all = good.concat(bad);
     const byKey = new Map(all.map((x) => [x.key, x]));
-    if (step.given || step.claim) {
-      const head = el("div", { class: "lw-proof-head" });
-      if (step.given) head.append(mdEl("**Voraussetzung:** " + step.given));
-      if (step.claim) head.append(mdEl("**Behauptung:** " + step.claim));
-      card.append(head);
-    }
+    proofHead(step, card);
     const target = el("ol", { class: "lw-proof" });
     const pool = el("div", { class: "lw-order-pool lw-proof-pool" });
     let seq = [];
@@ -1721,7 +2048,9 @@
   const S = {
     lesson: null, mode: "lesson", steps: [], cur: -1, inst: null, phase: "idle", root: null,
     attempts: 0, results: [], seed: "", base: "", startedAt: 0, run: 0, practice: null, variants: 0,
-    seen: new Set(),
+    seen: new Set(), insts: [], helped: false,
+    // exam: { title, courseId, chapterId, deadline, answered: Set of step indices, timer }
+    exam: null,
   };
 
   // ---- no repeats: generated tasks are compared by a fingerprint. Within one round a task never comes twice
@@ -1779,18 +2108,102 @@
     const inst = S.inst;
     const last = S.cur >= S.steps.length - 1;
     if (!inst) return { label: "Weiter", enabled: false, style: "continue" };
+    if (S.mode === "exam") {
+      if (S.phase === "finished") return { label: "Fertig", enabled: false, style: "finish" };
+      if (S.phase === "answering" && inst.question) {
+        // no feedback during the exam: hand in the answer, or skip; both move on
+        return { label: last ? "Abgeben und auswerten" : "Antwort abgeben", enabled: !!inst.canCheck(), style: "check", canGiveUp: true, giveUpLabel: "Überspringen" };
+      }
+      return { label: last ? "Abgeben und auswerten" : "Weiter", enabled: true, style: last ? "finish" : "continue" };
+    }
     if (S.phase === "answering" && inst.question) {
       const label = inst.primaryLabel ? inst.primaryLabel() : S.attempts > 0 ? "Erneut prüfen" : "Prüfen";
       // After a wrong answer the learner has to change something before checking again.
       return { label, enabled: !!inst.canCheck() && !S.needsChange, style: "check", canGiveUp: S.attempts > 0 };
     }
-    if (last) return { label: S.mode === "review" ? "Fertig" : S.mode === "practice" ? "Training abschließen" : "Lektion abschließen", enabled: true, style: "finish" };
+    if (last) {
+      const label = { review: "Fertig", mix: "Fertig", practice: "Training abschließen" }[S.mode] || "Lektion abschließen";
+      return { label, enabled: true, style: "finish" };
+    }
     return { label: "Weiter", enabled: true, style: "continue" };
+  }
+
+  // ------------------------------------------------------------------ exam
+  // Tasks are handed in without feedback. At the end (or when the time is up) every task is checked at once, wrong
+  // ones show their solution, and a table sums up the result per topic.
+
+  function fmtClock(sec) {
+    sec = Math.max(0, Math.round(sec));
+    return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0");
+  }
+
+  function examNext() {
+    const inst = S.inst;
+    if (inst) {
+      if (inst.lock) inst.lock();
+      inst.el.classList.add("done", "exam-locked");
+    }
+    if (S.cur >= S.steps.length - 1) { finishExam(false); return; }
+    showStep(S.cur + 1);
+  }
+
+  function finishExam(timeUp) {
+    const E = S.exam;
+    if (!E || S.phase === "finished") return;
+    clearInterval(E.timer);
+    if (S.inst && S.inst.lock) S.inst.lock();
+    S.root.classList.remove("lw-exam-running");
+    S.results = [];
+    for (let i = 0; i < S.steps.length; i++) {
+      const inst = S.insts[i];
+      if (!inst) { record({ correct: false, skipped: true, attempts: 1 }, i); continue; }
+      if (!inst.question) continue;
+      inst.el.classList.remove("exam-open");
+      if (E.answered.has(i)) {
+        let r = { correct: false };
+        try { r = inst.check() || r; } catch (e) { /* a broken task counts as wrong */ }
+        record({ correct: !!r.correct, attempts: 1 }, i);
+        inst.el.classList.add(r.correct ? "state-correct" : "state-wrong");
+        if (!r.correct && inst.reveal) inst.reveal();
+      } else {
+        if (inst.reveal) inst.reveal();
+        inst.el.classList.add("state-wrong");
+        record({ correct: false, skipped: true, attempts: 1 }, i);
+      }
+    }
+    const used = Math.round((Date.now() - S.startedAt) / 1000);
+    const byTopic = new Map();
+    for (const r of S.results) {
+      const key = r.topicId || "?";
+      const t = byTopic.get(key) || { title: E.topics[key] || "Weitere Aufgaben", n: 0, ok: 0 };
+      t.n += 1;
+      if (r.correct) t.ok += 1;
+      byTopic.set(key, t);
+    }
+    const total = S.results.length, ok = S.results.filter((r) => r.correct).length;
+    const rows = [...byTopic.values()].sort((a, b) => a.ok / a.n - b.ok / b.n).map((t) =>
+      el("div", { class: "lw-exam-row" + (t.ok / t.n < 0.6 ? " weak" : "") }, [
+        el("span", { class: "name", text: t.title }),
+        el("span", { class: "bar" }, [el("span", { style: "width:" + Math.round((100 * t.ok) / t.n) + "%" })]),
+        el("span", { class: "count", text: t.ok + " / " + t.n }),
+      ]));
+    const summary = el("section", { class: "lw-step lw-exam-summary" }, [
+      el("div", { class: "lw-step-label" }, [el("span", { class: "dot" }), el("span", { text: "Auswertung" })]),
+      el("div", { class: "lw-exam-score", text: ok + " von " + total + " richtig" }),
+      el("div", { class: "lw-subtitle", text: (timeUp ? "Die Zeit ist abgelaufen. " : "") + "Gebraucht: " + fmtClock(used) + " von " + fmtClock(E.minutes * 60) + " Minuten." }),
+      el("div", { class: "lw-exam-table" }, rows),
+      el("div", { class: "lw-md", html: md(ok === total ? "Alles richtig. Diese Themen sitzen." : "Unten stehen alle Aufgaben mit Lösung. Rot markierte Themen lohnen eine Trainingsrunde.") }),
+    ]);
+    const head = S.root.querySelector(".lw-head");
+    if (head && head.nextSibling) S.root.insertBefore(summary, head.nextSibling); else S.root.append(summary);
+    requestAnimationFrame(() => summary.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" }));
+    E.timeUp = !!timeUp;
+    finish();
   }
 
   /** After a generated task: one more of the same kind, with new numbers, right after this one. */
   function variantButton(card, source) {
-    if (!source || S.mode === "review") return;
+    if (!source || S.mode === "review" || S.mode === "exam" || S.mode === "mix") return;
     const b = el("button", { class: "lw-variant", type: "button", text: "Noch eine Aufgabe dieser Art" });
     b.addEventListener("click", () => {
       if (S.phase === "answering" || S.phase === "finished") return;
@@ -1824,6 +2237,7 @@
     S.cur = i;
     S.attempts = 0;
     S.needsChange = false;
+    S.helped = false;
     let step = S.steps[i];
     let inst;
     if (step.type === "gen") {
@@ -1847,7 +2261,9 @@
       inst = { el: card, question: false };
     }
     S.inst = inst;
+    S.insts[i] = inst;
     S.phase = inst.question ? "answering" : "done";
+    if (S.mode === "exam" && inst.question) inst.el.classList.add("exam-open");
     S.root.append(inst.el);
     if (inst.shown) inst.shown();
     if (i > 0) {
@@ -1856,12 +2272,17 @@
     announce();
   }
 
-  function record(result) {
-    const step = S.steps[S.cur];
+  function record(result, index) {
+    const i = index == null ? S.cur : index;
+    const step = S.steps[i];
+    const helped = index == null ? !!S.helped : false;
     S.results.push({
-      stepId: step.id, lessonId: step.lessonId || (S.lesson && S.lesson.id), type: step.type,
-      correct: !!result.correct, firstTry: !!result.correct && S.attempts === 1 && !result.revealed,
-      attempts: S.attempts, revealed: !!result.revealed, self: !!result.self,
+      stepId: step.id, lessonId: step.lessonId || (S.lesson && S.lesson.id && S.mode === "lesson" ? S.lesson.id : null), type: step.type,
+      correct: !!result.correct, firstTry: !!result.correct && (result.attempts || S.attempts) === 1 && !result.revealed && !helped,
+      attempts: result.attempts || S.attempts, revealed: !!result.revealed, self: !!result.self, helped,
+      topicId: step.topicId || (S.practice && S.practice.topicId) || null,
+      courseId: step.courseId || (S.practice && S.practice.courseId) || null,
+      level: step.level || null, gen: step.gen || null, skipped: !!result.skipped,
     });
   }
 
@@ -1870,19 +2291,30 @@
     const q = S.results.filter((r) => r.type !== "text");
     const score = q.length ? q.filter((r) => r.firstTry || (r.self && r.correct)).length / q.length : 1;
     S.phase = "finished";
-    S.root.append(el("div", { class: "lw-end", text: S.mode === "review" ? "Wiederholung abgeschlossen." : S.mode === "practice" ? "Training abgeschlossen." : "Lektion abgeschlossen." }));
+    const endText = { review: "Wiederholung abgeschlossen.", practice: "Training abgeschlossen.", exam: "Klausur ausgewertet.", mix: "Tagesmix abgeschlossen." }[S.mode] || "Lektion abgeschlossen.";
+    S.root.append(el("div", { class: "lw-end", text: endText }));
     const msg = {
       type: "finished", lessonId: S.mode === "lesson" ? S.lesson && S.lesson.id : null, mode: S.mode, results: S.results, score,
       seconds: Math.round((Date.now() - S.startedAt) / 1000),
     };
     if (S.practice) msg.practice = { topicId: S.practice.topicId || null, courseId: S.practice.courseId || null, level: S.practice.level };
+    if (S.exam) msg.exam = { title: S.exam.title, courseId: S.exam.courseId || null, chapterId: S.exam.chapterId || null, timeUp: !!S.exam.timeUp, minutes: S.exam.minutes };
     post(msg);
+    if (S.mode === "exam") announce();
   }
 
   /** Called by the native primary button (and Enter in numeric fields). */
   LW.primary = function () {
     const inst = S.inst;
     if (!inst || S.phase === "finished") return;
+    if (S.mode === "exam") {
+      if (S.phase === "answering" && inst.question) {
+        if (!inst.canCheck()) return;
+        S.exam.answered.add(S.cur);
+      }
+      examNext();
+      return;
+    }
     if (S.phase === "answering" && inst.question) {
       if (!inst.canCheck()) return;
       S.attempts += 1;
@@ -1926,6 +2358,8 @@
   LW.giveUp = function () {
     const inst = S.inst;
     if (!inst || S.phase !== "answering" || !inst.question) return;
+    // in an exam the second button skips the task; it counts as not solved
+    if (S.mode === "exam") { examNext(); return; }
     if (inst.reveal) inst.reveal();
     if (inst.lock) inst.lock();
     S.attempts = Math.max(1, S.attempts);
@@ -1946,6 +2380,74 @@
     S.theme = Object.assign({}, S.theme, theme);
     if (theme && theme.accent) document.documentElement.style.setProperty("--accent", theme.accent);
     if (theme && theme.fontScale) document.documentElement.style.setProperty("--fs", String(theme.fontScale));
+    if (theme && theme.reduceMotion != null) {
+      userReduceMotion = !!theme.reduceMotion;
+      document.documentElement.classList.toggle("lw-reduce-motion", userReduceMotion);
+    }
+    if (theme && theme.nativeKeys != null) document.documentElement.classList.toggle("lw-native-keys", !!theme.nativeKeys);
+  };
+
+  // ------------------------------------------------------------------ reading aloud
+  // LW.speech() returns the current step as plain German text for the speech synthesizer of the app: formulas are
+  // read in words, buttons and drawings are left out.
+
+  function texToSpeech(tex) {
+    let s = " " + String(tex) + " ";
+    const once = (re, to) => { s = s.replace(re, to); };
+    const loop = (re, to) => { let prev; do { prev = s; s = s.replace(re, to); } while (s !== prev); };
+    once(/\\left|\\right|\\big|\\Big|\\bigg|\\displaystyle|\\textstyle|\\[,;!]|\\quad|\\qquad|\\limits/g, " ");
+    loop(/\\(?:t|d)?frac\{([^{}]*)\}\{([^{}]*)\}/g, " ($1) durch ($2) ");
+    loop(/\\sqrt\[([^\]]*)\]\{([^{}]*)\}/g, " $1te Wurzel aus ($2) ");
+    loop(/\\sqrt\{([^{}]*)\}/g, " Wurzel aus ($1) ");
+    loop(/\\(?:text|mathrm|operatorname|mathbf|mathit|mathsf|boldsymbol)\{([^{}]*)\}/g, " $1 ");
+    loop(/\\(?:abs)\{([^{}]*)\}/g, " Betrag von ($1) ");
+    loop(/\\(?:norm)\{([^{}]*)\}/g, " Norm von ($1) ");
+    once(/\\mathbb\{R\}|\\R(?![a-z])/g, " R ");
+    once(/\\mathbb\{N\}|\\N(?![a-z])/g, " N ");
+    once(/\\mathbb\{Z\}|\\Z(?![a-z])/g, " Z ");
+    once(/\\mathbb\{Q\}|\\Q(?![a-z])/g, " Q ");
+    once(/\\mathbb\{C\}|\\C(?![a-z])/g, " C ");
+    loop(/\^\{([^{}]*)\}/g, " hoch ($1) ");
+    once(/\^(\w)/g, " hoch $1 ");
+    loop(/_\{([^{}]*)\}/g, " $1 ");
+    once(/_(\w)/g, " $1 ");
+    const words = [
+      [/\\sum/g, " Summe über "], [/\\prod/g, " Produkt über "], [/\\int/g, " Integral "], [/\\lim/g, " Grenzwert "], [/\\infty/g, " unendlich "],
+      [/\\cdot|\\times/g, " mal "], [/\\leq?(?![a-z])/g, " kleiner gleich "], [/\\geq?(?![a-z])/g, " größer gleich "], [/\\neq?(?![a-z])/g, " ungleich "],
+      [/\\approx/g, " ungefähr "], [/\\to(?![a-z])|\\rightarrow/g, " gegen "], [/\\Rightarrow|\\implies/g, " daraus folgt "],
+      [/\\Leftrightarrow|\\iff/g, " genau dann, wenn "], [/\\in(?![a-z])/g, " in "], [/\\notin/g, " nicht in "], [/\\pm/g, " plus minus "],
+      [/\\pi/g, " pi "], [/\\varepsilon|\\epsilon|\\eps(?![a-z])/g, " Epsilon "], [/\\delta/g, " Delta "], [/\\Delta/g, " Delta "],
+      [/\\alpha/g, " Alpha "], [/\\beta/g, " Beta "], [/\\gamma/g, " Gamma "], [/\\lambda/g, " Lambda "], [/\\mu/g, " mü "],
+      [/\\sigma/g, " Sigma "], [/\\theta/g, " Theta "], [/\\omega/g, " Omega "], [/\\phi|\\varphi/g, " Phi "], [/\\rho/g, " Rho "],
+      [/\\forall/g, " für alle "], [/\\exists/g, " es gibt "], [/\\land|\\wedge/g, " und "], [/\\lor|\\vee/g, " oder "], [/\\lnot|\\neg/g, " nicht "],
+      [/\\subseteq|\\subset/g, " Teilmenge von "], [/\\cup/g, " vereinigt "], [/\\cap/g, " geschnitten "], [/\\emptyset/g, " leere Menge "],
+      [/\\dots|\\ldots|\\cdots/g, " und so weiter "], [/\\circ/g, " nach "], [/\\mapsto/g, " wird abgebildet auf "],
+      [/\\sin/g, " Sinus "], [/\\cos/g, " Kosinus "], [/\\tan/g, " Tangens "], [/\\ln/g, " natürlicher Logarithmus "], [/\\log/g, " Logarithmus "],
+      [/\\exp/g, " e hoch "], [/\{,\}/g, " Komma "], [/\\%/g, " Prozent "], [/\|([^|]+)\|/g, " Betrag von $1 "],
+      [/=/g, " gleich "], [/</g, " kleiner als "], [/>/g, " größer als "], [/\+/g, " plus "], [/−|-/g, " minus "], [/\//g, " durch "],
+      [/\\[a-zA-Z]+/g, " "], [/[{}&]/g, " "], [/\\\\/g, " "],
+    ];
+    for (const [re, to] of words) once(re, to);
+    return s.replace(/\(\s*([^()\s]+)\s*\)/g, " $1 ").replace(/\s+/g, " ").trim();
+  }
+  LW.texToSpeech = texToSpeech;
+
+  function speakable(node) {
+    const c = node.cloneNode(true);
+    c.querySelectorAll("svg, canvas, .lw-keyrow, .lw-hint-btn, .lw-variant, .lw-feedback:not(.show), .lw-anim-bar, .lw-step-label .dot, .lw-option:not(.show-why) .why, script, style, [aria-hidden='true']").forEach((x) => x.remove());
+    c.querySelectorAll(".katex").forEach((k) => {
+      const tex = k.getAttribute("data-tex");
+      k.replaceWith(document.createTextNode(" " + (tex != null ? texToSpeech(tex) : k.textContent) + " "));
+    });
+    c.querySelectorAll(".lw-option .mark").forEach((m) => { if (m.textContent.trim()) m.textContent = "Antwort " + m.textContent.trim() + ": "; });
+    c.querySelectorAll("p, li, div, h1, h2, h3, button").forEach((b) => b.append(document.createTextNode(". ")));
+    return c.textContent.replace(/\s+/g, " ").replace(/\s+\./g, ".").replace(/([.?!:])(\s*\.)+/g, "$1").trim();
+  }
+
+  /** The current step as text to read aloud. */
+  LW.speech = function () {
+    if (!S.inst || !S.inst.el) return "";
+    return speakable(S.inst.el);
   };
 
   function normalizeSteps(lesson, lessonUrl) {
@@ -1959,9 +2461,11 @@
   }
 
   /**
-   * options: { lesson | lessonUrl, mode: "lesson" | "review" | "practice", items: [{lessonUrl, stepId}],
+   * options: { lesson | lessonUrl, mode: "lesson" | "review" | "practice" | "exam" | "mix", items: [{lessonUrl, stepId}],
    *            practice: {title, kicker, topicId, courseId, gens: [name | {gen, params}], level, count},
-   *            theme: {accent, fontScale}, insets: {top, bottom}, resumeAt, seed }
+   *            exam: {title, kicker, courseId, chapterId, minutes, count, gens: [{gen, level, topicId, topicTitle, courseId}]},
+   *            mix: {title, items: [{lessonUrl, stepId}], gens: [{gen, level, topicId, topicTitle, courseId}]},
+   *            theme: {accent, fontScale, reduceMotion, nativeKeys}, insets: {top, bottom}, resumeAt, seed }
    * seed varies the generated tasks; without it every start brings new numbers.
    */
   LW.start = async function (options) {
@@ -1976,6 +2480,10 @@
     S.variants = 0;
     S.seen = new Set();
     S.inst = null;
+    S.insts = [];
+    S.helped = false;
+    if (S.exam && S.exam.timer) clearInterval(S.exam.timer);
+    S.exam = null;
     LW.setTheme(o.theme || {});
     LW.setInsets(o.insets || {});
     document.body.innerHTML = "";
@@ -2003,6 +2511,71 @@
           el("div", { class: "lw-subtitle" }, [levelChip(level), el("span", { text: " " + count + " Aufgaben, jedes Mal neu gemischt" })]),
         ]);
         S.root.append(head);
+      } else if (S.mode === "exam") {
+        // exam: { title, kicker, courseId, chapterId, minutes, count, gens: [{gen, level, topicId, topicTitle, courseId}] }
+        const X = o.exam || {};
+        const gens = (X.gens || []).filter((g) => g && LW.generators[g.gen]);
+        if (!gens.length) throw new Error("Für dieses Kapitel gibt es noch keine Klausuraufgaben. Schließe zuerst eine Lektion mit Training ab.");
+        const count = Math.max(1, X.count || 10);
+        const order = [];
+        while (order.length < count) order.push(...shuffled(gens.map((g, k) => k), "exam" + S.run + order.length));
+        const topics = {};
+        gens.forEach((g) => { if (g.topicId) topics[g.topicId] = g.topicTitle || g.topicId; });
+        S.steps = order.slice(0, count).map((k, i) => {
+          const g = gens[k];
+          // other generators of the same topic may stand in, so the topic stays the same
+          const alt = gens.filter((x) => x.topicId === g.topicId).map((x) => ({ gen: x.gen, params: x.params }));
+          return { id: "e" + (i + 1), type: "gen", gen: g.gen, params: g.params, level: clampLevel(g.level || 2), topicId: g.topicId, courseId: g.courseId || X.courseId, lessonId: null, review: false, alt };
+        });
+        const minutes = Math.max(1, X.minutes || Math.ceil(count * 1.5));
+        S.exam = { title: X.title || "Klausur", courseId: X.courseId, chapterId: X.chapterId, minutes, topics, answered: new Set(), deadline: Date.now() + minutes * 60000, timer: null, timeUp: false };
+        S.lesson = { id: "exam", title: S.exam.title };
+        S.base = "";
+        const clock = el("div", { class: "lw-exam-clock", role: "timer", "aria-live": "off", text: fmtClock(minutes * 60) });
+        S.root.classList.add("lw-exam-running");
+        S.root.append(el("header", { class: "lw-head exam" }, [
+          el("div", { class: "lw-kicker", text: X.kicker || "Klausur" }),
+          el("div", { class: "lw-title", text: S.exam.title }),
+          el("div", { class: "lw-subtitle", text: count + " Aufgaben, " + minutes + " Minuten. Rückmeldung und Lösungen gibt es erst am Ende." }),
+        ]), clock);
+        const E = S.exam;
+        E.timer = setInterval(() => {
+          const left = (E.deadline - Date.now()) / 1000;
+          clock.textContent = fmtClock(left);
+          clock.classList.toggle("low", left <= 60);
+          if (left <= 0) finishExam(true);
+        }, 1000);
+      } else if (S.mode === "mix") {
+        // mix: { title, items: [{lessonUrl, stepId}], gens: [{gen, level, topicId, courseId}] }
+        const X = o.mix || {};
+        const cache = new Map();
+        const review = [];
+        for (const item of X.items || []) {
+          try {
+            if (!cache.has(item.lessonUrl)) cache.set(item.lessonUrl, await fetchJSON(item.lessonUrl));
+            const lesson = cache.get(item.lessonUrl);
+            const st = normalizeSteps(lesson).find((s) => s.id === item.stepId);
+            if (st) review.push(Object.assign({}, st, { from: lesson.title }));
+          } catch (e) { /* a lesson that vanished from the content is skipped */ }
+        }
+        const fresh = (X.gens || []).filter((g) => g && LW.generators[g.gen]).map((g, i) => ({
+          id: "m" + (i + 1), type: "gen", gen: g.gen, params: g.params, level: clampLevel(g.level || 1),
+          topicId: g.topicId, courseId: g.courseId, lessonId: null, review: false, from: g.topicTitle, alt: [],
+        }));
+        // alternate: one repetition, one new task
+        const steps = [];
+        for (let i = 0; i < Math.max(review.length, fresh.length); i++) {
+          if (review[i]) steps.push(review[i]);
+          if (fresh[i]) steps.push(fresh[i]);
+        }
+        S.lesson = { id: "mix", title: "Tagesmix" };
+        S.steps = steps;
+        S.base = "";
+        S.root.append(el("header", { class: "lw-head" }, [
+          el("div", { class: "lw-kicker", text: "Tagesmix" }),
+          el("div", { class: "lw-title", text: X.title || "Heute gemischt" }),
+          el("div", { class: "lw-subtitle", text: review.length + (review.length === 1 ? " Wiederholung, " : " Wiederholungen, ") + fresh.length + (fresh.length === 1 ? " neue Aufgabe" : " neue Aufgaben") + " aus deinen Fächern" }),
+        ]));
       } else if (S.mode === "review") {
         const cache = new Map();
         const steps = [];
@@ -2049,6 +2622,12 @@
   };
 
   LW.state = () => ({ cur: S.cur, phase: S.phase, total: S.steps.length, results: S.results.slice() });
+
+  /** Scrolls the current step back into view (the app calls it when the scratch pad takes part of the screen). */
+  LW.revealCurrent = function () {
+    if (S.inst && S.inst.el) S.inst.el.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
+    return 0;
+  };
 
   /** Collects question steps that are worth repeating later (used by the shell for spaced repetition). */
   const QUESTION_TYPES = ["choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "gen", "spot", "proof", "estimate", "timeline", "quadrant"];

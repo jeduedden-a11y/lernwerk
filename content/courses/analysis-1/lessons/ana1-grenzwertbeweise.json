@@ -1,0 +1,86 @@
+{
+  "id": "ana1-grenzwertbeweise",
+  "title": "Grenzwerte beweisen",
+  "subtitle": "Zu jedem ε ein N, Schritt für Schritt aufgeschrieben",
+  "source": "Lehrbuchstandard der Analysis I (Konvergenz von Folgen, Grenzwertsätze, Stetigkeit); eigene Aufbereitung als Beweistraining",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md", "title": "Stetigkeit" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Die Folge $a_n = \\tfrac1n$ und ein Band der Breite $\\varepsilon$ um den Grenzwert 0. Ein Grenzwertbeweis liefert zu **jedem** ε ein $N$, ab dem alle Glieder im Band liegen.",
+      "widget": "epsilon-band",
+      "params": { "f": "1/n", "limit": 0, "nMax": 30, "eps": 0.5, "n0": 3, "yRange": [-0.6, 1.05] },
+      "int": ["n0"],
+      "timeline": [
+        { "caption": "Bei ε = 0,5 liegen alle Glieder ab n = 3 im Band: 1/3 ist kleiner als 0,5.", "set": { "eps": 0.5, "n0": 3 } },
+        { "caption": "Ein schmaleres Band, ε = 0,2: Jetzt braucht man n ab 6, denn 1/5 ist genau 0,2 und liegt nicht mehr innen.", "to": { "eps": 0.2, "n0": 6 }, "dur": 2000, "hold": 8000 },
+        { "caption": "ε = 0,1: ab n = 11. Je kleiner ε, desto später das N.", "to": { "eps": 0.1, "n0": 11 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Allgemein: Jedes N größer als 1/ε passt. Genau das schreibt der Beweis auf, für jedes ε auf einmal.", "to": { "eps": 0.05, "n0": 21 }, "dur": 2000, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "»Die Folge kommt dem Grenzwert beliebig nahe« ist anschaulich klar, aber für einen Beweis zu vage. Die Definition macht daraus ein Spiel: Jemand gibt ein noch so kleines $\\varepsilon > 0$ vor, und man muss eine Stelle $N$ nennen, ab der alle Glieder näher als $\\varepsilon$ am Grenzwert liegen.\n\nEin Beweis gewinnt dieses Spiel für jedes $\\varepsilon$ gleichzeitig. Er hat fast immer denselben Aufbau: $\\varepsilon$ beliebig vorgeben, den Abstand $\\abs{a_n - a}$ nach oben abschätzen, $N$ so wählen, dass die Schranke unter $\\varepsilon$ fällt, und zum Schluss die Kette sauber hinschreiben.\n\nBei Summen und Produkten teilt man sich den Spielraum: Jede Folge bekommt $\\tfrac{\\varepsilon}{2}$. Und wer zeigen will, dass etwas **nicht** konvergiert, nimmt das Gegenteil an und findet ein ε, für das es kein $N$ gibt."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Konvergenz\n> $a_n \\to a$, wenn es zu jedem $\\varepsilon > 0$ ein $N \\in \\N$ gibt mit $\\abs{a_n - a} < \\varepsilon$ für alle $n \\ge N$.\n\n> [!satz] Bauplan eines ε-N-Beweises\n> 1. Sei $\\varepsilon > 0$ beliebig. 2. Schätze $\\abs{a_n - a}$ durch etwas Einfaches ab, das mit $n$ kleiner wird. 3. Wähle $N$ so, dass diese Schranke für $n \\ge N$ unter $\\varepsilon$ liegt. 4. Schreibe die Ungleichungskette hin.\n\n> [!tip] Werkzeuge\n> Dreiecksungleichung $\\abs{x + y} \\le \\abs{x} + \\abs{y}$, das archimedische Axiom (zu jedem $x$ gibt es $N > x$), und $\\max(N_1, N_2)$, wenn zwei Bedingungen gleichzeitig gelten sollen."
+    },
+    {
+      "id": "band", "type": "widget", "label": "Ausprobieren",
+      "md": "Die Folge $a_n = \\tfrac{n+1}{n}$ konvergiert gegen 1. Bei festem $\\varepsilon = 0{,}08$: Wähle das **kleinste** $n_0$, ab dem alle Glieder im Band liegen.",
+      "widget": "epsilon-band",
+      "params": { "f": "(n+1)/n", "limit": 1, "nMax": 30, "fixedEps": 0.08, "n0": 4, "yRange": [0.7, 2.05] },
+      "goal": { "eps": 0.08, "minimal": true },
+      "explain": "$\\abs{a_n - 1} = \\tfrac1n < 0{,}08 \\iff n > 12{,}5$. Also ab $n_0 = 13$. Im Beweis würde man allgemein $N > \\tfrac{1}{\\varepsilon}$ wählen."
+    },
+    {
+      "id": "schwelle", "type": "numeric", "label": "Rechnen",
+      "md": "Für $a_n = \\tfrac{1}{n}$ und $\\varepsilon = 0{,}01$: Welches ist das kleinste $N$ mit $\\abs{a_n - 0} < \\varepsilon$ für alle $n \\ge N$?",
+      "answer": 101, "tolerance": 0, "placeholder": "N",
+      "explain": "$\\tfrac1n < 0{,}01 \\iff n > 100$. Für $n = 100$ ist $\\tfrac1n = 0{,}01$, also nicht kleiner. Das kleinste $N$ ist 101."
+    },
+    {
+      "id": "summe", "type": "proof", "mode": "justify", "label": "Begründen",
+      "md": "Der Beweis der Summenregel steht da. Wähle für jede Zeile die Begründung.",
+      "given": "$a_n \\to a$ und $b_n \\to b$.",
+      "claim": "$a_n + b_n \\to a + b$.",
+      "steps": [
+        { "md": "Sei $\\varepsilon > 0$.", "by": "Beliebiges ε wählen" },
+        { "md": "Es gibt $N_1, N_2$ mit $\\abs{a_n - a} < \\tfrac{\\varepsilon}{2}$ für $n \\ge N_1$ und $\\abs{b_n - b} < \\tfrac{\\varepsilon}{2}$ für $n \\ge N_2$.", "by": "Definition der Konvergenz", "why": "Die Definition gilt für jede positive Schranke, also auch für $\\tfrac{\\varepsilon}{2}$." },
+        { "md": "Für $n \\ge \\max(N_1, N_2)$: $\\abs{(a_n + b_n) - (a + b)} \\le \\abs{a_n - a} + \\abs{b_n - b}$.", "by": "Dreiecksungleichung" },
+        { "md": "$\\abs{a_n - a} + \\abs{b_n - b} < \\tfrac{\\varepsilon}{2} + \\tfrac{\\varepsilon}{2} = \\varepsilon$.", "by": "Wahl von N" }
+      ],
+      "reasons": ["Archimedisches Axiom", "Annahme des Gegenteils"],
+      "explain": "Der Trick ist die Halbierung von ε: Beide Folgen dürfen je die Hälfte des Spielraums verbrauchen."
+    },
+    {
+      "id": "eindeutig", "type": "spot", "label": "Fehler finden",
+      "md": "Ein Beweis, dass der Grenzwert eindeutig ist, mit genau einem Fehler. In welcher Zeile?",
+      "lines": [
+        { "md": "Angenommen, $a_n \\to a$ und $a_n \\to b$ mit $a \\ne b$. Setze $\\varepsilon = \\tfrac{\\abs{a - b}}{2}$.", "why": "Richtig: Ein positives ε, halb so groß wie der Abstand." },
+        { "md": "Es gibt $N_1$ mit $\\abs{a_n - a} < \\varepsilon$ für $n \\ge N_1$ und $N_2$ mit $\\abs{a_n - b} < \\varepsilon$ für $n \\ge N_2$.", "why": "Richtig: Definition der Konvergenz, zweimal." },
+        { "md": "Für $n \\ge \\min(N_1, N_2)$ gelten beide Abschätzungen.", "why": "Das ist der Fehler: Beide gelten erst ab dem größeren Index, $n \\ge \\max(N_1, N_2)$." },
+        { "md": "Dann $\\abs{a - b} \\le \\abs{a - a_n} + \\abs{a_n - b} < 2\\varepsilon = \\abs{a - b}$, ein Widerspruch.", "why": "Mit $\\max$ statt $\\min$ wäre diese Zeile richtig." }
+      ],
+      "answer": 2,
+      "explain": "Wenn zwei Bedingungen gleichzeitig gelten sollen, nimmt man das Maximum der beiden Schwellen. Ein häufiger Flüchtigkeitsfehler mit großer Wirkung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "beweis-analysis", "level": 1, "label": "Aufbau erkennen" },
+    { "id": "neu2", "type": "gen", "gen": "beweis-analysis", "level": 2, "label": "Beweise bauen" },
+    { "id": "neu3", "type": "gen", "gen": "beweis-analysis", "level": 3, "label": "Lücken und Gründe" },
+    { "id": "neu4", "type": "gen", "gen": "beweis-analysis", "level": 4, "label": "Fehler finden" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Ein Konvergenzbeweis liefert zu jedem $\\varepsilon > 0$ ein $N$, ab dem $\\abs{a_n - a} < \\varepsilon$.",
+        "Bauplan: ε vorgeben, Abstand abschätzen, $N$ wählen, Kette hinschreiben.",
+        "Bei zwei Bedingungen gleichzeitig: $\\max(N_1, N_2)$; bei Summen: je $\\tfrac{\\varepsilon}{2}$.",
+        "Divergenz und Eindeutigkeit zeigt man oft per Widerspruch mit einem geschickt gewählten ε."
+      ]
+    }
+  ]
+}

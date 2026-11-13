@@ -1,0 +1,121 @@
+{
+  "id": "ana1-beweise",
+  "title": "Beweistechniken",
+  "subtitle": "Direkt, Kontraposition, Widerspruch, Fallunterscheidung, Induktion",
+  "source": "Lehrbuchstandard der Grundlagen (Beweismethoden im ersten Semester); Euklid, Elemente IX.20; der Beweis der Irrationalität von √2 in der Fassung der Lehrbücher",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/10 Wahlthemen (Q4)/Beweisverfahren.md", "title": "Beweisverfahren" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Vollständige Induktion.md", "title": "Vollständige Induktion" },
+    { "path": "02 Wiki/Mathematik/11 Analysis I/Aussagenlogik und Quantoren.md", "title": "Aussagenlogik und Quantoren" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein berühmter Widerspruchsbeweis, Zeile für Zeile: Die Wurzel aus 2 ist kein Bruch.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          { "tex": "\\sqrt{2} = \\tfrac{p}{q} \\quad p, q \\in \\Z,\\ q \\ne 0,\\ \\operatorname{ggT}(p, q) = 1", "why": "**Annahme des Gegenteils:** Die Wurzel wäre rational, als vollständig gekürzter Bruch." },
+          { "tex": "2q^2 = p^2", "why": "Quadrieren und mit $q^2$ malnehmen." },
+          { "tex": "p^2 \\text{ gerade} \\;\\Rightarrow\\; p \\text{ gerade},\\quad p = 2r", "why": "Wäre $p$ ungerade, wäre auch $p^2$ ungerade: ein kleiner Beweis durch Kontraposition." },
+          { "tex": "2q^2 = 4r^2 \\;\\Rightarrow\\; q^2 = 2r^2", "why": "Einsetzen und durch 2 teilen." },
+          { "tex": "q \\text{ gerade}", "why": "Dasselbe Argument wie eben für $p$." },
+          { "tex": "2 \\mid p \\text{ und } 2 \\mid q", "why": "**Widerspruch** zur Teilerfremdheit. Also war die Annahme falsch: $\\sqrt{2}$ ist irrational." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Ein Widerspruchsbeweis beginnt mit dem Gegenteil der Behauptung: Angenommen, die Wurzel aus 2 wäre ein gekürzter Bruch.", "set": { "k": 1 } },
+        { "caption": "Dann wird gerechnet, ganz gewöhnlich.", "set": { "k": 2 } },
+        { "caption": "Ein Zwischenschritt braucht einen eigenen kleinen Satz: Ist ein Quadrat gerade, so ist die Zahl gerade.", "set": { "k": 3 } },
+        { "caption": "Einsetzen liefert dieselbe Gleichung für q.", "set": { "k": 5 } },
+        { "caption": "Zähler und Nenner wären beide gerade, obwohl der Bruch gekürzt sein sollte. Dieser Widerspruch widerlegt die Annahme.", "set": { "k": 6 }, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Ein Beweis ist eine Kette von Schritten, von denen jeder aus Definitionen, Voraussetzungen oder schon bewiesenen Sätzen folgt. Welche Kette man baut, hängt vom Aufbau der Behauptung ab.\n\nBei »Wenn A, dann B« rechnet man oft **direkt** von A nach B. Kommt man an B schlecht heran, zeigt man die **Kontraposition**: Wenn nicht B, dann nicht A. Bei Aussagen wie »Es gibt keine größte Primzahl« nimmt man das Gegenteil an und führt es zum **Widerspruch**. Zerfällt die Lage in Fälle, etwa gerade und ungerade, behandelt man jeden einzeln: **Fallunterscheidung**. Geht es um alle natürlichen Zahlen, hilft die **Induktion**.\n\nUnd wer eine Allaussage widerlegen will, braucht keinen Beweis, sondern ein einziges **Gegenbeispiel**."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Direkter Beweis\n> Aus $A$ über Zwischenschritte $A \\Rightarrow A_1 \\Rightarrow \\cdots \\Rightarrow B$.\n\n> [!definition] Kontraposition\n> Statt $A \\Rightarrow B$ zeigt man das gleichwertige $\\neg B \\Rightarrow \\neg A$.\n\n> [!definition] Widerspruchsbeweis\n> Man nimmt $\\neg B$ an (oder $A \\wedge \\neg B$) und leitet eine falsche Aussage her. Also gilt $B$.\n\n> [!definition] Fallunterscheidung und Induktion\n> Fälle, die zusammen alles abdecken, einzeln beweisen. Induktion: $A(n_0)$ und $A(n) \\Rightarrow A(n+1)$ für alle $n \\ge n_0$.\n\n> [!tip] Zwei Richtungen\n> Eine Äquivalenz $A \\Leftrightarrow B$ oder eine Mengengleichheit zeigt man in beiden Richtungen einzeln."
+    },
+    {
+      "id": "kontra", "type": "proof", "label": "Beweis bauen",
+      "md": "Baue den Beweis durch Kontraposition. Nicht alle Bausteine gehören dazu.",
+      "given": "$n$ ist eine ganze Zahl, und $n^2$ ist gerade.",
+      "claim": "$n$ ist gerade.",
+      "steps": [
+        "Wir zeigen die Kontraposition: Ist $n$ ungerade, dann ist $n^2$ ungerade.",
+        "Sei $n$ ungerade, also $n = 2k + 1$ mit einer ganzen Zahl $k$.",
+        "Dann ist $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.",
+        "Also ist $n^2$ ungerade, und die Behauptung folgt."
+      ],
+      "distractors": [
+        { "md": "Wir zeigen: Ist $n$ gerade, dann ist $n^2$ gerade.", "why": "Das ist die Umkehrung, nicht die Kontraposition. Sie beweist die Behauptung nicht." },
+        { "md": "Sei $n^2 = 2k$, dann ist $n = \\sqrt{2k}$ gerade.", "why": "Aus $n = \\sqrt{2k}$ folgt nichts über gerade oder ungerade." }
+      ],
+      "explain": "Die Kontraposition dreht und verneint: aus »$n^2$ gerade ⇒ $n$ gerade« wird »$n$ ungerade ⇒ $n^2$ ungerade«, und das rechnet man direkt nach."
+    },
+    {
+      "id": "luecken", "type": "proof", "mode": "gaps", "label": "Lückenbeweis",
+      "md": "Ein direkter Beweis mit Lücken. Fülle sie.",
+      "given": "$a \\mid b$ und $b \\mid c$ für ganze Zahlen $a, b, c$.",
+      "claim": "$a \\mid c$.",
+      "steps": [
+        "Es gibt ganze Zahlen $k, m$ mit $b = ka$ und $c = mb$.",
+        "Einsetzen: $c = m(ka)$.",
+        "$c = (mk)\\,a$ mit der ganzen Zahl $mk$.",
+        "Also teilt $a$ die Zahl $c$."
+      ],
+      "gaps": [0, 2],
+      "distractors": [
+        { "md": "Es gibt eine ganze Zahl $k$ mit $b = ka$ und $c = kb$.", "why": "Die beiden Teilbarkeiten haben im Allgemeinen verschiedene Faktoren." },
+        { "md": "$c = (m + k)\\,a$ mit der ganzen Zahl $m + k$.", "why": "Die Faktoren multiplizieren sich: $m(ka) = (mk)a$." }
+      ],
+      "explain": "Definitionen auspacken, rechnen, wieder einpacken: das Grundmuster des direkten Beweises."
+    },
+    {
+      "id": "induktion", "type": "proof", "mode": "justify", "label": "Begründen",
+      "md": "Ein Induktionsbeweis steht da. Wähle für jede Zeile die Begründung.",
+      "given": "$n \\ge 1$ ist eine natürliche Zahl.",
+      "claim": "$1 + 3 + 5 + \\cdots + (2n - 1) = n^2$.",
+      "steps": [
+        { "md": "$n = 1$: links $1$, rechts $1^2 = 1$.", "by": "Induktionsanfang" },
+        { "md": "Für ein festes $n$ gelte $1 + 3 + \\cdots + (2n - 1) = n^2$.", "by": "Induktionsannahme" },
+        { "md": "$1 + 3 + \\cdots + (2n - 1) + (2n + 1) = n^2 + 2n + 1$.", "by": "Induktionsannahme anwenden", "why": "Die ersten $n$ Summanden ersetzt man durch $n^2$." },
+        { "md": "$n^2 + 2n + 1 = (n + 1)^2$.", "by": "Binomische Formel" },
+        { "md": "Die Formel gilt also für alle $n \\ge 1$.", "by": "Induktionsprinzip" }
+      ],
+      "reasons": ["Widerspruch", "Fallunterscheidung"],
+      "explain": "Die ungeraden Zahlen summieren sich zu Quadratzahlen; jede neue ungerade Zahl legt einen Winkel um das alte Quadrat."
+    },
+    {
+      "id": "pferde", "type": "spot", "label": "Fehler finden",
+      "md": "Ein berühmter falscher »Beweis«: Alle Pferde haben dieselbe Farbe. In welcher Zeile steckt der Fehler?",
+      "lines": [
+        { "md": "Behauptung $A(n)$: In jeder Gruppe von $n$ Pferden haben alle dieselbe Farbe.", "why": "Eine Aussage über alle $n$, also ein Fall für Induktion." },
+        { "md": "Anfang $n = 1$: Ein einzelnes Pferd hat dieselbe Farbe wie es selbst.", "why": "Das stimmt." },
+        { "md": "Annahme: Je $n$ Pferde haben dieselbe Farbe.", "why": "Als Induktionsannahme in Ordnung." },
+        { "md": "Ohne das letzte von $n + 1$ Pferden bleiben $n$, alle gleichfarbig; ohne das erste ebenso.", "why": "Das folgt aus der Annahme." },
+        { "md": "Beide Gruppen haben gemeinsame Pferde, also haben alle $n + 1$ dieselbe Farbe.", "why": "Hier ist der Fehler: Für $n + 1 = 2$ haben die beiden Gruppen kein gemeinsames Pferd. Der Schritt von 1 auf 2 bricht, und die ganze Kette fällt." }
+      ],
+      "answer": 4,
+      "explain": "Der Induktionsschritt muss für **jedes** $n \\ge n_0$ gelten. Hier versagt er genau bei $n = 1$, und ohne diesen ersten Dominostein fällt kein weiterer."
+    },
+    { "id": "neu1", "type": "gen", "gen": "beweis-zahlen", "level": 1, "label": "Strategie wählen" },
+    { "id": "neu2", "type": "gen", "gen": "beweis-zahlen", "level": 2, "label": "Beweise bauen" },
+    { "id": "neu3", "type": "gen", "gen": "beweis-mengen", "level": 3, "label": "Mengen und Abbildungen" },
+    { "id": "neu4", "type": "gen", "gen": "beweis-zahlen", "level": 4, "label": "Fehler und Begründungen" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Direkt: von der Voraussetzung zur Behauptung rechnen.",
+        "Kontraposition: $\\neg B \\Rightarrow \\neg A$ statt $A \\Rightarrow B$. Widerspruch: das Gegenteil annehmen und zum Widerspruch führen.",
+        "Fallunterscheidung: Fälle, die zusammen alles abdecken. Induktion: Anfang und Schritt für jedes $n$.",
+        "Eine Allaussage widerlegt ein einziges Gegenbeispiel; beweisen kann man sie so nicht."
+      ]
+    }
+  ]
+}

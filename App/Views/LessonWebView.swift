@@ -31,6 +31,33 @@ final class LessonController {
     func primary() { run("LW.primary(); 0") }
     func giveUp() { run("LW.giveUp(); 0") }
     func setInsets(top: CGFloat, bottom: CGFloat) { run("LW.setInsets({top: \(Int(top)), bottom: \(Int(bottom))}); 0") }
+
+    /// True while the math keys sit on the keyboard; otherwise the runtime shows them as a row at the field.
+    private(set) var nativeKeys = false
+
+    func setNativeKeys(_ on: Bool) {
+        nativeKeys = on
+        run("LW.setTheme({nativeKeys: \(on)}); 0")
+    }
+
+    /// Types into the focused field of the lesson (keys of the keyboard bar).
+    func insert(_ text: String) {
+        guard let data = try? JSONSerialization.data(withJSONObject: [text]), let json = String(data: data, encoding: .utf8) else { return }
+        run("LW.insertText(\(json)[0]); 0")
+    }
+
+    func endEditing() { run("document.activeElement && document.activeElement.blur(); 0") }
+
+    /// Scrolls the current step back into view, for example after the scratch pad took part of the screen.
+    func revealCurrent() { run("LW.revealCurrent && LW.revealCurrent(); 0") }
+
+    /// The current step as plain German text, formulas in words (empty with an older runtime).
+    func speech(_ completion: @escaping (String) -> Void) {
+        guard loaded, let webView else { completion(""); return }
+        webView.evaluateJavaScript("LW.speech ? LW.speech() : ''") { result, _ in
+            completion(result as? String ?? "")
+        }
+    }
 }
 
 /// Serves lw://app/<path> from the synced content, falling back to the copy inside the app.
@@ -124,6 +151,7 @@ struct LessonWebView: UIViewRepresentable {
         web.isInspectable = true
         web.navigationDelegate = context.coordinator
         controller.webView = web
+        context.coordinator.installKeys(on: web)
         if let url = URL(string: "lw://app/runtime/index.html") { web.load(URLRequest(url: url)) }
         return web
     }
@@ -139,14 +167,35 @@ struct LessonWebView: UIViewRepresentable {
     @MainActor
     final class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         let controller: LessonController
-        let startOptions: [String: Any]
+        var startOptions: [String: Any]
         var onMessage: (RuntimeMessage) -> Void
         private var started = false
+        private var keysInstalled = false
 
         init(controller: LessonController, startOptions: [String: Any], onMessage: @escaping (RuntimeMessage) -> Void) {
             self.controller = controller
             self.startOptions = startOptions
             self.onMessage = onMessage
+            super.init()
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        }
+
+        /// Puts minus, plus, slash and friends on the keyboard of the lesson.
+        func installKeys(on web: WKWebView) {
+            guard !keysInstalled else { return }
+            keysInstalled = MathKeyboard.install(on: web, insert: { [weak self] text in
+                self?.controller.insert(text)
+            }, done: { [weak self] in
+                self?.controller.endEditing()
+            })
+        }
+
+        /// The system leaves the bar out in some cases (the floating keyboard on the iPad, for example):
+        /// then the keys appear at the field, and disappear again once the bar is back.
+        @objc private func keyboardDidShow(_ note: Notification) {
+            guard keysInstalled, let web = controller.webView, web.window != nil, MathKeyboard.isEditing(in: web) else { return }
+            let showing = MathKeyboard.isShowing(in: web)
+            if showing != controller.nativeKeys { controller.setNativeKeys(showing) }
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -157,7 +206,12 @@ struct LessonWebView: UIViewRepresentable {
             controller.didLoad()
             guard !started else { return }
             started = true
+            installKeys(on: webView)
+            var theme = startOptions["theme"] as? [String: Any] ?? [:]
+            theme["nativeKeys"] = keysInstalled
+            startOptions["theme"] = theme
             controller.start(startOptions)
+            if keysInstalled { controller.setNativeKeys(true) }
         }
 
         func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction) async -> WKNavigationActionPolicy {

@@ -1,0 +1,103 @@
+{
+  "id": "phy-energie",
+  "title": "Energie und Impuls",
+  "subtitle": "Was bei Fall und Stoß erhalten bleibt",
+  "source": "Kerncurriculum Physik Hessen, Einführungsphase (Erhaltungssätze); Lehrbuchstandard der Mechanik",
+  "vault": [
+    { "path": "02 Wiki/Physik/01 E-Phase/Energieerhaltung.md", "title": "Energieerhaltung" },
+    { "path": "02 Wiki/Physik/01 E-Phase/Impulserhaltung.md", "title": "Impulserhaltung" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein Ball von 2 kg fällt aus 20 m Höhe, ohne Luftwiderstand. Aufgetragen sind seine Energien über der Höhe.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 21], "y": [0, 450], "xLabel": "Höhe h in m", "yLabel": "E in J",
+        "vars": [{ "name": "m", "min": 1, "max": 5, "value": 2, "hidden": true }, { "name": "h", "min": 0, "max": 20, "value": 20, "hidden": true }],
+        "functions": [
+          { "name": "Ep", "expr": "m*9.81*x", "color": "accent", "label": "Lage", "labelAt": 15, "domain": [0, 20] },
+          { "name": "Ek", "expr": "m*9.81*(20-x)", "color": "orange", "label": "Bewegung", "labelAt": 2, "domain": [0, 20] },
+          { "name": "Eg", "expr": "m*9.81*20", "color": "gray", "dashed": true, "label": "gesamt", "labelAt": 8, "domain": [0, 20] }
+        ],
+        "vlines": [{ "x": "h" }],
+        "points": [{ "x": "h", "on": "Ep", "color": "accent" }, { "x": "h", "on": "Ek", "color": "orange" }],
+        "readout": "Höhe {h|1} m: Lageenergie **{m*9.81*h|0} J**, Bewegungsenergie **{m*9.81*(20-h)|0} J**, Geschwindigkeit {sqrt(2*9.81*(20-h))|1} m/s"
+      },
+      "timeline": [
+        { "caption": "Oben steckt die ganze Energie in der Lage: $m g h = 2 \\cdot 9{,}81 \\cdot 20 \\approx 392$ J.", "set": { "h": 20 } },
+        { "caption": "Der Ball fällt. Was an Lageenergie verloren geht, kommt als Bewegungsenergie dazu.", "to": { "h": 10 }, "dur": 1800, "hold": 6000 },
+        { "caption": "In 5 m Höhe: 98 J in der Lage, 294 J in der Bewegung. Die Summe bleibt immer 392 J.", "to": { "h": 5 }, "dur": 1500, "hold": 7000 },
+        { "caption": "Unten ist alles Bewegungsenergie. Aus $m g h = \\tfrac12 m v^2$ folgt $v = \\sqrt{2gh} \\approx 19{,}8$ m/s, und die Masse hat sich herausgekürzt.", "to": { "h": 0 }, "dur": 1500, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Energie verschwindet nicht, sie wechselt nur die Form. Ein gehobener Körper hat **Lageenergie**, ein bewegter **Bewegungsenergie**, eine gespannte Feder **Spannenergie**. Ohne Reibung bleibt die Summe gleich, mit Reibung wird ein Teil zu Wärme.\n\nBei Stößen hilft eine zweite Erhaltungsgröße: der **Impuls** $p = m v$. Er bleibt bei jedem Stoß erhalten, auch wenn die Körper verbeult zusammenkleben. Die Bewegungsenergie bleibt nur beim **elastischen** Stoß erhalten.\n\nDeshalb rechnet man beim Fallen mit Energie und beim Zusammenstoß mit Impuls, und beim elastischen Stoß mit beidem."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Energieformen\n> Lageenergie $E_{pot} = m g h$, Bewegungsenergie $E_{kin} = \\tfrac12 m v^2$, Spannenergie $E_{sp} = \\tfrac12 D s^2$.\n\n> [!satz] Energieerhaltung\n> In einem abgeschlossenen System ohne Reibung ist die Summe aller Energien konstant.\n\n> [!definition] Impuls\n> $\\vec p = m \\vec v$, eine gerichtete Größe.\n\n> [!satz] Impulserhaltung\n> Wirken keine äußeren Kräfte, ist der Gesamtimpuls vor und nach einem Stoß gleich. Vollkommen unelastisch, die Körper kleben zusammen: $m_1 v_1 + m_2 v_2 = (m_1 + m_2)\\,v'$."
+    },
+    {
+      "id": "aufprall", "type": "widget", "label": "Ausprobieren",
+      "md": "Aus welcher Höhe muss ein Ball fallen, damit er mit **10 m/s** aufschlägt? Stelle die Fallhöhe ein.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 10.5], "y": [0, 15], "xLabel": "Fallhöhe in m", "yLabel": "v in m/s",
+        "vars": [{ "name": "H", "label": "Fallhöhe", "min": 1, "max": 10, "step": 0.1, "value": 2, "format": "{v} m", "digits": 1 }],
+        "functions": [{ "name": "v", "expr": "sqrt(2*9.81*x)", "color": "accent", "domain": [0, 10.5] }],
+        "hlines": [{ "y": 10, "color": "gray" }],
+        "points": [{ "x": "H", "on": "v", "color": "orange", "guides": true }],
+        "readout": "Fallhöhe {H|1} m: Aufprall mit **{sqrt(2*9.81*H)|2} m/s**"
+      },
+      "goal": {
+        "when": "abs(sqrt(2*9.81*H) - 10) < 0.15",
+        "hints": [{ "when": "sqrt(2*9.81*H) < 10", "text": "Erst {sqrt(2*9.81*H)|2} m/s, er muss höher starten." }, { "when": "sqrt(2*9.81*H) > 10", "text": "Schon {sqrt(2*9.81*H)|2} m/s, das ist zu hoch." }],
+        "solve": { "H": 5.1 }
+      },
+      "explain": "$h = \\tfrac{v^2}{2g} = \\tfrac{100}{19{,}62}\\,\\mathrm{m} \\approx 5{,}1\\,\\mathrm{m}$. Die Kurve ist eine Wurzel: Für die doppelte Geschwindigkeit braucht man die vierfache Höhe."
+    },
+    {
+      "id": "stoss", "type": "numeric", "label": "Rechnen",
+      "md": "Ein Wagen von $2\\,\\mathrm{kg}$ rollt mit $3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ auf einen ruhenden Wagen von $1\\,\\mathrm{kg}$ und koppelt an. Wie schnell rollen beide weiter (in m/s)?",
+      "answer": 2, "tolerance": 0.01, "placeholder": "m/s",
+      "explain": "Impuls vorher $2 \\cdot 3 = 6\\,\\mathrm{kg\\,\\tfrac{m}{s}}$, nachher $(2 + 1)\\,v'$. Also $v' = 2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Die Bewegungsenergie sinkt dabei von 9 J auf 6 J."
+    },
+    {
+      "id": "herleitung", "type": "proof", "mode": "justify", "label": "Herleitung begründen",
+      "md": "Die Herleitung der Aufprallgeschwindigkeit steht da. Wähle für jede Zeile, worauf sie sich stützt.",
+      "given": "Ein Körper der Masse $m$ fällt reibungsfrei aus der Höhe $h$.",
+      "claim": "Er schlägt mit $v = \\sqrt{2gh}$ auf.",
+      "steps": [
+        { "md": "Oben hat er nur Lageenergie $E = m g h$.", "by": "Definition der Lageenergie" },
+        { "md": "Unten hat er nur Bewegungsenergie $E = \\tfrac12 m v^2$.", "by": "Definition der Bewegungsenergie" },
+        { "md": "$m g h = \\tfrac12 m v^2$.", "by": "Energieerhaltung", "why": "Ohne Reibung geht keine Energie verloren: oben gleich unten." },
+        { "md": "$v^2 = 2 g h$.", "by": "Masse kürzen", "why": "Durch $m$ teilen und mit 2 malnehmen." },
+        { "md": "$v = \\sqrt{2gh}$.", "by": "Wurzel ziehen" }
+      ],
+      "reasons": ["Impulserhaltung", "Newtons zweites Gesetz"],
+      "explain": "Energieerhaltung trägt die ganze Herleitung; die Masse fällt heraus. Deshalb fallen ohne Luftwiderstand alle Körper gleich schnell."
+    },
+    {
+      "id": "elastisch", "type": "truefalse",
+      "md": "Stoßen zwei gleich schwere Billardkugeln elastisch und zentral, bleibt die stoßende Kugel liegen und die getroffene rollt mit deren Geschwindigkeit weiter.",
+      "answer": true,
+      "whyNot": "Impuls- und Energieerhaltung zusammen erlauben bei gleichen Massen nur den Tausch der Geschwindigkeiten.",
+      "explain": "Beim elastischen Stoß gleicher Massen tauschen die Kugeln ihre Geschwindigkeiten. Das zeigt auch das Kugelstoßpendel."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phy-energie", "level": 1, "label": "Energieformen" },
+    { "id": "neu2", "type": "gen", "gen": "phy-energie", "level": 2, "label": "Energieerhaltung" },
+    { "id": "neu3", "type": "gen", "gen": "phy-energie", "level": 3, "label": "Stöße" },
+    { "id": "neu4", "type": "gen", "gen": "phy-energie", "level": 4, "label": "Feder und Achterbahn" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "$E_{pot} = m g h$, $E_{kin} = \\tfrac12 m v^2$, $E_{sp} = \\tfrac12 D s^2$; ohne Reibung bleibt ihre Summe gleich.",
+        "Aus $m g h = \\tfrac12 m v^2$ folgt $v = \\sqrt{2gh}$, unabhängig von der Masse.",
+        "Der Impuls $p = m v$ bleibt bei jedem Stoß erhalten, die Bewegungsenergie nur beim elastischen.",
+        "Unelastisch: $v' = \\tfrac{m_1 v_1 + m_2 v_2}{m_1 + m_2}$. Elastisch mit gleichen Massen: Die Geschwindigkeiten werden getauscht."
+      ]
+    }
+  ]
+}

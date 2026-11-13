@@ -1,0 +1,103 @@
+{
+  "id": "che-ph",
+  "title": "Säuren, Basen und der pH-Wert",
+  "subtitle": "Protonen wandern, und eine logarithmische Skala zählt mit",
+  "source": "Kerncurriculum Chemie Hessen (Säure-Base-Konzept nach Brønsted); Lehrbuchstandard der Protolyse",
+  "vault": [
+    { "path": "02 Wiki/Chemie/02 E-Phase/Säure-Base-Konzept nach Brønsted.md", "title": "Säure-Base-Konzept nach Brønsted" },
+    { "path": "02 Wiki/Chemie/02 E-Phase/pH-Wert.md", "title": "pH-Wert" },
+    { "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Titration.md", "title": "Titration" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Titration: Zu $10\\,\\mathrm{mL}$ Salzsäure ($c = 0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$) tropft Natronlauge derselben Konzentration. Aufgetragen ist der pH-Wert über dem Laugenvolumen.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 20], "y": [0, 14], "xLabel": "Lauge in mL", "yLabel": "pH",
+        "vars": [{ "name": "V", "min": 0, "max": 20, "value": 0, "hidden": true }],
+        "functions": [{ "name": "p", "expr": "x < 10 ? -log((1 - 0.1*x)/(10 + x)) : (x > 10 ? 14 + log((0.1*x - 1)/(10 + x)) : 7)", "color": "accent", "samples": 400 }],
+        "hlines": [{ "y": 7, "color": "gray" }],
+        "points": [{ "x": "V", "on": "p", "color": "orange", "guides": true }],
+        "readout": "Zugegeben {V|1} mL Lauge: pH **{V < 10 ? -log((1 - 0.1*V)/(10 + V)) : (V > 10 ? 14 + log((0.1*V - 1)/(10 + V)) : 7)|2}**"
+      },
+      "timeline": [
+        { "caption": "Am Anfang: reine Salzsäure mit $c(\\mathrm{H_3O^+}) = 0{,}1$, also pH 1.", "set": { "V": 0 } },
+        { "caption": "Jedes Hydroxid-Ion der Lauge nimmt einem Oxonium-Ion sein Proton ab: $\\mathrm{H_3O^+ + OH^- \\to 2\\,H_2O}$. Der pH steigt aber nur langsam.", "to": { "V": 5 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Bei 9 mL ist erst eine Zehnerpotenz geschafft. Die Skala ist logarithmisch: Jede Stufe heißt zehnmal weniger Säure.", "to": { "V": 9 }, "dur": 1800, "hold": 8000 },
+        { "caption": "Bei 10 mL ist alle Säure neutralisiert: der Äquivalenzpunkt, pH 7. Hier springt die Kurve, schon ein Tropfen mehr ändert den pH um mehrere Stufen.", "to": { "V": 10 }, "dur": 1500, "hold": 9000 },
+        { "caption": "Danach bestimmt die überschüssige Lauge den pH, und die Kurve flacht wieder ab.", "to": { "V": 20 }, "dur": 2200, "hold": 7000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Nach Brønsted ist eine **Säure** ein Teilchen, das ein Proton $\\mathrm{H^+}$ abgibt, und eine **Base** eines, das eines aufnimmt. Gibt man Chlorwasserstoff in Wasser, wandert das Proton zum Wasser: $\\mathrm{HCl + H_2O \\to Cl^- + H_3O^+}$. Die Oxonium-Ionen $\\mathrm{H_3O^+}$ machen die Lösung sauer.\n\nWie sauer, sagt der **pH-Wert**: der negative Zehnerlogarithmus der Oxonium-Konzentration. Weil Konzentrationen über viele Zehnerpotenzen reichen, ist die Skala logarithmisch. pH 3 ist zehnmal saurer als pH 4 und hundertmal saurer als pH 5.\n\nWasser selbst ist ein **Ampholyt**: Es kann ein Proton abgeben oder aufnehmen. Ein winziger Teil reagiert immer mit sich selbst. Daraus folgt, dass $\\mathrm{pH} + \\mathrm{pOH} = 14$ ist, bei 25 °C."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] pH und pOH\n> $\\mathrm{pH} = -\\lg c(\\mathrm{H_3O^+})$, $\\mathrm{pOH} = -\\lg c(\\mathrm{OH^-})$, mit $c$ in $\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$. Bei 25 °C: $\\mathrm{pH} + \\mathrm{pOH} = 14$.\n\n> [!satz] Starke Säuren\n> Sie protolysieren vollständig: $c(\\mathrm{H_3O^+}) = c_0$. Verdünnen auf das Zehnfache hebt den pH um 1.\n\n> [!satz] Schwache Säuren und Puffer\n> Näherung: $\\mathrm{pH} \\approx \\tfrac12(\\mathrm{p}K_S - \\lg c_0)$. Puffer: $\\mathrm{pH} = \\mathrm{p}K_S + \\lg\\dfrac{c(\\mathrm{A^-})}{c(\\mathrm{HA})}$.\n\n> [!definition] Äquivalenzpunkt\n> Zugegebene Base und vorgelegte Säure sind stoffmengengleich: $c_S V_S = c_B V_B$."
+    },
+    {
+      "id": "titration", "type": "widget", "label": "Ausprobieren",
+      "md": "Jetzt $25\\,\\mathrm{mL}$ Salzsäure mit $c = 0{,}08\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$, titriert mit Natronlauge ($0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$). Stelle das Laugenvolumen am **Äquivalenzpunkt** ein.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 30], "y": [0, 14], "xLabel": "Lauge in mL", "yLabel": "pH",
+        "vars": [{ "name": "V", "label": "Lauge", "min": 0, "max": 30, "step": 0.5, "value": 5, "format": "{v} mL", "digits": 1 }],
+        "functions": [{ "name": "p", "expr": "x < 20 ? -log((2 - 0.1*x)/(25 + x)) : (x > 20 ? 14 + log((0.1*x - 2)/(25 + x)) : 7)", "color": "accent", "samples": 400 }],
+        "hlines": [{ "y": 7, "color": "gray" }],
+        "points": [{ "x": "V", "on": "p", "color": "orange", "guides": true }],
+        "readout": "{V|1} mL Lauge: pH **{V < 20 ? -log((2 - 0.1*V)/(25 + V)) : (V > 20 ? 14 + log((0.1*V - 2)/(25 + V)) : 7)|2}**"
+      },
+      "goal": {
+        "when": "abs(V - 20) < 0.01",
+        "hints": [{ "when": "V < 20", "text": "pH {-log((2 - 0.1*V)/(25 + V))|2}: Es ist noch Säure übrig." }, { "when": "V > 20", "text": "pH {14 + log((0.1*V - 2)/(25 + V))|2}: Hier ist schon Lauge im Überschuss." }],
+        "solve": { "V": 20 }
+      },
+      "explain": "Vorgelegt sind $n = 0{,}025\\,\\mathrm{L} \\cdot 0{,}08\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}} = 2\\,\\mathrm{mmol}$ Säure. Dafür braucht man $\\tfrac{2\\,\\mathrm{mmol}}{0{,}1\\,\\mathrm{mol/L}} = 20\\,\\mathrm{mL}$ Lauge."
+    },
+    {
+      "id": "verduennen", "type": "numeric", "label": "Rechnen",
+      "md": "Salzsäure mit pH 2 wird auf das hundertfache Volumen verdünnt. Welchen pH-Wert hat sie danach?",
+      "answer": 4, "tolerance": 0.01, "placeholder": "pH",
+      "explain": "$c(\\mathrm{H_3O^+})$ sinkt von $10^{-2}$ auf $10^{-4}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$, der pH steigt um $\\lg 100 = 2$ auf 4."
+    },
+    {
+      "id": "ampholyt", "type": "choice", "label": "Brønsted",
+      "md": "In der Reaktion $\\mathrm{NH_3 + H_2O \\rightleftharpoons NH_4^+ + OH^-}$: Welche Rolle spielt das Wasser?",
+      "options": [
+        { "md": "Säure: Es gibt ein Proton an das Ammoniak ab.", "correct": true, "why": "Aus $\\mathrm{H_2O}$ wird $\\mathrm{OH^-}$; es hat ein Proton verloren." },
+        { "md": "Base: Es nimmt ein Proton auf.", "why": "Das tut hier das Ammoniak; aus $\\mathrm{NH_3}$ wird $\\mathrm{NH_4^+}$." },
+        { "md": "Es ist nur Lösungsmittel und reagiert nicht.", "why": "Es reagiert mit: Ohne das Proton des Wassers entstünde kein $\\mathrm{OH^-}$." }
+      ],
+      "explain": "Gegenüber Ammoniak ist Wasser eine Säure, gegenüber Chlorwasserstoff eine Base. Ein solcher Ampholyt kann beides."
+    },
+    {
+      "id": "herleitung", "type": "proof", "mode": "justify", "label": "Herleitung begründen",
+      "md": "Woher kommt $\\mathrm{pH} + \\mathrm{pOH} = 14$? Wähle für jede Zeile die Begründung.",
+      "given": "Bei 25 °C gilt $c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-}) = 10^{-14}\\,\\tfrac{\\mathrm{mol}^2}{\\mathrm{L}^2}$.",
+      "claim": "$\\mathrm{pH} + \\mathrm{pOH} = 14$.",
+      "steps": [
+        { "md": "$c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-}) = 10^{-14}$.", "by": "Ionenprodukt des Wassers" },
+        { "md": "$-\\lg\\left(c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-})\\right) = 14$.", "by": "Logarithmieren" },
+        { "md": "$-\\lg c(\\mathrm{H_3O^+}) - \\lg c(\\mathrm{OH^-}) = 14$.", "by": "Logarithmengesetz", "why": "$\\lg(a \\cdot b) = \\lg a + \\lg b$." },
+        { "md": "$\\mathrm{pH} + \\mathrm{pOH} = 14$.", "by": "Definition von pH und pOH" }
+      ],
+      "reasons": ["Massenwirkungsgesetz", "Le Chatelier"],
+      "explain": "Das Ionenprodukt ist ein Produkt; der Logarithmus macht daraus eine Summe. Deshalb ergänzen sich pH und pOH immer zu 14."
+    },
+    { "id": "neu1", "type": "gen", "gen": "che-ph", "level": 1, "label": "Zehnerpotenzen" },
+    { "id": "neu2", "type": "gen", "gen": "che-ph", "level": 2, "label": "Säuren und Laugen" },
+    { "id": "neu3", "type": "gen", "gen": "che-ph", "level": 3, "label": "Verdünnen und Titrieren" },
+    { "id": "neu4", "type": "gen", "gen": "che-ph", "level": 4, "label": "Schwache Säuren und Puffer" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Brønsted: Säuren geben Protonen ab, Basen nehmen sie auf; Wasser kann beides.",
+        "$\\mathrm{pH} = -\\lg c(\\mathrm{H_3O^+})$; eine Stufe heißt Faktor zehn.",
+        "Bei 25 °C ist $\\mathrm{pH} + \\mathrm{pOH} = 14$.",
+        "Am Äquivalenzpunkt ist $c_S V_S = c_B V_B$; bei starker Säure und starker Lauge springt der pH dort um 7."
+      ]
+    }
+  ]
+}

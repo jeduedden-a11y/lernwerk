@@ -1,0 +1,96 @@
+{
+  "id": "phi-argumente",
+  "title": "Gültige Argumente und Fehlschlüsse",
+  "subtitle": "Wann aus Prämissen wirklich etwas folgt",
+  "source": "Lehrbuchstandard der Aussagenlogik und Argumentationstheorie; Peter Singer, Famine, Affluence, and Morality (1972)",
+  "vault": [
+    { "path": "02 Wiki/Philosophie/Teilgebiete/Logik.md", "title": "Logik" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Vier Schlüsse aus demselben Wenn-dann-Satz: »Wenn es regnet, ist die Straße nass.« Zwei sind gültig, zwei sind Fehlschlüsse.",
+      "widget": "spectrum",
+      "params": {
+        "left": "gültig", "right": "Fehlschluss", "select": false,
+        "items": [
+          { "name": "Modus ponens", "tag": "gültig", "text": "Es regnet. **Also ist die Straße nass.** Wenn die Wenn-dann-Aussage stimmt und ihr Vorderglied auch, kann das Hinterglied nicht falsch sein." },
+          { "name": "Modus tollens", "tag": "gültig", "text": "Die Straße ist nicht nass. **Also regnet es nicht.** Würde es regnen, wäre die Straße nass, und das ist sie nicht." },
+          { "name": "Bejahung des Hinterglieds", "tag": "Fehlschluss", "text": "Die Straße ist nass. Also regnet es? **Nicht zwingend.** Ein gebrochenes Wasserrohr macht sie auch nass." },
+          { "name": "Verneinung des Vorderglieds", "tag": "Fehlschluss", "text": "Es regnet nicht. Also ist die Straße nicht nass? **Nicht zwingend.** Dasselbe Wasserrohr widerlegt den Schluss." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Modus ponens: Wenn-dann-Satz und Vorderglied, daraus folgt das Hinterglied. Der Grundschluss jedes Arguments.", "set": { "k": 0 } },
+        { "caption": "Modus tollens geht rückwärts: Ist das Hinterglied falsch, kann das Vorderglied nicht wahr sein. Auch gültig.", "to": { "k": 1 }, "dur": 900, "hold": 8000 },
+        { "caption": "Jetzt die beliebte Falle: vom Hinterglied auf das Vorderglied schließen. Nasse Straße heißt nicht Regen.", "to": { "k": 2 }, "dur": 900, "hold": 8000 },
+        { "caption": "Und die zweite Falle: Fehlt das Vorderglied, kann das Hinterglied trotzdem gelten. Ein einziges Gegenbeispiel genügt, um einen Schluss als ungültig zu zeigen.", "to": { "k": 3 }, "dur": 900, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Ein **Argument** besteht aus Prämissen und einer Konklusion. Die Prämissen sollen die Konklusion begründen. In der Ethik ist das besonders wichtig, denn Meinungen gibt es viele; überzeugen kann nur, wer zeigt, warum etwas folgt.\n\nZwei Fragen trennt man dabei sauber. **Gültig** ist ein Argument, wenn die Konklusion zwingend folgt, sobald die Prämissen wahr sind; das ist eine Frage der Form. **Schlüssig** ist es, wenn es gültig ist und die Prämissen tatsächlich wahr sind. Wer ein Argument angreifen will, zeigt also entweder einen Formfehler oder bestreitet eine Prämisse.\n\nNeben formalen Fehlschlüssen gibt es inhaltliche: die Person statt der Sache angreifen, eine Position verzerren, nur zwei Möglichkeiten zulassen, das Ergebnis schon voraussetzen."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Gültig und schlüssig\n> **Gültig**: Es ist unmöglich, dass alle Prämissen wahr sind und die Konklusion falsch ist. **Schlüssig**: gültig und alle Prämissen wahr.\n\n> [!satz] Gültige Schlussformen\n> Modus ponens: $A \\Rightarrow B$, $A$, also $B$. Modus tollens: $A \\Rightarrow B$, $\\neg B$, also $\\neg A$. Kettenschluss: $A \\Rightarrow B$, $B \\Rightarrow C$, also $A \\Rightarrow C$. Disjunktiver Syllogismus: $A \\vee B$, $\\neg A$, also $B$.\n\n> [!warning] Formale Fehlschlüsse\n> Bejahung des Hinterglieds: $A \\Rightarrow B$, $B$, also $A$. Verneinung des Vorderglieds: $A \\Rightarrow B$, $\\neg A$, also $\\neg B$.\n\n> [!tip] Inhaltliche Fehlschlüsse\n> Ad hominem, Strohmann, falsches Dilemma, Zirkelschluss, unbelegtes Dammbruchargument, naturalistischer Fehlschluss (vom Sein auf das Sollen)."
+    },
+    {
+      "id": "tafel", "type": "widget", "label": "Wahrheitstafel",
+      "md": "Prüfe die Bejahung des Hinterglieds mit einer Wahrheitstafel. Ein gültiger Schluss müsste in **jeder** Zeile »w« ergeben. Tippe auf die Felder der letzten Spalte.",
+      "widget": "truth-table",
+      "params": { "vars": ["A", "B"], "columns": [
+        { "label": "A \\Rightarrow B", "expr": "A => B" },
+        { "label": "((A \\Rightarrow B) \\wedge B) \\Rightarrow A", "expr": "((A => B) & B) => A", "ask": true }
+      ] },
+      "goal": {},
+      "explain": "In der Zeile $A$ falsch, $B$ wahr sind beide Prämissen wahr, die Konklusion $A$ aber falsch. Diese eine Zeile macht den Schluss ungültig: Es regnet nicht, und die Straße ist trotzdem nass."
+    },
+    {
+      "id": "singer", "type": "proof", "mode": "justify", "label": "Argument begründen",
+      "md": "Peter Singers Argument für die Hungerhilfe. Wähle für jede Zeile, ob sie eine Prämisse ist oder mit welcher Schlussform sie folgt.",
+      "claim": "Wir sollten für die Hungerhilfe spenden.",
+      "steps": [
+        { "md": "Wenn wir etwas sehr Schlechtes verhindern können, ohne etwas moralisch Vergleichbares zu opfern, dann sollten wir es tun.", "by": "Prämisse" },
+        { "md": "Der Tod durch Hunger ist sehr schlecht.", "by": "Prämisse" },
+        { "md": "Mit Spenden können wir Hungertote verhindern, ohne etwas moralisch Vergleichbares zu opfern.", "by": "Prämisse" },
+        { "md": "Also sollten wir spenden.", "by": "Modus ponens", "why": "Die Bedingung des Wenn-Teils ist durch die Zeilen 2 und 3 erfüllt, also folgt der Dann-Teil." }
+      ],
+      "reasons": ["Modus tollens", "Kettenschluss"],
+      "explain": "Das Argument ist gültig. Wer die Konklusion ablehnt, muss eine Prämisse bestreiten, meist die erste oder die dritte. Genau darüber wird seit 1972 gestritten."
+    },
+    {
+      "id": "fehlschluesse", "type": "sort", "label": "Einordnen",
+      "md": "Welcher inhaltliche Fehlschluss steckt darin?",
+      "categories": ["Ad hominem", "Strohmann", "Falsches Dilemma", "Zirkelschluss"],
+      "items": [
+        { "md": "Kants Ethik kann nicht stimmen, er hat Königsberg ja nie verlassen.", "cat": "Ad hominem" },
+        { "md": "Utilitaristen wollen also Menschen opfern, sobald es irgendwem nützt.", "cat": "Strohmann" },
+        { "md": "Entweder wir verbieten alle Autos, oder wir geben den Klimaschutz auf.", "cat": "Falsches Dilemma" },
+        { "md": "Glück ist das höchste Gut, weil das höchste Gut eben Glück ist.", "cat": "Zirkelschluss" }
+      ],
+      "explain": "Angriff auf die Person statt auf das Argument, verzerrte Gegenposition, ausgeblendete Alternativen, vorausgesetztes Ergebnis."
+    },
+    {
+      "id": "schluessig", "type": "truefalse",
+      "md": "»Alle Fische können fliegen. Ein Hai ist ein Fisch. Also kann ein Hai fliegen.« Dieses Argument ist gültig.",
+      "answer": true,
+      "whyNot": "Gültigkeit betrifft nur die Form: Wären die Prämissen wahr, müsste die Konklusion wahr sein.",
+      "explain": "Gültig, aber nicht schlüssig: Die erste Prämisse ist falsch. Deshalb ist auch die Konklusion falsch, ohne dass die Form fehlerhaft wäre."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phi-argumente", "level": 1, "label": "Gültig oder nicht" },
+    { "id": "neu2", "type": "gen", "gen": "phi-argumente", "level": 2, "label": "Schlussformen" },
+    { "id": "neu3", "type": "gen", "gen": "phi-argumente", "level": 3, "label": "Gegenbeispiele und Fehlschlüsse" },
+    { "id": "neu4", "type": "gen", "gen": "phi-argumente", "level": 4, "label": "Argumente prüfen" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Gültig ist eine Frage der Form, schlüssig verlangt zusätzlich wahre Prämissen.",
+        "Modus ponens, Modus tollens, Kettenschluss und disjunktiver Syllogismus sind gültig.",
+        "Bejahung des Hinterglieds und Verneinung des Vorderglieds sind Fehlschlüsse; ein Gegenbeispiel zeigt es.",
+        "Wer ein gültiges Argument ablehnt, muss eine Prämisse bestreiten."
+      ]
+    }
+  ]
+}

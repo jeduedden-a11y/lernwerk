@@ -67,7 +67,12 @@ jobs:
             -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             build 2>&1 | tee build.log | grep -E "error:|warning: .*(deprecated|unavailable)|\*\* BUILD" || true
-          grep -q "\*\* BUILD SUCCEEDED \*\*" build.log || { grep -E "error:" -A3 build.log | head -150; exit 1; }
+          if ! grep -q "\*\* BUILD SUCCEEDED \*\*" build.log; then
+            grep -E "error:" -A3 build.log | head -150
+            # the same lines as annotations, readable on the run page without opening the log
+            grep -E "error:" build.log | sort -u | head -25 | while IFS= read -r l; do l=${l//'%'/'%25'}; echo "::error::${l:0:400}"; done
+            exit 1
+          fi
           mkdir -p Payload
           cp -R build/Build/Products/Release-iphoneos/Lernwerk.app Payload/
           zip -qry Lernwerk.ipa Payload

@@ -4,6 +4,7 @@ import LernwerkCore
 struct CourseView: View {
     @Environment(AppModel.self) private var model
     @State private var practiceTarget: PracticeTarget?
+    @State private var examTarget: ExamTarget?
     var course: Course
 
     var body: some View {
@@ -11,7 +12,9 @@ struct CourseView: View {
             VStack(alignment: .leading, spacing: 18) {
                 header
                 ForEach(Array(course.chapters.enumerated()), id: \.element.id) { offset, chapter in
-                    ChapterSection(course: course, chapter: chapter, number: offset + 1, target: $practiceTarget)
+                    ChapterSection(course: course, chapter: chapter, number: offset + 1, target: $practiceTarget) { chapter in
+                        examTarget = ExamTarget(course: course, chapter: chapter)
+                    }
                 }
             }
             .padding(.horizontal)
@@ -22,6 +25,7 @@ struct CourseView: View {
         .navigationTitle(course.title)
         .navigationBarTitleDisplayMode(.inline)
         .practiceLauncher($practiceTarget)
+        .examLauncher($examTarget)
         .toolbar {
             if !model.dueCards.filter({ $0.courseId == course.id }).isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -48,6 +52,16 @@ struct CourseView: View {
                 Text(d).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
             ProgressLine(value: model.progress(of: course), tint: course.tint)
+            // an exam over the whole course once two topics or more are open
+            if model.examTopics(course).count >= 2 {
+                Divider().padding(.top, 2)
+                Button {
+                    examTarget = ExamTarget(course: course, chapter: nil)
+                } label: {
+                    ExamEntryRow(course: course, chapter: nil)
+                }
+                .buttonStyle(.plain)
+            }
         }
         .card()
     }
@@ -59,6 +73,7 @@ struct ChapterSection: View {
     var chapter: Chapter
     var number: Int = 0
     @Binding var target: PracticeTarget?
+    var onExam: ((Chapter) -> Void)? = nil
 
     var body: some View {
         let topics = course.practiceTopics(in: chapter)
@@ -89,6 +104,15 @@ struct ChapterSection: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(!model.isUnlocked(topic))
+                    }
+                    if let onExam, topics.contains(where: { model.isUnlocked($0) }) {
+                        Button {
+                            onExam(chapter)
+                        } label: {
+                            ExamEntryRow(course: course, chapter: chapter)
+                                .padding(.horizontal, 8)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }

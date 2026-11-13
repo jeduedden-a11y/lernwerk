@@ -1,0 +1,101 @@
+{
+  "id": "py-werte",
+  "title": "Werte, Variablen und Kontrollfluss",
+  "subtitle": "Was Python Zeile für Zeile tut",
+  "source": "Python-Dokumentation (Built-in Types, Control Flow); Gliederung nach dem Python-Teil von CS50 AI",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Values and Control Flow.md", "title": "Python Values and Control Flow" },
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Syntax Reference.md", "title": "Python Syntax Reference" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein kurzes Programm läuft Zeile für Zeile. Die markierte Zeile wird gerade ausgeführt, rechts stehen die Variablen und die Ausgabe.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "x = 7\ny = 2\nq = x // y\nr = x % y\nprint(q, r)\nif r == 1:\n    print(\"ungerade\")\nelse:\n    print(\"gerade\")",
+        "trace": [
+          { "line": 1, "vars": { "x": "7" }, "note": "Eine Zuweisung legt den Namen `x` an und bindet ihn an den Wert 7." },
+          { "line": 2, "vars": { "x": "7", "y": "2" } },
+          { "line": 3, "vars": { "x": "7", "y": "2", "q": "3" }, "note": "`//` teilt ganzzahlig: 7 // 2 ist 3, der Rest fällt weg." },
+          { "line": 4, "vars": { "x": "7", "y": "2", "q": "3", "r": "1" }, "note": "`%` liefert den Rest: 7 = 3 · 2 + 1." },
+          { "line": 5, "vars": { "x": "7", "y": "2", "q": "3", "r": "1" }, "out": "3 1", "note": "`print` schreibt mehrere Werte mit Leerzeichen getrennt." },
+          { "line": 6, "vars": { "x": "7", "y": "2", "q": "3", "r": "1" }, "note": "Die Bedingung `r == 1` ist wahr, also geht es in den eingerückten Block." },
+          { "line": 7, "vars": { "x": "7", "y": "2", "q": "3", "r": "1" }, "out": "ungerade", "note": "Der `else`-Zweig wird übersprungen. Fertig." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Python liest das Programm von oben nach unten. Zuerst bekommt `x` den Wert 7.", "set": { "k": 0 } },
+        { "caption": "Dann `y`. Variablen sind Namen für Werte, die man später wieder benutzt.", "set": { "k": 1 } },
+        { "caption": "Ganzzahlige Division: 7 // 2 ist 3.", "set": { "k": 2 } },
+        { "caption": "Der Rest: 7 % 2 ist 1. Mit `% 2` erkennt man gerade und ungerade Zahlen.", "set": { "k": 3 } },
+        { "caption": "Die Ausgabe erscheint im Konsolenfenster: 3 1.", "set": { "k": 4 } },
+        { "caption": "Ein `if` prüft eine Bedingung. Was zum `if` gehört, ist eingerückt; die Einrückung ist in Python Teil der Sprache.", "set": { "k": 5 } },
+        { "caption": "Die Bedingung war wahr, also wird »ungerade« ausgegeben und der `else`-Zweig übersprungen.", "set": { "k": 6 } }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Ein Python-Programm ist eine Folge von Anweisungen, die von oben nach unten ausgeführt werden. Eine **Zuweisung** `x = 7` bindet einen Namen an einen Wert. Werte haben Typen: ganze Zahlen (`int`), Kommazahlen (`float`), Texte (`str`) und Wahrheitswerte (`True`, `False`).\n\nRechnen geht wie gewohnt, mit zwei Besonderheiten: `/` liefert immer eine Kommazahl, `//` teilt ganzzahlig und rundet nach unten, `%` gibt den Rest. In CS50 AI braucht man das ständig, etwa um Felder eines Spielbretts aus einer Nummer zu berechnen.\n\nDen Ablauf steuern `if`, `elif` und `else` sowie die Schleifen `for` und `while`. Was zu einem Block gehört, steht eingerückt darunter. `range(a, b)` zählt von `a` bis **vor** `b`."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Operatoren\n> `+ - *` wie gewohnt, `/` Division mit Kommazahl, `//` ganzzahlige Division (abrunden), `%` Rest, `**` Potenz. Vergleiche: `== != < <= > >=`, verknüpft mit `and`, `or`, `not`.\n\n> [!definition] Kontrollfluss\n> `if` / `elif` / `else`: Höchstens ein Zweig wird ausgeführt, der erste mit wahrer Bedingung. `for x in range(a, b, s)`: von `a` bis vor `b` in Schritten `s`. `while bedingung`: wiederholen, solange die Bedingung gilt.\n\n> [!tip] Strings\n> `len(w)` zählt Zeichen, `w[0]` ist das erste, `w[-1]` das letzte, `w[1:4]` die Zeichen 1 bis 3, `w[::-1]` rückwärts. Strings sind unveränderlich."
+    },
+    {
+      "id": "rest", "type": "numeric", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\nn = 47\nprint(n // 5 + n % 5)\n```",
+      "answer": 11, "tolerance": 0, "placeholder": "Ausgabe",
+      "explain": "47 // 5 ist 9, der Rest 47 % 5 ist 2. Zusammen 11."
+    },
+    {
+      "id": "zweige", "type": "choice", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\npunkte = 72\nif punkte >= 90:\n    print(\"sehr gut\")\nelif punkte >= 70:\n    print(\"gut\")\nelif punkte >= 50:\n    print(\"bestanden\")\nelse:\n    print(\"nicht bestanden\")\n```",
+      "options": [
+        { "md": "`gut`", "correct": true, "why": "72 ist nicht ≥ 90, aber ≥ 70: Der zweite Zweig ist der erste wahre." },
+        { "md": "`gut` und `bestanden`", "why": "Nach dem ersten wahren Zweig prüft Python kein weiteres `elif`." },
+        { "md": "`bestanden`", "why": "72 ≥ 50 stimmt zwar, aber der Zweig davor war schon wahr." },
+        { "md": "`sehr gut`", "why": "72 ist kleiner als 90." }
+      ],
+      "explain": "In einer if-elif-else-Kette wird nur der erste Zweig mit wahrer Bedingung ausgeführt."
+    },
+    {
+      "id": "parsons", "type": "proof", "label": "Programm bauen",
+      "md": "Baue ein Programm, das die Summe der geraden Zahlen von 0 bis 10 ausgibt. Achte auf die Einrückung.",
+      "steps": [
+        "`summe = 0`",
+        "`for i in range(0, 11):`",
+        "`    if i % 2 == 0:`",
+        "`        summe += i`",
+        "`print(summe)`"
+      ],
+      "distractors": [
+        { "md": "`for i in range(0, 10):`", "why": "`range(0, 10)` endet bei 9; die 10 fehlte." },
+        { "md": "`    if i % 2 == 1:`", "why": "`i % 2 == 1` trifft die ungeraden Zahlen." }
+      ],
+      "explain": "0 + 2 + 4 + 6 + 8 + 10 = 30. Die obere Grenze von `range` ist ausgeschlossen, deshalb 11."
+    },
+    {
+      "id": "slice", "type": "truefalse",
+      "md": "Für `w = \"Agenten\"` gibt `print(w[1:4])` die Zeichen `gen` aus.",
+      "answer": true,
+      "whyNot": "Index 1 ist das »g«; das Ende 4 ist ausgeschlossen, also die Indizes 1, 2 und 3.",
+      "explain": "Gezählt wird ab 0: A=0, g=1, e=2, n=3. `w[1:4]` liefert »gen«."
+    },
+    { "id": "neu1", "type": "gen", "gen": "py-werte", "level": 1, "label": "Operatoren und Strings" },
+    { "id": "neu2", "type": "gen", "gen": "py-werte", "level": 2, "label": "Zuweisungen und Zweige" },
+    { "id": "neu3", "type": "gen", "gen": "py-werte", "level": 3, "label": "Schleifen" },
+    { "id": "neu4", "type": "gen", "gen": "py-werte", "level": 4, "label": "Negative Zahlen und Slices" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Anweisungen laufen von oben nach unten; die Einrückung bestimmt, was zu einem Block gehört.",
+        "`/` gibt eine Kommazahl, `//` teilt ganzzahlig und rundet ab, `%` gibt den Rest.",
+        "In einer if-elif-else-Kette wird nur der erste wahre Zweig ausgeführt.",
+        "`range(a, b)` zählt bis vor `b`; Slices `w[i:j]` enden ebenfalls vor `j`."
+      ]
+    }
+  ]
+}

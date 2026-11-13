@@ -20,9 +20,20 @@ struct ReviewItem: Codable, Equatable, Hashable {
     var stepId: String
 }
 
-/// One run of the lesson player: a single lesson, a mixed review or a training round.
+/// One generator with the level and topic it is used for in an exam or the daily mix.
+struct GenPick: Equatable, Hashable {
+    var gen: String
+    var level: Int
+    var topicId: String
+    var topicTitle: String
+    var courseId: String
+
+    var json: [String: Any] { ["gen": gen, "level": level, "topicId": topicId, "topicTitle": topicTitle, "courseId": courseId] }
+}
+
+/// One run of the lesson player: a single lesson, a mixed review, a training round, an exam or the daily mix.
 struct LessonSession: Identifiable, Equatable {
-    enum Mode: Equatable { case lesson, review, practice }
+    enum Mode: Equatable { case lesson, review, practice, exam, mix }
     let id = UUID()
     var mode: Mode
     var course: Course?
@@ -34,6 +45,11 @@ struct LessonSession: Identifiable, Equatable {
     var accentHex: String
     var topic: PracticeTopic? = nil
     var level: Int = 1
+    /// Exam and daily mix: generated tasks with their topics.
+    var picks: [GenPick] = []
+    var chapterId: String? = nil
+    var taskCount: Int = 0
+    var minutes: Int = 0
     /// Seeds the generated tasks: every run of a lesson or training round brings new numbers.
     var seed: Int = Int.random(in: 1...999_983)
 }
@@ -290,6 +306,99 @@ final class AppModel {
     func startPractice(_ course: Course, _ topic: PracticeTopic, level: Int) {
         presentedLesson = LessonSession(mode: .practice, course: course, title: topic.title, accentHex: course.color,
                                         topic: topic, level: max(1, min(4, level)))
+    }
+
+    // MARK: exams and the daily mix
+
+    /// The level a topic is asked on in exams: Mittel at first, one above the highest mastered level later.
+    func examLevel(_ course: Course, _ topic: PracticeTopic) -> Int {
+        let mastered = practiceStat(course, topic).highestMastered
+        return max(2, min(4, mastered + 1))
+    }
+
+    /// Unlocked training topics of a chapter, or of the whole course.
+    func examTopics(_ course: Course, chapter: Chapter? = nil) -> [PracticeTopic] {
+        let topics = chapter.map { course.practiceTopics(in: $0) } ?? course.practiceTopics
+        return topics.filter(isUnlocked)
+    }
+
+    /// What an exam covers: the unlocked topics, two tasks per topic (6 to 12), 90 seconds per task.
+    func examPlan(_ course: Course, chapter: Chapter? = nil) -> (topics: [PracticeTopic], count: Int, minutes: Int) {
+        let topics = examTopics(course, chapter: chapter)
+        let count = min(12, max(6, 2 * topics.count))
+        return (topics, count, Int((Double(count) * 1.5).rounded(.up)))
+    }
+
+    /// Earlier exams over the same chapter (or the whole course), newest first.
+    func examHistory(_ course: Course, chapter: Chapter? = nil) -> [ExamRecord] {
+        state.exams.filter { $0.courseId == course.id && $0.chapterId == chapter?.id }.reversed()
+    }
+
+    func startExam(_ course: Course, chapter: Chapter? = nil) {
+        let plan = examPlan(course, chapter: chapter)
+        guard !plan.topics.isEmpty else { return }
+        let picks = plan.topics.flatMap { t in
+            t.gens.map { GenPick(gen: $0, level: examLevel(course, t), topicId: t.id, topicTitle: t.title, courseId: course.id) }
+        }
+        presentedLesson = LessonSession(mode: .exam, course: course, title: chapter.map { "Klausur: \($0.title)" } ?? "Klausur: \(course.title)",
+                                        accentHex: course.color, picks: picks, chapterId: chapter?.id, taskCount: plan.count, minutes: plan.minutes)
+    }
+
+    /// What the daily mix would contain: up to six due repetitions and up to six new tasks, weak topics first.
+    func mixPlan() -> (items: [ReviewItem], picks: [GenPick]) {
+        let items = dueCards.prefix(6).compactMap { card -> ReviewItem? in
+            guard let c = course(card.courseId) else { return nil }
+            return ReviewItem(lessonUrl: lessonURL(c, card.lessonId), stepId: card.stepId)
+        }
+        let weak = Set(weakSpots.compactMap { spot -> String? in
+            if case .topic(let c, let t) = spot.kind { return PracticeStat.key(course: c, topic: t) }
+            return nil
+        })
+        let ranked = unlockedTopics.enumerated().sorted { a, b in
+            let wa = weak.contains(PracticeStat.key(course: a.element.course.id, topic: a.element.topic.id))
+            let wb = weak.contains(PracticeStat.key(course: b.element.course.id, topic: b.element.topic.id))
+            if wa != wb { return wa }
+            // otherwise the topics trained longest ago come first
+            let la = practiceStat(a.element.course, a.element.topic).lastAt ?? .distantPast
+            let lb = practiceStat(b.element.course, b.element.topic).lastAt ?? .distantPast
+            return la != lb ? la < lb : a.offset < b.offset
+        }.map { $0.element }
+        let picks = ranked.prefix(6).compactMap { entry -> GenPick? in
+            guard let gen = entry.topic.gens.randomElement() else { return nil }
+            let stat = practiceStat(entry.course, entry.topic)
+            let level = max(1, min(4, stat.highestMastered + 1))
+            return GenPick(gen: gen, level: level, topicId: entry.topic.id, topicTitle: "\(entry.course.title) · \(entry.topic.title)", courseId: entry.course.id)
+        }
+        return (items, picks)
+    }
+
+    var canStartMix: Bool { !dueCards.isEmpty || !unlockedTopics.isEmpty }
+
+    func startMix() {
+        let plan = mixPlan()
+        guard !plan.items.isEmpty || !plan.picks.isEmpty else { return }
+        presentedLesson = LessonSession(mode: .mix, reviewItems: plan.items, title: "Tagesmix", accentHex: courses.first?.color ?? "#5E5CE6",
+                                        picks: plan.picks, taskCount: plan.items.count + plan.picks.count)
+    }
+
+    /// Topics and lessons that most need practice.
+    var weakSpots: [WeakSpot] { state.weakSpots(courses: courses) }
+
+    // MARK: links for shortcuts on the home screen
+
+    /// lernwerk://weiter, lernwerk://wiederholen, lernwerk://tagesmix
+    func open(_ url: URL) {
+        guard url.scheme == "lernwerk", presentedLesson == nil else { return }
+        switch url.host() ?? "" {
+        case "wiederholen":
+            if dueCards.isEmpty { selectedTab = .review } else { startReview() }
+        case "tagesmix":
+            selectedTab = .review
+            startMix()
+        default:
+            selectedTab = .learn
+            if let target = continueTarget { start(target.course, target.lesson) }
+        }
     }
 
     func noteProgress(_ session: LessonSession, step: Int) {

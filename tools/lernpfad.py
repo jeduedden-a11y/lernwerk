@@ -20,12 +20,14 @@ REQUIRES = {
         "ana1-ableitung": ["ana1-stetigkeit"], "ana1-mws": ["ana1-ableitung", "ana1-zws"], "ana1-riemann": ["ana1-supremum", "ana1-stetigkeit"],
         "ana1-taylor": ["ana1-mws", "ana1-exp"], "ana1-gleichmaessig": ["ana1-konvergenz", "ana1-stetigkeit"],
         "ana1-potenzreihen": ["ana1-exp", "ana1-kriterien"], "ana1-hauptsatz": ["ana1-riemann", "ana1-mws"],
+        "ana1-beweise": ["ana1-logik"], "ana1-grenzwertbeweise": ["ana1-konvergenz", "ana1-beweise"],
     },
     "lineare-algebra-1": {
         "la1-gruppen": [], "la1-vektorraum": ["la1-gruppen"], "la1-linkomb": ["la1-vektorraum"], "la1-basis": ["la1-linkomb"],
         "la1-matrizen": ["la1-basis"], "la1-matrixprodukt": ["la1-matrizen"], "la1-kern": ["la1-matrizen"],
         "la1-gauss": ["la1-linkomb"], "la1-det": ["la1-matrixprodukt"], "la1-eigen": ["la1-det", "la1-kern"],
         "la1-koordinaten": ["la1-basis", "la1-matrixprodukt"], "la1-loesungsmenge": ["la1-gauss", "la1-kern"],
+        "la1-beweise": ["la1-kern", "la1-vektorraum"],
     },
     "stochastik": {
         "stoch-zufall": [], "stoch-kombinatorik": ["stoch-zufall"], "stoch-bayes": ["stoch-zufall"], "stoch-unabhaengigkeit": ["stoch-bayes"],
@@ -33,6 +35,7 @@ REQUIRES = {
         "stoch-hypothesentest": ["stoch-binomial"], "stoch-prognose": ["stoch-binomial"], "stoch-konfidenz": ["stoch-prognose"],
         "stoch-kenngroessen": ["stoch-erwartungswert"], "stoch-regression": ["stoch-kenngroessen"], "stoch-normal": ["stoch-binomial", "stoch-kenngroessen"],
         "stoch-geometrisch": ["stoch-erwartungswert", "stoch-unabhaengigkeit"], "stoch-zgws": ["stoch-normal"],
+        "stoch-axiome": ["stoch-zufall"],
     },
     "cs50-ai": {
         "cs50-suche": [], "cs50-informiert": ["cs50-suche"], "cs50-minimax": ["cs50-suche"],
@@ -42,6 +45,7 @@ REQUIRES = {
         "cs50-klassifikation": ["cs50-lokal"], "cs50-rl": ["cs50-markov", "cs50-minimax"],
         "cs50-nn": ["cs50-klassifikation"], "cs50-nlp": ["cs50-nn", "cs50-markov"],
         "cs50-overfitting": ["cs50-klassifikation"], "cs50-transformer": ["cs50-nlp"],
+        "cs50-lp": ["cs50-lokal"],
     },
     "oekonomik": {
         "oek-markt": [], "oek-elastizitaet": ["oek-markt"], "oek-staat": ["oek-elastizitaet"], "oek-marktversagen": ["oek-staat"],
@@ -50,6 +54,7 @@ REQUIRES = {
         "oek-smith": ["oek-markt"], "oek-ricardo": ["oek-smith"], "oek-marx": ["oek-ricardo"], "oek-keynes": ["oek-multiplikator", "oek-marx"],
         "oek-hayek": ["oek-keynes", "oek-marktversagen"],
         "oek-spieltheorie": ["oek-marktformen"], "oek-arbeitsmarkt": ["oek-staat"],
+        "oek-zoll": ["oek-staat", "oek-ricardo"],
     },
     "ethnologie": {
         "eth-feldforschung": [], "eth-kultur": ["eth-feldforschung"], "eth-relativismus": ["eth-kultur"],
@@ -57,6 +62,21 @@ REQUIRES = {
         "eth-ritual": ["eth-kultur"], "eth-religion": ["eth-ritual"],
         "eth-politik": ["eth-verwandtschaft"], "eth-ethnizitaet": ["eth-politik", "eth-relativismus"], "eth-globalisierung": ["eth-ethnizitaet", "eth-kultur"],
         "eth-wirtschaftsformen": ["eth-gabe"], "eth-migration": ["eth-globalisierung"],
+        "eth-recht": ["eth-politik"],
+    },
+    "physik": {
+        "phy-kinematik": [], "phy-energie": ["phy-kinematik"], "phy-kondensator": ["phy-energie"],
+        "phy-schwingung": ["phy-energie"], "phy-photoeffekt": ["phy-kondensator"],
+    },
+    "chemie": {
+        "che-atombau": [], "che-bindung": ["che-atombau"], "che-ph": ["che-bindung"], "che-gleichgewicht": ["che-ph"],
+    },
+    "ethik": {
+        "phi-argumente": [], "phi-utilitarismus": ["phi-argumente"], "phi-kant": ["phi-argumente"],
+        "phi-tugend": ["phi-utilitarismus", "phi-kant"],
+    },
+    "python-ai": {
+        "py-werte": [], "py-sammlungen": ["py-werte"], "py-funktionen": ["py-sammlungen"], "py-klassen": ["py-funktionen"],
     },
 }
 
@@ -79,6 +99,14 @@ LINKS = {
     "stoch-zgws": ["stoch-prognose"],
     "eth-wirtschaftsformen": ["oek-markt"],
     "eth-migration": ["oek-arbeitsmarkt"],
+    "phy-kinematik": ["ana1-ableitung"],
+    "che-atombau": ["phy-photoeffekt"],
+    "phi-argumente": ["ana1-logik"],
+    "py-klassen": ["cs50-suche"],
+    "stoch-axiome": ["ana1-beweise"],
+    "cs50-lp": ["la1-gauss"],
+    "phi-utilitarismus": ["oek-marktversagen"],
+    "eth-recht": ["phi-kant"],
 }
 
 

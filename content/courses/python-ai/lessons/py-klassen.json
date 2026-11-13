@@ -1,0 +1,93 @@
+{
+  "id": "py-klassen",
+  "title": "Klassen und die Frontier der Suche",
+  "subtitle": "Node, StackFrontier und QueueFrontier aus CS50 AI",
+  "source": "Python-Dokumentation (Classes); Quellcode der Suche aus Vorlesung 0 von CS50 AI (Node, StackFrontier, QueueFrontier), in eigenen Worten erklärt",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Classes.md", "title": "Python Classes" },
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Search Patterns.md", "title": "Python Search Patterns" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Drei Knoten kommen in die Frontier, einer wird herausgenommen. Welcher, entscheidet eine einzige Zeile.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "class Node:\n    def __init__(self, state, parent):\n        self.state = state\n        self.parent = parent\n\nfrontier = []\nfrontier.append(Node(\"A\", None))\nfrontier.append(Node(\"B\", None))\nfrontier.append(Node(\"C\", None))\nnode = frontier.pop()\nprint(node.state)",
+        "trace": [
+          { "line": 1, "vars": {}, "note": "Eine Klasse ist ein Bauplan. `Node` beschreibt Knoten mit einem Zustand und einem Elternknoten." },
+          { "line": 6, "vars": { "frontier": "[]" }, "note": "Die Frontier: alle Knoten, die noch untersucht werden müssen." },
+          { "line": 7, "vars": { "frontier": "[A]" }, "note": "`Node(\"A\", None)` ruft `__init__` auf; das neue Objekt merkt sich `state = \"A\"`." },
+          { "line": 8, "vars": { "frontier": "[A, B]" } },
+          { "line": 9, "vars": { "frontier": "[A, B, C]" } },
+          { "line": 10, "vars": { "frontier": "[A, B]", "node": "C" }, "note": "`pop()` nimmt das zuletzt angehängte Element: ein Stapel. Mit `pop(0)` käme A heraus: eine Warteschlange." },
+          { "line": 11, "vars": { "frontier": "[A, B]", "node": "C" }, "out": "C" }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Die Klasse `Node` ist der Bauplan für die Knoten des Suchbaums.", "set": { "k": 0 } },
+        { "caption": "Die Frontier beginnt leer.", "set": { "k": 1 } },
+        { "caption": "Ein neuer Knoten entsteht: `__init__` füllt seine Attribute über `self`.", "set": { "k": 2 } },
+        { "caption": "Zwei weitere Knoten kommen hinten dazu.", "set": { "k": 4 } },
+        { "caption": "`pop()` nimmt den zuletzt hinzugefügten Knoten C. So arbeitet die StackFrontier, und daraus wird Tiefensuche.", "set": { "k": 5 } },
+        { "caption": "Mit `pop(0)` wäre es A, der älteste Knoten: QueueFrontier und Breitensuche. Der ganze Unterschied steckt in dieser Zeile.", "set": { "k": 6 } }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Eine **Klasse** bündelt Daten und die Funktionen, die mit ihnen arbeiten. Aus ihr erzeugt man **Objekte**: `Node(\"A\", None)` ist ein Knoten mit dem Zustand A. Die besondere Methode `__init__` füllt beim Erzeugen die Attribute, und `self` steht für das Objekt selbst.\n\nIn der Suche von CS50 AI gibt es drei Klassen. `Node` speichert Zustand, Elternknoten und Aktion; über die Elternverweise lässt sich am Ende der Weg zurückverfolgen. `StackFrontier` nimmt Knoten mit `pop()` vom Ende: zuletzt hinein, zuerst heraus, also **Tiefensuche**. `QueueFrontier` erbt alles und ändert nur `remove`: Sie nimmt mit `pop(0)` den ältesten Knoten, also **Breitensuche**.\n\nDazu kommt ein Set der schon untersuchten Zustände, damit die Suche nicht im Kreis läuft."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Klasse und Objekt\n> `class Name:` mit Methoden `def methode(self, ...)`. `__init__` wird beim Erzeugen aufgerufen. Attribute legt man mit `self.attribut = wert` an.\n\n> [!definition] Vererbung\n> `class QueueFrontier(StackFrontier):` übernimmt alle Methoden und überschreibt nur, was anders sein soll.\n\n> [!satz] Frontier und Suchreihenfolge\n> Stapel (`pop()`, LIFO): Tiefensuche. Warteschlange (`pop(0)`, FIFO): Breitensuche, die bei gleichen Kosten einen kürzesten Weg findet."
+    },
+    {
+      "id": "objekte", "type": "numeric", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\nclass Konto:\n    def __init__(self, stand):\n        self.stand = stand\n    def einzahlen(self, betrag):\n        self.stand += betrag\n\na = Konto(50)\nb = Konto(20)\na.einzahlen(30)\nb.einzahlen(5)\nprint(a.stand - b.stand)\n```",
+      "answer": 55, "tolerance": 0, "placeholder": "Ausgabe",
+      "explain": "Jedes Objekt hat seinen eigenen Stand: a 50 + 30 = 80, b 20 + 5 = 25. Differenz 55."
+    },
+    {
+      "id": "frontier", "type": "proof", "mode": "gaps", "label": "Klasse ergänzen",
+      "md": "Ergänze die Warteschlange für die Breitensuche. Sie erbt von `StackFrontier` und ändert nur `remove`.",
+      "steps": [
+        "`class QueueFrontier(StackFrontier):`",
+        "`    def remove(self):`",
+        "`        if self.empty():`",
+        "`            raise Exception(\"leere Frontier\")`",
+        "`        return self.frontier.pop(0)`"
+      ],
+      "gaps": [0, 4],
+      "distractors": [
+        { "md": "`        return self.frontier.pop()`", "why": "`pop()` nimmt den neuesten Knoten; das wäre wieder ein Stapel." },
+        { "md": "`class QueueFrontier:`", "why": "Ohne `(StackFrontier)` erbt die Klasse nichts; `add` und `empty` fehlten." }
+      ],
+      "explain": "Die Warteschlange übernimmt `add` und `empty` und nimmt beim Entfernen das älteste Element. Diese eine geänderte Zeile macht aus der Tiefen- eine Breitensuche."
+    },
+    {
+      "id": "reihenfolge", "type": "choice", "label": "Suche",
+      "md": "Graph: A → B, C; B → D; C → E. Die Suche beginnt bei A und legt Nachbarn in dieser Reihenfolge in die Frontier. Mit `pop(0)`: In welcher Reihenfolge werden die Knoten besucht?",
+      "options": [
+        { "md": "A, B, C, D, E", "correct": true, "why": "Warteschlange: erst alle Nachbarn von A, dann deren Nachbarn." },
+        { "md": "A, C, E, B, D", "why": "Das wäre die Tiefensuche mit `pop()`." },
+        { "md": "A, B, D, C, E", "why": "Das ist eine Tiefensuche, die den ersten Nachbarn zuerst nimmt; mit einer Warteschlange geht es ebenenweise." }
+      ],
+      "explain": "Breitensuche besucht ebenenweise. Deshalb findet sie bei gleich langen Kanten einen kürzesten Weg."
+    },
+    { "id": "neu1", "type": "gen", "gen": "py-klassen", "level": 1, "label": "Attribute" },
+    { "id": "neu2", "type": "gen", "gen": "py-klassen", "level": 2, "label": "Methoden und self" },
+    { "id": "neu3", "type": "gen", "gen": "py-klassen", "level": 3, "label": "Stapel und Warteschlange" },
+    { "id": "neu4", "type": "gen", "gen": "py-klassen", "level": 4, "label": "Suchreihenfolge" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Eine Klasse ist ein Bauplan, `__init__` füllt die Attribute, `self` ist das Objekt selbst.",
+        "Jedes Objekt hat eigene Attribute; Methoden verändern sie über `self`.",
+        "`pop()` ergibt einen Stapel und damit Tiefensuche, `pop(0)` eine Warteschlange und Breitensuche.",
+        "Über die `parent`-Verweise der Knoten lässt sich der gefundene Weg zurückverfolgen."
+      ]
+    }
+  ]
+}

@@ -86,7 +86,7 @@ Fragen kommen nach der Lektion in die Wiederholung. `"review": false` nimmt eine
 | `anim` | `widget`, `params`, `timeline` (Szenen), optional `int`; siehe unten |
 | `gen` | `gen` (Name des Generators), `level` 1 bis 4, optional `params`; siehe unten |
 | `spot` | **Fehler finden:** `lines` (Text oder `{ md, why }`), `answer` (Index ab 0 oder Liste). `why` erklärt eine Zeile, beim Fehler was schiefgeht, sonst warum sie stimmt. Auch für »Welche Aussage urteilt ethnozentrisch?« |
-| `proof` | **Beweis bauen:** `given`, `claim`, `steps` in richtiger Reihenfolge, `distractors: [{ md, why }]` als falsche Bausteine. Gezeigt wird der erste falsche Schritt mit seinem `why`. |
+| `proof` | **Beweis bauen:** `given`, `claim`, `steps` in richtiger Reihenfolge, `distractors: [{ md, why }]` als falsche Bausteine. Gezeigt wird der erste falsche Schritt mit seinem `why`. Mit `"mode": "gaps"` steht der Beweis da und nur die Zeilen in `gaps` (ab 0) werden aus Bausteinen gefüllt; mit `"mode": "justify"` wählt man zu jeder Zeile mit `by` die Begründung aus einem Menü (alle `by` plus `reasons`). Siehe »Beweisaufgaben«. |
 | `estimate` | **Schätzen:** `min`, `max`, `answer`, `tolerance` (absolut) oder `relTolerance`, optional `unit`, `digits`, `step`, `start`, `log` (logarithmische Skala). Nach dem Prüfen erscheint der wahre Wert auf der Skala, bei falscher Schätzung »Zu hoch« oder »Zu niedrig«. |
 | `timeline` | **Zeitstrahl:** `start`, `end` (Jahre), `items: [{ md, year }]`, `tolerance` in Jahren. Ereignis antippen, dann die Stelle auf dem Strahl; falsche zeigen »früher« oder »später«. (Nicht `from`/`to`: `from` belegt die Wiederholung.) |
 | `quadrant` | **Vierfeldertafel:** `x`, `y` (je zwei Beschriftungen), `xLabel`, `yLabel`, optional `cells` (Namen der vier Felder, zeilenweise), `items: [{ md, cell }]` mit `cell` 0 bis 3. |
@@ -174,6 +174,36 @@ LW.extend("eth-ritual", LW.forms.statements([
 `lv` ist die niedrigste Stufe, zu der ein Eintrag passt; jede Stufe nimmt vor allem Einträge ihrer eigenen und der Stufe darunter. Jede Aussage braucht ein `why`, es erscheint als Erklärung. Die Zusätze liegen in `generators/extra-*.js`, die Generatoren der neueren Lektionen in `generators/neue-themen.js`. **Generatoren prüfen** testet jede feste Zusatzaufgabe einmal und jede Vorlage mit zwölf Startwerten.
 - **Generatoren prüfen** in der Testumgebung erzeugt je Generator und Stufe 40 Aufgaben und meldet Formelfehler, `NaN`, fehlende Erklärungen und doppelte Antwortoptionen.
 
+## Beweisaufgaben
+
+Ein Beweis aus einem Pool wird zu sechs Aufgabenformen: `order` (aus Bausteinen bauen, mit falschen dazwischen), `gaps` (Lücken füllen), `justify` (zu jeder Zeile die Begründung wählen), `flaw` (die falsche Zeile finden, als `spot`), `strategy` (welcher Aufbau passt?) und `next` (wie geht es weiter?).
+
+```js
+LW.proofGen("beweis-zahlen", "Beweise mit ganzen Zahlen", [
+  { lv: 2, kind: "kontraposition", given: "…", claim: "…", idea: "Ein Satz zur Beweisidee.",
+    steps: [{ md: "…", by: "Kontraposition", why: "…" }, …],
+    distractors: [{ md: "…", why: "warum dieser Baustein falsch ist" }],
+    flaw: { line: 0, md: "die falsche Fassung von Zeile 0", why: "…" } },
+], { reasons: ["Definition von gerade", …] }, { 1: ["strategy", "next", "order"], 2: [...], 3: [...], 4: [...] });
+```
+
+- `kind` ist einer der Aufbauten aus `LW.forms.proofKinds` (`direkt`, `kontraposition`, `widerspruch`, `induktion`, `faelle`, `zwei`, `gegenbeispiel`, `konstruktion`, `abschaetzung`). Für andere Pools gibt `o.kinds` eigene Namen vor, etwa Schlussformen bei Argumenten.
+- `by` ist ein kurzer Klartext ohne Formeln (er steht in einem Menü). `reasons` sind zusätzliche, plausible falsche Begründungen.
+- Jeder Beweis braucht mindestens zwei `distractors` (für `next`) und sollte ein `flaw` haben. Die Zeilen sollten aufeinander aufbauen, damit »wie geht es weiter« eindeutig ist.
+- `LW.forms.proofs(pool, plan, o)` liefert dieselben Formen zum Anhängen an einen bestehenden Generator mit `LW.extend`; so bekommen Physik und Chemie Herleitungen, Python Programme zum Zusammensetzen (Einrückung mit geschützten Leerzeichen ` `).
+- Die Pools liegen in `generators/beweise.js`; `scripts/check_content.py` erkennt Generatoren, die mit `LW.proofGen` angelegt sind.
+
+## Klausur, Tagesmix, Vorlesen, Rechenzeichen
+
+Diese Funktionen steuert der native Rahmen; Lektionen brauchen dafür nichts Besonderes.
+
+- `LW.start({ mode: "exam", exam: { title, kicker, courseId, chapterId, minutes, count, gens: [{ gen, level, topicId, topicTitle, courseId }] } })`: gemischte Aufgaben ohne Rückmeldung, Uhr oben, am Ende Auswertung pro Thema. Der Knopf »Lösung« heißt dort »Überspringen« (`giveUpLabel`).
+- `LW.start({ mode: "mix", mix: { title, items: [{ lessonUrl, stepId }], gens: [...] } })`: abwechselnd Wiederholungen und neue Aufgaben.
+- `LW.speech()` liefert den aktuellen Schritt als Text zum Vorlesen; Formeln werden in Worte übersetzt (`\frac` wird »durch«, `^` wird »hoch«). Deshalb trägt jede gerenderte Formel ihren TeX-Quelltext in `data-tex`.
+- Zahlenfelder bekommen eine Reihe mit Rechenzeichen. Setzt die App die Tastaturleiste (`theme.nativeKeys`), bleibt die Reihe verborgen; die App schreibt über `LW.insertText` ins Feld. Fehlt die Leiste einmal (etwa bei der schwebenden iPad-Tastatur), schaltet die App `nativeKeys` aus und die Reihe erscheint.
+- `theme.reduceMotion` lässt Animationen sofort ans Ende springen (wie die Systemeinstellung »Bewegung reduzieren«).
+- Hilfeleiter: `hints` (oder `hint`) kommen zuerst, dann `way` (Lösungsweg Zeile für Zeile) oder die Sätze von `explain`. Wer den Lösungsweg aufdeckt, löst die Aufgabe nicht mehr »beim ersten Versuch«.
+
 ## Visualisierungen mit Ziel
 
 Ein `goal` macht aus einer Visualisierung eine Aufgabe. Die Bedingung ist ein Ausdruck über Werte, die das Widget bereitstellt:
@@ -208,6 +238,11 @@ Die Parameter stehen jeweils als Kommentar über dem Widget in `content/runtime/
 | `ethno.js` | `reciprocity`, `kula`, `kinship`, `spectrum`, `timeline`, `rite`, `alliance`, `segmentary`, `boundary` |
 | `stochastik.js` | `lln`, `bayes`, `expectation`, `galton`, `normal`, `hypothesis`, `boxplot`, `regression`, `tree`, `mosaic`, `intervals` |
 | `geo.js` | `worldmap` (Weltkarte in Equal-Earth-Projektion: Orte, Ströme zwischen ihnen, Aufgaben auf der Karte) |
+| `chemie.js` | `atom` (Schalenmodell der Elemente 1 bis 20 mit Ionenladung; Werte `Z`, `q`, `e`, `valence`, `period`, `group`, `full`) |
+| `philo.js` | `balance` (Waage für Abwägungen: Gewichte links und rechts, verstellbar oder zuzuordnen; Werte `L`, `R`, `diff`, `right`, `w_<id>`) |
+| `python.js` | `codetrace` (Programm Zeile für Zeile mit Variablentabelle und Ausgabe; `trace: [{ line, vars, out, note }]`, Wert `k`) |
+
+Für Abläufe Zeile für Zeile, etwa einen Beweis als Film, eignet sich `derivation` aus `analysis2.js` (`lines: [{ tex, why }]`, `start: 0`, Szenen setzen `k`).
 
 ### Weltkarte
 

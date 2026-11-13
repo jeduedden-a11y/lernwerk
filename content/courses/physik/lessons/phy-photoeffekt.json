@@ -1,0 +1,110 @@
+{
+  "id": "phy-photoeffekt",
+  "title": "Der Photoeffekt",
+  "subtitle": "Licht kommt in Portionen",
+  "source": "Kerncurriculum Physik Hessen, Q3 (Quantenobjekte); Albert Einstein, Annalen der Physik (1905)",
+  "vault": [
+    { "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Photoeffekt.md", "title": "Photoeffekt" },
+    { "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Hallwachs-Versuch.md", "title": "Hallwachs-Versuch" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Licht fällt auf eine Kaliumschicht. Aufgetragen ist die größte Bewegungsenergie der herausgelösten Elektronen über der Frequenz des Lichts.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 15], "y": [-3, 4], "xLabel": "f in 10¹⁴ Hz", "yLabel": "E in eV",
+        "vars": [{ "name": "W", "min": 1, "max": 5, "value": 2.25, "hidden": true }, { "name": "f", "min": 0, "max": 15, "value": 4, "hidden": true }],
+        "functions": [
+          { "name": "G", "expr": "0.4136*x - W", "color": "gray", "dashed": true, "width": 1.6 },
+          { "name": "E", "expr": "max(0, 0.4136*x - W)", "color": "accent", "label": "größte Bewegungsenergie", "labelAt": 6.5 }
+        ],
+        "points": [{ "x": "f", "on": "E", "color": "orange", "guides": true }],
+        "readout": "Frequenz {f|2} · 10¹⁴ Hz: Photonenenergie {0.4136*f|2} eV, Austrittsarbeit {W|2} eV, Elektronen mit **{max(0, 0.4136*f - W)|2} eV**"
+      },
+      "timeline": [
+        { "caption": "Rotes Licht, $4 \\cdot 10^{14}$ Hz: Es tritt kein einziges Elektron aus, auch nicht bei greller Beleuchtung.", "set": { "f": 4, "W": 2.25 } },
+        { "caption": "Erst ab der Grenzfrequenz, bei Kalium etwa $5{,}4 \\cdot 10^{14}$ Hz, kommen Elektronen frei.", "to": { "f": 5.44 }, "dur": 1800, "hold": 7000 },
+        { "caption": "Darüber wächst ihre Energie linear mit der Frequenz. Ein Photon bringt $h f$ mit, $W_A$ kostet das Herauslösen, der Rest bleibt als Bewegungsenergie.", "to": { "f": 11 }, "dur": 2200, "hold": 9000 },
+        { "caption": "Ein anderes Metall, Zink mit $W_A = 4{,}27$ eV: Die Gerade verschiebt sich, ihre Steigung bleibt. Die Steigung ist das plancksche Wirkungsquantum.", "to": { "W": 4.27 }, "dur": 2000, "hold": 9000 },
+        { "caption": "Verlängert man die Gerade nach links, schneidet sie die Energieachse bei $-W_A$.", "hold": 7000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Bestrahlt man eine Metallplatte mit Licht, lösen sich manchmal Elektronen heraus. Als Welle gedacht müsste helleres Licht schnellere Elektronen liefern, und auch schwaches Licht müsste irgendwann genug Energie ansammeln. Beides stimmt nicht.\n\nEinstein erklärte 1905: Licht gibt seine Energie in **Portionen** ab, den Photonen. Jedes Photon trägt $E = h f$ und gibt sie auf einmal an ein einzelnes Elektron ab. Reicht diese Portion nicht für die **Austrittsarbeit** $W_A$, passiert gar nichts, egal wie viele Photonen kommen.\n\nHelleres Licht bedeutet mehr Photonen, also mehr Elektronen, aber nicht schnellere. Schnellere Elektronen gibt es nur mit höherer Frequenz."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Photon\n> Energie $E = h f = \\dfrac{h c}{\\lambda}$ mit $h = 6{,}626 \\cdot 10^{-34}\\,\\mathrm{Js}$. Praktisch: $h c \\approx 1240\\,\\mathrm{eV \\cdot nm}$.\n\n> [!satz] Einsteins Gleichung\n> $h f = W_A + E_{kin,max}$. Grenzfrequenz $f_G = \\dfrac{W_A}{h}$.\n\n> [!definition] Gegenfeldmethode\n> Eine Gegenspannung $U_0$ bremst gerade die schnellsten Elektronen: $e U_0 = E_{kin,max}$. Aufgetragen über $f$ ergibt sich die **Einstein-Gerade** mit Steigung $\\tfrac{h}{e}$."
+    },
+    {
+      "id": "ein-ev", "type": "widget", "label": "Ausprobieren",
+      "md": "Cäsium hat die Austrittsarbeit $W_A = 1{,}94$ eV. Stelle die Frequenz so ein, dass die schnellsten Elektronen **genau 1 eV** Bewegungsenergie haben.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 12], "y": [-2.2, 3], "xLabel": "f in 10¹⁴ Hz", "yLabel": "E in eV",
+        "vars": [{ "name": "f", "label": "Frequenz", "min": 3, "max": 12, "step": 0.05, "value": 4, "format": "{v} · 10¹⁴ Hz", "digits": 2 }],
+        "functions": [{ "name": "E", "expr": "max(0, 0.4136*x - 1.94)", "color": "accent" }],
+        "hlines": [{ "y": 1, "color": "gray" }],
+        "points": [{ "x": "f", "on": "E", "color": "orange", "guides": true }],
+        "readout": "Photonenenergie {0.4136*f|2} eV, Elektronen mit **{max(0, 0.4136*f - 1.94)|2} eV**"
+      },
+      "goal": {
+        "when": "abs(0.4136*f - 1.94 - 1) < 0.03",
+        "hints": [{ "when": "0.4136*f < 1.94", "text": "Unterhalb der Grenzfrequenz kommt gar kein Elektron heraus." }, { "when": "0.4136*f - 1.94 < 1", "text": "Erst {0.4136*f - 1.94|2} eV, die Frequenz muss höher." }, { "when": "0.4136*f - 1.94 > 1", "text": "Schon {0.4136*f - 1.94|2} eV, etwas weniger." }],
+        "solve": { "f": 7.1 }
+      },
+      "explain": "$h f = W_A + E_{kin} = 2{,}94$ eV, also $f = \\tfrac{2{,}94\\,\\mathrm{eV}}{4{,}136 \\cdot 10^{-15}\\,\\mathrm{eVs}} \\approx 7{,}1 \\cdot 10^{14}$ Hz, blaues Licht."
+    },
+    {
+      "id": "grenze", "type": "numeric", "label": "Rechnen",
+      "md": "Kalium hat die Austrittsarbeit $2{,}25$ eV. Welche Wellenlänge darf Licht höchstens haben, damit es Elektronen herauslöst (in nm)?",
+      "answer": 551, "tolerance": 3, "placeholder": "nm",
+      "explain": "$\\lambda_G = \\tfrac{h c}{W_A} = \\tfrac{1240\\,\\mathrm{eV \\cdot nm}}{2{,}25\\,\\mathrm{eV}} \\approx 551\\,\\mathrm{nm}$, grünes Licht. Rotes Licht mit größerer Wellenlänge wirkt bei Kalium nicht."
+    },
+    {
+      "id": "beobachtung", "type": "sort", "label": "Einordnen",
+      "md": "Welche Beobachtung passt zum Photonenmodell, welche wäre die Erwartung im Wellenmodell, die sich **nicht** bestätigt?",
+      "categories": ["beobachtet, passt zu Photonen", "Erwartung im Wellenmodell, widerlegt"],
+      "items": [
+        { "md": "Unterhalb einer Grenzfrequenz tritt kein Elektron aus.", "cat": "beobachtet, passt zu Photonen" },
+        { "md": "Helleres Licht liefert schnellere Elektronen.", "cat": "Erwartung im Wellenmodell, widerlegt" },
+        { "md": "Die Elektronen kommen ohne messbare Verzögerung.", "cat": "beobachtet, passt zu Photonen" },
+        { "md": "Bei sehr schwachem Licht vergeht Zeit, bis genug Energie gesammelt ist.", "cat": "Erwartung im Wellenmodell, widerlegt" },
+        { "md": "Helleres Licht liefert mehr Elektronen gleicher Höchstenergie.", "cat": "beobachtet, passt zu Photonen" }
+      ],
+      "explain": "Ein Photon gibt seine ganze Energie $h f$ an ein Elektron ab, sofort und unteilbar. Deshalb hängt die Elektronenenergie an der Frequenz, ihre Zahl an der Intensität."
+    },
+    {
+      "id": "gerade", "type": "proof", "label": "Herleitung",
+      "md": "Baue die Herleitung der Einstein-Geraden.",
+      "given": "Licht der Frequenz $f$ fällt auf ein Metall mit der Austrittsarbeit $W_A$; gemessen wird die Gegenspannung $U_0$.",
+      "claim": "$U_0 = \\dfrac{h}{e}\\,f - \\dfrac{W_A}{e}$.",
+      "steps": [
+        "Ein Photon gibt seine ganze Energie $h f$ an ein Elektron ab.",
+        "$h f = W_A + E_{kin,max}$.",
+        "Die Gegenspannung stoppt gerade die schnellsten: $E_{kin,max} = e U_0$.",
+        "$e U_0 = h f - W_A$, also $U_0 = \\tfrac{h}{e} f - \\tfrac{W_A}{e}$."
+      ],
+      "distractors": [
+        { "md": "$h f = W_A - E_{kin,max}$.", "why": "Die Photonenenergie teilt sich auf: Austrittsarbeit plus Bewegungsenergie." },
+        { "md": "Die Energie der Elektronen wächst mit der Lichtintensität.", "why": "Die Intensität bestimmt nur die Zahl der Elektronen." }
+      ],
+      "explain": "Die Gerade hat die Steigung $\\tfrac{h}{e}$ für jedes Metall; der Achsenabschnitt $-\\tfrac{W_A}{e}$ verrät das Metall. So bestimmte Millikan 1916 das plancksche Wirkungsquantum."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phy-photoeffekt", "level": 1, "label": "Photonenenergie" },
+    { "id": "neu2", "type": "gen", "gen": "phy-photoeffekt", "level": 2, "label": "Austrittsarbeit" },
+    { "id": "neu3", "type": "gen", "gen": "phy-photoeffekt", "level": 3, "label": "Gegenfeldmethode" },
+    { "id": "neu4", "type": "gen", "gen": "phy-photoeffekt", "level": 4, "label": "Photonenzahl und Tempo" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Licht gibt Energie in Portionen ab: $E = h f = \\tfrac{hc}{\\lambda}$.",
+        "$h f = W_A + E_{kin,max}$; unterhalb der Grenzfrequenz $f_G = \\tfrac{W_A}{h}$ tritt kein Elektron aus.",
+        "Die Intensität bestimmt die Zahl der Elektronen, die Frequenz ihre Energie.",
+        "Die Einstein-Gerade $U_0(f)$ hat für jedes Metall die Steigung $\\tfrac{h}{e}$."
+      ]
+    }
+  ]
+}

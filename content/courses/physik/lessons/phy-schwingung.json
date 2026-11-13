@@ -1,0 +1,106 @@
+{
+  "id": "phy-schwingung",
+  "title": "Harmonische Schwingung",
+  "subtitle": "Feder- und Fadenpendel, Periode und Energie",
+  "source": "Kerncurriculum Physik Hessen, Q2 (Schwingungen und Wellen); Lehrbuchstandard der Mechanik",
+  "vault": [
+    { "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Harmonische Schwingung.md", "title": "Harmonische Schwingung" },
+    { "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Federpendel.md", "title": "Federpendel" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein Körper hängt an einer Feder. Er wird 2 cm nach oben gezogen und losgelassen. Der Graph zeigt seine Auslenkung $y$ über der Zeit.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 4.2], "y": [-3, 3], "xLabel": "t in s", "yLabel": "y in cm",
+        "vars": [{ "name": "A", "min": 0, "max": 3, "value": 2, "hidden": true }, { "name": "T", "min": 0.5, "max": 3, "value": 2, "hidden": true }, { "name": "t", "min": 0, "max": 4, "value": 0, "hidden": true }],
+        "functions": [{ "name": "y", "expr": "A*cos(2*pi*x/T)", "color": "accent" }],
+        "points": [{ "x": "t", "on": "y", "color": "orange", "guides": true }],
+        "readout": "$t = {t|2}$ s: Auslenkung $y = {A*cos(2*pi*t/T)|2}$ cm, Periode $T = {T|2}$ s, Amplitude {A|1} cm"
+      },
+      "timeline": [
+        { "caption": "Losgelassen am oberen Umkehrpunkt: größte Auslenkung, Geschwindigkeit null.", "set": { "t": 0, "T": 2, "A": 2 } },
+        { "caption": "Nach einer Viertelperiode geht der Körper durch die Ruhelage. Hier ist er am schnellsten, die Feder ist entspannt.", "to": { "t": 0.5 }, "dur": 1600, "hold": 7000 },
+        { "caption": "Nach einer halben Periode ist er unten im Umkehrpunkt.", "to": { "t": 1 }, "dur": 1400 },
+        { "caption": "Nach einer ganzen Periode, hier 2 s, ist er wieder oben. Dann wiederholt sich alles: eine Kosinuskurve.", "to": { "t": 2 }, "dur": 1800, "hold": 7000 },
+        { "caption": "Eine viermal so steife Feder halbiert die Periode: Die Kurve wird zusammengeschoben, der Körper schwingt doppelt so oft.", "to": { "T": 1 }, "dur": 1800, "hold": 8000 },
+        { "caption": "Eine kleinere Amplitude ändert die Periode nicht. Das ist das Kennzeichen einer harmonischen Schwingung.", "to": { "A": 1 }, "dur": 1500, "hold": 8000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Eine Feder zieht umso stärker zurück, je weiter man sie auslenkt. Genau diese Verhältnisgleichheit, Rückstellkraft proportional zur Auslenkung, macht aus dem Hin und Her eine saubere Sinus- oder Kosinuskurve: eine **harmonische Schwingung**.\n\nDie Zeit für ein volles Hin und Her ist die **Periodendauer** $T$. Ein schwerer Körper ist träge und schwingt langsamer, eine steife Feder zieht kräftiger und lässt ihn schneller schwingen. Wie weit man auslenkt, spielt für $T$ keine Rolle.\n\nBeim Fadenpendel übernimmt die Schwerkraft die Rolle der Feder. Dort zählt nur die Länge, nicht die Masse, solange die Auslenkung klein bleibt."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Harmonische Schwingung\n> $y(t) = \\hat y \\sin(\\omega t + \\varphi_0)$ mit Amplitude $\\hat y$ und Kreisfrequenz $\\omega = \\tfrac{2\\pi}{T} = 2\\pi f$.\n\n> [!satz] Periodendauer\n> Federpendel: $T = 2\\pi\\sqrt{\\dfrac{m}{D}}$. Fadenpendel bei kleiner Auslenkung: $T = 2\\pi\\sqrt{\\dfrac{l}{g}}$.\n\n> [!satz] Energie\n> Ohne Dämpfung bleibt $E = \\tfrac12 D \\hat y^2$ erhalten. Im Umkehrpunkt steckt sie in der Feder, in der Ruhelage in der Bewegung: $\\hat v = \\hat y\\,\\omega$."
+    },
+    {
+      "id": "takt", "type": "widget", "label": "Ausprobieren",
+      "md": "Eine Feder hat $D = 40\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$. Wähle die Masse so, dass das Pendel **genau eine Schwingung pro Sekunde** macht.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 3.2], "y": [-3, 3], "xLabel": "t in s", "yLabel": "y in cm",
+        "vars": [{ "name": "m", "label": "Masse", "min": 0.1, "max": 2, "step": 0.01, "value": 0.3, "format": "{v} kg", "digits": 2 }],
+        "functions": [{ "name": "y", "expr": "2*cos(2*pi*x/(2*pi*sqrt(m/40)))", "color": "accent" }],
+        "vlines": [{ "x": 1 }, { "x": 2 }, { "x": 3 }],
+        "readout": "Masse {m|2} kg: Periode $T = {2*pi*sqrt(m/40)|3}$ s"
+      },
+      "goal": {
+        "when": "abs(2*pi*sqrt(m/40) - 1) < 0.01",
+        "hints": [{ "when": "2*pi*sqrt(m/40) < 1", "text": "Die Periode ist erst {2*pi*sqrt(m/40)|2} s. Mehr Masse macht das Pendel langsamer." }, { "when": "2*pi*sqrt(m/40) > 1", "text": "Die Periode ist {2*pi*sqrt(m/40)|2} s, zu lang. Weniger Masse." }],
+        "solve": { "m": 1.01 }
+      },
+      "explain": "$T = 2\\pi\\sqrt{\\tfrac{m}{D}} = 1\\,\\mathrm{s} \\Rightarrow m = \\tfrac{D}{4\\pi^2} = \\tfrac{40}{39{,}5}\\,\\mathrm{kg} \\approx 1{,}01\\,\\mathrm{kg}$. Dann fällt jedes Maximum genau auf eine graue Sekundenlinie."
+    },
+    {
+      "id": "faden", "type": "numeric", "label": "Rechnen",
+      "md": "Wie lange dauert eine volle Schwingung eines Fadenpendels von $1\\,\\mathrm{m}$ Länge (in s, kleine Auslenkung)?",
+      "answer": 2.01, "tolerance": 0.02, "placeholder": "s",
+      "explain": "$T = 2\\pi\\sqrt{\\tfrac{l}{g}} = 2\\pi\\sqrt{\\tfrac{1}{9{,}81}}\\,\\mathrm{s} \\approx 2{,}01\\,\\mathrm{s}$. Ein Meter Pendel schlägt also fast genau im Sekundentakt nach jeder Seite; so wurde früher das Meter vorgeschlagen."
+    },
+    {
+      "id": "herleitung", "type": "proof", "mode": "justify", "label": "Herleitung begründen",
+      "md": "Woher kommt $T = 2\\pi\\sqrt{\\tfrac{m}{D}}$? Wähle für jede Zeile die Begründung.",
+      "given": "Ein Körper der Masse $m$ an einer Feder mit der Federkonstanten $D$. Ansatz $y(t) = \\hat y \\sin(\\omega t)$.",
+      "claim": "$T = 2\\pi\\sqrt{\\dfrac{m}{D}}$.",
+      "steps": [
+        { "md": "Rückstellkraft der Feder: $F = -D y$.", "by": "Hookesches Gesetz" },
+        { "md": "$m \\ddot y = -D y$.", "by": "Newtons zweites Gesetz", "why": "Kraft gleich Masse mal Beschleunigung, und die Beschleunigung ist $\\ddot y$." },
+        { "md": "Zweimal ableiten: $\\ddot y = -\\omega^2 \\hat y \\sin(\\omega t) = -\\omega^2 y$.", "by": "Ansatz ableiten" },
+        { "md": "Vergleich: $m\\omega^2 = D$, also $\\omega = \\sqrt{\\tfrac{D}{m}}$.", "by": "Koeffizientenvergleich" },
+        { "md": "$T = \\tfrac{2\\pi}{\\omega} = 2\\pi\\sqrt{\\tfrac{m}{D}}$.", "by": "Definition der Kreisfrequenz" }
+      ],
+      "reasons": ["Energieerhaltung", "Impulserhaltung"],
+      "explain": "Newton plus Hooke ergibt die Schwingungsgleichung $\\ddot y = -\\tfrac{D}{m} y$; der Sinusansatz löst sie mit $\\omega^2 = \\tfrac{D}{m}$."
+    },
+    {
+      "id": "aendern", "type": "sort", "label": "Einordnen",
+      "md": "Wie ändert sich die Periodendauer?",
+      "categories": ["länger", "kürzer", "gleich"],
+      "items": [
+        { "md": "Federpendel mit schwererem Körper", "cat": "länger" },
+        { "md": "Federpendel mit steiferer Feder", "cat": "kürzer" },
+        { "md": "Federpendel weiter ausgelenkt", "cat": "gleich" },
+        { "md": "Fadenpendel mit längerem Faden", "cat": "länger" },
+        { "md": "Fadenpendel mit schwererer Kugel", "cat": "gleich" },
+        { "md": "Fadenpendel auf dem Mond", "cat": "länger" }
+      ],
+      "explain": "$T \\sim \\sqrt{m}$ und $T \\sim \\tfrac{1}{\\sqrt D}$ beim Federpendel, $T \\sim \\sqrt{l}$ und $T \\sim \\tfrac{1}{\\sqrt g}$ beim Fadenpendel. Die Amplitude geht nicht ein, die Masse des Fadenpendels auch nicht."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phy-schwingung", "level": 1, "label": "Periode und Frequenz" },
+    { "id": "neu2", "type": "gen", "gen": "phy-schwingung", "level": 2, "label": "Federpendel" },
+    { "id": "neu3", "type": "gen", "gen": "phy-schwingung", "level": 3, "label": "Fadenpendel" },
+    { "id": "neu4", "type": "gen", "gen": "phy-schwingung", "level": 4, "label": "Auslenkung und Energie" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Harmonisch heißt: Rückstellkraft proportional zur Auslenkung, Bewegung als Sinus- oder Kosinuskurve.",
+        "$T = \\tfrac1f$, $\\omega = \\tfrac{2\\pi}{T}$; die Periode hängt nicht von der Amplitude ab.",
+        "Federpendel $T = 2\\pi\\sqrt{\\tfrac{m}{D}}$, Fadenpendel $T = 2\\pi\\sqrt{\\tfrac{l}{g}}$.",
+        "Die Energie pendelt zwischen Feder und Bewegung: $\\tfrac12 D \\hat y^2 = \\tfrac12 m \\hat v^2$."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "cs50-lp",
+  "title": "Lineare Optimierung",
+  "subtitle": "Das Beste unter linearen Bedingungen",
+  "source": "CS50 AI, Vorlesung 3 (Optimization); Lehrbuchstandard der linearen Optimierung; George Dantzig, Simplex-Verfahren (1947)",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Lineare Optimierung.md", "title": "Lineare Optimierung" },
+    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Lokale Suche.md", "title": "Lokale Suche" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Eine Werkstatt baut Tische ($x$) und Regale ($y$). Holz reicht für $x + y \\le 6$, Arbeitszeit für $2x + y \\le 8$. Gewinn: $z = 3x + 2y$. Die orange Gerade zeigt alle Punkte mit gleichem Gewinn.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 7], "y": [0, 9], "xLabel": "Tische x", "yLabel": "Regale y",
+        "vars": [{ "name": "z", "min": 0, "max": 20, "value": 0, "hidden": true }],
+        "functions": [
+          { "name": "c1", "expr": "6 - x", "color": "accent", "label": "Holz", "labelAt": 5.2, "domain": [0, 6] },
+          { "name": "c2", "expr": "8 - 2*x", "color": "green", "label": "Zeit", "labelAt": 3.5, "domain": [0, 4] },
+          { "name": "g", "expr": "max(0, min(6 - x, 8 - 2*x))", "hidden": true },
+          { "name": "obj", "expr": "(z - 3*x)/2", "color": "orange", "dashed": true }
+        ],
+        "areas": [{ "f": "g", "from": 0, "to": 4, "color": "accent", "opacity": 0.18 }],
+        "points": [{ "x": 0, "y": 0 }, { "x": 4, "y": 0 }, { "x": 2, "y": 4, "label": "(2 | 4)" }, { "x": 0, "y": 6 }],
+        "readout": "Gewinn auf der orangen Geraden: **z = {z|1}**"
+      },
+      "timeline": [
+        { "caption": "Der blaue Bereich enthält alle Pläne, die Holz und Zeit erlauben. Eine Gewinngerade mit z = 0 berührt nur den Ursprung: nichts bauen, nichts verdienen.", "set": { "z": 0 } },
+        { "caption": "Mehr Gewinn verschiebt die Gerade parallel nach oben rechts. Bei z = 6 schneidet sie den Bereich quer: Es gibt viele Pläne mit diesem Gewinn.", "to": { "z": 6 }, "dur": 1800, "hold": 7000 },
+        { "caption": "Bei z = 12 berührt sie zwei Ecken: 4 Tische ohne Regale oder 6 Regale ohne Tische.", "to": { "z": 12 }, "dur": 1600, "hold": 7000 },
+        { "caption": "Weiter geht es bis z = 14. Dort berührt die Gerade den Bereich nur noch in einer Ecke: 2 Tische und 4 Regale. Das ist das Optimum.", "to": { "z": 14 }, "dur": 1200, "hold": 9000 },
+        { "caption": "Noch weiter, und kein zulässiger Plan liegt mehr auf der Geraden. Das Optimum eines linearen Problems liegt immer in einer Ecke; der Simplex-Algorithmus wandert von Ecke zu Ecke dorthin.", "to": { "z": 17 }, "dur": 1400, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Lokale Suche tastet sich durch beliebige Landschaften. Viele Probleme haben aber eine besonders einfache Form: Ein Ziel wie Kosten oder Gewinn hängt **linear** von den Entscheidungen ab, und auch die Grenzen sind linear, etwa Material, Zeit oder Budget. Dann spricht man von **linearer Optimierung**.\n\nDie Bedingungen schneiden aus der Ebene ein Vieleck heraus, den zulässigen Bereich. Die Punkte gleichen Zielwerts liegen auf parallelen Geraden. Schiebt man diese Gerade so weit wie möglich, bleibt sie zuletzt an einer **Ecke** hängen. Deshalb genügt es, die Ecken zu prüfen, und genau das macht der Simplex-Algorithmus geschickt.\n\nIn Python löst `scipy.optimize.linprog` solche Probleme mit Hunderten von Variablen. Es minimiert immer; wer maximieren will, gibt die negierte Zielfunktion ein."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Lineares Optimierungsproblem\n> Maximiere (oder minimiere) $z = c_1 x_1 + \\cdots + c_n x_n$ unter linearen Bedingungen $a_{i1} x_1 + \\cdots + a_{in} x_n \\le b_i$ und meist $x_j \\ge 0$.\n\n> [!satz] Ecken\n> Ist der zulässige Bereich beschränkt und nicht leer, nimmt die Zielfunktion ihr Optimum in einer Ecke an. Ecken sind Schnittpunkte von zwei Randgeraden (in der Ebene).\n\n> [!tip] Vorgehen von Hand\n> Bedingungen aufstellen, Randgeraden zeichnen, Ecken berechnen, Zielfunktion in jede Ecke einsetzen, den besten Wert nehmen."
+    },
+    {
+      "id": "schieben", "type": "widget", "label": "Ausprobieren",
+      "md": "Schiebe die Gewinngerade so weit wie möglich, aber so, dass sie den zulässigen Bereich **noch berührt**.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 7], "y": [0, 9], "xLabel": "Tische x", "yLabel": "Regale y",
+        "vars": [{ "name": "z", "label": "Gewinn $z$", "min": 0, "max": 20, "step": 0.5, "value": 4, "digits": 1 }],
+        "functions": [
+          { "name": "c1", "expr": "6 - x", "color": "accent", "domain": [0, 6] },
+          { "name": "c2", "expr": "8 - 2*x", "color": "green", "domain": [0, 4] },
+          { "name": "g", "expr": "max(0, min(6 - x, 8 - 2*x))", "hidden": true },
+          { "name": "obj", "expr": "(z - 3*x)/2", "color": "orange", "dashed": true }
+        ],
+        "areas": [{ "f": "g", "from": 0, "to": 4, "color": "accent", "opacity": 0.18 }],
+        "readout": "z = {z|1}"
+      },
+      "goal": {
+        "when": "abs(z - 14) < 0.01",
+        "hints": [{ "when": "z < 14", "text": "Die Gerade schneidet den Bereich noch; es geht weiter." }, { "when": "z > 14", "text": "Jetzt liegt kein zulässiger Plan mehr auf der Geraden." }],
+        "solve": { "z": 14 }
+      },
+      "explain": "Bei $z = 14$ berührt die Gerade nur noch die Ecke $(2 \\mid 4)$: $3 \\cdot 2 + 2 \\cdot 4 = 14$. Die anderen Ecken liefern 0, 12 und 12."
+    },
+    {
+      "id": "ecken", "type": "numeric", "label": "Rechnen",
+      "md": "Gleicher Bereich, andere Preise: Jetzt bringt ein Regal mehr, $z = x + 3y$. Welcher größte Gewinn ist möglich? Die Ecken sind $(0 \\mid 0)$, $(4 \\mid 0)$, $(2 \\mid 4)$ und $(0 \\mid 6)$.",
+      "answer": 18, "tolerance": 0, "placeholder": "Zahl",
+      "explain": "Werte: 0, 4, 14 und 18. Das Optimum wandert in die Ecke $(0 \\mid 6)$: nur Regale. Mit der Zielfunktion ändert sich die Richtung der Gewinngeraden und damit die beste Ecke."
+    },
+    {
+      "id": "modell", "type": "choice", "label": "Modellieren",
+      "md": "Ein Futtermix aus Sorte A ($x$ kg) und Sorte B ($y$ kg) soll mindestens 12 g Eiweiß enthalten. A hat 2 g pro kg, B 4 g pro kg. Welche Bedingung beschreibt das?",
+      "options": [
+        { "md": "$2x + 4y \\ge 12$", "correct": true, "why": "Eiweiß aus A plus Eiweiß aus B, mindestens 12." },
+        { "md": "$2x + 4y \\le 12$", "why": "»Mindestens« heißt größer oder gleich." },
+        { "md": "$4x + 2y \\ge 12$", "why": "Die Gehalte sind vertauscht." },
+        { "md": "$x + y \\ge 12$", "why": "Es geht um Eiweiß, nicht um die Masse." }
+      ],
+      "explain": "Modellieren heißt: Variablen festlegen, jede Ressource oder Anforderung als lineare Ungleichung, das Ziel als lineare Funktion."
+    },
+    { "id": "neu1", "type": "gen", "gen": "cs50-lp", "level": 1, "label": "Einsetzen" },
+    { "id": "neu2", "type": "gen", "gen": "cs50-lp", "level": 2, "label": "Beste Ecke" },
+    { "id": "neu3", "type": "gen", "gen": "cs50-lp", "level": 3, "label": "Ecken und Modelle" },
+    { "id": "neu4", "type": "gen", "gen": "cs50-lp", "level": 4, "label": "Ganz von Hand" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Lineare Optimierung: lineares Ziel, lineare Bedingungen.",
+        "Die Bedingungen bilden ein konvexes Vieleck; das Optimum liegt in einer Ecke.",
+        "Von Hand: Ecken berechnen, Zielfunktion einsetzen, den besten Wert nehmen.",
+        "Der Simplex-Algorithmus wandert von Ecke zu Ecke; in Python hilft `scipy.optimize.linprog`."
+      ]
+    }
+  ]
+}

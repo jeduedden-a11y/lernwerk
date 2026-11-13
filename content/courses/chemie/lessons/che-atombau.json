@@ -1,0 +1,83 @@
+{
+  "id": "che-atombau",
+  "title": "Atombau und Schalenmodell",
+  "subtitle": "Kern, Hülle und warum das Periodensystem so aussieht",
+  "source": "Kerncurriculum Chemie Hessen (Basiskonzept Struktur und Eigenschaften); Schalenmodell nach Bohr in der Schulfassung",
+  "vault": [
+    { "path": "02 Wiki/Chemie/01 Grundlagen/Atombau.md", "title": "Atombau" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Das Schalenmodell: In der Mitte der Kern mit Protonen und Neutronen, außen die Elektronen auf Schalen. Orange sind die Elektronen der äußersten Schale.",
+      "widget": "atom",
+      "params": { "Z": 1, "slider": false },
+      "int": ["Z"],
+      "timeline": [
+        { "caption": "Wasserstoff: ein Proton, ein Elektron. Die erste Schale, die K-Schale, fasst zwei Elektronen.", "set": { "Z": 1 } },
+        { "caption": "Helium füllt die K-Schale. Eine volle Außenschale macht ein Atom besonders reaktionsträge: Helium ist ein Edelgas.", "to": { "Z": 2 }, "dur": 900, "hold": 7000 },
+        { "caption": "Lithium braucht eine neue Schale. Ein einzelnes Außenelektron: Lithium steht in der ersten Hauptgruppe, wie Natrium und Kalium.", "to": { "Z": 3 }, "dur": 900, "hold": 7000 },
+        { "caption": "Bis Neon füllt sich die L-Schale mit acht Elektronen. Die Ordnungszahl wächst um eins, das Periodensystem rückt eine Spalte weiter.", "to": { "Z": 10 }, "dur": 3500, "hold": 7000 },
+        { "caption": "Natrium beginnt die dritte Periode, wieder mit einem Außenelektron. Deshalb reagiert es so ähnlich wie Lithium.", "to": { "Z": 11 }, "dur": 900, "hold": 7000 },
+        { "caption": "Chlor hat sieben Außenelektronen, ihm fehlt eines zur Achterschale. Argon hat sie: wieder ein Edelgas.", "to": { "Z": 18 }, "dur": 3000, "hold": 8000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Ein Atom besteht aus einem winzigen, schweren **Kern** und einer großen, fast leeren **Hülle**. Im Kern sitzen positiv geladene Protonen und neutrale Neutronen, in der Hülle negativ geladene Elektronen. Im neutralen Atom gibt es gleich viele Elektronen wie Protonen.\n\nDie Zahl der Protonen ist die **Ordnungszahl** $Z$; sie legt das Element fest. Kohlenstoff hat immer 6 Protonen. Die Zahl der Neutronen darf schwanken: Atome mit verschiedenen Neutronenzahlen heißen **Isotope**.\n\nIm Schalenmodell sitzen die Elektronen auf Schalen: zwei auf der ersten, acht auf der zweiten, in der Schulfassung bis Calcium acht auf der dritten. Die Elektronen der äußersten Schale, die **Valenzelektronen**, bestimmen, wie ein Element reagiert. Das Periodensystem ordnet genau danach: Die Periode ist die Zahl der Schalen, die Hauptgruppe die Zahl der Valenzelektronen."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Kernbausteine\n> Ordnungszahl $Z$ = Zahl der Protonen. Massenzahl $A$ = Protonen + Neutronen. Schreibweise $^{A}_{Z}\\mathrm{X}$, etwa $^{23}_{11}\\mathrm{Na}$ mit 12 Neutronen.\n\n> [!definition] Schalenmodell\n> Die Schalen K, L, M, N fassen in der Schulfassung 2, 8, 8 und weitere Elektronen. **Valenzelektronen** sind die der äußersten besetzten Schale.\n\n> [!satz] Periodensystem\n> Periode = Zahl der besetzten Schalen. Hauptgruppe = Zahl der Valenzelektronen. Elemente einer Hauptgruppe reagieren ähnlich.\n\n> [!tip] Edelgaskonfiguration\n> Eine voll besetzte Außenschale (zwei bei Helium, sonst acht) ist besonders stabil. Viele Atome nehmen Elektronen auf oder geben sie ab, um sie zu erreichen."
+    },
+    {
+      "id": "suchen", "type": "widget", "label": "Ausprobieren",
+      "md": "Stelle ein Element ein, das in der **dritten Periode** steht und **fünf Valenzelektronen** hat.",
+      "widget": "atom",
+      "params": { "Z": 6 },
+      "goal": {
+        "when": "period == 3 && valence == 5",
+        "hints": [{ "when": "period != 3", "text": "Die dritte Periode hat drei besetzte Schalen: Z von 11 bis 18." }, { "when": "valence < 5", "text": "Noch zu wenige Außenelektronen." }, { "when": "valence > 5", "text": "Zu viele Außenelektronen." }],
+        "solve": { "Z": 15 }
+      },
+      "explain": "Phosphor, Z = 15: Schalen 2, 8, 5. Er steht in der dritten Periode und der fünften Hauptgruppe, unter Stickstoff."
+    },
+    {
+      "id": "neutronen", "type": "numeric", "label": "Rechnen",
+      "md": "Wie viele Neutronen hat ein Atom $^{35}_{17}\\mathrm{Cl}$?",
+      "answer": 18, "tolerance": 0, "placeholder": "Neutronen",
+      "explain": "Massenzahl minus Ordnungszahl: $35 - 17 = 18$. Das zweite häufige Chlorisotop $^{37}\\mathrm{Cl}$ hat 20 Neutronen."
+    },
+    {
+      "id": "schalen", "type": "cloze", "label": "Schalen",
+      "md": "Schwefel hat die Ordnungszahl 16. Seine Elektronen verteilen sich so: K-Schale {{0}}, L-Schale {{1}}, M-Schale {{2}}. Er steht also in der {{3}}. Hauptgruppe.",
+      "blanks": [
+        { "accept": [2], "numeric": true, "tolerance": 0, "placeholder": "K" },
+        { "accept": [8], "numeric": true, "tolerance": 0, "placeholder": "L" },
+        { "accept": [6], "numeric": true, "tolerance": 0, "placeholder": "M" },
+        { "accept": [6], "numeric": true, "tolerance": 0, "placeholder": "Gruppe" }
+      ],
+      "explain": "2 + 8 + 6 = 16. Sechs Valenzelektronen: sechste Hauptgruppe, wie Sauerstoff."
+    },
+    {
+      "id": "isotope", "type": "truefalse",
+      "md": "$^{12}\\mathrm{C}$ und $^{14}\\mathrm{C}$ sind verschiedene Elemente, weil ihre Massenzahlen verschieden sind.",
+      "answer": false,
+      "whyNot": "Beide haben 6 Protonen und sind Kohlenstoff; sie unterscheiden sich nur in der Neutronenzahl (6 und 8).",
+      "explain": "Das sind Isotope desselben Elements. $^{14}\\mathrm{C}$ ist radioaktiv und dient zur Altersbestimmung."
+    },
+    { "id": "neu1", "type": "gen", "gen": "che-atombau", "level": 1, "label": "Kernbausteine" },
+    { "id": "neu2", "type": "gen", "gen": "che-atombau", "level": 2, "label": "Schalen und Periodensystem" },
+    { "id": "neu3", "type": "gen", "gen": "che-atombau", "level": 3, "label": "Ionen" },
+    { "id": "neu4", "type": "gen", "gen": "che-atombau", "level": 4, "label": "Isotope und Edelgase" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Ordnungszahl = Protonen = Elektronen im neutralen Atom; Neutronen = Massenzahl minus Ordnungszahl.",
+        "Isotope: gleiches Element, verschiedene Neutronenzahl.",
+        "Schalen fassen 2, 8, 8 Elektronen; die äußeren heißen Valenzelektronen.",
+        "Periode = Zahl der Schalen, Hauptgruppe = Zahl der Valenzelektronen; volle Außenschale = Edelgaskonfiguration."
+      ]
+    }
+  ]
+}

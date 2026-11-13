@@ -1,0 +1,111 @@
+{
+  "id": "che-gleichgewicht",
+  "title": "Gleichgewicht und Le Chatelier",
+  "subtitle": "Wenn zwei Reaktionen sich die Waage halten",
+  "source": "Kerncurriculum Chemie Hessen, Q3 (Chemisches Gleichgewicht); Henry Le Chatelier (1884), Guldberg und Waage (1864)",
+  "vault": [
+    { "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Chemisches Gleichgewicht.md", "title": "Chemisches Gleichgewicht" },
+    { "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Massenwirkungsgesetz.md", "title": "Massenwirkungsgesetz" },
+    { "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Prinzip von Le Chatelier.md", "title": "Prinzip von Le Chatelier" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Die Reaktion $\\mathrm{A \\rightleftharpoons B}$, gestartet mit $1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$ A. Aufgetragen sind beide Konzentrationen über der Zeit.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 6], "y": [0, 1.05], "xLabel": "Zeit", "yLabel": "c in mol/L",
+        "vars": [{ "name": "K", "min": 0.25, "max": 9, "value": 1, "hidden": true }, { "name": "t", "min": 0, "max": 6, "value": 0, "hidden": true }],
+        "functions": [
+          { "name": "a", "expr": "1/(1+K) + (1 - 1/(1+K))*exp(-x)", "color": "accent", "label": "A", "labelAt": 0.35 },
+          { "name": "b", "expr": "1 - (1/(1+K) + (1 - 1/(1+K))*exp(-x))", "color": "orange", "label": "B", "labelAt": 0.35 }
+        ],
+        "points": [{ "x": "t", "on": "a", "color": "accent" }, { "x": "t", "on": "b", "color": "orange" }],
+        "vlines": [{ "x": "t" }],
+        "readout": "A: **{1/(1+K) + (1 - 1/(1+K))*exp(-t)|2}** mol/L, B: **{1 - (1/(1+K) + (1 - 1/(1+K))*exp(-t))|2}** mol/L, Verhältnis B zu A: {(1 - (1/(1+K) + (1 - 1/(1+K))*exp(-t)))/(1/(1+K) + (1 - 1/(1+K))*exp(-t))|2}"
+      },
+      "timeline": [
+        { "caption": "Am Anfang ist nur A da. Sobald die Reaktion läuft, entsteht B.", "set": { "t": 0, "K": 1 } },
+        { "caption": "A nimmt ab, B zu. Gleichzeitig zerfällt schon gebildetes B wieder zu A; die Rückreaktion wird schneller, je mehr B da ist.", "to": { "t": 1 }, "dur": 1800, "hold": 8000 },
+        { "caption": "Irgendwann ändern sich die Konzentrationen nicht mehr: Gleichgewicht. Hin- und Rückreaktion laufen weiter, aber gleich schnell. Hier mit K = 1: halb A, halb B.", "to": { "t": 5 }, "dur": 2500, "hold": 9000 },
+        { "caption": "Mit K = 4 liegt das Gleichgewicht weiter rechts: 0,8 mol/L B, 0,2 mol/L A. Das Verhältnis ist genau K.", "to": { "K": 4 }, "dur": 2000, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Viele Reaktionen laufen nicht vollständig ab. Sobald Produkte entstehen, reagieren einige zurück. Am Anfang überwiegt die Hinreaktion; je mehr Produkt sich bildet, desto häufiger die Rückreaktion. Schließlich sind beide gleich schnell, und die Konzentrationen bleiben stehen: ein **dynamisches Gleichgewicht**.\n\nWo es liegt, sagt die **Gleichgewichtskonstante** $K$. Großes $K$: fast nur Produkte. Kleines $K$: fast nur Edukte. $K$ hängt nur von der Temperatur ab.\n\nStört man ein Gleichgewicht, weicht es aus. Gibt man ein Edukt zu, wird mehr Produkt gebildet; erhöht man den Druck, rückt es zur Seite mit weniger Gasteilchen; heizt man, gewinnt die Richtung, die Wärme verbraucht. Das ist das **Prinzip von Le Chatelier**, das kleinste Zwang."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!satz] Massenwirkungsgesetz\n> Für $a\\,\\mathrm{A} + b\\,\\mathrm{B} \\rightleftharpoons c\\,\\mathrm{C} + d\\,\\mathrm{D}$ gilt im Gleichgewicht\n> $$K_c = \\frac{c(\\mathrm{C})^c \\cdot c(\\mathrm{D})^d}{c(\\mathrm{A})^a \\cdot c(\\mathrm{B})^b}.$$\n\n> [!satz] Prinzip von Le Chatelier\n> Übt man auf ein Gleichgewicht einen Zwang aus (Konzentration, Druck, Temperatur), verschiebt es sich so, dass der Zwang kleiner wird.\n\n> [!warning] Katalysator\n> Ein Katalysator beschleunigt Hin- und Rückreaktion gleich. Das Gleichgewicht stellt sich schneller ein, seine Lage bleibt."
+    },
+    {
+      "id": "lage", "type": "widget", "label": "Ausprobieren",
+      "md": "Wie groß muss $K$ sein, damit im Gleichgewicht **90 Prozent** als B vorliegen? Stelle es ein.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 6], "y": [0, 1.05], "xLabel": "Zeit", "yLabel": "c in mol/L",
+        "vars": [{ "name": "K", "label": "Gleichgewichtskonstante $K$", "min": 0.5, "max": 12, "step": 0.5, "value": 2, "digits": 1 }],
+        "functions": [{ "name": "b", "expr": "1 - (1/(1+K) + (1 - 1/(1+K))*exp(-x))", "color": "orange", "label": "B", "labelAt": 5.2 }],
+        "hlines": [{ "y": 0.9, "color": "gray" }],
+        "readout": "Im Gleichgewicht: **{K/(1+K)*100|1} %** als B"
+      },
+      "goal": {
+        "when": "abs(K/(1+K) - 0.9) < 0.003",
+        "hints": [{ "when": "K/(1+K) < 0.9", "text": "Erst {K/(1+K)*100|1} %. K muss größer werden." }, { "when": "K/(1+K) > 0.9", "text": "Schon {K/(1+K)*100|1} %, etwas kleiner." }],
+        "solve": { "K": 9 }
+      },
+      "explain": "Im Gleichgewicht ist $K = \\tfrac{c(\\mathrm{B})}{c(\\mathrm{A})} = \\tfrac{0{,}9}{0{,}1} = 9$."
+    },
+    {
+      "id": "mwg", "type": "numeric", "label": "Rechnen",
+      "md": "$\\mathrm{A + B \\rightleftharpoons C + D}$. Im Gleichgewicht: $c(\\mathrm{A}) = c(\\mathrm{B}) = 0{,}5$ und $c(\\mathrm{C}) = c(\\mathrm{D}) = 1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$. Bestimme $K_c$.",
+      "answer": 4, "tolerance": 0.01, "placeholder": "Zahl",
+      "explain": "$K_c = \\tfrac{1 \\cdot 1}{0{,}5 \\cdot 0{,}5} = 4$. Das ist zum Beispiel ungefähr die Konstante der Veresterung von Ethanol und Essigsäure."
+    },
+    {
+      "id": "zwang", "type": "sort", "label": "Le Chatelier",
+      "md": "Wohin verschiebt sich das Gleichgewicht?",
+      "categories": ["zu den Produkten", "zu den Edukten", "keine Verschiebung"],
+      "items": [
+        { "md": "Ein Edukt wird zugegeben.", "cat": "zu den Produkten" },
+        { "md": "Ein Produkt wird laufend abgezogen.", "cat": "zu den Produkten" },
+        { "md": "Exotherme Hinreaktion, die Temperatur steigt.", "cat": "zu den Edukten" },
+        { "md": "$\\mathrm{N_2 + 3\\,H_2 \\rightleftharpoons 2\\,NH_3}$, der Druck steigt.", "cat": "zu den Produkten" },
+        { "md": "$\\mathrm{H_2 + I_2 \\rightleftharpoons 2\\,HI}$, der Druck steigt.", "cat": "keine Verschiebung" },
+        { "md": "Ein Katalysator wird zugegeben.", "cat": "keine Verschiebung" }
+      ],
+      "explain": "Das System baut jeden Zwang ab: Zugaben werden verbraucht, Wärme von der endothermen Richtung aufgenommen, Druck durch weniger Gasteilchen gemindert. Gleiche Teilchenzahl oder ein Katalysator verschieben nichts."
+    },
+    {
+      "id": "herleitung", "type": "proof", "label": "Herleitung",
+      "md": "Warum ist $K$ eine Konstante? Baue die Herleitung aus den Geschwindigkeiten.",
+      "given": "$\\mathrm{A + B \\rightleftharpoons C + D}$ mit $v_{hin} = k_{hin} \\cdot c(\\mathrm{A}) \\cdot c(\\mathrm{B})$ und $v_{rück} = k_{rück} \\cdot c(\\mathrm{C}) \\cdot c(\\mathrm{D})$.",
+      "claim": "$\\dfrac{c(\\mathrm{C}) \\cdot c(\\mathrm{D})}{c(\\mathrm{A}) \\cdot c(\\mathrm{B})} = \\dfrac{k_{hin}}{k_{rück}} = K_c$.",
+      "steps": [
+        "Im Gleichgewicht gilt $v_{hin} = v_{rück}$.",
+        "$k_{hin}\\, c(\\mathrm{A})\\, c(\\mathrm{B}) = k_{rück}\\, c(\\mathrm{C})\\, c(\\mathrm{D})$.",
+        "$\\dfrac{c(\\mathrm{C})\\, c(\\mathrm{D})}{c(\\mathrm{A})\\, c(\\mathrm{B})} = \\dfrac{k_{hin}}{k_{rück}}$.",
+        "Die rechte Seite hängt nur von der Temperatur ab: Das ist $K_c$."
+      ],
+      "distractors": [
+        { "md": "Im Gleichgewicht ist $v_{hin} = v_{rück} = 0$.", "why": "Beide Reaktionen laufen weiter, nur gleich schnell." },
+        { "md": "$\\dfrac{c(\\mathrm{C})\\, c(\\mathrm{D})}{c(\\mathrm{A})\\, c(\\mathrm{B})} = \\dfrac{k_{rück}}{k_{hin}}$.", "why": "Beim Umformen landet $k_{hin}$ im Zähler." }
+      ],
+      "explain": "Aus gleichen Geschwindigkeiten wird ein konstanter Quotient der Konzentrationen. So haben Guldberg und Waage das Massenwirkungsgesetz begründet."
+    },
+    { "id": "neu1", "type": "gen", "gen": "che-gleichgewicht", "level": 1, "label": "Le Chatelier" },
+    { "id": "neu2", "type": "gen", "gen": "che-gleichgewicht", "level": 2, "label": "K berechnen" },
+    { "id": "neu3", "type": "gen", "gen": "che-gleichgewicht", "level": 3, "label": "Konzentrationen und Richtung" },
+    { "id": "neu4", "type": "gen", "gen": "che-gleichgewicht", "level": 4, "label": "Ausbeute der Veresterung" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Im Gleichgewicht laufen Hin- und Rückreaktion gleich schnell; die Konzentrationen bleiben konstant.",
+        "Massenwirkungsgesetz: Produkte durch Edukte, Koeffizienten als Exponenten; $K$ hängt nur von der Temperatur ab.",
+        "Le Chatelier: Ein gestörtes Gleichgewicht weicht dem Zwang aus.",
+        "Katalysatoren beschleunigen die Einstellung, verschieben die Lage aber nicht."
+      ]
+    }
+  ]
+}

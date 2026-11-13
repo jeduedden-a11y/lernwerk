@@ -1,0 +1,91 @@
+{
+  "id": "py-sammlungen",
+  "title": "Listen, Dictionaries und Sets",
+  "subtitle": "Daten sammeln, nachschlagen und nicht aus Versehen teilen",
+  "source": "Python-Dokumentation (Data Structures); Gliederung nach dem Python-Teil von CS50 AI",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Collections.md", "title": "Python Collections" },
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Mutability and Copying.md", "title": "Python Mutability and Copying" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Eine Liste wird verändert, und ein zweiter Name zeigt auf dieselbe Liste. Achte auf die Variable `b`.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "a = [3, 1, 2]\na.append(5)\nb = a\nb[0] = 9\nc = sorted(a)\nprint(a, c)",
+        "trace": [
+          { "line": 1, "vars": { "a": "[3, 1, 2]" }, "note": "Eine Liste: geordnet, veränderlich, Indizes ab 0." },
+          { "line": 2, "vars": { "a": "[3, 1, 2, 5]" }, "note": "`append` hängt am Ende an und verändert die Liste selbst." },
+          { "line": 3, "vars": { "a": "[3, 1, 2, 5]", "b": "[3, 1, 2, 5]" }, "note": "`b = a` kopiert nichts. `b` ist ein zweiter Name für dieselbe Liste." },
+          { "line": 4, "vars": { "a": "[9, 1, 2, 5]", "b": "[9, 1, 2, 5]" }, "note": "Die Änderung über `b` sieht man auch in `a`: Es ist ein und dieselbe Liste." },
+          { "line": 5, "vars": { "a": "[9, 1, 2, 5]", "b": "[9, 1, 2, 5]", "c": "[1, 2, 5, 9]" }, "note": "`sorted` baut eine neue, sortierte Liste; `a` bleibt unverändert." },
+          { "line": 6, "vars": { "a": "[9, 1, 2, 5]", "b": "[9, 1, 2, 5]", "c": "[1, 2, 5, 9]" }, "out": "[9, 1, 2, 5] [1, 2, 5, 9]" }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Eine Liste mit drei Zahlen.", "set": { "k": 0 } },
+        { "caption": "`append` hängt eine 5 an. Listen sind veränderlich.", "set": { "k": 1 } },
+        { "caption": "Jetzt die Falle: `b = a` legt keine Kopie an. Beide Namen zeigen auf dieselbe Liste im Speicher.", "set": { "k": 2 } },
+        { "caption": "Wer über `b` ändert, ändert auch `a`. In CS50 AI führt genau das zu Fehlern, wenn man ein Spielbrett für einen Zug ausprobiert, ohne es zu kopieren.", "set": { "k": 3 } },
+        { "caption": "`sorted` dagegen liefert eine neue Liste und lässt das Original in Ruhe.", "set": { "k": 4 } },
+        { "caption": "Die Ausgabe zeigt beide: das veränderte Original und die sortierte Kopie.", "set": { "k": 5 } }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Vier Sammlungen deckt CS50 AI fast vollständig ab. Eine **Liste** ist eine geordnete Reihe, die man verändern kann; gut für eine Frontier oder eine Folge von Zügen. Ein **Tupel** ist eine unveränderliche Reihe; gut für Zustände wie eine Position `(zeile, spalte)`. Ein **Dictionary** ordnet Schlüsseln Werte zu; gut für Wahrscheinlichkeiten oder Zähler. Ein **Set** ist eine Menge ohne Wiederholungen; gut für die schon besuchten Zustände einer Suche.\n\nAlle Namen in Python sind Verweise. Eine Zuweisung `b = a` lässt `b` auf dasselbe Objekt zeigen wie `a`. Bei unveränderlichen Werten merkt man das nie, bei Listen, Dicts und Sets sehr wohl: Wer eine echte Kopie braucht, schreibt `a.copy()` oder für verschachtelte Strukturen `copy.deepcopy(a)`."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Die vier Sammlungen\n> Liste `[1, 2, 3]`: geordnet, veränderlich. Tupel `(1, 2)`: geordnet, unveränderlich. Dictionary `{\"a\": 1}`: Schlüssel und Werte. Set `{1, 2}`: ungeordnet, ohne Doppelte.\n\n> [!definition] Wichtige Operationen\n> `xs.append(x)`, `xs.pop()` (letztes), `xs.pop(0)` (erstes), `xs[i:j]`, `len(xs)`. `d[k]`, `d.get(k, standard)`, `k in d`. `s.add(x)`, `x in s`, `a & b`, `a | b`, `a - b`.\n\n> [!warning] Aliasing\n> `b = a` kopiert keine Liste. Kopie: `a.copy()`, tief: `copy.deepcopy(a)`."
+    },
+    {
+      "id": "zaehlen", "type": "numeric", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\nwahl = [\"rot\", \"blau\", \"rot\", \"grün\", \"rot\", \"blau\"]\nstimmen = {}\nfor w in wahl:\n    stimmen[w] = stimmen.get(w, 0) + 1\nprint(stimmen[\"rot\"] - stimmen[\"blau\"])\n```",
+      "answer": 1, "tolerance": 0, "placeholder": "Ausgabe",
+      "explain": "Das Dictionary zählt: rot 3, blau 2, grün 1. Differenz 3 − 2 = 1. `get(w, 0)` liefert 0, wenn der Schlüssel noch fehlt."
+    },
+    {
+      "id": "kopie", "type": "choice", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\nbrett = [[\"X\", None], [None, \"O\"]]\nversuch = brett.copy()\nversuch[0][1] = \"X\"\nprint(brett[0][1])\n```",
+      "options": [
+        { "md": "`X`", "correct": true, "why": "`copy` ist flach: Die äußere Liste ist neu, die inneren Listen werden geteilt." },
+        { "md": "`None`", "why": "Das wäre bei `copy.deepcopy(brett)` so. Die flache Kopie teilt die Zeilen." },
+        { "md": "`TypeError`", "why": "Listen dürfen verändert werden; es gibt keinen Fehler." }
+      ],
+      "explain": "Genau dieser Fehler passiert leicht im Tic-Tac-Toe-Projekt von CS50 AI. Für ein unabhängiges Brett braucht man `copy.deepcopy(brett)`."
+    },
+    {
+      "id": "luecken", "type": "proof", "mode": "gaps", "label": "Programm ergänzen",
+      "md": "Das Programm soll die verschiedenen Zustände zählen, die eine Suche besucht hat. Fülle die Lücken.",
+      "steps": [
+        "`besucht = set()`",
+        "`for zustand in [(0, 0), (0, 1), (0, 0), (1, 1)]:`",
+        "`    besucht.add(zustand)`",
+        "`print(len(besucht))`"
+      ],
+      "gaps": [0, 2],
+      "distractors": [
+        { "md": "`besucht = {}`", "why": "`{}` ist ein leeres Dictionary, kein Set; ein leeres Set schreibt man `set()`." },
+        { "md": "`    besucht.append(zustand)`", "why": "Sets haben kein `append`; Elemente kommen mit `add` hinein." }
+      ],
+      "explain": "Das Set nimmt `(0, 0)` nur einmal auf; ausgegeben wird 3. Tupel eignen sich als Zustände, weil sie unveränderlich sind und deshalb in ein Set dürfen."
+    },
+    { "id": "neu1", "type": "gen", "gen": "py-sammlungen", "level": 1, "label": "Indizes" },
+    { "id": "neu2", "type": "gen", "gen": "py-sammlungen", "level": 2, "label": "Methoden und Zähler" },
+    { "id": "neu3", "type": "gen", "gen": "py-sammlungen", "level": 3, "label": "Slices und Dictionaries" },
+    { "id": "neu4", "type": "gen", "gen": "py-sammlungen", "level": 4, "label": "Aliasing und Mengen" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Liste: geordnet und veränderlich. Tupel: unveränderlich. Dictionary: Schlüssel zu Wert. Set: Menge ohne Doppelte.",
+        "`pop()` nimmt das letzte, `pop(0)` das erste Element.",
+        "`get(k, 0)` zählt bequem mit einem Dictionary.",
+        "`b = a` teilt eine Liste; `copy()` kopiert flach, `deepcopy` vollständig."
+      ]
+    }
+  ]
+}

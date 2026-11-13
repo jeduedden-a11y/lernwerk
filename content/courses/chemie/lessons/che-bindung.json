@@ -1,0 +1,97 @@
+{
+  "id": "che-bindung",
+  "title": "Ionen, Elektronegativität und Bindung",
+  "subtitle": "Wer die Elektronen bekommt, und wer sie nur teilt",
+  "source": "Kerncurriculum Chemie Hessen (Basiskonzept Struktur und Eigenschaften); Elektronegativität nach Pauling, gerundete Schulwerte",
+  "vault": [
+    { "path": "02 Wiki/Chemie/01 Grundlagen/Chemische Bindung.md", "title": "Chemische Bindung" },
+    { "path": "02 Wiki/Chemie/01 Grundlagen/Elektronegativität.md", "title": "Elektronegativität" },
+    { "path": "02 Wiki/Chemie/01 Grundlagen/Wasserstoffbrückenbindungen.md", "title": "Wasserstoffbrückenbindungen" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Wie aus Natrium und Chlor Kochsalz wird, im Schalenmodell.",
+      "widget": "atom",
+      "params": { "Z": 11, "q": 0, "slider": false },
+      "int": ["Z", "q"],
+      "timeline": [
+        { "caption": "Natrium hat ein einzelnes Außenelektron auf der M-Schale.", "set": { "Z": 11, "q": 0 } },
+        { "caption": "Gibt es dieses Elektron ab, bleibt die volle L-Schale übrig. Das Natrium-Ion $\\mathrm{Na^+}$ hat dieselbe Hülle wie Neon.", "to": { "q": 1 }, "dur": 900, "hold": 8000 },
+        { "caption": "Chlor hat sieben Außenelektronen, ihm fehlt eines zur Achterschale.", "set": { "Z": 17, "q": 0 }, "hold": 6000 },
+        { "caption": "Nimmt es ein Elektron auf, entsteht das Chlorid-Ion $\\mathrm{Cl^-}$ mit der Hülle von Argon.", "to": { "q": -1 }, "dur": 900, "hold": 8000 },
+        { "caption": "Positive und negative Ionen ziehen sich an: Ionenbindung. Im Kochsalzkristall wechseln sie sich in allen drei Richtungen ab, deshalb schmilzt Salz erst bei 801 °C.", "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Atome binden sich, um volle Außenschalen zu erreichen. Dafür gibt es zwei Wege. Ein Metall mit wenigen Außenelektronen **gibt** sie ab, ein Nichtmetall, dem wenige fehlen, **nimmt** sie auf: Es entstehen Ionen, die sich anziehen. Zwei Nichtmetalle dagegen **teilen** sich Elektronenpaare: Elektronenpaarbindung.\n\nWie gerecht geteilt wird, entscheidet die **Elektronegativität** $EN$, die Anziehungskraft eines Atoms auf Bindungselektronen. Sind beide gleich stark, liegt das Paar in der Mitte: unpolar. Zieht ein Partner stärker, rückt das Paar zu ihm, er bekommt eine negative Teilladung $\\delta^-$: polar. Ist der Unterschied sehr groß, geht das Elektron praktisch ganz über: Ionenbindung.\n\nAus polaren Bindungen kann ein **Dipolmolekül** werden, wenn sich die Teilladungen nicht durch Symmetrie aufheben. Wasser ist gewinkelt und ein Dipol, Kohlendioxid ist linear und keiner."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Elektronegativität\n> Maß dafür, wie stark ein Atom bindende Elektronen anzieht. Schulwerte nach Pauling: H 2,2; C 2,5; N 3,0; O 3,5; F 4,0; Na 0,9; Mg 1,2; Cl 3,0.\n\n> [!satz] Faustregel für die Bindungsart\n> $\\Delta EN < 0{,}5$: unpolare Elektronenpaarbindung. $0{,}5 \\le \\Delta EN \\le 1{,}7$: polare Elektronenpaarbindung. $\\Delta EN > 1{,}7$: überwiegend Ionenbindung. Die Übergänge sind fließend.\n\n> [!definition] Zwischenmolekulare Kräfte\n> Van-der-Waals-Kräfte (schwach, zwischen allen Molekülen), Dipol-Dipol-Kräfte, Wasserstoffbrücken (H an N, O oder F trifft ein freies Elektronenpaar; vergleichsweise stark)."
+    },
+    {
+      "id": "oxid", "type": "widget", "label": "Ausprobieren",
+      "md": "Stelle das Ion ein, das **Sauerstoff** bevorzugt bildet. Ordnungszahl und Ladung lassen sich verstellen.",
+      "widget": "atom",
+      "params": { "Z": 6, "q": 0, "chargeSlider": true },
+      "goal": {
+        "when": "Z == 8 && q == -2",
+        "hints": [{ "when": "Z != 8", "text": "Sauerstoff hat die Ordnungszahl 8." }, { "when": "q > -2", "text": "Sauerstoff hat sechs Außenelektronen. Wie viele fehlen bis zur Achterschale?" }, { "when": "q < -2", "text": "So viele Elektronen nimmt Sauerstoff nicht auf; die Achterschale ist schon früher voll." }],
+        "solve": { "Z": 8, "q": -2 }
+      },
+      "explain": "Sauerstoff nimmt zwei Elektronen auf und wird zum Oxid-Ion $\\mathrm{O^{2-}}$ mit 10 Elektronen, der Hülle von Neon."
+    },
+    {
+      "id": "differenz", "type": "numeric", "label": "Rechnen",
+      "md": "Wie groß ist $\\Delta EN$ in der Bindung zwischen Wasserstoff ($2{,}2$) und Chlor ($3{,}0$)?",
+      "answer": 0.8, "tolerance": 0.01, "placeholder": "Zahl",
+      "explain": "$\\Delta EN = 3{,}0 - 2{,}2 = 0{,}8$: eine polare Elektronenpaarbindung, $\\delta^-$ am Chlor. Deshalb löst sich Chlorwasserstoff so gut im polaren Wasser."
+    },
+    {
+      "id": "einordnen", "type": "sort", "label": "Einordnen",
+      "md": "Ordne die Bindungen ein. Werte: H 2,2; C 2,5; O 3,5; F 4,0; Na 0,9; K 0,8; Cl 3,0.",
+      "categories": ["unpolar", "polar", "ionisch"],
+      "items": [
+        { "md": "Cl–Cl", "cat": "unpolar" },
+        { "md": "C–H", "cat": "unpolar" },
+        { "md": "O–H", "cat": "polar" },
+        { "md": "C–O", "cat": "polar" },
+        { "md": "Na–Cl", "cat": "ionisch" },
+        { "md": "K–F", "cat": "ionisch" }
+      ],
+      "explain": "$\\Delta EN$: Cl–Cl 0, C–H 0,3, O–H 1,3, C–O 1,0, Na–Cl 2,1, K–F 3,2."
+    },
+    {
+      "id": "wasser", "type": "proof", "mode": "gaps", "label": "Argument",
+      "md": "Warum ist Wasser ein Dipolmolekül? Fülle die Lücken der Begründung.",
+      "claim": "Das Wassermolekül ist ein Dipol.",
+      "steps": [
+        "Sauerstoff ist deutlich elektronegativer als Wasserstoff ($3{,}5$ gegen $2{,}2$).",
+        "Jede O–H-Bindung ist polar: $\\delta^-$ am Sauerstoff, $\\delta^+$ an den Wasserstoffatomen.",
+        "Das Molekül ist gewinkelt, mit etwa 105° zwischen den Bindungen.",
+        "Die beiden Teildipole heben sich deshalb nicht auf, sie addieren sich zu einem Gesamtdipol."
+      ],
+      "gaps": [2, 3],
+      "distractors": [
+        { "md": "Das Molekül ist linear gebaut, H–O–H auf einer Geraden.", "why": "Die zwei freien Elektronenpaare am Sauerstoff drücken die Bindungen zusammen; das Molekül ist gewinkelt." },
+        { "md": "Die beiden Teildipole heben sich gegenseitig auf.", "why": "Das passiert nur bei symmetrischem Bau, etwa beim linearen $\\mathrm{CO_2}$." }
+      ],
+      "explain": "Polare Bindungen allein reichen nicht; es kommt auf die Geometrie an. Wasser: polar und gewinkelt, also ein Dipol. Kohlendioxid: polar, aber linear, also keiner."
+    },
+    { "id": "neu1", "type": "gen", "gen": "che-bindung", "level": 1, "label": "Elektronegativität" },
+    { "id": "neu2", "type": "gen", "gen": "che-bindung", "level": 2, "label": "Bindungsart" },
+    { "id": "neu3", "type": "gen", "gen": "che-bindung", "level": 3, "label": "Teilladungen und Dipole" },
+    { "id": "neu4", "type": "gen", "gen": "che-bindung", "level": 4, "label": "Kräfte zwischen Molekülen" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Metalle geben Elektronen ab, Nichtmetalle nehmen welche auf; die Ionen ziehen sich an.",
+        "Nichtmetalle teilen Elektronenpaare; die Elektronegativität entscheidet, wie gerecht.",
+        "$\\Delta EN$ unter 0,5 unpolar, bis 1,7 polar, darüber überwiegend ionisch.",
+        "Ob ein Molekül ein Dipol ist, hängt von polaren Bindungen und von der Geometrie ab."
+      ]
+    }
+  ]
+}

@@ -189,7 +189,7 @@ def main() -> int:
     widget_files = sorted((runtime / "widgets").glob("*.js"))
     widgets = {m for f in widget_files for m in re.findall(r'LW\.widget\("([a-z0-9-]+)"', f.read_text(encoding="utf-8"))}
     generator_files = sorted((runtime / "generators").glob("*.js")) if (runtime / "generators").is_dir() else []
-    GENERATORS.update(m for f in generator_files for m in re.findall(r'(?:\bgen|LW\.generator)\("([a-z0-9-]+)"', f.read_text(encoding="utf-8")))
+    GENERATORS.update(m for f in generator_files for m in re.findall(r'(?:\bgen|\bproofGen|LW\.generator)\("([a-z0-9-]+)"', f.read_text(encoding="utf-8")))
     widget_files = widget_files + generator_files
 
     info = load(runtime / "runtime.json") or {}

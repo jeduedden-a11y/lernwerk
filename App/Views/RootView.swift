@@ -37,6 +37,8 @@ struct RootView: View {
                 .environment(model)
         }
         .overlay(alignment: .top) { ToastView() }
+        // lernwerk://weiter, lernwerk://wiederholen, lernwerk://tagesmix (for shortcuts on the home screen)
+        .onOpenURL { model.open($0) }
         .task {
             model.openLaunchTarget()
             await model.syncContent()

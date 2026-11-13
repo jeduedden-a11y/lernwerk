@@ -1,0 +1,101 @@
+{
+  "id": "stoch-axiome",
+  "title": "Die Axiome von Kolmogorow",
+  "subtitle": "Drei Regeln, aus denen die ganze Wahrscheinlichkeitsrechnung folgt",
+  "source": "Andrei N. Kolmogorow, Grundbegriffe der Wahrscheinlichkeitsrechnung (1933); Lehrbuchstandard der Stochastik",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Axiome von Kolmogorow.md", "title": "Axiome von Kolmogorow" },
+    { "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsexperiment und Ereignis.md", "title": "Zufallsexperiment und Ereignis" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Kolmogorow stellte 1933 drei Axiome an den Anfang. Alles Weitere wird daraus bewiesen, etwa die Regel für das Gegenereignis.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          { "tex": "P(A) \\ge 0", "why": "**Axiom 1:** Wahrscheinlichkeiten sind nie negativ." },
+          { "tex": "P(\\Omega) = 1", "why": "**Axiom 2:** Irgendein Ergebnis tritt sicher ein." },
+          { "tex": "A \\cap B = \\emptyset \\;\\Rightarrow\\; P(A \\cup B) = P(A) + P(B)", "why": "**Axiom 3:** Wahrscheinlichkeiten unvereinbarer Ereignisse addieren sich." },
+          { "tex": "1 = P(\\Omega) = P(A \\cup \\bar A) = P(A) + P(\\bar A)", "why": "$A$ und sein Gegenereignis sind unvereinbar und füllen zusammen $\\Omega$: Axiom 2, dann Axiom 3." },
+          { "tex": "P(\\bar A) = 1 - P(A)", "why": "Die Gegenwahrscheinlichkeit, bewiesen aus den Axiomen." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Erstes Axiom: keine negativen Wahrscheinlichkeiten.", "set": { "k": 1 } },
+        { "caption": "Zweites Axiom: Das sichere Ereignis hat Wahrscheinlichkeit 1.", "set": { "k": 2 } },
+        { "caption": "Drittes Axiom: Unvereinbare Ereignisse addieren sich. Mehr wird nicht vorausgesetzt.", "set": { "k": 3 } },
+        { "caption": "Jetzt ein Beweis: A und nicht A zerlegen den Ergebnisraum.", "set": { "k": 4 } },
+        { "caption": "Daraus folgt die Gegenwahrscheinlichkeit. Laplace, Baumdiagramme und Bayes stehen alle auf diesem Fundament.", "set": { "k": 5 }, "hold": 8000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Was eine Wahrscheinlichkeit »eigentlich« ist, darüber streiten Philosophen bis heute: eine Häufigkeit auf lange Sicht, ein Maß für Überzeugung, eine Eigenschaft des Experiments? Kolmogorow umging den Streit. Er legte nur fest, wie Wahrscheinlichkeiten sich **verhalten** müssen, mit drei Regeln.\n\nDas hat zwei Vorteile. Jede Deutung, die diese Regeln erfüllt, darf die ganze Theorie benutzen. Und jede Rechenregel, von der Gegenwahrscheinlichkeit bis zum Satz von Bayes, lässt sich aus den drei Axiomen **beweisen**. Das Werkzeug dafür ist fast immer dasselbe: ein Ereignis in unvereinbare Teile zerlegen und Axiom 3 anwenden."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Wahrscheinlichkeitsmaß\n> Eine Funktion $P$, die jedem Ereignis $A \\subseteq \\Omega$ eine Zahl zuordnet, mit\n> (K1) $P(A) \\ge 0$, (K2) $P(\\Omega) = 1$, (K3) $P(A \\cup B) = P(A) + P(B)$ für unvereinbare $A, B$ (und entsprechend für abzählbar viele).\n\n> [!satz] Folgerungen\n> $P(\\emptyset) = 0$, $P(\\bar A) = 1 - P(A)$, aus $A \\subseteq B$ folgt $P(A) \\le P(B)$, und der Additionssatz $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.\n\n> [!tip] Beweisidee\n> Zerlegen in unvereinbare Teile, etwa $B = A \\cup (B \\setminus A)$ für $A \\subseteq B$, dann Axiom 3."
+    },
+    {
+      "id": "additionssatz", "type": "numeric", "label": "Rechnen",
+      "md": "Es ist $P(A) = 0{,}5$, $P(B) = 0{,}4$ und $P(A \\cap B) = 0{,}2$. Wie groß ist $P(A \\cup B)$?",
+      "answer": 0.7, "tolerance": 0.001, "placeholder": "Dezimalzahl",
+      "explain": "Additionssatz: $0{,}5 + 0{,}4 - 0{,}2 = 0{,}7$. Ohne den Abzug würde der Schnitt doppelt gezählt."
+    },
+    {
+      "id": "monotonie", "type": "proof", "mode": "justify", "label": "Begründen",
+      "md": "Ein Teilereignis ist nie wahrscheinlicher als das ganze. Wähle für jede Zeile die Begründung.",
+      "given": "$A \\subseteq B$.",
+      "claim": "$P(A) \\le P(B)$.",
+      "steps": [
+        { "md": "$B = A \\cup (B \\setminus A)$, und die beiden Teile sind unvereinbar.", "by": "Zerlegung" },
+        { "md": "$P(B) = P(A) + P(B \\setminus A)$.", "by": "Axiom 3" },
+        { "md": "$P(B \\setminus A) \\ge 0$.", "by": "Axiom 1" },
+        { "md": "Also $P(B) \\ge P(A)$.", "by": "Umformen" }
+      ],
+      "reasons": ["Axiom 2", "Unabhängigkeit"],
+      "explain": "Zerlegen, Axiom 3, Axiom 1: Der Rest $B \\setminus A$ kann nur etwas hinzufügen, nichts wegnehmen."
+    },
+    {
+      "id": "additionsbeweis", "type": "proof", "mode": "gaps", "label": "Lückenbeweis",
+      "md": "Fülle die Lücken im Beweis des Additionssatzes.",
+      "given": "$A, B$ sind beliebige Ereignisse.",
+      "claim": "$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+      "steps": [
+        "$A \\cup B = A \\cup (B \\setminus A)$, unvereinbar.",
+        "$P(A \\cup B) = P(A) + P(B \\setminus A)$.",
+        "$B = (A \\cap B) \\cup (B \\setminus A)$, unvereinbar, also $P(B) = P(A \\cap B) + P(B \\setminus A)$.",
+        "Einsetzen von $P(B \\setminus A) = P(B) - P(A \\cap B)$ ergibt die Behauptung."
+      ],
+      "gaps": [1, 2],
+      "distractors": [
+        { "md": "$P(A \\cup B) = P(A) + P(B)$.", "why": "Das gilt nur für unvereinbare Ereignisse; sonst wird der Schnitt doppelt gezählt." },
+        { "md": "$B = A \\cup (B \\setminus A)$, also $P(B) = P(A) + P(B \\setminus A)$.", "why": "Diese Vereinigung ist $A \\cup B$, nicht $B$." }
+      ],
+      "explain": "Zweimal zerlegen, zweimal Axiom 3, dann den gemeinsamen Teil $P(B \\setminus A)$ eliminieren."
+    },
+    {
+      "id": "null", "type": "truefalse",
+      "md": "Ein Ereignis mit Wahrscheinlichkeit 0 kann trotzdem eintreten.",
+      "answer": true,
+      "whyNot": "Bei stetigen Zufallsgrößen hat jeder einzelne Wert Wahrscheinlichkeit 0, und doch nimmt die Größe irgendeinen Wert an.",
+      "explain": "Aus den Axiomen folgt nur $P(\\emptyset) = 0$, nicht umgekehrt. Dass eine normalverteilte Größe genau den Wert 1,5 annimmt, hat Wahrscheinlichkeit 0, ist aber nicht unmöglich."
+    },
+    { "id": "neu1", "type": "gen", "gen": "beweis-stochastik", "level": 1, "label": "Aus den Axiomen" },
+    { "id": "neu2", "type": "gen", "gen": "beweis-stochastik", "level": 2, "label": "Beweise bauen" },
+    { "id": "neu3", "type": "gen", "gen": "beweis-stochastik", "level": 3, "label": "Additionssatz und Bayes" },
+    { "id": "neu4", "type": "gen", "gen": "beweis-stochastik", "level": 4, "label": "Unabhängigkeit" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Drei Axiome: $P(A) \\ge 0$, $P(\\Omega) = 1$, Additivität für unvereinbare Ereignisse.",
+        "Daraus folgen $P(\\emptyset) = 0$, die Gegenwahrscheinlichkeit, die Monotonie und der Additionssatz.",
+        "Beweistechnik: in unvereinbare Teile zerlegen und Axiom 3 anwenden.",
+        "Wahrscheinlichkeit 0 heißt nicht unmöglich."
+      ]
+    }
+  ]
+}

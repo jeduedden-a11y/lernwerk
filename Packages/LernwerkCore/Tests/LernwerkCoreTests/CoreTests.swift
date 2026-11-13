@@ -133,6 +133,61 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(meta.reviewableStepIDs, ["a", "b", "c", "d", "e"])
     }
 
+    func testExamIsStoredPerTopic() {
+        var state = LearnerState()
+        let finished = FinishedLesson(lessonId: nil, mode: "exam", results: [
+            StepResult(stepId: "e1", lessonId: nil, type: "numeric", correct: true, firstTry: true, attempts: 1, revealed: false,
+                       topicId: "laplace", courseId: "stochastik", level: 2),
+            StepResult(stepId: "e2", lessonId: nil, type: "choice", correct: false, firstTry: false, attempts: 1, revealed: false,
+                       topicId: "laplace", courseId: "stochastik", level: 2, skipped: true),
+            StepResult(stepId: "e3", lessonId: nil, type: "numeric", correct: true, firstTry: true, attempts: 1, revealed: false,
+                       topicId: "abzaehlen", courseId: "stochastik", level: 2),
+        ], score: 2.0 / 3.0, seconds: 120, exam: ExamInfo(title: "Klausur", courseId: "stochastik"))
+        let xp = state.record(finished, course: nil, meta: nil)
+        XCTAssertEqual(xp, 6)
+        XCTAssertEqual(state.exams.count, 1)
+        XCTAssertEqual(state.exams[0].correct, 2)
+        XCTAssertEqual(state.exams[0].topics["laplace"], Tally(correct: 1, total: 2))
+        XCTAssertEqual(state.exams[0].topics["abzaehlen"], Tally(correct: 1, total: 1))
+    }
+
+    func testMixMovesCardsAndCountsTraining() {
+        var state = LearnerState()
+        let now = Date()
+        state.cards[ReviewCard.key("l1", "q1")] = ReviewCard(courseId: "c", lessonId: "l1", stepId: "q1", due: now)
+        let finished = FinishedLesson(lessonId: nil, mode: "mix", results: [
+            StepResult(stepId: "q1", lessonId: "l1", type: "choice", correct: true, firstTry: true, attempts: 1, revealed: false),
+            StepResult(stepId: "m1", lessonId: nil, type: "numeric", correct: true, firstTry: true, attempts: 1, revealed: false,
+                       topicId: "t", courseId: "c", level: 3),
+        ], score: 1)
+        state.record(finished, course: nil, meta: nil, now: now)
+        XCTAssertGreaterThan(state.cards[ReviewCard.key("l1", "q1")]?.due ?? now, now)
+        XCTAssertEqual(state.practice["c/t"]?.tasks[2], 1)
+        XCTAssertEqual(state.practice["c/t"]?.correct[2], 1)
+    }
+
+    func testWeakSpotsNeedEnoughAnswers() {
+        var state = LearnerState()
+        var stat = PracticeStat()
+        stat.tasks = [8, 0, 0, 0]
+        stat.correct = [3, 0, 0, 0]
+        state.practice["c/t"] = stat
+        let course = Course(id: "c", title: "Kurs", subtitle: nil, description: nil, color: "#000000", symbol: "book", vault: nil, chapters: [],
+                            practice: [PracticeTopic(id: "t", title: "Thema", gens: ["g"])])
+        let spots = state.weakSpots(courses: [course])
+        XCTAssertEqual(spots.count, 1)
+        XCTAssertEqual(spots.first?.title, "Thema")
+        stat.tasks = [4, 0, 0, 0]
+        stat.correct = [1, 0, 0, 0]
+        state.practice["c/t"] = stat
+        XCTAssertTrue(state.weakSpots(courses: [course]).isEmpty)
+    }
+
+    func testPrimaryMessageCarriesSkipLabel() {
+        let m = RuntimeMessage.parse(["type": "primary", "label": "Antwort abgeben", "enabled": true, "style": "check", "canGiveUp": true, "giveUpLabel": "Überspringen"])
+        XCTAssertEqual(m, .primary(label: "Antwort abgeben", enabled: true, style: "check", canGiveUp: true, giveUpLabel: "Überspringen"))
+    }
+
     func testPathMessages() {
         XCTAssertEqual(RuntimeMessage.parse(["type": "open", "courseId": "ethnologie", "lessonId": "eth-gabe"]), .open(courseId: "ethnologie", lessonId: "eth-gabe"))
         XCTAssertEqual(RuntimeMessage.parse(["type": "practice", "courseId": "stochastik", "topicId": "schaetzen", "level": 7]), .practice(courseId: "stochastik", topicId: "schaetzen", level: 4))

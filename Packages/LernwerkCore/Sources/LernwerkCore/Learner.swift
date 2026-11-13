@@ -131,6 +131,68 @@ public struct PracticeStat: Codable, Hashable, Sendable {
     public static func key(course: String, topic: String) -> String { "\(course)/\(topic)" }
 }
 
+/// Correct answers out of all tasks, e.g. for one topic of an exam.
+public struct Tally: Codable, Hashable, Sendable {
+    public var correct: Int = 0
+    public var total: Int = 0
+    public init(correct: Int = 0, total: Int = 0) {
+        self.correct = correct
+        self.total = total
+    }
+    public var share: Double { total == 0 ? 0 : Double(correct) / Double(total) }
+}
+
+/// One exam: mixed tasks of a chapter or course, checked only at the end.
+public struct ExamRecord: Codable, Hashable, Sendable, Identifiable {
+    public var id: String = UUID().uuidString.lowercased()
+    public var date: Date
+    public var title: String
+    public var courseId: String?
+    public var chapterId: String?
+    public var correct: Int
+    public var total: Int
+    public var seconds: Int
+    public var timeUp: Bool
+    /// Per training topic id.
+    public var topics: [String: Tally]
+
+    public init(date: Date, title: String, courseId: String?, chapterId: String?, correct: Int, total: Int, seconds: Int, timeUp: Bool, topics: [String: Tally]) {
+        self.date = date
+        self.title = title
+        self.courseId = courseId
+        self.chapterId = chapterId
+        self.correct = correct
+        self.total = total
+        self.seconds = seconds
+        self.timeUp = timeUp
+        self.topics = topics
+    }
+
+    public var share: Double { total == 0 ? 0 : Double(correct) / Double(total) }
+}
+
+/// Something worth practising again: a training topic with a low hit rate, or a lesson whose questions keep failing.
+public struct WeakSpot: Hashable, Sendable, Identifiable {
+    public enum Kind: Hashable, Sendable {
+        case topic(courseId: String, topicId: String)
+        case lesson(courseId: String, lessonId: String)
+    }
+    public var kind: Kind
+    public var title: String
+    /// Hit rate between 0 and 1 the spot was judged by.
+    public var share: Double
+    /// How many answers it rests on.
+    public var evidence: Int
+    public var reason: String
+
+    public var id: String {
+        switch kind {
+        case .topic(let c, let t): return "topic:\(c)/\(t)"
+        case .lesson(let c, let l): return "lesson:\(c)/\(l)"
+        }
+    }
+}
+
 /// A note the learner wrote in the app; it goes into the vault through the Tagwerk bridge.
 public struct LearnNote: Codable, Hashable, Sendable, Identifiable {
     public var id: String
@@ -173,6 +235,8 @@ public struct LearnerState: Codable, Sendable {
     public var outbox: [OutgoingEvent] = []
     /// Training per "course/topic".
     public var practice: [String: PracticeStat] = [:]
+    /// Exams, newest last; only the last 50 are kept.
+    public var exams: [ExamRecord] = []
     public var lastLesson: String?
     public var dailyGoal: Int = 30
     public var bridgeFeatures: [String] = []
@@ -191,6 +255,7 @@ public struct LearnerState: Codable, Sendable {
         notes = (try? c.decode([LearnNote].self, forKey: .notes)) ?? []
         outbox = (try? c.decode([OutgoingEvent].self, forKey: .outbox)) ?? []
         practice = (try? c.decode([String: PracticeStat].self, forKey: .practice)) ?? [:]
+        exams = (try? c.decode([ExamRecord].self, forKey: .exams)) ?? []
         lastLesson = try? c.decodeIfPresent(String.self, forKey: .lastLesson)
         dailyGoal = (try? c.decode(Int.self, forKey: .dailyGoal)) ?? 30
         bridgeFeatures = (try? c.decode([String].self, forKey: .bridgeFeatures)) ?? []
@@ -225,6 +290,47 @@ public struct LearnerState: Codable, Sendable {
 
     public func completedCount(in course: Course) -> Int {
         course.readyLessons.filter { lessons[$0.id]?.isCompleted == true }.count
+    }
+
+    /// What most needs practice, weakest first.
+    /// Topics: hit rate at the first try in training and the daily mix plus the last ten exams; from 6 answers on, below 70 %.
+    /// Lessons: at least two of their questions were not known at the last repetition.
+    public func weakSpots(courses: [Course], limit: Int = 5) -> [WeakSpot] {
+        var examTally: [String: Tally] = [:]
+        for exam in exams.suffix(10) {
+            guard let course = exam.courseId else { continue }
+            for (topic, t) in exam.topics {
+                let key = PracticeStat.key(course: course, topic: topic)
+                examTally[key, default: Tally()].correct += t.correct
+                examTally[key, default: Tally()].total += t.total
+            }
+        }
+        var spots: [WeakSpot] = []
+        for course in courses {
+            for topic in course.practiceTopics {
+                let key = PracticeStat.key(course: course.id, topic: topic.id)
+                let p = practice[key]
+                let trainedCorrect = p?.correct.reduce(0, +) ?? 0
+                let trainedTotal = p?.totalTasks ?? 0
+                let exam = examTally[key] ?? Tally()
+                let all = Tally(correct: trainedCorrect + exam.correct, total: trainedTotal + exam.total)
+                guard all.total >= 6, all.share < 0.7 else { continue }
+                var reason = "\(all.correct) von \(all.total) Aufgaben beim ersten Versuch richtig"
+                if exam.total > 0 { reason += ", davon \(exam.correct) von \(exam.total) in Klausuren" }
+                spots.append(WeakSpot(kind: .topic(courseId: course.id, topicId: topic.id), title: topic.title,
+                                      share: all.share, evidence: all.total, reason: reason))
+            }
+            for lesson in course.readyLessons {
+                let lessonCards = cards.values.filter { $0.lessonId == lesson.id }
+                let failing = lessonCards.filter { $0.reps == 0 && $0.lapses > 0 }.count
+                guard failing >= 2, !lessonCards.isEmpty else { continue }
+                let share = 1 - Double(failing) / Double(lessonCards.count)
+                spots.append(WeakSpot(kind: .lesson(courseId: course.id, lessonId: lesson.id), title: lesson.title, share: share,
+                                      evidence: lessonCards.count, reason: "\(failing) von \(lessonCards.count) Fragen zuletzt nicht gewusst"))
+            }
+        }
+        let sorted = spots.sorted { $0.share != $1.share ? $0.share < $1.share : $0.evidence > $1.evidence }
+        return Array(sorted.prefix(limit))
     }
 
     // MARK: recording
@@ -262,6 +368,42 @@ public struct LearnerState: Codable, Sendable {
                 guard let lesson = r.lessonId else { continue }
                 let key = ReviewCard.key(lesson, r.stepId)
                 if let card = cards[key] { cards[key] = Scheduler.review(card, quality: r.quality, now: now) }
+            }
+        } else if finished.mode == "exam" {
+            // exams count every correct answer; the hit rate per topic feeds the weak spots, not the levels
+            let correct = finished.results.filter(\.correct).count
+            xp = 3 * correct + (finished.score >= 0.8 ? 10 : 0)
+            stat.practice += finished.results.count
+            var topics: [String: Tally] = [:]
+            for r in finished.results {
+                guard let topic = r.topicId else { continue }
+                topics[topic, default: Tally()].total += 1
+                if r.correct { topics[topic, default: Tally()].correct += 1 }
+            }
+            let info = finished.exam
+            exams.append(ExamRecord(date: now, title: info?.title ?? "Klausur", courseId: info?.courseId ?? course?.id, chapterId: info?.chapterId,
+                                    correct: correct, total: finished.results.count, seconds: finished.seconds ?? 0,
+                                    timeUp: info?.timeUp ?? false, topics: topics))
+            if exams.count > 50 { exams.removeFirst(exams.count - 50) }
+        } else if finished.mode == "mix" {
+            // daily mix: repetitions move their cards, new tasks count towards the topic's hit rate on their level
+            for r in finished.results {
+                if let lesson = r.lessonId {
+                    let key = ReviewCard.key(lesson, r.stepId)
+                    if let card = cards[key] { cards[key] = Scheduler.review(card, quality: r.quality, now: now) }
+                    xp += 2 + (r.quality >= 4 ? 1 : 0)
+                    stat.reviews += 1
+                } else if let topic = r.topicId, let courseID = r.courseId {
+                    let level = max(1, min(4, r.level ?? 1))
+                    let key = PracticeStat.key(course: courseID, topic: topic)
+                    var p = practice[key] ?? PracticeStat()
+                    p.tasks[level - 1] += 1
+                    if r.firstTry { p.correct[level - 1] += 1 }
+                    p.lastAt = now
+                    practice[key] = p
+                    xp += r.firstTry ? 1 + level : (r.correct ? 1 : 0)
+                    stat.practice += 1
+                }
             }
         } else if let lessonID = finished.lessonId, let course {
             var p = lessons[lessonID] ?? LessonProgress(courseId: course.id)

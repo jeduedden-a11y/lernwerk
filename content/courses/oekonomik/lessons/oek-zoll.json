@@ -1,0 +1,106 @@
+{
+  "id": "oek-zoll",
+  "title": "Zölle und Welthandel",
+  "subtitle": "Wer bei einem Importzoll gewinnt und wer verliert",
+  "source": "Lehrbuchstandard der Außenhandelstheorie (kleines offenes Land, partielles Gleichgewicht); eigene Zahlenbeispiele",
+  "vault": [
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Zölle und Freihandel.md", "title": "Zölle und Freihandel" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Komparativer Vorteil.md", "title": "Komparativer Vorteil" },
+    { "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Konsumenten- und Produzentenrente.md", "title": "Konsumenten- und Produzentenrente" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein kleines Land: Inländische Nachfrage $p = 20 - Q$, inländisches Angebot $p = 2 + Q$. Auf dem Weltmarkt kostet das Gut 5.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 20], "y": [0, 20], "xLabel": "Menge Q", "yLabel": "Preis p",
+        "vars": [{ "name": "t", "min": 0, "max": 6, "value": 0, "hidden": true }],
+        "lines": [
+          { "id": "N", "label": "Nachfrage", "a": 20, "m": -1, "color": "accent" },
+          { "id": "A", "label": "Angebot", "a": 2, "m": 1, "color": "orange" }
+        ],
+        "hlines": [
+          { "y": 5, "color": "blue", "label": "Weltmarktpreis" },
+          { "when": "t > 0", "y": "5 + t", "color": "red", "label": "mit Zoll" }
+        ],
+        "shades": [
+          { "when": "t > 0 && 12 - 2*t > 0.01", "points": [["3 + t", 5], ["15 - t", 5], ["15 - t", "5 + t"], ["3 + t", "5 + t"]], "color": "teal", "label": "Zoll" },
+          { "when": "t > 0", "points": [[3, 5], ["3 + t", 5], ["3 + t", "5 + t"]], "color": "red" },
+          { "when": "t > 0", "points": [["15 - t", 5], [15, 5], ["15 - t", "5 + t"]], "color": "red" }
+        ],
+        "readout": "Preis {5 + t|1}: Nachfrage {15 - t|1}, Inland {3 + t|1}, Import **{12 - 2*t|1}**, Zolleinnahmen {t*(12 - 2*t)|1}, Wohlfahrtsverlust {t*t|1}"
+      },
+      "timeline": [
+        { "caption": "Freihandel zum Weltmarktpreis 5: Die Inländer kaufen 15, heimische Firmen liefern 3. Die Lücke von 12 wird importiert.", "set": { "t": 0 } },
+        { "caption": "Ein Zoll von 2 hebt den Inlandspreis auf 7. Die Nachfrage sinkt auf 13, die heimische Produktion steigt auf 5, der Import fällt auf 8.", "to": { "t": 2 }, "dur": 1800, "hold": 8000 },
+        { "caption": "Das blaugrüne Rechteck sind die Zolleinnahmen: 2 mal 8 gleich 16. Die roten Dreiecke gehen ganz verloren: links teure Inlandsproduktion, rechts entgangene Käufe.", "hold": 9000 },
+        { "caption": "Bei einem Zoll von 4: Import 4, Einnahmen wieder 16, aber der Verlust ist auf 16 gewachsen.", "to": { "t": 4 }, "dur": 1800, "hold": 8000 },
+        { "caption": "Bei 6 erreicht der Inlandspreis den Preis ohne Handel, 11. Nichts wird mehr importiert, Einnahmen null: ein prohibitiver Zoll.", "to": { "t": 6 }, "dur": 1800, "hold": 9000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Ricardo hat gezeigt, dass Handel beiden Seiten nützt, sogar wenn eine alles besser kann. Trotzdem erheben Staaten Zölle. Was passiert dabei?\n\nIn einem kleinen Land, das den Weltmarktpreis nicht beeinflusst, steigt der Inlandspreis um den Zoll. Heimische **Produzenten** freuen sich: Sie verkaufen mehr zu einem höheren Preis. Der **Staat** nimmt Zoll ein. Die **Konsumenten** zahlen mehr und kaufen weniger.\n\nRechnet man alles zusammen, verliert das Land: Der Verlust der Konsumenten ist größer als die Gewinne der anderen. Übrig bleiben zwei Dreiecke, der **Wohlfahrtsverlust**. Zölle können trotzdem gewollt sein, etwa zum Schutz junger Industrien oder aus Sicherheitsgründen; ihr Preis ist dann aber sichtbar."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Importe\n> Beim Preis $p$: Import $= Q_N(p) - Q_A(p)$, wenn das positiv ist.\n\n> [!satz] Zoll im kleinen Land\n> Ein Mengenzoll $t$ hebt den Inlandspreis von $p_W$ auf $p_W + t$. Zolleinnahmen: $t$ mal Importmenge. Wohlfahrtsverlust: zwei Dreiecke, bei Geraden $\\tfrac12 t \\cdot \\Delta Q_A + \\tfrac12 t \\cdot \\Delta Q_N$.\n\n> [!definition] Prohibitiver Zoll\n> So hoch, dass der Inlandspreis den Autarkiepreis erreicht; dann wird nichts mehr importiert."
+    },
+    {
+      "id": "einstellen", "type": "widget", "label": "Ausprobieren",
+      "md": "Stelle den Zoll so ein, dass **genau 8 Einheiten** importiert werden.",
+      "widget": "curves",
+      "params": {
+        "x": [0, 20], "y": [0, 20], "xLabel": "Menge Q", "yLabel": "Preis p",
+        "vars": [{ "name": "t", "label": "Zoll", "min": 0, "max": 6, "step": 0.5, "value": 0, "digits": 1 }],
+        "lines": [
+          { "id": "N", "label": "Nachfrage", "a": 20, "m": -1, "color": "accent" },
+          { "id": "A", "label": "Angebot", "a": 2, "m": 1, "color": "orange" }
+        ],
+        "hlines": [
+          { "y": 5, "color": "blue", "label": "Weltmarktpreis" },
+          { "when": "t > 0", "y": "5 + t", "color": "red", "label": "mit Zoll" }
+        ],
+        "readout": "Inlandspreis {5 + t|1}, Import **{12 - 2*t|1}**"
+      },
+      "goal": {
+        "when": "abs(12 - 2*t - 8) < 0.01",
+        "hints": [{ "when": "12 - 2*t > 8", "text": "Noch {12 - 2*t|1} Einheiten Import. Ein höherer Zoll senkt ihn." }, { "when": "12 - 2*t < 8", "text": "Nur noch {12 - 2*t|1} Einheiten, der Zoll ist zu hoch." }],
+        "solve": { "t": 2 }
+      },
+      "explain": "Beim Preis $5 + t$ ist der Import $(15 - t) - (3 + t) = 12 - 2t$. Aus $12 - 2t = 8$ folgt $t = 2$."
+    },
+    {
+      "id": "einnahmen", "type": "numeric", "label": "Rechnen",
+      "md": "Gleiches Land, aber ein Zoll von $3$. Wie hoch sind die Zolleinnahmen?",
+      "answer": 18, "tolerance": 0, "placeholder": "Zahl",
+      "explain": "Inlandspreis 8: Nachfrage 12, Inland 6, Import 6. Einnahmen $3 \\cdot 6 = 18$. Der Wohlfahrtsverlust ist $3^2 = 9$."
+    },
+    {
+      "id": "wer", "type": "sort", "label": "Einordnen",
+      "md": "Ein kleines Land führt einen Importzoll ein. Wer gewinnt, wer verliert?",
+      "categories": ["gewinnt", "verliert"],
+      "items": [
+        { "md": "inländische Produzenten", "cat": "gewinnt" },
+        { "md": "inländische Konsumenten", "cat": "verliert" },
+        { "md": "der Staatshaushalt", "cat": "gewinnt" },
+        { "md": "das Land insgesamt", "cat": "verliert" }
+      ],
+      "explain": "Produzenten und Staat gewinnen, die Konsumenten verlieren mehr, als die anderen gewinnen. Der Rest sind die beiden Verlustdreiecke."
+    },
+    { "id": "neu1", "type": "gen", "gen": "oek-zoll", "level": 1, "label": "Freihandel" },
+    { "id": "neu2", "type": "gen", "gen": "oek-zoll", "level": 2, "label": "Zoll und Einnahmen" },
+    { "id": "neu3", "type": "gen", "gen": "oek-zoll", "level": 3, "label": "Wohlfahrtsverlust" },
+    { "id": "neu4", "type": "gen", "gen": "oek-zoll", "level": 4, "label": "Prohibitiver Zoll" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Liegt der Weltmarktpreis unter dem Autarkiepreis, importiert das Land die Lücke zwischen Nachfrage und Inlandsangebot.",
+        "Ein Zoll hebt den Inlandspreis: Produzenten und Staat gewinnen, Konsumenten verlieren.",
+        "Insgesamt entsteht ein Wohlfahrtsverlust aus zwei Dreiecken.",
+        "Ein prohibitiver Zoll beendet die Importe und bringt keine Einnahmen mehr."
+      ]
+    }
+  ]
+}

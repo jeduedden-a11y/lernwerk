@@ -5,6 +5,8 @@ struct SettingsView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
 
+    @AppStorage("reduceMotion") private var reduceMotion = false
+
     // Edited locally and written back on "Fertig", so a half-typed token never reaches the keychain.
     @State private var vault = VaultSettings()
     @State private var token = ""
@@ -35,8 +37,27 @@ struct SettingsView: View {
                 } header: {
                     Text("Lernen")
                 } footer: {
-                    Text("Eine neue Lektion bringt 10 Punkte und 2 für jede Aufgabe, die beim ersten Versuch sitzt. In der Wiederholung gibt es 2 Punkte je Aufgabe und einen mehr, wenn sie sofort sitzt.")
+                    Text("Eine neue Lektion bringt 10 Punkte und 2 für jede Aufgabe, die beim ersten Versuch sitzt. In der Wiederholung gibt es 2 Punkte je Aufgabe und einen mehr, wenn sie sofort sitzt. Eine Klausur bringt 3 Punkte je richtiger Aufgabe und 10 dazu ab 80 Prozent.")
                 }
+
+                Section {
+                    Toggle("Weniger Bewegung", isOn: $reduceMotion)
+                } header: {
+                    Text("Darstellung")
+                } footer: {
+                    Text("Animationen in den Lektionen springen gleich ans Ende, Seiten scrollen ohne Gleiten. Gilt auch, wenn »Bewegung reduzieren« in den Bedienungshilfen von iOS an ist.")
+                }
+
+                Section {
+                    LabeledContent("Weiter lernen", value: "lernwerk://weiter")
+                    LabeledContent("Wiederholen", value: "lernwerk://wiederholen")
+                    LabeledContent("Tagesmix", value: "lernwerk://tagesmix")
+                } header: {
+                    Text("Kurzbefehle")
+                } footer: {
+                    Text("In der Kurzbefehle-App eine Aktion »URL öffnen« mit einem dieser Links anlegen und über »Zum Home-Bildschirm« ablegen. Ein Tipp darauf startet Lernwerk direkt an dieser Stelle.")
+                }
+                .textSelection(.enabled)
 
                 Section {
                     TextField("GitHub-Benutzername", text: $vault.owner)

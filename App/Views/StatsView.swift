@@ -5,13 +5,17 @@ import LernwerkCore
 struct StatsView: View {
     @Environment(AppModel.self) private var model
     @State private var window = 14
+    @State private var practiceTarget: PracticeTarget?
+    @State private var examTarget: ExamTarget?
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     SummaryGrid()
+                    WeakSpotsCard(target: $practiceTarget)
                     XPChartCard(window: $window)
+                    ExamHistoryCard(target: $examTarget)
                     ForEach(model.subjects) { subject in
                         SectionTitle(title: subject.title, trailing: "\(Int((model.progress(of: subject) * 100).rounded())) %")
                         ForEach(model.courses(in: subject)) { course in
@@ -31,6 +35,97 @@ struct StatsView: View {
             .navigationDestination(for: Course.self) { course in
                 CourseView(course: course)
             }
+            .practiceLauncher($practiceTarget)
+            .examLauncher($examTarget)
+        }
+    }
+}
+
+/// Where practice pays off most: topics with a low hit rate, lessons whose questions keep slipping.
+struct WeakSpotsCard: View {
+    @Environment(AppModel.self) private var model
+    @Binding var target: PracticeTarget?
+
+    var body: some View {
+        let spots = model.weakSpots
+        VStack(alignment: .leading, spacing: 12) {
+            SectionTitle(title: "Schwachstellen", trailing: spots.isEmpty ? nil : (spots.count == 1 ? "1 Stelle" : "\(spots.count) Stellen"))
+            VStack(alignment: .leading, spacing: 12) {
+                if spots.isEmpty {
+                    Label {
+                        Text(model.state.practice.isEmpty && model.state.cards.isEmpty
+                             ? "Hier erscheinen Themen und Lektionen, die noch wackeln, sobald es genug Antworten gibt."
+                             : "Gerade nichts Auffälliges. Ein Thema landet hier, wenn nach mindestens sechs Antworten weniger als 70 Prozent beim ersten Versuch sitzen.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    } icon: {
+                        Image(systemName: "checkmark.seal.fill").foregroundStyle(.green)
+                    }
+                } else {
+                    ForEach(Array(spots.enumerated()), id: \.element.id) { offset, spot in
+                        if offset > 0 { Divider().padding(.leading, 48) }
+                        WeakSpotRow(spot: spot) { open(spot) }
+                    }
+                }
+            }
+            .card()
+        }
+    }
+
+    private func open(_ spot: WeakSpot) {
+        switch spot.kind {
+        case .topic(let courseId, let topicId):
+            guard let course = model.course(courseId), let topic = course.practiceTopics.first(where: { $0.id == topicId }) else { return }
+            target = PracticeTarget(course: course, topic: topic)
+        case .lesson(let courseId, let lessonId):
+            guard let course = model.course(courseId), let lesson = course.lessons.first(where: { $0.id == lessonId }) else { return }
+            model.start(course, lesson, fromStart: true)
+        }
+    }
+}
+
+struct WeakSpotRow: View {
+    @Environment(AppModel.self) private var model
+    var spot: WeakSpot
+    var action: () -> Void
+
+    var body: some View {
+        let course: Course? = {
+            switch spot.kind {
+            case .topic(let c, _), .lesson(let c, _): return model.course(c)
+            }
+        }()
+        let isTopic: Bool = { if case .topic = spot.kind { return true } else { return false } }()
+        HStack(spacing: 12) {
+            ZStack {
+                GoalRing(value: spot.share, tint: spot.share < 0.5 ? .red : .orange, lineWidth: 4)
+                Text("\(Int((spot.share * 100).rounded()))")
+                    .font(.caption2.weight(.bold).monospacedDigit())
+            }
+            .frame(width: 36, height: 36)
+            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(spot.title)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(2)
+                Text(spot.reason + (course.map { " · \($0.title)" } ?? ""))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityValue("\(Int((spot.share * 100).rounded())) Prozent sicher")
+            Spacer(minLength: 8)
+            Button {
+                action()
+            } label: {
+                Text(isTopic ? "Üben" : "Nochmal")
+                    .font(.subheadline.weight(.semibold))
+            }
+            .buttonStyle(.glassProminent)
+            .tint(course?.tint ?? .accentColor)
+            .accessibilityHint(isTopic ? "Öffnet die Stufen für dieses Thema" : "Startet die Lektion noch einmal von vorn")
         }
     }
 }

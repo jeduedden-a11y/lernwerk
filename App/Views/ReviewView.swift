@@ -11,6 +11,9 @@ struct ReviewView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
+                    if model.canStartMix {
+                        MixCard()
+                    }
                     if model.state.cards.isEmpty {
                         ContentUnavailableView {
                             Label("Noch nichts zu wiederholen", systemImage: "arrow.clockwise")
@@ -44,6 +47,59 @@ struct ReviewView: View {
     private var coursesWithCards: [Course] {
         let ids = Set(model.state.cards.values.map(\.courseId))
         return model.courses.filter { ids.contains($0.id) }
+    }
+}
+
+/// The daily mix: due repetitions and new tasks from every subject in one round, weak topics first.
+struct MixCard: View {
+    @Environment(AppModel.self) private var model
+    static let colors = [Color(hex: "#EC4899"), Color(hex: "#8B5CF6")]
+
+    var body: some View {
+        let plan = model.mixPlan()
+        let subjects = Set(plan.picks.map(\.courseId)).count
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                Image(systemName: "shuffle")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 44, height: 44)
+                    .background(LinearGradient(colors: Self.colors, startPoint: .topLeading, endPoint: .bottomTrailing),
+                                in: .rect(cornerRadius: 12, style: .continuous))
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Tagesmix").font(.title3.bold())
+                    Text(composition(plan.items.count, plan.picks.count, subjects))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Text("Abwechselnd eine Wiederholung und eine neue Aufgabe. Themen, die noch wackeln, kommen zuerst dran, danach die, die du am längsten nicht geübt hast.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            Button {
+                model.startMix()
+            } label: {
+                Label("Tagesmix starten", systemImage: "play.fill")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.glassProminent)
+            .tint(Self.colors[1])
+            .controlSize(.large)
+        }
+        .card()
+    }
+
+    private func composition(_ repeats: Int, _ fresh: Int, _ courses: Int) -> String {
+        var parts: [String] = []
+        if repeats > 0 { parts.append(repeats == 1 ? "1 Wiederholung" : "\(repeats) Wiederholungen") }
+        if fresh > 0 {
+            parts.append((fresh == 1 ? "1 neue Aufgabe" : "\(fresh) neue Aufgaben") + (courses > 1 ? " aus \(courses) Kursen" : ""))
+        }
+        return parts.joined(separator: " und ")
     }
 }
 

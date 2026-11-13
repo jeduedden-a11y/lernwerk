@@ -1,0 +1,100 @@
+{
+  "id": "la1-beweise",
+  "title": "Beweise mit Unterräumen und Abbildungen",
+  "subtitle": "Unterraumkriterium, Kern und Injektivität",
+  "source": "Lehrbuchstandard der Linearen Algebra I (Unterräume, lineare Abbildungen, Kern und Bild); eigene Aufbereitung als Beweistraining",
+  "vault": [
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Kern und Bild.md", "title": "Kern und Bild" },
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Vektorraum.md", "title": "Vektorraum" },
+    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md", "title": "Lineare Abbildungen und Matrizen" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Warum ist der Kern einer linearen Abbildung ein Unterraum? Der Beweis prüft drei Dinge, eins nach dem anderen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          { "tex": "f(0) = f(0 + 0) = f(0) + f(0) \\;\\Rightarrow\\; f(0) = 0", "why": "Also liegt der Nullvektor im Kern. Nebenbei bewiesen: Jede lineare Abbildung schickt 0 auf 0." },
+          { "tex": "u, v \\in \\ker f:\\quad f(u + v) = f(u) + f(v) = 0 + 0 = 0", "why": "Abgeschlossen unter Addition, dank der Additivität." },
+          { "tex": "\\lambda \\in K,\\ v \\in \\ker f:\\quad f(\\lambda v) = \\lambda f(v) = \\lambda \\cdot 0 = 0", "why": "Abgeschlossen unter Vielfachen, dank der Homogenität." },
+          { "tex": "\\ker f \\le V", "why": "Alle drei Bedingungen des Unterraumkriteriums sind erfüllt." }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Erste Bedingung: Der Nullvektor muss im Kern liegen. Ein kurzer Trick mit 0 = 0 + 0 zeigt es.", "set": { "k": 1 } },
+        { "caption": "Zweite Bedingung: Summen von Kernvektoren bleiben im Kern.", "set": { "k": 2 } },
+        { "caption": "Dritte Bedingung: Vielfache bleiben im Kern.", "set": { "k": 3 } },
+        { "caption": "Das Unterraumkriterium ist erfüllt. Fast jeder Unterraumbeweis hat genau diese drei Zeilen.", "set": { "k": 4 }, "hold": 8000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "In der linearen Algebra wiederholen sich wenige Beweismuster. Das wichtigste ist das **Unterraumkriterium**: Eine Teilmenge ist ein Unterraum, wenn sie den Nullvektor enthält und unter Addition und Vielfachen abgeschlossen ist. Man prüft das mit beliebigen Vektoren der Menge, nie mit Beispielen.\n\nDas zweite Muster heißt: Definitionen auspacken. »$v$ liegt im Kern« bedeutet »$f(v) = 0$«, »$f$ ist injektiv« bedeutet »aus $f(u) = f(v)$ folgt $u = v$«. Mit der Linearität verwandelt man das eine ins andere, etwa über die Differenz $u - v$.\n\nUnd wer zeigen will, dass etwas **nicht** gilt, etwa dass die Vereinigung zweier Unterräume kein Unterraum sein muss, braucht nur ein Gegenbeispiel."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!satz] Unterraumkriterium\n> $U \\subseteq V$ ist ein Unterraum, wenn $0 \\in U$, $u + v \\in U$ und $\\lambda u \\in U$ für alle $u, v \\in U$ und alle Skalare $\\lambda$.\n\n> [!definition] Kern und Bild\n> $\\ker f = \\{v \\in V : f(v) = 0\\}$, $\\operatorname{im} f = \\{f(v) : v \\in V\\}$. Beide sind Unterräume.\n\n> [!satz] Injektivität\n> Eine lineare Abbildung ist genau dann injektiv, wenn $\\ker f = \\{0\\}$."
+    },
+    {
+      "id": "injektiv", "type": "proof", "mode": "gaps", "label": "Lückenbeweis",
+      "md": "Fülle die Lücken im Beweis der Äquivalenz. Beide Richtungen sind nötig.",
+      "given": "$f\\colon V \\to W$ ist linear.",
+      "claim": "$f$ ist genau dann injektiv, wenn $\\ker f = \\{0\\}$.",
+      "steps": [
+        "»$\\Rightarrow$«: Sei $f$ injektiv und $v \\in \\ker f$. Dann $f(v) = 0 = f(0)$.",
+        "Aus der Injektivität folgt $v = 0$, also $\\ker f = \\{0\\}$.",
+        "»$\\Leftarrow$«: Sei $\\ker f = \\{0\\}$ und $f(u) = f(v)$.",
+        "Dann $f(u - v) = f(u) - f(v) = 0$, also $u - v \\in \\ker f$.",
+        "Also $u - v = 0$, d. h. $u = v$: $f$ ist injektiv."
+      ],
+      "gaps": [1, 3],
+      "distractors": [
+        { "md": "Dann $f(u + v) = f(u) + f(v) = 0$, also $u + v \\in \\ker f$.", "why": "Aus $f(u) = f(v)$ wird über die Differenz ein Kernvektor, nicht über die Summe." },
+        { "md": "Aus $f(v) = 0$ folgt $f = 0$.", "why": "Ein einzelner Vektor im Kern sagt nichts über die ganze Abbildung." }
+      ],
+      "explain": "Die Richtung »⇐« lebt von einem Trick: Gleiche Bilder bedeuten, dass die Differenz im Kern liegt. Ist der Kern trivial, sind die Urbilder gleich."
+    },
+    {
+      "id": "schnitt", "type": "proof", "mode": "justify", "label": "Begründen",
+      "md": "Der Schnitt zweier Unterräume ist wieder ein Unterraum. Wähle für jede Zeile die Begründung.",
+      "given": "$U_1, U_2$ sind Unterräume von $V$.",
+      "claim": "$U_1 \\cap U_2$ ist ein Unterraum.",
+      "steps": [
+        { "md": "$0 \\in U_1$ und $0 \\in U_2$, also $0 \\in U_1 \\cap U_2$.", "by": "Unterraumeigenschaft" },
+        { "md": "Seien $u, v \\in U_1 \\cap U_2$. Dann $u + v \\in U_1$ und $u + v \\in U_2$.", "by": "Unterraumeigenschaft" },
+        { "md": "Also $u + v \\in U_1 \\cap U_2$; genauso $\\lambda u \\in U_1 \\cap U_2$.", "by": "Definition des Schnitts" },
+        { "md": "$U_1 \\cap U_2$ ist ein Unterraum.", "by": "Unterraumkriterium" }
+      ],
+      "reasons": ["Gegenbeispiel wählen", "Homogenität"],
+      "explain": "Was in beiden Unterräumen liegt, bleibt bei Summen und Vielfachen in beiden. Für die Vereinigung klappt das nicht."
+    },
+    {
+      "id": "vereinigung", "type": "spot", "label": "Fehler finden",
+      "md": "Begründung, warum die Vereinigung der beiden Koordinatenachsen in $\\R^2$ kein Unterraum ist. Eine Zeile ist falsch begründet.",
+      "lines": [
+        { "md": "$U_1$ ist die $x$-Achse, $U_2$ die $y$-Achse; beide sind Unterräume.", "why": "Richtig." },
+        { "md": "$(1, 0)$ und $(0, 1)$ liegen in $U_1 \\cup U_2$.", "why": "Richtig: jeder in einer der Achsen." },
+        { "md": "$U_1 \\cup U_2$ enthält den Nullvektor nicht.", "why": "Falsch: $0$ liegt auf beiden Achsen. Gescheitert ist etwas anderes." },
+        { "md": "Ihre Summe $(1, 1)$ liegt auf keiner der Achsen, also ist $U_1 \\cup U_2$ nicht abgeschlossen unter Addition.", "why": "Richtig, das ist der eigentliche Grund." }
+      ],
+      "answer": 2,
+      "explain": "Ein einziges Gegenbeispiel genügt, aber man muss das richtige Kriterium verletzen: hier die Abgeschlossenheit unter Addition, nicht den Nullvektor."
+    },
+    { "id": "neu1", "type": "gen", "gen": "beweis-la", "level": 1, "label": "Aufbau erkennen" },
+    { "id": "neu2", "type": "gen", "gen": "beweis-la", "level": 2, "label": "Unterräume" },
+    { "id": "neu3", "type": "gen", "gen": "beweis-la", "level": 3, "label": "Lücken und Gründe" },
+    { "id": "neu4", "type": "gen", "gen": "beweis-la", "level": 4, "label": "Eigenvektoren und Fehler" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Unterraumkriterium: Nullvektor, Summen und Vielfache, jeweils mit beliebigen Elementen geprüft.",
+        "Kern und Bild einer linearen Abbildung sind Unterräume.",
+        "$f$ injektiv $\\iff \\ker f = \\{0\\}$; der Beweis läuft über die Differenz $u - v$.",
+        "Der Schnitt zweier Unterräume ist ein Unterraum, die Vereinigung im Allgemeinen nicht."
+      ]
+    }
+  ]
+}

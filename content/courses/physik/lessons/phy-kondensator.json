@@ -1,0 +1,108 @@
+{
+  "id": "phy-kondensator",
+  "title": "Ladungen im Kondensator",
+  "subtitle": "Homogenes Feld, Kapazität und die Bahn eines Elektrons",
+  "source": "Kerncurriculum Physik Hessen, Q1 (Elektrisches Feld); Lehrbuchstandard der Elektrostatik",
+  "vault": [
+    { "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Bewegung von Ladungen im elektrischen Feld.md", "title": "Bewegung von Ladungen im elektrischen Feld" },
+    { "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Kondensator und Kapazität.md", "title": "Kondensator und Kapazität" },
+    { "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Elektrisches Feld.md", "title": "Elektrisches Feld" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein Elektron, mit $U_B = 1000$ V beschleunigt, fliegt mittig zwischen zwei 10 cm lange Platten im Abstand 4 cm. Oben liegt die positive Platte.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 13], "y": [-2.6, 2.6], "xLabel": "x in cm", "yLabel": "y in cm", "height": 240,
+        "vars": [{ "name": "U", "min": 0, "max": 300, "value": 0, "hidden": true }, { "name": "UB", "min": 500, "max": 3000, "value": 1000, "hidden": true }, { "name": "d", "min": 4, "max": 4, "value": 4, "hidden": true }],
+        "functions": [{ "name": "y", "expr": "x <= 10 ? U*x^2/(4*d*UB) : U*100/(4*d*UB) + U*10/(2*d*UB)*(x - 10)", "color": "accent", "width": 3 }],
+        "lines": [
+          { "from": [0, 2], "to": [10, 2], "color": "red", "width": 5, "label": "+" },
+          { "from": [0, -2], "to": [10, -2], "color": "blue", "width": 5, "label": "−" }
+        ],
+        "readout": "Ablenkspannung {U|0} V, Beschleunigungsspannung {UB|0} V: Ablenkung am Plattenende **{U*100/(4*d*UB)|2} cm**"
+      },
+      "timeline": [
+        { "caption": "Ohne Spannung zwischen den Platten fliegt das Elektron geradeaus.", "set": { "U": 0, "UB": 1000 } },
+        { "caption": "Mit 100 V zieht die positive Platte das Elektron an. Längs fliegt es gleichförmig weiter, quer wird es gleichmäßig beschleunigt: Die Bahn ist eine Parabel, wie beim waagerechten Wurf.", "to": { "U": 100 }, "dur": 1800, "hold": 9000 },
+        { "caption": "Bei 200 V ist die Ablenkung doppelt so groß: 1,25 cm statt 0,63 cm am Plattenende.", "to": { "U": 200 }, "dur": 1600, "hold": 7000 },
+        { "caption": "Hinter den Platten wirkt keine Kraft mehr. Das Elektron fliegt geradlinig weiter, in der Richtung, die es am Plattenende hatte.", "hold": 7000 },
+        { "caption": "Mit doppelter Beschleunigungsspannung ist es schneller, bleibt kürzer im Feld und wird nur halb so stark abgelenkt.", "to": { "UB": 2000 }, "dur": 1800, "hold": 8000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Zwei parallele Platten mit einer Spannung dazwischen erzeugen ein **homogenes Feld**: Überall zwischen den Platten wirkt auf eine Ladung dieselbe Kraft, gleich stark und gleich gerichtet. Je größer die Spannung und je kleiner der Abstand, desto stärker das Feld.\n\nEin Elektron, das quer hineinfliegt, verhält sich wie ein waagerecht geworfener Stein: Längs der Platten behält es seine Geschwindigkeit, quer dazu wird es gleichmäßig beschleunigt, zur positiven Platte hin.\n\nDie Platten speichern außerdem Ladung. Wie viel sie bei einer Spannung aufnehmen, sagt die **Kapazität**; sie hängt nur von Fläche, Abstand und dem Material dazwischen ab."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Feldstärke\n> $\\vec E = \\dfrac{\\vec F}{q}$. Im Plattenkondensator ist das Feld homogen mit $E = \\dfrac{U}{d}$.\n\n> [!definition] Kapazität\n> $C = \\dfrac{Q}{U}$. Für den Plattenkondensator gilt $C = \\varepsilon_0 \\varepsilon_r \\dfrac{A}{d}$ mit $\\varepsilon_0 = 8{,}854 \\cdot 10^{-12}\\,\\tfrac{\\mathrm{F}}{\\mathrm{m}}$. Gespeicherte Energie: $W = \\tfrac12 C U^2$.\n\n> [!satz] Elektronen im Feld\n> Beschleunigung aus der Ruhe: $e U_B = \\tfrac12 m_e v^2$, also $v = \\sqrt{\\tfrac{2 e U_B}{m_e}}$.\n> Ablenkung quer zum Feld: $y = \\dfrac{U}{4 d U_B}\\,x^2$, eine Parabel; Ladung und Masse kürzen sich."
+    },
+    {
+      "id": "rand", "type": "widget", "label": "Ausprobieren",
+      "md": "Stelle die Ablenkspannung so ein, dass das Elektron den Kondensator **genau an der Kante der oberen Platte** verlässt ($y = 2$ cm bei $x = 10$ cm, $U_B = 1000$ V).",
+      "widget": "plot",
+      "params": {
+        "x": [0, 11], "y": [-2.6, 2.6], "xLabel": "x in cm", "yLabel": "y in cm", "height": 240,
+        "vars": [{ "name": "U", "label": "Ablenkspannung", "min": 0, "max": 400, "step": 10, "value": 100, "format": "{v} V", "digits": 0 }],
+        "functions": [{ "name": "y", "expr": "U*x^2/16000", "color": "accent", "width": 3, "domain": [0, 10] }],
+        "lines": [
+          { "from": [0, 2], "to": [10, 2], "color": "red", "width": 5, "label": "+" },
+          { "from": [0, -2], "to": [10, -2], "color": "blue", "width": 5, "label": "−" }
+        ],
+        "points": [{ "x": 10, "on": "y", "color": "orange" }],
+        "readout": "Am Plattenende: $y = {U/160|2}$ cm"
+      },
+      "goal": {
+        "when": "abs(U/160 - 2) < 0.02",
+        "hints": [{ "when": "U/160 < 2", "text": "Erst {U/160|2} cm. Mehr Spannung lenkt stärker ab." }, { "when": "U/160 > 2", "text": "Bei {U/160|2} cm würde das Elektron auf die Platte prallen." }],
+        "solve": { "U": 320 }
+      },
+      "explain": "$y = \\tfrac{U}{4 d U_B} x^2 = \\tfrac{U \\cdot 100}{4 \\cdot 4 \\cdot 1000}\\,\\mathrm{cm} = \\tfrac{U}{160}\\,\\mathrm{cm}$. Aus $\\tfrac{U}{160} = 2$ folgt $U = 320$ V."
+    },
+    {
+      "id": "feld", "type": "numeric", "label": "Rechnen",
+      "md": "Zwischen zwei Platten im Abstand $5\\,\\mathrm{mm}$ liegen $230\\,\\mathrm{V}$. Wie stark ist das Feld dazwischen (in kV/m)?",
+      "answer": 46, "tolerance": 0.1, "placeholder": "kV/m",
+      "explain": "$E = \\tfrac{U}{d} = \\tfrac{230\\,\\mathrm{V}}{0{,}005\\,\\mathrm{m}} = 46\\,000\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}} = 46\\,\\tfrac{\\mathrm{kV}}{\\mathrm{m}}$."
+    },
+    {
+      "id": "herleitung", "type": "proof", "label": "Herleitung",
+      "md": "Baue die Herleitung der Geschwindigkeit nach der Beschleunigungsspannung.",
+      "given": "Ein Elektron (Ladung $e$, Masse $m_e$) startet in Ruhe und durchläuft die Spannung $U_B$.",
+      "claim": "$v = \\sqrt{\\dfrac{2 e U_B}{m_e}}$.",
+      "steps": [
+        "Das Feld verrichtet am Elektron die Arbeit $W = e U_B$.",
+        "Sie wird ganz zu Bewegungsenergie: $e U_B = \\tfrac12 m_e v^2$.",
+        "Umstellen: $v^2 = \\tfrac{2 e U_B}{m_e}$.",
+        "Wurzel ziehen: $v = \\sqrt{\\tfrac{2 e U_B}{m_e}}$."
+      ],
+      "distractors": [
+        { "md": "Das Feld verrichtet die Arbeit $W = \\tfrac{U_B}{e}$.", "why": "Arbeit im Feld ist Ladung mal Spannung." },
+        { "md": "Sie wird ganz zu Bewegungsenergie: $e U_B = m_e v^2$.", "why": "Die Bewegungsenergie ist $\\tfrac12 m_e v^2$." }
+      ],
+      "explain": "Energieerhaltung: Was das Feld an Arbeit leistet, steckt danach in der Bewegung. Bei 1000 V erreicht ein Elektron schon fast $19\\,000$ km pro Sekunde."
+    },
+    {
+      "id": "masse", "type": "truefalse",
+      "md": "Protonen und Elektronen, die mit derselben Spannung beschleunigt wurden, werden im selben Ablenkkondensator gleich stark abgelenkt (nur in entgegengesetzte Richtungen).",
+      "answer": true,
+      "whyNot": "In $y = \\tfrac{U}{4 d U_B} x^2$ kommen weder Ladung noch Masse vor.",
+      "explain": "Ein schweres Teilchen ist langsamer und bleibt länger im Feld, wird aber auch träger beschleunigt. Beides hebt sich genau auf: $y = \\tfrac{U x^2}{4 d U_B}$."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phy-kondensator", "level": 1, "label": "Feldstärke und Kraft" },
+    { "id": "neu2", "type": "gen", "gen": "phy-kondensator", "level": 2, "label": "Kapazität" },
+    { "id": "neu3", "type": "gen", "gen": "phy-kondensator", "level": 3, "label": "Elektronen beschleunigen" },
+    { "id": "neu4", "type": "gen", "gen": "phy-kondensator", "level": 4, "label": "Ablenkung" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Im Plattenkondensator ist das Feld homogen: $E = \\tfrac{U}{d}$, die Kraft auf eine Ladung $F = q E$.",
+        "Kapazität $C = \\tfrac{Q}{U} = \\varepsilon_0 \\varepsilon_r \\tfrac{A}{d}$, gespeicherte Energie $W = \\tfrac12 C U^2$.",
+        "Beschleunigung aus der Ruhe: $e U_B = \\tfrac12 m_e v^2$.",
+        "Quer eingeschossene Elektronen fliegen auf einer Parabel, $y = \\tfrac{U}{4 d U_B} x^2$, wie ein waagerecht geworfener Stein."
+      ]
+    }
+  ]
+}

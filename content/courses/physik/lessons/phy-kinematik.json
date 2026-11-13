@@ -1,0 +1,115 @@
+{
+  "id": "phy-kinematik",
+  "title": "Bewegungen beschreiben",
+  "subtitle": "Ort, Geschwindigkeit und Beschleunigung im Diagramm",
+  "source": "Kerncurriculum Physik Hessen, Einführungsphase (Mechanik); Lehrbuchstandard der Kinematik",
+  "vault": [
+    { "path": "02 Wiki/Physik/01 E-Phase/Kinematik.md", "title": "Kinematik" },
+    { "path": "02 Wiki/Physik/01 E-Phase/Freier Fall.md", "title": "Freier Fall" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Ein Auto fährt an der Ampel los und beschleunigt gleichmäßig mit $2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Der Graph zeigt seinen Ort $s$ über der Zeit $t$.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 5.2], "y": [0, 28], "xLabel": "t in s", "yLabel": "s in m",
+        "vars": [{ "name": "a", "min": 0, "max": 5, "value": 2, "hidden": true }, { "name": "t", "min": 0, "max": 5, "value": 0, "hidden": true }],
+        "functions": [{ "name": "s", "expr": "0.5*a*x^2", "color": "accent", "label": "s(t)" }],
+        "tangents": [{ "f": "s", "at": "t", "length": 1.2, "color": "orange" }],
+        "points": [{ "x": "t", "on": "s", "color": "orange", "guides": true }],
+        "readout": "$t = {t|1}$ s: Ort $s = {0.5*a*t^2|1}$ m, Geschwindigkeit $v = {a*t|1}$ m/s (Steigung der Tangente)"
+      },
+      "timeline": [
+        { "caption": "Am Anfang steht das Auto: Ort null, Geschwindigkeit null.", "set": { "t": 0 } },
+        { "caption": "Nach einer Sekunde ist es erst einen Meter weit, aber schon 2 m/s schnell.", "to": { "t": 1 }, "dur": 1600 },
+        { "caption": "Nach drei Sekunden: 9 m, und 6 m/s. Die Tangente an den Graphen wird immer steiler; ihre Steigung ist die Geschwindigkeit.", "to": { "t": 3 }, "dur": 2000, "hold": 7000 },
+        { "caption": "Nach fünf Sekunden: 25 m. Fünffache Zeit, fünfundzwanzigfacher Weg. Bei gleichmäßiger Beschleunigung wächst der Weg mit dem Quadrat der Zeit.", "to": { "t": 5 }, "dur": 2000, "hold": 8000 },
+        { "caption": "Mit halber Beschleunigung wird die Parabel flacher: Nach fünf Sekunden sind es nur 12,5 m.", "to": { "a": 1 }, "dur": 1800, "hold": 7000 }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Eine Bewegung beschreibt man mit drei Größen. Der **Ort** $s$ sagt, wo der Körper ist. Die **Geschwindigkeit** $v$ sagt, wie schnell sich der Ort ändert. Die **Beschleunigung** $a$ sagt, wie schnell sich die Geschwindigkeit ändert.\n\nIm $s$-$t$-Diagramm ist die Geschwindigkeit die **Steigung** des Graphen. Eine Gerade heißt: immer gleich schnell. Eine Parabel, die steiler wird: immer schneller.\n\nIm $v$-$t$-Diagramm ist der zurückgelegte Weg die **Fläche** unter dem Graphen. Fährt man 10 s lang mit 20 m/s, ist das ein Rechteck mit 200 m Fläche.\n\nDer **freie Fall** ist eine gleichmäßig beschleunigte Bewegung mit $g = 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$, für alle Körper gleich, solange die Luft nicht bremst."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Gleichförmige Bewegung\n> Konstante Geschwindigkeit: $s(t) = v \\cdot t + s_0$.\n\n> [!definition] Gleichmäßig beschleunigte Bewegung\n> Konstante Beschleunigung $a$, Start mit $v_0$ am Ort $s_0$:\n> $$v(t) = a t + v_0, \\qquad s(t) = \\tfrac12 a t^2 + v_0 t + s_0$$\n\n> [!satz] Bremsweg und Fall\n> Bremsen von $v_0$ bis zum Stillstand mit der Verzögerung $a$: $s_B = \\dfrac{v_0^2}{2a}$. Freier Fall aus der Höhe $h$: $t = \\sqrt{\\tfrac{2h}{g}}$, $v = \\sqrt{2gh}$.\n\n> [!tip] Einheiten\n> $1\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}} = \\tfrac{1}{3{,}6}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Vor jeder Rechnung in Meter und Sekunden umrechnen."
+    },
+    {
+      "id": "einstellen", "type": "widget", "label": "Ausprobieren",
+      "md": "Stelle die Beschleunigung so ein, dass das Auto nach **4 Sekunden genau 24 Meter** weit gekommen ist.",
+      "widget": "plot",
+      "params": {
+        "x": [0, 5.2], "y": [0, 40], "xLabel": "t in s", "yLabel": "s in m",
+        "vars": [{ "name": "a", "label": "Beschleunigung $a$", "min": 0.5, "max": 5, "step": 0.5, "value": 1, "format": "{v} m/s²", "digits": 1 }],
+        "functions": [{ "name": "s", "expr": "0.5*a*x^2", "color": "accent" }],
+        "hlines": [{ "y": 24, "color": "gray" }],
+        "points": [{ "x": 4, "on": "s", "color": "orange", "guides": true, "label": "t = 4 s" }],
+        "readout": "Nach 4 s: $s = {8*a|1}$ m"
+      },
+      "goal": {
+        "when": "abs(8*a - 24) < 0.01",
+        "hints": [{ "when": "8*a < 24", "text": "Erst {8*a|1} m. Das Auto muss stärker beschleunigen." }, { "when": "8*a > 24", "text": "Schon {8*a|1} m, das ist zu weit." }],
+        "solve": { "a": 3 }
+      },
+      "explain": "$s = \\tfrac12 a t^2 = \\tfrac12 \\cdot a \\cdot 16 = 8a$. Aus $8a = 24$ folgt $a = 3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$."
+    },
+    {
+      "id": "bremsweg", "type": "numeric", "label": "Rechnen",
+      "md": "Ein Auto bremst von $72\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ mit der Verzögerung $8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ bis zum Stillstand. Wie lang ist der Bremsweg in Metern?",
+      "answer": 25, "tolerance": 0.2, "placeholder": "m",
+      "hint": "Zuerst $72\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ in Meter pro Sekunde umrechnen.",
+      "explain": "$v_0 = \\tfrac{72}{3{,}6}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. $s_B = \\tfrac{v_0^2}{2a} = \\tfrac{400}{16}\\,\\mathrm{m} = 25\\,\\mathrm{m}$."
+    },
+    {
+      "id": "herleitung", "type": "proof", "mode": "gaps", "label": "Herleitung",
+      "md": "Woher kommt die Formel für den Bremsweg? Fülle die Lücken der Herleitung.",
+      "given": "Ein Auto bremst von $v_0$ mit der konstanten Verzögerung $a$ bis zum Stillstand.",
+      "claim": "$s_B = \\dfrac{v_0^2}{2a}$.",
+      "steps": [
+        "Beim Bremsen gilt $v(t) = v_0 - a t$.",
+        "Stillstand bei $v(t_B) = 0$, also $t_B = \\tfrac{v_0}{a}$.",
+        "Für den Weg gilt $s(t) = v_0 t - \\tfrac12 a t^2$.",
+        "Einsetzen: $s_B = \\tfrac{v_0^2}{a} - \\tfrac{v_0^2}{2a} = \\tfrac{v_0^2}{2a}$."
+      ],
+      "gaps": [1, 3],
+      "distractors": [
+        { "md": "Stillstand bei $t_B = v_0 \\cdot a$.", "why": "Aus $v_0 - a t_B = 0$ folgt $t_B = \\tfrac{v_0}{a}$." },
+        { "md": "Einsetzen: $s_B = v_0 \\cdot t_B = \\tfrac{v_0^2}{a}$.", "why": "So weit käme das Auto ohne zu bremsen; der Bremsterm $\\tfrac12 a t^2$ fehlt." }
+      ],
+      "explain": "Erst die Bremszeit aus $v = 0$, dann in das Weg-Zeit-Gesetz einsetzen. Der Bremsweg wächst mit dem **Quadrat** der Anfangsgeschwindigkeit."
+    },
+    {
+      "id": "diagramm", "type": "choice", "label": "Diagramme",
+      "md": "Im $v$-$t$-Diagramm eines Radfahrers steigt der Graph von 0 auf $6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ in 3 s und bleibt dann waagerecht. Was gibt die Fläche unter dem Graphen an?",
+      "options": [
+        { "md": "den zurückgelegten Weg", "correct": true, "why": "Geschwindigkeit mal Zeit ist Weg; bei veränderlicher Geschwindigkeit summiert die Fläche die kleinen Wegstücke." },
+        { "md": "die Beschleunigung", "why": "Die Beschleunigung ist die Steigung im $v$-$t$-Diagramm, hier $2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ in den ersten 3 s." },
+        { "md": "die Durchschnittsgeschwindigkeit", "why": "Die erhält man erst, wenn man die Fläche durch die Zeit teilt." },
+        { "md": "den Ort zu Beginn", "why": "Der Startort steht in keinem $v$-$t$-Diagramm; es zeigt nur Änderungen." }
+      ],
+      "explain": "Steigung im $v$-$t$-Diagramm: Beschleunigung. Fläche: Weg. In den ersten 3 s sind das $\\tfrac12 \\cdot 3 \\cdot 6 = 9\\,\\mathrm{m}$."
+    },
+    {
+      "id": "fall", "type": "truefalse",
+      "md": "Lässt man ohne Luftwiderstand eine Bleikugel und eine Holzkugel gleichzeitig aus derselben Höhe fallen, kommt die Bleikugel zuerst an.",
+      "answer": false,
+      "whyNot": "Die Fallbeschleunigung $g$ ist für alle Körper gleich; die Masse kommt im Weg-Zeit-Gesetz $h = \\tfrac12 g t^2$ nicht vor.",
+      "explain": "Ohne Luft fallen alle Körper gleich schnell. Galilei hat das gefolgert, auf dem Mond hat ein Astronaut es 1971 mit Hammer und Feder gezeigt."
+    },
+    { "id": "neu1", "type": "gen", "gen": "phy-kinematik", "level": 1, "label": "Gleichförmig" },
+    { "id": "neu2", "type": "gen", "gen": "phy-kinematik", "level": 2, "label": "Beschleunigt" },
+    { "id": "neu3", "type": "gen", "gen": "phy-kinematik", "level": 3, "label": "Bremsen und Fallen" },
+    { "id": "neu4", "type": "gen", "gen": "phy-kinematik", "level": 4, "label": "Zwei Bewegungen" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "Im $s$-$t$-Diagramm ist die Steigung die Geschwindigkeit, im $v$-$t$-Diagramm die Steigung die Beschleunigung und die Fläche der Weg.",
+        "Gleichmäßig beschleunigt aus der Ruhe: $v = a t$ und $s = \\tfrac12 a t^2$; doppelte Zeit, vierfacher Weg.",
+        "Bremsweg $s_B = \\tfrac{v_0^2}{2a}$: doppelte Geschwindigkeit, vierfacher Bremsweg.",
+        "Freier Fall: $g = 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ für alle Körper, solange die Luft nicht bremst."
+      ]
+    }
+  ]
+}

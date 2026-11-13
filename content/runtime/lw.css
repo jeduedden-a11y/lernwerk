@@ -267,6 +267,73 @@ body {
 .lw-hint { display: none; margin-top: 8px; font-size: 0.93em; color: var(--label-2); }
 .lw-hint.open { display: block; }
 
+/* help in stages: hints, then the solution path step by step */
+.lw-help:empty { display: none; }
+.lw-help { display: grid; gap: 8px; margin-top: 8px; }
+.lw-help-item {
+  padding: 10px 12px; border-radius: 14px; font-size: 0.94em; animation: lw-in 260ms ease both;
+  background: var(--fill); border-left: 3px solid var(--label-3);
+}
+.lw-help-item.way { background: var(--accent-soft); border-left-color: var(--accent); }
+.lw-help-label { font-size: 0.78em; font-weight: 700; letter-spacing: 0.02em; color: var(--label-2); margin-bottom: 2px; }
+.lw-help-item.way .lw-help-label { color: var(--accent); }
+
+/* math keys at a field (older apps, or when the keyboard bar of the app is not available) */
+.lw-keyrow { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 2px; }
+.lw-native-keys .lw-keyrow { display: none; }
+.lw-key {
+  appearance: none; border: 0; min-width: 44px; height: 40px; padding: 0 10px; border-radius: 12px;
+  background: var(--fill-2); color: var(--label); font: inherit; font-size: 1.08em; font-weight: 600; cursor: pointer;
+  touch-action: manipulation;
+}
+.lw-key:active { background: var(--accent-soft); color: var(--accent); }
+
+/* code trace (Python) */
+.w-code { display: grid; gap: 10px; margin-top: 4px; }
+@media (min-width: 620px) { .w-code { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+.w-code-lines {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82em; line-height: 1.5; padding: 8px 0;
+  border-radius: 14px; background: var(--fill); max-height: 22em; overflow: auto;
+}
+.w-code-line { display: flex; gap: 10px; padding: 1px 12px 1px 6px; border-left: 3px solid transparent; white-space: pre; }
+.w-code-line .ln { flex: none; width: 1.6em; text-align: right; color: var(--label-3); user-select: none; }
+.w-code-line code { font: inherit; background: none; padding: 0; }
+.w-code-line.cur { background: var(--accent-soft); border-left-color: var(--accent); }
+.w-code-side .lw-pool-label { margin-top: 2px; }
+.w-code-vars { width: 100%; border-collapse: collapse; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82em; margin: 6px 0 10px; }
+.w-code-vars td { padding: 4px 8px; border-bottom: 1px solid var(--fill-2); vertical-align: top; }
+.w-code-vars td.name { color: var(--label-2); width: 34%; }
+.w-code-vars td.none { color: var(--label-3); font-family: inherit; }
+.w-code-vars tr.changed td.val { color: var(--accent); font-weight: 700; }
+.w-code-console {
+  margin: 6px 0 0; padding: 8px 10px; border-radius: 12px; min-height: 2.6em; white-space: pre-wrap;
+  background: #1c1c1e; color: #f2f2f7; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82em; line-height: 1.45;
+}
+.w-code-note { margin-top: 8px; min-height: 1.4em; color: var(--label-2); font-size: 0.92em; }
+.w-code-note p { margin: 0; }
+
+/* exam */
+.lw-exam-clock {
+  position: sticky; top: calc(var(--inset-top) + 4px); z-index: 5; justify-self: end; margin: -6px 0 6px auto;
+  width: max-content; padding: 6px 12px; border-radius: 999px; font-weight: 700; font-variant-numeric: tabular-nums;
+  background: var(--card); box-shadow: var(--shadow); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+.lw-exam-clock.low { color: var(--red); }
+.lw-lesson:not(.lw-exam-running) .lw-exam-clock { display: none; }
+.lw-step.exam-locked .lw-step-label::after { content: "abgegeben"; margin-left: auto; font-size: 0.85em; color: var(--label-2); font-weight: 600; }
+.lw-exam-summary .lw-exam-score { font-size: 1.6em; font-weight: 800; margin: 2px 0 4px; }
+.lw-exam-table { display: grid; gap: 8px; margin: 12px 0 10px; }
+.lw-exam-row { display: grid; grid-template-columns: 1fr 34% auto; align-items: center; gap: 10px; font-size: 0.94em; }
+.lw-exam-row .bar { height: 8px; border-radius: 4px; background: var(--fill-2); overflow: hidden; }
+.lw-exam-row .bar > span { display: block; height: 100%; background: var(--green); border-radius: 4px; }
+.lw-exam-row.weak .bar > span { background: var(--red); }
+.lw-exam-row .count { font-variant-numeric: tabular-nums; color: var(--label-2); }
+
+/* the app switch »Weniger Bewegung« */
+.lw-reduce-motion *, .lw-reduce-motion *::before, .lw-reduce-motion *::after {
+  animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;
+}
+
 /* ---------- Summary ---------- */
 .lw-summary ol { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 0; }
 .lw-summary li {
@@ -523,6 +590,22 @@ body {
 .lw-proof-qed { text-align: right; font-size: 1.2em; color: var(--green); padding-right: 6px; }
 .lw-pool-label { margin-top: 14px; font-size: 0.78em; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--label-3); }
 .lw-proof-pool { margin-top: 8px; }
+/* gap proofs: the given lines are quiet, the gaps invite a tap */
+.lw-proof-line.given { cursor: default; background: transparent; }
+.lw-proof-line.gap { cursor: pointer; }
+.lw-proof-line.gap.empty { min-height: 40px; }
+.lw-proof-line.gap.active { border-color: var(--accent); border-style: solid; background: var(--accent-soft); color: var(--accent); }
+/* justify: a reason under every line */
+.lw-justify .lw-proof-line .body { display: grid; gap: 8px; }
+.lw-select {
+  appearance: none; -webkit-appearance: none; width: 100%; min-height: 40px; padding: 8px 34px 8px 12px; border-radius: 12px;
+  border: 1px solid var(--separator, rgba(128, 128, 128, 0.3)); background: var(--fill-2); color: var(--label); font: inherit; font-size: 0.94em;
+  background-image: linear-gradient(45deg, transparent 50%, var(--label-2) 50%), linear-gradient(135deg, var(--label-2) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.lw-select:disabled { opacity: 0.8; }
+.lw-proof-line.correct .lw-select { border-color: var(--green); }
+.lw-proof-line.wrong .lw-select { border-color: var(--red); }
 
 /* ---------- Estimate ---------- */
 .lw-estimate { margin-top: 12px; padding: 14px 14px 10px; border-radius: 18px; background: var(--fill); }

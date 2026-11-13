@@ -180,7 +180,8 @@ public enum RuntimeMessage: Sendable, Equatable {
     case loaded
     case ready(steps: Int)
     case progress(index: Int, total: Int, answered: Bool)
-    case primary(label: String, enabled: Bool, style: String, canGiveUp: Bool)
+    /// giveUpLabel: text of the second button, "Lösung" when the runtime sends none (exams send "Überspringen").
+    case primary(label: String, enabled: Bool, style: String, canGiveUp: Bool, giveUpLabel: String?)
     case feedback(correct: Bool, isSelfCheck: Bool, invalid: Bool)
     case finished(FinishedLesson)
     case error(String)
@@ -198,7 +199,8 @@ public enum RuntimeMessage: Sendable, Equatable {
         case "ready": return .ready(steps: int("steps"))
         case "progress": return .progress(index: int("index"), total: int("total"), answered: bool("answered"))
         case "primary":
-            return .primary(label: dict["label"] as? String ?? "Weiter", enabled: bool("enabled"), style: dict["style"] as? String ?? "continue", canGiveUp: bool("canGiveUp"))
+            return .primary(label: dict["label"] as? String ?? "Weiter", enabled: bool("enabled"), style: dict["style"] as? String ?? "continue",
+                            canGiveUp: bool("canGiveUp"), giveUpLabel: dict["giveUpLabel"] as? String)
         case "feedback": return .feedback(correct: bool("correct"), isSelfCheck: bool("self"), invalid: bool("invalid"))
         case "error": return .error(dict["message"] as? String ?? "Unbekannter Fehler")
         case "open":
@@ -226,13 +228,23 @@ public struct StepResult: Codable, Sendable, Equatable {
     public var revealed: Bool
     /// Self-assessed reveal steps report "self": true.
     public var isSelfCheck: Bool
+    /// Generated tasks in training, exams and the daily mix name their topic, course and level.
+    public var topicId: String?
+    public var courseId: String?
+    public var level: Int?
+    /// The learner opened the solution path before answering.
+    public var helped: Bool
+    /// Not answered in an exam (skipped or out of time).
+    public var skipped: Bool
 
     enum CodingKeys: String, CodingKey {
         case stepId, lessonId, type, correct, firstTry, attempts, revealed
         case isSelfCheck = "self"
+        case topicId, courseId, level, helped, skipped
     }
 
-    public init(stepId: String, lessonId: String?, type: String, correct: Bool, firstTry: Bool, attempts: Int, revealed: Bool, isSelfCheck: Bool = false) {
+    public init(stepId: String, lessonId: String?, type: String, correct: Bool, firstTry: Bool, attempts: Int, revealed: Bool, isSelfCheck: Bool = false,
+                topicId: String? = nil, courseId: String? = nil, level: Int? = nil, helped: Bool = false, skipped: Bool = false) {
         self.stepId = stepId
         self.lessonId = lessonId
         self.type = type
@@ -241,18 +253,28 @@ public struct StepResult: Codable, Sendable, Equatable {
         self.attempts = attempts
         self.revealed = revealed
         self.isSelfCheck = isSelfCheck
+        self.topicId = topicId
+        self.courseId = courseId
+        self.level = level
+        self.helped = helped
+        self.skipped = skipped
     }
 
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         stepId = try c.decode(String.self, forKey: .stepId)
-        lessonId = try c.decodeIfPresent(String.self, forKey: .lessonId)
+        lessonId = try? c.decodeIfPresent(String.self, forKey: .lessonId)
         type = (try? c.decode(String.self, forKey: .type)) ?? "choice"
         correct = (try? c.decode(Bool.self, forKey: .correct)) ?? false
         firstTry = (try? c.decode(Bool.self, forKey: .firstTry)) ?? false
         attempts = (try? c.decode(Int.self, forKey: .attempts)) ?? 1
         revealed = (try? c.decode(Bool.self, forKey: .revealed)) ?? false
         isSelfCheck = (try? c.decode(Bool.self, forKey: .isSelfCheck)) ?? false
+        topicId = try? c.decodeIfPresent(String.self, forKey: .topicId)
+        courseId = try? c.decodeIfPresent(String.self, forKey: .courseId)
+        level = try? c.decodeIfPresent(Int.self, forKey: .level)
+        helped = (try? c.decode(Bool.self, forKey: .helped)) ?? false
+        skipped = (try? c.decode(Bool.self, forKey: .skipped)) ?? false
     }
 
     /// Quality for spaced repetition: 5 first try, 3 solved later or self-rated good, 1 failed.
@@ -275,6 +297,32 @@ public struct PracticeInfo: Codable, Sendable, Equatable {
     }
 }
 
+/// What the runtime reports about an exam besides the results.
+public struct ExamInfo: Codable, Sendable, Equatable {
+    public var title: String
+    public var courseId: String?
+    public var chapterId: String?
+    public var timeUp: Bool
+    public var minutes: Int?
+
+    public init(title: String, courseId: String? = nil, chapterId: String? = nil, timeUp: Bool = false, minutes: Int? = nil) {
+        self.title = title
+        self.courseId = courseId
+        self.chapterId = chapterId
+        self.timeUp = timeUp
+        self.minutes = minutes
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        title = (try? c.decode(String.self, forKey: .title)) ?? "Klausur"
+        courseId = try? c.decodeIfPresent(String.self, forKey: .courseId)
+        chapterId = try? c.decodeIfPresent(String.self, forKey: .chapterId)
+        timeUp = (try? c.decode(Bool.self, forKey: .timeUp)) ?? false
+        minutes = try? c.decodeIfPresent(Int.self, forKey: .minutes)
+    }
+}
+
 public struct FinishedLesson: Codable, Sendable, Equatable {
     public var lessonId: String?
     public var mode: String
@@ -283,13 +331,16 @@ public struct FinishedLesson: Codable, Sendable, Equatable {
     public var seconds: Int?
     /// Set for training rounds.
     public var practice: PracticeInfo?
+    /// Set for exams.
+    public var exam: ExamInfo?
 
-    public init(lessonId: String?, mode: String, results: [StepResult], score: Double, seconds: Int? = nil, practice: PracticeInfo? = nil) {
+    public init(lessonId: String?, mode: String, results: [StepResult], score: Double, seconds: Int? = nil, practice: PracticeInfo? = nil, exam: ExamInfo? = nil) {
         self.lessonId = lessonId
         self.mode = mode
         self.results = results
         self.score = score
         self.seconds = seconds
         self.practice = practice
+        self.exam = exam
     }
 }

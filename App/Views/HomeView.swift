@@ -323,6 +323,17 @@ struct QuickTiles: View {
             .buttonStyle(PressableStyle())
             .accessibilityHint(due > 0 ? "Startet die Wiederholung" : "Öffnet Üben")
 
+            Button {
+                if model.canStartMix { model.startMix() } else { model.selectedTab = .review }
+            } label: {
+                QuickTile(symbol: "shuffle",
+                          colors: MixCard.colors,
+                          title: "Tagesmix",
+                          detail: model.canStartMix ? "Altes und Neues gemischt" : "Ab der ersten Lektion")
+            }
+            .buttonStyle(PressableStyle())
+            .accessibilityHint(model.canStartMix ? "Startet den Tagesmix" : "Öffnet Üben")
+
             NavigationLink(value: PathRoute(subject: nil)) {
                 QuickTile(symbol: "point.3.connected.trianglepath.dotted",
                           colors: [Color(hex: "#26A65B"), Color(hex: "#E8930C"), Color(hex: "#E5484D"), Color(hex: "#8E4EC6")],

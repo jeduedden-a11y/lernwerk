@@ -1,0 +1,94 @@
+{
+  "id": "py-funktionen",
+  "title": "Funktionen und Comprehensions",
+  "subtitle": "Code bündeln und Listen in einer Zeile bauen",
+  "source": "Python-Dokumentation (Defining Functions, List Comprehensions); Gliederung nach dem Python-Teil von CS50 AI",
+  "vault": [
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Functions.md", "title": "Python Functions" },
+    { "path": "02 Wiki/Informatik/Python CS50 AI/Python Comprehensions.md", "title": "Python Comprehensions" }
+  ],
+  "steps": [
+    {
+      "id": "film", "type": "anim",
+      "md": "Eine Funktion und zwei List Comprehensions. Die Liste `werte` wächst bei jedem Durchlauf um ein Element.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "def quadrat(x):\n    return x * x\n\nwerte = [quadrat(n) for n in range(4)]\ngerade = [w for w in werte if w % 2 == 0]\nprint(werte, gerade)",
+        "trace": [
+          { "line": 1, "vars": {}, "note": "`def` legt die Funktion nur an. Ausgeführt wird ihr Rumpf erst beim Aufruf." },
+          { "line": 4, "vars": { "n": "0", "werte (im Bau)": "[0]" }, "note": "Die Comprehension ruft `quadrat(0)` auf und hängt das Ergebnis an." },
+          { "line": 2, "vars": { "x": "1", "werte (im Bau)": "[0]" }, "note": "Beim Aufruf `quadrat(1)` springt Python in die Funktion; `x` ist dort eine lokale Variable." },
+          { "line": 4, "vars": { "n": "1", "werte (im Bau)": "[0, 1]" }, "note": "`return` liefert 1 zurück." },
+          { "line": 4, "vars": { "n": "3", "werte": "[0, 1, 4, 9]" }, "note": "Nach vier Durchläufen ist die Liste fertig." },
+          { "line": 5, "vars": { "werte": "[0, 1, 4, 9]", "gerade": "[0, 4]" }, "note": "Die zweite Comprehension filtert mit `if`: nur gerade Werte." },
+          { "line": 6, "vars": { "werte": "[0, 1, 4, 9]", "gerade": "[0, 4]" }, "out": "[0, 1, 4, 9] [0, 4]" }
+        ]
+      },
+      "int": ["k"],
+      "timeline": [
+        { "caption": "Eine Funktionsdefinition merkt sich nur, was zu tun ist.", "set": { "k": 0 } },
+        { "caption": "Die Comprehension läuft über `range(4)` und ruft für jedes `n` die Funktion auf.", "set": { "k": 1 } },
+        { "caption": "Im Funktionsrumpf heißt der Wert `x`. Diese Variable gibt es nur dort.", "set": { "k": 2 } },
+        { "caption": "`return` gibt das Ergebnis zurück, und die Liste wächst.", "set": { "k": 3 } },
+        { "caption": "Vier Durchläufe später: `[0, 1, 4, 9]`.", "set": { "k": 4 } },
+        { "caption": "Mit `if` am Ende filtert eine Comprehension: Nur die geraden Quadrate bleiben.", "set": { "k": 5 } },
+        { "caption": "Zwei Zeilen Code, wofür man sonst Schleifen mit `append` schreiben würde.", "set": { "k": 6 } }
+      ]
+    },
+    {
+      "id": "intuition", "type": "text", "label": "Intuition",
+      "md": "Eine **Funktion** bündelt Code unter einem Namen. Sie bekommt Argumente, rechnet mit lokalen Variablen und gibt mit `return` ein Ergebnis zurück. In CS50 AI besteht fast jedes Projekt daraus, vorgegebene Funktionen wie `actions(board)` oder `minimax(board)` zu füllen.\n\nVariablen, die in einer Funktion zugewiesen werden, sind **lokal**: Sie entstehen beim Aufruf und verschwinden danach. Eine globale Variable gleichen Namens bleibt unberührt.\n\nEine **List Comprehension** baut eine Liste in einer Zeile: `[ausdruck for x in folge if bedingung]`. Mit `key`-Funktionen wie in `max(zuege, key=bewertung)` wählt man das beste Element einer Sammlung, eine der häufigsten Zeilen in KI-Programmen."
+    },
+    {
+      "id": "definition", "type": "text", "label": "Definition",
+      "md": "> [!definition] Funktion\n> `def name(param, standard=wert):` gefolgt vom eingerückten Rumpf. `return` beendet die Funktion und liefert einen Wert; ohne `return` liefert sie `None`.\n\n> [!definition] Comprehensions\n> Liste: `[f(x) for x in xs if bed(x)]`. Dictionary: `{k: v for k, v in paare}`. Set: `{f(x) for x in xs}`.\n\n> [!tip] Rekursion\n> Eine Funktion darf sich selbst aufrufen, braucht aber einen Basisfall. Minimax ist genau so gebaut: Der Wert eines Zuges ist der beste Wert der Folgezüge.\n\n> [!tip] key und lambda\n> `sorted(xs, key=lambda x: x[1])` sortiert nach dem zweiten Eintrag, `max(xs, key=len)` sucht das längste Element."
+    },
+    {
+      "id": "aufruf", "type": "numeric", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\ndef f(x, y=3):\n    return x * y - 1\n\nprint(f(4) + f(2, 5))\n```",
+      "answer": 20, "tolerance": 0, "placeholder": "Ausgabe",
+      "explain": "`f(4)` nutzt den Standardwert: 4 · 3 − 1 = 11. `f(2, 5)`: 2 · 5 − 1 = 9. Zusammen 20."
+    },
+    {
+      "id": "lokal", "type": "choice", "label": "Ausgabe",
+      "md": "Was gibt das Programm aus?\n\n```python\nzaehler = 10\n\ndef erhoehe():\n    zaehler = 1\n    return zaehler + 1\n\nergebnis = erhoehe()\nprint(zaehler, ergebnis)\n```",
+      "options": [
+        { "md": "`10 2`", "correct": true, "why": "In der Funktion entsteht ein lokales `zaehler`; das globale bleibt 10." },
+        { "md": "`1 2`", "why": "Die Zuweisung in der Funktion ändert das globale `zaehler` nicht." },
+        { "md": "`11 2`", "why": "Es wird nichts zum globalen Zähler addiert." }
+      ],
+      "explain": "Zuweisungen in einer Funktion erzeugen lokale Variablen. Wer das globale `zaehler` ändern will, braucht `global zaehler`, besser aber einen Rückgabewert."
+    },
+    {
+      "id": "parsons", "type": "proof", "label": "Programm bauen",
+      "md": "Baue eine Funktion, die aus einer Liste von Zügen den mit der besten Bewertung zurückgibt. `bewertung` ist eine vorhandene Funktion.",
+      "steps": [
+        "`def bester_zug(zuege):`",
+        "`    bester = None`",
+        "`    for zug in zuege:`",
+        "`        if bester is None or bewertung(zug) > bewertung(bester):`",
+        "`            bester = zug`",
+        "`    return bester`"
+      ],
+      "distractors": [
+        { "md": "`        return zug`", "why": "So kehrt die Funktion nach dem ersten Zug zurück, ohne die anderen anzusehen." },
+        { "md": "`    bester = 0`", "why": "Ein Zug ist kein Zahlwert; `None` zeigt, dass noch keiner gewählt ist." }
+      ],
+      "explain": "Das ist das Muster jeder Maximumsuche. Kürzer geht es mit `return max(zuege, key=bewertung)`."
+    },
+    { "id": "neu1", "type": "gen", "gen": "py-funktionen", "level": 1, "label": "Aufrufe" },
+    { "id": "neu2", "type": "gen", "gen": "py-funktionen", "level": 2, "label": "Comprehensions" },
+    { "id": "neu3", "type": "gen", "gen": "py-funktionen", "level": 3, "label": "Rekursion und Gültigkeit" },
+    { "id": "neu4", "type": "gen", "gen": "py-funktionen", "level": 4, "label": "key und lambda" },
+    {
+      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "points": [
+        "`def` legt eine Funktion an, `return` liefert ihr Ergebnis; ohne `return` kommt `None`.",
+        "In Funktionen zugewiesene Variablen sind lokal.",
+        "`[f(x) for x in xs if bed(x)]` baut und filtert eine Liste in einer Zeile.",
+        "`max(xs, key=f)` und `sorted(xs, key=f)` wählen und ordnen nach einer Bewertung."
+      ]
+    }
+  ]
+}
