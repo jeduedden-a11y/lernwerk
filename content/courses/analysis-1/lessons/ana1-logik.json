@@ -4,7 +4,14 @@
   "subtitle": "Die Sprache, in der Analysis geschrieben ist",
   "source": "Skript Jarohs, Abschnitt 1.1",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Aussagenlogik und Quantoren.md", "title": "Aussagenlogik und Quantoren" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Aussagenlogik und Quantoren.md",
+      "title": "Aussagenlogik und Quantoren"
+    },
+    {
+      "path": "02 Wiki/Kurse/Analysis I (Jarohs)/Analysis I (Jarohs) MOC.md",
+      "title": "Analysis I (Jarohs) MOC"
+    }
   ],
   "steps": [
     {
@@ -12,15 +19,77 @@
       "type": "anim",
       "md": "Stell dir alle denkbaren Situationen als Fläche vor. Im linken Kreis ist die Aussage $A$ wahr, im rechten die Aussage $B$. Jeder Junktor markiert dann einfach einen Teil der Fläche.",
       "widget": "venn",
-      "params": { "sets": 2, "labels": ["A wahr", "B wahr"] },
+      "params": {
+        "sets": 2,
+        "labels": [
+          "A wahr",
+          "B wahr"
+        ]
+      },
       "timeline": [
-        { "caption": "Jeder Punkt ist eine mögliche Situation. Links liegen die Situationen, in denen $A$ wahr ist, rechts die, in denen $B$ wahr ist. Außen ist beides falsch.", "do": { "show": [] } },
-        { "caption": "$A$ allein: der ganze linke Kreis, ob $B$ gilt oder nicht.", "do": { "show": ["10", "11"] } },
-        { "caption": "$A \\wedge B$ (und) ist nur dort wahr, wo **beide** gelten: in der Überschneidung.", "do": { "show": ["11"] } },
-        { "caption": "$A \\vee B$ (oder) ist wahr, sobald **mindestens eine** gilt. Die Überschneidung gehört dazu, das mathematische Oder schließt »beide« ein.", "do": { "show": ["10", "01", "11"] } },
-        { "caption": "$\\neg A$ (nicht $A$) ist alles außerhalb des linken Kreises.", "do": { "show": ["01", "00"] } },
-        { "caption": "Und die Implikation $A \\Rightarrow B$? Sie behauptet nur: Wo $A$ gilt, gilt auch $B$. Falsch ist sie also allein in der Sichel »$A$ ja, $B$ nein«. Überall sonst ist sie wahr, auch außerhalb von $A$.", "do": { "show": ["00", "01", "11"] }, "hold": 7000 },
-        { "caption": "Genau dieselbe Fläche hat $\\neg A \\vee B$. Darum sind beide Aussagen gleichwertig, und darum ist eine Implikation mit falscher Voraussetzung automatisch wahr.", "do": { "show": ["00", "01", "11"] } }
+        {
+          "caption": "Jeder Punkt ist eine mögliche Situation. Links liegen die Situationen, in denen $A$ wahr ist, rechts die, in denen $B$ wahr ist. Außen ist beides falsch.",
+          "do": {
+            "show": []
+          }
+        },
+        {
+          "caption": "$A$ allein: der ganze linke Kreis, ob $B$ gilt oder nicht.",
+          "do": {
+            "show": [
+              "10",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "$A \\wedge B$ (und) ist nur dort wahr, wo **beide** gelten: in der Überschneidung.",
+          "do": {
+            "show": [
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "$A \\vee B$ (oder) ist wahr, sobald **mindestens eine** gilt. Die Überschneidung gehört dazu, das mathematische Oder schließt »beide« ein.",
+          "do": {
+            "show": [
+              "10",
+              "01",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "$\\neg A$ (nicht $A$) ist alles außerhalb des linken Kreises.",
+          "do": {
+            "show": [
+              "01",
+              "00"
+            ]
+          }
+        },
+        {
+          "caption": "Und die Implikation $A \\Rightarrow B$? Sie behauptet nur: Wo $A$ gilt, gilt auch $B$. Falsch ist sie also allein in der Sichel »$A$ ja, $B$ nein«. Überall sonst ist sie wahr, auch außerhalb von $A$.",
+          "do": {
+            "show": [
+              "00",
+              "01",
+              "11"
+            ]
+          },
+          "hold": 7000
+        },
+        {
+          "caption": "Genau dieselbe Fläche hat $\\neg A \\vee B$. Darum sind beide Aussagen gleichwertig, und darum ist eine Implikation mit falscher Voraussetzung automatisch wahr.",
+          "do": {
+            "show": [
+              "00",
+              "01",
+              "11"
+            ]
+          }
+        }
       ]
     },
     {
@@ -34,7 +103,26 @@
       "label": "Ansehen",
       "md": "So sind »und«, »oder« und »entweder oder« festgelegt. Achte auf die erste Zeile: Das mathematische »oder« ist auch dann wahr, wenn **beide** Teilaussagen wahr sind.",
       "widget": "truth-table",
-      "params": { "vars": ["A", "B"], "columns": [{ "label": "A \\wedge B", "expr": "A & B" }, { "label": "A \\vee B", "expr": "A | B" }, { "label": "\\text{entweder } A \\text{ oder } B", "expr": "A xor B" }] }
+      "params": {
+        "vars": [
+          "A",
+          "B"
+        ],
+        "columns": [
+          {
+            "label": "A \\wedge B",
+            "expr": "A & B"
+          },
+          {
+            "label": "A \\vee B",
+            "expr": "A | B"
+          },
+          {
+            "label": "\\text{entweder } A \\text{ oder } B",
+            "expr": "A xor B"
+          }
+        ]
+      }
     },
     {
       "id": "tafel-impl",
@@ -42,7 +130,19 @@
       "label": "Ausfüllen",
       "md": "Fülle die Spalte für $A \\Rightarrow B$ aus. Tippe auf die Felder, um zwischen w und f zu wechseln.\n\nTipp: Eine Implikation ist nur dann **falsch**, wenn ein Versprechen gebrochen wird.",
       "widget": "truth-table",
-      "params": { "vars": ["A", "B"], "columns": [{ "label": "A \\Rightarrow B", "expr": "A => B", "ask": true }] },
+      "params": {
+        "vars": [
+          "A",
+          "B"
+        ],
+        "columns": [
+          {
+            "label": "A \\Rightarrow B",
+            "expr": "A => B",
+            "ask": true
+          }
+        ]
+      },
       "goal": {},
       "explain": "$A \\Rightarrow B$ ist nur falsch, wenn $A$ wahr und $B$ falsch ist. Ist $A$ falsch, ist die Implikation wahr, egal was $B$ ist. Das Skript sagt dazu: Aus einer falschen Aussage lässt sich **alles** folgern."
     },
@@ -60,7 +160,23 @@
       "label": "Ausfüllen",
       "md": "Fülle die Spalte $\\neg B \\Rightarrow \\neg A$ aus und vergleiche sie mit $A \\Rightarrow B$.",
       "widget": "truth-table",
-      "params": { "vars": ["A", "B"], "columns": [{ "label": "A \\Rightarrow B", "expr": "A => B" }, { "label": "\\neg B \\Rightarrow \\neg A", "expr": "!B => !A", "ask": true }] },
+      "params": {
+        "vars": [
+          "A",
+          "B"
+        ],
+        "columns": [
+          {
+            "label": "A \\Rightarrow B",
+            "expr": "A => B"
+          },
+          {
+            "label": "\\neg B \\Rightarrow \\neg A",
+            "expr": "!B => !A",
+            "ask": true
+          }
+        ]
+      },
       "goal": {},
       "explain": "Beide Spalten sind gleich: $(\\neg B \\Rightarrow \\neg A) \\Leftrightarrow (A \\Rightarrow B)$. Darauf beruht der **Beweis durch Kontraposition**: Statt $A \\Rightarrow B$ zeigt man direkt $\\neg B \\Rightarrow \\neg A$."
     },
@@ -74,10 +190,22 @@
       "type": "choice",
       "md": "Was ist die Verneinung von »$\\forall n \\in \\N\\ \\exists m \\in \\N : m > n$«?",
       "options": [
-        { "md": "$\\exists n \\in \\N\\ \\forall m \\in \\N : m \\le n$", "correct": true },
-        { "md": "$\\forall n \\in \\N\\ \\exists m \\in \\N : m \\le n$", "why": "Die Quantoren müssen **alle** getauscht werden, nicht nur die Aussage am Ende." },
-        { "md": "$\\exists n \\in \\N\\ \\exists m \\in \\N : m \\le n$", "why": "Aus $\\exists m$ wird beim Verneinen $\\forall m$." },
-        { "md": "$\\exists n \\in \\N\\ \\forall m \\in \\N : m < n$", "why": "Die Verneinung von $m > n$ ist $m \\le n$, nicht $m < n$." }
+        {
+          "md": "$\\exists n \\in \\N\\ \\forall m \\in \\N : m \\le n$",
+          "correct": true
+        },
+        {
+          "md": "$\\forall n \\in \\N\\ \\exists m \\in \\N : m \\le n$",
+          "why": "Die Quantoren müssen **alle** getauscht werden, nicht nur die Aussage am Ende."
+        },
+        {
+          "md": "$\\exists n \\in \\N\\ \\exists m \\in \\N : m \\le n$",
+          "why": "Aus $\\exists m$ wird beim Verneinen $\\forall m$."
+        },
+        {
+          "md": "$\\exists n \\in \\N\\ \\forall m \\in \\N : m < n$",
+          "why": "Die Verneinung von $m > n$ ist $m \\le n$, nicht $m < n$."
+        }
       ],
       "explain": "Schritt für Schritt: $\\forall n$ wird $\\exists n$, $\\exists m$ wird $\\forall m$, $m > n$ wird $m \\le n$. Die Verneinung besagt »es gibt eine größte natürliche Zahl«, und die ist falsch, wie es sein muss."
     },
@@ -86,10 +214,22 @@
       "type": "choice",
       "md": "Bald wichtig: Verneine\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| < \\varepsilon.$$",
       "options": [
-        { "md": "$\\exists \\varepsilon > 0\\ \\forall n_0 \\in \\N\\ \\exists n \\ge n_0 : |a_n - a| \\ge \\varepsilon$", "correct": true },
-        { "md": "$\\exists \\varepsilon > 0\\ \\forall n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| \\ge \\varepsilon$", "why": "Aus $\\forall n \\ge n_0$ wird $\\exists n \\ge n_0$." },
-        { "md": "$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| \\ge \\varepsilon$", "why": "So wird nur die innere Ungleichung verneint, die Quantoren bleiben stehen." },
-        { "md": "$\\exists \\varepsilon \\le 0\\ \\forall n_0 \\in \\N\\ \\exists n \\ge n_0 : |a_n - a| \\ge \\varepsilon$", "why": "Die Bedingung $\\varepsilon > 0$ beschreibt nur, worüber quantifiziert wird. Sie bleibt beim Verneinen stehen." }
+        {
+          "md": "$\\exists \\varepsilon > 0\\ \\forall n_0 \\in \\N\\ \\exists n \\ge n_0 : |a_n - a| \\ge \\varepsilon$",
+          "correct": true
+        },
+        {
+          "md": "$\\exists \\varepsilon > 0\\ \\forall n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| \\ge \\varepsilon$",
+          "why": "Aus $\\forall n \\ge n_0$ wird $\\exists n \\ge n_0$."
+        },
+        {
+          "md": "$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| \\ge \\varepsilon$",
+          "why": "So wird nur die innere Ungleichung verneint, die Quantoren bleiben stehen."
+        },
+        {
+          "md": "$\\exists \\varepsilon \\le 0\\ \\forall n_0 \\in \\N\\ \\exists n \\ge n_0 : |a_n - a| \\ge \\varepsilon$",
+          "why": "Die Bedingung $\\varepsilon > 0$ beschreibt nur, worüber quantifiziert wird. Sie bleibt beim Verneinen stehen."
+        }
       ],
       "explain": "Das ist genau die Aussage »$(a_n)$ konvergiert **nicht** gegen $a$«: Es gibt ein festes $\\varepsilon$, so dass immer wieder, egal wie spät, Folgenglieder mindestens $\\varepsilon$ von $a$ entfernt sind."
     },
@@ -98,8 +238,14 @@
       "type": "choice",
       "md": "Welche der beiden Aussagen ist wahr?",
       "options": [
-        { "md": "Für jeden Menschen existiert ein Tag im Jahr, an dem er Geburtstag hat.", "correct": true },
-        { "md": "Es existiert ein Tag im Jahr, an dem jeder Mensch Geburtstag hat.", "why": "Hier müsste ein einziger Tag für alle passen." }
+        {
+          "md": "Für jeden Menschen existiert ein Tag im Jahr, an dem er Geburtstag hat.",
+          "correct": true
+        },
+        {
+          "md": "Es existiert ein Tag im Jahr, an dem jeder Mensch Geburtstag hat.",
+          "why": "Hier müsste ein einziger Tag für alle passen."
+        }
       ],
       "explain": "Formal: $\\forall M\\ \\exists T$ gegen $\\exists T\\ \\forall M$. Beim Vertauschen von $\\forall$ und $\\exists$ ändert sich die Bedeutung. Im ersten Fall darf der Tag vom Menschen abhängen, im zweiten nicht."
     },
@@ -108,10 +254,22 @@
       "type": "match",
       "md": "Ordne die Beweisstrategien zu.",
       "pairs": [
-        ["Direkter Beweis", "eine Kette $A \\Rightarrow A_1 \\Rightarrow \\dots \\Rightarrow B$"],
-        ["Kontraposition", "zeige $\\neg B \\Rightarrow \\neg A$"],
-        ["Widerspruchsbeweis", "nimm $A \\wedge \\neg B$ an und leite etwas Falsches her"],
-        ["Gegenbeispiel", "widerlegt eine Aussage der Form $\\forall x : P(x)$"]
+        [
+          "Direkter Beweis",
+          "eine Kette $A \\Rightarrow A_1 \\Rightarrow \\dots \\Rightarrow B$"
+        ],
+        [
+          "Kontraposition",
+          "zeige $\\neg B \\Rightarrow \\neg A$"
+        ],
+        [
+          "Widerspruchsbeweis",
+          "nimm $A \\wedge \\neg B$ an und leite etwas Falsches her"
+        ],
+        [
+          "Gegenbeispiel",
+          "widerlegt eine Aussage der Form $\\forall x : P(x)$"
+        ]
       ],
       "explain": "Ein Gegenbeispiel genügt, um eine Allaussage zu widerlegen. Um sie zu beweisen, genügen Beispiele nie."
     },
@@ -129,10 +287,34 @@
       ],
       "explain": "Der Trick ist die Wahl $y = \\tfrac{x}{2}$: eine positive Zahl, die kleiner als $x$ ist."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-logik", "level": 1, "label": "Neue Belegung" },
-    { "id": "neu2", "type": "gen", "gen": "ana-logik", "level": 2, "label": "Tautologie?" },
-    { "id": "neu3", "type": "gen", "gen": "ana-logik", "level": 3, "label": "Verneinen" },
-    { "id": "neu4", "type": "gen", "gen": "ana-logik", "level": 4, "label": "Wahrheitstafel" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-logik",
+      "level": 1,
+      "label": "Neue Belegung"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-logik",
+      "level": 2,
+      "label": "Tautologie?"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-logik",
+      "level": 3,
+      "label": "Verneinen"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-logik",
+      "level": 4,
+      "label": "Wahrheitstafel"
+    },
     {
       "id": "summary",
       "type": "summary",

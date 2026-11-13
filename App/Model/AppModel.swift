@@ -179,7 +179,7 @@ final class AppModel {
     func progress(of subject: Subject) -> Double {
         let list = courses(in: subject)
         let ready = list.reduce(0) { $0 + $1.readyLessons.count }
-        let done = list.reduce(0) { $0 + state.completedCount(in: $1) }
+        let done = list.reduce(0) { $0 + state.settledCount(in: $1) }
         return ready == 0 ? 0 : Double(done) / Double(ready)
     }
 
@@ -294,36 +294,65 @@ final class AppModel {
     var streak: Int { state.streak() }
     var dueCards: [ReviewCard] { state.dueCards() }
 
+    /// Progress along the path: finished and skipped lessons.
     func progress(of course: Course) -> Double {
         let ready = course.readyLessons.count
-        return ready == 0 ? 0 : Double(state.completedCount(in: course)) / Double(ready)
+        return ready == 0 ? 0 : Double(state.settledCount(in: course)) / Double(ready)
     }
 
-    /// The lesson to continue: the one last opened if unfinished, else the next unfinished lesson in that course.
+    /// The lesson to continue: the one last opened if neither finished nor skipped, else the next open lesson in that course.
     var continueTarget: (course: Course, lesson: LessonRef)? {
         if let last = state.lastLesson {
             for c in courses {
                 guard let idx = c.lessons.firstIndex(where: { $0.id == last }) else { continue }
-                if state.lessons[last]?.isCompleted != true { return (c, c.lessons[idx]) }
-                if let next = c.lessons[(idx + 1)...].first(where: { $0.isReady && state.lessons[$0.id]?.isCompleted != true }) { return (c, next) }
+                if !state.isSettled(last) { return (c, c.lessons[idx]) }
+                if let next = c.lessons[(idx + 1)...].first(where: { $0.isReady && !state.isSettled($0.id) }) { return (c, next) }
             }
         }
         for c in courses {
-            if let next = c.readyLessons.first(where: { state.lessons[$0.id]?.isCompleted != true }) { return (c, next) }
+            if let next = c.readyLessons.first(where: { !state.isSettled($0.id) }) { return (c, next) }
         }
         return nil
     }
 
-    /// The home shelf: the lesson to continue first, then the next unfinished lesson of every other course.
+    /// The home shelf: the lesson to continue first, then the next open lesson of every other course.
     var upNext: [UpNextItem] {
         var list: [UpNextItem] = []
         if let first = continueTarget { list.append(UpNextItem(course: first.course, lesson: first.lesson)) }
         for c in courses where !list.contains(where: { $0.course.id == c.id }) {
-            if let next = c.readyLessons.first(where: { state.lessons[$0.id]?.isCompleted != true }) {
+            if let next = c.readyLessons.first(where: { !state.isSettled($0.id) }) {
                 list.append(UpNextItem(course: c, lesson: next))
             }
         }
         return Array(list.prefix(6))
+    }
+
+    // MARK: skipping
+
+    /// Skips a lesson the learner already knows: the path moves on and its training topics open; no review cards, no XP.
+    func skip(_ course: Course, _ lesson: LessonRef) {
+        state.skip(lessonID: lesson.id, courseID: course.id)
+        scheduleSave()
+    }
+
+    func unskip(_ lesson: LessonRef) {
+        state.unskip(lessonID: lesson.id)
+        scheduleSave()
+    }
+
+    /// Open (neither finished nor skipped) ready lessons of a chapter.
+    func openLessons(_ chapter: Chapter) -> [LessonRef] {
+        chapter.lessons.filter { $0.isReady && !state.isSettled($0.id) }
+    }
+
+    func skipChapter(_ course: Course, _ chapter: Chapter) {
+        for lesson in openLessons(chapter) { state.skip(lessonID: lesson.id, courseID: course.id) }
+        scheduleSave()
+    }
+
+    func unskipChapter(_ chapter: Chapter) {
+        for lesson in chapter.lessons { state.unskip(lessonID: lesson.id) }
+        scheduleSave()
     }
 
     func start(_ course: Course, _ lesson: LessonRef, fromStart: Bool = false) {
@@ -349,10 +378,10 @@ final class AppModel {
 
     // MARK: training
 
-    /// Unlocked when the lesson it belongs to is finished (or when it names none).
+    /// Unlocked when the lesson it belongs to is finished or skipped (or when it names none).
     func isUnlocked(_ topic: PracticeTopic) -> Bool {
         guard let after = topic.after else { return true }
-        return state.lessons[after]?.isCompleted == true
+        return state.isSettled(after)
     }
 
     func practiceStat(_ course: Course, _ topic: PracticeTopic) -> PracticeStat {
@@ -385,13 +414,14 @@ final class AppModel {
     /// Progress for the learning path page of the runtime (runtime/overview.js).
     func overviewProgress() -> [String: Any] {
         var done: [String] = []
+        var skipped: [String] = []
         var started: [String: Int] = [:]
         for (id, p) in state.lessons {
-            if p.isCompleted { done.append(id) } else if p.lastStep > 0 { started[id] = p.lastStep }
+            if p.isCompleted { done.append(id) } else if p.isSkipped { skipped.append(id) } else if p.lastStep > 0 { started[id] = p.lastStep }
         }
         var practice: [String: Int] = [:]
         for (key, stat) in state.practice where stat.highestMastered > 0 { practice[key] = stat.highestMastered }
-        return ["done": done.sorted(), "started": started, "practice": practice, "streak": streak]
+        return ["done": done.sorted(), "skipped": skipped.sorted(), "started": started, "practice": practice, "streak": streak]
     }
 
     /// Lesson or training round chosen on the learning path page.

@@ -1,0 +1,95 @@
+{
+  "id": "ta-potenzreihen",
+  "title": "Potenz- und Taylorreihen",
+  "subtitle": "Funktionen als unendliche Polynome",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Potenzreihen.md",
+      "title": "Potenzreihen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Taylor- und Maclaurin-Reihen.md",
+      "title": "Taylor- und Maclaurin-Reihen"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Eine **Potenzreihe** $\\sum a_k (x - x_0)^k$ konvergiert auf einem Intervall um $x_0$ mit dem **Konvergenzradius** $R = \\lim \\left|\\frac{a_k}{a_{k+1}}\\right|$. Die **Taylorreihe** einer Funktion hat die Koeffizienten $a_k = \\frac{f^{(k)}(x_0)}{k!}$; um $x_0 = 0$ heißt sie Maclaurin-Reihe: $e^x = \\sum \\frac{x^k}{k!}$, $\\sin x = x - \\frac{x^3}{3!} + \\ldots$",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Taylor",
+      "md": "Taylorpolynome von $\\sin x$ um 0: Erhöhe den Grad und sieh, wie weit die Näherung trägt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -7,
+          7
+        ],
+        "y": [
+          -2.5,
+          2.5
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "g",
+            "label": "Grad (1, 3, 5, 7, 9)",
+            "min": 1,
+            "max": 9,
+            "step": 2,
+            "value": 1,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "gray"
+          },
+          {
+            "name": "T",
+            "expr": "x - (g>=3)*x^3/6 + (g>=5)*x^5/120 - (g>=7)*x^7/5040 + (g>=9)*x^9/362880",
+            "color": "accent"
+          }
+        ],
+        "readout": "Taylorpolynom vom Grad {g|0}"
+      },
+      "goal": {
+        "when": "g >= 9",
+        "solve": {
+          "g": 9
+        }
+      },
+      "id": "w1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 1,
+      "label": "Taylorpolynome",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-potenzreihen",
+      "level": 2,
+      "label": "Potenzreihen",
+      "id": "g2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Potenzreihe mit Konvergenzradius R.",
+        "Taylor: a_k = f^(k)(x₀)/k!.",
+        "eˣ = Σ xᵏ/k!, sin x = x − x³/3! + …"
+      ],
+      "id": "summary"
+    }
+  ]
+}

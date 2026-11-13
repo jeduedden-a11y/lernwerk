@@ -4,7 +4,14 @@
   "subtitle": "Die Rechenregeln, auf denen alles Weitere steht",
   "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 1",
   "vault": [
-    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md", "title": "Gruppen und Körper" }
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    },
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Algebra I MOC.md",
+      "title": "Lineare Algebra I MOC"
+    }
   ],
   "steps": [
     {
@@ -12,13 +19,44 @@
       "type": "anim",
       "md": "Auf einer Uhr mit 5 Stunden ist $3 + 4 = 2$. Seltsam? Nein, nur Rechnen **modulo 5**. An solchen Rechnungen sieht man, was eine Gruppe und was ein Körper ist.",
       "widget": "modtable",
-      "params": { "n": 5, "op": "+", "select": 2, "nRange": [2, 12] },
+      "params": {
+        "n": 5,
+        "op": "+",
+        "select": 2,
+        "nRange": [
+          2,
+          12
+        ]
+      },
       "timeline": [
-        { "caption": "Die Tafel zeigt alle Summen modulo 5: Zeile $a$, Spalte $b$, Eintrag $a + b$ mit Rest bei Teilung durch 5. Jede Zeile ist eine Verschiebung der Zahlen $0$ bis $4$." },
-        { "caption": "Zeile 2 ist ausgewählt. Grün ist die Spalte, in der $0$ herauskommt: $2 + 3 \\equiv 0$. Also ist $3$ das **Inverse** von $2$. Jede Zahl hat hier ein Inverses.", "hold": 5200 },
-        { "caption": "Jetzt die Multiplikation modulo 5. Das neutrale Element ist die $1$. In jeder Zeile außer der $0$ steht genau eine $1$: Jede Zahl außer $0$ hat ein Inverses, zum Beispiel $2 \\cdot 3 = 6 \\equiv 1$.", "do": { "op": "*" }, "hold": 5600 },
-        { "caption": "Modulo 6 geht das schief: In Zeile 2 kommt keine $1$ vor. Rot markiert sind Nullteiler, $2 \\cdot 3 \\equiv 0$ obwohl keiner der Faktoren $0$ ist.", "set": { "n": 6 }, "hold": 5600 },
-        { "caption": "Bei einer Primzahl wie $7$ hat wieder jede Zahl außer $0$ ein Inverses. Dann ist $\\mathbb{Z}/7\\mathbb{Z}$ ein **Körper**: Man kann darin addieren, subtrahieren, multiplizieren und durch alles außer $0$ teilen.", "set": { "n": 7, "sel": 3 } }
+        {
+          "caption": "Die Tafel zeigt alle Summen modulo 5: Zeile $a$, Spalte $b$, Eintrag $a + b$ mit Rest bei Teilung durch 5. Jede Zeile ist eine Verschiebung der Zahlen $0$ bis $4$."
+        },
+        {
+          "caption": "Zeile 2 ist ausgewählt. Grün ist die Spalte, in der $0$ herauskommt: $2 + 3 \\equiv 0$. Also ist $3$ das **Inverse** von $2$. Jede Zahl hat hier ein Inverses.",
+          "hold": 5200
+        },
+        {
+          "caption": "Jetzt die Multiplikation modulo 5. Das neutrale Element ist die $1$. In jeder Zeile außer der $0$ steht genau eine $1$: Jede Zahl außer $0$ hat ein Inverses, zum Beispiel $2 \\cdot 3 = 6 \\equiv 1$.",
+          "do": {
+            "op": "*"
+          },
+          "hold": 5600
+        },
+        {
+          "caption": "Modulo 6 geht das schief: In Zeile 2 kommt keine $1$ vor. Rot markiert sind Nullteiler, $2 \\cdot 3 \\equiv 0$ obwohl keiner der Faktoren $0$ ist.",
+          "set": {
+            "n": 6
+          },
+          "hold": 5600
+        },
+        {
+          "caption": "Bei einer Primzahl wie $7$ hat wieder jede Zahl außer $0$ ein Inverses. Dann ist $\\mathbb{Z}/7\\mathbb{Z}$ ein **Körper**: Man kann darin addieren, subtrahieren, multiplizieren und durch alles außer $0$ teilen.",
+          "set": {
+            "n": 7,
+            "sel": 3
+          }
+        }
       ]
     },
     {
@@ -32,15 +70,36 @@
       "label": "Erkunden",
       "md": "**Stelle die Multiplikation modulo 8 ein und wähle eine Zeile, deren Zahl kein Inverses hat.** Tippe dazu links auf die Zeilennummer.",
       "widget": "modtable",
-      "params": { "n": 5, "op": "+", "select": 1, "nRange": [2, 12] },
+      "params": {
+        "n": 5,
+        "op": "+",
+        "select": 1,
+        "nRange": [
+          2,
+          12
+        ]
+      },
       "goal": {
         "when": "n == 8 && op == 1 && inv < 0",
         "hints": [
-          { "when": "n != 8", "text": "Stelle zuerst n = 8 ein." },
-          { "when": "op != 1", "text": "Wähle die Multiplikation modulo n." },
-          { "when": "inv >= 0", "text": "Die Zahl {sel|0} hat das Inverse {inv|0}. Suche eine Zeile ohne grünes Feld." }
+          {
+            "when": "n != 8",
+            "text": "Stelle zuerst n = 8 ein."
+          },
+          {
+            "when": "op != 1",
+            "text": "Wähle die Multiplikation modulo n."
+          },
+          {
+            "when": "inv >= 0",
+            "text": "Die Zahl {sel|0} hat das Inverse {inv|0}. Suche eine Zeile ohne grünes Feld."
+          }
         ],
-        "solve": { "n": 8, "op": 1, "sel": 2 }
+        "solve": {
+          "n": 8,
+          "op": 1,
+          "sel": 2
+        }
       },
       "explain": "Modulo 8 haben genau die geraden Zahlen kein Inverses, denn ein Produkt mit einer geraden Zahl bleibt gerade und kann nie $\\equiv 1$ sein. Allgemein ist $a$ modulo $n$ genau dann invertierbar, wenn $\\operatorname{ggT}(a, n) = 1$."
     },
@@ -49,10 +108,22 @@
       "type": "choice",
       "md": "Welche der folgenden Strukturen ist **keine** Gruppe?",
       "options": [
-        { "md": "$(\\mathbb{Z} \\setminus \\{0\\}, \\cdot)$", "correct": true },
-        { "md": "$(\\mathbb{Z}, +)$", "why": "Alle vier Axiome gelten, das Inverse von $a$ ist $-a$." },
-        { "md": "$(\\{1, -1\\}, \\cdot)$", "why": "Abgeschlossen, $1$ ist neutral, jedes Element ist sein eigenes Inverses." },
-        { "md": "$(\\mathbb{R}_{>0}, \\cdot)$", "why": "Produkte und Kehrwerte positiver Zahlen sind positiv." }
+        {
+          "md": "$(\\mathbb{Z} \\setminus \\{0\\}, \\cdot)$",
+          "correct": true
+        },
+        {
+          "md": "$(\\mathbb{Z}, +)$",
+          "why": "Alle vier Axiome gelten, das Inverse von $a$ ist $-a$."
+        },
+        {
+          "md": "$(\\{1, -1\\}, \\cdot)$",
+          "why": "Abgeschlossen, $1$ ist neutral, jedes Element ist sein eigenes Inverses."
+        },
+        {
+          "md": "$(\\mathbb{R}_{>0}, \\cdot)$",
+          "why": "Produkte und Kehrwerte positiver Zahlen sind positiv."
+        }
       ],
       "explain": "In $\\mathbb{Z} \\setminus \\{0\\}$ fehlen die multiplikativen Inversen: Es gibt keine ganze Zahl $x$ mit $2 \\cdot x = 1$."
     },
@@ -86,10 +157,34 @@
       "md": "Warum kann ein Körper keine Nullteiler haben? Angenommen, $a \\cdot b = 0$ mit $a \\ne 0$. Was folgt für $b$?",
       "solution": "Weil $a \\ne 0$ ist, gibt es $a^{-1}$. Multipliziere $a \\cdot b = 0$ von links mit $a^{-1}$: $b = a^{-1} \\cdot 0 = 0$. In einem Körper ist ein Produkt also nur dann $0$, wenn ein Faktor $0$ ist. Deshalb ist $\\mathbb{Z}/6\\mathbb{Z}$ mit $2 \\cdot 3 \\equiv 0$ kein Körper."
     },
-    { "id": "neu1", "type": "gen", "gen": "la-modular", "level": 1, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "la-modular", "level": 2, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "la-gruppe", "level": 2, "label": "Neue Struktur" },
-    { "id": "neu4", "type": "gen", "gen": "la-modular", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 1,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "la-gruppe",
+      "level": 2,
+      "label": "Neue Struktur"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 3,
+      "label": "Neue Werte"
+    },
     {
       "id": "summary",
       "type": "summary",

@@ -23,7 +23,7 @@ struct WeekBanner: View {
     var chapter: Chapter
 
     var body: some View {
-        let next = chapter.lessons.first { $0.isReady && model.state.lessons[$0.id]?.isCompleted != true }
+        let next = chapter.lessons.first { $0.isReady && !model.state.isSettled($0.id) }
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 Label("Diese Woche", systemImage: "calendar")

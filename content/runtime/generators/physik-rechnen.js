@@ -389,7 +389,7 @@
     return { type: "numeric", md, answer: a, tolerance: Math.max(Math.abs(a) * 0.02, 1e-9), placeholder: unit || "", explain };
   }
 
-  function make(level, G, params) {
+  function makeWith(T, level, G, params) {
     const list = [].concat((params && params.typ) || Object.keys(T)).filter((k) => T[k]);
     const id = G.pick(list.length ? list : Object.keys(T));
     if (T[id].custom) return T[id].custom(level, G);
@@ -399,7 +399,7 @@
     // level 4: proportionality, if some output is a power law of some input
     if (level >= 4) {
       const pairs = [];
-      okeys.forEach((ok) => Object.keys(S.v).forEach((ik) => { const q = powerLaw(S, G, ok, ik); if (q !== null && q !== 0) pairs.push([ok, ik, q]); }));
+      okeys.forEach((ok) => Object.keys(S.v).forEach((ik) => { if (S.noPow && (S.noPow === true || S.noPow.includes(ik))) return; const q = powerLaw(S, G, ok, ik); if (q !== null && q !== 0) pairs.push([ok, ik, q]); }));
       if (pairs.length) {
         const [ok, ik, q] = G.pick(pairs);
         const k = G.pick([2, 3, 4, 0.5]);
@@ -464,7 +464,11 @@
     return numericStep(md, ans, "MeV", "Massendefekt $\\Delta m = Z m_p + N m_n - m_K = " + Z + " \\cdot 1{,}007276 + " + N + " \\cdot 1{,}008665 - " + String(mk).replace(".", "{,}") + " \\approx " + G.tex(sig(dm, 4), 6) + "\\,\\mathrm{u}$. Bindungsenergie $E_B = \\Delta m\\,c^2 \\approx " + G.tex(sig(EB, 4), 6) + "\\,\\mathrm{MeV}$" + (askPer ? ", pro Nukleon $\\frac{E_B}{A} \\approx " + G.tex(sig(per, 3), 6) + "\\,\\mathrm{MeV}$. Eisen liegt mit etwa 8,8 MeV am höchsten: leichte Kerne gewinnen Energie durch Fusion, schwere durch Spaltung." : ". Die Kernmasse ist kleiner als die Summe der Nukleonenmassen: diese Differenz wurde beim Zusammenbau als Energie frei."));
   } });
 
+  const make = (level, G, params) => makeWith(T, level, G, params);
   LW.generator("phy-rechnen", { title: "Physik rechnen", make });
+  // the same engine for other subjects: LW.rechenEngine(specs) returns a make function; specs as above
+  LW.rechenEngine = (specs) => (level, G, params) => makeWith(specs, level, G, params);
+  LW.rechenHelpers = { numericStep, factorTex, sig };
   LW.physikTypen = T;
 })();
 

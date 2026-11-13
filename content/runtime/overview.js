@@ -1,8 +1,9 @@
 /* Learning path: an overview of all subjects with their progress, and a skill tree for every course, built from
  * the "requires" of the lessons in course.json (cross-course "links" are listed as connections).
  *
- * LW.start({ mode: "overview", subject, progress: { done: [lessonId], started: {lessonId: step},
+ * LW.start({ mode: "overview", subject, progress: { done: [lessonId], skipped: [lessonId], started: {lessonId: step},
  *            practice: {"courseId/topicId": best level passed 0..4}, xp, streak }, theme, insets })
+ * A skipped lesson counts as settled: it opens the lessons that build on it and its training topic.
  * posts { type: "open", courseId, lessonId } and { type: "practice", courseId, topicId, level }. */
 (function () {
   "use strict";
@@ -97,6 +98,8 @@
     document.body.append(root);
     const P = o.progress || {};
     const done = new Set(P.done || []);
+    const skipped = new Set((P.skipped || []).filter((id) => !done.has(id)));
+    const settled = (id) => done.has(id) || skipped.has(id);
     const started = P.started || {};
     const practice = P.practice || {};
     const base = o.contentBase || "../courses/";
@@ -124,14 +127,14 @@
         c.lessonsFlat.forEach((l) => { l.next = c.lessonsFlat.filter((m) => m.req.includes(l.id)); });
         c.topics = c.practice || [];
       });
-      const stateOf = (l) => (done.has(l.id) ? "done" : started[l.id] > 0 ? "started" : l.req.every((r) => done.has(r)) ? "ready" : "later");
+      const stateOf = (l) => (done.has(l.id) ? "done" : skipped.has(l.id) ? "skipped" : started[l.id] > 0 ? "started" : l.req.every(settled) ? "ready" : "later");
       const best = (c, t) => Math.max(0, Math.min(4, +practice[c.id + "/" + t.id] || 0));
       const levelsOf = (list) => list.reduce((s, c) => s + c.topics.reduce((a, t) => a + best(c, t), 0), 0);
       const maxLevelsOf = (list) => list.reduce((s, c) => s + c.topics.length * 4, 0);
 
       // ---------------------------------------------------------------- header and subject cards
       const allLessons = courses.reduce((s, c) => s + c.lessonsFlat.length, 0);
-      const allDone = courses.reduce((s, c) => s + c.lessonsFlat.filter((l) => done.has(l.id)).length, 0);
+      const allDone = courses.reduce((s, c) => s + c.lessonsFlat.filter((l) => settled(l.id)).length, 0);
       root.append(el("header", { class: "lw-head" }, [
         el("div", { class: "lw-kicker", text: "Überblick" }),
         el("div", { class: "lw-title", text: "Dein Lernpfad" }),
@@ -145,7 +148,7 @@
       root.append(tabs);
       root.append(el("div", { class: "ov-legend" }, [
         ["done", "geschafft"], ["started", "begonnen"], ["ready", "bereit"], ["later", "baut auf anderem auf"],
-      ].map(([k, t]) => el("span", { class: "ov-key " + k }, [el("i"), el("span", { text: t })]))));
+      ].concat(skipped.size ? [["skipped", "übersprungen"]] : []).map(([k, t]) => el("span", { class: "ov-key " + k }, [el("i"), el("span", { text: t })]))));
       const treeBox = el("div", { class: "ov-trees" });
       root.append(treeBox);
       const sheet = el("div", { class: "ov-sheet", role: "dialog", "aria-live": "polite" });
@@ -161,7 +164,7 @@
         cards.innerHTML = "";
         subjects.forEach((s) => {
           const total = s.list.reduce((a, c) => a + c.lessonsFlat.length, 0);
-          const got = s.list.reduce((a, c) => a + c.lessonsFlat.filter((l) => done.has(l.id)).length, 0);
+          const got = s.list.reduce((a, c) => a + c.lessonsFlat.filter((l) => settled(l.id)).length, 0);
           const nxt = nextLesson(s.list);
           const card = el("button", { class: "ov-subject" + (selected === s.id ? " on" : ""), type: "button" });
           card.style.setProperty("--sc", s.color || "#5e5ce6");
@@ -197,7 +200,7 @@
         list.forEach((c) => {
           const sec = el("section", { class: "ov-course" });
           sec.style.setProperty("--cc", c.color || "#5e5ce6");
-          const got = c.lessonsFlat.filter((l) => done.has(l.id)).length;
+          const got = c.lessonsFlat.filter((l) => settled(l.id)).length;
           sec.append(el("div", { class: "ov-course-head" }, [
             el("span", { class: "ov-course-dot" }),
             el("div", { class: "ov-course-title", text: c.title }),
@@ -211,16 +214,17 @@
             const a = pos.get(r), b = pos.get(l.id);
             if (!a || !b) return;
             const y1 = a.y + 21, y2 = b.y - 21, my = (y1 + y2) / 2;
-            const p = sv("path", { d: "M" + a.x + "," + y1 + " C" + a.x + "," + my + " " + b.x + "," + my + " " + b.x + "," + y2, class: "ov-edge" + (done.has(r) ? " lit" : "") }, edges);
+            const p = sv("path", { d: "M" + a.x + "," + y1 + " C" + a.x + "," + my + " " + b.x + "," + my + " " + b.x + "," + y2, class: "ov-edge" + (settled(r) ? " lit" : "") }, edges);
             p.dataset.from = r; p.dataset.to = l.id;
           }));
           c.lessonsFlat.forEach((l) => {
             const q = pos.get(l.id), st = stateOf(l);
-            const g = sv("g", { class: "ov-node " + st + (focusId === l.id ? " focus" : ""), transform: "translate(" + q.x + "," + q.y + ")", tabindex: "0", role: "button", "aria-label": l.title + ", " + { done: "geschafft", started: "begonnen", ready: "bereit", later: "baut auf anderen Lektionen auf" }[st] }, nodes);
+            const g = sv("g", { class: "ov-node " + st + (focusId === l.id ? " focus" : ""), transform: "translate(" + q.x + "," + q.y + ")", tabindex: "0", role: "button", "aria-label": l.title + ", " + { done: "geschafft", skipped: "übersprungen", started: "begonnen", ready: "bereit", later: "baut auf anderen Lektionen auf" }[st] }, nodes);
             if (st === "ready") sv("circle", { r: 25, class: "ov-glow" }, g);
             sv("circle", { r: 19, class: "ov-disc" }, g);
             if (st === "started") sv("circle", { r: 19, class: "ov-arc", "stroke-dasharray": "60 200", transform: "rotate(-90)" }, g);
             if (st === "done") sv("path", { d: "M-7,0.5 L-2,5.5 L7.5,-5", class: "ov-check" }, g);
+            else if (st === "skipped") sv("path", { d: "M-6,-5.5 L2,0 L-6,5.5 Z M5,-5.5 L5,5.5", class: "ov-skip" }, g);
             else { const t = sv("text", { class: "ov-num", y: 0.5 }, g); t.textContent = String(l.order + 1); }
             const topic = c.topics.find((t) => t.after === l.id);
             if (topic) {
@@ -252,7 +256,7 @@
         sheet.style.setProperty("--cc", c.color || "#5e5ce6");
         const close = el("button", { class: "ov-sheet-close", type: "button", "aria-label": "Schließen", text: "×" });
         close.addEventListener("click", () => { sheet.classList.remove("open"); focusId = null; paint(); });
-        const status = { done: "Geschafft", started: "Begonnen", ready: "Bereit", later: "Baut auf anderen Lektionen auf" }[st];
+        const status = { done: "Geschafft", skipped: "Übersprungen", started: "Begonnen", ready: "Bereit", later: "Baut auf anderen Lektionen auf" }[st];
         sheet.append(close,
           el("div", { class: "ov-sheet-kicker", text: c.title + " · " + l.chapter }),
           el("div", { class: "ov-sheet-title", text: l.title }),
@@ -260,7 +264,7 @@
         const chips = (label, list, mark) => {
           if (!list.length) return;
           sheet.append(el("div", { class: "ov-sheet-row" }, [el("span", { class: "ov-sheet-label", text: label })].concat(list.map((x) => {
-            const b = el("button", { class: "ov-chip" + (mark && done.has(x.id) ? " ok" : ""), type: "button", text: (mark ? (done.has(x.id) ? "✓ " : "") : "") + x.title + (x.course !== c ? " (" + x.course.title + ")" : "") });
+            const b = el("button", { class: "ov-chip" + (mark && settled(x.id) ? " ok" : ""), type: "button", text: (mark ? (done.has(x.id) ? "✓ " : skipped.has(x.id) ? "» " : "") : "") + x.title + (x.course !== c ? " (" + x.course.title + ")" : "") });
             b.addEventListener("click", () => {
               focusId = x.id;
               if (x.course !== c && selected !== "alle" && !subjects.find((s) => s.id === selected).list.includes(x.course)) selected = "alle";
@@ -276,10 +280,10 @@
         chips("Führt zu", l.next, false);
         chips("Verbindung", l.links.map((r) => lessonIndex.get(r)).filter(Boolean), false);
         const actions = el("div", { class: "ov-sheet-actions" });
-        const go = el("button", { class: "ov-btn primary", type: "button", text: st === "done" ? "Wiederholen" : st === "started" ? "Fortsetzen" : "Starten" });
+        const go = el("button", { class: "ov-btn primary", type: "button", text: st === "done" ? "Wiederholen" : st === "started" ? "Fortsetzen" : st === "skipped" ? "Doch ansehen" : "Starten" });
         go.addEventListener("click", () => LW.post({ type: "open", courseId: c.id, lessonId: l.id }));
         actions.append(go);
-        if (topic && st === "done") {
+        if (topic && (st === "done" || st === "skipped")) {
           const lvl = best(c, topic), next = Math.min(4, lvl + 1);
           const tr = el("button", { class: "ov-btn lv" + next, type: "button", text: "Training · " + LEVEL_NAMES[next] });
           tr.addEventListener("click", () => LW.post({ type: "practice", courseId: c.id, topicId: topic.id, level: next }));

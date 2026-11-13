@@ -1,0 +1,136 @@
+{
+  "id": "che-versuch-titration",
+  "title": "Versuch: Titration",
+  "subtitle": "Eigene Messreihe mit Auswertung",
+  "vault": [
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Titration.md",
+      "title": "Titration"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Versuch:** 20 mL einer Säure unbekannter Konzentration werden mit Natronlauge (c = 0,1 mol/L) titriert, ein pH-Meter misst laufend. Nimm zuerst die Kurve von Salzsäure auf: in großen Schritten bis kurz vor den Sprung, in seiner Nähe in kleinen.",
+      "image": "vault:Titrationskurven Vergleich.svg",
+      "alt": "Titrationskurven starker und schwacher Säuren",
+      "caption": "Titrationskurven starker und schwacher Säuren",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Salzsäure",
+      "md": "Titriere die Salzsäure. Miss mindestens acht Punkte, einige davon im Sprungbereich.",
+      "widget": "versuch",
+      "params": {
+        "exp": "titration",
+        "acid": "salzsaeure"
+      },
+      "goal": {
+        "when": "n >= 8 && err < 0.05",
+        "solve": {}
+      },
+      "id": "w1"
+    },
+    {
+      "type": "widget",
+      "label": "Essigsäure",
+      "md": "Jetzt Essigsäure. Achte auf den Puffer-Bereich und den Halbäquivalenzpunkt.",
+      "widget": "versuch",
+      "params": {
+        "exp": "titration",
+        "acid": "essigsaeure"
+      },
+      "goal": {
+        "when": "n >= 8 && err < 0.05",
+        "solve": {}
+      },
+      "id": "w2"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Die vier Kennpunkte der Essigsäure-Kurve: Ordne zu.",
+      "pairs": [
+        [
+          "Anfangspunkt",
+          "pH der schwachen Säure, etwa 2,9"
+        ],
+        [
+          "Halbäquivalenzpunkt",
+          "pH = pKS = 4,76, Pufferbereich"
+        ],
+        [
+          "Äquivalenzpunkt",
+          "pH etwa 8,7, weil Acetat basisch reagiert"
+        ],
+        [
+          "nach dem Äquivalenzpunkt",
+          "Überschuss an Natronlauge bestimmt den pH"
+        ]
+      ],
+      "explain": "Bei Salzsäure fehlt der Pufferbereich; ihr Äquivalenzpunkt liegt bei pH 7.",
+      "id": "ma1"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Indikator passt für die Essigsäure-Titration?",
+      "options": [
+        {
+          "md": "Phenolphthalein (Umschlag pH 8,2 bis 10)",
+          "correct": true
+        },
+        {
+          "md": "Methylorange (3,1 bis 4,4)",
+          "why": "Es schlägt mitten im Pufferbereich um, lange vor dem Äquivalenzpunkt."
+        },
+        {
+          "md": "Bromthymolblau (6,0 bis 7,6)",
+          "why": "Es schlägt etwas zu früh um; der Äquivalenzpunkt liegt im Basischen."
+        }
+      ],
+      "explain": "Der Umschlagsbereich muss im steilen Sprung um den Äquivalenzpunkt liegen.",
+      "id": "c1"
+    },
+    {
+      "type": "rubric",
+      "part": "a",
+      "review": false,
+      "md": "Werten Sie Ihre Messung der Essigsäure aus: Bestimmen Sie die Konzentration der Säure und ihren pKS-Wert und begründen Sie die Lage des Äquivalenzpunkts. (6 BE)",
+      "solution": "Am Äquivalenzpunkt (steilste Stelle, etwa bei dem abgelesenen Volumen V_B) gilt $c_S V_S = c_B V_B$, also $c_S = \\frac{0{,}1\\,\\mathrm{mol/L} \\cdot V_B}{20\\,\\mathrm{mL}}$. Bei halbem Volumen liegt der Halbäquivalenzpunkt; dort sind c(HA) und c(A⁻) gleich, nach Henderson-Hasselbalch gilt pH = pKS ≈ 4,8. Der Äquivalenzpunkt liegt im Basischen, weil dort eine Natriumacetatlösung vorliegt und Acetat als Base mit Wasser Hydroxid-Ionen bildet.",
+      "criteria": [
+        {
+          "md": "Äquivalenzpunkt korrekt abgelesen",
+          "points": 1
+        },
+        {
+          "md": "Konzentration über c_S V_S = c_B V_B berechnet",
+          "points": 2
+        },
+        {
+          "md": "pKS am Halbäquivalenzpunkt bestimmt und begründet",
+          "points": 2
+        },
+        {
+          "md": "Lage des ÄP über die Basizität des Acetats begründet",
+          "points": 1
+        }
+      ],
+      "operator": {
+        "word": "Auswerten",
+        "means": "Daten oder Ergebnisse zu einer abschließenden Aussage zusammenführen."
+      },
+      "id": "r1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Äquivalenzpunkt: c_S V_S = c_B V_B, steilste Stelle.",
+        "Schwache Säure: Pufferbereich, Halbäquivalenzpunkt mit pH = pKS, ÄP im Basischen.",
+        "Indikator nach dem Sprungbereich wählen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

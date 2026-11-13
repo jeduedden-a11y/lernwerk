@@ -1,0 +1,138 @@
+{
+  "id": "tm-beweisfehler",
+  "title": "Fehler in Beweisen finden",
+  "subtitle": "Etappe 12: der eine falsche Schritt",
+  "vault": [
+    {
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Typische Fehler in Beweisen.md",
+      "title": "Typische Fehler in Beweisen"
+    },
+    {
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Fehlerhafte Beweiszeile finden.md",
+      "title": "Fehlerhafte Beweiszeile finden"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Die häufigsten Fehler: **durch etwas teilen, das null sein kann**, **beide Seiten quadrieren** (erzeugt Scheinlösungen), **Wurzel ziehen ohne ±**, **das zu Beweisende voraussetzen**, **Umkehrung statt Kontraposition** und **aus Beispielen verallgemeinern**. Gesucht ist im TMUA meist die *erste* falsche Zeile.",
+      "id": "t1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "A 'proof' that $1 = 2$. Which line contains the first error?",
+      "lines": [
+        {
+          "md": "Let $a = b$.",
+          "why": "Zulässige Annahme."
+        },
+        {
+          "md": "Then $a^2 = ab$.",
+          "why": "Beide Seiten mit $a$ multipliziert: korrekt."
+        },
+        {
+          "md": "So $a^2 - b^2 = ab - b^2$.",
+          "why": "Auf beiden Seiten $b^2$ abgezogen: korrekt."
+        },
+        {
+          "md": "So $(a + b)(a - b) = b(a - b)$.",
+          "why": "Faktorisiert: korrekt."
+        },
+        {
+          "md": "So $a + b = b$.",
+          "why": "Fehler: Hier wurde durch $a - b = 0$ geteilt."
+        },
+        {
+          "md": "So $2b = b$, hence $2 = 1$.",
+          "why": "Folgt aus dem Fehler davor."
+        }
+      ],
+      "answer": 4,
+      "explain": "Weil $a = b$, ist $a - b = 0$; durch null zu teilen ist verboten.",
+      "lang": "en",
+      "id": "sp1"
+    },
+    {
+      "type": "choice",
+      "md": "A student solves $\\sqrt{x + 6} = x$ by squaring: $x^2 - x - 6 = 0$, so $x = 3$ or $x = -2$, and concludes that both are solutions. What is wrong?",
+      "options": [
+        {
+          "md": "$x = -2$ is not a solution; squaring introduced it.",
+          "correct": true
+        },
+        {
+          "md": "Nothing is wrong."
+        },
+        {
+          "md": "$x = 3$ is not a solution."
+        },
+        {
+          "md": "The quadratic was solved incorrectly."
+        }
+      ],
+      "explain": "Probe: $\\sqrt{4} = 2 \\neq -2$. Quadrieren ist keine Äquivalenzumformung.",
+      "lang": "en",
+      "label": "Test question",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-beweisfehler",
+      "level": 2,
+      "label": "Errors in proofs",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-beweisfehler",
+      "level": 3,
+      "label": "Errors in proofs",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-beweisfehler",
+      "level": 4,
+      "label": "Errors in proofs",
+      "id": "g3"
+    },
+    {
+      "type": "choice",
+      "md": "Claim: *if $a > b$ then $a^2 > b^2$.* Proof: (1) $a > b$. (2) Multiplying by $a$: $a^2 > ab$. (3) Multiplying $a > b$ by $b$: $ab > b^2$. (4) Hence $a^2 > ab > b^2$. Where is the first error?",
+      "options": [
+        {
+          "md": "there is no error"
+        },
+        {
+          "md": "line (4)"
+        },
+        {
+          "md": "line (3)"
+        },
+        {
+          "md": "line (1)"
+        },
+        {
+          "md": "line (2)",
+          "correct": true
+        }
+      ],
+      "explain": "Multiplizieren mit $a$ erhält die Ungleichung nur, wenn $a > 0$. Gegenbeispiel zur Behauptung: $a = -1$, $b = -2$. Zeile (3) hat dasselbe Problem, aber (2) kommt zuerst.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Abschlussaufgabe",
+      "id": "c2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Division durch möglicherweise null, Quadrieren, Wurzel ohne ±.",
+        "Zirkelschluss und Umkehrung statt Kontraposition.",
+        "Gesucht ist die erste falsche Zeile."
+      ],
+      "id": "summary"
+    }
+  ]
+}

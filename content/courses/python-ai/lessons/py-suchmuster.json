@@ -1,0 +1,76 @@
+{
+  "id": "py-suchmuster",
+  "title": "Suchmuster in Python",
+  "subtitle": "Frontier, Knoten, Pfad",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Search Patterns.md",
+      "title": "Python Search Patterns"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Jede Suche in CS50 AI folgt demselben Muster: Eine **Frontier** enthält Knoten, die noch zu untersuchen sind; ein **explored**-Set merkt sich Besuchtes. Ein **Knoten** speichert Zustand, Elternknoten und Aktion. Mit `list.pop()` wird die Frontier zum **Stapel** (Tiefensuche), mit `collections.deque.popleft()` zur **Schlange** (Breitensuche); mit `heapq` zur **Prioritätswarteschlange** (A*).",
+      "id": "t1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Welche Datenstruktur ergibt welche Suche?",
+      "pairs": [
+        [
+          "Stapel (LIFO)",
+          "Tiefensuche"
+        ],
+        [
+          "Schlange (FIFO)",
+          "Breitensuche"
+        ],
+        [
+          "Prioritätswarteschlange nach g + h",
+          "A*-Suche"
+        ]
+      ],
+      "explain": "Der Algorithmus bleibt gleich; nur die Reihenfolge, in der die Frontier Knoten herausgibt, ändert sich.",
+      "id": "ma1"
+    },
+    {
+      "type": "order",
+      "label": "Pfad",
+      "md": "Wie rekonstruiert man den Lösungsweg?",
+      "items": [
+        "Beim Zielknoten beginnen",
+        "Aktion merken und zum Elternknoten gehen",
+        "Wiederholen, bis der Startknoten (ohne Eltern) erreicht ist",
+        "Gesammelte Aktionen umdrehen"
+      ],
+      "explain": "Die Reihenfolge: 1. Beim Zielknoten beginnen. 2. Aktion merken und zum Elternknoten gehen. 3. Wiederholen, bis der Startknoten (ohne Eltern) erreicht ist. 4. Gesammelte Aktionen umdrehen.",
+      "id": "o1"
+    },
+    {
+      "type": "truefalse",
+      "md": "`explored` sollte eine Liste sein, damit die Reihenfolge erhalten bleibt.",
+      "answer": false,
+      "explain": "Ein Set prüft Mitgliedschaft in konstanter Zeit, eine Liste in linearer. Bei großen Suchräumen macht das den Unterschied.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "py-klassen",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Frontier + explored + Knoten mit Eltern.",
+        "Stapel: DFS, Schlange: BFS, Heap: A*.",
+        "Pfad rückwärts über die Eltern."
+      ],
+      "id": "summary"
+    }
+  ]
+}

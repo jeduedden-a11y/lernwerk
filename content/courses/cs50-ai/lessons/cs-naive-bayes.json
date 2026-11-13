@@ -1,0 +1,57 @@
+{
+  "id": "cs-naive-bayes",
+  "title": "Bag of Words und Naive Bayes",
+  "subtitle": "Stimmung aus Wörtern",
+  "steps": [
+    {
+      "type": "text",
+      "md": "Im **Bag-of-Words**-Modell zählt nur, welche Wörter vorkommen, nicht ihre Reihenfolge. **Naive Bayes** klassifiziert damit, etwa positiv oder negativ: $P(\\text{pos} \\mid w_1, \\ldots, w_n) \\propto P(\\text{pos}) \\prod_i P(w_i \\mid \\text{pos})$. »Naiv« ist die Annahme, dass Wörter unabhängig sind. **Additive Glättung** verhindert, dass ein nie gesehenes Wort die Wahrscheinlichkeit auf null setzt.",
+      "id": "t1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum braucht man Glättung?",
+      "options": [
+        {
+          "md": "Ein Wort, das in positiven Texten nie vorkam, würde das ganze Produkt auf 0 setzen.",
+          "correct": true
+        },
+        {
+          "md": "Damit die Wahrscheinlichkeiten größer als 1 werden."
+        },
+        {
+          "md": "Damit die Reihenfolge der Wörter zählt."
+        }
+      ],
+      "explain": "Man addiert zu jeder Zählung einen kleinen Wert, etwa 1 (Laplace-Glättung).",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "P(pos) = 0,5, P(»great« | pos) = 0,4, P(»great« | neg) = 0,1, P(neg) = 0,5. Wie groß ist P(pos | »great«)?",
+      "answer": 0.8,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\frac{0{,}5 \\cdot 0{,}4}{0{,}5 \\cdot 0{,}4 + 0{,}5 \\cdot 0{,}1} = \\frac{0{,}2}{0{,}25} = 0{,}8$.",
+      "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-nlp",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Bag of Words: Häufigkeiten ohne Reihenfolge.",
+        "Naive Bayes: Produkt der Wortwahrscheinlichkeiten.",
+        "Glättung gegen Nullen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

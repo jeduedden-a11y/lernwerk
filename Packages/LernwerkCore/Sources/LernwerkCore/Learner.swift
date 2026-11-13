@@ -21,10 +21,16 @@ public struct LessonProgress: Codable, Hashable, Sendable {
     public var bestScore: Double?
     public var timesCompleted: Int = 0
     public var updatedAt: Date = Date()
+    /// Set when the learner skips the lesson (already known): it then counts as settled for the path, not as finished.
+    public var skippedAt: Date?
 
     public init(courseId: String) { self.courseId = courseId }
 
     public var isCompleted: Bool { completedAt != nil }
+    /// Skipped and not finished since.
+    public var isSkipped: Bool { skippedAt != nil && completedAt == nil }
+    /// Finished or skipped: the path moves on, training topics behind it open.
+    public var isSettled: Bool { completedAt != nil || skippedAt != nil }
 }
 
 /// One question step scheduled for spaced repetition (SM-2 family).
@@ -298,6 +304,31 @@ public struct LearnerState: Codable, Sendable {
         course.readyLessons.filter { lessons[$0.id]?.isCompleted == true }.count
     }
 
+    /// Finished or skipped lessons of a course: the progress along the path.
+    public func settledCount(in course: Course) -> Int {
+        course.readyLessons.filter { lessons[$0.id]?.isSettled == true }.count
+    }
+
+    /// True when the lesson is finished or skipped.
+    public func isSettled(_ lessonID: String) -> Bool { lessons[lessonID]?.isSettled == true }
+
+    /// Skips a lesson the learner already knows. A finished lesson stays finished.
+    public mutating func skip(lessonID: String, courseID: String, now: Date = Date()) {
+        var p = lessons[lessonID] ?? LessonProgress(courseId: courseID)
+        guard !p.isCompleted else { return }
+        p.skippedAt = now
+        p.updatedAt = now
+        lessons[lessonID] = p
+    }
+
+    /// Takes a skip back: the lesson is open again.
+    public mutating func unskip(lessonID: String, now: Date = Date()) {
+        guard var p = lessons[lessonID], p.skippedAt != nil else { return }
+        p.skippedAt = nil
+        p.updatedAt = now
+        lessons[lessonID] = p
+    }
+
     /// What most needs practice, weakest first.
     /// Topics: hit rate at the first try in training and the daily mix plus the last ten exams; from 6 answers on, below 70 %.
     /// Lessons: at least two of their questions were not known at the last repetition.
@@ -415,6 +446,7 @@ public struct LearnerState: Codable, Sendable {
             var p = lessons[lessonID] ?? LessonProgress(courseId: course.id)
             let firstTime = !p.isCompleted
             p.completedAt = p.completedAt ?? now
+            p.skippedAt = nil
             p.timesCompleted += 1
             p.bestScore = max(p.bestScore ?? 0, finished.score)
             p.lastStep = 0
@@ -532,6 +564,8 @@ extension LearnerState {
         let ready = chapter.lessons.filter(\.isReady)
         guard !ready.isEmpty else { return .none }
         let done = ready.filter { lessons[$0.id]?.isCompleted == true }.count
+        // skipped lessons count as covered, but only learning starts the light
+        let settled = ready.filter { lessons[$0.id]?.isSettled == true }.count
         let started = done > 0 || ready.contains { (lessons[$0.id]?.lastStep ?? 0) > 0 }
         guard started else { return .none }
         let ids = Set(ready.map(\.id))
@@ -545,7 +579,7 @@ extension LearnerState {
             share = min(share, Double(correct) / Double(tasks))
         }
         if share < 0.6 { return .red }
-        if done == ready.count && share >= 0.8 { return .green }
+        if settled == ready.count && share >= 0.8 { return .green }
         return .yellow
     }
 }

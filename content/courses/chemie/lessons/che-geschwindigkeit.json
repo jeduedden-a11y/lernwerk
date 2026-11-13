@@ -1,0 +1,138 @@
+{
+  "id": "che-geschwindigkeit",
+  "title": "Reaktionsgeschwindigkeit",
+  "subtitle": "Wie schnell, und warum?",
+  "vault": [
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Reaktionsgeschwindigkeit.md",
+      "title": "Reaktionsgeschwindigkeit"
+    },
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/01 Chemie Q3.md",
+      "title": "01 Chemie Q3"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Die **Reaktionsgeschwindigkeit** ist die Konzentrationsänderung pro Zeit: $\\bar v = -\\frac{\\Delta c(\\text{Edukt})}{\\Delta t} = \\frac{\\Delta c(\\text{Produkt})}{\\Delta t}$. Im c-t-Diagramm ist die mittlere Geschwindigkeit die Steigung einer Sekante, die momentane die Steigung der Tangente. Am Anfang ist sie am größten, weil dann die meisten Edukte da sind.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Tangente",
+      "md": "Der Graph zeigt den Abbau eines Edukts. Verschiebe den Zeitpunkt t: Die Tangentensteigung ist die momentane Geschwindigkeit.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          120
+        ],
+        "y": [
+          0,
+          1.1
+        ],
+        "xLabel": "t in s",
+        "yLabel": "c in mol/L",
+        "vars": [
+          {
+            "name": "t",
+            "label": "Zeitpunkt t",
+            "min": 0,
+            "max": 110,
+            "step": 1,
+            "value": 10,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "c",
+            "expr": "exp(-x/40)",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "c",
+            "at": "t"
+          }
+        ],
+        "points": [
+          {
+            "x": "t",
+            "on": "c",
+            "guides": true
+          }
+        ],
+        "readout": "Bei t = {t|0} s ist c = {exp(-t/40)|3} mol/L und v = {exp(-t/40)/40*1000|1} mmol/(L·s)."
+      },
+      "goal": {
+        "when": "t >= 27 && t <= 29",
+        "solve": {
+          "t": 28
+        },
+        "hints": [
+          {
+            "when": "t < 27",
+            "text": "Etwas später: c liegt noch über 0,5 mol/L."
+          },
+          {
+            "when": "t > 29",
+            "text": "Etwas früher: c ist schon unter 0,5 mol/L."
+          }
+        ],
+        "message": "Stelle den Zeitpunkt ein, an dem nur noch die Hälfte des Edukts da ist. Vergleiche dort die Geschwindigkeit mit der am Anfang."
+      },
+      "id": "w1"
+    },
+    {
+      "type": "multi",
+      "md": "Was erhöht die Reaktionsgeschwindigkeit nach der Stoßtheorie?",
+      "options": [
+        {
+          "md": "höhere Konzentration",
+          "correct": true
+        },
+        {
+          "md": "höhere Temperatur",
+          "correct": true
+        },
+        {
+          "md": "feinere Zerteilung eines Feststoffs",
+          "correct": true
+        },
+        {
+          "md": "ein Katalysator",
+          "correct": true
+        },
+        {
+          "md": "ein größeres Reaktionsgefäß bei gleicher Stoffmenge",
+          "why": "Mehr Volumen heißt kleinere Konzentration, also weniger Stöße."
+        }
+      ],
+      "explain": "Nur wirksame Stöße zählen: genug Energie und die richtige Ausrichtung. Konzentration und Zerteilung erhöhen die Zahl der Stöße, Temperatur und Katalysator den Anteil der wirksamen.",
+      "id": "m1"
+    },
+    {
+      "type": "gen",
+      "gen": "che-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "geschwindigkeit"
+      },
+      "label": "Geschwindigkeit berechnen",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "v = −Δc(Edukt)/Δt, mittlere (Sekante) und momentane (Tangente).",
+        "Stoßtheorie: wirksame Stöße brauchen Energie und Ausrichtung.",
+        "Konzentration, Temperatur, Zerteilung, Katalysator."
+      ],
+      "id": "summary"
+    }
+  ]
+}

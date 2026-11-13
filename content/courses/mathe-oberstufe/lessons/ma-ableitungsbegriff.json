@@ -1,0 +1,125 @@
+{
+  "id": "ma-ableitungsbegriff",
+  "title": "Der Ableitungsbegriff",
+  "subtitle": "Von der Sekante zur Tangente",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Ableitungsbegriff.md",
+      "title": "Ableitungsbegriff"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Die **mittlere Änderungsrate** auf $[x_0; x_0 + h]$ ist die Steigung der Sekante, der Differenzenquotient $\\frac{f(x_0 + h) - f(x_0)}{h}$. Lässt man $h \\to 0$ gehen, wird die Sekante zur Tangente: Ihre Steigung ist die **Ableitung** $f'(x_0)$, die lokale Änderungsrate.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Grenzübergang",
+      "md": "Verkleinere $h$: Die Sekante (grün) dreht sich in die Tangente (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          4
+        ],
+        "y": [
+          -1,
+          6
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "x0",
+            "label": "Stelle x₀",
+            "min": 0,
+            "max": 2.5,
+            "step": 0.1,
+            "value": 1,
+            "digits": 1
+          },
+          {
+            "name": "h",
+            "label": "Abstand h",
+            "min": 0.05,
+            "max": 2,
+            "step": 0.05,
+            "value": 1.5,
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2",
+            "color": "accent"
+          }
+        ],
+        "secants": [
+          {
+            "f": "f",
+            "from": "x0",
+            "to": "x0 + h"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "x0"
+          }
+        ],
+        "readout": "Sekantensteigung {x0 + h/2|3}, Tangentensteigung {x0|3}"
+      },
+      "goal": {
+        "when": "h <= 0.1",
+        "solve": {
+          "h": 0.05
+        },
+        "message": "Mach h so klein wie möglich."
+      },
+      "id": "w1"
+    },
+    {
+      "type": "choice",
+      "md": "Was bedeutet $f'(3) = -2$ für eine Temperaturkurve $f(t)$ (t in Stunden, f in °C)?",
+      "options": [
+        {
+          "md": "Um 3 Uhr sinkt die Temperatur momentan um 2 °C pro Stunde.",
+          "correct": true
+        },
+        {
+          "md": "Um 3 Uhr ist es −2 °C kalt.",
+          "why": "Das wäre $f(3) = -2$."
+        },
+        {
+          "md": "Zwischen 0 und 3 Uhr sank die Temperatur um 2 °C.",
+          "why": "Das wäre eine mittlere Änderung."
+        }
+      ],
+      "explain": "Die Ableitung ist eine Rate mit der Einheit »Einheit von f pro Einheit von t«.",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "ableitung"
+      },
+      "label": "Ableiten",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Differenzenquotient: mittlere Änderungsrate, Sekantensteigung.",
+        "Ableitung: Grenzwert für h → 0, Tangentensteigung, lokale Rate.",
+        "Einheit: y-Einheit pro x-Einheit."
+      ],
+      "id": "summary"
+    }
+  ]
+}

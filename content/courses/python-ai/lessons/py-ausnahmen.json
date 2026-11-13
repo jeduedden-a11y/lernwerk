@@ -1,0 +1,60 @@
+{
+  "id": "py-ausnahmen",
+  "title": "Ausnahmen und Dateien",
+  "subtitle": "Robuste Programme, CSV lesen",
+  "steps": [
+    {
+      "type": "text",
+      "md": "Fehler zur Laufzeit lösen **Ausnahmen** aus; mit `try`/`except` fängt man sie gezielt ab, `finally` läuft immer. Dateien öffnet man mit `with open(pfad) as f:`, dann schließt Python sie sicher. Für Tabellen (Projekt Shopping) liest `csv.reader` oder `csv.DictReader` Zeile für Zeile.",
+      "id": "t1"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Code fängt einen fehlenden Schlüssel sauber ab?",
+      "options": [
+        {
+          "md": "```python\ntry:\n    wert = d[k]\nexcept KeyError:\n    wert = 0\n```",
+          "correct": true
+        },
+        {
+          "md": "```python\ntry:\n    wert = d[k]\nexcept:\n    pass\n```"
+        },
+        {
+          "md": "```python\nif d[k]:\n    wert = d[k]\n```"
+        }
+      ],
+      "explain": "Nur den erwarteten Fehler abfangen; ein nacktes `except` verschluckt auch echte Programmierfehler. Kürzer geht es mit `d.get(k, 0)`.",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "`with open(\"daten.csv\") as f:` schließt die Datei auch dann, wenn im Block ein Fehler auftritt.",
+      "answer": true,
+      "explain": "Der Kontextmanager garantiert das Aufräumen, wie ein `finally`.",
+      "id": "tf1"
+    },
+    {
+      "type": "order",
+      "label": "Plan",
+      "md": "Lies eine CSV-Datei mit Kopfzeile ein und sammle die Zeilen. Ordne.",
+      "items": [
+        "`import csv`",
+        "`with open(pfad) as f:`",
+        "`reader = csv.DictReader(f)`",
+        "`for zeile in reader: daten.append(zeile)`"
+      ],
+      "explain": "Die Reihenfolge: 1. `import csv`. 2. `with open(pfad) as f:`. 3. `reader = csv.DictReader(f)`. 4. `for zeile in reader: daten.append(zeile)`.",
+      "id": "o1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "try/except gezielt, finally immer.",
+        "with open schließt sicher.",
+        "csv.DictReader für Tabellen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

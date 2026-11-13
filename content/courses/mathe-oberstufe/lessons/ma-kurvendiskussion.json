@@ -1,0 +1,112 @@
+{
+  "id": "ma-kurvendiskussion",
+  "title": "Kurvendiskussion",
+  "subtitle": "Der vollständige Steckbrief eines Graphen",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Kurvendiskussion.md",
+      "title": "Kurvendiskussion"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Eine **Kurvendiskussion** ermittelt alle wichtigen Merkmale: Definitionsbereich, Symmetrie, Verhalten im Unendlichen, Nullstellen, **Extrempunkte** ($f'(x) = 0$ und Vorzeichenwechsel von $f'$ oder $f'' \\neq 0$), **Wendepunkte** ($f''(x) = 0$ und Vorzeichenwechsel von $f''$) und Monotonie- und Krümmungsbereiche.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Extrempunkt suchen",
+      "md": "Bewege den Punkt auf $f(x) = x^3 - 3x$ und suche den Hochpunkt: Dort ist $f'(x) = 0$ und $f''(x) < 0$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          2.5
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "x0",
+            "label": "x₀",
+            "min": -2.4,
+            "max": 2.4,
+            "step": 0.1,
+            "value": 0.5,
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "color": "accent"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "x0"
+          }
+        ],
+        "points": [
+          {
+            "x": "x0",
+            "on": "f",
+            "guides": true
+          }
+        ],
+        "readout": "f'(x₀) = {3*x0^2 - 3|2}, f''(x₀) = {6*x0|2}"
+      },
+      "goal": {
+        "when": "abs(x0 + 1) < 0.01",
+        "solve": {
+          "x0": -1
+        },
+        "hints": [
+          {
+            "when": "abs(x0 - 1) < 0.01",
+            "text": "Das ist der Tiefpunkt: f'' > 0."
+          }
+        ]
+      },
+      "id": "w1"
+    },
+    {
+      "type": "order",
+      "label": "Ablauf",
+      "md": "Ordne eine typische Kurvendiskussion.",
+      "items": [
+        "Definitionsbereich und Symmetrie",
+        "Verhalten im Unendlichen und Nullstellen",
+        "Ableitungen bilden, Extrempunkte bestimmen",
+        "Wendepunkte bestimmen",
+        "Graph skizzieren"
+      ],
+      "explain": "Die Reihenfolge: 1. Definitionsbereich und Symmetrie. 2. Verhalten im Unendlichen und Nullstellen. 3. Ableitungen bilden, Extrempunkte bestimmen. 4. Wendepunkte bestimmen. 5. Graph skizzieren.",
+      "id": "o1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus $f'(x_0) = 0$ folgt immer, dass bei $x_0$ ein Extrempunkt liegt.",
+      "answer": false,
+      "explain": "Gegenbeispiel $f(x) = x^3$ bei 0: waagerechte Tangente, aber kein Vorzeichenwechsel von $f'$, also ein Sattelpunkt.",
+      "id": "tf1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Notwendig: f'(x) = 0; hinreichend: Vorzeichenwechsel oder f''(x) ≠ 0.",
+        "Wendepunkt: f''(x) = 0 mit Vorzeichenwechsel.",
+        "Sattelpunkt: waagerechte Tangente ohne Extremum."
+      ],
+      "id": "summary"
+    }
+  ]
+}

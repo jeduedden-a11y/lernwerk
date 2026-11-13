@@ -1,0 +1,68 @@
+{
+  "id": "py-rekursion",
+  "title": "Rekursion",
+  "subtitle": "Funktionen, die sich selbst aufrufen",
+  "steps": [
+    {
+      "type": "text",
+      "md": "Eine **rekursive** Funktion ruft sich selbst mit einem kleineren Problem auf. Sie braucht einen **Basisfall**, der ohne Rekursion endet, sonst läuft sie bis zum `RecursionError`. Minimax in Tic-Tac-Toe ist rekursiv: Der Wert eines Zustands ergibt sich aus den Werten der Folgezustände. Wiederholte Teilprobleme spart man mit `functools.lru_cache` (Memoisierung).",
+      "id": "t1"
+    },
+    {
+      "type": "order",
+      "label": "Aufrufkette",
+      "md": "Ordne die Aufrufe von `fak(3)` mit `fak(n) = 1 if n == 0 else n * fak(n - 1)`.",
+      "items": [
+        "fak(3) ruft fak(2) auf",
+        "fak(2) ruft fak(1) auf",
+        "fak(1) ruft fak(0) auf",
+        "fak(0) gibt 1 zurück (Basisfall)",
+        "Die Ergebnisse werden zurückmultipliziert: 1, 1, 2, 6"
+      ],
+      "explain": "Die Reihenfolge: 1. fak(3) ruft fak(2) auf. 2. fak(2) ruft fak(1) auf. 3. fak(1) ruft fak(0) auf. 4. fak(0) gibt 1 zurück (Basisfall). 5. Die Ergebnisse werden zurückmultipliziert: 1, 1, 2, 6.",
+      "id": "o1"
+    },
+    {
+      "type": "choice",
+      "md": "Was fehlt, wenn eine rekursive Funktion mit `RecursionError` abbricht?",
+      "options": [
+        {
+          "md": "meist ein erreichbarer Basisfall",
+          "correct": true
+        },
+        {
+          "md": "eine Schleife"
+        },
+        {
+          "md": "ein `return` am Anfang der Datei"
+        }
+      ],
+      "explain": "Ohne Basisfall wird der Aufrufstapel immer tiefer, bis Python abbricht (Standardgrenze etwa 1000).",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Mit `@lru_cache` berechnet eine rekursive Fibonacci-Funktion jedes Teilergebnis nur einmal.",
+      "answer": true,
+      "explain": "Ergebnisse werden zwischengespeichert; aus exponentieller wird lineare Laufzeit.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "py-funktionen",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Rekursion: kleineres Problem plus Basisfall.",
+        "Minimax ist rekursiv.",
+        "Memoisierung mit lru_cache."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "cs-proj-crossword",
+  "title": "Projekt: Crossword",
+  "subtitle": "Ein Kreuzworträtsel als CSP",
+  "steps": [
+    {
+      "type": "text",
+      "md": "Jede Wortlücke ist eine **Variable**, ihre Domäne sind alle Wörter des Wörterbuchs. **Knotenkonsistenz**: Nur Wörter passender Länge bleiben. **Bogenkonsistenz**: An Kreuzungen müssen die Buchstaben übereinstimmen (AC-3). Danach **Backtracking** mit MRV- und Gradheuristik und LCV-Wertordnung; außerdem darf kein Wort doppelt vorkommen.",
+      "id": "t1"
+    },
+    {
+      "type": "order",
+      "label": "Ablauf",
+      "md": "Ordne den Lösungsweg.",
+      "items": [
+        "Knotenkonsistenz: falsche Längen streichen",
+        "AC-3: Wörter ohne passenden Kreuzungspartner streichen",
+        "Backtracking: Variable wählen (MRV), Werte nach LCV ordnen",
+        "Bei Widerspruch zurückgehen, bis alle Lücken gefüllt sind"
+      ],
+      "explain": "Die Reihenfolge: 1. Knotenkonsistenz: falsche Längen streichen. 2. AC-3: Wörter ohne passenden Kreuzungspartner streichen. 3. Backtracking: Variable wählen (MRV), Werte nach LCV ordnen. 4. Bei Widerspruch zurückgehen, bis alle Lücken gefüllt sind.",
+      "id": "o1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ohne die Regel »kein Wort doppelt« könnten zwei Lücken dasselbe Wort bekommen.",
+      "answer": true,
+      "explain": "Das ist ein zusätzlicher globaler Constraint, den man in der Konsistenzprüfung der Zuweisung mitprüft.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-csp",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Variablen: Lücken; Domänen: Wörter.",
+        "Knoten- und Bogenkonsistenz.",
+        "Backtracking mit MRV, Grad, LCV."
+      ],
+      "id": "summary"
+    }
+  ]
+}

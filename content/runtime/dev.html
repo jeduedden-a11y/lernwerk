@@ -383,18 +383,20 @@
 
   // learning path with made-up progress: about every second lesson whose prerequisites are done
   $("path").onclick = async () => {
-    const done = [], started = {}, practice = {};
+    const done = [], skipped = [], started = {}, practice = {};
+    const settled = (r) => done.includes(r) || skipped.includes(r);
     for (const id of index.courses) {
       const c = courses[id];
       const refs = lessonsOf(c);
       refs.forEach((l, i) => {
-        const ready = (l.requires || []).every((r) => done.includes(r));
+        const ready = (l.requires || []).every(settled);
         if (ready && (i < 3 || Math.random() < 0.45)) done.push(l.id);
+        else if (ready && Math.random() < 0.15) skipped.push(l.id);
         else if (ready && Math.random() < 0.3) started[l.id] = 3;
       });
-      (c.practice || []).forEach((t) => { if (done.includes(t.after)) practice[id + "/" + t.id] = Math.floor(Math.random() * 5); });
+      (c.practice || []).forEach((t) => { if (settled(t.after)) practice[id + "/" + t.id] = Math.floor(Math.random() * 5); });
     }
-    frame.contentWindow.LW.start({ mode: "overview", progress: { done, started, practice, streak: 4 }, insets: { top: 112, bottom: 40 } });
+    frame.contentWindow.LW.start({ mode: "overview", progress: { done, skipped, started, practice, streak: 4 }, insets: { top: 112, bottom: 40 } });
   };
 
   const boot = () => { if (!index) loadIndex().catch((e) => { $("report").textContent = String(e); }); };

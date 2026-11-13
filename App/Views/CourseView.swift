@@ -109,6 +109,7 @@ struct ChapterSection: View {
                 } else if let ref = chapter.ref {
                     Text(ref).font(.footnote).foregroundStyle(.secondary)
                 }
+                chapterMenu
             }
             .padding(.bottom, StageDates.range(chapter) == nil ? 10 : 2)
             if let range = StageDates.range(chapter) {
@@ -147,6 +148,37 @@ struct ChapterSection: View {
             .card(padding: 8)
         }
     }
+
+    /// Skip a whole chapter the learner already knows, or take the skips back.
+    @ViewBuilder private var chapterMenu: some View {
+        let open = model.openLessons(chapter)
+        let anySkipped = chapter.lessons.contains { model.state.lessons[$0.id]?.isSkipped == true }
+        if !open.isEmpty || anySkipped {
+            Menu {
+                if !open.isEmpty {
+                    Button {
+                        model.skipChapter(course, chapter)
+                    } label: {
+                        Label(open.count == 1 ? "Offene Lektion überspringen" : "Alle \(open.count) offenen Lektionen überspringen", systemImage: "forward.end")
+                    }
+                }
+                if anySkipped {
+                    Button {
+                        model.unskipChapter(chapter)
+                    } label: {
+                        Label("Überspringen aufheben", systemImage: "arrow.uturn.backward")
+                    }
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .frame(width: 32, height: 28)
+                    .contentShape(.rect)
+            }
+            .accessibilityLabel("Optionen für \(chapter.title)")
+        }
+    }
 }
 
 /// One node on the learning path of a chapter.
@@ -159,6 +191,7 @@ struct LessonRow: View {
 
     private var progress: LessonProgress? { model.state.lessons[lesson.id] }
     private var done: Bool { progress?.isCompleted == true }
+    private var skipped: Bool { progress?.isSkipped == true }
     private var started: Bool { !done && (progress?.lastStep ?? 0) > 0 }
 
     var body: some View {
@@ -189,12 +222,44 @@ struct LessonRow: View {
         }
         .buttonStyle(.plain)
         .disabled(!lesson.isReady)
+        .contextMenu {
+            if lesson.isReady {
+                if skipped {
+                    Button {
+                        model.unskip(lesson)
+                    } label: {
+                        Label("Nicht mehr überspringen", systemImage: "arrow.uturn.backward")
+                    }
+                } else if !done {
+                    Button {
+                        model.skip(course, lesson)
+                    } label: {
+                        Label("Überspringen", systemImage: "forward.end")
+                    }
+                }
+                if done || started {
+                    Button {
+                        model.start(course, lesson, fromStart: true)
+                    } label: {
+                        Label("Von vorn beginnen", systemImage: "arrow.counterclockwise")
+                    }
+                }
+            }
+        }
         .accessibilityLabel(lesson.title)
         .accessibilityValue(stateText)
+        .accessibilityActions {
+            if lesson.isReady && !done {
+                Button(skipped ? "Nicht mehr überspringen" : "Überspringen") {
+                    if skipped { model.unskip(lesson) } else { model.skip(course, lesson) }
+                }
+            }
+        }
     }
 
     private var stateText: String {
         if done { return "abgeschlossen" }
+        if skipped { return "übersprungen" }
         if !lesson.isReady { return "bald verfügbar" }
         return started ? "begonnen" : "offen"
     }
@@ -202,6 +267,7 @@ struct LessonRow: View {
     private var detail: String {
         if !lesson.isReady { return "Bald verfügbar" + (lesson.ref.map { " · \($0)" } ?? "") }
         var parts: [String] = []
+        if skipped { parts.append("Übersprungen") }
         if let m = lesson.minutes { parts.append(Format.minutes(m)) }
         if let r = lesson.ref { parts.append(r) }
         if done, let s = progress?.bestScore { parts.append("\(Int((s * 100).rounded())) %") }
@@ -226,6 +292,8 @@ struct LessonRow: View {
                 .overlay {
                     if done {
                         Image(systemName: "checkmark").font(.footnote.weight(.bold)).foregroundStyle(.white)
+                    } else if skipped {
+                        Image(systemName: "forward.end.fill").font(.caption.weight(.bold)).foregroundStyle(course.tint)
                     } else if !lesson.isReady {
                         Image(systemName: "hourglass").font(.caption2).foregroundStyle(.secondary)
                     }

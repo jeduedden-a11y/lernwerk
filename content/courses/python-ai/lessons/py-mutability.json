@@ -1,0 +1,126 @@
+{
+  "id": "py-mutability",
+  "title": "Veränderliche Objekte und Kopien",
+  "subtitle": "Namen, Objekte, Aliasing",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Mutability and Copying.md",
+      "title": "Python Mutability and Copying"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "In Python sind Variablen **Namen für Objekte**. Listen, Dictionaries und Sets sind **veränderlich** (mutable): Ändert man sie über einen Namen, sehen alle anderen Namen für dasselbe Objekt die Änderung. Zahlen, Strings und Tupel sind **unveränderlich**. `b = a` kopiert nichts; `a.copy()` oder `list(a)` macht eine flache Kopie, `copy.deepcopy(a)` auch von verschachtelten Objekten.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Code verfolgen",
+      "md": "Verfolge, welche Namen auf dasselbe Objekt zeigen.",
+      "widget": "codetrace",
+      "params": {
+        "code": "a = [1, 2]\nb = a\nb.append(3)\nc = a.copy()\nc.append(4)\nprint(a, b, c)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "a": "[1, 2]"
+            },
+            "note": "Eine Liste entsteht; `a` zeigt auf sie."
+          },
+          {
+            "line": 2,
+            "vars": {
+              "a": "[1, 2]",
+              "b": "[1, 2]"
+            },
+            "note": "`b` ist kein neues Objekt, nur ein zweiter Name für dieselbe Liste."
+          },
+          {
+            "line": 3,
+            "vars": {
+              "a": "[1, 2, 3]",
+              "b": "[1, 2, 3]"
+            },
+            "note": "`append` ändert das gemeinsame Objekt; auch `a` sieht die 3."
+          },
+          {
+            "line": 4,
+            "vars": {
+              "a": "[1, 2, 3]",
+              "b": "[1, 2, 3]",
+              "c": "[1, 2, 3]"
+            },
+            "note": "`copy()` legt eine neue Liste an."
+          },
+          {
+            "line": 5,
+            "vars": {
+              "a": "[1, 2, 3]",
+              "b": "[1, 2, 3]",
+              "c": "[1, 2, 3, 4]"
+            },
+            "note": "Nur die Kopie ändert sich."
+          },
+          {
+            "line": 6,
+            "vars": {
+              "a": "[1, 2, 3]",
+              "b": "[1, 2, 3]",
+              "c": "[1, 2, 3, 4]"
+            },
+            "out": "[1, 2, 3] [1, 2, 3] [1, 2, 3, 4]",
+            "note": "Ausgabe."
+          }
+        ]
+      },
+      "id": "w1"
+    },
+    {
+      "type": "choice",
+      "md": "Was gibt dieser Code aus?\n\n```python\ndef add(x, liste=[]):\n    liste.append(x)\n    return liste\n\nadd(1)\nprint(add(2))\n```",
+      "options": [
+        {
+          "md": "`[1, 2]`",
+          "correct": true
+        },
+        {
+          "md": "`[2]`"
+        },
+        {
+          "md": "`[1]`"
+        },
+        {
+          "md": "einen Fehler"
+        }
+      ],
+      "explain": "Der Standardwert `[]` wird nur einmal beim Definieren erzeugt und dann bei jedem Aufruf wiederverwendet. Üblich ist deshalb `liste=None` und im Rumpf `if liste is None: liste = []`.",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "`copy.copy` kopiert auch die inneren Listen einer verschachtelten Liste.",
+      "answer": false,
+      "explain": "Eine flache Kopie übernimmt nur die äußere Ebene; die inneren Listen werden geteilt. Dafür braucht man `copy.deepcopy`.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "py-sammlungen",
+      "level": 2,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Variablen sind Namen für Objekte.",
+        "Listen, Dicts, Sets sind veränderlich; b = a kopiert nicht.",
+        "copy() flach, deepcopy() tief; kein veränderlicher Standardwert."
+      ],
+      "id": "summary"
+    }
+  ]
+}

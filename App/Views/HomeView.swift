@@ -268,7 +268,15 @@ struct UpNextCard: View {
             .contentShape(shape)
         }
         .buttonStyle(PressableStyle())
+        .contextMenu {
+            Button {
+                model.skip(course, lesson)
+            } label: {
+                Label("Überspringen", systemImage: "forward.end")
+            }
+        }
         .accessibilityHint(started ? "Setzt die Lektion fort" : "Startet die Lektion")
+        .accessibilityAction(named: "Überspringen") { model.skip(course, lesson) }
     }
 }
 

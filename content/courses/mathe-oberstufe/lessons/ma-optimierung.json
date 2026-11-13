@@ -1,0 +1,109 @@
+{
+  "id": "ma-optimierung",
+  "title": "Numerische Optimierung",
+  "subtitle": "Wenn man nicht exakt lösen kann",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/10 Wahlthemen (Q4)/Numerische Optimierungsverfahren.md",
+      "title": "Numerische Optimierungsverfahren"
+    },
+    {
+      "path": "02 Wiki/Mathematik/10 Wahlthemen (Q4)/Wahlthemen (Q4) MOC.md",
+      "title": "Wahlthemen (Q4) MOC"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Viele Optimierungsprobleme lassen sich nicht exakt lösen. **Numerische Verfahren** nähern das Optimum schrittweise: Intervallhalbierung, Newton-Verfahren auf $f'$ oder **Gradientenabstieg**, bei dem man immer ein Stück gegen die Steigung geht: $x_{n+1} = x_n - \\eta f'(x_n)$.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Gradientenabstieg",
+      "md": "Gradientenabstieg für $f(x) = (x - 2)^2 + 1$: Ein Schritt mit Schrittweite η vom Startwert aus. Probiere verschiedene η.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          5
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "x",
+        "yLabel": "f(x)",
+        "vars": [
+          {
+            "name": "s",
+            "label": "Startwert",
+            "min": -1,
+            "max": 5,
+            "step": 0.1,
+            "value": 4.5,
+            "digits": 1
+          },
+          {
+            "name": "eta",
+            "label": "Schrittweite η",
+            "min": 0.05,
+            "max": 1.2,
+            "step": 0.05,
+            "value": 0.25,
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "(x - 2)^2 + 1",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "s",
+            "on": "f",
+            "guides": true
+          },
+          {
+            "x": "s - eta*2*(s - 2)",
+            "on": "f",
+            "color": "orange"
+          }
+        ],
+        "readout": "Nächster Punkt x₁ = {s - eta*2*(s-2)|3}"
+      },
+      "id": "w1"
+    },
+    {
+      "type": "choice",
+      "md": "Was passiert beim Gradientenabstieg, wenn die Schrittweite zu groß ist?",
+      "options": [
+        {
+          "md": "Das Verfahren springt über das Minimum hinweg und kann divergieren.",
+          "correct": true
+        },
+        {
+          "md": "Es wird immer schneller und genauer."
+        },
+        {
+          "md": "Es bleibt sofort stehen."
+        }
+      ],
+      "explain": "Bei $f(x) = (x-2)^2$ führt $\\eta > 1$ zu immer größeren Sprüngen. Die Wahl der Schrittweite ist auch beim Training neuronaler Netze entscheidend.",
+      "id": "c1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Numerisch: schrittweise Näherung.",
+        "Gradientenabstieg: x − η f'(x).",
+        "Schrittweite zu klein: langsam; zu groß: divergent."
+      ],
+      "id": "summary"
+    }
+  ]
+}

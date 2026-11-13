@@ -174,6 +174,17 @@ LW.extend("eth-ritual", LW.forms.statements([
 `lv` ist die niedrigste Stufe, zu der ein Eintrag passt; jede Stufe nimmt vor allem Einträge ihrer eigenen und der Stufe darunter. Jede Aussage braucht ein `why`, es erscheint als Erklärung. Die Zusätze liegen in `generators/extra-*.js`, die Generatoren der neueren Lektionen in `generators/neue-themen.js`. **Generatoren prüfen** testet jede feste Zusatzaufgabe einmal und jede Vorlage mit zwölf Startwerten.
 - **Generatoren prüfen** in der Testumgebung erzeugt je Generator und Stufe 40 Aufgaben und meldet Formelfehler, `NaN`, fehlende Erklärungen und doppelte Antwortoptionen.
 
+### Rechenaufgaben in vier Stufen
+
+`generators/physik-rechnen.js` baut aus Aufgabenbeschreibungen den Generator `phy-rechnen`; `params.typ` nennt den Aufgabentyp (eine Liste wählt zufällig). Dieselbe Maschine nutzen `chemie-rechnen.js` (`che-rechnen` und je Kapitel `che-r-*`) und `mathe-rechnen.js` (`ma-rechnen` und `ma-r-*`) über `LW.rechenEngine(specs)`.
+
+- **Stufe 1**: Ergebnis aus gegebenen Werten. **Stufe 2**: Werte in Alltagseinheiten (cm, g, km/h, mT, nm …), erst umrechnen. **Stufe 3**: Formel rückwärts, gesucht ist eine Eingangsgröße. **Stufe 4**: Proportionalität (eine Größe verdoppelt, halbiert …: um welchen Faktor ändert sich das Ergebnis?); folgt das Ergebnis keinem Potenzgesetz, eine Rückwärtsaufgabe in Alltagseinheiten.
+- Eine Beschreibung: `v` (Eingaben `[Symbol, Name, Einheit, min, max, Stellen, Faktor zu SI, Alternativeinheit, ihr Faktor]`), `o` (Ergebnisse `[Symbol, Name, Einheit, gültige Ziffern, Faktor, f(SI-Werte)]`), `tex` und `inv` (Formel und Umstellungen für die Erklärung), `ctx` (Situation), `cst` (Konstanten), `ok(x)` (Plausibilität), `invKeys` (erlaubte gesuchte Eingaben), `noPow` (`true` oder Liste der Eingaben, die Stufe 4 nicht verändert). Was nicht ins Schema passt, liefert `custom(level, G)` mit einem fertigen Schritt.
+
+### Aussagenpools je Fach
+
+`philosophie2.js`, `oekonomik2.js` und `ethnologie2.js` legen ganze Generatoren aus Aussagenpools an (`LW.forms.statements` mit dem Plan `{ 1: ["tf"], 2: ["tf", "sort"], 3: ["multi", "sort"], 4: ["spot", "multi"] }`). Die Hilfsfunktion dort muss `gen` heißen: `scripts/check_content.py` erkennt Generatornamen nur in `gen("…"`, `proofGen("…"` und `LW.generator("…"`.
+
 ## Beweisaufgaben
 
 Ein Beweis aus einem Pool wird zu sechs Aufgabenformen: `order` (aus Bausteinen bauen, mit falschen dazwischen), `gaps` (Lücken füllen), `justify` (zu jeder Zeile die Begründung wählen), `flaw` (die falsche Zeile finden, als `spot`), `strategy` (welcher Aufbau passt?) und `next` (wie geht es weiter?).
@@ -288,7 +299,9 @@ Aufgabentypen sind Funktionen `R.<typ>(step, ctx)` in `runtime/lw.js`, die `{ el
 
 ## Lernpfad
 
-`runtime/overview.js` zeichnet die Seite »Lernpfad«: oben die Fächer mit Fortschrittsring, Trainingsstufen und der nächsten Lektion, darunter je Kurs einen Baum aus `requires`. Die App startet sie mit `LW.start({ mode: "overview", subject, progress: { done, started, practice, streak } })` und bekommt `{ type: "open", courseId, lessonId }` oder `{ type: "practice", courseId, topicId, level }` zurück. In der Testumgebung zeigt der Knopf **Lernpfad** die Seite mit ausgedachtem Fortschritt.
+`runtime/overview.js` zeichnet die Seite »Lernpfad«: oben die Fächer mit Fortschrittsring, Trainingsstufen und der nächsten Lektion, darunter je Kurs einen Baum aus `requires`. Die App startet sie mit `LW.start({ mode: "overview", subject, progress: { done, skipped, started, practice, streak } })` und bekommt `{ type: "open", courseId, lessonId }` oder `{ type: "practice", courseId, topicId, level }` zurück. In der Testumgebung zeigt der Knopf **Lernpfad** die Seite mit ausgedachtem Fortschritt.
+
+**Überspringen**: In der App lässt sich eine Lektion über ihr Kontextmenü, die Karte »Als Nächstes« oder das Kapitelmenü (»Alle offenen Lektionen überspringen«) überspringen. Übersprungene Lektionen gelten als erledigt für den Pfad: Sie schalten die Lektionen frei, die auf ihnen aufbauen, öffnen ihr Trainingsthema und zählen im Fortschritt; sie bringen aber keine XP und keine Wiederholungskarten, und die Ampel eines Kapitels springt erst an, wenn dort wirklich gelernt wurde. »Nicht mehr überspringen« nimmt das zurück; wer die Lektion später durcharbeitet, hat sie normal geschafft.
 
 ## Formelsammlung je Kurs
 

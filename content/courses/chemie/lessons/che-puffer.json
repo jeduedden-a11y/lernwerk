@@ -1,0 +1,128 @@
+{
+  "id": "che-puffer",
+  "title": "Puffersysteme",
+  "subtitle": "pH-Werte, die sich wehren",
+  "vault": [
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Puffersysteme.md",
+      "title": "Puffersysteme"
+    },
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Henderson-Hasselbalch-Gleichung.md",
+      "title": "Henderson-Hasselbalch-Gleichung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Ein **Puffer** ist ein Gemisch aus einer schwachen Säure und ihrer korrespondierenden Base, etwa Essigsäure und Acetat. Gibt man Säure zu, fängt die Base die Oxonium-Ionen ab; gibt man Lauge zu, neutralisiert die Säure die Hydroxid-Ionen. Den pH berechnet die **Henderson-Hasselbalch-Gleichung**:\n\n$$\\mathrm{pH} = \\mathrm{p}K_S + \\lg\\frac{c(\\mathrm{A^-})}{c(\\mathrm{HA})}$$",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Puffern",
+      "md": "Ein Acetatpuffer (pKS 4,76) enthält 0,1 mol Säure und 0,1 mol Acetat. Gib Natronlauge zu und beobachte den pH.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          0.098
+        ],
+        "y": [
+          3,
+          8
+        ],
+        "xLabel": "n(NaOH) in mol",
+        "yLabel": "pH",
+        "vars": [
+          {
+            "name": "n",
+            "label": "zugegebene NaOH in mol",
+            "min": 0,
+            "max": 0.095,
+            "step": 0.005,
+            "value": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "Puffer",
+            "expr": "4.76 + log((0.1 + x)/(0.1 - x))",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "n",
+            "on": "Puffer",
+            "guides": true
+          }
+        ],
+        "readout": "n(NaOH) = {n|3} mol: pH = {4.76 + log((0.1 + n)/(0.1 - n))|2}"
+      },
+      "goal": {
+        "when": "n >= 0.08",
+        "solve": {
+          "n": 0.09
+        },
+        "message": "Gib so viel Lauge zu, bis der Puffer erschöpft ist und der pH steil ansteigt."
+      },
+      "id": "w1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Liter Puffer enthält 0,20 mol Essigsäure und 0,10 mol Natriumacetat. Welchen pH hat er?",
+      "answer": 4.46,
+      "tolerance": 0.02,
+      "placeholder": "",
+      "explain": "$\\mathrm{pH} = 4{,}76 + \\lg\\frac{0{,}10}{0{,}20} = 4{,}76 - 0{,}30 = 4{,}46$.",
+      "id": "n1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Ordne zu.",
+      "pairs": [
+        [
+          "Pufferbereich",
+          "pKS ± 1"
+        ],
+        [
+          "Pufferkapazität",
+          "wächst mit den absoluten Konzentrationen"
+        ],
+        [
+          "Blutpuffer",
+          "Kohlensäure/Hydrogencarbonat, pH 7,4"
+        ],
+        [
+          "bei c(A⁻) = c(HA)",
+          "pH = pKS"
+        ]
+      ],
+      "explain": "Die Lage des Puffers (welcher pH) bestimmt der pKS, die Kapazität (wie viel er schluckt) die Konzentration.",
+      "id": "ma1"
+    },
+    {
+      "type": "gen",
+      "gen": "che-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "puffer"
+      },
+      "label": "Puffer-pH",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Puffer: schwache Säure und korrespondierende Base.",
+        "pH = pKS + lg(c(A⁻)/c(HA)).",
+        "Bereich pKS ± 1; Kapazität durch Konzentration."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "ma-extremwert",
+  "title": "Extremwertprobleme",
+  "subtitle": "Das Beste aus einer Bedingung machen",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Extremwertprobleme.md",
+      "title": "Extremwertprobleme"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Bei einem **Extremwertproblem** soll eine Größe (Fläche, Volumen, Kosten) maximal oder minimal werden, während eine **Nebenbedingung** gilt. Man drückt die Zielgröße mit der Nebenbedingung durch eine einzige Variable aus und sucht das Extremum dieser **Zielfunktion**, Randwerte inklusive.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Optimieren",
+      "md": "Ein Rechteck hat den Umfang 20. Verändere die Breite $x$: Wann ist die Fläche am größten?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          0,
+          30
+        ],
+        "xLabel": "Breite x",
+        "yLabel": "Fläche A",
+        "vars": [
+          {
+            "name": "b",
+            "label": "Breite x",
+            "min": 0.5,
+            "max": 9.5,
+            "step": 0.5,
+            "value": 2,
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "A",
+            "expr": "x*(10 - x)",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "b",
+            "on": "A",
+            "guides": true
+          }
+        ],
+        "readout": "Breite {b|1}, Länge {10 - b|1}, Fläche {b*(10-b)|2}"
+      },
+      "goal": {
+        "when": "abs(b - 5) < 0.01",
+        "solve": {
+          "b": 5
+        }
+      },
+      "id": "w1"
+    },
+    {
+      "type": "order",
+      "label": "Lösungsweg",
+      "md": "Ordne den Lösungsweg.",
+      "items": [
+        "Zielgröße und Nebenbedingung als Gleichungen notieren",
+        "Nebenbedingung nach einer Variablen auflösen und einsetzen: Zielfunktion",
+        "Definitionsbereich der Zielfunktion festlegen",
+        "Extremum mit $f' = 0$ und $f''$ bestimmen",
+        "Randwerte vergleichen und im Kontext antworten"
+      ],
+      "explain": "Die Reihenfolge: 1. Zielgröße und Nebenbedingung als Gleichungen notieren. 2. Nebenbedingung nach einer Variablen auflösen und einsetzen: Zielfunktion. 3. Definitionsbereich der Zielfunktion festlegen. 4. Extremum mit $f' = 0$ und $f''$ bestimmen. 5. Randwerte vergleichen und im Kontext antworten.",
+      "id": "o1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Aus 60 cm Draht soll ein Rechteck mit größter Fläche gebogen werden. Wie groß ist diese Fläche in cm²?",
+      "answer": 225,
+      "tolerance": 0,
+      "placeholder": "cm²",
+      "explain": "$2x + 2y = 60 \\Rightarrow y = 30 - x$. $A(x) = x(30 - x)$, $A'(x) = 30 - 2x = 0$ bei $x = 15$: ein Quadrat mit $A = 225\\,\\mathrm{cm}^2$.",
+      "id": "n1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Zielfunktion + Nebenbedingung → Funktion einer Variablen.",
+        "Definitionsbereich beachten, Randwerte prüfen.",
+        "f' = 0, f'' < 0 für Maximum."
+      ],
+      "id": "summary"
+    }
+  ]
+}

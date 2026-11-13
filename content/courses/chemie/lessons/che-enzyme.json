@@ -1,0 +1,143 @@
+{
+  "id": "che-enzyme",
+  "title": "Katalyse in Natur und Technik",
+  "subtitle": "Enzyme und technische Katalysatoren",
+  "vault": [
+    {
+      "path": "02 Wiki/Chemie/06 Q4 Wahlthemen/Katalyse in Natur und Technik.md",
+      "title": "Katalyse in Natur und Technik"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Enzyme** sind Proteine mit einem **aktiven Zentrum**, in das nur ein bestimmtes Substrat passt (Schlüssel-Schloss-Prinzip, genauer: induzierte Passform). Sie arbeiten bei Körpertemperatur und neutralem pH und sind hochspezifisch. **Technische Katalysatoren** wie Eisen beim Haber-Bosch-Verfahren oder Platin im Autoabgaskatalysator sind robust, aber weniger wählerisch und brauchen oft hohe Temperaturen.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Optimum",
+      "md": "Aktivität eines Enzyms in Abhängigkeit von der Temperatur. Finde das Optimum.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          70
+        ],
+        "y": [
+          0,
+          1.3
+        ],
+        "xLabel": "Temperatur in °C",
+        "yLabel": "relative Aktivität",
+        "vars": [
+          {
+            "name": "T",
+            "label": "Temperatur",
+            "min": 0,
+            "max": 70,
+            "step": 1,
+            "value": 20,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "2^((x-37)/10) / (1 + exp((x-45)/2.5)) * 1.0",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "a",
+            "guides": true
+          }
+        ],
+        "readout": "Bei {T|0} °C: Aktivität {2^((T-37)/10) / (1 + exp((T-45)/2.5))|2}"
+      },
+      "goal": {
+        "when": "T >= 38 && T <= 42",
+        "solve": {
+          "T": 41
+        },
+        "hints": [
+          {
+            "when": "T < 38",
+            "text": "Wärmer: Die Aktivität steigt noch nach der RGT-Regel."
+          },
+          {
+            "when": "T > 42",
+            "text": "Zu heiß: Das Enzym beginnt zu denaturieren."
+          }
+        ],
+        "message": "Stelle die Temperatur mit der höchsten Aktivität ein."
+      },
+      "id": "w1"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Enzym oder technischer Katalysator?",
+      "categories": [
+        "Enzym",
+        "technischer Katalysator"
+      ],
+      "items": [
+        {
+          "md": "hochspezifisch für ein Substrat",
+          "cat": "Enzym"
+        },
+        {
+          "md": "arbeitet bei 37 °C",
+          "cat": "Enzym"
+        },
+        {
+          "md": "verliert über 50 °C oft seine Wirkung",
+          "cat": "Enzym"
+        },
+        {
+          "md": "verträgt mehrere hundert Grad",
+          "cat": "technischer Katalysator"
+        },
+        {
+          "md": "Platin-Rhodium im Auto",
+          "cat": "technischer Katalysator"
+        }
+      ],
+      "explain": "Die Stärke der Enzyme (Spezifität, milde Bedingungen) ist zugleich ihre Schwäche (Empfindlichkeit gegen Hitze und pH).",
+      "id": "s1"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Hemmstoff ähnelt dem Substrat und besetzt das aktive Zentrum. Wie lässt sich seine Wirkung abschwächen?",
+      "options": [
+        {
+          "md": "durch mehr Substrat, das den Hemmstoff verdrängt (kompetitive Hemmung)",
+          "correct": true
+        },
+        {
+          "md": "durch Erhitzen auf 80 °C",
+          "why": "Das zerstört das Enzym."
+        },
+        {
+          "md": "gar nicht",
+          "why": "Bei kompetitiver Hemmung konkurrieren beide um das Zentrum; viel Substrat gewinnt."
+        }
+      ],
+      "explain": "Bindet der Hemmstoff an einer anderen Stelle und verformt das Enzym (allosterisch), hilft mehr Substrat nicht.",
+      "id": "c1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Enzyme: Proteine, aktives Zentrum, spezifisch, mild.",
+        "Temperatur- und pH-Optimum; darüber Denaturierung.",
+        "Technische Katalysatoren: robust, heiß, weniger spezifisch."
+      ],
+      "id": "summary"
+    }
+  ]
+}

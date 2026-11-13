@@ -107,4 +107,5 @@
   }
   LW.generator("formeln-physik", training("physik"));
   LW.generator("formeln-chemie", training("chemie"));
+  LW.generator("formeln-mathe-oberstufe", training("mathe-oberstufe"));
 })();

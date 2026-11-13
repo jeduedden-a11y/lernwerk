@@ -1,0 +1,113 @@
+{
+  "id": "ma-scharen",
+  "title": "Funktionenscharen",
+  "subtitle": "Ein Parameter, viele Graphen",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Funktionenscharen.md",
+      "title": "Funktionenscharen"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Eine **Funktionenschar** $f_k$ enthält einen Parameter $k$. Jede Rechnung (Nullstellen, Extrempunkte) wird allgemein mit $k$ geführt; das Ergebnis hängt von $k$ ab. Die Punkte, die beim Variieren von $k$ entstehen, liegen auf einer **Ortskurve**.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Schar",
+      "md": "$f_k(x) = x^2 - 2kx$: Verändere $k$ und beobachte den Scheitel. Er wandert auf der Ortskurve $y = -x^2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          4
+        ],
+        "y": [
+          -6,
+          4
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "k",
+            "label": "Parameter k",
+            "min": -2,
+            "max": 2,
+            "step": 0.1,
+            "value": 0.5,
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2*k*x",
+            "color": "accent"
+          },
+          {
+            "name": "o",
+            "expr": "-x^2",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "k",
+            "on": "f",
+            "guides": true
+          }
+        ],
+        "readout": "Scheitel S({k|1} | {-k^2|2})"
+      },
+      "goal": {
+        "when": "abs(k - 1.5) < 0.01",
+        "solve": {
+          "k": 1.5
+        },
+        "message": "Stelle k = 1,5 ein."
+      },
+      "id": "w1"
+    },
+    {
+      "type": "choice",
+      "md": "Die Scheitel von $f_k(x) = x^2 - 2kx$ liegen bei $S(k \\mid -k^2)$. Wie lautet die Ortskurve?",
+      "options": [
+        {
+          "md": "$y = -x^2$",
+          "correct": true
+        },
+        {
+          "md": "$y = x^2$",
+          "why": "Das Vorzeichen geht verloren."
+        },
+        {
+          "md": "$y = -k^2$",
+          "why": "Die Ortskurve darf $k$ nicht mehr enthalten."
+        }
+      ],
+      "explain": "Aus $x = k$ folgt $k = x$; eingesetzt in $y = -k^2$: $y = -x^2$.",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Alle Graphen der Schar $f_k(x) = x^2 - 2kx$ gehen durch den Ursprung.",
+      "answer": true,
+      "explain": "$f_k(0) = 0$ für jedes $k$: Der Ursprung ist ein gemeinsamer Punkt der Schar.",
+      "id": "tf1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Rechnen mit Parameter: Ergebnisse hängen von k ab.",
+        "Ortskurve: Parameter eliminieren (k durch x ausdrücken).",
+        "Gemeinsame Punkte: unabhängig von k."
+      ],
+      "id": "summary"
+    }
+  ]
+}

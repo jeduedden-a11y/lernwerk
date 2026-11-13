@@ -1,0 +1,89 @@
+{
+  "id": "cs-heuristiken",
+  "title": "Heuristiken für A*",
+  "subtitle": "Zulässig und konsistent",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Informierte Suche.md",
+      "title": "Informierte Suche"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "A* wählt den Knoten mit kleinstem $f(n) = g(n) + h(n)$: bisherige Kosten plus geschätzte Restkosten. A* findet die optimale Lösung, wenn die Heuristik **zulässig** ist (sie überschätzt nie) und, bei Graphensuche, **konsistent** ($h(n) \\leq c(n, n') + h(n')$ für jeden Nachfolger). Im Labyrinth ohne Diagonalen ist die **Manhattan-Distanz** zulässig.",
+      "id": "t1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum darf eine Heuristik für optimales A* nicht überschätzen?",
+      "options": [
+        {
+          "md": "Sonst könnte A* einen guten Weg zu früh verwerfen, weil er teurer aussieht, als er ist.",
+          "correct": true
+        },
+        {
+          "md": "Weil sie sonst zu langsam rechnet."
+        },
+        {
+          "md": "Weil Heuristiken immer 0 sein müssen."
+        }
+      ],
+      "explain": "Eine Unterschätzung hält alle Kandidaten im Rennen; eine Überschätzung kann den optimalen Weg aus dem Blick drängen.",
+      "id": "c1"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Zulässig im Gitter mit Schritten nach oben, unten, links, rechts (Kosten 1)?",
+      "categories": [
+        "zulässig",
+        "nicht zulässig"
+      ],
+      "items": [
+        {
+          "md": "Manhattan-Distanz zum Ziel",
+          "cat": "zulässig"
+        },
+        {
+          "md": "Luftlinie zum Ziel",
+          "cat": "zulässig"
+        },
+        {
+          "md": "h = 0 überall",
+          "cat": "zulässig"
+        },
+        {
+          "md": "doppelte Manhattan-Distanz",
+          "cat": "nicht zulässig"
+        }
+      ],
+      "explain": "h = 0 ist zulässig, macht A* aber zur gewöhnlichen Kostensuche (Dijkstra).",
+      "id": "s1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 2,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 3,
+      "label": "Üben",
+      "id": "g2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f = g + h.",
+        "Zulässig: nie überschätzen; konsistent: Dreiecksungleichung.",
+        "Manhattan-Distanz im Gitter."
+      ],
+      "id": "summary"
+    }
+  ]
+}

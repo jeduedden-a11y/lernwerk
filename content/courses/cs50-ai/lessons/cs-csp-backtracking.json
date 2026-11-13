@@ -1,0 +1,81 @@
+{
+  "id": "cs-csp-backtracking",
+  "title": "Backtracking mit Heuristiken",
+  "subtitle": "AC-3, MRV, Grad, LCV",
+  "vault": [
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Constraint Satisfaction.md",
+      "title": "Constraint Satisfaction"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Backtracking** weist Variablen nacheinander Werte zu und geht zurück, sobald ein Constraint verletzt ist. Schneller wird es durch **Inferenz** (AC-3 macht alle Kanten bogenkonsistent) und **Heuristiken**: **MRV** wählt die Variable mit den wenigsten verbleibenden Werten, **Gradheuristik** die mit den meisten Constraints, **LCV** probiert zuerst den Wert, der den Nachbarn die meisten Möglichkeiten lässt.",
+      "id": "t1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Ordne die Heuristik zu.",
+      "pairs": [
+        [
+          "MRV",
+          "Variable mit den wenigsten möglichen Werten zuerst"
+        ],
+        [
+          "Gradheuristik",
+          "Variable mit den meisten Nachbarn zuerst"
+        ],
+        [
+          "LCV",
+          "Wert, der die Nachbarn am wenigsten einschränkt, zuerst"
+        ]
+      ],
+      "explain": "MRV entdeckt Sackgassen früh (»fail first«), LCV erhöht die Erfolgschance des gewählten Werts.",
+      "id": "ma1"
+    },
+    {
+      "type": "choice",
+      "md": "Wann ist eine Kante X → Y bogenkonsistent?",
+      "options": [
+        {
+          "md": "wenn es für jeden Wert in der Domäne von X einen passenden Wert in Y gibt",
+          "correct": true
+        },
+        {
+          "md": "wenn X und Y denselben Wert haben"
+        },
+        {
+          "md": "wenn X keine Nachbarn hat"
+        }
+      ],
+      "explain": "AC-3 streicht aus der Domäne von X alle Werte ohne Partner in Y und prüft betroffene Kanten erneut.",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-csp",
+      "level": 2,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "cs-csp",
+      "level": 3,
+      "label": "Üben",
+      "id": "g2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Backtracking mit Rückschritt.",
+        "AC-3 für Bogenkonsistenz.",
+        "MRV, Gradheuristik, LCV."
+      ],
+      "id": "summary"
+    }
+  ]
+}

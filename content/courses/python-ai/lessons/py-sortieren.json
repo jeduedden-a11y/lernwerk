@@ -1,0 +1,94 @@
+{
+  "id": "py-sortieren",
+  "title": "Sortieren, key und lambda",
+  "subtitle": "Argmax und Ranglisten",
+  "steps": [
+    {
+      "type": "text",
+      "md": "`sorted(folge, key=f)` sortiert nach dem Wert von `f`; `reverse=True` absteigend. `max(folge, key=f)` liefert das Element mit dem größten `f`, also ein **argmax**, wie es Q-Learning braucht. Pythons Sortierung ist **stabil**: Gleiche Schlüssel behalten ihre Reihenfolge.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Code verfolgen",
+      "md": "Verfolge Rangliste und Bestwert.",
+      "widget": "codetrace",
+      "params": {
+        "code": "punkte = {\"Ada\": 7, \"Bo\": 9, \"Cy\": 7}\nrangliste = sorted(punkte, key=lambda n: punkte[n], reverse=True)\nbester = max(punkte, key=punkte.get)\nprint(rangliste, bester)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "punkte": "{'Ada': 7, 'Bo': 9, 'Cy': 7}"
+            },
+            "note": "Ein Dictionary mit Punkten."
+          },
+          {
+            "line": 2,
+            "vars": {
+              "punkte": "{'Ada': 7, 'Bo': 9, 'Cy': 7}",
+              "rangliste": "['Bo', 'Ada', 'Cy']"
+            },
+            "note": "Sortiert werden die Schlüssel nach ihren Punkten; Ada und Cy behalten ihre Reihenfolge (stabil)."
+          },
+          {
+            "line": 3,
+            "vars": {
+              "punkte": "{'Ada': 7, 'Bo': 9, 'Cy': 7}",
+              "rangliste": "['Bo', 'Ada', 'Cy']",
+              "bester": "'Bo'"
+            },
+            "note": "`max` mit `key` ist ein argmax: der Schlüssel mit dem größten Wert."
+          },
+          {
+            "line": 4,
+            "vars": {
+              "bester": "'Bo'"
+            },
+            "out": "['Bo', 'Ada', 'Cy'] Bo",
+            "note": "Ausgabe."
+          }
+        ]
+      },
+      "id": "w1"
+    },
+    {
+      "type": "choice",
+      "md": "Wie wählt ein Q-Learning-Agent die beste Aktion `a` aus `aktionen` mit Werten `Q[(s, a)]`?",
+      "options": [
+        {
+          "md": "`max(aktionen, key=lambda a: Q[(s, a)])`",
+          "correct": true
+        },
+        {
+          "md": "`max(Q)`"
+        },
+        {
+          "md": "`sorted(aktionen)[0]`"
+        },
+        {
+          "md": "`aktionen.max(Q)`"
+        }
+      ],
+      "explain": "`max(Q)` gäbe nur den größten Schlüssel des Dictionaries zurück, nicht die beste Aktion im Zustand `s`.",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "py-sammlungen",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "sorted mit key und reverse.",
+        "max mit key = argmax.",
+        "Stabile Sortierung."
+      ],
+      "id": "summary"
+    }
+  ]
+}

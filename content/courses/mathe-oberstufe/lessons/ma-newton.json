@@ -1,0 +1,106 @@
+{
+  "id": "ma-newton",
+  "title": "Das Newton-Verfahren",
+  "subtitle": "Nullstellen nähern mit Tangenten",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Newton-Verfahren.md",
+      "title": "Newton-Verfahren"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Lässt sich eine Gleichung nicht exakt lösen, nähert man die Nullstelle schrittweise: Man legt im Startwert $x_0$ die Tangente an und nimmt deren Nullstelle als nächste Näherung.\n\n$$x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$$",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Newton-Schritt",
+      "md": "Newton-Schritt für $f(x) = x^2 - 2$: Verschiebe den Startwert. Die Tangente schneidet die x-Achse näher an $\\sqrt2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          3.5
+        ],
+        "y": [
+          -3,
+          9
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "s",
+            "label": "Startwert x₀",
+            "min": 0.5,
+            "max": 3.2,
+            "step": 0.1,
+            "value": 3,
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2",
+            "color": "accent"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "s"
+          }
+        ],
+        "points": [
+          {
+            "x": "s",
+            "on": "f",
+            "guides": true
+          }
+        ],
+        "readout": "x₁ = {s - (s^2 - 2)/(2*s)|4}, √2 ≈ 1,4142"
+      },
+      "id": "w1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Newton-Verfahren versagt, wenn man an einer Stelle mit waagerechter Tangente startet.",
+      "answer": true,
+      "explain": "Dann ist $f'(x_n) = 0$ und die Formel teilt durch null: Die Tangente schneidet die x-Achse nicht.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "newton"
+      },
+      "label": "Ein Schritt",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": "newton"
+      },
+      "label": "Zwei Schritte",
+      "id": "g2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "x_{n+1} = x_n − f(x_n)/f'(x_n).",
+        "Konvergiert meist sehr schnell.",
+        "Versagt bei f'(x_n) = 0 oder ungünstigem Start."
+      ],
+      "id": "summary"
+    }
+  ]
+}

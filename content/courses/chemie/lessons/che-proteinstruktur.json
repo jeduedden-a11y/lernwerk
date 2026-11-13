@@ -1,0 +1,115 @@
+{
+  "id": "che-proteinstruktur",
+  "title": "Proteinfaltung",
+  "subtitle": "Vier Ebenen der Struktur",
+  "vault": [
+    {
+      "path": "02 Wiki/Chemie/04 Q2 Naturstoffe und Synthese/Proteinstruktur.md",
+      "title": "Proteinstruktur"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Ein Protein ist mehr als seine Kette. Man unterscheidet vier Ebenen:\n\n1. **Primärstruktur:** die Reihenfolge der Aminosäuren.\n2. **Sekundärstruktur:** α-Helix und β-Faltblatt, gehalten durch Wasserstoffbrücken zwischen den C=O- und N–H-Gruppen des Rückgrats.\n3. **Tertiärstruktur:** die räumliche Faltung durch Wechselwirkungen der Seitenketten.\n4. **Quartärstruktur:** mehrere Ketten bilden einen Komplex (Hämoglobin: vier).",
+      "image": "vault:Proteinstrukturebenen.svg",
+      "alt": "Die Strukturebenen",
+      "caption": "Die Strukturebenen",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Falten",
+      "md": "Falte die Kette Schritt für Schritt bis zur Quartärstruktur.",
+      "widget": "protein",
+      "params": {
+        "stage": 0,
+        "heat": 0
+      },
+      "goal": {
+        "when": "stage == 3 && heat < 0.2",
+        "solve": {
+          "stage": 3,
+          "heat": 0
+        }
+      },
+      "id": "w1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Welche Kraft hält welche Struktur?",
+      "pairs": [
+        [
+          "Peptidbindungen",
+          "Primärstruktur"
+        ],
+        [
+          "Wasserstoffbrücken im Rückgrat",
+          "Sekundärstruktur"
+        ],
+        [
+          "Disulfidbrücken und Ionenbindungen der Seitenketten",
+          "Tertiärstruktur"
+        ],
+        [
+          "Zusammenlagerung mehrerer Ketten",
+          "Quartärstruktur"
+        ]
+      ],
+      "explain": "In der Tertiärstruktur wirken alle Kräfte zwischen Seitenketten: Disulfidbrücken (kovalent), Ionenbindungen, Wasserstoffbrücken und hydrophobe Wechselwirkungen.",
+      "id": "ma1"
+    },
+    {
+      "type": "widget",
+      "label": "Denaturieren",
+      "md": "Erhitze das Protein. Welche Ebenen gehen verloren?",
+      "widget": "protein",
+      "params": {
+        "stage": 3,
+        "heat": 0
+      },
+      "goal": {
+        "when": "heat >= 0.8",
+        "solve": {
+          "heat": 1
+        }
+      },
+      "id": "w2"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Ei wird gekocht. Welche Struktur bleibt erhalten?",
+      "options": [
+        {
+          "md": "die Primärstruktur",
+          "correct": true
+        },
+        {
+          "md": "die Tertiärstruktur",
+          "why": "Gerade sie wird durch die Hitze zerstört."
+        },
+        {
+          "md": "die Sekundärstruktur",
+          "why": "Wasserstoffbrücken brechen beim Erhitzen."
+        },
+        {
+          "md": "alle vier",
+          "why": "Dann würde das Eiweiß nicht fest und weiß."
+        }
+      ],
+      "explain": "Denaturierung zerstört die räumliche Struktur, nicht die Peptidbindungen. Das Protein verliert seine Funktion; meist ist das nicht umkehrbar.",
+      "id": "c1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Primär: Sequenz. Sekundär: Helix und Faltblatt durch Wasserstoffbrücken im Rückgrat.",
+        "Tertiär: Seitenketten (Disulfid, ionisch, H-Brücken, hydrophob). Quartär: mehrere Ketten.",
+        "Denaturierung durch Hitze, Säure, Schwermetalle: Raumstruktur weg, Sequenz bleibt."
+      ],
+      "id": "summary"
+    }
+  ]
+}

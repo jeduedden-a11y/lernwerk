@@ -1,0 +1,72 @@
+{
+  "id": "py-iteratoren",
+  "title": "itertools und Generatoren",
+  "subtitle": "Alle Kombinationen, ohne Listen zu bauen",
+  "steps": [
+    {
+      "type": "text",
+      "md": "`itertools` liefert Kombinatorik fertig: `product` (kartesisches Produkt, etwa alle Wahrheitsbelegungen), `permutations`, `combinations`. **Generatoren** mit `yield` erzeugen Werte erst bei Bedarf; das spart Speicher. Model Checking in Lecture 1 probiert alle $2^n$ Belegungen von $n$ Symbolen durch.",
+      "id": "t1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Wie viele Elemente liefert der Ausdruck?",
+      "pairs": [
+        [
+          "`list(itertools.product([True, False], repeat=3))`",
+          "8"
+        ],
+        [
+          "`list(itertools.permutations(\"abcd\", 2))`",
+          "12"
+        ],
+        [
+          "`list(itertools.combinations(\"abcd\", 2))`",
+          "6"
+        ],
+        [
+          "`list(itertools.combinations(\"abcd\", 3))`",
+          "4"
+        ]
+      ],
+      "explain": "$2^3 = 8$ Belegungen; $4 \\cdot 3 = 12$ geordnete Paare; $\\binom42 = 6$ und $\\binom43 = 4$ Auswahlen ohne Reihenfolge.",
+      "id": "ma1"
+    },
+    {
+      "type": "choice",
+      "md": "Was unterscheidet `return` und `yield` in einer Funktion?",
+      "options": [
+        {
+          "md": "`yield` gibt einen Wert ab und setzt beim nächsten Abruf an derselben Stelle fort; `return` beendet die Funktion.",
+          "correct": true
+        },
+        {
+          "md": "Kein Unterschied."
+        },
+        {
+          "md": "`yield` ist schneller, sonst gleich."
+        }
+      ],
+      "explain": "Eine Funktion mit `yield` ist ein Generator; man durchläuft ihn mit `for` oder `next()`.",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "py-funktionen",
+      "level": 3,
+      "label": "Üben",
+      "id": "g1"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "product, permutations, combinations.",
+        "Generatoren erzeugen Werte bei Bedarf.",
+        "Model Checking: alle 2ⁿ Belegungen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

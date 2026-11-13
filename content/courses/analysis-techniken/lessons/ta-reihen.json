@@ -1,0 +1,113 @@
+{
+  "id": "ta-reihen",
+  "title": "Reihen und Partialsummen",
+  "subtitle": "Unendlich viele Summanden",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Reihen und Partialsummen.md",
+      "title": "Reihen und Partialsummen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Divergenzkriterium.md",
+      "title": "Divergenzkriterium"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/p-Reihe.md",
+      "title": "p-Reihe"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Eine **Reihe** $\\sum a_k$ ist die Folge ihrer Partialsummen $s_n = a_1 + \\ldots + a_n$. Die **geometrische Reihe** $\\sum_{k=0}^\\infty q^k = \\frac{1}{1-q}$ konvergiert für $|q| < 1$. **Divergenzkriterium:** Gehen die Glieder nicht gegen 0, divergiert die Reihe. Die Umkehrung gilt nicht: Die harmonische Reihe $\\sum \\frac1k$ divergiert, obwohl $\\frac1k \\to 0$. Die **p-Reihe** $\\sum \\frac{1}{k^p}$ konvergiert genau für $p > 1$.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Partialsummen",
+      "md": "Partialsummen der harmonischen Reihe ($\\sum 1/k$, blau) und von $\\sum 1/k^2$ (orange): Die eine wächst immer weiter, die andere bleibt unter $\\pi^2/6 \\approx 1{,}645$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          1,
+          200
+        ],
+        "y": [
+          0,
+          6.5
+        ],
+        "xLabel": "n",
+        "yLabel": "Partialsumme",
+        "vars": [
+          {
+            "name": "n",
+            "label": "Glieder n",
+            "min": 1,
+            "max": 200,
+            "step": 1,
+            "value": 10,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "h",
+            "expr": "ln(x) + 0.5772",
+            "color": "blue"
+          },
+          {
+            "name": "q",
+            "expr": "1.6449 - 1/x",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "n",
+            "on": "h",
+            "guides": true
+          }
+        ],
+        "readout": "harmonisch ≈ {ln(n) + 0.5772|3}, Quadrate ≈ {1.6449 - 1/n|3}"
+      },
+      "id": "w1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Wenn $a_k \\to 0$, konvergiert $\\sum a_k$.",
+      "answer": false,
+      "explain": "Gegenbeispiel: harmonische Reihe. $a_k \\to 0$ ist nur notwendig.",
+      "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "geomreihe"
+      },
+      "label": "Geometrische Reihe",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": "geomreihe"
+      },
+      "label": "p-Reihe",
+      "id": "g2"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Reihe = Folge der Partialsummen.",
+        "Geometrisch: 1/(1 − q) für |q| < 1.",
+        "Glieder → 0 nötig, nicht hinreichend; p-Reihe konvergent für p > 1."
+      ],
+      "id": "summary"
+    }
+  ]
+}

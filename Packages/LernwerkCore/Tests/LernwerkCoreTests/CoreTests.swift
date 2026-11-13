@@ -264,6 +264,36 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(state.light(for: chapter, in: course), .red)
     }
 
+    func testSkippedLessonsSettleThePath() throws {
+        // progress stored before skipping existed still decodes
+        let old = try JSONDecoder().decode(LessonProgress.self, from: Data(#"{"courseId":"c","lastStep":2,"timesCompleted":0,"updatedAt":0}"#.utf8))
+        XCTAssertFalse(old.isSkipped)
+        XCTAssertFalse(old.isSettled)
+        let lessons = [LessonRef(id: "a", title: "A"), LessonRef(id: "b", title: "B")]
+        let chapter = Chapter(id: "k", title: "K", lessons: lessons)
+        let course = Course(id: "c", title: "C", color: "#000000", symbol: "x", chapters: [chapter])
+        var state = LearnerState()
+        state.skip(lessonID: "a", courseID: "c")
+        XCTAssertTrue(state.lessons["a"]?.isSkipped ?? false)
+        XCTAssertTrue(state.isSettled("a"))
+        XCTAssertEqual(state.completedCount(in: course), 0)
+        XCTAssertEqual(state.settledCount(in: course), 1)
+        // finishing a skipped lesson turns it into a finished one
+        let finished = FinishedLesson(lessonId: "a", mode: "lesson", results: [], score: 1)
+        _ = state.record(finished, course: course, meta: nil)
+        XCTAssertTrue(state.lessons["a"]?.isCompleted ?? false)
+        XCTAssertFalse(state.lessons["a"]?.isSkipped ?? true)
+        // a finished lesson cannot be skipped, a skip can be taken back
+        state.skip(lessonID: "a", courseID: "c")
+        XCTAssertNil(state.lessons["a"]?.skippedAt)
+        state.skip(lessonID: "b", courseID: "c")
+        XCTAssertEqual(state.settledCount(in: course), 2)
+        XCTAssertEqual(state.light(for: chapter, in: course), .green)
+        state.unskip(lessonID: "b")
+        XCTAssertFalse(state.isSettled("b"))
+        XCTAssertEqual(state.light(for: chapter, in: course), .yellow)
+    }
+
     func testIgnoredFiles() {
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev.html"))
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev-frame.html"))

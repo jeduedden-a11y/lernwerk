@@ -1,0 +1,154 @@
+{
+  "id": "ma-integral",
+  "title": "Integral und Hauptsatz",
+  "subtitle": "Von der Fläche zur Stammfunktion",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Integralbegriff und Hauptsatz.md",
+      "title": "Integralbegriff und Hauptsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Grundintegrale.md",
+      "title": "Grundintegrale"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Das **Integral** $\\int_a^b f(x)\\,dx$ ist der orientierte Flächeninhalt zwischen Graph und x-Achse, als Grenzwert von Rechtecksummen. Der **Hauptsatz** verbindet es mit dem Ableiten: Ist $F' = f$, dann gilt\n\n$$\\int_a^b f(x)\\,dx = F(b) - F(a).$$\n\nFlächen unterhalb der x-Achse zählen negativ.",
+      "id": "t1"
+    },
+    {
+      "type": "widget",
+      "label": "Rechteckssummen",
+      "md": "Rechtecke unter $f(x) = 0{,}5x^2 + 1$ auf $[0; 3]$: Erhöhe die Zahl der Streifen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          3.2
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "xLabel": "x",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "n",
+            "label": "Streifen n",
+            "min": 2,
+            "max": 60,
+            "step": 1,
+            "value": 3,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2 + 1",
+            "color": "accent"
+          }
+        ],
+        "riemann": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": 3,
+            "n": "n",
+            "kind": "lower"
+          }
+        ],
+        "readout": "Untersumme mit {n|0} Streifen: {S|3}; exakt: 7,5"
+      },
+      "goal": {
+        "when": "n >= 50",
+        "solve": {
+          "n": 60
+        }
+      },
+      "id": "w1"
+    },
+    {
+      "type": "match",
+      "label": "Zuordnen",
+      "md": "Ordne die Stammfunktion zu.",
+      "pairs": [
+        [
+          "$x^3$",
+          "$\\frac{x^4}{4}$"
+        ],
+        [
+          "$e^{2x}$",
+          "$\\frac12 e^{2x}$"
+        ],
+        [
+          "$\\frac1x$",
+          "$\\ln|x|$"
+        ],
+        [
+          "$\\cos x$",
+          "$\\sin x$"
+        ],
+        [
+          "$\\sin x$",
+          "$-\\cos x$"
+        ]
+      ],
+      "explain": "Probe immer durch Ableiten. Konstanten im Exponenten oder Argument müssen geteilt werden.",
+      "id": "ma1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": "integral"
+      },
+      "label": "Linear",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": "integral"
+      },
+      "label": "Quadratisch",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": "integral"
+      },
+      "label": "Kubisch",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": "integral"
+      },
+      "label": "Grenze gesucht",
+      "id": "g4"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Integral: orientierte Fläche, Grenzwert von Rechteckssummen.",
+        "Hauptsatz: ∫ₐᵇ f dx = F(b) − F(a).",
+        "Stammfunktion durch Ableiten prüfen."
+      ],
+      "id": "summary"
+    }
+  ]
+}
