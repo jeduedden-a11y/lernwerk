@@ -41,6 +41,7 @@ struct RootView: View {
         .onOpenURL { model.open($0) }
         .task {
             model.openLaunchTarget()
+            await model.syncProgress()
             await model.syncContent()
             await model.pushNotes(quiet: true)
         }
@@ -48,12 +49,14 @@ struct RootView: View {
             switch phase {
             case .active:
                 Task {
+                    await model.syncProgress()
                     await Reminders.shared.refresh(state: model.state)
                     await model.syncContent()
                     await model.pushNotes(quiet: true)
                 }
             case .background:
                 model.saveNow()
+                model.syncProgressBeforeSuspend()
                 // the badge and the reminders of the next days follow what was learned just now
                 Task { await Reminders.shared.refresh(state: model.state) }
             default:

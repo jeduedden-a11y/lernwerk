@@ -24,61 +24,48 @@
     return res.json();
   }
 
-  /** Title for a node: the part before the first comma or colon if the title is long, in at most two lines. */
-  function shortLines(title) {
-    let t = String(title);
-    if (t.length > 28) {
-      const cut = t.split(/[:,]| und /)[0].trim();
-      if (cut.length >= 8) t = cut;
-    }
-    const words = t.split(/\s+/);
-    const lines = [""];
-    for (const w of words) {
-      const cur = lines[lines.length - 1];
-      if (!cur) lines[lines.length - 1] = w;
-      else if ((cur + " " + w).length <= 15) lines[lines.length - 1] = cur + " " + w;
-      else lines.push(w);
-    }
-    if (lines.length > 2) lines.splice(2, lines.length - 2, lines.slice(2).join(" "));
-    if (lines[1] && lines[1].length > 16) lines[1] = lines[1].slice(0, 15).trimEnd() + "…";
-    if (lines[0].length > 17) lines[0] = lines[0].slice(0, 16) + "…";
-    return lines;
-  }
-
-  /** Layered layout: depth = longest chain of prerequisites; at most four nodes per row, ordered by their parents. */
-  function layout(lessons, W) {
+  /** The tree follows the course: one band per chapter, in course order. Inside a band one row per lesson with its
+   * full title, indented below the lesson of the same chapter it builds on (its first such prerequisite), joined by
+   * an angled line. A prerequisite from an earlier chapter shows as a short line from above on the band's first row;
+   * the lesson sheet names every prerequisite. */
+  function layout(lessons, chapters, W) {
     const byId = new Map(lessons.map((l) => [l.id, l]));
-    const depth = new Map();
-    const d = (l, seen) => {
-      if (depth.has(l.id)) return depth.get(l.id);
-      if (seen.has(l.id)) return 0;
-      seen.add(l.id);
-      const v = l.req.length ? 1 + Math.max(...l.req.map((r) => d(byId.get(r), seen))) : 0;
-      depth.set(l.id, v);
-      return v;
-    };
-    lessons.forEach((l) => d(l, new Set()));
-    const layers = [];
-    lessons.forEach((l) => { (layers[depth.get(l.id)] = layers[depth.get(l.id)] || []).push(l); });
     const pos = new Map();
-    let row = 0;
-    const PITCH = 98, TOP = 34;
-    layers.forEach((layer, k) => {
-      if (!layer) return;
-      if (k > 0) {
-        const bary = (l) => (l.req.length ? l.req.reduce((s, r) => s + (pos.get(r) ? pos.get(r).x : W / 2), 0) / l.req.length : W / 2);
-        layer.sort((a, b) => bary(a) - bary(b) || a.order - b.order);
+    const bands = [];
+    const links = [];
+    const ROW = 44, HEAD = 46, FOOT = 24, GAP = 10, INDENT = 24;
+    let y = 4;
+    chapters.forEach((ch, ci) => {
+      const list = lessons.filter((l) => l.chapterIndex === ci);
+      if (!list.length) return;
+      if (list.length === 1) {
+        // a chapter of one lesson (a week of a dated plan): one line, node left, titles beside it
+        pos.set(list[0].id, { x: 38, y: y + 31, compact: true });
+        bands.push({ chapter: ch, index: ci, top: y, bottom: y + 62, lessons: list, compact: true });
+        y += 62 + GAP;
+        return;
       }
-      const rows = Math.ceil(layer.length / 4);
-      const per = Math.ceil(layer.length / rows);
-      for (let r = 0; r < rows; r++) {
-        const chunk = layer.slice(r * per, (r + 1) * per);
-        const gap = Math.min(88, (W - 64) / Math.max(1, chunk.length - 1));
-        chunk.forEach((l, i) => pos.set(l.id, { x: W / 2 + (i - (chunk.length - 1) / 2) * gap, y: TOP + row * PITCH }));
-        row += 1;
-      }
+      // the first prerequisite inside the chapter decides the column; an earlier lesson only, so there are no loops
+      const kids = new Map(list.map((l) => [l.id, []]));
+      const roots = [];
+      list.forEach((l) => {
+        const parent = l.req.map((r) => byId.get(r)).find((p) => p && p.chapterIndex === ci && p.order < l.order);
+        if (parent) kids.get(parent.id).push(l); else roots.push(l);
+      });
+      const top = y;
+      let rowY = top + HEAD;
+      const walk = (l, depth, parent) => {
+        pos.set(l.id, { x: 30 + Math.min(depth, 4) * INDENT, y: rowY, row: true, first: rowY === top + HEAD });
+        rowY += ROW;
+        if (parent) links.push([parent.id, l.id]);
+        kids.get(l.id).forEach((k) => walk(k, depth + 1, l));
+      };
+      roots.forEach((r) => walk(r, 0, null));
+      const bottom = rowY - ROW + FOOT;
+      bands.push({ chapter: ch, index: ci, top, bottom, lessons: list });
+      y = bottom + GAP;
     });
-    return { pos, height: TOP + (row - 1) * PITCH + 62 };
+    return { pos, bands, links, height: y };
   }
 
   function ring(parent, size, value, color) {
@@ -207,38 +194,65 @@
             el("div", { class: "ov-course-count", text: got + "/" + c.lessonsFlat.length }),
           ]));
           const W = 360;
-          const { pos, height } = layout(c.lessonsFlat, W);
+          const { pos, bands, links, height } = layout(c.lessonsFlat, c.chapters || [], W);
           const svg = sv("svg", { viewBox: "0 0 " + W + " " + height, class: "ov-tree", role: "img", "aria-label": "Lernpfad " + c.title }, null);
-          const edges = sv("g", null, svg), nodes = sv("g", null, svg);
-          c.lessonsFlat.forEach((l) => l.req.forEach((r) => {
-            const a = pos.get(r), b = pos.get(l.id);
-            if (!a || !b) return;
-            const y1 = a.y + 21, y2 = b.y - 21, my = (y1 + y2) / 2;
-            const p = sv("path", { d: "M" + a.x + "," + y1 + " C" + a.x + "," + my + " " + b.x + "," + my + " " + b.x + "," + y2, class: "ov-edge" + (settled(r) ? " lit" : "") }, edges);
-            p.dataset.from = r; p.dataset.to = l.id;
-          }));
+          const back = sv("g", null, svg), edges = sv("g", null, svg), nodes = sv("g", null, svg);
+          bands.forEach((b) => {
+            const all = b.lessons.length, got = b.lessons.filter((l) => settled(l.id)).length;
+            sv("rect", { x: 2, y: b.top, width: W - 4, height: b.bottom - b.top, rx: 16, class: "ov-band" + (got === all ? " full" : "") }, back);
+            const title = String(b.chapter.title || "");
+            const t = sv("text", { x: b.compact ? 66 : 16, y: b.top + (b.compact ? 26 : 19), class: "ov-band-title" }, back);
+            t.textContent = title.length > 40 ? title.slice(0, 39).trimEnd() + "…" : title;
+            const sub = [b.chapter.ref, got + "/" + all].filter(Boolean).join(" · ");
+            const s = sv("text", { x: W - 16, y: b.top + (b.compact ? 26 : 19), class: "ov-band-count" }, back);
+            s.textContent = sub;
+          });
+          c.lessonsFlat.forEach((l) => {
+            const b = pos.get(l.id);
+            if (!b) return;
+            const outside = l.req.filter((r) => lessonIndex.get(r) && lessonIndex.get(r).chapterIndex !== l.chapterIndex);
+            if (outside.length && (b.compact || b.first)) {
+              // built on an earlier chapter: a short line from above, lit once those lessons are settled
+              const r = b.compact ? 19 : 16;
+              const p = sv("path", { d: "M" + b.x + "," + (b.y - r - 3) + " L" + b.x + "," + (b.y - r - 10), class: "ov-edge ov-stub" + (outside.every(settled) ? " lit" : "") }, edges);
+              p.dataset.to = l.id;
+            }
+          });
+          // from a lesson down and across to what builds on it, lit once it is settled
+          links.forEach(([from, to]) => {
+            const a = pos.get(from), b = pos.get(to);
+            const d = b.x - a.x >= 20
+              ? "M" + a.x + "," + (a.y + 16) + " L" + a.x + "," + (b.y - 6) + " Q" + a.x + "," + b.y + " " + (a.x + 6) + "," + b.y + " L" + (b.x - 15) + "," + b.y
+              : "M" + a.x + "," + (a.y + 16) + " L" + b.x + "," + (b.y - 16);
+            const p = sv("path", { d, class: "ov-edge" + (settled(from) ? " lit" : "") }, edges);
+            p.dataset.from = from; p.dataset.to = to;
+          });
           c.lessonsFlat.forEach((l) => {
             const q = pos.get(l.id), st = stateOf(l);
             const g = sv("g", { class: "ov-node " + st + (focusId === l.id ? " focus" : ""), transform: "translate(" + q.x + "," + q.y + ")", tabindex: "0", role: "button", "aria-label": l.title + ", " + { done: "geschafft", skipped: "übersprungen", started: "begonnen", ready: "bereit", later: "baut auf anderen Lektionen auf" }[st] }, nodes);
-            if (st === "ready") sv("circle", { r: 25, class: "ov-glow" }, g);
-            sv("circle", { r: 19, class: "ov-disc" }, g);
-            if (st === "started") sv("circle", { r: 19, class: "ov-arc", "stroke-dasharray": "60 200", transform: "rotate(-90)" }, g);
-            if (st === "done") sv("path", { d: "M-7,0.5 L-2,5.5 L7.5,-5", class: "ov-check" }, g);
-            else if (st === "skipped") sv("path", { d: "M-6,-5.5 L2,0 L-6,5.5 Z M5,-5.5 L5,5.5", class: "ov-skip" }, g);
-            else { const t = sv("text", { class: "ov-num", y: 0.5 }, g); t.textContent = String(l.order + 1); }
+            // rows of a longer chapter draw the node a little smaller; the title stands beside it in full
+            const half = q.row ? 16 : 19;
+            sv("rect", { x: -half - 4, y: -half - 2, width: W - q.x + half - 10, height: 2 * half + 4, rx: 10, class: "ov-hit" }, g);
+            const k0 = q.row ? sv("g", { transform: "scale(0.82)" }, g) : g;
+            if (st === "ready") sv("circle", { r: 25, class: "ov-glow" }, k0);
+            sv("circle", { r: 19, class: "ov-disc" }, k0);
+            if (st === "started") sv("circle", { r: 19, class: "ov-arc", "stroke-dasharray": "60 200", transform: "rotate(-90)" }, k0);
+            if (st === "done") sv("path", { d: "M-7,0.5 L-2,5.5 L7.5,-5", class: "ov-check" }, k0);
+            else if (st === "skipped") sv("path", { d: "M-6,-5.5 L2,0 L-6,5.5 Z M5,-5.5 L5,5.5", class: "ov-skip" }, k0);
+            else { const t = sv("text", { class: "ov-num", y: 0.5 }, k0); t.textContent = String(l.order + 1); }
+            if (l.links.length) sv("circle", { cx: 15, cy: -15, r: 3.6, class: "ov-link-dot" }, k0);
             const topic = c.topics.find((t) => t.after === l.id);
+            // training levels: four dots at the right end of the line
             if (topic) {
               const lvl = best(c, topic);
               for (let k = 1; k <= 4; k++) {
-                const dot = sv("circle", { cx: -10.5 + (k - 1) * 7, cy: 26, r: 2.6, class: "ov-pip" + (k <= lvl ? " on" : "") }, g);
+                const dot = sv("circle", { cx: W - 44 - q.x + (k - 1) * 7, cy: 0, r: 2.6, class: "ov-pip" + (k <= lvl ? " on" : "") }, g);
                 if (k <= lvl) dot.style.fill = "var(--lv" + k + "-a)";
               }
             }
-            shortLines(l.title).forEach((line, i) => {
-              const t = sv("text", { class: "ov-label", y: (topic ? 40 : 34) + i * 11 }, g);
-              t.textContent = line;
-            });
-            if (l.links.length) sv("circle", { cx: 15, cy: -15, r: 3.6, class: "ov-link-dot" }, g);
+            const room = Math.floor((W - q.x - half - 12 - (topic ? 40 : 10)) / 5.7);
+            const t = sv("text", { class: "ov-label side", x: half + 9, y: q.compact ? 11 : 4 }, g);
+            t.textContent = l.title.length > room ? l.title.slice(0, room - 1).trimEnd() + "…" : l.title;
             const open = () => { focusId = l.id; paint(); showSheet(l); };
             g.addEventListener("click", open);
             g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });

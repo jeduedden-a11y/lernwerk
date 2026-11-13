@@ -9,6 +9,8 @@ import CommonCrypto
 
 public enum EnvelopeKind: String, Codable, Sendable {
     case inbox, snapshot, wiki
+    /// Learning progress of one Lernwerk device (lernwerk/fortschritt/); only the app reads it.
+    case progress
 }
 
 public struct Envelope: Codable, Sendable {

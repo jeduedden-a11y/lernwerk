@@ -246,7 +246,9 @@ public struct LearnerState: Codable, Sendable {
     public var practice: [String: PracticeStat] = [:]
     /// Exams, newest last; only the last 50 are kept.
     public var exams: [ExamRecord] = []
-    public var lastLesson: String?
+    public var lastLesson: String? { didSet { lastLessonAt = Date() } }
+    /// When lastLesson was set; the newer one wins when devices are compared.
+    public var lastLessonAt: Date?
     public var dailyGoal: Int = 30
     public var bridgeFeatures: [String] = []
     public var bridgePluginVersion: String?
@@ -255,6 +257,21 @@ public struct LearnerState: Codable, Sendable {
     public var deviceSalt: String = TagwerkCrypto.randomBytes(16).base64EncodedString()
     /// Wrong tasks of courses with a mistake log (TMUA), newest last.
     public var mistakes: [Mistake] = []
+
+    // MARK: progress across devices (see ProgressSync.swift)
+
+    /// Names this installation in the data repo: lernwerk/fortschritt/<deviceID>.tw.
+    public var deviceID: String = UUID().uuidString.lowercased()
+    /// Set by "Lernfortschritt zurücksetzen"; a newer reset on another device clears this one too.
+    public var resetAt: Date?
+    /// What this device learned per day and per training topic. `days` and `practice` add the other devices to it.
+    public var ownDays: [String: DayStat] = [:]
+    public var ownPractice: [String: PracticeStat] = [:]
+    /// The other devices as last read: their own days and training, so the totals can be recomputed offline.
+    public var peers: [String: ProgressPeer] = [:]
+    /// Ids of solved or removed mistakes, so another device does not bring them back.
+    public var resolvedMistakes: [String] = []
+    public var progressSync = ProgressSyncMeta()
 
     public init() {}
 
@@ -275,6 +292,15 @@ public struct LearnerState: Codable, Sendable {
         lastSyncError = try? c.decodeIfPresent(String.self, forKey: .lastSyncError)
         deviceSalt = (try? c.decode(String.self, forKey: .deviceSalt)) ?? TagwerkCrypto.randomBytes(16).base64EncodedString()
         mistakes = (try? c.decode([Mistake].self, forKey: .mistakes)) ?? []
+        lastLessonAt = try? c.decodeIfPresent(Date.self, forKey: .lastLessonAt)
+        deviceID = (try? c.decode(String.self, forKey: .deviceID)) ?? UUID().uuidString.lowercased()
+        resetAt = try? c.decodeIfPresent(Date.self, forKey: .resetAt)
+        // before the sync existed everything was learned on this device
+        ownDays = (try? c.decode([String: DayStat].self, forKey: .ownDays)) ?? days
+        ownPractice = (try? c.decode([String: PracticeStat].self, forKey: .ownPractice)) ?? practice
+        peers = (try? c.decode([String: ProgressPeer].self, forKey: .peers)) ?? [:]
+        resolvedMistakes = (try? c.decode([String].self, forKey: .resolvedMistakes)) ?? []
+        progressSync = (try? c.decode(ProgressSyncMeta.self, forKey: .progressSync)) ?? ProgressSyncMeta()
     }
 
     // MARK: derived values
@@ -373,8 +399,38 @@ public struct LearnerState: Codable, Sendable {
     // MARK: recording
 
     /// Records a finished lesson or review session and returns the XP earned.
+    /// The day and training figures it adds also go to this device's own share (ownDays, ownPractice).
     @discardableResult
     public mutating func record(_ finished: FinishedLesson, course: Course?, meta: LessonMeta?, now: Date = Date()) -> Int {
+        let dayKey = DayKey.key(for: now)
+        let dayBefore = days[dayKey] ?? DayStat()
+        let practiceBefore = practice
+        let xp = recordTotals(finished, course: course, meta: meta, now: now)
+        let dayAfter = days[dayKey] ?? DayStat()
+        var own = ownDays[dayKey] ?? DayStat()
+        own.xp += dayAfter.xp - dayBefore.xp
+        own.lessons += dayAfter.lessons - dayBefore.lessons
+        own.reviews += dayAfter.reviews - dayBefore.reviews
+        own.seconds += dayAfter.seconds - dayBefore.seconds
+        own.practice += dayAfter.practice - dayBefore.practice
+        ownDays[dayKey] = own
+        for (key, after) in practice where practiceBefore[key] != after {
+            let before = practiceBefore[key] ?? PracticeStat()
+            var mine = ownPractice[key] ?? PracticeStat()
+            for i in 0..<4 {
+                mine.tasks[i] += after.tasks[i] - before.tasks[i]
+                mine.correct[i] += after.correct[i] - before.correct[i]
+                mine.best[i] = max(mine.best[i], after.best[i])
+            }
+            mine.rounds += after.rounds - before.rounds
+            mine.lastLevel = after.lastLevel
+            mine.lastAt = after.lastAt
+            ownPractice[key] = mine
+        }
+        return xp
+    }
+
+    private mutating func recordTotals(_ finished: FinishedLesson, course: Course?, meta: LessonMeta?, now: Date) -> Int {
         let dayKey = DayKey.key(for: now)
         var stat = days[dayKey] ?? DayStat()
         let questions = finished.results.count
@@ -489,12 +545,25 @@ public struct LearnerState: Codable, Sendable {
         for r in finished.results {
             guard let i = mistakes.firstIndex(where: { $0.id == r.stepId }) else { continue }
             if r.correct && !r.revealed {
+                markResolved(mistakes[i].id)
                 mistakes.remove(at: i)
             } else {
                 mistakes[i].retries += 1
                 mistakes[i].date = now
             }
         }
+    }
+
+    /// Takes a task out of the mistake log by hand.
+    public mutating func removeMistake(id: String) {
+        mistakes.removeAll { $0.id == id }
+        markResolved(id)
+    }
+
+    mutating func markResolved(_ id: String) {
+        guard !resolvedMistakes.contains(id) else { return }
+        resolvedMistakes.append(id)
+        if resolvedMistakes.count > 1000 { resolvedMistakes.removeFirst(resolvedMistakes.count - 1000) }
     }
 
     /// Formula cards: one per formula a finished lesson works with, first due the next day. Existing cards stay.

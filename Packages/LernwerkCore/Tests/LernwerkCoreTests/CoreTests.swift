@@ -294,6 +294,99 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(state.light(for: chapter, in: course), .yellow)
     }
 
+    private func practiceRound() throws -> FinishedLesson {
+        let json = #"{"type":"finished","lessonId":null,"mode":"practice","score":0.8,"practice":{"topicId":"binomial","courseId":"stochastik","level":3},"results":[{"stepId":"p1","type":"numeric","correct":true,"firstTry":true,"attempts":1,"revealed":false,"self":false},{"stepId":"p2","type":"choice","correct":true,"firstTry":false,"attempts":2,"revealed":false,"self":false},{"stepId":"p3","type":"cloze","correct":false,"firstTry":false,"attempts":2,"revealed":true,"self":false}]}"#
+        guard case .finished(let f) = RuntimeMessage.parse(try JSONSerialization.jsonObject(with: Data(json.utf8))) else {
+            throw XCTSkip("not parsed")
+        }
+        return f
+    }
+
+    func testProgressMergesAcrossDevices() throws {
+        let course = Course(id: "c", title: "C", color: "#000000", symbol: "x",
+                            chapters: [Chapter(id: "k", title: "K", lessons: [LessonRef(id: "a", title: "A"), LessonRef(id: "b", title: "B")])])
+        let now = Date()
+        let day = DayKey.key(for: now)
+        var phone = LearnerState()
+        var pad = LearnerState()
+        let lesson = FinishedLesson(lessonId: "a", mode: "lesson", results: [
+            StepResult(stepId: "q1", lessonId: "a", type: "choice", correct: true, firstTry: true, attempts: 1, revealed: false),
+        ], score: 1, seconds: 30)
+        let xpPhone = phone.record(lesson, course: course, meta: nil, now: now)
+        let xpPad = pad.record(try practiceRound(), course: nil, meta: nil, now: now)
+        pad.skip(lessonID: "b", courseID: "c", now: now)
+        // files go back and forth several times: nothing counts twice
+        for i in 0..<3 {
+            phone.merge([(ProgressSnapshot(state: pad, name: "iPad"), "p\(i)")], now: now)
+            pad.merge([(ProgressSnapshot(state: phone, name: "iPhone"), "f\(i)")], now: now)
+        }
+        XCTAssertEqual(phone.days[day]?.xp, xpPhone + xpPad)
+        XCTAssertEqual(pad.days[day]?.xp, xpPhone + xpPad)
+        XCTAssertEqual(phone.ownDays[day]?.xp, xpPhone)
+        XCTAssertTrue(pad.lessons["a"]?.isCompleted ?? false)
+        XCTAssertTrue(phone.lessons["b"]?.isSkipped ?? false)
+        XCTAssertEqual(pad.cards, phone.cards)
+        XCTAssertEqual(pad.cards.count, 1)
+        XCTAssertEqual(phone.practice["stochastik/binomial"]?.tasks, [0, 0, 3, 0])
+        XCTAssertEqual(phone.peers[pad.deviceID]?.name, "iPad")
+        // a second round on the phone counts once more on the pad
+        phone.record(try practiceRound(), course: nil, meta: nil, now: now)
+        pad.merge([(ProgressSnapshot(state: phone, name: "iPhone"), "f9")], now: now)
+        XCTAssertEqual(pad.practice["stochastik/binomial"]?.tasks, [0, 0, 6, 0])
+        XCTAssertEqual(pad.practice["stochastik/binomial"]?.rounds, 2)
+        // the later change wins: the skip taken back on the pad reaches the phone
+        pad.unskip(lessonID: "b", now: now.addingTimeInterval(60))
+        XCTAssertTrue(phone.merge([(ProgressSnapshot(state: pad, name: "iPad"), "p9")], now: now))
+        XCTAssertFalse(phone.isSettled("b"))
+        XCTAssertFalse(phone.merge([(ProgressSnapshot(state: pad, name: "iPad"), "p9")], now: now))
+    }
+
+    func testResetReachesOtherDevices() throws {
+        let course = Course(id: "c", title: "C", color: "#000000", symbol: "x", chapters: [Chapter(id: "k", title: "K", lessons: [LessonRef(id: "a", title: "A")])])
+        let now = Date()
+        var phone = LearnerState()
+        var pad = LearnerState()
+        pad.notes = [LearnNote(courseId: "c", lessonId: "a", lessonTitle: "A", stepId: nil, vaultPath: "x.md", vaultTitle: "x", text: "Notiz")]
+        phone.record(FinishedLesson(lessonId: "a", mode: "lesson", results: [], score: 1), course: course, meta: nil, now: now)
+        pad.merge([(ProgressSnapshot(state: phone, name: "iPhone"), "f1")], now: now)
+        phone.merge([(ProgressSnapshot(state: pad, name: "iPad"), "p1")], now: now)
+        XCTAssertTrue(pad.isSettled("a"))
+        phone.resetProgress(now: now.addingTimeInterval(100))
+        XCTAssertTrue(phone.lessons.isEmpty)
+        // the pad's file from before the reset brings nothing back
+        phone.merge([(ProgressSnapshot(state: pad, name: "iPad"), "p1")], now: now)
+        XCTAssertTrue(phone.lessons.isEmpty)
+        XCTAssertNil(phone.days[DayKey.key(for: now)])
+        // and the pad follows the reset, its notes stay
+        pad.merge([(ProgressSnapshot(state: phone, name: "iPhone"), "f2")], now: now)
+        XCTAssertTrue(pad.lessons.isEmpty)
+        XCTAssertNil(pad.days[DayKey.key(for: now)])
+        XCTAssertEqual(pad.resetAt, phone.resetAt)
+        XCTAssertEqual(pad.notes.count, 1)
+    }
+
+    func testProgressFileAndSolvedMistakes() throws {
+        var a = LearnerState()
+        var b = LearnerState()
+        let m = Mistake(courseId: "tmua", topicId: nil, topicTitle: nil, task: "{}", date: Date(timeIntervalSince1970: 1_800_000_000))
+        a.mistakes = [m]
+        b.merge([(ProgressSnapshot(state: a, name: "iPhone"), "x")])
+        XCTAssertEqual(b.mistakes.count, 1)
+        b.removeMistake(id: m.id)
+        a.merge([(ProgressSnapshot(state: b, name: "iPad"), "y")])
+        XCTAssertTrue(a.mistakes.isEmpty)
+        // packed, sealed and opened again
+        let snap = ProgressSnapshot(state: a, name: "iPhone", savedAt: Date(timeIntervalSince1970: 1_800_000_100))
+        let sealed = try TagwerkCrypto.seal(try snap.packed(), passphrase: "pass", kind: .progress, salt: TagwerkCrypto.randomBytes(16), iterations: 100_000)
+        let back = try ProgressSnapshot.unpacked(try TagwerkCrypto.open(sealed, passphrase: "pass", kind: .progress))
+        XCTAssertEqual(back, snap)
+        XCTAssertEqual(try back.contentHash(), try ProgressSnapshot(state: a, name: "iPhone").contentHash())
+        // a state saved before the sync existed: everything was learned on this device
+        let old = try JSONDecoder().decode(LearnerState.self, from: Data(#"{"days":{"2026-11-01":{"xp":12}}}"#.utf8))
+        XCTAssertEqual(old.ownDays["2026-11-01"]?.xp, 12)
+        XCTAssertFalse(old.deviceID.isEmpty)
+    }
+
     func testIgnoredFiles() {
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev.html"))
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev-frame.html"))

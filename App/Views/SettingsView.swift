@@ -10,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("reminderHour") private var reminderHour = 18
     @AppStorage("reminderMinute") private var reminderMinute = 0
     @AppStorage("badgeOn") private var badgeOn = true
+    @AppStorage("progressSyncOn") private var progressSyncOn = true
     @State private var notificationsDenied = false
 
     // Edited locally and written back on "Fertig", so a half-typed token never reaches the keychain.
@@ -132,6 +133,38 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("Fortschritt abgleichen", isOn: $progressSyncOn)
+                        .onChange(of: progressSyncOn) { _, on in
+                            if on { Task { await model.syncProgress(quiet: false) } }
+                        }
+                    if progressSyncOn {
+                        LabeledContent("Zuletzt abgeglichen", value: Format.relative(model.state.progressSync.lastSync))
+                        ForEach(peerIDs, id: \.self) { id in
+                            if let peer = model.state.peers[id] {
+                                LabeledContent(peer.name, value: "Stand " + Format.relative(peer.savedAt))
+                            }
+                        }
+                        Button {
+                            Task { await model.syncProgress(force: true, quiet: false) }
+                        } label: {
+                            HStack {
+                                Text("Jetzt abgleichen")
+                                Spacer()
+                                if model.progressPhase == .busy { ProgressView() }
+                            }
+                        }
+                        .disabled(model.progressPhase == .busy || !model.isVaultConfigured)
+                        if let error = model.state.progressSync.error {
+                            Text(error).font(.footnote).foregroundStyle(.red)
+                        }
+                    }
+                } header: {
+                    Text("Geräte")
+                } footer: {
+                    Text("iPhone und iPad gleichen Lektionen, Übersprungenes, Wiederholungen, Punkte, Training, Klausuren und das Fehlerprotokoll über das Daten-Repo ab, verschlüsselt mit deiner Passphrase. Jedes Gerät schreibt eine eigene Datei unter lernwerk/fortschritt. Abgeglichen wird beim Öffnen und beim Verlassen der App und beim Herunterziehen auf der Startseite. Notizen gehen wie bisher direkt an den Vault.")
+                }
+
+                Section {
                     LabeledContent("Lektionen", value: "\(readyCount) fertig, \(plannedCount) geplant")
                     LabeledContent("Zuletzt geladen", value: Format.relative(model.lastContentSync))
                     LabeledContent("Lektions-Runtime", value: runtimeVersion)
@@ -173,7 +206,7 @@ struct SettingsView: View {
                 Section {
                     Button("Lernfortschritt zurücksetzen", role: .destructive) { confirmReset = true }
                 } footer: {
-                    Text("Löscht abgeschlossene Lektionen, Wiederholungen und Punkte. Notizen bleiben.")
+                    Text("Löscht abgeschlossene Lektionen, Wiederholungen und Punkte. Notizen bleiben. Mit dem Abgleich gilt das auch für deine anderen Geräte.")
                 }
 
                 Section("Über") {
@@ -202,6 +235,11 @@ struct SettingsView: View {
         }
         .onAppear(perform: load)
         .onDisappear(perform: save)
+    }
+
+    /// Other devices, most recently saved first.
+    private var peerIDs: [String] {
+        model.state.peers.sorted { ($0.value.savedAt ?? .distantPast) > ($1.value.savedAt ?? .distantPast) }.map { $0.key }
     }
 
     private var readyCount: Int { model.courses.reduce(0) { $0 + $1.readyLessons.count } }

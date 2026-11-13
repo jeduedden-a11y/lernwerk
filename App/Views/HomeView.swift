@@ -81,7 +81,10 @@ struct HomeView: View {
             .navigationDestination(for: PathRoute.self) { route in
                 PathView(subject: route.subject)
             }
-            .refreshable { await model.syncContent(force: true) }
+            .refreshable {
+                await model.syncProgress()
+                await model.syncContent(force: true)
+            }
             .sheet(isPresented: $showSettings) {
                 SettingsView().environment(model)
             }

@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import SwiftUI
+import UIKit
 import LernwerkCore
 
 enum Phase: Equatable {
@@ -478,7 +479,7 @@ final class AppModel {
     }
 
     func removeMistake(_ mistake: Mistake) {
-        state.mistakes.removeAll { $0.id == mistake.id }
+        state.removeMistake(id: mistake.id)
         scheduleSave()
     }
 
@@ -780,13 +781,92 @@ final class AppModel {
         if let data = try? encoder.encode(state) { try? data.write(to: stateURL, options: .atomic) }
     }
 
+    /// Clears the progress; with the sync on, the other devices follow at their next sync.
     func resetProgress() {
-        let keep = state
-        state = LearnerState()
-        state.notes = keep.notes
-        state.outbox = keep.outbox
-        state.dailyGoal = keep.dailyGoal
-        state.deviceSalt = keep.deviceSalt
+        state.resetProgress()
         saveNow()
+        Task { await syncProgress() }
+    }
+
+    // MARK: progress across devices
+
+    var progressPhase: Phase = .idle
+
+    /// Settings toggle "Fortschritt abgleichen", on unless switched off.
+    var progressSyncOn: Bool { UserDefaults.standard.object(forKey: "progressSyncOn") as? Bool ?? true }
+
+    var deviceName: String { UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone" }
+
+    /// Reads the progress files of the other devices from the data repo, merges them and writes this device's file
+    /// if something changed. `force` downloads every file again.
+    func syncProgress(force: Bool = false, quiet: Bool = true) async {
+        guard progressSyncOn, let conn = connection(), progressPhase != .busy else { return }
+        progressPhase = .busy
+        let sync = ProgressSync(github: conn.github, passphrase: conn.passphrase, salt: conn.deviceSalt)
+        do {
+            let listing = try await sync.list()
+            var takenFrom: [String] = []
+            var everything = force
+            // a second pass catches files that a reset adopted from another device made relevant again
+            for _ in 0..<2 {
+                let wanted = listing.filter { $0.key != state.deviceID && (everything || state.peers[$0.key]?.sha != $0.value) }
+                guard !wanted.isEmpty else { break }
+                var incoming: [(snapshot: ProgressSnapshot, sha: String)] = []
+                for (device, sha) in wanted.sorted(by: { $0.key < $1.key }) {
+                    if let snap = try await sync.download(device: device) { incoming.append((snapshot: snap, sha: sha)) }
+                }
+                if state.merge(incoming) { takenFrom += incoming.map { $0.snapshot.name } }
+                everything = false
+            }
+            let snapshot = ProgressSnapshot(state: state, name: deviceName, savedAt: Date())
+            let hash = try snapshot.contentHash()
+            let remote = listing[state.deviceID]
+            if remote == nil || remote != state.progressSync.ownSHA || hash != state.progressSync.uploadedHash {
+                state.progressSync.ownSHA = try await sync.upload(snapshot, sha: remote)
+                state.progressSync.uploadedHash = hash
+            }
+            state.progressSync.lastSync = Date()
+            state.progressSync.error = nil
+            progressPhase = .idle
+            let names = Array(Set(takenFrom)).sorted()
+            if !names.isEmpty {
+                toast = "Fortschritt vom \(names.joined(separator: " und ")) übernommen"
+                await Reminders.shared.refresh(state: state)
+            } else if !quiet {
+                toast = "Fortschritt ist abgeglichen"
+            }
+            scheduleSave()
+        } catch {
+            state.progressSync.error = error.localizedDescription
+            progressPhase = .failed(error.localizedDescription)
+            if !quiet { toast = "Abgleich fehlgeschlagen" }
+            scheduleSave()
+        }
+    }
+
+    /// When the app leaves the screen: iOS grants a few seconds to upload what was learned.
+    func syncProgressBeforeSuspend() {
+        guard progressSyncOn, isVaultConfigured else { return }
+        let box = BackgroundTaskBox()
+        box.id = UIApplication.shared.beginBackgroundTask(withName: "Fortschritt") {
+            // iOS calls the expiry handler on the main thread
+            MainActor.assumeIsolated { box.end() }
+        }
+        Task {
+            await syncProgress()
+            saveNow()
+            box.end()
+        }
+    }
+}
+
+/// Holds the id of a background task so both the expiry handler and the finished upload can end it, once.
+private final class BackgroundTaskBox: @unchecked Sendable {
+    var id: UIBackgroundTaskIdentifier = .invalid
+
+    @MainActor func end() {
+        guard id != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(id)
+        id = .invalid
     }
 }

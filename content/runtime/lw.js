@@ -12,7 +12,7 @@
   "use strict";
 
   const LW = (window.LW = window.LW || {});
-  LW.version = "1.7.0";
+  LW.version = "1.7.1";
   LW.api = 1;
   LW.widgets = LW.widgets || {};
   LW.widget = function (name, def) { LW.widgets[name] = def; };

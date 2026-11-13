@@ -115,6 +115,36 @@ public struct GitHubClient: Sendable {
         _ = try await send(req, ok: [200, 201])
     }
 
+    /// Creates or replaces a file; `sha` must name the current blob when it exists. Returns the new blob sha.
+    public func putFile(path: String, data: Data, sha: String?, message: String) async throws -> String {
+        var body: [String: Any] = ["message": message, "content": data.base64EncodedString(), "branch": config.branch]
+        if let sha { body["sha"] = sha }
+        let req = request(url(path), method: "PUT", body: try JSONSerialization.data(withJSONObject: body))
+        guard let (data, _) = try await send(req, ok: [200, 201]),
+              let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let content = obj["content"] as? [String: Any],
+              let newSHA = content["sha"] as? String else { throw GitHubClientError.invalidResponse }
+        return newSHA
+    }
+
+    public struct Entry: Sendable {
+        public var name: String
+        public var path: String
+        public var sha: String
+    }
+
+    /// Files of a folder; empty if the folder does not exist yet.
+    public func list(path: String) async throws -> [Entry] {
+        let req = request(url(path, query: [URLQueryItem(name: "ref", value: config.branch)]), method: "GET")
+        guard let (data, _) = try await send(req, ok: [200], allow404: true) else { return [] }
+        guard let items = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else { return [] }
+        return items.compactMap { item -> Entry? in
+            guard (item["type"] as? String) == "file", let name = item["name"] as? String,
+                  let p = item["path"] as? String, let sha = item["sha"] as? String else { return nil }
+            return Entry(name: name, path: p, sha: sha)
+        }
+    }
+
     /// nil if the file does not exist, or if etag matches (not modified).
     public func getFile(path: String, etag: String? = nil) async throws -> RemoteFile? {
         let req = request(url(path, query: [URLQueryItem(name: "ref", value: config.branch)]), method: "GET", etag: etag)
