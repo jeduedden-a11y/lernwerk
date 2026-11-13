@@ -1,0 +1,114 @@
+{
+  "id": "phy-selbstinduktion",
+  "title": "Selbstinduktion und Induktivität",
+  "subtitle": "Spulen bremsen Stromänderungen",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Selbstinduktion und Induktivität.md",
+      "title": "Selbstinduktion und Induktivität"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Ändert sich der Strom durch eine Spule, ändert sich ihr eigenes Magnetfeld und damit der Fluss durch sie selbst. Die induzierte Spannung wirkt der Änderung entgegen:\n\n$$U_{ind} = -L\\,\\dot{I}, \\qquad L = \\mu_0\\mu_r\\frac{N^2 A}{l}.$$\n\nBeim Einschalten steigt der Strom deshalb nicht sofort, sondern nähert sich $I_0 = U/R$ mit der Zeitkonstante $\\tau = L/R$.",
+      "image": "vault:Selbstinduktion.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "einschalten",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Einschaltvorgang mit $U$ = 6 V und $R$ = 12 Ω: ändere die Induktivität.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          0,
+          0.6
+        ],
+        "xLabel": "t in s",
+        "yLabel": "I in A",
+        "vars": [
+          {
+            "name": "L",
+            "label": "Induktivität",
+            "min": 0.1,
+            "max": 5,
+            "step": 0.1,
+            "value": 1,
+            "format": "{v} H",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "I",
+            "expr": "0.5*(1 - exp(-12*x/L))",
+            "color": "accent"
+          }
+        ],
+        "readout": "Zeitkonstante L/R = {L/12*1000|0} ms; nach dieser Zeit fließen 63 Prozent des Endstroms 0,5 A."
+      }
+    },
+    {
+      "id": "ausschalten",
+      "type": "choice",
+      "md": "Warum kann beim Ausschalten einer Spule ein Funke am Schalter entstehen?",
+      "options": [
+        {
+          "md": "Die plötzliche Stromänderung induziert eine hohe Spannung",
+          "correct": true
+        },
+        {
+          "md": "Weil die Spule Ladung speichert wie ein Kondensator",
+          "why": "Eine Spule speichert Energie im Magnetfeld, nicht Ladung."
+        },
+        {
+          "md": "Weil der Schalter heiß wird",
+          "why": "Die Ursache ist die Selbstinduktion."
+        },
+        {
+          "md": "Weil der Widerstand plötzlich null wird",
+          "why": "Beim Öffnen wird er sehr groß."
+        }
+      ],
+      "explain": "$|U_{ind}| = L\\frac{\\Delta I}{\\Delta t}$ ist bei sehr kleinem $\\Delta t$ sehr groß."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "induktivitaet"
+      },
+      "level": 1,
+      "label": "Induktivität"
+    },
+    {
+      "id": "g2",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "selbstinduktion"
+      },
+      "level": 1,
+      "label": "Selbstinduktion"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$U_{ind} = -L\\dot I$.",
+        "$L = \\mu_0\\mu_r\\frac{N^2A}{l}$.",
+        "Einschalten: Anstieg mit $\\tau = L/R$; Ausschalten: Spannungsspitze."
+      ]
+    }
+  ]
+}

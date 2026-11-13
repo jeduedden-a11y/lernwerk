@@ -1,0 +1,100 @@
+{
+  "id": "phy-resonanz",
+  "title": "Erzwungene Schwingung und Resonanz",
+  "subtitle": "Wenn der Antrieb im Takt der Eigenfrequenz kommt",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Erzwungene Schwingung und Resonanz.md",
+      "title": "Erzwungene Schwingung und Resonanz"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Wird ein Schwinger periodisch angeregt, schwingt er nach dem Einschwingen mit der **Erregerfrequenz**, nicht mit seiner Eigenfrequenz. Die Amplitude hängt stark davon ab, wie nah beide beieinanderliegen: Trifft die Erregerfrequenz die Eigenfrequenz $f_0$, wird die Amplitude maximal (**Resonanz**). Je schwächer die Dämpfung, desto höher und schmaler die Resonanzkurve; ohne Dämpfung käme es zur **Resonanzkatastrophe**."
+    },
+    {
+      "id": "kurve",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Resonanzkurve: Amplitude bezogen auf die statische Auslenkung, über dem Verhältnis von Erreger- zu Eigenfrequenz. Ändere die Dämpfung.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          2.5
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "f / f₀",
+        "yLabel": "Amplitude (relativ)",
+        "vars": [
+          {
+            "name": "D",
+            "label": "Dämpfungsgrad",
+            "min": 0.05,
+            "max": 1,
+            "step": 0.01,
+            "value": 0.1,
+            "format": "{v}",
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "A",
+            "expr": "1/sqrt((1 - x^2)^2 + (2*D*x)^2)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Bei Resonanz etwa {1/(2*D)|1}-fache Überhöhung"
+      }
+    },
+    {
+      "id": "takt",
+      "type": "choice",
+      "md": "Mit welcher Frequenz schwingt ein angeregtes Federpendel nach dem Einschwingen?",
+      "options": [
+        {
+          "md": "mit der Erregerfrequenz",
+          "correct": true
+        },
+        {
+          "md": "mit seiner Eigenfrequenz",
+          "why": "Nur bei Resonanz sind beide gleich."
+        },
+        {
+          "md": "mit der Summe beider Frequenzen",
+          "why": "Das gibt es nicht."
+        },
+        {
+          "md": "mit dem Mittelwert beider",
+          "why": "Das wäre eine Schwebung, ein anderer Vorgang."
+        }
+      ],
+      "explain": "Der Antrieb gibt den Takt vor; die Eigenfrequenz bestimmt nur, wie groß die Amplitude wird."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "resonanz"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Erzwungen schwingt der Körper mit der Erregerfrequenz.",
+        "Resonanz: Erregerfrequenz gleich Eigenfrequenz, größte Amplitude.",
+        "Weniger Dämpfung, höhere und schmalere Resonanzkurve."
+      ]
+    }
+  ]
+}

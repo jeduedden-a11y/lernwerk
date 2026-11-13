@@ -1,0 +1,113 @@
+{
+  "id": "phy-braunsche-roehre",
+  "title": "Braunsche Röhre",
+  "subtitle": "Elektronen werden beschleunigt und abgelenkt",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Braunsche Röhre.md",
+      "title": "Braunsche Röhre"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "In der Braunschen Röhre werden Elektronen erst mit $U_B$ beschleunigt, dann fliegen sie quer durch das Feld eines Ablenkkondensators. Dort wirkt eine konstante Kraft senkrecht zur Flugrichtung: die Bahn ist eine **Parabel**, wie beim waagerechten Wurf. Am Plattenende gilt $y = \\frac{U_y l^2}{4 d U_B}$; danach fliegen die Elektronen geradeaus zum Schirm.",
+      "image": "vault:Braunsche Roehre.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "strahl",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Verändere Ablenk- und Beschleunigungsspannung. Platten: 5 cm lang, 2 cm Abstand; der Schirm steht 20 cm hinter dem Plattenanfang.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "xLabel": "x in cm",
+        "yLabel": "y in cm",
+        "vars": [
+          {
+            "name": "uy",
+            "label": "Ablenkspannung",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "value": 100,
+            "format": "{v} V",
+            "digits": 0
+          },
+          {
+            "name": "ub",
+            "label": "Beschleunigungsspannung",
+            "min": 500,
+            "max": 3000,
+            "step": 50,
+            "value": 1000,
+            "format": "{v} V",
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "uy*min(x,5)^2/(8*ub) + uy*5*max(0,x-5)/(4*ub)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Ablenkung am Plattenende {uy*25/(8*ub)|2} cm, auf dem Schirm {uy*25/(8*ub) + uy*75/(4*ub)|2} cm"
+      }
+    },
+    {
+      "id": "doppelt",
+      "type": "choice",
+      "md": "Wie ändert sich die Ablenkung, wenn man die Beschleunigungsspannung verdoppelt?",
+      "options": [
+        {
+          "md": "Sie halbiert sich",
+          "correct": true
+        },
+        {
+          "md": "Sie verdoppelt sich",
+          "why": "Schnellere Elektronen bleiben kürzer im Feld."
+        },
+        {
+          "md": "Sie bleibt gleich",
+          "why": "$y \\sim \\frac{1}{U_B}$."
+        },
+        {
+          "md": "Sie viertelt sich",
+          "why": "$U_B$ steht nur einfach im Nenner."
+        }
+      ],
+      "explain": "Schnellere Elektronen verbringen weniger Zeit zwischen den Platten: $y \\sim \\frac{U_y}{U_B}$."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "ablenkung"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Beschleunigung: $eU_B = \\tfrac12 m v^2$.",
+        "Im Querfeld eine Parabel, wie beim waagerechten Wurf.",
+        "Ablenkung $\\sim U_y / U_B$."
+      ]
+    }
+  ]
+}

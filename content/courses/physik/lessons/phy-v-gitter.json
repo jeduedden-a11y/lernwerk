@@ -1,0 +1,121 @@
+{
+  "id": "phy-v-gitter",
+  "title": "Versuch: Wellenlänge mit dem Gitter",
+  "subtitle": "Laserlicht vermessen wie im Abitur",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Beugung und Interferenz.md",
+      "title": "Beugung und Interferenz"
+    }
+  ],
+  "steps": [
+    {
+      "id": "ziel",
+      "type": "text",
+      "md": "**Ziel**: die Wellenlänge eines Lasers bestimmen.\n\n**Aufbau**: Ein Laser beleuchtet ein Gitter mit bekannter Strichzahl. Auf einem Schirm im Abstand $e$ erscheinen das Maximum 0. Ordnung in der Mitte und symmetrisch daneben die Maxima höherer Ordnung. Gemessen wird der Abstand $a_1$ des ersten Maximums von der Mitte.",
+      "image": "vault:Beugungsgitter.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "ablauf",
+      "type": "order",
+      "label": "Durchführung",
+      "md": "Bringe die Durchführung in die richtige Reihenfolge.",
+      "items": [
+        "Gitter senkrecht zum Laserstrahl ausrichten",
+        "Schirmabstand $e$ messen",
+        "Abstand der beiden Maxima 1. Ordnung messen und halbieren",
+        "Für mehrere Schirmabstände wiederholen und $\\lambda$ berechnen"
+      ],
+      "explain": "Den Abstand zwischen den beiden symmetrischen Maxima zu messen und zu halbieren, ist genauer als die Mitte zu schätzen."
+    },
+    {
+      "id": "messen",
+      "type": "widget",
+      "label": "Messen und auswerten",
+      "md": "Nimm Messwerte für verschiedene Schirmabstände auf. Ziel: höchstens 3 Prozent Abweichung.",
+      "widget": "versuch",
+      "params": {
+        "exp": "gitter",
+        "lines": 300
+      },
+      "goal": {
+        "when": "n >= 4 && err < 0.03",
+        "message": "Nimm mindestens vier Schirmabstände auf.",
+        "solve": {}
+      }
+    },
+    {
+      "id": "herleitung",
+      "type": "rubric",
+      "part": "1",
+      "review": false,
+      "md": "Leiten Sie die Bedingung $g\\sin\\alpha_k = k\\lambda$ für die Maxima her.",
+      "solution": "Von benachbarten Spalten gehen Wellen aus, die unter dem Winkel $\\alpha$ den Gangunterschied $\\Delta s = g\\sin\\alpha$ haben (rechtwinkliges Dreieck mit der Gitterkonstante $g$ als Hypotenuse). Konstruktive Interferenz aller Spalte verlangt, dass dieser Gangunterschied ein ganzes Vielfaches der Wellenlänge ist: $g\\sin\\alpha_k = k\\lambda$.",
+      "criteria": [
+        {
+          "md": "Gangunterschied benachbarter Spalte $g\\sin\\alpha$",
+          "points": 1
+        },
+        {
+          "md": "Bedingung für Verstärkung: ganzzahliges Vielfaches von $\\lambda$",
+          "points": 1
+        },
+        {
+          "md": "Zusammenhang mit dem Schirm über $\\tan\\alpha = a/e$",
+          "points": 1
+        }
+      ],
+      "operator": {
+        "word": "Herleiten",
+        "means": "aus bekannten Gleichungen durch Umformen eine neue Beziehung gewinnen"
+      }
+    },
+    {
+      "id": "klein",
+      "type": "choice",
+      "md": "Warum ist die Kleinwinkelnäherung $\\sin\\alpha \\approx \\tan\\alpha$ bei einem Gitter mit 300 Strichen pro mm oft zu grob?",
+      "options": [
+        {
+          "md": "Die Beugungswinkel sind mit etwa 10° und mehr nicht mehr klein",
+          "correct": true
+        },
+        {
+          "md": "Weil Laserlicht zu hell ist",
+          "why": "Die Helligkeit spielt keine Rolle."
+        },
+        {
+          "md": "Weil das Gitter zu breit ist",
+          "why": "Die Gitterbreite ändert die Winkel nicht."
+        },
+        {
+          "md": "Sie ist immer genau genug",
+          "why": "Ab etwa 5° wachsen die Abweichungen spürbar."
+        }
+      ],
+      "explain": "Bei $\\alpha \\approx 11^\\circ$ unterscheiden sich $\\sin$ und $\\tan$ um rund 2 Prozent; besser über den Winkel rechnen.",
+      "label": "Abiturfrage"
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "gitter"
+      },
+      "level": 3,
+      "label": "Auswerten"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$g\\sin\\alpha_k = k\\lambda$ und $\\tan\\alpha_k = \\frac{a_k}{e}$.",
+        "Über den Winkel rechnen statt mit der Kleinwinkelnäherung.",
+        "Mehrere Schirmabstände machen das Ergebnis sicherer."
+      ]
+    }
+  ]
+}

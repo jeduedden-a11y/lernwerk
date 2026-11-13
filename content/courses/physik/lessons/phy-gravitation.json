@@ -1,0 +1,117 @@
+{
+  "id": "phy-gravitation",
+  "title": "Gravitation",
+  "subtitle": "Newtons Gravitationsgesetz und das Feld der Erde",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Gravitation.md",
+      "title": "Gravitation"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Zwei Massen ziehen einander an:\n\n$$F_G = G\\,\\frac{m_1 m_2}{r^2}, \\qquad G = 6{,}674 \\cdot 10^{-11}\\,\\mathrm{\\frac{m^3}{kg\\,s^2}}.$$\n\nAn der Erdoberfläche ergibt das $g = G\\frac{M_E}{R_E^2} \\approx 9{,}81\\,\\mathrm{m/s^2}$. Weiter draußen nimmt die Feldstärke mit $\\frac{1}{r^2}$ ab."
+    },
+    {
+      "id": "abfall",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Verschiebe den Punkt: Wie stark ist die Fallbeschleunigung in größerem Abstand vom Erdmittelpunkt?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          1,
+          10
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "r in Erdradien",
+        "yLabel": "g in m/s²",
+        "vars": [
+          {
+            "name": "r",
+            "label": "Abstand",
+            "min": 1,
+            "max": 10,
+            "step": 0.1,
+            "value": 2,
+            "format": "{v} Erdradien",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "g",
+            "expr": "9.81/x^2",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "r",
+            "on": "g",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "In {r|1} Erdradien Abstand ist g = {9.81/r^2|2} m/s²."
+      }
+    },
+    {
+      "id": "iss",
+      "type": "choice",
+      "md": "Warum schweben Astronauten in der Raumstation, 400 km über der Erde?",
+      "options": [
+        {
+          "md": "Sie fallen mit der Station gemeinsam um die Erde herum",
+          "correct": true
+        },
+        {
+          "md": "Dort gibt es keine Gravitation",
+          "why": "In 400 km Höhe ist $g$ noch etwa 8,7 m/s²."
+        },
+        {
+          "md": "Die Zentrifugalkraft hebt die Gravitation auf",
+          "why": "Im Inertialsystem gibt es nur die Gravitation; sie zwingt alles auf dieselbe Kreisbahn."
+        },
+        {
+          "md": "Die Luft trägt sie",
+          "why": "Die Station ist im fast luftleeren Raum."
+        }
+      ],
+      "explain": "Station und Astronauten sind im freien Fall auf derselben Bahn: nichts drückt gegen die Wände, daher die Schwerelosigkeit."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "gravitation"
+      },
+      "level": 1
+    },
+    {
+      "id": "g2",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "satellit"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$F_G = G\\frac{m_1 m_2}{r^2}$, Abstand der Schwerpunkte.",
+        "Die Fallbeschleunigung nimmt außerhalb der Erde mit $1/r^2$ ab.",
+        "Schwerelosigkeit im Orbit ist freier Fall, keine fehlende Gravitation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "id": "phy-relativitaet",
+  "title": "Spezielle Relativitätstheorie",
+  "subtitle": "Zeit und Länge hängen vom Bezugssystem ab",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Spezielle Relativitätstheorie.md",
+      "title": "Spezielle Relativitätstheorie"
+    },
+    {
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/05 Physik Q4.md",
+      "title": "05 Physik Q4"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Einsteins Postulate: Physikalische Gesetze gelten in allen Inertialsystemen gleich, und die Lichtgeschwindigkeit ist in allen gleich groß. Daraus folgt mit $\\gamma = \\frac{1}{\\sqrt{1 - v^2/c^2}}$:\n\n- **Zeitdilatation**: bewegte Uhren gehen langsamer, $\\Delta t = \\gamma\\,\\Delta t_0$.\n- **Längenkontraktion**: bewegte Körper sind in Bewegungsrichtung verkürzt, $L = \\frac{L_0}{\\gamma}$.\n- **Masse und Energie**: $E = \\gamma m c^2$, in Ruhe $E_0 = mc^2$."
+    },
+    {
+      "id": "gamma",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Der Lorentzfaktor $\\gamma$ in Abhängigkeit von $v/c$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          0.99
+        ],
+        "y": [
+          1,
+          8
+        ],
+        "xLabel": "v / c",
+        "yLabel": "γ",
+        "vars": [
+          {
+            "name": "b",
+            "label": "Geschwindigkeit",
+            "min": 0,
+            "max": 0.99,
+            "step": 0.01,
+            "value": 0.6,
+            "format": "{v} c",
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "g",
+            "expr": "1/sqrt(1 - x^2)",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "b",
+            "on": "g",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "γ = {1/sqrt(1 - b^2)|3}: eine bewegte Uhr geht um diesen Faktor langsamer."
+      }
+    },
+    {
+      "id": "myon",
+      "type": "choice",
+      "md": "Warum erreichen Myonen aus der oberen Atmosphäre den Erdboden, obwohl sie in ihrer Lebensdauer klassisch nur rund 660 m weit kämen?",
+      "options": [
+        {
+          "md": "Ihre Uhr geht für uns langsamer: ihre Lebensdauer ist im Erdsystem viel länger",
+          "correct": true
+        },
+        {
+          "md": "Sie fliegen schneller als das Licht",
+          "why": "Nichts mit Masse erreicht die Lichtgeschwindigkeit."
+        },
+        {
+          "md": "Die Atmosphäre beschleunigt sie",
+          "why": "Sie werden gebremst, nicht beschleunigt."
+        },
+        {
+          "md": "Sie entstehen erst kurz über dem Boden",
+          "why": "Sie entstehen in rund 10 km Höhe."
+        }
+      ],
+      "explain": "Bei $v \\approx 0{,}995c$ ist $\\gamma \\approx 10$; im Myonensystem ist dagegen die Atmosphäre verkürzt. Beide Beschreibungen passen zusammen."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "zeitdilatation"
+      },
+      "level": 1
+    },
+    {
+      "id": "g2",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "laengenkontraktion"
+      },
+      "level": 1,
+      "label": "Längenkontraktion"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Lichtgeschwindigkeit in allen Inertialsystemen gleich.",
+        "$\\Delta t = \\gamma\\Delta t_0$, $L = L_0/\\gamma$.",
+        "$E = \\gamma mc^2$; Effekte erst nahe $c$ spürbar."
+      ]
+    }
+  ]
+}

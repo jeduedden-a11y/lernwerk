@@ -1,0 +1,130 @@
+{
+  "id": "phy-newton",
+  "title": "Die drei Newtonschen Axiome",
+  "subtitle": "Trägheit, Grundgleichung, Wechselwirkung",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Newtonsche Axiome.md",
+      "title": "Newtonsche Axiome"
+    },
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/01 Physik E-Phase.md",
+      "title": "01 Physik E-Phase"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Drei Sätze tragen die ganze Mechanik:\n\n1. **Trägheit**: Ohne resultierende Kraft bleibt ein Körper in Ruhe oder bewegt sich geradlinig gleichförmig weiter.\n2. **Grundgleichung**: Die resultierende Kraft bestimmt die Beschleunigung, $F = m\\,a$.\n3. **Wechselwirkung**: Übt A auf B eine Kraft aus, übt B auf A eine gleich große, entgegengesetzte Kraft aus."
+    },
+    {
+      "id": "versuch",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Ziehe am Regler für die Kraft und ändere die Masse: Wie hängt die Beschleunigung von beiden ab?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          12
+        ],
+        "xLabel": "F in N",
+        "yLabel": "a in m/s²",
+        "vars": [
+          {
+            "name": "m",
+            "label": "Masse",
+            "min": 0.5,
+            "max": 5,
+            "step": 0.1,
+            "value": 2,
+            "format": "{v} kg",
+            "digits": 1
+          },
+          {
+            "name": "F",
+            "label": "Kraft",
+            "min": 0,
+            "max": 20,
+            "step": 0.5,
+            "value": 8,
+            "format": "{v} N",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "x/m",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "F",
+            "on": "a",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Mit F = {F|1} N und m = {m|1} kg ist a = {F/m|2} m/s²."
+      }
+    },
+    {
+      "id": "traeg",
+      "type": "choice",
+      "md": "Ein Puck gleitet auf einer reibungsfreien Eisfläche. Welche Kraft hält ihn in Bewegung?",
+      "options": [
+        {
+          "md": "keine: ohne Kraft bleibt seine Geschwindigkeit gleich",
+          "correct": true
+        },
+        {
+          "md": "eine Kraft in Bewegungsrichtung",
+          "why": "So dachte Aristoteles. Newton zeigte: Kräfte ändern Bewegungen, sie erhalten sie nicht."
+        },
+        {
+          "md": "die Gewichtskraft",
+          "why": "Sie wirkt senkrecht und wird vom Eis ausgeglichen."
+        },
+        {
+          "md": "der Schwung als eigene Kraft",
+          "why": "Schwung, also Impuls, ist keine Kraft."
+        }
+      ],
+      "explain": "1. Axiom: Für gleichförmige Bewegung braucht es keine Kraft, nur für Änderungen der Bewegung."
+    },
+    {
+      "id": "aufzug",
+      "type": "truefalse",
+      "md": "Fährt ein Aufzug mit konstanter Geschwindigkeit nach oben, ist die Seilkraft größer als die Gewichtskraft.",
+      "answer": false,
+      "explain": "Konstante Geschwindigkeit heißt keine Beschleunigung: Seilkraft und Gewichtskraft sind gleich groß. Größer ist die Seilkraft nur beim Anfahren nach oben."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "schiefe-ebene"
+      },
+      "level": 1,
+      "label": "Kräfteansatz"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ohne resultierende Kraft keine Änderung der Bewegung (Trägheit).",
+        "$F = m\\,a$ mit der Summe aller Kräfte am Körper.",
+        "Kräftepaare nach dem 3. Axiom wirken an verschiedenen Körpern und heben sich deshalb nie auf."
+      ]
+    }
+  ]
+}

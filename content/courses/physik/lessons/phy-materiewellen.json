@@ -1,0 +1,108 @@
+{
+  "id": "phy-materiewellen",
+  "title": "Materiewellen",
+  "subtitle": "Auch Elektronen haben eine Wellenlänge",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Materiewellen.md",
+      "title": "Materiewellen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "De Broglie übertrug $p = h/\\lambda$ von Photonen auf Teilchen: jedes Teilchen mit Impuls $p$ hat die Wellenlänge\n\n$$\\lambda = \\frac{h}{p} = \\frac{h}{m v}.$$\n\nFür ein Elektron nach der Beschleunigungsspannung $U$ ist $p = \\sqrt{2meU}$. Bei einigen Kilovolt liegt $\\lambda$ im Bereich der Atomabstände: Elektronen werden an Kristallen gebeugt wie Röntgenlicht."
+    },
+    {
+      "id": "spannung",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Wie hängt die De-Broglie-Wellenlänge eines Elektrons von der Beschleunigungsspannung ab?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0.1,
+          10
+        ],
+        "y": [
+          0,
+          120
+        ],
+        "xLabel": "U in kV",
+        "yLabel": "λ in pm",
+        "vars": [
+          {
+            "name": "U",
+            "label": "Spannung",
+            "min": 0.1,
+            "max": 10,
+            "step": 0.1,
+            "value": 4,
+            "format": "{v} kV",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "l",
+            "expr": "1226/sqrt(x*1000)",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "l",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Bei {U|1} kV ist λ = {1226/sqrt(U*1000)|1} pm."
+      }
+    },
+    {
+      "id": "ball",
+      "type": "choice",
+      "md": "Warum zeigt ein Tennisball keine Welleneigenschaften?",
+      "options": [
+        {
+          "md": "Seine Wellenlänge ist unmessbar klein",
+          "correct": true
+        },
+        {
+          "md": "Er hat keine Wellenlänge",
+          "why": "Nach de Broglie hat jedes Teilchen mit Impuls eine Wellenlänge."
+        },
+        {
+          "md": "Er ist zu langsam",
+          "why": "Auch langsam ist sein Impuls riesig im Vergleich zu $h$."
+        },
+        {
+          "md": "Er ist nicht geladen",
+          "why": "Ladung spielt keine Rolle."
+        }
+      ],
+      "explain": "$\\lambda = \\frac{h}{mv} \\approx \\frac{6{,}6 \\cdot 10^{-34}}{0{,}06 \\cdot 30}\\,\\mathrm{m} \\approx 4 \\cdot 10^{-34}\\,\\mathrm{m}$: weit kleiner als jeder Atomkern."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "debroglie"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\lambda = \\frac{h}{p}$ für jedes Teilchen.",
+        "Elektronen: $\\lambda = \\frac{h}{\\sqrt{2meU}}$, im Bereich der Atomabstände.",
+        "Makroskopische Körper haben unmessbar kleine Wellenlängen."
+      ]
+    }
+  ]
+}

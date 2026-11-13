@@ -1,0 +1,113 @@
+{
+  "id": "phy-stehende-wellen",
+  "title": "Stehende Wellen",
+  "subtitle": "Eigenschwingungen von Saiten und Pfeifen",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Stehende Wellen.md",
+      "title": "Stehende Wellen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Überlagern sich zwei gleiche Wellen, die gegeneinander laufen, entsteht eine **stehende Welle**: Knoten bleiben immer in Ruhe, Bäuche schwingen maximal. Benachbarte Knoten liegen $\\frac{\\lambda}{2}$ auseinander. Eine an beiden Enden eingespannte Saite der Länge $l$ kann nur solche Wellen tragen, die genau passen:\n\n$$l = k\\frac{\\lambda_k}{2} \\quad\\Rightarrow\\quad f_k = k\\,\\frac{c}{2l}.$$",
+      "image": "vault:Stehende Welle.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "moden",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Wähle die Ordnung der Eigenschwingung und lass die Zeit laufen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          -2.2,
+          2.2
+        ],
+        "xLabel": "x in m",
+        "yLabel": "y in cm",
+        "vars": [
+          {
+            "name": "k",
+            "label": "Ordnung",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "value": 2,
+            "format": "{v}",
+            "digits": 0
+          },
+          {
+            "name": "t",
+            "label": "Zeit (Bruchteil der Periode)",
+            "min": 0,
+            "max": 1,
+            "step": 0.02,
+            "value": 0,
+            "format": "{v}",
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "2*sin(k*pi*x)*cos(2*pi*t)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Ordnung {k|0}: {k+1|0} Knoten, Wellenlänge {2/k|2} m"
+      }
+    },
+    {
+      "id": "knoten",
+      "type": "choice",
+      "md": "Wie weit liegen zwei benachbarte Knoten einer stehenden Welle auseinander?",
+      "options": [
+        {
+          "md": "eine halbe Wellenlänge",
+          "correct": true
+        },
+        {
+          "md": "eine Wellenlänge",
+          "why": "Zwischen zwei Knoten liegt nur ein Bauch."
+        },
+        {
+          "md": "eine Viertelwellenlänge",
+          "why": "Das ist der Abstand Knoten zu Bauch."
+        },
+        {
+          "md": "das hängt von der Amplitude ab",
+          "why": "Die Lage hängt nur von $\\lambda$ ab."
+        }
+      ],
+      "explain": "Knoten im Abstand $\\frac{\\lambda}{2}$, Bauch genau dazwischen."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "stehende-welle"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stehende Welle: Überlagerung gegenläufiger Wellen.",
+        "Knotenabstand $\\lambda/2$.",
+        "Beidseitig fest: $f_k = k\\frac{c}{2l}$."
+      ]
+    }
+  ]
+}

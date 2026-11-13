@@ -1,0 +1,109 @@
+{
+  "id": "phy-polarisation",
+  "title": "Polarisation",
+  "subtitle": "Licht ist eine Transversalwelle",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Polarisation.md",
+      "title": "Polarisation"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Bei einer Transversalwelle hat die Schwingung eine Richtung quer zur Ausbreitung. Natürliches Licht schwingt in allen Querrichtungen; ein **Polarisationsfilter** lässt nur eine Richtung durch. Ein zweiter Filter, um den Winkel $\\theta$ gedreht, lässt den Anteil\n\n$$I = I_0\\cos^2\\theta \\quad \\text{(Gesetz von Malus)}$$\n\ndurch. Gekreuzte Filter sperren ganz. Dass Licht polarisierbar ist, beweist: es ist eine Transversalwelle."
+    },
+    {
+      "id": "malus",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Drehe den zweiten Filter.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          180
+        ],
+        "y": [
+          0,
+          1.1
+        ],
+        "xLabel": "θ in Grad",
+        "yLabel": "I / I₀",
+        "vars": [
+          {
+            "name": "th",
+            "label": "Drehwinkel",
+            "min": 0,
+            "max": 180,
+            "step": 1,
+            "value": 30,
+            "format": "{v}°",
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "I",
+            "expr": "cos(x*pi/180)^2",
+            "color": "accent"
+          }
+        ],
+        "points": [
+          {
+            "x": "th",
+            "on": "I",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Durchgelassen: {100*cos(th*pi/180)^2|0} Prozent"
+      }
+    },
+    {
+      "id": "schall",
+      "type": "choice",
+      "md": "Warum lässt sich Schall in Luft nicht polarisieren?",
+      "options": [
+        {
+          "md": "Er ist eine Longitudinalwelle",
+          "correct": true
+        },
+        {
+          "md": "Er ist zu langsam",
+          "why": "Mit der Geschwindigkeit hat das nichts zu tun."
+        },
+        {
+          "md": "Seine Wellenlänge ist zu groß",
+          "why": "Polarisation hängt von der Schwingungsrichtung ab."
+        },
+        {
+          "md": "Er lässt sich doch polarisieren",
+          "why": "In Luft schwingen die Teilchen nur längs."
+        }
+      ],
+      "explain": "Bei Longitudinalwellen gibt es keine Querrichtung, die ein Filter auswählen könnte."
+    },
+    {
+      "id": "rechnen",
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Zwei Polarisationsfilter stehen unter 60° zueinander. Welcher Anteil des Lichts hinter dem ersten Filter kommt durch den zweiten (in Prozent)?",
+      "answer": 25,
+      "tolerance": 1,
+      "placeholder": "%",
+      "explain": "$\\cos^2 60^\\circ = 0{,}25$."
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Polarisation gibt es nur bei Transversalwellen.",
+        "Malus: $I = I_0\\cos^2\\theta$.",
+        "Gekreuzte Filter sperren."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "phy-zerfall",
+  "title": "Radioaktiver Zerfall",
+  "subtitle": "Zufall im Einzelnen, Gesetz im Ganzen",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Radioaktiver Zerfall.md",
+      "title": "Radioaktiver Zerfall"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Instabile Kerne zerfallen unter Aussendung von Alpha-, Beta- oder Gammastrahlung. Wann ein einzelner Kern zerfällt, ist zufällig; für viele Kerne gilt das **Zerfallsgesetz**\n\n$$N(t) = N_0\\,e^{-\\lambda t} = N_0\\left(\\tfrac12\\right)^{t/T_{1/2}}, \\qquad T_{1/2} = \\frac{\\ln 2}{\\lambda}.$$\n\nDie **Aktivität** $A = \\lambda N$ gibt die Zerfälle pro Sekunde an, in Becquerel.",
+      "image": "vault:Kernphysik Zerfall.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "kurve",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Zerfallskurve: ändere die Halbwertszeit.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          50
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "xLabel": "t in min",
+        "yLabel": "N / N₀",
+        "vars": [
+          {
+            "name": "T",
+            "label": "Halbwertszeit",
+            "min": 2,
+            "max": 30,
+            "step": 1,
+            "value": 10,
+            "format": "{v} min",
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "N",
+            "expr": "0.5^(x/T)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Nach 30 min sind noch {100*0.5^(30/T)|1} Prozent der Kerne übrig."
+      }
+    },
+    {
+      "id": "rest",
+      "type": "choice",
+      "md": "Nach drei Halbwertszeiten: welcher Anteil der Kerne ist noch nicht zerfallen?",
+      "options": [
+        {
+          "md": "ein Achtel",
+          "correct": true
+        },
+        {
+          "md": "ein Drittel",
+          "why": "Jede Halbwertszeit halbiert den Rest."
+        },
+        {
+          "md": "null",
+          "why": "Exponentielle Abnahme erreicht null nie."
+        },
+        {
+          "md": "ein Sechstel",
+          "why": "$\\left(\\tfrac12\\right)^3 = \\tfrac18$."
+        }
+      ],
+      "explain": "$\\tfrac12 \\cdot \\tfrac12 \\cdot \\tfrac12 = \\tfrac18$."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "zerfall"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Einzelzerfall zufällig, viele Kerne folgen $N_0 e^{-\\lambda t}$.",
+        "$T_{1/2} = \\frac{\\ln 2}{\\lambda}$.",
+        "Aktivität $A = \\lambda N$ in Bq."
+      ]
+    }
+  ]
+}

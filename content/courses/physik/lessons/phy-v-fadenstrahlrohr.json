@@ -1,0 +1,128 @@
+{
+  "id": "phy-v-fadenstrahlrohr",
+  "title": "Versuch: Spezifische Ladung im Fadenstrahlrohr",
+  "subtitle": "Aufbau, eigene Messreihe, Auswertung wie im Abitur",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Bestimmung der spezifischen Ladung.md",
+      "title": "Bestimmung der spezifischen Ladung"
+    }
+  ],
+  "steps": [
+    {
+      "id": "ziel",
+      "type": "text",
+      "md": "**Ziel**: die spezifische Ladung $\\frac{e}{m}$ des Elektrons bestimmen.\n\n**Aufbau**: Eine Glühkathode sendet Elektronen aus, die mit $U_B$ beschleunigt werden. Ein Glaskolben mit wenig Wasserstoffgas macht ihre Bahn sichtbar: Stöße regen das Gas zum Leuchten an. Zwei Helmholtzspulen erzeugen im Kolben ein homogenes Magnetfeld $B$ senkrecht zum Strahl.",
+      "image": "vault:Fadenstrahlrohr.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "ablauf",
+      "type": "order",
+      "label": "Durchführung",
+      "md": "Bringe die Durchführung in die richtige Reihenfolge.",
+      "items": [
+        "Beschleunigungsspannung $U_B$ einstellen und notieren",
+        "Spulenstrom einstellen, bis der Strahl eine geschlossene Kreisbahn bildet",
+        "Durchmesser der Bahn am Spiegelmaßstab ohne Parallaxe ablesen",
+        "Messung für mehrere Kombinationen von $U_B$ und $I$ wiederholen"
+      ],
+      "explain": "Den Radius erhält man als halben Durchmesser; jede Messung liefert ein Wertepaar für die Auswertung."
+    },
+    {
+      "id": "messen",
+      "type": "widget",
+      "label": "Messen und auswerten",
+      "md": "Nimm mindestens fünf Messwerte auf und werte sie im Diagramm aus. Ziel: höchstens 8 Prozent Abweichung vom Literaturwert.",
+      "widget": "versuch",
+      "params": {
+        "exp": "fadenstrahlrohr"
+      },
+      "goal": {
+        "when": "n >= 5 && err < 0.08",
+        "message": "Nimm mindestens fünf Messwerte auf; achte darauf, dass der Strahl nicht den Kolben trifft.",
+        "solve": {}
+      }
+    },
+    {
+      "id": "herleitung",
+      "type": "rubric",
+      "part": "1",
+      "review": false,
+      "md": "Leiten Sie die Gleichung $\\frac{e}{m} = \\frac{2U_B}{B^2 r^2}$ her.",
+      "solution": "Energiesatz für die Beschleunigung: $e U_B = \\tfrac12 m v^2$. Auf der Kreisbahn ist die Lorentzkraft die Zentripetalkraft: $e v B = \\frac{m v^2}{r}$, also $v = \\frac{e B r}{m}$. Einsetzen: $e U_B = \\tfrac12 m \\frac{e^2B^2r^2}{m^2}$, umgestellt $\\frac{e}{m} = \\frac{2U_B}{B^2r^2}$.",
+      "criteria": [
+        {
+          "md": "Energiesatz $eU_B = \\tfrac12 m v^2$",
+          "points": 1
+        },
+        {
+          "md": "Lorentzkraft gleich Zentripetalkraft",
+          "points": 1
+        },
+        {
+          "md": "$v$ eliminiert und nach $\\frac{e}{m}$ umgestellt",
+          "points": 1
+        }
+      ],
+      "operator": {
+        "word": "Herleiten",
+        "means": "aus bekannten Gleichungen durch Umformen eine neue Beziehung gewinnen"
+      }
+    },
+    {
+      "id": "helmholtz",
+      "type": "choice",
+      "md": "Warum verwendet man zwei Spulen im Abstand ihres Radius (Helmholtz-Anordnung)?",
+      "options": [
+        {
+          "md": "Weil sich dann zwischen ihnen ein nahezu homogenes Feld ergibt",
+          "correct": true
+        },
+        {
+          "md": "Damit das Feld doppelt so stark wird",
+          "why": "Stärker wird es auch, entscheidend ist die Homogenität."
+        },
+        {
+          "md": "Damit der Strahl sichtbar wird",
+          "why": "Das leistet das Gas im Kolben."
+        },
+        {
+          "md": "Um die Elektronen zu beschleunigen",
+          "why": "Das tut die Anodenspannung."
+        }
+      ],
+      "explain": "Nur in einem homogenen Feld ist die Bahn ein Kreis mit überall gleichem Radius.",
+      "label": "Abiturfrage"
+    },
+    {
+      "id": "fehler",
+      "type": "truefalse",
+      "md": "Liest man den Durchmesser statt des Radius ab und setzt ihn als $r$ ein, wird $\\frac{e}{m}$ um den Faktor 4 zu klein.",
+      "answer": true,
+      "explain": "$r$ geht quadratisch in den Nenner ein: doppelt so großer Wert, ein Viertel des Ergebnisses.",
+      "label": "Fehlerquelle"
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "fadenstrahl"
+      },
+      "level": 3,
+      "label": "Auswerten"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\frac{e}{m} = \\frac{2U_B}{B^2r^2}$ aus Energiesatz und Kraftgleichgewicht.",
+        "Gerade aus $2U_B$ gegen $B^2r^2$: Steigung $\\frac{e}{m}$.",
+        "Literaturwert $1{,}76 \\cdot 10^{11}\\,\\mathrm{C/kg}$; Fehler: Parallaxe, Erdfeld, inhomogenes Feld."
+      ]
+    }
+  ]
+}

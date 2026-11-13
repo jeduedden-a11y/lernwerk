@@ -1,0 +1,114 @@
+{
+  "id": "phy-generator",
+  "title": "Generator",
+  "subtitle": "Wechselspannung aus einer drehenden Spule",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Generator.md",
+      "title": "Generator"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Dreht sich eine Spule mit $N$ Windungen und der Fläche $A$ gleichmäßig in einem Magnetfeld, ändert sich der Fluss periodisch: $\\Phi(t) = B A\\cos(\\omega t)$. Induziert wird eine sinusförmige Wechselspannung\n\n$$U(t) = N B A\\,\\omega\\,\\sin(\\omega t), \\qquad \\hat{U} = N B A\\,\\omega.$$\n\nSchneller drehen erhöht Frequenz und Scheitelwert zugleich.",
+      "image": "vault:Generator.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "wechsel",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Ändere Drehfrequenz und Windungszahl (B = 0,1 T, A = 100 cm²).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          0.1
+        ],
+        "y": [
+          -70,
+          70
+        ],
+        "xLabel": "t in s",
+        "yLabel": "U in V",
+        "vars": [
+          {
+            "name": "f",
+            "label": "Drehfrequenz",
+            "min": 10,
+            "max": 100,
+            "step": 1,
+            "value": 50,
+            "format": "{v} Hz",
+            "digits": 0
+          },
+          {
+            "name": "N",
+            "label": "Windungszahl",
+            "min": 10,
+            "max": 200,
+            "step": 10,
+            "value": 100,
+            "format": "{v}",
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "U",
+            "expr": "N*0.1*0.01*2*pi*f*sin(2*pi*f*x)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Scheitelspannung {N*0.1*0.01*2*pi*f|1} V, Periodendauer {1000/f|1} ms"
+      }
+    },
+    {
+      "id": "doppelt",
+      "type": "choice",
+      "md": "Die Drehfrequenz wird verdoppelt. Was passiert mit der Scheitelspannung?",
+      "options": [
+        {
+          "md": "Sie verdoppelt sich",
+          "correct": true
+        },
+        {
+          "md": "Sie bleibt gleich",
+          "why": "$\\hat{U} = NBA\\omega$ wächst mit $\\omega$."
+        },
+        {
+          "md": "Sie vervierfacht sich",
+          "why": "$\\omega$ geht einfach ein."
+        },
+        {
+          "md": "Sie halbiert sich",
+          "why": "Schneller drehen, schnellere Flussänderung."
+        }
+      ],
+      "explain": "$\\hat{U} \\sim \\omega$, und die Periodendauer halbiert sich."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "induktion"
+      },
+      "level": 2,
+      "label": "Induktion"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\Phi(t) = BA\\cos(\\omega t)$.",
+        "$U(t) = NBA\\omega\\sin(\\omega t)$.",
+        "Scheitelwert $\\sim$ Windungszahl, Feld, Fläche und Drehzahl."
+      ]
+    }
+  ]
+}

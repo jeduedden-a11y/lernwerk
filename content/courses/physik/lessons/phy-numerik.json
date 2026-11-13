@@ -1,0 +1,57 @@
+{
+  "id": "phy-numerik",
+  "title": "Bewegungen numerisch simulieren",
+  "subtitle": "Das Euler-Verfahren Schritt für Schritt",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Numerische Simulation von Bewegungen.md",
+      "title": "Numerische Simulation von Bewegungen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Wenn die Kraft von der Geschwindigkeit abhängt, etwa bei Luftreibung, gibt es oft keine einfache Formel für $v(t)$. Dann rechnet man in kleinen Zeitschritten $\\Delta t$ und tut in jedem Schritt so, als bliebe die Beschleunigung konstant:\n\n$$a_n = \\frac{F(v_n)}{m}, \\quad v_{n+1} = v_n + a_n\\,\\Delta t, \\quad s_{n+1} = s_n + v_n\\,\\Delta t.$$\n\nKleinere Schritte geben genauere Ergebnisse, kosten aber mehr Rechenschritte."
+    },
+    {
+      "id": "schritte",
+      "type": "order",
+      "label": "Reihenfolge",
+      "md": "Ordne die Arbeitsschritte einer Tabellenkalkulation für den Fall mit Luftreibung.",
+      "items": [
+        "Konstanten und Startwerte eintragen: $m$, $k$, $\\Delta t$, $v_0 = 0$.",
+        "Beschleunigung aus der aktuellen Geschwindigkeit berechnen.",
+        "Neue Geschwindigkeit und neuen Ort aus den alten Werten berechnen.",
+        "Zeile nach unten kopieren und den Graphen $v(t)$ zeichnen."
+      ],
+      "explain": "Jede Zeile nutzt nur die Werte der Zeile darüber: das ist das Euler-Verfahren."
+    },
+    {
+      "id": "genau",
+      "type": "truefalse",
+      "md": "Halbiert man die Schrittweite, wird das Euler-Ergebnis in der Regel genauer.",
+      "answer": true,
+      "explain": "Der Fehler entsteht, weil die Beschleunigung innerhalb eines Schritts in Wirklichkeit nicht konstant ist; kürzere Schritte machen diesen Fehler kleiner."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "euler"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Euler: Steigung am Anfang des Schritts verwenden.",
+        "$v_{n+1} = v_n + a_n\\Delta t$, $s_{n+1} = s_n + v_n\\Delta t$.",
+        "Kleinere Schrittweite, kleinerer Fehler."
+      ]
+    }
+  ]
+}

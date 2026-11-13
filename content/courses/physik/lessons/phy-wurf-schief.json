@@ -1,0 +1,129 @@
+{
+  "id": "phy-wurf-schief",
+  "title": "Schiefer Wurf",
+  "subtitle": "Abwurf unter einem Winkel: Weite, Höhe, bester Winkel",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Schiefer Wurf.md",
+      "title": "Schiefer Wurf"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Beim schiefen Wurf zerlegt man die Abwurfgeschwindigkeit: $v_x = v_0\\cos\\alpha$ bleibt konstant, $v_y = v_0\\sin\\alpha$ nimmt wie beim senkrechten Wurf um $g$ pro Sekunde ab. Ohne Luftreibung gilt für Abwurf und Landung auf gleicher Höhe\n\n$$w = \\frac{v_0^2\\sin(2\\alpha)}{g}, \\qquad h_{max} = \\frac{v_0^2\\sin^2\\alpha}{2g}.$$",
+      "image": "vault:Schiefer Wurf.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "winkel",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Verändere den Abwurfwinkel. Bei welchem Winkel wird die Weite am größten?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          52
+        ],
+        "y": [
+          0,
+          26
+        ],
+        "xLabel": "x in m",
+        "yLabel": "y in m",
+        "vars": [
+          {
+            "name": "a",
+            "label": "Abwurfwinkel",
+            "min": 5,
+            "max": 85,
+            "step": 1,
+            "value": 30,
+            "format": "{v}°",
+            "digits": 0
+          },
+          {
+            "name": "v0",
+            "label": "Abwurfgeschwindigkeit",
+            "min": 5,
+            "max": 22,
+            "step": 0.5,
+            "value": 18,
+            "format": "{v} m/s",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "x*tan(a*pi/180) - 9.81*x^2/(2*v0^2*cos(a*pi/180)^2)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Wurfweite {v0^2*sin(2*a*pi/180)/9.81|1} m, größte Höhe {(v0*sin(a*pi/180))^2/(2*9.81)|1} m"
+      },
+      "goal": {
+        "when": "abs(a - 45) < 1.5",
+        "hints": [
+          {
+            "when": "a < 45",
+            "text": "Etwas steiler probieren."
+          },
+          {
+            "when": "a > 45",
+            "text": "Etwas flacher probieren."
+          }
+        ],
+        "solve": {
+          "a": 45
+        }
+      }
+    },
+    {
+      "id": "paar",
+      "type": "choice",
+      "md": "Ein Ball fliegt unter 30° genauso weit wie unter einem anderen Winkel. Unter welchem?",
+      "options": [
+        {
+          "md": "60°",
+          "correct": true
+        },
+        {
+          "md": "15°",
+          "why": "$\\sin(30^\\circ) \\ne \\sin(60^\\circ)$."
+        },
+        {
+          "md": "45°",
+          "why": "Unter 45° fliegt er weiter als unter 30°."
+        },
+        {
+          "md": "90°",
+          "why": "Senkrecht nach oben ist die Weite null."
+        }
+      ],
+      "explain": "$\\sin(2 \\cdot 30^\\circ) = \\sin(2 \\cdot 60^\\circ)$: Winkel, die sich zu 90° ergänzen, geben dieselbe Weite."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "schiefer-wurf"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Zerlegen: $v_x = v_0\\cos\\alpha$ konstant, $v_y = v_0\\sin\\alpha - g t$.",
+        "Weite $w = v_0^2\\sin(2\\alpha)/g$, am größten bei 45°.",
+        "Mit Luftreibung liegt der beste Winkel unter 45°."
+      ]
+    }
+  ]
+}

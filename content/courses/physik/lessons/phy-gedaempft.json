@@ -1,0 +1,109 @@
+{
+  "id": "phy-gedaempft",
+  "title": "Gedämpfte Schwingung",
+  "subtitle": "Wie Reibung eine Schwingung ausklingen lässt",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Gedämpfte Schwingung.md",
+      "title": "Gedämpfte Schwingung"
+    },
+    {
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/03 Physik Q2.md",
+      "title": "03 Physik Q2"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Reale Schwingungen verlieren Energie durch Reibung. Bei geschwindigkeitsproportionaler Reibung nimmt die Amplitude **exponentiell** ab:\n\n$$\\hat{y}(t) = \\hat{y}_0\\,e^{-\\delta t}.$$\n\nIn gleichen Zeitabständen schrumpft die Amplitude also um denselben Faktor. Die Periodendauer bleibt bei schwacher Dämpfung praktisch unverändert."
+    },
+    {
+      "id": "ausklingen",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Ändere die Abklingkonstante: Wie schnell wird die Schwingung kleiner?",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          -5,
+          5
+        ],
+        "xLabel": "t in s",
+        "yLabel": "y in cm",
+        "vars": [
+          {
+            "name": "d",
+            "label": "Abklingkonstante",
+            "min": 0,
+            "max": 1,
+            "step": 0.02,
+            "value": 0.2,
+            "format": "{v} 1/s",
+            "digits": 2
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "4*exp(-d*x)*cos(2*pi*x)",
+            "color": "accent"
+          },
+          {
+            "name": "h",
+            "expr": "4*exp(-d*x)",
+            "color": "gray"
+          }
+        ],
+        "readout": "Nach 5 s ist die Amplitude auf {4*exp(-d*5)|2} cm gesunken; Halbwertszeit der Amplitude {ln(2)/max(d,0.0001)|1} s"
+      }
+    },
+    {
+      "id": "faktor",
+      "type": "choice",
+      "md": "Eine Amplitude sinkt in 2 s von 8 cm auf 4 cm. Wie groß ist sie nach weiteren 2 s?",
+      "options": [
+        {
+          "md": "2 cm",
+          "correct": true
+        },
+        {
+          "md": "0 cm",
+          "why": "Exponentielle Abnahme erreicht nie null."
+        },
+        {
+          "md": "3 cm",
+          "why": "Sie sinkt nicht linear, sondern um denselben Faktor."
+        },
+        {
+          "md": "1 cm",
+          "why": "Das wäre nach 6 s."
+        }
+      ],
+      "explain": "In gleichen Zeiten derselbe Faktor: wieder die Hälfte."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "daempfung"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\hat{y}(t) = \\hat{y}_0 e^{-\\delta t}$.",
+        "Gleiche Zeitabstände, gleicher Faktor.",
+        "Die Periodendauer bleibt bei schwacher Dämpfung fast gleich."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "id": "phy-wurf-waagerecht",
+  "title": "Waagerechter Wurf",
+  "subtitle": "Zwei Bewegungen überlagern sich ungestört",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Waagerechter Wurf.md",
+      "title": "Waagerechter Wurf"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Ein waagerecht abgeworfener Körper macht zwei Bewegungen zugleich, ohne dass sie sich stören (**Unabhängigkeitsprinzip**): waagerecht fliegt er gleichförmig mit $v_0$ weiter, senkrecht fällt er frei.\n\n$$x(t) = v_0 t, \\qquad y(t) = -\\tfrac12 g t^2$$\n\nDie Fallzeit hängt nur von der Höhe ab: $t = \\sqrt{2h/g}$.",
+      "image": "vault:Waagerechter Wurf.svg",
+      "alt": "Skizze aus deinem Vault.",
+      "caption": "Skizze aus deinem Vault."
+    },
+    {
+      "id": "bahn",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Stelle Abwurfhöhe und Geschwindigkeit so ein, dass der Ball 10 m weit fliegt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          22
+        ],
+        "y": [
+          0,
+          21
+        ],
+        "xLabel": "x in m",
+        "yLabel": "y in m",
+        "vars": [
+          {
+            "name": "v0",
+            "label": "Abwurfgeschwindigkeit",
+            "min": 1,
+            "max": 15,
+            "step": 0.1,
+            "value": 4,
+            "format": "{v} m/s",
+            "digits": 1
+          },
+          {
+            "name": "h",
+            "label": "Abwurfhöhe",
+            "min": 1,
+            "max": 20,
+            "step": 0.1,
+            "value": 5,
+            "format": "{v} m",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "h - 9.81*x^2/(2*v0^2)",
+            "color": "accent"
+          }
+        ],
+        "readout": "Flugzeit {sqrt(2*h/9.81)|2} s, Wurfweite {v0*sqrt(2*h/9.81)|2} m"
+      },
+      "goal": {
+        "when": "abs(v0*sqrt(2*h/9.81) - 10) < 0.3",
+        "hints": [
+          {
+            "when": "v0*sqrt(2*h/9.81) < 10",
+            "text": "Noch zu kurz: schneller abwerfen oder von höher oben."
+          },
+          {
+            "when": "v0*sqrt(2*h/9.81) > 10",
+            "text": "Zu weit."
+          }
+        ],
+        "solve": {
+          "v0": 7,
+          "h": 10
+        }
+      }
+    },
+    {
+      "id": "doppelt",
+      "type": "choice",
+      "md": "Die Abwurfgeschwindigkeit wird verdoppelt, die Höhe bleibt. Was passiert?",
+      "options": [
+        {
+          "md": "Die Wurfweite verdoppelt sich, die Flugzeit bleibt gleich",
+          "correct": true
+        },
+        {
+          "md": "Wurfweite und Flugzeit verdoppeln sich",
+          "why": "Die Flugzeit hängt nur von der Höhe ab."
+        },
+        {
+          "md": "Die Wurfweite vervierfacht sich",
+          "why": "$s = v_0 t$ ist proportional zu $v_0$."
+        },
+        {
+          "md": "Der Ball fällt langsamer",
+          "why": "Senkrecht fällt er wie jeder andere Körper."
+        }
+      ],
+      "explain": "$t = \\sqrt{2h/g}$ hängt nicht von $v_0$ ab, und $s = v_0 t$ wächst proportional."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "waagerechter-wurf"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Waagerecht gleichförmig, senkrecht freier Fall: beide Bewegungen stören sich nicht.",
+        "Fallzeit $t = \\sqrt{2h/g}$, unabhängig von $v_0$.",
+        "Bahn: $y = -\\frac{g}{2v_0^2}x^2$, eine Parabel."
+      ]
+    }
+  ]
+}

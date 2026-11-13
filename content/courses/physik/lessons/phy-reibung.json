@@ -1,0 +1,105 @@
+{
+  "id": "phy-reibung",
+  "title": "Reibung und Grenzgeschwindigkeit",
+  "subtitle": "Warum fallende Körper nicht immer schneller werden",
+  "vault": [
+    {
+      "path": "02 Wiki/Physik/01 E-Phase/Reibung und Grenzgeschwindigkeit.md",
+      "title": "Reibung und Grenzgeschwindigkeit"
+    }
+  ],
+  "steps": [
+    {
+      "id": "kern",
+      "type": "text",
+      "md": "Gleit- und Haftreibung hängen von der Anpresskraft ab: $F_R = \\mu F_N$. Luftreibung dagegen wächst mit der Geschwindigkeit, bei schnellen Körpern etwa wie\n\n$$F_L = \\tfrac12 c_w \\rho A v^2.$$\n\nEin fallender Körper wird deshalb schneller, bis die Luftreibung so groß ist wie die Gewichtskraft: dann fällt er mit der **Grenzgeschwindigkeit** $v_G = \\sqrt{\\frac{2mg}{c_w\\rho A}}$ weiter."
+    },
+    {
+      "id": "fall",
+      "type": "widget",
+      "label": "Ausprobieren",
+      "md": "Ändere die Grenzgeschwindigkeit, etwa vom Fallschirmspringer (rund 55 m/s) bis zum geöffneten Schirm (rund 5 m/s).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          15
+        ],
+        "y": [
+          0,
+          60
+        ],
+        "xLabel": "t in s",
+        "yLabel": "v in m/s",
+        "vars": [
+          {
+            "name": "vg",
+            "label": "Grenzgeschwindigkeit",
+            "min": 5,
+            "max": 60,
+            "step": 1,
+            "value": 50,
+            "format": "{v} m/s",
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "name": "frei",
+            "expr": "9.81*x",
+            "color": "gray"
+          },
+          {
+            "name": "v",
+            "expr": "vg*(1 - exp(-2*9.81*x/vg))/(1 + exp(-2*9.81*x/vg))",
+            "color": "accent"
+          }
+        ],
+        "readout": "Grau: freier Fall ohne Luft. Nach 5 s mit Luft: v = {vg*(1 - exp(-2*9.81*5/vg))/(1 + exp(-2*9.81*5/vg))|1} m/s"
+      }
+    },
+    {
+      "id": "gleich",
+      "type": "choice",
+      "md": "Was gilt im Moment, in dem die Grenzgeschwindigkeit erreicht ist?",
+      "options": [
+        {
+          "md": "Gewichtskraft und Luftreibung sind gleich groß",
+          "correct": true
+        },
+        {
+          "md": "Die Luftreibung ist größer",
+          "why": "Dann würde der Körper langsamer."
+        },
+        {
+          "md": "Die Gewichtskraft ist null",
+          "why": "Sie bleibt unverändert."
+        },
+        {
+          "md": "Die Beschleunigung ist $g$",
+          "why": "Sie ist null: die Geschwindigkeit ändert sich nicht mehr."
+        }
+      ],
+      "explain": "Kräftegleichgewicht nach dem 1. Axiom: keine Beschleunigung mehr."
+    },
+    {
+      "id": "g1",
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "params": {
+        "typ": "grenzgeschwindigkeit"
+      },
+      "level": 1
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gleit- und Haftreibung: $F_R = \\mu F_N$.",
+        "Luftreibung wächst mit $v^2$.",
+        "Grenzgeschwindigkeit, wenn Luftreibung und Gewichtskraft gleich sind."
+      ]
+    }
+  ]
+}
