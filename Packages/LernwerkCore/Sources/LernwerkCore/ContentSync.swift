@@ -26,7 +26,17 @@ public struct ContentManifest: Codable, Sendable {
     public var treeEtag: String?
     public var syncedAt: Date?
     public var runtimeHeld: Bool = false
+    /// Commit of the copy inside the installed app that the cache was last aligned with.
+    public var bundleCommit: String?
+    /// Blob hashes of that copy: a file the app already ships is not downloaded again.
+    public var bundleFiles: [String: String]?
     public init() {}
+}
+
+/// Resources/Content/bundle-manifest.json, written by scripts/bundle-content.sh.
+public struct BundleManifest: Codable, Sendable {
+    public var commit: String
+    public var files: [String: String]
 }
 
 public struct ContentSyncReport: Sendable, Equatable {
@@ -65,12 +75,49 @@ public struct ContentSync: Sendable {
     public var root: URL          // local cache folder, mirrors content/
     public var shellVersion: Int
     public var session: URLSession
+    /// The content copy inside the app, if any.
+    public var bundleRoot: URL?
+    /// Downloads running at the same time.
+    public static let parallel = 8
 
-    public init(source: ContentSource, root: URL, shellVersion: Int, session: URLSession = .shared) {
+    public init(source: ContentSource, root: URL, shellVersion: Int, session: URLSession = .shared, bundleRoot: URL? = nil) {
         self.source = source
         self.root = root
         self.shellVersion = shellVersion
         self.session = session
+        self.bundleRoot = bundleRoot
+    }
+
+    /// After a new install: the copy inside the app becomes the base. Downloaded files of the paths it ships are removed,
+    /// so an older download can never hide a newer lesson of the app, and the next sync fetches only what changed on
+    /// GitHub since the app was built. Returns true if the cache was aligned now.
+    @discardableResult
+    public func adoptBundle() -> Bool {
+        guard let bundleRoot,
+              let data = try? Data(contentsOf: bundleRoot.appendingPathComponent("bundle-manifest.json")),
+              let bundle = try? JSONDecoder().decode(BundleManifest.self, from: data) else { return false }
+        var manifest = loadManifest()
+        guard manifest.bundleCommit != bundle.commit else { return false }
+        let fm = FileManager.default
+        var shipped: [String: String] = [:]
+        for (rel, sha) in bundle.files where !Self.isIgnored(rel) && fm.fileExists(atPath: bundleRoot.appendingPathComponent(rel).path) {
+            try? fm.removeItem(at: root.appendingPathComponent(rel))
+            manifest.files[rel] = sha
+            shipped[rel] = sha
+        }
+        manifest.bundleCommit = bundle.commit
+        manifest.bundleFiles = shipped
+        manifest.treeEtag = nil
+        try? fm.createDirectory(at: root, withIntermediateDirectories: true)
+        try? saveManifest(manifest)
+        return true
+    }
+
+    /// True if the file with this hash is on the device: downloaded, or shipped inside the app.
+    private func isAvailable(_ rel: String, sha: String, manifest: ContentManifest) -> Bool {
+        if FileManager.default.fileExists(atPath: root.appendingPathComponent(rel).path) { return true }
+        guard manifest.bundleFiles?[rel] == sha, let bundleRoot else { return false }
+        return FileManager.default.fileExists(atPath: bundleRoot.appendingPathComponent(rel).path)
     }
 
     private var manifestURL: URL { root.appendingPathComponent(".manifest.json") }
@@ -92,7 +139,8 @@ public struct ContentSync: Sendable {
         return name.hasPrefix("dev") || name.hasPrefix(".") || path.hasPrefix("runtime/vendor/")
     }
 
-    public func sync(force: Bool = false) async throws -> ContentSyncReport {
+    /// `progress` gets (files ready, files to fetch) while downloading.
+    public func sync(force: Bool = false, progress: (@Sendable (Int, Int) -> Void)? = nil) async throws -> ContentSyncReport {
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         var manifest = loadManifest()
 
@@ -128,18 +176,51 @@ public struct ContentSync: Sendable {
 
         let changed = remote.filter { rel, sha in
             if holdRuntime && rel.hasPrefix("runtime/") { return false }
-            return manifest.files[rel] != sha || !FileManager.default.fileExists(atPath: root.appendingPathComponent(rel).path)
+            return manifest.files[rel] != sha || !isAvailable(rel, sha: sha, manifest: manifest)
         }
-        // download everything first, then move into place, so a failed sync never leaves half a lesson
+        // Download everything first, then move into place, so a failed sync never leaves half a lesson.
+        // Files fetched by an interrupted attempt stay in staging and count, so every attempt gets further.
         let staging = root.appendingPathComponent(".staging", isDirectory: true)
-        try? FileManager.default.removeItem(at: staging)
         try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
+        var missing: [(rel: String, sha: String)] = []
         for (rel, sha) in changed {
-            let data = try await download(rel, sha: sha)
-            let dest = staging.appendingPathComponent(rel)
-            try FileManager.default.createDirectory(at: dest.deletingLastPathComponent(), withIntermediateDirectories: true)
-            try data.write(to: dest, options: .atomic)
+            if let d = try? Data(contentsOf: staging.appendingPathComponent(rel)), GitBlob.sha(d) == sha { continue }
+            missing.append((rel: rel, sha: sha))
         }
+        let total = changed.count
+        var ready = total - missing.count
+        progress?(ready, total)
+        let fetch: @Sendable (String, String) async -> Error? = { rel, sha in
+            do {
+                let data = try await self.download(rel, sha: sha)
+                let dest = staging.appendingPathComponent(rel)
+                try FileManager.default.createDirectory(at: dest.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try data.write(to: dest, options: .atomic)
+                return nil
+            } catch {
+                return error
+            }
+        }
+        var lastError: Error?
+        var next = 0
+        await withTaskGroup(of: Error?.self) { group in
+            while next < min(Self.parallel, missing.count) {
+                let item = missing[next]
+                next += 1
+                group.addTask { await fetch(item.rel, item.sha) }
+            }
+            while let result = await group.next() {
+                if let result { lastError = result } else { ready += 1 }
+                progress?(ready, total)
+                if next < missing.count {
+                    let item = missing[next]
+                    next += 1
+                    group.addTask { await fetch(item.rel, item.sha) }
+                }
+            }
+        }
+        // what arrived stays in staging for the next attempt
+        if let lastError { throw lastError }
         for (rel, sha) in changed {
             let src = staging.appendingPathComponent(rel)
             let dest = root.appendingPathComponent(rel)

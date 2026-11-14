@@ -137,7 +137,10 @@ final class AppModel {
         } else {
             state = LearnerState()
         }
-        let manifest = ContentSync(source: contentSource, root: cacheRoot, shellVersion: Self.shellVersion).loadManifest()
+        let contentSync = ContentSync(source: contentSource, root: cacheRoot, shellVersion: Self.shellVersion, bundleRoot: locator.bundleRoot)
+        // a new install brings newer lessons than older downloads; they must not hide them
+        if !demo { contentSync.adoptBundle() }
+        let manifest = contentSync.loadManifest()
         lastContentSync = manifest.syncedAt
         runtimeHeld = manifest.runtimeHeld
         reloadCourses()
@@ -274,9 +277,18 @@ final class AppModel {
     func syncContent(force: Bool = false) async {
         guard !isDemo, contentPhase != .busy else { return }
         contentPhase = .busy
-        let sync = ContentSync(source: contentSource, root: cacheRoot, shellVersion: Self.shellVersion)
+        let sync = ContentSync(source: contentSource, root: cacheRoot, shellVersion: Self.shellVersion, bundleRoot: locator.bundleRoot)
         do {
-            let report = try await sync.sync(force: force)
+            let report = try await sync.sync(force: force) { [weak self] done, total in
+                Task { @MainActor in
+                    guard let self else { return }
+                    if self.contentProgress == nil && total > 20 && done < total {
+                        self.toast = "Neue Inhalte: \(total) Dateien werden geladen"
+                    }
+                    self.contentProgress = total > 0 && done < total ? (done, total) : nil
+                }
+            }
+            contentProgress = nil
             runtimeHeld = report.runtimeHeld
             lastContentSync = Date()
             contentPhase = .idle
@@ -285,9 +297,13 @@ final class AppModel {
                 toast = report.downloaded == 1 ? "1 Datei aktualisiert" : "\(report.downloaded) Dateien aktualisiert"
             }
         } catch {
-            contentPhase = .failed(error.localizedDescription)
+            contentProgress = nil
+            contentPhase = .failed(error.localizedDescription + " Schon Geladenes bleibt, der nächste Versuch macht dort weiter.")
         }
     }
+
+    /// Files downloaded and files to fetch while a content sync runs.
+    var contentProgress: (done: Int, total: Int)?
 
     // MARK: progress
 

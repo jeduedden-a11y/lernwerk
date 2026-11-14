@@ -387,6 +387,30 @@ final class CoreTests: XCTestCase {
         XCTAssertFalse(old.deviceID.isEmpty)
     }
 
+    func testNewInstallReplacesOlderDownloads() throws {
+        let fm = FileManager.default
+        let base = fm.temporaryDirectory.appendingPathComponent("lw-\(UUID().uuidString)")
+        let bundle = base.appendingPathComponent("Bundle"), cache = base.appendingPathComponent("Cache")
+        defer { try? fm.removeItem(at: base) }
+        let new = Data(#"{"courses":["a","b"]}"#.utf8), old = Data(#"{"courses":["a"]}"#.utf8)
+        try fm.createDirectory(at: bundle.appendingPathComponent("courses"), withIntermediateDirectories: true)
+        try fm.createDirectory(at: cache.appendingPathComponent("courses"), withIntermediateDirectories: true)
+        try new.write(to: bundle.appendingPathComponent("courses/index.json"))
+        try old.write(to: cache.appendingPathComponent("courses/index.json"))
+        let shipped = BundleManifest(commit: "abc", files: ["courses/index.json": GitBlob.sha(new)])
+        try JSONEncoder().encode(shipped).write(to: bundle.appendingPathComponent("bundle-manifest.json"))
+        let locator = ContentLocator(cacheRoot: cache, bundleRoot: bundle)
+        XCTAssertEqual(locator.data("courses/index.json"), old)
+        let sync = ContentSync(source: ContentSource(), root: cache, shellVersion: 1, bundleRoot: bundle)
+        XCTAssertTrue(sync.adoptBundle())
+        // the older download is gone, the lessons of the app count
+        XCTAssertEqual(locator.data("courses/index.json"), new)
+        XCTAssertEqual(sync.loadManifest().files["courses/index.json"], GitBlob.sha(new))
+        XCTAssertEqual(sync.loadManifest().bundleFiles?["courses/index.json"], GitBlob.sha(new))
+        // the same install again changes nothing
+        XCTAssertFalse(sync.adoptBundle())
+    }
+
     func testIgnoredFiles() {
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev.html"))
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev-frame.html"))

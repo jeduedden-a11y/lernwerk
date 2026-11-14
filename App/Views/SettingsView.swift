@@ -167,6 +167,10 @@ struct SettingsView: View {
                 Section {
                     LabeledContent("Lektionen", value: "\(readyCount) fertig, \(plannedCount) geplant")
                     LabeledContent("Zuletzt geladen", value: Format.relative(model.lastContentSync))
+                    if let p = model.contentProgress {
+                        LabeledContent("Lädt gerade", value: "\(p.done) von \(p.total) Dateien")
+                        ProgressView(value: Double(p.done), total: Double(max(1, p.total)))
+                    }
                     LabeledContent("Lektions-Runtime", value: runtimeVersion)
                     Button {
                         Task { await model.syncContent(force: true) }
