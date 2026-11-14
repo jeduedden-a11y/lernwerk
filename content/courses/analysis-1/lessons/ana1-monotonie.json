@@ -4,8 +4,14 @@
   "subtitle": "Konvergenz beweisen, ohne den Grenzwert zu kennen",
   "source": "Skript Jarohs, Abschnitt 9.15 bis 9.24",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Monotone Folgen.md", "title": "Monotone Folgen" },
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md", "title": "Konvergenz von Folgen" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Monotone Folgen.md",
+      "title": "Monotone Folgen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "title": "Konvergenz von Folgen"
+    }
   ],
   "steps": [
     {
@@ -13,13 +19,47 @@
       "type": "anim",
       "md": "Die Folge $a_n = \\left(1 + \\tfrac1n\\right)^n$. Was ist ihr Grenzwert? Man kann ihn nicht einfach ablesen, denn $1 + \\tfrac1n \\to 1$, aber der Exponent wächst.",
       "widget": "sequence",
-      "params": { "term": "(1 + 1/n)^n", "limit": "e", "limitLabel": "e ≈ 2,71828", "nMax": 60, "n": 1, "yRange": [1.8, 3.1], "readout": "$a_{{N|0}} = {a|6}$" },
-      "int": ["N"],
+      "params": {
+        "term": "(1 + 1/n)^n",
+        "limit": "e",
+        "limitLabel": "e ≈ 2,71828",
+        "nMax": 60,
+        "n": 1,
+        "yRange": [
+          1.8,
+          3.1
+        ],
+        "readout": "$a_{{N|0}} = {a|6}$"
+      },
+      "int": [
+        "N"
+      ],
       "timeline": [
-        { "caption": "$a_1 = 2$. Ein Kapital, das zu $100\\,\\%$ einmal im Jahr verzinst wird, verdoppelt sich." },
-        { "caption": "$a_2 = 2{,}25$, $a_3 \\approx 2{,}37$, $a_5 \\approx 2{,}49$: Häufigeres Verzinsen bringt mehr, aber immer weniger dazu.", "to": { "N": 5 }, "dur": 1600 },
-        { "caption": "Zwei Beobachtungen: Die Folge **wächst** in jedem Schritt, und sie bleibt **unter 3**. Man kann beides beweisen, mit Bernoulli und mit dem binomischen Lehrsatz.", "to": { "N": 20 }, "dur": 2200, "hold": 6500 },
-        { "caption": "Eine wachsende Folge, die eine Decke nicht durchstößt, muss sich irgendwo **stauen**. Wegen der Vollständigkeit von $\\R$ gibt es den Punkt, an dem sie sich staut: das Supremum der Glieder. Dieser Grenzwert heißt $e \\approx 2{,}71828$.", "to": { "N": 60 }, "dur": 2400 }
+        {
+          "caption": "$a_1 = 2$. Ein Kapital, das zu $100\\,\\%$ einmal im Jahr verzinst wird, verdoppelt sich."
+        },
+        {
+          "caption": "$a_2 = 2{,}25$, $a_3 \\approx 2{,}37$, $a_5 \\approx 2{,}49$: Häufigeres Verzinsen bringt mehr, aber immer weniger dazu.",
+          "to": {
+            "N": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Zwei Beobachtungen: Die Folge **wächst** in jedem Schritt, und sie bleibt **unter 3**. Man kann beides beweisen, mit Bernoulli und mit dem binomischen Lehrsatz.",
+          "to": {
+            "N": 20
+          },
+          "dur": 2200,
+          "hold": 6500
+        },
+        {
+          "caption": "Eine wachsende Folge, die eine Decke nicht durchstößt, muss sich irgendwo **stauen**. Wegen der Vollständigkeit von $\\R$ gibt es den Punkt, an dem sie sich staut: das Supremum der Glieder. Dieser Grenzwert heißt $e \\approx 2{,}71828$.",
+          "to": {
+            "N": 60
+          },
+          "dur": 2400
+        }
       ]
     },
     {
@@ -38,11 +78,35 @@
       "label": "Einstellen",
       "md": "Die Folge $a_1 = 1$, $a_{n+1} = \\sqrt{2 + a_n}$ wächst und bleibt unter $2$. **Stelle $n$ auf die erste Stelle, an der $a_n$ näher als $0{,}001$ an $2$ liegt.**",
       "widget": "sequence",
-      "params": { "rec": { "a1": 1, "next": "sqrt(2 + a)" }, "limit": 2, "nMax": 12, "n": 1, "yRange": [0.8, 2.2], "readout": "$a_{{N|0}} = {a|6}$, Abstand zu $2$: ${2 - a|6}$" },
+      "params": {
+        "rec": {
+          "a1": 1,
+          "next": "sqrt(2 + a)"
+        },
+        "limit": 2,
+        "nMax": 12,
+        "n": 1,
+        "yRange": [
+          0.8,
+          2.2
+        ],
+        "readout": "$a_{{N|0}} = {a|6}$, Abstand zu $2$: ${2 - a|6}$"
+      },
       "goal": {
         "when": "N == 7",
-        "hints": [{ "when": "2 - a >= 0.001", "text": "Der Abstand ist noch {2 - a|5}, also mindestens 0,001." }, { "when": "N > 7", "text": "Hier ist der Abstand klein genug, aber es geht früher." }],
-        "solve": { "N": 7 }
+        "hints": [
+          {
+            "when": "2 - a >= 0.001",
+            "text": "Der Abstand ist noch {2 - a|5}, also mindestens 0,001."
+          },
+          {
+            "when": "N > 7",
+            "text": "Hier ist der Abstand klein genug, aber es geht früher."
+          }
+        ],
+        "solve": {
+          "N": 7
+        }
       },
       "explain": "$a_6 \\approx 1{,}998929$ ist noch $0{,}00107$ entfernt, $a_7 \\approx 1{,}999732$ nur noch $0{,}00027$. Der Abstand zu $2$ schrumpft in jedem Schritt etwa auf ein Viertel."
     },
@@ -71,10 +135,73 @@
       "whyNot": "$a_n = n$ ist monoton wachsend, aber unbeschränkt.",
       "explain": "Monotonie allein reicht nicht, man braucht die Beschränktheit dazu. Umgekehrt reicht Beschränktheit allein auch nicht, wie $(-1)^n$ zeigt."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-monoton", "level": 1, "label": "Heron" },
-    { "id": "neu2", "type": "gen", "gen": "ana-monoton", "level": 2, "label": "Fixpunkt" },
-    { "id": "neu3", "type": "gen", "gen": "ana-monoton", "level": 3, "label": "Zinsen" },
-    { "id": "neu4", "type": "gen", "gen": "ana-monoton", "level": 4, "label": "Monotonie" },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$a_1 = 0$, $a_{n+1} = \\sqrt{6 + a_n}$. Bestimme $\\lim a_n$.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Grenzwert",
+      "explain": "Monoton wachsend und durch $3$ beschränkt; der Grenzwert erfüllt $a = \\sqrt{6 + a}$, also $a = 3$.",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede konvergente Folge ist monoton.",
+      "answer": false,
+      "explain": "$\\tfrac{(-1)^n}{n} \\to 0$ springt hin und her.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine monotone Folge mit einer konvergenten Teilfolge konvergiert.",
+      "answer": true,
+      "explain": "Monotonie überträgt die Beschränktheit der Teilfolge auf die ganze Folge.",
+      "label": "Verständnis",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $a_{n+1} = f(a_n)$ mit stetigem $f$ und $a_n \\to a$, so ist $f(a) = a$.",
+      "answer": true,
+      "explain": "$a = \\lim a_{n+1} = \\lim f(a_n) = f(a)$. Aber Vorsicht: Erst Konvergenz zeigen, dann die Fixpunktgleichung lösen.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-monoton",
+      "level": 1,
+      "label": "Heron"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-monoton",
+      "level": 2,
+      "label": "Fixpunkt"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-monoton",
+      "level": 3,
+      "label": "Zinsen"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-monoton",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-monoton",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -83,7 +210,9 @@
         "Monoton und beschränkt heißt konvergent, der Grenzwert ist das Supremum bzw. Infimum.",
         "Der Satz liefert Konvergenz, ohne den Grenzwert zu kennen. Er beruht auf der Vollständigkeit.",
         "Bei rekursiven Folgen findet man den Grenzwert aus $a = f(a)$, aber erst nach dem Konvergenzbeweis.",
-        "$e = \\lim (1 + \\tfrac1n)^n \\approx 2{,}71828$."
+        "$e = \\lim (1 + \\tfrac1n)^n \\approx 2{,}71828$.",
+        "Rekursive Folgen: erst Monotonie und Beschränktheit, dann Fixpunktgleichung.",
+        "Konvergent heißt nicht monoton."
       ]
     }
   ]

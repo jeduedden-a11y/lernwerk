@@ -4,7 +4,10 @@
   "subtitle": "Eine unendliche Summe, die überall konvergiert",
   "source": "Skript Jarohs, Kapitel 11",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md", "title": "Exponentialfunktion" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md",
+      "title": "Exponentialfunktion"
+    }
   ],
   "steps": [
     {
@@ -13,21 +16,75 @@
       "md": "Grau ist $e^x$. Blau sind die Teilsummen der Reihe $\\sum \\tfrac{x^k}{k!} = 1 + x + \\tfrac{x^2}{2} + \\tfrac{x^3}{6} + \\dots$, abgebrochen nach dem Glied $x^n$.",
       "widget": "plot",
       "params": {
-        "x": [-4, 3], "y": [-3, 15],
-        "vars": [{ "name": "n", "min": 0, "max": 10, "step": 1, "value": 0, "hidden": true }],
+        "x": [
+          -4,
+          3
+        ],
+        "y": [
+          -3,
+          15
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
         "functions": [
-          { "expr": "exp(x)", "color": "gray", "width": 4, "label": "eˣ", "labelAt": 2.3 },
-          { "name": "T", "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)" }
+          {
+            "expr": "exp(x)",
+            "color": "gray",
+            "width": 4,
+            "label": "eˣ",
+            "labelAt": 2.3
+          },
+          {
+            "name": "T",
+            "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)"
+          }
         ],
         "readout": "Teilsumme bis $x^{{n|0}}$"
       },
-      "int": ["n"],
+      "int": [
+        "n"
+      ],
       "timeline": [
-        { "caption": "Nur der erste Summand: die Konstante $1$. Bei $x = 0$ stimmt sie schon, sonst nirgends." },
-        { "caption": "$1 + x$: eine Gerade, die Tangente an $e^x$ bei $0$.", "to": { "n": 1 }, "dur": 500 },
-        { "caption": "$1 + x + \\tfrac{x^2}{2}$: Die Parabel schmiegt sich schon auf einem größeren Bereich an.", "to": { "n": 2 }, "dur": 500 },
-        { "caption": "Mit jedem Summanden wird der Bereich größer, auf dem man keinen Unterschied mehr sieht.", "to": { "n": 4 }, "dur": 1200, "hold": 5000 },
-        { "caption": "Bei $n = 10$ ist auf dem ganzen Bild kein Unterschied mehr zu sehen. Für **jedes** feste $x$ konvergiert die Reihe, denn $k!$ wächst schneller als jede Potenz $x^k$. Diese Reihe ist die **Definition** der Exponentialfunktion.", "to": { "n": 10 }, "dur": 2400 }
+        {
+          "caption": "Nur der erste Summand: die Konstante $1$. Bei $x = 0$ stimmt sie schon, sonst nirgends."
+        },
+        {
+          "caption": "$1 + x$: eine Gerade, die Tangente an $e^x$ bei $0$.",
+          "to": {
+            "n": 1
+          },
+          "dur": 500
+        },
+        {
+          "caption": "$1 + x + \\tfrac{x^2}{2}$: Die Parabel schmiegt sich schon auf einem größeren Bereich an.",
+          "to": {
+            "n": 2
+          },
+          "dur": 500
+        },
+        {
+          "caption": "Mit jedem Summanden wird der Bereich größer, auf dem man keinen Unterschied mehr sieht.",
+          "to": {
+            "n": 4
+          },
+          "dur": 1200,
+          "hold": 5000
+        },
+        {
+          "caption": "Bei $n = 10$ ist auf dem ganzen Bild kein Unterschied mehr zu sehen. Für **jedes** feste $x$ konvergiert die Reihe, denn $k!$ wächst schneller als jede Potenz $x^k$. Diese Reihe ist die **Definition** der Exponentialfunktion.",
+          "to": {
+            "n": 10
+          },
+          "dur": 2400
+        }
       ]
     },
     {
@@ -47,19 +104,56 @@
       "md": "Wie viele Summanden braucht man für $e^2 \\approx 7{,}389$? **Stelle den Grad $n$ so ein, dass die Teilsumme bei $x = 2$ weniger als $0{,}01$ von $e^2$ abweicht.**",
       "widget": "plot",
       "params": {
-        "x": [-1, 3], "y": [0, 12],
-        "vars": [{ "name": "n", "label": "Grad $n$", "min": 0, "max": 10, "step": 1, "value": 2, "digits": 0 }],
-        "functions": [
-          { "expr": "exp(x)", "color": "gray", "width": 4 },
-          { "name": "T", "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)" }
+        "x": [
+          -1,
+          3
         ],
-        "points": [{ "x": 2, "on": "T", "label": "Tₙ(2)" }],
+        "y": [
+          0,
+          12
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "label": "Grad $n$",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "value": 2,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "expr": "exp(x)",
+            "color": "gray",
+            "width": 4
+          },
+          {
+            "name": "T",
+            "expr": "1 + (n >= 1 ? x : 0) + (n >= 2 ? x^2/2 : 0) + (n >= 3 ? x^3/6 : 0) + (n >= 4 ? x^4/24 : 0) + (n >= 5 ? x^5/120 : 0) + (n >= 6 ? x^6/720 : 0) + (n >= 7 ? x^7/5040 : 0) + (n >= 8 ? x^8/40320 : 0) + (n >= 9 ? x^9/362880 : 0) + (n >= 10 ? x^10/3628800 : 0)"
+          }
+        ],
+        "points": [
+          {
+            "x": 2,
+            "on": "T",
+            "label": "Tₙ(2)"
+          }
+        ],
         "readout": "$T_n(2) = {T(2)|4}$, $e^2 = {exp(2)|4}$, Abweichung ${exp(2) - T(2)|4}$"
       },
       "goal": {
         "when": "abs(T(2) - exp(2)) < 0.01",
-        "hints": [{ "when": "abs(T(2) - exp(2)) >= 0.01", "text": "Die Abweichung ist noch {exp(2) - T(2)|4}." }],
-        "solve": { "n": 7 }
+        "hints": [
+          {
+            "when": "abs(T(2) - exp(2)) >= 0.01",
+            "text": "Die Abweichung ist noch {exp(2) - T(2)|4}."
+          }
+        ],
+        "solve": {
+          "n": 7
+        }
       },
       "explain": "Ab $n = 7$: $T_7(2) \\approx 7{,}3810$, Abweichung $0{,}008$. Für größere $x$ braucht man mehr Summanden, weil $\\tfrac{x^k}{k!}$ erst klein wird, wenn $k$ deutlich größer als $x$ ist."
     },
@@ -86,10 +180,73 @@
       "answer": true,
       "explain": "Für $x \\ge 0$ folgt das direkt aus der Reihe, weil alle weiteren Summanden nicht negativ sind. Für $x < 0$ zeigt man es mit der Konvexität oder mit $\\left(1 + \\tfrac xn\\right)^n \\to e^x$ und Bernoulli. Geometrisch: Die Tangente $1 + x$ liegt unter dem Graphen."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-exp", "level": 1, "label": "Teilsumme" },
-    { "id": "neu2", "type": "gen", "gen": "ana-exp", "level": 2, "label": "Logarithmus" },
-    { "id": "neu3", "type": "gen", "gen": "ana-exp", "level": 3, "label": "Fehler" },
-    { "id": "neu4", "type": "gen", "gen": "ana-exp", "level": 4, "label": "Eigenschaften" },
+    {
+      "type": "truefalse",
+      "md": "$\\exp(z) \\ne 0$ für alle $z \\in \\mathbb{C}$.",
+      "answer": true,
+      "explain": "$\\exp(z)\\exp(-z) = 1$.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\exp: \\mathbb{C} \\to \\mathbb{C}\\setminus\\{0\\}$ ist surjektiv, aber nicht injektiv.",
+      "answer": true,
+      "explain": "Polarform: $w = e^{\\ln|w| + i\\varphi}$; Periode $2\\pi i$.",
+      "label": "Klausur",
+      "id": "v2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele $z \\in \\mathbb{C}$ mit $|z| < 20$ erfüllen $e^z = 1$?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$z = 2\\pi ik$ mit $|k| \\le 3$, weil $2\\pi \\cdot 3 \\approx 18{,}8 < 20 < 25{,}1$.",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$e$ ist irrational.",
+      "answer": true,
+      "explain": "Aus $e = \\tfrac pq$ würde $q!(e - \\sum_{k \\le q}\\tfrac{1}{k!})$ eine ganze Zahl echt zwischen $0$ und $1$.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 1,
+      "label": "Teilsumme"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 2,
+      "label": "Logarithmus"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 3,
+      "label": "Fehler"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -98,7 +255,8 @@
         "$\\exp(x) = \\sum \\tfrac{x^k}{k!}$ konvergiert für alle $x$ absolut.",
         "Funktionalgleichung: $\\exp(x + y) = \\exp(x)\\exp(y)$. Daraus folgen Positivität und $\\exp(-x) = 1/\\exp(x)$.",
         "$e = \\exp(1)$, und $\\ln$ ist die Umkehrfunktion von $\\exp$.",
-        "$e^x \\ge 1 + x$: Die Tangente in $0$ liegt unter dem Graphen."
+        "$e^x \\ge 1 + x$: Die Tangente in $0$ liegt unter dem Graphen.",
+        "$\\exp$ ist auf $\\mathbb{C}$ periodisch mit Periode $2\\pi i$ und nie null."
       ]
     }
   ]

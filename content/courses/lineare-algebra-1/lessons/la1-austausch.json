@@ -1,0 +1,256 @@
+{
+  "id": "la1-austausch",
+  "title": "Basisergänzung und Austauschsatz",
+  "subtitle": "Warum alle Basen gleich lang sind",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md",
+      "title": "Basis und Dimension"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wir tauschen Vektoren einer Basis Schritt für Schritt gegen neue aus. Dabei bleibt es immer eine Basis, und genau das zeigt, dass alle Basen gleich viele Vektoren haben.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "e_1, e_2, e_3",
+            "why": "Die Standardbasis des $\\mathbb{R}^3$."
+          },
+          {
+            "tex": "v_1 = (1, 1, 0) = 1 \\cdot e_1 + 1 \\cdot e_2 + 0 \\cdot e_3",
+            "why": "Der Koeffizient bei $e_1$ ist nicht $0$."
+          },
+          {
+            "tex": "v_1, e_2, e_3",
+            "why": "Austauschlemma: $e_1$ darf gegen $v_1$ getauscht werden, es bleibt eine Basis."
+          },
+          {
+            "tex": "v_2 = (1, 2, 1) = 1 \\cdot v_1 + 1 \\cdot e_2 + 1 \\cdot e_3",
+            "why": "Jetzt in der **neuen** Basis ausgedrückt: $(1, 1, 0) + (0, 1, 0) + (0, 0, 1) = (1, 2, 1)$."
+          },
+          {
+            "tex": "v_1, v_2, e_3",
+            "why": "Der Koeffizient bei $e_2$ ist $1 \\ne 0$: $e_2$ wird gegen $v_2$ getauscht. Getauscht wird immer ein **alter** Vektor; $v_1$ bleibt, obwohl auch sein Koeffizient nicht null ist."
+          },
+          {
+            "tex": "k \\text{ unabhängige Vektoren} \\Rightarrow k \\le n",
+            "why": "Austauschsatz: Man kann alle $k$ neuen Vektoren hineintauschen, also gibt es mindestens $k$ alte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start: die Standardbasis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der erste neue Vektor hat einen Koeffizienten $\\ne 0$ bei $e_1$.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Also darf er $e_1$ ersetzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Den zweiten drücken wir in der **neuen** Basis aus.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Er ersetzt einen der alten Vektoren, nie einen schon eingetauschten.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Daraus folgt: Unabhängige Familien sind höchstens so lang wie Basen.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Austauschlemma\n> Ist $b_1, \\dots, b_n$ eine Basis und $v = \\sum \\lambda_i b_i$ mit $\\lambda_k \\ne 0$, so ist auch $b_1, \\dots, b_{k-1}, v, b_{k+1}, \\dots, b_n$ eine Basis.\n\n> [!theorem] Austauschsatz (Steinitz)\n> Sind $v_1, \\dots, v_k$ linear unabhängig und $b_1, \\dots, b_n$ eine Basis, so ist $k \\le n$, und man kann $k$ der $b_i$ so durch die $v_j$ ersetzen, dass wieder eine Basis entsteht.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "**Folgerungen:** Alle Basen eines endlich erzeugten Raums haben gleich viele Elemente, die **Dimension**. In einem $n$-dimensionalen Raum sind $n + 1$ Vektoren immer abhängig. Jede linear unabhängige Familie lässt sich zu einer Basis ergänzen (**Basisergänzungssatz**), und jedes Erzeugendensystem enthält eine Basis.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis des Austauschlemmas (Teil: die neue Familie erzeugt $V$).",
+      "given": "$b_1, \\dots, b_n$ ist eine Basis von $V$, $v = \\sum_i \\lambda_i b_i$ mit $\\lambda_1 \\ne 0$.",
+      "claim": "$v, b_2, \\dots, b_n$ erzeugen $V$.",
+      "steps": [
+        "Löse nach $b_1$ auf: $b_1 = \\lambda_1^{-1}\\bigl(v - \\lambda_2 b_2 - \\dots - \\lambda_n b_n\\bigr)$.",
+        "Also liegt $b_1$ im Spann von $v, b_2, \\dots, b_n$.",
+        "Dieser Spann enthält damit alle $b_1, \\dots, b_n$.",
+        "Weil die $b_i$ den Raum $V$ erzeugen, erzeugen auch $v, b_2, \\dots, b_n$ den Raum $V$."
+      ],
+      "distractors": [
+        {
+          "md": "Löse nach $v$ auf: $v = \\lambda_1 b_1 + \\dots$",
+          "why": "Das ist die Voraussetzung; gebraucht wird $b_1$ als Kombination der neuen Familie."
+        },
+        {
+          "md": "Weil $\\lambda_1 \\ne 0$, ist $v = b_1$.",
+          "why": "$v$ kann ganz anders aussehen als $b_1$; nur sein Anteil bei $b_1$ ist nicht null."
+        }
+      ],
+      "explain": "Hier braucht man $\\lambda_1 \\ne 0$, um durch $\\lambda_1$ zu teilen. Die Unabhängigkeit der neuen Familie zeigt man ähnlich durch Koeffizientenvergleich.",
+      "id": "p1"
+    },
+    {
+      "type": "multi",
+      "md": "Im $\\mathbb{R}^3$ mit der Basis $e_1, e_2, e_3$ ist $v = (2, 0, 5)$. Gegen welche Basisvektoren darf man $v$ austauschen?",
+      "options": [
+        {
+          "md": "$e_1$",
+          "correct": true
+        },
+        {
+          "md": "$e_3$",
+          "correct": true
+        },
+        {
+          "md": "$e_2$",
+          "why": "Der Koeffizient von $v$ bei $e_2$ ist $0$: $v, e_1, e_3$ liegen alle in der $xz$-Ebene und sind abhängig."
+        }
+      ],
+      "explain": "Austauschen darf man genau die $b_k$ mit $\\lambda_k \\ne 0$. Hier $v = 2e_1 + 0e_2 + 5e_3$.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Vektoren muss man zu $(1, 2, 3, 4)$ hinzunehmen, um eine Basis des $\\mathbb{R}^4$ zu erhalten?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Jede Basis des $\\mathbb{R}^4$ hat $4$ Vektoren. Basisergänzung mit Vektoren der Standardbasis: etwa $e_2, e_3, e_4$, weil $(1, 2, 3, 4)$ bei $e_1$ den Koeffizienten $1 \\ne 0$ hat.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jedes Erzeugendensystem des $\\mathbb{R}^3$ hat mindestens drei Elemente.",
+      "answer": true,
+      "explain": "Jedes Erzeugendensystem enthält eine Basis, und jede Basis hat $3$ Elemente.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Behauptung: Alle Basen eines endlich erzeugten Vektorraums sind gleich lang. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Seien $b_1, \\dots, b_n$ und $c_1, \\dots, c_m$ zwei Basen.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Die $c_j$ sind linear unabhängig, die $b_i$ eine Basis; nach dem Austauschsatz ist $m \\le n$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Daraus folgt sofort $m = n$.",
+          "why": "Falsch: Aus $m \\le n$ allein folgt nichts. Man braucht die Symmetrie: Mit vertauschten Rollen ist auch $n \\le m$."
+        },
+        {
+          "md": "Also haben beide Basen gleich viele Elemente.",
+          "why": "Richtig, nach beiden Ungleichungen."
+        }
+      ],
+      "answer": 2,
+      "explain": "Der Austauschsatz liefert eine Ungleichung; die Gleichheit kommt erst durch Anwenden in beide Richtungen.",
+      "id": "sp1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Funktionen $1$, $\\sin$, $\\cos$ sind linear unabhängig.",
+      "answer": true,
+      "explain": "Aus $a + b\\sin x + c\\cos x = 0$ für alle $x$: Bei $x = 0$ ist $a + c = 0$, bei $x = \\pi$ ist $a - c = 0$, also $a = c = 0$, und bei $x = \\tfrac\\pi2$ dann $b = 0$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\mathbb{R}$ hat als Vektorraum über $\\mathbb{Q}$ eine Basis, und jede solche Basis ist überabzählbar.",
+      "answer": true,
+      "explain": "Die Existenz liefert das Auswahlaxiom (Lemma von Zorn), sehen kann man keine. Überabzählbar muss sie sein, weil der $\\mathbb{Q}$-Spann einer abzählbaren Menge abzählbar ist.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-basis",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Austauschlemma: $v$ darf jedes $b_k$ ersetzen, bei dem sein Koeffizient nicht null ist.",
+        "Austauschsatz: Unabhängige Familien sind höchstens so lang wie Basen; deshalb ist die Dimension wohldefiniert.",
+        "Basisergänzung: Jede unabhängige Familie lässt sich zu einer Basis ergänzen.",
+        "In einem $n$-dimensionalen Raum: $n$ unabhängige Vektoren sind eine Basis, $n + 1$ Vektoren sind abhängig."
+      ],
+      "id": "summary"
+    }
+  ]
+}

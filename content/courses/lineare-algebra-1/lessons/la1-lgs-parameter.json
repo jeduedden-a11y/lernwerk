@@ -1,0 +1,252 @@
+{
+  "id": "la1-lgs-parameter",
+  "title": "Gleichungssysteme mit Parametern",
+  "subtitle": "Fallunterscheidungen sauber führen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Lineare Gleichungssysteme.md",
+      "title": "Lineare Gleichungssysteme"
+    },
+    {
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Gauß-Algorithmus.md",
+      "title": "Gauß-Algorithmus"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein klassisches Klausursystem: Für welche $a$ gibt es keine, genau eine oder unendlich viele Lösungen?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\begin{aligned} x + y + az &= 1 \\\\ x + ay + z &= 1 \\\\ ax + y + z &= 1 \\end{aligned}",
+            "why": "Ein Parameter $a$."
+          },
+          {
+            "tex": "(a + 2)(x + y + z) = 3",
+            "why": "Alle drei Gleichungen addieren."
+          },
+          {
+            "tex": "a = -2:\\quad 0 = 3",
+            "why": "Widerspruch: **keine** Lösung."
+          },
+          {
+            "tex": "a = 1:\\quad x + y + z = 1",
+            "why": "Alle Gleichungen sind gleich: eine Ebene, **unendlich viele** Lösungen."
+          },
+          {
+            "tex": "a \\ne 1:\\quad (1 - a)(y - z) = 0 \\Rightarrow y = z,\\ \\text{ebenso } x = y",
+            "why": "Gleichung 1 minus 2; durch $1 - a \\ne 0$ teilen ist erlaubt."
+          },
+          {
+            "tex": "x = y = z = \\tfrac{1}{a + 2}\\quad (a \\notin \\{1, -2\\})",
+            "why": "**Genau eine** Lösung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein System mit Parameter.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Trick: alles addieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der erste Sonderfall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der zweite.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teilen nur, wenn der Teiler nicht null ist.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der allgemeine Fall.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Vorgehen: Erst die Determinante als Funktion des Parameters. Wo sie nicht null ist, gibt es genau eine Lösung. An ihren Nullstellen jeden Fall einzeln prüfen: Ist das System dort widersprüchlich oder unterbestimmt?\n\n**Vorsicht beim Teilen:** Durch einen Ausdruck mit Parameter darf man nur teilen, wenn er nicht null ist. Jeder solche Schritt erzeugt einen Sonderfall.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Kronecker-Capelli\n> $Ax = b$ ist genau dann lösbar, wenn $\\operatorname{rang} A = \\operatorname{rang}(A \\mid b)$. Dann ist die Lösungsmenge $x_0 + \\ker A$ mit $\\dim\\ker A = n - \\operatorname{rang} A$.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für welches $t$ ist $\\begin{aligned} x + 2y &= 1 \\\\ 3x + ty &= 5 \\end{aligned}$ nicht eindeutig lösbar?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "t",
+      "explain": "$\\det = t - 6$. Für $t = 6$ ist die linke Seite der zweiten Gleichung das Dreifache der ersten, rechts steht $5 \\ne 3$: keine Lösung.",
+      "id": "n1"
+    },
+    {
+      "type": "cloze",
+      "label": "Klausur",
+      "md": "Für welches Paar $(a, b)$ hat $\\begin{aligned} x + 2y &= 3 \\\\ 2x + ay &= b \\end{aligned}$ unendlich viele Lösungen?\n\n$a =$ {{0}} $\\qquad b =$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "6"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Die zweite Gleichung muss das Doppelte der ersten sein. Für $a = 4$, $b \\ne 6$ keine Lösung; für $a \\ne 4$ genau eine.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Hat $A_t x = b$ für alle $t \\ne t_0$ genau eine Lösung, so hat es für $t = t_0$ keine.",
+      "answer": false,
+      "explain": "Bei $t_0$ kann es keine oder unendlich viele Lösungen geben, das entscheidet die rechte Seite. Beispiel oben: $a = -2$ keine, $a = 1$ unendlich viele.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "multi",
+      "md": "Was gilt für das System aus der Animation?",
+      "options": [
+        {
+          "md": "Für $a = 0$ ist $(\\tfrac12, \\tfrac12, \\tfrac12)$ die einzige Lösung.",
+          "correct": true
+        },
+        {
+          "md": "Für $a = 1$ gibt es unendlich viele Lösungen.",
+          "correct": true
+        },
+        {
+          "md": "Für $a = 2$ ist $x = \\tfrac14$.",
+          "correct": true
+        },
+        {
+          "md": "Für $a = -2$ gibt es genau eine Lösung.",
+          "why": "Dort entsteht $0 = 3$."
+        }
+      ],
+      "explain": "Allgemein $x = y = z = \\tfrac{1}{a + 2}$ für $a \\notin \\{1, -2\\}$.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Gelöst wird $(a - 1)x = a^2 - 1$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Die rechte Seite ist $a^2 - 1 = (a - 1)(a + 1)$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Teilen durch $a - 1$ ergibt für jedes $a$ die einzige Lösung $x = a + 1$.",
+          "why": "Falsch: Für $a = 1$ darf man nicht teilen; dort lautet die Gleichung $0 = 0$, und **jedes** $x$ ist Lösung."
+        },
+        {
+          "md": "Probe: $(a - 1)(a + 1) = a^2 - 1$.",
+          "why": "Die Probe stimmt, zeigt aber nur, dass $x = a + 1$ eine Lösung ist, nicht die einzige."
+        }
+      ],
+      "answer": 1,
+      "explain": "Fallunterscheidung: Für $a \\ne 1$ genau $x = a + 1$, für $a = 1$ alle $x$.",
+      "id": "sp1"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Für wie viele $a \\in \\mathbb{F}_5$ ist $\\begin{aligned} x + ay &= 1 \\\\ ax + y &= 1 \\end{aligned}$ **nicht** eindeutig lösbar?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$\\det = 1 - a^2 = 0$ für $a = \\pm1$, in $\\mathbb{F}_5$ also $a = 1$ und $a = 4$. Bei $a = 1$ unendlich viele (hier fünf) Lösungen, bei $a = 4 = -1$ ein Widerspruch.",
+      "id": "n2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-lgsparam",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-lgsparam",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-lgsparam",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-lgsparam",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-lgsparam",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Determinante als Funktion des Parameters: außerhalb der Nullstellen genau eine Lösung.",
+        "An den Nullstellen: Rang von $A$ und von $(A \\mid b)$ vergleichen (Kronecker-Capelli).",
+        "Durch einen Ausdruck mit Parameter nur teilen, wenn er nicht null ist; sonst ein eigener Fall.",
+        "Derselbe Sonderfall kann je nach rechter Seite keine oder unendlich viele Lösungen haben."
+      ],
+      "id": "summary"
+    }
+  ]
+}

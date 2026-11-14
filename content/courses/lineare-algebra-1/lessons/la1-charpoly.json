@@ -1,0 +1,240 @@
+{
+  "id": "la1-charpoly",
+  "title": "Das charakteristische Polynom",
+  "subtitle": "Eigenwerte als Nullstellen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eigenwerte findet man als Nullstellen eines Polynoms. Dabei verraten zwei Koeffizienten schon Spur und Determinante.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}",
+            "why": "Gesucht: alle $\\lambda$ mit $Av = \\lambda v$, $v \\ne 0$."
+          },
+          {
+            "tex": "\\det(\\lambda E - A) = (\\lambda - 2)^2 - 1",
+            "why": "$(\\lambda E - A)v = 0$ hat eine Lösung $v \\ne 0$ genau dann, wenn die Determinante null ist."
+          },
+          {
+            "tex": "= \\lambda^2 - 4\\lambda + 3 = (\\lambda - 1)(\\lambda - 3)",
+            "why": "Das **charakteristische Polynom**."
+          },
+          {
+            "tex": "\\lambda_1 + \\lambda_2 = 4 = \\operatorname{Spur}A,\\quad \\lambda_1\\lambda_2 = 3 = \\det A",
+            "why": "Koeffizientenvergleich."
+          },
+          {
+            "tex": "E_1 = \\operatorname{span}\\{(1, -1)\\},\\quad E_3 = \\operatorname{span}\\{(1, 1)\\}",
+            "why": "Die Eigenräume als Kerne von $A - \\lambda E$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine symmetrische Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Bedingung als Determinante.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Polynom zweiten Grades.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Seine Koeffizienten sind Spur und Determinante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zu jedem Eigenwert ein Eigenraum.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$\\chi_A(\\lambda) = \\det(\\lambda E - A)$ ist ein normiertes Polynom vom Grad $n$. Seine Nullstellen sind die Eigenwerte, ihre Vielfachheit als Nullstelle heißt **algebraische Vielfachheit**. Der **Eigenraum** $E_\\lambda = \\ker(A - \\lambda E)$ hat die **geometrische Vielfachheit** $\\dim E_\\lambda$.\n\n$\\chi_A(\\lambda) = \\lambda^n - (\\operatorname{Spur}A)\\lambda^{n-1} + \\dots + (-1)^n\\det A$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Eigenschaften\n> Ähnliche Matrizen haben dasselbe charakteristische Polynom (aber nicht umgekehrt). Für jeden Eigenwert gilt: geometrische Vielfachheit $\\le$ algebraische Vielfachheit.\n>\n> Über $\\mathbb{C}$ zerfällt $\\chi_A$ in Linearfaktoren: Die Spur ist die Summe, die Determinante das Produkt aller Eigenwerte mit Vielfachheit.",
+      "id": "t2"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Bestimme die Eigenwerte von $\\begin{pmatrix}3&2\\\\1&4\\end{pmatrix}$ (größeren zuerst).\n\n{{0}} $\\qquad$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "5"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "$\\chi(\\lambda) = \\lambda^2 - 7\\lambda + 10 = (\\lambda - 5)(\\lambda - 2)$. Kontrolle: $5 + 2 = 7 = $ Spur, $5 \\cdot 2 = 10 = \\det$.",
+      "id": "cl1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche geometrische Vielfachheit hat der Eigenwert $2$ von $\\begin{pmatrix}2&1&0\\\\0&2&0\\\\0&0&3\\end{pmatrix}$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$A - 2E = \\begin{pmatrix}0&1&0\\\\0&0&0\\\\0&0&1\\end{pmatrix}$ hat Rang $2$, Kern $\\operatorname{span}\\{e_1\\}$. Algebraisch $2$, geometrisch $1$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Matrizen mit gleichem charakteristischem Polynom sind ähnlich.",
+      "answer": false,
+      "explain": "$E$ und $\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ haben beide $(\\lambda - 1)^2$, sind aber nicht ähnlich: Nur $E$ ist zu $E$ ähnlich.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$A \\in \\mathbb{R}^{3 \\times 3}$ hat die Eigenwerte $1, 2, 3$. Berechne $\\det(A + E)$.",
+      "answer": 24,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$A + E$ hat die Eigenwerte $2, 3, 4$, die Determinante ist ihr Produkt: $24$.",
+      "id": "n2"
+    },
+    {
+      "type": "choice",
+      "md": "Was ist $\\chi_A(0)$ für $\\chi_A(\\lambda) = \\det(\\lambda E - A)$, $A \\in K^{n \\times n}$?",
+      "options": [
+        {
+          "md": "$(-1)^n\\det A$",
+          "correct": true
+        },
+        {
+          "md": "$\\det A$",
+          "why": "Nur für gerade $n$: $\\det(-A) = (-1)^n\\det A$."
+        },
+        {
+          "md": "$\\operatorname{Spur}A$",
+          "why": "Die Spur steht beim Koeffizienten von $\\lambda^{n-1}$."
+        },
+        {
+          "md": "$0$",
+          "why": "Nur, wenn $A$ nicht invertierbar ist."
+        }
+      ],
+      "explain": "$\\chi_A(0) = \\det(-A) = (-1)^n\\det A$. Insbesondere: $0$ ist Eigenwert genau dann, wenn $\\det A = 0$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Über $\\mathbb{C}$ hat jede quadratische Matrix einen Eigenvektor.",
+      "answer": true,
+      "explain": "$\\chi_A$ hat nach dem Fundamentalsatz der Algebra eine komplexe Nullstelle. Über $\\mathbb{R}$ falsch: die Drehung um $90°$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "$A \\in \\mathbb{R}^{4 \\times 4}$ hat $\\chi_A(\\lambda) = (\\lambda - 2)^3(\\lambda + 1)$ und $\\operatorname{rang}(A - 2E) = 2$. Welche Dimension hat der Eigenraum zu $2$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$\\dim\\ker(A - 2E) = 4 - 2 = 2$, kleiner als die algebraische Vielfachheit $3$: $A$ ist nicht diagonalisierbar.",
+      "id": "n3"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum ist die geometrische Vielfachheit höchstens die algebraische?",
+      "solution": "Ergänze eine Basis $v_1, \\dots, v_g$ von $E_\\lambda$ zu einer Basis von $V$. In dieser Basis hat $A$ die Gestalt $\\begin{pmatrix}\\lambda E_g & *\\\\0 & B\\end{pmatrix}$, also $\\chi_A(x) = (x - \\lambda)^g\\chi_B(x)$. Damit ist $\\lambda$ mindestens $g$-fache Nullstelle.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\chi_A(\\lambda) = \\det(\\lambda E - A)$; Nullstellen sind die Eigenwerte.",
+        "Spur $=$ Summe, Determinante $=$ Produkt der Eigenwerte (mit Vielfachheit, über $\\mathbb{C}$).",
+        "Eigenraum $E_\\lambda = \\ker(A - \\lambda E)$; geometrisch $\\le$ algebraisch.",
+        "Gleiches charakteristisches Polynom heißt noch nicht ähnlich."
+      ],
+      "id": "summary"
+    }
+  ]
+}

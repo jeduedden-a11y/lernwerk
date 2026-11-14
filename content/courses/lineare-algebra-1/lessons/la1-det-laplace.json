@@ -1,0 +1,217 @@
+{
+  "id": "la1-det-laplace",
+  "title": "Laplace-Entwicklung und Blockmatrizen",
+  "subtitle": "Determinanten geschickt berechnen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Determinante.md",
+      "title": "Determinante"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine $4 \\times 4$-Determinante ohne Rechenmarathon: Wir suchen die Spalte mit den meisten Nullen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}2&0&1&3\\\\1&0&2&1\\\\4&5&1&2\\\\0&0&3&1\\end{pmatrix}",
+            "why": "In Spalte 2 steht nur ein Eintrag $\\ne 0$."
+          },
+          {
+            "tex": "\\det A = (-1)^{3+2} \\cdot 5 \\cdot \\det M",
+            "why": "Entwicklung nach Spalte 2: Vorzeichen nach dem Schachbrettmuster."
+          },
+          {
+            "tex": "M = \\begin{pmatrix}2&1&3\\\\1&2&1\\\\0&3&1\\end{pmatrix}",
+            "why": "Zeile 3 und Spalte 2 streichen."
+          },
+          {
+            "tex": "\\det M = 2(2 - 3) - 1(1 - 0) + 3(3 - 0) = 6",
+            "why": "Entwicklung nach der ersten Zeile."
+          },
+          {
+            "tex": "\\det A = -5 \\cdot 6 = -30",
+            "why": "Fertig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zuerst die Nullen suchen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Entwickeln nach der dünnsten Spalte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Übrig bleibt eine $3 \\times 3$-Determinante.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die wird wieder entwickelt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Laplace-Entwicklung** nach Zeile $i$: $\\det A = \\sum_j (-1)^{i+j} a_{ij} \\det A_{ij}$, wobei $A_{ij}$ durch Streichen von Zeile $i$ und Spalte $j$ entsteht. Ebenso nach Spalten. Strategie: mit Zeilenumformungen Nullen erzeugen, dann nach der dünnsten Zeile oder Spalte entwickeln.\n\nDie Regel von Sarrus gilt **nur** für $3 \\times 3$-Matrizen.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Nützliche Formeln\n> Dreiecksmatrizen: Produkt der Diagonale. Blockdreiecksmatrizen: $\\det\\begin{pmatrix}A&B\\\\0&D\\end{pmatrix} = \\det A \\det D$.\n>\n> Vandermonde: $\\det\\bigl(x_i^{\\,j-1}\\bigr) = \\prod_{i<j}(x_j - x_i)$, nicht null genau dann, wenn die $x_i$ verschieden sind.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\det\\begin{pmatrix}1&2&5&7\\\\3&4&1&1\\\\0&0&2&1\\\\0&0&1&1\\end{pmatrix}$.",
+      "answer": -2,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Blockdreiecksmatrix: $\\det\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix} \\cdot \\det\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix} = (-2) \\cdot 1 = -2$. Der Block oben rechts spielt keine Rolle.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\det\\begin{pmatrix}1&1&1\\\\1&2&4\\\\1&4&16\\end{pmatrix}$.",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Vandermonde mit den Stützstellen $1, 2, 4$: $(2 - 1)(4 - 1)(4 - 2) = 6$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Regel von Sarrus berechnet auch $4 \\times 4$-Determinanten.",
+      "answer": false,
+      "explain": "Sarrus liefert $6$ Summanden; eine $4 \\times 4$-Determinante hat $24$. Das Diagonalenmuster funktioniert nur bei $3 \\times 3$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für Blockmatrizen gilt $\\det\\begin{pmatrix}A&B\\\\C&D\\end{pmatrix} = \\det A\\det D - \\det B\\det C$.",
+      "answer": false,
+      "explain": "Das sieht aus wie die $2 \\times 2$-Formel, stimmt aber im Allgemeinen nicht. Sicher richtig ist nur der Fall $C = 0$ (oder $B = 0$): $\\det A \\det D$.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "choice",
+      "md": "Eine Zeile einer $5 \\times 5$-Matrix hat nur einen Eintrag $\\ne 0$. Was ist der schnellste Weg?",
+      "options": [
+        {
+          "md": "Nach dieser Zeile entwickeln: Es bleibt eine $4 \\times 4$-Determinante",
+          "correct": true
+        },
+        {
+          "md": "Leibniz mit $120$ Summanden",
+          "why": "Viel zu aufwendig."
+        },
+        {
+          "md": "Sarrus",
+          "why": "Gibt es für $5 \\times 5$ nicht."
+        },
+        {
+          "md": "Erst die Matrix invertieren",
+          "why": "Invertieren ist aufwendiger als die Determinante."
+        }
+      ],
+      "explain": "Laplace lohnt sich genau bei Zeilen oder Spalten mit vielen Nullen.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Berechne $\\det\\begin{pmatrix}0&1&2\\\\1&0&1\\\\2&1&0\\end{pmatrix}$ (die Matrix mit $a_{ij} = |i - j|$).",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Entwicklung nach der ersten Zeile: $0 - 1 \\cdot (0 - 2) + 2 \\cdot (1 - 0) = 4$. Allgemein ist $\\det(|i - j|) = (-1)^{n-1}(n - 1)2^{n-2}$.",
+      "id": "n3"
+    },
+    {
+      "type": "reveal",
+      "label": "Extrem",
+      "md": "Warum ist die Vandermonde-Determinante $\\prod_{i<j}(x_j - x_i)$? Skizziere die Idee.",
+      "solution": "Fasse die Determinante als Polynom in der letzten Stützstelle $x_n$ auf. Es hat Grad $n - 1$ und verschwindet für $x_n = x_1, \\dots, x_{n-1}$ (zwei gleiche Zeilen). Also ist es $c \\prod_{i<n}(x_n - x_i)$, wobei $c$ (der Leitkoeffizient) die Vandermonde-Determinante der ersten $n - 1$ Stellen ist. Induktion.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Laplace: nach der Zeile oder Spalte mit den meisten Nullen entwickeln, vorher Nullen erzeugen.",
+        "Blockdreiecksmatrizen: $\\det A \\det D$; die allgemeine Blockformel gibt es so nicht.",
+        "Sarrus nur für $3 \\times 3$.",
+        "Vandermonde: $\\prod_{i<j}(x_j - x_i)$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

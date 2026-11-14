@@ -4,7 +4,10 @@
   "subtitle": "Abstände allgemein denken",
   "source": "Skript Jarohs, Kapitel 8",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Metrische Räume.md", "title": "Metrische Räume" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Metrische Räume.md",
+      "title": "Metrische Räume"
+    }
   ],
   "steps": [
     {
@@ -13,18 +16,92 @@
       "md": "Blau ist die Menge $U = (0, 1)$ auf der Zahlengeraden, ohne ihre Randpunkte. Um den Punkt $x$ zeichnen wir einen grünen Streifen. Frage: Passt um **jeden** Punkt von $U$ ein Streifen ganz in $U$?",
       "widget": "plot",
       "params": {
-        "x": [-0.3, 1.3], "y": [-0.5, 0.5], "grid": false, "height": 170,
-        "vars": [{ "name": "x0", "min": 0, "max": 1.2, "value": 0.5, "hidden": true }, { "name": "r", "min": 0, "max": 1, "value": 0.3, "hidden": true }],
-        "lines": [{ "from": [0, 0], "to": [1, 0], "color": "accent", "width": 7 }],
-        "vbands": [{ "x": "x0", "d": "r", "color": "green" }],
-        "points": [{ "x": "x0", "y": 0, "color": "green", "label": "x" }],
+        "x": [
+          -0.3,
+          1.3
+        ],
+        "y": [
+          -0.5,
+          0.5
+        ],
+        "grid": false,
+        "height": 170,
+        "vars": [
+          {
+            "name": "x0",
+            "min": 0,
+            "max": 1.2,
+            "value": 0.5,
+            "hidden": true
+          },
+          {
+            "name": "r",
+            "min": 0,
+            "max": 1,
+            "value": 0.3,
+            "hidden": true
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "color": "accent",
+            "width": 7
+          }
+        ],
+        "vbands": [
+          {
+            "x": "x0",
+            "d": "r",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "x0",
+            "y": 0,
+            "color": "green",
+            "label": "x"
+          }
+        ],
         "readout": "$x = {x0|3}$, Radius $r = {r|3}$"
       },
       "timeline": [
-        { "caption": "Um $x = 0{,}5$ passt der Streifen $(x - r, x + r)$ mit $r = 0{,}3$ ganz in $U$." },
-        { "caption": "Je näher $x$ am Rand liegt, desto schmaler muss der Streifen werden. Bei $x = 0{,}85$ reicht noch $r = 0{,}12$.", "to": { "x0": 0.85, "r": 0.12 }, "dur": 2000 },
-        { "caption": "Bei $x = 0{,}97$ geht es mit $r = 0{,}025$. Man wählt einfach $r$ kleiner als den Abstand zum Rand. Das klappt für **jeden** Punkt von $U$, weil die Randpunkte $0$ und $1$ nicht dazugehören. $U$ ist **offen**.", "to": { "x0": 0.97, "r": 0.025 }, "dur": 2000, "hold": 7000 },
-        { "caption": "Nimmt man den Rand dazu, $[0, 1]$, scheitert es am Punkt $1$: Jeder Streifen um $1$ ragt nach rechts heraus, egal wie schmal. $[0, 1]$ ist nicht offen. Sie ist **abgeschlossen**, weil ihr Komplement offen ist.", "to": { "x0": 1, "r": 0.1 }, "dur": 1600 }
+        {
+          "caption": "Um $x = 0{,}5$ passt der Streifen $(x - r, x + r)$ mit $r = 0{,}3$ ganz in $U$."
+        },
+        {
+          "caption": "Je näher $x$ am Rand liegt, desto schmaler muss der Streifen werden. Bei $x = 0{,}85$ reicht noch $r = 0{,}12$.",
+          "to": {
+            "x0": 0.85,
+            "r": 0.12
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Bei $x = 0{,}97$ geht es mit $r = 0{,}025$. Man wählt einfach $r$ kleiner als den Abstand zum Rand. Das klappt für **jeden** Punkt von $U$, weil die Randpunkte $0$ und $1$ nicht dazugehören. $U$ ist **offen**.",
+          "to": {
+            "x0": 0.97,
+            "r": 0.025
+          },
+          "dur": 2000,
+          "hold": 7000
+        },
+        {
+          "caption": "Nimmt man den Rand dazu, $[0, 1]$, scheitert es am Punkt $1$: Jeder Streifen um $1$ ragt nach rechts heraus, egal wie schmal. $[0, 1]$ ist nicht offen. Sie ist **abgeschlossen**, weil ihr Komplement offen ist.",
+          "to": {
+            "x0": 1,
+            "r": 0.1
+          },
+          "dur": 1600
+        }
       ]
     },
     {
@@ -43,11 +120,30 @@
       "label": "Finden",
       "md": "Hier sind die Einheitskugeln der Metriken $d_1$, $d_2$ und $d_\\infty$ in der Ebene. **Ziehe den Punkt auf den Rand der $d_\\infty$-Kugel (Quadrat), aber deutlich außerhalb der $d_2$-Kugel (Kreis).**",
       "widget": "unitball",
-      "params": { "point": [0.3, 0.3] },
+      "params": {
+        "point": [
+          0.3,
+          0.3
+        ]
+      },
       "goal": {
         "when": "abs(ninf - 1) < 0.03 && n2 > 1.1",
-        "hints": [{ "when": "abs(ninf - 1) >= 0.03", "text": "d∞ = {ninf|2}: Die größere Koordinate muss 1 sein." }, { "when": "n2 <= 1.1", "text": "d₂ = {n2|2}: noch zu nah am Kreis. Geh Richtung Ecke des Quadrats." }],
-        "solve": { "point": [1, 0.8] }
+        "hints": [
+          {
+            "when": "abs(ninf - 1) >= 0.03",
+            "text": "d∞ = {ninf|2}: Die größere Koordinate muss 1 sein."
+          },
+          {
+            "when": "n2 <= 1.1",
+            "text": "d₂ = {n2|2}: noch zu nah am Kreis. Geh Richtung Ecke des Quadrats."
+          }
+        ],
+        "solve": {
+          "point": [
+            1,
+            0.8
+          ]
+        }
       },
       "explain": "In den Ecken des Quadrats ist der euklidische Abstand bis zu $\\sqrt2 \\approx 1{,}41$. Trotzdem beschreiben alle drei Metriken dieselben offenen Mengen, denn jede Kugel der einen enthält eine kleinere Kugel der anderen."
     },
@@ -70,16 +166,86 @@
       "type": "choice",
       "md": "Warum ist $A = \\set{\\tfrac1n : n \\in \\N}$ nicht abgeschlossen in $\\R$?",
       "options": [
-        { "md": "Die Folge $\\tfrac1n$ liegt in $A$, ihr Grenzwert $0$ aber nicht.", "correct": true },
-        { "md": "Weil $A$ unendlich viele Elemente hat.", "why": "$\\N$ ist unendlich und trotzdem abgeschlossen." },
-        { "md": "Weil $A$ nicht offen ist.", "why": "Nicht offen heißt nicht automatisch abgeschlossen." }
+        {
+          "md": "Die Folge $\\tfrac1n$ liegt in $A$, ihr Grenzwert $0$ aber nicht.",
+          "correct": true
+        },
+        {
+          "md": "Weil $A$ unendlich viele Elemente hat.",
+          "why": "$\\N$ ist unendlich und trotzdem abgeschlossen."
+        },
+        {
+          "md": "Weil $A$ nicht offen ist.",
+          "why": "Nicht offen heißt nicht automatisch abgeschlossen."
+        }
       ],
       "explain": "Nach dem Folgenkriterium muss eine abgeschlossene Menge alle ihre Grenzwerte enthalten. Nimmt man die $0$ dazu, wird $A \\cup \\set0$ abgeschlossen."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-metrik", "level": 1, "label": "Einordnen" },
-    { "id": "neu2", "type": "gen", "gen": "ana-metrik", "level": 2, "label": "Einordnen" },
-    { "id": "neu3", "type": "gen", "gen": "ana-metrik", "level": 3, "label": "Abstände" },
-    { "id": "neu4", "type": "gen", "gen": "ana-metrik", "level": 4, "label": "Nachdenken" },
+    {
+      "type": "truefalse",
+      "md": "$d(x, y) = (x - y)^2$ ist eine Metrik auf $\\mathbb{R}$.",
+      "answer": false,
+      "explain": "$d(0, 2) = 4 > 2 = d(0, 1) + d(1, 2)$.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $d$ eine Metrik, so auch $\\min(d, 1)$.",
+      "answer": true,
+      "explain": "Die Dreiecksungleichung bleibt: Ist einer der Summanden rechts $\\ge 1$, gilt sie sofort, sonst wie bei $d$.",
+      "label": "Klausur",
+      "id": "v2"
+    },
+    {
+      "type": "truefalse",
+      "md": "In $\\mathbb{Q}$ ist jede abgeschlossene, beschränkte Menge kompakt.",
+      "answer": false,
+      "explain": "$\\mathbb{Q} \\cap [0, 2]$ enthält Folgen gegen $\\sqrt2$ ohne konvergente Teilfolge in $\\mathbb{Q}$. Heine-Borel braucht Vollständigkeit.",
+      "label": "Klausur",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "In jedem metrischen Raum ist die abgeschlossene Kugel $\\bar B(x, r)$ der Abschluss der offenen Kugel $B(x, r)$.",
+      "answer": false,
+      "explain": "Diskrete Metrik, $r = 1$: $B(x, 1) = \\{x\\}$ ist abgeschlossen, $\\bar B(x, 1)$ ist alles.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-metrik",
+      "level": 1,
+      "label": "Einordnen"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-metrik",
+      "level": 2,
+      "label": "Einordnen"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-metrik",
+      "level": 3,
+      "label": "Abstände"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-metrik",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-metrik",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -88,7 +254,9 @@
         "Eine Metrik ist eine Abstandsfunktion: definit, symmetrisch, Dreiecksungleichung.",
         "Offen: Um jeden Punkt passt eine kleine Kugel in die Menge. Abgeschlossen: Das Komplement ist offen.",
         "Abgeschlossene Mengen enthalten die Grenzwerte ihrer konvergenten Folgen.",
-        "Offen und abgeschlossen sind keine Gegensätze: Es gibt Mengen, die beides oder keines sind."
+        "Offen und abgeschlossen sind keine Gegensätze: Es gibt Mengen, die beides oder keines sind.",
+        "Die Dreiecksungleichung ist der Knackpunkt jeder Metrik.",
+        "Heine-Borel gilt im $\\mathbb{R}^n$, nicht in $\\mathbb{Q}$."
       ]
     }
   ]

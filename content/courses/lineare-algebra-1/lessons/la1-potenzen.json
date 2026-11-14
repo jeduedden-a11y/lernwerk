@@ -1,0 +1,225 @@
+{
+  "id": "la1-potenzen",
+  "title": "Matrixpotenzen und lineare Rekursionen",
+  "subtitle": "Was Diagonalisieren nützt",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    },
+    {
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Übergangsmatrizen und Populationsmodelle.md",
+      "title": "Übergangsmatrizen und Populationsmodelle"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Fibonacci-Zahlen sind eine Matrixpotenz. Diagonalisieren liefert eine Formel, mit der man $F_n$ direkt ausrechnet.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\begin{pmatrix}F_{n+1}\\\\F_n\\end{pmatrix} = \\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}\\begin{pmatrix}F_n\\\\F_{n-1}\\end{pmatrix}",
+            "why": "Die Rekursion $F_{n+1} = F_n + F_{n-1}$ als Matrix."
+          },
+          {
+            "tex": "\\begin{pmatrix}F_{n+1}\\\\F_n\\end{pmatrix} = A^n\\begin{pmatrix}1\\\\0\\end{pmatrix}",
+            "why": "$n$-mal anwenden, Start $F_1 = 1$, $F_0 = 0$."
+          },
+          {
+            "tex": "\\chi_A(\\lambda) = \\lambda^2 - \\lambda - 1,\\quad \\varphi = \\tfrac{1 + \\sqrt5}{2},\\ \\psi = \\tfrac{1 - \\sqrt5}{2}",
+            "why": "Zwei verschiedene Eigenwerte: diagonalisierbar."
+          },
+          {
+            "tex": "A^n = S\\operatorname{diag}(\\varphi^n, \\psi^n)S^{-1}",
+            "why": "Potenzen einer Diagonalmatrix: Einträge potenzieren."
+          },
+          {
+            "tex": "F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5}",
+            "why": "Formel von Binet."
+          },
+          {
+            "tex": "F_{10} = 55,\\quad \\varphi^{10}/\\sqrt5 \\approx 55{,}004",
+            "why": "Weil $|\\psi| < 1$, ist $F_n$ die nächste ganze Zahl zu $\\varphi^n/\\sqrt5$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Rekursion als Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die $n$-te Zahl steckt in $A^n$.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eigenwerte: Goldener Schnitt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diagonalisieren macht Potenzen leicht.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eine geschlossene Formel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und der größte Eigenwert bestimmt das Wachstum.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ist $A = SDS^{-1}$, dann $A^n = SD^nS^{-1}$, und $D^n$ potenziert nur die Diagonale. Für $x_{n+1} = Ax_n$ zerlegt man den Start $x_0$ in Eigenvektoren: $x_0 = \\sum c_i v_i$, dann $x_n = \\sum c_i \\lambda_i^n v_i$. Langfristig dominiert der Eigenwert mit dem größten Betrag.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lineare Rekursionen\n> $a_{n+2} = pa_{n+1} + qa_n$ hat die charakteristische Gleichung $\\lambda^2 = p\\lambda + q$. Bei zwei verschiedenen Nullstellen ist $a_n = c_1\\lambda_1^n + c_2\\lambda_2^n$; die $c_i$ legen die Startwerte fest.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$A = \\begin{pmatrix}1&1\\\\0&2\\end{pmatrix}$. Welcher Eintrag steht oben rechts in $A^5$?",
+      "answer": 31,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Eigenwerte $1$ und $2$. Man rechnet $A^2 = \\begin{pmatrix}1&3\\\\0&4\\end{pmatrix}$, $A^3 = \\begin{pmatrix}1&7\\\\0&8\\end{pmatrix}$: allgemein $A^n = \\begin{pmatrix}1&2^n - 1\\\\0&2^n\\end{pmatrix}$, also $31$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$a_0 = 0$, $a_1 = 1$, $a_{n+2} = 5a_{n+1} - 6a_n$. Berechne $a_5$.",
+      "answer": 211,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$\\lambda^2 - 5\\lambda + 6 = (\\lambda - 2)(\\lambda - 3)$, also $a_n = c_12^n + c_23^n$. Startwerte: $c_1 + c_2 = 0$, $2c_1 + 3c_2 = 1$, also $a_n = 3^n - 2^n$ und $a_5 = 243 - 32 = 211$.",
+      "id": "n2"
+    },
+    {
+      "type": "choice",
+      "md": "$x_{n+1} = Ax_n$, $A$ diagonalisierbar mit den Eigenwerten $1{,}2$ und $0{,}5$. Wie verhält sich $x_n$ für große $n$ (Startwert mit beiden Anteilen)?",
+      "options": [
+        {
+          "md": "Es wächst wie $1{,}2^n$ in Richtung des Eigenvektors zu $1{,}2$",
+          "correct": true
+        },
+        {
+          "md": "Es geht gegen $0$",
+          "why": "Nur der Anteil zum Eigenwert $0{,}5$ verschwindet."
+        },
+        {
+          "md": "Es pendelt zwischen zwei Werten",
+          "why": "Dafür bräuchte es einen negativen Eigenwert vom Betrag $1$."
+        },
+        {
+          "md": "Es bleibt konstant",
+          "why": "Konstant bleibt nur ein Eigenvektor zum Eigenwert $1$."
+        }
+      ],
+      "explain": "$x_n = c_1 1{,}2^n v_1 + c_2 0{,}5^n v_2$. Der zweite Summand verschwindet, der erste dominiert. Genau so analysiert man Populationsmodelle.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $A$ diagonalisierbar und haben alle Eigenwerte Betrag kleiner $1$, so gilt $A^n \\to 0$.",
+      "answer": true,
+      "explain": "$A^n = SD^nS^{-1}$ und $D^n \\to 0$. Es gilt sogar ohne Diagonalisierbarkeit.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Berechne $F_{30}$ (Fibonacci mit $F_0 = 0$, $F_1 = 1$).",
+      "answer": 832040,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Mit Binet: $\\varphi^{30}/\\sqrt5 \\approx 832040{,}0000002$, und $F_{30}$ ist die nächste ganze Zahl. Oder $30$ Additionen.",
+      "id": "n3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus $A^n = \\begin{pmatrix}F_{n+1}&F_n\\\\F_n&F_{n-1}\\end{pmatrix}$ für $A = \\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}$ folgt $F_{n+1}F_{n-1} - F_n^2 = (-1)^n$.",
+      "answer": true,
+      "explain": "Determinanten: $\\det A^n = (\\det A)^n = (-1)^n$. Das ist die Identität von Cassini, bewiesen mit einer Zeile linearer Algebra.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$A = SDS^{-1} \\Rightarrow A^n = SD^nS^{-1}$.",
+        "$x_n = \\sum c_i\\lambda_i^n v_i$: Langfristig dominiert der betragsgrößte Eigenwert.",
+        "Lineare Rekursionen: $a_n = c_1\\lambda_1^n + c_2\\lambda_2^n$ mit den Nullstellen der charakteristischen Gleichung.",
+        "Fibonacci: $F_n = (\\varphi^n - \\psi^n)/\\sqrt5$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

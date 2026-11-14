@@ -1,0 +1,203 @@
+{
+  "id": "ana1-cauchyprodukt",
+  "title": "Das Cauchy-Produkt",
+  "subtitle": "Reihen multiplizieren",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md",
+      "title": "Reihen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md",
+      "title": "Exponentialfunktion"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wie multipliziert man zwei unendliche Summen? Man sammelt alle Produkte mit gleicher Indexsumme.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Bigl(\\sum_{k \\ge 0}a_k\\Bigr)\\Bigl(\\sum_{m \\ge 0}b_m\\Bigr) \\overset?= \\sum_{n \\ge 0}c_n",
+            "why": "Gesucht: eine Reihe für das Produkt."
+          },
+          {
+            "tex": "c_n = \\sum_{k=0}^{n}a_kb_{n-k}",
+            "why": "Alle Produkte $a_kb_m$ mit $k + m = n$, wie beim Ausmultiplizieren von Polynomen."
+          },
+          {
+            "tex": "\\Bigl(\\sum x^n\\Bigr)^2:\\quad c_n = \\sum_{k=0}^n x^kx^{n-k} = (n + 1)x^n",
+            "why": "Beispiel: die geometrische Reihe mit sich selbst."
+          },
+          {
+            "tex": "\\sum_{n \\ge 0}(n + 1)x^n = \\frac{1}{(1 - x)^2}",
+            "why": "Für $|x| < 1$, weil beide Faktoren absolut konvergieren."
+          },
+          {
+            "tex": "e^x e^y = \\sum_n\\sum_{k=0}^n\\frac{x^ky^{n-k}}{k!(n-k)!} = \\sum_n\\frac{(x + y)^n}{n!}",
+            "why": "Und so folgt die Funktionalgleichung der Exponentialfunktion."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Reihen sollen multipliziert werden.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleiche Indexsumme zusammenfassen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Formel für das Quadrat der geometrischen Reihe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die wichtigste Anwendung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Das **Cauchy-Produkt** von $\\sum a_n$ und $\\sum b_n$ ist $\\sum c_n$ mit $c_n = \\sum_{k=0}^n a_kb_{n-k}$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Cauchy-Produktsatz\n> Konvergieren beide Reihen **absolut**, so konvergiert das Cauchy-Produkt absolut gegen das Produkt der Werte. (Mertens: Es reicht, wenn eine absolut und die andere konvergent ist.)\n>\n> Ohne absolute Konvergenz kann das Cauchy-Produkt divergieren.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\sum_{n \\ge 0}\\tfrac{n + 1}{2^n}$.",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Wert",
+      "explain": "$\\sum(n + 1)x^n = \\tfrac{1}{(1 - x)^2}$ bei $x = \\tfrac12$: $\\tfrac{1}{1/4} = 4$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für $a = (1, 2, 3, \\dots)$ und $b = (1, 1, 1, \\dots)$ (Glieder ab Index $0$): Bestimme $c_2$ des Cauchy-Produkts.",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "c2",
+      "explain": "$c_2 = a_0b_2 + a_1b_1 + a_2b_0 = 1 + 2 + 3 = 6$. Mit lauter Einsen als $b$ entstehen Partialsummen.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Cauchy-Produkt zweier konvergenter Reihen konvergiert immer.",
+      "answer": false,
+      "explain": "$\\sum\\tfrac{(-1)^n}{\\sqrt{n + 1}}$ mit sich selbst: $|c_n| \\ge 1$, die Glieder gehen nicht gegen $0$.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ist das Cauchy-Produkt von $\\sum\\tfrac{x^n}{n!}$ und $\\sum\\tfrac{(-x)^n}{n!}$?",
+      "options": [
+        {
+          "md": "Die Reihe mit $c_0 = 1$ und $c_n = 0$ für $n \\ge 1$",
+          "correct": true
+        },
+        {
+          "md": "$\\sum\\tfrac{x^{2n}}{(n!)^2}$",
+          "why": "$c_n = \\tfrac{(x - x)^n}{n!}$, der binomische Lehrsatz mit $y = -x$."
+        },
+        {
+          "md": "$e^{2x}$",
+          "why": "Das wäre das Produkt mit $e^x$ selbst."
+        },
+        {
+          "md": "Es divergiert",
+          "why": "Beide Reihen konvergieren absolut."
+        }
+      ],
+      "explain": "$e^xe^{-x} = e^0 = 1$, und genau so steht es im Cauchy-Produkt: $c_n = \\tfrac{(x + (-x))^n}{n!} = 0$ für $n \\ge 1$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist eine der beiden Reihen absolut konvergent und die andere konvergent, so konvergiert das Cauchy-Produkt gegen das Produkt.",
+      "answer": true,
+      "explain": "Satz von Mertens.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-absolut",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-absolut",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-absolut",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-absolut",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-exp",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Cauchy-Produkt: $c_n = \\sum_{k=0}^n a_kb_{n-k}$.",
+        "Bei absoluter Konvergenz konvergiert es gegen das Produkt; daraus folgt $e^{x+y} = e^xe^y$.",
+        "Ohne absolute Konvergenz kann es divergieren."
+      ],
+      "id": "summary"
+    }
+  ]
+}

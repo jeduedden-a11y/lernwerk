@@ -4,8 +4,14 @@
   "subtitle": "Funktionen durch Polynome ersetzen, mit Garantie",
   "source": "Skript Jarohs, Kapitel 15",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Taylorpolynome.md", "title": "Taylorpolynome" },
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md", "title": "Ableitung" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Taylorpolynome.md",
+      "title": "Taylorpolynome"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "title": "Ableitung"
+    }
   ],
   "steps": [
     {
@@ -14,20 +20,68 @@
       "md": "Grau ist $\\sin x$, blau ein Polynom, das bei $0$ so viele Ableitungen wie möglich mit $\\sin$ gemeinsam hat. Je höher der Grad, desto länger klebt es am Sinus.",
       "widget": "plot",
       "params": {
-        "x": [-7, 7], "y": [-3, 3],
-        "vars": [{ "name": "n", "min": 1, "max": 13, "step": 1, "value": 1, "hidden": true }],
+        "x": [
+          -7,
+          7
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "min": 1,
+            "max": 13,
+            "step": 1,
+            "value": 1,
+            "hidden": true
+          }
+        ],
         "functions": [
-          { "expr": "sin(x)", "color": "gray", "width": 4, "label": "sin", "labelAt": 5.2 },
-          { "name": "T", "expr": "x - (n >= 3 ? x^3/6 : 0) + (n >= 5 ? x^5/120 : 0) - (n >= 7 ? x^7/5040 : 0) + (n >= 9 ? x^9/362880 : 0) - (n >= 11 ? x^11/39916800 : 0) + (n >= 13 ? x^13/6227020800 : 0)" }
+          {
+            "expr": "sin(x)",
+            "color": "gray",
+            "width": 4,
+            "label": "sin",
+            "labelAt": 5.2
+          },
+          {
+            "name": "T",
+            "expr": "x - (n >= 3 ? x^3/6 : 0) + (n >= 5 ? x^5/120 : 0) - (n >= 7 ? x^7/5040 : 0) + (n >= 9 ? x^9/362880 : 0) - (n >= 11 ? x^11/39916800 : 0) + (n >= 13 ? x^13/6227020800 : 0)"
+          }
         ],
         "readout": "Grad $n = {n|0}$"
       },
-      "int": ["n"],
+      "int": [
+        "n"
+      ],
       "timeline": [
-        { "caption": "Grad $1$: die Tangente $T_1(x) = x$. Bei $0$ stimmen Wert und Steigung, aber schon bei $x = 1$ ist der Fehler sichtbar." },
-        { "caption": "Grad $3$: $x - \\tfrac{x^3}{6}$. Jetzt stimmt auch die Krümmung, und die Näherung hält etwa bis $x = \\pm 1{,}5$.", "to": { "n": 3 }, "dur": 600 },
-        { "caption": "Grad $5$ und $7$: Jeder neue Summand korrigiert den Fehler des vorigen, und der Bereich guter Übereinstimmung wächst.", "to": { "n": 7 }, "dur": 1600, "hold": 6000 },
-        { "caption": "Grad $13$: Auf fast dem ganzen Bild ist kein Unterschied mehr zu sehen. Ein Polynom aus Grundrechenarten ersetzt den Sinus. So rechnen Taschenrechner, und das Restglied sagt, wie genau.", "to": { "n": 13 }, "dur": 2000 }
+        {
+          "caption": "Grad $1$: die Tangente $T_1(x) = x$. Bei $0$ stimmen Wert und Steigung, aber schon bei $x = 1$ ist der Fehler sichtbar."
+        },
+        {
+          "caption": "Grad $3$: $x - \\tfrac{x^3}{6}$. Jetzt stimmt auch die Krümmung, und die Näherung hält etwa bis $x = \\pm 1{,}5$.",
+          "to": {
+            "n": 3
+          },
+          "dur": 600
+        },
+        {
+          "caption": "Grad $5$ und $7$: Jeder neue Summand korrigiert den Fehler des vorigen, und der Bereich guter Übereinstimmung wächst.",
+          "to": {
+            "n": 7
+          },
+          "dur": 1600,
+          "hold": 6000
+        },
+        {
+          "caption": "Grad $13$: Auf fast dem ganzen Bild ist kein Unterschied mehr zu sehen. Ein Polynom aus Grundrechenarten ersetzt den Sinus. So rechnen Taschenrechner, und das Restglied sagt, wie genau.",
+          "to": {
+            "n": 13
+          },
+          "dur": 2000
+        }
       ]
     },
     {
@@ -47,19 +101,60 @@
       "md": "Grau ist $\\cos x$, blau sein Taylorpolynom um $0$. **Wähle den kleinsten Grad, bei dem $T_n(1)$ weniger als $0{,}001$ von $\\cos 1$ abweicht.**",
       "widget": "plot",
       "params": {
-        "x": [-4, 4], "y": [-2, 2],
-        "vars": [{ "name": "n", "label": "Grad $n$", "min": 0, "max": 10, "step": 1, "value": 2, "digits": 0 }],
-        "functions": [
-          { "expr": "cos(x)", "color": "gray", "width": 4 },
-          { "name": "T", "expr": "1 - (n >= 2 ? x^2/2 : 0) + (n >= 4 ? x^4/24 : 0) - (n >= 6 ? x^6/720 : 0) + (n >= 8 ? x^8/40320 : 0) - (n >= 10 ? x^10/3628800 : 0)" }
+        "x": [
+          -4,
+          4
         ],
-        "points": [{ "x": 1, "on": "T", "label": "Tₙ(1)" }],
+        "y": [
+          -2,
+          2
+        ],
+        "vars": [
+          {
+            "name": "n",
+            "label": "Grad $n$",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "value": 2,
+            "digits": 0
+          }
+        ],
+        "functions": [
+          {
+            "expr": "cos(x)",
+            "color": "gray",
+            "width": 4
+          },
+          {
+            "name": "T",
+            "expr": "1 - (n >= 2 ? x^2/2 : 0) + (n >= 4 ? x^4/24 : 0) - (n >= 6 ? x^6/720 : 0) + (n >= 8 ? x^8/40320 : 0) - (n >= 10 ? x^10/3628800 : 0)"
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "on": "T",
+            "label": "Tₙ(1)"
+          }
+        ],
         "readout": "$T_n(1) = {T(1)|6}$, $\\cos 1 = {cos(1)|6}$, Fehler ${abs(T(1) - cos(1))|6}$"
       },
       "goal": {
         "when": "abs(T(1) - cos(1)) < 0.001 && n <= 6",
-        "hints": [{ "when": "abs(T(1) - cos(1)) >= 0.001", "text": "Der Fehler ist noch {abs(T(1) - cos(1))|5}." }, { "when": "n > 6", "text": "Genau genug, aber es geht mit kleinerem Grad." }],
-        "solve": { "n": 6 }
+        "hints": [
+          {
+            "when": "abs(T(1) - cos(1)) >= 0.001",
+            "text": "Der Fehler ist noch {abs(T(1) - cos(1))|5}."
+          },
+          {
+            "when": "n > 6",
+            "text": "Genau genug, aber es geht mit kleinerem Grad."
+          }
+        ],
+        "solve": {
+          "n": 6
+        }
       },
       "explain": "$T_4(1) \\approx 0{,}541667$ weicht um $0{,}0014$ ab, $T_6(1) \\approx 0{,}540278$ nur noch um $0{,}00002$. Grad $5$ bringt nichts Neues, weil der Kosinus nur gerade Potenzen hat. Lagrange garantiert für $n = 5$ den Fehler $\\le \\tfrac{1}{6!} \\approx 0{,}0014$, für $n = 6$ sogar $\\le \\tfrac{1}{7!} \\approx 0{,}0002$."
     },
@@ -76,7 +171,7 @@
       "label": "Rechnen",
       "md": "Berechne mit dem Taylorpolynom vom Grad $2$ von $e^x$ um $0$ einen Näherungswert für $e^{0{,}1}$ (vier Nachkommastellen).",
       "answer": 1.105,
-      "tolerance": 0.00006,
+      "tolerance": 6e-05,
       "answerText": "1,1050",
       "explain": "$1 + 0{,}1 + \\tfrac{0{,}01}{2} = 1{,}105$. Der echte Wert ist $1{,}10517\\ldots$, der Fehler etwa $\\tfrac{0{,}1^3}{6} \\approx 0{,}00017$, genau wie das Restglied vorhersagt."
     },
@@ -87,10 +182,77 @@
       "answer": true,
       "explain": "Genau so ist es konstruiert. Über die Güte der Näherung **außerhalb** von $x_0$ sagt das allein noch nichts. Dafür braucht man das Restglied."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-taylor", "level": 1, "label": "Koeffizient" },
-    { "id": "neu2", "type": "gen", "gen": "ana-taylor", "level": 2, "label": "Auswerten" },
-    { "id": "neu3", "type": "gen", "gen": "ana-taylor", "level": 3, "label": "Logarithmus" },
-    { "id": "neu4", "type": "gen", "gen": "ana-taylor", "level": 4, "label": "Restglied" },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Werte das Taylorpolynom vom Grad $3$ von $e^x$ um $0$ bei $x = 1$ aus (vier Nachkommastellen).",
+      "answer": 2.6667,
+      "tolerance": 0.0002,
+      "placeholder": "Zahl",
+      "explain": "$1 + 1 + \\tfrac12 + \\tfrac16$.",
+      "id": "v1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Bestimme $f^{(5)}(0)$ für $f(x) = \\tfrac{1}{1 - x}$.",
+      "answer": 120,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Koeffizient von $x^5$ ist $1 = \\tfrac{f^{(5)}(0)}{5!}$.",
+      "id": "v2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Konvergiert die Taylorreihe einer glatten Funktion überall, so stellt sie die Funktion dar.",
+      "answer": false,
+      "explain": "$e^{-1/x^2}$: Reihe $0$, Funktion nicht $0$.",
+      "label": "Verständnis",
+      "id": "v3"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Bestimme $f^{(10)}(0)$ für $f(x) = x^2\\cos x$.",
+      "answer": 90,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Koeffizient von $x^{10}$: $\\tfrac{1}{8!}$, also $f^{(10)}(0) = \\tfrac{10!}{8!} = 90$.",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 1,
+      "label": "Koeffizient"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 2,
+      "label": "Auswerten"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 3,
+      "label": "Logarithmus"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-taylor",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -99,7 +261,9 @@
         "$T_n(x) = \\sum_{k \\le n} \\tfrac{f^{(k)}(x_0)}{k!}(x - x_0)^k$ trifft Wert und Ableitungen bis $n$.",
         "Grad $1$ ist die Tangente, höhere Grade treffen auch die Krümmung.",
         "Lagrange: Der Fehler ist $\\tfrac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}$ für ein unbekanntes $\\xi$.",
-        "Mit beschränkten Ableitungen liefert das eine garantierte Genauigkeit."
+        "Mit beschränkten Ableitungen liefert das eine garantierte Genauigkeit.",
+        "Hohe Ableitungen über Koeffizienten bekannter Reihen.",
+        "Konvergenz der Taylorreihe reicht nicht, das Restglied muss verschwinden."
       ]
     }
   ]

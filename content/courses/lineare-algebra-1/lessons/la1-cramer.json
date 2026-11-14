@@ -1,0 +1,227 @@
+{
+  "id": "la1-cramer",
+  "title": "Adjunkte und Cramersche Regel",
+  "subtitle": "Lösungen und Inverse als Quotienten von Determinanten",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Determinante.md",
+      "title": "Determinante"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Warum funktioniert die Cramersche Regel? Die Antwort steckt in zwei Eigenschaften der Determinante.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = (s_1\\ s_2),\\quad Ax = x s_1 + y s_2 = b",
+            "why": "Die Spalten von $A$ heißen $s_1, s_2$."
+          },
+          {
+            "tex": "\\det(b, s_2) = \\det(x s_1 + y s_2,\\ s_2)",
+            "why": "Ersetze die erste Spalte durch $b$."
+          },
+          {
+            "tex": "= x\\det(s_1, s_2) + y\\det(s_2, s_2)",
+            "why": "Linear in der ersten Spalte."
+          },
+          {
+            "tex": "= x\\det A",
+            "why": "Alternierend: $\\det(s_2, s_2) = 0$."
+          },
+          {
+            "tex": "x = \\frac{\\det(b, s_2)}{\\det A},\\quad y = \\frac{\\det(s_1, b)}{\\det A}",
+            "why": "Das ist die Cramersche Regel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein System als Kombination der Spalten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spalte durch die rechte Seite ersetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Linearität.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Alternieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teilen durch $\\det A \\ne 0$.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Die **Adjunkte** $\\operatorname{adj}A$ hat an der Stelle $(i, j)$ den Eintrag $(-1)^{i+j}\\det A_{ji}$ (Indizes vertauscht!). Es gilt $A \\operatorname{adj}A = (\\det A)E$, also $A^{-1} = \\tfrac{1}{\\det A}\\operatorname{adj}A$.\n\nFür $2 \\times 2$: $\\operatorname{adj}\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix} = \\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Cramersche Regel\n> Ist $\\det A \\ne 0$, so ist die Lösung von $Ax = b$ gegeben durch $x_i = \\det A_i / \\det A$, wobei $A_i$ aus $A$ entsteht, indem man die $i$-te Spalte durch $b$ ersetzt.\n\nZum Rechnen taugt sie nur bei kleinen Systemen. Ihr Wert ist theoretisch: Die Lösung hängt stetig (sogar rational) von $A$ und $b$ ab.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Löse $2x + y = 5$, $x + 3y = 5$ mit Cramer. Bestimme $x$.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "x",
+      "explain": "$\\det A = 6 - 1 = 5$, $\\det A_1 = \\det\\begin{pmatrix}5&1\\\\5&3\\end{pmatrix} = 10$, also $x = 2$. Ebenso $y = \\det\\begin{pmatrix}2&5\\\\1&5\\end{pmatrix}/5 = 1$.",
+      "id": "n1"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Bestimme $\\operatorname{adj}\\begin{pmatrix}3&1\\\\4&2\\end{pmatrix}$, zeilenweise.\n\n{{0}} {{1}} {{2}} {{3}}",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-4"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Diagonale tauschen, Nebendiagonale negieren: $\\begin{pmatrix}2&-1\\\\-4&3\\end{pmatrix}$. Probe: $A\\operatorname{adj}A = 2E$, und $\\det A = 2$.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine ganzzahlige Matrix hat genau dann eine ganzzahlige Inverse, wenn $\\det A = \\pm 1$.",
+      "answer": true,
+      "explain": "$A^{-1} = \\tfrac{1}{\\det A}\\operatorname{adj}A$ mit ganzzahliger Adjunkte. Umgekehrt ist $\\det A \\cdot \\det A^{-1} = 1$ ein Produkt ganzer Zahlen.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$A \\in \\mathbb{R}^{4 \\times 4}$ mit $\\det A = 2$. Berechne $\\det(\\operatorname{adj}A)$.",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$(\\det A)^{n-1} = 2^3 = 8$, aus $A\\operatorname{adj}A = (\\det A)E$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für große Gleichungssysteme ist die Cramersche Regel effizienter als Gauß.",
+      "answer": false,
+      "explain": "Sie braucht $n + 1$ Determinanten; Gauß löst das System mit dem Aufwand einer einzigen. Cramer ist ein Werkzeug für Beweise und kleine Systeme.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Hat $A \\in \\mathbb{R}^{n \\times n}$ den Rang $n - 1$, so hat $\\operatorname{adj}A$ den Rang $1$.",
+      "answer": true,
+      "explain": "$A\\operatorname{adj}A = 0$, also liegt das Bild von $\\operatorname{adj}A$ im eindimensionalen Kern von $A$. Und $\\operatorname{adj}A \\ne 0$, weil irgendein $(n-1)$-Minor nicht null ist.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum gilt $A\\operatorname{adj}A = (\\det A)E$?",
+      "solution": "Diagonaleintrag $i$: $\\sum_j a_{ij}(-1)^{i+j}\\det A_{ij}$, das ist die Laplace-Entwicklung von $\\det A$ nach Zeile $i$. Eintrag $(i, k)$ mit $i \\ne k$: dieselbe Entwicklung für die Matrix, in der Zeile $k$ durch Zeile $i$ ersetzt wurde. Sie hat zwei gleiche Zeilen, also Determinante $0$.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cramer",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cramer",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cramer",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cramer",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cramer",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\operatorname{adj}A$: Eintrag $(i, j)$ ist $(-1)^{i+j}\\det A_{ji}$; $A\\operatorname{adj}A = (\\det A)E$.",
+        "Cramer: $x_i = \\det A_i / \\det A$, Spalte $i$ durch $b$ ersetzt.",
+        "$\\det(\\operatorname{adj}A) = (\\det A)^{n-1}$; ganzzahlig invertierbar $\\iff \\det = \\pm1$.",
+        "Cramer ist ein Beweiswerkzeug, zum Rechnen nimmt man Gauß."
+      ],
+      "id": "summary"
+    }
+  ]
+}

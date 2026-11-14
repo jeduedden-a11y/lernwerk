@@ -1,0 +1,255 @@
+{
+  "id": "la1-diagonal",
+  "title": "Diagonalisierbarkeit",
+  "subtitle": "Wann eine Basis aus Eigenvektoren existiert",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Gestrichelt erscheinen die Eigenrichtungen. Ob es genug davon gibt, entscheidet über die Diagonalisierbarkeit.",
+      "widget": "matrix-transform",
+      "params": {
+        "matrix": [
+          [
+            3,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "editable": false,
+        "showEigen": true
+      },
+      "timeline": [
+        {
+          "caption": "$A = \\begin{pmatrix}3&1\\\\0&2\\end{pmatrix}$ hat zwei Eigenrichtungen: $\\lambda = 3$ auf der $x$-Achse, $\\lambda = 2$ auf der Geraden durch $(1, -1)$. In dieser Basis ist $A$ diagonal.",
+          "hold": 6200
+        },
+        {
+          "caption": "Jetzt wird der erste Eigenwert zu $2$: $\\begin{pmatrix}2&1\\\\0&2\\end{pmatrix}$. Ein doppelter Eigenwert, aber nur **eine** Eigenrichtung. Zu wenige Eigenvektoren: nicht diagonalisierbar.",
+          "to": {
+            "m11": 2
+          },
+          "dur": 2200,
+          "hold": 6200
+        },
+        {
+          "caption": "Ohne den Eintrag oben rechts ist es $2E$: Jede Richtung ist Eigenrichtung, die Matrix ist schon diagonal.",
+          "to": {
+            "m12": 0
+          },
+          "dur": 1600,
+          "hold": 5200
+        },
+        {
+          "caption": "Die Drehung um $90°$ hat gar keine reelle Eigenrichtung. Über $\\mathbb{R}$ nicht diagonalisierbar, über $\\mathbb{C}$ schon.",
+          "to": {
+            "m11": 0,
+            "m12": -1,
+            "m21": 1,
+            "m22": 0
+          },
+          "dur": 2200
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$A$ heißt **diagonalisierbar**, wenn es eine Basis aus Eigenvektoren gibt. Gleichwertig: $A = SDS^{-1}$ mit einer Diagonalmatrix $D$; die Spalten von $S$ sind Eigenvektoren, die Einträge von $D$ die Eigenwerte.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Kriterium\n> $A$ ist genau dann diagonalisierbar, wenn $\\chi_A$ in Linearfaktoren zerfällt und für **jeden** Eigenwert die geometrische gleich der algebraischen Vielfachheit ist.\n>\n> Hinreichend: $n$ verschiedene Eigenwerte. Ebenso hinreichend (über $\\mathbb{R}$): $A$ symmetrisch.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$Av = \\lambda v$ und $Aw = \\mu w$ mit $v, w \\ne 0$ und $\\lambda \\ne \\mu$.",
+      "claim": "$v$ und $w$ sind linear unabhängig.",
+      "steps": [
+        "Sei $av + bw = 0$.",
+        "Anwenden von $A$: $a\\lambda v + b\\mu w = 0$.",
+        "Das $\\lambda$-fache der ersten Gleichung abziehen: $b(\\mu - \\lambda)w = 0$.",
+        "Wegen $\\mu \\ne \\lambda$ und $w \\ne 0$ ist $b = 0$, dann auch $a = 0$."
+      ],
+      "distractors": [
+        {
+          "md": "Weil $v \\ne w$, sind sie unabhängig.",
+          "why": "Verschiedene Vektoren können abhängig sein, etwa $v$ und $2v$."
+        },
+        {
+          "md": "Anwenden von $A$: $av + bw = 0$ bleibt gleich.",
+          "why": "$A$ multipliziert die Summanden mit verschiedenen Faktoren, genau das nutzt der Beweis."
+        }
+      ],
+      "explain": "Der Trick: $A$ wirkt auf die beiden Summanden verschieden; eine Kombination der Gleichungen eliminiert einen davon.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche geometrische Vielfachheit hat der Eigenwert $1$ von $\\begin{pmatrix}1&1&0\\\\0&1&0\\\\0&0&1\\end{pmatrix}$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$A - E$ hat Rang $1$, also Kern der Dimension $2$. Die algebraische Vielfachheit ist $3$: nicht diagonalisierbar.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "Für welches $t$ ist $\\begin{pmatrix}1&t\\\\0&1\\end{pmatrix}$ diagonalisierbar?",
+      "options": [
+        {
+          "md": "$t = 0$",
+          "correct": true
+        },
+        {
+          "md": "Für jedes $t$",
+          "why": "Für $t \\ne 0$ ist der Eigenraum zu $1$ nur eine Gerade."
+        },
+        {
+          "md": "Für $t = 1$",
+          "why": "Das ist die Scherung, gerade nicht diagonalisierbar."
+        },
+        {
+          "md": "Für kein $t$",
+          "why": "Für $t = 0$ ist es die Einheitsmatrix."
+        }
+      ],
+      "explain": "Doppelter Eigenwert $1$; diagonalisierbar hieße ähnlich zu $E$, also gleich $E$.",
+      "id": "c1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Matrizen sind über $\\mathbb{R}$ diagonalisierbar?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix}1&2\\\\0&3\\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix}0&0\\\\0&0\\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$",
+          "why": "Doppelter Eigenwert, eindimensionaler Eigenraum."
+        },
+        {
+          "md": "$\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$",
+          "why": "Keine reellen Eigenwerte."
+        }
+      ],
+      "explain": "Verschiedene Eigenwerte, symmetrisch, oder schon diagonal: diagonalisierbar.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "$A = \\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}$. Es gibt $S$ mit $S^{-1}AS = \\operatorname{diag}(\\lambda_1, \\lambda_2)$, $\\lambda_1 > \\lambda_2$. Bestimme $\\lambda_1$, $\\lambda_2$.\n\n{{0}} $\\qquad$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "5"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Spur $7$, Determinante $10$: $\\lambda^2 - 7\\lambda + 10 = (\\lambda - 5)(\\lambda - 2)$. Eigenvektoren $(1, 1)$ und $(1, -2)$ bilden die Spalten von $S$.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Summe zweier diagonalisierbarer Matrizen ist diagonalisierbar.",
+      "answer": false,
+      "explain": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix} + \\begin{pmatrix}-1&0\\\\0&0\\end{pmatrix} = \\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$, nilpotent und $\\ne 0$.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine nilpotente Matrix $\\ne 0$ ist nie diagonalisierbar.",
+      "answer": true,
+      "explain": "Einziger Eigenwert $0$; diagonalisierbar hieße ähnlich zur Nullmatrix, also selbst null.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Vertauschen zwei diagonalisierbare Matrizen, so haben sie eine gemeinsame Basis aus Eigenvektoren.",
+      "answer": true,
+      "explain": "$B$ bildet jeden Eigenraum von $A$ in sich ab ($ABv = BAv = \\lambda Bv$), und eingeschränkt darauf bleibt $B$ diagonalisierbar.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Diagonalisierbar $\\iff$ Basis aus Eigenvektoren $\\iff A = SDS^{-1}$.",
+        "Kriterium: $\\chi_A$ zerfällt, und geometrisch $=$ algebraisch für jeden Eigenwert.",
+        "Hinreichend: $n$ verschiedene Eigenwerte, oder symmetrisch über $\\mathbb{R}$.",
+        "Nilpotente Matrizen $\\ne 0$ und Scherungen sind nicht diagonalisierbar."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "id": "ana1-konvex",
+  "title": "Konvexität",
+  "subtitle": "Sekanten über dem Graphen, und was daraus folgt",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Kurvendiskussion.md",
+      "title": "Kurvendiskussion"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Mittelwertsatz.md",
+      "title": "Mittelwertsatz"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Konvex heißt: Jede Sekante liegt über dem Graphen. Für zweimal differenzierbare Funktionen ist das dasselbe wie $f'' \\ge 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f\\bigl((1 - t)x + ty\\bigr) \\le (1 - t)f(x) + tf(y),\\quad t \\in [0, 1]",
+            "why": "Definition: Der Graph liegt unter der Sehne."
+          },
+          {
+            "tex": "\\frac{f(z) - f(x)}{z - x} \\le \\frac{f(y) - f(z)}{y - z}\\quad (x < z < y)",
+            "why": "Gleichwertig: Die Steigungen der Sekanten wachsen."
+          },
+          {
+            "tex": "f' \\text{ monoton wachsend}",
+            "why": "Für differenzierbares $f$: Die Ableitung wächst."
+          },
+          {
+            "tex": "f'' \\ge 0",
+            "why": "Für zweimal differenzierbares $f$."
+          },
+          {
+            "tex": "f(y) \\ge f(x) + f'(x)(y - x)",
+            "why": "Und der Graph liegt **über** jeder Tangente, etwa $e^y \\ge 1 + y$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die Definition über Sehnen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sekantensteigungen wachsen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung wächst.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweite Ableitung nicht negativ.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangenten liegen unter dem Graphen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$f$ heißt **konvex** auf einem Intervall, wenn $f((1 - t)x + ty) \\le (1 - t)f(x) + tf(y)$ für alle $x, y$ und $t \\in [0, 1]$; **konkav**, wenn $-f$ konvex ist. An einem **Wendepunkt** wechselt $f$ von konvex zu konkav.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Jensen\n> Für konvexes $f$ und Gewichte $\\lambda_i \\ge 0$ mit $\\sum\\lambda_i = 1$ gilt $f\\bigl(\\sum\\lambda_ix_i\\bigr) \\le \\sum\\lambda_if(x_i)$.\n>\n> Mit dem konkaven $\\ln$ folgt die Ungleichung vom arithmetischen und geometrischen Mittel.",
+      "id": "t2"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Konvex, konkav oder weder noch (auf dem angegebenen Bereich)?",
+      "categories": [
+        "konvex",
+        "konkav",
+        "weder noch"
+      ],
+      "items": [
+        {
+          "md": "$e^x$ auf $\\mathbb{R}$",
+          "cat": "konvex"
+        },
+        {
+          "md": "$\\ln x$ auf $(0, \\infty)$",
+          "cat": "konkav"
+        },
+        {
+          "md": "$x^3$ auf $\\mathbb{R}$",
+          "cat": "weder noch"
+        },
+        {
+          "md": "$|x|$ auf $\\mathbb{R}$",
+          "cat": "konvex"
+        },
+        {
+          "md": "$\\sqrt x$ auf $(0, \\infty)$",
+          "cat": "konkav"
+        }
+      ],
+      "explain": "$f''$ entscheidet, wo es existiert; $|x|$ ist konvex, obwohl bei $0$ nicht differenzierbar.",
+      "id": "s1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen größten Wert hat $xyz$ für $x, y, z \\ge 0$ mit $x + y + z = 12$?",
+      "answer": 64,
+      "tolerance": 0,
+      "placeholder": "Wert",
+      "explain": "AM-GM: $\\sqrt[3]{xyz} \\le 4$, Gleichheit bei $x = y = z = 4$: $64$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wo hat $f(x) = x^3 - 6x^2 + 5x$ ihren Wendepunkt?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "x",
+      "explain": "$f''(x) = 6x - 12$ wechselt bei $2$ das Vorzeichen.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein lokales Minimum einer konvexen Funktion ist ein globales.",
+      "answer": true,
+      "explain": "Läge irgendwo ein kleinerer Wert, so lägen Punkte auf der Sekante dorthin beliebig nah am lokalen Minimum mit kleinerem Wert.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine konvexe Funktion auf einem offenen Intervall ist stetig.",
+      "answer": true,
+      "explain": "Wachsende Sekantensteigungen beschränken die Differenzenquotienten. Auf $[a, b]$ darf sie am Rand springen.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine beschränkte konvexe Funktion auf $\\mathbb{R}$ ist konstant.",
+      "answer": true,
+      "explain": "Hat sie irgendwo eine Steigung $\\ne 0$, liegt der Graph über einer nicht waagrechten Tangente und ist unbeschränkt.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-konvex",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-konvex",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-konvex",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-konvex",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-konvex",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Konvex: Sehnen über dem Graphen, Tangenten darunter; bei $C^2$-Funktionen $f'' \\ge 0$.",
+        "Lokale Minima konvexer Funktionen sind global.",
+        "Jensen: $f(\\sum\\lambda_ix_i) \\le \\sum\\lambda_if(x_i)$; daraus AM-GM.",
+        "Wendepunkt: Vorzeichenwechsel von $f''$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

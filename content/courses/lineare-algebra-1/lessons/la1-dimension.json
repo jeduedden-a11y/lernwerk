@@ -1,0 +1,229 @@
+{
+  "id": "la1-dimension",
+  "title": "Dimension: Formeln und Beispiele",
+  "subtitle": "Dimensionen zählen, ohne eine Basis hinzuschreiben",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md",
+      "title": "Basis und Dimension"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Dimensionsformel für Unterräume lässt sich aus der Basisergänzung beweisen. So sieht der Beweis aus.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "w_1, \\dots, w_r \\text{ Basis von } U \\cap W",
+            "why": "Wir starten im Durchschnitt."
+          },
+          {
+            "tex": "w_1, \\dots, w_r, u_1, \\dots, u_s \\text{ Basis von } U",
+            "why": "Ergänzen zu einer Basis von $U$: $\\dim U = r + s$."
+          },
+          {
+            "tex": "w_1, \\dots, w_r, x_1, \\dots, x_t \\text{ Basis von } W",
+            "why": "Ebenso für $W$: $\\dim W = r + t$."
+          },
+          {
+            "tex": "w_1, \\dots, w_r, u_1, \\dots, u_s, x_1, \\dots, x_t \\text{ erzeugen } U + W",
+            "why": "Jeder Vektor von $U + W$ ist $u + w$, und beide sind so darstellbar."
+          },
+          {
+            "tex": "\\textstyle\\sum \\alpha_i w_i + \\sum \\beta_j u_j = -\\sum \\gamma_k x_k \\in U \\cap W \\Rightarrow \\gamma = 0",
+            "why": "Unabhängigkeit: Die rechte Seite liegt in $W$ und in $U$, also im Durchschnitt; dort ist sie eine Kombination der $w_i$, und weil die $w_i$ und $x_k$ unabhängig sind, sind alle $\\gamma_k = 0$, danach auch $\\alpha, \\beta$."
+          },
+          {
+            "tex": "\\dim(U + W) = r + s + t = \\dim U + \\dim W - \\dim(U \\cap W)",
+            "why": "Zählen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Basis des Durchschnitts ist der gemeinsame Kern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzen nach beiden Seiten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Alles zusammen erzeugt die Summe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und es ist unabhängig.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Vektoren im Durchschnitt hat man nur einmal gezählt.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Dimensionen, die man kennen sollte: $\\dim K^n = n$, $\\dim K^{m \\times n} = mn$, $\\dim K[x]_{\\le n} = n + 1$, $\\dim \\operatorname{Hom}(K^n, K^m) = mn$. Die symmetrischen $n \\times n$-Matrizen haben Dimension $\\tfrac{n(n+1)}{2}$, die schiefsymmetrischen $\\tfrac{n(n-1)}{2}$, die mit Spur $0$ haben $n^2 - 1$.\n\n$K[x]$ und der Raum aller Folgen haben **unendliche** Dimension.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Dimensionen zählen\n> $k$ **unabhängige** lineare Bedingungen senken die Dimension um $k$: $\\dim\\{p \\in \\mathbb{R}[x]_{\\le n} : p(a_1) = \\dots = p(a_k) = 0\\} = n + 1 - k$ für verschiedene $a_i$ und $k \\le n + 1$. Unabhängig heißt: Keine Bedingung folgt aus den anderen.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Dimension hat der Raum der symmetrischen $4 \\times 4$-Matrizen?",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "Frei sind die Einträge auf und über der Diagonale: $4 + 3 + 2 + 1 = 10 = \\tfrac{4 \\cdot 5}{2}$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Dimension hat $\\{p \\in \\mathbb{R}[x]_{\\le 4} : p(1) = p(2) = 0\\}$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$p = (x - 1)(x - 2)q$ mit $\\deg q \\le 2$: Dimension $3 = 5 - 2$. Die zwei Bedingungen sind unabhängig, weil die Stellen verschieden sind.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\{p \\in \\mathbb{R}[x]_{\\le 4} : p(1) = 0,\\ p(1) + p(2) = p(2)\\}$ hat Dimension $3$.",
+      "answer": false,
+      "explain": "Die zweite Bedingung lautet $p(1) = 0$, sie ist dieselbe wie die erste. Nur **eine** unabhängige Bedingung: Dimension $4$. Abhängige Bedingungen senken die Dimension nicht.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Zwei Ebenen durch den Ursprung im $\\mathbb{R}^3$. Was gilt immer?",
+      "options": [
+        {
+          "md": "Sie schneiden sich mindestens in einer Geraden",
+          "correct": true
+        },
+        {
+          "md": "Sie schneiden sich nur im Ursprung",
+          "why": "Dann wäre $\\dim(U + W) = 4 > 3$."
+        },
+        {
+          "md": "Sie sind gleich",
+          "why": "Zwei Koordinatenebenen sind verschieden."
+        },
+        {
+          "md": "Ihre Summe ist direkt",
+          "why": "Direkt hieße Schnitt $\\{0\\}$, siehe oben."
+        }
+      ],
+      "explain": "$\\dim(U \\cap W) = 2 + 2 - \\dim(U + W) \\ge 4 - 3 = 1$. Im $\\mathbb{R}^4$ dagegen können sich zwei Ebenen nur in $0$ treffen.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Wie viele Unterräume der Dimension $1$ hat $\\mathbb{F}_2^3$?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Jeder der $7$ Vektoren $\\ne 0$ spannt eine Gerade $\\{0, v\\}$ auf, und jede Gerade enthält genau einen Vektor $\\ne 0$. Geometrisch: die $7$ Punkte der Fano-Ebene.",
+      "id": "n3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die reellen Folgen mit $a_{n+2} = a_{n+1} + a_n$ bilden einen zweidimensionalen Vektorraum.",
+      "answer": true,
+      "explain": "Die Rekursion ist linear und homogen, also ein Unterraum. $(a_0, a_1)$ legt die Folge fest, und jedes Paar kommt vor: $a \\mapsto (a_0, a_1)$ ist ein Isomorphismus auf $\\mathbb{R}^2$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\mathbb{C}^3$ hat als reeller Vektorraum Dimension $3$.",
+      "answer": false,
+      "explain": "Als reeller Raum hat $\\mathbb{C}$ die Basis $1, i$, also hat $\\mathbb{C}^3$ die reelle Dimension $6$. Die Dimension hängt vom Skalarkörper ab.",
+      "label": "Verständnis",
+      "id": "tf3"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Zeige: $\\mathbb{R}[x]$ ist nicht endlichdimensional.",
+      "solution": "Angenommen, $p_1, \\dots, p_k$ erzeugen $\\mathbb{R}[x]$. Sei $d$ der größte Grad unter ihnen. Jede Linearkombination hat Grad höchstens $d$, also liegt $x^{d+1}$ nicht im Spann. Widerspruch. Ebenso: $1, x, x^2, \\dots$ sind unendlich viele linear unabhängige Vektoren.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dimension",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\dim K^{m \\times n} = mn$, $\\dim K[x]_{\\le n} = n + 1$, symmetrisch $\\tfrac{n(n+1)}2$, schiefsymmetrisch $\\tfrac{n(n-1)}2$.",
+        "Unabhängige lineare Bedingungen senken die Dimension um ihre Anzahl, abhängige nicht.",
+        "Zwei Ebenen im $\\mathbb{R}^3$ schneiden sich mindestens in einer Geraden.",
+        "Die Dimension hängt vom Körper ab: $\\dim_{\\mathbb{C}} \\mathbb{C}^n = n$, $\\dim_{\\mathbb{R}} \\mathbb{C}^n = 2n$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

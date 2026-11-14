@@ -1,0 +1,282 @@
+{
+  "id": "la1-cayley",
+  "title": "Cayley-Hamilton und Minimalpolynom",
+  "subtitle": "Jede Matrix erfüllt ihre eigene Gleichung",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Setzt man eine Matrix in ihr eigenes charakteristisches Polynom ein, kommt die Nullmatrix heraus. Wir prüfen es an einem Beispiel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}1&2\\\\3&4\\end{pmatrix},\\quad \\chi_A(\\lambda) = \\lambda^2 - 5\\lambda - 2",
+            "why": "Spur $5$, Determinante $-2$."
+          },
+          {
+            "tex": "A^2 = \\begin{pmatrix}7&10\\\\15&22\\end{pmatrix}",
+            "why": "Ausmultipliziert."
+          },
+          {
+            "tex": "A^2 - 5A - 2E = \\begin{pmatrix}7 - 5 - 2 & 10 - 10\\\\15 - 15 & 22 - 20 - 2\\end{pmatrix}",
+            "why": "Einsetzen."
+          },
+          {
+            "tex": "= \\begin{pmatrix}0&0\\\\0&0\\end{pmatrix}",
+            "why": "**Cayley-Hamilton:** $\\chi_A(A) = 0$."
+          },
+          {
+            "tex": "A^{-1} = \\tfrac12(A - 5E)",
+            "why": "Aus $A(A - 5E) = 2E$: die Inverse ohne Gauß."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Charakteristisches Polynom einer $2 \\times 2$-Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Das Quadrat.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Null, wie versprochen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eine Anwendung: die Inverse als Polynom in $A$.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Cayley-Hamilton\n> Für jede quadratische Matrix gilt $\\chi_A(A) = 0$.\n\nDas **Minimalpolynom** $\\mu_A$ ist das normierte Polynom kleinsten Grades mit $\\mu_A(A) = 0$. Es teilt jedes Polynom, das $A$ annulliert, insbesondere $\\chi_A$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Minimalpolynom und Diagonalisierbarkeit\n> $\\mu_A$ und $\\chi_A$ haben dieselben Nullstellen (die Eigenwerte). $A$ ist genau dann diagonalisierbar, wenn $\\mu_A$ in **verschiedene** Linearfaktoren zerfällt.",
+      "id": "t2"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Nach Cayley-Hamilton gilt $A^2 = pA + qE$ für $A = \\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}$. Bestimme $p$ und $q$.\n\n$p =$ {{0}} $\\qquad q =$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "5"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-5"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "$\\chi_A = \\lambda^2 - 5\\lambda + 5$, also $A^2 = 5A - 5E$.",
+      "id": "cl1"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Bestimme $A^{-1}$ für $A = \\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$ mit $A^{-1} = \\tfrac{1}{\\det A}(\\operatorname{Spur}(A)E - A)$, zeilenweise.\n\n{{0}} {{1}} {{2}} {{3}}",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Spur $3$, Determinante $1$: $3E - A = \\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix}$.",
+      "id": "cl2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen Grad hat das Minimalpolynom von $\\operatorname{diag}(2, 2, 5)$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Grad",
+      "explain": "$(x - 2)(x - 5)$ annulliert sie schon. Das charakteristische Polynom $(x - 2)^2(x - 5)$ hat Grad $3$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus $A^2 = A$ folgt, dass $A$ diagonalisierbar ist.",
+      "answer": true,
+      "explain": "$\\mu_A$ teilt $x^2 - x = x(x - 1)$, hat also nur einfache Nullstellen.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "»Beweis« von Cayley-Hamilton: $\\chi_A(A) = \\det(A \\cdot E - A) = \\det 0 = 0$. Was ist falsch?",
+      "options": [
+        {
+          "md": "Man darf für die Zahl $\\lambda$ nicht einfach eine Matrix einsetzen; links steht eine Matrix, rechts eine Zahl",
+          "correct": true
+        },
+        {
+          "md": "Nichts, das ist der Beweis",
+          "why": "$\\chi_A(A)$ ist eine Matrix, $\\det 0$ eine Zahl."
+        },
+        {
+          "md": "$\\det 0$ ist nicht null",
+          "why": "Doch, das stimmt."
+        },
+        {
+          "md": "Cayley-Hamilton ist falsch",
+          "why": "Der Satz stimmt, nur dieser Beweis nicht."
+        }
+      ],
+      "explain": "Echte Beweise laufen über die Adjunkte von $\\lambda E - A$ oder über Trigonalisierung.",
+      "label": "Extrem",
+      "id": "c1"
+    },
+    {
+      "type": "cloze",
+      "label": "Klausur",
+      "md": "$A$ erfüllt $A^2 = A + E$. Schreibe $A^6 = aA + bE$.\n\n$a =$ {{0}} $\\qquad b =$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "8"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "5"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Induktiv $A^n = F_nA + F_{n-1}E$ mit Fibonacci-Zahlen: $A^3 = 2A + E$, $A^4 = 3A + 2E$, $A^5 = 5A + 3E$, $A^6 = 8A + 5E$.",
+      "id": "cl3"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "$A \\in \\mathbb{R}^{5 \\times 5}$ ist nilpotent mit $\\operatorname{rang}A = 4$. Welchen Grad hat $\\mu_A$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "Grad",
+      "explain": "Die Kerne von $A, A^2, \\dots$ wachsen in jedem Schritt um genau $1$ (Rang $4$ heißt $\\dim\\ker A = 1$). Erst $A^5 = 0$: $\\mu_A = x^5$.",
+      "id": "n2"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum teilt das Minimalpolynom jedes Polynom $p$ mit $p(A) = 0$?",
+      "solution": "Division mit Rest: $p = q\\mu_A + r$ mit $\\deg r < \\deg\\mu_A$. Einsetzen: $0 = p(A) = q(A)\\mu_A(A) + r(A) = r(A)$. Wäre $r \\ne 0$, hätte man ein annullierendes Polynom kleineren Grades. Also $r = 0$.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Cayley-Hamilton: $\\chi_A(A) = 0$; für $2 \\times 2$: $A^2 = (\\operatorname{Spur}A)A - (\\det A)E$.",
+        "Das Minimalpolynom teilt jedes annullierende Polynom; es hat dieselben Nullstellen wie $\\chi_A$.",
+        "Diagonalisierbar $\\iff \\mu_A$ zerfällt in verschiedene Linearfaktoren.",
+        "Inverse und hohe Potenzen lassen sich als Polynome in $A$ schreiben."
+      ],
+      "id": "summary"
+    }
+  ]
+}

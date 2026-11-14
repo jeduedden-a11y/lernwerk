@@ -1,0 +1,212 @@
+{
+  "id": "la1-trigonal",
+  "title": "Trigonalisierung",
+  "subtitle": "Wenn Diagonalisieren nicht geht",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Diese Matrix ist nicht diagonalisierbar. Auf eine obere Dreiecksform bekommt man sie trotzdem.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}2&1\\\\-1&4\\end{pmatrix},\\quad \\chi_A = (\\lambda - 3)^2",
+            "why": "Ein doppelter Eigenwert $3$."
+          },
+          {
+            "tex": "A - 3E = \\begin{pmatrix}-1&1\\\\-1&1\\end{pmatrix},\\quad v_1 = (1, 1)",
+            "why": "Nur ein Eigenvektor: nicht diagonalisierbar."
+          },
+          {
+            "tex": "S = \\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}",
+            "why": "Ergänze $v_1$ beliebig zu einer Basis, etwa mit $e_2$."
+          },
+          {
+            "tex": "S^{-1}AS = \\begin{pmatrix}3&1\\\\0&3\\end{pmatrix}",
+            "why": "Obere Dreiecksmatrix, auf der Diagonale die Eigenwerte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein doppelter Eigenwert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aber nur eine Eigenrichtung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wir nehmen sie als ersten Basisvektor.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dreiecksform: genug für viele Zwecke.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$A$ heißt **trigonalisierbar**, wenn $A$ ähnlich zu einer oberen Dreiecksmatrix ist. Auf deren Diagonale stehen dann die Eigenwerte mit Vielfachheit.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Trigonalisierung\n> $A$ ist genau dann trigonalisierbar, wenn $\\chi_A$ in Linearfaktoren zerfällt. Über $\\mathbb{C}$ ist also jede Matrix trigonalisierbar.\n>\n> **Beweisidee:** Ein Eigenvektor existiert, weil $\\chi_A$ eine Nullstelle hat. Ergänzt man ihn zu einer Basis, entsteht $\\begin{pmatrix}\\lambda & *\\\\0 & B\\end{pmatrix}$; dann Induktion für $B$.",
+      "id": "t2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede reelle Matrix ist über $\\mathbb{R}$ trigonalisierbar.",
+      "answer": false,
+      "explain": "Die Drehung um $90°$ hat kein zerfallendes charakteristisches Polynom ($\\lambda^2 + 1$), also keinen reellen Eigenvektor als ersten Basisvektor.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede komplexe Matrix ist trigonalisierbar.",
+      "answer": true,
+      "explain": "Über $\\mathbb{C}$ zerfällt jedes Polynom (Fundamentalsatz der Algebra).",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$S^{-1}AS = \\begin{pmatrix}2&5&1\\\\0&-1&3\\\\0&0&4\\end{pmatrix}$. Berechne $\\det A$.",
+      "answer": -8,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Ähnliche Matrizen haben dieselbe Determinante, und die einer Dreiecksmatrix ist das Produkt der Diagonale: $2 \\cdot (-1) \\cdot 4 = -8$.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "Was steht auf der Diagonale einer Dreiecksform von $A$?",
+      "options": [
+        {
+          "md": "Die Eigenwerte von $A$, mit algebraischer Vielfachheit",
+          "correct": true
+        },
+        {
+          "md": "Die Diagonaleinträge von $A$",
+          "why": "Die ändern sich beim Basiswechsel."
+        },
+        {
+          "md": "Die Spalten von $S$",
+          "why": "Das sind Vektoren, keine Zahlen auf der Diagonale."
+        },
+        {
+          "md": "Nur Einsen",
+          "why": "Das wäre eine unipotente Matrix, ein Sonderfall."
+        }
+      ],
+      "explain": "$\\chi$ einer Dreiecksmatrix ist $\\prod(\\lambda - d_{ii})$, und ähnliche Matrizen haben dasselbe $\\chi$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Ordne die Schritte der Trigonalisierung (Induktionsschritt).",
+      "given": "$\\chi_A$ zerfällt in Linearfaktoren, $A \\in K^{n \\times n}$.",
+      "claim": "$A$ ist trigonalisierbar.",
+      "steps": [
+        "$\\chi_A$ hat eine Nullstelle $\\lambda$, also gibt es einen Eigenvektor $v_1$.",
+        "Ergänze $v_1$ zu einer Basis $v_1, \\dots, v_n$.",
+        "In dieser Basis hat $A$ die Gestalt $\\begin{pmatrix}\\lambda & *\\\\0 & B\\end{pmatrix}$ mit $B \\in K^{(n-1) \\times (n-1)}$.",
+        "$\\chi_A = (x - \\lambda)\\chi_B$, also zerfällt auch $\\chi_B$; nach Induktion ist $B$ trigonalisierbar, und damit $A$."
+      ],
+      "distractors": [
+        {
+          "md": "Also ist $A$ diagonalisierbar.",
+          "why": "Trigonalisierbar ist schwächer; die Einträge oberhalb der Diagonale bleiben."
+        },
+        {
+          "md": "Ergänze $v_1$ durch weitere Eigenvektoren zu einer Basis.",
+          "why": "Es gibt im Allgemeinen nicht genug Eigenvektoren; beliebige Ergänzung genügt."
+        }
+      ],
+      "explain": "Ein Eigenvektor, beliebig ergänzen, Induktion: Das Muster vieler Normalformbeweise.",
+      "id": "p1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die diagonalisierbaren Matrizen liegen dicht in $\\mathbb{C}^{n \\times n}$.",
+      "answer": true,
+      "explain": "Trigonalisiere $A$ und ändere die Diagonaleinträge um beliebig wenig, sodass sie verschieden werden. Dann hat die Matrix $n$ verschiedene Eigenwerte und ist diagonalisierbar. Damit kann man Sätze erst für diagonalisierbare Matrizen beweisen und dann durch Stetigkeit übertragen, zum Beispiel Cayley-Hamilton.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-diag",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-charpoly",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-cayley",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Trigonalisierbar $\\iff \\chi_A$ zerfällt in Linearfaktoren; über $\\mathbb{C}$ immer.",
+        "Auf der Diagonale der Dreiecksform stehen die Eigenwerte mit Vielfachheit.",
+        "Beweis: Eigenvektor, beliebig ergänzen, Induktion.",
+        "Über $\\mathbb{R}$ kann es scheitern (Drehungen)."
+      ],
+      "id": "summary"
+    }
+  ]
+}

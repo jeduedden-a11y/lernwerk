@@ -1,0 +1,181 @@
+{
+  "id": "ana1-integrierbar",
+  "title": "Welche Funktionen sind integrierbar?",
+  "subtitle": "Das Riemann-Kriterium und seine Grenzen",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Riemann-Integral.md",
+      "title": "Riemann-Integral"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Funktion ist integrierbar, wenn sich Ober- und Untersumme beliebig nahe kommen. Bei monotonen Funktionen sieht man das sofort.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U(Z) - L(Z) = \\sum_k (M_k - m_k)\\,\\Delta x_k",
+            "why": "Differenz von Ober- und Untersumme: Schwankung mal Breite."
+          },
+          {
+            "tex": "f \\text{ wachsend}:\\ M_k = f(x_k),\\ m_k = f(x_{k-1})",
+            "why": "Auf jedem Teilintervall liegen Maximum und Minimum an den Rändern."
+          },
+          {
+            "tex": "U - L = \\frac{b - a}{n}\\sum_k\\bigl(f(x_k) - f(x_{k-1})\\bigr)",
+            "why": "Gleich breite Teile."
+          },
+          {
+            "tex": "= \\frac{b - a}{n}\\bigl(f(b) - f(a)\\bigr) \\to 0",
+            "why": "Die Summe teleskopiert."
+          },
+          {
+            "tex": "\\text{monoton} \\Rightarrow \\text{integrierbar}",
+            "why": "Auch mit unendlich vielen Sprüngen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die Lücke zwischen Ober- und Untersumme.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bei Monotonie: Ränder.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleiche Breiten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teleskop.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Monotone Funktionen sind integrierbar.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Riemann-Kriterium\n> Eine beschränkte Funktion ist genau dann integrierbar, wenn es zu jedem $\\varepsilon > 0$ eine Zerlegung mit $U - L < \\varepsilon$ gibt.\n\nIntegrierbar sind: stetige Funktionen (über gleichmäßige Stetigkeit), monotone, stückweise stetige. Nicht integrierbar ist die Dirichlet-Funktion ($1$ auf $\\mathbb{Q}$, $0$ sonst): jede Obersumme $1$, jede Untersumme $0$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!info] Ausblick: Lebesgue\n> Genau dann integrierbar, wenn beschränkt und die Unstetigkeitsstellen eine Nullmenge bilden. Abzählbar viele Unstetigkeiten schaden also nie.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$f$ ist auf $[0, 1]$ monoton wachsend mit $f(0) = 0$ und $f(1) = 1$. Wie viele gleiche Teile braucht man, damit sicher $U - L \\le \\tfrac{1}{100}$ ist?",
+      "answer": 100,
+      "tolerance": 0,
+      "placeholder": "n",
+      "explain": "$U - L = \\tfrac{1}{n}(f(1) - f(0)) = \\tfrac1n \\le \\tfrac{1}{100}$ für $n \\ge 100$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Dirichlet-Funktion ist auf $[0, 1]$ Riemann-integrierbar.",
+      "answer": false,
+      "explain": "Ober- und Untersummen bleiben bei $1$ und $0$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\tfrac{1}{\\sqrt x}$ ist auf $(0, 1]$ (mit beliebigem Wert in $0$) Riemann-integrierbar.",
+      "answer": false,
+      "explain": "Riemann-integrierbar setzt Beschränktheit voraus. Als **uneigentliches** Integral existiert $\\int_0^1\\tfrac{dx}{\\sqrt x} = 2$ trotzdem.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Thomae-Funktion ist integrierbar mit Integral $0$, obwohl sie in allen rationalen Zahlen unstetig ist.",
+      "answer": true,
+      "explain": "Die Unstetigkeitsstellen bilden eine Nullmenge; Riemann-Kriterium direkt: nur endlich viele Werte über $\\varepsilon$.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f$ integrierbar und $g$ stetig, so ist $g \\circ f$ integrierbar.",
+      "answer": true,
+      "explain": "$g$ ist auf dem kompakten Wertebereich gleichmäßig stetig. Die andere Reihenfolge $f \\circ g$ kann scheitern.",
+      "label": "Extrem",
+      "id": "tf4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-integral",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-integral",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-integral",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-integral",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-integral",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Riemann-Kriterium: $U - L$ beliebig klein.",
+        "Stetig, monoton, stückweise stetig: integrierbar; Dirichlet-Funktion nicht.",
+        "Riemann-integrierbar setzt Beschränktheit voraus; sonst uneigentlich.",
+        "Lebesgue: Unstetigkeitsstellen eine Nullmenge."
+      ],
+      "id": "summary"
+    }
+  ]
+}

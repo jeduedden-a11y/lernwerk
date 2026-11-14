@@ -12,7 +12,7 @@
   "use strict";
 
   const LW = (window.LW = window.LW || {});
-  LW.version = "1.7.1";
+  LW.version = "1.8.0";
   LW.api = 1;
   LW.widgets = LW.widgets || {};
   LW.widget = function (name, def) { LW.widgets[name] = def; };
@@ -438,14 +438,17 @@
   // More tasks for an existing generator, per level: LW.extend("oek-hayek", { 1: [step, …], 2: [(level, G, params) => step, …] }).
   // A plain object is one fixed task, a function a template with its own random values. realize() draws from the
   // generator's own make() and these entries together; "any" adds entries to every level.
+  // o.replace lists levels on which the generator's own make() no longer takes part: those levels draw only from the
+  // entries (used where the deep tasks of a course take over level 4 completely).
   LW.extensions = LW.extensions || {};
-  LW.extend = function (name, byLevel) {
+  LW.extend = function (name, byLevel, o) {
     const ext = LW.extensions[name] || (LW.extensions[name] = { 1: [], 2: [], 3: [], 4: [] });
     for (const key of Object.keys(byLevel || {})) {
       const items = [].concat(byLevel[key] || []);
       const levels = key === "any" ? [1, 2, 3, 4] : [clampLevel(+key)];
       for (const lv of levels) ext[lv].push(...items);
     }
+    for (const lv of (o && o.replace) || []) (ext.replace || (ext.replace = {}))[clampLevel(+lv)] = true;
   };
 
   // Task forms from content pools: one pool of statements, term pairs or grouped items becomes several task types
@@ -697,10 +700,11 @@
     const G = genKit(rng(hash(seedStr)));
     const params = step.params || {};
     // The generator's own make() weighs like three entries, a template too, a fixed task like one.
-    const extra = ((LW.extensions[step.gen] || {})[level]) || [];
+    const ext = LW.extensions[step.gen] || {};
+    const extra = ext[level] || [];
     let made = null;
     if (extra.length && !params.noExtend) {
-      const own = 3;
+      const own = ext.replace && ext.replace[level] ? 0 : 3;
       let total = own;
       for (const x of extra) total += typeof x === "function" ? 3 : 1;
       let t = G.r() * total;

@@ -1,0 +1,264 @@
+{
+  "id": "la1-dual",
+  "title": "Dualraum und duale Basis",
+  "subtitle": "Lineare Funktionen auf einem Vektorraum",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "title": "Lineare Abbildungen und Matrizen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Zu jeder Basis gehören Funktionen, die die Koordinaten herauslesen. Überraschend: Sie hängen von der **ganzen** Basis ab.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "b_1 = (1, 0),\\quad b_2 = (1, 1)",
+            "why": "Eine Basis des $\\mathbb{R}^2$."
+          },
+          {
+            "tex": "b_1^*(b_1) = 1,\\ b_1^*(b_2) = 0,\\quad b_2^*(b_1) = 0,\\ b_2^*(b_2) = 1",
+            "why": "Die duale Basis: $b_i^*$ liest die $i$-te Koordinate."
+          },
+          {
+            "tex": "b_1^*(x, y) = x - y,\\quad b_2^*(x, y) = y",
+            "why": "Gelöst: $(x, y) = (x - y) b_1 + y\\, b_2$."
+          },
+          {
+            "tex": "e_1^*(x, y) = x",
+            "why": "Zur Standardbasis $e_1, e_2$ gehört dagegen $e_1^*(x, y) = x$."
+          },
+          {
+            "tex": "b_1 = e_1,\\ \\text{aber}\\ b_1^* \\ne e_1^*",
+            "why": "Derselbe erste Vektor, aber ein anderes Funktional, weil der zweite Basisvektor anders ist."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Basis, deren erster Vektor $e_1$ ist.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die dualen Funktionale sind durch diese vier Bedingungen festgelegt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausgerechnet.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zum Vergleich die Standardbasis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Das erste Koordinatenfunktional hängt auch vom zweiten Basisvektor ab.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Der **Dualraum** $V^* = \\operatorname{Hom}(V, K)$ besteht aus den linearen Funktionalen $V \\to K$. Beispiele: Koordinatenfunktionen, $p \\mapsto p(2)$, $p \\mapsto \\int_0^1 p$, $A \\mapsto \\operatorname{Spur} A$.\n\nZu einer Basis $b_1, \\dots, b_n$ gibt es genau eine **duale Basis** $b_1^*, \\dots, b_n^*$ mit $b_i^*(b_j) = 1$ für $i = j$ und $0$ sonst; also $\\dim V^* = \\dim V$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Duale Abbildung und Annullator\n> Zu $f: V \\to W$ gehört $f^*: W^* \\to V^*$, $\\varphi \\mapsto \\varphi \\circ f$. Bezüglich dualer Basen hat $f^*$ die Matrix $A^T$.\n>\n> Der Annullator $U^0 = \\{\\varphi \\in V^* : \\varphi|_U = 0\\}$ hat die Dimension $\\dim V - \\dim U$. In endlicher Dimension ist $V \\to V^{**}$, $v \\mapsto (\\varphi \\mapsto \\varphi(v))$, ein Isomorphismus ohne Basiswahl.",
+      "id": "t2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Funktional $b_1^*$ der dualen Basis hängt nur von $b_1$ ab.",
+      "answer": false,
+      "explain": "Es muss auf $b_2, \\dots, b_n$ verschwinden, also hängt es von allen Basisvektoren ab. Beispiel oben: $e_1^*(x, y) = x$, aber zur Basis $e_1, e_1 + e_2$ gehört $x - y$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "Bestimme die duale Basis zu $b_1 = (1, 1)$, $b_2 = (1, 2)$.\n\n$b_1^*(x, y) =$ {{0}} $x\\ +$ {{1}} $y \\qquad b_2^*(x, y) =$ {{2}} $x\\ +$ {{3}} $y$",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Mit $S = \\begin{pmatrix}1&1\\\\1&2\\end{pmatrix}$ (Basis als Spalten) ist $S^{-1} = \\begin{pmatrix}2&-1\\\\-1&1\\end{pmatrix}$, und $S^{-1}S = E$ heißt: Die Zeilen von $S^{-1}$ sind die dualen Funktionale. Probe: $b_1^*(1, 2) = 2 - 2 = 0$.",
+      "id": "cl1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Abbildungen $\\mathbb{R}[x]_{\\le 2} \\to \\mathbb{R}$ sind lineare Funktionale?",
+      "options": [
+        {
+          "md": "$p \\mapsto \\int_0^1 p(x)\\,dx$",
+          "correct": true
+        },
+        {
+          "md": "$p \\mapsto p'(1)$",
+          "correct": true
+        },
+        {
+          "md": "$p \\mapsto$ Koeffizient von $x^2$",
+          "correct": true
+        },
+        {
+          "md": "$p \\mapsto p(0)^2$",
+          "why": "Quadrieren ist nicht linear."
+        },
+        {
+          "md": "$p \\mapsto p(0) + 1$",
+          "why": "Das Nullpolynom geht auf $1$."
+        }
+      ],
+      "explain": "Auswerten, Ableiten an einer Stelle, Integrieren und Koeffizienten ablesen sind linear.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$U \\subseteq \\mathbb{R}^5$ hat Dimension $2$. Welche Dimension hat der Annullator $U^0$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$5 - 2 = 3$. Ergänze eine Basis von $U$ zu einer von $\\mathbb{R}^5$; die dualen Funktionale der drei neuen Vektoren bilden eine Basis von $U^0$.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "$f: V \\to W$ hat bezüglich Basen die Matrix $A$. Welche Matrix hat $f^*: W^* \\to V^*$ bezüglich der dualen Basen?",
+      "options": [
+        {
+          "md": "$A^T$",
+          "correct": true
+        },
+        {
+          "md": "$A^{-1}$",
+          "why": "$f$ muss nicht invertierbar sein; $f^*$ geht nur in die Gegenrichtung."
+        },
+        {
+          "md": "$A$",
+          "why": "Die Formate passen nicht: $f^*$ geht von $W^*$ nach $V^*$."
+        },
+        {
+          "md": "$-A$",
+          "why": "Ein Vorzeichen entsteht nicht."
+        }
+      ],
+      "explain": "$(f^*w_i^*)(v_j) = w_i^*(f(v_j)) = a_{ij}$. Daraus folgt elegant Zeilenrang $=$ Spaltenrang: $\\operatorname{rang} f^* = \\operatorname{rang} f$.",
+      "label": "Klausur",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zwei lineare Funktionale $\\varphi, \\psi \\ne 0$ mit $\\ker\\varphi = \\ker\\psi$ sind Vielfache voneinander.",
+      "answer": true,
+      "explain": "Der gemeinsame Kern $H$ hat Kodimension $1$. Für $v \\notin H$ stimmen $\\varphi$ und $\\tfrac{\\varphi(v)}{\\psi(v)}\\psi$ auf $H$ und auf $v$ überein, also auf $H \\oplus \\operatorname{span}\\{v\\} = V$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\mathbb{R}[x]$ ist zu seinem Dualraum isomorph.",
+      "answer": false,
+      "explain": "$\\mathbb{R}[x]$ hat eine abzählbare Basis. Ein Funktional ist durch die Werte auf $1, x, x^2, \\dots$ frei bestimmt, also ist $\\mathbb{R}[x]^* \\cong \\mathbb{R}^{\\mathbb{N}}$, der Raum aller Folgen, und der hat überabzählbare Dimension. In unendlicher Dimension ist der Dualraum echt größer.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dual",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dual",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dual",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dual",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-dual",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$V^* = \\operatorname{Hom}(V, K)$; die duale Basis liest Koordinaten aus, $\\dim V^* = \\dim V$.",
+        "$b_i^*$ hängt von der ganzen Basis ab; rechnerisch sind die dualen Funktionale die Zeilen von $S^{-1}$.",
+        "Die duale Abbildung hat die Matrix $A^T$; $\\dim U^0 = \\dim V - \\dim U$.",
+        "In endlicher Dimension ist $V \\cong V^{**}$ kanonisch, in unendlicher ist $V^*$ größer."
+      ],
+      "id": "summary"
+    }
+  ]
+}

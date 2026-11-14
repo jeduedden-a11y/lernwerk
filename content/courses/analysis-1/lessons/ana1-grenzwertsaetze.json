@@ -1,0 +1,217 @@
+{
+  "id": "ana1-grenzwertsaetze",
+  "title": "Grenzwertsätze und ihre Grenzen",
+  "subtitle": "Rechnen mit Grenzwerten, und wann es schiefgeht",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "title": "Konvergenz von Folgen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Folgen und Konvergenz.md",
+      "title": "Folgen und Konvergenz"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Warum konvergiert ein Produkt konvergenter Folgen gegen das Produkt der Grenzwerte? Der Beweis ist ein Musterbeispiel für Abschätzungen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_n \\to a,\\quad b_n \\to b",
+            "why": "Voraussetzung."
+          },
+          {
+            "tex": "a_nb_n - ab = a_n(b_n - b) + b(a_n - a)",
+            "why": "Der Trick: $a_nb$ abziehen und wieder addieren."
+          },
+          {
+            "tex": "|a_nb_n - ab| \\le |a_n|\\,|b_n - b| + |b|\\,|a_n - a|",
+            "why": "Dreiecksungleichung."
+          },
+          {
+            "tex": "|a_n| \\le M \\text{ für alle } n",
+            "why": "Konvergente Folgen sind beschränkt."
+          },
+          {
+            "tex": "|a_nb_n - ab| \\le M|b_n - b| + |b|\\,|a_n - a| \\to 0",
+            "why": "Beide Summanden gehen gegen $0$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei konvergente Folgen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Nullsummentrick.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abschätzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beschränktheit liefert eine Konstante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fertig.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Grenzwertsätze:** Aus $a_n \\to a$ und $b_n \\to b$ folgt $a_n \\pm b_n \\to a \\pm b$, $a_nb_n \\to ab$, $\\tfrac{a_n}{b_n} \\to \\tfrac ab$ (falls $b \\ne 0$), $|a_n| \\to |a|$, und aus $a_n \\le b_n$ folgt $a \\le b$.\n\n**Einschließung:** Ist $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to L$, so $c_n \\to L$. Spezialfall: Nullfolge mal beschränkte Folge ist Nullfolge.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!warning] Wo die Sätze nicht greifen\n> Die Sätze setzen voraus, dass **beide** Folgen konvergieren. Ausdrücke wie $\\infty - \\infty$, $0 \\cdot \\infty$, $\\tfrac00$, $1^\\infty$ sind **unbestimmt**: Man muss umformen (erweitern, durch die höchste Potenz teilen, Logarithmus nehmen).",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\lim_{n \\to \\infty}\\tfrac{n^2 + 1}{n^2 - n}$.",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Grenzwert",
+      "explain": "Durch $n^2$ teilen: $\\tfrac{1 + 1/n^2}{1 - 1/n} \\to 1$. Erst umformen, dann Grenzwertsätze.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Konvergiert $(a_nb_n)$, so konvergieren $(a_n)$ und $(b_n)$.",
+      "answer": false,
+      "explain": "$(-1)^n \\cdot (-1)^n = 1$. Die Grenzwertsätze gehen nur in eine Richtung.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $a_n \\to 0$ und $(b_n)$ beschränkt, so gilt $a_nb_n \\to 0$.",
+      "answer": true,
+      "explain": "$|a_nb_n| \\le M|a_n| \\to 0$. Damit erledigt man etwa $\\tfrac{\\sin n}{n} \\to 0$, obwohl $\\sin n$ nicht konvergiert.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Bestimmt wird $\\lim n\\bigl(\\sqrt{n^2 + 1} - n\\bigr)$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$\\sqrt{n^2 + 1} - n \\to 0$ und $n \\to \\infty$.",
+          "why": "Beides stimmt."
+        },
+        {
+          "md": "Also hat der Ausdruck die Form $\\infty \\cdot 0 = 0$.",
+          "why": "Falsch: $\\infty \\cdot 0$ ist unbestimmt. Richtig: erweitern, $n \\cdot \\tfrac{1}{\\sqrt{n^2 + 1} + n} = \\tfrac{1}{\\sqrt{1 + 1/n^2} + 1} \\to \\tfrac12$."
+        },
+        {
+          "md": "Der Grenzwert ist $\\tfrac12$.",
+          "why": "Das ist das richtige Ergebnis, aber es folgt nicht aus der Zeile davor."
+        }
+      ],
+      "answer": 1,
+      "explain": "Unbestimmte Formen sind ein Signal zum Umformen, nicht zum Raten.",
+      "id": "sp1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus $a_n < b_n$ für alle $n$ folgt $\\lim a_n < \\lim b_n$.",
+      "answer": false,
+      "explain": "$0 < \\tfrac1n$, beide Grenzwerte $0$.",
+      "label": "Verständnis",
+      "id": "tf3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Bestimme $\\lim_{n \\to \\infty}\\sqrt[n]{3^n + 5^n}$.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "Grenzwert",
+      "explain": "$5 \\le \\sqrt[n]{3^n + 5^n} \\le 5\\sqrt[n]2 \\to 5$: Einschließung.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $a_n > 0$ und $\\tfrac{a_{n+1}}{a_n} \\to q < 1$, so gilt $a_n \\to 0$.",
+      "answer": true,
+      "explain": "Ab einem $N$ ist $\\tfrac{a_{n+1}}{a_n} \\le r$ mit $q < r < 1$, also $a_n \\le a_Nr^{n-N} \\to 0$. So zeigt man $\\tfrac{n^{10}}{2^n} \\to 0$ in einer Zeile.",
+      "label": "Extrem",
+      "id": "tf4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-grenzwert",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-grenzwert",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-grenzwert",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-epsilon",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-grenzwert",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Grenzwertsätze nur für konvergente Folgen; unbestimmte Formen erst umformen.",
+        "Einschließung: zwischen zwei Folgen mit demselben Grenzwert.",
+        "Nullfolge mal beschränkt ist Nullfolge.",
+        "Strikte Ungleichungen werden im Grenzwert zu $\\le$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

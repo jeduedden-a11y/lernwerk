@@ -4,7 +4,10 @@
   "subtitle": "Warum man Matrizen gerade so multipliziert",
   "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 3",
   "vault": [
-    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md", "title": "Matrixmultiplikation" }
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md",
+      "title": "Matrixmultiplikation"
+    }
   ],
   "steps": [
     {
@@ -12,13 +15,55 @@
       "type": "anim",
       "md": "Erst drehen, dann scheren, oder umgekehrt: Kommt dasselbe heraus? Die Antwort erklärt, warum das Matrixprodukt so seltsam aussieht.",
       "widget": "matrix-transform",
-      "params": { "matrix": [[1, 0], [0, 1]], "editable": false },
+      "params": {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "editable": false
+      },
       "timeline": [
-        { "caption": "Zwei Abbildungen: $D$ dreht um $90°$, $S = \\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ schert. Wir beginnen beim unveränderten Gitter." },
-        { "caption": "Zuerst $S$: $e_2$ kippt nach $(1, 1)$, das Gitter wird schief.", "to": { "m12": 1 }, "dur": 1600 },
-        { "caption": "Danach $D$: Alles dreht sich um $90°$. Zusammen ergibt das $DS = \\begin{pmatrix}0&-1\\\\1&1\\end{pmatrix}$, denn die Spalten sind die Bilder $D(S e_1)$ und $D(S e_2)$.", "to": { "m11": 0, "m12": -1, "m21": 1, "m22": 1 }, "dur": 2200, "hold": 5400 },
-        { "caption": "Jetzt in der anderen Reihenfolge: erst drehen, dann scheren. Ergebnis $SD = \\begin{pmatrix}1&-1\\\\1&0\\end{pmatrix}$, ein anderes Gitter.", "to": { "m11": 1, "m12": -1, "m21": 1, "m22": 0 }, "dur": 2200, "hold": 5400 },
-        { "caption": "Also $DS \\ne SD$: Die Reihenfolge zählt. Das Produkt $AB$ steht für **»erst $B$, dann $A$«**, gelesen von rechts nach links wie bei $f(g(x))$." }
+        {
+          "caption": "Zwei Abbildungen: $D$ dreht um $90°$, $S = \\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ schert. Wir beginnen beim unveränderten Gitter."
+        },
+        {
+          "caption": "Zuerst $S$: $e_2$ kippt nach $(1, 1)$, das Gitter wird schief.",
+          "to": {
+            "m12": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Danach $D$: Alles dreht sich um $90°$. Zusammen ergibt das $DS = \\begin{pmatrix}0&-1\\\\1&1\\end{pmatrix}$, denn die Spalten sind die Bilder $D(S e_1)$ und $D(S e_2)$.",
+          "to": {
+            "m11": 0,
+            "m12": -1,
+            "m21": 1,
+            "m22": 1
+          },
+          "dur": 2200,
+          "hold": 5400
+        },
+        {
+          "caption": "Jetzt in der anderen Reihenfolge: erst drehen, dann scheren. Ergebnis $SD = \\begin{pmatrix}1&-1\\\\1&0\\end{pmatrix}$, ein anderes Gitter.",
+          "to": {
+            "m11": 1,
+            "m12": -1,
+            "m21": 1,
+            "m22": 0
+          },
+          "dur": 2200,
+          "hold": 5400
+        },
+        {
+          "caption": "Also $DS \\ne SD$: Die Reihenfolge zählt. Das Produkt $AB$ steht für **»erst $B$, dann $A$«**, gelesen von rechts nach links wie bei $f(g(x))$."
+        }
       ]
     },
     {
@@ -38,8 +83,31 @@
       "label": "Einstellen",
       "md": "Gesucht ist die Matrix der Abbildung **erst an der $x$-Achse spiegeln, dann um $90°$ gegen den Uhrzeigersinn drehen**. Ziehe die Bilder von $e_1$ und $e_2$ an die richtigen Stellen.",
       "widget": "matrix-transform",
-      "params": { "matrix": [[1, 0], [0, 1]], "range": 3 },
-      "goal": { "matrix": [[0, 1], [1, 0]] },
+      "params": {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "range": 3
+      },
+      "goal": {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
       "explain": "Spiegeln: $e_1 \\mapsto e_1$, $e_2 \\mapsto -e_2$. Drehen: $e_1 \\mapsto e_2$, $-e_2 \\mapsto e_1$. Zusammen $e_1 \\mapsto e_2$ und $e_2 \\mapsto e_1$: die Spiegelung an der Diagonalen $y = x$, mit Matrix $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$."
     },
     {
@@ -48,8 +116,30 @@
       "label": "Rechnen",
       "md": "Berechne $\\begin{pmatrix}2&-1\\\\0&3\\end{pmatrix}\\begin{pmatrix}1&4\\\\2&1\\end{pmatrix}$ (zeilenweise).\n\n{{0}} {{1}} {{2}} {{3}}",
       "blanks": [
-        { "accept": [0], "numeric": true }, { "accept": [7], "numeric": true },
-        { "accept": [6], "numeric": true }, { "accept": [3], "numeric": true }
+        {
+          "accept": [
+            0
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            7
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            6
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            3
+          ],
+          "numeric": true
+        }
       ],
       "explain": "$2\\cdot1 + (-1)\\cdot2 = 0$, $2\\cdot4 + (-1)\\cdot1 = 7$, $0\\cdot1 + 3\\cdot2 = 6$, $0\\cdot4 + 3\\cdot1 = 3$."
     },
@@ -71,8 +161,30 @@
       "label": "Rechnen",
       "md": "Bestimme die Inverse von $\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$ (zeilenweise).\n\n{{0}} {{1}} {{2}} {{3}}",
       "blanks": [
-        { "accept": [1], "numeric": true }, { "accept": [-1], "numeric": true },
-        { "accept": [-1], "numeric": true }, { "accept": [2], "numeric": true }
+        {
+          "accept": [
+            1
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            -1
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            -1
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            2
+          ],
+          "numeric": true
+        }
       ],
       "hint": "Die Determinante ist $2 \\cdot 1 - 1 \\cdot 1 = 1$.",
       "explain": "$A^{-1} = \\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix}$. Probe: $\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}\\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix} = \\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}$."
@@ -84,9 +196,122 @@
       "md": "Warum ist $(AB)^{-1} = B^{-1}A^{-1}$ und nicht $A^{-1}B^{-1}$? Rechne nach, indem du $(AB)(B^{-1}A^{-1})$ vereinfachst.",
       "solution": "$$(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AEA^{-1} = AA^{-1} = E.$$\nDie Klammern darf man wegen der Assoziativität verschieben. Mit $A^{-1}B^{-1}$ ginge das nicht, weil $B$ und $A^{-1}$ nicht nebeneinanderstünden."
     },
-    { "id": "neu1", "type": "gen", "gen": "la-matrix", "level": 2, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "la-matrix", "level": 3, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "la-matrix", "level": 4, "label": "Neue Werte" },
+    {
+      "type": "multi",
+      "md": "Welche Rechenregeln gelten für **alle** $n \\times n$-Matrizen?",
+      "options": [
+        {
+          "md": "$(AB)^T = B^TA^T$",
+          "correct": true
+        },
+        {
+          "md": "$\\operatorname{Spur}(AB) = \\operatorname{Spur}(BA)$",
+          "correct": true
+        },
+        {
+          "md": "$(A + B)^2 = A^2 + 2AB + B^2$",
+          "why": "Ausmultipliziert steht dort $AB + BA$, und das ist nur bei vertauschenden Matrizen $2AB$."
+        },
+        {
+          "md": "Aus $AB = 0$ folgt $A = 0$ oder $B = 0$",
+          "why": "$\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}^2 = 0$: Matrizen haben Nullteiler."
+        },
+        {
+          "md": "Aus $A^2 = A$ folgt $A = 0$ oder $A = E$",
+          "why": "Jede Projektion ist idempotent, etwa $\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$."
+        }
+      ],
+      "explain": "Was man von Zahlen kennt, gilt bei Matrizen oft nicht: Sie vertauschen nicht und haben Nullteiler.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für quadratische Matrizen folgt aus $AB = E$ schon $BA = E$.",
+      "answer": true,
+      "explain": "Aus $AB = E$ folgt: $B$ ist injektiv ($Bx = 0 \\Rightarrow x = ABx = 0$), in endlicher Dimension also invertierbar, und $A = B^{-1}$. Für nicht quadratische Matrizen falsch: $\\begin{pmatrix}1&0\\end{pmatrix}\\begin{pmatrix}1\\\\0\\end{pmatrix} = (1)$, aber andersherum entsteht eine $2 \\times 2$-Matrix vom Rang $1$.",
+      "label": "Klausur",
+      "id": "v2"
+    },
+    {
+      "type": "choice",
+      "md": "$N = \\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$. Was ist $(E - N)^{-1}$?",
+      "options": [
+        {
+          "md": "$E + N$",
+          "correct": true
+        },
+        {
+          "md": "$E - N$",
+          "why": "$(E - N)^2 = E - 2N \\ne E$."
+        },
+        {
+          "md": "$E$",
+          "why": "$(E - N)E = E - N \\ne E$."
+        },
+        {
+          "md": "Es gibt keine Inverse",
+          "why": "$\\det(E - N) = 1$."
+        }
+      ],
+      "explain": "Geometrische Reihe für Matrizen: $(E - N)(E + N) = E - N^2 = E$, weil $N^2 = 0$. Allgemein $(E - N)^{-1} = E + N + N^2 + \\dots$, solange die Potenzen irgendwann null sind.",
+      "label": "Verständnis",
+      "id": "v3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$A = \\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$. Welcher Eintrag steht oben rechts in $A^{10}$?",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$A = E + N$ mit $N^2 = 0$, und $E$, $N$ vertauschen. Binomische Formel: $A^{10} = E + 10N$. Geometrisch: zehnmal dieselbe Scherung, die Scherfaktoren addieren sich.",
+      "id": "v4"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele invertierbare $2 \\times 2$-Matrizen gibt es über $\\mathbb{F}_2$?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Erste Spalte: einer der $3$ Vektoren $\\ne 0$. Zweite Spalte: keiner aus dem Spann der ersten ($0$ oder die erste selbst), also $4 - 2 = 2$ Möglichkeiten. $3 \\cdot 2 = 6$.",
+      "id": "v5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Es gibt reelle $n \\times n$-Matrizen $A, B$ mit $AB - BA = E$.",
+      "answer": false,
+      "explain": "Die Spur zeigt es: $\\operatorname{Spur}(AB - BA) = 0$, aber $\\operatorname{Spur} E = n$. In der Quantenmechanik gilt $XP - PX = i\\hbar \\cdot \\mathrm{id}$, das geht deshalb nur in unendlicher Dimension.",
+      "label": "Extrem",
+      "id": "v6"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "la-matrix",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "la-matrix",
+      "level": 3,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "la-matrix",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "la-matrix",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -95,7 +320,9 @@
         "$AB$ ist die Matrix der Verkettung »erst $B$, dann $A$«. Spalte $j$ von $AB$ ist $A$ mal Spalte $j$ von $B$.",
         "Das Produkt ist assoziativ, aber nicht kommutativ.",
         "$A$ ist invertierbar genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$: $\\tfrac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$.",
-        "$(AB)^{-1} = B^{-1}A^{-1}$, die Reihenfolge kehrt sich um."
+        "$(AB)^{-1} = B^{-1}A^{-1}$, die Reihenfolge kehrt sich um.",
+        "Matrizen vertauschen im Allgemeinen nicht und haben Nullteiler; $(A + B)^2 \\ne A^2 + 2AB + B^2$.",
+        "Für quadratische Matrizen reicht $AB = E$, dann ist auch $BA = E$."
       ]
     }
   ]

@@ -185,6 +185,17 @@ LW.extend("eth-ritual", LW.forms.statements([
 
 `philosophie2.js`, `oekonomik2.js` und `ethnologie2.js` legen ganze Generatoren aus Aussagenpools an (`LW.forms.statements` mit dem Plan `{ 1: ["tf"], 2: ["tf", "sort"], 3: ["multi", "sort"], 4: ["spot", "multi"] }`). Die Hilfsfunktion dort muss `gen` heißen: `scripts/check_content.py` erkennt Generatornamen nur in `gen("…"`, `proofGen("…"` und `LW.generator("…"`.
 
+### Uni-Niveau: Verständnis, Klausur, Extrem
+
+Lineare Algebra I (`generators/uni-la1.js` bis `uni-la3.js`) und Analysis I (`generators/uni-ana.js`) verlangen Verständnis statt Rezept. Stufe 3 fragt nach Gegenbeispielen, Fehlern in Beweisen und Aussagen, die man begründen muss. Stufe 4 (Experte) mischt zu etwa gleichen Teilen die schwersten Klausuraufgaben (Label **Klausur**) mit Aufgaben, die über eine Klausur hinausgehen (Label **Extrem**). In den Lektionen tragen `gen`-Schritte der Stufe 4 deshalb kein eigenes Label: Die Aufgabe nennt ihre Art selbst.
+
+- `LW.extend(name, { 4: [...] }, { replace: [4] })` ersetzt auf den genannten Stufen die eigene `make`-Funktion des Generators: Dort kommen nur noch die Zusätze.
+- `uni-la1.js` legt den Baukasten `LW.uni` an, den alle `uni-*.js` nutzen: Zahlentheorie (`gcd`, `phi`, `powmod` …), Matrizen (`mat`, `vec`, `detN`, `rankOf`, `mulMM` …), Schrittbausteine (`tf`, `ch`, `mu`, `nu`, `sp`, `pr`) und die Labels `VS` (Verständnis), `KL` (Klausur) und `EX` (Extrem) für feste Aufgaben wie für Vorlagen.
+- `byLevels(title, { 1: [...], 2: [...], 3: [...], 4: [...] })` baut einen Generator aus Listen je Stufe; aufgerufen als `gen("name", byLevels(...))`, damit `check_content.py` den Namen findet.
+- `expert(name, [...])` macht die Liste zur einzigen Quelle der Stufe 4 eines bestehenden Generators und verschiebt frühere Zusätze der Stufe 4 nach Stufe 3; `demote(name)` gibt die alten Stufe-4-Aufgaben der eigenen `make`-Funktion an Stufe 3 weiter. Feste Aufgaben zählen bei `expert` so viel wie Vorlagen, damit Klausur und Extrem gleich oft kommen.
+- `uni-mehr.js` (nach `uni-ana.js` geladen) füllt jede Stufe aller Uni-Generatoren auf, bis mindestens 12 verschiedene Aufgaben aus 40 Versuchen kommen: `more(name, [...])` hängt weitere Klausur- und Extrem-Aufgaben an Stufe 4 (feste Aufgaben zählen dort so viel wie Vorlagen), `add(name, stufe, [...])` weitere Vorlagen an die unteren Stufen.
+- Vertiefte Lektionen bekommen vor den abschließenden `gen`-Schritten einen Verständnisblock (Schritt-IDs `v1`, `v2` …): eine Herleitung als Animation (`derivation`), Aussagen mit Gegenbeispiel, Beweise zum Zusammensetzen oder mit Fehler, danach Aufgaben mit den Labels Verständnis, Klausur und Extrem. Zusätzliche Experte-Schritte am Ende heißen `x41`, `x42` ….
+
 ## Beweisaufgaben
 
 Ein Beweis aus einem Pool wird zu sechs Aufgabenformen: `order` (aus Bausteinen bauen, mit falschen dazwischen), `gaps` (Lücken füllen), `justify` (zu jeder Zeile die Begründung wählen), `flaw` (die falsche Zeile finden, als `spot`), `strategy` (welcher Aufbau passt?) und `next` (wie geht es weiter?).

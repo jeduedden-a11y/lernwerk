@@ -166,6 +166,90 @@
       "explain": "Über $\\R$ gibt es deshalb nur drei Möglichkeiten: keine, genau eine oder unendlich viele Lösungen."
     },
     {
+      "type": "truefalse",
+      "md": "Sind $x_1$ und $x_2$ Lösungen von $Ax = b$, so ist auch $x_1 + x_2$ eine Lösung.",
+      "answer": false,
+      "explain": "$A(x_1 + x_2) = 2b$. Das stimmt nur für $b = 0$. Die Lösungsmenge eines inhomogenen Systems ist kein Unterraum.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Sind $x_1$ und $x_2$ Lösungen von $Ax = b$, so ist auch $\\tfrac12(x_1 + x_2)$ eine Lösung.",
+      "answer": true,
+      "explain": "$A\\bigl(\\tfrac12x_1 + \\tfrac12x_2\\bigr) = \\tfrac12 b + \\tfrac12 b = b$. Kombinationen mit Koeffizientensumme $1$ bleiben Lösungen: Die Lösungsmenge ist ein affiner Raum.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Mengen können Lösungsmenge eines linearen Gleichungssystems in drei Unbekannten über $\\mathbb{R}$ sein?",
+      "options": [
+        {
+          "md": "die leere Menge",
+          "correct": true
+        },
+        {
+          "md": "ein einzelner Punkt",
+          "correct": true
+        },
+        {
+          "md": "eine Gerade, die nicht durch $0$ geht",
+          "correct": true
+        },
+        {
+          "md": "ganz $\\mathbb{R}^3$",
+          "correct": true
+        },
+        {
+          "md": "genau zwei Punkte",
+          "why": "Mit zwei Lösungen liegt die ganze Gerade durch sie in der Lösungsmenge."
+        },
+        {
+          "md": "ein Kreis",
+          "why": "Lösungsmengen sind affine Räume, keine gekrümmten Gebilde."
+        }
+      ],
+      "explain": "Lösungsmengen sind leer oder $x_0 + \\ker A$: Punkt, Gerade, Ebene oder der ganze Raum ($A = 0$, $b = 0$).",
+      "label": "Verständnis",
+      "id": "v3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$A \\in \\mathbb{R}^{3 \\times 3}$ hat Rang $1$. Welche Dimension hat $\\{B \\in \\mathbb{R}^{3 \\times 2} : AB = 0\\}$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "Jede der zwei Spalten von $B$ muss im Kern von $A$ liegen, der hat Dimension $3 - 1 = 2$. Zusammen $2 \\cdot 2 = 4$.",
+      "id": "v4"
+    },
+    {
+      "type": "choice",
+      "md": "Wann ist $Ax = b$ für **jedes** $b$ lösbar ($A \\in \\mathbb{R}^{m \\times n}$)?",
+      "options": [
+        {
+          "md": "Wenn $\\operatorname{rang} A = m$",
+          "correct": true
+        },
+        {
+          "md": "Wenn $\\operatorname{rang} A = n$",
+          "why": "Das heißt: höchstens eine Lösung (Kern null), nicht unbedingt eine."
+        },
+        {
+          "md": "Wenn $\\det A \\ne 0$",
+          "why": "Die Determinante gibt es nur für $m = n$; dort ist es richtig, allgemein nicht."
+        },
+        {
+          "md": "Wenn $A$ keine Nullzeile hat",
+          "why": "$\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix}$ hat keine Nullzeile, aber $Ax = (1, 0)^T$ ist unlösbar."
+        }
+      ],
+      "explain": "Lösbar für jedes $b$ heißt: Das Bild ist der ganze $\\mathbb{R}^m$, also Spaltenrang $m$. Eindeutig heißt Rang $n$. Beides zusammen nur bei quadratischen invertierbaren Matrizen.",
+      "label": "Klausur",
+      "id": "v5"
+    },
+    {
       "id": "neu1",
       "type": "gen",
       "gen": "la-loesungsmenge",
@@ -190,8 +274,13 @@
       "id": "neu4",
       "type": "gen",
       "gen": "la-loesungsmenge",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "la-loesungsmenge",
       "level": 4,
-      "label": "Fallen"
+      "id": "x41"
     },
     {
       "id": "summary",
@@ -201,7 +290,9 @@
         "Lösbar genau dann, wenn $\\operatorname{Rang} A = \\operatorname{Rang}(A \\mid b)$.",
         "Eine Zeile $0 = c$ mit $c \\ne 0$ heißt: keine Lösung. Eine Nullzeile legt nichts fest.",
         "Unbekannte ohne Stufe sind frei; es gibt $n - \\operatorname{Rang} A$ freie Parameter.",
-        "Alle Lösungen: eine Lösung plus der Kern, $x_p + \\ker A$."
+        "Alle Lösungen: eine Lösung plus der Kern, $x_p + \\ker A$.",
+        "Die Lösungsmenge ist leer oder $x_0 + \\ker A$, ein affiner Raum.",
+        "Für jedes $b$ lösbar: Rang $=$ Zeilenzahl. Höchstens eine Lösung: Rang $=$ Spaltenzahl."
       ]
     }
   ]

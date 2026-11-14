@@ -4,7 +4,10 @@
   "subtitle": "Warum geschachtelte Intervalle in ℝ nie ins Leere laufen",
   "source": "Skript Jarohs, Beweis von Satz 5.13 (Vorbemerkung); Übungsblatt 2, Aufgabe 4",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md", "title": "Intervallschachtelung" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md",
+      "title": "Intervallschachtelung"
+    }
   ],
   "steps": [
     {
@@ -12,14 +15,50 @@
       "type": "anim",
       "md": "Wir fangen $\\sqrt2$ ein, ohne es je auszurechnen. Wir wissen nur: $1^2 < 2 < 2^2$. Also liegt die gesuchte Zahl in $[1, 2]$. Und dann halbieren wir.",
       "widget": "nested-intervals",
-      "params": { "a": "floor(sqrt(2)*2^(n-1))/2^(n-1)", "b": "floor(sqrt(2)*2^(n-1))/2^(n-1) + 2^(1-n)", "steps": 9, "range": [0.9, 2.1] },
-      "int": ["n"],
+      "params": {
+        "a": "floor(sqrt(2)*2^(n-1))/2^(n-1)",
+        "b": "floor(sqrt(2)*2^(n-1))/2^(n-1) + 2^(1-n)",
+        "steps": 9,
+        "range": [
+          0.9,
+          2.1
+        ]
+      },
+      "int": [
+        "n"
+      ],
       "timeline": [
-        { "caption": "$I_1 = [1, 2]$, weil $1^2 = 1 < 2$ und $2^2 = 4 > 2$." },
-        { "caption": "Mitte $1{,}5$: $1{,}5^2 = 2{,}25 > 2$. Die gesuchte Zahl liegt also links: $I_2 = [1;\\ 1{,}5]$.", "to": { "n": 2 }, "dur": 600 },
-        { "caption": "Mitte $1{,}25$: $1{,}25^2 = 1{,}5625 < 2$. Weiter rechts: $I_3 = [1{,}25;\\ 1{,}5]$.", "to": { "n": 3 }, "dur": 600 },
-        { "caption": "So geht es weiter. Jedes Intervall liegt im vorigen und ist halb so lang. Links stehen immer Zahlen mit Quadrat unter $2$, rechts mit Quadrat über $2$.", "to": { "n": 7 }, "dur": 2400 },
-        { "caption": "Die Längen $2^{1-n}$ gehen gegen $0$. In $\\R$ bleibt am Ende genau ein Punkt übrig, der in allen Intervallen liegt: $\\sqrt2$. In $\\Q$ dagegen wäre der Durchschnitt **leer**, denn $\\sqrt2$ ist nicht rational. Genau diese Lücke schließt die Vollständigkeit.", "to": { "n": 9 }, "dur": 1000 }
+        {
+          "caption": "$I_1 = [1, 2]$, weil $1^2 = 1 < 2$ und $2^2 = 4 > 2$."
+        },
+        {
+          "caption": "Mitte $1{,}5$: $1{,}5^2 = 2{,}25 > 2$. Die gesuchte Zahl liegt also links: $I_2 = [1;\\ 1{,}5]$.",
+          "to": {
+            "n": 2
+          },
+          "dur": 600
+        },
+        {
+          "caption": "Mitte $1{,}25$: $1{,}25^2 = 1{,}5625 < 2$. Weiter rechts: $I_3 = [1{,}25;\\ 1{,}5]$.",
+          "to": {
+            "n": 3
+          },
+          "dur": 600
+        },
+        {
+          "caption": "So geht es weiter. Jedes Intervall liegt im vorigen und ist halb so lang. Links stehen immer Zahlen mit Quadrat unter $2$, rechts mit Quadrat über $2$.",
+          "to": {
+            "n": 7
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Die Längen $2^{1-n}$ gehen gegen $0$. In $\\R$ bleibt am Ende genau ein Punkt übrig, der in allen Intervallen liegt: $\\sqrt2$. In $\\Q$ dagegen wäre der Durchschnitt **leer**, denn $\\sqrt2$ ist nicht rational. Genau diese Lücke schließt die Vollständigkeit.",
+          "to": {
+            "n": 9
+          },
+          "dur": 1000
+        }
       ]
     },
     {
@@ -33,17 +72,37 @@
       "label": "Ausprobieren",
       "md": "Die Intervalle $I_n$ sind die Dezimalabschnitte von $\\sqrt2$: $[1{,}4;\\ 1{,}5]$, $[1{,}41;\\ 1{,}42]$, … Schachtle weiter.",
       "widget": "nested-intervals",
-      "params": { "a": "floor(sqrt(2)*10^n)/10^n", "b": "floor(sqrt(2)*10^n)/10^n + 10^(-n)", "steps": 7, "range": [1.35, 1.55] }
+      "params": {
+        "a": "floor(sqrt(2)*10^n)/10^n",
+        "b": "floor(sqrt(2)*10^n)/10^n + 10^(-n)",
+        "steps": 7,
+        "range": [
+          1.35,
+          1.55
+        ]
+      }
     },
     {
       "id": "q-luecke",
       "type": "choice",
       "md": "Alle Randpunkte dieser Intervalle sind rational. Was wäre, wenn man nur in $\\Q$ rechnen dürfte?",
       "options": [
-        { "md": "Der Durchschnitt aller $I_n \\cap \\Q$ wäre leer, weil der einzige gemeinsame Punkt $\\sqrt2 \\notin \\Q$ ist.", "correct": true },
-        { "md": "Der Durchschnitt enthielte $1{,}41421$.", "why": "$1{,}41421$ liegt nicht in $I_6 = [1{,}414213;\\ 1{,}414214]$." },
-        { "md": "Der Durchschnitt wäre ganz $\\Q \\cap [1, 2]$.", "why": "Die Intervalle werden beliebig klein, im Durchschnitt bleibt höchstens ein Punkt." },
-        { "md": "In $\\Q$ gibt es keine Intervalle.", "why": "Natürlich gibt es sie, nur fehlen ihnen die Lücken-Punkte." }
+        {
+          "md": "Der Durchschnitt aller $I_n \\cap \\Q$ wäre leer, weil der einzige gemeinsame Punkt $\\sqrt2 \\notin \\Q$ ist.",
+          "correct": true
+        },
+        {
+          "md": "Der Durchschnitt enthielte $1{,}41421$.",
+          "why": "$1{,}41421$ liegt nicht in $I_6 = [1{,}414213;\\ 1{,}414214]$."
+        },
+        {
+          "md": "Der Durchschnitt wäre ganz $\\Q \\cap [1, 2]$.",
+          "why": "Die Intervalle werden beliebig klein, im Durchschnitt bleibt höchstens ein Punkt."
+        },
+        {
+          "md": "In $\\Q$ gibt es keine Intervalle.",
+          "why": "Natürlich gibt es sie, nur fehlen ihnen die Lücken-Punkte."
+        }
       ],
       "explain": "Die Aussage hängt also am **Vollständigkeitsaxiom**. Genau deshalb braucht der Beweis $\\sup$ und $\\inf$."
     },
@@ -80,17 +139,92 @@
       "type": "multi",
       "md": "Angenommen, zusätzlich gilt $b_n - a_n \\to 0$. Was folgt?",
       "options": [
-        { "md": "$\\sup A = \\inf B$.", "correct": true },
-        { "md": "Der Durchschnitt besteht aus genau einem Punkt.", "correct": true },
-        { "md": "Der Durchschnitt ist leer.", "why": "Er ist nach dem Satz nie leer." },
-        { "md": "Die Folgen $(a_n)$ und $(b_n)$ konvergieren gegen denselben Grenzwert.", "correct": true }
+        {
+          "md": "$\\sup A = \\inf B$.",
+          "correct": true
+        },
+        {
+          "md": "Der Durchschnitt besteht aus genau einem Punkt.",
+          "correct": true
+        },
+        {
+          "md": "Der Durchschnitt ist leer.",
+          "why": "Er ist nach dem Satz nie leer."
+        },
+        {
+          "md": "Die Folgen $(a_n)$ und $(b_n)$ konvergieren gegen denselben Grenzwert.",
+          "correct": true
+        }
       ],
       "explain": "Wenn die Längen gegen $0$ gehen, bleibt genau ein Punkt übrig. So definiert man zum Beispiel $\\sqrt2$ oder $e$ durch Intervallschachtelungen."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-wurzel", "level": 1, "label": "Neue Wurzel" },
-    { "id": "neu2", "type": "gen", "gen": "ana-wurzel", "level": 2, "label": "Neue Wurzel" },
-    { "id": "neu3", "type": "gen", "gen": "ana-zws", "level": 2, "label": "Halbieren" },
-    { "id": "neu4", "type": "gen", "gen": "ana-wurzel", "level": 4, "label": "Wie viele Schritte?" },
+    {
+      "type": "truefalse",
+      "md": "Jede Intervallschachtelung mit rationalen Endpunkten enthält eine rationale Zahl.",
+      "answer": false,
+      "explain": "Die Dezimalnäherungen von $\\sqrt2$ bilden eine Schachtelung mit rationalen Endpunkten, deren einziger gemeinsamer Punkt $\\sqrt2$ ist. In $\\mathbb{Q}$ kann der Durchschnitt leer sein.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Durchschnitt der offenen Intervalle $(0, \\tfrac1n)$ für $n \\ge 1$ ist leer.",
+      "answer": true,
+      "explain": "Jedes $x > 0$ fällt aus einem Intervall heraus, $0$ liegt in keinem. Für die Schachtelung braucht man abgeschlossene Intervalle.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie lang ist das Intervall nach $10$ Halbierungsschritten, wenn man mit $[1, 2]$ beginnt? (sechs Nachkommastellen)",
+      "answer": 0.000977,
+      "tolerance": 6e-07,
+      "placeholder": "Länge",
+      "explain": "$2^{-10} = \\tfrac{1}{1024} \\approx 0{,}000977$. Jeder Schritt bringt ein Bit, etwa drei Dezimalstellen pro zehn Schritte.",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Sind die Intervalle abgeschlossen und geschachtelt, aber ihre Längen gehen nicht gegen $0$, so kann der Durchschnitt mehr als einen Punkt enthalten.",
+      "answer": true,
+      "explain": "$[-1 - \\tfrac1n, 1 + \\tfrac1n]$ schachteln sich auf $[-1, 1]$. Erst die Längen gegen $0$ machen den Punkt eindeutig.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 1,
+      "label": "Neue Wurzel"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 2,
+      "label": "Neue Wurzel"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-zws",
+      "level": 2,
+      "label": "Halbieren"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-supinf",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -99,7 +233,9 @@
         "Abgeschlossene, beschränkte, geschachtelte Intervalle haben in $\\R$ einen nichtleeren Durchschnitt.",
         "In $\\Q$ ist das falsch, offene oder unbeschränkte Intervalle reichen auch nicht.",
         "Beweisidee: $\\sup A \\le \\inf B$, und alles dazwischen liegt in jedem $I_n$.",
-        "Schrumpfen die Längen gegen $0$, bleibt genau ein Punkt."
+        "Schrumpfen die Längen gegen $0$, bleibt genau ein Punkt.",
+        "Abgeschlossen und Längen gegen $0$: genau ein gemeinsamer Punkt.",
+        "In $\\mathbb{Q}$ kann eine Schachtelung leer ausgehen."
       ]
     }
   ]

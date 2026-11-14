@@ -1,0 +1,270 @@
+{
+  "id": "la1-homomorphismen",
+  "title": "Gruppenhomomorphismen, Kern und Isomorphie",
+  "subtitle": "Abbildungen, die die Struktur mitnehmen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein Homomorphismus erfüllt nur eine Regel: $\\varphi(ab) = \\varphi(a)\\varphi(b)$. Daraus folgt erstaunlich viel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\varphi(e) = \\varphi(e \\cdot e) = \\varphi(e)\\,\\varphi(e)",
+            "why": "Die Regel mit $a = b = e$."
+          },
+          {
+            "tex": "\\varphi(e) = e_H",
+            "why": "Von links mit $\\varphi(e)^{-1}$ multiplizieren."
+          },
+          {
+            "tex": "\\varphi(a)\\,\\varphi(a^{-1}) = \\varphi(a a^{-1}) = \\varphi(e) = e_H",
+            "why": "Also ist $\\varphi(a^{-1}) = \\varphi(a)^{-1}$."
+          },
+          {
+            "tex": "\\varphi(a) = \\varphi(b) \\iff \\varphi(a b^{-1}) = e_H \\iff a b^{-1} \\in \\ker\\varphi",
+            "why": "Gleiche Bilder genau dann, wenn der »Quotient« im Kern liegt."
+          },
+          {
+            "tex": "\\varphi \\text{ injektiv} \\iff \\ker\\varphi = \\{e\\}",
+            "why": "Injektivität prüft man nur am neutralen Element."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wir starten mit der einzigen Regel und setzen das neutrale Element ein."
+        },
+        {
+          "caption": "Neutrales geht auf Neutrales: Das muss man nicht fordern, es folgt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Inverse gehen auf Inverse.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der **Kern** $\\ker\\varphi = \\{a : \\varphi(a) = e_H\\}$ misst, was zusammenfällt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ist der Kern trivial, geht nichts verloren: $\\varphi$ ist injektiv.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine Abbildung $\\varphi: G \\to H$ zwischen Gruppen heißt **Homomorphismus**, wenn $\\varphi(ab) = \\varphi(a)\\varphi(b)$ für alle $a, b$. Ein bijektiver Homomorphismus heißt **Isomorphismus**, dann ist $G \\cong H$: Die Gruppen sind bis auf Umbenennung gleich.\n\nBeispiele: $\\det: \\mathrm{GL}_n(\\mathbb{R}) \\to \\mathbb{R}^\\times$, $\\exp: (\\mathbb{R}, +) \\to (\\mathbb{R}_{>0}, \\cdot)$, $\\operatorname{sgn}: S_n \\to \\{\\pm 1\\}$, und $\\mathbb{Z} \\to \\mathbb{Z}/n\\mathbb{Z}$, $x \\mapsto x \\bmod n$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Kern und Bild\n> $\\ker\\varphi$ ist eine Untergruppe von $G$, $\\operatorname{im}\\varphi$ eine Untergruppe von $H$. Jede Faser $\\varphi^{-1}(y)$ ist eine Nebenklasse $a \\ker\\varphi$.\n>\n> Für endliches $G$ folgt daraus $|G| = |\\ker\\varphi| \\cdot |\\operatorname{im}\\varphi|$ (das ist der Homomorphiesatz in Zahlen).",
+      "id": "t2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Abbildungen sind Gruppenhomomorphismen?",
+      "options": [
+        {
+          "md": "$\\det: \\mathrm{GL}_2(\\mathbb{R}) \\to (\\mathbb{R}\\setminus\\{0\\}, \\cdot)$",
+          "correct": true
+        },
+        {
+          "md": "$x \\mapsto x^2$ auf $(\\mathbb{R}\\setminus\\{0\\}, \\cdot)$",
+          "correct": true
+        },
+        {
+          "md": "$x \\mapsto e^x$ von $(\\mathbb{R}, +)$ nach $(\\mathbb{R}_{>0}, \\cdot)$",
+          "correct": true
+        },
+        {
+          "md": "$x \\mapsto x^2$ auf $(\\mathbb{R}, +)$",
+          "why": "$(1 + 1)^2 = 4$, aber $1^2 + 1^2 = 2$."
+        },
+        {
+          "md": "$A \\mapsto A^T$ auf $\\mathrm{GL}_2(\\mathbb{R})$",
+          "why": "$(AB)^T = B^TA^T$, die Reihenfolge kehrt sich um; bei nicht vertauschenden Matrizen ist das nicht $A^TB^T$."
+        },
+        {
+          "md": "$x \\mapsto x + 1$ auf $(\\mathbb{Z}, +)$",
+          "why": "$0$ geht auf $1$, ein Homomorphismus bildet $0$ auf $0$ ab."
+        }
+      ],
+      "explain": "Prüfe immer zuerst, ob das neutrale Element auf das neutrale Element geht; das schließt viele Kandidaten sofort aus.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ist der Kern von $\\det: \\mathrm{GL}_2(\\mathbb{R}) \\to (\\mathbb{R}\\setminus\\{0\\}, \\cdot)$?",
+      "options": [
+        {
+          "md": "Die Matrizen mit Determinante $1$",
+          "correct": true
+        },
+        {
+          "md": "Nur die Einheitsmatrix",
+          "why": "$\\begin{pmatrix}2&0\\\\0&\\frac12\\end{pmatrix}$ hat Determinante $1$."
+        },
+        {
+          "md": "Die Matrizen mit Determinante $0$",
+          "why": "Die liegen nicht in $\\mathrm{GL}_2$, und das neutrale Element von $(\\mathbb{R}\\setminus\\{0\\}, \\cdot)$ ist $1$, nicht $0$."
+        },
+        {
+          "md": "Die Drehmatrizen",
+          "why": "Drehungen haben Determinante $1$, aber Scherungen wie $\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ auch."
+        }
+      ],
+      "explain": "Kern heißt: geht auf das neutrale Element des Ziels, hier $1$. Das ist die **spezielle lineare Gruppe** $\\mathrm{SL}_2(\\mathbb{R})$.",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$\\varphi: \\mathbb{Z}/12\\mathbb{Z} \\to \\mathbb{Z}/12\\mathbb{Z}$, $x \\mapsto 3x$. Wie viele Elemente hat das **Bild** von $\\varphi$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Kern: $3x \\equiv 0 \\pmod{12}$ heißt $4 \\mid x$, also $\\{0, 4, 8\\}$ mit $3$ Elementen. Bild $= 12/3 = 4$ Elemente, nämlich $\\{0, 3, 6, 9\\}$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $\\varphi: G \\to H$ ein surjektiver Homomorphismus und $G$ abelsch, so ist $H$ abelsch.",
+      "answer": true,
+      "explain": "Jedes Element von $H$ ist ein $\\varphi(a)$. Dann $\\varphi(a)\\varphi(b) = \\varphi(ab) = \\varphi(ba) = \\varphi(b)\\varphi(a)$. Die Umkehrung gilt nicht: $\\operatorname{sgn}: S_3 \\to \\{\\pm1\\}$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum sind $\\mathbb{Z}/4\\mathbb{Z}$ und $\\mathbb{Z}/2\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z}$ **nicht** isomorph?",
+      "options": [
+        {
+          "md": "$\\mathbb{Z}/4\\mathbb{Z}$ hat ein Element der Ordnung $4$, die andere Gruppe nicht, und Isomorphismen erhalten Ordnungen",
+          "correct": true
+        },
+        {
+          "md": "Weil die eine Gruppe aus Paaren besteht und die andere nicht",
+          "why": "Isomorphie fragt nach der Struktur, nicht nach den Namen der Elemente."
+        },
+        {
+          "md": "Weil sie verschieden viele Elemente haben",
+          "why": "Beide haben vier Elemente."
+        },
+        {
+          "md": "Weil nur eine von beiden abelsch ist",
+          "why": "Beide sind abelsch."
+        }
+      ],
+      "explain": "Aus $\\varphi(a)^k = \\varphi(a^k)$ folgt: Ein Isomorphismus erhält die Ordnung jedes Elements. In $\\mathbb{Z}/2 \\times \\mathbb{Z}/2$ ist $2x = 0$ für alle $x$, in $\\mathbb{Z}/4$ nicht.",
+      "label": "Verständnis",
+      "id": "c2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$\\varphi: G \\to H$ ist ein Homomorphismus.",
+      "claim": "$\\varphi$ ist injektiv genau dann, wenn $\\ker\\varphi = \\{e\\}$.",
+      "steps": [
+        "$\\Rightarrow$: Es gilt $\\varphi(e) = e_H$. Bei Injektivität kann kein weiteres Element auf $e_H$ gehen, also $\\ker\\varphi = \\{e\\}$.",
+        "$\\Leftarrow$: Sei $\\varphi(a) = \\varphi(b)$.",
+        "Dann $\\varphi(ab^{-1}) = \\varphi(a)\\varphi(b)^{-1} = e_H$, also $ab^{-1} \\in \\ker\\varphi$.",
+        "Wegen $\\ker\\varphi = \\{e\\}$ ist $ab^{-1} = e$, also $a = b$."
+      ],
+      "distractors": [
+        {
+          "md": "Dann $\\varphi(a - b) = 0$.",
+          "why": "In einer allgemeinen Gruppe gibt es kein Minus, man arbeitet mit $ab^{-1}$."
+        },
+        {
+          "md": "Also ist $\\varphi$ auch surjektiv.",
+          "why": "Injektiv sagt nichts über Surjektivität, etwa $\\mathbb{Z} \\to \\mathbb{Z}$, $x \\mapsto 2x$."
+        }
+      ],
+      "explain": "Zwei Richtungen. Die interessante ist $\\Leftarrow$: Gleiche Bilder übersetzen sich in ein Element des Kerns. Dasselbe Argument zeigt bei linearen Abbildungen: injektiv genau dann, wenn $\\ker f = \\{0\\}$.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele Gruppenhomomorphismen $\\mathbb{Z}/6\\mathbb{Z} \\to \\mathbb{Z}/4\\mathbb{Z}$ gibt es?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Ein Homomorphismus ist durch $y = \\varphi(1)$ festgelegt, und wegen $6 \\cdot 1 = 0$ muss $6y \\equiv 0 \\pmod 4$ gelten, also $y \\in \\{0, 2\\}$. Zwei Homomorphismen: der triviale und $x \\mapsto 2x$.",
+      "id": "n2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Homomorphismen erhalten neutrale Elemente, Inverse und Ordnungen.",
+        "$\\ker\\varphi$ und $\\operatorname{im}\\varphi$ sind Untergruppen; $\\varphi$ ist injektiv genau dann, wenn $\\ker\\varphi = \\{e\\}$.",
+        "Für endliches $G$: $|G| = |\\ker\\varphi| \\cdot |\\operatorname{im}\\varphi|$.",
+        "Isomorphe Gruppen sind strukturgleich; unterschiedliche Elementordnungen beweisen Nicht-Isomorphie."
+      ],
+      "id": "summary"
+    }
+  ]
+}

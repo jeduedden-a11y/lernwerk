@@ -1,0 +1,211 @@
+{
+  "id": "ana1-hospital",
+  "title": "Die Regeln von L'Hospital",
+  "subtitle": "Ein starkes Werkzeug mit klaren Voraussetzungen",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Mittelwertsatz.md",
+      "title": "Mittelwertsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "title": "Ableitung"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Bei $\\tfrac00$ entscheidet das Verhältnis der Geschwindigkeiten, mit denen Zähler und Nenner verschwinden. Das ist die Idee hinter L'Hospital.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\lim_{x \\to 0}\\frac{1 - \\cos x}{x^2}",
+            "why": "Form $\\tfrac00$."
+          },
+          {
+            "tex": "= \\lim_{x \\to 0}\\frac{\\sin x}{2x}",
+            "why": "L'Hospital: Zähler und Nenner getrennt ableiten. Wieder $\\tfrac00$."
+          },
+          {
+            "tex": "= \\lim_{x \\to 0}\\frac{\\cos x}{2} = \\frac12",
+            "why": "Noch einmal: Jetzt ist der Grenzwert klar."
+          },
+          {
+            "tex": "1 - \\cos x = \\tfrac{x^2}{2} - \\tfrac{x^4}{24} + \\dots",
+            "why": "Gegenprobe mit der Reihe: $\\tfrac{1 - \\cos x}{x^2} = \\tfrac12 - \\tfrac{x^2}{24} + \\dots \\to \\tfrac12$."
+          },
+          {
+            "tex": "\\frac{f(x)}{g(x)} = \\frac{f(x) - f(0)}{g(x) - g(0)} = \\frac{f'(\\xi)}{g'(\\xi)}",
+            "why": "Warum es klappt: verallgemeinerter Mittelwertsatz von Cauchy."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein unbestimmter Ausdruck.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Noch einmal.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe mit der Reihe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Grund: ein Mittelwertsatz.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Regel von L'Hospital\n> Gehen $f$ und $g$ für $x \\to a$ beide gegen $0$ (oder beide gegen $\\pm\\infty$), ist $g' \\ne 0$ nahe $a$, und **existiert** $\\lim\\tfrac{f'(x)}{g'(x)} = L$, so gilt $\\lim\\tfrac{f(x)}{g(x)} = L$. Ebenso für $a = \\pm\\infty$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!warning] Fallen\n> Erst prüfen, ob wirklich $\\tfrac00$ oder $\\tfrac\\infty\\infty$ vorliegt. Existiert $\\lim\\tfrac{f'}{g'}$ nicht, sagt die Regel **nichts**. Formen wie $0 \\cdot \\infty$, $\\infty - \\infty$, $1^\\infty$ erst in einen Bruch umwandeln. Oft ist die Reihenentwicklung schneller.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\lim_{x \\to 0}\\tfrac{x - \\sin x}{x^3}$ (vier Nachkommastellen).",
+      "answer": 0.1667,
+      "tolerance": 0.0002,
+      "placeholder": "Zahl",
+      "explain": "Dreimal L'Hospital, oder $\\sin x = x - \\tfrac{x^3}{6} + \\dots$: $\\tfrac16$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\lim_{x \\to 0^+}x\\ln x$.",
+      "answer": 0,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$\\tfrac{\\ln x}{1/x}$ ist $\\tfrac{-\\infty}{\\infty}$; L'Hospital: $\\tfrac{1/x}{-1/x^2} = -x \\to 0$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\lim_{x \\to \\infty}\\tfrac{x + \\sin x}{x}$ existiert nicht, weil $\\lim\\tfrac{1 + \\cos x}{1}$ nicht existiert.",
+      "answer": false,
+      "explain": "L'Hospital ist nur hinreichend. Direkt: $1 + \\tfrac{\\sin x}{x} \\to 1$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Bestimmt wird $\\lim_{x \\to 0}\\tfrac{x + 1}{x + 2}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Zähler und Nenner sind differenzierbar.",
+          "why": "Stimmt, aber das reicht nicht."
+        },
+        {
+          "md": "L'Hospital: $\\lim\\tfrac{1}{1} = 1$.",
+          "why": "Falsch: Es liegt kein unbestimmter Ausdruck vor ($\\tfrac12$, nicht $\\tfrac00$). Die Regel ist nicht anwendbar."
+        },
+        {
+          "md": "Der Grenzwert ist $\\tfrac12$.",
+          "why": "Richtig, durch Einsetzen."
+        }
+      ],
+      "answer": 1,
+      "explain": "Vor jeder Anwendung prüfen: Ist es wirklich $\\tfrac00$ oder $\\tfrac\\infty\\infty$?",
+      "id": "sp1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\ln x$ wächst für $x \\to \\infty$ langsamer als jede Potenz $x^\\alpha$ mit $\\alpha > 0$.",
+      "answer": true,
+      "explain": "$\\tfrac{\\ln x}{x^\\alpha} \\to \\tfrac{1/x}{\\alpha x^{\\alpha-1}} \\to 0$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Bestimme $\\lim_{x \\to 0}\\bigl(\\tfrac{\\sin x}{x}\\bigr)^{1/x^2}$ (vier Nachkommastellen).",
+      "answer": 0.8465,
+      "tolerance": 0.0002,
+      "placeholder": "Zahl",
+      "explain": "Logarithmieren: $\\tfrac{1}{x^2}\\ln\\tfrac{\\sin x}{x} \\approx \\tfrac{1}{x^2}\\cdot\\bigl(-\\tfrac{x^2}{6}\\bigr) = -\\tfrac16$, also $e^{-1/6}$.",
+      "id": "n3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-hospital",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-hospital",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-hospital",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-hospital",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-hospital",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Nur bei $\\tfrac00$ oder $\\tfrac\\infty\\infty$, und nur wenn $\\lim f'/g'$ existiert.",
+        "Andere unbestimmte Formen erst in einen Bruch verwandeln, bei $1^\\infty$ logarithmieren.",
+        "Die Regel ist hinreichend, nicht notwendig.",
+        "Reihenentwicklungen sind oft schneller und zeigen mehr."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "id": "la1-isomorphie",
+  "title": "Isomorphismen und Abbildungsmatrizen",
+  "subtitle": "Jeder endlichdimensionale Raum ist ein K hoch n in Verkleidung",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "title": "Lineare Abbildungen und Matrizen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Auch die Ableitung von Polynomen hat eine Matrix. Man muss nur eine Basis wählen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "V = \\mathbb{R}[x]_{\\le 3},\\quad B = (1, x, x^2, x^3)",
+            "why": "Ein $4$-dimensionaler Raum mit der Monombasis."
+          },
+          {
+            "tex": "D(1) = 0,\\ D(x) = 1,\\ D(x^2) = 2x,\\ D(x^3) = 3x^2",
+            "why": "Die Bilder der Basisvektoren."
+          },
+          {
+            "tex": "M_B(D) = \\begin{pmatrix}0&1&0&0\\\\0&0&2&0\\\\0&0&0&3\\\\0&0&0&0\\end{pmatrix}",
+            "why": "Ihre Koordinaten als Spalten."
+          },
+          {
+            "tex": "p = 5 - x + 4x^3 \\;\\leftrightarrow\\; (5, -1, 0, 4)",
+            "why": "Die Koordinatenabbildung macht aus Polynomen Vektoren des $\\mathbb{R}^4$."
+          },
+          {
+            "tex": "M_B(D) \\cdot (5, -1, 0, 4)^T = (-1, 0, 12, 0)^T \\;\\leftrightarrow\\; -1 + 12x^2",
+            "why": "Matrix mal Koordinaten $=$ Koordinaten der Ableitung: $p' = -1 + 12x^2$."
+          },
+          {
+            "tex": "M_B(D)^4 = 0",
+            "why": "Viermal ableiten macht jedes kubische Polynom zu $0$, die Matrix ist nilpotent."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wir wählen eine Basis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Leiten die Basisvektoren ab.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schreiben die Koordinaten in die Spalten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Polynom wird zum Koordinatenvektor.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und Ableiten wird zur Matrixmultiplikation.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sogar Eigenschaften wie »viermal ableiten gibt null« übertragen sich.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ein **Isomorphismus** ist eine bijektive lineare Abbildung; ihre Umkehrung ist automatisch linear. Wählt man eine Basis $B$ von $V$, so ist die Koordinatenabbildung $V \\to K^n$, $v \\mapsto (\\lambda_1, \\dots, \\lambda_n)$, ein Isomorphismus.\n\n**Folgerung:** Zwei endlichdimensionale Räume über demselben Körper sind genau dann isomorph, wenn sie dieselbe Dimension haben. $\\mathbb{R}^{2 \\times 2}$, $\\mathbb{R}[x]_{\\le 3}$ und $\\mathbb{R}^4$ sind alle »derselbe« Raum.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Abbildungsmatrix\n> Für $f: V \\to W$ und Basen $B = (b_1, \\dots, b_n)$, $C = (c_1, \\dots, c_m)$ ist $M_C^B(f)$ die $m \\times n$-Matrix, deren $j$-te Spalte die $C$-Koordinaten von $f(b_j)$ enthält.\n>\n> Dann gilt $M_D^B(g \\circ f) = M_D^C(g)\\,M_C^B(f)$, und $\\operatorname{Hom}(V, W) \\cong K^{m \\times n}$ hat die Dimension $mn$.",
+      "id": "t2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche dieser reellen Vektorräume sind zu $\\mathbb{R}^4$ isomorph?",
+      "options": [
+        {
+          "md": "$\\mathbb{R}^{2 \\times 2}$",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{R}[x]_{\\le 3}$",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{C}^2$ als reeller Raum",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{R}[x]_{\\le 4}$",
+          "why": "Dimension $5$."
+        },
+        {
+          "md": "die symmetrischen $2 \\times 2$-Matrizen",
+          "why": "Dimension $3$."
+        }
+      ],
+      "explain": "In endlicher Dimension zählt nur die Dimension. Isomorph heißt nicht »gleich aussehend«, sondern »strukturgleich«.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Abbildung $\\mathbb{R}[x]_{\\le 2} \\to \\mathbb{R}^3$ ist ein Isomorphismus?",
+      "options": [
+        {
+          "md": "$p \\mapsto (p(1), p(-1), p(0))$",
+          "correct": true
+        },
+        {
+          "md": "$p \\mapsto (p(0), p'(0), p(0) + p'(0))$",
+          "why": "Die dritte Komponente ist die Summe der ersten beiden; das Bild ist nur eine Ebene."
+        },
+        {
+          "md": "$p \\mapsto (p(1), p(1), p(2))$",
+          "why": "Zwei gleiche Komponenten: Das Bild ist höchstens zweidimensional."
+        },
+        {
+          "md": "$p \\mapsto (p'(0), p''(0), p'''(0))$",
+          "why": "$p''' = 0$ für Polynome vom Grad $\\le 2$, und die Konstanten liegen im Kern."
+        }
+      ],
+      "explain": "Ein Polynom vom Grad $\\le 2$ ist durch seine Werte an drei verschiedenen Stellen eindeutig bestimmt (Interpolation), und jedes Werte-Tripel kommt vor.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "cloze",
+      "label": "Rechnen",
+      "md": "$f(x, y) = (x + 2y,\\ 3x)$. Bestimme die Matrix von $f$ bezüglich der Basis $b_1 = (1, 0)$, $b_2 = (1, 1)$ (in Start und Ziel), zeilenweise.\n\n{{0}} {{1}} {{2}} {{3}}",
+      "blanks": [
+        {
+          "accept": [
+            "-2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "0"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "$f(b_1) = (1, 3) = -2 b_1 + 3 b_2$ und $f(b_2) = (3, 3) = 0 \\cdot b_1 + 3 b_2$. Spalten $(-2, 3)$ und $(0, 3)$: $\\begin{pmatrix}-2&0\\\\3&3\\end{pmatrix}$. Kontrolle: Spur $1$ und Determinante $-6$ wie bei $\\begin{pmatrix}1&2\\\\3&0\\end{pmatrix}$.",
+      "id": "cl1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Dimension hat $\\operatorname{Hom}(\\mathbb{R}^3, \\mathbb{R}^{2 \\times 2})$?",
+      "answer": 12,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$\\dim\\operatorname{Hom}(V, W) = \\dim V \\cdot \\dim W = 3 \\cdot 4 = 12$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\mathbb{R}[x]$ ist zu $\\mathbb{R}^n$ isomorph für ein geeignetes $n$.",
+      "answer": false,
+      "explain": "$\\mathbb{R}[x]$ ist unendlichdimensional, $1, x, x^2, \\dots$ sind unabhängig. Der Satz »gleiche Dimension heißt isomorph« gilt in endlicher Dimension.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "$T: \\mathbb{R}^{3 \\times 3} \\to \\mathbb{R}^{3 \\times 3}$, $A \\mapsto A^T$. Welche Spur hat $T$ (als lineare Abbildung eines $9$-dimensionalen Raums)?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Spur",
+      "explain": "In der Basis der Matrixeinheiten $E_{ij}$ vertauscht $T$ die Basisvektoren: $E_{ij} \\mapsto E_{ji}$. Auf der Diagonale der Matrix von $T$ stehen Einsen genau bei den Fixpunkten $E_{11}, E_{22}, E_{33}$. Spur $3$.",
+      "id": "n2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Koordinaten sind ein Isomorphismus $V \\to K^n$; gleiche endliche Dimension heißt isomorph.",
+        "Spalte $j$ von $M_C^B(f)$: die $C$-Koordinaten von $f(b_j)$.",
+        "Verketten entspricht dem Matrixprodukt; $\\dim\\operatorname{Hom}(V, W) = \\dim V \\cdot \\dim W$.",
+        "Auch Ableitung, Transponieren und Auswerten haben Matrizen, sobald man Basen wählt."
+      ],
+      "id": "summary"
+    }
+  ]
+}

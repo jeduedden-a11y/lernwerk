@@ -158,6 +158,133 @@
       "solution": "Weil $a \\ne 0$ ist, gibt es $a^{-1}$. Multipliziere $a \\cdot b = 0$ von links mit $a^{-1}$: $b = a^{-1} \\cdot 0 = 0$. In einem Körper ist ein Produkt also nur dann $0$, wenn ein Faktor $0$ ist. Deshalb ist $\\mathbb{Z}/6\\mathbb{Z}$ mit $2 \\cdot 3 \\equiv 0$ kein Körper."
     },
     {
+      "type": "truefalse",
+      "md": "In jeder Gruppe gilt $(ab)^{-1} = a^{-1}b^{-1}$.",
+      "answer": false,
+      "explain": "Richtig ist $(ab)^{-1} = b^{-1}a^{-1}$: $(ab)(b^{-1}a^{-1}) = a(bb^{-1})a^{-1} = aa^{-1} = e$. Wer Socken und Schuhe ausziehen will, muss mit den Schuhen anfangen. Beide Formeln stimmen nur, wenn $a$ und $b$ vertauschen.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Das Inverse eines Elements ist eindeutig. Baue den Beweis.",
+      "given": "$G$ ist eine Gruppe, $a \\in G$, und $b$, $c$ sind beide invers zu $a$: $ab = ba = e$ und $ac = ca = e$.",
+      "claim": "$b = c$.",
+      "steps": [
+        "$b = b e$, weil $e$ neutral ist.",
+        "$b e = b(ac)$, weil $ac = e$.",
+        "$b(ac) = (ba)c$ nach dem Assoziativgesetz.",
+        "$(ba)c = e c = c$, weil $ba = e$."
+      ],
+      "distractors": [
+        {
+          "md": "$b = b \\cdot a \\cdot a^{-1}$, also $b = a^{-1}$, und ebenso $c = a^{-1}$.",
+          "why": "Das setzt schon voraus, dass es *das* Inverse $a^{-1}$ gibt, also genau das, was zu zeigen ist."
+        },
+        {
+          "md": "$b(ac) = (bc)a$.",
+          "why": "Das Assoziativgesetz verschiebt nur Klammern, die Reihenfolge der Faktoren bleibt."
+        }
+      ],
+      "explain": "Der Beweis braucht nur Neutralität, Assoziativität und die beiden Inversengleichungen. Genauso zeigt man, dass das neutrale Element eindeutig ist.",
+      "id": "v2"
+    },
+    {
+      "type": "choice",
+      "md": "In welcher Struktur hat die Gleichung $ax = b$ für **jedes** $a \\ne 0$ und jedes $b$ genau eine Lösung?",
+      "options": [
+        {
+          "md": "In einem Körper",
+          "correct": true
+        },
+        {
+          "md": "In jedem kommutativen Ring",
+          "why": "In $\\mathbb{Z}$ hat $2x = 1$ keine Lösung, in $\\mathbb{Z}/6\\mathbb{Z}$ hat $2x = 0$ zwei Lösungen ($0$ und $3$)."
+        },
+        {
+          "md": "In $\\mathbb{Z}/6\\mathbb{Z}$",
+          "why": "$2$ ist dort nicht invertierbar."
+        },
+        {
+          "md": "In $(\\mathbb{Z}, +)$ als Gruppe",
+          "why": "Dort gibt es keine Multiplikation $ax$ mit eigenem Inversen; $2x = 1$ ist in $\\mathbb{Z}$ unlösbar."
+        }
+      ],
+      "explain": "Genau dann, wenn jedes $a \\ne 0$ ein multiplikatives Inverses hat: $x = a^{-1}b$, und eindeutig, weil man von links mit $a^{-1}$ multiplizieren kann. Das ist die Definition eines Körpers.",
+      "label": "Verständnis",
+      "id": "v3"
+    },
+    {
+      "type": "multi",
+      "md": "Was gilt in **jedem** Körper $K$?",
+      "options": [
+        {
+          "md": "$1 \\ne 0$",
+          "correct": true
+        },
+        {
+          "md": "$a \\cdot 0 = 0$ für alle $a$",
+          "correct": true
+        },
+        {
+          "md": "Aus $ab = 0$ folgt $a = 0$ oder $b = 0$",
+          "correct": true
+        },
+        {
+          "md": "$1 + 1 \\ne 0$",
+          "why": "In $\\mathbb{F}_2 = \\mathbb{Z}/2\\mathbb{Z}$ ist $1 + 1 = 0$."
+        },
+        {
+          "md": "$K$ hat unendlich viele Elemente",
+          "why": "$\\mathbb{F}_p$ hat $p$ Elemente."
+        },
+        {
+          "md": "Jede Zahl hat eine Quadratwurzel in $K$",
+          "why": "In $\\mathbb{R}$ hat $-1$ keine, in $\\mathbb{Q}$ hat $2$ keine."
+        }
+      ],
+      "explain": "$1 \\ne 0$ steht in den Axiomen. $a \\cdot 0 = 0$ folgt aus dem Distributivgesetz. Und gälte $ab = 0$ mit $a \\ne 0$, dann wäre $b = a^{-1}ab = 0$: Körper haben keine Nullteiler.",
+      "label": "Verständnis",
+      "id": "v4"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Behauptung: Gilt in einer Gruppe $a^2 = e$ für alle $a$, so ist sie abelsch. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Aus $a^2 = e$ folgt $a = a^{-1}$ für jedes $a$.",
+          "why": "Richtig: $aa = e$ heißt, $a$ ist sein eigenes Inverses."
+        },
+        {
+          "md": "Für $a, b \\in G$ ist auch $ab$ in $G$, also $(ab)^2 = e$ und $ab = (ab)^{-1}$.",
+          "why": "Richtig, die Voraussetzung gilt auch für $ab$."
+        },
+        {
+          "md": "$(ab)^{-1} = a^{-1}b^{-1}$.",
+          "why": "Falsch: Richtig ist $(ab)^{-1} = b^{-1}a^{-1}$. Mit der falschen Formel hätte man die Vertauschbarkeit schon benutzt."
+        },
+        {
+          "md": "Mit $a^{-1} = a$ und $b^{-1} = b$ folgt $ab = ba$.",
+          "why": "Mit der richtigen Formel $(ab)^{-1} = b^{-1}a^{-1} = ba$ stimmt dieser Schluss."
+        }
+      ],
+      "answer": 2,
+      "explain": "Der Beweis funktioniert mit $(ab)^{-1} = b^{-1}a^{-1} = ba$. Die Reihenfolge beim Invertieren ist der Kern der Sache.",
+      "id": "v5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Elemente von $\\mathbb{Z}/12\\mathbb{Z}$ sind multiplikativ invertierbar?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Invertierbar sind die zu $12$ teilerfremden Reste $1, 5, 7, 11$; etwa $5 \\cdot 5 = 25 \\equiv 1$. Die übrigen ($2, 3, 4, 6, 8, 9, 10$) sind Nullteiler.",
+      "id": "v6"
+    },
+    {
       "id": "neu1",
       "type": "gen",
       "gen": "la-modular",
@@ -186,6 +313,12 @@
       "label": "Neue Werte"
     },
     {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 4,
+      "id": "x41"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste aus dieser Lektion:",
@@ -193,7 +326,9 @@
         "Gruppe: abgeschlossen, assoziativ, neutrales Element, Inverse. Abelsch, wenn zusätzlich kommutativ.",
         "Inverse und neutrales Element sind eindeutig, das folgt allein aus den Axiomen.",
         "Körper: Addition und Multiplikation (ohne $0$) sind abelsche Gruppen, verbunden durch das Distributivgesetz.",
-        "$\\mathbb{Z}/n\\mathbb{Z}$ ist genau dann ein Körper, wenn $n$ prim ist. Sonst gibt es Nullteiler."
+        "$\\mathbb{Z}/n\\mathbb{Z}$ ist genau dann ein Körper, wenn $n$ prim ist. Sonst gibt es Nullteiler.",
+        "$(ab)^{-1} = b^{-1}a^{-1}$, die Reihenfolge dreht sich um.",
+        "Neutrales Element und Inverse sind eindeutig; Körper haben keine Nullteiler."
       ]
     }
   ]

@@ -1,0 +1,217 @@
+{
+  "id": "ana1-kompakt",
+  "title": "Kompaktheit und der Satz vom Maximum",
+  "subtitle": "Warum stetige Funktionen auf [a, b] Maximum und Minimum annehmen",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "title": "Stetigkeit"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Zwischenwertsatz.md",
+      "title": "Zwischenwertsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Teilfolgen und Cauchy-Folgen.md",
+      "title": "Teilfolgen und Cauchy-Folgen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Der Satz vom Maximum braucht drei Zutaten: Supremum, Bolzano-Weierstraß und Stetigkeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "s = \\sup_{x \\in [a, b]} f(x) \\in \\mathbb{R} \\cup \\{\\infty\\}",
+            "why": "Das Supremum der Funktionswerte."
+          },
+          {
+            "tex": "x_n \\in [a, b],\\quad f(x_n) \\to s",
+            "why": "Es gibt Stellen, deren Werte gegen $s$ gehen."
+          },
+          {
+            "tex": "x_{n_k} \\to x^* \\in [a, b]",
+            "why": "Bolzano-Weierstraß: eine konvergente Teilfolge; ihr Grenzwert liegt in $[a, b]$, weil das Intervall abgeschlossen ist."
+          },
+          {
+            "tex": "f(x_{n_k}) \\to f(x^*)",
+            "why": "Stetigkeit (Folgenkriterium)."
+          },
+          {
+            "tex": "f(x^*) = s",
+            "why": "Grenzwerte sind eindeutig. Insbesondere ist $s < \\infty$: $f$ ist beschränkt und nimmt sein Maximum an."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Kandidat für das Maximum.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eine Folge, die ihm nahekommt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eine Teilfolge konvergiert, und zwar im Intervall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stetigkeit überträgt die Konvergenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Das Supremum wird angenommen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine Menge $K \\subseteq \\mathbb{R}$ heißt **(folgen-)kompakt**, wenn jede Folge in $K$ eine Teilfolge hat, die gegen einen Punkt **in $K$** konvergiert. In $\\mathbb{R}$ und $\\mathbb{R}^n$ gilt **Heine-Borel**: kompakt $\\iff$ abgeschlossen und beschränkt.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Stetige Bilder kompakter Mengen\n> Ist $K$ kompakt und $f$ stetig, so ist $f(K)$ kompakt. Folge: Eine stetige Funktion auf $[a, b]$ ist beschränkt und nimmt Maximum und Minimum an.\n\nBeide Voraussetzungen sind nötig: $x$ auf $(0, 1)$ hat kein Maximum, $\\tfrac1x$ auf $(0, 1]$ ist unbeschränkt.",
+      "id": "t2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Teilmengen von $\\mathbb{R}$ sind kompakt?",
+      "options": [
+        {
+          "md": "$[0, 1]$",
+          "correct": true
+        },
+        {
+          "md": "$\\{0\\} \\cup \\{\\tfrac1n : n \\ge 1\\}$",
+          "correct": true
+        },
+        {
+          "md": "$(0, 1)$",
+          "why": "$\\tfrac1n \\to 0 \\notin (0, 1)$."
+        },
+        {
+          "md": "$[0, \\infty)$",
+          "why": "Unbeschränkt: $x_n = n$ hat keine konvergente Teilfolge."
+        },
+        {
+          "md": "$\\mathbb{Q} \\cap [0, 1]$",
+          "why": "Nicht abgeschlossen: Folgen gegen $\\tfrac{\\sqrt2}{2}$."
+        }
+      ],
+      "explain": "Abgeschlossen und beschränkt. Die Menge $\\{0\\} \\cup \\{\\tfrac1n\\}$ enthält ihren einzigen Häufungspunkt.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das stetige Bild einer abgeschlossenen Menge ist abgeschlossen.",
+      "answer": false,
+      "explain": "$\\arctan(\\mathbb{R}) = (-\\tfrac\\pi2, \\tfrac\\pi2)$. Kompaktheit überträgt sich, Abgeschlossenheit allein nicht.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Beweis des Satzes vom Maximum für stetiges $f$ auf $[a, b]$. Welche Begründung fehlt oder ist falsch?",
+      "lines": [
+        {
+          "md": "Wähle $x_n$ mit $f(x_n) \\to \\sup f$.",
+          "why": "Richtig (Definition des Supremums)."
+        },
+        {
+          "md": "Eine Teilfolge $x_{n_k}$ konvergiert gegen ein $x^*$.",
+          "why": "Richtig (Bolzano-Weierstraß, die Folge ist beschränkt)."
+        },
+        {
+          "md": "$x^*$ liegt in $[a, b]$, weil alle $x_{n_k}$ in $[a, b]$ liegen und Intervalle beschränkt sind.",
+          "why": "Falsch begründet: Beschränktheit reicht nicht ($(0, 1]$ ist beschränkt, $\\tfrac1n \\to 0$ fällt heraus). Gebraucht wird, dass $[a, b]$ **abgeschlossen** ist."
+        },
+        {
+          "md": "Stetigkeit liefert $f(x^*) = \\sup f$.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 2,
+      "explain": "Die Abgeschlossenheit sorgt dafür, dass der Grenzwert im Definitionsbereich bleibt; genau dort darf man $f$ auswerten.",
+      "id": "sp1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine stetige Funktion $f: \\mathbb{R} \\to \\mathbb{R}$ mit $\\lim_{x \\to \\pm\\infty}f(x) = 0$ nimmt ihr Maximum oder ihr Minimum an.",
+      "answer": true,
+      "explain": "Ist $f$ irgendwo positiv, etwa $f(x_0) = c > 0$, dann ist außerhalb eines großen $[-R, R]$ der Wert kleiner als $c$, und auf $[-R, R]$ wird das Maximum angenommen. Ist $f \\le 0$ überall, argumentiert man mit dem Minimum (oder $f = 0$).",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-zws",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-zws",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-zws",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-zws",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Kompakt in $\\mathbb{R}^n$: abgeschlossen und beschränkt (Heine-Borel).",
+        "Stetige Bilder kompakter Mengen sind kompakt; daher Maximum und Minimum auf $[a, b]$.",
+        "Ohne Abgeschlossenheit oder Beschränktheit scheitert der Satz."
+      ],
+      "id": "summary"
+    }
+  ]
+}

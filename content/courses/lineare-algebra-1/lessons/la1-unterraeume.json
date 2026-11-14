@@ -1,0 +1,259 @@
+{
+  "id": "la1-unterraeume",
+  "title": "Unterräume, Summen und direkte Summen",
+  "subtitle": "Wie man Unterräume kombiniert und wann eine Zerlegung eindeutig ist",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Vektorraum.md",
+      "title": "Vektorraum"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Zwei Unterräume kann man schneiden, vereinigen oder addieren. Nur zwei dieser drei Operationen liefern wieder einen Unterraum.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U = x\\text{-Achse},\\quad W = y\\text{-Achse}",
+            "why": "Zwei Geraden durch den Ursprung im $\\mathbb{R}^2$."
+          },
+          {
+            "tex": "U \\cap W = \\{0\\}",
+            "why": "Der Durchschnitt zweier Unterräume ist immer ein Unterraum."
+          },
+          {
+            "tex": "(1, 0) + (0, 1) = (1, 1) \\notin U \\cup W",
+            "why": "Die Vereinigung ist kein Unterraum: Sie ist nicht abgeschlossen unter Addition."
+          },
+          {
+            "tex": "U + W = \\{u + w : u \\in U, w \\in W\\} = \\mathbb{R}^2",
+            "why": "Die **Summe** ist der kleinste Unterraum, der beide enthält."
+          },
+          {
+            "tex": "(x, y) = (x, 0) + (0, y) \\text{ eindeutig}",
+            "why": "Weil $U \\cap W = \\{0\\}$, ist die Zerlegung eindeutig: eine **direkte Summe** $U \\oplus W$."
+          },
+          {
+            "tex": "\\dim(U + W) = \\dim U + \\dim W - \\dim(U \\cap W)",
+            "why": "Die Dimensionsformel für Summen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Achsen in der Ebene.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schneiden geht immer.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vereinigen geht schief.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Addieren liefert den kleinsten gemeinsamen Oberraum.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ist der Schnitt null, zerlegt sich jeder Vektor eindeutig.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und die Dimensionen passen zusammen.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Für Unterräume $U, W \\subseteq V$ sind $U \\cap W$ und $U + W = \\{u + w : u \\in U,\\ w \\in W\\}$ wieder Unterräume. Die Vereinigung $U \\cup W$ ist nur dann einer, wenn einer der beiden im anderen liegt.\n\nDie Summe heißt **direkt**, $U \\oplus W$, wenn $U \\cap W = \\{0\\}$. Gleichwertig: Jeder Vektor von $U + W$ lässt sich **eindeutig** als $u + w$ schreiben.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Dimensionsformel für Unterräume\n> $\\dim(U + W) = \\dim U + \\dim W - \\dim(U \\cap W)$.\n>\n> **Beweisidee:** Starte mit einer Basis von $U \\cap W$, ergänze sie einmal zu einer Basis von $U$ und einmal zu einer von $W$. Alles zusammen ist eine Basis von $U + W$, und die Vektoren des Durchschnitts zählt man nur einmal.\n\nFolgerung: Zwei Ebenen durch $0$ im $\\mathbb{R}^3$ schneiden sich mindestens in einer Geraden, denn $2 + 2 - 3 = 1$.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$U, W \\subseteq V$ sind Unterräume, und $U \\cup W$ ist ein Unterraum.",
+      "claim": "$U \\subseteq W$ oder $W \\subseteq U$.",
+      "steps": [
+        "Angenommen, weder $U \\subseteq W$ noch $W \\subseteq U$.",
+        "Dann gibt es $u \\in U \\setminus W$ und $w \\in W \\setminus U$.",
+        "$u + w$ liegt im Unterraum $U \\cup W$, also in $U$ oder in $W$.",
+        "Aus $u + w \\in U$ folgt $w = (u + w) - u \\in U$; aus $u + w \\in W$ folgt $u \\in W$. Beides widerspricht der Wahl."
+      ],
+      "distractors": [
+        {
+          "md": "Dann ist $u + w = 0$.",
+          "why": "Das folgt nirgends."
+        },
+        {
+          "md": "Also ist $U = W$.",
+          "why": "Behauptet ist weniger: Einer liegt im anderen."
+        }
+      ],
+      "explain": "Widerspruchsbeweis: Je ein Element aus beiden Differenzmengen, ihre Summe hat keinen Platz.",
+      "id": "p1"
+    },
+    {
+      "type": "choice",
+      "md": "$U$ ist die $xy$-Ebene im $\\mathbb{R}^3$, $W$ die $xz$-Ebene. Was gilt?",
+      "options": [
+        {
+          "md": "$U + W = \\mathbb{R}^3$, aber die Summe ist nicht direkt",
+          "correct": true
+        },
+        {
+          "md": "$U \\oplus W = \\mathbb{R}^3$",
+          "why": "$U \\cap W$ ist die $x$-Achse, nicht $\\{0\\}$."
+        },
+        {
+          "md": "$U + W$ ist eine Ebene",
+          "why": "Die Summe enthält beide Ebenen, also $e_1, e_2, e_3$."
+        },
+        {
+          "md": "$U \\cup W$ ist ein Unterraum",
+          "why": "$e_2 + e_3$ liegt in keiner der beiden Ebenen."
+        }
+      ],
+      "explain": "$\\dim(U + W) = 2 + 2 - 1 = 3$. Direkt wäre die Summe nur bei $\\dim(U \\cap W) = 0$; hier ist $e_1$ doppelt vertreten: $e_1 = e_1 + 0 = 0 + e_1$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$U, W \\subseteq \\mathbb{R}^6$ sind Unterräume der Dimension $4$. Wie groß ist $\\dim(U \\cap W)$ **mindestens**?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$\\dim(U \\cap W) = 4 + 4 - \\dim(U + W) \\ge 8 - 6 = 2$. Erreicht für $U = \\operatorname{span}\\{e_1, \\dots, e_4\\}$, $W = \\operatorname{span}\\{e_3, \\dots, e_6\\}$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jeder Vektor von $U + W$ lässt sich eindeutig als $u + w$ mit $u \\in U$, $w \\in W$ schreiben.",
+      "answer": false,
+      "explain": "Nur bei einer direkten Summe. Liegt $x \\ne 0$ in $U \\cap W$, dann $x = x + 0 = 0 + x$: zwei verschiedene Zerlegungen.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "multi",
+      "md": "Was gilt im Raum der reellen $n \\times n$-Matrizen?",
+      "options": [
+        {
+          "md": "Er ist die direkte Summe der symmetrischen und der schiefsymmetrischen Matrizen.",
+          "correct": true
+        },
+        {
+          "md": "Symmetrische und schiefsymmetrische Matrizen schneiden sich nur in der Nullmatrix.",
+          "correct": true
+        },
+        {
+          "md": "Er ist die direkte Summe der oberen und der unteren Dreiecksmatrizen.",
+          "why": "Die Summe ist alles, aber nicht direkt: Diagonalmatrizen liegen in beiden."
+        },
+        {
+          "md": "Die invertierbaren Matrizen bilden einen Unterraum.",
+          "why": "Die Nullmatrix ist nicht invertierbar, und $E + (-E) = 0$."
+        }
+      ],
+      "explain": "$A = \\tfrac12(A + A^T) + \\tfrac12(A - A^T)$, und ist $A$ zugleich symmetrisch und schiefsymmetrisch, so $A = A^T = -A$, also $A = 0$. In Charakteristik $2$ bricht das zusammen.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $V = U \\oplus W$ und $V = U \\oplus W'$, so ist $W = W'$.",
+      "answer": false,
+      "explain": "Komplemente sind nicht eindeutig: Zur $x$-Achse im $\\mathbb{R}^2$ ist jede andere Gerade durch $0$ ein Komplement. Eindeutig ist nur die Dimension $\\dim W = \\dim V - \\dim U$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\mathbb{F}_2^2$ ist die Vereinigung von drei echten Unterräumen.",
+      "answer": true,
+      "explain": "Die drei Geraden $\\{0, (1, 0)\\}$, $\\{0, (0, 1)\\}$, $\\{0, (1, 1)\\}$ überdecken alle vier Vektoren. Über unendlichen Körpern ist ein Vektorraum nie Vereinigung endlich vieler echter Unterräume.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-summe",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-summe",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-summe",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-summe",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-summe",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$U \\cap W$ und $U + W$ sind Unterräume, $U \\cup W$ nur, wenn einer im anderen liegt.",
+        "Direkt heißt $U \\cap W = \\{0\\}$, gleichwertig: eindeutige Zerlegung $v = u + w$.",
+        "$\\dim(U + W) = \\dim U + \\dim W - \\dim(U \\cap W)$.",
+        "Komplemente existieren in endlicher Dimension, sind aber nicht eindeutig."
+      ],
+      "id": "summary"
+    }
+  ]
+}

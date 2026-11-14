@@ -1,0 +1,244 @@
+{
+  "id": "la1-rang",
+  "title": "Rang: Zeilenrang gleich Spaltenrang",
+  "subtitle": "Eine Zahl, die eine Matrix fast vollständig beschreibt",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "title": "Lineare Abbildungen und Matrizen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Den Rang liest man an der Stufenform ab. Dabei passiert etwas Erstaunliches: Zeilen und Spalten liefern dieselbe Zahl.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}1&2&0&1\\\\2&4&1&3\\\\3&6&1&4\\end{pmatrix}",
+            "why": "Drei Zeilen, vier Spalten."
+          },
+          {
+            "tex": "\\begin{pmatrix}1&2&0&1\\\\0&0&1&1\\\\0&0&1&1\\end{pmatrix}",
+            "why": "Zeile 2 minus $2 \\cdot$ Zeile 1, Zeile 3 minus $3 \\cdot$ Zeile 1."
+          },
+          {
+            "tex": "\\begin{pmatrix}1&2&0&1\\\\0&0&1&1\\\\0&0&0&0\\end{pmatrix}",
+            "why": "Zeile 3 minus Zeile 2: Stufenform mit zwei Stufen, **Zeilenrang** $2$."
+          },
+          {
+            "tex": "s_2 = 2s_1,\\quad s_4 = s_1 + s_3",
+            "why": "Die Spalten ohne Stufe sind Kombinationen der Stufenspalten, in $A$ genauso wie in der Stufenform."
+          },
+          {
+            "tex": "\\text{Spaltenrang} = 2 = \\text{Zeilenrang}",
+            "why": "Zwei unabhängige Spalten: $s_1$ und $s_3$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine $3 \\times 4$-Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeilenumformungen, Schritt für Schritt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei Stufen bleiben übrig.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeilenumformungen ändern die Abhängigkeiten zwischen den **Spalten** nicht.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Also stimmen Zeilen- und Spaltenrang überein.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Der **Spaltenrang** ist die Dimension des Spaltenraums, also $\\dim\\operatorname{im} A$. Der **Zeilenrang** ist die Dimension des Zeilenraums. Zeilenumformungen ändern weder den Zeilenraum noch die linearen Beziehungen zwischen den Spalten; in der Stufenform sieht man beide Ränge sofort, und sie sind gleich.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Rang\n> $\\operatorname{rang} A = \\operatorname{rang} A^T$. Für $A \\in K^{m \\times n}$ gilt $\\operatorname{rang} A \\le \\min(m, n)$, und $A \\in K^{n \\times n}$ ist invertierbar genau dann, wenn $\\operatorname{rang} A = n$.\n>\n> $\\operatorname{rang}(AB) \\le \\min(\\operatorname{rang} A, \\operatorname{rang} B)$ und (Sylvester) $\\operatorname{rang}(AB) \\ge \\operatorname{rang} A + \\operatorname{rang} B - n$.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen Rang hat $\\begin{pmatrix}1&2&3\\\\4&5&6\\\\7&8&9\\end{pmatrix}$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Rang",
+      "explain": "Die Zeilen bilden eine arithmetische Folge: Zeile 1 $+$ Zeile 3 $= 2 \\cdot$ Zeile 2. Zwei Zeilen sind unabhängig, die dritte nicht. Determinante $0$.",
+      "id": "n1"
+    },
+    {
+      "type": "cloze",
+      "label": "Klausur",
+      "md": "$A_t = \\begin{pmatrix}1&1&1\\\\1&t&1\\\\1&1&t\\end{pmatrix}$. Für welches $t$ ist $\\operatorname{rang} A_t < 3$, und welchen Rang hat $A_t$ dann?\n\n$t =$ {{0}} $\\qquad \\operatorname{rang} =$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Zeile 2 und 3 minus Zeile 1: $(0, t - 1, 0)$ und $(0, 0, t - 1)$. $\\det A_t = (t - 1)^2$. Für $t = 1$ sind alle Zeilen gleich: Rang $1$, nicht nur $2$. Eine doppelte Nullstelle der Determinante kann den Rang um mehr als $1$ senken.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für alle Matrizen passender Größe gilt $\\operatorname{rang}(AB) \\le \\min(\\operatorname{rang} A, \\operatorname{rang} B)$.",
+      "answer": true,
+      "explain": "$\\operatorname{im}(AB) \\subseteq \\operatorname{im} A$ liefert die erste Schranke; $\\operatorname{rang}(AB) = \\operatorname{rang}(B^TA^T) \\le \\operatorname{rang} B^T = \\operatorname{rang} B$ die zweite.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für quadratische Matrizen gilt $\\operatorname{rang}(AB) = \\operatorname{rang}(BA)$.",
+      "answer": false,
+      "explain": "$A = \\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$, $B = \\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$: $AB = B$ hat Rang $1$, $BA = 0$ hat Rang $0$.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "proof",
+      "mode": "justify",
+      "label": "Begründen",
+      "md": "Wähle zu jeder Zeile die Begründung.",
+      "given": "$A \\in K^{m \\times n}$, $B \\in K^{n \\times p}$.",
+      "claim": "$\\operatorname{rang}(AB) \\le \\operatorname{rang} A$.",
+      "steps": [
+        {
+          "md": "$\\operatorname{im}(AB) = \\{A(Bx) : x \\in K^p\\}$",
+          "by": "Definition des Bildes",
+          "why": "Das Bild von $AB$ besteht aus den Vektoren $ABx$."
+        },
+        {
+          "md": "$\\{A(Bx)\\} \\subseteq \\{Ay : y \\in K^n\\} = \\operatorname{im} A$",
+          "by": "Jedes Bx ist ein Vektor y",
+          "why": "Man setzt $y = Bx$."
+        },
+        {
+          "md": "$\\dim\\operatorname{im}(AB) \\le \\dim\\operatorname{im} A$",
+          "by": "Ein Unterraum hat höchstens die Dimension des Oberraums",
+          "why": "Monotonie der Dimension."
+        }
+      ],
+      "reasons": [
+        "Dimensionsformel",
+        "AB = BA"
+      ],
+      "explain": "Bilder werden durch Hintereinanderschalten nicht größer.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Welchen Rang hat die $5 \\times 5$-Matrix mit den Einträgen $a_{ij} = i + j$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Rang",
+      "explain": "Zeile $i$ ist $i \\cdot (1, 1, 1, 1, 1) + (1, 2, 3, 4, 5)$. Alle Zeilen liegen im Spann zweier unabhängiger Vektoren: Rang $2$, für jede Größe ab $2$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für jede reelle Matrix gilt $\\operatorname{rang}(A^TA) = \\operatorname{rang} A$.",
+      "answer": true,
+      "explain": "$A^TAx = 0$ impliziert $\\|Ax\\|^2 = x^TA^TAx = 0$, also $Ax = 0$: $\\ker(A^TA) = \\ker A$. Über $\\mathbb{C}$ mit der gewöhnlichen Transponierten falsch: $A = \\begin{pmatrix}1\\\\i\\end{pmatrix}$ gibt $A^TA = 0$.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum ändern Zeilenumformungen die linearen Beziehungen zwischen den **Spalten** nicht?",
+      "solution": "Eine Zeilenumformung ist die Multiplikation von links mit einer invertierbaren Matrix $P$. Eine Beziehung $\\sum_j c_j s_j = 0$ zwischen den Spalten heißt $Ac = 0$. Wegen $PAc = 0 \\iff Ac = 0$ hat $PA$ genau dieselben Beziehungen. Deshalb sind in $A$ genau die Spalten unabhängig, die in der Stufenform eine Stufe haben.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-rang",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-rang",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-rang",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-rang",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-rang",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Zeilenrang $=$ Spaltenrang; ablesbar an der Stufenform.",
+        "$\\operatorname{rang}(AB) \\le \\min(\\operatorname{rang} A, \\operatorname{rang} B)$, Sylvester: $\\ge \\operatorname{rang} A + \\operatorname{rang} B - n$.",
+        "Invertierbar heißt voller Rang; Nullstellen der Determinante als Funktion eines Parameters zeigen Rangabfall, aber nicht wie viel.",
+        "Reell: $\\operatorname{rang}(A^TA) = \\operatorname{rang} A$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

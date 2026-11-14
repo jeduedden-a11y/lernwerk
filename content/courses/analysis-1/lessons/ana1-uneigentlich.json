@@ -1,0 +1,203 @@
+{
+  "id": "ana1-uneigentlich",
+  "title": "Uneigentliche Integrale",
+  "subtitle": "Integrale über unendlich lange Intervalle und über Polstellen",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Uneigentliche Integrale.md",
+      "title": "Uneigentliche Integrale"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Integralkriterium.md",
+      "title": "Integralkriterium"
+    },
+    {
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/p-Reihe.md",
+      "title": "p-Reihe"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Ein unendlich langes Gebiet kann eine endliche Fläche haben. Und das entscheidet zugleich über die Konvergenz von Reihen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\int_1^\\infty\\frac{dx}{x^2} := \\lim_{R \\to \\infty}\\int_1^R\\frac{dx}{x^2}",
+            "why": "Definition über einen Grenzwert."
+          },
+          {
+            "tex": "= \\lim_{R \\to \\infty}\\Bigl[-\\frac1x\\Bigr]_1^R = \\lim_{R \\to \\infty}\\Bigl(1 - \\frac1R\\Bigr) = 1",
+            "why": "Endliche Fläche."
+          },
+          {
+            "tex": "\\int_1^\\infty\\frac{dx}{x} = \\lim_{R \\to \\infty}\\ln R = \\infty",
+            "why": "Bei $\\tfrac1x$ divergiert es."
+          },
+          {
+            "tex": "\\sum_{n=2}^N\\frac{1}{n^2} \\le \\int_1^N\\frac{dx}{x^2} \\le 1",
+            "why": "Integralkriterium: Die Treppe unter dem Graphen."
+          },
+          {
+            "tex": "\\sum\\frac{1}{n^p} < \\infty \\iff p > 1",
+            "why": "Reihe und Integral konvergieren gemeinsam."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Integral bis unendlich.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Endlicher Wert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bei $\\tfrac1x$ nicht.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich mit einer Reihe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Das $p$-Kriterium.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Uneigentliche Integrale definiert man als Grenzwerte: $\\int_a^\\infty f = \\lim_{R \\to \\infty}\\int_a^R f$ und, bei einer Polstelle in $a$, $\\int_a^b f = \\lim_{\\varepsilon \\to 0^+}\\int_{a+\\varepsilon}^b f$.\n\nMerkregel: $\\int_1^\\infty x^{-p}$ konvergiert für $p > 1$, $\\int_0^1 x^{-p}$ für $p < 1$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Integralkriterium\n> Ist $f \\ge 0$ monoton fallend auf $[1, \\infty)$, so konvergiert $\\sum_{n \\ge 1}f(n)$ genau dann, wenn $\\int_1^\\infty f(x)\\,dx$ konvergiert.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\int_1^\\infty\\tfrac{dx}{x^3}$.",
+      "answer": 0.5,
+      "tolerance": 0.0001,
+      "placeholder": "Wert",
+      "explain": "$\\bigl[-\\tfrac{1}{2x^2}\\bigr]_1^\\infty = \\tfrac12$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\int_0^1\\tfrac{dx}{\\sqrt x}$.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Wert",
+      "explain": "$[2\\sqrt x]_0^1 = 2$: Die Polstelle ist integrierbar, weil $p = \\tfrac12 < 1$.",
+      "id": "n2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Berechne $\\int_0^\\infty x^2e^{-x}\\,dx$.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Wert",
+      "explain": "$\\Gamma(3) = 2! = 2$, durch zweimal partielle Integration.",
+      "id": "n3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\int_0^\\infty\\tfrac{\\sin x}{x}\\,dx$ konvergiert, aber nicht absolut.",
+      "answer": true,
+      "explain": "Partielle Integration zeigt Konvergenz (Wert $\\tfrac\\pi2$). Die Beträge liefern auf jeder Halbwelle mindestens $\\tfrac{2}{(k + 1)\\pi}$, eine harmonische Summe.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Konvergiert $\\int_1^\\infty f(x)\\,dx$ für stetiges $f \\ge 0$, so gilt $f(x) \\to 0$.",
+      "answer": false,
+      "explain": "Schmale Zacken der Höhe $1$ um jede ganze Zahl $n$ mit Breite $2^{-n}$: endliche Fläche, aber $f$ geht nicht gegen $0$. Anders als bei Reihen.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Berechne $\\int_{-\\infty}^\\infty e^{-x^2}\\,dx$ (vier Nachkommastellen).",
+      "answer": 1.7725,
+      "tolerance": 0.0002,
+      "placeholder": "Wert",
+      "explain": "$\\sqrt\\pi$, über das Quadrat in Polarkoordinaten.",
+      "id": "n4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-uneigentlich",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-uneigentlich",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-uneigentlich",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-uneigentlich",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-uneigentlich",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Uneigentliche Integrale sind Grenzwerte eigentlicher Integrale.",
+        "$\\int_1^\\infty x^{-p} < \\infty \\iff p > 1$; $\\int_0^1 x^{-p} < \\infty \\iff p < 1$.",
+        "Integralkriterium: Reihe und Integral konvergieren gemeinsam (für fallende $f \\ge 0$).",
+        "Konvergenz des Integrals erzwingt nicht $f \\to 0$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

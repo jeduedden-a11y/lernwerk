@@ -1,0 +1,251 @@
+{
+  "id": "la1-skalarprodukt",
+  "title": "Skalarprodukte und die Cauchy-Schwarz-Ungleichung",
+  "subtitle": "Längen und Winkel in jedem Vektorraum",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Skalarprodukt.md",
+      "title": "Skalarprodukt"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Normen und Skalarprodukt.md",
+      "title": "Normen und Skalarprodukt"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die wichtigste Ungleichung der linearen Algebra, bewiesen mit einer einzigen Idee: Ein Quadrat ist nie negativ.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "0 \\le \\|v - tw\\|^2 = \\|v\\|^2 - 2t\\langle v, w\\rangle + t^2\\|w\\|^2",
+            "why": "Für jede reelle Zahl $t$ ($w \\ne 0$)."
+          },
+          {
+            "tex": "t = \\frac{\\langle v, w\\rangle}{\\|w\\|^2}",
+            "why": "Wähle $t$ so, dass die rechte Seite am kleinsten wird."
+          },
+          {
+            "tex": "0 \\le \\|v\\|^2 - \\frac{\\langle v, w\\rangle^2}{\\|w\\|^2}",
+            "why": "Einsetzen."
+          },
+          {
+            "tex": "\\langle v, w\\rangle^2 \\le \\|v\\|^2\\|w\\|^2",
+            "why": "**Cauchy-Schwarz.**"
+          },
+          {
+            "tex": "\\text{Gleichheit} \\iff v = tw",
+            "why": "Gleichheit genau dann, wenn $\\|v - tw\\| = 0$: $v$ und $w$ sind linear abhängig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Quadrat ist nicht negativ.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Den besten Wert für $t$ einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umformen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fertig.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und wann genau Gleichheit gilt.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ein **Skalarprodukt** auf einem reellen Vektorraum ist eine Abbildung $\\langle \\cdot, \\cdot \\rangle$, die bilinear, symmetrisch und **positiv definit** ist ($\\langle v, v \\rangle > 0$ für $v \\ne 0$). Es liefert die Norm $\\|v\\| = \\sqrt{\\langle v, v \\rangle}$ und Winkel über $\\cos\\alpha = \\tfrac{\\langle v, w \\rangle}{\\|v\\|\\|w\\|}$.\n\nBeispiele: $\\langle x, y \\rangle = x^TSy$ mit positiv definitem symmetrischem $S$; $\\langle p, q \\rangle = \\int_0^1 p(x)q(x)\\,dx$ auf Polynomen; $\\langle A, B \\rangle = \\operatorname{Spur}(A^TB)$ auf Matrizen.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Folgerungen\n> Cauchy-Schwarz $|\\langle v, w \\rangle| \\le \\|v\\|\\|w\\|$ garantiert $-1 \\le \\cos\\alpha \\le 1$. Daraus folgt die Dreiecksungleichung. Normen aus Skalarprodukten erfüllen die **Parallelogrammgleichung** $\\|v + w\\|^2 + \\|v - w\\|^2 = 2\\|v\\|^2 + 2\\|w\\|^2$, und genau diese Normen kommen von Skalarprodukten.",
+      "id": "t2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Ausdrücke sind Skalarprodukte auf $\\mathbb{R}^2$?",
+      "options": [
+        {
+          "md": "$x_1y_1 + 2x_2y_2$",
+          "correct": true
+        },
+        {
+          "md": "$2x_1y_1 + x_1y_2 + x_2y_1 + x_2y_2$",
+          "correct": true
+        },
+        {
+          "md": "$x_1y_1 - x_2y_2$",
+          "why": "$\\langle e_2, e_2 \\rangle = -1$: nicht positiv definit."
+        },
+        {
+          "md": "$x_1y_1$",
+          "why": "$\\langle e_2, e_2 \\rangle = 0$: nicht definit."
+        },
+        {
+          "md": "$x_1y_1 + x_1y_2 + x_2y_2$",
+          "why": "Nicht symmetrisch: $\\langle e_1, e_2 \\rangle = 1 \\ne 0 = \\langle e_2, e_1 \\rangle$."
+        }
+      ],
+      "explain": "Prüfe die Gram-Matrix: symmetrisch und positiv definit (für $2 \\times 2$: Eintrag oben links $> 0$ und Determinante $> 0$). $\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$ hat $2 > 0$ und $\\det = 1 > 0$.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$\\langle p, q \\rangle = \\int_0^1 p(x)q(x)\\,dx$. Berechne $\\langle x^2, x^3 \\rangle$ (vier Nachkommastellen).",
+      "answer": 0.1667,
+      "tolerance": 0.0002,
+      "placeholder": "Zahl",
+      "explain": "$\\int_0^1 x^5\\,dx = \\tfrac16$.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Welchen Winkel (in Grad) schließen $1$ und $x$ bezüglich dieses Skalarprodukts ein?",
+      "answer": 30,
+      "tolerance": 0.1,
+      "placeholder": "Grad",
+      "explain": "$\\langle 1, x \\rangle = \\tfrac12$, $\\|1\\| = 1$, $\\|x\\| = \\tfrac{1}{\\sqrt3}$. $\\cos\\alpha = \\tfrac{\\sqrt3}{2}$, also $30°$. Winkel zwischen Funktionen sind kein Bild, sondern eine Rechnung.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Summennorm $\\|x\\|_1 = |x_1| + |x_2|$ kommt von einem Skalarprodukt.",
+      "answer": false,
+      "explain": "Parallelogrammgleichung mit $e_1, e_2$: links $\\|e_1 + e_2\\|_1^2 + \\|e_1 - e_2\\|_1^2 = 4 + 4 = 8$, rechts $2 + 2 = 4$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für welche ganzen Zahlen $a$ ist $x_1y_1 + a(x_1y_2 + x_2y_1) + 9x_2y_2$ ein Skalarprodukt? Gib das größte an.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "a",
+      "explain": "Gram-Matrix $\\begin{pmatrix}1&a\\\\a&9\\end{pmatrix}$: positiv definit genau dann, wenn $9 - a^2 > 0$, also $|a| < 3$. Größtes ganzes $a = 2$.",
+      "id": "n3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\langle A, B \\rangle = \\operatorname{Spur}(A^TB)$ ist ein Skalarprodukt auf $\\mathbb{R}^{n \\times n}$.",
+      "answer": true,
+      "explain": "$\\operatorname{Spur}(A^TB) = \\sum_{i,j}a_{ij}b_{ij}$: das gewöhnliche Skalarprodukt, wenn man die Matrix als langen Vektor liest.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $A \\in \\mathbb{R}^{2 \\times 2}$ und $\\langle Ax, x \\rangle = 0$ für alle $x$, so ist $A = 0$.",
+      "answer": false,
+      "explain": "Die Drehung um $90°$ erfüllt das: Jeder Vektor steht senkrecht auf seinem Bild. Allgemein jede schiefsymmetrische Matrix. Über $\\mathbb{C}$ mit dem hermiteschen Skalarprodukt folgt dagegen $A = 0$.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "choice",
+      "md": "Wie gewinnt man ein reelles Skalarprodukt aus seiner Norm zurück?",
+      "options": [
+        {
+          "md": "$\\langle v, w \\rangle = \\tfrac14\\bigl(\\|v + w\\|^2 - \\|v - w\\|^2\\bigr)$",
+          "correct": true
+        },
+        {
+          "md": "$\\langle v, w \\rangle = \\|v\\|\\|w\\|$",
+          "why": "Das ist nur die obere Schranke aus Cauchy-Schwarz."
+        },
+        {
+          "md": "Gar nicht",
+          "why": "Doch: mit der Polarisierungsformel."
+        },
+        {
+          "md": "$\\langle v, w \\rangle = \\|v + w\\| - \\|v\\| - \\|w\\|$",
+          "why": "Ohne Quadrate entsteht keine Bilinearform."
+        }
+      ],
+      "explain": "$\\|v \\pm w\\|^2 = \\|v\\|^2 \\pm 2\\langle v, w\\rangle + \\|w\\|^2$. Folgerung: Längentreue lineare Abbildungen sind auch winkeltreu.",
+      "label": "Extrem",
+      "id": "c1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-skalar",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-skalar",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-skalar",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-skalar",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-skalar",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Skalarprodukt: bilinear, symmetrisch, positiv definit; Gram-Matrix prüfen.",
+        "Cauchy-Schwarz $|\\langle v, w \\rangle| \\le \\|v\\|\\|w\\|$, Gleichheit genau bei linearer Abhängigkeit.",
+        "Parallelogrammgleichung kennzeichnet Normen aus Skalarprodukten; $\\|\\cdot\\|_1$ gehört nicht dazu.",
+        "Polarisierung: Die Norm bestimmt das Skalarprodukt."
+      ],
+      "id": "summary"
+    }
+  ]
+}

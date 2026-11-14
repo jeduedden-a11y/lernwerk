@@ -1,0 +1,242 @@
+{
+  "id": "la1-aehnlichkeit",
+  "title": "Äquivalente und ähnliche Matrizen",
+  "subtitle": "Dieselbe Abbildung, verschiedene Basen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Koordinaten und Basiswechsel.md",
+      "title": "Koordinaten und Basiswechsel"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "In einer gut gewählten Basis wird eine Matrix diagonal. Die neue Matrix ist der alten **ähnlich**: Sie beschreibt dieselbe Abbildung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}",
+            "why": "Eine Abbildung in der Standardbasis."
+          },
+          {
+            "tex": "A\\begin{pmatrix}1\\\\1\\end{pmatrix} = 5\\begin{pmatrix}1\\\\1\\end{pmatrix},\\quad A\\begin{pmatrix}1\\\\-2\\end{pmatrix} = 2\\begin{pmatrix}1\\\\-2\\end{pmatrix}",
+            "why": "Zwei besondere Richtungen werden nur gestreckt."
+          },
+          {
+            "tex": "S = \\begin{pmatrix}1&1\\\\1&-2\\end{pmatrix}",
+            "why": "Diese Richtungen als neue Basis, als Spalten von $S$."
+          },
+          {
+            "tex": "S^{-1}AS = \\begin{pmatrix}5&0\\\\0&2\\end{pmatrix}",
+            "why": "In der neuen Basis: Streckung um $5$ und um $2$."
+          },
+          {
+            "tex": "\\operatorname{Spur} = 7,\\quad \\det = 10",
+            "why": "Spur und Determinante stimmen bei $A$ und $S^{-1}AS$ überein: Sie gehören zur Abbildung, nicht zur Basis."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Matrix, scheinbar ohne Struktur.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei Richtungen bleiben erhalten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wir machen sie zur Basis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Jetzt sieht man, was die Abbildung tut.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Was sich nicht ändert, ist eine Eigenschaft der Abbildung selbst.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$A, B \\in K^{n \\times n}$ heißen **ähnlich**, wenn $B = S^{-1}AS$ für ein invertierbares $S$: dieselbe lineare Abbildung $V \\to V$ in zwei Basen. $A, B \\in K^{m \\times n}$ heißen **äquivalent**, wenn $B = SAT$ mit invertierbaren $S, T$: dieselbe Abbildung $V \\to W$, wobei Start- und Zielbasis unabhängig wechseln.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Invarianten\n> Äquivalente Matrizen haben denselben Rang, und der Rang ist die **einzige** Invariante: Jede Matrix vom Rang $r$ ist äquivalent zu $\\begin{pmatrix}E_r&0\\\\0&0\\end{pmatrix}$.\n>\n> Ähnlichkeit ist viel feiner. Ähnliche Matrizen haben gleiche Spur, Determinante, Rang, gleiches charakteristisches Polynom und gleiche Eigenwerte, aber diese Daten reichen im Allgemeinen nicht, um Ähnlichkeit zu entscheiden.",
+      "id": "t2"
+    },
+    {
+      "type": "multi",
+      "md": "Was haben ähnliche Matrizen $A$ und $S^{-1}AS$ **immer** gemeinsam?",
+      "options": [
+        {
+          "md": "die Determinante",
+          "correct": true
+        },
+        {
+          "md": "die Spur",
+          "correct": true
+        },
+        {
+          "md": "den Rang",
+          "correct": true
+        },
+        {
+          "md": "den Eintrag oben links",
+          "why": "$S^{-1}AS$ kann ganz andere Einträge haben, siehe das Beispiel oben."
+        },
+        {
+          "md": "Symmetrie",
+          "why": "Ist $A$ symmetrisch, muss $S^{-1}AS$ es nicht sein, außer $S$ ist orthogonal."
+        }
+      ],
+      "explain": "$\\det(S^{-1}AS) = \\det A$, $\\operatorname{Spur}(S^{-1}AS) = \\operatorname{Spur}(ASS^{-1}) = \\operatorname{Spur} A$, und $S$ ändert keine Dimensionen.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zwei $2 \\times 2$-Matrizen mit gleicher Spur und gleicher Determinante sind ähnlich.",
+      "answer": false,
+      "explain": "$E$ und $\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$ haben beide Spur $2$ und Determinante $1$. Aber $S^{-1}ES = E$ für jedes $S$: Nur $E$ selbst ist zu $E$ ähnlich.",
+      "label": "Klausur",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Welches Paar ist ähnlich?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$ und $\\begin{pmatrix}1&5\\\\0&2\\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$E$ und $\\begin{pmatrix}1&1\\\\0&1\\end{pmatrix}$",
+          "why": "Nur $E$ ist zu $E$ ähnlich."
+        },
+        {
+          "md": "$\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$ und $\\begin{pmatrix}1&0\\\\0&3\\end{pmatrix}$",
+          "why": "Verschiedene Spuren."
+        },
+        {
+          "md": "$\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ und die Nullmatrix",
+          "why": "Die Nullmatrix ist nur zu sich selbst ähnlich, und Rang $1 \\ne 0$."
+        }
+      ],
+      "explain": "Die Dreiecksmatrix hat die verschiedenen Eigenwerte $1$ und $2$, also zwei unabhängige Eigenvektoren, und ist deshalb zu $\\operatorname{diag}(1, 2)$ ähnlich.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "In wie viele Klassen zerfallen die $3 \\times 4$-Matrizen unter **Äquivalenz**?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Die einzige Invariante ist der Rang, möglich sind $0, 1, 2, 3$. Unter Ähnlichkeit gäbe es bei quadratischen Matrizen unendlich viele Klassen (schon die Diagonalmatrizen $\\lambda E$ sind paarweise nicht ähnlich).",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $A$ ähnlich zu $\\lambda E$, so ist $A = \\lambda E$.",
+      "answer": true,
+      "explain": "$A = S^{-1}(\\lambda E)S = \\lambda S^{-1}S = \\lambda E$.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede quadratische Matrix ist zu ihrer Transponierten ähnlich.",
+      "answer": true,
+      "explain": "Wahr, aber nicht leicht: $A$ und $A^T$ haben für jedes $\\lambda$ und $k$ denselben Rang von $(A - \\lambda E)^k$, damit dieselbe Jordan-Normalform. Ein expliziter Basiswechsel ist oft schwer anzugeben.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für quadratische $A, B$ sind $AB$ und $BA$ stets ähnlich.",
+      "answer": false,
+      "explain": "$A = \\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$, $B = \\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$: $AB \\ne 0 = BA$. Ist aber $A$ invertierbar, dann $BA = A^{-1}(AB)A$. Gleich ist immer das charakteristische Polynom.",
+      "label": "Extrem",
+      "id": "tf4"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Warum ist die Spur basisunabhängig, obwohl sie aus den Diagonaleinträgen gebildet wird?",
+      "solution": "$\\operatorname{Spur}(XY) = \\sum_{i,k} x_{ik}y_{ki} = \\operatorname{Spur}(YX)$. Mit $X = S^{-1}$ und $Y = AS$ folgt $\\operatorname{Spur}(S^{-1}AS) = \\operatorname{Spur}(ASS^{-1}) = \\operatorname{Spur} A$. Später: Die Spur ist die Summe der Eigenwerte, mit Vielfachheit gezählt.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbmatrix",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ähnlich: $B = S^{-1}AS$, dieselbe Abbildung $V \\to V$ in einer anderen Basis.",
+        "Äquivalent: $B = SAT$; der Rang ist die einzige Invariante.",
+        "Ähnliche Matrizen teilen Spur, Determinante, Rang, charakteristisches Polynom; das reicht nicht für Ähnlichkeit.",
+        "$\\lambda E$ ist nur zu sich selbst ähnlich."
+      ],
+      "id": "summary"
+    }
+  ]
+}

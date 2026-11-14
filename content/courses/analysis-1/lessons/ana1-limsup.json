@@ -1,0 +1,232 @@
+{
+  "id": "ana1-limsup",
+  "title": "Häufungspunkte, Limes superior und inferior",
+  "subtitle": "Was von einer nicht konvergenten Folge übrig bleibt",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Teilfolgen und Cauchy-Folgen.md",
+      "title": "Teilfolgen und Cauchy-Folgen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Auch eine Folge, die nicht konvergiert, hat einen größten und einen kleinsten Häufungspunkt. Man findet sie über die Suprema der Restfolgen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_n = (-1)^n\\bigl(1 + \\tfrac1n\\bigr)",
+            "why": "Eine springende Folge: $-2, \\tfrac32, -\\tfrac43, \\tfrac54, \\dots$"
+          },
+          {
+            "tex": "s_k = \\sup_{n \\ge k} a_n",
+            "why": "Das Supremum der Folge ab der Stelle $k$."
+          },
+          {
+            "tex": "s_1 \\ge s_2 \\ge s_3 \\ge \\dots",
+            "why": "Je weniger Glieder, desto kleiner das Supremum: $(s_k)$ fällt."
+          },
+          {
+            "tex": "s_k \\to 1 = \\limsup a_n",
+            "why": "Der Grenzwert der fallenden Folge ist der **Limes superior**."
+          },
+          {
+            "tex": "\\inf_{n \\ge k} a_n \\to -1 = \\liminf a_n",
+            "why": "Ebenso von unten: der **Limes inferior**."
+          },
+          {
+            "tex": "\\liminf a_n \\le \\limsup a_n,\\ \\text{Gleichheit} \\iff \\text{Konvergenz}",
+            "why": "Hier $-1 < 1$: keine Konvergenz."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Folge mit zwei Häufungspunkten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wir schauen nur noch auf das Ende der Folge.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Suprema fallen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ihr Grenzwert ist der größte Häufungspunkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Von unten genauso.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fallen beide zusammen, konvergiert die Folge.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Für eine beschränkte Folge ist $\\limsup a_n = \\lim_{k \\to \\infty}\\sup_{n \\ge k}a_n$ der **größte** und $\\liminf a_n$ der **kleinste Häufungspunkt**. Beide existieren immer (für unbeschränkte Folgen als $\\pm\\infty$).",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Eigenschaften\n> $(a_n)$ konvergiert genau dann, wenn $\\limsup a_n = \\liminf a_n$ (endlich). Ist $\\limsup a_n < c$, so gilt $a_n < c$ für fast alle $n$; ist $\\limsup a_n > c$, so gilt $a_n > c$ für unendlich viele $n$.\n>\n> Anwendung: **Cauchy-Hadamard**, $R = 1/\\limsup\\sqrt[n]{|a_n|}$ für Potenzreihen.",
+      "id": "t2"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Bestimme $\\limsup$ und $\\liminf$ von $a_n = (-1)^n + \\tfrac1n$.\n\n$\\limsup =$ {{0}} $\\qquad \\liminf =$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Gerade Glieder $1 + \\tfrac1n \\to 1$, ungerade $-1 + \\tfrac1n \\to -1$.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\limsup a_n$ ist das Supremum der Menge der Folgenglieder.",
+      "answer": false,
+      "explain": "$a_n = \\tfrac{(-1)^n}{n}$: $\\sup = \\tfrac12$, aber $\\limsup = 0$. Der Limes superior ignoriert endlich viele Ausreißer.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für beschränkte Folgen gilt $\\limsup(a_n + b_n) \\le \\limsup a_n + \\limsup b_n$, nicht immer mit Gleichheit.",
+      "answer": true,
+      "explain": "$a_n = (-1)^n$, $b_n = -(-1)^n$: links $0$, rechts $2$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$a_n = 2^n$ für gerade, $3^n$ für ungerade $n$. Bestimme $\\limsup\\sqrt[n]{a_n}$.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Die Teilfolgen liefern $2$ und $3$, der größere ist der Limes superior. Damit hat $\\sum a_nx^n$ den Radius $\\tfrac13$.",
+      "id": "n1"
+    },
+    {
+      "type": "multi",
+      "md": "$\\limsup a_n = 2$. Was folgt?",
+      "options": [
+        {
+          "md": "Für jedes $c > 2$ ist $a_n < c$ für fast alle $n$.",
+          "correct": true
+        },
+        {
+          "md": "Für jedes $c < 2$ ist $a_n > c$ für unendlich viele $n$.",
+          "correct": true
+        },
+        {
+          "md": "$a_n \\le 2$ für alle $n$",
+          "why": "Endlich viele Glieder dürfen größer sein, etwa $a_1 = 100$."
+        },
+        {
+          "md": "$a_n \\to 2$",
+          "why": "Der Limes inferior kann kleiner sein."
+        }
+      ],
+      "explain": "Genau diese zwei Eigenschaften kennzeichnen den Limes superior.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\limsup_{n \\to \\infty}\\sin n = 1$.",
+      "answer": true,
+      "explain": "Die Reste $n \\bmod 2\\pi$ liegen dicht in $[0, 2\\pi)$, weil $\\pi$ irrational ist; $\\sin n$ kommt $1$ beliebig nahe.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-limsup",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-limsup",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-limsup",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-limsup",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-limsup",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\limsup$ und $\\liminf$: größter und kleinster Häufungspunkt; immer vorhanden.",
+        "Konvergenz $\\iff \\limsup = \\liminf$ (endlich).",
+        "$\\limsup a_n < c$: fast alle Glieder unter $c$; $> c$: unendlich viele darüber.",
+        "Cauchy-Hadamard: $R = 1/\\limsup\\sqrt[n]{|a_n|}$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

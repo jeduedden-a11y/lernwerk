@@ -1,0 +1,244 @@
+{
+  "id": "la1-orthogonal",
+  "title": "Orthogonale Matrizen und der Spektralsatz",
+  "subtitle": "Längentreue Abbildungen und symmetrische Matrizen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Skalarprodukt.md",
+      "title": "Skalarprodukt"
+    },
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Manche Abbildungen erhalten Längen und Winkel, andere haben senkrechte Eigenrichtungen. Beides hängt zusammen.",
+      "widget": "matrix-transform",
+      "params": {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "editable": false,
+        "showEigen": true
+      },
+      "timeline": [
+        {
+          "caption": "Die Einheitsmatrix."
+        },
+        {
+          "caption": "Eine Drehung: Das Einheitsquadrat bleibt ein Einheitsquadrat, Längen und Winkel bleiben. $Q^TQ = E$, $\\det Q = 1$.",
+          "to": {
+            "m11": 0.6,
+            "m12": -0.8,
+            "m21": 0.8,
+            "m22": 0.6
+          },
+          "dur": 2200,
+          "hold": 5600
+        },
+        {
+          "caption": "Eine Spiegelung: ebenfalls längentreu, aber $\\det = -1$. Ihre Eigenrichtungen (gestrichelt) stehen senkrecht.",
+          "to": {
+            "m11": 1,
+            "m12": 0,
+            "m21": 0,
+            "m22": -1
+          },
+          "dur": 2200,
+          "hold": 5600
+        },
+        {
+          "caption": "Eine symmetrische Matrix $\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$: nicht längentreu, aber ihre Eigenrichtungen stehen senkrecht. Das ist der **Spektralsatz**.",
+          "to": {
+            "m11": 2,
+            "m12": 1,
+            "m21": 1,
+            "m22": 2
+          },
+          "dur": 2200
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$Q \\in \\mathbb{R}^{n \\times n}$ heißt **orthogonal**, wenn $Q^TQ = E$. Gleichwertig: Die Spalten bilden eine ONB, oder $\\|Qv\\| = \\|v\\|$ für alle $v$. Dann $Q^{-1} = Q^T$ und $\\det Q = \\pm1$. Im $\\mathbb{R}^2$ sind das genau die Drehungen ($\\det = 1$) und Spiegelungen ($\\det = -1$).",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Spektralsatz\n> Jede reelle symmetrische Matrix hat nur reelle Eigenwerte und eine Orthonormalbasis aus Eigenvektoren: $A = QDQ^T$ mit orthogonalem $Q$.\n\nDamit kann man symmetrische Matrizen in einer passenden rechtwinkligen Basis als reine Streckungen ansehen.",
+      "id": "t2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede Matrix mit Determinante $1$ ist orthogonal.",
+      "answer": false,
+      "explain": "$\\begin{pmatrix}2&0\\\\0&\\frac12\\end{pmatrix}$ hat Determinante $1$, verzerrt aber Längen. Umgekehrt haben orthogonale Matrizen Determinante $\\pm1$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jeder reelle Eigenwert einer orthogonalen Matrix ist $1$ oder $-1$.",
+      "answer": true,
+      "explain": "$\\|Qv\\| = \\|v\\|$ und $Qv = \\lambda v$ ergeben $|\\lambda| = 1$.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Bestimme die Eigenwerte von $\\begin{pmatrix}3&1\\\\1&3\\end{pmatrix}$ (größeren zuerst).\n\n{{0}} $\\qquad$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Eigenvektoren $(1, 1)$ und $(1, -1)$, senkrecht wie vom Spektralsatz versprochen: Eigenwerte $3 \\pm 1$.",
+      "id": "cl1"
+    },
+    {
+      "type": "choice",
+      "md": "$Q$ ist orthogonal. Wie bekommt man $Q^{-1}$?",
+      "options": [
+        {
+          "md": "$Q^{-1} = Q^T$",
+          "correct": true
+        },
+        {
+          "md": "Mit Gauß-Jordan, wie bei jeder Matrix",
+          "why": "Geht, aber unnötig: Transponieren genügt."
+        },
+        {
+          "md": "$Q^{-1} = Q$",
+          "why": "Nur bei symmetrischen orthogonalen Matrizen wie Spiegelungen."
+        },
+        {
+          "md": "$Q^{-1} = -Q$",
+          "why": "Dann wäre $Q^2 = -E$; das gilt nur für spezielle Drehungen."
+        }
+      ],
+      "explain": "$Q^TQ = E$ ist die Definition. Deshalb sind orthogonale Basiswechsel billig.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele orthogonale $2 \\times 2$-Matrizen haben nur ganzzahlige Einträge?",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Spalten der Länge $1$ mit ganzen Zahlen sind $\\pm e_1, \\pm e_2$, und die zweite muss senkrecht zur ersten sein: $4 \\cdot 2 = 8$ (vier Drehungen um Vielfache von $90°$ und vier Spiegelungen).",
+      "id": "n1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$A$ ist reell symmetrisch, $Av = \\lambda v$, $Aw = \\mu w$ mit $\\lambda \\ne \\mu$.",
+      "claim": "$\\langle v, w \\rangle = 0$.",
+      "steps": [
+        "$\\lambda\\langle v, w \\rangle = \\langle Av, w \\rangle$.",
+        "$\\langle Av, w \\rangle = \\langle v, A^Tw \\rangle = \\langle v, Aw \\rangle$, weil $A = A^T$.",
+        "$\\langle v, Aw \\rangle = \\mu\\langle v, w \\rangle$.",
+        "Also $(\\lambda - \\mu)\\langle v, w \\rangle = 0$, und wegen $\\lambda \\ne \\mu$ ist $\\langle v, w \\rangle = 0$."
+      ],
+      "distractors": [
+        {
+          "md": "$\\langle Av, w \\rangle = \\langle v, w \\rangle$.",
+          "why": "Das gälte für orthogonale $A$, nicht für symmetrische."
+        },
+        {
+          "md": "Also $\\lambda = \\mu$.",
+          "why": "Vorausgesetzt ist $\\lambda \\ne \\mu$; daraus folgt die Orthogonalität."
+        }
+      ],
+      "explain": "Symmetrisch heißt: $A$ darf im Skalarprodukt die Seite wechseln.",
+      "id": "p1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede orthogonale $3 \\times 3$-Matrix mit Determinante $1$ hat den Eigenwert $1$.",
+      "answer": true,
+      "explain": "$\\det(Q - E) = \\det(Q - QQ^T) = \\det Q\\det(E - Q^T) = \\det(E - Q) = -\\det(Q - E)$ in ungerader Dimension, also null. Jede Drehung im Raum hat eine Achse (Euler).",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede orthogonale Matrix ist über $\\mathbb{R}$ diagonalisierbar.",
+      "answer": false,
+      "explain": "Die Drehung um $90°$ hat keine reellen Eigenwerte. Über $\\mathbb{C}$ ist jede orthogonale Matrix diagonalisierbar (sogar unitär).",
+      "label": "Extrem",
+      "id": "tf4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-orthogonal",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-orthogonal",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-orthogonal",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-orthogonal",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-orthogonal",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Orthogonal: $Q^TQ = E$, Spalten bilden eine ONB, längen- und winkeltreu, $\\det Q = \\pm1$.",
+        "Spektralsatz: Reelle symmetrische Matrizen haben eine ONB aus Eigenvektoren, $A = QDQ^T$.",
+        "Eigenvektoren symmetrischer Matrizen zu verschiedenen Eigenwerten sind orthogonal.",
+        "Reelle Eigenwerte orthogonaler Matrizen sind $\\pm1$; Drehungen im Raum haben eine Achse."
+      ],
+      "id": "summary"
+    }
+  ]
+}

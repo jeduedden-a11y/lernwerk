@@ -2,52 +2,90 @@
   "id": "lineare-algebra-1",
   "title": "Lineare Algebra I",
   "subtitle": "Vektorräume, lineare Abbildungen, Matrizen",
-  "description": "Der Stoff einer üblichen Vorlesung Lineare Algebra I in der Reihenfolge, in der die Begriffe aufeinander aufbauen: Gruppen und Körper, Vektorräume, Basis und Dimension, lineare Abbildungen und Matrizen, Gleichungssysteme, Determinanten und Eigenwerte. Jede Lektion beginnt mit einer Animation in der Ebene und endet bei der allgemeinen Definition.",
+  "description": "Der Stoff einer vollständigen Vorlesung Lineare Algebra I in der Reihenfolge, in der die Begriffe aufeinander aufbauen: Gruppen, Ringe, Körper und Polynome, Vektorräume mit Summen und Dimension, lineare Abbildungen, Rang, Abbildungsmatrizen und Ähnlichkeit, Quotient und Dualraum, Gleichungssysteme mit Parametern, Determinanten, Eigenwerte bis Cayley-Hamilton und Skalarprodukte. Jede Lektion verlangt Verständnis statt Rezept: Gegenbeispiele, Beweise zum Zusammensetzen, Fehler in Beweisen. Die Stufe Experte mischt die schwersten Klausuraufgaben mit Aufgaben darüber hinaus.",
   "color": "#0A84FF",
   "symbol": "square.grid.3x3.fill",
   "vault": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Algebra I MOC.md",
   "chapters": [
     {
-      "id": "grundlagen", "title": "Gruppen und Körper", "ref": "Kapitel 1",
+      "id": "grundlagen", "title": "Gruppen, Ringe und Körper", "ref": "Kapitel 1",
       "lessons": [
-        { "id": "la1-gruppen", "title": "Gruppen und Körper", "minutes": 14, "requires": [], "links": ["ana1-koerper"] }
+        { "id": "la1-gruppen", "title": "Gruppen und Körper", "minutes": 21, "requires": [], "links": ["ana1-koerper"] },
+        { "id": "la1-untergruppen", "title": "Untergruppen, Ordnung und der Satz von Lagrange", "minutes": 16, "requires": ["la1-gruppen"] },
+        { "id": "la1-homomorphismen", "title": "Gruppenhomomorphismen, Kern und Isomorphie", "minutes": 16, "requires": ["la1-untergruppen"] },
+        { "id": "la1-permutationen", "title": "Permutationen und das Signum", "minutes": 16, "requires": ["la1-untergruppen"] },
+        { "id": "la1-ringe", "title": "Ringe, Körper und die Charakteristik", "minutes": 16, "requires": ["la1-gruppen"] },
+        { "id": "la1-polynome", "title": "Polynome über einem Körper", "minutes": 15, "requires": ["la1-ringe"] }
       ]
     },
     {
       "id": "vektorraeume", "title": "Vektorräume", "ref": "Kapitel 2",
       "lessons": [
-        { "id": "la1-vektorraum", "title": "Was ist ein Vektorraum?", "minutes": 13, "requires": ["la1-gruppen"] },
-        { "id": "la1-linkomb", "title": "Linearkombination und Spann", "minutes": 13, "requires": ["la1-vektorraum"] },
-        { "id": "la1-basis", "title": "Lineare Unabhängigkeit, Basis, Dimension", "minutes": 15, "requires": ["la1-linkomb"] }
+        { "id": "la1-vektorraum", "title": "Was ist ein Vektorraum?", "minutes": 20, "requires": ["la1-gruppen"] },
+        { "id": "la1-unterraeume", "title": "Unterräume, Summen und direkte Summen", "minutes": 16, "requires": ["la1-vektorraum"] },
+        { "id": "la1-linkomb", "title": "Linearkombination und Spann", "minutes": 20, "requires": ["la1-vektorraum"] },
+        { "id": "la1-basis", "title": "Lineare Unabhängigkeit, Basis, Dimension", "minutes": 22, "requires": ["la1-linkomb"] },
+        { "id": "la1-austausch", "title": "Basisergänzung und Austauschsatz", "minutes": 16, "requires": ["la1-basis"] },
+        { "id": "la1-dimension", "title": "Dimension: Formeln und Beispiele", "minutes": 15, "requires": ["la1-austausch"] }
       ]
     },
     {
       "id": "abbildungen", "title": "Lineare Abbildungen und Matrizen", "ref": "Kapitel 3",
       "lessons": [
-        { "id": "la1-matrizen", "title": "Matrizen als lineare Abbildungen", "minutes": 14, "requires": ["la1-basis"] },
-        { "id": "la1-matrixprodukt", "title": "Verkettung, Matrixprodukt und Inverse", "minutes": 14, "requires": ["la1-matrizen"] },
-        { "id": "la1-kern", "title": "Kern, Bild und Dimensionsformel", "minutes": 14, "requires": ["la1-matrizen"] },
-        { "id": "la1-beweise", "title": "Beweise mit Unterräumen und Abbildungen", "minutes": 14, "requires": ["la1-kern", "la1-vektorraum"] },
-        { "id": "la1-koordinaten", "title": "Koordinaten und Basiswechsel", "minutes": 13, "requires": ["la1-basis", "la1-matrixprodukt"] }
+        { "id": "la1-linear", "title": "Lineare Abbildungen und der Fortsetzungssatz", "minutes": 15, "requires": ["la1-dimension"] },
+        { "id": "la1-matrizen", "title": "Matrizen als lineare Abbildungen", "minutes": 21, "requires": ["la1-basis"] },
+        { "id": "la1-matrixprodukt", "title": "Verkettung, Matrixprodukt und Inverse", "minutes": 21, "requires": ["la1-matrizen"] },
+        { "id": "la1-kern", "title": "Kern, Bild und Dimensionsformel", "minutes": 21, "requires": ["la1-matrizen"] },
+        { "id": "la1-rang", "title": "Rang: Zeilenrang gleich Spaltenrang", "minutes": 16, "requires": ["la1-kern"] },
+        { "id": "la1-isomorphie", "title": "Isomorphismen und Abbildungsmatrizen", "minutes": 16, "requires": ["la1-rang"] },
+        { "id": "la1-koordinaten", "title": "Koordinaten und Basiswechsel", "minutes": 20, "requires": ["la1-basis", "la1-matrixprodukt"] },
+        { "id": "la1-aehnlichkeit", "title": "Äquivalente und ähnliche Matrizen", "minutes": 15, "requires": ["la1-koordinaten"] },
+        { "id": "la1-beweise", "title": "Beweise mit Unterräumen und Abbildungen", "minutes": 21, "requires": ["la1-kern", "la1-vektorraum"] }
+      ]
+    },
+    {
+      "id": "quotient", "title": "Quotientenraum und Dualraum", "ref": "Kapitel 3",
+      "lessons": [
+        { "id": "la1-quotient", "title": "Quotientenräume und der Homomorphiesatz", "minutes": 16, "requires": ["la1-isomorphie"] },
+        { "id": "la1-dual", "title": "Dualraum und duale Basis", "minutes": 15, "requires": ["la1-quotient"] }
       ]
     },
     {
       "id": "lgs", "title": "Lineare Gleichungssysteme", "ref": "Kapitel 4",
       "lessons": [
-        { "id": "la1-gauss", "title": "Gauß-Verfahren", "minutes": 15, "requires": ["la1-linkomb"] },
-        { "id": "la1-loesungsmenge", "title": "Lösungsmengen linearer Gleichungssysteme", "minutes": 13, "requires": ["la1-gauss", "la1-kern"] }
+        { "id": "la1-gauss", "title": "Gauß-Verfahren", "minutes": 22, "requires": ["la1-linkomb"] },
+        { "id": "la1-loesungsmenge", "title": "Lösungsmengen linearer Gleichungssysteme", "minutes": 20, "requires": ["la1-gauss", "la1-kern"] },
+        { "id": "la1-elementarmatrizen", "title": "Elementarmatrizen und die Inverse", "minutes": 15, "requires": ["la1-loesungsmenge"] },
+        { "id": "la1-lgs-parameter", "title": "Gleichungssysteme mit Parametern", "minutes": 16, "requires": ["la1-elementarmatrizen"] }
       ]
     },
     {
       "id": "det", "title": "Determinanten", "ref": "Kapitel 5",
       "lessons": [
-        { "id": "la1-det", "title": "Determinante als Flächenfaktor", "minutes": 13, "requires": ["la1-matrixprodukt"] }
+        { "id": "la1-det", "title": "Determinante als Flächenfaktor", "minutes": 20, "requires": ["la1-matrixprodukt"] },
+        { "id": "la1-det-leibniz", "title": "Die Determinante als alternierende Multilinearform", "minutes": 16, "requires": ["la1-det"] },
+        { "id": "la1-det-laplace", "title": "Laplace-Entwicklung und Blockmatrizen", "minutes": 15, "requires": ["la1-det-leibniz"] },
+        { "id": "la1-cramer", "title": "Adjunkte und Cramersche Regel", "minutes": 14, "requires": ["la1-det-laplace"] }
       ]
     },
     {
-      "id": "eigen", "title": "Eigenwerte", "ref": "Kapitel 6",
+      "id": "eigen", "title": "Eigenwerte und Diagonalisierung", "ref": "Kapitel 6",
       "lessons": [
-        { "id": "la1-eigen", "title": "Eigenvektoren und Eigenwerte", "minutes": 15, "requires": ["la1-det", "la1-kern"] }
+        { "id": "la1-eigen", "title": "Eigenvektoren und Eigenwerte", "minutes": 22, "requires": ["la1-det", "la1-kern"] },
+        { "id": "la1-charpoly", "title": "Das charakteristische Polynom", "minutes": 15, "requires": ["la1-eigen"] },
+        { "id": "la1-diagonal", "title": "Diagonalisierbarkeit", "minutes": 16, "requires": ["la1-charpoly"] },
+        { "id": "la1-potenzen", "title": "Matrixpotenzen und lineare Rekursionen", "minutes": 15, "requires": ["la1-diagonal"] },
+        { "id": "la1-trigonal", "title": "Trigonalisierung", "minutes": 13, "requires": ["la1-diagonal"] },
+        { "id": "la1-cayley", "title": "Cayley-Hamilton und Minimalpolynom", "minutes": 15, "requires": ["la1-trigonal"] }
+      ]
+    },
+    {
+      "id": "skalar", "title": "Skalarprodukte und Orthogonalität", "ref": "Kapitel 7",
+      "lessons": [
+        { "id": "la1-skalarprodukt", "title": "Skalarprodukte und die Cauchy-Schwarz-Ungleichung", "minutes": 16, "requires": ["la1-cayley"] },
+        { "id": "la1-orthonormal", "title": "Orthonormalbasen und Gram-Schmidt", "minutes": 15, "requires": ["la1-skalarprodukt"] },
+        { "id": "la1-projektion", "title": "Orthogonale Projektion und Ausgleichsrechnung", "minutes": 16, "requires": ["la1-orthonormal"] },
+        { "id": "la1-orthogonal", "title": "Orthogonale Matrizen und der Spektralsatz", "minutes": 16, "requires": ["la1-projektion"] }
       ]
     }
   ],
@@ -63,6 +101,20 @@
     { "id": "eigen", "title": "Eigenwerte und Eigenvektoren", "summary": "Charakteristisches Polynom, Eigenvektoren, Diagonalisierbarkeit.", "after": "la1-eigen", "gens": ["la-eigen"] },
     { "id": "koordinaten", "title": "Koordinaten und Basiswechsel", "summary": "Koordinaten bestimmen, Basiswechselmatrix, ähnliche Matrizen.", "after": "la1-koordinaten", "gens": ["la-koordinaten"] },
     { "id": "loesungsmenge", "title": "Lösungsmengen", "summary": "Rang, Lösbarkeit, freie Parameter, Stufenform lesen.", "after": "la1-loesungsmenge", "gens": ["la-loesungsmenge", "la-gauss"] },
-    { "id": "beweise", "title": "Beweise der linearen Algebra", "summary": "Unterraumkriterium, Kern, Injektivität, Inverse und Eigenvektoren.", "after": "la1-beweise", "gens": ["beweis-la"] }
+    { "id": "beweise", "title": "Beweise der linearen Algebra", "summary": "Unterraumkriterium, Kern, Injektivität, Inverse und Eigenvektoren.", "after": "la1-beweise", "gens": ["beweis-la"] },
+    { "id": "homomorphismen", "title": "Untergruppen und Homomorphismen", "summary": "Ordnungen, Lagrange, Kern und Bild, Isomorphie erkennen.", "after": "la1-homomorphismen", "gens": ["la-homomorph"] },
+    { "id": "permutationen", "title": "Permutationen und Signum", "summary": "Verketten, Zyklen, Signum und Ordnung von Permutationen.", "after": "la1-permutationen", "gens": ["la-perm"] },
+    { "id": "polynome", "title": "Polynome", "summary": "Division mit Rest, Nullstellen, Irreduzibilität über verschiedenen Körpern.", "after": "la1-polynome", "gens": ["la-polynom"] },
+    { "id": "summen", "title": "Summen und Durchschnitte", "summary": "Dimensionsformel für Unterräume, direkte Summen, Lage von Unterräumen.", "after": "la1-unterraeume", "gens": ["la-summe"] },
+    { "id": "dimension", "title": "Dimension", "summary": "Austauschsatz, Dimensionen bekannter Räume, Basen ergänzen.", "after": "la1-dimension", "gens": ["la-dimension"] },
+    { "id": "linear", "title": "Lineare Abbildungen", "summary": "Linearität prüfen, durch Basisbilder festlegen, Abbildungsmatrizen.", "after": "la1-linear", "gens": ["la-abbildung"] },
+    { "id": "rang", "title": "Rang", "summary": "Rang bestimmen, mit Parametern, Ranggleichungen und -ungleichungen.", "after": "la1-rang", "gens": ["la-rang"] },
+    { "id": "abbmatrix", "title": "Abbildungsmatrizen und Ähnlichkeit", "summary": "Matrizen bezüglich Basen, Basiswechsel, Invarianten ähnlicher Matrizen.", "after": "la1-aehnlichkeit", "gens": ["la-abbmatrix"] },
+    { "id": "quotient", "title": "Quotient und Dualraum", "summary": "Nebenklassen, Dimension von Quotienten, duale Basis, Annullator.", "after": "la1-dual", "gens": ["la-quotient", "la-dual"] },
+    { "id": "elementar", "title": "Elementarmatrizen und Parameter", "summary": "Inverse mit Gauß-Jordan, Gleichungssysteme mit Parametern.", "after": "la1-lgs-parameter", "gens": ["la-elementar", "la-lgsparam"] },
+    { "id": "detrechnen", "title": "Determinanten berechnen", "summary": "Leibniz, Laplace, Blockmatrizen, Rechenregeln, Cramer und Adjunkte.", "after": "la1-cramer", "gens": ["la-detrechnen", "la-cramer"] },
+    { "id": "diagonal", "title": "Diagonalisieren", "summary": "Charakteristisches Polynom, Vielfachheiten, Diagonalisierbarkeit, Matrixpotenzen.", "after": "la1-potenzen", "gens": ["la-charpoly", "la-diag"] },
+    { "id": "cayley", "title": "Cayley-Hamilton und Minimalpolynom", "summary": "Trigonalisieren, Cayley-Hamilton, Minimalpolynom bestimmen.", "after": "la1-cayley", "gens": ["la-cayley"] },
+    { "id": "skalar", "title": "Skalarprodukte und Orthogonalität", "summary": "Skalarprodukte prüfen, Gram-Schmidt, Projektionen, orthogonale Matrizen.", "after": "la1-orthogonal", "gens": ["la-skalar", "la-gramschmidt", "la-orthogonal"] }
   ]
 }

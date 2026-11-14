@@ -1,0 +1,212 @@
+{
+  "id": "ana1-umkehr",
+  "title": "Umkehrfunktionen",
+  "subtitle": "Stetigkeit und Ableitung der Umkehrung",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "title": "Ableitung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "title": "Stetigkeit"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Die Ableitung von $\\arcsin$ folgt aus der von $\\sin$, ohne Grenzwertrechnung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sin(\\arcsin y) = y",
+            "why": "Definition der Umkehrfunktion auf $[-1, 1]$."
+          },
+          {
+            "tex": "\\cos(\\arcsin y) \\cdot \\arcsin'(y) = 1",
+            "why": "Beide Seiten ableiten (Kettenregel)."
+          },
+          {
+            "tex": "\\arcsin'(y) = \\frac{1}{\\cos(\\arcsin y)}",
+            "why": "Umstellen, solange der Kosinus nicht null ist."
+          },
+          {
+            "tex": "\\cos(\\arcsin y) = \\sqrt{1 - y^2}",
+            "why": "$\\cos^2 + \\sin^2 = 1$, und auf $[-\\tfrac\\pi2, \\tfrac\\pi2]$ ist der Kosinus nicht negativ."
+          },
+          {
+            "tex": "\\arcsin'(y) = \\frac{1}{\\sqrt{1 - y^2}}\\quad (|y| < 1)",
+            "why": "An den Rändern $\\pm1$ ist $\\arcsin$ nicht differenzierbar: senkrechte Tangente."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die Gleichung, die die Umkehrfunktion festlegt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umstellen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mit dem Pythagoras vereinfachen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und die Grenzen der Formel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Umkehrfunktion\n> Ist $f$ auf einem Intervall stetig und streng monoton, so ist $f^{-1}$ stetig und streng monoton. Ist $f$ zusätzlich in $x_0$ differenzierbar mit $f'(x_0) \\ne 0$, so ist $f^{-1}$ in $y_0 = f(x_0)$ differenzierbar mit\n>\n> $$(f^{-1})'(y_0) = \\frac{1}{f'(x_0)}.$$",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "Geometrisch: Der Graph von $f^{-1}$ ist der an der Winkelhalbierenden gespiegelte Graph; Steigungen werden zu Kehrwerten. Wo $f' = 0$, hat $f^{-1}$ eine senkrechte Tangente, wie $\\sqrt[3]y$ bei $0$.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$f(x) = x^3 + x$. Berechne $(f^{-1})'(2)$ (zwei Nachkommastellen).",
+      "answer": 0.25,
+      "tolerance": 0.006,
+      "placeholder": "Zahl",
+      "explain": "$f(1) = 2$, $f'(1) = 4$, also $\\tfrac14$. Die Umkehrfunktion selbst muss man dafür nicht kennen.",
+      "id": "n1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\arctan'(1)$ (zwei Nachkommastellen).",
+      "answer": 0.5,
+      "tolerance": 0.006,
+      "placeholder": "Zahl",
+      "explain": "$\\arctan'(y) = \\tfrac{1}{1 + y^2}$, bei $1$: $\\tfrac12$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f$ differenzierbar und bijektiv, so ist $f^{-1}$ überall differenzierbar.",
+      "answer": false,
+      "explain": "$x^3$: $\\sqrt[3]y$ ist bei $0$ nicht differenzierbar, weil $f'(0) = 0$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist $\\ln'(y) = \\tfrac1y$?",
+      "options": [
+        {
+          "md": "Weil $\\exp' = \\exp$ und damit $\\ln'(y) = \\tfrac{1}{\\exp(\\ln y)} = \\tfrac1y$",
+          "correct": true
+        },
+        {
+          "md": "Weil man $\\ln$ als Reihe ableitet",
+          "why": "Eine Reihe für $\\ln y$ um $0$ gibt es nicht; die Formel kommt aus der Umkehrregel."
+        },
+        {
+          "md": "Weil $\\ln$ die Stammfunktion von $\\tfrac1x$ ist",
+          "why": "Das ist eine Folgerung, wenn man $\\ln$ über $\\exp$ definiert."
+        },
+        {
+          "md": "Weil $\\ln$ konkav ist",
+          "why": "Konkavität sagt nichts über die genaue Ableitung."
+        }
+      ],
+      "explain": "Umkehrregel mit $f = \\exp$: $(f^{-1})'(y) = \\tfrac{1}{f'(f^{-1}(y))}$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Umkehrfunktion einer streng konvexen, wachsenden Funktion ist konkav.",
+      "answer": true,
+      "explain": "Spiegeln an der Winkelhalbierenden vertauscht über und unter Sekanten: $e^x$ und $\\ln$.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Es gibt eine stetige Funktion $f: \\mathbb{R} \\to \\mathbb{R}$ mit $f(f(x)) = -x$ für alle $x$.",
+      "answer": false,
+      "explain": "Aus $f(f(x)) = -x$ folgt Injektivität, also strenge Monotonie, und $f \\circ f$ wäre wachsend. Aber $-x$ fällt.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-umkehr",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-umkehr",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-umkehr",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-umkehr",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-umkehr",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stetig und streng monoton auf einem Intervall: Umkehrung stetig.",
+        "$(f^{-1})'(f(x_0)) = 1/f'(x_0)$, falls $f'(x_0) \\ne 0$.",
+        "$f'(x_0) = 0$: senkrechte Tangente der Umkehrung.",
+        "So folgen $\\ln' = \\tfrac1y$, $\\arcsin' = \\tfrac{1}{\\sqrt{1 - y^2}}$, $\\arctan' = \\tfrac{1}{1 + y^2}$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

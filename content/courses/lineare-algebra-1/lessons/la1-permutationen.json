@@ -1,0 +1,272 @@
+{
+  "id": "la1-permutationen",
+  "title": "Permutationen und das Signum",
+  "subtitle": "Zyklen, Transpositionen und gerade Permutationen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine Permutation mischt Zahlen. Wir zerlegen sie in Kreise und lesen daran ab, ob sie gerade oder ungerade ist.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sigma = \\begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\\\ 3 & 5 & 4 & 1 & 2 \\end{pmatrix}",
+            "why": "Zweizeilenform: oben das Argument, unten das Bild."
+          },
+          {
+            "tex": "1 \\mapsto 3 \\mapsto 4 \\mapsto 1",
+            "why": "Wir folgen der $1$, bis sie zurückkehrt: der Zyklus $(1\\,3\\,4)$."
+          },
+          {
+            "tex": "2 \\mapsto 5 \\mapsto 2",
+            "why": "Die kleinste noch freie Zahl: der Zyklus $(2\\,5)$."
+          },
+          {
+            "tex": "\\sigma = (1\\,3\\,4)(2\\,5)",
+            "why": "Disjunkte Zyklen; ihre Reihenfolge ist egal, weil sie vertauschen."
+          },
+          {
+            "tex": "(1\\,3\\,4) = (1\\,4)(1\\,3)",
+            "why": "Rechts zuerst: $(1\\,3)$ schickt $1$ auf $3$, dann bleibt $3$ unter $(1\\,4)$ stehen. Ein $k$-Zyklus braucht $k - 1$ Transpositionen."
+          },
+          {
+            "tex": "\\operatorname{sgn}\\sigma = (-1)^2 \\cdot (-1)^1 = -1",
+            "why": "Drei Transpositionen insgesamt: $\\sigma$ ist **ungerade**."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Permutation von fünf Zahlen in Zweizeilenform.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wir folgen den Pfeilen, bis wir im Kreis sind.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "So entsteht die Zyklenschreibweise.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Jeder Zyklus zerfällt in Vertauschungen von zwei Zahlen, **Transpositionen**.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ob gerade oder ungerade viele: Das ist das **Signum**.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$S_n$ ist die Gruppe aller Bijektionen von $\\{1, \\dots, n\\}$, verknüpft durch Hintereinanderausführung; sie hat $n!$ Elemente. $\\sigma \\circ \\tau$ heißt: **erst $\\tau$, dann $\\sigma$**.\n\nJede Permutation zerfällt eindeutig in disjunkte Zyklen, und jeder Zyklus ist ein Produkt von Transpositionen: $(a_1\\,a_2\\,\\dots\\,a_k) = (a_1\\,a_k)\\cdots(a_1\\,a_3)(a_1\\,a_2)$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Signum\n> Ein **Fehlstand** von $\\sigma$ ist ein Paar $i < j$ mit $\\sigma(i) > \\sigma(j)$. $\\operatorname{sgn}(\\sigma) = (-1)^{\\text{Anzahl der Fehlstände}}$.\n>\n> **Satz:** $\\operatorname{sgn}(\\sigma\\tau) = \\operatorname{sgn}(\\sigma)\\operatorname{sgn}(\\tau)$, und jede Transposition hat Signum $-1$. Deshalb ist $\\operatorname{sgn}(\\sigma) = (-1)^k$ für **jede** Zerlegung in $k$ Transpositionen, die Parität von $k$ ist eindeutig.\n\nDas Signum ist der Grund, warum die Determinante wohldefiniert ist.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$\\sigma = \\begin{pmatrix}1&2&3&4\\\\2&4&1&3\\end{pmatrix}$, $\\tau = \\begin{pmatrix}1&2&3&4\\\\3&4&2&1\\end{pmatrix}$. Bestimme $(\\sigma \\circ \\tau)(2)$.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Erst $\\tau$: $\\tau(2) = 4$. Dann $\\sigma$: $\\sigma(4) = 3$. Also $(\\sigma\\circ\\tau)(2) = 3$. In umgekehrter Reihenfolge wäre $(\\tau\\circ\\sigma)(2) = \\tau(4) = 1$: $S_n$ ist für $n \\ge 3$ nicht abelsch.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Permutation ist $(1\\,2\\,3) \\circ (2\\,3)$?",
+      "options": [
+        {
+          "md": "$(1\\,2)$",
+          "correct": true
+        },
+        {
+          "md": "$(1\\,3)$",
+          "why": "Rechne nach: $1 \\mapsto 1 \\mapsto 2$, also geht $1$ auf $2$."
+        },
+        {
+          "md": "$(1\\,2\\,3)$",
+          "why": "Das Produkt mit der Transposition ändert den Zyklus."
+        },
+        {
+          "md": "die Identität",
+          "why": "$1$ geht auf $2$."
+        }
+      ],
+      "explain": "Erst $(2\\,3)$, dann $(1\\,2\\,3)$: $1 \\mapsto 1 \\mapsto 2$, $2 \\mapsto 3 \\mapsto 1$, $3 \\mapsto 2 \\mapsto 3$. Also $(1\\,2)$. Kontrolle über das Signum: $(+1)(-1) = -1$, passt zu einer Transposition.",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\operatorname{sgn}\\begin{pmatrix}1&2&3&4&5&6\\\\2&3&1&5&4&6\\end{pmatrix}$.",
+      "answer": -1,
+      "tolerance": 0,
+      "placeholder": "1 oder -1",
+      "explain": "Zyklen: $(1\\,2\\,3)(4\\,5)$, die $6$ bleibt fest. $3$-Zyklus: $+1$, Transposition: $-1$. Produkt $-1$.",
+      "id": "n2"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Permutationen sind **gerade**?",
+      "options": [
+        {
+          "md": "ein $3$-Zyklus",
+          "correct": true
+        },
+        {
+          "md": "$(1\\,2)(3\\,4)$",
+          "correct": true
+        },
+        {
+          "md": "die Identität",
+          "correct": true
+        },
+        {
+          "md": "eine Transposition",
+          "why": "Signum $-1$."
+        },
+        {
+          "md": "ein $4$-Zyklus",
+          "why": "$4 - 1 = 3$ Transpositionen: ungerade."
+        }
+      ],
+      "explain": "Ein $k$-Zyklus hat Signum $(-1)^{k-1}$: Zyklen **ungerader** Länge sind gerade. Das wirkt verdreht, ist aber nur Zählen.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zerlegt man eine Permutation auf zwei Arten in Transpositionen, so haben beide Zerlegungen gleich viele Faktoren.",
+      "answer": false,
+      "explain": "$(1\\,2\\,3) = (1\\,3)(1\\,2) = (1\\,3)(1\\,2)(1\\,2)(1\\,2)$: zwei oder vier Faktoren. Gleich ist nur die **Parität**, und genau darauf beruht das Signum.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "proof",
+      "mode": "justify",
+      "label": "Begründen",
+      "md": "Wähle zu jeder Zeile die Begründung.",
+      "given": "$\\sigma \\in S_n$.",
+      "claim": "$\\operatorname{sgn}(\\sigma^{-1}) = \\operatorname{sgn}(\\sigma)$.",
+      "steps": [
+        {
+          "md": "$\\operatorname{sgn}(\\sigma)\\operatorname{sgn}(\\sigma^{-1}) = \\operatorname{sgn}(\\sigma\\sigma^{-1})$",
+          "by": "Das Signum ist multiplikativ",
+          "why": "Der Satz: $\\operatorname{sgn}(\\sigma\\tau) = \\operatorname{sgn}\\sigma \\operatorname{sgn}\\tau$."
+        },
+        {
+          "md": "$\\operatorname{sgn}(\\sigma\\sigma^{-1}) = \\operatorname{sgn}(\\mathrm{id}) = 1$",
+          "by": "Die Identität hat keine Fehlstände",
+          "why": "$(-1)^0 = 1$."
+        },
+        {
+          "md": "$\\operatorname{sgn}(\\sigma^{-1}) = \\operatorname{sgn}(\\sigma)^{-1} = \\operatorname{sgn}(\\sigma)$",
+          "by": "Plus und minus eins sind ihr eigenes Inverses",
+          "why": "$1^{-1} = 1$ und $(-1)^{-1} = -1$."
+        }
+      ],
+      "reasons": [
+        "Die Zyklenzerlegung ist eindeutig",
+        "Satz von Lagrange"
+      ],
+      "explain": "Eine Zeile Algebra mit dem Multiplikationssatz. Genauso folgt: Konjugierte Permutationen $\\tau\\sigma\\tau^{-1}$ haben dasselbe Signum wie $\\sigma$.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Ordnung hat $(1\\,2\\,3)(4\\,5)$ in $S_5$?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Ordnung",
+      "explain": "Disjunkte Zyklen vertauschen. $\\sigma^k = \\mathrm{id}$ genau dann, wenn $3 \\mid k$ und $2 \\mid k$: kleinstes $k = \\operatorname{kgV}(3, 2) = 6$.",
+      "id": "n3"
+    },
+    {
+      "type": "reveal",
+      "label": "Extrem",
+      "md": "Zeige: Die Nachbartranspositionen $(1\\,2), (2\\,3), \\dots, (n-1\\;n)$ erzeugen $S_n$.",
+      "solution": "Jede Permutation lässt sich durch wiederholtes Vertauschen benachbarter Einträge sortieren (Bubblesort): Ist die Liste $\\sigma(1), \\dots, \\sigma(n)$ nicht sortiert, gibt es eine Stelle $i$ mit $\\sigma(i) > \\sigma(i + 1)$, und das Vertauschen senkt die Zahl der Fehlstände um genau $1$. Nach so vielen Schritten, wie es Fehlstände gibt, ist die Liste sortiert: $\\sigma \\circ \\tau_1 \\circ \\dots \\circ \\tau_m = \\mathrm{id}$. Also ist $\\sigma$ ein Produkt von Nachbartranspositionen, und zwar von genau so vielen, wie es Fehlstände hat.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-perm",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-perm",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-perm",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-perm",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-perm",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Jede Permutation zerfällt eindeutig in disjunkte Zyklen; ihre Ordnung ist das kgV der Zyklenlängen.",
+        "Ein $k$-Zyklus ist ein Produkt von $k - 1$ Transpositionen, Signum $(-1)^{k-1}$.",
+        "$\\operatorname{sgn}$ ist multiplikativ; die Parität jeder Zerlegung in Transpositionen ist eindeutig.",
+        "Die geraden Permutationen bilden die Untergruppe $A_n$ mit $n!/2$ Elementen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "id": "ana1-glstetig",
+  "title": "Gleichmäßige Stetigkeit",
+  "subtitle": "Ein Delta für alle Stellen",
+  "source": "Lehrbuchstandard Analysis I, ergänzend zum Skript Jarohs",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "title": "Stetigkeit"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "$x^2$ ist überall stetig, aber nicht gleichmäßig: Je weiter außen, desto kleiner muss $\\delta$ sein.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = x^2,\\quad \\varepsilon = 1",
+            "why": "Wir suchen ein $\\delta$, das für **alle** Stellen funktioniert."
+          },
+          {
+            "tex": "x \\text{ und } y = x + \\tfrac1x\\quad (x > 0)",
+            "why": "Zwei Punkte im Abstand $\\tfrac1x$."
+          },
+          {
+            "tex": "f(y) - f(x) = 2 + \\tfrac{1}{x^2} > 2",
+            "why": "Ihre Bilder liegen immer mehr als $2$ auseinander."
+          },
+          {
+            "tex": "\\tfrac1x < \\delta \\text{ für großes } x",
+            "why": "Für jedes $\\delta$ findet man so ein Paar mit Abstand $< \\delta$."
+          },
+          {
+            "tex": "\\text{kein gemeinsames } \\delta",
+            "why": "$x^2$ ist auf $\\mathbb{R}$ nicht gleichmäßig stetig. Auf $[0, 5]$ dagegen schon."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Fehlerschranke wird vorgegeben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei nahe Punkte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ihre Bilder liegen weit auseinander.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Das gelingt mit beliebig nahen Punkten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kein $\\delta$ passt überall.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$f$ heißt **gleichmäßig stetig** auf $D$, wenn $\\forall\\varepsilon > 0\\ \\exists\\delta > 0\\ \\forall x, y \\in D: |x - y| < \\delta \\Rightarrow |f(x) - f(y)| < \\varepsilon$. Bei gewöhnlicher Stetigkeit darf $\\delta$ von der Stelle abhängen, hier nicht.\n\n**Lipschitz-stetig** ($|f(x) - f(y)| \\le L|x - y|$) $\\Rightarrow$ gleichmäßig stetig $\\Rightarrow$ stetig.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Satz von Heine\n> Jede stetige Funktion auf einem kompakten Intervall $[a, b]$ ist gleichmäßig stetig. Das braucht man etwa, um zu zeigen, dass stetige Funktionen integrierbar sind.",
+      "id": "t2"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Gleichmäßig stetig oder nicht?",
+      "categories": [
+        "gleichmäßig stetig",
+        "nicht gleichmäßig stetig"
+      ],
+      "items": [
+        {
+          "md": "$\\sqrt x$ auf $[0, \\infty)$",
+          "cat": "gleichmäßig stetig"
+        },
+        {
+          "md": "$x^2$ auf $\\mathbb{R}$",
+          "cat": "nicht gleichmäßig stetig"
+        },
+        {
+          "md": "$\\sin x$ auf $\\mathbb{R}$",
+          "cat": "gleichmäßig stetig"
+        },
+        {
+          "md": "$\\tfrac1x$ auf $(0, 1]$",
+          "cat": "nicht gleichmäßig stetig"
+        },
+        {
+          "md": "$\\sin(x^2)$ auf $\\mathbb{R}$",
+          "cat": "nicht gleichmäßig stetig"
+        },
+        {
+          "md": "$\\arctan x$ auf $\\mathbb{R}$",
+          "cat": "gleichmäßig stetig"
+        }
+      ],
+      "explain": "Gleichmäßig stetig: beschränkte Steigung ($\\sin$, $\\arctan$) oder wie $\\sqrt x$ mit $|\\sqrt x - \\sqrt y| \\le \\sqrt{|x - y|}$. Nicht: wachsende Steigung ($x^2$), Explosion am offenen Rand ($\\tfrac1x$), immer schnellere Schwingungen ($\\sin x^2$).",
+      "id": "s1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme die kleinste Lipschitz-Konstante von $x^2$ auf $[0, 5]$.",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "L",
+      "explain": "$\\sup|f'| = 10$.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede gleichmäßig stetige Funktion ist Lipschitz-stetig.",
+      "answer": false,
+      "explain": "$\\sqrt x$ auf $[0, 1]$: gleichmäßig stetig (Heine), aber die Steigung bei $0$ ist unbeschränkt.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Produkt zweier gleichmäßig stetiger Funktionen ist gleichmäßig stetig.",
+      "answer": false,
+      "explain": "$x \\cdot x$ auf $\\mathbb{R}$. Für beschränkte Faktoren stimmt es.",
+      "label": "Klausur",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine gleichmäßig stetige Funktion auf $(0, 1)$ lässt sich stetig auf $[0, 1]$ fortsetzen.",
+      "answer": true,
+      "explain": "Sie bildet Cauchy-Folgen auf Cauchy-Folgen ab, also existieren die Randgrenzwerte. Daran sieht man sofort, dass $\\tfrac1x$ und $\\sin\\tfrac1x$ auf $(0, 1)$ nicht gleichmäßig stetig sind.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ana-glstetig",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gleichmäßig: ein $\\delta$ für alle Stellen.",
+        "Lipschitz $\\Rightarrow$ gleichmäßig stetig $\\Rightarrow$ stetig; die Umkehrungen gelten nicht.",
+        "Heine: stetig auf $[a, b]$ heißt gleichmäßig stetig.",
+        "Typische Hindernisse: wachsende Steigung, Explosion am Rand, immer schnellere Schwingung."
+      ],
+      "id": "summary"
+    }
+  ]
+}

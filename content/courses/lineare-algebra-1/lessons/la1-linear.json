@@ -1,0 +1,241 @@
+{
+  "id": "la1-linear",
+  "title": "Lineare Abbildungen und der Fortsetzungssatz",
+  "subtitle": "Zwei Pfeile bestimmen die ganze Abbildung",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "title": "Lineare Abbildungen und Matrizen"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Eine lineare Abbildung der Ebene ist durch zwei Pfeile festgelegt: die Bilder der Einheitsvektoren.",
+      "widget": "matrix-transform",
+      "params": {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "editable": false
+      },
+      "timeline": [
+        {
+          "caption": "Die Identität: Jeder Punkt bleibt, wo er ist."
+        },
+        {
+          "caption": "Wir schieben das Bild von $e_1$ nach $(2, 1)$. Das ganze Gitter folgt, weil $x e_1$ nach $x \\cdot (2, 1)$ geht.",
+          "to": {
+            "m11": 2,
+            "m21": 1
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Dann das Bild von $e_2$ nach $(1, 1)$. Jeder Punkt $x e_1 + y e_2$ landet bei $x(2, 1) + y(1, 1)$.",
+          "to": {
+            "m12": 1,
+            "m22": 1
+          },
+          "dur": 1800,
+          "hold": 5600
+        },
+        {
+          "caption": "Mehr Freiheit gibt es nicht: Die Bilder einer Basis bestimmen alles, und man darf sie beliebig vorgeben. Das ist der **Fortsetzungssatz**."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$f: V \\to W$ heißt **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Beispiele außerhalb des $\\mathbb{R}^n$: die Ableitung $p \\mapsto p'$, das Auswerten $p \\mapsto p(2)$, das Integral, die Spur, das Transponieren. Keine linearen Abbildungen sind Verschiebungen $v \\mapsto v + a$ ($a \\ne 0$), $x \\mapsto x^2$ oder $A \\mapsto \\det A$.\n\nJede lineare Abbildung bildet $0$ auf $0$ ab, Unterräume auf Unterräume und Linearkombinationen auf Linearkombinationen.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Fortsetzungssatz\n> Ist $b_1, \\dots, b_n$ eine Basis von $V$ und sind $w_1, \\dots, w_n \\in W$ **beliebig**, so gibt es genau eine lineare Abbildung $f$ mit $f(b_i) = w_i$.\n\nVorschreiben darf man also die Bilder einer Basis, aber nicht die Bilder weiterer Vektoren, denn die sind dann schon festgelegt.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis des Fortsetzungssatzes.",
+      "given": "$b_1, \\dots, b_n$ ist eine Basis von $V$, $w_1, \\dots, w_n \\in W$.",
+      "claim": "Es gibt genau eine lineare Abbildung $f: V \\to W$ mit $f(b_i) = w_i$.",
+      "steps": [
+        "Jedes $v \\in V$ hat eindeutige Koordinaten: $v = \\sum_i \\lambda_i b_i$.",
+        "Setze $f(v) = \\sum_i \\lambda_i w_i$; das ist wohldefiniert, weil die Koordinaten eindeutig sind.",
+        "Die Koordinaten von $v + v'$ und $\\mu v$ sind Summe und Vielfaches, also ist $f$ linear, und $f(b_i) = w_i$.",
+        "Eindeutig: Jede lineare $g$ mit $g(b_i) = w_i$ erfüllt $g(v) = \\sum_i \\lambda_i g(b_i) = f(v)$."
+      ],
+      "distractors": [
+        {
+          "md": "Setze $f(v) = w_1$ für alle $v$.",
+          "why": "Diese Abbildung ist nicht linear (außer $w_1 = 0$) und trifft nicht alle $w_i$."
+        },
+        {
+          "md": "Eindeutig, weil $f$ injektiv ist.",
+          "why": "Die $w_i$ dürfen beliebig sein, auch gleich; $f$ muss nicht injektiv sein."
+        }
+      ],
+      "explain": "Existenz über Koordinaten, Eindeutigkeit über Linearität. Darum genügt es, eine Basis zu kennen.",
+      "id": "p1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Abbildungen sind linear?",
+      "options": [
+        {
+          "md": "$p \\mapsto p'$ auf $\\mathbb{R}[x]$",
+          "correct": true
+        },
+        {
+          "md": "$A \\mapsto \\operatorname{Spur} A$",
+          "correct": true
+        },
+        {
+          "md": "$f \\mapsto \\int_0^1 f(x)\\,dx$",
+          "correct": true
+        },
+        {
+          "md": "$A \\mapsto \\det A$ auf $\\mathbb{R}^{2 \\times 2}$",
+          "why": "$\\det(2E) = 4 \\ne 2$."
+        },
+        {
+          "md": "$p \\mapsto p + 1$",
+          "why": "Das Nullpolynom geht auf $1$."
+        },
+        {
+          "md": "$(x, y) \\mapsto (|x|, y)$",
+          "why": "$-(1, 0) \\mapsto (1, 0) \\ne -(1, 0)$."
+        }
+      ],
+      "explain": "Erster Test: Geht $0$ auf $0$? Zweiter Test: ein Vielfaches wie $2v$ oder $-v$ einsetzen.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "$f: \\mathbb{R}^2 \\to \\mathbb{R}^2$ ist linear mit $f(1, 0) = (2, 1)$ und $f(1, 1) = (3, 4)$. Berechne $f(2, -1)$.\n\n$f(2, -1) = ($ {{0}} $,$ {{1}} $)$",
+      "blanks": [
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-1"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "$f(0, 1) = f(1, 1) - f(1, 0) = (1, 3)$. Dann $f(2, -1) = 2f(1, 0) - f(0, 1) = (4, 2) - (1, 3) = (3, -1)$.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Es gibt eine lineare Abbildung $f: \\mathbb{R}^2 \\to \\mathbb{R}^2$ mit $f(1, 1) = (1, 0)$ und $f(2, 2) = (3, 0)$.",
+      "answer": false,
+      "explain": "$(2, 2) = 2 \\cdot (1, 1)$, also muss $f(2, 2) = 2f(1, 1) = (2, 0)$ sein. Vorschreiben darf man nur Bilder **linear unabhängiger** Vektoren.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Matrix hat $D: p \\mapsto p'$ auf $\\mathbb{R}[x]_{\\le 2}$ bezüglich $1, x, x^2$?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix}0&1&0\\\\0&0&2\\\\0&0&0\\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix}0&0&0\\\\1&0&0\\\\0&2&0\\end{pmatrix}$",
+          "why": "Das sind die Bilder als Zeilen. In die Spalten gehören die Koordinaten von $D(1), D(x), D(x^2)$."
+        },
+        {
+          "md": "$\\begin{pmatrix}0&1&0\\\\0&0&1\\\\0&0&0\\end{pmatrix}$",
+          "why": "$D(x^2) = 2x$, nicht $x$."
+        },
+        {
+          "md": "$\\begin{pmatrix}1&0&0\\\\0&2&0\\\\0&0&0\\end{pmatrix}$",
+          "why": "$D(1) = 0$."
+        }
+      ],
+      "explain": "Spalte $j$ sind die Koordinaten von $D(\\text{Basisvektor } j)$: $D(1) = 0$, $D(x) = 1$, $D(x^2) = 2x$. Die Matrix ist nilpotent: $D^3 = 0$, wie es sein muss.",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$D: \\mathbb{R}[x] \\to \\mathbb{R}[x]$, $p \\mapsto p'$, ist surjektiv, aber nicht injektiv.",
+      "answer": true,
+      "explain": "Jedes Polynom hat eine Stammfunktion, und die Konstanten gehen auf $0$. In endlicher Dimension gibt es so etwas nicht: Dort ist eine lineare Abbildung $V \\to V$ injektiv genau dann, wenn sie surjektiv ist.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede Funktion $f: \\mathbb{R} \\to \\mathbb{R}$ mit $f(x + y) = f(x) + f(y)$ ist linear, also von der Form $f(x) = cx$.",
+      "answer": false,
+      "explain": "Sie ist $\\mathbb{Q}$-linear, und ist sie stetig (oder nur monoton), so ist sie $cx$. Ohne solche Zusatzbedingungen gibt es mit einer Hamel-Basis von $\\mathbb{R}$ über $\\mathbb{Q}$ wilde Lösungen. Additiv reicht für Linearität nur über $\\mathbb{Q}$.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-abbildung",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Linear heißt additiv und homogen; $0 \\mapsto 0$ ist der schnellste Test.",
+        "Fortsetzungssatz: Die Bilder einer Basis darf man beliebig vorgeben, dann ist alles festgelegt.",
+        "Spalte $j$ der Abbildungsmatrix = Koordinaten des Bildes des $j$-ten Basisvektors.",
+        "In unendlicher Dimension trennen sich injektiv und surjektiv, etwa bei der Ableitung."
+      ],
+      "id": "summary"
+    }
+  ]
+}

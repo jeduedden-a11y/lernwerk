@@ -1,0 +1,271 @@
+{
+  "id": "la1-quotient",
+  "title": "Quotientenräume und der Homomorphiesatz",
+  "subtitle": "Rechnen mit ganzen Geraden statt mit Punkten",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Kern und Bild.md",
+      "title": "Kern und Bild"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Im Quotientenraum fasst man alle Vektoren zusammen, die sich nur um ein Element von $U$ unterscheiden. Aus Punkten werden parallele Geraden.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U = \\operatorname{span}\\{(1, 1)\\} \\subseteq \\mathbb{R}^2",
+            "why": "Eine Gerade durch den Ursprung."
+          },
+          {
+            "tex": "v + U = \\{v + t(1, 1) : t \\in \\mathbb{R}\\}",
+            "why": "Die **Nebenklasse** von $v$: die zu $U$ parallele Gerade durch $v$."
+          },
+          {
+            "tex": "(3, 1) + U = (2, 0) + U",
+            "why": "Gleich, weil $(3, 1) - (2, 0) = (1, 1) \\in U$."
+          },
+          {
+            "tex": "(v + U) + (w + U) = (v + w) + U",
+            "why": "Addition über Vertreter: Das Ergebnis hängt nicht von der Wahl ab."
+          },
+          {
+            "tex": "\\mathbb{R}^2/U \\to \\mathbb{R},\\quad (x, y) + U \\mapsto x - y",
+            "why": "$x - y$ ist auf jeder Nebenklasse konstant: ein Isomorphismus."
+          },
+          {
+            "tex": "\\dim \\mathbb{R}^2/U = 2 - 1 = 1",
+            "why": "Aus einem zweidimensionalen Raum wird ein eindimensionaler."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Gerade $U$ durch den Ursprung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Jeder Punkt bestimmt eine parallele Gerade.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verschiedene Punkte, dieselbe Gerade.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mit den Geraden kann man rechnen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sie sind durch eine Zahl beschrieben.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Quotient hat die Dimension $\\dim V - \\dim U$.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Für einen Unterraum $U \\subseteq V$ ist $V/U = \\{v + U : v \\in V\\}$ die Menge der Nebenklassen. Es gilt $v + U = w + U$ genau dann, wenn $v - w \\in U$. Mit $(v + U) + (w + U) = (v + w) + U$ und $\\lambda(v + U) = \\lambda v + U$ wird $V/U$ ein Vektorraum, der **Quotientenraum**.\n\nDie Projektion $\\pi: V \\to V/U$, $v \\mapsto v + U$, ist linear, surjektiv und hat den Kern $U$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Homomorphiesatz\n> Für jede lineare Abbildung $f: V \\to W$ ist $V/\\ker f \\to \\operatorname{im} f$, $v + \\ker f \\mapsto f(v)$, ein Isomorphismus.\n>\n> In endlicher Dimension: $\\dim V/U = \\dim V - \\dim U$, und der Homomorphiesatz liefert erneut die Dimensionsformel.",
+      "id": "t2"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Vektor liegt in derselben Nebenklasse wie $(1, 2)$ in $\\mathbb{R}^2/\\operatorname{span}\\{(1, 1)\\}$?",
+      "options": [
+        {
+          "md": "$(3, 4)$",
+          "correct": true
+        },
+        {
+          "md": "$(2, 1)$",
+          "why": "$(1, 2) - (2, 1) = (-1, 1)$ liegt nicht in $U$."
+        },
+        {
+          "md": "$(1, -2)$",
+          "why": "Differenz $(0, 4) \\notin U$."
+        },
+        {
+          "md": "$(0, 0)$",
+          "why": "$(1, 2) \\notin U$, also ist $(1, 2) + U \\ne U$."
+        }
+      ],
+      "explain": "$(3, 4) - (1, 2) = (2, 2) = 2 \\cdot (1, 1) \\in U$. Alle Vertreter haben dieselbe Differenz $y - x = 1$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Nebenklasse $v + U$ ist genau dann ein Unterraum, wenn $v \\in U$.",
+      "answer": true,
+      "explain": "Ein Unterraum enthält $0$, und $0 \\in v + U$ heißt $-v \\in U$. Dann ist $v + U = U$. Die übrigen Nebenklassen sind verschobene Kopien von $U$, affine Unterräume.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Dimension hat $\\mathbb{R}[x]_{\\le 4} / \\{p : p(1) = 0\\}$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "Der Unterraum ist der Kern der surjektiven Abbildung $p \\mapsto p(1)$ auf $\\mathbb{R}$. Homomorphiesatz: Der Quotient ist $\\cong \\mathbb{R}$, Dimension $1$. Jede Nebenklasse ist durch den Wert $p(1)$ festgelegt.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist $(v + U) + (w + U) := (v + w) + U$ wohldefiniert?",
+      "options": [
+        {
+          "md": "Andere Vertreter $v + u_1$ und $w + u_2$ ändern die Summe nur um $u_1 + u_2 \\in U$",
+          "correct": true
+        },
+        {
+          "md": "Weil jede Nebenklasse genau einen Vertreter hat",
+          "why": "Jede hat sehr viele; genau deshalb muss man prüfen."
+        },
+        {
+          "md": "Weil $U$ unter Multiplikation abgeschlossen ist",
+          "why": "Vektoren multipliziert man nicht miteinander; gebraucht wird die Abgeschlossenheit unter Addition."
+        },
+        {
+          "md": "Weil $V/U$ ein Unterraum von $V$ ist",
+          "why": "$V/U$ besteht aus Teilmengen von $V$, es ist kein Unterraum von $V$."
+        }
+      ],
+      "explain": "»Wohldefiniert« heißt: unabhängig von der Wahl der Vertreter. Das ist bei jeder Definition über Vertreter zu prüfen.",
+      "label": "Verständnis",
+      "id": "c2"
+    },
+    {
+      "type": "proof",
+      "label": "Klausur",
+      "md": "Baue den Beweis des Homomorphiesatzes.",
+      "given": "$f: V \\to W$ ist linear.",
+      "claim": "$\\bar f: V/\\ker f \\to \\operatorname{im} f$, $v + \\ker f \\mapsto f(v)$, ist ein Isomorphismus.",
+      "steps": [
+        "Wohldefiniert: Aus $v + \\ker f = v' + \\ker f$ folgt $v - v' \\in \\ker f$, also $f(v) = f(v')$.",
+        "Linear, weil $f$ linear ist und die Operationen in $V/\\ker f$ über Vertreter erklärt sind.",
+        "Injektiv: $\\bar f(v + \\ker f) = 0$ heißt $v \\in \\ker f$, also $v + \\ker f = \\ker f$, die Null des Quotienten.",
+        "Surjektiv: Jedes $f(v) \\in \\operatorname{im} f$ ist $\\bar f(v + \\ker f)$."
+      ],
+      "distractors": [
+        {
+          "md": "Injektiv, weil $f$ injektiv ist.",
+          "why": "Das ist nicht vorausgesetzt; injektiv wird erst $\\bar f$, weil der Kern herausgeteilt ist."
+        },
+        {
+          "md": "Wohldefiniert, weil $\\ker f = \\{0\\}$.",
+          "why": "Gebraucht wird nur: Differenzen von Vertretern liegen im Kern."
+        }
+      ],
+      "explain": "Der Homomorphiesatz sagt: Jede lineare Abbildung ist eine Projektion, gefolgt von einem Isomorphismus, gefolgt von einer Inklusion.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Dimension hat $\\mathbb{R}^{3 \\times 3}/\\mathrm{Sym}$, der Quotient nach den symmetrischen Matrizen?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "$9 - 6 = 3$. Die schiefsymmetrischen Matrizen bilden ein Komplement, und jedes Komplement ist zum Quotienten isomorph.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $V/U$ endlichdimensional, so ist $V$ endlichdimensional.",
+      "answer": false,
+      "explain": "$V = U = \\mathbb{R}[x]$ ergibt $V/U = \\{0\\}$. Endlich wird $V$ erst, wenn auch $U$ endlich ist; dann $\\dim V = \\dim U + \\dim V/U$.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Welche Dimension hat $\\mathbb{R}[x] / x^2\\mathbb{R}[x]$ (Polynome modulo Vielfachen von $x^2$)?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Dimension",
+      "explain": "Division mit Rest durch $x^2$: Jede Klasse hat genau einen Vertreter $a + bx$. Basis $1 + U$, $x + U$. Ein unendlichdimensionaler Raum durch einen unendlichdimensionalen kann endlich sein.",
+      "id": "n3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-quotient",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-quotient",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-quotient",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-quotient",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-quotient",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$V/U$: Nebenklassen $v + U$; gleich genau dann, wenn die Differenz in $U$ liegt.",
+        "Definitionen über Vertreter müssen wohldefiniert sein.",
+        "Homomorphiesatz: $V/\\ker f \\cong \\operatorname{im} f$; in endlicher Dimension $\\dim V/U = \\dim V - \\dim U$.",
+        "Jedes Komplement von $U$ ist zu $V/U$ isomorph."
+      ],
+      "id": "summary"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "id": "la1-orthonormal",
+  "title": "Orthonormalbasen und Gram-Schmidt",
+  "subtitle": "Aus jeder Basis eine rechtwinklige machen",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Skalarprodukt.md",
+      "title": "Skalarprodukt"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Normen und Skalarprodukt.md",
+      "title": "Normen und Skalarprodukt"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Gram-Schmidt macht aus einer beliebigen Basis eine Orthonormalbasis: Man zieht von jedem Vektor ab, was in Richtung der vorigen zeigt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "v_1 = (1, 1, 0),\\quad v_2 = (1, 0, 1)",
+            "why": "Zwei unabhängige Vektoren, nicht senkrecht."
+          },
+          {
+            "tex": "u_1 = \\tfrac{1}{\\sqrt2}(1, 1, 0)",
+            "why": "Den ersten normieren."
+          },
+          {
+            "tex": "w_2 = v_2 - \\langle v_2, u_1\\rangle u_1 = (1, 0, 1) - \\tfrac12(1, 1, 0) = (\\tfrac12, -\\tfrac12, 1)",
+            "why": "Den Anteil in Richtung $u_1$ abziehen."
+          },
+          {
+            "tex": "\\langle w_2, u_1 \\rangle = 0",
+            "why": "Probe: Jetzt steht $w_2$ senkrecht auf $u_1$."
+          },
+          {
+            "tex": "u_2 = \\tfrac{w_2}{\\|w_2\\|} = \\tfrac{1}{\\sqrt6}(1, -1, 2)",
+            "why": "Normieren: $\\|w_2\\|^2 = \\tfrac14 + \\tfrac14 + 1 = \\tfrac32$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei schräge Vektoren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der erste wird nur normiert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vom zweiten wird die Projektion abgezogen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Jetzt sind sie senkrecht.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und auf Länge $1$ gebracht.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine **Orthonormalbasis** (ONB) besteht aus paarweise senkrechten Vektoren der Länge $1$. In ihr sind Koordinaten Skalarprodukte: $v = \\sum_i \\langle v, u_i \\rangle u_i$, und $\\|v\\|^2 = \\sum_i \\langle v, u_i \\rangle^2$ (**Parseval**). Kein Gleichungssystem nötig.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Gram-Schmidt\n> Aus linear unabhängigen $v_1, \\dots, v_n$ entstehen mit $w_k = v_k - \\sum_{i<k}\\langle v_k, u_i \\rangle u_i$ und $u_k = w_k / \\|w_k\\|$ orthonormale $u_1, \\dots, u_n$ mit $\\operatorname{span}\\{u_1, \\dots, u_k\\} = \\operatorname{span}\\{v_1, \\dots, v_k\\}$ für jedes $k$.\n>\n> Folgerung: Jeder endlichdimensionale Raum mit Skalarprodukt hat eine ONB.",
+      "id": "t2"
+    },
+    {
+      "type": "cloze",
+      "label": "Lücken",
+      "md": "Gram-Schmidt ohne Normieren für $v_1 = (2, 0)$, $v_2 = (1, 3)$: Bestimme $u_2 = v_2 - \\tfrac{\\langle v_2, v_1 \\rangle}{\\langle v_1, v_1 \\rangle}v_1$.\n\n$u_2 = ($ {{0}} $,$ {{1}} $)$",
+      "blanks": [
+        {
+          "accept": [
+            "0"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        },
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        }
+      ],
+      "explain": "$\\tfrac{\\langle v_2, v_1 \\rangle}{\\langle v_1, v_1 \\rangle} = \\tfrac24 = \\tfrac12$, also $u_2 = (1, 3) - (1, 0) = (0, 3)$.",
+      "id": "cl1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche erste Koordinate hat $v = (3, 1)$ bezüglich der ONB $u_1 = \\tfrac{1}{\\sqrt2}(1, 1)$, $u_2 = \\tfrac{1}{\\sqrt2}(1, -1)$? (zwei Nachkommastellen)",
+      "answer": 2.83,
+      "tolerance": 0.006,
+      "placeholder": "Zahl",
+      "explain": "$\\langle v, u_1 \\rangle = \\tfrac{4}{\\sqrt2} = 2\\sqrt2 \\approx 2{,}83$. In einer ONB ist jede Koordinate ein Skalarprodukt.",
+      "id": "n1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Paarweise orthogonale Vektoren $\\ne 0$ sind linear unabhängig.",
+      "answer": true,
+      "explain": "Aus $\\sum c_iv_i = 0$ folgt durch Skalarprodukt mit $v_k$: $c_k\\|v_k\\|^2 = 0$, also $c_k = 0$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "Gram-Schmidt auf $1, x$ bezüglich $\\langle p, q \\rangle = \\int_0^1 pq\\,dx$ (ohne Normieren). Was wird aus $x$?",
+      "options": [
+        {
+          "md": "$x - \\tfrac12$",
+          "correct": true
+        },
+        {
+          "md": "$x$",
+          "why": "$\\langle x, 1 \\rangle = \\tfrac12 \\ne 0$."
+        },
+        {
+          "md": "$x - 1$",
+          "why": "$\\langle x - 1, 1 \\rangle = -\\tfrac12 \\ne 0$."
+        },
+        {
+          "md": "$\\tfrac{x}{\\sqrt3}$",
+          "why": "Normieren allein macht nicht senkrecht."
+        }
+      ],
+      "explain": "$x - \\tfrac{\\langle x, 1 \\rangle}{\\langle 1, 1 \\rangle} = x - \\tfrac12$. Probe: $\\int_0^1 (x - \\tfrac12)\\,dx = 0$.",
+      "label": "Klausur",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\|x - \\tfrac12\\|^2$ bezüglich desselben Skalarprodukts (vier Nachkommastellen).",
+      "answer": 0.0833,
+      "tolerance": 0.0002,
+      "placeholder": "Zahl",
+      "explain": "$\\int_0^1 (x - \\tfrac12)^2\\,dx = \\tfrac{1}{12}$. Die normierte Version ist $\\sqrt{12}\\,(x - \\tfrac12)$.",
+      "id": "n2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Sind $u_1, \\dots, u_n$ orthonormal und $v = \\sum c_iu_i$, so gilt $\\|v\\|^2 = \\sum c_i^2$.",
+      "answer": true,
+      "explain": "$\\|v\\|^2 = \\langle \\sum c_iu_i, \\sum c_ju_j \\rangle = \\sum c_i c_j\\langle u_i, u_j \\rangle = \\sum c_i^2$. Der Satz des Pythagoras in $n$ Dimensionen.",
+      "label": "Verständnis",
+      "id": "tf2"
+    },
+    {
+      "type": "choice",
+      "md": "Gram-Schmidt auf $1, x, x^2$ bezüglich $\\int_{-1}^1 pq\\,dx$: Was wird aus $x^2$ (ohne Normieren)?",
+      "options": [
+        {
+          "md": "$x^2 - \\tfrac13$",
+          "correct": true
+        },
+        {
+          "md": "$x^2$",
+          "why": "$\\langle x^2, 1 \\rangle = \\tfrac23 \\ne 0$."
+        },
+        {
+          "md": "$x^2 - x$",
+          "why": "$x^2$ und $x$ sind auf $[-1, 1]$ schon orthogonal."
+        },
+        {
+          "md": "$x^2 - \\tfrac12$",
+          "why": "$\\tfrac{\\langle x^2, 1 \\rangle}{\\langle 1, 1 \\rangle} = \\tfrac{2/3}{2} = \\tfrac13$."
+        }
+      ],
+      "explain": "Das sind bis auf Faktoren die Legendre-Polynome $1$, $x$, $\\tfrac12(3x^2 - 1)$.",
+      "label": "Extrem",
+      "id": "c2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede invertierbare reelle Matrix ist ein Produkt $QR$ aus einer orthogonalen und einer oberen Dreiecksmatrix.",
+      "answer": true,
+      "explain": "Gram-Schmidt auf die Spalten: Die $u_k$ bilden $Q$, die Koeffizienten der Zerlegung $v_k = \\sum_{i \\le k} r_{ik}u_i$ bilden $R$.",
+      "label": "Extrem",
+      "id": "tf3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gramschmidt",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gramschmidt",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gramschmidt",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gramschmidt",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gramschmidt",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "In einer ONB sind Koordinaten Skalarprodukte: $v = \\sum\\langle v, u_i \\rangle u_i$.",
+        "Gram-Schmidt: Projektionen auf die vorigen Vektoren abziehen, dann normieren.",
+        "Orthogonale Vektoren $\\ne 0$ sind unabhängig; Parseval: $\\|v\\|^2 = \\sum\\langle v, u_i \\rangle^2$.",
+        "Auch Polynome haben ONB: Legendre-Polynome."
+      ],
+      "id": "summary"
+    }
+  ]
+}

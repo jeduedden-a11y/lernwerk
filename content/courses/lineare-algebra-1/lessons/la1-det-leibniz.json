@@ -1,0 +1,243 @@
+{
+  "id": "la1-det-leibniz",
+  "title": "Die Determinante als alternierende Multilinearform",
+  "subtitle": "Drei Regeln, und die Formel folgt von selbst",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Determinante.md",
+      "title": "Determinante"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Wir fordern nur drei Eigenschaften: linear in jeder Spalte, null bei zwei gleichen Spalten, $\\det E = 1$. Daraus folgt die bekannte Formel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\det\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix} = \\det(ae_1 + ce_2,\\ be_1 + de_2)",
+            "why": "Die Spalten in der Standardbasis."
+          },
+          {
+            "tex": "= ab\\det(e_1, e_1) + ad\\det(e_1, e_2) + cb\\det(e_2, e_1) + cd\\det(e_2, e_2)",
+            "why": "Linear in jeder Spalte: ausmultiplizieren."
+          },
+          {
+            "tex": "\\det(e_1, e_1) = \\det(e_2, e_2) = 0",
+            "why": "Alternierend: zwei gleiche Spalten."
+          },
+          {
+            "tex": "\\det(e_2, e_1) = -\\det(e_1, e_2) = -1",
+            "why": "Vertauschen ändert das Vorzeichen (folgt aus alternierend), und $\\det E = 1$."
+          },
+          {
+            "tex": "= ad - bc",
+            "why": "Mehr bleibt nicht übrig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wir zerlegen die Spalten in Einheitsvektoren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Multilinear heißt: wie ein Produkt ausmultiplizieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Terme mit gleichen Spalten fallen weg.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vertauschte Spalten bringen ein Minus.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Heraus kommt $ad - bc$, ohne sie vorher gekannt zu haben.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine **Determinantenfunktion** ist eine Abbildung $\\det: K^{n \\times n} \\to K$, die in jeder Spalte linear ist, bei zwei gleichen Spalten $0$ ergibt (**alternierend**) und $\\det E = 1$ erfüllt. Es gibt genau eine solche Abbildung.\n\nAusmultiplizieren wie in der Animation liefert die **Leibniz-Formel**: $\\det A = \\sum_{\\sigma \\in S_n} \\operatorname{sgn}(\\sigma) \\, a_{\\sigma(1)1} a_{\\sigma(2)2} \\cdots a_{\\sigma(n)n}$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Folgerungen\n> Vertauschen zweier Spalten ändert das Vorzeichen; Addieren eines Vielfachen einer Spalte ändert nichts. $\\det(AB) = \\det A \\det B$, $\\det A^T = \\det A$ (also gilt alles auch für Zeilen), und $\\det A \\ne 0 \\iff A$ invertierbar.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$\\Delta$ ist multilinear und alternierend (null bei zwei gleichen Argumenten).",
+      "claim": "$\\Delta(\\dots, w, \\dots, v, \\dots) = -\\Delta(\\dots, v, \\dots, w, \\dots)$.",
+      "steps": [
+        "$0 = \\Delta(\\dots, v + w, \\dots, v + w, \\dots)$, weil zwei gleiche Argumente.",
+        "Multilinear ausmultipliziert: $\\Delta(v, v) + \\Delta(v, w) + \\Delta(w, v) + \\Delta(w, w)$ (die übrigen Argumente fest).",
+        "$\\Delta(v, v) = \\Delta(w, w) = 0$.",
+        "Also $\\Delta(v, w) + \\Delta(w, v) = 0$."
+      ],
+      "distractors": [
+        {
+          "md": "$\\Delta(v + w, v + w) = 2\\Delta(v, w)$.",
+          "why": "Beim Ausmultiplizieren entstehen vier Terme, und $\\Delta(w, v)$ ist nicht von vornherein gleich $\\Delta(v, w)$."
+        },
+        {
+          "md": "Weil $\\Delta$ symmetrisch ist, ist $\\Delta(v, w) = \\Delta(w, v)$.",
+          "why": "$\\Delta$ ist antisymmetrisch, das ist gerade zu zeigen."
+        }
+      ],
+      "explain": "Der Trick, $v + w$ zweimal einzusetzen, kommt immer wieder vor.",
+      "id": "p1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Aus wie vielen Summanden besteht die Leibniz-Formel für $4 \\times 4$-Matrizen?",
+      "answer": 24,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Ein Summand pro Permutation in $S_4$: $4! = 24$. Für $10 \\times 10$ wären es schon $3\\,628\\,800$, deshalb rechnet man mit Gauß.",
+      "id": "n1"
+    },
+    {
+      "type": "choice",
+      "md": "Welches Vorzeichen hat in der Leibniz-Formel einer $3 \\times 3$-Matrix der Summand $a_{21}a_{32}a_{13}$?",
+      "options": [
+        {
+          "md": "$+$",
+          "correct": true
+        },
+        {
+          "md": "$-$",
+          "why": "Die zugehörige Permutation ist ein $3$-Zyklus und damit gerade."
+        }
+      ],
+      "explain": "$\\sigma(1) = 2$, $\\sigma(2) = 3$, $\\sigma(3) = 1$: ein $3$-Zyklus, Signum $+1$. In der Sarrus-Regel ist das eine der drei Diagonalen nach rechts unten.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Determinante einer Permutationsmatrix ist das Signum der Permutation.",
+      "answer": true,
+      "explain": "In der Leibniz-Formel bleibt genau ein Summand übrig, der zur Permutation selbst, mit Produkt $1$.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Abbildungen $(v, w) \\mapsto \\Delta(v, w)$ auf $\\mathbb{R}^2 \\times \\mathbb{R}^2$ sind multilinear und alternierend?",
+      "options": [
+        {
+          "md": "$\\det(v, w)$",
+          "correct": true
+        },
+        {
+          "md": "$3\\det(v, w)$",
+          "correct": true
+        },
+        {
+          "md": "$v_1w_2 + v_2w_1$",
+          "why": "Bilinear, aber für $v = w = (1, 1)$ kommt $2 \\ne 0$ heraus: nicht alternierend."
+        },
+        {
+          "md": "$v_1w_1$",
+          "why": "$\\Delta(e_1, e_1) = 1 \\ne 0$."
+        },
+        {
+          "md": "$\\det(v, w) + 1$",
+          "why": "Nicht linear: Für $v = 0$ müsste $0$ herauskommen."
+        }
+      ],
+      "explain": "Jede alternierende Bilinearform auf $\\mathbb{R}^2$ ist ein Vielfaches der Determinante, festgelegt durch ihren Wert auf $(e_1, e_2)$.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Beweise $\\det(AB) = \\det A \\det B$ mit der Eindeutigkeit der Determinante.",
+      "solution": "Halte $A$ fest und setze $\\Delta(B) = \\det(AB)$. Die Spalten von $AB$ sind $Ab_1, \\dots, Ab_n$, also ist $\\Delta$ multilinear und alternierend in den Spalten von $B$. Eine solche Form ist $\\Delta(E) \\cdot \\det$, also $\\det(AB) = \\det(AE)\\det B = \\det A \\det B$.",
+      "id": "rv1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede alternierende Multilinearform auf $(K^n)^n$ ist ein Vielfaches der Determinante.",
+      "answer": true,
+      "explain": "Ausmultiplizieren und Alternieren zeigt: Sie ist durch ihren Wert auf $(e_1, \\dots, e_n)$ festgelegt. Der Raum dieser Formen ist eindimensional.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-detrechnen",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-det",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Determinante: multilinear in den Spalten, alternierend, $\\det E = 1$; damit eindeutig bestimmt.",
+        "Leibniz: Summe über alle Permutationen mit Vorzeichen $\\operatorname{sgn}\\sigma$; $n!$ Summanden.",
+        "Vertauschen: Vorzeichenwechsel; Vielfache addieren: unverändert.",
+        "$\\det(AB) = \\det A \\det B$ folgt aus der Eindeutigkeit."
+      ],
+      "id": "summary"
+    }
+  ]
+}

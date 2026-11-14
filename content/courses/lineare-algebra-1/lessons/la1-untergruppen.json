@@ -1,0 +1,241 @@
+{
+  "id": "la1-untergruppen",
+  "title": "Untergruppen, Ordnung und der Satz von Lagrange",
+  "subtitle": "Warum die Größe einer Untergruppe die Gruppenordnung teilt",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "In $\\mathbb{Z}/12\\mathbb{Z}$ erzeugt jedes Element eine eigene kleine Gruppe. Ihre Größen haben etwas gemeinsam.",
+      "widget": "modtable",
+      "params": {
+        "n": 12,
+        "op": "+",
+        "select": 4,
+        "nSlider": false,
+        "opToggle": false
+      },
+      "timeline": [
+        {
+          "caption": "Die Additionstafel von $\\mathbb{Z}/12\\mathbb{Z}$. Markiert ist die Zeile der $4$: $4 + 8 \\equiv 0$, also ist $8$ das Inverse von $4$."
+        },
+        {
+          "caption": "Die Vielfachen von $4$ sind $4, 8, 12 \\equiv 0$. Die Menge $\\{0, 4, 8\\}$ ist abgeschlossen, enthält $0$ und die Inversen: eine **Untergruppe** mit $3$ Elementen.",
+          "hold": 5200
+        },
+        {
+          "caption": "Die Vielfachen von $3$: $\\{0, 3, 6, 9\\}$, vier Elemente.",
+          "set": {
+            "sel": 3
+          },
+          "hold": 4200
+        },
+        {
+          "caption": "Die $5$ erzeugt alles: $5, 10, 3, 8, 1, \\dots$ Zwölf Elemente.",
+          "set": {
+            "sel": 5
+          },
+          "hold": 4200
+        },
+        {
+          "caption": "$3$, $4$, $12$ und auch $1, 2, 6$ für die übrigen Elemente: lauter Teiler von $12$. Das ist kein Zufall, sondern der **Satz von Lagrange**.",
+          "set": {
+            "sel": 6
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine **Untergruppe** ist eine Teilmenge, die mit derselben Verknüpfung selbst eine Gruppe ist. Kurz prüft man: $H \\ne \\emptyset$ und mit $a, b \\in H$ liegt auch $ab^{-1}$ in $H$ (**Untergruppenkriterium**).\n\nDie **Ordnung** eines Elements $a$ ist das kleinste $k \\ge 1$ mit $a^k = e$ (additiv: $k \\cdot a = 0$). Die Potenzen $e, a, a^2, \\dots, a^{k-1}$ bilden die von $a$ **erzeugte** Untergruppe $\\langle a \\rangle$, sie hat genau $k$ Elemente.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Satz von Lagrange\n> Ist $G$ eine endliche Gruppe und $H$ eine Untergruppe, so teilt $|H|$ die Ordnung $|G|$.\n>\n> **Folgerungen:** Die Ordnung jedes Elements teilt $|G|$, und $a^{|G|} = e$ für alle $a$. Gruppen von Primzahlordnung sind zyklisch.\n\nDie Idee: Die **Nebenklassen** $aH = \\{ah : h \\in H\\}$ zerlegen $G$ in gleich große Stücke.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis des Satzes von Lagrange.",
+      "given": "$G$ ist eine endliche Gruppe, $H \\subseteq G$ eine Untergruppe.",
+      "claim": "$|H|$ teilt $|G|$.",
+      "steps": [
+        "Für $a \\in G$ sei $aH = \\{ah : h \\in H\\}$ die Nebenklasse von $a$.",
+        "$h \\mapsto ah$ ist eine Bijektion $H \\to aH$ (umkehrbar durch Multiplikation mit $a^{-1}$), also $|aH| = |H|$.",
+        "Zwei Nebenklassen sind gleich oder disjunkt: Aus $c \\in aH \\cap bH$ folgt $aH = cH = bH$.",
+        "Jedes $a$ liegt in $aH$, weil $e \\in H$; die Nebenklassen überdecken also $G$.",
+        "$G$ ist disjunkte Vereinigung von $k$ Nebenklassen mit je $|H|$ Elementen, also $|G| = k \\cdot |H|$."
+      ],
+      "distractors": [
+        {
+          "md": "Jede Nebenklasse $aH$ ist selbst eine Untergruppe.",
+          "why": "Für $a \\notin H$ enthält $aH$ nicht einmal $e$."
+        },
+        {
+          "md": "$|aH| = |a| \\cdot |H|$.",
+          "why": "$h \\mapsto ah$ ist injektiv: Die Nebenklasse hat genau $|H|$ Elemente."
+        }
+      ],
+      "explain": "Gleich große, disjunkte Stücke, die alles überdecken: Dann teilt die Stückgröße die Gesamtzahl. Die Zahl $k = |G|/|H|$ heißt **Index** von $H$.",
+      "id": "p1"
+    },
+    {
+      "type": "choice",
+      "md": "Eine Gruppe hat $20$ Elemente. Welche Ordnung kann eine Untergruppe **nicht** haben?",
+      "options": [
+        {
+          "md": "$8$",
+          "correct": true
+        },
+        {
+          "md": "$1$",
+          "why": "$\\{e\\}$ ist immer eine Untergruppe."
+        },
+        {
+          "md": "$10$",
+          "why": "$10$ teilt $20$; zum Beispiel $\\langle 2 \\rangle$ in $\\mathbb{Z}/20\\mathbb{Z}$."
+        },
+        {
+          "md": "$20$",
+          "why": "$G$ selbst."
+        }
+      ],
+      "explain": "Untergruppenordnungen teilen $20$: möglich sind nur $1, 2, 4, 5, 10, 20$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Umkehrung von Lagrange: Teilt $d$ die Ordnung von $G$, so hat $G$ eine Untergruppe mit genau $d$ Elementen.",
+      "answer": false,
+      "explain": "Falsch im Allgemeinen. Die alternierende Gruppe $A_4$ hat $12$ Elemente, aber keine Untergruppe der Ordnung $6$: Eine solche hätte Index $2$ und enthielte deshalb alle Quadrate. Jeder $3$-Zyklus ist ein Quadrat (das seines Inversen), es gibt acht davon, mehr als $6$. Für **zyklische** Gruppen stimmt die Umkehrung.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Ordnung hat $6$ in $(\\mathbb{Z}/15\\mathbb{Z}, +)$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "Ordnung",
+      "explain": "Gesucht ist das kleinste $k$ mit $15 \\mid 6k$, also $5 \\mid 2k$, also $k = 5$. Allgemein: Ordnung $= 15/\\gcd(6, 15) = 15/3 = 5$. Kontrolle: $5$ teilt $15$.",
+      "id": "n1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Gruppen haben **nur** die Untergruppen $\\{e\\}$ und $G$?",
+      "options": [
+        {
+          "md": "$\\mathbb{Z}/7\\mathbb{Z}$",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{Z}/13\\mathbb{Z}$",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{Z}/9\\mathbb{Z}$",
+          "why": "$\\langle 3 \\rangle = \\{0, 3, 6\\}$ ist eine echte Untergruppe."
+        },
+        {
+          "md": "$\\mathbb{Z}/2\\mathbb{Z} \\times \\mathbb{Z}/2\\mathbb{Z}$",
+          "why": "Jedes Element $\\ne e$ erzeugt eine Untergruppe mit $2$ Elementen."
+        },
+        {
+          "md": "$S_3$",
+          "why": "$\\langle (1\\,2) \\rangle$ hat $2$ Elemente."
+        }
+      ],
+      "explain": "Genau die Gruppen von Primzahlordnung: Jede Untergruppe hat dann Ordnung $1$ oder $p$.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Behauptung: Jede Gruppe $G$ mit $p$ Elementen, $p$ prim, ist zyklisch. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Sei $a \\in G$ mit $a \\ne e$; so ein $a$ gibt es, weil $p \\ge 2$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "$\\langle a \\rangle$ ist eine Untergruppe mit mindestens zwei Elementen ($e$ und $a$).",
+          "why": "Richtig."
+        },
+        {
+          "md": "Nach Lagrange hat $\\langle a \\rangle$ genau $p - 1$ Elemente, weil $e$ nicht mitzählt.",
+          "why": "Falsch: $e$ gehört zu $\\langle a \\rangle$, und Lagrange sagt nur, dass $|\\langle a \\rangle|$ ein Teiler von $p$ ist, also $1$ oder $p$."
+        },
+        {
+          "md": "Also ist $|\\langle a \\rangle| = p$, das heißt $\\langle a \\rangle = G$.",
+          "why": "Richtig, mit der korrigierten Zeile davor."
+        }
+      ],
+      "answer": 2,
+      "explain": "Weil $|\\langle a \\rangle| \\ge 2$ ein Teiler von $p$ ist, ist es $p$. Damit erzeugt jedes $a \\ne e$ die ganze Gruppe.",
+      "id": "sp1"
+    },
+    {
+      "type": "reveal",
+      "label": "Beweis",
+      "md": "Folgere aus Lagrange den **kleinen Satz von Fermat**: Ist $p$ prim und $p \\nmid a$, dann $a^{p-1} \\equiv 1 \\pmod p$.",
+      "solution": "Die invertierbaren Reste $(\\mathbb{Z}/p\\mathbb{Z})^\\times = \\{1, \\dots, p - 1\\}$ bilden mit der Multiplikation eine Gruppe mit $p - 1$ Elementen. Die Ordnung $k$ von $a$ teilt $p - 1$, also $a^{p-1} = (a^k)^{(p-1)/k} = 1^{(p-1)/k} = 1$. Allgemeiner (Euler): $a^{\\varphi(n)} \\equiv 1 \\pmod n$ für $\\gcd(a, n) = 1$.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gruppe",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-homomorph",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Untergruppenkriterium: $H \\ne \\emptyset$ und $a, b \\in H \\Rightarrow ab^{-1} \\in H$.",
+        "Die Ordnung von $a$ ist $|\\langle a \\rangle|$; in $\\mathbb{Z}/n\\mathbb{Z}$ ist sie $n/\\gcd(a, n)$.",
+        "Lagrange: $|H|$ teilt $|G|$, weil die Nebenklassen $G$ in gleich große Stücke zerlegen.",
+        "Die Umkehrung gilt nicht allgemein ($A_4$ hat keine Untergruppe der Ordnung $6$), wohl aber für zyklische Gruppen."
+      ],
+      "id": "summary"
+    }
+  ]
+}

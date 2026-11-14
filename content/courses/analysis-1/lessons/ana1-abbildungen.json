@@ -4,7 +4,10 @@
   "subtitle": "Wann eine Abbildung umkehrbar ist",
   "source": "Skript Jarohs, Abschnitt 1.4",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Abbildungen.md", "title": "Abbildungen" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Abbildungen.md",
+      "title": "Abbildungen"
+    }
   ],
   "steps": [
     {
@@ -12,13 +15,84 @@
       "type": "anim",
       "md": "Links eine Menge $A$, rechts eine Menge $B$. Eine **Abbildung** schickt jedes Element von $A$ mit einem Pfeil zu genau einem Element von $B$.",
       "widget": "mapping",
-      "params": { "left": ["1", "2", "3", "4"], "right": ["a", "b", "c", "d"], "map": [-1, -1, -1, -1] },
+      "params": {
+        "left": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "right": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "map": [
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
       "timeline": [
-        { "caption": "Noch gibt es keine Pfeile. Eine Abbildung $f: A \\to B$ verlangt: **Jedes** Element links bekommt **genau einen** Pfeil.", "do": { "map": [-1, -1, -1, -1] } },
-        { "caption": "Jetzt ist es eine Abbildung. Aber $a$ wird zweimal getroffen, von $1$ und von $2$: Die Abbildung ist **nicht injektiv**. Und $b$ wird gar nicht getroffen: **nicht surjektiv**.", "do": { "map": [0, 0, 2, 3] }, "hold": 6500 },
-        { "caption": "Wir biegen den Pfeil von $2$ auf $b$ um. Jetzt hat jedes Element rechts **genau ein** Urbild: injektiv und surjektiv zugleich, also **bijektiv**.", "do": { "map": [0, 1, 2, 3] } },
-        { "caption": "Eine Bijektion kann man umdrehen: Dreht man alle Pfeile um, bekommt man wieder eine Abbildung, die **Umkehrabbildung** $f^{-1}: B \\to A$. Bei einer nicht injektiven Abbildung ginge das nicht, denn $a$ hätte dann zwei Pfeile.", "do": { "map": [1, 0, 3, 2] }, "hold": 6500 },
-        { "caption": "Zwischen endlichen Mengen gibt es eine Bijektion nur bei **gleich vielen** Elementen. Genau so wird später »gleich groß« für unendliche Mengen definiert.", "do": { "map": [1, 0, 3, 2] } }
+        {
+          "caption": "Noch gibt es keine Pfeile. Eine Abbildung $f: A \\to B$ verlangt: **Jedes** Element links bekommt **genau einen** Pfeil.",
+          "do": {
+            "map": [
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          }
+        },
+        {
+          "caption": "Jetzt ist es eine Abbildung. Aber $a$ wird zweimal getroffen, von $1$ und von $2$: Die Abbildung ist **nicht injektiv**. Und $b$ wird gar nicht getroffen: **nicht surjektiv**.",
+          "do": {
+            "map": [
+              0,
+              0,
+              2,
+              3
+            ]
+          },
+          "hold": 6500
+        },
+        {
+          "caption": "Wir biegen den Pfeil von $2$ auf $b$ um. Jetzt hat jedes Element rechts **genau ein** Urbild: injektiv und surjektiv zugleich, also **bijektiv**.",
+          "do": {
+            "map": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        {
+          "caption": "Eine Bijektion kann man umdrehen: Dreht man alle Pfeile um, bekommt man wieder eine Abbildung, die **Umkehrabbildung** $f^{-1}: B \\to A$. Bei einer nicht injektiven Abbildung ginge das nicht, denn $a$ hätte dann zwei Pfeile.",
+          "do": {
+            "map": [
+              1,
+              0,
+              3,
+              2
+            ]
+          },
+          "hold": 6500
+        },
+        {
+          "caption": "Zwischen endlichen Mengen gibt es eine Bijektion nur bei **gleich vielen** Elementen. Genau so wird später »gleich groß« für unendliche Mengen definiert.",
+          "do": {
+            "map": [
+              1,
+              0,
+              3,
+              2
+            ]
+          }
+        }
       ]
     },
     {
@@ -37,8 +111,40 @@
       "label": "Umbiegen",
       "md": "Diese Zuordnung ist nicht bijektiv. **Biege Pfeile um, bis sie bijektiv ist:** Tippe links ein Element an, dann rechts sein neues Bild.",
       "widget": "mapping",
-      "params": { "left": ["1", "2", "3"], "right": ["a", "b", "c"], "map": [0, 0, 1], "editable": true },
-      "goal": { "when": "bijective == 1", "hints": [{ "when": "injective == 0", "text": "Noch hat ein Element rechts zwei Urbilder." }], "solve": { "map": [0, 1, 2] } },
+      "params": {
+        "left": [
+          "1",
+          "2",
+          "3"
+        ],
+        "right": [
+          "a",
+          "b",
+          "c"
+        ],
+        "map": [
+          0,
+          0,
+          1
+        ],
+        "editable": true
+      },
+      "goal": {
+        "when": "bijective == 1",
+        "hints": [
+          {
+            "when": "injective == 0",
+            "text": "Noch hat ein Element rechts zwei Urbilder."
+          }
+        ],
+        "solve": {
+          "map": [
+            0,
+            1,
+            2
+          ]
+        }
+      },
       "explain": "Bei drei Elementen auf beiden Seiten genügt es, injektiv zu sein: Dann werden drei verschiedene Elemente getroffen, also alle. Es gibt $3! = 6$ Bijektionen."
     },
     {
@@ -46,10 +152,22 @@
       "type": "choice",
       "md": "Welche Wahl von Start- und Zielmenge macht $f(x) = x^2$ **injektiv, aber nicht surjektiv**?",
       "options": [
-        { "md": "$f: [0, \\infty) \\to \\R$", "correct": true },
-        { "md": "$f: \\R \\to [0, \\infty)$", "why": "Surjektiv, aber nicht injektiv: $f(-1) = f(1)$." },
-        { "md": "$f: [0, \\infty) \\to [0, \\infty)$", "why": "Das ist sogar bijektiv." },
-        { "md": "$f: \\R \\to \\R$", "why": "Weder noch." }
+        {
+          "md": "$f: [0, \\infty) \\to \\R$",
+          "correct": true
+        },
+        {
+          "md": "$f: \\R \\to [0, \\infty)$",
+          "why": "Surjektiv, aber nicht injektiv: $f(-1) = f(1)$."
+        },
+        {
+          "md": "$f: [0, \\infty) \\to [0, \\infty)$",
+          "why": "Das ist sogar bijektiv."
+        },
+        {
+          "md": "$f: \\R \\to \\R$",
+          "why": "Weder noch."
+        }
       ],
       "explain": "Auf $[0, \\infty)$ ist $x^2$ streng monoton, also injektiv. Negative Zahlen in der Zielmenge $\\R$ werden aber nie getroffen."
     },
@@ -72,14 +190,98 @@
       "id": "urbild",
       "type": "cloze",
       "md": "$f: \\R \\to \\R$, $f(x) = x^2$. Bestimme das Urbild $f^{-1}([4, 9])$. Es besteht aus zwei Intervallen $[-u, -v] \\cup [v, u]$.\n\n$v =$ {{0}} $\\qquad u =$ {{1}}",
-      "blanks": [{ "accept": [2], "numeric": true }, { "accept": [3], "numeric": true }],
+      "blanks": [
+        {
+          "accept": [
+            2
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            3
+          ],
+          "numeric": true
+        }
+      ],
       "hint": "Für welche $x$ liegt $x^2$ zwischen $4$ und $9$?",
       "explain": "$4 \\le x^2 \\le 9 \\iff 2 \\le |x| \\le 3$, also $f^{-1}([4, 9]) = [-3, -2] \\cup [2, 3]$. Das Urbild existiert, obwohl $f$ nicht umkehrbar ist."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-abb", "level": 1, "label": "Neue Abbildung" },
-    { "id": "neu2", "type": "gen", "gen": "ana-abb", "level": 2, "label": "Neue Abbildung" },
-    { "id": "neu3", "type": "gen", "gen": "ana-abb", "level": 3, "label": "Verkettung" },
-    { "id": "neu4", "type": "gen", "gen": "ana-abb", "level": 4, "label": "Abzählen" },
+    {
+      "type": "truefalse",
+      "md": "Ist $g \\circ f$ injektiv, so ist $f$ injektiv.",
+      "answer": true,
+      "explain": "Aus $f(x) = f(y)$ folgt $g(f(x)) = g(f(y))$, also $x = y$.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $g \\circ f$ surjektiv, so ist $f$ surjektiv.",
+      "answer": false,
+      "explain": "$f: \\{1\\} \\to \\{1, 2\\}$, $g: \\{1, 2\\} \\to \\{1\\}$: $g \\circ f$ ist surjektiv, $f$ nicht. Surjektiv muss $g$ sein.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für jede Abbildung gilt $f(A \\cap B) = f(A) \\cap f(B)$.",
+      "answer": false,
+      "explain": "Nur $\\subseteq$. $f(x) = x^2$ mit $A = \\{-1\\}$, $B = \\{1\\}$: links $\\emptyset$, rechts $\\{1\\}$. Gleichheit für alle $A, B$ genau bei injektivem $f$.",
+      "label": "Klausur",
+      "id": "v3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele surjektive Abbildungen $\\{1, 2, 3, 4\\} \\to \\{1, 2\\}$ gibt es?",
+      "answer": 14,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "Alle $2^4 = 16$ Abbildungen außer den zwei konstanten.",
+      "id": "v4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Es gibt für keine Menge $M$ eine surjektive Abbildung $M \\to \\mathcal{P}(M)$.",
+      "answer": true,
+      "explain": "Cantor: Zu $f$ liegt $D = \\{x \\in M : x \\notin f(x)\\}$ nicht im Bild. Deshalb gibt es unendlich viele Stufen der Unendlichkeit.",
+      "label": "Extrem",
+      "id": "v5"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-abb",
+      "level": 1,
+      "label": "Neue Abbildung"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-abb",
+      "level": 2,
+      "label": "Neue Abbildung"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-abb",
+      "level": 3,
+      "label": "Verkettung"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-abb",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-abb",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -88,7 +290,9 @@
         "Injektiv: verschiedene Elemente, verschiedene Bilder. Surjektiv: alles wird getroffen.",
         "Bijektiv heißt umkehrbar. Die Umkehrabbildung entsteht durch Umdrehen aller Pfeile.",
         "Die Eigenschaften hängen von Start- und Zielmenge ab, nicht nur von der Formel.",
-        "Urbilder $f^{-1}(N)$ gibt es immer, auch ohne Umkehrabbildung."
+        "Urbilder $f^{-1}(N)$ gibt es immer, auch ohne Umkehrabbildung.",
+        "$g \\circ f$ injektiv $\\Rightarrow f$ injektiv; $g \\circ f$ surjektiv $\\Rightarrow g$ surjektiv.",
+        "Bilder vertragen sich nicht mit Durchschnitten, Urbilder schon."
       ]
     }
   ]

@@ -4,7 +4,10 @@
   "subtitle": "Die Richtungen, die eine Abbildung nur streckt",
   "source": "Übliche Vorlesung Lineare Algebra I, Kapitel 6",
   "vault": [
-    { "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md", "title": "Eigenwerte und Eigenvektoren" }
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "title": "Eigenwerte und Eigenvektoren"
+    }
   ],
   "steps": [
     {
@@ -12,13 +15,57 @@
       "type": "anim",
       "md": "Die meisten Vektoren werden von einer Matrix gedreht und gestreckt. Ein paar besondere Richtungen werden nur gestreckt. Wir suchen sie.",
       "widget": "matrix-transform",
-      "params": { "matrix": [[2, 1], [1, 2]], "editable": false, "probe": [2, 0], "showEigen": true },
+      "params": {
+        "matrix": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "editable": false,
+        "probe": [
+          2,
+          0
+        ],
+        "showEigen": true
+      },
       "timeline": [
-        { "caption": "$A = \\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$. Der rote Pfeil $v$ ist ein Testvektor, der grüne $Av$ sein Bild. Hier zeigen sie in verschiedene Richtungen: $A$ dreht $v$." },
-        { "caption": "Wir drehen $v$ nach oben. Das Bild $Av$ dreht sich mit, aber nicht im gleichen Maß.", "to": { "px": 1.5, "py": 1 }, "dur": 2000 },
-        { "caption": "Bei $v = (1{,}5;\\ 1{,}5)$ zeigt $Av$ in **dieselbe** Richtung, nur dreimal so lang: $Av = 3v$. $v$ ist ein **Eigenvektor** zum **Eigenwert** $3$.", "to": { "px": 1.5, "py": 1.5 }, "dur": 1400, "hold": 5600 },
-        { "caption": "Eine zweite besondere Richtung: Bei $v = (1{,}5;\\ -1{,}5)$ ist $Av = 1 \\cdot v$, Eigenwert $1$. Diese Richtung bleibt unverändert.", "to": { "px": 1.5, "py": -1.5 }, "dur": 2400, "hold": 5600 },
-        { "caption": "Die gestrichelten Geraden sind die **Eigenräume**. Entlang dieser Achsen wirkt $A$ wie eine reine Streckung, um $3$ und um $1$. In dieser Basis wäre $A$ eine Diagonalmatrix." }
+        {
+          "caption": "$A = \\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$. Der rote Pfeil $v$ ist ein Testvektor, der grüne $Av$ sein Bild. Hier zeigen sie in verschiedene Richtungen: $A$ dreht $v$."
+        },
+        {
+          "caption": "Wir drehen $v$ nach oben. Das Bild $Av$ dreht sich mit, aber nicht im gleichen Maß.",
+          "to": {
+            "px": 1.5,
+            "py": 1
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Bei $v = (1{,}5;\\ 1{,}5)$ zeigt $Av$ in **dieselbe** Richtung, nur dreimal so lang: $Av = 3v$. $v$ ist ein **Eigenvektor** zum **Eigenwert** $3$.",
+          "to": {
+            "px": 1.5,
+            "py": 1.5
+          },
+          "dur": 1400,
+          "hold": 5600
+        },
+        {
+          "caption": "Eine zweite besondere Richtung: Bei $v = (1{,}5;\\ -1{,}5)$ ist $Av = 1 \\cdot v$, Eigenwert $1$. Diese Richtung bleibt unverändert.",
+          "to": {
+            "px": 1.5,
+            "py": -1.5
+          },
+          "dur": 2400,
+          "hold": 5600
+        },
+        {
+          "caption": "Die gestrichelten Geraden sind die **Eigenräume**. Entlang dieser Achsen wirkt $A$ wie eine reine Streckung, um $3$ und um $1$. In dieser Basis wäre $A$ eine Diagonalmatrix."
+        }
       ]
     },
     {
@@ -32,11 +79,39 @@
       "label": "Suchen",
       "md": "$A = \\begin{pmatrix}3&1\\\\0&2\\end{pmatrix}$. **Ziehe den roten Testvektor $v$, bis $Av$ genau in dieselbe oder die Gegenrichtung zeigt.**",
       "widget": "matrix-transform",
-      "params": { "matrix": [[3, 1], [0, 2]], "editable": false, "probe": [1, 1], "probeSnap": 0.25, "range": 4 },
+      "params": {
+        "matrix": [
+          [
+            3,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "editable": false,
+        "probe": [
+          1,
+          1
+        ],
+        "probeSnap": 0.25,
+        "range": 4
+      },
       "goal": {
         "when": "parallel == 1",
-        "hints": [{ "when": "parallel == 0", "text": "Av = ({qx|2} | {qy|2}) zeigt noch woanders hin als v." }],
-        "solve": { "probe": [1, 0] }
+        "hints": [
+          {
+            "when": "parallel == 0",
+            "text": "Av = ({qx|2} | {qy|2}) zeigt noch woanders hin als v."
+          }
+        ],
+        "solve": {
+          "probe": [
+            1,
+            0
+          ]
+        }
       },
       "explain": "Eigenvektoren sind $(1, 0)$ mit Eigenwert $3$ und $(1, -1)$ mit Eigenwert $2$, und alle ihre Vielfachen. Bei einer Dreiecksmatrix stehen die Eigenwerte auf der Diagonale."
     },
@@ -45,7 +120,20 @@
       "type": "cloze",
       "label": "Rechnen",
       "md": "Bestimme die Eigenwerte von $A = \\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}$ (größerer zuerst).\n\n$\\lambda_1 =$ {{0}} $\\qquad \\lambda_2 =$ {{1}}",
-      "blanks": [{ "accept": [5], "numeric": true }, { "accept": [2], "numeric": true }],
+      "blanks": [
+        {
+          "accept": [
+            5
+          ],
+          "numeric": true
+        },
+        {
+          "accept": [
+            2
+          ],
+          "numeric": true
+        }
+      ],
       "hint": "Spur $7$, Determinante $10$. Löse $\\lambda^2 - 7\\lambda + 10 = 0$.",
       "explain": "$\\lambda^2 - 7\\lambda + 10 = (\\lambda - 5)(\\lambda - 2)$. Kontrolle: $5 + 2 = 7 = $ Spur, $5 \\cdot 2 = 10 = \\det A$."
     },
@@ -74,10 +162,104 @@
       "md": "Warum lohnt sich die Suche nach Eigenvektoren? Denke an $A^{100}v$ für einen Eigenvektor $v$.",
       "solution": "Für einen Eigenvektor ist $A^{100}v = \\lambda^{100}v$, ohne 100 Matrixmultiplikationen. Bilden die Eigenvektoren eine Basis, zerlegt man jeden Vektor in Eigenvektoren und rechnet in jeder Richtung einzeln. Matrizen mit einer Basis aus Eigenvektoren heißen **diagonalisierbar**: $A = PDP^{-1}$ mit einer Diagonalmatrix $D$. So berechnet man Langzeitverhalten, etwa bei Populationsmodellen oder Markov-Ketten."
     },
-    { "id": "neu1", "type": "gen", "gen": "la-eigen", "level": 1, "label": "Neue Matrix" },
-    { "id": "neu2", "type": "gen", "gen": "la-eigen", "level": 2, "label": "Neue Matrix" },
-    { "id": "neu3", "type": "gen", "gen": "la-eigen", "level": 3, "label": "Neue Matrix" },
-    { "id": "neu4", "type": "gen", "gen": "la-eigen", "level": 4, "label": "Nachdenken" },
+    {
+      "type": "truefalse",
+      "md": "Die Summe zweier Eigenvektoren von $A$ ist wieder ein Eigenvektor.",
+      "answer": false,
+      "explain": "Nur bei gleichem Eigenwert. Für $A = \\operatorname{diag}(1, 2)$ geht $e_1 + e_2$ auf $(1, 2)$, kein Vielfaches von $(1, 1)$.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eigenvektoren zu verschiedenen Eigenwerten sind linear unabhängig.",
+      "answer": true,
+      "explain": "Für zwei: Aus $av + bw = 0$ folgt durch Anwenden von $A$ und Abziehen des $\\lambda$-fachen $b(\\mu - \\lambda)w = 0$, also $b = 0$ und dann $a = 0$. Induktiv für beliebig viele.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "cloze",
+      "label": "Klausur",
+      "md": "$A$ hat die Eigenwerte $2$ und $5$. Welche Eigenwerte hat $A^2 - 3A + 2E$? (größeren zuerst)\n\n{{0}} $\\qquad$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "12"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "0"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Ist $Av = \\lambda v$, dann $(A^2 - 3A + 2E)v = (\\lambda^2 - 3\\lambda + 2)v$. Also $p(5) = 12$ und $p(2) = 0$. Man muss $A$ dafür nicht kennen.",
+      "id": "v3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "$A \\in \\mathbb{R}^{3 \\times 3}$ hat die Eigenwerte $1, 2, 4$. Berechne $\\operatorname{Spur}(A^2)$.",
+      "answer": 21,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$A^2$ hat die Eigenwerte $1, 4, 16$, und die Spur ist ihre Summe: $21$.",
+      "id": "v4"
+    },
+    {
+      "type": "truefalse",
+      "md": "$A$ und $A^T$ haben dieselben Eigenvektoren.",
+      "answer": false,
+      "explain": "Dieselben Eigenwerte ja, Eigenvektoren nein: $\\begin{pmatrix}1&1\\\\0&2\\end{pmatrix}$ hat den Eigenvektor $e_1$, ihre Transponierte $\\begin{pmatrix}1&0\\\\1&2\\end{pmatrix}$ nicht ($e_1 \\mapsto (1, 1)$).",
+      "label": "Verständnis",
+      "id": "v5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede reelle $3 \\times 3$-Matrix hat mindestens einen reellen Eigenwert.",
+      "answer": true,
+      "explain": "Das charakteristische Polynom hat ungeraden Grad und damit eine reelle Nullstelle. Deshalb hat jede Drehung des Raums eine Achse.",
+      "label": "Extrem",
+      "id": "v6"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "la-eigen",
+      "level": 1,
+      "label": "Neue Matrix"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "la-eigen",
+      "level": 2,
+      "label": "Neue Matrix"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "la-eigen",
+      "level": 3,
+      "label": "Neue Matrix"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "la-eigen",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "la-eigen",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -86,7 +268,9 @@
         "Eigenvektor: $Av = \\lambda v$ mit $v \\ne 0$. Die Richtung bleibt, nur die Länge ändert sich um $\\lambda$.",
         "Eigenwerte sind die Nullstellen von $\\det(A - \\lambda E)$, bei $2 \\times 2$: $\\lambda^2 - \\operatorname{Spur}(A)\\lambda + \\det A$.",
         "Eigenvektoren zu $\\lambda$ bilden den Kern von $A - \\lambda E$.",
-        "Gibt es eine Basis aus Eigenvektoren, ist $A$ diagonalisierbar, und Potenzen werden leicht."
+        "Gibt es eine Basis aus Eigenvektoren, ist $A$ diagonalisierbar, und Potenzen werden leicht.",
+        "Eigenvektoren zu verschiedenen Eigenwerten sind unabhängig.",
+        "Ist $\\lambda$ Eigenwert von $A$, so ist $p(\\lambda)$ Eigenwert von $p(A)$."
       ]
     }
   ]

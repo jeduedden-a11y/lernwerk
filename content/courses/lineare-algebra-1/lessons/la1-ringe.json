@@ -1,0 +1,251 @@
+{
+  "id": "la1-ringe",
+  "title": "Ringe, Körper und die Charakteristik",
+  "subtitle": "Wann man durch jede Zahl außer null teilen kann",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Multiplikation modulo $n$: Mal gibt es zu jeder Zahl ein Inverses, mal nicht. Die Tafel zeigt, woran das liegt.",
+      "widget": "modtable",
+      "params": {
+        "n": 6,
+        "op": "*",
+        "select": 2,
+        "nSlider": false,
+        "opToggle": false
+      },
+      "timeline": [
+        {
+          "caption": "Multiplikation in $\\mathbb{Z}/6\\mathbb{Z}$. In der Zeile der $2$ kommt keine $1$ vor: $2$ hat kein Inverses. Rot markiert: $2 \\cdot 3 \\equiv 0$, ein **Nullteiler**.",
+          "hold": 5600
+        },
+        {
+          "caption": "Bei $n = 7$ hat jede Zeile außer der $0$ genau eine $1$: Jede Zahl ist invertierbar, $\\mathbb{Z}/7\\mathbb{Z}$ ist ein **Körper**.",
+          "set": {
+            "n": 7,
+            "sel": 3
+          },
+          "hold": 5600
+        },
+        {
+          "caption": "Bei $n = 8$ ist $3$ invertierbar ($3 \\cdot 3 = 9 \\equiv 1$), $2$, $4$ und $6$ nicht. Invertierbar sind genau die zu $8$ teilerfremden Reste.",
+          "set": {
+            "n": 8,
+            "sel": 3
+          },
+          "hold": 5600
+        },
+        {
+          "caption": "Merke: $\\mathbb{Z}/n\\mathbb{Z}$ ist genau dann ein Körper, wenn $n$ eine Primzahl ist.",
+          "set": {
+            "n": 11,
+            "sel": 4
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ein **Ring** hat eine Addition und eine Multiplikation: $(R, +)$ ist eine abelsche Gruppe, die Multiplikation ist assoziativ mit Eins, und es gelten die Distributivgesetze. Beispiele: $\\mathbb{Z}$, $\\mathbb{Z}/n\\mathbb{Z}$, Polynome, $n \\times n$-Matrizen.\n\nDie **Einheiten** $R^\\times$ sind die multiplikativ invertierbaren Elemente. Ein **Nullteiler** ist ein $a \\ne 0$ mit $ab = 0$ für ein $b \\ne 0$. Ein **Körper** ist ein kommutativer Ring, in dem jedes $a \\ne 0$ eine Einheit ist.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Charakteristik\n> Die **Charakteristik** von $K$ ist die kleinste Zahl $p \\ge 1$ mit $\\underbrace{1 + \\dots + 1}_{p} = 0$, oder $0$, wenn es keine gibt.\n>\n> Die Charakteristik eines Körpers ist $0$ oder eine Primzahl: Wäre sie $mn$ mit $1 < m, n$, dann wären $m \\cdot 1$ und $n \\cdot 1$ Nullteiler.\n\nIn Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$. Viele Formeln der Schule gelten dort nicht, etwa $x = -x \\Rightarrow x = 0$.",
+      "id": "t2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis.",
+      "given": "$p$ ist eine Primzahl, $a \\in \\mathbb{Z}$ mit $p \\nmid a$.",
+      "claim": "$a$ ist in $\\mathbb{Z}/p\\mathbb{Z}$ invertierbar.",
+      "steps": [
+        "Weil $p$ prim ist und $a$ nicht teilt, gilt $\\gcd(a, p) = 1$.",
+        "Nach dem erweiterten euklidischen Algorithmus gibt es $s, t \\in \\mathbb{Z}$ mit $sa + tp = 1$.",
+        "Modulo $p$ fällt $tp$ weg: $sa \\equiv 1 \\pmod p$.",
+        "Also ist $s$ das Inverse von $a$ in $\\mathbb{Z}/p\\mathbb{Z}$."
+      ],
+      "distractors": [
+        {
+          "md": "Weil $p$ prim ist, ist $a \\equiv 1 \\pmod p$.",
+          "why": "$a$ kann jeder Rest außer $0$ sein."
+        },
+        {
+          "md": "Es gibt $s, t$ mit $sa + tp = 0$.",
+          "why": "Das gilt immer ($s = p$, $t = -a$) und hilft nicht; gebraucht wird die $1$."
+        }
+      ],
+      "explain": "Der Schlüssel ist die Darstellung des $\\gcd$ als ganzzahlige Kombination (Lemma von Bézout).",
+      "id": "p1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Charakteristik jedes Körpers ist $0$ oder eine Primzahl.",
+      "answer": true,
+      "explain": "Ist $\\operatorname{char} K = mn$ mit $1 < m, n < mn$, dann $(m \\cdot 1)(n \\cdot 1) = mn \\cdot 1 = 0$, aber beide Faktoren sind $\\ne 0$, weil $mn$ die kleinste solche Zahl ist. Körper haben keine Nullteiler.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "choice",
+      "md": "In welchem Ring gilt $(a + b)^2 = a^2 + b^2$ für alle $a, b$?",
+      "options": [
+        {
+          "md": "$\\mathbb{Z}/2\\mathbb{Z}$",
+          "correct": true
+        },
+        {
+          "md": "$\\mathbb{Z}/4\\mathbb{Z}$",
+          "why": "$(1 + 1)^2 = 4 \\equiv 0$, aber $1 + 1 = 2$."
+        },
+        {
+          "md": "$\\mathbb{Z}/3\\mathbb{Z}$",
+          "why": "$(1 + 1)^2 = 4 \\equiv 1$, aber $1 + 1 = 2$."
+        },
+        {
+          "md": "$\\mathbb{R}$",
+          "why": "$(1 + 1)^2 = 4 \\ne 2$."
+        }
+      ],
+      "explain": "$(a + b)^2 = a^2 + 2ab + b^2$; der Mittelterm verschwindet für alle $a, b$ genau dann, wenn $2 = 0$, also in Charakteristik $2$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Elemente von $\\mathbb{Z}/10\\mathbb{Z}$ sind Einheiten?",
+      "options": [
+        {
+          "md": "$3$",
+          "correct": true
+        },
+        {
+          "md": "$7$",
+          "correct": true
+        },
+        {
+          "md": "$9$",
+          "correct": true
+        },
+        {
+          "md": "$5$",
+          "why": "$5 \\cdot 2 = 10 \\equiv 0$: Nullteiler."
+        },
+        {
+          "md": "$4$",
+          "why": "$4 \\cdot 5 \\equiv 0$: Nullteiler."
+        },
+        {
+          "md": "$2$",
+          "why": "$2 \\cdot 5 \\equiv 0$: Nullteiler."
+        }
+      ],
+      "explain": "Einheiten sind die zu $10$ teilerfremden Reste $1, 3, 7, 9$: $3 \\cdot 7 = 21 \\equiv 1$, $9 \\cdot 9 = 81 \\equiv 1$.",
+      "id": "m1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme das Inverse von $7$ in $\\mathbb{Z}/26\\mathbb{Z}$ (Zahl von $0$ bis $25$).",
+      "answer": 15,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Euklid: $26 = 3 \\cdot 7 + 5$, $7 = 1 \\cdot 5 + 2$, $5 = 2 \\cdot 2 + 1$. Rückwärts: $1 = 5 - 2 \\cdot 2 = 5 - 2(7 - 5) = 3 \\cdot 5 - 2 \\cdot 7 = 3(26 - 3 \\cdot 7) - 2 \\cdot 7 = 3 \\cdot 26 - 11 \\cdot 7$. Also $7^{-1} \\equiv -11 \\equiv 15$. Probe: $7 \\cdot 15 = 105 = 4 \\cdot 26 + 1$.",
+      "id": "n1"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Behauptung: Ist $\\mathbb{Z}/n\\mathbb{Z}$ ein Körper, dann ist $n$ prim. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Angenommen, $n = ab$ mit $1 < a, b < n$.",
+          "why": "Richtig: So beginnt der Widerspruchsbeweis."
+        },
+        {
+          "md": "Dann ist $a \\cdot b \\equiv 0 \\pmod n$, aber $a, b \\not\\equiv 0$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Also ist $a$ das Inverse von $b$.",
+          "why": "Falsch: $ab \\equiv 0$, nicht $1$. Richtig ist: $a$ ist ein Nullteiler und deshalb nicht invertierbar."
+        },
+        {
+          "md": "Ein Körper hat keine Nullteiler, Widerspruch. Also ist $n$ prim.",
+          "why": "Richtig, mit der korrigierten Zeile davor."
+        }
+      ],
+      "answer": 2,
+      "explain": "Nullteiler sind nie invertierbar: Aus $ab = 0$ und $ca = 1$ folgte $b = cab = 0$.",
+      "id": "sp1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jeder endliche kommutative Ring ohne Nullteiler ist ein Körper.",
+      "answer": true,
+      "explain": "Für $a \\ne 0$ ist $x \\mapsto ax$ injektiv (aus $ax = ay$ folgt $a(x - y) = 0$, also $x = y$). Auf einer endlichen Menge ist eine injektive Abbildung bijektiv, also wird die $1$ getroffen: $ab = 1$. Für unendliche Ringe falsch: $\\mathbb{Z}$.",
+      "label": "Extrem",
+      "id": "tf2"
+    },
+    {
+      "type": "reveal",
+      "label": "Extrem",
+      "md": "Warum hat ein endlicher Körper der Charakteristik $p$ genau $p^n$ Elemente für ein $n \\ge 1$?",
+      "solution": "Die Vielfachen der Eins, $0, 1, 2 \\cdot 1, \\dots, (p - 1) \\cdot 1$, bilden einen Teilkörper, eine Kopie von $\\mathbb{F}_p$. Der Körper $K$ ist dann ein Vektorraum über $\\mathbb{F}_p$, und weil er endlich ist, hat er eine endliche Basis $b_1, \\dots, b_n$. Jedes Element ist eindeutig $\\lambda_1 b_1 + \\dots + \\lambda_n b_n$ mit $\\lambda_i \\in \\mathbb{F}_p$: genau $p^n$ Möglichkeiten. Deshalb gibt es keinen Körper mit $6$ oder $10$ Elementen.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-modular",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Einheiten von $\\mathbb{Z}/n\\mathbb{Z}$: die zu $n$ teilerfremden Reste; die übrigen $\\ne 0$ sind Nullteiler.",
+        "$\\mathbb{Z}/n\\mathbb{Z}$ ist ein Körper genau dann, wenn $n$ prim ist.",
+        "Die Charakteristik eines Körpers ist $0$ oder prim; endliche Körper haben $p^n$ Elemente.",
+        "In Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$."
+      ],
+      "id": "summary"
+    }
+  ]
+}

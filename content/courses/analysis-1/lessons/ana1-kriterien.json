@@ -4,8 +4,14 @@
   "subtitle": "Konvergenz durch Vergleich mit Bekanntem",
   "source": "Skript Jarohs, Abschnitt 10.9 bis 10.27",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenzkriterien für Reihen.md", "title": "Konvergenzkriterien für Reihen" },
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md", "title": "Reihen" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenzkriterien für Reihen.md",
+      "title": "Konvergenzkriterien für Reihen"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md",
+      "title": "Reihen"
+    }
   ],
   "steps": [
     {
@@ -13,13 +19,53 @@
       "type": "anim",
       "md": "Die Reihe $\\sum \\dfrac{n^2}{2^n}$. Blau die Summanden, orange die Teilsummen. Konvergiert sie? Die Summanden wachsen am Anfang sogar.",
       "widget": "sequence",
-      "params": { "term": "n^2/2^n", "mode": "both", "limit": 6, "limitLabel": "Summe 6", "nMax": 30, "n": 1, "yRange": [0, 6.8], "readout": "$a_{{N|0}} = {a|4}$, $s_{{N|0}} = {s|4}$" },
-      "int": ["N"],
+      "params": {
+        "term": "n^2/2^n",
+        "mode": "both",
+        "limit": 6,
+        "limitLabel": "Summe 6",
+        "nMax": 30,
+        "n": 1,
+        "yRange": [
+          0,
+          6.8
+        ],
+        "readout": "$a_{{N|0}} = {a|4}$, $s_{{N|0}} = {s|4}$"
+      },
+      "int": [
+        "N"
+      ],
       "timeline": [
-        { "caption": "$a_1 = \\tfrac12$, $a_2 = 1$, $a_3 = \\tfrac98$: Die Summanden werden erst größer. Kein guter Anfang für eine konvergente Reihe?", "to": { "N": 3 }, "dur": 1200 },
-        { "caption": "Ab $n = 3$ fallen sie. Der Quotient zweier Nachbarn ist $\\dfrac{a_{n+1}}{a_n} = \\dfrac{(n+1)^2}{2n^2}$, und das strebt gegen $\\tfrac12$.", "to": { "N": 8 }, "dur": 1800, "hold": 6500 },
-        { "caption": "Ab einer Stelle schrumpft also jeder Summand mindestens auf, sagen wir, $60\\,\\%$ des vorigen. Dann liegen die Summanden unter einer **geometrischen Reihe**, und die konvergiert.", "to": { "N": 15 }, "dur": 1800, "hold": 6500 },
-        { "caption": "Die Teilsummen nähern sich $6$. Das ist das **Quotientenkriterium**: Wo der Quotient unter $1$ bleibt, gewinnt das geometrische Schrumpfen gegen jedes Polynom im Zähler.", "to": { "N": 30 }, "dur": 1800 }
+        {
+          "caption": "$a_1 = \\tfrac12$, $a_2 = 1$, $a_3 = \\tfrac98$: Die Summanden werden erst größer. Kein guter Anfang für eine konvergente Reihe?",
+          "to": {
+            "N": 3
+          },
+          "dur": 1200
+        },
+        {
+          "caption": "Ab $n = 3$ fallen sie. Der Quotient zweier Nachbarn ist $\\dfrac{a_{n+1}}{a_n} = \\dfrac{(n+1)^2}{2n^2}$, und das strebt gegen $\\tfrac12$.",
+          "to": {
+            "N": 8
+          },
+          "dur": 1800,
+          "hold": 6500
+        },
+        {
+          "caption": "Ab einer Stelle schrumpft also jeder Summand mindestens auf, sagen wir, $60\\,\\%$ des vorigen. Dann liegen die Summanden unter einer **geometrischen Reihe**, und die konvergiert.",
+          "to": {
+            "N": 15
+          },
+          "dur": 1800,
+          "hold": 6500
+        },
+        {
+          "caption": "Die Teilsummen nähern sich $6$. Das ist das **Quotientenkriterium**: Wo der Quotient unter $1$ bleibt, gewinnt das geometrische Schrumpfen gegen jedes Polynom im Zähler.",
+          "to": {
+            "N": 30
+          },
+          "dur": 1800
+        }
       ]
     },
     {
@@ -38,11 +84,31 @@
       "label": "Einstellen",
       "md": "Die Teilsummen von $1 - \\tfrac12 + \\tfrac13 - \\tfrac14 \\pm \\dots$ pendeln um $\\ln 2 \\approx 0{,}6931$. **Stelle $n$ so ein, dass die Teilsumme weniger als $0{,}01$ von $\\ln 2$ entfernt ist.**",
       "widget": "sequence",
-      "params": { "term": "(-1)^(n+1)/n", "mode": "sums", "limit": "ln(2)", "limitLabel": "ln 2", "eps": 0.01, "nMax": 120, "n": 5, "yRange": [0.4, 1.05], "readout": "$s_{{N|0}} = {s|5}$, Abstand zu $\\ln 2$: ${abs(s - L)|5}$" },
+      "params": {
+        "term": "(-1)^(n+1)/n",
+        "mode": "sums",
+        "limit": "ln(2)",
+        "limitLabel": "ln 2",
+        "eps": 0.01,
+        "nMax": 120,
+        "n": 5,
+        "yRange": [
+          0.4,
+          1.05
+        ],
+        "readout": "$s_{{N|0}} = {s|5}$, Abstand zu $\\ln 2$: ${abs(s - L)|5}$"
+      },
       "goal": {
         "when": "abs(s - L) < 0.01",
-        "hints": [{ "when": "abs(s - L) >= 0.01", "text": "Der Abstand ist noch {abs(s - L)|4}. Die Teilsummen müssen in den schmalen Streifen." }],
-        "solve": { "N": 60 }
+        "hints": [
+          {
+            "when": "abs(s - L) >= 0.01",
+            "text": "Der Abstand ist noch {abs(s - L)|4}. Die Teilsummen müssen in den schmalen Streifen."
+          }
+        ],
+        "solve": {
+          "N": 60
+        }
       },
       "explain": "Ab $n = 50$ ist der Abstand kleiner als $0{,}01$. Die Leibniz-Abschätzung $|s_n - \\ln 2| \\le \\tfrac{1}{n+1}$ garantiert das erst ab $n = 100$. Sie ist sicher, aber vorsichtig."
     },
@@ -58,9 +124,18 @@
       "type": "choice",
       "md": "Was liefert das Quotientenkriterium für $\\sum \\tfrac1k$ und für $\\sum \\tfrac{1}{k^2}$?",
       "options": [
-        { "md": "In beiden Fällen strebt der Quotient gegen $1$, also keine Aussage. Tatsächlich divergiert die erste und konvergiert die zweite.", "correct": true },
-        { "md": "Die erste divergiert, weil der Quotient gegen $1$ geht; die zweite konvergiert, weil er kleiner ist.", "why": "$\\tfrac{k^2}{(k+1)^2} \\to 1$, der Quotient der zweiten Reihe strebt ebenfalls gegen $1$." },
-        { "md": "Beide konvergieren, weil die Quotienten kleiner als $1$ sind.", "why": "Es kommt auf den Grenzwert an, und der ist $1$. Außerdem divergiert $\\sum \\tfrac1k$." }
+        {
+          "md": "In beiden Fällen strebt der Quotient gegen $1$, also keine Aussage. Tatsächlich divergiert die erste und konvergiert die zweite.",
+          "correct": true
+        },
+        {
+          "md": "Die erste divergiert, weil der Quotient gegen $1$ geht; die zweite konvergiert, weil er kleiner ist.",
+          "why": "$\\tfrac{k^2}{(k+1)^2} \\to 1$, der Quotient der zweiten Reihe strebt ebenfalls gegen $1$."
+        },
+        {
+          "md": "Beide konvergieren, weil die Quotienten kleiner als $1$ sind.",
+          "why": "Es kommt auf den Grenzwert an, und der ist $1$. Außerdem divergiert $\\sum \\tfrac1k$."
+        }
       ],
       "explain": "Bei $q = 1$ versagen Quotienten- und Wurzelkriterium immer. Für $\\sum \\tfrac{1}{k^2}$ hilft die Majorante $\\tfrac{1}{k(k-1)} = \\tfrac{1}{k-1} - \\tfrac1k$, eine Teleskopsumme."
     },
@@ -72,10 +147,88 @@
       "whyNot": "$\\sum \\tfrac{(-1)^{k+1}}{k}$ konvergiert nach Leibniz, aber $\\sum \\tfrac1k$ divergiert.",
       "explain": "Umgekehrt gilt: Absolut konvergente Reihen konvergieren, und man darf ihre Summanden beliebig umordnen, ohne den Wert zu ändern. Bei nur bedingt konvergenten Reihen kann eine Umordnung jeden beliebigen Wert ergeben."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-kriterien", "level": 1, "label": "Quotient" },
-    { "id": "neu2", "type": "gen", "gen": "ana-kriterien", "level": 2, "label": "Entscheiden" },
-    { "id": "neu3", "type": "gen", "gen": "ana-kriterien", "level": 3, "label": "Wurzel" },
-    { "id": "neu4", "type": "gen", "gen": "ana-kriterien", "level": 4, "label": "Werkzeug wählen" },
+    {
+      "type": "choice",
+      "md": "Welches Kriterium entscheidet $\\sum\\tfrac{n!}{n^n}$?",
+      "options": [
+        {
+          "md": "Quotientenkriterium, Grenzwert $\\tfrac1e$",
+          "correct": true
+        },
+        {
+          "md": "Leibniz",
+          "why": "Die Glieder sind positiv."
+        },
+        {
+          "md": "Nullfolgenkriterium",
+          "why": "Zeigt nur Divergenz."
+        },
+        {
+          "md": "Vergleich mit $\\sum\\tfrac1n$",
+          "why": "Eine divergente Majorante beweist nichts."
+        }
+      ],
+      "explain": "$\\tfrac{a_{n+1}}{a_n} = (\\tfrac{n}{n+1})^n \\to \\tfrac1e < 1$: konvergent.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Liefert das Quotientenkriterium eine Entscheidung, so auch das Wurzelkriterium.",
+      "answer": true,
+      "explain": "Das Wurzelkriterium ist stärker: $\\limsup\\sqrt[n]{a_n} \\le \\limsup\\tfrac{a_{n+1}}{a_n}$.",
+      "label": "Klausur",
+      "id": "v2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Konvergiert $\\sum a_n$, so auch $\\sum a_n^2$.",
+      "answer": false,
+      "explain": "$a_n = \\tfrac{(-1)^n}{\\sqrt n}$: $\\sum a_n^2 = \\sum\\tfrac1n$.",
+      "label": "Klausur",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\sum_{n \\ge 1}\\tfrac{\\sin n}{n}$ konvergiert.",
+      "answer": true,
+      "explain": "Dirichlet: Beschränkte Partialsummen von $\\sin n$ mal monoton fallende Nullfolge.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-kriterien",
+      "level": 1,
+      "label": "Quotient"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-kriterien",
+      "level": 2,
+      "label": "Entscheiden"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-kriterien",
+      "level": 3,
+      "label": "Wurzel"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-kriterien",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-kriterien",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -84,7 +237,9 @@
         "Majorante: Liegt eine Reihe betragsmäßig unter einer konvergenten, konvergiert sie absolut.",
         "Quotient oder Wurzel mit Grenzwert $q < 1$: konvergent, $q > 1$: divergent, $q = 1$: keine Aussage.",
         "Leibniz: alternierend mit monoton fallenden Beträgen gegen $0$ konvergiert, Fehler höchstens das nächste Glied.",
-        "Absolut konvergent ist stärker als konvergent."
+        "Absolut konvergent ist stärker als konvergent.",
+        "Fakultäten: Quotient; $n$-te Potenzen: Wurzel; Vorzeichenwechsel: Leibniz oder Dirichlet.",
+        "Vergleiche gelten nur für nichtnegative Glieder."
       ]
     }
   ]

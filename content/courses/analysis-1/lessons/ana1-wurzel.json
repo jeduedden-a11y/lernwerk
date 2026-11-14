@@ -4,8 +4,14 @@
   "subtitle": "Warum √2 existiert und trotzdem kein Bruch ist",
   "source": "Skript Jarohs, Abschnitt 4.1 bis 4.10",
   "vault": [
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Wurzeln und Dichtheit.md", "title": "Wurzeln und Dichtheit" },
-    { "path": "02 Wiki/Mathematik/11 Analysis I/Supremum und Infimum.md", "title": "Supremum und Infimum" }
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Wurzeln und Dichtheit.md",
+      "title": "Wurzeln und Dichtheit"
+    },
+    {
+      "path": "02 Wiki/Mathematik/11 Analysis I/Supremum und Infimum.md",
+      "title": "Supremum und Infimum"
+    }
   ],
   "steps": [
     {
@@ -13,14 +19,67 @@
       "type": "anim",
       "md": "Ein Rechteck mit Flächeninhalt $c$ soll zum Quadrat werden. Dessen Seite ist dann $\\sqrt c$. Das Verfahren von **Heron**: Ersetze die eine Seite $a$ durch den Mittelwert von $a$ und $\\tfrac{c}{a}$.",
       "widget": "sequence",
-      "params": { "rec": { "a1": 1, "next": "(a + c/a)/2" }, "vars": [{ "name": "c", "label": "c", "min": 2, "max": 10, "step": 1, "value": 2, "digits": 0 }], "limit": "sqrt(c)", "limitLabel": "√c", "nMax": 8, "n": 1, "yRange": [0, 6], "readout": "$a_{{N|0}} = {a|8}$, $\\sqrt c = {sqrt(c)|8}$" },
-      "int": ["N"],
+      "params": {
+        "rec": {
+          "a1": 1,
+          "next": "(a + c/a)/2"
+        },
+        "vars": [
+          {
+            "name": "c",
+            "label": "c",
+            "min": 2,
+            "max": 10,
+            "step": 1,
+            "value": 2,
+            "digits": 0
+          }
+        ],
+        "limit": "sqrt(c)",
+        "limitLabel": "√c",
+        "nMax": 8,
+        "n": 1,
+        "yRange": [
+          0,
+          6
+        ],
+        "readout": "$a_{{N|0}} = {a|8}$, $\\sqrt c = {sqrt(c)|8}$"
+      },
+      "int": [
+        "N"
+      ],
       "timeline": [
-        { "caption": "Start mit $a_1 = 1$ für $c = 2$: Ein Rechteck mit den Seiten $1$ und $2$ hat Fläche $2$, ist aber kein Quadrat." },
-        { "caption": "Neue Seite: Mittelwert aus $1$ und $\\tfrac21 = 2$, also $a_2 = 1{,}5$. Die andere Seite ist $\\tfrac{2}{1{,}5} \\approx 1{,}333$. Schon fast quadratisch.", "to": { "N": 2 }, "dur": 600 },
-        { "caption": "$a_3 \\approx 1{,}41667$, $a_4 \\approx 1{,}4142157$. Die Zahl der richtigen Stellen verdoppelt sich ungefähr in jedem Schritt.", "to": { "N": 4 }, "dur": 1200 },
-        { "caption": "Ab hier ändert sich auf dem Bildschirm nichts mehr. Die Folge ist fallend, nach unten durch $\\sqrt2$ beschränkt und strebt gegen $\\sqrt2 \\approx 1{,}41421356$.", "to": { "N": 8 }, "dur": 1200 },
-        { "caption": "Dasselbe funktioniert für jedes $c > 0$, hier $c = 7$. Alle Glieder sind rationale Zahlen. Der Grenzwert ist es meistens nicht, und genau deshalb braucht man $\\R$.", "to": { "c": 7 }, "dur": 1800 }
+        {
+          "caption": "Start mit $a_1 = 1$ für $c = 2$: Ein Rechteck mit den Seiten $1$ und $2$ hat Fläche $2$, ist aber kein Quadrat."
+        },
+        {
+          "caption": "Neue Seite: Mittelwert aus $1$ und $\\tfrac21 = 2$, also $a_2 = 1{,}5$. Die andere Seite ist $\\tfrac{2}{1{,}5} \\approx 1{,}333$. Schon fast quadratisch.",
+          "to": {
+            "N": 2
+          },
+          "dur": 600
+        },
+        {
+          "caption": "$a_3 \\approx 1{,}41667$, $a_4 \\approx 1{,}4142157$. Die Zahl der richtigen Stellen verdoppelt sich ungefähr in jedem Schritt.",
+          "to": {
+            "N": 4
+          },
+          "dur": 1200
+        },
+        {
+          "caption": "Ab hier ändert sich auf dem Bildschirm nichts mehr. Die Folge ist fallend, nach unten durch $\\sqrt2$ beschränkt und strebt gegen $\\sqrt2 \\approx 1{,}41421356$.",
+          "to": {
+            "N": 8
+          },
+          "dur": 1200
+        },
+        {
+          "caption": "Dasselbe funktioniert für jedes $c > 0$, hier $c = 7$. Alle Glieder sind rationale Zahlen. Der Grenzwert ist es meistens nicht, und genau deshalb braucht man $\\R$.",
+          "to": {
+            "c": 7
+          },
+          "dur": 1800
+        }
       ]
     },
     {
@@ -40,17 +99,63 @@
       "md": "Der blaue Graph ist $x^2$, die Linie die Höhe $2$. **Ziehe den Punkt so, dass $s^2$ möglichst nahe bei $2$ liegt**, auf zwei Nachkommastellen genau.",
       "widget": "plot",
       "params": {
-        "x": [0, 2.2], "y": [0, 4.5],
-        "functions": [{ "expr": "x^2", "label": "x²", "labelAt": 1.85 }],
-        "hlines": [{ "y": 2, "color": "orange" }],
-        "vars": [{ "name": "s", "min": 0, "max": 2.2, "value": 1.8, "hidden": true }],
-        "points": [{ "x": "s", "on": "f", "drag": "x", "snap": 0.01, "guides": true, "label": "s" }],
+        "x": [
+          0,
+          2.2
+        ],
+        "y": [
+          0,
+          4.5
+        ],
+        "functions": [
+          {
+            "expr": "x^2",
+            "label": "x²",
+            "labelAt": 1.85
+          }
+        ],
+        "hlines": [
+          {
+            "y": 2,
+            "color": "orange"
+          }
+        ],
+        "vars": [
+          {
+            "name": "s",
+            "min": 0,
+            "max": 2.2,
+            "value": 1.8,
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": "s",
+            "on": "f",
+            "drag": "x",
+            "snap": 0.01,
+            "guides": true,
+            "label": "s"
+          }
+        ],
         "readout": "$s = {s|2}$, $s^2 = {s^2|4}$"
       },
       "goal": {
         "when": "abs(s - sqrt(2)) < 0.006",
-        "hints": [{ "when": "s^2 > 2", "text": "s² = {s^2|4} ist noch größer als 2. Weiter nach links." }, { "when": "s^2 < 2", "text": "s² = {s^2|4} ist noch kleiner als 2. Weiter nach rechts." }],
-        "solve": { "s": 1.41 }
+        "hints": [
+          {
+            "when": "s^2 > 2",
+            "text": "s² = {s^2|4} ist noch größer als 2. Weiter nach links."
+          },
+          {
+            "when": "s^2 < 2",
+            "text": "s² = {s^2|4} ist noch kleiner als 2. Weiter nach rechts."
+          }
+        ],
+        "solve": {
+          "s": 1.41
+        }
       },
       "explain": "$1{,}41^2 = 1{,}9881 < 2 < 2{,}0164 = 1{,}42^2$. Jede weitere Stelle erfordert ein feineres Gitter, aber kein Bruch trifft $2$ genau."
     },
@@ -66,10 +171,24 @@
       "type": "multi",
       "md": "Welche dieser Zahlen sind irrational?",
       "options": [
-        { "md": "$\\sqrt8$", "correct": true, "why": "$\\sqrt8 = 2\\sqrt2$, und ein rationales Vielfaches einer irrationalen Zahl ist irrational." },
-        { "md": "$\\sqrt{\\tfrac94}$", "why": "$= \\tfrac32$." },
-        { "md": "$\\sqrt2 \\cdot \\sqrt8$", "why": "$= \\sqrt{16} = 4$. Produkte irrationaler Zahlen können rational sein." },
-        { "md": "$\\sqrt2 + \\sqrt3$", "correct": true, "why": "Wäre $\\sqrt2 + \\sqrt3 = r \\in \\Q$, dann $r^2 = 5 + 2\\sqrt6$, also $\\sqrt6 \\in \\Q$. Aber $6$ ist keine Quadratzahl." }
+        {
+          "md": "$\\sqrt8$",
+          "correct": true,
+          "why": "$\\sqrt8 = 2\\sqrt2$, und ein rationales Vielfaches einer irrationalen Zahl ist irrational."
+        },
+        {
+          "md": "$\\sqrt{\\tfrac94}$",
+          "why": "$= \\tfrac32$."
+        },
+        {
+          "md": "$\\sqrt2 \\cdot \\sqrt8$",
+          "why": "$= \\sqrt{16} = 4$. Produkte irrationaler Zahlen können rational sein."
+        },
+        {
+          "md": "$\\sqrt2 + \\sqrt3$",
+          "correct": true,
+          "why": "Wäre $\\sqrt2 + \\sqrt3 = r \\in \\Q$, dann $r^2 = 5 + 2\\sqrt6$, also $\\sqrt6 \\in \\Q$. Aber $6$ ist keine Quadratzahl."
+        }
       ],
       "explain": "Irrationale Zahlen sind unter Summe und Produkt nicht abgeschlossen. Man muss jeden Fall einzeln prüfen."
     },
@@ -87,10 +206,73 @@
       ],
       "explain": "Erst wird das Gitter fein genug gewählt, dann der erste Gitterpunkt rechts von $a$ genommen. Er kann $b$ nicht überspringen, weil die Maschen enger sind als das Intervall."
     },
-    { "id": "neu1", "type": "gen", "gen": "ana-wurzel", "level": 1, "label": "Einschachteln" },
-    { "id": "neu2", "type": "gen", "gen": "ana-wurzel", "level": 2, "label": "Annähern" },
-    { "id": "neu3", "type": "gen", "gen": "ana-wurzel", "level": 3, "label": "Rational?" },
-    { "id": "neu4", "type": "gen", "gen": "ana-wurzel", "level": 4, "label": "Halbieren" },
+    {
+      "type": "truefalse",
+      "md": "$\\sqrt2 + \\sqrt3$ ist irrational.",
+      "answer": true,
+      "explain": "Wäre $q = \\sqrt2 + \\sqrt3$ rational, so auch $q^2 = 5 + 2\\sqrt6$ und damit $\\sqrt6$.",
+      "label": "Verständnis",
+      "id": "v1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Summe zweier irrationaler Zahlen ist irrational.",
+      "answer": false,
+      "explain": "$\\sqrt2 + (-\\sqrt2) = 0$.",
+      "label": "Verständnis",
+      "id": "v2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Es gilt $\\sqrt{7 + 4\\sqrt3} = a + \\sqrt3$ mit ganzem $a$. Bestimme $a$.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "a",
+      "explain": "$(a + \\sqrt3)^2 = a^2 + 3 + 2a\\sqrt3 = 7 + 4\\sqrt3$ liefert $a = 2$.",
+      "id": "v3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $x > 0$ irrational, so ist $\\sqrt x$ irrational.",
+      "answer": true,
+      "explain": "Kontraposition: Ist $\\sqrt x$ rational, so auch $x = (\\sqrt x)^2$.",
+      "label": "Extrem",
+      "id": "v4"
+    },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 1,
+      "label": "Einschachteln"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 2,
+      "label": "Annähern"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 3,
+      "label": "Rational?"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 4
+    },
+    {
+      "type": "gen",
+      "gen": "ana-wurzel",
+      "level": 4,
+      "id": "x41"
+    },
     {
       "id": "summary",
       "type": "summary",
@@ -99,7 +281,9 @@
         "Wurzeln existieren in $\\R$ wegen des Vollständigkeitsaxioms: $\\sqrt c = \\sup\\set{x \\ge 0 : x^2 < c}$.",
         "$\\sqrt2$ ist irrational; $\\sqrt m$ ist für natürliches $m$ ganz oder irrational.",
         "$\\Q$ ist dicht in $\\R$: Zwischen zwei reellen Zahlen liegt immer ein Bruch.",
-        "Heron: $a_{n+1} = \\tfrac12(a_n + \\tfrac{c}{a_n})$ nähert $\\sqrt c$ sehr schnell durch Brüche an."
+        "Heron: $a_{n+1} = \\tfrac12(a_n + \\tfrac{c}{a_n})$ nähert $\\sqrt c$ sehr schnell durch Brüche an.",
+        "Irrationalität zeigt man meist durch Quadrieren und einen Widerspruch.",
+        "Summen und Produkte irrationaler Zahlen können rational sein."
       ]
     }
   ]

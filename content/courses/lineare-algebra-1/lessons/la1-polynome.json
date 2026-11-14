@@ -1,0 +1,248 @@
+{
+  "id": "la1-polynome",
+  "title": "Polynome über einem Körper",
+  "subtitle": "Division mit Rest, Nullstellen und der Unterschied zur Funktion",
+  "source": "Übliche Vorlesung Lineare Algebra I",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "title": "Gruppen und Körper"
+    }
+  ],
+  "steps": [
+    {
+      "id": "film",
+      "type": "anim",
+      "md": "Polynome kann man wie Zahlen mit Rest teilen. Daraus folgt der wichtigste Satz über Nullstellen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "p(x) = x^3 - 2x^2 - x + 5,\\quad g(x) = x - 2",
+            "why": "Wir teilen $p$ durch $g$ mit Rest."
+          },
+          {
+            "tex": "x^3 - 2x^2 - x + 5 = x^2(x - 2) + (-x + 5)",
+            "why": "$x^3 : x = x^2$; zurückmultiplizieren und abziehen, $x^3 - 2x^2$ fällt weg."
+          },
+          {
+            "tex": "-x + 5 = (-1)(x - 2) + 3",
+            "why": "$-x : x = -1$; es bleibt der Rest $3$."
+          },
+          {
+            "tex": "p(x) = (x^2 - 1)(x - 2) + 3",
+            "why": "Division mit Rest: Der Rest hat kleineren Grad als der Teiler."
+          },
+          {
+            "tex": "p(2) = 0 + 3 = 3",
+            "why": "Bei $x = 2$ fällt der erste Summand weg: Der Rest ist der Funktionswert."
+          },
+          {
+            "tex": "p(a) = 0 \\iff (x - a) \\mid p",
+            "why": "Nullstellen sind genau die abspaltbaren Linearfaktoren."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wie bei der schriftlichen Division: höchste Potenz zuerst.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Am Ende bleibt ein Rest vom Grad kleiner als $1$, also eine Zahl.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diese Zahl ist $p(2)$.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Und daraus: $a$ ist Nullstelle genau dann, wenn $x - a$ ein Teiler ist.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$K[x]$ ist der Ring der Polynome $a_0 + a_1 x + \\dots + a_n x^n$ mit Koeffizienten in $K$. Ist $a_n \\ne 0$, hat das Polynom den **Grad** $n$. Über einem Körper gilt $\\deg(pq) = \\deg p + \\deg q$, weil das Produkt der Leitkoeffizienten nicht $0$ ist.\n\n**Division mit Rest:** Zu $p$ und $g \\ne 0$ gibt es eindeutige $q, r$ mit $p = qg + r$ und $\\deg r < \\deg g$.",
+      "id": "t1"
+    },
+    {
+      "type": "text",
+      "md": "> [!theorem] Nullstellen\n> Ein Polynom vom Grad $n \\ge 1$ über einem Körper hat höchstens $n$ Nullstellen.\n>\n> **Achtung:** Ein Polynom ist eine Liste von Koeffizienten, keine Funktion. Über $\\mathbb{F}_2$ ist $x^2 + x \\ne 0$, aber $0^2 + 0 = 1^2 + 1 = 0$: Als Funktion ist es die Nullfunktion.\n\nÜber $\\mathbb{R}$ und $\\mathbb{C}$ (unendliche Körper) bestimmt die Funktion das Polynom eindeutig, über endlichen Körpern nicht.",
+      "id": "t2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welchen Rest lässt $x^4 + 3x + 1$ bei Division durch $x + 1$?",
+      "answer": -1,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Der Rest bei Division durch $x - a$ ist $p(a)$, hier $a = -1$: $1 - 3 + 1 = -1$.",
+      "id": "n1"
+    },
+    {
+      "type": "cloze",
+      "label": "Verständnis",
+      "md": "Bestimme den Rest von $x^4$ bei Division durch $(x - 1)(x - 2)$.\n\nRest $=$ {{0}} $x\\ +$ {{1}}",
+      "blanks": [
+        {
+          "accept": [
+            "15"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        },
+        {
+          "accept": [
+            "-14"
+          ],
+          "numeric": true,
+          "tolerance": 0
+        }
+      ],
+      "explain": "Der Rest $r = sx + t$ hat Grad kleiner $2$ und stimmt bei $1$ und $2$ mit $x^4$ überein: $s + t = 1$, $2s + t = 16$. Also $s = 15$, $t = -14$. Kein Ausdividieren nötig.",
+      "id": "cl1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Über $\\mathbb{F}_2$ ist $x^2 + x$ das Nullpolynom.",
+      "answer": false,
+      "explain": "Es ist die Null**funktion**, aber nicht das Nullpolynom: Seine Koeffizienten sind $(0, 1, 1)$. Deshalb unterscheidet man in der Algebra streng zwischen Polynomen und Polynomfunktionen.",
+      "label": "Verständnis",
+      "id": "tf1"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Aussagen über Irreduzibilität stimmen?",
+      "options": [
+        {
+          "md": "$x^2 + 1$ ist über $\\mathbb{R}$ irreduzibel",
+          "correct": true
+        },
+        {
+          "md": "$x^2 - 2$ ist über $\\mathbb{Q}$ irreduzibel",
+          "correct": true
+        },
+        {
+          "md": "$x^2 + 1$ ist über $\\mathbb{F}_2$ irreduzibel",
+          "why": "$x^2 + 1 = (x + 1)^2$, denn $2x = 0$."
+        },
+        {
+          "md": "$x^4 + 1$ ist über $\\mathbb{R}$ irreduzibel",
+          "why": "$x^4 + 1 = (x^2 + \\sqrt2x + 1)(x^2 - \\sqrt2x + 1)$."
+        },
+        {
+          "md": "$x^2 + 1$ ist über $\\mathbb{C}$ irreduzibel",
+          "why": "$x^2 + 1 = (x - i)(x + i)$."
+        }
+      ],
+      "explain": "Grad $2$ und $3$: irreduzibel genau dann, wenn keine Nullstelle. Ab Grad $4$ reicht das nicht, man kann ohne Nullstellen in quadratische Faktoren zerfallen.",
+      "label": "Verständnis",
+      "id": "m1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum hat ein Polynom vom Grad $n$ über einem Körper höchstens $n$ Nullstellen?",
+      "options": [
+        {
+          "md": "Jede Nullstelle $a$ spaltet $x - a$ ab und senkt den Grad um $1$; weil es keine Nullteiler gibt, ist ein Produkt nur an Nullstellen eines Faktors null",
+          "correct": true
+        },
+        {
+          "md": "Weil der Fundamentalsatz der Algebra es sagt",
+          "why": "Der Fundamentalsatz handelt von der Existenz von Nullstellen in $\\mathbb{C}$, nicht von einer Obergrenze in jedem Körper."
+        },
+        {
+          "md": "Weil Polynome stetig sind",
+          "why": "Über endlichen Körpern gibt es keine Stetigkeit, und die Aussage gilt dort trotzdem."
+        },
+        {
+          "md": "Weil es höchstens $n$ Koeffizienten gibt",
+          "why": "Es sind $n + 1$ Koeffizienten, und ihre Anzahl ist nicht das Argument."
+        }
+      ],
+      "explain": "Induktion über den Grad: $p = (x - a)q$ mit $\\deg q = n - 1$. Ist $b \\ne a$ Nullstelle, dann $(b - a)q(b) = 0$, und ohne Nullteiler folgt $q(b) = 0$.",
+      "label": "Verständnis",
+      "id": "c1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viele Nullstellen hat $x^2 - x$ in $\\mathbb{Z}/6\\mathbb{Z}$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$x(x - 1) \\equiv 0 \\pmod 6$ für $x = 0, 1, 3, 4$ ($3 \\cdot 2 = 6$, $4 \\cdot 3 = 12$). Vier Nullstellen bei Grad $2$: In $\\mathbb{Z}/6\\mathbb{Z}$ gibt es Nullteiler, die Schranke gilt nur über Körpern.",
+      "id": "n2"
+    },
+    {
+      "type": "reveal",
+      "label": "Interpolation",
+      "md": "Bestimme das Polynom $p$ vom Grad höchstens $2$ mit $p(0) = 1$, $p(1) = 3$, $p(2) = 7$, und begründe, warum es nur eines gibt.",
+      "solution": "Ansatz $p = a + bx + cx^2$: $a = 1$, $1 + b + c = 3$, $1 + 2b + 4c = 7$. Also $b + c = 2$, $b + 2c = 3$, das heißt $c = 1$, $b = 1$: $p = x^2 + x + 1$. **Eindeutig:** Zwei solche Polynome unterscheiden sich um ein Polynom vom Grad $\\le 2$ mit drei Nullstellen $0, 1, 2$, das muss das Nullpolynom sein.",
+      "id": "rv1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-polynom",
+      "level": 1,
+      "label": "Leicht",
+      "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-polynom",
+      "level": 2,
+      "label": "Mittel",
+      "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "la-polynom",
+      "level": 3,
+      "label": "Schwer",
+      "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "la-polynom",
+      "level": 4,
+      "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "la-polynom",
+      "level": 4,
+      "id": "g5"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Division mit Rest: $p = qg + r$ mit $\\deg r < \\deg g$; der Rest bei $x - a$ ist $p(a)$.",
+        "$a$ ist Nullstelle genau dann, wenn $x - a$ teilt; höchstens $\\deg p$ Nullstellen über einem Körper.",
+        "Polynome sind keine Funktionen: Über $\\mathbb{F}_p$ ist $x^p - x \\ne 0$, aber als Funktion null.",
+        "Grad $2$ oder $3$: irreduzibel genau dann, wenn keine Nullstelle."
+      ],
+      "id": "summary"
+    }
+  ]
+}
