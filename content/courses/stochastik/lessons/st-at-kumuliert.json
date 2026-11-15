@@ -16,6 +16,57 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Mit $F(k) = P(X \\le k)$: höchstens $k$ ist $F(k)$, mindestens $k$ ist $1 - F(k - 1)$, mehr als $k$ ist $1 - F(k)$, zwischen $a$ und $b$ ist $F(b) - F(a - 1)$.",
+      "label": "Verfahren",
+      "more": "| Formulierung | Rechnung |\n|---|---|\n| höchstens $k$ | $F(k)$ |\n| weniger als $k$ | $F(k - 1)$ |\n| mindestens $k$ | $1 - F(k - 1)$ |\n| mehr als $k$ | $1 - F(k)$ |\n| zwischen $a$ und $b$ (einschließlich) | $F(b) - F(a - 1)$ |",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $X \\sim B(10; 0{,}5)$, gesucht $P(3 \\le X \\le 6)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(3 \\le X \\le 6) = F(6) - F(2)",
+            "why": "Alles bis 6 minus alles bis 2."
+          },
+          {
+            "tex": "\\approx 0{,}8281 - 0{,}0547 = 0{,}7734",
+            "why": "Tabellenwerte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "»Mindestens 5« ist $1 - F(4)$, nicht $1 - F(5)$: Der Wert 5 gehört dazu.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Kumulierte Binomialverteilung",
@@ -81,6 +132,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Mehr als",
+      "md": "$X \\sim B(10; 0{,}5)$. Berechne $P(X > 7)$ (vier Nachkommastellen).",
+      "answer": 0.0547,
+      "tolerance": 0.0005,
+      "placeholder": "",
+      "explain": "$1 - F(7) \\approx 1 - 0{,}9453 = 0{,}0547$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -134,6 +195,21 @@
       "level": 4,
       "label": "Binomialverteilung",
       "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-binom",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Mindestens k: 1 − F(k − 1)."
+      ]
     }
   ]
 }

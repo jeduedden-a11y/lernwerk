@@ -64,7 +64,8 @@
     {
       "id": "sigma",
       "type": "text",
-      "md": "Für $X \\sim B(n; p)$ mit $\\mu = np$ und $\\sigma = \\sqrt{np(1-p)}$ gelten bei $\\sigma > 3$ die **Sigma-Regeln**:\n\n| Intervall | Wahrscheinlichkeit |\n|---|---|\n| $[\\mu - \\sigma;\\ \\mu + \\sigma]$ | $\\approx 68{,}3\\,\\%$ |\n| $[\\mu - 1{,}64\\sigma;\\ \\mu + 1{,}64\\sigma]$ | $\\approx 90\\,\\%$ |\n| $[\\mu - 1{,}96\\sigma;\\ \\mu + 1{,}96\\sigma]$ | $\\approx 95\\,\\%$ |\n| $[\\mu - 2{,}58\\sigma;\\ \\mu + 2{,}58\\sigma]$ | $\\approx 99\\,\\%$ |\n\nEin solches Intervall um $\\mu$ heißt **Prognoseintervall**: Bei bekanntem $p$ sagt es voraus, wo die Trefferzahl einer künftigen Stichprobe mit großer Wahrscheinlichkeit liegt. Teilt man durch $n$, erhält man es für die relative Häufigkeit: $p \\pm z\\sqrt{\\tfrac{p(1-p)}{n}}$."
+      "md": "Für $X \\sim B(n; p)$ mit $\\sigma > 3$ gelten die **Sigma-Regeln**:\n\n| Intervall um $\\mu$ | Wahrscheinlichkeit |\n|---|---|\n| $\\pm\\sigma$ | etwa 68 % |\n| $\\pm 1{,}64\\sigma$ | etwa 90 % |\n| $\\pm 1{,}96\\sigma$ | etwa 95 % |\n| $\\pm 2{,}58\\sigma$ | etwa 99 % |",
+      "more": "Für $X \\sim B(n; p)$ mit $\\mu = np$ und $\\sigma = \\sqrt{np(1-p)}$ gelten bei $\\sigma > 3$ die **Sigma-Regeln**:\n\n| Intervall | Wahrscheinlichkeit |\n|---|---|\n| $[\\mu - \\sigma;\\ \\mu + \\sigma]$ | $\\approx 68{,}3\\,\\%$ |\n| $[\\mu - 1{,}64\\sigma;\\ \\mu + 1{,}64\\sigma]$ | $\\approx 90\\,\\%$ |\n| $[\\mu - 1{,}96\\sigma;\\ \\mu + 1{,}96\\sigma]$ | $\\approx 95\\,\\%$ |\n| $[\\mu - 2{,}58\\sigma;\\ \\mu + 2{,}58\\sigma]$ | $\\approx 99\\,\\%$ |\n\nEin solches Intervall um $\\mu$ heißt **Prognoseintervall**: Bei bekanntem $p$ sagt es voraus, wo die Trefferzahl einer künftigen Stichprobe mit großer Wahrscheinlichkeit liegt. Teilt man durch $n$, erhält man es für die relative Häufigkeit: $p \\pm z\\sqrt{\\tfrac{p(1-p)}{n}}$."
     },
     {
       "id": "verteilung",
@@ -82,6 +83,55 @@
         "rel": "le",
         "nMax": 200
       }
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**95-%-Prognoseintervall** für $X \\sim B(100; 0{,}5)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mu = 100 \\cdot 0{,}5 = 50, \\quad \\sigma = \\sqrt{100 \\cdot 0{,}5 \\cdot 0{,}5} = 5",
+            "why": "Kenngrößen; σ > 3, die Sigma-Regeln gelten."
+          },
+          {
+            "tex": "50 \\pm 1{,}96 \\cdot 5 = 50 \\pm 9{,}8",
+            "why": "1,96 σ um μ."
+          },
+          {
+            "tex": "[40{,}2;\\; 59{,}8] \\;\\Rightarrow\\; X \\in \\{41, \\ldots, 59\\}",
+            "why": "Für Trefferzahlen nach innen runden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kenngrößen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Breite.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Intervall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -245,6 +295,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Prognose",
+      "md": "$X \\sim B(400; 0{,}5)$. Wo beginnt das 95-%-Prognoseintervall? (eine Nachkommastelle)",
+      "answer": 180.4,
+      "tolerance": 0.1,
+      "placeholder": "",
+      "explain": "$\\mu = 200$, $\\sigma = 10$, $200 - 19{,}6 = 180{,}4$.",
+      "id": "vq1"
+    },
+    {
       "id": "intervall",
       "type": "cloze",
       "label": "Rechnen",
@@ -349,7 +409,8 @@
         "Sigma-Regeln: $\\mu \\pm \\sigma$, $\\mu \\pm 1{,}96\\sigma$, $\\mu \\pm 2{,}58\\sigma$ enthalten rund $68\\,\\%$, $95\\,\\%$, $99\\,\\%$, wenn $\\sigma > 3$.",
         "Ein Prognoseintervall schließt vom bekannten $p$ auf künftige Stichproben.",
         "Für die relative Häufigkeit: $p \\pm z\\sqrt{\\tfrac{p(1-p)}{n}}$. Die Breite schrumpft wie $\\tfrac{1}{\\sqrt n}$.",
-        "Ein Ergebnis außerhalb des Intervalls spricht gegen das angenommene $p$."
+        "Ein Ergebnis außerhalb des Intervalls spricht gegen das angenommene $p$.",
+        "Prognoseintervall: μ ± 1,96σ bei bekanntem p."
       ]
     }
   ]

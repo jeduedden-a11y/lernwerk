@@ -71,7 +71,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Eine Münze steht im Verdacht, zu oft **Kopf** zu zeigen. Du wirfst sie $50$-mal und zählst die Köpfe $X$.\n\n- **Nullhypothese** $H_0$: Die Münze ist fair, $p = 0{,}5$.\n- **Gegenhypothese** $H_1$: $p > 0{,}5$.\n\nUnter $H_0$ ist $X \\sim B(50; 0{,}5)$, im Mittel also $25$ Köpfe. Auch eine faire Münze zeigt mal $30$. Ab wie vielen Köpfen glaubst du ihr nicht mehr? Diese Grenze legst du **vor** dem Werfen fest: Für $X \\ge k$ lehnst du $H_0$ ab."
+      "md": "$H_0$: Die Münze ist fair, $p = 0{,}5$; $H_1$: $p > 0{,}5$. **Vor** dem Werfen legt man fest, ab wie vielen Köpfen man $H_0$ ablehnt.",
+      "more": "Eine Münze steht im Verdacht, zu oft **Kopf** zu zeigen. Du wirfst sie $50$-mal und zählst die Köpfe $X$.\n\n- **Nullhypothese** $H_0$: Die Münze ist fair, $p = 0{,}5$.\n- **Gegenhypothese** $H_1$: $p > 0{,}5$.\n\nUnter $H_0$ ist $X \\sim B(50; 0{,}5)$, im Mittel also $25$ Köpfe. Auch eine faire Münze zeigt mal $30$. Ab wie vielen Köpfen glaubst du ihr nicht mehr? Diese Grenze legst du **vor** dem Werfen fest: Für $X \\ge k$ lehnst du $H_0$ ab."
     },
     {
       "id": "grenze",
@@ -101,6 +102,106 @@
         ]
       },
       "explain": "$k = 32$: $\\alpha = P(X \\ge 32) \\approx 3{,}2\\,\\%$. Bei $k = 31$ wäre $\\alpha \\approx 5{,}9\\,\\%$, zu viel. Der Ablehnungsbereich ist $\\{32, \\dots, 50\\}$, das **Signifikanzniveau** $5\\,\\%$ wird eingehalten."
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Entscheidung und Fehlerarten** in der Grafik aus dem Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Hypothesentest Fehlerarten.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Oben die vier Kombinationen aus Wirklichkeit und Entscheidung, unten der Ablehnungsbereich.",
+          "to": {
+            "x": 0.5,
+            "y": 0.45,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Fehler 1. Art: H₀ ist wahr, wird aber verworfen. Seine Wahrscheinlichkeit α legt man vorher fest.",
+          "to": {
+            "x": 0.39,
+            "y": 0.42,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Fehler 2. Art: H₀ ist falsch, wird aber beibehalten; β lässt sich nicht direkt kontrollieren.",
+          "to": {
+            "x": 0.66,
+            "y": 0.29,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Der Ablehnungsbereich liegt am Rand der Verteilung unter H₀; seine Fläche ist α.",
+          "to": {
+            "x": 0.7,
+            "y": 0.8,
+            "z": 1.7,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Entscheidungsregel:** $n = 50$, $H_0: p = 0{,}5$, $H_1: p > 0{,}5$, $\\alpha = 5\\,\\%$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(X \\ge 31) \\approx 0{,}0595 > 0{,}05",
+            "why": "Mit der Grenze 31 wäre der Fehler 1. Art zu groß."
+          },
+          {
+            "tex": "P(X \\ge 32) \\approx 0{,}0325 \\le 0{,}05",
+            "why": "Die Grenze 32 hält das Signifikanzniveau ein."
+          },
+          {
+            "tex": "\\text{Ablehnungsbereich } \\{32, \\ldots, 50\\}",
+            "why": "Bei 32 oder mehr Köpfen wird H₀ verworfen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "31.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "32.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Regel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -209,6 +310,37 @@
           ]
         }
       ]
+    },
+    {
+      "type": "choice",
+      "md": "Was bedeutet ein Signifikanzniveau von $\\alpha = 5\\,\\%$?",
+      "options": [
+        {
+          "md": "Die Wahrscheinlichkeit, $H_0$ zu verwerfen, obwohl $H_0$ wahr ist, beträgt höchstens 5 %.",
+          "correct": true
+        },
+        {
+          "md": "$H_0$ ist mit 95 % Wahrscheinlichkeit wahr."
+        },
+        {
+          "md": "Der Fehler 2. Art ist höchstens 5 %.",
+          "why": "β wird durch α nicht festgelegt."
+        },
+        {
+          "md": "In 5 % der Fälle ist das Ergebnis falsch."
+        }
+      ],
+      "explain": "α begrenzt nur den Fehler 1. Art.",
+      "label": "Alpha",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein nicht signifikantes Ergebnis beweist, dass $H_0$ wahr ist.",
+      "answer": false,
+      "explain": "Der Test kann H₀ nur verwerfen, nicht beweisen; es fehlte nur der Beleg dagegen.",
+      "label": "Deutung",
+      "id": "vq2"
     },
     {
       "id": "dreissig",
@@ -344,7 +476,8 @@
         "Der Ablehnungsbereich wird vorher mit der Verteilung unter $H_0$ bestimmt, sodass $P(X \\in K) \\le \\alpha$.",
         "Fehler 1. Art: $H_0$ zu Unrecht abgelehnt ($\\le \\alpha$). Fehler 2. Art: $H_0$ zu Unrecht beibehalten ($\\beta$).",
         "Bei festem $n$ tauscht man $\\alpha$ gegen $\\beta$. Nur ein größeres $n$ senkt beide.",
-        "$\\alpha$ ist nicht die Wahrscheinlichkeit, dass $H_0$ stimmt."
+        "$\\alpha$ ist nicht die Wahrscheinlichkeit, dass $H_0$ stimmt.",
+        "α begrenzt den Fehler 1. Art; der Test beweist H₀ nie."
       ]
     }
   ]

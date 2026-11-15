@@ -84,7 +84,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Körpergrößen, Messfehler, Punktzahlen großer Tests: Viele Größen streuen glockenförmig um einen Mittelwert. Das Modell dafür ist die **Normalverteilung** $N(\\mu; \\sigma)$ mit der Dichte\n\n$$\\varphi_{\\mu,\\sigma}(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\, e^{-\\frac12\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}.$$\n\nWichtig: Die Dichte selbst ist keine Wahrscheinlichkeit. Wahrscheinlichkeiten sind **Flächen** unter der Kurve, $P(a \\le X \\le b) = \\int_a^b \\varphi_{\\mu,\\sigma}(x)\\,dx$, und die Gesamtfläche ist $1$."
+      "md": "Die **Normalverteilung** $N(\\mu; \\sigma)$ beschreibt glockenförmige Streuung. Wahrscheinlichkeiten sind **Flächen** unter der Dichte, $P(a \\le X \\le b) = \\int_a^b \\varphi\\,dx$; die Dichte selbst ist keine Wahrscheinlichkeit.",
+      "more": "Körpergrößen, Messfehler, Punktzahlen großer Tests: Viele Größen streuen glockenförmig um einen Mittelwert. Das Modell dafür ist die **Normalverteilung** $N(\\mu; \\sigma)$ mit der Dichte\n\n$$\\varphi_{\\mu,\\sigma}(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\, e^{-\\frac12\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}.$$\n\nWichtig: Die Dichte selbst ist keine Wahrscheinlichkeit. Wahrscheinlichkeiten sind **Flächen** unter der Kurve, $P(a \\le X \\le b) = \\int_a^b \\varphi_{\\mu,\\sigma}(x)\\,dx$, und die Gesamtfläche ist $1$."
     },
     {
       "id": "form",
@@ -156,6 +157,106 @@
         }
       },
       "explain": "$[70; 130] = [\\mu - 2\\sigma; \\mu + 2\\sigma]$ mit $95{,}4\\,\\%$. Das ist die **68-95-99,7-Regel**: Innerhalb von $1$, $2$, $3$ Standardabweichungen liegen rund $68{,}3\\,\\%$, $95{,}4\\,\\%$ und $99{,}7\\,\\%$."
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Von der Binomial- zur Normalverteilung** in der Grafik aus dem Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Binomial zu Normalverteilung.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Drei Histogramme mit p = 0,5 und wachsendem n, darüber die Glockenkurve.",
+          "to": {
+            "x": 0.5,
+            "y": 0.35,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "n = 5: grob gestuft, σ ≈ 1,12; die Näherung ist unzulässig.",
+          "to": {
+            "x": 0.19,
+            "y": 0.35,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "n = 100: praktisch deckungsgleich, σ = 5 > 3.",
+          "to": {
+            "x": 0.81,
+            "y": 0.35,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Laplace-Bedingung σ > 3 und Stetigkeitskorrektur: k + 0,5 statt k.",
+          "to": {
+            "x": 0.4,
+            "y": 0.82,
+            "z": 1.6,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Standardisieren:** $X \\sim N(100; 10)$, gesucht $P(X \\le 110)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "z = \\frac{x - \\mu}{\\sigma} = \\frac{110 - 100}{10} = 1",
+            "why": "Abstand vom Mittelwert in Standardabweichungen."
+          },
+          {
+            "tex": "P(X \\le 110) = \\Phi(1) \\approx 0{,}841",
+            "why": "Tabelle oder Rechner der Standardnormalverteilung."
+          },
+          {
+            "tex": "P(90 \\le X \\le 110) = \\Phi(1) - \\Phi(-1) \\approx 0{,}683",
+            "why": "Die 1-σ-Umgebung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "z-Wert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Phi.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umgebung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -264,6 +365,38 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Standardisieren",
+      "md": "$X \\sim N(50; 4)$. Berechne $P(X \\le 58)$ (drei Nachkommastellen).",
+      "answer": 0.977,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$z = \\tfrac{58 - 50}{4} = 2$, $\\Phi(2) \\approx 0{,}977$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was gibt der Wert der Dichtefunktion an einer Stelle an?",
+      "options": [
+        {
+          "md": "keine Wahrscheinlichkeit, nur die Höhe der Kurve; Wahrscheinlichkeiten sind Flächen",
+          "correct": true
+        },
+        {
+          "md": "die Wahrscheinlichkeit genau dieses Werts"
+        },
+        {
+          "md": "den Erwartungswert"
+        },
+        {
+          "md": "die Standardabweichung"
+        }
+      ],
+      "explain": "Bei stetigen Verteilungen ist $P(X = x) = 0$.",
+      "label": "Dichte",
+      "id": "vq2"
     },
     {
       "id": "ueber115",
@@ -414,7 +547,8 @@
         "Bei der Normalverteilung sind Wahrscheinlichkeiten Flächen unter der Glockenkurve.",
         "$\\mu \\pm \\sigma$, $\\mu \\pm 2\\sigma$, $\\mu \\pm 3\\sigma$ enthalten rund $68\\,\\%$, $95\\,\\%$, $99{,}7\\,\\%$.",
         "Mit $z = \\tfrac{x - \\mu}{\\sigma}$ wird jede Normalverteilung zur Standardnormalverteilung, $P(X \\le x) = \\Phi(z)$.",
-        "Für $\\sigma > 3$ nähert die Normalverteilung die Binomialverteilung gut an."
+        "Für $\\sigma > 3$ nähert die Normalverteilung die Binomialverteilung gut an.",
+        "Standardisieren mit z = (x − μ)/σ; Wahrscheinlichkeiten sind Flächen."
       ]
     }
   ]

@@ -60,7 +60,8 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "Zwei Ereignisse $A$ und $B$ heißen **stochastisch unabhängig**, wenn\n\n$$P(A \\cap B) = P(A) \\cdot P(B).$$\n\nIst $P(A) > 0$, ist das gleichwertig mit $P(B \\mid A) = P(B)$: Das Wissen, dass $A$ eingetreten ist, ändert die Wahrscheinlichkeit von $B$ nicht. Die Definition ist symmetrisch, sie gilt dann auch umgekehrt.\n\n**Beispiel:** Ein Würfel und eine Münze. $A$: Sechs, $B$: Kopf. $P(A \\cap B) = \\tfrac{1}{12} = \\tfrac16 \\cdot \\tfrac12$, unabhängig, wie erwartet."
+      "md": "$A$ und $B$ sind **unabhängig**, wenn $P(A \\cap B) = P(A) \\cdot P(B)$, gleichwertig $P(B \\mid A) = P(B)$: Das Wissen über $A$ ändert nichts an $B$.",
+      "more": "Zwei Ereignisse $A$ und $B$ heißen **stochastisch unabhängig**, wenn\n\n$$P(A \\cap B) = P(A) \\cdot P(B).$$\n\nIst $P(A) > 0$, ist das gleichwertig mit $P(B \\mid A) = P(B)$: Das Wissen, dass $A$ eingetreten ist, ändert die Wahrscheinlichkeit von $B$ nicht. Die Definition ist symmetrisch, sie gilt dann auch umgekehrt.\n\n**Beispiel:** Ein Würfel und eine Münze. $A$: Sechs, $B$: Kopf. $P(A \\cap B) = \\tfrac{1}{12} = \\tfrac16 \\cdot \\tfrac12$, unabhängig, wie erwartet."
     },
     {
       "id": "einstellen",
@@ -93,6 +94,55 @@
         }
       },
       "explain": "Bei $P(B \\mid \\text{nicht } A) = 0{,}55$ ist $B$ in beiden Spalten gleich häufig. Dann ist $P(B) = 0{,}55$ und $P(A \\cap B) = 0{,}4 \\cdot 0{,}55 = 0{,}22 = P(A) \\cdot P(B)$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Unabhängigkeit prüfen** in einer Vierfeldertafel: $P(A) = 0{,}4$, $P(B) = 0{,}5$, $P(A \\cap B) = 0{,}2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(A) \\cdot P(B) = 0{,}4 \\cdot 0{,}5 = 0{,}2",
+            "why": "Produkt der Randwahrscheinlichkeiten."
+          },
+          {
+            "tex": "= P(A \\cap B)",
+            "why": "Stimmt mit dem inneren Feld überein."
+          },
+          {
+            "tex": "P(B \\mid A) = \\tfrac{0{,}2}{0{,}4} = 0{,}5 = P(B)",
+            "why": "Gleichwertig: Das Wissen über A ändert nichts."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -192,6 +242,24 @@
       ]
     },
     {
+      "type": "truefalse",
+      "md": "Zwei unvereinbare Ereignisse mit positiver Wahrscheinlichkeit sind stochastisch unabhängig.",
+      "answer": false,
+      "explain": "$P(A \\cap B) = 0$, aber $P(A) \\cdot P(B) > 0$: Sie sind sogar stark abhängig, denn A schließt B aus.",
+      "label": "Unvereinbar",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Produkt",
+      "md": "$A$ und $B$ sind unabhängig mit $P(A) = 0{,}3$ und $P(B) = 0{,}6$. Berechne $P(A \\cap B)$.",
+      "answer": 0.18,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$0{,}3 \\cdot 0{,}6 = 0{,}18$.",
+      "id": "vq2"
+    },
+    {
       "id": "rechnen",
       "type": "numeric",
       "label": "Rechnen",
@@ -265,7 +333,8 @@
         "$A$ und $B$ sind unabhängig, wenn $P(A \\cap B) = P(A) \\cdot P(B)$, gleichwertig $P(B \\mid A) = P(B)$.",
         "Im Mosaikdiagramm: $B$ ist in beiden Spalten gleich hoch.",
         "Unvereinbare Ereignisse mit positiver Wahrscheinlichkeit sind immer abhängig.",
-        "Mit $A, B$ sind auch $A, \\bar B$ und $\\bar A, \\bar B$ unabhängig."
+        "Mit $A, B$ sind auch $A, \\bar B$ und $\\bar A, \\bar B$ unabhängig.",
+        "Unabhängig: P(A ∩ B) = P(A) · P(B); unvereinbar ist etwas anderes."
       ]
     }
   ]

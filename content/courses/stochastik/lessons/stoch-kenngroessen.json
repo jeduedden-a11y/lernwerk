@@ -68,7 +68,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Die beschreibende Statistik arbeitet mit **beobachteten** Daten, nicht mit einem Zufallsmodell. Sie fasst eine Datenreihe $x_1, \\dots, x_n$ in wenigen Kenngrößen zusammen.\n\n**Lagemaße** sagen, wo die Daten liegen: das **arithmetische Mittel** $\\bar x = \\tfrac1n \\sum x_i$ und der **Median** $\\tilde x$, der mittlere Wert der sortierten Reihe (bei geradem $n$ das Mittel der beiden mittleren).\n\n**Streumaße** sagen, wie weit sie auseinanderliegen: Spannweite, Quartilsabstand, Standardabweichung."
+      "md": "**Lagemaße** (Mittelwert $\\bar x$, Median $\\tilde x$) sagen, wo die Daten liegen; **Streumaße** (Spannweite, Quartilsabstand, Standardabweichung), wie weit sie auseinanderliegen.",
+      "more": "Die beschreibende Statistik arbeitet mit **beobachteten** Daten, nicht mit einem Zufallsmodell. Sie fasst eine Datenreihe $x_1, \\dots, x_n$ in wenigen Kenngrößen zusammen.\n\n**Lagemaße** sagen, wo die Daten liegen: das **arithmetische Mittel** $\\bar x = \\tfrac1n \\sum x_i$ und der **Median** $\\tilde x$, der mittlere Wert der sortierten Reihe (bei geradem $n$ das Mittel der beiden mittleren).\n\n**Streumaße** sagen, wie weit sie auseinanderliegen: Spannweite, Quartilsabstand, Standardabweichung."
     },
     {
       "id": "ausreisser",
@@ -122,6 +123,55 @@
         }
       },
       "explain": "Ein einzelner Ausreißer zieht den Mittelwert mit, der Median bleibt stehen. Man nennt den Median deshalb **robust**. Bei Einkommen oder Mieten berichten Statistikämter darum oft den Median."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Mittelwert und Median** der Datenreihe 2, 3, 3, 5, 7, 10.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\bar x = \\frac{2 + 3 + 3 + 5 + 7 + 10}{6} = 5",
+            "why": "Summe durch Anzahl."
+          },
+          {
+            "tex": "\\tilde x = \\frac{3 + 5}{2} = 4",
+            "why": "Gerade Anzahl: Mittel der beiden mittleren Werte."
+          },
+          {
+            "tex": "\\text{mit Ausreißer } 100 \\text{ statt } 10: \\; \\bar x = 20, \\; \\tilde x = 4",
+            "why": "Der Median bleibt stehen, der Mittelwert springt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Median.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausreißer.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -227,6 +277,28 @@
           ]
         }
       ]
+    },
+    {
+      "type": "choice",
+      "md": "Welches Lagemaß ist unempfindlich gegen Ausreißer?",
+      "options": [
+        {
+          "md": "der Median",
+          "correct": true
+        },
+        {
+          "md": "das arithmetische Mittel"
+        },
+        {
+          "md": "die Spannweite"
+        },
+        {
+          "md": "die Standardabweichung"
+        }
+      ],
+      "explain": "Er hängt nur von der Reihenfolge ab, nicht von der Größe der extremen Werte.",
+      "label": "Robust",
+      "id": "vq1"
     },
     {
       "id": "median-gerade",
@@ -359,7 +431,8 @@
         "Mittelwert $\\bar x$ und Median $\\tilde x$ beschreiben die Lage, Spannweite, Quartilsabstand und Standardabweichung die Streuung.",
         "Der Median und die Quartile sind robust gegen Ausreißer, der Mittelwert nicht.",
         "Der Boxplot zeigt Minimum, $Q_1$, Median, $Q_3$ und Maximum. Die Box enthält die mittlere Hälfte der Daten.",
-        "Weichen Mittelwert und Median deutlich voneinander ab, sind die Daten schief."
+        "Weichen Mittelwert und Median deutlich voneinander ab, sind die Daten schief.",
+        "Median robust, Mittelwert empfindlich gegen Ausreißer."
       ]
     }
   ]

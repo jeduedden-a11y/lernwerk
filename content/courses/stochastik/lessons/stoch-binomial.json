@@ -81,7 +81,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Ein Zufallsexperiment mit nur zwei Ausgängen, **Treffer** mit Wahrscheinlichkeit $p$ und **Niete**, heißt Bernoulli-Experiment. Wiederholst du es $n$-mal unabhängig, entsteht eine **Bernoulli-Kette** der Länge $n$.\n\nDie Anzahl $X$ der Treffer ist dann **binomialverteilt**, kurz $X \\sim B(n; p)$:\n\n$$P(X = k) = \\binom{n}{k} \\cdot p^k \\cdot (1-p)^{n-k}$$\n\n$p^k (1-p)^{n-k}$ ist die Wahrscheinlichkeit **eines** Pfades mit $k$ Treffern, $\\binom nk$ zählt, wie viele solche Pfade es gibt."
+      "md": "$n$ unabhängige Wiederholungen mit Trefferwahrscheinlichkeit $p$: Die Trefferzahl ist **binomialverteilt**, $P(X = k) = \\binom nk p^k (1-p)^{n-k}$, Zahl der Pfade mal Wahrscheinlichkeit eines Pfades.",
+      "more": "Ein Zufallsexperiment mit nur zwei Ausgängen, **Treffer** mit Wahrscheinlichkeit $p$ und **Niete**, heißt Bernoulli-Experiment. Wiederholst du es $n$-mal unabhängig, entsteht eine **Bernoulli-Kette** der Länge $n$.\n\nDie Anzahl $X$ der Treffer ist dann **binomialverteilt**, kurz $X \\sim B(n; p)$:\n\n$$P(X = k) = \\binom{n}{k} \\cdot p^k \\cdot (1-p)^{n-k}$$\n\n$p^k (1-p)^{n-k}$ ist die Wahrscheinlichkeit **eines** Pfades mit $k$ Treffern, $\\binom nk$ zählt, wie viele solche Pfade es gibt."
     },
     {
       "id": "galton",
@@ -109,6 +110,66 @@
         }
       },
       "explain": "Die Fächer füllen sich immer ähnlicher der gestrichelten Kurve, der Binomialverteilung $B(8; 0{,}5)$. Die Mitte bei $4 = n \\cdot p$ ist am vollsten."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung der Binomialformel** am Beispiel $n = 3$, $k = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "TTN,\\; TNT,\\; NTT",
+            "why": "Drei Pfade mit genau zwei Treffern."
+          },
+          {
+            "tex": "P(\\text{ein Pfad}) = p^2(1 - p)",
+            "why": "Jeder dieser Pfade hat dieselbe Wahrscheinlichkeit."
+          },
+          {
+            "tex": "\\binom32 = 3",
+            "why": "So viele Pfade gibt es: die Plätze der Treffer auswählen."
+          },
+          {
+            "tex": "P(X = 2) = \\binom32 p^2(1 - p)^1",
+            "why": "Allgemein: Pfadanzahl mal Pfadwahrscheinlichkeit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Pfade.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Pfad.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Anzahl.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -214,6 +275,24 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Formel",
+      "md": "$X \\sim B(5; 0{,}3)$. Berechne $P(X = 2)$ (vier Nachkommastellen).",
+      "answer": 0.3087,
+      "tolerance": 0.0005,
+      "placeholder": "",
+      "explain": "$\\binom52 \\cdot 0{,}3^2 \\cdot 0{,}7^3 = 10 \\cdot 0{,}09 \\cdot 0{,}343 = 0{,}3087$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für $X \\sim B(n; p)$ gilt $E(X) = np$.",
+      "answer": true,
+      "explain": "Im Mittel trifft jeder der $n$ Versuche mit Wahrscheinlichkeit $p$.",
+      "label": "Erwartungswert",
+      "id": "vq2"
     },
     {
       "id": "warum-mitte",
@@ -392,7 +471,8 @@
         "$X \\sim B(n; p)$ zählt Treffer in $n$ unabhängigen Versuchen: $P(X = k) = \\binom nk p^k (1-p)^{n-k}$.",
         "$\\binom nk$ ist die Zahl der Wege mit $k$ Treffern, jeder Weg hat dieselbe Wahrscheinlichkeit.",
         "»Höchstens« und »mindestens« brauchen kumulierte Wahrscheinlichkeiten, oft geht es über das Gegenereignis schneller.",
-        "$\\mu = np$, $\\sigma = \\sqrt{np(1-p)}$; bei $\\sigma > 3$ gelten die Sigma-Regeln."
+        "$\\mu = np$, $\\sigma = \\sqrt{np(1-p)}$; bei $\\sigma > 3$ gelten die Sigma-Regeln.",
+        "Binomialformel: Pfadanzahl mal Pfadwahrscheinlichkeit."
       ]
     }
   ]

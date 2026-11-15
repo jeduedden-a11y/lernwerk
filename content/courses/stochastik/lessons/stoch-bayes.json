@@ -67,7 +67,118 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Die Fachbegriffe zur Animation: Die Krankheit betrifft $1\\,\\%$ der Bevölkerung (**Basisrate** oder Prävalenz). Der Test erkennt $90\\,\\%$ der Kranken (**Sensitivität**) und meldet bei $91\\,\\%$ der Gesunden korrekt »negativ« (**Spezifität**). Bei den übrigen $9\\,\\%$ der Gesunden schlägt er fälschlich an.\n\nDer häufigste Denkfehler: Man verwechselt »Wie oft ist ein Kranker positiv?« mit »Wie oft ist ein Positiver krank?«. Das sind zwei verschiedene Fragen mit sehr verschiedenen Antworten."
+      "md": "**Basisrate** 1 %, **Sensitivität** 90 %, **Spezifität** 91 %. »Wie oft ist ein Kranker positiv?« und »Wie oft ist ein Positiver krank?« sind zwei verschiedene Fragen.",
+      "more": "Die Fachbegriffe zur Animation: Die Krankheit betrifft $1\\,\\%$ der Bevölkerung (**Basisrate** oder Prävalenz). Der Test erkennt $90\\,\\%$ der Kranken (**Sensitivität**) und meldet bei $91\\,\\%$ der Gesunden korrekt »negativ« (**Spezifität**). Bei den übrigen $9\\,\\%$ der Gesunden schlägt er fälschlich an.\n\nDer häufigste Denkfehler: Man verwechselt »Wie oft ist ein Kranker positiv?« mit »Wie oft ist ein Positiver krank?«. Das sind zwei verschiedene Fragen mit sehr verschiedenen Antworten."
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Baum und Vierfeldertafel:** dieselbe Information in zwei Darstellungen, aus der Grafik im Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Baumdiagramm und Vierfeldertafel.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Links das Baumdiagramm, rechts die Vierfeldertafel, unten der Merksatz.",
+          "to": {
+            "x": 0.5,
+            "y": 0.45,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Im Baum stehen an der zweiten Stufe bedingte Wahrscheinlichkeiten wie P(B|A) = 0,9.",
+          "to": {
+            "x": 0.22,
+            "y": 0.4,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Pfadregeln: entlang eines Pfades multiplizieren, über mehrere Pfade addieren.",
+          "to": {
+            "x": 0.25,
+            "y": 0.69,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "In der Tafel stehen innen die Schnittwahrscheinlichkeiten, am Rand die Summen; 0,41 ist die totale Wahrscheinlichkeit von B.",
+          "to": {
+            "x": 0.75,
+            "y": 0.4,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Merksatz: Die Bedingung steht im Nenner.",
+          "to": {
+            "x": 0.35,
+            "y": 0.88,
+            "z": 1.8,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Satz von Bayes** für den Test: Basisrate 1 %, Sensitivität 90 %, Fehlalarm bei 9 % der Gesunden.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(K \\mid +) = \\frac{P(K \\cap +)}{P(+)}",
+            "why": "Definition der bedingten Wahrscheinlichkeit."
+          },
+          {
+            "tex": "P(+) = 0{,}01 \\cdot 0{,}9 + 0{,}99 \\cdot 0{,}09 = 0{,}0981",
+            "why": "Totale Wahrscheinlichkeit: beide Pfade zu »positiv«."
+          },
+          {
+            "tex": "P(K \\mid +) = \\frac{0{,}009}{0{,}0981} \\approx 0{,}092",
+            "why": "Nur gut 9 % der Positiven sind krank."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nenner.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -259,6 +370,39 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Bayes",
+      "md": "Basisrate 2 %, Sensitivität 95 %, Fehlalarm bei 5 % der Gesunden. Wie groß ist $P(K \\mid +)$? (drei Nachkommastellen)",
+      "answer": 0.279,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$\\tfrac{0{,}02 \\cdot 0{,}95}{0{,}02 \\cdot 0{,}95 + 0{,}98 \\cdot 0{,}05} = \\tfrac{0{,}019}{0{,}068} \\approx 0{,}279$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Wahrscheinlichkeit liest man im Baumdiagramm direkt an einer Kante der zweiten Stufe ab?",
+      "options": [
+        {
+          "md": "$P(B \\mid A)$",
+          "correct": true
+        },
+        {
+          "md": "$P(A \\mid B)$",
+          "why": "Die umgekehrte Bedingung steht nirgends im Baum; dafür braucht man Bayes."
+        },
+        {
+          "md": "$P(A \\cap B)$"
+        },
+        {
+          "md": "$P(B)$"
+        }
+      ],
+      "explain": "Die zweite Stufe gilt unter der Bedingung der ersten.",
+      "label": "Baum",
+      "id": "vq2"
+    },
+    {
       "id": "schaetzen",
       "type": "choice",
       "label": "Verstanden?",
@@ -417,7 +561,8 @@
         "$P(A \\mid B) = \\tfrac{P(A \\cap B)}{P(B)}$: Einschränken auf die Fälle mit $B$, dann den Anteil von $A$ bestimmen.",
         "Natürliche Häufigkeiten (»9 von 98«) machen bedingte Wahrscheinlichkeiten durchschaubar.",
         "Satz von Bayes: Zähler ist der eine Pfad, Nenner die Summe aller Pfade zur Bedingung.",
-        "Bei seltenen Ereignissen dominieren die falsch Positiven. Die Basisrate entscheidet, was ein Befund bedeutet."
+        "Bei seltenen Ereignissen dominieren die falsch Positiven. Die Basisrate entscheidet, was ein Befund bedeutet.",
+        "Bayes: Bedingung im Nenner; P(+) über die totale Wahrscheinlichkeit."
       ]
     }
   ]

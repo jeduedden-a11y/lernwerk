@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Bei großem $n$ (mit $\\sigma > 3$) ersetzt man die Binomialverteilung durch die Normalverteilung: rechtsseitig mit $\\alpha = 5\\,\\%$ Ablehnung ab $\\mu + 1{,}64\\sigma$, zweiseitig außerhalb von $\\mu \\pm 1{,}96\\sigma$.",
+      "label": "Verfahren",
+      "more": "1. $\\mu = np_0$ und $\\sigma = \\sqrt{np_0(1 - p_0)}$ berechnen, $\\sigma > 3$ prüfen.\n2. Passendes Vielfaches von $\\sigma$ wählen: einseitig 5 %: 1,64; zweiseitig 5 %: 1,96; einseitig 1 %: 2,33; zweiseitig 1 %: 2,58.\n3. Grenzen berechnen und für Trefferzahlen **nach außen** runden.\n4. Entscheidungsregel formulieren.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $n = 1000$, $H_0: p = 0{,}3$, rechtsseitig, $\\alpha = 5\\,\\%$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mu = 300, \\quad \\sigma = \\sqrt{1000 \\cdot 0{,}3 \\cdot 0{,}7} \\approx 14{,}49",
+            "why": "Kenngrößen; σ > 3."
+          },
+          {
+            "tex": "\\mu + 1{,}64\\sigma \\approx 323{,}8",
+            "why": "Grenze."
+          },
+          {
+            "tex": "\\text{Ablehnung ab } 324 \\text{ Treffern}",
+            "why": "Nach außen aufrunden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kenngrößen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenze.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Regel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Die Näherung nur bei $\\sigma > 3$. Und die Grenzen für Trefferzahlen nach **außen** runden, sonst wird $\\alpha$ überschritten.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Hypothesentest für die Normalverteilung",
@@ -89,6 +151,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Grenze",
+      "md": "$n = 400$, $H_0: p = 0{,}5$, zweiseitig mit $\\alpha = 5\\,\\%$. Ab welcher Trefferzahl wird am oberen Rand abgelehnt?",
+      "answer": 220,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$200 + 1{,}96 \\cdot 10 = 219{,}6$, also ab 220.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -142,6 +214,21 @@
       "level": 3,
       "label": "Normalverteilung",
       "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-normal",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Großes n: Grenzen μ ± c·σ, nach außen runden."
+      ]
     }
   ]
 }

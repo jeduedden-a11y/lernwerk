@@ -84,13 +84,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Viele Fragen haben die Form »Wie lange dauert es, bis …?«: bis zur ersten Sechs, bis ein Los gewinnt, bis ein Bauteil ausfällt. Jeder Versuch gelingt unabhängig mit derselben Wahrscheinlichkeit $p$. Die Zahl $X$ der Versuche bis zum ersten Erfolg ist dann **geometrisch verteilt**.\n\nDamit der erste Erfolg genau beim $k$-ten Versuch kommt, müssen zuerst $k - 1$ Fehlschläge passieren und dann ein Erfolg: $P(X = k) = (1 - p)^{k-1} p$. Jeder weitere Schritt multipliziert mit $1 - p$, die Wahrscheinlichkeiten fallen wie eine geometrische Folge, daher der Name.\n\nZwei Dinge überraschen fast alle. Erstens ist der **wahrscheinlichste** Wert immer $k = 1$, auch wenn man im Mittel $\\tfrac1p$ Versuche braucht. Zweitens hat der Zufall kein Gedächtnis: Nach zehn Würfen ohne Sechs ist die nächste Sechs kein bisschen wahrscheinlicher als vorher."
+      "md": "Die Zahl der Versuche bis zum **ersten Erfolg** ist geometrisch verteilt: erst $k - 1$ Fehlschläge, dann ein Treffer, $P(X = k) = (1 - p)^{k-1}p$.",
+      "more": "Viele Fragen haben die Form »Wie lange dauert es, bis …?«: bis zur ersten Sechs, bis ein Los gewinnt, bis ein Bauteil ausfällt. Jeder Versuch gelingt unabhängig mit derselben Wahrscheinlichkeit $p$. Die Zahl $X$ der Versuche bis zum ersten Erfolg ist dann **geometrisch verteilt**.\n\nDamit der erste Erfolg genau beim $k$-ten Versuch kommt, müssen zuerst $k - 1$ Fehlschläge passieren und dann ein Erfolg: $P(X = k) = (1 - p)^{k-1} p$. Jeder weitere Schritt multipliziert mit $1 - p$, die Wahrscheinlichkeiten fallen wie eine geometrische Folge, daher der Name.\n\nZwei Dinge überraschen fast alle. Erstens ist der **wahrscheinlichste** Wert immer $k = 1$, auch wenn man im Mittel $\\tfrac1p$ Versuche braucht. Zweitens hat der Zufall kein Gedächtnis: Nach zehn Würfen ohne Sechs ist die nächste Sechs kein bisschen wahrscheinlicher als vorher."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Geometrische Verteilung\n> $X$ zählt die Versuche bis zum ersten Erfolg in einer Bernoulli-Kette mit Trefferwahrscheinlichkeit $p$: $P(X = k) = (1 - p)^{k-1} p$ für $k = 1, 2, 3, \\dots$\n\n> [!satz] Kennzahlen\n> $P(X \\le k) = 1 - (1 - p)^k$, $\\quad E(X) = \\dfrac1p$, $\\quad V(X) = \\dfrac{1 - p}{p^2}$.\n\n> [!satz] Gedächtnislosigkeit\n> $P(X > m + n \\mid X > m) = P(X > n)$: Wer schon $m$-mal gescheitert ist, steht wieder ganz am Anfang."
+      "md": "$P(X \\le k) = 1 - (1-p)^k$, $E(X) = \\frac1p$, $V(X) = \\frac{1-p}{p^2}$. **Gedächtnislos:** Wer schon $m$-mal gescheitert ist, steht wieder ganz am Anfang.",
+      "more": "> [!definition] Geometrische Verteilung\n> $X$ zählt die Versuche bis zum ersten Erfolg in einer Bernoulli-Kette mit Trefferwahrscheinlichkeit $p$: $P(X = k) = (1 - p)^{k-1} p$ für $k = 1, 2, 3, \\dots$\n\n> [!satz] Kennzahlen\n> $P(X \\le k) = 1 - (1 - p)^k$, $\\quad E(X) = \\dfrac1p$, $\\quad V(X) = \\dfrac{1 - p}{p^2}$.\n\n> [!satz] Gedächtnislosigkeit\n> $P(X > m + n \\mid X > m) = P(X > n)$: Wer schon $m$-mal gescheitert ist, steht wieder ganz am Anfang."
     },
     {
       "id": "mittel-vier",
@@ -148,6 +150,55 @@
         }
       },
       "explain": "$E(X) = \\tfrac1p = 4 \\iff p = 0{,}25$. Trotzdem ist der Erfolg nach vier Versuchen nur zu $1 - 0{,}75^4 \\approx 68\\,\\%$ eingetreten."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Kennzahlen der geometrischen Verteilung.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(X > k) = (1 - p)^k",
+            "why": "Die ersten k Versuche scheitern alle."
+          },
+          {
+            "tex": "P(X \\le k) = 1 - (1 - p)^k",
+            "why": "Gegenereignis."
+          },
+          {
+            "tex": "E(X) = \\sum_{k \\ge 1} k(1 - p)^{k-1}p = \\frac1p",
+            "why": "Bei p = 1/6 dauert es im Mittel 6 Würfe bis zur ersten Sechs."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Scheitern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kumuliert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erwartung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -449,6 +500,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Geometrisch",
+      "md": "Wie wahrscheinlich fällt die erste Sechs genau im dritten Wurf? (vier Nachkommastellen)",
+      "answer": 0.1157,
+      "tolerance": 0.0005,
+      "placeholder": "",
+      "explain": "$\\left(\\tfrac56\\right)^2 \\cdot \\tfrac16 = \\tfrac{25}{216} \\approx 0{,}1157$.",
+      "id": "vq1"
+    },
+    {
       "id": "dritter",
       "type": "numeric",
       "label": "Rechnen",
@@ -516,7 +577,8 @@
         "Versuche bis zum ersten Erfolg: $P(X = k) = (1 - p)^{k-1} p$.",
         "Spätestens beim $k$-ten Mal: $1 - (1 - p)^k$, über das Gegenereignis.",
         "Im Mittel wartet man $\\tfrac1p$ Versuche, am wahrscheinlichsten ist trotzdem $k = 1$.",
-        "Der Zufall hat kein Gedächtnis: Frühere Fehlschläge ändern nichts."
+        "Der Zufall hat kein Gedächtnis: Frühere Fehlschläge ändern nichts.",
+        "P(X ≤ k) = 1 − (1 − p)^k; E(X) = 1/p."
       ]
     }
   ]

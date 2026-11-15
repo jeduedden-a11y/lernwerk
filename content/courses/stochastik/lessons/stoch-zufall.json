@@ -55,7 +55,57 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Ein **Zufallsexperiment** hat mehrere mögliche Ergebnisse, und vorher weiß niemand, welches eintritt. Alle Ergebnisse zusammen bilden die **Ergebnismenge** $\\Omega$, eine Teilmenge davon heißt **Ereignis**.\n\nSind alle Ergebnisse gleich wahrscheinlich, zählt man einfach ab. Das ist die **Laplace-Wahrscheinlichkeit**:\n\n$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl aller Ergebnisse}}$$\n\nBeim fairen Würfel ist $\\Omega = \\{1, \\dots, 6\\}$. Für »gerade Zahl« $E = \\{2, 4, 6\\}$ ist $P(E) = \\tfrac36 = \\tfrac12$."
+      "md": "Bei gleich wahrscheinlichen Ergebnissen zählt man ab: **Laplace-Wahrscheinlichkeit** $P(E) = \\frac{|E|}{|\\Omega|}$, günstige durch mögliche Ergebnisse. Beim Würfel ist $P(\\text{gerade}) = \\frac36 = \\frac12$.",
+      "more": "Ein **Zufallsexperiment** hat mehrere mögliche Ergebnisse, und vorher weiß niemand, welches eintritt. Alle Ergebnisse zusammen bilden die **Ergebnismenge** $\\Omega$, eine Teilmenge davon heißt **Ereignis**.\n\nSind alle Ergebnisse gleich wahrscheinlich, zählt man einfach ab. Das ist die **Laplace-Wahrscheinlichkeit**:\n\n$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl aller Ergebnisse}}$$\n\nBeim fairen Würfel ist $\\Omega = \\{1, \\dots, 6\\}$. Für »gerade Zahl« $E = \\{2, 4, 6\\}$ ist $P(E) = \\tfrac36 = \\tfrac12$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Gegenereignis:** Wie wahrscheinlich ist mindestens eine Sechs bei vier Würfen?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(\\text{keine Sechs}) = \\left(\\tfrac56\\right)^4",
+            "why": "Vier unabhängige Würfe ohne Sechs."
+          },
+          {
+            "tex": "P(\\text{mindestens eine}) = 1 - \\left(\\tfrac56\\right)^4",
+            "why": "»Mindestens eine« ist das Gegenteil von »keine«."
+          },
+          {
+            "tex": "\\approx 1 - 0{,}482 = 0{,}518",
+            "why": "Etwas mehr als die Hälfte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Keine.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenereignis.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -153,6 +203,24 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Gegenereignis",
+      "md": "Wie wahrscheinlich ist mindestens eine Sechs bei drei Würfen? (drei Nachkommastellen)",
+      "answer": 0.421,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$1 - \\left(\\tfrac56\\right)^3 \\approx 0{,}421$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Mit zwei Würfeln ist die Augensumme 7 genauso wahrscheinlich wie die Augensumme 12.",
+      "answer": false,
+      "explain": "7 hat sechs günstige Ergebnisse ($\\tfrac{6}{36}$), 12 nur eines ($\\tfrac{1}{36}$).",
+      "label": "Laplace",
+      "id": "vq2"
     },
     {
       "id": "summe7",
@@ -343,7 +411,8 @@
         "Bei gleich wahrscheinlichen Ergebnissen zählst du ab: $P(E) = \\tfrac{|E|}{|\\Omega|}$. Gleich wahrscheinlich müssen die Ergebnisse sein, nicht die Ereignisse.",
         "Die relative Häufigkeit $\\tfrac kn$ stabilisiert sich bei vielen Versuchen um die Wahrscheinlichkeit $p$.",
         "Die absolute Abweichung $k - np$ wächst dabei wie $\\sqrt n$. Ausgeglichen wird nichts, nur verdünnt.",
-        "Zufallsversuche ohne Gedächtnis kennen keine »fälligen« Ergebnisse."
+        "Zufallsversuche ohne Gedächtnis kennen keine »fälligen« Ergebnisse.",
+        "»Mindestens eins« über das Gegenereignis »keins« berechnen."
       ]
     }
   ]

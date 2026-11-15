@@ -66,7 +66,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Fast jede Abzählaufgabe ist eine Variante einer einzigen Frage: Aus $n$ Dingen werden $k$ ausgewählt. Entscheidend sind zwei Fragen:\n\n1. **Kommt es auf die Reihenfolge an?** Beim Siegerpodest ja, beim Lottotipp nein.\n2. **Darf dasselbe mehrfach vorkommen?** Bei einem Zahlenschloss ja, bei einem Team nein.\n\n| | mit Wiederholung | ohne Wiederholung |\n|---|---|---|\n| geordnet | $n^k$ | $\\dfrac{n!}{(n-k)!}$ |\n| ungeordnet | $\\binom{n+k-1}{k}$ | $\\binom nk$ |\n\nAlle Formeln folgen aus der Produktregel. Die Tabelle musst du nicht auswendig lernen, wenn du verstehst, woher sie kommt."
+      "md": "Aus $n$ Dingen werden $k$ ausgewählt. Zwei Fragen entscheiden: Zählt die Reihenfolge? Ist Wiederholung erlaubt?\n\n| | mit Wiederholung | ohne Wiederholung |\n|---|---|---|\n| geordnet | $n^k$ | $\\dfrac{n!}{(n-k)!}$ |\n| ungeordnet | $\\binom{n+k-1}{k}$ | $\\binom nk$ |",
+      "more": "Fast jede Abzählaufgabe ist eine Variante einer einzigen Frage: Aus $n$ Dingen werden $k$ ausgewählt. Entscheidend sind zwei Fragen:\n\n1. **Kommt es auf die Reihenfolge an?** Beim Siegerpodest ja, beim Lottotipp nein.\n2. **Darf dasselbe mehrfach vorkommen?** Bei einem Zahlenschloss ja, bei einem Team nein.\n\n| | mit Wiederholung | ohne Wiederholung |\n|---|---|---|\n| geordnet | $n^k$ | $\\dfrac{n!}{(n-k)!}$ |\n| ungeordnet | $\\binom{n+k-1}{k}$ | $\\binom nk$ |\n\nAlle Formeln folgen aus der Produktregel. Die Tabelle musst du nicht auswendig lernen, wenn du verstehst, woher sie kommt."
     },
     {
       "id": "beispiel",
@@ -101,6 +102,66 @@
         }
       },
       "after": "Beim zweiten Zug hat sich die Urne verändert: Nach einer roten Kugel sind nur noch 2 von 4 Kugeln rot. Das macht »ohne Zurücklegen« aus."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Woher die Formeln kommen:** Produktregel, dann Reihenfolgen herausteilen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n \\cdot (n - 1) \\cdots (n - k + 1) = \\frac{n!}{(n - k)!}",
+            "why": "Geordnet ohne Wiederholung: für jede Stelle eine Möglichkeit weniger."
+          },
+          {
+            "tex": "\\text{jede Auswahl kommt in } k! \\text{ Reihenfolgen vor}",
+            "why": "Ungeordnet zählt sie nur einmal."
+          },
+          {
+            "tex": "\\binom nk = \\frac{n!}{k!\\,(n - k)!}",
+            "why": "Durch k! teilen."
+          },
+          {
+            "tex": "\\binom{49}{6} = 13\\,983\\,816",
+            "why": "Lotto 6 aus 49."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Geordnet.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Reihenfolgen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Binomialkoeffizient.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lotto.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -305,6 +366,26 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Zahlenschloss",
+      "md": "Wie viele vierstellige Zahlenschlosscodes gibt es (Ziffern 0 bis 9)?",
+      "answer": 10000,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Geordnet mit Wiederholung: $10^4$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Team",
+      "md": "Auf wie viele Arten kann man aus 8 Personen ein Team aus 3 bilden?",
+      "answer": 56,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\binom83 = \\tfrac{8 \\cdot 7 \\cdot 6}{3!} = 56$.",
+      "id": "vq2"
+    },
+    {
       "id": "genau-eine",
       "type": "numeric",
       "label": "Rechnen",
@@ -319,7 +400,8 @@
     {
       "id": "binomialkoeffizient",
       "type": "text",
-      "md": "Wie viele Teams aus 2 Personen lassen sich aus 5 Personen bilden? Geordnet gäbe es $5 \\cdot 4 = 20$ Paare. Aber das Team $\\{A, B\\}$ wurde dabei zweimal gezählt, als $(A, B)$ und als $(B, A)$. Also gibt es $\\tfrac{20}{2} = 10$ Teams.\n\nAllgemein: Jede Auswahl von $k$ Dingen tritt in $k!$ Reihenfolgen auf. Deshalb ist die Zahl der ungeordneten Auswahlen der **Binomialkoeffizient**\n\n$$\\binom nk = \\frac{n!}{k!\\,(n-k)!}, \\quad\\text{gelesen »n über k«.}$$\n\nEr zählt auch die Pfade mit genau $k$ Treffern in einem Baum mit $n$ Stufen. Das brauchst du später bei der Binomialverteilung."
+      "md": "$\\binom nk = \\frac{n!}{k!\\,(n-k)!}$ zählt die Auswahlen von $k$ aus $n$ ohne Reihenfolge: geordnet zählen, dann durch die $k!$ Reihenfolgen jeder Auswahl teilen.",
+      "more": "Wie viele Teams aus 2 Personen lassen sich aus 5 Personen bilden? Geordnet gäbe es $5 \\cdot 4 = 20$ Paare. Aber das Team $\\{A, B\\}$ wurde dabei zweimal gezählt, als $(A, B)$ und als $(B, A)$. Also gibt es $\\tfrac{20}{2} = 10$ Teams.\n\nAllgemein: Jede Auswahl von $k$ Dingen tritt in $k!$ Reihenfolgen auf. Deshalb ist die Zahl der ungeordneten Auswahlen der **Binomialkoeffizient**\n\n$$\\binom nk = \\frac{n!}{k!\\,(n-k)!}, \\quad\\text{gelesen »n über k«.}$$\n\nEr zählt auch die Pfade mit genau $k$ Treffern in einem Baum mit $n$ Stufen. Das brauchst du später bei der Binomialverteilung."
     },
     {
       "id": "beweis",
@@ -425,7 +507,8 @@
         "**Produktregel**: Gibt es nacheinander $m_1, m_2, \\dots$ Möglichkeiten, so gibt es insgesamt $m_1 \\cdot m_2 \\cdots$ Möglichkeiten.",
         "Zwei Fragen entscheiden das Modell: Zählt die Reihenfolge? Ist Wiederholung erlaubt?",
         "$\\binom nk = \\tfrac{n!}{k!(n-k)!}$ zählt ungeordnete Auswahlen, weil jede Auswahl in $k!$ Reihenfolgen vorkommt.",
-        "Im Baumdiagramm: Pfadregel (multiplizieren entlang eines Pfades), Summenregel (addieren über Pfade)."
+        "Im Baumdiagramm: Pfadregel (multiplizieren entlang eines Pfades), Summenregel (addieren über Pfade).",
+        "Ungeordnet = geordnet geteilt durch k!."
       ]
     }
   ]

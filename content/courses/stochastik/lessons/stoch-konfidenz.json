@@ -64,7 +64,8 @@
     {
       "id": "formel",
       "type": "text",
-      "md": "Bei $n$ Befragten mit relativer Häufigkeit $h$ ist das **95-%-Konfidenzintervall** für den unbekannten Anteil $p$ näherungsweise\n\n$$\\left[\\ h - 1{,}96\\sqrt{\\frac{h(1-h)}{n}};\\ \\ h + 1{,}96\\sqrt{\\frac{h(1-h)}{n}}\\ \\right].$$\n\nDie Idee: $h$ liegt mit $95\\,\\%$ Wahrscheinlichkeit höchstens $1{,}96$ Standardabweichungen von $p$ entfernt. Dann liegt umgekehrt auch $p$ höchstens so weit von $h$ entfernt. Weil $p$ unbekannt ist, setzt man für die Standardabweichung $h$ ein.\n\nDas Prognoseintervall schließt von $p$ auf $h$, das Konfidenzintervall von $h$ auf $p$."
+      "md": "Das **95-%-Konfidenzintervall** für einen unbekannten Anteil ist $h \\pm 1{,}96\\sqrt{\\frac{h(1-h)}{n}}$. Es schließt von der Stichprobe auf $p$, umgekehrt zum Prognoseintervall.",
+      "more": "Bei $n$ Befragten mit relativer Häufigkeit $h$ ist das **95-%-Konfidenzintervall** für den unbekannten Anteil $p$ näherungsweise\n\n$$\\left[\\ h - 1{,}96\\sqrt{\\frac{h(1-h)}{n}};\\ \\ h + 1{,}96\\sqrt{\\frac{h(1-h)}{n}}\\ \\right].$$\n\nDie Idee: $h$ liegt mit $95\\,\\%$ Wahrscheinlichkeit höchstens $1{,}96$ Standardabweichungen von $p$ entfernt. Dann liegt umgekehrt auch $p$ höchstens so weit von $h$ entfernt. Weil $p$ unbekannt ist, setzt man für die Standardabweichung $h$ ein.\n\nDas Prognoseintervall schließt von $p$ auf $h$, das Konfidenzintervall von $h$ auf $p$."
     },
     {
       "id": "simulieren",
@@ -97,6 +98,55 @@
         }
       },
       "explain": "Die Quote liegt nahe bei $95\\,\\%$, bei kleinem $n$ und $p$ nahe $0$ oder $1$ oft etwas darunter, weil die Näherung dort grob ist."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Konfidenzintervall:** 100 Befragte, 60 sagen ja, $h = 0{,}6$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sqrt{\\frac{h(1 - h)}{n}} = \\sqrt{\\frac{0{,}24}{100}} \\approx 0{,}049",
+            "why": "Geschätzte Standardabweichung der relativen Häufigkeit."
+          },
+          {
+            "tex": "1{,}96 \\cdot 0{,}049 \\approx 0{,}096",
+            "why": "Halbe Breite."
+          },
+          {
+            "tex": "[0{,}504;\\; 0{,}696]",
+            "why": "Mit 95 % Vertrauen liegt der wahre Anteil hier."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Streuung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Breite.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Intervall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -196,6 +246,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Breite",
+      "md": "Wie groß ist die halbe Breite des 95-%-Konfidenzintervalls bei $n = 400$ und $h = 0{,}5$? (drei Nachkommastellen)",
+      "answer": 0.049,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$1{,}96\\sqrt{\\tfrac{0{,}25}{400}} = 1{,}96 \\cdot 0{,}025 = 0{,}049$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Vervierfacht man den Stichprobenumfang, halbiert sich die Breite des Konfidenzintervalls.",
+      "answer": true,
+      "explain": "Die Breite geht mit $\\tfrac{1}{\\sqrt n}$.",
+      "label": "Umfang",
+      "id": "vq2"
+    },
+    {
       "id": "umfrage",
       "type": "cloze",
       "label": "Rechnen",
@@ -267,7 +335,8 @@
         "Konfidenzintervall: $h \\pm 1{,}96\\sqrt{\\tfrac{h(1-h)}{n}}$ schließt vom Stichprobenergebnis auf den unbekannten Anteil.",
         "»95 %« beschreibt das Verfahren: Etwa 95 von 100 so berechneten Intervallen enthalten das wahre $p$.",
         "Doppelte Genauigkeit kostet die vierfache Stichprobe.",
-        "Prognoseintervall: von $p$ auf $h$. Konfidenzintervall: von $h$ auf $p$."
+        "Prognoseintervall: von $p$ auf $h$. Konfidenzintervall: von $h$ auf $p$.",
+        "Konfidenzintervall h ± 1,96·√(h(1 − h)/n); Breite ~ 1/√n."
       ]
     }
   ]

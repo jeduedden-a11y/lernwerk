@@ -89,7 +89,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Hängen zwei Größen zusammen, etwa Lernzeit und Testergebnis, trägt man die Paare $(x_i, y_i)$ in ein **Streudiagramm** ein. Liegen die Punkte ungefähr auf einer Geraden, sucht man die Gerade $y = a + b\\,x$, die am besten passt.\n\nAber was heißt »am besten«? Für jeden Punkt gibt es eine senkrechte Abweichung $y_i - (a + b\\,x_i)$, das **Residuum**. Die übliche Antwort: Die Summe der **quadrierten** Residuen soll so klein wie möglich sein."
+      "md": "Die **Regressionsgerade** $y = a + bx$ macht die Summe der **quadrierten** senkrechten Abweichungen, der Residuen, so klein wie möglich.",
+      "more": "Hängen zwei Größen zusammen, etwa Lernzeit und Testergebnis, trägt man die Paare $(x_i, y_i)$ in ein **Streudiagramm** ein. Liegen die Punkte ungefähr auf einer Geraden, sucht man die Gerade $y = a + b\\,x$, die am besten passt.\n\nAber was heißt »am besten«? Für jeden Punkt gibt es eine senkrechte Abweichung $y_i - (a + b\\,x_i)$, das **Residuum**. Die übliche Antwort: Die Summe der **quadrierten** Residuen soll so klein wie möglich sein."
     },
     {
       "id": "anpassen",
@@ -159,6 +160,66 @@
       "explain": "Die **Regressionsgerade** macht die Quadratsumme minimal (Methode der kleinsten Quadrate). Hier ist sie $y \\approx 1{,}37 + 0{,}82\\,x$ mit einer Quadratsumme von etwa $1{,}46$. Sie geht immer durch den Schwerpunkt $(\\bar x, \\bar y)$ der Punktwolke."
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Regressionsgerade** für die Punkte $(1 \\mid 2)$, $(2 \\mid 3)$, $(3 \\mid 5)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\bar x = 2, \\quad \\bar y = \\tfrac{10}{3}",
+            "why": "Mittelwerte."
+          },
+          {
+            "tex": "s_{xy} = \\tfrac13\\sum (x_i - \\bar x)(y_i - \\bar y) = 1, \\quad s_x^2 = \\tfrac23",
+            "why": "Kovarianz und Varianz von x."
+          },
+          {
+            "tex": "b = \\frac{s_{xy}}{s_x^2} = 1{,}5, \\quad a = \\bar y - b\\bar x = \\tfrac13",
+            "why": "Steigung und Achsenabschnitt."
+          },
+          {
+            "tex": "y = \\tfrac13 + 1{,}5x",
+            "why": "Die Gerade geht durch den Schwerpunkt (x̄ | ȳ)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Mittel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kovarianz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Koeffizienten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Korrelation und Regression",
@@ -205,6 +266,22 @@
           ]
         }
       ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Korrelationskoeffizient $r = -1$ bedeutet, dass alle Punkte auf einer fallenden Geraden liegen.",
+      "answer": true,
+      "explain": "$|r| = 1$ heißt perfekter linearer Zusammenhang; das Vorzeichen gibt die Richtung.",
+      "label": "Korrelation",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine starke Korrelation beweist, dass die eine Größe die andere verursacht.",
+      "answer": false,
+      "explain": "Korrelation ist keine Kausalität; oft steckt eine dritte Größe dahinter.",
+      "label": "Kausalität",
+      "id": "vq2"
     },
     {
       "id": "vorhersage",
@@ -403,7 +480,8 @@
         "Die Regressionsgerade minimiert die Summe der quadrierten senkrechten Abweichungen und geht durch $(\\bar x, \\bar y)$.",
         "$r \\in [-1; 1]$ misst Richtung und Stärke eines **linearen** Zusammenhangs.",
         "Einzelne Ausreißer können Gerade und $r$ stark verändern.",
-        "Korrelation ist keine Kausalität, und $r = 0$ heißt nicht »kein Zusammenhang«."
+        "Korrelation ist keine Kausalität, und $r = 0$ heißt nicht »kein Zusammenhang«.",
+        "Regressionsgerade: b = s_xy / s_x², geht durch (x̄ | ȳ)."
       ]
     }
   ]

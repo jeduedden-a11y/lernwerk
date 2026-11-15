@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Warten auf den ersten Treffer: $P(X = k) = (1-p)^{k-1}p$, $P(X \\le k) = 1 - (1-p)^k$, im Mittel $E(X) = \\tfrac1p$ Versuche.",
+      "label": "Verfahren",
+      "more": "**Erkennen:** »bis zum ersten …«, unabhängige Versuche mit gleichem $p$.\n\n**Typische Fragen:** genau beim $k$-ten Versuch, spätestens beim $k$-ten ($P(X \\le k)$), erst nach dem $k$-ten ($P(X > k) = (1 - p)^k$), mittlere Wartezeit $\\tfrac1p$.\n\n**Gedächtnislosigkeit:** Nach $m$ Fehlschlägen ist die weitere Wartezeit genauso verteilt wie am Anfang.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Wie wahrscheinlich fällt die erste Sechs spätestens im sechsten Wurf?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(X \\le 6) = 1 - P(X > 6)",
+            "why": "Gegenereignis."
+          },
+          {
+            "tex": "= 1 - \\left(\\tfrac56\\right)^6",
+            "why": "Sechs Fehlschläge hintereinander."
+          },
+          {
+            "tex": "\\approx 0{,}665",
+            "why": "Nur zwei Drittel, obwohl die mittlere Wartezeit 6 ist."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gegenereignis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$X$ zählt die Versuche **einschließlich** des Treffers: $P(X = 1) = p$, nicht $1 - p$.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Geometrische Verteilung",
@@ -113,6 +175,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Warten",
+      "md": "Trefferwahrscheinlichkeit 0,2. Wie wahrscheinlich ist es, dass der erste Treffer erst nach dem zehnten Versuch kommt? (drei Nachkommastellen)",
+      "answer": 0.107,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$P(X > 10) = 0{,}8^{10} \\approx 0{,}107$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -159,6 +231,21 @@
       "level": 2,
       "label": "Warten",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-geometrisch",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Geometrisch: P(X > k) = (1 − p)^k, E(X) = 1/p."
+      ]
     }
   ]
 }

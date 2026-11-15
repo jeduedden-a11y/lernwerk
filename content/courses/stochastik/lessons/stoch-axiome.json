@@ -85,13 +85,75 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Was eine Wahrscheinlichkeit »eigentlich« ist, darüber streiten Philosophen bis heute: eine Häufigkeit auf lange Sicht, ein Maß für Überzeugung, eine Eigenschaft des Experiments? Kolmogorow umging den Streit. Er legte nur fest, wie Wahrscheinlichkeiten sich **verhalten** müssen, mit drei Regeln.\n\nDas hat zwei Vorteile. Jede Deutung, die diese Regeln erfüllt, darf die ganze Theorie benutzen. Und jede Rechenregel, von der Gegenwahrscheinlichkeit bis zum Satz von Bayes, lässt sich aus den drei Axiomen **beweisen**. Das Werkzeug dafür ist fast immer dasselbe: ein Ereignis in unvereinbare Teile zerlegen und Axiom 3 anwenden."
+      "md": "Kolmogorow legte nicht fest, was Wahrscheinlichkeit **ist**, sondern wie sie sich **verhält**: drei Regeln, aus denen sich alle Rechenregeln beweisen lassen.",
+      "more": "Was eine Wahrscheinlichkeit »eigentlich« ist, darüber streiten Philosophen bis heute: eine Häufigkeit auf lange Sicht, ein Maß für Überzeugung, eine Eigenschaft des Experiments? Kolmogorow umging den Streit. Er legte nur fest, wie Wahrscheinlichkeiten sich **verhalten** müssen, mit drei Regeln.\n\nDas hat zwei Vorteile. Jede Deutung, die diese Regeln erfüllt, darf die ganze Theorie benutzen. Und jede Rechenregel, von der Gegenwahrscheinlichkeit bis zum Satz von Bayes, lässt sich aus den drei Axiomen **beweisen**. Das Werkzeug dafür ist fast immer dasselbe: ein Ereignis in unvereinbare Teile zerlegen und Axiom 3 anwenden."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Wahrscheinlichkeitsmaß\n> Eine Funktion $P$, die jedem Ereignis $A \\subseteq \\Omega$ eine Zahl zuordnet, mit\n> (K1) $P(A) \\ge 0$, (K2) $P(\\Omega) = 1$, (K3) $P(A \\cup B) = P(A) + P(B)$ für unvereinbare $A, B$ (und entsprechend für abzählbar viele).\n\n> [!satz] Folgerungen\n> $P(\\emptyset) = 0$, $P(\\bar A) = 1 - P(A)$, aus $A \\subseteq B$ folgt $P(A) \\le P(B)$, und der Additionssatz $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.\n\n> [!tip] Beweisidee\n> Zerlegen in unvereinbare Teile, etwa $B = A \\cup (B \\setminus A)$ für $A \\subseteq B$, dann Axiom 3."
+      "md": "**Axiome:** $P(A) \\ge 0$, $P(\\Omega) = 1$, und für unvereinbare Ereignisse $P(A \\cup B) = P(A) + P(B)$. Daraus folgen $P(\\bar A) = 1 - P(A)$ und $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+      "more": "> [!definition] Wahrscheinlichkeitsmaß\n> Eine Funktion $P$, die jedem Ereignis $A \\subseteq \\Omega$ eine Zahl zuordnet, mit\n> (K1) $P(A) \\ge 0$, (K2) $P(\\Omega) = 1$, (K3) $P(A \\cup B) = P(A) + P(B)$ für unvereinbare $A, B$ (und entsprechend für abzählbar viele).\n\n> [!satz] Folgerungen\n> $P(\\emptyset) = 0$, $P(\\bar A) = 1 - P(A)$, aus $A \\subseteq B$ folgt $P(A) \\le P(B)$, und der Additionssatz $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.\n\n> [!tip] Beweisidee\n> Zerlegen in unvereinbare Teile, etwa $B = A \\cup (B \\setminus A)$ für $A \\subseteq B$, dann Axiom 3."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung des Additionssatzes** aus den Axiomen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A \\cup B = A \\,\\dot\\cup\\, (B \\setminus A)",
+            "why": "In zwei unvereinbare Teile zerlegen."
+          },
+          {
+            "tex": "P(A \\cup B) = P(A) + P(B \\setminus A)",
+            "why": "Axiom K3."
+          },
+          {
+            "tex": "B = (A \\cap B) \\,\\dot\\cup\\, (B \\setminus A) \\;\\Rightarrow\\; P(B \\setminus A) = P(B) - P(A \\cap B)",
+            "why": "Noch einmal K3 für B."
+          },
+          {
+            "tex": "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)",
+            "why": "Einsetzen: Der Schnitt wurde doppelt gezählt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "K3.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "B zerlegen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Satz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -239,6 +301,29 @@
       ]
     },
     {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des Additionssatzes in die richtige Reihenfolge.",
+      "items": [
+        "$A \\cup B$ in die unvereinbaren Teile $A$ und $B \\setminus A$ zerlegen",
+        "Axiom K3: $P(A \\cup B) = P(A) + P(B \\setminus A)$",
+        "Aus $B = (A \\cap B) \\cup (B \\setminus A)$ folgt $P(B \\setminus A) = P(B) - P(A \\cap B)$",
+        "Einsetzen: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$"
+      ],
+      "explain": "Die Reihenfolge: 1. $A \\cup B$ in die unvereinbaren Teile $A$ und $B \\setminus A$ zerlegen. 2. Axiom K3: $P(A \\cup B) = P(A) + P(B \\setminus A)$. 3. Aus $B = (A \\cap B) \\cup (B \\setminus A)$ folgt $P(B \\setminus A) = P(B) - P(A \\cap B)$. 4. Einsetzen: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Additionssatz",
+      "md": "$P(A) = 0{,}5$, $P(B) = 0{,}4$, $P(A \\cap B) = 0{,}2$. Berechne $P(A \\cup B)$.",
+      "answer": 0.7,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$0{,}5 + 0{,}4 - 0{,}2 = 0{,}7$.",
+      "id": "vq2"
+    },
+    {
       "id": "additionssatz",
       "type": "numeric",
       "label": "Rechnen",
@@ -354,7 +439,8 @@
         "Drei Axiome: $P(A) \\ge 0$, $P(\\Omega) = 1$, Additivität für unvereinbare Ereignisse.",
         "Daraus folgen $P(\\emptyset) = 0$, die Gegenwahrscheinlichkeit, die Monotonie und der Additionssatz.",
         "Beweistechnik: in unvereinbare Teile zerlegen und Axiom 3 anwenden.",
-        "Wahrscheinlichkeit 0 heißt nicht unmöglich."
+        "Wahrscheinlichkeit 0 heißt nicht unmöglich.",
+        "Alle Rechenregeln folgen aus den drei Axiomen."
       ]
     }
   ]

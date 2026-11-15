@@ -70,13 +70,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Körpergröße, Messfehler, die Augensumme vieler Würfel: Erstaunlich vieles folgt der Glockenkurve. Der Grund ist fast immer derselbe. Das Ergebnis ist eine Summe vieler kleiner, unabhängiger Einflüsse, und beim Addieren gleichen sich die Zufälle teilweise aus. Extreme brauchen, dass sehr viele Einflüsse in dieselbe Richtung zeigen, und das ist selten.\n\nZwei Zahlen beschreiben eine Summe von $n$ gleichartigen Summanden. Ihr Erwartungswert wächst wie $n$: $E = n \\mu$. Ihre Streuung wächst nur wie die Wurzel: $\\sigma_{\\text{Summe}} = \\sqrt n\\, \\sigma$. Teilt man durch $n$, bekommt man den Mittelwert, und dessen Streuung **schrumpft** wie $\\tfrac{\\sigma}{\\sqrt n}$.\n\nDas ist der Grund, warum Mittelwerte vieler Messungen so verlässlich sind. Für die halbe Unsicherheit braucht man allerdings viermal so viele Messungen."
+      "md": "Summen vieler kleiner, unabhängiger Einflüsse werden glockenförmig. Ihr Erwartungswert wächst wie $n$, ihre Streuung nur wie $\\sqrt n$.",
+      "more": "Körpergröße, Messfehler, die Augensumme vieler Würfel: Erstaunlich vieles folgt der Glockenkurve. Der Grund ist fast immer derselbe. Das Ergebnis ist eine Summe vieler kleiner, unabhängiger Einflüsse, und beim Addieren gleichen sich die Zufälle teilweise aus. Extreme brauchen, dass sehr viele Einflüsse in dieselbe Richtung zeigen, und das ist selten.\n\nZwei Zahlen beschreiben eine Summe von $n$ gleichartigen Summanden. Ihr Erwartungswert wächst wie $n$: $E = n \\mu$. Ihre Streuung wächst nur wie die Wurzel: $\\sigma_{\\text{Summe}} = \\sqrt n\\, \\sigma$. Teilt man durch $n$, bekommt man den Mittelwert, und dessen Streuung **schrumpft** wie $\\tfrac{\\sigma}{\\sqrt n}$.\n\nDas ist der Grund, warum Mittelwerte vieler Messungen so verlässlich sind. Für die halbe Unsicherheit braucht man allerdings viermal so viele Messungen."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!satz] Summen unabhängiger Zufallsgrößen\n> Für unabhängige $X_1, \\dots, X_n$ mit Erwartungswert $\\mu$ und Varianz $\\sigma^2$ gilt für die Summe $S_n$: $E(S_n) = n\\mu$ und $V(S_n) = n\\sigma^2$. Der Mittelwert $\\bar X = \\tfrac{S_n}{n}$ hat die Standardabweichung $\\tfrac{\\sigma}{\\sqrt n}$.\n\n> [!satz] Zentraler Grenzwertsatz\n> Für große $n$ ist $S_n$ näherungsweise normalverteilt mit $\\mu_S = n\\mu$ und $\\sigma_S = \\sqrt n\\, \\sigma$. Die Summanden selbst dürfen dabei fast beliebig verteilt sein.\n\n> [!tip] Spezialfall\n> Eine binomialverteilte Größe ist eine Summe von $n$ Bernoulli-Größen. Deshalb wird $B(n; p)$ für großes $n$ glockenförmig."
+      "md": "$E(S_n) = n\\mu$ und $\\sigma(S_n) = \\sqrt n\\,\\sigma$. **Zentraler Grenzwertsatz:** Für große $n$ ist $S_n$ näherungsweise normalverteilt, fast egal, wie die Summanden verteilt sind.",
+      "more": "> [!satz] Summen unabhängiger Zufallsgrößen\n> Für unabhängige $X_1, \\dots, X_n$ mit Erwartungswert $\\mu$ und Varianz $\\sigma^2$ gilt für die Summe $S_n$: $E(S_n) = n\\mu$ und $V(S_n) = n\\sigma^2$. Der Mittelwert $\\bar X = \\tfrac{S_n}{n}$ hat die Standardabweichung $\\tfrac{\\sigma}{\\sqrt n}$.\n\n> [!satz] Zentraler Grenzwertsatz\n> Für große $n$ ist $S_n$ näherungsweise normalverteilt mit $\\mu_S = n\\mu$ und $\\sigma_S = \\sqrt n\\, \\sigma$. Die Summanden selbst dürfen dabei fast beliebig verteilt sein.\n\n> [!tip] Spezialfall\n> Eine binomialverteilte Größe ist eine Summe von $n$ Bernoulli-Größen. Deshalb wird $B(n; p)$ für großes $n$ glockenförmig."
     },
     {
       "id": "streuung",
@@ -112,6 +114,55 @@
         }
       },
       "explain": "$\\sigma = \\sqrt{n \\cdot 0{,}5 \\cdot 0{,}5} = \\tfrac{\\sqrt n}{2} \\ge 3 \\iff n \\ge 36$. Für die doppelte Streuung braucht man die vierfache Zahl an Versuchen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Streuung einer Summe** unabhängiger Zufallsgrößen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "V(S_n) = V(X_1) + \\ldots + V(X_n) = n\\sigma^2",
+            "why": "Bei Unabhängigkeit addieren sich Varianzen."
+          },
+          {
+            "tex": "\\sigma(S_n) = \\sqrt n\\,\\sigma",
+            "why": "Die Standardabweichung wächst nur wie die Wurzel."
+          },
+          {
+            "tex": "\\sigma(\\bar X) = \\frac{\\sqrt n\\,\\sigma}{n} = \\frac{\\sigma}{\\sqrt n}",
+            "why": "Der Mittelwert wird immer genauer."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Varianz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
     },
     {
       "id": "notiz",
@@ -383,6 +434,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Mittelwert",
+      "md": "Eine Messung streut mit $\\sigma = 5$. Wie stark streut der Mittelwert aus 100 unabhängigen Messungen?",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\tfrac{5}{\\sqrt{100}} = 0{,}5$.",
+      "id": "vq1"
+    },
+    {
       "id": "augensumme",
       "type": "numeric",
       "label": "Rechnen",
@@ -476,7 +537,8 @@
         "Summen: Erwartungswert $n\\mu$, Standardabweichung $\\sqrt n\\,\\sigma$.",
         "Mittelwerte streuen mit $\\tfrac{\\sigma}{\\sqrt n}$: halbe Unsicherheit kostet vierfache Arbeit.",
         "Zentraler Grenzwertsatz: Summen vieler unabhängiger Größen sind näherungsweise normalverteilt.",
-        "Darum ist die Binomialverteilung für großes n glockenförmig, und darum gibt es die Glocke so oft."
+        "Darum ist die Binomialverteilung für großes n glockenförmig, und darum gibt es die Glocke so oft.",
+        "σ der Summe √n·σ, des Mittelwerts σ/√n."
       ]
     }
   ]

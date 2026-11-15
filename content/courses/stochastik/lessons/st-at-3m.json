@@ -20,6 +20,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Gesucht ist das kleinste $n$ mit $P(X \\ge 1) \\ge c$, also $1 - (1 - p)^n \\ge c$. Umstellen, logarithmieren, durch $\\ln(1 - p) < 0$ teilen (das Zeichen dreht sich) und **aufrunden**.",
+      "label": "Verfahren",
+      "more": "1. Gegenereignis: $P(X \\ge 1) = 1 - P(X = 0) = 1 - (1 - p)^n$.\n2. Ungleichung $1 - (1 - p)^n \\ge c$ umstellen zu $(1 - p)^n \\le 1 - c$.\n3. Logarithmieren: $n \\cdot \\ln(1 - p) \\le \\ln(1 - c)$.\n4. Durch $\\ln(1 - p)$ teilen; weil es negativ ist, dreht sich das Zeichen: $n \\ge \\tfrac{\\ln(1 - c)}{\\ln(1 - p)}$.\n5. Auf die nächste ganze Zahl **aufrunden**.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Trefferwahrscheinlichkeit 10 %; wie oft muss man es mindestens versuchen, um mit mindestens 95 % mindestens einen Treffer zu haben?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "1 - 0{,}9^n \\ge 0{,}95 \\;\\Rightarrow\\; 0{,}9^n \\le 0{,}05",
+            "why": "Gegenereignis, umstellen."
+          },
+          {
+            "tex": "n \\ge \\frac{\\ln 0{,}05}{\\ln 0{,}9} \\approx 28{,}4",
+            "why": "Logarithmieren; durch die negative Zahl ln 0,9 teilen dreht das Zeichen."
+          },
+          {
+            "tex": "n = 29",
+            "why": "Aufrunden: Mit 28 Versuchen reicht es knapp nicht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Logarithmus.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aufrunden.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Beim Teilen durch $\\ln(1 - p)$ kehrt sich das Ungleichheitszeichen um. Und immer **aufrunden**: Mit dem abgerundeten $n$ wäre die Bedingung nicht erfüllt.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "3M-Aufgaben",
@@ -93,6 +155,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "3M",
+      "md": "Trefferwahrscheinlichkeit 0,2. Wie viele Versuche braucht man mindestens, damit mit mindestens 90 % mindestens ein Treffer dabei ist?",
+      "answer": 11,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$0{,}8^n \\le 0{,}1$ gibt $n \\ge 10{,}3$, also $n = 11$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -145,6 +217,26 @@
       },
       "label": "Mindestzahl Versuche",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "mindestens"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "3M: Gegenereignis, logarithmieren, Zeichen drehen, aufrunden."
+      ]
     }
   ]
 }

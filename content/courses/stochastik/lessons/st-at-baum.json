@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Pfadregeln: **entlang** eines Pfades multiplizieren, **verschiedene** Pfade zum selben Ereignis addieren. Ohne Zurücklegen ändern sich die Wahrscheinlichkeiten auf der zweiten Stufe.",
+      "label": "Verfahren",
+      "more": "1. Stufen und Ausgänge festlegen, den Baum zeichnen.\n2. Kanten beschriften; an jeder Verzweigung ist die Summe 1.\n3. Gesuchte Pfade markieren, Pfadwahrscheinlichkeiten multiplizieren, Pfade addieren.\n4. Bei »mindestens« lohnt oft das Gegenereignis.\n\n**Ohne Zurücklegen** verringern sich nach jedem Zug die Anzahlen und der Nenner.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Urne mit 3 roten und 2 blauen Kugeln, zwei Züge ohne Zurücklegen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(rr) = \\tfrac35 \\cdot \\tfrac24 = 0{,}3",
+            "why": "Ein Pfad: multiplizieren; nach dem ersten Zug sind nur noch 4 Kugeln da."
+          },
+          {
+            "tex": "P(\\text{verschiedenfarbig}) = \\tfrac35 \\cdot \\tfrac24 + \\tfrac25 \\cdot \\tfrac34 = 0{,}6",
+            "why": "Zwei Pfade: addieren."
+          },
+          {
+            "tex": "P(\\text{mindestens eine blaue}) = 1 - P(rr) = 0{,}7",
+            "why": "Gegenereignis."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Pfad.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei Pfade.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenereignis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ohne Zurücklegen stehen auf der zweiten Stufe **neue** Nenner. Und an jeder Verzweigung muss die Summe 1 sein.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Baumdiagramme",
@@ -89,6 +151,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Pfad",
+      "md": "Aus einer Urne mit 4 roten und 1 blauen Kugel werden zwei ohne Zurücklegen gezogen. Wie wahrscheinlich sind beide rot?",
+      "answer": 0.6,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\tfrac45 \\cdot \\tfrac34 = 0{,}6$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -135,6 +207,21 @@
       "level": 2,
       "label": "Urnenmodell",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-urne",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Pfade multiplizieren, Pfade addieren; ohne Zurücklegen neue Nenner."
+      ]
     }
   ]
 }
