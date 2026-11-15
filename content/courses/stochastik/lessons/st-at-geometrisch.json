@@ -16,6 +16,103 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Geometrische Verteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Geometrische Verteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Wie oft muss man würfeln, bis zum ersten Mal eine Sechs fällt?\"*, *\"Wie groß ist die Wahrscheinlichkeit, dass der erste Erfolg im $k$-ten Versuch eintritt?\"*, *\"Bestimmen Sie die Wahrscheinlichkeit, dass höchstens $k$ Versuche nötig sind\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Anzahl der Versuche bis zum ersten Erfolg\n> Ein Bernoulli-Experiment mit konstanter Erfolgswahrscheinlichkeit $p$ wird **unabhängig wiederholt**, bis der erste Erfolg eintritt. Die Zufallsgröße $X$ zählt die **Anzahl der Versuche** bis einschließlich dieses ersten Erfolgs."
+            }
+          ]
+        },
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = (1-p)^{k-1} \\cdot p, \\qquad k = 1,2,3,\\dots$$\n\n**Lesart:** In den ersten $k-1$ Versuchen tritt jeweils ein Misserfolg auf (Wahrscheinlichkeit $(1-p)^{k-1}$), im $k$-ten Versuch dann der Erfolg (Wahrscheinlichkeit $p$) -- alle Versuche sind unabhängig, die Wahrscheinlichkeiten werden multipliziert."
+            }
+          ]
+        },
+        {
+          "title": "Kumulierte Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "$$P(X \\leq k) = 1 - (1-p)^k$$\n\nDas Gegenereignis \"mehr als $k$ Versuche nötig\" bedeutet: die ersten $k$ Versuche sind **alle** Misserfolge, mit Wahrscheinlichkeit $(1-p)^k$."
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert",
+          "blocks": [
+            {
+              "md": "$$E(X) = \\frac{1}{p}$$\n\nAnschaulich: Ist die Erfolgswahrscheinlichkeit klein, dauert es im Mittel entsprechend lange bis zum ersten Erfolg."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Erfolgswahrscheinlichkeit $p$** aus der Aufgabenstellung bestimmen.\n2. **Gesuchte Wahrscheinlichkeit klassifizieren:** \"genau im $k$-ten Versuch\" $\\Rightarrow$ Einzelwert-Formel; \"höchstens $k$ Versuche\" $\\Rightarrow$ kumulierte Formel; \"mehr als $k$ Versuche\" $\\Rightarrow$ Gegenereignis $(1-p)^k$.\n3. **Formel einsetzen** und auswerten.\n4. **Bei Erwartungswertfragen:** $E(X) = \\tfrac1p$ direkt anwenden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein fairer Würfel wird wiederholt geworfen. Wie groß ist die Wahrscheinlichkeit, dass die erste Sechs genau im vierten Wurf fällt? Wie viele Würfe sind im Mittel bis zur ersten Sechs nötig?*\n\n**Schritt 1:** $p = \\dfrac16$.\n\n**Schritt 3:**\n$$P(X=4) = \\left(\\frac{5}{6}\\right)^{3} \\cdot \\frac{1}{6} = \\frac{125}{216}\\cdot\\frac{1}{6} = \\frac{125}{1296} \\approx 0{,}0965$$\n\n*Mit rund 9,65 % Wahrscheinlichkeit fällt die erste Sechs genau beim vierten Wurf.*\n\n**Schritt 4:**\n$$E(X) = \\frac{1}{1/6} = 6$$\n\n*Im Mittel sind 6 Würfe bis zur ersten Sechs nötig -- ein Ergebnis, das sich mit der Alltagserfahrung deckt.*"
+            }
+          ]
+        },
+        {
+          "title": "Zweites Beispiel: kumulierte Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "*Wie groß ist die Wahrscheinlichkeit, dass spätestens beim dritten Wurf eine Sechs fällt?*\n\n$$P(X \\leq 3) = 1 - \\left(\\frac{5}{6}\\right)^3 = 1 - \\frac{125}{216} = \\frac{91}{216} \\approx 0{,}4213$$"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zur Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Bei der **Binomialverteilung** ist die **Anzahl der Versuche fest** ($n$ ist gegeben), gesucht ist die Anzahl der Erfolge. Bei der geometrischen Verteilung ist es umgekehrt: die **Anzahl der Erfolge ist fest** (genau einer, der erste), gesucht ist die Anzahl der dafür nötigen Versuche."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bei $k=1$ die Formel falsch auswerten.** $P(X=1) = (1-p)^0 \\cdot p = p$ -- der Exponent $0$ ergibt $1$, keine Sonderbehandlung nötig.\n- **\"Höchstens $k$\" mit \"genau $k$\" verwechseln.** Erstere verlangt die kumulierte Formel oder eine Summe, letztere nur den Einzelwert.\n- **Beim Gegenereignis \"mehr als $k$ Versuche\" den Exponenten falsch setzen.** Es sind $(1-p)^k$, nicht $(1-p)^{k+1}$ oder $(1-p)^{k-1}$ -- die ersten $k$ Versuche müssen alle misslingen.\n- **Erwartungswert mit der wahrscheinlichsten Anzahl von Versuchen verwechseln.** $E(X)=\\tfrac1p$ ist ein Mittelwert, keine Garantie -- der wahrscheinlichste Einzelwert ist tatsächlich $k=1$.\n- **Unabhängigkeit der Versuche nicht prüfen.** Bei Ziehen ohne Zurücklegen aus einer kleinen Grundgesamtheit gilt die geometrische Verteilung nicht -- dort ändert sich $p$ mit jedem Versuch."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bernoulli-Kette** · **Binomialverteilung** · **Hypergeometrische Verteilung** · **Poisson-Verteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

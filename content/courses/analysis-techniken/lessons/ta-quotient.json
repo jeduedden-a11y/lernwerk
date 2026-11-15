@@ -15,6 +15,165 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Quotientenkriterium:** $\\displaystyle\\sum \\frac{2^k}{k^2}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{a_{k+1}}{a_k} = \\frac{2^{k+1}}{(k + 1)^2} \\cdot \\frac{k^2}{2^k} = 2 \\cdot \\frac{k^2}{(k + 1)^2}",
+            "why": "Quotient aufeinanderfolgender Glieder."
+          },
+          {
+            "tex": "\\to 2 > 1",
+            "why": "Grenzwert für k → ∞."
+          },
+          {
+            "tex": "\\Rightarrow \\text{divergent}",
+            "why": "Die Glieder wachsen am Ende geometrisch."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Quotient.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Quotientenkriterium:** $\\left|\\tfrac{a_{k+1}}{a_k}\\right| \\to q$; für $q < 1$ absolut konvergent, für $q > 1$ divergent, bei $q = 1$ keine Aussage. Das **Wurzelkriterium** $\\sqrt[k]{|a_k|} \\to q$ hilft bei $k$-ten Potenzen.",
+      "label": "Quotient",
+      "more": "**Wann:** Fakultäten und Potenzen wie $q^k$ im Glied machen den Quotienten einfach; Ausdrücke der Form $(\\ldots)^k$ legen die Wurzel nahe.\n\n**Grenze:** Für p-Reihen ist $q = 1$; dort entscheiden die Kriterien nichts, man braucht Vergleich oder Integralkriterium.\n\n**Bezug zu Potenzreihen:** Aus dem Quotientenkriterium folgt der Konvergenzradius.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Quotienten- und Wurzelkriterium",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Quotienten- und Wurzelkriterium.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Quotientenkriterium",
+          "blocks": [
+            {
+              "md": "Für $\\sum a_n$ mit positiven Gliedern:\n$$L = \\lim_{n\\to\\infty}\\frac{a_{n+1}}{a_n}$$\n$L<1$: **absolut konvergent**; $L>1$ (o. $\\infty$): **divergent**; $L=1$: **keine Aussage**.\n\n**Am besten geeignet für:** Fakultäten, Exponentialausdrücke, Produkte."
+            }
+          ]
+        },
+        {
+          "title": "Wurzelkriterium",
+          "blocks": [
+            {
+              "md": "$$L = \\lim_{n\\to\\infty}\\sqrt[n]{a_n}$$\nGleiche Entscheidungsregel wie oben.\n\n**Am besten geeignet für:** Ausdrücke, die bereits **hoch $n$** stehen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel (Quotientenkriterium mit Fakultät)",
+          "blocks": [
+            {
+              "md": "$$\\sum \\frac{n!}{n^n}: \\quad \\frac{a_{n+1}}{a_n} = \\left(\\frac{n}{n+1}\\right)^n \\to \\frac1e < 1 \\;\\Longrightarrow\\; \\text{konvergent}$$"
+            }
+          ]
+        },
+        {
+          "title": "Faustregel",
+          "blocks": [
+            {
+              "md": "Fakultät sichtbar → **Quotientenkriterium**. Ausdruck hoch $n$ → **Wurzelkriterium**. Bei $L=1$ versagen **beide** Tests — anderes Kriterium nötig (z. B. $\\sum\\frac1n$ vs. $\\sum\\frac1{n^2}$ liefern beide $L=1$, verhalten sich aber gegensätzlich).\n\nDas Quotientenkriterium ist das Standardwerkzeug zur Bestimmung des Konvergenzradius von **Potenzreihen**."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Kriterien",
+          "blocks": [
+            {
+              "md": "$$q = \\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right| \\qquad w = \\lim_{n\\to\\infty}\\sqrt[n]{|a_n|}$$\n\n| Wert | Folgerung |\n|---|---|\n| $<1$ | **absolut konvergent** |\n| $>1$ | divergent |\n| $=1$ | **keine Aussage** |\n\n> [!important] Beide vergleichen mit der geometrischen Reihe\n> Das ist ihr gemeinsamer Ursprung. Ist der Quotient aufeinanderfolgender Glieder ab einem Index kleiner als eine feste Zahl $q<1$, so werden die Glieder von einer geometrischen Reihe majorisiert -- und diese konvergiert.\n>\n> Daraus erklärt sich zugleich die Lücke bei 1: Die geometrische Reihe versagt dort als Vergleich, weil sie selbst divergiert. Der Fall $q=1$ ist deshalb keine Schwäche der Beweisführung, sondern liegt in der Sache.\n>\n> Bei $q>1$ folgt sogar mehr als Divergenz: Die Glieder wachsen, bilden also keine Nullfolge, und das **Divergenzkriterium** greift unmittelbar."
+            }
+          ]
+        },
+        {
+          "title": "Die Wahl zwischen beiden",
+          "blocks": [
+            {
+              "md": "> [!tip] Die Bauart der Glieder entscheidet\n> | Glieder enthalten | geeignet |\n> |---|---|\n> | Fakultäten $n!$ | **Quotientenkriterium** |\n> | Produkte, die sich fortsetzen | Quotientenkriterium |\n> | $n$-te Potenzen wie $\\left(\\frac{n}{n+1}\\right)^n$ | **Wurzelkriterium** |\n> | Ausdrücke der Form $c^n$ | beide gleich gut |\n>\n> Bei Fakultäten kürzt sich im Quotienten fast alles weg: $\\frac{(n+1)!}{n!} = n+1$. Das ist der Grund, weshalb dieses Kriterium dort ohne jede Rechenarbeit zum Ziel führt.\n>\n> Bei $n$-ten Potenzen hebt die $n$-te Wurzel den Exponenten auf. Der Grenzwert $\\sqrt[n]{n} \\to 1$ ist dabei laufend nützlich und sollte präsent sein.\n>\n> Theoretisch ist das Wurzelkriterium das stärkere: Wo das Quotientenkriterium entscheidet, entscheidet auch das Wurzelkriterium, aber nicht umgekehrt. Praktisch ist der Quotient meist bequemer zu rechnen."
+            }
+          ]
+        },
+        {
+          "title": "Der Fall q gleich eins",
+          "blocks": [
+            {
+              "md": "> [!warning] Kein Ergebnis, sondern ein Hinweis auf ein anderes Verfahren\n> Bei allen p-Reihen liefert das Quotientenkriterium den Wert 1 -- gleichgültig, ob die Reihe konvergiert oder divergiert. Für $\\sum 1/n$ und $\\sum 1/n^2$ ergibt sich derselbe Grenzwert, obwohl die eine divergiert und die andere konvergiert.\n>\n> Das zeigt, dass die Kriterien für Glieder, die nur **polynomial** abfallen, zu grob sind. Dort ist der Vergleich mit der **p-Reihe** das Mittel der Wahl -- über das **Grenzwertvergleichskriterium**.\n>\n> Die Formulierung in der Lösung sollte das ausdrücklich festhalten: \"Das Quotientenkriterium liefert den Grenzwert 1 und ist damit nicht anwendbar.\" Ein Schluss auf Divergenz wäre falsch."
+            }
+          ]
+        },
+        {
+          "title": "Absolute Konvergenz als Ergebnis",
+          "blocks": [
+            {
+              "md": "> [!info] Beide Kriterien arbeiten mit Beträgen\n> Sie liefern daher stets **absolute** Konvergenz, nie nur bedingte. Das ist eine stärkere Aussage, hat aber eine Kehrseite: Bei alternierenden Reihen wie $\\sum \\frac{(-1)^n}{n}$, die nur bedingt konvergieren, können sie prinzipiell nicht greifen. Dort ist das **Leibniz-Kriterium** zuständig. Siehe **Absolute und bedingte Konvergenz**.\n>\n> Ihre wichtigste Anwendung liegt bei **Potenzreihen**: Der Konvergenzradius wird fast immer über das Quotientenkriterium bestimmt."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Quotienten- und Wurzelkriterium sind die hinreichenden Kriterien für Glieder mit Potenzen und Fakultäten. Bei Versagen greifen **Grenzwertvergleichskriterium** oder **Integralkriterium**; ihre Hauptanwendung sind **Potenzreihen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was liefert das Quotientenkriterium für $\\sum \\dfrac{k}{3^k}$?",
+      "options": [
+        {
+          "md": "$q = \\tfrac13$, absolut konvergent",
+          "correct": true
+        },
+        {
+          "md": "$q = 3$, divergent"
+        },
+        {
+          "md": "$q = 1$, keine Aussage"
+        },
+        {
+          "md": "$q = 0$, divergent"
+        }
+      ],
+      "explain": "$\\tfrac{k + 1}{3^{k+1}} \\cdot \\tfrac{3^k}{k} = \\tfrac{k + 1}{3k} \\to \\tfrac13$.",
+      "label": "Quotient",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Berechne $q = \\lim \\left|\\frac{a_{k+1}}{a_k}\\right|$ für $a_k = \\frac{3^k}{k!}$.",
@@ -39,12 +198,25 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "reihenkriterium"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Quotient oder Wurzel → q < 1: absolut konvergent; q > 1: divergent; q = 1: offen.",
         "Fakultäten: Quotient; k-te Potenzen: Wurzel.",
-        "p-Reihen versagen bei diesen Kriterien."
+        "p-Reihen versagen bei diesen Kriterien.",
+        "Quotient < 1 konvergent, > 1 divergent, = 1 keine Aussage."
       ],
       "id": "summary"
     }

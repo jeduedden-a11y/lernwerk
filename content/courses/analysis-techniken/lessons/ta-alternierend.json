@@ -19,6 +19,367 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Leibniz",
+      "md": "**Die alternierende harmonische Reihe:** Die Partialsummen springen um $\\ln 2 \\approx 0{,}693$ (orange) herum, mit immer kleineren Ausschlägen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          25
+        ],
+        "y": [
+          0.4,
+          1.05
+        ],
+        "grid": true,
+        "xLabel": "n",
+        "vars": [
+          {
+            "name": "N",
+            "min": 1,
+            "max": 24,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 2,
+            "y": 0.5,
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": 0.8333,
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": 0.5833,
+            "color": "blue"
+          },
+          {
+            "x": 5,
+            "y": 0.7833,
+            "color": "blue"
+          },
+          {
+            "x": 6,
+            "y": 0.6167,
+            "color": "blue"
+          },
+          {
+            "x": 7,
+            "y": 0.7595,
+            "color": "blue"
+          },
+          {
+            "x": 8,
+            "y": 0.6345,
+            "color": "blue"
+          },
+          {
+            "x": 9,
+            "y": 0.7456,
+            "color": "blue"
+          },
+          {
+            "x": 10,
+            "y": 0.6456,
+            "color": "blue"
+          },
+          {
+            "x": 11,
+            "y": 0.7365,
+            "color": "blue"
+          },
+          {
+            "x": 12,
+            "y": 0.6532,
+            "color": "blue"
+          },
+          {
+            "x": 13,
+            "y": 0.7301,
+            "color": "blue"
+          },
+          {
+            "x": 14,
+            "y": 0.6587,
+            "color": "blue"
+          },
+          {
+            "x": 15,
+            "y": 0.7254,
+            "color": "blue"
+          },
+          {
+            "x": 16,
+            "y": 0.6629,
+            "color": "blue"
+          },
+          {
+            "x": 17,
+            "y": 0.7217,
+            "color": "blue"
+          },
+          {
+            "x": 18,
+            "y": 0.6661,
+            "color": "blue"
+          },
+          {
+            "x": 19,
+            "y": 0.7188,
+            "color": "blue"
+          },
+          {
+            "x": 20,
+            "y": 0.6688,
+            "color": "blue"
+          },
+          {
+            "x": 21,
+            "y": 0.7164,
+            "color": "blue"
+          },
+          {
+            "x": 22,
+            "y": 0.6709,
+            "color": "blue"
+          },
+          {
+            "x": 23,
+            "y": 0.7144,
+            "color": "blue"
+          },
+          {
+            "x": 24,
+            "y": 0.6727,
+            "color": "blue"
+          },
+          {
+            "x": "N",
+            "y": 0.4,
+            "color": "label"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 0.6931,
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "N",
+            "color": "gray"
+          }
+        ],
+        "readout": "n = {N|0} · Fehler höchstens 1/(n + 1) = {1/(N + 1)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "s₁ = 1, s₂ = 0,5: über und unter ln 2.",
+          "set": {
+            "N": 2
+          }
+        },
+        {
+          "caption": "Die Abstände schrumpfen wie 1/n.",
+          "to": {
+            "N": 10
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Reihe konvergiert, aber langsam.",
+          "to": {
+            "N": 24
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Leibniz:** Fällt $b_k$ monoton gegen 0, konvergiert $\\sum (-1)^k b_k$, und der Fehler ist höchstens das erste weggelassene Glied. **Absolut** konvergent heißt: Auch $\\sum |a_k|$ konvergiert; sonst **bedingt**.",
+      "label": "Alternierend",
+      "more": "**Bedingt konvergent:** $1 - \\tfrac12 + \\tfrac13 - \\ldots = \\ln 2$, aber $\\sum \\tfrac1k$ divergiert. Bei solchen Reihen hängt der Wert sogar von der Reihenfolge der Summanden ab.\n\n**Absolute Konvergenz** ist stärker und robust gegen Umordnen; jede absolut konvergente Reihe konvergiert.\n\n**Fehlerschranke:** $|s - s_n| \\leq b_{n+1}$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Alternierende Reihen (Leibniz-Kriterium)",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Alternierende Reihen (Leibniz-Kriterium).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **alternierende Reihe** wechselt das Vorzeichen der Glieder:\n$$\\sum_{n=1}^\\infty (-1)^{n-1}a_n = a_1-a_2+a_3-\\cdots, \\quad a_n>0$$"
+            }
+          ]
+        },
+        {
+          "title": "Leibniz-Kriterium",
+          "blocks": [
+            {
+              "md": "Die Reihe konvergiert, wenn **beide** Bedingungen gelten:\n1. $a_n$ ist **fallend**: $a_{n+1}\\leq a_n$.\n2. $a_n \\to 0$."
+            }
+          ]
+        },
+        {
+          "title": "Fehlerabschätzung (Alternierender-Reihen-Restglied)",
+          "blocks": [
+            {
+              "md": "Erfüllt die Reihe das Leibniz-Kriterium und konvergiert gegen $S$, gilt für die Partialsumme $S_n$:\n$$|S-S_n| \\leq a_{n+1}$$\n\nDer Fehler ist durch den **ersten weggelassenen Term** beschränkt — enorm nützlich für numerische Approximationen, besonders bei **Taylor- und Maclaurin-Reihen**."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^\\infty \\frac{(-1)^{n-1}}{n}: \\quad a_n=\\frac1n \\text{ fallend}, \\to 0 \\;\\Longrightarrow\\; \\text{konvergent}$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Annehmen, \"alternierend\" bedeute automatisch konvergent — $a_n\\to0$ muss trotzdem gelten.\n- Die Monotoniebedingung nicht geprüft.\n- Die Fehlerabschätzung auf nicht-alternierende Reihen anwenden — sie gilt **nur** unter den Leibniz-Bedingungen.\n\nFührt direkt zur Unterscheidung **Absolute und bedingte Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$\\sum (-1)^n b_n \\text{ konvergiert, wenn } b_n \\ge 0,\\; b_n \\text{ monoton fallend},\\; b_n \\to 0$$\n\n> [!important] Drei Bedingungen -- und alle drei werden gebraucht\n> Der Vorzeichenwechsel allein genügt nicht. Die Beträge müssen **monoton fallen** und gegen null gehen; erst dann heben sich aufeinanderfolgende Glieder so weit auf, dass die Partialsummen einen Grenzwert einschließen.\n>\n> Die Monotonie ist die am häufigsten übersehene Bedingung. Sie ist nachzuweisen -- entweder durch $b_{n+1}\\le b_n$ direkt oder über die Ableitung der zugehörigen Funktion. Bei zusammengesetzten Ausdrücken wie $\\frac{\\ln n}{n}$ ist der Nachweis nicht trivial, weil die Folge zunächst wächst und erst ab $n=3$ fällt. Die Einschränkung \"ab einem Index\" ist dabei zulässig.\n>\n> Anschaulich pendeln die Partialsummen um den Grenzwert und nähern sich ihm von beiden Seiten -- eine Intervallschachtelung. Die geraden Partialsummen bilden eine wachsende, die ungeraden eine fallende Folge, und beide streben demselben Wert zu."
+            }
+          ]
+        },
+        {
+          "title": "Die Fehlerabschätzung",
+          "blocks": [
+            {
+              "md": "$$|s - s_n| \\le b_{n+1}$$\n\n> [!tip] Der Abbruchfehler ist höchstens so groß wie das erste weggelassene Glied\n> Das ist die praktisch nützlichste Eigenschaft alternierender Reihen und der Grund, weshalb sie sich für Näherungsrechnungen besonders eignen. Man kann vorab bestimmen, wie viele Glieder für eine gewünschte Genauigkeit nötig sind -- ohne den Grenzwert zu kennen.\n>\n> Bei anderen Reihen ist eine so einfache Fehlerschranke nicht zu haben. Sie folgt hier unmittelbar aus der Intervallschachtelung: Der Grenzwert liegt stets zwischen zwei aufeinanderfolgenden Partialsummen, deren Abstand genau $b_{n+1}$ beträgt.\n>\n> Anwendung findet das etwa bei der Leibniz-Reihe $\\frac{\\pi}{4} = 1-\\frac{1}{3}+\\frac{1}{5}-\\dots$, die zwar konvergiert, aber so langsam, dass für zwei sichere Nachkommastellen bereits Hunderte von Gliedern nötig sind. Sie ist damit ein hübsches, aber praktisch unbrauchbares Verfahren zur Berechnung von $\\pi$."
+            }
+          ]
+        },
+        {
+          "title": "Bedingte Konvergenz",
+          "blocks": [
+            {
+              "md": "> [!warning] Leibniz liefert Konvergenz, aber nicht absolute Konvergenz\n> Die alternierende harmonische Reihe $\\sum \\frac{(-1)^{n+1}}{n} = \\ln 2$ konvergiert nach Leibniz. Die Reihe der Beträge ist die harmonische Reihe und divergiert. Die Konvergenz ist also nur **bedingt**.\n>\n> Das hat eine erstaunliche Folge: Durch Umordnen der Glieder lässt sich jeder beliebige Wert erzeugen. Die vertraute Vertauschbarkeit der Summanden gilt hier nicht. Siehe **Absolute und bedingte Konvergenz**.\n>\n> In der Lösung ist daher stets anzugeben, welche Art von Konvergenz vorliegt. Die Reihenfolge der Prüfung lautet zweckmäßig: zuerst die Beträge -- konvergieren sie, ist man mit der stärkeren Aussage fertig; erst wenn nicht, folgt Leibniz."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Leibniz-Kriterium ist das einzige Kriterium für alternierende Reihen und liefert im Gegensatz zum **Quotienten- und Wurzelkriterium** auch bedingte Konvergenz. Der Unterschied wird in **Absolute und bedingte Konvergenz** behandelt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Absolute und bedingte Konvergenz",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Absolute und bedingte Konvergenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definitionen",
+          "blocks": [
+            {
+              "md": "- **Absolut konvergent:** $\\sum |a_n|$ konvergiert.\n- **Bedingt konvergent:** $\\sum a_n$ konvergiert, aber $\\sum |a_n|$ divergiert."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "$$\\sum |a_n| \\text{ konvergiert} \\;\\Longrightarrow\\; \\sum a_n \\text{ konvergiert}$$\nDie Umkehrung ist **falsch**."
+            }
+          ]
+        },
+        {
+          "title": "Kanonisches Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^\\infty \\frac{(-1)^{n-1}}{n} = \\ln 2$$\nkonvergiert nach dem **Leibniz-Kriterium** — aber $\\sum\\frac1n$ (**p-Reihe**) divergiert. Also **bedingt** konvergent."
+            }
+          ]
+        },
+        {
+          "title": "Riemannscher Umordnungssatz",
+          "blocks": [
+            {
+              "md": "- Konvergiert eine Reihe **bedingt**, kann man ihre Glieder so **umordnen**, dass sie gegen **jede beliebige** reelle Zahl konvergiert — oder divergiert.\n- Konvergiert eine Reihe **absolut**, konvergiert **jede Umordnung** gegen dieselbe Summe.\n\nBedingte Konvergenz ist damit \"fragil\" (ordnungsabhängig), absolute Konvergenz \"robust\" — deshalb ist absolute Konvergenz stets vorzuziehen, wenn erreichbar."
+            }
+          ]
+        },
+        {
+          "title": "Die Begriffe",
+          "blocks": [
+            {
+              "md": "| Art | Bedingung |\n|---|---|\n| **absolut konvergent** | $\\sum |a_n|$ konvergiert |\n| **bedingt konvergent** | $\\sum a_n$ konvergiert, $\\sum |a_n|$ nicht |\n| divergent | $\\sum a_n$ konvergiert nicht |\n\n> [!important] Absolute Konvergenz ist die stärkere Eigenschaft\n> Aus absoluter folgt gewöhnliche Konvergenz, nicht umgekehrt. Der Nachweis nutzt, dass sich $a_n$ in positive und negative Anteile zerlegen lässt, die beide durch $\\sum|a_n|$ majorisiert werden.\n>\n> Praktisch bedeutet das eine Arbeitserleichterung: Für Reihen mit wechselnden Vorzeichen prüft man zunächst die Betragsreihe. Gelingt das, ist man fertig -- und alle Kriterien für nichtnegative Glieder stehen zur Verfügung.\n>\n> Nur wenn die Betragsreihe divergiert, muss man auf das **Leibniz-Kriterium** zurückgreifen. Der Standardfall bedingter Konvergenz ist die alternierende harmonische Reihe."
+            }
+          ]
+        },
+        {
+          "title": "Der Umordnungssatz",
+          "blocks": [
+            {
+              "md": "> [!warning] Bei bedingter Konvergenz darf nicht umgeordnet werden\n> Der Riemannsche Umordnungssatz sagt: Zu jeder bedingt konvergenten Reihe und **jeder** vorgegebenen Zahl gibt es eine Umordnung, die genau gegen diese Zahl konvergiert. Man kann die Reihe auch divergieren lassen.\n>\n> Das ist einer der befremdlichsten Sätze der Analysis. Die Begründung ist gleichwohl einsichtig: Bei bedingter Konvergenz divergieren die positiven und die negativen Anteile jeder für sich. Man kann daher zunächst so viele positive Glieder nehmen, bis das Ziel überschritten ist, dann negative, bis es unterschritten ist, und so fort -- der Vorrat geht nie aus.\n>\n> Bei **absolut** konvergenten Reihen ist Umordnen dagegen unbedenklich; der Wert bleibt derselbe. Das ist eine der Rechtfertigungen dafür, weshalb absolute Konvergenz in der höheren Analysis die eigentlich interessante Eigenschaft ist.\n>\n> Die allgemeine Lehre: Die Rechenregeln endlicher Summen dürfen nicht ungeprüft auf unendliche übertragen werden. Assoziativität und Kommutativität, im Endlichen selbstverständlich, sind hier an Bedingungen geknüpft."
+            }
+          ]
+        },
+        {
+          "title": "Die Prüfreihenfolge",
+          "blocks": [
+            {
+              "md": "> [!tip] Ein festes Schema für Reihen mit wechselnden Vorzeichen\n> 1. Bilden die Glieder eine **Nullfolge**? Wenn nein, divergent, fertig.\n> 2. Konvergiert die **Betragsreihe**? Wenn ja, absolut konvergent, fertig.\n> 3. Sind die Beträge monoton fallend? Wenn ja, nach **Leibniz** bedingt konvergent.\n> 4. Sonst weitere Untersuchung.\n>\n> Dieses Schema vermeidet den häufigsten Fehler, nämlich sofort zu Leibniz zu greifen und die stärkere Aussage zu verschenken. Es macht zudem sichtbar, dass die Kriterien für nichtnegative Glieder über den Umweg der Betragsreihe auch bei alternierenden Reihen anwendbar sind."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Unterschied zwischen absoluter und bedingter Konvergenz erklärt, weshalb **Quotienten- und Wurzelkriterium** und **Leibniz-Kriterium** verschiedene Aussagen liefern. Bei **Potenzreihen** ist die Konvergenz im Innern des Konvergenzintervalls stets absolut."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Fehler",
+      "md": "Wie viele Glieder von $\\sum \\tfrac{(-1)^{k+1}}{k}$ braucht man mindestens, damit der Fehler unter 0,01 liegt?",
+      "answer": 99,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$b_{n+1} = \\tfrac{1}{n + 1} \\leq 0{,}01$ gilt ab $n = 99$.",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Absolut, bedingt konvergent oder divergent?",
@@ -56,12 +417,25 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "reihenkriterium"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Leibniz: b_k fallend gegen 0 ⇒ Σ(−1)^k b_k konvergiert.",
         "Absolut: Σ|a_k| konvergiert; sonst bedingt.",
-        "Fehlerabschätzung: erstes weggelassenes Glied."
+        "Fehlerabschätzung: erstes weggelassenes Glied.",
+        "Leibniz: monoton gegen 0; Fehler ≤ erstes weggelassenes Glied."
       ],
       "id": "summary"
     }

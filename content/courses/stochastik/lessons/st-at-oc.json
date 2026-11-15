@@ -16,6 +16,100 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Operationscharakteristik",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Operationscharakteristik.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Aufgabe fragt, wie sich die Fehlerwahrscheinlichkeit ändert, **wenn der wahre Parameter variiert**. Signalformulierungen: *\"Untersuchen Sie, wie $\\beta$ von $p$ abhängt\"*, *\"Zeichnen Sie die Operationscharakteristik\"*, *\"Interpretieren Sie den Verlauf des Graphen\"*.\n\nAnspruchsvoller Aufgabentyp, der im Leistungskurs auftritt und Verständnis statt Rechenroutine prüft."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Operationscharakteristik** $OC(p)$ ordnet jedem möglichen wahren Parameter $p$ die Wahrscheinlichkeit zu, dass der Test $H_0$ **beibehält**:\n\n$$OC(p) = P_p(X \\in A)$$\n\nwobei $A$ der Annahmebereich ist. Anders gesagt: die Wahrscheinlichkeit, dass der Test **nicht anschlägt** -- als Funktion der Wirklichkeit.\n\n> [!important] Zwei Ablesungen aus derselben Kurve\n> - An der Stelle $p = p_0$ (also unter $H_0$) gilt $OC(p_0) = 1 - \\alpha$.\n> - An jeder Stelle $p_1 \\neq p_0$, die zu $H_1$ gehört, gilt $OC(p_1) = \\beta(p_1)$.\n>\n> Die Kurve zeigt also **beide Fehlerarten gleichzeitig** -- deshalb ist sie das Werkzeug, mit dem sich die Güte eines Tests als Ganzes beurteilen lässt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Annahmebereich $A$ bestimmen** (aus **Entscheidungsregel bestimmen** oder aus der Aufgabe).\n2. **Funktionsterm aufstellen:** $OC(p) = P_p(X \\in A)$, bei rechtsseitigem Test also $OC(p) = P_p(X \\le k-1)$.\n3. **Wertetabelle anlegen** für mehrere $p$ (typisch: $p_0$ und einige Werte darüber/darunter).\n4. **Kurve zeichnen** oder gegebene Kurve auswerten.\n5. **Interpretieren:**\n   - Wert bei $p_0$: entspricht $1 - \\alpha$\n   - Werte in Richtung $H_1$: entsprechen $\\beta$\n   - Steilheit der Kurve: je steiler, desto **trennschärfer** der Test"
+            }
+          ]
+        },
+        {
+          "title": "Beispielhafter Verlauf",
+          "blocks": [
+            {
+              "md": "*Fortsetzung: $n = 200$, $A = \\{0, \\dots, 15\\}$, also $OC(p) = P_p(X \\le 15)$.*\n\n| $p$ | $OC(p) = P_p(X \\le 15)$ | Bedeutung |\n|---|---|---|\n| 0,03 | 0,996 | $H_0$ wahr, wird fast sicher beibehalten |\n| 0,05 | 0,951 | $= 1 - \\alpha$ |\n| 0,06 | 0,873 | $\\beta$ bei $p_1 = 0{,}06$ |\n| 0,08 | 0,460 | $\\beta$ bei $p_1 = 0{,}08$ |\n| 0,10 | 0,157 | $\\beta$ bei $p_1 = 0{,}10$ |\n| 0,12 | 0,036 | Abweichung wird meist erkannt |"
+            },
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0.03",
+                  "0.05",
+                  "0.06",
+                  "0.08",
+                  "0.1",
+                  "0.12"
+                ],
+                "series": [
+                  {
+                    "title": "OC(p) = Wahrscheinlichkeit, H0 beizubehalten",
+                    "data": [
+                      0.996,
+                      0.951,
+                      0.873,
+                      0.46,
+                      0.157,
+                      0.036
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "*(Benötigt das Plugin **Obsidian Charts**. Werte gerundet, zur Illustration des Verlaufs.)*"
+            }
+          ]
+        },
+        {
+          "title": "Interpretation des Verlaufs",
+          "blocks": [
+            {
+              "md": "Die Kurve fällt **monoton** von nahezu 1 auf nahezu 0. Entscheidend ist das mittlere Stück:\n\n- **Bei $p$ nahe $p_0$** liegt $OC$ hoch -- kleine Abweichungen werden kaum erkannt. Das ist keine Schwäche des Verfahrens, sondern unvermeidlich: Eine Abweichung von 5 % auf 6 % ist bei $n = 200$ statistisch nicht sicher von Zufall zu trennen.\n- **Bei großem Abstand zu $p_0$** fällt $OC$ steil ab -- deutliche Abweichungen werden zuverlässig erkannt.\n- **Ein größeres $n$** macht die Kurve steiler. Das ist die grafische Entsprechung der Aussage, dass nur mehr Daten beide Fehlerarten gleichzeitig senken (siehe **Fehler 1. und 2. Art**)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$OC(p)$ mit $\\beta$ gleichsetzen.** $OC(p)$ ist nur dort gleich $\\beta$, wo $p$ zu $H_1$ gehört. An der Stelle $p_0$ ist es $1 - \\alpha$.\n- **Kurve als Wahrscheinlichkeitsverteilung lesen.** $OC$ ist eine Funktion **des Parameters**, keine Verteilung der Zufallsgröße. Die Fläche darunter hat keine Bedeutung.\n- **Beim Zeichnen den Annahmebereich mit dem Ablehnungsbereich vertauschen.** Dann läuft die Kurve steigend statt fallend.\n- **Nur einen Punkt berechnen.** Der Aufgabentyp verlangt den Verlauf über mehrere Werte."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Fehler 1. und 2. Art** · **Irrtumswahrscheinlichkeit berechnen** · **Entscheidungsregel bestimmen** · **Zweiseitiger Hypothesentest**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

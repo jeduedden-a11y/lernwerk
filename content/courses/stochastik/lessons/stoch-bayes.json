@@ -4,8 +4,14 @@
   "subtitle": "Warum ein positiver Test weniger bedeutet, als er verspricht",
   "source": "KCGO Mathematik Hessen, Q3.1; natürliche Häufigkeiten nach Gigerenzer",
   "vault": [
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Bedingte Wahrscheinlichkeit.md", "title": "Bedingte Wahrscheinlichkeit" },
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Satz von Bayes.md", "title": "Satz von Bayes" }
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bedingte Wahrscheinlichkeit.md",
+      "title": "Bedingte Wahrscheinlichkeit"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Satz von Bayes.md",
+      "title": "Satz von Bayes"
+    }
   ],
   "steps": [
     {
@@ -13,15 +19,49 @@
       "type": "anim",
       "md": "Ein Test ist »zu 90 Prozent zuverlässig«. Was heißt ein positives Ergebnis wirklich? Die Antwort steckt in den Anzahlen.",
       "widget": "bayes",
-      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": [] },
+      "params": {
+        "population": 1000,
+        "prevalence": 0.01,
+        "sensitivity": 0.9,
+        "specificity": 0.91,
+        "sliders": []
+      },
       "timeline": [
-        { "caption": "1000 Personen. Ein Prozent hat die Krankheit: das sind die 10 roten Punkte ganz oben links.", "do": { "view": "grid", "onlyPos": false } },
-        { "caption": "Der Test erkennt 9 der 10 Kranken (gefüllt rot). Einen übersieht er (roter Ring)." },
-        { "caption": "Er schlägt aber auch bei 9 Prozent der 990 Gesunden an: Die 89 orangen Punkte sind falscher Alarm." },
-        { "caption": "Jetzt nur noch die positiven Tests: 9 rote neben 89 orangen. Wer positiv getestet wurde, ist einer dieser 98 Punkte.", "do": { "onlyPos": true } },
-        { "caption": "Nur 9 der 98 sind krank, also etwa 9 Prozent. Die vielen Gesunden erzeugen mehr falsche als echte Treffer.", "hold": 3200 },
-        { "caption": "Derselbe Gedanke als Baum: Zwei Pfade enden bei »positiv«, der obere mit 9, der untere mit 89 Personen.", "do": { "view": "tree" } },
-        { "caption": "Und als Vierfeldertafel: In der Spalte »positiv« stehen 9 und 89. Bedingte Wahrscheinlichkeit heißt: nur diese Spalte betrachten.", "do": { "view": "table" } }
+        {
+          "caption": "1000 Personen. Ein Prozent hat die Krankheit: das sind die 10 roten Punkte ganz oben links.",
+          "do": {
+            "view": "grid",
+            "onlyPos": false
+          }
+        },
+        {
+          "caption": "Der Test erkennt 9 der 10 Kranken (gefüllt rot). Einen übersieht er (roter Ring)."
+        },
+        {
+          "caption": "Er schlägt aber auch bei 9 Prozent der 990 Gesunden an: Die 89 orangen Punkte sind falscher Alarm."
+        },
+        {
+          "caption": "Jetzt nur noch die positiven Tests: 9 rote neben 89 orangen. Wer positiv getestet wurde, ist einer dieser 98 Punkte.",
+          "do": {
+            "onlyPos": true
+          }
+        },
+        {
+          "caption": "Nur 9 der 98 sind krank, also etwa 9 Prozent. Die vielen Gesunden erzeugen mehr falsche als echte Treffer.",
+          "hold": 3200
+        },
+        {
+          "caption": "Derselbe Gedanke als Baum: Zwei Pfade enden bei »positiv«, der obere mit 9, der untere mit 89 Personen.",
+          "do": {
+            "view": "tree"
+          }
+        },
+        {
+          "caption": "Und als Vierfeldertafel: In der Spalte »positiv« stehen 9 und 89. Bedingte Wahrscheinlichkeit heißt: nur diese Spalte betrachten.",
+          "do": {
+            "view": "table"
+          }
+        }
       ]
     },
     {
@@ -30,15 +70,216 @@
       "md": "Die Fachbegriffe zur Animation: Die Krankheit betrifft $1\\,\\%$ der Bevölkerung (**Basisrate** oder Prävalenz). Der Test erkennt $90\\,\\%$ der Kranken (**Sensitivität**) und meldet bei $91\\,\\%$ der Gesunden korrekt »negativ« (**Spezifität**). Bei den übrigen $9\\,\\%$ der Gesunden schlägt er fälschlich an.\n\nDer häufigste Denkfehler: Man verwechselt »Wie oft ist ein Kranker positiv?« mit »Wie oft ist ein Positiver krank?«. Das sind zwei verschiedene Fragen mit sehr verschiedenen Antworten."
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bedingte Wahrscheinlichkeit",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bedingte Wahrscheinlichkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **bedingte Wahrscheinlichkeit** $P(A|B)$ gibt an, wie wahrscheinlich Ereignis $A$ ist, **wenn bereits bekannt ist**, dass Ereignis $B$ eingetreten ist:\n$$P(A\\,|\\,B) = \\frac{P(A\\cap B)}{P(B)}, \\qquad P(B) \\neq 0$$"
+            }
+          ]
+        },
+        {
+          "title": "Umformung: Multiplikationssatz",
+          "blocks": [
+            {
+              "md": "Durch Umstellen ergibt sich die für Baumdiagramme zentrale Formel:\n$$P(A\\cap B) = P(B)\\cdot P(A\\,|\\,B)$$\nDas entspricht genau der **Pfadregel**: die Wahrscheinlichkeit eines Pfades ist das Produkt der bedingten Wahrscheinlichkeiten entlang des Pfades."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "In einer Klasse sind 60 % der Schüler sportlich aktiv ($S$), davon spielen 40 % zusätzlich ein Instrument ($M$). Gesucht: $P(S \\cap M)$.\n$$P(S\\cap M) = P(S)\\cdot P(M\\,|\\,S) = 0{,}6 \\cdot 0{,}4 = 0{,}24$$"
+            }
+          ]
+        },
+        {
+          "title": "Vierfeldertafel",
+          "blocks": [
+            {
+              "md": "Bedingte Wahrscheinlichkeiten lassen sich übersichtlich in einer **Vierfeldertafel** darstellen (Zeilen: $B$/$\\bar B$, Spalten: $A$/$\\bar A$, mit Randsummen):\n\n| | $A$ | $\\bar A$ | $\\Sigma$ |\n|---|---|---|---|\n| $B$ | $P(A\\cap B)$ | $P(\\bar A \\cap B)$ | $P(B)$ |\n| $\\bar B$ | $P(A\\cap \\bar B)$ | $P(\\bar A\\cap\\bar B)$ | $P(\\bar B)$ |\n| $\\Sigma$ | $P(A)$ | $P(\\bar A)$ | $1$ |"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zu Unabhängigkeit",
+          "blocks": [
+            {
+              "md": "Sind $A$ und $B$ **unabhängig**, gilt $P(A|B) = P(A)$ — das Wissen um $B$ verändert die Wahrscheinlichkeit von $A$ nicht (siehe **Stochastische Unabhängigkeit**)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $P(A|B)$ und $P(B|A)$ verwechseln — **nicht** dasselbe (Umkehrung nur über den **Satz von Bayes**).\n- $P(A\\cap B)$ mit $P(A|B)$ verwechseln.\n- Bei $P(B)=0$ die bedingte Wahrscheinlichkeit trotzdem \"berechnen\" — undefiniert.\n\nUmkehrung der Bedingung: **Satz von Bayes**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Darstellungen derselben Information",
+          "blocks": [
+            {
+              "image": "vault:Baumdiagramm und Vierfeldertafel.svg"
+            },
+            {
+              "md": "$$P(A\\mid B) = \\frac{P(A \\cap B)}{P(B)}$$\n\n> [!important] Die Bedingung verkleinert den Ergebnisraum\n> Das ist die begriffliche Kernaussage. Die Bedingung $B$ ersetzt die ursprüngliche Grundgesamtheit durch eine kleinere: Gerechnet wird nur noch **innerhalb von B**.\n>\n> Deshalb steht $P(B)$ im Nenner -- es ist die neue Bezugsgröße, auf die normiert wird. Der Zähler ist stets die **Schnittwahrscheinlichkeit**, niemals eine Randwahrscheinlichkeit.\n>\n> Zum Beispiel: \"Wie wahrscheinlich ist eine Sechs, wenn die Zahl gerade ist?\" Der Ergebnisraum schrumpft von $\\{1,...,6\\}$ auf $\\{2,4,6\\}$, die Antwort ist $1/3$ statt $1/6$."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb Baum und Tafel beide gebraucht werden",
+          "blocks": [
+            {
+              "md": "| | Baumdiagramm | Vierfeldertafel |\n|---|---|---|\n| zeigt unmittelbar | $P(B\\mid A)$ als Astbeschriftung | $P(A \\cap B)$ in den Innenfeldern |\n| Struktur | zeitlich, gerichtet | symmetrisch |\n| gut für | mehrstufige Vorgänge, mehr als zwei Stufen | Umkehrung der Bedingung |\n\n> [!tip] Der Wechsel zwischen beiden Darstellungen ist die eigentliche Technik\n> Die **umgekehrte** bedingte Wahrscheinlichkeit $P(A\\mid B)$ steht nirgends im Baum -- sie erfordert das Rückwärtsrechnen. In der Tafel dagegen liest man sie als Anteil einer Spalte ab.\n>\n> Standardvorgehen: Die gegebenen Wahrscheinlichkeiten in den Baum eintragen, die Pfadprodukte in die Tafel übertragen, die Randsummen bilden -- und dann ablesen.\n>\n> Ist ein Feld der Tafel gefüllt und die Randsummen bekannt, ergeben sich die übrigen drei durch Subtraktion. Das ist bei Aufgaben mit unvollständigen Angaben der schnellste Weg."
+            }
+          ]
+        },
+        {
+          "title": "Der häufigste Denkfehler",
+          "blocks": [
+            {
+              "md": "> [!warning] P(A|B) und P(B|A) sind verschiedene Größen\n> Sie hängen über den Satz von Bayes zusammen, sind aber im Allgemeinen **nicht gleich**. Die Verwechslung heißt in der medizinischen Statistik **Prävalenzfehler**.\n>\n> Anschaulich: $P(\\text{Regen} \\mid \\text{Wolken})$ ist mäßig, $P(\\text{Wolken} \\mid \\text{Regen})$ ist praktisch eins. Dieselben zwei Ereignisse, völlig verschiedene Zahlen.\n>\n> Der Unterschied entsteht durch die **Größe der Bedingungsmenge**: Ist $P(B)$ sehr viel größer als $P(A)$, so ist $P(A\\mid B)$ entsprechend kleiner als $P(B\\mid A)$.\n>\n> In Aufgabentexten erkennt man die Richtung an der Formulierung: \"unter den Positiven\" bedingt auf den Test, \"bei den Erkrankten\" bedingt auf die Krankheit."
+            }
+          ]
+        },
+        {
+          "title": "Der Satz von der totalen Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "$$P(B) = P(A)\\cdot P(B\\mid A) + P(\\bar{A})\\cdot P(B\\mid \\bar{A})$$\n\n> [!info] Er ist nur die Randsumme der Tafel\n> Anschaulich zerlegt er $B$ in seine Anteile aus $A$ und aus $\\bar{A}$ -- im Baum die Summe aller Pfade, die zu $B$ führen.\n>\n> Er wird meist als Zwischenschritt gebraucht: als **Nenner** beim Satz von Bayes."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Bedingte Wahrscheinlichkeiten sind die Grundlage des **Satzes von Bayes** und der **stochastischen Unabhängigkeit** -- diese ist genau der Sonderfall $P(A\\mid B) = P(A)$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Satz von Bayes",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Satz von Bayes.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Satz von Bayes** kehrt eine bedingte Wahrscheinlichkeit um — aus $P(B|A)$ berechnet man $P(A|B)$:\n$$P(A\\,|\\,B) = \\frac{P(B\\,|\\,A)\\cdot P(A)}{P(B)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Herleitung",
+          "blocks": [
+            {
+              "md": "Aus der Definition der bedingten Wahrscheinlichkeit (siehe **Bedingte Wahrscheinlichkeit**) gilt $P(A\\cap B) = P(A|B)\\cdot P(B) = P(B|A)\\cdot P(A)$. Auflösen nach $P(A|B)$ liefert die Formel."
+            }
+          ]
+        },
+        {
+          "title": "Typischer Anwendungskontext: Testverfahren",
+          "blocks": [
+            {
+              "md": "Bayes ist zentral bei medizinischen Tests, Qualitätskontrollen o. Ä., wenn man von \"$P(\\text{Test positiv}\\,|\\,\\text{krank})$\" (bekannt aus der Testgüte) auf \"$P(\\text{krank}\\,|\\,\\text{Test positiv})$\" (die eigentlich interessierende Größe) schließen will."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Ein Test erkennt eine Krankheit (Prävalenz $P(K)=0{,}01$) mit Sensitivität $P(T^+|K)=0{,}98$ und hat eine Falsch-Positiv-Rate $P(T^+|\\bar K)=0{,}05$. Gesucht: $P(K\\,|\\,T^+)$.\n\nGesamtwahrscheinlichkeit für ein positives Testergebnis (Satz von der totalen Wahrscheinlichkeit):\n$$P(T^+) = P(T^+|K)P(K) + P(T^+|\\bar K)P(\\bar K) = 0{,}98\\cdot0{,}01 + 0{,}05\\cdot0{,}99 = 0{,}0593$$\n$$P(K\\,|\\,T^+) = \\frac{0{,}98\\cdot0{,}01}{0{,}0593} \\approx 0{,}165$$\nTrotz eines \"guten\" Tests ist bei positivem Ergebnis die tatsächliche Erkrankungswahrscheinlichkeit nur ca. **16,5 %** — eine für viele überraschende, aber typische Konsequenz niedriger Prävalenz (Bayes-Paradoxon)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $P(A|B)$ mit $P(B|A)$ gleichsetzen (\"Inversionsfehler\") — genau das verhindert der Satz von Bayes.\n- Den Nenner $P(B)$ vergessen, auf die totale Wahrscheinlichkeit über **alle** Fälle zu beziehen (nicht nur $P(B|A)P(A)$).\n\nBaut direkt auf **Bedingte Wahrscheinlichkeit** auf."
+            }
+          ]
+        },
+        {
+          "title": "Die Formel und ihre Herkunft",
+          "blocks": [
+            {
+              "md": "$$P(A\\mid B) = \\frac{P(A)\\cdot P(B\\mid A)}{P(B)} = \\frac{P(A)\\cdot P(B\\mid A)}{P(A)\\cdot P(B\\mid A) + P(\\bar{A})\\cdot P(B\\mid \\bar{A})}$$\n\n> [!info] Der Satz ist keine neue Aussage, sondern eine Umformung\n> Er entsteht daraus, dass sich die Schnittwahrscheinlichkeit auf zwei Weisen schreiben lässt:\n> $$P(A\\cap B) = P(A)\\cdot P(B\\mid A) = P(B)\\cdot P(A\\mid B)$$\n> Auflösen nach $P(A\\mid B)$ liefert unmittelbar die Formel. Der Nenner wird meist über den Satz von der totalen Wahrscheinlichkeit ausgerechnet.\n>\n> Wer eine Vierfeldertafel aufstellt, **braucht die Formel nicht** -- man liest das Ergebnis als Spaltenanteil ab. Der Satz ist die algebraische Fassung desselben Vorgangs. Im Abitur ist die Tafel meist der sicherere Weg, die Formel der schnellere."
+            }
+          ]
+        },
+        {
+          "title": "Die Deutung: Umkehrung der Schlussrichtung",
+          "blocks": [
+            {
+              "md": "| Richtung | Frage |\n|---|---|\n| $P(B\\mid A)$ | Ursache gegeben -- wie wahrscheinlich ist die Wirkung? |\n| $P(A\\mid B)$ | Wirkung beobachtet -- wie wahrscheinlich ist diese Ursache? |\n\n> [!important] Bayes rechnet von der Beobachtung auf die Ursache zurück\n> Das ist die Denkfigur der gesamten empirischen Wissenschaft: Man sieht Daten und fragt nach der Hypothese, die sie erzeugt hat. Die Formel gibt an, wie eine **Vorannahme** (die Prior-Wahrscheinlichkeit $P(A)$) durch eine Beobachtung zu einer **revidierten Einschätzung** wird.\n>\n> Die Vorannahme verschwindet dabei nie aus der Rechnung. Genau das macht den Satz für die Erkenntnistheorie interessant und für Testaufgaben tückisch."
+            }
+          ]
+        },
+        {
+          "title": "Das Standardbeispiel: der medizinische Test",
+          "blocks": [
+            {
+              "md": "Angenommen, 0,5 Prozent der Bevölkerung sind erkrankt. Der Test erkennt Erkrankte zu 99 Prozent und Gesunde zu 98 Prozent korrekt.\n\n| | Test positiv | Test negativ | Summe |\n|---|---|---|---|\n| krank | 0,00495 | 0,00005 | 0,005 |\n| gesund | 0,01990 | 0,97510 | 0,995 |\n| Summe | **0,02485** | 0,97515 | 1,000 |\n\n$$P(\\text{krank}\\mid \\text{positiv}) = \\frac{0{,}00495}{0{,}02485} \\approx 0{,}199$$\n\n> [!warning] Ein Test mit 99 Prozent Trefferquote liefert bei positivem Befund nur rund 20 Prozent Erkrankungswahrscheinlichkeit\n> Das Ergebnis wirkt paradox, ist es aber nicht. Der Grund ist die **Prävalenz**: Die Gruppe der Gesunden ist rund zweihundertmal größer, sodass die 2 Prozent falsch Positiven unter ihnen zahlenmäßig die 99 Prozent richtig Positiven unter den Erkrankten deutlich übertreffen.\n>\n> Auf 200 000 Menschen gerechnet: 990 richtig positive Kranke stehen 3980 falsch positiven Gesunden gegenüber.\n>\n> Der Denkfehler, aus der hohen Sensitivität auf eine hohe Erkrankungswahrscheinlichkeit zu schließen, heißt **Basisraten-Vernachlässigung**. Er ist in der Aufgabenstellung meist bewusst angelegt -- die Interpretation gehört daher zur vollständigen Lösung.\n>\n> Praktische Folge: Reihenuntersuchungen bei seltenen Krankheiten erzeugen überwiegend falsche Alarme. Deshalb wird bei positivem Screening ein zweiter, anderer Test angeschlossen -- der arbeitet dann auf einer Gruppe mit 20 statt 0,5 Prozent Prävalenz."
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen in Aufgaben",
+          "blocks": [
+            {
+              "md": "1. Die Ereignisse **benennen** und die gegebenen Wahrscheinlichkeiten der richtigen Richtung zuordnen\n2. Vierfeldertafel aufstellen -- Innenfelder als Pfadprodukte\n3. Randsummen bilden (das ist der Nenner)\n4. Gesuchtes als Anteil ablesen\n5. Ergebnis **im Sachkontext deuten**, insbesondere den Einfluss der Basisrate"
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Satz von Bayes setzt die **bedingte Wahrscheinlichkeit** voraus und ist ihre wichtigste Anwendung. Die zugrundeliegende Frage -- wie Beobachtung eine Überzeugung ändert -- berührt die **Erkenntnistheorie**."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "schaetzen",
       "type": "choice",
       "label": "Verstanden?",
       "md": "Wie wahrscheinlich bist du nach dem positiven Test tatsächlich krank?",
       "options": [
-        { "md": "etwa $90\\,\\%$", "why": "$90\\,\\%$ ist die Wahrscheinlichkeit, **als Kranker** positiv zu testen. Gefragt ist die umgekehrte Richtung." },
-        { "md": "etwa $50\\,\\%$", "why": "Schon näher, aber die vielen Gesunden fallen noch stärker ins Gewicht." },
-        { "md": "etwa $9\\,\\%$", "correct": true },
-        { "md": "etwa $1\\,\\%$", "why": "Der Test verrät durchaus etwas: Nach dem positiven Befund ist das Risiko deutlich höher als vorher." }
+        {
+          "md": "etwa $90\\,\\%$",
+          "why": "$90\\,\\%$ ist die Wahrscheinlichkeit, **als Kranker** positiv zu testen. Gefragt ist die umgekehrte Richtung."
+        },
+        {
+          "md": "etwa $50\\,\\%$",
+          "why": "Schon näher, aber die vielen Gesunden fallen noch stärker ins Gewicht."
+        },
+        {
+          "md": "etwa $9\\,\\%$",
+          "correct": true
+        },
+        {
+          "md": "etwa $1\\,\\%$",
+          "why": "Der Test verrät durchaus etwas: Nach dem positiven Befund ist das Risiko deutlich höher als vorher."
+        }
       ],
       "explain": "Rund $9\\,\\%$. Die meisten tippen auf $90\\,\\%$, auch viele Ärztinnen und Ärzte. Warum es so wenig ist, siehst du gleich an 1000 Personen."
     },
@@ -53,7 +294,13 @@
       "label": "Ansehen",
       "md": "Jeder Punkt ist eine Person. Rot sind die Kranken, Orange die Gesunden mit falschem Alarm. Tippe auf **Nur positive Tests zeigen** und vergleiche Rot mit Orange. Die Schalter darunter zeigen dieselben Zahlen als Baum und als Vierfeldertafel.",
       "widget": "bayes",
-      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": [] }
+      "params": {
+        "population": 1000,
+        "prevalence": 0.01,
+        "sensitivity": 0.9,
+        "specificity": 0.91,
+        "sliders": []
+      }
     },
     {
       "id": "rechnen",
@@ -73,11 +320,30 @@
       "label": "Ausprobieren",
       "md": "Der Test bleibt derselbe, aber die Krankheit wird häufiger, etwa in einer Risikogruppe. **Ab welchem Anteil Kranker stimmt ein positiver Test mindestens in der Hälfte der Fälle?**",
       "widget": "bayes",
-      "params": { "population": 1000, "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.91, "sliders": ["prevalence"], "views": ["grid", "table"] },
+      "params": {
+        "population": 1000,
+        "prevalence": 0.01,
+        "sensitivity": 0.9,
+        "specificity": 0.91,
+        "sliders": [
+          "prevalence"
+        ],
+        "views": [
+          "grid",
+          "table"
+        ]
+      },
       "goal": {
         "when": "post >= 0.5",
-        "hints": [{ "when": "post < 0.5", "text": "Bei {prev*100|1} % Kranken stimmt ein positiver Test erst zu {post*100|1} %. Schiebe den Anteil höher." }],
-        "solve": { "prev": 0.091 }
+        "hints": [
+          {
+            "when": "post < 0.5",
+            "text": "Bei {prev*100|1} % Kranken stimmt ein positiver Test erst zu {post*100|1} %. Schiebe den Anteil höher."
+          }
+        ],
+        "solve": {
+          "prev": 0.091
+        }
       },
       "explain": "Ab etwa $9{,}1\\,\\%$ Kranken: Dann gibt es ungefähr gleich viele richtig und falsch Positive. Die Aussagekraft eines Tests hängt also nicht nur vom Test ab, sondern von der **Basisrate**."
     },
@@ -94,8 +360,22 @@
       "label": "Übertragen",
       "md": "In einer Fabrik sind $2\\,\\%$ der Teile defekt. Die Endkontrolle sortiert $95\\,\\%$ der defekten Teile aus, aber auch $3\\,\\%$ der einwandfreien.\n\n$P(\\text{aussortiert}) =$ {{0}}\n\n$P(\\text{defekt} \\mid \\text{aussortiert}) \\approx$ {{1}}",
       "blanks": [
-        { "accept": [0.0484], "numeric": true, "tolerance": 0.0002, "placeholder": "Dezimalzahl" },
-        { "accept": [0.3926], "numeric": true, "tolerance": 0.004, "placeholder": "Dezimalzahl" }
+        {
+          "accept": [
+            0.0484
+          ],
+          "numeric": true,
+          "tolerance": 0.0002,
+          "placeholder": "Dezimalzahl"
+        },
+        {
+          "accept": [
+            0.3926
+          ],
+          "numeric": true,
+          "tolerance": 0.004,
+          "placeholder": "Dezimalzahl"
+        }
       ],
       "hint": "Zeichne den Baum: erst defekt oder nicht, dann aussortiert oder nicht. Für $P(\\text{aussortiert})$ addierst du zwei Pfade.",
       "explain": "$P(\\text{aussortiert}) = 0{,}02 \\cdot 0{,}95 + 0{,}98 \\cdot 0{,}03 = 0{,}019 + 0{,}0294 = 0{,}0484$. Davon sind nur $\\tfrac{0{,}019}{0{,}0484} \\approx 0{,}39$ wirklich defekt, mehr als die Hälfte der aussortierten Teile ist in Ordnung."
@@ -108,8 +388,20 @@
       "whyNot": "Im Beispiel ist $P(+ \\mid K) = 0{,}9$, aber $P(K \\mid +) \\approx 0{,}09$.",
       "explain": "Beide hängen über den Satz von Bayes zusammen: $P(A \\mid B) = P(B \\mid A) \\cdot \\tfrac{P(A)}{P(B)}$. Gleich sind sie nur, wenn $P(A) = P(B)$. Vor Gericht hat die Verwechslung einen eigenen Namen: **Trugschluss des Anklägers**."
     },
-    { "id": "neu1", "type": "gen", "gen": "stoch-bayes", "level": 2, "label": "Neue Situation" },
-    { "id": "neu2", "type": "gen", "gen": "stoch-bayes", "level": 3, "label": "Neue Situation" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-bayes",
+      "level": 2,
+      "label": "Neue Situation"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-bayes",
+      "level": 3,
+      "label": "Neue Situation"
+    },
     {
       "id": "schaetzen-neu",
       "type": "gen",

@@ -15,6 +15,158 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grenzwert",
+      "md": "**Endliche Fläche bis ins Unendliche?** Unter $\\tfrac{1}{x^2}$ (blau) wächst die Fläche ab 1 nie über 1; unter $\\tfrac1x$ (orange) wächst sie unbegrenzt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          1.2
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "B",
+            "min": 1,
+            "max": 20,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "1/x^2",
+            "color": "blue",
+            "domain": [
+              0.8,
+              20
+            ]
+          },
+          {
+            "name": "g",
+            "expr": "1/x",
+            "color": "orange",
+            "domain": [
+              0.8,
+              20
+            ]
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 1,
+            "to": "B",
+            "color": "blue"
+          }
+        ],
+        "readout": "obere Grenze {B|1} · Fläche unter 1/x²: {1 - 1/B|3} · unter 1/x: {ln(B)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Bis 2: 0,5 gegen 0,69.",
+          "set": {
+            "B": 2
+          }
+        },
+        {
+          "caption": "Bis 5: 0,8 gegen 1,61.",
+          "to": {
+            "B": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bis 20: 0,95 gegen 3,0; die blaue Fläche nähert sich 1, die orange wächst weiter.",
+          "to": {
+            "B": 19.9
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Bei unendlicher Grenze oder einer Polstelle am Rand ersetzt man die Grenze durch eine Variable und bildet den **Grenzwert**: $\\int_1^\\infty \\tfrac{1}{x^p}\\,dx$ konvergiert genau für $p > 1$.",
+      "label": "Uneigentlich",
+      "more": "**Typ 1, unendliche Grenze:** $\\int_a^\\infty f(x)\\,dx = \\lim_{b \\to \\infty}\\int_a^b f(x)\\,dx$.\n\n**Typ 2, Polstelle am Rand:** $\\int_0^1 \\tfrac{1}{\\sqrt x}\\,dx = \\lim_{\\varepsilon \\to 0}\\int_\\varepsilon^1 x^{-1/2}\\,dx = 2$.\n\n**Merkregel:** $\\int_1^\\infty x^{-p}\\,dx$ konvergiert für $p > 1$ (Wert $\\tfrac{1}{p - 1}$); $\\int_0^1 x^{-p}\\,dx$ konvergiert für $p < 1$. Bei $p = 1$ divergieren beide.\n\n**Exponentiell:** $\\int_0^\\infty e^{-kx}\\,dx = \\tfrac1k$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Uneigentliche Integrale",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Uneigentliche Integrale.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Integral ist **uneigentlich**, wenn entweder das **Integrationsintervall unendlich** ist oder der **Integrand eine unendliche Definitionslücke** besitzt. Beide Fälle werden über einen **Grenzwert** definiert."
+            }
+          ]
+        },
+        {
+          "title": "Typ I — Unendliche Intervalle",
+          "blocks": [
+            {
+              "md": "$$\\int_a^{\\infty} f(x)\\,dx = \\lim_{t\\to\\infty}\\int_a^t f(x)\\,dx$$\n\n**Beispiel:** $\\displaystyle\\int_1^\\infty \\frac{1}{x^2}\\,dx = \\lim_{t\\to\\infty}\\left[-\\frac1x\\right]_1^t = 1$ — **konvergent**.\n\nVergleich: $\\displaystyle\\int_1^\\infty \\frac1x\\,dx = \\lim_{t\\to\\infty}\\ln t = \\infty$ — **divergent** (obwohl $\\frac1x\\to0$)."
+            }
+          ]
+        },
+        {
+          "title": "Typ II — Unendliche Definitionslücken",
+          "blocks": [
+            {
+              "md": "Bei einer Polstelle $x=a$:\n$$\\int_a^b f(x)\\,dx = \\lim_{t\\to a^+}\\int_t^b f(x)\\,dx$$\n\n**Beispiel:** $\\displaystyle\\int_0^1 \\frac{1}{\\sqrt{x}}\\,dx = \\lim_{t\\to0^+}\\left[2\\sqrt{x}\\right]_t^1 = 2$ — **konvergent**."
+            }
+          ]
+        },
+        {
+          "title": "Das $p$-Integral — kritisches Vergleichsergebnis",
+          "blocks": [
+            {
+              "md": "$$\\int_1^{\\infty} \\frac{1}{x^p}\\,dx \\text{ konvergiert} \\iff p>1 \\qquad \\int_0^1 \\frac{1}{x^p}\\,dx \\text{ konvergiert} \\iff p<1$$\n\nDie Umkehrung zwischen $[1,\\infty)$ und $[0,1]$ ist bemerkenswert — direktes Analogon zur **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Vergleichskriterium",
+          "blocks": [
+            {
+              "md": "Für $0\\leq f(x)\\leq g(x)$: konvergiert $\\int g$, konvergiert auch $\\int f$; divergiert $\\int f$, divergiert auch $\\int g$. Analog zum **direkten Vergleichskriterium** bei Reihen."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Grenzwert weglassen (uneigentliche Integrale sind **keine** normalen bestimmten Integrale).\n- Bei $\\int_{-\\infty}^{\\infty}$ beide Hälften **getrennt** über eigene Grenzwerte prüfen — nicht symmetrisch als ein Grenzwert.\n- Innere Singularitäten übersehen (nicht nur an den Grenzen prüfen)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_1^\\infty \\frac{1}{x^3}\\,dx$.",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\lim_{b \\to \\infty}\\left[-\\tfrac{1}{2x^2}\\right]_1^b = \\tfrac12$.",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Konvergent oder divergent?",
@@ -68,12 +220,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "uneigentlich"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "uneigentlich"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Problematische Grenze durch Variable ersetzen, Grenzwert bilden.",
         "∫₁^∞ x^{−p} konvergiert für p > 1; ∫₀¹ x^{−p} für p < 1.",
-        "1/x divergiert in beide Richtungen."
+        "1/x divergiert in beide Richtungen.",
+        "Uneigentlich: Grenze durch Variable ersetzen, Grenzwert bilden."
       ],
       "id": "summary"
     }

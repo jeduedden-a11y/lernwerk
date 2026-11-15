@@ -20,6 +20,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "3M-Aufgaben",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/3M-Aufgaben.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Der Name kommt von den **drei \"mindestens\"** in der typischen Aufgabenstellung:\n\n> *\"Wie oft muss **mindestens** gewürfelt werden, damit mit einer Wahrscheinlichkeit von **mindestens** 99 % **mindestens** eine Sechs fällt?\"*\n\nKennzeichen: Gesucht ist der **Stichprobenumfang $n$**, nicht eine Wahrscheinlichkeit. Die Trefferwahrscheinlichkeit $p$ ist bekannt, eine Mindestsicherheit ist vorgegeben.\n\nWeitere Formulierungen: *\"Wie viele Lose muss man kaufen, um mit 95 % Sicherheit mindestens einen Gewinn zu ziehen?\"*, *\"Ab welchem Stichprobenumfang ...\"*"
+            }
+          ]
+        },
+        {
+          "title": "Die Standardstruktur",
+          "blocks": [
+            {
+              "md": "Fast jede 3M-Aufgabe folgt demselben Muster:\n\n$$P(X \\ge 1) \\ge q \\quad\\Longleftrightarrow\\quad 1 - P(X = 0) \\ge q \\quad\\Longleftrightarrow\\quad P(X = 0) \\le 1 - q$$\n\nMit $P(X = 0) = (1-p)^n$ folgt die Kernungleichung:\n\n$$(1-p)^n \\le 1 - q$$\n\n> [!important] Zwei Schritte, an denen es reihenweise schiefgeht\n> **Beim Logarithmieren dreht sich das Ungleichheitszeichen.** Man teilt durch $\\ln(1-p)$, und dieser Wert ist **negativ**, weil $0 < 1-p < 1$. Wer das Zeichen stehen lässt, erhält eine Obergrenze statt einer Untergrenze.\n>\n> **Es wird immer aufgerundet**, auch bei 25,01. Ein Stichprobenumfang ist ganzzahlig, und Abrunden würde die geforderte Sicherheit unterschreiten."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zufallsgröße und Verteilung festlegen:** $X$ = Anzahl der Treffer bei $n$ Versuchen, $X \\sim B(n; p)$.\n2. **Bedingung in Formelsprache übersetzen:** $P(X \\ge 1) \\ge q$.\n3. **Gegenereignis bilden:** $1 - P(X = 0) \\ge q$, also $P(X = 0) \\le 1 - q$.\n4. **$P(X = 0)$ einsetzen:** $(1-p)^n \\le 1-q$.\n5. **Logarithmieren:** $n \\cdot \\ln(1-p) \\le \\ln(1-q)$.\n6. **Durch $\\ln(1-p)$ teilen und Zeichen umdrehen:**\n   $$n \\ge \\frac{\\ln(1-q)}{\\ln(1-p)}$$\n7. **Aufrunden** auf die nächste ganze Zahl.\n8. **Antwortsatz** mit Bezug zur Aufgabe."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Wie oft muss man mindestens würfeln, damit mit einer Wahrscheinlichkeit von mindestens 99 % mindestens eine Sechs fällt?*\n\n**Schritt 1:** $X$ = Anzahl der Sechsen, $X \\sim B(n; \\tfrac{1}{6})$.\n\n**Schritt 2:** $P(X \\ge 1) \\ge 0{,}99$\n\n**Schritt 3:** $P(X = 0) \\le 0{,}01$\n\n**Schritt 4:** $\\left(\\tfrac{5}{6}\\right)^n \\le 0{,}01$\n\n**Schritt 5:** $n \\cdot \\ln\\tfrac{5}{6} \\le \\ln 0{,}01$\n\n**Schritt 6:** Wegen $\\ln\\tfrac{5}{6} \\approx -0{,}1823 < 0$ dreht sich das Zeichen:\n$$n \\ge \\frac{\\ln 0{,}01}{\\ln \\tfrac{5}{6}} = \\frac{-4{,}6052}{-0{,}1823} \\approx 25{,}26$$\n\n**Schritt 7:** $n = 26$\n\n**Schritt 8:** *Es muss mindestens 26-mal gewürfelt werden.*\n\n**Probe:** $\\left(\\tfrac{5}{6}\\right)^{25} \\approx 0{,}0105 > 0{,}01$ (reicht noch nicht), $\\left(\\tfrac{5}{6}\\right)^{26} \\approx 0{,}0087 \\le 0{,}01$ (reicht). Bestätigt.\n\n> [!tip] Die Probe lohnt sich immer\n> Beide Nachbarwerte einsetzen kostet zwei Zeilen und deckt sowohl Rundungs- als auch Vorzeichenfehler auf. Bei diesem Aufgabentyp gehört sie zum Standardvorgehen."
+            }
+          ]
+        },
+        {
+          "title": "Variante: mindestens zwei Treffer",
+          "blocks": [
+            {
+              "md": "Wird nach **mindestens zwei** Treffern gefragt, reicht das einfache Gegenereignis nicht mehr:\n$$P(X \\ge 2) = 1 - P(X = 0) - P(X = 1) = 1 - (1-p)^n - n \\cdot p \\cdot (1-p)^{n-1}$$\n\nDiese Ungleichung ist nach $n$ **nicht mehr algebraisch auflösbar**. Lösungsweg: systematisches Probieren mit dem Rechner oder Wertetabelle, bis die Bedingung erstmals erfüllt ist. Das ist der zulässige und erwartete Weg -- kein Zeichen dafür, dass man etwas übersehen hat."
+            }
+          ]
+        },
+        {
+          "title": "Variante: Wahrscheinlichkeit gesucht statt $n$",
+          "blocks": [
+            {
+              "md": "Manche Aufgaben drehen die Frage um: *\"Mit welcher Wahrscheinlichkeit fällt bei 30 Würfen mindestens eine Sechs?\"* Dann ist $n$ gegeben und die Rechnung endet nach Schritt 4:\n$$P(X \\ge 1) = 1 - \\left(\\tfrac{5}{6}\\right)^{30} \\approx 0{,}9957$$"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Zeichen beim Logarithmieren nicht umdrehen.** Führt zu $n \\le 25{,}26$ und der unsinnigen Antwort, man dürfe höchstens 25-mal würfeln.\n- **Abrunden.** Bei \"mindestens\" wird immer aufgerundet, unabhängig von der Nachkommastelle.\n- **Ohne Gegenereignis rechnen.** $P(X \\ge 1)$ direkt als Summe über alle $k \\ge 1$ ist bei unbekanntem $n$ nicht handhabbar.\n- **$1-q$ und $q$ verwechseln.** Bei 99 % Sicherheit steht rechts $0{,}01$, nicht $0{,}99$.\n- **$(1-p)$ mit $p$ verwechseln.** Gesucht ist die Wahrscheinlichkeit für **keinen** Treffer, also $\\tfrac{5}{6}$, nicht $\\tfrac{1}{6}$.\n- **Bei \"mindestens zwei\" algebraisch weiterrechnen wollen.** Dort ist Probieren der vorgesehene Weg."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Kumulierte Binomialverteilung** · **Binomialverteilung** · **Bernoulli-Kette** · **Baumdiagramme** · **Entscheidungsregel bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

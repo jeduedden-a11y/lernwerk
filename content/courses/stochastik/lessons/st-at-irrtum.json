@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Irrtumswahrscheinlichkeit berechnen",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Irrtumswahrscheinlichkeit berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Der Ablehnungsbereich ist **bereits gegeben** -- entweder aus einer Vorgängeraufgabe oder direkt im Text (*\"Die Nullhypothese wird verworfen, wenn mindestens 16 defekte Teile auftreten\"*). Gesucht ist die Wahrscheinlichkeit, dass diese Regel zur falschen Entscheidung führt.\n\nSignalformulierungen: *\"Berechnen Sie die Irrtumswahrscheinlichkeit\"*, *\"Mit welcher Wahrscheinlichkeit wird fälschlich abgelehnt?\"*, *\"Bestimmen Sie die Wahrscheinlichkeit eines Fehlers zweiter Art\"*.\n\nDies ist die **Umkehrung** von **Entscheidungsregel bestimmen**: dort war $\\alpha$ gegeben und $k$ gesucht, hier ist $k$ gegeben und die Wahrscheinlichkeit gesucht."
+            }
+          ]
+        },
+        {
+          "title": "Die entscheidende Vorfrage",
+          "blocks": [
+            {
+              "md": "> [!important] Welcher Fehler ist gemeint?\n> **Fehler 1. Art:** $H_0$ ist wahr, wird aber verworfen. Rechnung **mit $p_0$** aus $H_0$.\n> **Fehler 2. Art:** $H_0$ ist falsch, wird aber beibehalten. Rechnung **mit dem in der Aufgabe genannten tatsächlichen $p$**.\n>\n> Ohne diese Unterscheidung rechnet man mit dem falschen $p$ -- der häufigste Totalverlust bei diesem Aufgabentyp. Details in **Fehler 1. und 2. Art**."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "### Fehler 1. Art\n1. Ablehnungsbereich $\\overline{A}$ aus der Aufgabe übernehmen.\n2. Verteilung **unter $H_0$** ansetzen: $X \\sim B(n; p_0)$.\n3. $\\alpha = P_{p_0}(X \\in \\overline{A})$ berechnen.\n4. Über das Gegenereignis in kumulierte Form bringen.\n5. Ergebnis in Prozent angeben und **im Sachkontext deuten**.\n\n### Fehler 2. Art\n1. Den in der Aufgabe genannten **tatsächlichen** Wert $p_1$ identifizieren.\n2. Verteilung neu ansetzen: $X \\sim B(n; p_1)$ -- gleiches $n$, anderes $p$.\n3. $\\beta = P_{p_1}(X \\in A)$ berechnen, wobei $A$ der **Annahme**bereich ist.\n4. Kumulierte Form nutzen.\n5. Deuten."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Fortsetzung: $n = 200$, Ablehnungsbereich $\\overline{A} = \\{16, \\dots, 200\\}$, Annahmebereich $A = \\{0, \\dots, 15\\}$.*\n\n### Fehler 1. Art\nUnter $H_0$ gilt $p_0 = 0{,}05$, also $X \\sim B(200; 0{,}05)$:\n$$\\alpha = P(X \\ge 16) = 1 - P(X \\le 15) = 1 - 0{,}9513 = 0{,}0487$$\n\n**Deutung:** In etwa 4,9 % der Fälle wird der Ausschussanteil als erhöht eingestuft, obwohl er tatsächlich bei 5 % liegt -- der Hersteller wird also fälschlich beanstandet.\n\n### Fehler 2. Art\n*Angenommen, der tatsächliche Ausschussanteil beträgt $p_1 = 0{,}08$.*\n\nJetzt gilt $X \\sim B(200; 0{,}08)$ mit $\\mu = 16$:\n$$\\beta = P(X \\le 15) \\approx 0{,}4602$$\n\n**Deutung:** Liegt der Ausschussanteil in Wahrheit bei 8 %, bleibt der Test in rund 46 % der Fälle unauffällig -- die Verschlechterung wird also häufiger übersehen als erkannt.\n\n> [!warning] Das ist kein Rechenfehler, sondern die Aussage der Aufgabe\n> Ein $\\beta$ von 46 % wirkt alarmierend hoch, ist bei dieser Konstellation aber korrekt: $p_1 = 0{,}08$ liegt nahe bei $p_0 = 0{,}05$, und die Stichprobe ist für diese Feinheit zu klein. Genau diese Interpretation wird in Abituraufgaben abgefragt -- oft mit der Anschlussfrage, wie sich $\\beta$ durch größeres $n$ senken lässt."
+            }
+          ]
+        },
+        {
+          "title": "Zusammenhang der beiden Fehlerarten",
+          "blocks": [
+            {
+              "md": "$\\alpha$ und $\\beta$ lassen sich bei festem $n$ **nicht gleichzeitig** verkleinern: Verschiebt man $k$ nach oben, sinkt $\\alpha$ und steigt $\\beta$, und umgekehrt. Nur ein größeres $n$ verbessert beide zugleich. Die grafische Darstellung dieses Zusammenhangs ist die **Operationscharakteristik**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Mit dem falschen $p$ rechnen.** Fehler 1. Art immer mit $p_0$, Fehler 2. Art immer mit $p_1$. Wer hier verwechselt, bekommt keine Teilpunkte.\n- **Beim Fehler 2. Art den Ablehnungsbereich einsetzen** statt des Annahmebereichs. $\\beta$ ist die Wahrscheinlichkeit, **im Annahmebereich zu landen**, obwohl $H_0$ falsch ist.\n- **Grenze falsch übertragen.** Ist $\\overline{A} = \\{16, \\dots\\}$, dann ist $A = \\{0, \\dots, 15\\}$ -- also $P(X \\le 15)$, nicht $P(X \\le 16)$.\n- **$\\alpha + \\beta = 1$ annehmen.** Beide Werte beziehen sich auf **verschiedene** Verteilungen und addieren sich nicht zu 1.\n- **Deutung weglassen.** Der Operator lautet fast immer \"berechnen **und interpretieren**\". Die Interpretation ist eigenständig bepunktet."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Entscheidungsregel bestimmen** · **Fehler 1. und 2. Art** · **Operationscharakteristik** · **Zweiseitiger Hypothesentest** · **Kumulierte Binomialverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

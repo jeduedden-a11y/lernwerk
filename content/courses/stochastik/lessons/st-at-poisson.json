@@ -16,6 +16,87 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Poisson-Verteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Poisson-Verteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Im Durchschnitt gehen 3 Anrufe pro Minute ein\"*, *\"Die Anzahl der Druckfehler pro Seite ist poissonverteilt\"*, *\"Bestimmen Sie die Wahrscheinlichkeit für genau $k$ seltene Ereignisse in einem festen Zeitraum\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Seltene Ereignisse bei bekannter mittlerer Rate\n> Die Poisson-Verteilung modelliert die Anzahl von Ereignissen, die **unabhängig voneinander und mit konstanter durchschnittlicher Rate** $\\lambda$ in einem festen Zeit- oder Raumintervall auftreten -- etwa Anrufe pro Minute, Unfälle pro Tag, Druckfehler pro Seite. Der Parameter $\\lambda$ ist zugleich der Erwartungswert."
+            }
+          ]
+        },
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = \\frac{\\lambda^k \\cdot e^{-\\lambda}}{k!}, \\qquad k = 0,1,2,\\dots$$"
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert und Varianz",
+          "blocks": [
+            {
+              "md": "$$E(X) = \\lambda, \\qquad \\operatorname{Var}(X) = \\lambda$$\n\nEine Besonderheit der Poisson-Verteilung: Erwartungswert und Varianz sind **identisch** -- ein schneller Plausibilitätscheck, ob ein Datensatz überhaupt poissonverteilt sein kann."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Rate $\\lambda$** aus der Aufgabenstellung ablesen (Durchschnittswert pro Intervall).\n2. **Gesuchtes $k$** bestimmen.\n3. **Formel einsetzen**, $e^{-\\lambda}$ mit dem Taschenrechner auswerten.\n4. **Bei \"mindestens\"/\"höchstens\"-Fragen:** über Summierung oder Gegenereignis gehen, analog zur Binomialverteilung."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*In einer Telefonzentrale gehen im Mittel 3 Anrufe pro Minute ein. Wie groß ist die Wahrscheinlichkeit, dass in einer bestimmten Minute genau 5 Anrufe eingehen?*\n\n**Schritt 1:** $\\lambda = 3$.\n\n**Schritt 3:**\n$$P(X=5) = \\frac{3^5 \\cdot e^{-3}}{5!} = \\frac{243 \\cdot e^{-3}}{120}$$\n\nMit $e^{-3} \\approx 0{,}049787$:\n$$P(X=5) \\approx \\frac{243 \\cdot 0{,}049787}{120} \\approx \\frac{12{,}098}{120} \\approx 0{,}1008$$\n\n*Mit rund 10,1 % Wahrscheinlichkeit gehen genau 5 Anrufe in dieser Minute ein.*"
+            }
+          ]
+        },
+        {
+          "title": "Poisson-Approximation der Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Für eine binomialverteilte Größe mit **großem $n$** und **kleinem $p$**, sodass $\\lambda = n\\cdot p$ eine moderate Zahl bleibt (Faustregel: $n \\geq 50$, $p \\leq 0{,}05$), lässt sich die Binomialverteilung durch die Poisson-Verteilung mit $\\lambda = n\\cdot p$ annähern. Praktisch relevant, wenn $n$ zu groß für direkte Binomialkoeffizienten-Berechnung ist, aber $p$ zu klein für die Normalapproximation nach de Moivre-Laplace (siehe **Normalverteilung**).\n\n*Beispiel:* Bei $n=1000$ Bauteilen mit Ausschussrate $p=0{,}002$ ist $\\lambda = 1000\\cdot0{,}002 = 2$ -- die Anzahl defekter Bauteile lässt sich näherungsweise poissonverteilt mit $\\lambda=2$ modellieren, statt mit unhandlichen Binomialkoeffizienten für $n=1000$ zu rechnen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\lambda$ nicht an die richtige Zeiteinheit anpassen.** Ist die Rate \"3 pro Minute\" gegeben, aber nach der Wahrscheinlichkeit für ein 5-Minuten-Intervall gefragt, muss $\\lambda$ zunächst auf $\\lambda=15$ hochskaliert werden.\n- **$e^{-\\lambda}$ vergessen** oder mit $e^{\\lambda}$ verwechseln -- das Vorzeichen im Exponenten ist entscheidend.\n- **Fakultät $k!$ falsch berechnen** oder mit $\\lambda^k$ vertauschen.\n- **Poisson-Approximation anwenden, obwohl $p$ nicht klein genug ist.** Dann liefert die Normalapproximation über die Normalverteilung bessere Ergebnisse.\n- **Erwartungswert und Varianz für unterschiedlich halten.** Bei der Poisson-Verteilung sind sie **identisch** -- gleich $\\lambda$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Binomialverteilung** · **Geometrische Verteilung** · **Hypergeometrische Verteilung** · **Normalverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

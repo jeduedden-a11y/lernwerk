@@ -1215,6 +1215,139 @@
       "Rohstoffe pro Stück $E_1$: erste Spalte von $C = A \\cdot B = " + mtex(C) + "$, also " + C[0][0] + " von $R_1$ und " + C[1][0] + " von $R_2$. Der knappere Rohstoff begrenzt: $\\min\\left(\\lfloor \\tfrac{" + stock[0] + "}{" + C[0][0] + "} \\rfloor, \\lfloor \\tfrac{" + stock[1] + "}{" + C[1][0] + "} \\rfloor\\right) = " + maxN + "$.", 0);
   });
 
+  // ---------------------------------------------------------------- calculus techniques (Mathematik wave)
+  spec("partialbruch", (level, G) => {
+    let a, b;
+    do { a = G.int(-4, 4); b = a - G.pick([1, 2, -1, -2, 4]); } while (a === b);
+    const A = 1 / (a - b), B = 1 / (b - a), den = "(" + poly([1, -a]) + ")(" + poly([1, -b]) + ")";
+    if (level <= 1) return num("Zerlege $\\dfrac{1}{" + den + "} = \\dfrac{A}{" + poly([1, -a]) + "} + \\dfrac{B}{" + poly([1, -b]) + "}$. Bestimme $A$.", A,
+      "Mit dem Hauptnenner: $1 = A(" + poly([1, -b]) + ") + B(" + poly([1, -a]) + ")$. Für $x = " + a + "$ fällt $B$ weg: $1 = A \\cdot " + par(a - b) + "$, also $A = " + G.frac(1, a - b) + "$.", 0.001);
+    if (level === 2) {
+      const p = nz(G, -3, 3), q = G.int(-4, 4), A2 = (p * a + q) / (a - b);
+      return num("Zerlege $\\dfrac{" + poly([p, q]) + "}{" + den + "} = \\dfrac{A}{" + poly([1, -a]) + "} + \\dfrac{B}{" + poly([1, -b]) + "}$. Bestimme $A$.", A2,
+        "$" + poly([p, q]) + " = A(" + poly([1, -b]) + ") + B(" + poly([1, -a]) + ")$. Einsetzen von $x = " + a + "$: $" + (p * a + q) + " = A \\cdot " + par(a - b) + "$, also $A = " + G.frac(p * a + q, a - b) + "$.", 0.001);
+    }
+    const lo = Math.max(a, b) + G.int(1, 3), hi = lo + G.int(1, 3);
+    const F = (x) => A * Math.log(Math.abs((x - a) / (x - b)));
+    if (level === 3) return num("Berechne $\\displaystyle\\int_{" + lo + "}^{" + hi + "} \\frac{1}{" + den + "}\\,dx$ (drei Nachkommastellen).", F(hi) - F(lo),
+      "Partialbrüche: $\\tfrac{1}{" + den + "} = \\tfrac{" + G.frac(1, a - b) + "}{" + poly([1, -a]) + "} " + (B < 0 ? "- " : "+ ") + "\\tfrac{" + G.frac(1, Math.abs(a - b)) + "}{" + poly([1, -b]) + "}$. Stammfunktion $" + G.frac(1, a - b) + "\\ln\\left|\\tfrac{" + poly([1, -a]) + "}{" + poly([1, -b]) + "}\\right|$; Wert $\\approx " + G.tex(F(hi) - F(lo), 3) + "$.", 0.002);
+    return num("Berechne $\\displaystyle\\int_{" + lo + "}^{\\infty} \\frac{1}{" + den + "}\\,dx$ (drei Nachkommastellen).", -F(lo),
+      "Stammfunktion $" + G.frac(1, a - b) + "\\ln\\left|\\tfrac{" + poly([1, -a]) + "}{" + poly([1, -b]) + "}\\right|$; für $x \\to \\infty$ geht der Bruch gegen 1, der Logarithmus gegen 0. Wert $0 - F(" + lo + ") \\approx " + G.tex(-F(lo), 3) + "$.", 0.002);
+  });
+  const TRIGI = [
+    [1, "\\int_0^{\\pi} \\sin x\\,dx", 2, "$[-\\cos x]_0^{\\pi} = 1 + 1 = 2$."],
+    [1, "\\int_0^{\\pi/2} \\cos x\\,dx", 1, "$[\\sin x]_0^{\\pi/2} = 1$."],
+    [1, "\\int_0^{2\\pi} \\sin x\\,dx", 0, "Die Flächen über und unter der Achse heben sich auf."],
+    [2, "\\int_0^{\\pi} \\sin^2 x\\,dx", Math.PI / 2, "Halbwinkelformel $\\sin^2 x = \\tfrac{1 - \\cos 2x}{2}$: $\\left[\\tfrac{x}{2} - \\tfrac{\\sin 2x}{4}\\right]_0^{\\pi} = \\tfrac{\\pi}{2}$."],
+    [2, "\\int_0^{\\pi/2} \\sin^2 x\\,dx", Math.PI / 4, "Halbwinkelformel: $\\left[\\tfrac{x}{2} - \\tfrac{\\sin 2x}{4}\\right]_0^{\\pi/2} = \\tfrac{\\pi}{4}$."],
+    [2, "\\int_0^{\\pi/2} \\sin x\\cos x\\,dx", 0.5, "Mit $u = \\sin x$: $\\int_0^1 u\\,du = \\tfrac12$."],
+    [3, "\\int_0^{\\pi/2} \\sin^3 x\\,dx", 2 / 3, "Einen Faktor abspalten: $\\sin x(1 - \\cos^2 x)$, mit $u = \\cos x$: $\\int_0^1 (1 - u^2)\\,du = \\tfrac23$."],
+    [3, "\\int_0^{\\pi} \\sin x\\cos^2 x\\,dx", 2 / 3, "Mit $u = \\cos x$, $du = -\\sin x\\,dx$: $\\int_{-1}^{1} u^2\\,du = \\tfrac23$."],
+    [3, "\\int_0^{\\pi/4} \\tfrac{1}{\\cos^2 x}\\,dx", 1, "$(\\tan x)' = \\tfrac{1}{\\cos^2 x}$: $\\tan\\tfrac{\\pi}{4} - \\tan 0 = 1$."],
+    [4, "\\int_0^{\\pi} x\\sin x\\,dx", Math.PI, "Partiell: $[-x\\cos x]_0^{\\pi} + \\int_0^{\\pi}\\cos x\\,dx = \\pi + 0 = \\pi$."],
+    [4, "\\int_0^{1} \\sqrt{1 - x^2}\\,dx", Math.PI / 4, "Viertelkreis mit Radius 1, oder Substitution $x = \\sin t$: $\\int_0^{\\pi/2}\\cos^2 t\\,dt = \\tfrac{\\pi}{4}$."],
+    [4, "\\int_0^{\\pi/2} \\sin^4 x\\,dx", (3 * Math.PI) / 16, "Zweimal Halbwinkelformel: $\\sin^4 x = \\tfrac38 - \\tfrac12\\cos 2x + \\tfrac18\\cos 4x$, Integral $\\tfrac{3\\pi}{16}$."],
+  ];
+  spec("trigintegral", (level, G) => {
+    const [, tex, v, why] = G.pick(TRIGI.filter((e) => e[0] === Math.min(4, Math.max(1, level))));
+    return num("Berechne $\\displaystyle" + tex + "$ (drei Nachkommastellen).", v, why + " Ergebnis $\\approx " + G.tex(v, 3) + "$.", 0.002);
+  });
+  spec("folge", (level, G) => {
+    if (level <= 1) {
+      const a = nz(G, -6, 6), b = G.int(-5, 5), c = G.pick([1, 2, 3, 4, -2]), d = G.int(1, 6);
+      return num("Bestimme $\\displaystyle\\lim_{n \\to \\infty} \\frac{" + poly([a, b], "n") + "}{" + poly([c, d], "n") + "}$.", a / c,
+        "Durch $n$ kürzen: $\\tfrac{" + a + " + " + par(b) + "/n}{" + c + " + " + d + "/n} \\to " + G.frac(a, c) + "$.", 0.001);
+    }
+    if (level === 2) {
+      const q = G.pick([0.5, 0.2, -0.5, 0.25, 0.8]), c = G.int(1, 9), a0 = G.int(0, 9);
+      return num("Die Folge $a_{n+1} = " + tnum(q) + " \\cdot a_n + " + c + "$ mit $a_0 = " + a0 + "$ konvergiert. Bestimme ihren Grenzwert.", c / (1 - q),
+        "Grenzwert $a$ erfüllt $a = " + tnum(q) + "a + " + c + "$, also $a = \\tfrac{" + c + "}{1 - " + par(q) + "} = " + G.tex(c / (1 - q), 4) + "$; der Startwert spielt keine Rolle, weil $|" + tnum(q) + "| < 1$.", 0.001);
+    }
+    if (level === 3) {
+      const k = G.pick([1, 2, 3, -1, 0.5]);
+      return num("Bestimme $\\displaystyle\\lim_{n \\to \\infty} \\left(1 + \\frac{" + tnum(k) + "}{n}\\right)^n$ (drei Nachkommastellen).", Math.exp(k),
+        "Bekannter Grenzwert: $\\left(1 + \\tfrac{k}{n}\\right)^n \\to e^k$, hier $e^{" + tnum(k) + "} \\approx " + G.tex(Math.exp(k), 3) + "$.", 0.002);
+    }
+    const k = G.pick([2, 4, 6, 8, 10]);
+    return num("Bestimme $\\displaystyle\\lim_{n \\to \\infty} n\\left(\\sqrt{n^2 + " + k + "} - n\\right)$.", k / 2,
+      "Erweitern mit $\\sqrt{n^2 + " + k + "} + n$: $\\tfrac{" + k + "n}{\\sqrt{n^2 + " + k + "} + n} = \\tfrac{" + k + "}{\\sqrt{1 + " + k + "/n^2} + 1} \\to \\tfrac{" + k + "}{2} = " + k / 2 + "$.", 0.001);
+  });
+  const TESTS = ["Divergenzkriterium (Glieder gegen 0?)", "Quotientenkriterium", "Wurzelkriterium", "Leibniz-Kriterium", "Grenzwertvergleich mit einer p-Reihe"];
+  spec("reihenkriterium", (level, G) => {
+    if (level >= 4) {
+      const p = G.pick([0.5, 1, 2, 3]), alt = G.chance(0.5);
+      const right = alt ? (p > 1 ? "absolut konvergent" : "bedingt konvergent") : (p > 1 ? "konvergent" : "divergent");
+      const opts = alt ? ["absolut konvergent", "bedingt konvergent", "divergent", "konvergent, aber nur für gerade n"] : ["konvergent", "divergent", "bedingt konvergent", "absolut konvergent mit Grenzwert 0"];
+      return choice(G, "Wie verhält sich $\\displaystyle\\sum_{n=1}^{\\infty} \\frac{" + (alt ? "(-1)^n" : "1") + "}{n^{" + tnum(p) + "}}$?", right, opts.filter((o) => o !== right).map((o) => ({ md: o })),
+        (alt ? "Leibniz: Die Beträge fallen monoton gegen 0, also konvergiert die Reihe. Absolut nur, wenn $\\sum \\tfrac{1}{n^p}$ konvergiert, also für $p > 1$." : "p-Reihe: konvergent genau für $p > 1$ (Integralkriterium).") + " Hier $p = " + tnum(p) + "$.");
+    }
+    const k = G.int(2, 5), forms = [
+      [0, "\\frac{" + k + "n + 1}{n + 2}", "Die Glieder gehen gegen " + k + ", nicht gegen 0: divergent, ohne weiteren Test."],
+      [1, "\\frac{n!}{" + k + "^n}", "Fakultäten und Potenzen: Der Quotient aufeinanderfolgender Glieder vereinfacht sich."],
+      [1, "\\frac{" + k + "^n}{n!}", "Fakultäten im Nenner: Quotientenkriterium, $\\tfrac{a_{n+1}}{a_n} = \\tfrac{" + k + "}{n + 1} \\to 0$."],
+      [2, "\\left(\\frac{n}{" + k + "n + 1}\\right)^n", "Eine n-te Potenz: Die n-te Wurzel nimmt den Exponenten weg, $\\to \\tfrac{1}{" + k + "} < 1$."],
+      [3, "\\frac{(-1)^n}{\\sqrt{n}}", "Wechselnde Vorzeichen, Beträge fallen gegen 0: Leibniz."],
+      [4, "\\frac{n^2 + " + k + "}{n^4 + n}", "Bruch aus Polynomen: verhält sich wie $\\tfrac{1}{n^2}$, Grenzwertvergleich mit der p-Reihe für $p = 2$."],
+    ];
+    const pool = level <= 1 ? forms.filter((f) => f[0] <= 1) : forms;
+    const [ix, tex, why] = G.pick(pool);
+    return choice(G, "Welches Kriterium entscheidet am schnellsten über $\\displaystyle\\sum_{n=1}^{\\infty} " + tex + "$?", TESTS[ix], TESTS.filter((t, i) => i !== ix).map((t) => ({ md: t })), why);
+  });
+  spec("taylor", (level, G) => {
+    const fact = (n) => (n <= 1 ? 1 : n * fact(n - 1));
+    if (level <= 2) {
+      const pick = level <= 1 ? G.pick([["e^x", 3, 1 / 6], ["e^x", 4, 1 / 24], ["e^x", 2, 0.5]]) : G.pick([["\\sin x", 5, 1 / 120], ["\\sin x", 3, -1 / 6], ["\\cos x", 4, 1 / 24], ["\\cos x", 2, -0.5], ["\\ln(1 + x)", 3, 1 / 3], ["\\tfrac{1}{1 - x}", 4, 1]]);
+      return num("Welcher Koeffizient steht vor $x^{" + pick[1] + "}$ in der Taylorreihe von $" + pick[0] + "$ um 0? (vier Nachkommastellen)", pick[2],
+        "Koeffizient $\\tfrac{f^{(n)}(0)}{n!}$ mit $n = " + pick[1] + "$; Ergebnis $" + G.tex(pick[2], 4) + "$.", 0.0002);
+    }
+    if (level === 3) {
+      const x = G.pick([0.1, 0.2, 0.3]), useExp = G.chance(0.5);
+      const v = useExp ? 1 + x + (x * x) / 2 + (x * x * x) / 6 : x - (x * x * x) / 6;
+      return num("Nähere $" + (useExp ? "e^{" + tnum(x) + "}" : "\\sin " + tnum(x)) + "$ mit dem Taylorpolynom " + (useExp ? "dritten Grades um 0 (" : "dritten Grades um 0 (") + "fünf Nachkommastellen).", v,
+        (useExp ? "$T_3(x) = 1 + x + \\tfrac{x^2}{2} + \\tfrac{x^3}{6}$" : "$T_3(x) = x - \\tfrac{x^3}{6}$") + " bei $x = " + tnum(x) + "$: $\\approx " + G.tex(v, 5) + "$. Der Fehler ist kleiner als das nächste Glied.", 0.00002);
+    }
+    const k = G.int(2, 6);
+    return num("Bestimme den Konvergenzradius von $\\displaystyle\\sum_{n=0}^{\\infty} \\frac{x^n}{" + k + "^n}$.", k,
+      "Quotientenkriterium: $\\left|\\tfrac{a_{n+1}}{a_n}\\right| = \\tfrac{|x|}{" + k + "} < 1$ genau für $|x| < " + k + "$. Radius $" + k + "$; es ist eine geometrische Reihe in $\\tfrac{x}{" + k + "}$.", 0);
+  });
+  spec("parameterkurve", (level, G) => {
+    if (level <= 1) {
+      const t0 = nz(G, -3, 3);
+      return num("Die Kurve $x(t) = t^2$, $y(t) = t^3$. Bestimme die Steigung $\\tfrac{dy}{dx}$ an der Stelle $t = " + t0 + "$.", 1.5 * t0,
+        "$\\tfrac{dy}{dx} = \\tfrac{\\dot y}{\\dot x} = \\tfrac{3t^2}{2t} = \\tfrac32 t$, bei $t = " + t0 + "$ also $" + tnum(1.5 * t0) + "$.", 0.001);
+    }
+    if (level === 2) {
+      const a = G.int(2, 5), b = G.int(1, 4), t0 = G.pick([Math.PI / 4, Math.PI / 3, Math.PI / 6]), name = t0 === Math.PI / 4 ? "\\tfrac{\\pi}{4}" : t0 === Math.PI / 3 ? "\\tfrac{\\pi}{3}" : "\\tfrac{\\pi}{6}";
+      const m = -(b * Math.cos(t0)) / (a * Math.sin(t0));
+      return num("Ellipse $x(t) = " + a + "\\cos t$, $y(t) = " + b + "\\sin t$. Bestimme $\\tfrac{dy}{dx}$ bei $t = " + name + "$ (drei Nachkommastellen).", m,
+        "$\\tfrac{dy}{dx} = \\tfrac{" + b + "\\cos t}{-" + a + "\\sin t}$, bei $t = " + name + "$: $\\approx " + G.tex(m, 3) + "$.", 0.002);
+    }
+    if (level === 3) {
+      const r = G.int(1, 6), frac = G.pick([[1, "\\pi"], [0.5, "\\tfrac{\\pi}{2}"], [2, "2\\pi"]]);
+      return num("Kreis $x(t) = " + r + "\\cos t$, $y(t) = " + r + "\\sin t$. Wie lang ist der Bogen für $0 \\leq t \\leq " + frac[1] + "$? (zwei Nachkommastellen)", r * frac[0] * Math.PI,
+        "$L = \\int \\sqrt{\\dot x^2 + \\dot y^2}\\,dt = \\int " + r + "\\,dt = " + r + " \\cdot " + frac[1] + " \\approx " + G.tex(r * frac[0] * Math.PI, 2) + "$.", 0.01);
+    }
+    const v = (2 / 3) * (2 * Math.SQRT2 - 1);
+    return num("Bestimme die Länge der Kurve $x(t) = t^2$, $y(t) = \\tfrac23 t^3$ für $0 \\leq t \\leq 1$ (drei Nachkommastellen).", v,
+      "$\\sqrt{(2t)^2 + (2t^2)^2} = 2t\\sqrt{1 + t^2}$; $\\int_0^1 2t\\sqrt{1 + t^2}\\,dt = \\left[\\tfrac23(1 + t^2)^{3/2}\\right]_0^1 = \\tfrac23(2\\sqrt2 - 1) \\approx " + G.tex(v, 3) + "$.", 0.002);
+  });
+  spec("arbeit", (level, G) => {
+    if (level <= 2) {
+      const D = G.pick([100, 200, 250, 400, 500]), s1 = level <= 1 ? 0 : G.pick([0.05, 0.1, 0.2]), s2 = s1 + G.pick([0.1, 0.2, 0.3]);
+      const W = 0.5 * D * (s2 * s2 - s1 * s1);
+      return num("Eine Feder hat die Federkonstante $D = " + D + "$ N/m. Welche Arbeit braucht man, um sie von $" + tnum(s1) + "$ m auf $" + tnum(s2) + "$ m Auslenkung zu dehnen? (in J)", W,
+        "$W = \\int_{" + tnum(s1) + "}^{" + tnum(s2) + "} " + D + "s\\,ds = \\tfrac{" + D + "}{2}\\left(" + tnum(s2) + "^2 - " + tnum(s1) + "^2\\right) = " + G.tex(W, 3) + "$ J.", Math.max(0.001, W * 0.005), "J");
+    }
+    if (level === 3) {
+      const a = G.int(1, 4), b = G.int(1, 10), d = G.int(1, 4), W = (a * d * d * d) / 3 + b * d;
+      return num("Eine Kraft $F(x) = " + poly([a, 0, b]) + "$ (in N, $x$ in m) wirkt längs des Wegs. Wie viel Arbeit verrichtet sie von $x = 0$ bis $x = " + d + "$? (in J)", W,
+        "$W = \\int_0^{" + d + "} (" + poly([a, 0, b]) + ")\\,dx = \\left[" + G.frac(a, 3) + "x^3 + " + b + "x\\right]_0^{" + d + "} = " + G.tex(W, 3) + "$ J.", 0.01, "J");
+    }
+    const k = G.pick([12, 24, 36, 60]), r1 = G.int(1, 3), r2 = r1 + G.int(1, 3), W = k * (1 / r1 - 1 / r2);
+    return num("Eine anziehende Kraft hat den Betrag $F(r) = \\tfrac{" + k + "}{r^2}$. Welche Arbeit braucht man, um den Abstand von $r = " + r1 + "$ auf $r = " + r2 + "$ zu vergrößern?", W,
+      "$W = \\int_{" + r1 + "}^{" + r2 + "} \\tfrac{" + k + "}{r^2}\\,dr = \\left[-\\tfrac{" + k + "}{r}\\right]_{" + r1 + "}^{" + r2 + "} = " + k + "\\left(\\tfrac{1}{" + r1 + "} - \\tfrac{1}{" + r2 + "}\\right) = " + G.tex(W, 3) + "$.", 0.01);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
@@ -1224,5 +1357,5 @@
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat", "geradenpunkt", "ebenenform", "durchstoss", "spiegelpunkt", "teilpunkt", "schatten", "linkombi"]));
   LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang", "matrixpotenz", "verflechtung"]));
   LW.generator("ma-r-stochastik", chapter("Abitur-Stochastik", ["poisson", "mindestens", "hypergeometrisch"]));
-  LW.generator("ma-r-techniken", chapter("Rechentechniken", ["partiell", "substitution", "uneigentlich", "trapez", "polar", "geomreihe", "rotation"]));
+  LW.generator("ma-r-techniken", chapter("Rechentechniken", ["partiell", "substitution", "uneigentlich", "trapez", "polar", "geomreihe", "rotation", "partialbruch", "trigintegral", "folge", "reihenkriterium", "taylor", "parameterkurve", "arbeit"]));
 })();

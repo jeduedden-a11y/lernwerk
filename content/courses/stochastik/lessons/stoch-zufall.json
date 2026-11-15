@@ -4,7 +4,10 @@
   "subtitle": "Was eine Wahrscheinlichkeit über viele Versuche verrät",
   "source": "KCGO Mathematik Hessen, Q3.1",
   "vault": [
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md", "title": "Laplace-Wahrscheinlichkeit" }
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md",
+      "title": "Laplace-Wahrscheinlichkeit"
+    }
   ],
   "steps": [
     {
@@ -12,19 +15,144 @@
       "type": "anim",
       "md": "Was bedeutet eigentlich der Satz »Die Wahrscheinlichkeit für Kopf ist $\\tfrac12$«? Sieh zu, was bei vielen Würfen passiert.",
       "widget": "lln",
-      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "views": false },
+      "params": {
+        "p": 0.5,
+        "pText": "0,5",
+        "event": "Kopf",
+        "unit": "Würfe",
+        "views": false
+      },
       "timeline": [
-        { "caption": "Ein einzelner Wurf ist reiner Zufall. Nach einem Wurf ist die relative Häufigkeit von Kopf entweder $0$ oder $1$.", "do": { "run": 1 } },
-        { "caption": "Nach 10 Würfen kann sie noch irgendwo liegen, bei $0{,}3$ oder bei $0{,}7$. Zehn Würfe sind sehr wenig.", "do": { "run": 9 } },
-        { "caption": "Nach 100 Würfen pendelt die Kurve schon deutlich enger um $0{,}5$.", "do": { "run": 90 } },
-        { "caption": "Nach 1000 Würfen ist sie fast ruhig. Die relative Häufigkeit stabilisiert sich bei der Wahrscheinlichkeit: das **empirische Gesetz der großen Zahlen**.", "do": { "run": 900 } },
-        { "caption": "Wahrscheinlichkeit ist also der Wert, um den sich die relative Häufigkeit auf lange Sicht einpendelt. Über den **nächsten** Wurf sagt sie nichts Sicheres." }
+        {
+          "caption": "Ein einzelner Wurf ist reiner Zufall. Nach einem Wurf ist die relative Häufigkeit von Kopf entweder $0$ oder $1$.",
+          "do": {
+            "run": 1
+          }
+        },
+        {
+          "caption": "Nach 10 Würfen kann sie noch irgendwo liegen, bei $0{,}3$ oder bei $0{,}7$. Zehn Würfe sind sehr wenig.",
+          "do": {
+            "run": 9
+          }
+        },
+        {
+          "caption": "Nach 100 Würfen pendelt die Kurve schon deutlich enger um $0{,}5$.",
+          "do": {
+            "run": 90
+          }
+        },
+        {
+          "caption": "Nach 1000 Würfen ist sie fast ruhig. Die relative Häufigkeit stabilisiert sich bei der Wahrscheinlichkeit: das **empirische Gesetz der großen Zahlen**.",
+          "do": {
+            "run": 900
+          }
+        },
+        {
+          "caption": "Wahrscheinlichkeit ist also der Wert, um den sich die relative Häufigkeit auf lange Sicht einpendelt. Über den **nächsten** Wurf sagt sie nichts Sicheres."
+        }
       ]
     },
     {
       "id": "intro",
       "type": "text",
       "md": "Ein **Zufallsexperiment** hat mehrere mögliche Ergebnisse, und vorher weiß niemand, welches eintritt. Alle Ergebnisse zusammen bilden die **Ergebnismenge** $\\Omega$, eine Teilmenge davon heißt **Ereignis**.\n\nSind alle Ergebnisse gleich wahrscheinlich, zählt man einfach ab. Das ist die **Laplace-Wahrscheinlichkeit**:\n\n$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl aller Ergebnisse}}$$\n\nBeim fairen Würfel ist $\\Omega = \\{1, \\dots, 6\\}$. Für »gerade Zahl« $E = \\{2, 4, 6\\}$ ist $P(E) = \\tfrac36 = \\tfrac12$."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Laplace-Wahrscheinlichkeit",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Zufallsexperiment heißt **Laplace-Experiment**, wenn alle Elementarereignisse **gleich wahrscheinlich** sind (z. B. fairer Würfel, faire Münze). In diesem Fall gilt die **Laplace-Formel**:\n$$P(A) = \\frac{|A|}{|\\Omega|} = \\frac{\\text{Anzahl der für } A \\text{ günstigen Ergebnisse}}{\\text{Anzahl aller möglichen Ergebnisse}}$$"
+            }
+          ]
+        },
+        {
+          "title": "Voraussetzung",
+          "blocks": [
+            {
+              "md": "Die Laplace-Formel gilt **nur**, wenn tatsächlich Gleichwahrscheinlichkeit vorliegt — bei einem gezinkten Würfel oder ungleich wahrscheinlichen Ausgängen ist sie **nicht** anwendbar."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Wahrscheinlichkeit, beim einmaligen Würfeln eine Zahl $\\geq 5$ zu würfeln: $A=\\{5,6\\}$, $\\Omega=\\{1,\\dots,6\\}$:\n$$P(A) = \\frac{|A|}{|\\Omega|} = \\frac{2}{6} = \\frac{1}{3}$$"
+            }
+          ]
+        },
+        {
+          "title": "Kombination mit Kombinatorik",
+          "blocks": [
+            {
+              "md": "Bei mehrstufigen Experimenten wird $|A|$ und $|\\Omega|$ oft mit den Zählprinzipien der **Kombinatorik** bestimmt.\n\n**Beispiel:** Wahrscheinlichkeit für genau 3 Richtige bei \"6 aus 49\" (ohne Zusatzzahl):\n$$P(\\text{3 Richtige}) = \\frac{\\binom{6}{3}\\cdot\\binom{43}{3}}{\\binom{49}{6}} = \\frac{20 \\cdot 12\\,341}{13\\,983\\,816} \\approx 0{,}0177$$"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung",
+          "blocks": [
+            {
+              "md": "Nicht jedes Zufallsexperiment ist ein Laplace-Experiment: Bei einer **Bernoulli-Kette** (siehe **Bernoulli-Kette**) mit $p \\neq 0{,}5$ sind die Ergebnisse **nicht** gleich wahrscheinlich — dort gilt stattdessen die **Binomialverteilung**."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Laplace-Formel auf Experimente anwenden, bei denen die Ergebnisse **nicht** gleich wahrscheinlich sind (klassischer Fehler).\n- $|\\Omega|$ falsch bestimmen, weil Zurücklegen/Reihenfolge nicht korrekt berücksichtigt wurden — siehe **Kombinatorik**.\n\nVertiefung bei zusammengesetzten Ereignissen: **Bedingte Wahrscheinlichkeit**."
+            }
+          ]
+        },
+        {
+          "title": "Die Formel und ihre Voraussetzung",
+          "blocks": [
+            {
+              "md": "$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl der möglichen Ergebnisse}}$$\n\n> [!warning] Die Formel gilt nur bei Gleichwahrscheinlichkeit\n> Das ist die entscheidende und am häufigsten übergangene Einschränkung. Ein Laplace-Experiment liegt vor, wenn **alle** Ergebnisse dieselbe Wahrscheinlichkeit haben -- idealer Würfel, faire Münze, Ziehen aus einer Urne mit gleichartigen Kugeln.\n>\n> Bei einem gezinkten Würfel, einer Reißzwecke oder der Frage nach dem Wetter versagt sie. Die Rechtfertigung der Annahme gehört daher in jede vollständige Lösung; sie stützt sich meist auf **Symmetrie** des Zufallsgeräts.\n>\n> Der klassische Gegenbeispielfall ist die Augensumme zweier Würfel: Die elf möglichen Summen von 2 bis 12 sind **nicht** gleich wahrscheinlich. Laplace gilt hier auf der Ebene der 36 Zahlenpaare, nicht auf der Ebene der Summen. Wer das übersieht, erhält für die Sieben $1/11$ statt korrekt $6/36 = 1/6$."
+            }
+          ]
+        },
+        {
+          "title": "Die Wahl des Ergebnisraums",
+          "blocks": [
+            {
+              "md": "> [!important] Ergebnisraum und Zählweise müssen zusammenpassen\n> Dasselbe Experiment lässt sich verschieden modellieren -- geordnet oder ungeordnet, mit oder ohne Zurücklegen. Zähler und Nenner müssen aus **derselben** Modellierung stammen.\n>\n> Beim Ziehen zweier Karten etwa: Zählt man geordnete Paare, so sind es $52 \\cdot 51$ Möglichkeiten; zählt man ungeordnete, so $\\binom{52}{2}$. Beide Wege führen zum selben Ergebnis, sofern man sie **nicht mischt**.\n>\n> Die Faustregel lautet: Wo die Aufgabe von \"Reihenfolge\" spricht, geordnet zählen; wo sie von \"Auswahl\" oder \"Menge\" spricht, ungeordnet. Die Zählverfahren liefert die **Kombinatorik**."
+            }
+          ]
+        },
+        {
+          "title": "Das Gegenereignis",
+          "blocks": [
+            {
+              "md": "$$P(\\bar{E}) = 1 - P(E)$$\n\n> [!tip] Bei \"mindestens ein\" fast immer der kürzeste Weg\n> \"Mindestens ein Treffer\" verlangt sonst die Summe über alle Trefferzahlen; das Gegenereignis \"kein Treffer\" ist ein einziger Term.\n>\n> Das ist keine Besonderheit der Laplace-Situation, sondern eine allgemeine Rechentechnik -- sie gilt in jedem Wahrscheinlichkeitsraum und begegnet bei der **Binomialverteilung** in derselben Form wieder."
+            }
+          ]
+        },
+        {
+          "title": "Die Grenzen des Begriffs",
+          "blocks": [
+            {
+              "md": "> [!info] Der frequentistische Zugang als Ergänzung\n> Wo Symmetrie fehlt, wird die Wahrscheinlichkeit nicht abgezählt, sondern als **relative Häufigkeit bei sehr vielen Wiederholungen** bestimmt. Das Gesetz der großen Zahlen stellt sicher, dass sich diese der Wahrscheinlichkeit annähert.\n>\n> Beide Zugänge sind mit den Axiomen von Kolmogorow verträglich, die den Begriff formal nur über Nichtnegativität, Normierung und Additivität festlegen -- ohne zu sagen, woher die Zahlen stammen. Die Frage nach der Deutung von Wahrscheinlichkeit ist damit keine mathematische, sondern eine philosophische."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Laplace-Wahrscheinlichkeit ist der Einstieg in die Wahrscheinlichkeitsrechnung. Sie setzt den Begriff des **Zufallsexperiments** voraus und stützt sich beim Abzählen auf die **Kombinatorik**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "summe7",
@@ -43,9 +171,18 @@
       "type": "choice",
       "md": "Ist die Augensumme **11** genauso wahrscheinlich wie die Augensumme **12**?",
       "options": [
-        { "md": "Nein, 11 ist doppelt so wahrscheinlich wie 12.", "correct": true },
-        { "md": "Ja, beide entstehen aus genau einer Kombination: 5 und 6 bzw. 6 und 6.", "why": "Als **Paare** gezählt ergibt $(5,6)$ und $(6,5)$ zwei verschiedene Ergebnisse, $(6,6)$ nur eines." },
-        { "md": "Nein, 12 ist wahrscheinlicher, weil die 6 auf beiden Würfeln vorkommt.", "why": "Für 12 muss **jeder** Würfel eine 6 zeigen, das ist nur ein einziges der 36 Paare." }
+        {
+          "md": "Nein, 11 ist doppelt so wahrscheinlich wie 12.",
+          "correct": true
+        },
+        {
+          "md": "Ja, beide entstehen aus genau einer Kombination: 5 und 6 bzw. 6 und 6.",
+          "why": "Als **Paare** gezählt ergibt $(5,6)$ und $(6,5)$ zwei verschiedene Ergebnisse, $(6,6)$ nur eines."
+        },
+        {
+          "md": "Nein, 12 ist wahrscheinlicher, weil die 6 auf beiden Würfeln vorkommt.",
+          "why": "Für 12 muss **jeder** Würfel eine 6 zeigen, das ist nur ein einziges der 36 Paare."
+        }
       ],
       "explain": "$P(11) = \\tfrac{2}{36}$, $P(12) = \\tfrac{1}{36}$. Gleich wahrscheinlich sind nur die 36 Paare, nicht die Summen. Sogar Leibniz soll sich hier verzählt haben: Er hielt 11 und 12 für gleich wahrscheinlich."
     },
@@ -60,11 +197,24 @@
       "label": "Simulieren",
       "md": "Eine faire Münze, $p = 0{,}5$ für Kopf. Wirf sie und beobachte die relative Häufigkeit. Die waagerechte Achse ist logarithmisch: 1, 10, 100, 1000 Würfe liegen gleich weit auseinander.\n\n**Wirf mindestens 1000-mal.**",
       "widget": "lln",
-      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "views": false },
+      "params": {
+        "p": 0.5,
+        "pText": "0,5",
+        "event": "Kopf",
+        "unit": "Würfe",
+        "views": false
+      },
       "goal": {
         "when": "n >= 1000",
-        "hints": [{ "when": "n < 1000", "text": "Erst {n|0} Würfe. Tippe auf +1.000, die Münze ist geduldig." }],
-        "solve": { "n": 1000 }
+        "hints": [
+          {
+            "when": "n < 1000",
+            "text": "Erst {n|0} Würfe. Tippe auf +1.000, die Münze ist geduldig."
+          }
+        ],
+        "solve": {
+          "n": 1000
+        }
       },
       "explain": "Am Anfang springt die Kurve wild, nach einem Wurf ist $h_1$ entweder $0$ oder $1$. Mit jeder Zehnerpotenz wird sie ruhiger und legt sich an die Linie $p = 0{,}5$."
     },
@@ -74,7 +224,13 @@
       "label": "Genauer hinsehen",
       "md": "Dieselbe Münze, andere Darstellung: nicht die relative Häufigkeit, sondern die Abweichung in **Treffern**, also $k - n \\cdot p$. Wirf wieder einige tausend Mal.",
       "widget": "lln",
-      "params": { "p": 0.5, "pText": "0,5", "event": "Kopf", "unit": "Würfe", "view": "abs" },
+      "params": {
+        "p": 0.5,
+        "pText": "0,5",
+        "event": "Kopf",
+        "unit": "Würfe",
+        "view": "abs"
+      },
       "after": "Die gestrichelten Kurven zeigen die typische Größe der Abweichung, $\\sqrt{n \\cdot p \\cdot (1-p)}$. Sie wächst mit $n$, nur langsamer als $n$ selbst."
     },
     {
@@ -90,10 +246,22 @@
       "type": "choice",
       "md": "Beim Roulette kam achtmal hintereinander **Rot**. Was gilt für die nächste Runde? (37 Fächer: 18 rot, 18 schwarz, die Null grün.)",
       "options": [
-        { "md": "Rot und Schwarz haben wie immer je die Wahrscheinlichkeit $\\tfrac{18}{37}$.", "correct": true },
-        { "md": "Schwarz ist jetzt wahrscheinlicher, weil sich die Farben auf lange Sicht ausgleichen müssen.", "why": "Die Kugel hat kein Gedächtnis. Lange Reihen werden nicht ausgeglichen, sondern von den vielen folgenden Runden verdünnt." },
-        { "md": "Rot ist wahrscheinlicher, der Kessel hat offenbar einen Hang zu Rot.", "why": "Acht Mal Rot passiert bei einem fairen Kessel etwa einmal in 300 Serien. Ein Indiz für einen Defekt wäre das erst bei viel längeren Beobachtungen." },
-        { "md": "Das lässt sich nicht sagen, nach so einer Serie ist alles offen.", "why": "Doch: Die Runden sind unabhängig, die Wahrscheinlichkeiten bleiben genau dieselben." }
+        {
+          "md": "Rot und Schwarz haben wie immer je die Wahrscheinlichkeit $\\tfrac{18}{37}$.",
+          "correct": true
+        },
+        {
+          "md": "Schwarz ist jetzt wahrscheinlicher, weil sich die Farben auf lange Sicht ausgleichen müssen.",
+          "why": "Die Kugel hat kein Gedächtnis. Lange Reihen werden nicht ausgeglichen, sondern von den vielen folgenden Runden verdünnt."
+        },
+        {
+          "md": "Rot ist wahrscheinlicher, der Kessel hat offenbar einen Hang zu Rot.",
+          "why": "Acht Mal Rot passiert bei einem fairen Kessel etwa einmal in 300 Serien. Ein Indiz für einen Defekt wäre das erst bei viel längeren Beobachtungen."
+        },
+        {
+          "md": "Das lässt sich nicht sagen, nach so einer Serie ist alles offen.",
+          "why": "Doch: Die Runden sind unabhängig, die Wahrscheinlichkeiten bleiben genau dieselben."
+        }
       ],
       "explain": "Der Irrglaube, Zufall müsse sich bald ausgleichen, heißt **Spielerfehlschluss**. Die Wahrscheinlichkeit für Rot in Runde 9 hängt nicht von den Runden 1 bis 8 ab."
     },
@@ -103,7 +271,14 @@
       "label": "Ausprobieren",
       "md": "Jetzt ein Würfel, Ereignis »Sechs«, also $p = \\tfrac16 \\approx 0{,}167$. Mit dem Regler kannst du auch andere Wahrscheinlichkeiten ausprobieren, etwa die einer Reißzwecke.",
       "widget": "lln",
-      "params": { "p": "1/6", "pText": "1/6", "event": "eine Sechs", "unit": "Würfe", "slider": true, "views": false }
+      "params": {
+        "p": "1/6",
+        "pText": "1/6",
+        "event": "eine Sechs",
+        "unit": "Würfe",
+        "slider": true,
+        "views": false
+      }
     },
     {
       "id": "erwartung",
@@ -121,15 +296,45 @@
       "label": "Zuordnen",
       "md": "Ordne jedem Begriff seine Bedeutung zu.",
       "pairs": [
-        ["Ergebnismenge $\\Omega$", "alle möglichen Ergebnisse"],
-        ["Ereignis", "eine Teilmenge von $\\Omega$"],
-        ["relative Häufigkeit", "$\\tfrac{k}{n}$ nach $n$ Versuchen"],
-        ["Laplace-Wahrscheinlichkeit", "$\\tfrac{|E|}{|\\Omega|}$ bei gleich wahrscheinlichen Ergebnissen"]
+        [
+          "Ergebnismenge $\\Omega$",
+          "alle möglichen Ergebnisse"
+        ],
+        [
+          "Ereignis",
+          "eine Teilmenge von $\\Omega$"
+        ],
+        [
+          "relative Häufigkeit",
+          "$\\tfrac{k}{n}$ nach $n$ Versuchen"
+        ],
+        [
+          "Laplace-Wahrscheinlichkeit",
+          "$\\tfrac{|E|}{|\\Omega|}$ bei gleich wahrscheinlichen Ergebnissen"
+        ]
       ]
     },
-    { "id": "neu1", "type": "gen", "gen": "stoch-laplace", "level": 1, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "stoch-laplace", "level": 2, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "stoch-laplace", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-laplace",
+      "level": 1,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-laplace",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-laplace",
+      "level": 3,
+      "label": "Neue Werte"
+    },
     {
       "id": "summary",
       "type": "summary",

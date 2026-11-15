@@ -15,6 +15,143 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Beispiel:** $\\displaystyle\\int_0^1 x\\,e^{x^2}\\,dx$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "u = x^2, \\quad du = 2x\\,dx",
+            "why": "Die innere Funktion samt ihrer Ableitung steht im Integranden."
+          },
+          {
+            "tex": "\\int_0^1 x\\,e^{x^2}\\,dx = \\tfrac12\\int_0^1 e^{u}\\,du",
+            "why": "x dx = du/2; die Grenzen ändern sich mit: u(0) = 0, u(1) = 1."
+          },
+          {
+            "tex": "= \\tfrac12(e - 1) \\approx 0{,}859",
+            "why": "Integrieren und einsetzen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Substitution.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umschreiben.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Substitution** ist die Kettenregel rückwärts: $\\int f(g(x))\\,g'(x)\\,dx = \\int f(u)\\,du$ mit $u = g(x)$. Bei bestimmten Integralen die **Grenzen mit umrechnen**.",
+      "label": "Verfahren",
+      "more": "**Erkennen:** Eine innere Funktion und (bis auf einen Faktor) ihre Ableitung stehen im Integranden, etwa $2x$ neben $x^2 + 1$.\n\n**Schema:** $u = g(x)$ wählen, $du = g'(x)\\,dx$, alles in $u$ ausdrücken, integrieren, zurücksubstituieren oder mit umgerechneten Grenzen rechnen.\n\n**Lineare Substitution:** $\\int f(ax + b)\\,dx = \\tfrac1a F(ax + b)$.\n\n**Logarithmische Substitution:** $\\int \\tfrac{f'(x)}{f(x)}\\,dx = \\ln|f(x)| + C$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Integration durch Substitution",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Integration durch Substitution.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Substitutionsregel** ist das Integrationsgegenstück zur **Kettenregel**. Sie führt eine neue Variable $u$ ein, um eine Verkettung \"rückgängig zu machen\":\n\n$$\\int F'(g(x))\\cdot g'(x)\\,dx = \\int F'(u)\\,du = F(u) + C$$"
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen (Schritt für Schritt)",
+          "blocks": [
+            {
+              "md": "1. Finde $g(x)$ im Integranden, dessen Ableitung $g'(x)$ (bis auf Faktor) ebenfalls vorkommt.\n2. Setze $u = g(x)$.\n3. Berechne $du = g'(x)\\,dx$ und löse nach $dx$ auf.\n4. Schreibe das Integral **vollständig** in $u$ um — kein $x$ darf übrig bleiben.\n5. Integriere nach $u$.\n6. Rücksubstituiere $u = g(x)$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int 2x\\cos(x^2)\\,dx$$\n\nBeobachtung: Die Ableitung von $x^2$ ist $2x$ — sie steckt bereits im Integranden.\n\n$$u = x^2,\\quad du = 2x\\,dx \\;\\Longrightarrow\\; \\int \\cos(u)\\,du = \\sin(u)+C = \\sin(x^2)+C$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $dx$ vergessen umzurechnen.\n- Nach der Substitution bleibt noch ein $x$ im Integral stehen.\n- Ein konstanter Faktor fehlt (z. B. $x$ statt $2x$) — durch Multiplizieren/Dividieren kompensieren.\n- Bei bestimmten Integralen: Grenzen mit substituieren oder vor Auswertung rücksubstituieren."
+            }
+          ]
+        },
+        {
+          "title": "Verwandt",
+          "blocks": [
+            {
+              "md": "Grundlage für viele **Spezielle Integralformen**. Wenn eine Wurzel $\\sqrt{a^2-x^2}$ im Spiel ist, hilft stattdessen die **Trigonometrische Substitution**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Substitution passt zu $\\int \\cos x \\cdot e^{\\sin x}\\,dx$?",
+      "options": [
+        {
+          "md": "$u = \\sin x$",
+          "correct": true
+        },
+        {
+          "md": "$u = \\cos x$"
+        },
+        {
+          "md": "$u = e^x$"
+        },
+        {
+          "md": "$u = x$"
+        }
+      ],
+      "explain": "Dann $du = \\cos x\\,dx$ und $\\int e^u\\,du = e^{\\sin x} + C$.",
+      "label": "Wahl",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_0^2 x\\,(x^2 + 1)^2\\,dx$ (drei Nachkommastellen).",
+      "answer": 20.667,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$u = x^2 + 1$, Grenzen 1 und 5: $\\tfrac12\\int_1^5 u^2\\,du = \\tfrac16(125 - 1) \\approx 20{,}667$.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Berechne $\\int_0^1 2x(x^2 + 1)^3\\,dx$.",
@@ -55,12 +192,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "substitution"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "substitution"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "u = g(x), du = g'(x) dx.",
         "Grenzen mit umrechnen.",
-        "f'/f integriert zu ln|f|."
+        "f'/f integriert zu ln|f|.",
+        "Substitution: innere Funktion und ihre Ableitung; Grenzen mit umrechnen."
       ],
       "id": "summary"
     }

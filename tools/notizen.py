@@ -43,7 +43,8 @@ def strip_tags(text: str) -> str:
 def clean_inline(line: str) -> str:
     # tags only outside formulas: "$<$ zu $>$" must not be read as a tag
     parts = MATH.split(line)
-    line = "".join(p if i % 2 else strip_tags(p) for i, p in enumerate(parts))
+    # in formulas a bare % starts a TeX comment and swallows the rest (KaTeX then reports a missing brace)
+    line = "".join(re.sub(r"(?<!\\)%", r"\\%", p) if i % 2 else strip_tags(p) for i, p in enumerate(parts))
     line = re.sub(r"\s\^[A-Za-z0-9-]+\s*$", "", line)  # block ids
     line = re.sub(r"\[\[([^\]|#]+)#([^\]|]+)\|([^\]]+)\]\]", r"**\3**", line)
     line = re.sub(r"\[\[([^\]|]+)\|([^\]]+)\]\]", r"**\2**", line)

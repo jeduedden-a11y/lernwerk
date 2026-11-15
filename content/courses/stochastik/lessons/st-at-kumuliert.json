@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kumulierte Binomialverteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Kumulierte Binomialverteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Immer dann, wenn nach **\"höchstens\", \"mindestens\", \"weniger als\", \"mehr als\"** oder einem **Bereich** gefragt wird -- im Gegensatz zu \"genau\", was die einfache Binomialformel verlangt.\n\nDas ist kein eigenständiger Prüfungsinhalt, sondern das **Handwerkszeug**, ohne das kein Hypothesentest und kein Konfidenzintervall lösbar ist. Deshalb hier gesondert."
+            }
+          ]
+        },
+        {
+          "title": "Die Umrechnungstabelle",
+          "blocks": [
+            {
+              "md": "Tabellen und Rechner liefern ausschließlich $P(X \\le m)$. Jede andere Formulierung muss darauf zurückgeführt werden:\n\n| Formulierung | Ereignis | Umrechnung |\n|---|---|---|\n| höchstens $m$ | $X \\le m$ | $P(X \\le m)$ -- direkt ablesbar |\n| weniger als $m$ | $X < m$ | $P(X \\le m-1)$ |\n| mindestens $m$ | $X \\ge m$ | $1 - P(X \\le m-1)$ |\n| mehr als $m$ | $X > m$ | $1 - P(X \\le m)$ |\n| genau $m$ | $X = m$ | $P(X \\le m) - P(X \\le m-1)$ |\n| zwischen $a$ und $b$ (einschließlich) | $a \\le X \\le b$ | $P(X \\le b) - P(X \\le a-1)$ |\n\n> [!important] Die beiden Stolperstellen\n> **\"Mindestens\" und \"weniger als\" verschieben den Index um eins.** Bei \"mindestens $m$\" gehört $m$ selbst noch zum Ereignis, also muss bis $m-1$ abgezogen werden.\n>\n> **Bei Bereichen wird $a-1$ abgezogen, nicht $a$.** Sonst fehlt der Randwert $a$ im Ergebnis."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Formulierung in ein Ereignis übersetzen** ($\\le$, $<$, $\\ge$, $>$, $=$).\n2. **Randwerte prüfen:** Gehört die genannte Zahl selbst dazu? \"Mindestens 16\" schließt 16 ein, \"mehr als 16\" nicht.\n3. **Auf kumulierte Form bringen** nach der Tabelle oben.\n4. **Werte beschaffen** -- Tabelle oder Rechner.\n5. **Ergebnis runden** (üblich: vier Nachkommastellen) und im Sachkontext deuten."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnete Beispiele",
+          "blocks": [
+            {
+              "md": "*Gegeben: $X \\sim B(50; 0{,}2)$, also $\\mu = 10$.*\n\n**\"höchstens 8 Treffer\":**\n$$P(X \\le 8) \\approx 0{,}3073$$\n\n**\"mindestens 12 Treffer\":**\n$$P(X \\ge 12) = 1 - P(X \\le 11) \\approx 1 - 0{,}7107 = 0{,}2893$$\n\n**\"genau 10 Treffer\":**\n$$P(X = 10) = P(X \\le 10) - P(X \\le 9) \\approx 0{,}5836 - 0{,}4437 = 0{,}1399$$\n\nAlternativ direkt über die Binomialformel:\n$$P(X = 10) = \\binom{50}{10} \\cdot 0{,}2^{10} \\cdot 0{,}8^{40} \\approx 0{,}1398$$\n\n**\"zwischen 8 und 12 Treffern (einschließlich)\":**\n$$P(8 \\le X \\le 12) = P(X \\le 12) - P(X \\le 7) \\approx 0{,}7772 - 0{,}1904 = 0{,}5868$$\n\n> [!note] Zahlenwerte\n> Die Werte sind gerundete Werte der Verteilung $B(50; 0{,}2)$ und dienen der Illustration des Verfahrens. In der Prüfung ist die gestellte Tabelle beziehungsweise der zugelassene Rechner maßgeblich."
+            }
+          ]
+        },
+        {
+          "title": "Der 3M-Aufgabentyp",
+          "blocks": [
+            {
+              "md": "Eine eigene Klasse bilden Aufgaben vom Typ **\"dreimal mindestens\"**: *\"Wie oft muss man mindestens würfeln, damit mit einer Wahrscheinlichkeit von mindestens 99 % mindestens einmal eine Sechs fällt?\"*\n\nHier ist **$n$ gesucht**, nicht die Wahrscheinlichkeit. Lösungsweg über das Gegenereignis:\n$$P(X \\ge 1) \\ge 0{,}99 \\;\\Longleftrightarrow\\; 1 - P(X = 0) \\ge 0{,}99 \\;\\Longleftrightarrow\\; \\left(\\tfrac{5}{6}\\right)^n \\le 0{,}01$$\n$$n \\ge \\frac{\\ln 0{,}01}{\\ln \\tfrac{5}{6}} \\approx 25{,}26 \\;\\Longrightarrow\\; n = 26$$\n\n> [!warning] Aufrunden, nicht runden\n> Bei \"mindestens\" wird das Ergebnis **immer aufgerundet**, auch bei 25,01. Ein nicht ganzzahliges $n$ existiert nicht, und Abrunden würde die geforderte Sicherheit unterschreiten.\n>\n> Beim Teilen durch $\\ln\\tfrac{5}{6}$ **dreht sich das Ungleichheitszeichen**, weil dieser Logarithmus negativ ist. Genau hier geht der Aufgabentyp meist schief."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Index-Verschiebung bei \"mindestens\".** $P(X \\ge m) = 1 - P(X \\le m-1)$, nicht $1 - P(X \\le m)$.\n- **Randwert bei Bereichsaufgaben verlieren.** $a-1$ abziehen, nicht $a$.\n- **\"Genau\" mit der kumulierten Tabelle verwechseln.** Entweder Differenz zweier kumulierter Werte oder direkt die Binomialformel.\n- **Bei 3M-Aufgaben abrunden** oder das Ungleichheitszeichen beim Logarithmieren nicht umdrehen.\n- **Zu früh runden.** Zwischenergebnisse mit voller Genauigkeit weiterrechnen, erst am Ende runden."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Binomialverteilung** · **Bernoulli-Kette** · **Entscheidungsregel bestimmen** · **Irrtumswahrscheinlichkeit berechnen** · **Normalverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

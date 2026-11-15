@@ -150,6 +150,305 @@
       "explain": "$E(X) = \\tfrac1p = 4 \\iff p = 0{,}25$. Trotzdem ist der Erfolg nach vier Versuchen nur zu $1 - 0{,}75^4 \\approx 68\\,\\%$ eingetreten."
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Geometrische Verteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Geometrische Verteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Wie oft muss man würfeln, bis zum ersten Mal eine Sechs fällt?\"*, *\"Wie groß ist die Wahrscheinlichkeit, dass der erste Erfolg im $k$-ten Versuch eintritt?\"*, *\"Bestimmen Sie die Wahrscheinlichkeit, dass höchstens $k$ Versuche nötig sind\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Anzahl der Versuche bis zum ersten Erfolg\n> Ein Bernoulli-Experiment mit konstanter Erfolgswahrscheinlichkeit $p$ wird **unabhängig wiederholt**, bis der erste Erfolg eintritt. Die Zufallsgröße $X$ zählt die **Anzahl der Versuche** bis einschließlich dieses ersten Erfolgs."
+            }
+          ]
+        },
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = (1-p)^{k-1} \\cdot p, \\qquad k = 1,2,3,\\dots$$\n\n**Lesart:** In den ersten $k-1$ Versuchen tritt jeweils ein Misserfolg auf (Wahrscheinlichkeit $(1-p)^{k-1}$), im $k$-ten Versuch dann der Erfolg (Wahrscheinlichkeit $p$) -- alle Versuche sind unabhängig, die Wahrscheinlichkeiten werden multipliziert."
+            }
+          ]
+        },
+        {
+          "title": "Kumulierte Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "$$P(X \\leq k) = 1 - (1-p)^k$$\n\nDas Gegenereignis \"mehr als $k$ Versuche nötig\" bedeutet: die ersten $k$ Versuche sind **alle** Misserfolge, mit Wahrscheinlichkeit $(1-p)^k$."
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert",
+          "blocks": [
+            {
+              "md": "$$E(X) = \\frac{1}{p}$$\n\nAnschaulich: Ist die Erfolgswahrscheinlichkeit klein, dauert es im Mittel entsprechend lange bis zum ersten Erfolg."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Erfolgswahrscheinlichkeit $p$** aus der Aufgabenstellung bestimmen.\n2. **Gesuchte Wahrscheinlichkeit klassifizieren:** \"genau im $k$-ten Versuch\" $\\Rightarrow$ Einzelwert-Formel; \"höchstens $k$ Versuche\" $\\Rightarrow$ kumulierte Formel; \"mehr als $k$ Versuche\" $\\Rightarrow$ Gegenereignis $(1-p)^k$.\n3. **Formel einsetzen** und auswerten.\n4. **Bei Erwartungswertfragen:** $E(X) = \\tfrac1p$ direkt anwenden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein fairer Würfel wird wiederholt geworfen. Wie groß ist die Wahrscheinlichkeit, dass die erste Sechs genau im vierten Wurf fällt? Wie viele Würfe sind im Mittel bis zur ersten Sechs nötig?*\n\n**Schritt 1:** $p = \\dfrac16$.\n\n**Schritt 3:**\n$$P(X=4) = \\left(\\frac{5}{6}\\right)^{3} \\cdot \\frac{1}{6} = \\frac{125}{216}\\cdot\\frac{1}{6} = \\frac{125}{1296} \\approx 0{,}0965$$\n\n*Mit rund 9,65 % Wahrscheinlichkeit fällt die erste Sechs genau beim vierten Wurf.*\n\n**Schritt 4:**\n$$E(X) = \\frac{1}{1/6} = 6$$\n\n*Im Mittel sind 6 Würfe bis zur ersten Sechs nötig -- ein Ergebnis, das sich mit der Alltagserfahrung deckt.*"
+            }
+          ]
+        },
+        {
+          "title": "Zweites Beispiel: kumulierte Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "*Wie groß ist die Wahrscheinlichkeit, dass spätestens beim dritten Wurf eine Sechs fällt?*\n\n$$P(X \\leq 3) = 1 - \\left(\\frac{5}{6}\\right)^3 = 1 - \\frac{125}{216} = \\frac{91}{216} \\approx 0{,}4213$$"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zur Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Bei der **Binomialverteilung** ist die **Anzahl der Versuche fest** ($n$ ist gegeben), gesucht ist die Anzahl der Erfolge. Bei der geometrischen Verteilung ist es umgekehrt: die **Anzahl der Erfolge ist fest** (genau einer, der erste), gesucht ist die Anzahl der dafür nötigen Versuche."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bei $k=1$ die Formel falsch auswerten.** $P(X=1) = (1-p)^0 \\cdot p = p$ -- der Exponent $0$ ergibt $1$, keine Sonderbehandlung nötig.\n- **\"Höchstens $k$\" mit \"genau $k$\" verwechseln.** Erstere verlangt die kumulierte Formel oder eine Summe, letztere nur den Einzelwert.\n- **Beim Gegenereignis \"mehr als $k$ Versuche\" den Exponenten falsch setzen.** Es sind $(1-p)^k$, nicht $(1-p)^{k+1}$ oder $(1-p)^{k-1}$ -- die ersten $k$ Versuche müssen alle misslingen.\n- **Erwartungswert mit der wahrscheinlichsten Anzahl von Versuchen verwechseln.** $E(X)=\\tfrac1p$ ist ein Mittelwert, keine Garantie -- der wahrscheinlichste Einzelwert ist tatsächlich $k=1$.\n- **Unabhängigkeit der Versuche nicht prüfen.** Bei Ziehen ohne Zurücklegen aus einer kleinen Grundgesamtheit gilt die geometrische Verteilung nicht -- dort ändert sich $p$ mit jedem Versuch."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bernoulli-Kette** · **Binomialverteilung** · **Hypergeometrische Verteilung** · **Poisson-Verteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Bernoulli-Kette",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bernoulli-Kette.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Bernoulli-Kette** der Länge $n$ besteht aus $n$ **unabhängigen** Wiederholungen desselben Zufallsexperiments mit genau zwei möglichen Ausgängen: **Treffer** (Wahrscheinlichkeit $p$) und **Niete** (Wahrscheinlichkeit $1-p$). Jede einzelne Wiederholung heißt **Bernoulli-Experiment**."
+            }
+          ]
+        },
+        {
+          "title": "Voraussetzungen",
+          "blocks": [
+            {
+              "md": "1. Nur zwei Ausgänge pro Durchführung (Treffer/Niete).\n2. Die Trefferwahrscheinlichkeit $p$ bleibt bei **jeder** Durchführung **gleich**.\n3. Die Durchführungen sind **unabhängig** voneinander (z. B. Ziehen **mit** Zurücklegen)."
+            }
+          ]
+        },
+        {
+          "title": "Wahrscheinlichkeit für eine bestimmte Trefferreihenfolge",
+          "blocks": [
+            {
+              "md": "Für eine **feste** Reihenfolge mit genau $k$ Treffern unter $n$ Versuchen (z. B. Treffer-Treffer-Niete-...):\n$$p^k \\cdot (1-p)^{n-k}$$\n(Produktregel, da die Versuche unabhängig sind.)"
+            }
+          ]
+        },
+        {
+          "title": "Anzahl möglicher Reihenfolgen",
+          "blocks": [
+            {
+              "md": "Da die Reihenfolge der $k$ Treffer unter den $n$ Plätzen beliebig sein darf, gibt es $\\binom{n}{k}$ mögliche Anordnungen (siehe **Kombinatorik**)."
+            }
+          ]
+        },
+        {
+          "title": "Bernoulli-Formel",
+          "blocks": [
+            {
+              "md": "Die Wahrscheinlichkeit für **genau** $k$ Treffer bei $n$ Versuchen:\n$$P(X=k) = \\binom{n}{k}\\cdot p^k \\cdot (1-p)^{n-k}$$\nDiese Formel definiert die **Binomialverteilung**."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Ein Basketballspieler trifft mit $p=0{,}7$ Wahrscheinlichkeit. Wahrscheinlichkeit für genau 3 Treffer bei 5 Würfen:\n$$P(X=3) = \\binom{5}{3}\\cdot 0{,}7^3\\cdot 0{,}3^2 = 10 \\cdot 0{,}343 \\cdot 0{,}09 = 0{,}3087$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Bernoulli-Kette auf Experimente **ohne** Zurücklegen anwenden (dann sind die Versuche nicht mehr unabhängig — dort gilt stattdessen die hypergeometrische Verteilung, nicht Abitur-relevant in Hessen).\n- Den Binomialkoeffizienten $\\binom{n}{k}$ vergessen und nur $p^k(1-p)^{n-k}$ berechnen (das ist nur die Wahrscheinlichkeit für **eine bestimmte** Reihenfolge).\n\nFührt direkt zur **Binomialverteilung**."
+            }
+          ]
+        },
+        {
+          "title": "Der Bernoulli-Versuch",
+          "blocks": [
+            {
+              "md": "> [!info] Die Reduktion auf zwei Ausgänge ist eine Modellierungsleistung\n> Ein Bernoulli-Versuch hat genau zwei Ausgänge, üblich benannt als **Treffer** und **Niete**, mit den Wahrscheinlichkeiten $p$ und $1-p$.\n>\n> Die Zweiteilung ist selten von der Sache vorgegeben, sondern wird vom Modellierenden gesetzt: Ein Würfel hat sechs Ausgänge, wird aber zum Bernoulli-Versuch, sobald man nur nach \"Sechs oder nicht Sechs\" fragt. Diese Festlegung dessen, was als Treffer zählt, gehört ausdrücklich in die Lösung -- $p$ hängt daran.\n>\n> Was \"Treffer\" heißt, ist dabei frei wählbar und muss nichts Erwünschtes bezeichnen. Bei einer Aufgabe über Ausschussware ist der Defekt der Treffer."
+            }
+          ]
+        },
+        {
+          "title": "Die Kette",
+          "blocks": [
+            {
+              "md": "> [!important] Drei Bedingungen, und alle drei sind zu prüfen\n> Eine Bernoulli-Kette der Länge $n$ ist die $n$-fache Wiederholung eines Bernoulli-Versuchs mit:\n>\n> 1. **konstantem** $p$ über alle Stufen\n> 2. **Unabhängigkeit** der Einzelversuche\n> 3. **fest vorgegebenem** $n$\n>\n> Die zweite Bedingung ist die inhaltlich stärkste. Sie rechtfertigt, die Wahrscheinlichkeiten entlang eines Pfades zu **multiplizieren** -- ohne sie bricht der gesamte Aufbau der **Binomialverteilung** zusammen. Siehe **Stochastische Unabhängigkeit**.\n>\n> Verletzt sind die ersten beiden Bedingungen typischerweise beim **Ziehen ohne Zurücklegen**: Jede gezogene Kugel verändert die Zusammensetzung und damit $p$ der nächsten Stufe."
+            }
+          ]
+        },
+        {
+          "title": "Pfadwahrscheinlichkeit und Pfadzahl",
+          "blocks": [
+            {
+              "md": "$$P(\\text{ein bestimmter Pfad mit } k \\text{ Treffern}) = p^k (1-p)^{n-k}$$\n\n> [!tip] Alle Pfade mit gleich vielen Treffern sind gleich wahrscheinlich\n> Das ist die entscheidende Einsicht und der Grund, weshalb sich das Problem überhaupt geschlossen lösen lässt. Ob die drei Treffer zu Beginn, am Ende oder verstreut fallen, ändert am Produkt nichts -- die Faktoren werden nur umgeordnet.\n>\n> Folglich genügt es, die Pfade zu **zählen**. Ihre Anzahl ist $\\binom{n}{k}$, denn eine Pfadauswahl entspricht der Auswahl der $k$ Stufen, auf denen der Treffer fällt. Multipliziert man beides, entsteht die Formel der Binomialverteilung.\n>\n> Die Bernoulli-Kette ist damit nicht ein Nachbarthema der Binomialverteilung, sondern **deren Herleitung**. Wer diesen Weg einmal nachvollzogen hat, muss die Formel nicht auswendig behalten."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Sonderfälle mit eigenem Namen",
+          "blocks": [
+            {
+              "md": "| Frage | Ansatz |\n|---|---|\n| kein Treffer | $(1-p)^n$ |\n| mindestens ein Treffer | $1 - (1-p)^n$ |\n\n> [!warning] Die Mindestens-eins-Aufgabe verlangt fast immer das Gegenereignis\n> Der direkte Weg summierte über alle $k$ von 1 bis $n$. Das Gegenereignis ist ein einziger Term.\n>\n> In der umgekehrten Fragestellung -- \"wie oft muss man mindestens werfen, damit mit 99 Prozent Wahrscheinlichkeit wenigstens einmal...\" -- führt das auf eine **Exponentialungleichung**:\n> $$1 - (1-p)^n \\ge 0{,}99 \\;\\Longleftrightarrow\\; n \\ge \\frac{\\ln 0{,}01}{\\ln(1-p)}$$\n> Beim Logarithmieren ist zu beachten, dass $\\ln(1-p)$ **negativ** ist -- das Ungleichheitszeichen dreht sich also um. Das Ergebnis wird stets aufgerundet, weil $n$ ganzzahlig ist."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Bernoulli-Kette ist die Struktur, aus der die **Binomialverteilung** hervorgeht. Sie setzt die **Stochastische Unabhängigkeit** voraus und nutzt den Binomialkoeffizienten aus der **Kombinatorik**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Zufallsgröße und Erwartungswert",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsgröße und Erwartungswert.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Zufallsgröße** (Zufallsvariable) $X$ ordnet jedem Ergebnis eines Zufallsexperiments eine **Zahl** zu (z. B. Anzahl der Treffer, Gewinn in Euro). Ihre **Wahrscheinlichkeitsverteilung** gibt an, mit welcher Wahrscheinlichkeit $X$ welchen Wert annimmt: $P(X=x_i)$."
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert",
+          "blocks": [
+            {
+              "md": "Der **Erwartungswert** $E(X)$ ist der langfristige Durchschnittswert von $X$ bei (gedanklich) sehr häufiger Wiederholung des Experiments:\n$$E(X) = \\sum_{i} x_i \\cdot P(X=x_i)$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel — faires Spiel prüfen",
+          "blocks": [
+            {
+              "md": "Bei einem Glücksspiel kostet der Einsatz 2 €. Man gewinnt mit $P=\\frac16$ genau 10 €, sonst nichts. Zufallsgröße $X$ = Auszahlung:\n$$E(X) = 10\\cdot\\frac16 + 0\\cdot\\frac56 = \\frac{10}{6} \\approx 1{,}67 \\text{ €}$$\nDa $E(X) = 1{,}67\\,€ < 2\\,€$ (Einsatz), ist das Spiel **nicht fair** — im Mittel verliert man 0,33 € pro Spiel."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften des Erwartungswerts",
+          "blocks": [
+            {
+              "md": "$$E(a\\cdot X + b) = a\\cdot E(X) + b \\qquad E(X+Y) = E(X)+E(Y)$$\n(Linearität — gilt **unabhängig davon**, ob $X,Y$ unabhängig sind.)"
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert der Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Für eine binomialverteilte Zufallsgröße mit $n$ Versuchen und Trefferwahrscheinlichkeit $p$ (siehe **Bernoulli-Kette**, **Binomialverteilung**):\n$$E(X) = n\\cdot p$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Erwartungswert als \"wahrscheinlichsten Wert\" missverstehen — er ist ein **gewichteter Durchschnitt**, muss selbst kein möglicher Wert von $X$ sein (z. B. $E(X)=3{,}5$ beim Würfeln).\n- Bei der Fairness-Beurteilung Einsatz und Auszahlung verwechseln.\n\nZur Streuung um den Erwartungswert: **Varianz und Standardabweichung (Stochastik)**."
+            }
+          ]
+        },
+        {
+          "title": "Was eine Zufallsgröße leistet",
+          "blocks": [
+            {
+              "md": "> [!info] Sie übersetzt Ergebnisse in Zahlen\n> Ein Zufallsexperiment liefert zunächst Ergebnisse, die keine Zahlen sein müssen -- \"Kopf\", \"rote Kugel\", \"defekt\". Eine Zufallsgröße $X$ ist eine **Abbildung** vom Ergebnisraum in die reellen Zahlen: Sie ordnet jedem Ergebnis eine Zahl zu.\n>\n> Erst dadurch werden Mittelwert und Streuung überhaupt bildbar. Ohne Zahlen gibt es keinen Erwartungswert.\n>\n> Die Zuordnung ist eine **Modellierungsentscheidung**, keine Eigenschaft des Experiments. Bei einem Glücksspiel kann $X$ den Gewinn, den Reingewinn nach Einsatz oder die Augensumme bezeichnen -- drei verschiedene Zufallsgrößen auf demselben Experiment mit verschiedenen Erwartungswerten."
+            }
+          ]
+        },
+        {
+          "title": "Der Erwartungswert",
+          "blocks": [
+            {
+              "md": "$$E(X) = \\sum_{i} x_i \\cdot P(X = x_i)$$\n\n> [!important] Der Erwartungswert ist kein zu erwartender Wert\n> Der Name führt in die Irre. $E(X)$ ist der **langfristige Mittelwert** bei sehr vielen Wiederholungen -- er muss selbst gar nicht als Ergebnis auftreten können.\n>\n> Beim Würfel ist $E(X) = 3{,}5$, obwohl keine Fläche 3,5 zeigt. Bei einer Familie mit im Mittel 1,4 Kindern ebenso.\n>\n> Formal ist $E(X)$ ein mit Wahrscheinlichkeiten **gewichtetes Mittel**: Jeder Wert geht mit seiner Wahrscheinlichkeit ein. Bei gleichverteilten Werten fällt das mit dem gewöhnlichen arithmetischen Mittel zusammen -- sonst nicht."
+            }
+          ]
+        },
+        {
+          "title": "Fairness bei Spielen",
+          "blocks": [
+            {
+              "md": "| $E(\\text{Gewinn})$ | Bedeutung |\n|---|---|\n| $= 0$ | das Spiel ist **fair** |\n| $< 0$ | für den Spieler ungünstig |\n| $> 0$ | für den Veranstalter ungünstig |\n\n> [!warning] Einsatz abziehen -- oder konsequent nicht\n> Der häufigste Fehler bei Gewinnspielaufgaben ist die Vermischung zweier Größen: **Auszahlung** und **Reingewinn**. Ist $X$ der Reingewinn, so ist der Einsatz in jeder Zeile der Tabelle bereits abgezogen; ist $X$ die Auszahlung, gilt Fairness bei $E(X) = \\text{Einsatz}$.\n>\n> Zulässig sind beide Wege, gemischt werden dürfen sie nicht. Es empfiehlt sich, in der Lösung ausdrücklich festzuhalten, was $X$ bezeichnet.\n>\n> Bei der Frage \"welcher Einsatz macht das Spiel fair\" ist die Gleichung $E(\\text{Auszahlung}) = e$ nach $e$ aufzulösen -- der Erwartungswert der Auszahlung ist der faire Einsatz."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "$$E(aX + b) = a\\,E(X) + b \\qquad E(X+Y) = E(X) + E(Y)$$\n\n> [!tip] Die Additivität gilt ohne Unabhängigkeit\n> Das ist bemerkenswert und wird oft übersehen: $E(X+Y) = E(X)+E(Y)$ gilt **immer**, auch wenn $X$ und $Y$ voneinander abhängen. Bei der **Varianz** ist das anders -- dort ist Unabhängigkeit Voraussetzung.\n>\n> Diese Regel erspart bei zusammengesetzten Größen viel Arbeit: Der Erwartungswert der **Binomialverteilung** $E(X) = np$ folgt unmittelbar daraus, dass $X$ die Summe von $n$ Einzelversuchen mit Erwartungswert $p$ ist."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Zufallsgröße ist die Brücke vom **Zufallsexperiment** zur Kenngrößenrechnung. Auf ihr bauen **Varianz** und alle Verteilungen auf."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "dritter",
       "type": "numeric",
       "label": "Rechnen",

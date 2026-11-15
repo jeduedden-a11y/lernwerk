@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vereinigung und Schnitt von Ereignissen",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Vereinigung und Schnitt von Ereignissen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Aufgabe verknüpft zwei Ereignisse sprachlich. Signalwörter und ihre Übersetzung:\n\n| Formulierung | Ereignis | Schreibweise |\n|---|---|---|\n| \"A **und** B\" (beide zugleich) | Schnitt | $A \\cap B$ |\n| \"A **oder** B\" (mindestens eines) | Vereinigung | $A \\cup B$ |\n| \"**weder** A **noch** B\" | Gegenereignis der Vereinigung | $\\overline{A \\cup B}$ |\n| \"**nicht** A\" | Gegenereignis | $\\overline{A}$ |\n| \"**nur** A\" (A, aber nicht B) | Differenz | $A \\cap \\overline{B}$ |\n| \"**genau eines** von beiden\" | symmetrische Differenz | $(A \\cap \\overline{B}) \\cup (\\overline{A} \\cap B)$ |\n\n> [!important] \"Oder\" ist immer einschließend\n> Das mathematische \"oder\" schließt den Fall ein, dass **beide** eintreten. \"A oder B\" bedeutet also \"mindestens eines von beiden\", nicht \"genau eines\". Wer das umgangssprachliche ausschließende \"entweder oder\" ansetzt, rechnet systematisch falsch."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Grundsätze",
+          "blocks": [
+            {
+              "md": "**Additionssatz:**\n$$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$$\n\nDer Abzug ist nötig, weil die Schnittmenge sonst doppelt gezählt würde. Nur bei **unvereinbaren** Ereignissen ($A \\cap B = \\emptyset$) entfällt er.\n\n**Gegenereignis:**\n$$P(\\overline{A}) = 1 - P(A)$$\n\n**Regeln von De Morgan:**\n$$\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B} \\qquad\\text{und}\\qquad \\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$$\n\nIn Worten: Das Gegenteil von \"mindestens eines\" ist \"keines\", das Gegenteil von \"beide\" ist \"mindestens eines nicht\"."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ereignisse benennen** und in Worten festhalten, wofür $A$ und $B$ stehen.\n2. **Sprachliche Formulierung übersetzen** nach der Tabelle oben. Bei \"weder noch\" und \"nicht beide\" besonders sorgfältig sein.\n3. **Prüfen, welche Größen gegeben sind.** Fehlt $P(A \\cap B)$, aber Unabhängigkeit ist bekannt oder zu prüfen, gilt $P(A \\cap B) = P(A) \\cdot P(B)$.\n4. **Passenden Satz anwenden.** Bei \"weder noch\" fast immer über De Morgan plus Gegenereignis.\n5. **Plausibilität prüfen:** Jede Wahrscheinlichkeit liegt zwischen 0 und 1, und $P(A \\cap B) \\le \\min(P(A), P(B)) \\le P(A \\cup B)$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*In einer Klasse lernen 60 % Französisch ($F$), 45 % Spanisch ($S$), 20 % beide Sprachen.*\n\n**a) Wie viele lernen mindestens eine der beiden Sprachen?**\n$$P(F \\cup S) = P(F) + P(S) - P(F \\cap S) = 0{,}60 + 0{,}45 - 0{,}20 = 0{,}85$$\n\n**b) Wie viele lernen keine der beiden?**\n\nÜber De Morgan und Gegenereignis:\n$$P(\\overline{F} \\cap \\overline{S}) = P(\\overline{F \\cup S}) = 1 - 0{,}85 = 0{,}15$$\n\n**c) Wie viele lernen nur Französisch?**\n$$P(F \\cap \\overline{S}) = P(F) - P(F \\cap S) = 0{,}60 - 0{,}20 = 0{,}40$$\n\n**d) Wie viele lernen genau eine der beiden Sprachen?**\n$$P(F \\cap \\overline{S}) + P(\\overline{F} \\cap S) = 0{,}40 + (0{,}45 - 0{,}20) = 0{,}40 + 0{,}25 = 0{,}65$$\n\n**e) Sind die Ereignisse unabhängig?**\n\n$P(F) \\cdot P(S) = 0{,}60 \\cdot 0{,}45 = 0{,}27$, aber $P(F \\cap S) = 0{,}20$. Verschieden, also **abhängig** -- wer Französisch lernt, wählt seltener zusätzlich Spanisch, als es bei Unabhängigkeit zu erwarten wäre.\n\n**Kontrolle** über alle vier disjunkten Fälle:\n$$0{,}40 + 0{,}25 + 0{,}20 + 0{,}15 = 1$$"
+            }
+          ]
+        },
+        {
+          "title": "Darstellung als Vierfeldertafel",
+          "blocks": [
+            {
+              "md": "Dasselbe Beispiel, kompakt (siehe **Vierfeldertafel**):\n\n| | $S$ | $\\overline{S}$ | Summe |\n|---|---|---|---|\n| $F$ | 0,20 | 0,40 | 0,60 |\n| $\\overline{F}$ | 0,25 | 0,15 | 0,40 |\n| **Summe** | 0,45 | 0,55 | 1 |\n\nAlle Teilaufgaben lassen sich hier direkt ablesen. Bei zwei Ereignissen ist die Tafel meist der schnellere Weg."
+            }
+          ]
+        },
+        {
+          "title": "Unvereinbarkeit und Unabhängigkeit",
+          "blocks": [
+            {
+              "md": "Zwei häufig verwechselte Begriffe:\n\n| | Bedeutung | Formel |\n|---|---|---|\n| **unvereinbar** (disjunkt) | können nicht zugleich eintreten | $P(A \\cap B) = 0$ |\n| **unabhängig** | beeinflussen einander nicht | $P(A \\cap B) = P(A)\\cdot P(B)$ |\n\n> [!warning] Unvereinbar ist fast nie unabhängig\n> Sind $A$ und $B$ unvereinbar und beide möglich ($P(A), P(B) > 0$), dann sind sie **abhängig** -- denn wenn $A$ eintritt, ist $B$ ausgeschlossen. Das ist maximale Abhängigkeit, nicht Unabhängigkeit. Eine beliebte Fangfrage."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Beim Additionssatz $P(A \\cap B)$ nicht abziehen.** Führt zu Wahrscheinlichkeiten über 1, wenn man aufmerksam ist -- sonst unbemerkt zu falschen Ergebnissen.\n- **\"Oder\" als ausschließend lesen.** Mathematisch schließt \"oder\" den Fall \"beide\" ein.\n- **\"Weder noch\" direkt angehen,** statt über De Morgan. Der Umweg über das Gegenereignis der Vereinigung ist deutlich kürzer.\n- **\"Nur A\" mit $P(A)$ gleichsetzen.** $P(A)$ enthält auch die Fälle, in denen zusätzlich $B$ eintritt.\n- **Unvereinbarkeit und Unabhängigkeit verwechseln.**\n- **$P(A \\cap B) = P(A)\\cdot P(B)$ ungeprüft ansetzen.** Diese Formel gilt **nur** bei Unabhängigkeit -- die muss gegeben oder gezeigt sein."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zufallsexperiment und Ereignis** · **Vierfeldertafel** · **Stochastische Unabhängigkeit** · **Bedingte Wahrscheinlichkeit** · **Laplace-Wahrscheinlichkeit**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

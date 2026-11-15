@@ -68,6 +68,285 @@
       "id": "w1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Taylorkoeffizienten von $e^x$** um 0.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = \\sum_{k} a_k x^k \\;\\Rightarrow\\; f^{(k)}(0) = k!\\,a_k",
+            "why": "k-mal ableiten: Nur das Glied mit x^k überlebt bei 0."
+          },
+          {
+            "tex": "a_k = \\frac{f^{(k)}(0)}{k!}",
+            "why": "Taylorformel."
+          },
+          {
+            "tex": "(e^x)^{(k)} = e^x \\;\\Rightarrow\\; a_k = \\frac{1}{k!}",
+            "why": "Alle Ableitungen sind 1 bei 0."
+          },
+          {
+            "tex": "e^x = \\sum_{k=0}^{\\infty} \\frac{x^k}{k!}",
+            "why": "Für alle x konvergent."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "e^x.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Reihe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine **Potenzreihe** $\\sum a_k(x - x_0)^k$ konvergiert innerhalb des **Konvergenzradius** $R$ um $x_0$. Die **Taylorreihe** hat die Koeffizienten $\\tfrac{f^{(k)}(x_0)}{k!}$; ihre Abschnitte sind die besten Näherungspolynome.",
+      "label": "Potenzreihen",
+      "more": "**Wichtige Reihen um 0:** $e^x = \\sum \\tfrac{x^k}{k!}$; $\\sin x = x - \\tfrac{x^3}{3!} + \\tfrac{x^5}{5!} - \\ldots$; $\\cos x = 1 - \\tfrac{x^2}{2!} + \\ldots$; $\\ln(1 + x) = x - \\tfrac{x^2}{2} + \\tfrac{x^3}{3} - \\ldots$ für $|x| < 1$; $\\tfrac{1}{1 - x} = \\sum x^k$ für $|x| < 1$.\n\n**Konvergenzradius:** $R = \\lim\\left|\\tfrac{a_k}{a_{k+1}}\\right|$, aus dem Quotientenkriterium. Am Rand muss man einzeln prüfen.\n\n**Fehler:** Der Abstand zwischen Funktion und Taylorpolynom $T_n$ wird durch das Restglied abgeschätzt; nah an $x_0$ ist er klein.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Potenzreihen",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Potenzreihen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Potenzreihe** ist eine Reihe der Form\n$$\\sum_{n=0}^\\infty c_n(x-a)^n = c_0+c_1(x-a)+c_2(x-a)^2+\\cdots$$\nmit Koeffizienten $c_n$ und **Zentrum** $a$. Anders als bisherige Reihen ist eine Potenzreihe eine **Funktion von $x$**."
+            }
+          ]
+        },
+        {
+          "title": "Konvergenzradius und -intervall",
+          "blocks": [
+            {
+              "md": "Für jede Potenzreihe gilt genau eine der drei Möglichkeiten:\n1. Konvergenz **nur bei** $x=a$ (Radius $R=0$)\n2. Konvergenz für **alle** $x\\in\\mathbb{R}$ ($R=\\infty$)\n3. Konvergenz für $|x-a|<R$, Divergenz für $|x-a|>R$\n\nAn den **Randpunkten** $x=a\\pm R$ muss separat geprüft werden (z. B. mit dem **Leibniz-Kriterium** oder **p-Reihe**)."
+            }
+          ]
+        },
+        {
+          "title": "Radius bestimmen",
+          "blocks": [
+            {
+              "md": "Über das **Quotienten- und Wurzelkriterium**:\n$$R = \\frac{1}{\\displaystyle\\lim_{n\\to\\infty}\\left|\\frac{c_{n+1}}{c_n}\\right|} = \\frac{1}{\\displaystyle\\lim_{n\\to\\infty}|c_n|^{1/n}}$$"
+            }
+          ]
+        },
+        {
+          "title": "Gliedweises Differenzieren/Integrieren",
+          "blocks": [
+            {
+              "md": "Innerhalb des Konvergenzintervalls verhalten sich Potenzreihen wie Polynome:\n$$\\frac{d}{dx}\\sum_{n=0}^\\infty c_n(x-a)^n = \\sum_{n=1}^\\infty n\\,c_n(x-a)^{n-1}$$\nBeide Operationen **erhalten den Radius** $R$, können aber das Randverhalten ändern."
+            }
+          ]
+        },
+        {
+          "title": "Die geometrische Reihe als Potenzreihe",
+          "blocks": [
+            {
+              "md": "$$\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n, \\quad |x|<1$$\nAusgangspunkt für zahllose weitere Potenzreihen durch Substitution, Ableiten, Integrieren."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: $\\arctan x$ herleiten",
+          "blocks": [
+            {
+              "md": "Aus $\\dfrac{1}{1+x^2}=\\sum(-1)^nx^{2n}$ (Substitution $t=-x^2$) durch Integration:\n$$\\arctan x = \\sum_{n=0}^\\infty \\frac{(-1)^nx^{2n+1}}{2n+1} = x-\\frac{x^3}{3}+\\frac{x^5}{5}-\\cdots$$\nBei $x=1$ ergibt sich die berühmte **Leibniz-Formel**: $\\dfrac{\\pi}{4}=1-\\dfrac13+\\dfrac15-\\cdots$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Randpunkte nicht geprüft.\n- $R$ mit dem Intervall verwechselt — das Intervall ist $(a-R,a+R)$, abhängig vom Zentrum $a$.\n- Annehmen, die Reihe entspreche der Funktion **außerhalb** des Konvergenzintervalls.\n\nDie Brücke zu **Taylor- und Maclaurin-Reihen**."
+            }
+          ]
+        },
+        {
+          "title": "Die Bauform",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=0}^{\\infty} c_n (x-x_0)^n$$\n\n> [!important] Eine Potenzreihe ist eine Funktion, kein Zahlwert\n> Der wesentliche Unterschied zu den bisherigen Reihen: Die Konvergenz hängt von $x$ ab. Für manche $x$ konvergiert die Reihe, für andere nicht -- und dort, wo sie konvergiert, definiert sie eine Funktion.\n>\n> Man kann eine Potenzreihe als \"unendliches Polynom\" auffassen. Sie erbt die guten Eigenschaften der Polynome: Im Innern des Konvergenzbereichs darf sie gliedweise differenziert und integriert werden, und das Ergebnis ist wieder eine Potenzreihe mit demselben Radius.\n>\n> $x_0$ heißt **Entwicklungspunkt**. Um ihn herum liegt der Konvergenzbereich symmetrisch -- daher der Name Radius."
+            }
+          ]
+        },
+        {
+          "title": "Der Konvergenzradius",
+          "blocks": [
+            {
+              "md": "$$r = \\lim_{n\\to\\infty}\\left|\\frac{c_n}{c_{n+1}}\\right|$$\n\n| Bereich | Verhalten |\n|---|---|\n| $|x-x_0| < r$ | **absolut** konvergent |\n| $|x-x_0| > r$ | divergent |\n| $|x-x_0| = r$ | **gesondert prüfen** |\n\n> [!warning] Die Randpunkte müssen einzeln untersucht werden\n> Die Formel liefert den Radius, nicht das Verhalten an den Rändern. Dort versagt das Quotientenkriterium, weil es den Grenzwert 1 ergibt. Für jeden der beiden Randpunkte ist der konkrete Wert einzusetzen und die entstehende Zahlenreihe mit einem passenden Kriterium zu prüfen.\n>\n> Alle vier Kombinationen kommen vor: beide Ränder gehören dazu, keiner, oder genau einer. Das Beispiel $\\sum \\frac{x^n}{n}$ hat den Radius 1; bei $x=-1$ entsteht die alternierende harmonische Reihe -- konvergent nach Leibniz --, bei $x=1$ die harmonische Reihe -- divergent. Das Konvergenzintervall ist also $[-1;1)$.\n>\n> Die Randbetrachtung wird regelmäßig vergessen und ist ein sicherer Punktverlust."
+            }
+          ]
+        },
+        {
+          "title": "Rechnen mit Potenzreihen",
+          "blocks": [
+            {
+              "md": "> [!tip] Gliedweise ableiten und integrieren ist erlaubt\n> $$\\left(\\sum c_n x^n\\right)' = \\sum n\\,c_n x^{n-1} \\qquad \\int \\sum c_n x^n\\,dx = \\sum \\frac{c_n}{n+1}x^{n+1} + C$$\n> Der Konvergenzradius bleibt dabei erhalten -- nur das Verhalten an den Rändern kann sich ändern.\n>\n> Das eröffnet einen bequemen Weg, neue Reihen zu gewinnen. Aus der geometrischen Reihe $\\frac{1}{1-x} = \\sum x^n$ folgt durch Integration die Reihe für $-\\ln(1-x)$, durch Ersetzen von $x$ durch $-x^2$ und anschließende Integration die für $\\arctan x$. Setzt man dort $x=1$, erhält man die Leibniz-Reihe für $\\pi/4$.\n>\n> Solche Ableitungen sind eleganter als die direkte Berechnung über die Taylorformel und in der Prüfung schneller."
+            }
+          ]
+        },
+        {
+          "title": "Wozu Potenzreihen dienen",
+          "blocks": [
+            {
+              "md": "> [!info] Sie machen transzendente Funktionen berechenbar\n> Ein Taschenrechner berechnet $\\sin$, $\\exp$ und $\\ln$ über Reihenentwicklungen -- Addition und Multiplikation sind die einzigen Operationen, die eine Maschine unmittelbar beherrscht.\n>\n> Darüber hinaus erlauben Potenzreihen die Lösung von Differenzialgleichungen, für die keine geschlossene Lösung existiert, und sie liefern die Grundlage der Näherungsformeln in der Physik: $\\sin x \\approx x$ für kleine Winkel ist der Abbruch nach dem ersten Glied. Genau darauf beruht die Behandlung des Fadenpendels als harmonischer Schwinger."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Potenzreihen entstehen aus **Reihen und Partialsummen**, indem die Glieder von einer Variablen abhängen. Der Konvergenzradius wird über das **Quotienten- und Wurzelkriterium** bestimmt; die wichtigsten Beispiele liefern die **Taylor- und Maclaurin-Reihen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Taylor- und Maclaurin-Reihen",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Taylor- und Maclaurin-Reihen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Taylor-Reihe** stellt $f(x)$ als Potenzreihe um $x=a$ dar:\n$$f(x) = \\sum_{n=0}^\\infty \\frac{f^{(n)}(a)}{n!}(x-a)^n$$\nFür $a=0$ heißt sie **Maclaurin-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Herleitung der Koeffizienten",
+          "blocks": [
+            {
+              "md": "Ausgehend von $f(x)=\\sum c_n(x-a)^n$ liefert $n$-faches Differenzieren und Auswerten bei $x=a$:\n$$f^{(n)}(a) = n!\\,c_n \\;\\Longrightarrow\\; c_n = \\frac{f^{(n)}(a)}{n!}$$"
+            }
+          ]
+        },
+        {
+          "title": "Die essentiellen Maclaurin-Reihen (auswendig lernen!)",
+          "blocks": [
+            {
+              "md": "$$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} \\qquad R=\\infty$$\n$$\\sin x = \\sum_{n=0}^\\infty \\frac{(-1)^nx^{2n+1}}{(2n+1)!} \\qquad R=\\infty$$\n$$\\cos x = \\sum_{n=0}^\\infty \\frac{(-1)^nx^{2n}}{(2n)!} \\qquad R=\\infty$$\n$$\\frac{1}{1-x} = \\sum_{n=0}^\\infty x^n \\qquad R=1$$\n$$\\ln(1+x) = \\sum_{n=1}^\\infty \\frac{(-1)^{n-1}x^n}{n} \\qquad R=1$$\n$$\\arctan x = \\sum_{n=0}^\\infty \\frac{(-1)^nx^{2n+1}}{2n+1} \\qquad R=1$$"
+            }
+          ]
+        },
+        {
+          "title": "Taylor-Restglied (Fehlerabschätzung)",
+          "blocks": [
+            {
+              "md": "Ist $|f^{(n+1)}(t)|\\leq M$ für alle $t$ zwischen $a$ und $x$:\n$$|R_n(x)| \\leq \\frac{M}{(n+1)!}|x-a|^{n+1}$$"
+            }
+          ]
+        },
+        {
+          "title": "Anschauung",
+          "blocks": [
+            {
+              "md": "*(siehe Notiz »taylor_series_buildup.html«)*\nJedes höhere Taylor-Polynom schmiegt sich enger an die Funktion um $a$ — bis die Approximation im Grenzwert exakt wird."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: $e^{-x^2}$ aus bekannter Reihe",
+          "blocks": [
+            {
+              "md": "Substitution $x\\to-x^2$ in der $e^x$-Reihe:\n$$e^{-x^2} = \\sum_{n=0}^\\infty \\frac{(-1)^nx^{2n}}{n!} = 1-x^2+\\frac{x^4}{2!}-\\cdots$$\nZentral für die Gaußsche Normalverteilung."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Das $n!$ im Nenner vergessen — häufigster Fehler überhaupt.\n- Annehmen, die Reihe konvergiere überall, obwohl $R$ endlich sein kann.\n- Ableitungen mühsam neu berechnen statt bekannte Reihen zu substituieren (siehe Beispiel oben).\n\nNutzt direkt die **Kettenregel** (für Substitutionen) und das **Leibniz-Restglied** für alternierende Fälle."
+            }
+          ]
+        },
+        {
+          "title": "Die Entwicklung",
+          "blocks": [
+            {
+              "md": "$$f(x) = \\sum_{n=0}^{\\infty}\\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$$\n\n> [!important] Die Koeffizienten sind durch die Ableitungen erzwungen\n> Die Formel ist keine Erfindung, sondern die einzige Möglichkeit. Fordert man, dass eine Potenzreihe an der Stelle $x_0$ in **allen** Ableitungen mit $f$ übereinstimmt, so ergibt sich durch wiederholtes Ableiten und Einsetzen zwangsläufig $c_n = \\frac{f^{(n)}(x_0)}{n!}$.\n>\n> Die Fakultät im Nenner kommt aus dem Ableiten der Potenz: $(x^n)^{(n)} = n!$. Sie neutralisiert genau diesen Faktor.\n>\n> Für $x_0=0$ heißt die Entwicklung **Maclaurin-Reihe**. Sie ist der Regelfall, weil sich die Rechnung dort am einfachsten gestaltet.\n>\n> Die abgebrochene Reihe -- das **Taylorpolynom** vom Grad $n$ -- ist die beste polynomiale Näherung dieses Grades in der Nähe von $x_0$. Für $n=1$ ist es die Tangente, für $n=2$ die Schmiegeparabel. Die Linearisierung, die in der Physik allgegenwärtig ist, ist damit nur der erste Schritt einer allgemeinen Systematik."
+            }
+          ]
+        },
+        {
+          "title": "Die wichtigsten Reihen",
+          "blocks": [
+            {
+              "md": "| Funktion | Reihe | Konvergenz |\n|---|---|---|\n| $e^x$ | $\\sum \\frac{x^n}{n!}$ | für alle $x$ |\n| $\\sin x$ | $x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\dots$ | für alle $x$ |\n| $\\cos x$ | $1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\dots$ | für alle $x$ |\n| $\\frac{1}{1-x}$ | $\\sum x^n$ | $|x|<1$ |\n| $\\ln(1+x)$ | $x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\dots$ | $-1 < x \\le 1$ |\n\n> [!tip] Die Symmetrie zeigt sich in den Exponenten\n> $\\sin$ ist ungerade und hat nur ungerade Potenzen, $\\cos$ ist gerade und hat nur gerade. Das ist eine brauchbare Kontrolle beim Aufschreiben aus dem Gedächtnis.\n>\n> Bemerkenswert ist der Zusammenhang zwischen den ersten drei Reihen. Setzt man in die Exponentialreihe $ix$ ein und ordnet nach Real- und Imaginärteil, entstehen genau die Reihen von Kosinus und Sinus -- das ist die eulersche Formel $e^{ix} = \\cos x + i\\sin x$. Für $x=\\pi$ folgt daraus $e^{i\\pi}+1=0$, die berühmteste Gleichung der Mathematik, die fünf Grundkonstanten verbindet."
+            }
+          ]
+        },
+        {
+          "title": "Das Restglied",
+          "blocks": [
+            {
+              "md": "$$R_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}(x-x_0)^{n+1} \\quad \\text{für ein } \\xi \\text{ zwischen } x_0 \\text{ und } x$$\n\n> [!warning] Die Reihe muss nicht gegen die Funktion konvergieren\n> Das ist der subtilste Punkt des Themas. Selbst wenn die Taylorreihe konvergiert, kann ihr Wert von $f(x)$ abweichen. Gleichheit gilt genau dann, wenn das Restglied gegen null geht.\n>\n> Das klassische Gegenbeispiel ist $f(x)=e^{-1/x^2}$ mit $f(0)=0$: Alle Ableitungen im Nullpunkt verschwinden, die Taylorreihe ist die Nullreihe -- die Funktion aber ist außerhalb von null von null verschieden.\n>\n> Praktisch dient das Restglied der **Fehlerabschätzung**. Man schätzt $|f^{(n+1)}|$ auf dem betrachteten Intervall nach oben ab und erhält eine Schranke für den Näherungsfehler. Bei $\\sin$ und $\\cos$ ist das besonders bequem, weil alle Ableitungen betragsmäßig durch 1 beschränkt sind.\n>\n> Der Fehler wächst mit dem Abstand vom Entwicklungspunkt in der $(n+1)$-ten Potenz. Taylorpolynome sind daher **lokale** Näherungen -- weit entfernt vom Entwicklungspunkt taugen sie nichts."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Taylorreihen sind der wichtigste Fall der **Potenzreihen**. Sie verallgemeinern die Tangentennäherung aus dem **Ableitungsbegriff** und liefern die Grundlage der Näherungsformeln in der Physik."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Radius",
+      "md": "Welchen Konvergenzradius hat $\\sum \\dfrac{x^k}{2^k}$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Geometrisch in $\\tfrac{x}{2}$: konvergent für $|x| < 2$.",
+      "id": "vq1"
+    },
+    {
       "type": "gen",
       "gen": "ana-taylor",
       "level": 1,
@@ -82,12 +361,61 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "taylor"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "taylor"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "taylor"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "taylor"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Potenzreihe mit Konvergenzradius R.",
         "Taylor: a_k = f^(k)(x₀)/k!.",
-        "eˣ = Σ xᵏ/k!, sin x = x − x³/3! + …"
+        "eˣ = Σ xᵏ/k!, sin x = x − x³/3! + …",
+        "Taylorkoeffizient f^(k)(x₀)/k!; Radius aus dem Quotientenkriterium."
       ],
       "id": "summary"
     }

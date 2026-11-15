@@ -15,6 +15,132 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Beispiel:** $\\displaystyle\\int \\frac{1}{x^2 - 1}\\,dx$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{1}{(x - 1)(x + 1)} = \\frac{A}{x - 1} + \\frac{B}{x + 1}",
+            "why": "Ansatz mit den Linearfaktoren des Nenners."
+          },
+          {
+            "tex": "1 = A(x + 1) + B(x - 1)",
+            "why": "Mit dem Hauptnenner multiplizieren."
+          },
+          {
+            "tex": "x = 1: A = \\tfrac12, \\quad x = -1: B = -\\tfrac12",
+            "why": "Einsetzen der Nullstellen: Je ein Summand fällt weg."
+          },
+          {
+            "tex": "\\int = \\tfrac12\\ln|x - 1| - \\tfrac12\\ln|x + 1| + C = \\tfrac12\\ln\\left|\\tfrac{x - 1}{x + 1}\\right| + C",
+            "why": "Jeder Teilbruch integriert sich zu einem Logarithmus."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hauptnenner.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Koeffizienten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ein Bruch mit faktorisierbarem Nenner zerfällt in **Teilbrüche** $\\tfrac{A}{x - a} + \\tfrac{B}{x - b}$; jeder integriert sich zu einem Logarithmus. Die Koeffizienten liefert das Einsetzen der Nullstellen.",
+      "label": "Verfahren",
+      "more": "**Voraussetzung:** echt gebrochen (Zählergrad kleiner als Nennergrad); sonst zuerst Polynomdivision.\n\n**Ansatz je nach Nenner:** einfache Nullstelle $\\tfrac{A}{x - a}$; doppelte $\\tfrac{A}{x - a} + \\tfrac{B}{(x - a)^2}$; nicht zerlegbarer quadratischer Faktor $\\tfrac{Bx + C}{x^2 + px + q}$.\n\n**Koeffizienten:** Einsetzen der Nullstellen (Zuhaltemethode) oder Koeffizientenvergleich.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Partialbruchzerlegung",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Partialbruchzerlegung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Partialbruchzerlegung** zerlegt eine rationale Funktion $\\dfrac{P(x)}{Q(x)}$ in eine Summe einfacherer Brüche, die direkt integrierbar sind — quasi die Umkehrung des Bruch-Addierens."
+            }
+          ]
+        },
+        {
+          "title": "Voraussetzungen",
+          "blocks": [
+            {
+              "md": "1. Grad von $P$ **echt kleiner** als Grad von $Q$ — sonst zuerst **Polynomdivision**.\n2. $Q(x)$ muss über den reellen Zahlen faktorisierbar sein."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Fälle",
+          "blocks": [
+            {
+              "md": "**Einfache Linearfaktoren:** $Q(x)=(x-a_1)\\cdots(x-a_n)$\n$$\\frac{P(x)}{Q(x)} = \\frac{A_1}{x-a_1}+\\cdots+\\frac{A_n}{x-a_n}$$\n\n**Mehrfache Linearfaktoren:** für $(x-a)^k$\n$$\\frac{A_1}{x-a}+\\frac{A_2}{(x-a)^2}+\\cdots+\\frac{A_k}{(x-a)^k}$$\n\n**Irreduzible quadratische Faktoren:** für $x^2+bx+c$ (nicht reell faktorisierbar)\n$$\\frac{Ax+B}{x^2+bx+c}$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int \\frac{1}{x^2-1}\\,dx,\\quad x^2-1=(x-1)(x+1)$$\n$$\\frac{1}{(x-1)(x+1)} = \\frac{A}{x-1}+\\frac{B}{x+1} \\;\\Longrightarrow\\; 1=A(x+1)+B(x-1)$$\n$x=1: A=\\tfrac12$; $x=-1: B=-\\tfrac12$\n$$\\int\\frac{1}{x^2-1}\\,dx = \\tfrac12\\ln|x-1|-\\tfrac12\\ln|x+1|+C = \\tfrac12\\ln\\left|\\frac{x-1}{x+1}\\right|+C$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Gradbedingung nicht geprüft — ohne Polynomdivision funktioniert die Methode nicht.\n- Bei mehrfachen Faktoren fehlt ein Term.\n- Bei quadratischen Faktoren nur $A$ statt $Ax+B$ im Zähler angesetzt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Koeffizient",
+      "md": "Zerlege $\\dfrac{3x + 1}{(x - 1)(x + 1)} = \\dfrac{A}{x - 1} + \\dfrac{B}{x + 1}$ und gib $A$ an.",
+      "answer": 2,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$3x + 1 = A(x + 1) + B(x - 1)$; $x = 1$: $4 = 2A$, also $A = 2$ (und $B = 1$).",
+      "id": "vq1"
+    },
+    {
       "type": "cloze",
       "label": "Lücken",
       "md": "Bestimme $A$ und $B$ in $\\frac{1}{(x-1)(x+1)} = \\frac{A}{x-1} + \\frac{B}{x+1}$: $A = $ {{0}}, $B = $ {{1}}.",
@@ -56,12 +182,61 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "partialbruch"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "partialbruch"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "partialbruch"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "partialbruch"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Nenner faktorisieren, Ansatz mit Teilbrüchen.",
         "Konstanten über Einsetzen der Nullstellen.",
-        "Zählergrad ≥ Nennergrad: erst Polynomdivision."
+        "Zählergrad ≥ Nennergrad: erst Polynomdivision.",
+        "Partialbrüche: Ansatz nach den Nennerfaktoren, Koeffizienten durch Einsetzen."
       ],
       "id": "summary"
     }

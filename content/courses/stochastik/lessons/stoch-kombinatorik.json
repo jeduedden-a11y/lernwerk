@@ -4,8 +4,14 @@
   "subtitle": "Wie man zählt, ohne alles aufzuschreiben",
   "source": "KCGO Mathematik Hessen, Q3.1",
   "vault": [
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md", "title": "Kombinatorik" },
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md", "title": "Laplace-Wahrscheinlichkeit" }
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md",
+      "title": "Kombinatorik"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md",
+      "title": "Laplace-Wahrscheinlichkeit"
+    }
   ],
   "steps": [
     {
@@ -13,13 +19,48 @@
       "type": "anim",
       "md": "Drei Personen A, B und C stellen sich in eine Reihe. Wie viele Reihenfolgen gibt es? Statt zu raten, bauen wir sie Stufe für Stufe auf.",
       "widget": "tree",
-      "params": { "mode": "perm", "items": ["A", "B", "C"], "depth": 3, "reveal": 0 },
+      "params": {
+        "mode": "perm",
+        "items": [
+          "A",
+          "B",
+          "C"
+        ],
+        "depth": 3,
+        "reveal": 0
+      },
       "timeline": [
-        { "caption": "Für den ersten Platz kommen alle drei in Frage: drei Äste.", "do": { "reveal": 1 } },
-        { "caption": "Für den zweiten Platz bleiben an jedem Ast nur noch zwei Personen übrig.", "do": { "reveal": 2 } },
-        { "caption": "Für den letzten Platz bleibt genau eine. Jeder Weg von links nach rechts ist eine Reihenfolge.", "do": { "reveal": 3 } },
-        { "caption": "Das sind $3 \\cdot 2 \\cdot 1 = 6$ Wege. Man muss sie nicht zählen, man **multipliziert** die Zahl der Möglichkeiten pro Stufe: die **Produktregel**. Kurz schreibt man $3! = 6$.", "hold": 5200 },
-        { "caption": "Bei 10 Personen wären es $10! = 3\\,628\\,800$ Reihenfolgen. Das Baumdiagramm würde nie fertig, die Produktregel rechnet es in einer Zeile.", "do": { "highlight": ["ABC", "CBA"] } }
+        {
+          "caption": "Für den ersten Platz kommen alle drei in Frage: drei Äste.",
+          "do": {
+            "reveal": 1
+          }
+        },
+        {
+          "caption": "Für den zweiten Platz bleiben an jedem Ast nur noch zwei Personen übrig.",
+          "do": {
+            "reveal": 2
+          }
+        },
+        {
+          "caption": "Für den letzten Platz bleibt genau eine. Jeder Weg von links nach rechts ist eine Reihenfolge.",
+          "do": {
+            "reveal": 3
+          }
+        },
+        {
+          "caption": "Das sind $3 \\cdot 2 \\cdot 1 = 6$ Wege. Man muss sie nicht zählen, man **multipliziert** die Zahl der Möglichkeiten pro Stufe: die **Produktregel**. Kurz schreibt man $3! = 6$.",
+          "hold": 5200
+        },
+        {
+          "caption": "Bei 10 Personen wären es $10! = 3\\,628\\,800$ Reihenfolgen. Das Baumdiagramm würde nie fertig, die Produktregel rechnet es in einer Zeile.",
+          "do": {
+            "highlight": [
+              "ABC",
+              "CBA"
+            ]
+          }
+        }
       ]
     },
     {
@@ -39,8 +80,229 @@
       "label": "Ansehen",
       "md": "Eine Urne mit 3 roten (R) und 2 blauen (B) Kugeln, zweimal ziehen **ohne Zurücklegen**. An den Ästen stehen die Wahrscheinlichkeiten, rechts das Produkt entlang des Pfades (**Pfadregel**). Markiert sind die Pfade mit **genau einer roten** Kugel.",
       "widget": "tree",
-      "params": { "mode": "urn", "urn": { "counts": { "R": 3, "B": 2 }, "replace": false, "names": { "R": "rot", "B": "blau" } }, "depth": 2, "highlight": { "count": { "R": 1 } } },
+      "params": {
+        "mode": "urn",
+        "urn": {
+          "counts": {
+            "R": 3,
+            "B": 2
+          },
+          "replace": false,
+          "names": {
+            "R": "rot",
+            "B": "blau"
+          }
+        },
+        "depth": 2,
+        "highlight": {
+          "count": {
+            "R": 1
+          }
+        }
+      },
       "after": "Beim zweiten Zug hat sich die Urne verändert: Nach einer roten Kugel sind nur noch 2 von 4 Kugeln rot. Das macht »ohne Zurücklegen« aus."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kombinatorik (Zählprinzipien)",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Kombinatorik** liefert Zählprinzipien, um die Anzahl möglicher Ergebnisse eines (mehrstufigen) Zufallsexperiments zu bestimmen — Grundlage für **Laplace-Wahrscheinlichkeiten**."
+            }
+          ]
+        },
+        {
+          "title": "Pfadregeln (Baumdiagramm)",
+          "blocks": [
+            {
+              "md": "- **Produktregel (Multiplikationsregel):** Die Wahrscheinlichkeit eines Pfades ist das **Produkt** der Wahrscheinlichkeiten entlang des Pfades.\n- **Summenregel (Additionsregel):** Die Wahrscheinlichkeit eines Ereignisses, das durch mehrere Pfade erreicht wird, ist die **Summe** der zugehörigen Pfadwahrscheinlichkeiten."
+            }
+          ]
+        },
+        {
+          "title": "Fakultät und Permutationen",
+          "blocks": [
+            {
+              "md": "$$n! = n\\cdot(n-1)\\cdot(n-2)\\cdots 2\\cdot 1, \\qquad 0! := 1$$\nDie Anzahl der Anordnungen (**Permutationen**) von $n$ unterscheidbaren Objekten ist $n!$."
+            }
+          ]
+        },
+        {
+          "title": "Binomialkoeffizient (Kombinationen ohne Wiederholung, ohne Reihenfolge)",
+          "blocks": [
+            {
+              "md": "Anzahl der Möglichkeiten, $k$ Objekte aus $n$ ohne Zurücklegen und ohne Berücksichtigung der Reihenfolge auszuwählen:\n$$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$$"
+            }
+          ]
+        },
+        {
+          "title": "Übersicht: Ziehen von $k$ aus $n$ Elementen",
+          "blocks": [
+            {
+              "md": "| | mit Reihenfolge | ohne Reihenfolge |\n|---|---|---|\n| **mit Zurücklegen** | $n^k$ | $\\binom{n+k-1}{k}$ |\n| **ohne Zurücklegen** | $\\dfrac{n!}{(n-k)!}$ | $\\binom{n}{k}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Lottoziehung \"6 aus 49\": $\\binom{49}{6} = \\frac{49!}{6!\\,43!} = 13\\,983\\,816$ mögliche Kombinationen (ohne Zurücklegen, ohne Reihenfolge)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Ziehen **mit** vs. **ohne** Zurücklegen verwechseln — entscheidend für die richtige Formel.\n- Bei \"ohne Reihenfolge\" trotzdem die Reihenfolge mitzählen (führt zu einem um den Faktor $k!$ zu großen Ergebnis).\n- $\\binom{n}{k}$ mit $n^k$ verwechseln.\n\nGrundlage der **Bernoulli-Kette** (Binomialkoeffizient zählt die Anordnungen von Treffern) und der **Laplace-Wahrscheinlichkeit**."
+            }
+          ]
+        },
+        {
+          "title": "Die vier Grundfälle",
+          "blocks": [
+            {
+              "md": "| | mit Zurücklegen | ohne Zurücklegen |\n|---|---|---|\n| **geordnet** | $n^k$ | $\\dfrac{n!}{(n-k)!}$ |\n| **ungeordnet** | $\\dbinom{n+k-1}{k}$ | $\\dbinom{n}{k}$ |\n\n> [!important] Zwei Fragen legen die Formel fest\n> Erstens: **Spielt die Reihenfolge eine Rolle?** Zweitens: **Darf ein Element mehrfach vorkommen?** Sind beide beantwortet, ist die Formel bestimmt -- alles Weitere ist Einsetzen.\n>\n> Im Abitur sind vor allem drei Felder relevant. Das Feld unten rechts, der **Binomialkoeffizient**, ist der mit Abstand wichtigste: Er zählt die Auswahlen ohne Reihenfolge und ohne Wiederholung und tritt als Pfadzahl in der **Binomialverteilung** wieder auf.\n>\n> Das Feld unten links (Kombination mit Wiederholung) kommt selten vor; es lohnt, es zu kennen, aber nicht, es zu erzwingen."
+            }
+          ]
+        },
+        {
+          "title": "Der Binomialkoeffizient",
+          "blocks": [
+            {
+              "md": "$$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$$\n\n> [!info] Weshalb durch k! geteilt wird\n> Die geordnete Anzahl $\\frac{n!}{(n-k)!}$ zählt jede Auswahl so oft, wie sie sich anordnen lässt -- nämlich $k!$-mal. Die Division entfernt genau diese Vielfachzählung.\n>\n> Daraus folgt unmittelbar die **Symmetrie** $\\binom{n}{k} = \\binom{n}{n-k}$: $k$ Elemente auszuwählen heißt, $n-k$ Elemente wegzulassen. Rechnerisch nutzt man das, um mit dem kleineren der beiden Werte zu arbeiten.\n>\n> Die Werte stehen im **Pascalschen Dreieck**, in dem jeder Eintrag die Summe der beiden darüber ist: $\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}$. Anschaulich unterscheidet die Zerlegung danach, ob ein bestimmtes Element in der Auswahl liegt oder nicht."
+            }
+          ]
+        },
+        {
+          "title": "Randfälle und Rechenhinweise",
+          "blocks": [
+            {
+              "md": "| Ausdruck | Wert | Begründung |\n|---|---|---|\n| $0!$ | 1 | genau eine Anordnung der leeren Menge |\n| $\\binom{n}{0}$ | 1 | nichts auswählen geht auf eine Weise |\n| $\\binom{n}{n}$ | 1 | alles auswählen ebenso |\n| $\\binom{n}{1}$ | $n$ | ein Element aus $n$ |\n\n> [!warning] Fakultäten wachsen schneller als jede Vorstellung\n> $70!$ überschreitet bereits den Zahlenbereich vieler Taschenrechner. Deshalb ist der Binomialkoeffizient **nie** über die ausgeschriebene Fakultätsformel zu berechnen, sondern über die gekürzte Form:\n> $$\\binom{49}{6} = \\frac{49 \\cdot 48 \\cdot 47 \\cdot 46 \\cdot 45 \\cdot 44}{6 \\cdot 5 \\cdot 4 \\cdot 3 \\cdot 2 \\cdot 1} = 13\\,983\\,816$$\n> Das ist zugleich die Zahl der Tippreihen beim Lotto -- und die Rechnung, an der sich das Verfahren am besten einprägt."
+            }
+          ]
+        },
+        {
+          "title": "Das Zählprinzip als Grundlage",
+          "blocks": [
+            {
+              "md": "> [!tip] Alle vier Formeln folgen aus einem Gedanken\n> Wird eine Entscheidung in $k$ Schritte zerlegt und hat jeder Schritt eine Anzahl von Möglichkeiten, so ist die Gesamtzahl das **Produkt** dieser Anzahlen. Das ist das allgemeine Zählprinzip.\n>\n> Bleiben die Möglichkeiten pro Schritt gleich, ergibt sich $n^k$; verringern sie sich um eins, die absteigende Produktfolge $n(n-1)\\cdots$. Wer das Prinzip beherrscht, kann jede der Formeln im Bedarfsfall neu herleiten -- verlässlicher als Auswendiglernen.\n>\n> Bei Aufgaben mit **Zusatzbedingungen** -- \"die Damen sitzen nebeneinander\", \"mindestens ein Defekt\" -- versagt das schematische Einsetzen. Dann hilft entweder das Zusammenfassen zu Blöcken oder das Gegenereignis."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Kombinatorik liefert die Abzählverfahren für die **Laplace-Wahrscheinlichkeit** und erklärt den Binomialkoeffizienten in der **Binomialverteilung**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Laplace-Wahrscheinlichkeit",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Zufallsexperiment heißt **Laplace-Experiment**, wenn alle Elementarereignisse **gleich wahrscheinlich** sind (z. B. fairer Würfel, faire Münze). In diesem Fall gilt die **Laplace-Formel**:\n$$P(A) = \\frac{|A|}{|\\Omega|} = \\frac{\\text{Anzahl der für } A \\text{ günstigen Ergebnisse}}{\\text{Anzahl aller möglichen Ergebnisse}}$$"
+            }
+          ]
+        },
+        {
+          "title": "Voraussetzung",
+          "blocks": [
+            {
+              "md": "Die Laplace-Formel gilt **nur**, wenn tatsächlich Gleichwahrscheinlichkeit vorliegt — bei einem gezinkten Würfel oder ungleich wahrscheinlichen Ausgängen ist sie **nicht** anwendbar."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Wahrscheinlichkeit, beim einmaligen Würfeln eine Zahl $\\geq 5$ zu würfeln: $A=\\{5,6\\}$, $\\Omega=\\{1,\\dots,6\\}$:\n$$P(A) = \\frac{|A|}{|\\Omega|} = \\frac{2}{6} = \\frac{1}{3}$$"
+            }
+          ]
+        },
+        {
+          "title": "Kombination mit Kombinatorik",
+          "blocks": [
+            {
+              "md": "Bei mehrstufigen Experimenten wird $|A|$ und $|\\Omega|$ oft mit den Zählprinzipien der **Kombinatorik** bestimmt.\n\n**Beispiel:** Wahrscheinlichkeit für genau 3 Richtige bei \"6 aus 49\" (ohne Zusatzzahl):\n$$P(\\text{3 Richtige}) = \\frac{\\binom{6}{3}\\cdot\\binom{43}{3}}{\\binom{49}{6}} = \\frac{20 \\cdot 12\\,341}{13\\,983\\,816} \\approx 0{,}0177$$"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung",
+          "blocks": [
+            {
+              "md": "Nicht jedes Zufallsexperiment ist ein Laplace-Experiment: Bei einer **Bernoulli-Kette** (siehe **Bernoulli-Kette**) mit $p \\neq 0{,}5$ sind die Ergebnisse **nicht** gleich wahrscheinlich — dort gilt stattdessen die **Binomialverteilung**."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Laplace-Formel auf Experimente anwenden, bei denen die Ergebnisse **nicht** gleich wahrscheinlich sind (klassischer Fehler).\n- $|\\Omega|$ falsch bestimmen, weil Zurücklegen/Reihenfolge nicht korrekt berücksichtigt wurden — siehe **Kombinatorik**.\n\nVertiefung bei zusammengesetzten Ereignissen: **Bedingte Wahrscheinlichkeit**."
+            }
+          ]
+        },
+        {
+          "title": "Die Formel und ihre Voraussetzung",
+          "blocks": [
+            {
+              "md": "$$P(E) = \\frac{|E|}{|\\Omega|} = \\frac{\\text{Anzahl der günstigen Ergebnisse}}{\\text{Anzahl der möglichen Ergebnisse}}$$\n\n> [!warning] Die Formel gilt nur bei Gleichwahrscheinlichkeit\n> Das ist die entscheidende und am häufigsten übergangene Einschränkung. Ein Laplace-Experiment liegt vor, wenn **alle** Ergebnisse dieselbe Wahrscheinlichkeit haben -- idealer Würfel, faire Münze, Ziehen aus einer Urne mit gleichartigen Kugeln.\n>\n> Bei einem gezinkten Würfel, einer Reißzwecke oder der Frage nach dem Wetter versagt sie. Die Rechtfertigung der Annahme gehört daher in jede vollständige Lösung; sie stützt sich meist auf **Symmetrie** des Zufallsgeräts.\n>\n> Der klassische Gegenbeispielfall ist die Augensumme zweier Würfel: Die elf möglichen Summen von 2 bis 12 sind **nicht** gleich wahrscheinlich. Laplace gilt hier auf der Ebene der 36 Zahlenpaare, nicht auf der Ebene der Summen. Wer das übersieht, erhält für die Sieben $1/11$ statt korrekt $6/36 = 1/6$."
+            }
+          ]
+        },
+        {
+          "title": "Die Wahl des Ergebnisraums",
+          "blocks": [
+            {
+              "md": "> [!important] Ergebnisraum und Zählweise müssen zusammenpassen\n> Dasselbe Experiment lässt sich verschieden modellieren -- geordnet oder ungeordnet, mit oder ohne Zurücklegen. Zähler und Nenner müssen aus **derselben** Modellierung stammen.\n>\n> Beim Ziehen zweier Karten etwa: Zählt man geordnete Paare, so sind es $52 \\cdot 51$ Möglichkeiten; zählt man ungeordnete, so $\\binom{52}{2}$. Beide Wege führen zum selben Ergebnis, sofern man sie **nicht mischt**.\n>\n> Die Faustregel lautet: Wo die Aufgabe von \"Reihenfolge\" spricht, geordnet zählen; wo sie von \"Auswahl\" oder \"Menge\" spricht, ungeordnet. Die Zählverfahren liefert die **Kombinatorik**."
+            }
+          ]
+        },
+        {
+          "title": "Das Gegenereignis",
+          "blocks": [
+            {
+              "md": "$$P(\\bar{E}) = 1 - P(E)$$\n\n> [!tip] Bei \"mindestens ein\" fast immer der kürzeste Weg\n> \"Mindestens ein Treffer\" verlangt sonst die Summe über alle Trefferzahlen; das Gegenereignis \"kein Treffer\" ist ein einziger Term.\n>\n> Das ist keine Besonderheit der Laplace-Situation, sondern eine allgemeine Rechentechnik -- sie gilt in jedem Wahrscheinlichkeitsraum und begegnet bei der **Binomialverteilung** in derselben Form wieder."
+            }
+          ]
+        },
+        {
+          "title": "Die Grenzen des Begriffs",
+          "blocks": [
+            {
+              "md": "> [!info] Der frequentistische Zugang als Ergänzung\n> Wo Symmetrie fehlt, wird die Wahrscheinlichkeit nicht abgezählt, sondern als **relative Häufigkeit bei sehr vielen Wiederholungen** bestimmt. Das Gesetz der großen Zahlen stellt sicher, dass sich diese der Wahrscheinlichkeit annähert.\n>\n> Beide Zugänge sind mit den Axiomen von Kolmogorow verträglich, die den Begriff formal nur über Nichtnegativität, Normierung und Additivität festlegen -- ohne zu sagen, woher die Zahlen stammen. Die Frage nach der Deutung von Wahrscheinlichkeit ist damit keine mathematische, sondern eine philosophische."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Laplace-Wahrscheinlichkeit ist der Einstieg in die Wahrscheinlichkeitsrechnung. Sie setzt den Begriff des **Zufallsexperiments** voraus und stützt sich beim Abzählen auf die **Kombinatorik**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "genau-eine",
@@ -72,10 +334,22 @@
       "label": "Zuordnen",
       "md": "Welche Formel passt zu welcher Situation?",
       "pairs": [
-        ["PIN aus 4 Ziffern", "$10^4$"],
-        ["Siegerpodest aus 8 Läuferinnen", "$\\dfrac{8!}{5!}$"],
-        ["Lottotipp 6 aus 49", "$\\binom{49}{6}$"],
-        ["Sitzordnung von 5 Gästen an 5 Plätzen", "$5!$"]
+        [
+          "PIN aus 4 Ziffern",
+          "$10^4$"
+        ],
+        [
+          "Siegerpodest aus 8 Läuferinnen",
+          "$\\dfrac{8!}{5!}$"
+        ],
+        [
+          "Lottotipp 6 aus 49",
+          "$\\binom{49}{6}$"
+        ],
+        [
+          "Sitzordnung von 5 Gästen an 5 Plätzen",
+          "$5!$"
+        ]
       ]
     },
     {
@@ -83,10 +357,22 @@
       "type": "choice",
       "md": "Aus 12 Schülerinnen und Schülern werden 3 für einen Ausschuss gewählt. Wie viele Möglichkeiten gibt es?",
       "options": [
-        { "md": "$220$", "correct": true },
-        { "md": "$1320$", "why": "Das ist $12 \\cdot 11 \\cdot 10$, die Zahl der **geordneten** Auswahlen. Im Ausschuss gibt es keine Plätze 1 bis 3." },
-        { "md": "$1728$", "why": "$12^3$ würde erlauben, dass dieselbe Person mehrfach gewählt wird." },
-        { "md": "$36$", "why": "$3 \\cdot 12$ ist keine Abzählregel, die hier passt." }
+        {
+          "md": "$220$",
+          "correct": true
+        },
+        {
+          "md": "$1320$",
+          "why": "Das ist $12 \\cdot 11 \\cdot 10$, die Zahl der **geordneten** Auswahlen. Im Ausschuss gibt es keine Plätze 1 bis 3."
+        },
+        {
+          "md": "$1728$",
+          "why": "$12^3$ würde erlauben, dass dieselbe Person mehrfach gewählt wird."
+        },
+        {
+          "md": "$36$",
+          "why": "$3 \\cdot 12$ ist keine Abzählregel, die hier passt."
+        }
       ],
       "explain": "$\\binom{12}{3} = \\dfrac{12 \\cdot 11 \\cdot 10}{3!} = \\dfrac{1320}{6} = 220$."
     },
@@ -103,10 +389,34 @@
       "start": 10,
       "explain": "Über das Gegenereignis, alle Geburtstage verschieden: $\\tfrac{365 \\cdot 364 \\cdots 343}{365^{23}} \\approx 0{,}493$. Also rund $50{,}7\\,\\%$. Die Intuition liegt fast immer zu niedrig, weil sie an die eigene Person denkt. Es zählen aber alle $\\binom{23}{2} = 253$ Paare."
     },
-    { "id": "neu1", "type": "gen", "gen": "stoch-kombi", "level": 1, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "stoch-kombi", "level": 2, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "stoch-urne", "level": 2, "label": "Neue Urne" },
-    { "id": "neu4", "type": "gen", "gen": "stoch-kombi", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-kombi",
+      "level": 1,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-kombi",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-urne",
+      "level": 2,
+      "label": "Neue Urne"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "stoch-kombi",
+      "level": 3,
+      "label": "Neue Werte"
+    },
     {
       "id": "summary",
       "type": "summary",

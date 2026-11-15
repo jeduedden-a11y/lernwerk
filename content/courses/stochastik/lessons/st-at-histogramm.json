@@ -16,6 +16,118 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Histogramm auswerten",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Histogramm auswerten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Wahrscheinlichkeitsverteilung ist **grafisch** gegeben, und es soll daraus abgelesen, gedeutet oder zugeordnet werden. Signalformulierungen: *\"Das Histogramm zeigt ...\"*, *\"Ordnen Sie die Histogramme den Verteilungen zu\"*, *\"Markieren Sie die Sigma-Umgebung\"*, *\"Beschreiben Sie, wie sich das Histogramm verändert, wenn ...\"*\n\nTypischer Einstiegs- oder Transferteil einer Stochastikaufgabe -- wenig Rechnung, viel Interpretation."
+            }
+          ]
+        },
+        {
+          "title": "Was ein Histogramm zeigt",
+          "blocks": [
+            {
+              "md": "Auf der waagerechten Achse stehen die möglichen Werte $k$ der Zufallsgröße, auf der senkrechten die zugehörigen Wahrscheinlichkeiten $P(X = k)$. Bei gleicher Balkenbreite ist die **Höhe** proportional zur Wahrscheinlichkeit, die **Gesamtfläche** ergibt 1."
+            },
+            {
+              "chart": {
+                "type": "bar",
+                "labels": [
+                  "4",
+                  "6",
+                  "8",
+                  "10",
+                  "12",
+                  "14",
+                  "16"
+                ],
+                "series": [
+                  {
+                    "title": "B(50; 0,2)",
+                    "data": [
+                      0.026,
+                      0.075,
+                      0.13,
+                      0.14,
+                      0.103,
+                      0.054,
+                      0.021
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "*(Benötigt das Plugin **Obsidian Charts**. Gerundete Werte der Binomialverteilung $B(50; 0{,}2)$ mit $\\mu = 10$, zur Illustration.)*"
+            }
+          ]
+        },
+        {
+          "title": "Die vier Kenngrößen im Bild",
+          "blocks": [
+            {
+              "md": "| Merkmal | Ablesung |\n|---|---|\n| **Erwartungswert $\\mu$** | Lage des Schwerpunkts, bei symmetrischen Verteilungen der höchste Balken |\n| **Standardabweichung $\\sigma$** | Breite; schmale Glocke bedeutet kleines $\\sigma$ |\n| **Symmetrie** | Bei $p = 0{,}5$ symmetrisch; $p < 0{,}5$ rechtsschief, $p > 0{,}5$ linksschief |\n| **Wahrscheinlichkeit eines Bereichs** | Summe der Balkenhöhen im Bereich, entspricht der Fläche |\n\n> [!important] Wie $n$ und $p$ das Bild verändern\n> **$n$ wächst:** Die Verteilung wandert nach rechts ($\\mu = np$ steigt), wird **absolut** breiter ($\\sigma = \\sqrt{np(1-p)}$ steigt), aber **relativ** schmaler -- die Streuung wächst nur mit $\\sqrt{n}$, der Erwartungswert linear. Deshalb nähert sich die Form mit wachsendem $n$ der Glockenkurve an.\n>\n> **$p$ wächst:** Die Verteilung wandert nach rechts. Die Streuung ist bei $p = 0{,}5$ am größten und nimmt zu beiden Rändern hin ab."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Achsen lesen.** Was steht waagerecht, was senkrecht? Balkenbreite prüfen.\n2. **$\\mu$ abschätzen** als Lage des Schwerpunkts.\n3. **$\\sigma$ abschätzen** -- Faustregel: Innerhalb von $\\mu \\pm \\sigma$ liegen etwa zwei Drittel der Gesamtfläche.\n4. **Auf $n$ und $p$ zurückrechnen**, falls gefragt: aus $\\mu = np$ und $\\sigma^2 = np(1-p)$ folgt\n   $$1 - p = \\frac{\\sigma^2}{\\mu} \\quad\\Longrightarrow\\quad p = 1 - \\frac{\\sigma^2}{\\mu}, \\qquad n = \\frac{\\mu}{p}$$\n5. **Bei Zuordnungsaufgaben** systematisch vergleichen: erst Lage ($\\mu$), dann Breite ($\\sigma$), dann Schiefe.\n6. **Aussagen begründen**, nicht nur behaupten -- der Operator lautet meist \"begründen\" oder \"erläutern\"."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Histogramm einer Binomialverteilung hat seinen Schwerpunkt bei etwa 10; zwischen 7 und 13 liegen ungefähr 68 % der Fläche. Bestimmen Sie $n$ und $p$.*\n\n**Schritt 2:** $\\mu \\approx 10$\n\n**Schritt 3:** Die 68-%-Regel entspricht $\\mu \\pm \\sigma$, also $\\sigma \\approx 3$.\n\n**Schritt 4:**\n$$1 - p = \\frac{\\sigma^2}{\\mu} = \\frac{9}{10} = 0{,}9 \\quad\\Longrightarrow\\quad p = 0{,}1$$\n$$n = \\frac{\\mu}{p} = \\frac{10}{0{,}1} = 100$$\n\n**Ergebnis:** $X \\sim B(100; 0{,}1)$.\n\n**Probe:** $\\mu = 100 \\cdot 0{,}1 = 10$ und $\\sigma = \\sqrt{100 \\cdot 0{,}1 \\cdot 0{,}9} = \\sqrt{9} = 3$. Bestätigt."
+            }
+          ]
+        },
+        {
+          "title": "Sigma-Umgebungen einzeichnen",
+          "blocks": [
+            {
+              "md": "Häufige Teilaufgabe: die $1\\sigma$-, $2\\sigma$- oder $3\\sigma$-Umgebung markieren und den Flächenanteil angeben.\n\n| Umgebung | Anteil |\n|---|---|\n| $\\mu \\pm \\sigma$ | ca. 68,3 % |\n| $\\mu \\pm 1{,}96\\sigma$ | ca. 95 % |\n| $\\mu \\pm 2\\sigma$ | ca. 95,4 % |\n| $\\mu \\pm 3\\sigma$ | ca. 99,7 % |\n\n> [!warning] Die Sigma-Regeln sind Näherungen\n> Sie stammen von der **Normalverteilung** und gelten für die Binomialverteilung nur näherungsweise. Voraussetzung ist die Laplace-Bedingung $\\sigma > 3$. Bei kleinem $n$ oder sehr kleinem $p$ ist die Verteilung zu schief -- dann liefern die Regeln spürbar falsche Werte, und es ist exakt über die kumulierte Tabelle zu rechnen (siehe **Kumulierte Binomialverteilung**)."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zum Boxplot",
+          "blocks": [
+            {
+              "md": "Beide zeigen Verteilungen, aber verschiedener Art:\n\n| | Histogramm | Boxplot |\n|---|---|---|\n| Zeigt | Wahrscheinlichkeiten eines **Modells** | Kenngrößen **erhobener Daten** |\n| Grundlage | Zufallsgröße mit bekannter Verteilung | Stichprobe |\n| Ablesbar | ganze Verteilungsform | fünf Kennzahlen |\n\nDetails zum Boxplot in **Beschreibende Statistik (Kenngrößen und Boxplot)**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Höhe als Anzahl statt als Wahrscheinlichkeit lesen.** Achsenbeschriftung prüfen -- beides kommt vor.\n- **$\\mu$ mit dem höchsten Balken gleichsetzen.** Bei schiefen Verteilungen fallen Modus und Erwartungswert auseinander.\n- **Sigma-Regeln ohne Prüfung der Laplace-Bedingung anwenden.**\n- **Bei Zuordnungsaufgaben nur die Lage vergleichen.** Zwei Verteilungen können dasselbe $\\mu$ und völlig verschiedene $\\sigma$ haben.\n- **Behaupten statt begründen.** \"Das Histogramm gehört zu $B(100; 0{,}1)$, weil der Schwerpunkt bei 10 liegt und die Breite etwa 3 beträgt\" ist die vollständige Antwort.\n- **$\\sigma$ und $\\sigma^2$ verwechseln** bei der Rückrechnung auf $p$. In der Formel steht die **Varianz**."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Binomialverteilung** · **Varianz und Standardabweichung (Stochastik)** · **Normalverteilung** · **Kumulierte Binomialverteilung** · **Beschreibende Statistik (Kenngrößen und Boxplot)**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

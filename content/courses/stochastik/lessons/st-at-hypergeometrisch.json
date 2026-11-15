@@ -16,6 +16,87 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Hypergeometrische Verteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Hypergeometrische Verteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Aus einer Urne mit ... Kugeln werden ... ohne Zurücklegen gezogen\"*, *\"Bei einer Qualitätskontrolle werden aus einer Lieferung ohne Zurücklegen entnommen\"*, *\"Wie groß ist die Wahrscheinlichkeit, genau $k$ Treffer zu ziehen?\"* bei einer **endlichen** Grundgesamtheit mit **Ziehung ohne Zurücklegen**."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zur Binomialverteilung",
+          "blocks": [
+            {
+              "md": "> [!important] Mit oder ohne Zurücklegen entscheidet\n> Bei der **Binomialverteilung** bleibt die Trefferwahrscheinlichkeit bei jeder Ziehung gleich (Ziehung mit Zurücklegen, oder eine so große Grundgesamtheit, dass sich die Wahrscheinlichkeit praktisch nicht ändert). Bei der hypergeometrischen Verteilung wird **ohne Zurücklegen** gezogen -- jede Ziehung verändert die Zusammensetzung der restlichen Grundgesamtheit, die Ziehungen sind **nicht unabhängig**."
+            }
+          ]
+        },
+        {
+          "title": "Parameter und Formel",
+          "blocks": [
+            {
+              "md": "Grundgesamtheit vom Umfang $N$, davon $K$ \"Erfolge\" (z. B. rote Kugeln). Stichprobe vom Umfang $n$, ohne Zurücklegen. Gesucht: Wahrscheinlichkeit für genau $k$ Erfolge in der Stichprobe.\n\n$$P(X=k) = \\frac{\\dbinom{K}{k} \\cdot \\dbinom{N-K}{n-k}}{\\dbinom{N}{n}}$$\n\n**Lesart:** Im Zähler wird getrennt gezählt, auf wie viele Arten $k$ Erfolge aus den $K$ vorhandenen und $n-k$ Nieten aus den $N-K$ vorhandenen gezogen werden können. Im Nenner steht die Gesamtzahl aller möglichen Stichproben vom Umfang $n$ aus $N$ Elementen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **$N$, $K$, $n$ und $k$ aus der Aufgabenstellung identifizieren.**\n2. **Prüfen: Ziehung ohne Zurücklegen?** Nur dann ist die hypergeometrische Verteilung das richtige Modell.\n3. **Binomialkoeffizienten einzeln berechnen:** $\\binom{K}{k}$, $\\binom{N-K}{n-k}$, $\\binom{N}{n}$.\n4. **Formel einsetzen** und auswerten.\n5. **Bei \"mindestens\"/\"höchstens\"-Fragen:** über das Gegenereignis oder Summierung mehrerer $k$-Werte gehen (analog zu **3M-Aufgaben**)."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Urne enthält 20 Kugeln, davon 8 rote. Es werden ohne Zurücklegen 5 Kugeln gezogen. Wie groß ist die Wahrscheinlichkeit, genau 3 rote Kugeln zu ziehen?*\n\n**Schritt 1:** $N=20$, $K=8$, $n=5$, $k=3$.\n\n**Schritt 3:**\n$$\\binom{8}{3} = 56, \\qquad \\binom{20-8}{5-3} = \\binom{12}{2} = 66, \\qquad \\binom{20}{5} = 15504$$\n\n**Schritt 4:**\n$$P(X=3) = \\frac{56 \\cdot 66}{15504} = \\frac{3696}{15504} \\approx 0{,}2384$$\n\n*Mit etwa 23,8 % Wahrscheinlichkeit werden genau 3 rote Kugeln gezogen.*"
+            }
+          ]
+        },
+        {
+          "title": "Erwartungswert",
+          "blocks": [
+            {
+              "md": "Analog zur Binomialverteilung gilt für den Erwartungswert:\n$$E(X) = n \\cdot \\frac{K}{N}$$\n\nIm Beispiel: $E(X) = 5 \\cdot \\dfrac{8}{20} = 5 \\cdot 0{,}4 = 2$ -- im Mittel werden 2 rote Kugeln gezogen, derselbe Wert wie bei einer (fiktiven) Binomialverteilung mit $p=\\tfrac{K}{N}$."
+            }
+          ]
+        },
+        {
+          "title": "Näherung durch die Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Ist $N$ sehr groß im Vergleich zu $n$ (Faustregel: $n \\leq 0{,}05 \\cdot N$), unterscheidet sich das Ziehen ohne Zurücklegen kaum vom Ziehen mit Zurücklegen -- die hypergeometrische Verteilung lässt sich dann näherungsweise durch die Binomialverteilung mit $p = \\tfrac{K}{N}$ ersetzen. Das vereinfacht die Rechnung erheblich."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Binomialverteilung verwenden, obwohl ohne Zurücklegen gezogen wird**, ohne die Näherungsbedingung zu prüfen. Bei kleinem $N$ liefert das ein falsches Ergebnis.\n- **Im zweiten Binomialkoeffizienten die falschen Zahlen einsetzen.** $\\binom{N-K}{n-k}$, nicht $\\binom{N}{n-k}$ oder $\\binom{K}{n-k}$.\n- **Binomialkoeffizienten falsch berechnen** -- $\\binom{n}{k} = \\dfrac{n!}{k!(n-k)!}$, siehe **Kombinatorik**.\n- **Bei \"mindestens $k$ Treffer\" nur $P(X=k)$ berechnen**, statt die Summe $P(X\\geq k)$ zu bilden oder über das Gegenereignis zu gehen.\n- **Erwartungswertformel mit der der Binomialverteilung verwechseln**, obwohl sie im Ergebnis zufällig gleich aussieht ($n\\cdot p$ mit $p=K/N$)."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Binomialverteilung** · **Kombinatorik** · **Geometrische Verteilung** · **Poisson-Verteilung** · **3M-Aufgaben**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

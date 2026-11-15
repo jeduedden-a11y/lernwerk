@@ -19,6 +19,163 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung aus der Produktregel** und ein Beispiel: $\\int x\\,e^x\\,dx$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(uv)' = u'v + uv' \\;\\Rightarrow\\; \\int u'v\\,dx = uv - \\int uv'\\,dx",
+            "why": "Produktregel integrieren und umstellen."
+          },
+          {
+            "tex": "u' = e^x,\\; v = x \\;\\Rightarrow\\; u = e^x,\\; v' = 1",
+            "why": "v wird beim Ableiten einfacher, u′ lässt sich leicht integrieren."
+          },
+          {
+            "tex": "\\int x\\,e^x\\,dx = x\\,e^x - \\int e^x\\,dx",
+            "why": "Formel anwenden."
+          },
+          {
+            "tex": "= (x - 1)\\,e^x + C",
+            "why": "Das Restintegral ist einfach."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wahl.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Anwenden.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Partielle Integration** ist die Produktregel rückwärts: $\\int u'v\\,dx = uv - \\int uv'\\,dx$. Man wählt $v$ so, dass es beim Ableiten **einfacher** wird (Polynome, $\\ln x$).",
+      "label": "Verfahren",
+      "more": "**Wahlregel:** $v$ = Polynom oder $\\ln x$ (wird beim Ableiten einfacher), $u'$ = $e^x$, $\\sin x$, $\\cos x$ (lässt sich leicht integrieren). Bei $\\int \\ln x\\,dx$ schreibt man $1 \\cdot \\ln x$ mit $u' = 1$.\n\n**Mehrfach:** Bei $x^2e^x$ zweimal integrieren, bis das Polynom verschwunden ist.\n\n**Rückkehr zum Ausgangsintegral:** Bei $\\int e^x\\sin x\\,dx$ erscheint nach zwei Schritten das Ausgangsintegral wieder; man bringt es auf eine Seite und löst nach ihm auf.\n\n**Bestimmte Integrale:** $\\int_a^b u'v\\,dx = [uv]_a^b - \\int_a^b uv'\\,dx$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Partielle Integration",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Partielle Integration.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Partielle Integration** kehrt die **Produktregel** um. Sie ist das Werkzeug für Integrale über **Produkte** unabhängiger Funktionen wie $xe^x$ oder $x\\ln x$, bei denen Substitution nicht greift."
+            }
+          ]
+        },
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "Aus der Produktregel $\\frac{d}{dx}[uv] = u'v+uv'$ folgt durch Integrieren:\n\n$$\\boxed{\\int u\\,dv = uv - \\int v\\,du}$$"
+            }
+          ]
+        },
+        {
+          "title": "Die LIATE-Regel — Wahl von $u$",
+          "blocks": [
+            {
+              "md": "Priorität (höchste zuerst) für die Wahl von $u$:\n\n| Priorität | Funktionstyp | Beispiel |\n|---|---|---|\n| 1 | **L**ogarithmen | $\\ln x$ |\n| 2 | **I**nverse trig. Funktionen | $\\arctan x$ |\n| 3 | **A**lgebraische Funktionen | $x^2$ |\n| 4 | **T**rigonometrische Funktionen | $\\sin x$ |\n| 5 | **E**xponentialfunktionen | $e^x$ |\n\nDer Rest wird $dv$. Ziel: $\\int v\\,du$ soll **einfacher** sein als das Ausgangsintegral."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int xe^x\\,dx: \\quad u=x,\\ dv=e^x dx \\;\\Longrightarrow\\; du=dx,\\ v=e^x$$\n$$= xe^x - \\int e^x\\,dx = xe^x - e^x + C = e^x(x-1)+C$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Falsche Wahl von $u$/$dv$ macht das neue Integral schwieriger statt leichter.\n- Das Minuszeichen in der Formel vergessen.\n- **Zyklische Integrale** (z. B. $\\int e^x\\sin x\\,dx$): zweimal anwenden, dann algebraisch nach dem Ausgangsintegral auflösen — kein Fehler, sondern die Methode."
+            }
+          ]
+        },
+        {
+          "title": "Verwandt",
+          "blocks": [
+            {
+              "md": "Liefert u. a. die Formel für **Integrale von Logarithmusfunktionen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Stammfunktion hat $\\ln x$?",
+      "options": [
+        {
+          "md": "$x\\ln x - x + C$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac1x + C$",
+          "why": "Das ist die Ableitung."
+        },
+        {
+          "md": "$x\\ln x + C$"
+        },
+        {
+          "md": "$\\tfrac{(\\ln x)^2}{2} + C$"
+        }
+      ],
+      "explain": "$\\int 1 \\cdot \\ln x\\,dx = x\\ln x - \\int x \\cdot \\tfrac1x\\,dx = x\\ln x - x + C$.",
+      "label": "Logarithmus",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_0^1 x\\,e^x\\,dx$.",
+      "answer": 1,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$[(x - 1)e^x]_0^1 = 0 - (-1) = 1$.",
+      "id": "vq2"
+    },
+    {
       "type": "choice",
       "md": "Wie wählt man bei $\\int x\\cos x\\,dx$?",
       "options": [
@@ -64,12 +221,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "partiell"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "partiell"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "∫ u'v = uv − ∫ uv'.",
         "v ableitungsfreundlich wählen (LIATE).",
-        "Zyklische Fälle: nach dem Integral auflösen."
+        "Zyklische Fälle: nach dem Integral auflösen.",
+        "Partielle Integration: v wird beim Ableiten einfacher, u′ leicht integrierbar."
       ],
       "id": "summary"
     }

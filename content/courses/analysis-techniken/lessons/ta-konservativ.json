@@ -15,6 +15,164 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ist $\\vec F(x, y) = (2xy, x^2)$ konservativ?**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{\\partial F_1}{\\partial y} = 2x, \\quad \\frac{\\partial F_2}{\\partial x} = 2x",
+            "why": "Integrabilitätsbedingung: Die gemischten Ableitungen stimmen überein."
+          },
+          {
+            "tex": "\\varphi_x = 2xy \\;\\Rightarrow\\; \\varphi = x^2 y + c(y)",
+            "why": "Nach x integrieren."
+          },
+          {
+            "tex": "\\varphi_y = x^2 + c'(y) = x^2 \\;\\Rightarrow\\; c' = 0",
+            "why": "Mit der zweiten Komponente vergleichen."
+          },
+          {
+            "tex": "\\varphi(x, y) = x^2 y",
+            "why": "Potenzial gefunden: F = ∇φ."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integrieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abgleichen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Potenzial.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Ein Vektorfeld ist **konservativ**, wenn es Gradient eines **Potenzials** ist, $\\vec F = \\nabla\\varphi$. Dann hängt die Arbeit nur von Anfangs- und Endpunkt ab: $\\int \\vec F \\cdot d\\vec s = \\varphi(B) - \\varphi(A)$, und auf geschlossenen Wegen ist sie null.",
+      "label": "Konservativ",
+      "more": "**Test in der Ebene:** $\\tfrac{\\partial F_1}{\\partial y} = \\tfrac{\\partial F_2}{\\partial x}$ (auf einem Gebiet ohne Löcher).\n\n**Potenzial finden:** eine Komponente integrieren, die Integrationskonstante als Funktion der anderen Variablen ansetzen, mit der zweiten Komponente abgleichen.\n\n**Physik:** Gravitation und elektrische Kraft sind konservativ; deshalb gibt es eine potenzielle Energie. Reibung ist es nicht.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Konservative Vektorfelder",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Konservative Vektorfelder.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Vektorfeld $\\mathbf{F}$ heißt **konservativ**, wenn ein Skalarfeld $f$ (die **Potentialfunktion**) existiert mit:\n$$\\mathbf{F} = \\nabla f = \\left\\langle\\frac{\\partial f}{\\partial x},\\,\\frac{\\partial f}{\\partial y},\\,\\frac{\\partial f}{\\partial z}\\right\\rangle$$"
+            }
+          ]
+        },
+        {
+          "title": "Test (einfach zusammenhängendes Gebiet)",
+          "blocks": [
+            {
+              "md": "Für $\\mathbf{F}=\\langle P,Q\\rangle$:\n$$\\mathbf{F} \\text{ konservativ} \\iff \\frac{\\partial P}{\\partial y} = \\frac{\\partial Q}{\\partial x}$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Konservative Felder haben **wegunabhängige Kurvenintegrale** — eine der wichtigsten Eigenschaften der Vektoranalysis."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$\\mathbf{F}(x,y)=\\langle2xy,\\,x^2+1\\rangle$: $\\partial P/\\partial y = 2x = \\partial Q/\\partial x$ → konservativ.\nPotentialfunktion durch Integrieren von $P$ nach $x$: $f=x^2y+g(y)$; Ableiten nach $y$ und Vergleich mit $Q$ liefert $g(y)=y$, also $f(x,y)=x^2y+y$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Der Test gilt nur auf **einfach zusammenhängenden** Gebieten (ohne Löcher) — bei Löchern kann er falsch-positiv sein.\n- Potentialfunktionen sind nur bis auf eine additive Konstante eindeutig.\n\nBaut auf **Skalar- und Vektorfelder** auf."
+            }
+          ]
+        },
+        {
+          "title": "Die Definition und ihre drei gleichwertigen Fassungen",
+          "blocks": [
+            {
+              "md": "> [!important] Drei Aussagen, die dasselbe bedeuten\n> Ein Vektorfeld $\\vec{F}$ heißt konservativ, wenn eine der folgenden -- untereinander gleichwertigen -- Bedingungen gilt:\n>\n> 1. Es gibt ein Skalarfeld $\\phi$ mit $\\vec{F} = \\operatorname{grad}\\phi$ -- ein **Potenzial**\n> 2. Das Wegintegral $\\int_C \\vec{F}\\cdot d\\vec{s}$ ist **wegunabhängig**\n> 3. Das Wegintegral über jeden **geschlossenen** Weg ist null\n>\n> Die Gleichwertigkeit von 2 und 3 ist unmittelbar einzusehen: Zwei Wege mit denselben Endpunkten bilden zusammen einen geschlossenen Weg, wenn man einen von ihnen rückwärts durchläuft.\n>\n> Der Zusammenhang mit 1 ist die mehrdimensionale Fassung des Hauptsatzes der Differenzial- und Integralrechnung: Das Potenzial spielt die Rolle der Stammfunktion, und das Wegintegral ist die Differenz seiner Werte an den Endpunkten."
+            }
+          ]
+        },
+        {
+          "title": "Die praktische Prüfbedingung",
+          "blocks": [
+            {
+              "md": "$$\\operatorname{rot}\\vec{F} = \\vec{0} \\qquad \\text{bzw. in der Ebene} \\quad \\frac{\\partial F_2}{\\partial x} = \\frac{\\partial F_1}{\\partial y}$$\n\n> [!tip] Die Rotation misst die Wirbelstärke\n> Verschwindet sie überall, ist das Feld wirbelfrei. Anschaulich: Ein in die Strömung gesetztes kleines Schaufelrad würde sich nicht drehen.\n>\n> Die ebene Bedingung folgt aus der Vertauschbarkeit der zweiten partiellen Ableitungen -- dem Satz von Schwarz. Wäre $\\vec{F}$ ein Gradient, so wären beide Ausdrücke die gemischte zweite Ableitung desselben Potenzials und damit gleich.\n>\n> Wichtig ist die Einschränkung: Wirbelfreiheit garantiert die Existenz eines Potenzials nur auf **einfach zusammenhängenden** Gebieten -- solchen ohne Löcher. Das Wirbelfeld um einen Stromleiter ist außerhalb des Leiters wirbelfrei, besitzt aber kein globales Potenzial, weil das Gebiet ein Loch hat."
+            }
+          ]
+        },
+        {
+          "title": "Die physikalische Bedeutung",
+          "blocks": [
+            {
+              "md": "> [!info] Konservativ heißt energieerhaltend\n> Der Name stammt aus der Physik. In einem konservativen Kraftfeld hängt die verrichtete Arbeit nur von Anfangs- und Endpunkt ab, nicht vom Weg. Auf einem geschlossenen Weg wird keine Arbeit gewonnen -- deshalb ist ein Perpetuum mobile in einem solchen Feld ausgeschlossen.\n>\n> Das Potenzial ist bis auf eine additive Konstante bestimmt, genau wie eine Stammfunktion. Diese Freiheit erklärt, weshalb in der Physik nur **Potenzialdifferenzen** messbar sind -- die Spannung, nicht das Potenzial selbst. Der Nullpunkt wird gesetzt, nicht gefunden.\n>\n> | Feld | konservativ? |\n> |---|---|\n> | Gravitationsfeld | ja |\n> | elektrostatisches Feld | ja |\n> | Magnetfeld eines Stromleiters | nein |\n> | Reibungskraft | nein |\n>\n> Die Reibung ist das anschaulichste Gegenbeispiel: Sie wirkt stets entgegen der Bewegung, sodass auf einem geschlossenen Weg Energie verloren geht."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Konservative Felder verbinden den Gradienten aus **Skalar- und Vektorfelder** mit dem Integralbegriff. Ihr Gegenstück sind die Wirbelfelder, siehe **Radiale und Rotationsfelder**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Arbeit",
+      "md": "$\\vec F = \\nabla\\varphi$ mit $\\varphi(x, y) = x^2 y$. Welche Arbeit verrichtet $\\vec F$ auf irgendeinem Weg von $(0 \\mid 0)$ nach $(2 \\mid 3)$?",
+      "answer": 12,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\varphi(2, 3) - \\varphi(0, 0) = 12$, unabhängig vom Weg.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Ist $\\vec F(x, y) = (2xy, x^2)$ konservativ?",
       "options": [
@@ -52,7 +210,8 @@
       "points": [
         "Konservativ: F = ∇φ, Arbeit wegunabhängig, Ringintegral null.",
         "Test in der Ebene: ∂F₁/∂y = ∂F₂/∂x.",
-        "Potenzielle Energie existiert nur bei konservativen Kräften."
+        "Potenzielle Energie existiert nur bei konservativen Kräften.",
+        "Konservativ: F = ∇φ, Arbeit = Potenzialdifferenz, wegunabhängig."
       ],
       "id": "summary"
     }

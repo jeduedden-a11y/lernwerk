@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zweiseitiger Hypothesentest",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Zweiseitiger Hypothesentest.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Aufgabe prüft auf **Abweichung in beide Richtungen**. Signalformulierungen: *\"Es soll überprüft werden, ob sich der Anteil verändert hat\"*, *\"ob die Angabe zutrifft\"*, *\"ob der Würfel fair ist\"*. Kein \"mehr als\" oder \"weniger als\", sondern schlicht \"anders\".\n\n$$H_0: p = p_0 \\qquad H_1: p \\neq p_0$$"
+            }
+          ]
+        },
+        {
+          "title": "Der eine entscheidende Unterschied",
+          "blocks": [
+            {
+              "md": "> [!important] $\\alpha$ wird halbiert\n> Der Ablehnungsbereich besteht aus **zwei** Teilen -- einem linken und einem rechten Rand. Auf jeden entfällt höchstens $\\alpha/2$:\n> $$P(X \\le k_1) \\le \\frac{\\alpha}{2} \\qquad\\text{und}\\qquad P(X \\ge k_2) \\le \\frac{\\alpha}{2}$$\n>\n> Wer mit dem vollen $\\alpha$ pro Seite rechnet, erhält einen zu großen Ablehnungsbereich und damit ein tatsächliches Niveau von bis zu $2\\alpha$. Das ist der charakteristische Fehler dieses Aufgabentyps."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zweiseitigkeit erkennen** und $H_0: p = p_0$, $H_1: p \\neq p_0$ notieren.\n2. **$\\alpha$ halbieren:** pro Rand steht $\\alpha/2$ zur Verfügung.\n3. **Linke Grenze:** größtes $k_1$ mit $P(X \\le k_1) \\le \\alpha/2$.\n4. **Rechte Grenze:** kleinstes $k_2$ mit $P(X \\ge k_2) \\le \\alpha/2$, also $P(X \\le k_2 - 1) \\ge 1 - \\alpha/2$.\n5. **Ablehnungsbereich zusammensetzen:** $\\overline{A} = \\{0, \\dots, k_1\\} \\cup \\{k_2, \\dots, n\\}$.\n6. **Annahmebereich:** $A = \\{k_1+1, \\dots, k_2-1\\}$.\n7. **Tatsächliches Niveau:** $P(X \\le k_1) + P(X \\ge k_2)$ -- beide Ränder addieren.\n8. **Entscheidungsregel in Worten** formulieren."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Würfel wird 300-mal geworfen. Es soll auf dem 5-%-Niveau geprüft werden, ob die Sechs mit der erwarteten Wahrscheinlichkeit $\\tfrac{1}{6}$ auftritt.*\n\n**Schritt 1:** $H_0: p = \\tfrac{1}{6}$, $H_1: p \\neq \\tfrac{1}{6}$. Unter $H_0$ gilt $X \\sim B(300; \\tfrac{1}{6})$ mit\n$$\\mu = 300 \\cdot \\tfrac{1}{6} = 50, \\qquad \\sigma = \\sqrt{300 \\cdot \\tfrac{1}{6} \\cdot \\tfrac{5}{6}} = \\sqrt{41{,}\\overline{6}} \\approx 6{,}45$$\n\n**Schritt 2:** $\\alpha/2 = 0{,}025$ pro Rand.\n\n**Schritt 3/4:** Näherung über die Sigma-Regeln (siehe **Normalverteilung**): Der 95-%-Bereich liegt bei $\\mu \\pm 1{,}96\\sigma$, also\n$$50 \\pm 1{,}96 \\cdot 6{,}45 = 50 \\pm 12{,}64$$\nDamit $k_1 \\approx 37$ und $k_2 \\approx 63$.\n\n**Schritt 5:** $\\overline{A} = \\{0, \\dots, 37\\} \\cup \\{63, \\dots, 300\\}$\n\n**Schritt 6:** $A = \\{38, \\dots, 62\\}$\n\n**Schritt 8:** *Entscheidungsregel: Fällt die Anzahl der Sechsen in den Bereich von 38 bis 62, wird $H_0$ beibehalten. Bei 37 oder weniger beziehungsweise 63 oder mehr Sechsen wird $H_0$ verworfen und der Würfel als nicht regelmäßig angesehen.*\n\n> [!note] Näherung versus exakte Tabelle\n> Die Sigma-Regel liefert hier eine gute Näherung, weil $\\sigma \\approx 6{,}45 > 3$ (Laplace-Bedingung erfüllt). Verlangt die Aufgabe **exakte** Grenzen, ist die kumulierte Binomialtabelle zu verwenden -- die Werte können dann um eins abweichen. Welches Verfahren zulässig ist, steht in der Aufgabenstellung."
+            }
+          ]
+        },
+        {
+          "title": "Zusammenhang zum Konfidenzintervall",
+          "blocks": [
+            {
+              "md": "Der Annahmebereich eines zweiseitigen Tests und das **Konfidenzintervall** sind zwei Seiten derselben Rechnung:\n\n| | gegeben | gesucht |\n|---|---|---|\n| Zweiseitiger Test | $p_0$ | Bereich plausibler **Trefferzahlen** |\n| Konfidenzintervall | beobachtetes $\\hat p$ | Bereich plausibler **Wahrscheinlichkeiten** |\n\nEin Wert $p_0$ wird vom zweiseitigen Test zum Niveau $\\alpha$ genau dann verworfen, wenn $p_0$ **außerhalb** des $(1-\\alpha)$-Konfidenzintervalls liegt. Diese Äquivalenz ist eine beliebte Transferfrage."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\alpha$ nicht halbieren.** Der Fehler dieses Aufgabentyps schlechthin.\n- **Nur einen Rand berechnen.** Beide Grenzen sind gefordert, auch wenn die Aufgabe nach \"dem Ablehnungsbereich\" im Singular fragt.\n- **Grenzen falsch zuordnen.** $k_1$ gehört zum Ablehnungsbereich, $k_1+1$ zum Annahmebereich.\n- **Bei der Sigma-Regel 1,96 mit 2 verwechseln.** Für exakt 95 % gilt 1,96; die Faustregel mit 2 liefert etwa 95,4 %.\n- **Laplace-Bedingung nicht prüfen.** Die Normalapproximation ist erst ab $\\sigma > 3$ vertretbar."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Entscheidungsregel bestimmen** · **Hypothesen aufstellen** · **Irrtumswahrscheinlichkeit berechnen** · **Konfidenzintervalle** · **Normalverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

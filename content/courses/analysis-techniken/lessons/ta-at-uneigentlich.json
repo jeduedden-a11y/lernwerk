@@ -16,6 +16,143 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Erst die **Problemstelle** benennen (unendliche Grenze oder Polstelle), dann durch eine Variable ersetzen, integrieren und den **Grenzwert** bilden. Existiert er nicht, divergiert das Integral.",
+      "label": "Verfahren",
+      "more": "1. **Problemstelle** finden: Grenze $\\pm\\infty$ oder eine Stelle, an der $f$ unbeschränkt ist.\n2. **Ersetzen:** $\\int_1^\\infty \\to \\int_1^b$, $\\int_0^1 \\to \\int_\\varepsilon^1$.\n3. **Integrieren** mit der Variablen als Grenze.\n4. **Grenzwert** für $b \\to \\infty$ oder $\\varepsilon \\to 0$.\n\n**Vergleich** hilft, ohne zu rechnen: $\\int_1^\\infty \\tfrac{1}{x^2 + 1}\\,dx$ konvergiert, weil $\\tfrac{1}{x^2 + 1} \\leq \\tfrac{1}{x^2}$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Merkregel herleiten:** $\\displaystyle\\int_1^\\infty \\frac{1}{x^p}\\,dx$ für $p \\neq 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\int_1^b x^{-p}\\,dx = \\left[\\frac{x^{1-p}}{1 - p}\\right]_1^b = \\frac{b^{1-p} - 1}{1 - p}",
+            "why": "Mit Variable integrieren."
+          },
+          {
+            "tex": "p > 1: \\; b^{1-p} \\to 0 \\;\\Rightarrow\\; \\frac{1}{p - 1}",
+            "why": "Konvergent."
+          },
+          {
+            "tex": "p < 1: \\; b^{1-p} \\to \\infty",
+            "why": "Divergent; bei p = 1 ebenso (ln b → ∞)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "p > 1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "p ≤ 1.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine Polstelle **im Inneren** des Intervalls nicht übersehen: dort das Integral aufteilen und beide Teile einzeln untersuchen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Uneigentliche Integrale und Grenzwertargumentation",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Aufgabentypen/Uneigentliche Integrale und Grenzwertargumentation.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Fläche erstreckt sich ins Unendliche, soll aber einen endlichen Wert haben. Erkennbar an *\"der Inhalt der Fläche zwischen dem Graphen und der x-Achse\"* ohne rechte Grenze, an *\"zeige unter Angabe einer geeigneten Grenzwertargumentation\"*, an Sachkontexten wie Gesamtdosis, Gesamtladung oder Bioverfügbarkeit.\n\nOperatoren: **Zeige unter Angabe einer geeigneten Grenzwertargumentation**, **Berechne den Inhalt der Fläche**, **Untersuche, ob der Flächeninhalt endlich ist**.\n\n> [!important] Die Grenzwertargumentation ist der bewertete Teil\n> Das Ausrechnen der Stammfunktion ist Routine. Punkte gibt es dafür, dass die uneigentliche Grenze **sauber als Grenzwert** behandelt wird -- also über eine Hilfsvariable, nicht durch Einsetzen von unendlich.\n>\n> Formulierungen wie \"$F(\\infty) = 0$\" sind fachlich falsch: Unendlich ist keine Stelle, an der man eine Funktion auswerten kann."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Endliche obere Grenze einführen.** $\\int_a^b$ mit einer Variablen $b$, ausdrücklich als solche benannt.\n2. **Stammfunktion bilden und einsetzen.** Ergebnis ist ein Term in $b$.\n3. **Grenzübergang ausführen** und **begründen**:\n   $$\\lim_{b\\to\\infty} \\int_a^b f(x)\\,dx = \\lim_{b\\to\\infty}\\big(F(b) - F(a)\\big)$$\n4. **Das Verhalten des kritischen Terms benennen.** Bei $e^{-kb}$ mit $k>0$: geht gegen null, weil der Exponent gegen minus unendlich strebt. Bei $\\tfrac{1}{b^p}$: geht gegen null für $p>0$.\n5. **Ergebnis im Sachzusammenhang deuten**, falls ein Kontext vorliegt."
+            }
+          ]
+        },
+        {
+          "title": "Die entscheidenden Grenzwerte",
+          "blocks": [
+            {
+              "md": "| Term | Verhalten für $b \\to \\infty$ | Bedingung |\n|---|---|---|\n| $e^{-kb}$ | $\\to 0$ | $k>0$ |\n| $b\\,e^{-kb}$ | $\\to 0$ | $k>0$, Exponential schlägt Potenz |\n| $\\dfrac{1}{b^p}$ | $\\to 0$ | $p>0$ |\n| $\\ln b$ | $\\to \\infty$ | -- |\n\n> [!tip] Exponentialfunktionen schlagen Potenzfunktionen\n> Ausdrücke wie $b^2 e^{-b}$ streben gegen null, obwohl der erste Faktor wächst. Diese Wachstumshierarchie ist bei Bateman- und Zerfallsfunktionen laufend nötig und sollte als Begründung ausdrücklich genannt werden."
+            }
+          ]
+        },
+        {
+          "title": "Fallen",
+          "blocks": [
+            {
+              "md": "> [!warning] Vier Stolperstellen\n> **Unendlich einsetzen.** Der häufigste Fehler und ein sicherer Punktverlust, auch bei richtigem Zahlenwert.\n>\n> **Die Konvergenz nicht begründen.** \"Der zweite Term fällt weg\" genügt nicht; es ist zu sagen, **weshalb** er gegen null geht.\n>\n> **Die untere Grenze vergessen.** Der Grenzwert liefert nur $\\lim F(b)$; davon ist $F(a)$ abzuziehen.\n>\n> **Divergenz übersehen.** Nicht jede ins Unendliche reichende Fläche ist endlich. Bei $\\int_1^\\infty \\tfrac{1}{x}\\,dx$ wächst die Stammfunktion $\\ln x$ unbeschränkt -- das Integral existiert nicht."
+            }
+          ]
+        },
+        {
+          "title": "Sachbezug",
+          "blocks": [
+            {
+              "md": "> [!info] Was ein endlicher Wert inhaltlich bedeutet\n> Bei einem Medikament, dessen Konzentration exponentiell abklingt, ist das uneigentliche Integral die **insgesamt aufgenommene Wirkstoffmenge** -- ein endlicher Wert, obwohl die Konzentration theoretisch nie exakt null wird. Diese Deutung wird regelmäßig verlangt und ist der Kern der Aufgabe."
+            }
+          ]
+        },
+        {
+          "title": "Anschluss",
+          "blocks": [
+            {
+              "md": "Grundlage sind **Integralbegriff und Hauptsatz** und **Verhalten im Unendlichen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Exponential",
+      "md": "Berechne $\\displaystyle\\int_0^\\infty e^{-2x}\\,dx$.",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\lim_{b \\to \\infty}\\left[-\\tfrac12 e^{-2x}\\right]_0^b = \\tfrac12$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\int_0^1 \\tfrac{1}{x}\\,dx$ ist endlich.",
+      "answer": false,
+      "explain": "$\\lim_{\\varepsilon \\to 0}(-\\ln\\varepsilon) = \\infty$.",
+      "label": "Polstelle",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +205,38 @@
       },
       "label": "Exponential",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "uneigentlich"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "partialbruch"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Problemstelle ersetzen, Grenzwert bilden; Polstellen im Inneren aufteilen."
+      ]
     }
   ]
 }

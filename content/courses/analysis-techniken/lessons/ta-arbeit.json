@@ -19,6 +19,130 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Federarbeit",
+      "md": "**Arbeit als Fläche:** Bei einer Feder wächst die Kraft linear, $F(s) = Ds$ mit $D = 200$ N/m. Die Arbeit ist die Fläche unter der Kraftkurve.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          0.35
+        ],
+        "y": [
+          0,
+          70
+        ],
+        "grid": true,
+        "xLabel": "s in m",
+        "vars": [
+          {
+            "name": "SS",
+            "min": 0,
+            "max": 0.3,
+            "value": 0.1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "F",
+            "expr": "200*x",
+            "color": "blue"
+          }
+        ],
+        "areas": [
+          {
+            "f": "F",
+            "from": 0,
+            "to": "SS",
+            "color": "orange"
+          }
+        ],
+        "readout": "s = {SS|2} m · F = {200*SS|1} N · W = ½ D s² = {100*SS^2|3} J"
+      },
+      "timeline": [
+        {
+          "caption": "Bei 0,1 m: W = 1 J.",
+          "set": {
+            "SS": 0.1
+          }
+        },
+        {
+          "caption": "Doppelte Dehnung, vierfache Arbeit: 4 J.",
+          "to": {
+            "SS": 0.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei 0,3 m: 9 J.",
+          "to": {
+            "SS": 0.3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Bei konstanter Kraft ist $W = F \\cdot s$. Ändert sich die Kraft mit dem Weg, summiert man über kleine Wegstücke: $W = \\int_a^b F(s)\\,ds$, die **Fläche unter der Kraftkurve**.",
+      "label": "Arbeit",
+      "more": "**Feder:** $F = Ds$, also $W = \\tfrac12 D s^2$ von der Ruhelage aus; zwischen $s_1$ und $s_2$ ist $W = \\tfrac12 D(s_2^2 - s_1^2)$.\n\n**Gravitation:** $F = \\tfrac{GMm}{r^2}$; die Arbeit von $r_1$ nach $r_2$ ist $GMm\\left(\\tfrac{1}{r_1} - \\tfrac{1}{r_2}\\right)$.\n\n**Seil oder Kette heben:** Der Teil, der noch hängt, wird kürzer; man summiert über die einzelnen Stücke, die unterschiedlich weit gehoben werden.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Arbeit (Integralrechnung)",
+      "path": "02 Wiki/Mathematik/06 Anwendungen der Integration/Arbeit (Integralrechnung).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "Bewegt eine Kraft $F(x)$ ein Objekt von $x=a$ nach $x=b$:\n$$W = \\int_a^b F(x)\\,dx$$"
+            }
+          ]
+        },
+        {
+          "title": "Hookesches Gesetz",
+          "blocks": [
+            {
+              "md": "Eine Feder mit Federkonstante $k$, um $x$ Einheiten aus der Ruhelage gedehnt, übt die Kraft $F(x)=kx$ aus:\n$$W = \\int_a^b kx\\,dx = \\frac{k}{2}(b^2-a^2)$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Feder, natürliche Länge $0{,}5$ m, $10$ N dehnen sie auf $0{,}7$ m ($k=50$ N/m). Arbeit zum Dehnen auf $0{,}9$ m (also $0$ bis $0{,}4$ m Dehnung):\n$$W = \\int_0^{0.4} 50x\\,dx = 25(0{,}16) = 4\\text{ J}$$"
+            }
+          ]
+        },
+        {
+          "title": "Wichtig",
+          "blocks": [
+            {
+              "md": "$W=F\\cdot d$ gilt **nur** bei konstanter Kraft. Bei variabler Kraft ist Integration zwingend erforderlich."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Arbeit",
+      "md": "Eine Kraft $F(x) = 3x^2$ (N, $x$ in m) wirkt von $x = 0$ bis $x = 2$. Welche Arbeit verrichtet sie (in J)?",
+      "answer": 8,
+      "tolerance": 0.001,
+      "placeholder": "J",
+      "explain": "$\\int_0^2 3x^2\\,dx = [x^3]_0^2 = 8$ J.",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Eine Feder (D = 200 N/m) wird um 0,1 m gedehnt. Welche Arbeit ist nötig (in J)?",
@@ -36,12 +160,61 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "arbeit"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "arbeit"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "arbeit"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "arbeit"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "W = ∫ F(s) ds bei veränderlicher Kraft.",
         "Feder: W = ½ D s².",
-        "Seil und Pumpe: Masse oder Weg ändern sich."
+        "Seil und Pumpe: Masse oder Weg ändern sich.",
+        "Arbeit = Fläche unter der Kraft-Weg-Kurve."
       ],
       "id": "summary"
     }

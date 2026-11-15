@@ -16,6 +16,151 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Steht im Zähler (bis auf einen Faktor) die **Ableitung des Nenners**, ist die Stammfunktion ein Logarithmus: $\\int \\dfrac{f'(x)}{f(x)}\\,dx = \\ln|f(x)| + C$.",
+      "label": "Verfahren",
+      "more": "**Erkennen:** Nenner ableiten und mit dem Zähler vergleichen; ein konstanter Faktor lässt sich ausgleichen.\n\n**Begründung:** Substitution $u = f(x)$, $du = f'(x)\\,dx$: $\\int \\tfrac{du}{u} = \\ln|u|$.\n\n**Beispiele:** $\\int \\tfrac{2x}{x^2 + 1}\\,dx = \\ln(x^2 + 1)$; $\\int \\tan x\\,dx = -\\ln|\\cos x|$; $\\int \\tfrac{x}{x^2 + 4}\\,dx = \\tfrac12\\ln(x^2 + 4)$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $\\displaystyle\\int \\tan x\\,dx = \\int \\frac{\\sin x}{\\cos x}\\,dx$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(\\cos x)' = -\\sin x",
+            "why": "Der Zähler ist bis auf das Vorzeichen die Ableitung des Nenners."
+          },
+          {
+            "tex": "\\int \\frac{\\sin x}{\\cos x}\\,dx = -\\int \\frac{-\\sin x}{\\cos x}\\,dx",
+            "why": "Vorzeichen ausgleichen."
+          },
+          {
+            "tex": "= -\\ln|\\cos x| + C",
+            "why": "f′/f-Regel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Vergleich.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausgleich.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Der Faktor muss **konstant** sein: Bei $\\int \\tfrac{1}{x^2 + 1}\\,dx$ fehlt das $x$ im Zähler; dort ist die Stammfunktion $\\arctan x$, kein Logarithmus.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Logarithmische Substitution",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Aufgabentypen/Logarithmische Substitution.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie eine Stammfunktion von $f$\"* bei einem Bruch, dessen **Zähler ein Vielfaches der Ableitung des Nenners** ist, z. B. $f(x) = \\dfrac{3x^2}{x^3+1}$ oder $f(x) = \\dfrac{x}{x^2+4}$.\n\nEin Sonderfall der **Integration durch Substitution**, so häufig, dass er als eigenständiges Erkennungsmuster lohnt."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundformel",
+          "blocks": [
+            {
+              "md": "> [!important] Zähler ist (bis auf Faktor) die Ableitung des Nenners\n> $$\\int \\frac{g'(x)}{g(x)}\\,dx = \\ln|g(x)| + C$$\n> Erkennbar daran, dass beim Ableiten von $g(x)$ genau der Zähler (oder ein konstantes Vielfaches davon) entsteht."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Nenner $g(x)$ benennen.**\n2. **Ableitung $g'(x)$ bilden.**\n3. **Zähler mit $g'(x)$ vergleichen:** stimmt er exakt, bis auf einen konstanten Faktor, oder gar nicht überein?\n4. **Fehlenden Faktor ausgleichen:** Integranden mit dem Kehrwert des fehlenden Faktors erweitern (Faktor vor das Integral ziehen).\n5. **Stammfunktion notieren:** $\\ln|g(x)|$, multipliziert mit dem ausgeglichenen Faktor, plus $C$.\n6. **Ableitungsprobe:** die Stammfunktion ableiten und mit $f$ vergleichen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Faktor stimmt exakt",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie eine Stammfunktion von $f(x) = \\dfrac{3x^2}{x^3+1}$.*\n\n**Schritt 1:** $g(x) = x^3+1$.\n\n**Schritt 2:** $g'(x) = 3x^2$.\n\n**Schritt 3:** Zähler ist exakt $g'(x)$ -- kein Ausgleichsfaktor nötig.\n\n**Schritt 5:**\n$$F(x) = \\ln|x^3+1| + C$$\n\n**Schritt 6 (Probe):**\n$$F'(x) = \\frac{3x^2}{x^3+1} = f(x) \\checkmark$$"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Faktor muss ausgeglichen werden",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie eine Stammfunktion von $f(x) = \\dfrac{x}{x^2+4}$.*\n\n**Schritt 1:** $g(x) = x^2+4$.\n\n**Schritt 2:** $g'(x) = 2x$.\n\n**Schritt 3:** Zähler ist $x$, das ist $\\tfrac{1}{2}$ von $g'(x) = 2x$.\n\n**Schritt 4:** Integral mit $\\tfrac{1}{2}$ vor das Integral ziehen: $f(x) = \\tfrac12 \\cdot \\dfrac{2x}{x^2+4}$.\n\n**Schritt 5:** Da $x^2+4$ stets positiv ist, kann auf die Betragsstriche verzichtet werden:\n$$F(x) = \\frac{1}{2}\\ln(x^2+4) + C$$\n\n**Schritt 6 (Probe):**\n$$F'(x) = \\frac{1}{2} \\cdot \\frac{2x}{x^2+4} = \\frac{x}{x^2+4} = f(x) \\checkmark$$"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung: wann diese Regel NICHT gilt",
+          "blocks": [
+            {
+              "md": "Bei $f(x) = \\dfrac{1}{x^2+4}$ (Zähler konstant, kein Vielfaches der Nennerableitung $2x$) greift die logarithmische Substitution **nicht** -- hier führt der Weg über die Arkustangens-Stammfunktion, ein anderer Grundintegral-Typ. Die Regel funktioniert ausschließlich, wenn der Zähler tatsächlich proportional zur Ableitung des Nenners ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Betragsstriche vergessen**, wenn $g(x)$ auch negative Werte annehmen kann. $\\ln$ ist nur für positive Argumente definiert.\n- **Konstanten Faktor im Zähler übersehen** und direkt $\\ln|g(x)|$ ohne Anpassung hinschreiben.\n- **Fälschlich anwenden, wenn der Zähler keine Ableitung des Nenners ist.** Nur das Muster $\\dfrac{g'(x)}{g(x)}$ (bis auf konstanten Faktor) führt auf den Logarithmus.\n- **Ableitungsprobe auslassen.** Gerade bei dieser Technik ein schneller, verlässlicher Kontrollschritt.\n- **Bei $g(x)$ mit mehreren Termen die Ableitung unvollständig bilden**, etwa Produktregel- oder Kettenregel-Anteile vergessen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Integration durch Substitution** · **Grundintegrale** · **Ableitungsbegriff**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_0^1 \\frac{2x}{x^2 + 1}\\,dx$ (drei Nachkommastellen).",
+      "answer": 0.693,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$[\\ln(x^2 + 1)]_0^1 = \\ln 2 \\approx 0{,}693$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -58,6 +203,26 @@
       },
       "label": "f'/f",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "substitution"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f′/f integriert sich zu ln|f|."
+      ]
     }
   ]
 }

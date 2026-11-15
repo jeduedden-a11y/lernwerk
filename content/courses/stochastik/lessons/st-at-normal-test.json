@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Hypothesentest für die Normalverteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Hypothesentest für die Normalverteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Eine Stichprobe von $n$ Packungen liefert einen mittleren Inhalt von $\\bar{x}$\"*, *\"Prüfen Sie auf dem Signifikanzniveau $\\alpha$, ob die Abweichung vom Sollwert signifikant ist\"*, *\"Die Füllmenge ist normalverteilt mit bekannter Standardabweichung $\\sigma$\"*.\n\nAnders als bei den bisherigen **Hypothesentests** geht es hier **nicht um einen Anteil $p$**, sondern um den **Mittelwert $\\mu$** einer normalverteilten Größe -- Gewicht, Länge, Füllmenge. Das Verfahren heißt **Gauß-Test** (auch $z$-Test)."
+            }
+          ]
+        },
+        {
+          "title": "Der Gauß-Test",
+          "blocks": [
+            {
+              "md": "> [!important] Standardisierte Prüfgröße\n> Ist $X$ normalverteilt mit bekanntem $\\sigma$, ist der Stichprobenmittelwert $\\bar{x}$ aus $n$ Beobachtungen selbst (näherungsweise) normalverteilt mit Standardabweichung $\\dfrac{\\sigma}{\\sqrt{n}}$. Die Prüfgröße\n> $$z = \\frac{\\bar{x} - \\mu_0}{\\sigma / \\sqrt{n}}$$\n> gibt an, um wie viele Standardfehler der beobachtete Mittelwert vom behaupteten Sollwert $\\mu_0$ abweicht."
+            }
+          ]
+        },
+        {
+          "title": "Hypothesen und kritische Werte",
+          "blocks": [
+            {
+              "md": "| Testrichtung | $H_1$ | Ablehnungsbereich |\n|---|---|---|\n| zweiseitig | $\\mu \\neq \\mu_0$ | $\\lvert z \\rvert > z_{1-\\alpha/2}$ |\n| rechtsseitig | $\\mu > \\mu_0$ | $z > z_{1-\\alpha}$ |\n| linksseitig | $\\mu < \\mu_0$ | $z < -z_{1-\\alpha}$ |\n\nGängige kritische Werte (Standardnormalverteilung): $z_{0{,}95} \\approx 1{,}645$, $z_{0{,}975} \\approx 1{,}96$, $z_{0{,}99} \\approx 2{,}326$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Hypothesen formulieren:** $H_0: \\mu = \\mu_0$ gegen $H_1$ passend zur Testrichtung.\n2. **Prüfgröße berechnen:** $z = \\dfrac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}}$.\n3. **Kritischen Wert** aus der Tabelle der Standardnormalverteilung ablesen, passend zu $\\alpha$ und Testrichtung.\n4. **Vergleichen** und entscheiden: liegt $z$ im Ablehnungsbereich?\n5. **Entscheidung in Worten formulieren** und auf den Sachkontext beziehen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Abfüllanlage soll Packungen mit einem Sollgewicht von $\\mu_0 = 500\\,\\text{g}$ befüllen. Aus Erfahrung ist bekannt, dass das Gewicht normalverteilt ist mit $\\sigma = 10\\,\\text{g}$. Eine Stichprobe von $n=25$ Packungen ergibt einen Mittelwert von $\\bar{x} = 496\\,\\text{g}$. Prüfen Sie auf dem Signifikanzniveau $\\alpha=5\\,\\%$ (zweiseitig), ob die Anlage systematisch vom Sollwert abweicht.*\n\n**Schritt 1:** $H_0: \\mu = 500$, $H_1: \\mu \\neq 500$ -- zweiseitiger Test.\n\n**Schritt 2:**\n$$z = \\frac{496 - 500}{10/\\sqrt{25}} = \\frac{-4}{10/5} = \\frac{-4}{2} = -2$$\n\n**Schritt 3:** Zweiseitig, $\\alpha=0{,}05$: kritischer Wert $z_{0{,}975} \\approx 1{,}96$.\n\n**Schritt 4:** $\\lvert z \\rvert = 2 > 1{,}96$ -- $z$ liegt im Ablehnungsbereich.\n\n**Schritt 5:** *$H_0$ wird auf dem 5-%-Niveau verworfen. Die Abweichung vom Sollgewicht ist statistisch signifikant -- die Anlage füllt im Mittel zu wenig ab.*"
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zum Test bei der Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Bei einem Anteil $p$ (etwa Ausschussquote) wird mit der Binomialverteilung und der **Entscheidungsregel über kumulierte Wahrscheinlichkeiten** gearbeitet. Beim Gauß-Test für $\\mu$ wird stattdessen die Prüfgröße $z$ direkt mit einem **kritischen $z$-Wert** verglichen -- kein Blättern in einer kumulierten Verteilungstabelle nötig, sondern ein einziger Tabellenwert (oder GTR-Funktion) für die Standardnormalverteilung."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\sigma$ der Grundgesamtheit mit der Standardabweichung des Stichprobenmittels verwechseln.** Im Nenner steht $\\sigma/\\sqrt{n}$, nicht $\\sigma$ allein -- der Mittelwert streut weniger als eine Einzelmessung.\n- **$\\sqrt{n}$ vergessen** oder mit $n$ selbst verwechseln.\n- **Bei zweiseitigem Test $\\alpha$ nicht halbieren.** Der kritische Wert für $\\alpha=5\\,\\%$ zweiseitig ist $z_{0{,}975}$, nicht $z_{0{,}95}$.\n- **Vorzeichen von $z$ ignorieren.** Bei einseitigen Tests entscheidet die Richtung der Abweichung, ob $z$ überhaupt im relevanten Ablehnungsbereich liegen kann.\n- **Signifikanz mit praktischer Relevanz verwechseln.** Eine statistisch signifikante Abweichung von 4 g kann in der Praxis unbedeutend sein -- Signifikanz ist eine statistische, keine inhaltliche Aussage."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Normalverteilung** · **Hypothesen aufstellen** · **Entscheidungsregel bestimmen** · **Hypothesentests (Binomialverteilung)** · **Konfidenzintervalle**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

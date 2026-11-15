@@ -19,8 +19,9 @@
   "steps": [
     {
       "type": "text",
-      "md": "Eine **Reihe** $\\sum a_k$ ist die Folge ihrer Partialsummen $s_n = a_1 + \\ldots + a_n$. Die **geometrische Reihe** $\\sum_{k=0}^\\infty q^k = \\frac{1}{1-q}$ konvergiert für $|q| < 1$. **Divergenzkriterium:** Gehen die Glieder nicht gegen 0, divergiert die Reihe. Die Umkehrung gilt nicht: Die harmonische Reihe $\\sum \\frac1k$ divergiert, obwohl $\\frac1k \\to 0$. Die **p-Reihe** $\\sum \\frac{1}{k^p}$ konvergiert genau für $p > 1$.",
-      "id": "t1"
+      "md": "Eine **Reihe** ist die Folge ihrer Partialsummen. $\\sum q^k = \\frac{1}{1 - q}$ für $|q| < 1$, $\\sum \\frac{1}{k^p}$ konvergiert genau für $p > 1$. Gehen die Glieder nicht gegen 0, divergiert die Reihe.",
+      "id": "t1",
+      "more": "Eine **Reihe** $\\sum a_k$ ist die Folge ihrer Partialsummen $s_n = a_1 + \\ldots + a_n$. Die **geometrische Reihe** $\\sum_{k=0}^\\infty q^k = \\frac{1}{1-q}$ konvergiert für $|q| < 1$. **Divergenzkriterium:** Gehen die Glieder nicht gegen 0, divergiert die Reihe. Die Umkehrung gilt nicht: Die harmonische Reihe $\\sum \\frac1k$ divergiert, obwohl $\\frac1k \\to 0$. Die **p-Reihe** $\\sum \\frac{1}{k^p}$ konvergiert genau für $p > 1$."
     },
     {
       "type": "widget",
@@ -73,6 +74,304 @@
       "id": "w1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung der geometrischen Summe.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "s_n = 1 + q + q^2 + \\ldots + q^n",
+            "why": "Partialsumme."
+          },
+          {
+            "tex": "q\\,s_n = q + q^2 + \\ldots + q^{n+1}",
+            "why": "Mit q multiplizieren."
+          },
+          {
+            "tex": "s_n - q\\,s_n = 1 - q^{n+1} \\;\\Rightarrow\\; s_n = \\frac{1 - q^{n+1}}{1 - q}",
+            "why": "Subtrahieren: Fast alles hebt sich weg."
+          },
+          {
+            "tex": "|q| < 1: \\; s_n \\to \\frac{1}{1 - q}",
+            "why": "q^{n+1} geht gegen 0."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mal q.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Eine **Reihe** ist die Folge ihrer Partialsummen. $\\sum q^k = \\tfrac{1}{1 - q}$ für $|q| < 1$; $\\sum \\tfrac{1}{k^p}$ konvergiert genau für $p > 1$. Gehen die Glieder **nicht** gegen 0, divergiert die Reihe.",
+      "label": "Reihen",
+      "more": "**Divergenzkriterium:** $a_k \\to 0$ ist notwendig, aber nicht hinreichend; die harmonische Reihe $\\sum \\tfrac1k$ divergiert, obwohl ihre Glieder gegen 0 gehen.\n\n**Teleskopsummen:** $\\sum \\tfrac{1}{k(k + 1)} = \\sum\\left(\\tfrac1k - \\tfrac{1}{k + 1}\\right)$, die Partialsumme ist $1 - \\tfrac{1}{n + 1} \\to 1$.\n\n**p-Reihen** dienen als Vergleich für viele andere Reihen.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Reihen und Partialsummen",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Reihen und Partialsummen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Reihe** ist die Summe der Glieder einer Folge:\n$$\\sum_{n=1}^{\\infty} a_n = a_1+a_2+a_3+\\cdots$$\n\nDefiniert über die **Partialsummen** $S_n=\\sum_{k=1}^n a_k$: die Reihe **konvergiert** gegen $S$, wenn $\\lim_{n\\to\\infty}S_n=S$ — jede Frage über Reihen ist damit eine Frage über die **Folge** $\\{S_n\\}$."
+            }
+          ]
+        },
+        {
+          "title": "Die geometrische Reihe",
+          "blocks": [
+            {
+              "md": "Die wichtigste Reihe der Mathematik:\n$$\\sum_{n=0}^{\\infty} r^n = \\begin{cases}\\dfrac{1}{1-r} & |r|<1\\\\ \\text{divergiert} & |r|\\geq1\\end{cases}$$\n\nAllgemein mit Startwert $a$ ab $n=1$:\n$$\\sum_{n=1}^{\\infty} ar^{n-1} = \\frac{a}{1-r}, \\quad |r|<1$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=0}^{\\infty}\\left(\\frac23\\right)^n = \\frac{1}{1-2/3} = 3$$"
+            }
+          ]
+        },
+        {
+          "title": "Verwandt",
+          "blocks": [
+            {
+              "md": "Ebenfalls fundamental: die **p-Reihe**. Erster Test bei jeder Reihe: das **Divergenzkriterium**."
+            }
+          ]
+        },
+        {
+          "title": "Die Definition",
+          "blocks": [
+            {
+              "md": "$$s_n = \\sum_{k=1}^{n} a_k \\qquad \\sum_{k=1}^{\\infty} a_k := \\lim_{n\\to\\infty} s_n$$\n\n> [!important] Eine Reihe ist die Folge ihrer Partialsummen\n> Das ist keine Umschreibung, sondern die Definition. Eine unendliche Summe ist zunächst ein sinnloser Ausdruck -- Addition ist für endlich viele Summanden erklärt. Erst der Grenzwert der Partialsummen gibt ihr einen Sinn.\n>\n> Damit überträgt sich der gesamte Apparat aus **Folgen und Konvergenz** unmittelbar. Eine Reihe konvergiert genau dann, wenn ihre Partialsummenfolge konvergiert.\n>\n> Zu unterscheiden sind zwei Folgen, die leicht verwechselt werden: die Folge der **Glieder** $a_n$ und die Folge der **Partialsummen** $s_n$. Dass die erste eine Nullfolge ist, sagt über die zweite wenig aus -- siehe **Divergenzkriterium**."
+            }
+          ]
+        },
+        {
+          "title": "Die geometrische Reihe",
+          "blocks": [
+            {
+              "md": "$$\\sum_{k=0}^{\\infty} q^k = \\frac{1}{1-q} \\quad \\text{für } |q|<1$$\n\n> [!tip] Die einzige Reihe des Abiturs mit geschlossener Summenformel\n> Sie folgt aus der endlichen Partialsumme $s_n = \\frac{1-q^{n+1}}{1-q}$: Für $|q|<1$ geht $q^{n+1}$ gegen null, und es bleibt $\\frac{1}{1-q}$.\n>\n> Für $|q|\\ge 1$ divergiert die Reihe, weil bereits die Glieder keine Nullfolge bilden.\n>\n> Ihre Bedeutung reicht weit über sich selbst hinaus: Sie ist die **Vergleichsreihe**, aus der Quotienten- und Wurzelkriterium hergeleitet werden, und sie liefert die Umwandlung periodischer Dezimalbrüche in Brüche. Der Ausdruck $0{,}\\overline{3} = \\sum 3\\cdot 10^{-k} = \\frac{1}{3}$ ist nichts anderes als ihre Anwendung."
+            }
+          ]
+        },
+        {
+          "title": "Die harmonische Reihe",
+          "blocks": [
+            {
+              "md": "$$\\sum_{k=1}^{\\infty} \\frac{1}{k} = \\infty$$\n\n> [!warning] Das wichtigste Gegenbeispiel der gesamten Analysis\n> Die Glieder bilden eine Nullfolge, und dennoch divergiert die Reihe. Sie wächst allerdings außerordentlich langsam: Um die Partialsumme 20 zu erreichen, braucht es mehr als 250 Millionen Glieder.\n>\n> Der klassische Beweis von Oresme fasst die Glieder in Blöcken zusammen -- $\\tfrac{1}{3}+\\tfrac{1}{4} > \\tfrac{1}{2}$, dann die nächsten vier, dann die nächsten acht. Jeder Block übertrifft $\\tfrac{1}{2}$, und da es unendlich viele Blöcke gibt, wächst die Summe über jede Schranke.\n>\n> Dieses Beispiel begründet, weshalb die Konvergenzuntersuchung überhaupt Kriterien braucht und nicht mit einem Blick auf die Glieder auskommt. Es ist die Grenzlinie: Bereits $\\sum 1/k^{1{,}01}$ konvergiert. Siehe **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "> [!info] Nur eingeschränkt darf umgeformt werden\n> Konvergente Reihen dürfen gliedweise addiert und mit einem Faktor multipliziert werden. Endlich viele Glieder dürfen verändert oder weggelassen werden -- das ändert den Summenwert, nicht aber das Konvergenzverhalten.\n>\n> **Umordnen** ist dagegen nur bei absoluter Konvergenz erlaubt. Bei bedingt konvergenten Reihen lässt sich durch Umordnen jeder beliebige Wert erzeugen -- der Riemannsche Umordnungssatz. Das ist einer der überraschendsten Sätze der Analysis und zeigt, dass unendliche Summen sich grundlegend anders verhalten als endliche. Siehe **Absolute und bedingte Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Reihen bauen auf **Folgen und Konvergenz** auf. Ihre Konvergenz wird über die Kriterien geprüft, beginnend mit dem **Divergenzkriterium**. Als Funktionen aufgefasst führen sie zu **Potenzreihen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Divergenzkriterium",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Divergenzkriterium.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Wenn $\\displaystyle\\sum_{n=1}^\\infty a_n$ konvergiert, dann gilt $\\displaystyle\\lim_{n\\to\\infty}a_n=0$.\n\n**Kontraposition (das eigentliche Werkzeug):** Ist $\\displaystyle\\lim_{n\\to\\infty}a_n\\neq0$, **divergiert** die Reihe."
+            }
+          ]
+        },
+        {
+          "title": "Kritische Warnung",
+          "blocks": [
+            {
+              "md": "Die Umkehrung ist **falsch**: $a_n\\to0$ garantiert **nicht** Konvergenz. Kanonisches Gegenbeispiel: die harmonische Reihe $\\sum\\frac1n$ (**p-Reihe**) — die Glieder gehen gegen $0$, die Reihe divergiert trotzdem."
+            }
+          ]
+        },
+        {
+          "title": "Nutzen",
+          "blocks": [
+            {
+              "md": "Immer **zuerst** anwenden — der schnellste Weg, eine Reihe als divergent zu entlarven, bevor aufwendigere Kriterien nötig werden."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$\\sum a_n \\text{ konvergent} \\;\\Longrightarrow\\; a_n \\to 0$$\n\n> [!important] Die Umkehrung gilt nicht -- das ist der Kern des Kriteriums\n> Aus $a_n \\to 0$ folgt **nicht** die Konvergenz der Reihe. Die **harmonische Reihe** ist das stehende Gegenbeispiel: Ihre Glieder bilden eine Nullfolge, die Reihe divergiert dennoch.\n>\n> Brauchbar ist das Kriterium daher nur in seiner **verneinten** Form: Bilden die Glieder keine Nullfolge, so divergiert die Reihe mit Sicherheit. Man spricht deshalb vom Divergenz-, nicht vom Konvergenzkriterium.\n>\n> Der Beweis ist kurz: Aus $a_n = s_n - s_{n-1}$ folgt bei Konvergenz beider Partialsummenfolgen gegen denselben Grenzwert $s$, dass die Differenz gegen null geht."
+            }
+          ]
+        },
+        {
+          "title": "Der Einsatz in der Praxis",
+          "blocks": [
+            {
+              "md": "> [!tip] Immer der erste Prüfschritt -- er kostet nichts\n> Vor jedem aufwendigen Kriterium lohnt der Blick auf das Grenzverhalten der Glieder. Ergibt sich kein Grenzwert null, ist die Untersuchung nach einer Zeile beendet.\n>\n> Typische Fälle, in denen das Kriterium sofort greift:\n>\n> | Reihe | Grenzwert der Glieder | Folgerung |\n> |---|---|---|\n> | $\\sum \\frac{n}{n+1}$ | $1$ | divergent |\n> | $\\sum (-1)^n$ | existiert nicht | divergent |\n> | $\\sum \\frac{n^2}{2n^2+3}$ | $\\tfrac{1}{2}$ | divergent |\n> | $\\sum \\left(1+\\tfrac{1}{n}\\right)^n$ | $e$ | divergent |\n>\n> Der letzte Fall ist der lehrreichste: Der Ausdruck sieht nach einer Nullfolge aus, strebt aber gegen die Eulersche Zahl."
+            }
+          ]
+        },
+        {
+          "title": "Die Formulierung im Beweis",
+          "blocks": [
+            {
+              "md": "> [!warning] Ein negatives Ergebnis ist kein Ergebnis\n> Ist $a_n$ eine Nullfolge, so ist über die Reihe **nichts** entschieden. Formulierungen wie \"die Glieder gehen gegen null, also konvergiert die Reihe\" sind falsch und werden entsprechend bewertet.\n>\n> Korrekt lautet der Zwischenstand: \"Das Divergenzkriterium greift nicht, die Untersuchung ist mit einem hinreichenden Kriterium fortzusetzen.\" Erst dann folgt der Vergleich, das Quotientenkriterium oder ein anderes Verfahren.\n>\n> Diese Unterscheidung zwischen **notwendiger** und **hinreichender** Bedingung ist über die Analysis hinaus bedeutsam. Sie begegnet bei den Extremstellen in derselben Gestalt: $f'(x)=0$ ist notwendig, aber nicht hinreichend."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Divergenzkriterium ist der erste Schritt jeder Konvergenzuntersuchung von **Reihen und Partialsummen**. Greift es nicht, folgen die **Vergleichskriterien** oder das **Quotienten- und Wurzelkriterium**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "p-Reihe",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/p-Reihe.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^{\\infty} \\frac{1}{n^p} \\;\\text{konvergiert} \\iff p>1$$"
+            }
+          ]
+        },
+        {
+          "title": "Zwei berühmte Spezialfälle",
+          "blocks": [
+            {
+              "md": "- **$p=1$ — harmonische Reihe** $\\sum \\frac1n$: divergiert, obwohl die Glieder gegen $0$ gehen. Eines der wichtigsten Gegenbeispiele der Mathematik.\n- **$p=2$ — Basel-Problem:** $\\sum \\frac{1}{n^2} = \\dfrac{\\pi^2}{6}$, gelöst von Euler 1734."
+            }
+          ]
+        },
+        {
+          "title": "Beweis-Idee",
+          "blocks": [
+            {
+              "md": "Folgt aus dem **Integralkriterium**: $\\sum \\frac1{n^p}$ verhält sich wie $\\int_1^\\infty x^{-p}\\,dx$, das genau für $p>1$ konvergiert (siehe **$p$-Integral**) — eine direkte Parallele zwischen Reihen und uneigentlichen Integralen."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^p} \\quad \\begin{cases} \\text{konvergent} & p>1\\\\ \\text{divergent} & p\\le 1\\end{cases}$$\n\n> [!important] Die Grenze liegt bei genau eins -- und der Grenzfall selbst divergiert\n> Für $p=1$ entsteht die harmonische Reihe, die divergiert. Schon $p=1{,}001$ führt zur Konvergenz. Die Grenze ist damit scharf, aber der kritische Wert gehört zur divergenten Seite.\n>\n> Diese Feinheit ist bemerkenswert: Zwischen $\\sum 1/n$ und $\\sum 1/n^{1{,}001}$ liegt für jedes einzelne Glied ein kaum messbarer Unterschied, im Summenverhalten aber der zwischen unendlich und endlich.\n>\n> Der Nachweis gelingt am elegantesten über das **Integralkriterium**: Das uneigentliche Integral $\\int_1^\\infty x^{-p}\\,dx$ konvergiert genau für $p>1$, weil dort die Stammfunktion $\\frac{x^{1-p}}{1-p}$ für $x\\to\\infty$ gegen null geht. Für $p=1$ ist die Stammfunktion $\\ln x$, die unbeschränkt wächst."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Einzelfälle",
+          "blocks": [
+            {
+              "md": "| $p$ | Reihe | Verhalten |\n|---|---|---|\n| $\\tfrac{1}{2}$ | $\\sum \\frac{1}{\\sqrt{n}}$ | divergent |\n| $1$ | $\\sum \\frac{1}{n}$ | divergent |\n| $2$ | $\\sum \\frac{1}{n^2}$ | konvergent, Wert $\\frac{\\pi^2}{6}$ |\n| $3$ | $\\sum \\frac{1}{n^3}$ | konvergent |\n\n> [!info] Das Basler Problem\n> Dass $\\sum 1/n^2 = \\pi^2/6$ ist, wurde 1735 von Euler gefunden und gilt als eines der überraschendsten Ergebnisse der Analysis -- die Kreiszahl tritt in einer Summe auf, in der weder Kreise noch Winkel vorkommen.\n>\n> Für die Prüfung ist der Wert nicht zu behalten. Bemerkenswert ist die allgemeine Lage: Von den p-Reihen kennt man geschlossene Summenwerte nur für **gerade** $p$. Der Wert von $\\sum 1/n^3$ ist bis heute nicht in geschlossener Form bekannt. Konvergenz nachzuweisen und den Grenzwert zu bestimmen sind grundverschiedene Aufgaben -- die erste ist meist leicht, die zweite oft unmöglich."
+            }
+          ]
+        },
+        {
+          "title": "Die Rolle als Vergleichsmaßstab",
+          "blocks": [
+            {
+              "md": "> [!tip] Die p-Reihe ist die Skala, an der alles andere gemessen wird\n> Ihre Bedeutung liegt weniger in ihr selbst als in ihrer Verwendung. Bei den **Vergleichskriterien** und beim **Grenzwertvergleichskriterium** ist sie in praktisch jedem Fall die herangezogene Vergleichsreihe.\n>\n> Deshalb genügt es, eine einzige Frage zu beantworten: Wie schnell fallen die Glieder im Vergleich zu $1/n^p$? Bei rationalen Ausdrücken ist $p$ der Gradunterschied, bei Wurzelausdrücken entsprechend gebrochen.\n>\n> Terme mit Logarithmus verschieben die Grenze nur unwesentlich: $\\sum \\frac{1}{n\\ln n}$ divergiert noch, $\\sum \\frac{1}{n(\\ln n)^2}$ konvergiert bereits. Der Logarithmus wirkt schwächer als jede noch so kleine Potenz -- ein weiterer Beleg für die Wachstumsrangfolge."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die p-Reihe ist der Maßstab aller Vergleichskriterien und wird über das **Integralkriterium** bewiesen. Ihr Grenzfall $p=1$ ist die harmonische Reihe aus **Reihen und Partialsummen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Geometrisch",
+      "md": "Berechne $\\displaystyle\\sum_{k=0}^{\\infty} 3 \\cdot \\left(\\tfrac14\\right)^k$.",
+      "answer": 4,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\tfrac{3}{1 - \\tfrac14} = 4$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Teleskop",
+      "md": "Berechne $\\displaystyle\\sum_{k=1}^{\\infty} \\frac{1}{k(k + 1)}$.",
+      "answer": 1,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "Teleskop: $1 - \\tfrac{1}{n + 1} \\to 1$.",
+      "id": "vq2"
+    },
+    {
       "type": "truefalse",
       "md": "Wenn $a_k \\to 0$, konvergiert $\\sum a_k$.",
       "answer": false,
@@ -100,12 +399,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "geomreihe"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "reihenkriterium"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Reihe = Folge der Partialsummen.",
         "Geometrisch: 1/(1 − q) für |q| < 1.",
-        "Glieder → 0 nötig, nicht hinreichend; p-Reihe konvergent für p > 1."
+        "Glieder → 0 nötig, nicht hinreichend; p-Reihe konvergent für p > 1.",
+        "Reihe = Folge der Partialsummen; Glieder → 0 ist nur notwendig."
       ],
       "id": "summary"
     }

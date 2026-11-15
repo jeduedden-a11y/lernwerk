@@ -4,8 +4,14 @@
   "subtitle": "Vorhersagen, was eine Stichprobe zeigen wird",
   "source": "KCGO Mathematik Hessen, Q3.4",
   "vault": [
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Prognoseintervalle.md", "title": "Prognoseintervalle" },
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md", "title": "Binomialverteilung" }
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Prognoseintervalle.md",
+      "title": "Prognoseintervalle"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    }
   ],
   "steps": [
     {
@@ -13,12 +19,46 @@
       "type": "anim",
       "md": "Ein Anteil $p = 0{,}4$ ist bekannt, etwa der Anteil einer Partei bei der letzten Wahl. Was zeigen Stichproben von je 100 Personen?",
       "widget": "intervals",
-      "params": { "mode": "prognose", "p": 0.4, "n": 100, "sizes": [100, 400, 1000] },
+      "params": {
+        "mode": "prognose",
+        "p": 0.4,
+        "n": 100,
+        "sizes": [
+          100,
+          400,
+          1000
+        ]
+      },
       "timeline": [
-        { "caption": "Eine Stichprobe: Die relative Häufigkeit $h$ liegt nahe bei $0{,}4$, aber nicht genau darauf.", "do": { "sample": 1 } },
-        { "caption": "Zwanzig Stichproben: Jede Zeile eine. Die Werte streuen um $p$.", "do": { "sample": 19 } },
-        { "caption": "Der helle Streifen ist das **Prognoseintervall** $p \\pm 1{,}96\\sqrt{\\tfrac{p(1-p)}{n}}$. Etwa $95\\,\\%$ der Stichproben landen darin, die roten Punkte sind die Ausnahmen.", "do": { "sample": 80 }, "hold": 5200 },
-        { "caption": "Mit viermal so großen Stichproben ($n = 400$) wird der Streifen halb so breit: Die Breite schrumpft wie $\\tfrac{1}{\\sqrt n}$.", "set": { "n": 400 }, "do": { "sample": 60 }, "hold": 5000 }
+        {
+          "caption": "Eine Stichprobe: Die relative Häufigkeit $h$ liegt nahe bei $0{,}4$, aber nicht genau darauf.",
+          "do": {
+            "sample": 1
+          }
+        },
+        {
+          "caption": "Zwanzig Stichproben: Jede Zeile eine. Die Werte streuen um $p$.",
+          "do": {
+            "sample": 19
+          }
+        },
+        {
+          "caption": "Der helle Streifen ist das **Prognoseintervall** $p \\pm 1{,}96\\sqrt{\\tfrac{p(1-p)}{n}}$. Etwa $95\\,\\%$ der Stichproben landen darin, die roten Punkte sind die Ausnahmen.",
+          "do": {
+            "sample": 80
+          },
+          "hold": 5200
+        },
+        {
+          "caption": "Mit viermal so großen Stichproben ($n = 400$) wird der Streifen halb so breit: Die Breite schrumpft wie $\\tfrac{1}{\\sqrt n}$.",
+          "set": {
+            "n": 400
+          },
+          "do": {
+            "sample": 60
+          },
+          "hold": 5000
+        }
       ]
     },
     {
@@ -32,7 +72,177 @@
       "label": "Ansehen",
       "md": "$B(100; 0{,}4)$: Der helle Streifen ist $\\mu \\pm \\sigma$. Schiebe $k$ und wähle $P(X \\le k)$, um Flächen zu vergleichen.",
       "widget": "galton",
-      "params": { "modes": ["histogram"], "n": 100, "p": 0.4, "k": 45, "rel": "le", "nMax": 200 }
+      "params": {
+        "modes": [
+          "histogram"
+        ],
+        "n": 100,
+        "p": 0.4,
+        "k": 45,
+        "rel": "le",
+        "nMax": 200
+      }
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Prognoseintervalle",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Prognoseintervalle.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Teil der Sammlung **Stochastik MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Ist die Trefferwahrscheinlichkeit $p$ bekannt, sagt ein **Prognoseintervall** voraus, in welchem Bereich die Trefferzahl $X$ (oder die relative Häufigkeit $h = \\frac{X}{n}$) bei $n$ Versuchen mit hoher Wahrscheinlichkeit liegen wird."
+            }
+          ]
+        },
+        {
+          "title": "Sigma-Regeln",
+          "blocks": [
+            {
+              "md": "Für $X \\sim B(n, p)$ mit $\\mu = np$ und $\\sigma = \\sqrt{np(1 - p)}$ gilt näherungsweise, wenn $\\sigma > 3$ (Laplace-Bedingung):\n\n| Intervall | Wahrscheinlichkeit |\n|---|---|\n| $[\\mu - \\sigma;\\ \\mu + \\sigma]$ | etwa $68{,}3\\,\\%$ |\n| $[\\mu - 2\\sigma;\\ \\mu + 2\\sigma]$ | etwa $95{,}4\\,\\%$ |\n| $[\\mu - 3\\sigma;\\ \\mu + 3\\sigma]$ | etwa $99{,}7\\,\\%$ |\n| $[\\mu - 1{,}96\\sigma;\\ \\mu + 1{,}96\\sigma]$ | etwa $95\\,\\%$ |\n| $[\\mu - 2{,}58\\sigma;\\ \\mu + 2{,}58\\sigma]$ | etwa $99\\,\\%$ |\n\nFür die relative Häufigkeit teilt man durch $n$: $h$ liegt mit etwa $95\\,\\%$ in $\\left[p - 1{,}96\\sqrt{\\tfrac{p(1-p)}{n}};\\ p + 1{,}96\\sqrt{\\tfrac{p(1-p)}{n}}\\right]$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Eine faire Münze wird $400$-mal geworfen: $\\mu = 200$, $\\sigma = 10$. Mit etwa $95\\,\\%$ liegt die Zahl der Köpfe zwischen $180{,}4$ und $219{,}6$, also zwischen $181$ und $219$; die relative Häufigkeit zwischen $0{,}451$ und $0{,}549$."
+            }
+          ]
+        },
+        {
+          "title": "Das Wurzel-n-Gesetz",
+          "blocks": [
+            {
+              "md": "Die Breite des Intervalls für $h$ schrumpft wie $\\frac{1}{\\sqrt n}$: Für halbe Breite braucht man viermal so viele Versuche."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung",
+          "blocks": [
+            {
+              "md": "Prognose: $p$ ist bekannt, $h$ wird vorhergesagt. **Konfidenzintervall**: $h$ ist beobachtet, $p$ wird geschätzt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Binomialverteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ist $X$ die Anzahl der Treffer in einer **Bernoulli-Kette** der Länge $n$ mit Trefferwahrscheinlichkeit $p$, so heißt $X$ **binomialverteilt** mit den Parametern $n$ und $p$, kurz $X \\sim B(n;p)$."
+            }
+          ]
+        },
+        {
+          "title": "Wahrscheinlichkeitsfunktion",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = \\binom{n}{k}\\,p^k\\,(1-p)^{n-k}, \\qquad k=0,1,\\dots,n$$"
+            }
+          ]
+        },
+        {
+          "title": "Kenngrößen",
+          "blocks": [
+            {
+              "md": "$$E(X) = n\\cdot p \\qquad \\mathrm{Var}(X) = n\\cdot p\\cdot(1-p) \\qquad \\sigma(X) = \\sqrt{n\\cdot p\\cdot(1-p)}$$\n(siehe **Zufallsgröße und Erwartungswert**, **Varianz und Standardabweichung (Stochastik)**)"
+            }
+          ]
+        },
+        {
+          "title": "Kumulierte Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Für Aussagen wie \"**höchstens** $k$ Treffer\" oder \"**mindestens** $k$ Treffer\" wird die **Verteilungsfunktion** benötigt:\n$$P(X\\le k) = \\sum_{i=0}^k \\binom{n}{i}p^i(1-p)^{n-i}$$\nIn der Praxis (und im Abitur) wird diese meist einer **Tabelle der kumulierten Binomialverteilung** entnommen oder mit dem GTR/CAS berechnet, nicht von Hand aufsummiert."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$X \\sim B(20;\\,0{,}3)$ (20 Versuche, Trefferwahrscheinlichkeit 30 %). Erwartungswert $E(X)=6$, Standardabweichung $\\sigma(X)=\\sqrt{20\\cdot0{,}3\\cdot0{,}7}=\\sqrt{4{,}2}\\approx2{,}05$.\n$$P(X=5) = \\binom{20}{5}\\cdot0{,}3^5\\cdot0{,}7^{15} \\approx 0{,}1789$$"
+            }
+          ]
+        },
+        {
+          "title": "Symmetrie und Form",
+          "blocks": [
+            {
+              "md": "Die Verteilung ist **symmetrisch** genau für $p=0{,}5$; für $p<0{,}5$ ist sie linkssteil (rechtsschief), für $p>0{,}5$ rechtssteil. Für großes $n$ nähert sich die Form der **Normalverteilung** an (Näherungsformel von de Moivre-Laplace)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $P(X=k)$ (genau $k$) mit $P(X\\le k)$ (höchstens $k$) verwechseln.\n- \"Mindestens $k$\" als $1-P(X\\le k)$ statt korrekt $1-P(X\\le k-1)$ berechnen (Off-by-one-Fehler).\n- Parameter $n$ und $p$ vertauschen.\n\nGrundlage für **Hypothesentests (Binomialverteilung)** und **Konfidenzintervalle**."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb der Binomialkoeffizient auftritt",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = \\binom{n}{k}\\,p^k\\,(1-p)^{n-k}$$\n\n> [!important] Die drei Faktoren beantworten drei verschiedene Fragen\n> | Faktor | beantwortet |\n> |---|---|\n> | $p^k$ | Wie wahrscheinlich sind $k$ Treffer an **festen** Stellen? |\n> | $(1-p)^{n-k}$ | Wie wahrscheinlich sind die übrigen Nieten? |\n> | $\\binom{n}{k}$ | Auf **wie viele Arten** lassen sich die Treffer verteilen? |\n>\n> Der Binomialkoeffizient ist also kein Rechentrick, sondern zählt die **Pfade** im Baumdiagramm, die zu genau $k$ Treffern führen. Alle diese Pfade haben dieselbe Wahrscheinlichkeit -- deshalb genügt es, sie zu zählen und zu multiplizieren.\n>\n> Wer ihn vergisst, berechnet die Wahrscheinlichkeit **einer bestimmten Reihenfolge** statt der von $k$ Treffern insgesamt. Das ist der häufigste Fehler bei Binomialaufgaben."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen prüfen",
+          "blocks": [
+            {
+              "md": "| Bedingung | bedeutet |\n|---|---|\n| **zwei** Ausgänge | Treffer oder Niete |\n| $p$ **konstant** | ändert sich nicht von Versuch zu Versuch |\n| Versuche **unabhängig** | Ergebnisse beeinflussen einander nicht |\n| $n$ **fest** | vorab bestimmt |\n\n> [!warning] Ziehen ohne Zurücklegen ist nicht binomialverteilt\n> Dabei ändert sich $p$ mit jedem Zug -- die zweite Bedingung ist verletzt. Korrekt wäre die hypergeometrische Verteilung.\n>\n> Als **Näherung** ist die Binomialverteilung dennoch brauchbar, wenn die Stichprobe klein gegen die Grundgesamtheit ist -- Faustregel: höchstens 5 Prozent. Bei einer Umfrage unter 1000 von 60 Millionen Wahlberechtigten ist der Unterschied belanglos, beim Ziehen von 3 aus 10 Kugeln nicht.\n>\n> Die Prüfung der Voraussetzungen gehört zur Lösung. Wer sie überspringt, wendet die Formel unter Umständen auf einen Fall an, für den sie nicht gilt."
+            }
+          ]
+        },
+        {
+          "title": "Die Gestalt der Verteilung",
+          "blocks": [
+            {
+              "md": "| $p$ | Form |\n|---|---|\n| $p = 0{,}5$ | **symmetrisch** |\n| $p < 0{,}5$ | linkssteil, rechtsschief |\n| $p > 0{,}5$ | rechtssteil, linksschief |\n| $n$ groß | nähert sich der **Glockenform** |\n\n> [!tip] Der wahrscheinlichste Wert liegt bei np\n> Der Erwartungswert $E(X) = np$ ist zugleich näherungsweise der Modalwert -- der Wert mit der größten Einzelwahrscheinlichkeit.\n>\n> Das ist eine nützliche **Plausibilitätskontrolle**: Ein Ergebnis, das weit von $np$ entfernt eine hohe Wahrscheinlichkeit ergibt, enthält meist einen Rechenfehler.\n>\n> Für großes $n$ lässt sich die Binomial- durch die **Normalverteilung** annähern. Die Faustregel dafür lautet $\\sigma > 3$, also $np(1-p) > 9$."
+            }
+          ]
+        },
+        {
+          "title": "Mindestens, höchstens, genau",
+          "blocks": [
+            {
+              "md": "> [!warning] Die Formulierung entscheidet über den Ansatz\n> | Formulierung | Ansatz |\n> |---|---|\n> | genau $k$ | $P(X=k)$ |\n> | höchstens $k$ | $P(X \\le k)$ -- direkt aus der Tabelle |\n> | weniger als $k$ | $P(X \\le k-1)$ |\n> | **mindestens** $k$ | $1 - P(X \\le k-1)$ |\n> | mehr als $k$ | $1 - P(X \\le k)$ |\n>\n> Die dritte und vierte Zeile enthalten die häufigste Fehlerquelle: Bei \"mindestens $k$\" ist $k$ **eingeschlossen**, das Gegenereignis reicht also nur bis $k-1$.\n>\n> Wer hier um eins danebenliegt, erhält ein plausibel aussehendes, aber falsches Ergebnis. Eine Kontrolle über den Erwartungswert deckt das oft auf."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Binomialverteilung baut auf der **Bernoulli-Kette** auf und ist die Grundlage der **Hypothesentests** und **Konfidenzintervalle**. Für großes $n$ geht sie in die **Normalverteilung** über."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "intervall",
@@ -40,8 +250,20 @@
       "label": "Rechnen",
       "md": "$n = 100$, $p = 0{,}4$. Gib das $95\\,\\%$-Prognoseintervall für die **Trefferzahl** an, $\\mu \\pm 1{,}96\\sigma$ (eine Nachkommastelle).\n\nvon {{0}} bis {{1}}",
       "blanks": [
-        { "accept": [30.4], "numeric": true, "tolerance": 0.051 },
-        { "accept": [49.6], "numeric": true, "tolerance": 0.051 }
+        {
+          "accept": [
+            30.4
+          ],
+          "numeric": true,
+          "tolerance": 0.051
+        },
+        {
+          "accept": [
+            49.6
+          ],
+          "numeric": true,
+          "tolerance": 0.051
+        }
       ],
       "hint": "$\\mu = 40$, $\\sigma = \\sqrt{100 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{24}$.",
       "explain": "$\\sigma = \\sqrt{24} \\approx 4{,}899$, $1{,}96\\sigma \\approx 9{,}60$, also $[30{,}4;\\ 49{,}6]$. Ganzzahlig: Mit etwa $95\\,\\%$ Wahrscheinlichkeit liegt die Trefferzahl zwischen $31$ und $49$."
@@ -52,11 +274,28 @@
       "label": "Ausprobieren",
       "md": "**Wähle eine Stichprobengröße, bei der das 95-%-Prognoseintervall für die relative Häufigkeit schmaler ist als $\\pm 0{,}05$.** Ziehe dann einige Stichproben zur Kontrolle.",
       "widget": "intervals",
-      "params": { "mode": "prognose", "p": 0.4, "n": 25, "sizes": [25, 100, 400, 1000] },
+      "params": {
+        "mode": "prognose",
+        "p": 0.4,
+        "n": 25,
+        "sizes": [
+          25,
+          100,
+          400,
+          1000
+        ]
+      },
       "goal": {
         "when": "1.96*sqrt(p*(1-p)/n) < 0.05",
-        "hints": [{ "when": "1.96*sqrt(p*(1-p)/n) >= 0.05", "text": "Bei n = {n|0} ist die halbe Breite {1.96*sqrt(p*(1-p)/n)|3}. Größeres n." }],
-        "solve": { "n": 400 },
+        "hints": [
+          {
+            "when": "1.96*sqrt(p*(1-p)/n) >= 0.05",
+            "text": "Bei n = {n|0} ist die halbe Breite {1.96*sqrt(p*(1-p)/n)|3}. Größeres n."
+          }
+        ],
+        "solve": {
+          "n": 400
+        },
         "allowUntouched": false
       },
       "explain": "Ab $n \\approx 369$ ist $1{,}96\\sqrt{\\tfrac{0{,}24}{n}} < 0{,}05$. Bei $n = 400$ ist die halbe Breite $0{,}048$. Genauigkeit wird teuer: Für die halbe Breite braucht man die vierfache Stichprobe."
@@ -66,15 +305,42 @@
       "type": "choice",
       "md": "In der letzten Wahl kam eine Partei auf $40\\,\\%$. In einer Umfrage mit $n = 400$ sind es nur $33\\,\\%$. Was ist die beste Einschätzung?",
       "options": [
-        { "md": "$0{,}33$ liegt außerhalb von $0{,}4 \\pm 0{,}048$, die Partei hat vermutlich wirklich verloren.", "correct": true },
-        { "md": "Das ist normale Schwankung, Umfragen schwanken immer.", "why": "Schwankung ja, aber typischerweise nur um etwa $\\pm 0{,}05$ bei $n = 400$. $7$ Prozentpunkte sind deutlich mehr." },
-        { "md": "Die Umfrage ist falsch, weil sie nicht $40\\,\\%$ ergibt.", "why": "Eine Stichprobe trifft $p$ fast nie genau. Die Frage ist nur, ob die Abweichung im erwartbaren Rahmen bleibt." }
+        {
+          "md": "$0{,}33$ liegt außerhalb von $0{,}4 \\pm 0{,}048$, die Partei hat vermutlich wirklich verloren.",
+          "correct": true
+        },
+        {
+          "md": "Das ist normale Schwankung, Umfragen schwanken immer.",
+          "why": "Schwankung ja, aber typischerweise nur um etwa $\\pm 0{,}05$ bei $n = 400$. $7$ Prozentpunkte sind deutlich mehr."
+        },
+        {
+          "md": "Die Umfrage ist falsch, weil sie nicht $40\\,\\%$ ergibt.",
+          "why": "Eine Stichprobe trifft $p$ fast nie genau. Die Frage ist nur, ob die Abweichung im erwartbaren Rahmen bleibt."
+        }
       ],
       "explain": "Liegt ein Ergebnis außerhalb des Prognoseintervalls, ist es unter der Annahme $p = 0{,}4$ ungewöhnlich. Das ist genau der Gedanke hinter dem Hypothesentest, nur mit einem symmetrischen Bereich."
     },
-    { "id": "neu1", "type": "gen", "gen": "stoch-prognose", "level": 1, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "stoch-prognose", "level": 2, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "stoch-prognose", "level": 3, "label": "Neue Werte" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-prognose",
+      "level": 1,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-prognose",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-prognose",
+      "level": 3,
+      "label": "Neue Werte"
+    },
     {
       "id": "summary",
       "type": "summary",

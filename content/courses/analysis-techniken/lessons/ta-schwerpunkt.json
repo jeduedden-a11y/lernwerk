@@ -15,6 +15,140 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Balance",
+      "md": "**Der Schwerpunkt als Balancepunkt:** die Fläche unter $f(x) = x$ auf $[0; 3]$. Eine senkrechte Achse wandert; das Drehmoment ist null, wenn sie durch den Schwerpunkt geht.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.2,
+          3.3
+        ],
+        "y": [
+          -0.2,
+          3.3
+        ],
+        "grid": true,
+        "height": 356,
+        "vars": [
+          {
+            "name": "CC",
+            "min": 0.5,
+            "max": 2.8,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x",
+            "color": "blue",
+            "domain": [
+              0,
+              3
+            ]
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": 3,
+            "color": "blue"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "CC",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 2,
+            "y": 1,
+            "color": "accent",
+            "label": "S"
+          }
+        ],
+        "readout": "Achse bei x = {CC|2} · Drehmoment {9 - 4.5*CC|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Achse bei 1: Die rechte Seite überwiegt.",
+          "set": {
+            "CC": 1
+          }
+        },
+        {
+          "caption": "Achse bei 2: Gleichgewicht, x̄ = 2.",
+          "to": {
+            "CC": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Achse bei 2,6: Jetzt überwiegt die linke Seite.",
+          "to": {
+            "CC": 2.6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Der **Schwerpunkt** einer Fläche unter $f$ ist ein gewichteter Mittelwert: $\\bar x = \\dfrac{\\int_a^b x f(x)\\,dx}{\\int_a^b f(x)\\,dx}$, $\\bar y = \\dfrac{\\tfrac12\\int_a^b f(x)^2\\,dx}{\\int_a^b f(x)\\,dx}$.",
+      "label": "Schwerpunkt",
+      "more": "**Bedeutung:** An der Stelle $\\bar x$ ist das Drehmoment $\\int (x - \\bar x) f(x)\\,dx$ null; dort lässt sich die Fläche balancieren.\n\n**Symmetrie:** Bei symmetrischen Flächen liegt der Schwerpunkt auf der Symmetrieachse.\n\n**Masse mit Dichte:** Für einen Stab mit Dichte $\\rho(x)$: Masse $\\int \\rho\\,dx$, Schwerpunkt $\\tfrac{\\int x\\rho\\,dx}{\\int \\rho\\,dx}$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Masse und Schwerpunkt",
+      "path": "02 Wiki/Mathematik/06 Anwendungen der Integration/Masse und Schwerpunkt.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Masse eines dünnen Stabes",
+          "blocks": [
+            {
+              "md": "Für linearer Dichte $\\rho(x)$ auf $[a,b]$:\n$$m = \\int_a^b \\rho(x)\\,dx$$"
+            }
+          ]
+        },
+        {
+          "title": "Schwerpunkt",
+          "blocks": [
+            {
+              "md": "$$\\bar{x} = \\frac{1}{m}\\int_a^b x\\,\\rho(x)\\,dx$$"
+            }
+          ]
+        },
+        {
+          "title": "Erweiterung auf Flächen (Ausblick)",
+          "blocks": [
+            {
+              "md": "Für eine dünne Platte (Lamina) mit Dichte $\\rho$ über einer Region $R$:\n$$m = \\iint_R \\rho(x,y)\\,dA$$\nDies führt natürlich zu Doppelintegralen — ein Ausblick auf höherdimensionale Integration."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Schwerpunkt",
+      "md": "Wo liegt der Schwerpunkt $\\bar x$ der Fläche unter $f(x) = x^2$ auf $[0; 2]$?",
+      "answer": 1.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\tfrac{\\int_0^2 x^3\\,dx}{\\int_0^2 x^2\\,dx} = \\tfrac{4}{8/3} = 1{,}5$.",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Wo liegt der Schwerpunkt ($\\bar x$) der Fläche unter $f(x) = x$ auf $[0; 3]$?",
@@ -37,7 +171,8 @@
       "points": [
         "x̄ = ∫ x f dx / ∫ f dx.",
         "Stab: Masse ∫ ρ dx.",
-        "Symmetrie nutzen."
+        "Symmetrie nutzen.",
+        "Schwerpunkt = gewichteter Mittelwert; Drehmoment null."
       ],
       "id": "summary"
     }

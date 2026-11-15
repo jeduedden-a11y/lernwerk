@@ -23,6 +23,315 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Welches Kriterium wann?** Der Entscheidungsbaum aus dem Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Konvergenzkriterien Entscheidungsbaum.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Eine Reihe ist gegeben; der Baum führt zum passenden Test.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Schritt 1, immer zuerst: Gehen die Glieder gegen 0? Wenn nicht, divergiert die Reihe.",
+          "to": {
+            "x": 0.4,
+            "y": 0.3,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Schritt 2: Wie sind die Glieder gebaut? Fakultäten und Potenzen führen zum Quotientenkriterium.",
+          "to": {
+            "x": 0.2,
+            "y": 0.62,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Brüche aus Polynomen vergleicht man mit einer p-Reihe.",
+          "to": {
+            "x": 0.5,
+            "y": 0.62,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Wechselnde Vorzeichen: Leibniz.",
+          "to": {
+            "x": 0.33,
+            "y": 0.84,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Vergleich:** Liegt $0 \\leq a_k \\leq b_k$ und konvergiert $\\sum b_k$, dann auch $\\sum a_k$. **Grenzwertvergleich:** Ist $\\tfrac{a_k}{b_k} \\to c > 0$, verhalten sich beide Reihen gleich. **Integralkriterium:** $\\sum f(k)$ und $\\int_1^\\infty f(x)\\,dx$ konvergieren gemeinsam.",
+      "label": "Kriterien",
+      "more": "**Majorante und Minorante:** Eine konvergente größere Reihe zieht die kleinere mit; eine divergente kleinere zieht die größere mit.\n\n**Grenzwertvergleich mit p-Reihen:** Bei Brüchen aus Polynomen vergleicht man mit $\\tfrac{1}{k^p}$, wobei $p$ der Gradunterschied von Nenner und Zähler ist.\n\n**Integralkriterium** für positive, monoton fallende $f$; daraus folgt die Regel für p-Reihen.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vergleichskriterien (Direkter Vergleich)",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Vergleichskriterien (Direkter Vergleich).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Satz (Direktes Vergleichskriterium)",
+          "blocks": [
+            {
+              "md": "Seien $0\\leq a_n\\leq b_n$ für alle hinreichend großen $n$:\n- Konvergiert $\\sum b_n$, dann konvergiert auch $\\sum a_n$.\n- Divergiert $\\sum a_n$, dann divergiert auch $\\sum b_n$."
+            }
+          ]
+        },
+        {
+          "title": "Intuition",
+          "blocks": [
+            {
+              "md": "Hat die **größere** Reihe endliche Summe, muss die kleinere es auch haben. Häuft die **kleinere** Reihe bereits unendlich viel an, tut die größere es erst recht."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^\\infty \\frac{1}{2^n+n}: \\quad 2^n+n>2^n \\Rightarrow \\frac{1}{2^n+n}<\\frac{1}{2^n}$$\n$\\sum\\frac1{2^n}$ ist eine konvergente geometrische Reihe → die Ausgangsreihe **konvergiert**."
+            }
+          ]
+        },
+        {
+          "title": "Häufiger Fehler",
+          "blocks": [
+            {
+              "md": "Die Ungleichung muss in die **richtige Richtung** zeigen: Um Konvergenz zu zeigen, braucht man $a_n\\leq b_n$ mit konvergentem $\\sum b_n$ — nicht umgekehrt.\n\nWenn der direkte Vergleich unhandlich ist, hilft das **Grenzwertvergleichskriterium**. Beide nutzen bekannte Referenzreihen wie die **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Die Wahl des Kriteriums im Überblick",
+          "blocks": [
+            {
+              "image": "vault:Konvergenzkriterien Entscheidungsbaum.svg"
+            }
+          ]
+        },
+        {
+          "title": "Majorante und Minorante",
+          "blocks": [
+            {
+              "md": "> [!important] Zwei Richtungen, die nicht vertauscht werden dürfen\n> | Voraussetzung | Schluss |\n> |---|---|\n> | $0 \\le a_n \\le b_n$ und $\\sum b_n$ **konvergiert** | $\\sum a_n$ konvergiert |\n> | $0 \\le b_n \\le a_n$ und $\\sum b_n$ **divergiert** | $\\sum a_n$ divergiert |\n>\n> Anschaulich: Eine konvergente **Majorante** drückt die Reihe von oben, eine divergente **Minorante** treibt sie von unten. Die jeweils andere Kombination sagt nichts -- eine divergente Majorante schließt nicht aus, dass die kleinere Reihe konvergiert.\n>\n> Diese Asymmetrie ist die häufigste Fehlerquelle. Wer eine Abschätzung nach oben findet und daraus auf Divergenz schließt, hat das Kriterium falsch herum angewandt.\n>\n> Beide Richtungen setzen **nichtnegative** Glieder voraus. Bei alternierenden Reihen ist das Kriterium erst auf die Beträge anwendbar -- was auf die absolute Konvergenz führt."
+            }
+          ]
+        },
+        {
+          "title": "Die Standardvergleichsreihen",
+          "blocks": [
+            {
+              "md": "| Vergleichsreihe | Verhalten |\n|---|---|\n| $\\sum q^n$ | konvergent für $|q|<1$ |\n| $\\sum \\frac{1}{n^p}$ | konvergent für $p>1$ |\n| $\\sum \\frac{1}{n}$ | divergent |\n\n> [!tip] Nur zwei Familien werden gebraucht\n> Praktisch jeder Vergleich läuft auf die geometrische Reihe oder die **p-Reihe** hinaus. Beide muss man sicher beherrschen -- alle übrigen Reihen werden auf sie zurückgeführt.\n>\n> Die Abschätzung selbst gelingt meist durch **Vergröbern** einzelner Terme: Im Nenner wird etwas weggelassen, um ihn kleiner und den Bruch größer zu machen; im Zähler umgekehrt. Etwa\n> $$\\frac{1}{n^2+n+1} \\le \\frac{1}{n^2}$$\n> Die Majorante konvergiert, also auch die Ausgangsreihe."
+            }
+          ]
+        },
+        {
+          "title": "Die Grenzen des direkten Vergleichs",
+          "blocks": [
+            {
+              "md": "> [!warning] Manche Abschätzungen sind nicht sauber zu führen\n> Bei $\\sum \\frac{1}{n^2-n}$ etwa ist $n^2-n < n^2$, der Bruch also **größer** als $1/n^2$ -- die naheliegende Abschätzung geht in die falsche Richtung. Man müsste $n^2-n \\ge \\tfrac{1}{2}n^2$ für $n\\ge 2$ nachweisen und käme mit dem Faktor 2 zum Ziel.\n>\n> Solche Kunstgriffe sind fehleranfällig und zeitraubend. Deshalb greift man in der Praxis zum **Grenzwertvergleichskriterium**, das die Abschätzung durch einen Grenzwert ersetzt und in derselben Lage ohne Umwege entscheidet.\n>\n> Ein weiterer Punkt: Der Vergleich muss nicht von Anfang an gelten. Es genügt, dass die Ungleichung **ab einem Index** erfüllt ist, da endlich viele Glieder das Konvergenzverhalten nicht beeinflussen. Diese Freiheit sollte in der Lösung ausdrücklich genutzt werden."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Vergleichskriterien setzen die **p-Reihe** als Maßstab voraus. Ihre praktisch handlichere Fassung ist das **Grenzwertvergleichskriterium**; für Glieder mit Potenzen und Fakultäten eignet sich das **Quotienten- und Wurzelkriterium**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Grenzwertvergleichskriterium",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Grenzwertvergleichskriterium.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Für $a_n>0$, $b_n>0$ mit $\\displaystyle L=\\lim_{n\\to\\infty}\\frac{a_n}{b_n}$:\n- $0<L<\\infty$: beide Reihen konvergieren oder divergieren gemeinsam.\n- $L=0$ und $\\sum b_n$ konvergiert $\\Rightarrow \\sum a_n$ konvergiert.\n- $L=\\infty$ und $\\sum b_n$ divergiert $\\Rightarrow \\sum a_n$ divergiert."
+            }
+          ]
+        },
+        {
+          "title": "Vergleichsreihe wählen — die Kernfertigkeit",
+          "blocks": [
+            {
+              "md": "Frage: Wie verhält sich $a_n$ für große $n$? Terme niedrigerer Ordnung streichen:\n$$\\frac{3n^2+1}{n^4-2} \\approx \\frac{3}{n^2}$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^\\infty \\frac{3n^2+1}{n^4-2}, \\quad b_n=\\frac1{n^2}: \\quad L=\\lim_{n\\to\\infty}\\frac{3n^2+1}{n^4-2}\\cdot n^2 = 3$$\n$L=3\\in(0,\\infty)$ und $\\sum\\frac1{n^2}$ konvergiert (**p-Reihe**, $p=2$) → die Reihe **konvergiert**."
+            }
+          ]
+        },
+        {
+          "title": "Vorteil gegenüber dem direkten Vergleich",
+          "blocks": [
+            {
+              "md": "Kein exaktes Ungleichheitszeichen nötig — nur das asymptotische Verhalten muss übereinstimmen. Ideal, wenn **direkter Vergleich** unhandlich wäre."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$\\lim_{n\\to\\infty}\\frac{a_n}{b_n} = c \\text{ mit } 0<c<\\infty \\;\\Longrightarrow\\; \\sum a_n \\text{ und } \\sum b_n \\text{ verhalten sich gleich}$$\n\n> [!important] Ein endlicher, von null verschiedener Grenzwert bedeutet gleiches Wachstum\n> Sind die Glieder für große $n$ im Wesentlichen proportional, so entscheiden beide Reihen gemeinsam über Konvergenz oder Divergenz. Der Proportionalitätsfaktor $c$ ist dabei gleichgültig -- ein konstanter Faktor ändert das Konvergenzverhalten nicht.\n>\n> Der Vorteil gegenüber dem direkten Vergleich liegt darin, dass keine Ungleichung konstruiert werden muss. Man rechnet einen Grenzwert aus, was mit den vertrauten Techniken gelingt.\n>\n> Die Randfälle sind schwächer: Bei $c=0$ folgt aus der Konvergenz von $\\sum b_n$ die von $\\sum a_n$, aber nichts umgekehrt. Bei $c=\\infty$ überträgt sich nur die Divergenz. Im Abitur genügt fast immer der Hauptfall."
+            }
+          ]
+        },
+        {
+          "title": "Das Verfahren bei rationalen Gliedern",
+          "blocks": [
+            {
+              "md": "> [!tip] Der Gradunterschied liefert die Vergleichsreihe\n> Bei einem Quotienten aus Polynomen bestimmt man $p$ als **Nennergrad minus Zählergrad** und vergleicht mit $\\sum 1/n^p$.\n>\n> | Reihe | $p$ | Verhalten |\n> |---|---|---|\n> | $\\sum \\frac{n+1}{n^3+2}$ | $2$ | konvergent |\n> | $\\sum \\frac{2n^2-1}{n^3+n}$ | $1$ | divergent |\n> | $\\sum \\frac{\\sqrt{n}}{n^2+1}$ | $1{,}5$ | konvergent |\n>\n> Die dritte Zeile zeigt, dass Wurzeln als gebrochene Grade zählen: $\\sqrt{n} = n^{0{,}5}$.\n>\n> Der Grenzwert selbst ist dann der Quotient der Leitkoeffizienten und stets endlich und positiv -- die Voraussetzung ist damit automatisch erfüllt. Man muss ihn ausrechnen und angeben, aber sein Wert spielt für das Ergebnis keine Rolle."
+            }
+          ]
+        },
+        {
+          "title": "Asymptotisches Denken",
+          "blocks": [
+            {
+              "md": "> [!info] Nur das Wachstum für große n zählt\n> Alle Summanden niedrigerer Ordnung sind belanglos: $\\frac{3n^2+17n-4}{n^5-n^2+1}$ verhält sich wie $\\frac{3}{n^3}$. Das ist derselbe Gedanke, der beim Grenzverhalten gebrochenrationaler Funktionen die Asymptote bestimmt.\n>\n> Bei nichtrationalen Ausdrücken hilft die bekannte Rangfolge des Wachstums:\n> $$\\ln n \\;\\ll\\; n^p \\;\\ll\\; q^n \\;\\ll\\; n! \\;\\ll\\; n^n$$\n> Logarithmen wachsen langsamer als jede Potenz, Potenzen langsamer als jede Exponentialfunktion, diese langsamer als die Fakultät. Diese Kette entscheidet die meisten Vergleichsfragen, bevor gerechnet wird.\n>\n> Ebenso nützlich sind die Näherungen $\\sin(1/n) \\approx 1/n$ und $\\ln(1+1/n) \\approx 1/n$ für große $n$ -- sie führen solche Reihen unmittelbar auf die harmonische Reihe zurück."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Grenzwertvergleichskriterium ist die praktische Fassung der **Vergleichskriterien** und stützt sich auf die **p-Reihe** als Maßstab."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Integralkriterium",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Integralkriterium.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Ist $f$ stetig, positiv und fallend auf $[1,\\infty)$ mit $a_n=f(n)$, dann:\n$$\\sum_{n=1}^{\\infty} a_n \\text{ konvergiert} \\iff \\int_1^{\\infty} f(x)\\,dx \\text{ konvergiert}$$"
+            }
+          ]
+        },
+        {
+          "title": "Intuition",
+          "blocks": [
+            {
+              "md": "Reihe und **uneigentliches Integral** schließen sich gegenseitig ein (Ober-/Untersumme) — ist eines endlich, ist es das andere auch."
+            }
+          ]
+        },
+        {
+          "title": "Wichtig",
+          "blocks": [
+            {
+              "md": "Das Kriterium liefert **nur** eine Konvergenzaussage — der Reihenwert selbst entspricht **nicht** dem Integralwert. Voraussetzungen (stetig, positiv, **fallend**) müssen erfüllt sein; bei oszillierenden Funktionen ist das Kriterium nicht anwendbar.\n\nBeweisgrundlage der **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$f \\text{ stetig, positiv, monoton fallend} \\;\\Longrightarrow\\; \\sum_{n=1}^\\infty f(n) \\text{ und } \\int_1^\\infty f(x)\\,dx \\text{ verhalten sich gleich}$$\n\n> [!important] Die Reihe ist eine Treppenfläche, das Integral die glatte Fläche darunter\n> Die Reihenglieder $f(n)$ lassen sich als Flächen von Rechtecken der Breite eins deuten. Weil $f$ monoton fällt, liegt die Treppe je nach Anordnung vollständig über oder unter der Kurve. Daraus ergeben sich zwei Abschätzungen, die Reihe und Integral gegenseitig einschließen:\n> $$\\int_1^{\\infty} f(x)\\,dx \\;\\le\\; \\sum_{n=1}^{\\infty} f(n) \\;\\le\\; f(1) + \\int_1^{\\infty} f(x)\\,dx$$\n> Ist das Integral endlich, so ist die Reihe nach oben beschränkt und konvergiert; ist es unendlich, treibt die untere Schranke die Reihe über jede Grenze.\n>\n> Das Kriterium ist damit im Kern nichts anderes als ein Vergleich -- nur mit einem Integral statt einer anderen Reihe. Es schlägt eine Brücke zwischen diskreter Summation und Integralrechnung, die in beide Richtungen nutzbar ist."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen",
+          "blocks": [
+            {
+              "md": "> [!warning] Alle drei Bedingungen sind zu prüfen und in der Lösung zu nennen\n> **Positiv** und **monoton fallend** müssen nicht von Anfang an gelten -- es genügt ab einem Index, weil endlich viele Glieder das Konvergenzverhalten nicht ändern. Die Monotonie ist dabei meist über die Ableitung nachzuweisen und der Schritt, der am häufigsten unterschlagen wird.\n>\n> Ohne Monotonie versagt das Kriterium: Die Treppenabschätzung setzt voraus, dass die Funktion zwischen zwei ganzzahligen Stellen nicht ausschlägt.\n>\n> Zu beachten ist außerdem, dass das Integral zwar über Konvergenz **entscheidet**, aber **nicht** den Summenwert liefert. Reihenwert und Integralwert unterscheiden sich; das Integral liefert lediglich Schranken."
+            }
+          ]
+        },
+        {
+          "title": "Der typische Anwendungsfall",
+          "blocks": [
+            {
+              "md": "> [!tip] Immer dann, wenn ein Logarithmus im Spiel ist\n> Bei Reihen wie $\\sum \\frac{1}{n\\ln n}$ versagen Quotienten- und Wurzelkriterium, weil sie den Grenzwert 1 liefern. Der Vergleich mit einer p-Reihe scheitert, weil der Logarithmus zwischen alle Potenzen fällt.\n>\n> Das Integral dagegen lässt sich durch Substitution $u=\\ln x$ sofort auswerten: $\\int \\frac{dx}{x\\ln x} = \\ln|\\ln x|$, was für $x\\to\\infty$ unbeschränkt wächst -- die Reihe divergiert.\n>\n> Bei $\\sum \\frac{1}{n(\\ln n)^2}$ ergibt dieselbe Substitution $-\\frac{1}{\\ln x}$, was gegen null strebt -- die Reihe konvergiert. Diese beiden Beispiele zeigen die Feinheit der Konvergenzgrenze und sind der eigentliche Grund, weshalb das Kriterium gebraucht wird.\n>\n> Sein zweiter Hauptzweck ist der Beweis der **p-Reihe** selbst -- die Grundlage aller Vergleichskriterien."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Integralkriterium verbindet **Reihen und Partialsummen** mit der Integralrechnung und liefert den Beweis für die **p-Reihe**. Es greift dort, wo das **Quotienten- und Wurzelkriterium** versagt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Mit welcher Reihe vergleicht man $\\sum \\dfrac{3k^2 + 1}{k^5 - k}$ am besten?",
+      "options": [
+        {
+          "md": "$\\sum \\dfrac{1}{k^3}$",
+          "correct": true
+        },
+        {
+          "md": "$\\sum \\dfrac{1}{k^2}$"
+        },
+        {
+          "md": "$\\sum \\dfrac{1}{k^5}$"
+        },
+        {
+          "md": "$\\sum \\dfrac1k$"
+        }
+      ],
+      "explain": "Gradunterschied 5 − 2 = 3; Grenzwertvergleich mit p = 3 > 1: konvergent.",
+      "label": "Vergleich",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Konvergiert $\\sum \\frac{1}{k^2 + 3k}$?",
       "options": [
@@ -66,12 +375,37 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "reihenkriterium"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "reihenkriterium"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Majorante konvergent ⇒ konvergent; Minorante divergent ⇒ divergent.",
         "Grenzwertvergleich: Quotient → c > 0.",
-        "Integralkriterium für fallende positive Glieder."
+        "Integralkriterium für fallende positive Glieder.",
+        "Vergleich mit p-Reihen über den Gradunterschied; Integralkriterium."
       ],
       "id": "summary"
     }

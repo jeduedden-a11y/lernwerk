@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vierfeldertafel",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Vierfeldertafel.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Zwei Merkmale werden gleichzeitig betrachtet, jedes mit genau zwei Ausprägungen. Erkennbar an Formulierungen wie *\"von den Befragten sind 60 % weiblich, davon rauchen 20 %\"*, *\"ein Test erkennt die Krankheit in 98 % der Fälle\"*, *\"wie viel Prozent der positiv Getesteten sind tatsächlich erkrankt?\"*\n\nOperatoren: **Stellen Sie eine Vierfeldertafel auf**, **Vervollständigen Sie**, **Bestimmen Sie die Wahrscheinlichkeit, dass ...**\n\nDie Vierfeldertafel ist die effizienteste Darstellung, wenn nach **umgekehrten** bedingten Wahrscheinlichkeiten gefragt wird -- sie ersetzt den Satz von Bayes durch reines Ablesen."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "md": "| | $B$ | $\\overline{B}$ | Summe |\n|---|---|---|---|\n| $A$ | $P(A \\cap B)$ | $P(A \\cap \\overline{B})$ | $P(A)$ |\n| $\\overline{A}$ | $P(\\overline{A} \\cap B)$ | $P(\\overline{A} \\cap \\overline{B})$ | $P(\\overline{A})$ |\n| **Summe** | $P(B)$ | $P(\\overline{B})$ | $1$ |\n\n> [!important] Im Inneren stehen Schnittwahrscheinlichkeiten, am Rand die Einzelwahrscheinlichkeiten\n> Die vier inneren Felder enthalten **immer** $P(\\cdot \\cap \\cdot)$, niemals bedingte Wahrscheinlichkeiten. Bedingte Wahrscheinlichkeiten stehen **nirgends** in der Tafel -- sie werden daraus berechnet.\n>\n> Genau hier liegt der Hauptfehler: Eine Angabe wie \"20 % der Frauen rauchen\" ist $P(R \\mid F) = 0{,}2$, **nicht** $P(R \\cap F)$. Sie muss erst umgerechnet werden."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Merkmale und Bezeichner festlegen.** $A$ und $\\overline{A}$ für das erste, $B$ und $\\overline{B}$ für das zweite Merkmal. Bezeichnungen aufschreiben, nicht im Kopf behalten.\n2. **Jede Angabe einordnen.** Für jeden Prozentwert entscheiden:\n   - \"X % **aller** sind ...\" → Randwert\n   - \"X % **der Y** sind ...\" → bedingte Wahrscheinlichkeit, muss umgerechnet werden\n   - \"X % sind **sowohl ... als auch** ...\" → inneres Feld\n3. **Bedingte Angaben umrechnen** über $P(A \\cap B) = P(B \\mid A) \\cdot P(A)$.\n4. **Tafel füllen**, dabei die Summenbedingungen nutzen: Jede Zeile und jede Spalte addiert sich zum jeweiligen Randwert, alles zusammen zu 1.\n5. **Gesuchte Größe bestimmen:**\n   - $P(A \\cap B)$ → direkt ablesen\n   - $P(A \\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$ → inneres Feld geteilt durch **Spalten**summe\n   - $P(B \\mid A) = \\dfrac{P(A \\cap B)}{P(A)}$ → inneres Feld geteilt durch **Zeilen**summe\n6. **Ergebnis im Sachkontext deuten.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Schnelltest erkennt eine Krankheit bei Erkrankten mit 96 % Wahrscheinlichkeit. Bei Gesunden schlägt er fälschlich in 3 % der Fälle an. In der Bevölkerung sind 2 % erkrankt. Wie wahrscheinlich ist es, dass eine positiv getestete Person tatsächlich krank ist?*\n\n**Schritt 1:** $K$ = krank, $T$ = Test positiv.\n\n**Schritt 2/3:** Gegeben sind\n- $P(K) = 0{,}02$ (Randwert)\n- $P(T \\mid K) = 0{,}96$ (bedingt) → $P(K \\cap T) = 0{,}96 \\cdot 0{,}02 = 0{,}0192$\n- $P(T \\mid \\overline{K}) = 0{,}03$ (bedingt) → $P(\\overline{K} \\cap T) = 0{,}03 \\cdot 0{,}98 = 0{,}0294$\n\n**Schritt 4:**\n\n| | $T$ | $\\overline{T}$ | Summe |\n|---|---|---|---|\n| $K$ | 0,0192 | 0,0008 | 0,02 |\n| $\\overline{K}$ | 0,0294 | 0,9506 | 0,98 |\n| **Summe** | 0,0486 | 0,9514 | 1 |\n\n**Schritt 5:** Gesucht ist $P(K \\mid T)$ -- inneres Feld geteilt durch Spaltensumme:\n$$P(K \\mid T) = \\frac{0{,}0192}{0{,}0486} \\approx 0{,}395$$\n\n**Schritt 6:** *Nur etwa 40 % der positiv Getesteten sind tatsächlich krank.*\n\n> [!warning] Dieses Ergebnis ist kein Rechenfehler\n> Der Test ist mit 96 % Trefferquote gut, trotzdem ist die Mehrheit der positiven Befunde falsch. Grund: Die Gruppe der Gesunden ist 49-mal größer, sodass selbst 3 % Fehlalarm dort mehr absolute Fälle erzeugen als 96 % Treffer bei den wenigen Kranken.\n>\n> Dieser Effekt (Basisratenfehler) ist ein Standardmotiv in Abituraufgaben -- und die Interpretation wird eigenständig bepunktet."
+            }
+          ]
+        },
+        {
+          "title": "Unabhängigkeit prüfen",
+          "blocks": [
+            {
+              "md": "Zwei Ereignisse sind **stochastisch unabhängig**, wenn gilt:\n$$P(A \\cap B) = P(A) \\cdot P(B)$$\n\nIn der Tafel: **Inneres Feld mit dem Produkt der beiden zugehörigen Randwerte vergleichen.** Im Beispiel: $0{,}0192$ gegen $0{,}02 \\cdot 0{,}0486 = 0{,}000972$ -- deutlich verschieden, also abhängig. Das war zu erwarten, denn ein Test, dessen Ergebnis unabhängig von der Krankheit wäre, wäre wertlos."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bedingte Angabe als Schnittwahrscheinlichkeit eintragen.** \"20 % der Frauen rauchen\" ist $P(R \\mid F)$, nicht $P(R \\cap F)$. Ohne Multiplikation mit $P(F)$ ist die ganze Tafel falsch.\n- **Bei $P(A \\mid B)$ durch den falschen Randwert teilen.** Die Bedingung steht **hinter** dem Strich und bestimmt den Nenner: bei $P(K \\mid T)$ wird durch $P(T)$ geteilt, also durch die Spaltensumme.\n- **$P(T \\mid K)$ und $P(K \\mid T)$ verwechseln.** Diese Werte unterscheiden sich im Beispiel um mehr als das Doppelte.\n- **Tafel mit absoluten Häufigkeiten und Wahrscheinlichkeiten mischen.** Entweder durchgehend Anzahlen (dann ist die Gesamtsumme $n$) oder durchgehend Wahrscheinlichkeiten (Gesamtsumme 1).\n- **Rundungsfehler in den Randsummen.** Bei Zwischenrundungen stimmen die Summen nicht mehr -- mit voller Genauigkeit rechnen, erst am Ende runden."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bedingte Wahrscheinlichkeit** · **Satz von Bayes** · **Stochastische Unabhängigkeit** · **Baumdiagramme** · **Vereinigung und Schnitt von Ereignissen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

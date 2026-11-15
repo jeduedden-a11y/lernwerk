@@ -4,7 +4,10 @@
   "subtitle": "Treffer zählen in einer Bernoulli-Kette",
   "source": "KCGO Mathematik Hessen, Q3.2",
   "vault": [
-    { "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md", "title": "Binomialverteilung" }
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    }
   ],
   "steps": [
     {
@@ -12,15 +15,67 @@
       "type": "anim",
       "md": "Viele kleine Zufallsentscheidungen nacheinander: Wie verteilt sich die Zahl der Treffer?",
       "widget": "galton",
-      "params": { "modes": ["board", "histogram"], "mode": "board", "rows": 6, "p": 0.5, "n": 6, "k": 3, "rel": "eq", "nMax": 40 },
+      "params": {
+        "modes": [
+          "board",
+          "histogram"
+        ],
+        "mode": "board",
+        "rows": 6,
+        "p": 0.5,
+        "n": 6,
+        "k": 3,
+        "rel": "eq",
+        "nMax": 40
+      },
       "timeline": [
-        { "caption": "Eine Kugel fällt durch 6 Reihen von Nägeln. An jedem Nagel geht sie zufällig nach links oder rechts, je mit Wahrscheinlichkeit $\\tfrac12$.", "do": { "drop": 1 }, "hold": 3200 },
-        { "caption": "Die Nummer des Fachs zählt, wie oft sie nach **rechts** ging. Sechs unabhängige Ja-Nein-Entscheidungen: eine **Bernoulli-Kette** der Länge 6.", "do": { "drop": 12 }, "hold": 4000 },
-        { "caption": "Mit vielen Kugeln entsteht ein Berg. In die Mitte führen viele Wege, an den Rand nur einer.", "do": { "drop": 150 }, "hold": 4200 },
-        { "caption": "Die gestrichelte Linie ist die Vorhersage der **Binomialverteilung** $B(6; 0{,}5)$: $P(X = k) = \\binom6k \\cdot 0{,}5^6$." },
-        { "caption": "Ohne Brett, nur die Verteilung: Jede Säule ist eine Wahrscheinlichkeit $P(X = k)$.", "do": { "mode": "histogram" } },
-        { "caption": "Ist die Trefferwahrscheinlichkeit kleiner, rückt der Berg nach links: hier $p = 0{,}2$.", "to": { "p": 0.2 }, "dur": 1800 },
-        { "caption": "Mit mehr Versuchen wird er breiter und immer glockenförmiger, hier $n = 30$. Der Erwartungswert ist $n \\cdot p$.", "to": { "n": 30 }, "int": ["n"], "dur": 2200 }
+        {
+          "caption": "Eine Kugel fällt durch 6 Reihen von Nägeln. An jedem Nagel geht sie zufällig nach links oder rechts, je mit Wahrscheinlichkeit $\\tfrac12$.",
+          "do": {
+            "drop": 1
+          },
+          "hold": 3200
+        },
+        {
+          "caption": "Die Nummer des Fachs zählt, wie oft sie nach **rechts** ging. Sechs unabhängige Ja-Nein-Entscheidungen: eine **Bernoulli-Kette** der Länge 6.",
+          "do": {
+            "drop": 12
+          },
+          "hold": 4000
+        },
+        {
+          "caption": "Mit vielen Kugeln entsteht ein Berg. In die Mitte führen viele Wege, an den Rand nur einer.",
+          "do": {
+            "drop": 150
+          },
+          "hold": 4200
+        },
+        {
+          "caption": "Die gestrichelte Linie ist die Vorhersage der **Binomialverteilung** $B(6; 0{,}5)$: $P(X = k) = \\binom6k \\cdot 0{,}5^6$."
+        },
+        {
+          "caption": "Ohne Brett, nur die Verteilung: Jede Säule ist eine Wahrscheinlichkeit $P(X = k)$.",
+          "do": {
+            "mode": "histogram"
+          }
+        },
+        {
+          "caption": "Ist die Trefferwahrscheinlichkeit kleiner, rückt der Berg nach links: hier $p = 0{,}2$.",
+          "to": {
+            "p": 0.2
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Mit mehr Versuchen wird er breiter und immer glockenförmiger, hier $n = 30$. Der Erwartungswert ist $n \\cdot p$.",
+          "to": {
+            "n": 30
+          },
+          "int": [
+            "n"
+          ],
+          "dur": 2200
+        }
       ]
     },
     {
@@ -34,22 +89,149 @@
       "label": "Simulieren",
       "md": "Im **Galtonbrett** prallt jede Kugel an 8 Nägeln ab, jedes Mal mit Wahrscheinlichkeit $\\tfrac12$ nach rechts. Die Nummer des Fachs zählt die Rechts-Abpraller, ist also $B(8; 0{,}5)$-verteilt. **Lass mindestens 200 Kugeln laufen.**",
       "widget": "galton",
-      "params": { "modes": ["board"], "rows": 8, "p": 0.5 },
+      "params": {
+        "modes": [
+          "board"
+        ],
+        "rows": 8,
+        "p": 0.5
+      },
       "goal": {
         "when": "balls >= 200",
-        "hints": [{ "when": "balls < 200", "text": "Erst {balls|0} Kugeln. Mit +100 geht es schneller." }],
-        "solve": { "balls": 200 }
+        "hints": [
+          {
+            "when": "balls < 200",
+            "text": "Erst {balls|0} Kugeln. Mit +100 geht es schneller."
+          }
+        ],
+        "solve": {
+          "balls": 200
+        }
       },
       "explain": "Die Fächer füllen sich immer ähnlicher der gestrichelten Kurve, der Binomialverteilung $B(8; 0{,}5)$. Die Mitte bei $4 = n \\cdot p$ ist am vollsten."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Binomialverteilung",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ist $X$ die Anzahl der Treffer in einer **Bernoulli-Kette** der Länge $n$ mit Trefferwahrscheinlichkeit $p$, so heißt $X$ **binomialverteilt** mit den Parametern $n$ und $p$, kurz $X \\sim B(n;p)$."
+            }
+          ]
+        },
+        {
+          "title": "Wahrscheinlichkeitsfunktion",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = \\binom{n}{k}\\,p^k\\,(1-p)^{n-k}, \\qquad k=0,1,\\dots,n$$"
+            }
+          ]
+        },
+        {
+          "title": "Kenngrößen",
+          "blocks": [
+            {
+              "md": "$$E(X) = n\\cdot p \\qquad \\mathrm{Var}(X) = n\\cdot p\\cdot(1-p) \\qquad \\sigma(X) = \\sqrt{n\\cdot p\\cdot(1-p)}$$\n(siehe **Zufallsgröße und Erwartungswert**, **Varianz und Standardabweichung (Stochastik)**)"
+            }
+          ]
+        },
+        {
+          "title": "Kumulierte Binomialverteilung",
+          "blocks": [
+            {
+              "md": "Für Aussagen wie \"**höchstens** $k$ Treffer\" oder \"**mindestens** $k$ Treffer\" wird die **Verteilungsfunktion** benötigt:\n$$P(X\\le k) = \\sum_{i=0}^k \\binom{n}{i}p^i(1-p)^{n-i}$$\nIn der Praxis (und im Abitur) wird diese meist einer **Tabelle der kumulierten Binomialverteilung** entnommen oder mit dem GTR/CAS berechnet, nicht von Hand aufsummiert."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$X \\sim B(20;\\,0{,}3)$ (20 Versuche, Trefferwahrscheinlichkeit 30 %). Erwartungswert $E(X)=6$, Standardabweichung $\\sigma(X)=\\sqrt{20\\cdot0{,}3\\cdot0{,}7}=\\sqrt{4{,}2}\\approx2{,}05$.\n$$P(X=5) = \\binom{20}{5}\\cdot0{,}3^5\\cdot0{,}7^{15} \\approx 0{,}1789$$"
+            }
+          ]
+        },
+        {
+          "title": "Symmetrie und Form",
+          "blocks": [
+            {
+              "md": "Die Verteilung ist **symmetrisch** genau für $p=0{,}5$; für $p<0{,}5$ ist sie linkssteil (rechtsschief), für $p>0{,}5$ rechtssteil. Für großes $n$ nähert sich die Form der **Normalverteilung** an (Näherungsformel von de Moivre-Laplace)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $P(X=k)$ (genau $k$) mit $P(X\\le k)$ (höchstens $k$) verwechseln.\n- \"Mindestens $k$\" als $1-P(X\\le k)$ statt korrekt $1-P(X\\le k-1)$ berechnen (Off-by-one-Fehler).\n- Parameter $n$ und $p$ vertauschen.\n\nGrundlage für **Hypothesentests (Binomialverteilung)** und **Konfidenzintervalle**."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb der Binomialkoeffizient auftritt",
+          "blocks": [
+            {
+              "md": "$$P(X=k) = \\binom{n}{k}\\,p^k\\,(1-p)^{n-k}$$\n\n> [!important] Die drei Faktoren beantworten drei verschiedene Fragen\n> | Faktor | beantwortet |\n> |---|---|\n> | $p^k$ | Wie wahrscheinlich sind $k$ Treffer an **festen** Stellen? |\n> | $(1-p)^{n-k}$ | Wie wahrscheinlich sind die übrigen Nieten? |\n> | $\\binom{n}{k}$ | Auf **wie viele Arten** lassen sich die Treffer verteilen? |\n>\n> Der Binomialkoeffizient ist also kein Rechentrick, sondern zählt die **Pfade** im Baumdiagramm, die zu genau $k$ Treffern führen. Alle diese Pfade haben dieselbe Wahrscheinlichkeit -- deshalb genügt es, sie zu zählen und zu multiplizieren.\n>\n> Wer ihn vergisst, berechnet die Wahrscheinlichkeit **einer bestimmten Reihenfolge** statt der von $k$ Treffern insgesamt. Das ist der häufigste Fehler bei Binomialaufgaben."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen prüfen",
+          "blocks": [
+            {
+              "md": "| Bedingung | bedeutet |\n|---|---|\n| **zwei** Ausgänge | Treffer oder Niete |\n| $p$ **konstant** | ändert sich nicht von Versuch zu Versuch |\n| Versuche **unabhängig** | Ergebnisse beeinflussen einander nicht |\n| $n$ **fest** | vorab bestimmt |\n\n> [!warning] Ziehen ohne Zurücklegen ist nicht binomialverteilt\n> Dabei ändert sich $p$ mit jedem Zug -- die zweite Bedingung ist verletzt. Korrekt wäre die hypergeometrische Verteilung.\n>\n> Als **Näherung** ist die Binomialverteilung dennoch brauchbar, wenn die Stichprobe klein gegen die Grundgesamtheit ist -- Faustregel: höchstens 5 Prozent. Bei einer Umfrage unter 1000 von 60 Millionen Wahlberechtigten ist der Unterschied belanglos, beim Ziehen von 3 aus 10 Kugeln nicht.\n>\n> Die Prüfung der Voraussetzungen gehört zur Lösung. Wer sie überspringt, wendet die Formel unter Umständen auf einen Fall an, für den sie nicht gilt."
+            }
+          ]
+        },
+        {
+          "title": "Die Gestalt der Verteilung",
+          "blocks": [
+            {
+              "md": "| $p$ | Form |\n|---|---|\n| $p = 0{,}5$ | **symmetrisch** |\n| $p < 0{,}5$ | linkssteil, rechtsschief |\n| $p > 0{,}5$ | rechtssteil, linksschief |\n| $n$ groß | nähert sich der **Glockenform** |\n\n> [!tip] Der wahrscheinlichste Wert liegt bei np\n> Der Erwartungswert $E(X) = np$ ist zugleich näherungsweise der Modalwert -- der Wert mit der größten Einzelwahrscheinlichkeit.\n>\n> Das ist eine nützliche **Plausibilitätskontrolle**: Ein Ergebnis, das weit von $np$ entfernt eine hohe Wahrscheinlichkeit ergibt, enthält meist einen Rechenfehler.\n>\n> Für großes $n$ lässt sich die Binomial- durch die **Normalverteilung** annähern. Die Faustregel dafür lautet $\\sigma > 3$, also $np(1-p) > 9$."
+            }
+          ]
+        },
+        {
+          "title": "Mindestens, höchstens, genau",
+          "blocks": [
+            {
+              "md": "> [!warning] Die Formulierung entscheidet über den Ansatz\n> | Formulierung | Ansatz |\n> |---|---|\n> | genau $k$ | $P(X=k)$ |\n> | höchstens $k$ | $P(X \\le k)$ -- direkt aus der Tabelle |\n> | weniger als $k$ | $P(X \\le k-1)$ |\n> | **mindestens** $k$ | $1 - P(X \\le k-1)$ |\n> | mehr als $k$ | $1 - P(X \\le k)$ |\n>\n> Die dritte und vierte Zeile enthalten die häufigste Fehlerquelle: Bei \"mindestens $k$\" ist $k$ **eingeschlossen**, das Gegenereignis reicht also nur bis $k-1$.\n>\n> Wer hier um eins danebenliegt, erhält ein plausibel aussehendes, aber falsches Ergebnis. Eine Kontrolle über den Erwartungswert deckt das oft auf."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die Binomialverteilung baut auf der **Bernoulli-Kette** auf und ist die Grundlage der **Hypothesentests** und **Konfidenzintervalle**. Für großes $n$ geht sie in die **Normalverteilung** über."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "warum-mitte",
       "type": "choice",
       "md": "Warum landen in der Mitte die meisten Kugeln?",
       "options": [
-        { "md": "In Fach 4 führen $\\binom84 = 70$ verschiedene Wege, in Fach 0 nur einer.", "correct": true },
-        { "md": "Die Kugeln werden in der Mitte abgebremst.", "why": "Jeder Abprall ist ein faires Bernoulli-Experiment, gebremst wird nichts." },
-        { "md": "Die mittleren Wege sind wahrscheinlicher als die äußeren.", "why": "Jeder einzelne Weg hat dieselbe Wahrscheinlichkeit $\\left(\\tfrac12\\right)^8$. Es gibt nur mehr Wege zur Mitte." }
+        {
+          "md": "In Fach 4 führen $\\binom84 = 70$ verschiedene Wege, in Fach 0 nur einer.",
+          "correct": true
+        },
+        {
+          "md": "Die Kugeln werden in der Mitte abgebremst.",
+          "why": "Jeder Abprall ist ein faires Bernoulli-Experiment, gebremst wird nichts."
+        },
+        {
+          "md": "Die mittleren Wege sind wahrscheinlicher als die äußeren.",
+          "why": "Jeder einzelne Weg hat dieselbe Wahrscheinlichkeit $\\left(\\tfrac12\\right)^8$. Es gibt nur mehr Wege zur Mitte."
+        }
       ],
       "explain": "$P(X = k) = \\binom8k \\cdot \\left(\\tfrac12\\right)^8$: Alle $2^8 = 256$ Wege sind gleich wahrscheinlich, und $70$ davon enden in Fach 4, also $P(X = 4) = \\tfrac{70}{256} \\approx 0{,}27$."
     },
@@ -71,14 +253,34 @@
       "label": "Einstellen",
       "md": "Fragen wie »**höchstens** 2 Treffer« brauchen die kumulierte Wahrscheinlichkeit $P(X \\le k)$, die Summe mehrerer Säulen. **Stelle für $B(10; 0{,}3)$ die Wahrscheinlichkeit $P(X \\le 2)$ ein.**",
       "widget": "galton",
-      "params": { "modes": ["histogram"], "n": 10, "p": 0.3, "k": 3, "rel": "eq", "nMax": 50 },
+      "params": {
+        "modes": [
+          "histogram"
+        ],
+        "n": 10,
+        "p": 0.3,
+        "k": 3,
+        "rel": "eq",
+        "nMax": 50
+      },
       "goal": {
         "when": "n == 10 && abs(p - 0.3) < 0.001 && k == 2 && rel == 1",
         "hints": [
-          { "when": "n != 10 || abs(p - 0.3) >= 0.001", "text": "Lass n bei 10 und p bei 0,3." },
-          { "when": "rel != 1", "text": "Wähle oben P(X ≤ k): »höchstens« schließt k mit ein." }
+          {
+            "when": "n != 10 || abs(p - 0.3) >= 0.001",
+            "text": "Lass n bei 10 und p bei 0,3."
+          },
+          {
+            "when": "rel != 1",
+            "text": "Wähle oben P(X ≤ k): »höchstens« schließt k mit ein."
+          }
         ],
-        "solve": { "n": 10, "p": 0.3, "k": 2, "rel": "le" }
+        "solve": {
+          "n": 10,
+          "p": 0.3,
+          "k": 2,
+          "rel": "le"
+        }
       },
       "explain": "$P(X \\le 2) = P(X=0) + P(X=1) + P(X=2) \\approx 0{,}0282 + 0{,}1211 + 0{,}2335 = 0{,}3828$."
     },
@@ -104,14 +306,36 @@
       "label": "Rätsel",
       "md": "Finde $n$ und $p$ so, dass $\\mu = 12$ und $\\sigma = 3$. Der helle Streifen zeigt $\\mu \\pm \\sigma$.",
       "widget": "galton",
-      "params": { "modes": ["histogram"], "n": 20, "p": 0.5, "k": 10, "rel": "le", "nMax": 60, "sliders": ["n", "p"] },
+      "params": {
+        "modes": [
+          "histogram"
+        ],
+        "n": 20,
+        "p": 0.5,
+        "k": 10,
+        "rel": "le",
+        "nMax": 60,
+        "sliders": [
+          "n",
+          "p"
+        ]
+      },
       "goal": {
         "when": "abs(mu - 12) < 0.01 && abs(sigma - 3) < 0.01",
         "hints": [
-          { "when": "abs(mu - 12) >= 0.01", "text": "μ = {mu|2}. Es muss n · p = 12 sein." },
-          { "when": "abs(sigma - 3) >= 0.01", "text": "μ stimmt, aber σ = {sigma|2}. Zusätzlich muss n · p · (1 − p) = 9 sein. Teile die beiden Gleichungen durcheinander." }
+          {
+            "when": "abs(mu - 12) >= 0.01",
+            "text": "μ = {mu|2}. Es muss n · p = 12 sein."
+          },
+          {
+            "when": "abs(sigma - 3) >= 0.01",
+            "text": "μ stimmt, aber σ = {sigma|2}. Zusätzlich muss n · p · (1 − p) = 9 sein. Teile die beiden Gleichungen durcheinander."
+          }
         ],
-        "solve": { "n": 48, "p": 0.25 }
+        "solve": {
+          "n": 48,
+          "p": 0.25
+        }
       },
       "explain": "Aus $n p = 12$ und $n p (1 - p) = 9$ folgt $1 - p = \\tfrac{9}{12}$, also $p = 0{,}25$ und $n = 48$."
     },
@@ -120,16 +344,46 @@
       "type": "multi",
       "md": "Welche Aussagen über $B(n; p)$ stimmen?",
       "options": [
-        { "md": "Für $p = 0{,}5$ ist die Verteilung symmetrisch um $\\tfrac n2$.", "correct": true },
-        { "md": "Für $p < 0{,}5$ liegt die höchste Säule links von $\\tfrac n2$.", "correct": true },
-        { "md": "Mit wachsendem $n$ wird $\\sigma$ kleiner.", "why": "$\\sigma = \\sqrt{np(1-p)}$ wächst mit $n$. Nur die **relative** Streuung $\\tfrac{\\sigma}{n}$ nimmt ab." },
-        { "md": "Der Erwartungswert $n \\cdot p$ ist immer eine ganze Zahl.", "why": "Für $n = 10$, $p = 0{,}25$ ist $\\mu = 2{,}5$, obwohl $X$ nur ganze Werte annimmt." }
+        {
+          "md": "Für $p = 0{,}5$ ist die Verteilung symmetrisch um $\\tfrac n2$.",
+          "correct": true
+        },
+        {
+          "md": "Für $p < 0{,}5$ liegt die höchste Säule links von $\\tfrac n2$.",
+          "correct": true
+        },
+        {
+          "md": "Mit wachsendem $n$ wird $\\sigma$ kleiner.",
+          "why": "$\\sigma = \\sqrt{np(1-p)}$ wächst mit $n$. Nur die **relative** Streuung $\\tfrac{\\sigma}{n}$ nimmt ab."
+        },
+        {
+          "md": "Der Erwartungswert $n \\cdot p$ ist immer eine ganze Zahl.",
+          "why": "Für $n = 10$, $p = 0{,}25$ ist $\\mu = 2{,}5$, obwohl $X$ nur ganze Werte annimmt."
+        }
       ],
       "explain": "Probiere es im Diagramm aus: $p$ verschiebt den Berg, $n$ macht ihn breiter und flacher, gemessen an der ganzen Achse $0$ bis $n$ aber schmaler."
     },
-    { "id": "neu1", "type": "gen", "gen": "stoch-binom", "level": 2, "label": "Neue Werte" },
-    { "id": "neu2", "type": "gen", "gen": "stoch-binom", "level": 3, "label": "Neue Werte" },
-    { "id": "neu3", "type": "gen", "gen": "stoch-binom-kenn", "level": 2, "label": "Neue Werte" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "stoch-binom",
+      "level": 2,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "stoch-binom",
+      "level": 3,
+      "label": "Neue Werte"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "stoch-binom-kenn",
+      "level": 2,
+      "label": "Neue Werte"
+    },
     {
       "id": "summary",
       "type": "summary",

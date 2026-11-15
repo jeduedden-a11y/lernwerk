@@ -19,6 +19,192 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Halbwinkel",
+      "md": "**Warum $\\int_0^{\\pi}\\sin^2 x\\,dx = \\tfrac{\\pi}{2}$:** blau $\\sin^2 x$, orange die Linie $\\tfrac12$. Was über der Linie liegt, füllt genau die Lücken darunter: Die Fläche ist ein Rechteck der Höhe $\\tfrac12$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          3.3
+        ],
+        "y": [
+          -0.1,
+          1.15
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 3.1416,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "sin(x)^2",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 0.5,
+            "color": "orange"
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": "X",
+            "color": "blue"
+          }
+        ],
+        "readout": "Fläche bis x = {X|2}: {X/2 - sin(2*X)/4|3} · Rechteck x/2 = {X/2|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 0,5 liegt die Fläche unter dem Rechteck.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "Bei x = π/2 gleichen sich beide aus: π/4.",
+          "to": {
+            "X": 1.5708
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = π: π/2.",
+          "to": {
+            "X": 3.1416
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Potenzen** von $\\sin$ und $\\cos$: bei ungeraden einen Faktor abspalten und $\\sin^2 + \\cos^2 = 1$ nutzen, bei geraden die **Halbwinkelformeln** $\\sin^2 x = \\tfrac{1 - \\cos 2x}{2}$. Wurzeln wie $\\sqrt{1 - x^2}$ löst die Substitution $x = \\sin t$.",
+      "label": "Verfahren",
+      "more": "**Ungerade Potenz:** $\\int \\sin^3 x\\,dx = \\int \\sin x(1 - \\cos^2 x)\\,dx$, mit $u = \\cos x$.\n\n**Gerade Potenz:** $\\sin^2 x = \\tfrac{1 - \\cos 2x}{2}$, $\\cos^2 x = \\tfrac{1 + \\cos 2x}{2}$; bei $\\sin^4 x$ zweimal anwenden.\n\n**Trigonometrische Substitution:** $\\sqrt{1 - x^2}$ mit $x = \\sin t$, $\\sqrt{1 + x^2}$ mit $x = \\tan t$, $\\sqrt{x^2 - 1}$ mit $x = \\tfrac{1}{\\cos t}$.",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Trigonometrische Integrale",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Trigonometrische Integrale.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Integrale über Produkte/Potenzen trigonometrischer Funktionen ($\\sin^m x\\cos^n x$, $\\tan^m x\\sec^n x$) — gelöst durch **strategischen Einsatz von Identitäten** aus der **Formelsammlung**."
+            }
+          ]
+        },
+        {
+          "title": "Strategie I: $\\int \\sin^m x\\cos^n x\\,dx$",
+          "blocks": [
+            {
+              "md": "- **$n$ ungerade:** einen Faktor $\\cos x$ für $du$ aufheben, Rest via $\\cos^2x=1-\\sin^2x$ umwandeln, substituiere $u=\\sin x$.\n- **$m$ ungerade:** analog mit $\\sin x$ aufheben, $u=\\cos x$.\n- **beide gerade:** **Halbwinkelformeln** zur Potenzreduktion nutzen."
+            }
+          ]
+        },
+        {
+          "title": "Strategie II: $\\int \\tan^m x\\sec^n x\\,dx$",
+          "blocks": [
+            {
+              "md": "- **$n$ gerade:** $\\sec^2x$ für $du$ aufheben, Rest via $\\sec^2x=1+\\tan^2x$, $u=\\tan x$.\n- **$m$ ungerade:** $\\sec x\\tan x$ für $du$ aufheben, Rest via $\\tan^2x=\\sec^2x-1$, $u=\\sec x$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel (Fall $n$ ungerade)",
+          "blocks": [
+            {
+              "md": "$$\\int \\sin^2x\\cos^3x\\,dx = \\int \\sin^2x(1-\\sin^2x)\\cos x\\,dx \\xrightarrow{u=\\sin x} \\int u^2-u^4\\,du = \\frac{\\sin^3x}{3}-\\frac{\\sin^5x}{5}+C$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Gerade Potenzen erfordern Halbwinkelformeln, nicht Substitution — das übersehen viele.\n- Der \"aufgehobene\" Faktor für $du$ fehlt oder wird vergessen.\n\nBeide Strategien nutzen letztlich die **Integration durch Substitution**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Trigonometrische Substitution",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Trigonometrische Substitution.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Technik zur Integration von Ausdrücken mit $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ oder $\\sqrt{x^2-a^2}$: Statt $u=g(x)$ wird $x$ selbst als trigonometrische Funktion substituiert, um die Wurzel über eine pythagoreische Identität zum Verschwinden zu bringen."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Substitutionen",
+          "blocks": [
+            {
+              "md": "| Wurzelform | Substitution | genutzte Identität |\n|---|---|---|\n| $\\sqrt{a^2-x^2}$ | $x=a\\sin\\theta$ | $1-\\sin^2\\theta=\\cos^2\\theta$ |\n| $\\sqrt{a^2+x^2}$ | $x=a\\tan\\theta$ | $1+\\tan^2\\theta=\\sec^2\\theta$ |\n| $\\sqrt{x^2-a^2}$ | $x=a\\sec\\theta$ | $\\sec^2\\theta-1=\\tan^2\\theta$ |"
+            }
+          ]
+        },
+        {
+          "title": "Geometrische Interpretation",
+          "blocks": [
+            {
+              "md": "Zu jeder Substitution gehört ein rechtwinkliges Dreieck — essenziell für die Rücksubstitution ohne $\\theta=\\arcsin(x/a)$ explizit zu berechnen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int \\frac{1}{\\sqrt{4-x^2}}\\,dx,\\quad a=2,\\ x=2\\sin\\theta,\\ dx=2\\cos\\theta\\,d\\theta$$\n$$\\sqrt{4-x^2}=2\\cos\\theta \\;\\Longrightarrow\\; \\int 1\\,d\\theta = \\theta+C = \\arcsin\\!\\left(\\frac{x}{2}\\right)+C$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $dx$ nicht umgerechnet.\n- Referenzdreieck übersprungen → fehleranfällige Rücksubstitution.\n- Quadratischer Ausdruck unter der Wurzel nicht in Standardform: erst **quadratische Ergänzung**, dann substituieren.\n\nErgebnisse landen oft in der **Tabelle der Arkusfunktions-Integrale**. Spezialfall der **Integration durch Substitution**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Halbwinkel",
+      "md": "Berechne $\\displaystyle\\int_0^{\\pi/2} \\cos^2 x\\,dx$ (drei Nachkommastellen).",
+      "answer": 0.785,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$\\left[\\tfrac{x}{2} + \\tfrac{\\sin 2x}{4}\\right]_0^{\\pi/2} = \\tfrac{\\pi}{4} \\approx 0{,}785$.",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Welche Substitution passt?",
@@ -57,12 +243,49 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "trigintegral"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "trigintegral"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "trigintegral"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Ungerade Potenz: einen Faktor abspalten; gerade: Halbwinkelformel.",
         "√(a² − x²): x = a sin t; √(a² + x²): x = a tan t.",
-        "Geometrische Deutung als Kontrolle."
+        "Geometrische Deutung als Kontrolle.",
+        "Ungerade Potenz: Faktor abspalten; gerade Potenz: Halbwinkelformel."
       ],
       "id": "summary"
     }

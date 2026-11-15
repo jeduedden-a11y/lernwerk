@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Baumdiagramme",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Baumdiagramme.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein Zufallsexperiment läuft in **mehreren Stufen** ab. Signalformulierungen: *\"Es wird dreimal gezogen\"*, *\"nacheinander\"*, *\"ohne Zurücklegen\"*, *\"zuerst ... dann ...\"*\n\nOperatoren: **Zeichnen Sie ein Baumdiagramm**, **Berechnen Sie die Wahrscheinlichkeit**, **Bestimmen Sie**.\n\nDas Baumdiagramm ist das Grundwerkzeug der mehrstufigen Stochastik. Auch wenn die Aufgabe es nicht ausdrücklich verlangt, lohnt sich die Skizze fast immer -- sie verhindert die häufigsten Denkfehler."
+            }
+          ]
+        },
+        {
+          "title": "Die zwei Pfadregeln",
+          "blocks": [
+            {
+              "md": "> [!important] Multiplizieren entlang, Addieren zwischen\n> **Pfadmultiplikationsregel:** Die Wahrscheinlichkeit eines einzelnen Pfades ist das **Produkt** aller Kantenwahrscheinlichkeiten entlang des Pfades.\n>\n> **Pfadadditionsregel:** Die Wahrscheinlichkeit eines Ereignisses ist die **Summe** der Wahrscheinlichkeiten aller Pfade, die zu diesem Ereignis gehören.\n>\n> Merkhilfe: \"und\" entlang eines Pfades bedeutet mal, \"oder\" zwischen Pfaden bedeutet plus.\n\nKontrolle: Die Kantenwahrscheinlichkeiten, die von **einem** Knoten ausgehen, addieren sich immer zu 1. Stimmt das nicht, ist ein Fehler im Baum."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Stufenzahl bestimmen.** Wie oft wird gezogen, geworfen, geprüft?\n2. **Verzweigungen je Stufe festlegen.** Meist zwei (Treffer/Niete), manchmal mehr.\n3. **Erste Stufe beschriften** mit den Ausgangswahrscheinlichkeiten.\n4. **Folgestufen beschriften.** Entscheidend:\n   - **Mit Zurücklegen:** gleiche Wahrscheinlichkeiten auf jeder Stufe\n   - **Ohne Zurücklegen:** Wahrscheinlichkeiten ändern sich, Nenner sinkt um 1 pro Stufe\n5. **Gesuchtes Ereignis identifizieren** und alle zugehörigen Pfade markieren.\n6. **Pfadregeln anwenden:** je Pfad multiplizieren, dann addieren.\n7. **Bei \"mindestens\"-Formulierungen Gegenereignis prüfen** -- oft deutlich kürzer."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Urne enthält 5 rote und 3 blaue Kugeln. Es werden zwei Kugeln **ohne Zurücklegen** gezogen. Wie wahrscheinlich ist es, genau eine rote Kugel zu ziehen?*\n\n**Schritt 1 bis 4:** Zwei Stufen, je zwei Äste.\n\nErste Stufe: $P(R) = \\tfrac{5}{8}$, $P(B) = \\tfrac{3}{8}$.\n\nZweite Stufe, abhängig vom ersten Zug:\n- nach Rot: $P(R \\mid R) = \\tfrac{4}{7}$, $P(B \\mid R) = \\tfrac{3}{7}$\n- nach Blau: $P(R \\mid B) = \\tfrac{5}{7}$, $P(B \\mid B) = \\tfrac{2}{7}$\n\n**Schritt 5:** \"Genau eine rote\" umfasst zwei Pfade: RB und BR.\n\n**Schritt 6:**\n$$P(RB) = \\frac{5}{8} \\cdot \\frac{3}{7} = \\frac{15}{56}, \\qquad P(BR) = \\frac{3}{8} \\cdot \\frac{5}{7} = \\frac{15}{56}$$\n$$P(\\text{genau eine rote}) = \\frac{15}{56} + \\frac{15}{56} = \\frac{30}{56} = \\frac{15}{28} \\approx 0{,}536$$\n\n**Gegenprobe** über alle vier Pfade:\n$$P(RR) = \\frac{5}{8}\\cdot\\frac{4}{7} = \\frac{20}{56}, \\qquad P(BB) = \\frac{3}{8}\\cdot\\frac{2}{7} = \\frac{6}{56}$$\nSumme: $\\tfrac{20+15+15+6}{56} = \\tfrac{56}{56} = 1$. Der Baum ist vollständig."
+            }
+          ]
+        },
+        {
+          "title": "Variante: mit Zurücklegen",
+          "blocks": [
+            {
+              "md": "Bei gleicher Urne **mit** Zurücklegen bleibt $P(R) = \\tfrac{5}{8}$ auf beiden Stufen:\n$$P(\\text{genau eine rote}) = 2 \\cdot \\frac{5}{8} \\cdot \\frac{3}{8} = \\frac{30}{64} \\approx 0{,}469$$\n\nZiehen mit Zurücklegen ist eine **Bernoulli-Kette** -- ab drei Stufen lohnt statt des Baums die **Binomialformel**.\n\n> [!tip] Wann Baum, wann Formel?\n> **Baum:** wenige Stufen, ungleiche Wahrscheinlichkeiten, ohne Zurücklegen, verschachtelte Bedingungen.\n> **Binomialformel:** viele Stufen, gleichbleibende Trefferwahrscheinlichkeit, mit Zurücklegen.\n> Bei zehn Stufen hätte der Baum 1024 Pfade -- dann ist er kein Werkzeug mehr."
+            }
+          ]
+        },
+        {
+          "title": "Der umgekehrte Baum",
+          "blocks": [
+            {
+              "md": "Wird nach einer Wahrscheinlichkeit **entgegen der Zeitrichtung** gefragt (*\"Die zweite Kugel ist rot. Wie wahrscheinlich war die erste blau?\"*), hilft der umgekehrte Baum: Stufen vertauschen, Randwahrscheinlichkeiten neu berechnen.\n\nRechnerisch entspricht das dem **Satz von Bayes**. Bei zwei Merkmalen mit je zwei Ausprägungen ist die **Vierfeldertafel** meist schneller."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Beim Ziehen ohne Zurücklegen die Nenner nicht anpassen.** Ab der zweiten Stufe sinkt die Gesamtzahl. Häufigster Fehler überhaupt.\n- **Nur einen Pfad zählen.** \"Genau eine rote\" umfasst RB **und** BR -- der Faktor 2 wird oft vergessen.\n- **Pfadregeln vertauschen.** Entlang multiplizieren, zwischen addieren, nicht umgekehrt.\n- **Bei \"mindestens einmal\" alle Pfade einzeln rechnen,** statt das Gegenereignis \"keinmal\" zu nutzen.\n- **Kein Kontrollcheck.** Die Summe aller Pfadwahrscheinlichkeiten muss 1 ergeben. Diese Probe kostet zehn Sekunden und findet fast jeden Fehler.\n- **Baum nicht zeichnen, weil er nicht verlangt ist.** Er ist auch dann Punktegrundlage, wenn nur das Ergebnis gefordert ist -- als Rechenweg."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Vierfeldertafel** · **Bedingte Wahrscheinlichkeit** · **Satz von Bayes** · **Bernoulli-Kette** · **Binomialverteilung** · **3M-Aufgaben**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

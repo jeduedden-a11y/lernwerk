@@ -16,6 +16,63 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Entscheidungsregel bestimmen",
+      "path": "02 Wiki/Mathematik/09 Stochastik/Aufgabentypen/Entscheidungsregel bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gegeben sind $n$, $p_0$ und ein **Signifikanzniveau** $\\alpha$ (typisch 5 % oder 1 %). Gesucht ist die **Grenze $k$** des Ablehnungsbereichs. Signalformulierungen: *\"Bestimmen Sie die Entscheidungsregel\"*, *\"Ermitteln Sie den Ablehnungsbereich\"*, *\"Ab welcher Anzahl wird die Nullhypothese verworfen?\"*\n\nDies ist der Aufgabentyp, bei dem die meisten Punkte verloren gehen -- fast immer an der Randstelle."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundgleichung",
+          "blocks": [
+            {
+              "md": "Gesucht ist die **kleinste** beziehungsweise **größte** Zahl $k$, für die die Wahrscheinlichkeit eines Fehlers 1. Art unter $\\alpha$ bleibt.\n\n**Rechtsseitiger Test** ($H_1: p > p_0$), Ablehnungsbereich $\\overline{A} = \\{k, \\dots, n\\}$:\n$$P(X \\ge k) \\le \\alpha \\quad \\Longleftrightarrow \\quad 1 - P(X \\le k-1) \\le \\alpha \\quad \\Longleftrightarrow \\quad P(X \\le k-1) \\ge 1 - \\alpha$$\n\n**Linksseitiger Test** ($H_1: p < p_0$), Ablehnungsbereich $\\overline{A} = \\{0, \\dots, k\\}$:\n$$P(X \\le k) \\le \\alpha$$\n\n> [!important] Warum die Umformung beim rechtsseitigen Test nötig ist\n> Tabellen und Taschenrechner liefern **kumulierte** Werte $P(X \\le k)$, nicht $P(X \\ge k)$. Ohne die Umformung über das Gegenereignis ist der Wert nicht nachschlagbar. Das $k-1$ ist die Quelle des häufigsten Fehlers in diesem Aufgabentyp."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Verteilung und Hypothesen notieren:** $X \\sim B(n; p_0)$ unter $H_0$, Testrichtung aus **Hypothesen aufstellen**.\n2. **Ungleichung aufstellen** entsprechend der Testrichtung (siehe oben).\n3. **In kumulierte Form bringen**, sodass nur $P(X \\le \\cdot)$ vorkommt.\n4. **Tabelle oder Rechner nutzen:** kleinstes $k$ suchen, das die Ungleichung erfüllt (siehe **Kumulierte Binomialverteilung**).\n5. **Randstelle prüfen:** Erfüllt $k-1$ die Bedingung noch nicht, $k$ aber schon? Beide Werte einsetzen und vergleichen.\n6. **Entscheidungsregel in Worten formulieren** -- nicht nur die Zahl hinschreiben.\n7. **Tatsächliches Signifikanzniveau angeben:** $P(X \\ge k)$ mit dem gefundenen $k$. Dieser Wert liegt unter $\\alpha$, meist deutlich."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Fortsetzung: $n = 200$, $H_0: p = 0{,}05$, $H_1: p > 0{,}05$, Signifikanzniveau $\\alpha = 5\\ \\%$.*\n\n**Schritt 1:** Unter $H_0$ gilt $X \\sim B(200; 0{,}05)$, also $\\mu = np = 10$, $\\sigma = \\sqrt{np(1-p)} = \\sqrt{9{,}5} \\approx 3{,}08$.\n\n**Schritt 2:** Rechtsseitig, gesucht kleinstes $k$ mit $P(X \\ge k) \\le 0{,}05$.\n\n**Schritt 3:** $1 - P(X \\le k-1) \\le 0{,}05 \\;\\Longleftrightarrow\\; P(X \\le k-1) \\ge 0{,}95$.\n\n**Schritt 4/5:** Tabellenwerte für $B(200; 0{,}05)$:\n\n| $m$ | $P(X \\le m)$ |\n|---|---|\n| 14 | 0,9165 |\n| 15 | 0,9513 |\n| 16 | 0,9738 |\n\nErstes $m$ mit $P(X \\le m) \\ge 0{,}95$ ist $m = 15$. Wegen $m = k-1$ folgt $k = 16$.\n\n**Schritt 6:** *Entscheidungsregel: Werden unter den 200 geprüften Bauteilen **16 oder mehr** defekte gefunden, wird $H_0$ verworfen und der Ausschussanteil als erhöht angesehen. Bei 15 oder weniger wird $H_0$ beibehalten.*\n\n**Schritt 7:** Tatsächliches Niveau: $P(X \\ge 16) = 1 - P(X \\le 15) = 1 - 0{,}9513 = 0{,}0487$, also **4,87 %** -- unter den geforderten 5 %.\n\n> [!note] Zahlenwerte\n> Die Tabellenwerte oben sind gerundete Werte der Binomialverteilung $B(200; 0{,}05)$ und dienen der Illustration des Verfahrens. In der Prüfung ist die gestellte Tabelle beziehungsweise der Rechner maßgeblich."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Das $k-1$ vergessen.** Wer $P(X \\le k) \\ge 0{,}95$ löst statt $P(X \\le k-1) \\ge 0{,}95$, erhält $k = 15$ statt 16 -- ein Fehler um genau eins, der die gesamte Folgeaufgabe kippt.\n- **Falsche Ungleichungsrichtung nach dem Übergang zum Gegenereignis.** Bei $1 - P(\\dots) \\le \\alpha$ dreht sich das Zeichen um: $P(\\dots) \\ge 1 - \\alpha$.\n- **$k$ selbst dem Annahmebereich zuschlagen.** Beim rechtsseitigen Test gehört $k$ zum **Ablehnungs**bereich.\n- **Nur die Zahl angeben.** Der Operator verlangt eine Entscheidungs**regel** -- ein vollständiger Satz mit Bedingung und Konsequenz.\n- **Signifikanzniveau mit tatsächlicher Irrtumswahrscheinlichkeit verwechseln.** $\\alpha$ ist die Vorgabe (Obergrenze), $P(X \\ge k)$ der tatsächlich erreichte Wert.\n- **Bei zweiseitigen Tests $\\alpha$ nicht halbieren** -- siehe **Zweiseitiger Hypothesentest**."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Hypothesen aufstellen** · **Irrtumswahrscheinlichkeit berechnen** · **Zweiseitiger Hypothesentest** · **Fehler 1. und 2. Art** · **Kumulierte Binomialverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
