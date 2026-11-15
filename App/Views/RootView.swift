@@ -40,6 +40,8 @@ struct RootView: View {
         .overlay(alignment: .top) { ToastView() }
         // dark by default; light or the system setting in Einstellungen › Darstellung
         .preferredColorScheme((Appearance(rawValue: appearance) ?? .dark).scheme)
+        // a light tick when the tab changes
+        .sensoryFeedback(.selection, trigger: model.selectedTab)
         // lernwerk://weiter, lernwerk://wiederholen, lernwerk://tagesmix (for shortcuts on the home screen)
         .onOpenURL { model.open($0) }
         .task {

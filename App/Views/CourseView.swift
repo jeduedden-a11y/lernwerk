@@ -11,22 +11,28 @@ struct CourseView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 header
+                    .appearOnce(0)
                 if let week = model.currentChapter(course) {
                     WeekBanner(course: course, chapter: week)
+                        .appearOnce(1)
                 }
                 if let papers = course.papers, !papers.isEmpty {
                     PapersCard(course: course, papers: papers)
+                        .appearOnce(2)
                 }
                 if course.mistakeLog == true {
                     MistakeLogCard(course: course)
+                        .appearOnce(3)
                 }
                 if let book = model.formulaBook(course) {
                     FormulaCard(course: course, book: book, practiceTarget: $practiceTarget)
+                        .appearOnce(3)
                 }
                 ForEach(Array(course.chapters.enumerated()), id: \.element.id) { offset, chapter in
                     ChapterSection(course: course, chapter: chapter, number: offset + 1, target: $practiceTarget) { chapter in
                         examTarget = ExamTarget(course: course, chapter: chapter)
                     }
+                    .appearOnce(4 + offset)
                 }
             }
             .padding(.horizontal)

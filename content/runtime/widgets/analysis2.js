@@ -495,25 +495,49 @@
       host.append(row);
       const next = K.button(row, "Nächster Schritt", () => { if (k < lines.length) { k++; paint(); ctx.changed(); } });
       K.button(row, "Von vorn", () => { k = 0; paint(); ctx.changed(); });
-      function paint() {
-        box.innerHTML = "";
-        lines.forEach((l, i) => {
-          if (i >= k) return;
-          const item = LW.el("div", { class: "lw-der-line" + (i === k - 1 ? " current" : "") });
-          item.append(LW.el("div", { class: "lw-der-math", html: LW.math(l.tex, true) }));
-          if (l.why) item.append(LW.el("div", { class: "lw-der-why lw-md", html: LW.md(l.why) }));
-          box.append(item);
-        });
-        if (k === 0) box.append(LW.el("div", { class: "lw-der-empty", text: "Tippe auf »Nächster Schritt«." }));
+      const empty = LW.el("div", { class: "lw-der-empty", text: "Tippe auf »Nächster Schritt«." });
+      // Each line is built once (KaTeX included) and kept. A scene that glides to the next line sets k many times a
+      // second; only a real change touches the page, and only the new line fades in.
+      const items = [];
+      let shown = 0, pending = false;
+      function item(i) {
+        if (!items[i]) {
+          const l = lines[i];
+          const it = LW.el("div", { class: "lw-der-line" });
+          it.append(LW.el("div", { class: "lw-der-math", html: LW.math(l.tex, true) }));
+          if (l.why) it.append(LW.el("div", { class: "lw-der-why lw-md", html: LW.md(l.why) }));
+          items[i] = it;
+        }
+        return items[i];
+      }
+      function render() {
+        pending = false;
+        const single = k === shown + 1;
+        while (shown > k) { items[shown - 1].remove(); shown--; }
+        if (k > 0) empty.remove();
+        while (shown < k) {
+          const it = item(shown);
+          it.classList.toggle("lw-der-in", single);
+          box.append(it);
+          shown++;
+        }
+        items.forEach((it, i) => { if (it) it.classList.toggle("current", i === k - 1); });
+        if (k === 0 && !empty.isConnected) box.append(empty);
         next.disabled = k >= lines.length;
       }
-      paint();
+      // several changes in one go (a jump back through the scenes) end in one drawing
+      function paint() { if (!pending) { pending = true; queueMicrotask(render); } }
+      function setK(v) {
+        const n = K.clamp(Math.round(v), 0, lines.length);
+        if (n !== k) { k = n; paint(); }
+      }
+      render();
       return {
         check: (goal) => checkGoal(goal, { k, total: lines.length }),
-        solve() { k = lines.length; paint(); },
+        solve() { setK(lines.length); },
         getVar: (name) => (name === "k" ? k : NaN),
-        setVar(name, v) { if (name === "k") { k = K.clamp(Math.round(v), 0, lines.length); paint(); } },
-        act(name) { if (name === "next" && k < lines.length) { k++; paint(); } if (name === "reset") { k = 0; paint(); } },
+        setVar(name, v) { if (name === "k") setK(v); },
+        act(name) { if (name === "next") setK(k + 1); if (name === "reset") setK(0); },
       };
     },
   });

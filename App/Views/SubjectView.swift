@@ -54,7 +54,7 @@ struct SubjectView: View {
                     }
                     ProgressLine(value: model.progress(of: subject), tint: subject.tint)
                     NavigationLink(value: PathRoute(subject: subject.id)) {
-                        Label("Lernpfad als Baum ansehen", systemImage: "point.3.connected.trianglepath.dotted")
+                        Label("Lernpfad ansehen", systemImage: "point.3.connected.trianglepath.dotted")
                             .font(.subheadline.weight(.semibold))
                             .foregroundStyle(subject.tint)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -63,18 +63,42 @@ struct SubjectView: View {
                     .buttonStyle(.plain)
                 }
                 .card()
-                ForEach(courses) { course in
+                .appearOnce(0)
+                ForEach(Array(courses.enumerated()), id: \.element.id) { offset, course in
                     NavigationLink(value: course) {
                         CourseCard(course: course)
                     }
                     .buttonStyle(PressableStyle())
+                    .zoomSource("course:" + course.id)
+                    .contextMenu {
+                        if let next = course.readyLessons.first(where: { !model.state.isSettled($0.id) }) {
+                            Button {
+                                model.start(course, next)
+                            } label: {
+                                Label("Weiterlernen: \(next.title)", systemImage: "play.fill")
+                            }
+                        }
+                        if let topic = trainingTopic(course) {
+                            Button {
+                                model.startPractice(course, topic, level: min(4, model.practiceStat(course, topic).highestMastered + 1))
+                            } label: {
+                                Label("Training: \(topic.title)", systemImage: "dumbbell")
+                            }
+                        }
+                    } preview: {
+                        CourseCard(course: course)
+                            .frame(width: 340)
+                            .padding(6)
+                            .environment(model)
+                    }
+                    .appearOnce(offset + 1)
                 }
             }
             .padding(.horizontal)
             .padding(.bottom, 24)
             .readableColumn()
         }
-        .background { TintBackground(tints: courses.prefix(3).map(\.tint)) }
+        .background { TintBackground(tints: [subject.tint]) }
         .navigationTitle(subject.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -92,5 +116,12 @@ struct SubjectView: View {
             FormulaSheet(courses: withFormulas, accentHex: withFormulas.first?.color ?? subject.color)
                 .environment(model)
         }
+    }
+
+    /// An unlocked training topic of the course with the lowest level passed.
+    private func trainingTopic(_ course: Course) -> PracticeTopic? {
+        course.practiceTopics
+            .filter { model.isUnlocked($0) && model.practiceStat(course, $0).highestMastered < 4 }
+            .min { model.practiceStat(course, $0).highestMastered < model.practiceStat(course, $1).highestMastered }
     }
 }

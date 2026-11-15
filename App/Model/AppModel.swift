@@ -209,6 +209,23 @@ final class AppModel {
         return nil
     }
 
+    /// The training to start from a subject: an unlocked topic with the lowest level passed, the course worked in
+    /// last first; the level is the one above the highest passed.
+    func trainingTarget(in subject: Subject) -> (course: Course, topic: PracticeTopic, level: Int)? {
+        var best: (course: Course, topic: PracticeTopic, mastered: Int, recent: Date)?
+        for course in courses(in: subject) {
+            let recent = lastActivity(in: course) ?? .distantPast
+            for topic in course.practiceTopics where isUnlocked(topic) {
+                let mastered = practiceStat(course, topic).highestMastered
+                if mastered >= 4 { continue }
+                if let b = best, mastered > b.mastered || (mastered == b.mastered && recent <= b.recent) { continue }
+                best = (course, topic, mastered, recent)
+            }
+        }
+        guard let best else { return nil }
+        return (best.course, best.topic, min(4, best.mastered + 1))
+    }
+
     func progress(of subject: Subject) -> Double {
         let list = courses(in: subject)
         let ready = list.reduce(0) { $0 + $1.readyLessons.count }

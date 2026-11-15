@@ -25,6 +25,8 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
   --radius: 26px;
   --radius-s: 16px;
+  --sky: #fbf8f5;
+  --sky-glow: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -44,6 +46,8 @@
     --yellow: #ffd60a;
     --teal: #40c8e0;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+    --sky: #060507;
+    --sky-glow: 1;
   }
 }
 
@@ -528,7 +532,9 @@ body {
 
 /* ---------- Derivations, one line after the other ---------- */
 .lw-derivation { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
-.lw-der-line { padding: 8px 12px; border-radius: var(--radius-s); background: var(--fill); animation: lw-cap 360ms ease-out both; }
+.lw-der-line { padding: 8px 12px; border-radius: var(--radius-s); background: var(--fill); transition: background 0.25s, box-shadow 0.25s; }
+.lw-der-line.lw-der-in { animation: lw-cap 360ms ease-out both; }
+.lw-reduce-motion .lw-der-line.lw-der-in { animation: none; }
 .lw-der-line.current { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
 .lw-der-math { overflow-x: auto; }
 .lw-der-math .katex-display { margin: 0.2em 0; }
@@ -863,3 +869,47 @@ body {
 .lw-step.exam-late .lw-step-label::after { content: "nicht erreicht"; margin-left: auto; font-size: 0.85em; color: var(--label-2); font-weight: 600; }
 .lw-exam-hint { margin: 8px 0 4px; padding: 10px 12px; border-radius: 14px; background: var(--accent-soft); }
 .lw-exam-tasks { font-size: 0.92em; }
+
+/* learning path as constellations: night sky in dark mode, a star chart on paper in light mode */
+.ov-course.ov-sky { background: var(--sky); border-color: color-mix(in srgb, var(--label) 8%, transparent); position: relative; }
+@media (prefers-color-scheme: dark) {
+  .ov-course.ov-sky { background: radial-gradient(130% 50% at 50% 0%, color-mix(in srgb, var(--cc) 15%, var(--sky)) 0%, var(--sky) 70%); }
+}
+.ov-dust { fill: var(--label); opacity: calc(var(--sky-glow) * 0.4); }
+.ov-band-title { letter-spacing: 0.08em; font-size: 9.5px; }
+.ov-band-count.full { fill: var(--cc); }
+.ov-line { stroke: var(--label-3); stroke-width: 1; stroke-linecap: round; opacity: 0.55; }
+.ov-line.lit { stroke: var(--cc); stroke-width: 1.4; opacity: 0.8; }
+.ov-line.next { stroke: var(--cc); stroke-width: 1.4; stroke-dasharray: 0.04 0.035; opacity: 0.9; }
+.ov-line.ov-stub { stroke-dasharray: 0.12 0.12; }
+.ov-star .ov-hit { fill: transparent; }
+.ov-star .ov-core { fill: var(--cc); }
+.ov-star .ov-halo { fill: var(--cc); opacity: calc(0.1 + var(--sky-glow) * 0.12); }
+.ov-star .ov-halo.ready { opacity: calc(0.12 + var(--sky-glow) * 0.08); }
+.ov-star .ov-spark { fill: #fff; opacity: calc(0.35 + var(--sky-glow) * 0.6); }
+.ov-star .ov-ringstar { fill: color-mix(in srgb, var(--cc) 22%, var(--sky)); stroke: var(--cc); stroke-width: 2; }
+.ov-star .ov-orbit { fill: none; stroke: color-mix(in srgb, var(--cc) 30%, transparent); stroke-width: 2; }
+.ov-star .ov-arc { fill: none; stroke: var(--cc); stroke-width: 2; stroke-linecap: round; }
+.ov-star .ov-skipstar { fill: color-mix(in srgb, var(--cc) 25%, var(--sky)); stroke: var(--cc); stroke-width: 1.4; stroke-dasharray: 2.2 2; }
+.ov-star .ov-dim { fill: var(--label-3); }
+.ov-star .ov-focus-ring { fill: none; stroke: var(--label); stroke-width: 1.2; opacity: 0; transition: opacity 0.2s; }
+.ov-star.focus .ov-focus-ring { opacity: 0.8; }
+.ov-star .ov-label { fill: var(--label-2); font-size: 8.6px; font-weight: 600; paint-order: stroke; stroke: var(--sky); stroke-width: 3px; }
+.ov-star.done .ov-label, .ov-star.started .ov-label, .ov-star.ready .ov-label { fill: var(--label); }
+.ov-star.later .ov-label { fill: var(--label-3); font-weight: 500; }
+.ov-star .ov-pip { fill: var(--fill-2); }
+.ov-star:focus-visible .ov-focus-ring { opacity: 0.8; }
+/* entrance, once: stars come up in course order, lines draw themselves; nothing keeps moving */
+.ov-star .ov-star-body { animation: ov-star-in 0.5s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); transform-box: fill-box; transform-origin: center; }
+.ov-line { stroke-dasharray: 1; stroke-dashoffset: 0; animation: ov-line-in 0.7s ease-out both; animation-delay: var(--d, 0ms); }
+.ov-line.next, .ov-line.ov-stub { animation: ov-fade-in 0.6s ease-out both; animation-delay: var(--d, 0ms); }
+@keyframes ov-star-in { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: none; } }
+@keyframes ov-line-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes ov-fade-in { from { opacity: 0; } }
+.ov-settled .ov-star .ov-star-body, .ov-settled .ov-line { animation: none; }
+.lw-reduce-motion .ov-star .ov-star-body, .lw-reduce-motion .ov-line { animation: none; }
+@media (prefers-reduced-motion: reduce) { .ov-star .ov-star-body, .ov-line { animation: none; } }
+.ov-key.done i { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.ov-key.later i { width: 6px; height: 6px; border: 0; background: var(--label-3); margin: 0 2.5px; }
+.ov-sky-label { opacity: 0.85; paint-order: stroke; stroke: var(--sky); stroke-width: 4px; stroke-linejoin: round; }
+.ov-band-title.ov-sky-label { fill: var(--label-3); font-size: 9px; letter-spacing: 0.12em; }

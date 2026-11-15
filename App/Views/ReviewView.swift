@@ -13,6 +13,7 @@ struct ReviewView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     if model.canStartMix {
                         MixCard()
+                            .appearOnce(0)
                     }
                     if model.state.cards.isEmpty {
                         ContentUnavailableView {
@@ -23,11 +24,15 @@ struct ReviewView: View {
                         .padding(.top, 24)
                     } else {
                         DueHeader()
+                            .appearOnce(1)
                     }
                     TrainingSection(target: $practiceTarget)
+                        .appearOnce(2)
                     if !model.state.cards.isEmpty {
                         ForecastCard()
+                            .appearOnce(3)
                         StageCard()
+                            .appearOnce(4)
                         SectionTitle(title: "Nach Kurs")
                         ForEach(coursesWithCards) { course in
                             CourseReviewRow(course: course)
@@ -38,7 +43,7 @@ struct ReviewView: View {
                 .padding(.bottom, 24)
                 .readableColumn()
             }
-            .background { TintBackground(tints: [Level(1).colors[0], Level(3).colors[0], Level(4).colors[1]]) }
+            .background { TintBackground(tints: [Color.accentColor]) }
             .navigationTitle("Üben")
             .practiceLauncher($practiceTarget)
         }

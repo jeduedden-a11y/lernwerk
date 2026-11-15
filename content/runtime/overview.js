@@ -24,48 +24,102 @@
     return res.json();
   }
 
-  /** The tree follows the course: one band per chapter, in course order. Inside a band one row per lesson with its
-   * full title, indented below the lesson of the same chapter it builds on (its first such prerequisite), joined by
-   * an angled line. A prerequisite from an earlier chapter shows as a short line from above on the band's first row;
-   * the lesson sheet names every prerequisite. */
-  function layout(lessons, chapters, W) {
-    const byId = new Map(lessons.map((l) => [l.id, l]));
-    const pos = new Map();
-    const bands = [];
-    const links = [];
-    const ROW = 44, HEAD = 46, FOOT = 24, GAP = 10, INDENT = 24;
-    let y = 4;
+  /** One sky per course, one path through it. Inside a chapter a star hangs below the closest lesson it builds on,
+   * so each row is one step further; within a row the stars follow their parents from left to right, three to a row
+   * at most, a little scattered (always the same way, seeded by the lesson id). Every chapter is joined to the one
+   * before: by the lesson its first stars build on there, or else from the last star of the previous chapter, so
+   * the whole course reads as one connected path. A chapter of a single lesson (a stage of a dated plan) swings to
+   * the left or right of the one before, so the chain meanders across the sky. The chapter names stand in the sky
+   * like the names on a star chart, without breaking the path. */
+  function skyLayout(lessons, chapters, W) {
+    const pos = new Map(), groups = [], edges = [];
+    const COLS = 3, ROW = 74, MX = 22, LABEL = 18, FIRST = 26, TAIL = 42;
+    const SWING = [0.5, 0.8, 0.5, 0.2];
+    let y = 6, prev = null, gi = 0;
     chapters.forEach((ch, ci) => {
       const list = lessons.filter((l) => l.chapterIndex === ci);
       if (!list.length) return;
-      if (list.length === 1) {
-        // a chapter of one lesson (a week of a dated plan): one line, node left, titles beside it
-        pos.set(list[0].id, { x: 38, y: y + 31, compact: true });
-        bands.push({ chapter: ch, index: ci, top: y, bottom: y + 62, lessons: list, compact: true });
-        y += 62 + GAP;
-        return;
-      }
-      // the first prerequisite inside the chapter decides the column; an earlier lesson only, so there are no loops
-      const kids = new Map(list.map((l) => [l.id, []]));
-      const roots = [];
-      list.forEach((l) => {
-        const parent = l.req.map((r) => byId.get(r)).find((p) => p && p.chapterIndex === ci && p.order < l.order);
-        if (parent) kids.get(parent.id).push(l); else roots.push(l);
-      });
       const top = y;
-      let rowY = top + HEAD;
-      const walk = (l, depth, parent) => {
-        pos.set(l.id, { x: 30 + Math.min(depth, 4) * INDENT, y: rowY, row: true, first: rowY === top + HEAD });
-        rowY += ROW;
-        if (parent) links.push([parent.id, l.id]);
-        kids.get(l.id).forEach((k) => walk(k, depth + 1, l));
-      };
-      roots.forEach((r) => walk(r, 0, null));
-      const bottom = rowY - ROW + FOOT;
-      bands.push({ chapter: ch, index: ci, top, bottom, lessons: list });
-      y = bottom + GAP;
+      const parent = new Map(), depth = new Map();
+      list.forEach((l) => {
+        const inside = list.filter((m) => l.req.includes(m.id) && m.order < l.order);
+        const p = inside.length ? inside.reduce((x, m) => (m.order > x.order ? m : x)) : null;
+        parent.set(l.id, p);
+        depth.set(l.id, p ? depth.get(p.id) + 1 : 0);
+        if (p) edges.push([p.id, l.id]);
+      });
+      const roots = list.filter((l) => !parent.get(l.id));
+      let row = 0;
+      if (list.length === 1) {
+        pos.set(list[0].id, { x: MX + SWING[gi % SWING.length] * (W - 2 * MX), y: top + LABEL + FIRST, w: (W - 2 * MX) / 2.2, i: 0 });
+        row = 1;
+      } else {
+        const levels = [];
+        list.forEach((l) => { const d = depth.get(l.id); (levels[d] = levels[d] || []).push(l); });
+        levels.forEach((level, d) => {
+          if (!level) return;
+          level.sort((m, n) => {
+            const pm = parent.get(m.id), pn = parent.get(n.id);
+            const xm = pm ? pos.get(pm.id).x : 0, xn = pn ? pos.get(pn.id).x : 0;
+            return xm !== xn ? xm - xn : m.order - n.order;
+          });
+          for (let k = 0; k < level.length; k += COLS) {
+            const chunk = level.slice(k, k + COLS);
+            // the first stars of a chapter run back and forth row by row, so the line through them never jumps
+            if (d === 0 && (k / COLS) % 2 === 1) chunk.reverse();
+            const cw = (W - 2 * MX) / chunk.length;
+            chunk.forEach((l, i) => {
+              const h = LW.hash(l.id) >>> 0;
+              const jx = ((h % 997) / 997 - 0.5) * Math.min(24, cw * 0.25);
+              const jy = (((h >>> 11) % 991) / 991 - 0.5) * 16;
+              pos.set(l.id, { x: MX + (i + 0.5) * cw + jx, y: top + LABEL + FIRST + row * ROW + jy, w: Math.min(cw, (W - 2 * MX) / 2.2), i: list.indexOf(l) });
+            });
+            row += 1;
+          }
+        });
+      }
+      // the bridge from the previous chapter: what the first stars build on there, else its last star
+      const bridgedRoots = new Set();
+      if (prev) {
+        roots.forEach((r) => {
+          const there = prev.lessons.filter((m) => r.req.includes(m.id));
+          if (there.length) {
+            edges.push([there.reduce((x, m) => (m.order > x.order ? m : x)).id, r.id, "bridge"]);
+            bridgedRoots.add(r.id);
+          }
+        });
+        if (!bridgedRoots.size) {
+          const last = prev.lessons.reduce((x, m) => {
+            const px = pos.get(x.id), pm = pos.get(m.id);
+            return pm.y > px.y + 1 || (Math.abs(pm.y - px.y) <= 1 && m.order > x.order) ? m : x;
+          });
+          edges.push([last.id, roots[0].id, "bridge"]);
+          bridgedRoots.add(roots[0].id);
+        }
+      }
+      // every other first star hangs on the one before it, so the chapter is one figure
+      roots.forEach((r, k) => { if (k > 0) edges.push([roots[k - 1].id, r.id, "sib"]); });
+      const bottom = top + LABEL + FIRST + (row - 1) * ROW + TAIL;
+      groups.push({ chapter: ch, index: ci, top, bottom, lessons: list });
+      prev = { lessons: list };
+      y = bottom + 4;
+      gi += 1;
     });
-    return { pos, bands, links, height: y };
+    return { pos, groups, edges, height: y + 6 };
+  }
+
+  /** A title in at most two short lines under its star. */
+  function wrapTitle(title, room) {
+    const words = String(title).split(/\s+/);
+    const lines = [""];
+    for (const w of words) {
+      const cur = lines[lines.length - 1];
+      if (!cur) lines[lines.length - 1] = w;
+      else if ((cur + " " + w).length <= room) lines[lines.length - 1] = cur + " " + w;
+      else if (lines.length < 2) lines.push(w);
+      else { lines[1] = (lines[1] + " " + w); break; }
+    }
+    return lines.map((t) => (t.length > room ? t.slice(0, room - 1).trimEnd() + "…" : t));
   }
 
   function ring(parent, size, value, color) {
@@ -124,7 +178,7 @@
       const allDone = courses.reduce((s, c) => s + c.lessonsFlat.filter((l) => settled(l.id)).length, 0);
       root.append(el("header", { class: "lw-head" }, [
         el("div", { class: "lw-kicker", text: "Überblick" }),
-        el("div", { class: "lw-title", text: "Dein Lernpfad" }),
+        el("div", { class: "lw-title", text: "Lernpfad" }),
         el("div", { class: "lw-subtitle", text: allDone + " von " + allLessons + " Lektionen · " + levelsOf(courses) + " von " + maxLevelsOf(courses) + " Trainingsstufen" + (P.streak ? " · " + P.streak + (P.streak === 1 ? " Tag" : " Tage") + " in Folge" : "") }),
       ]));
 
@@ -134,7 +188,7 @@
       const tabs = el("div", { class: "ov-tabs", role: "tablist" });
       root.append(tabs);
       root.append(el("div", { class: "ov-legend" }, [
-        ["done", "geschafft"], ["started", "begonnen"], ["ready", "bereit"], ["later", "baut auf anderem auf"],
+        ["done", "abgeschlossen"], ["started", "begonnen"], ["ready", "als Nächstes frei"], ["later", "gesperrt"],
       ].concat(skipped.size ? [["skipped", "übersprungen"]] : []).map(([k, t]) => el("span", { class: "ov-key " + k }, [el("i"), el("span", { text: t })]))));
       const treeBox = el("div", { class: "ov-trees" });
       root.append(treeBox);
@@ -165,7 +219,7 @@
           ]));
           const lv = levelsOf(s.list), mx = maxLevelsOf(s.list);
           const bar = el("div", { class: "ov-levelbar", title: "Trainingsstufen" }, [el("i", { style: "width:" + (mx ? (100 * lv) / mx : 0) + "%" })]);
-          card.append(top, bar, el("div", { class: "ov-subject-next", text: nxt ? "Als Nächstes: " + nxt.title : got === total ? "Alles geschafft" : "" }));
+          card.append(top, bar, el("div", { class: "ov-subject-next", text: nxt ? "Als Nächstes: " + nxt.title : got === total ? "Alles abgeschlossen" : "" }));
           card.addEventListener("click", () => { selected = selected === s.id ? "alle" : s.id; paint(); });
           cards.append(card);
         });
@@ -194,66 +248,77 @@
             el("div", { class: "ov-course-count", text: got + "/" + c.lessonsFlat.length }),
           ]));
           const W = 360;
-          const { pos, bands, links, height } = layout(c.lessonsFlat, c.chapters || [], W);
+          sec.classList.add("ov-sky");
+          const { pos, groups, edges, height } = skyLayout(c.lessonsFlat, c.chapters || [], W);
           const svg = sv("svg", { viewBox: "0 0 " + W + " " + height, class: "ov-tree", role: "img", "aria-label": "Lernpfad " + c.title }, null);
-          const back = sv("g", null, svg), edges = sv("g", null, svg), nodes = sv("g", null, svg);
-          bands.forEach((b) => {
-            const all = b.lessons.length, got = b.lessons.filter((l) => settled(l.id)).length;
-            sv("rect", { x: 2, y: b.top, width: W - 4, height: b.bottom - b.top, rx: 16, class: "ov-band" + (got === all ? " full" : "") }, back);
-            const title = String(b.chapter.title || "");
-            const t = sv("text", { x: b.compact ? 66 : 16, y: b.top + (b.compact ? 26 : 19), class: "ov-band-title" }, back);
-            t.textContent = title.length > 40 ? title.slice(0, 39).trimEnd() + "…" : title;
-            const sub = [b.chapter.ref, got + "/" + all].filter(Boolean).join(" · ");
-            const s = sv("text", { x: W - 16, y: b.top + (b.compact ? 26 : 19), class: "ov-band-count" }, back);
-            s.textContent = sub;
+          const back = sv("g", null, svg), lines = sv("g", null, svg), nodes = sv("g", null, svg);
+          // faint background stars, always the same for a course
+          let seed = LW.hash(c.id) >>> 0;
+          const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+          for (let k = 0, n = Math.round(height / 7); k < n; k++) {
+            sv("circle", { cx: (rnd() * W).toFixed(1), cy: (rnd() * height).toFixed(1), r: (0.35 + rnd() * 0.75).toFixed(2), class: "ov-dust", opacity: (0.15 + rnd() * 0.35).toFixed(2) }, back);
+          }
+          groups.forEach((gr) => {
+            const all = gr.lessons.length, got = gr.lessons.filter((l) => settled(l.id)).length;
+            const title = String(gr.chapter.title || "");
+            const t = sv("text", { x: 16, y: gr.top + 13, class: "ov-band-title ov-sky-label" }, back);
+            t.textContent = (title.length > 40 ? title.slice(0, 39).trimEnd() + "…" : title).toUpperCase();
+            const sub = sv("text", { x: W - 16, y: gr.top + 13, class: "ov-band-count ov-sky-label" + (got === all ? " full" : "") }, back);
+            sub.textContent = [gr.chapter.ref, got + "/" + all].filter(Boolean).join(" · ");
           });
-          c.lessonsFlat.forEach((l) => {
-            const b = pos.get(l.id);
-            if (!b) return;
-            const outside = l.req.filter((r) => lessonIndex.get(r) && lessonIndex.get(r).chapterIndex !== l.chapterIndex);
-            if (outside.length && (b.compact || b.first)) {
-              // built on an earlier chapter: a short line from above, lit once those lessons are settled
-              const r = b.compact ? 19 : 16;
-              const p = sv("path", { d: "M" + b.x + "," + (b.y - r - 3) + " L" + b.x + "," + (b.y - r - 10), class: "ov-edge ov-stub" + (outside.every(settled) ? " lit" : "") }, edges);
-              p.dataset.to = l.id;
-            }
-          });
-          // from a lesson down and across to what builds on it, lit once it is settled
-          links.forEach(([from, to]) => {
+          const lit = (from, to) => settled(from) && (settled(to) || stateOf(lessonIndex.get(to)) === "started");
+          edges.forEach(([from, to, kind], k) => {
             const a = pos.get(from), b = pos.get(to);
-            const d = b.x - a.x >= 20
-              ? "M" + a.x + "," + (a.y + 16) + " L" + a.x + "," + (b.y - 6) + " Q" + a.x + "," + b.y + " " + (a.x + 6) + "," + b.y + " L" + (b.x - 15) + "," + b.y
-              : "M" + a.x + "," + (a.y + 16) + " L" + b.x + "," + (b.y - 16);
-            const p = sv("path", { d, class: "ov-edge" + (settled(from) ? " lit" : "") }, edges);
-            p.dataset.from = from; p.dataset.to = to;
+            const next = settled(from) && stateOf(lessonIndex.get(to)) === "ready";
+            const ln = sv("line", { x1: a.x.toFixed(1), y1: a.y.toFixed(1), x2: b.x.toFixed(1), y2: b.y.toFixed(1), pathLength: 1,
+              class: "ov-line" + (kind ? " " + kind : "") + (lit(from, to) ? " lit" : next ? " next" : ""), style: "--d:" + Math.min(900, 120 + k * 14) + "ms" }, lines);
+            ln.dataset.from = from; ln.dataset.to = to;
           });
           c.lessonsFlat.forEach((l) => {
             const q = pos.get(l.id), st = stateOf(l);
-            const g = sv("g", { class: "ov-node " + st + (focusId === l.id ? " focus" : ""), transform: "translate(" + q.x + "," + q.y + ")", tabindex: "0", role: "button", "aria-label": l.title + ", " + { done: "geschafft", skipped: "übersprungen", started: "begonnen", ready: "bereit", later: "baut auf anderen Lektionen auf" }[st] }, nodes);
-            // rows of a longer chapter draw the node a little smaller; the title stands beside it in full
-            const half = q.row ? 16 : 19;
-            sv("rect", { x: -half - 4, y: -half - 2, width: W - q.x + half - 10, height: 2 * half + 4, rx: 10, class: "ov-hit" }, g);
-            const k0 = q.row ? sv("g", { transform: "scale(0.82)" }, g) : g;
-            if (st === "ready") sv("circle", { r: 25, class: "ov-glow" }, k0);
-            sv("circle", { r: 19, class: "ov-disc" }, k0);
-            if (st === "started") sv("circle", { r: 19, class: "ov-arc", "stroke-dasharray": "60 200", transform: "rotate(-90)" }, k0);
-            if (st === "done") sv("path", { d: "M-7,0.5 L-2,5.5 L7.5,-5", class: "ov-check" }, k0);
-            else if (st === "skipped") sv("path", { d: "M-6,-5.5 L2,0 L-6,5.5 Z M5,-5.5 L5,5.5", class: "ov-skip" }, k0);
-            else { const t = sv("text", { class: "ov-num", y: 0.5 }, k0); t.textContent = String(l.order + 1); }
-            if (l.links.length) sv("circle", { cx: 15, cy: -15, r: 3.6, class: "ov-link-dot" }, k0);
+            const g = sv("g", { class: "ov-node ov-star " + st + (focusId === l.id ? " focus" : ""), transform: "translate(" + q.x.toFixed(1) + "," + q.y.toFixed(1) + ")",
+              tabindex: "0", role: "button", style: "--d:" + Math.min(900, q.i * 24) + "ms",
+              "aria-label": l.title + ", " + { done: "abgeschlossen", skipped: "übersprungen", started: "begonnen", ready: "als Nächstes frei", later: "gesperrt" }[st] }, nodes);
+            sv("circle", { r: 24, class: "ov-hit" }, g);
+            const star = sv("g", { class: "ov-star-body" }, g);
+            if (st === "done") {
+              sv("circle", { r: 11, class: "ov-halo" }, star);
+              sv("circle", { r: 5.5, class: "ov-core" }, star);
+              sv("circle", { r: 1.9, class: "ov-spark" }, star);
+            } else if (st === "started") {
+              sv("circle", { r: 9, class: "ov-orbit" }, star);
+              sv("circle", { r: 9, class: "ov-arc", pathLength: 1, "stroke-dasharray": "0.4 1", transform: "rotate(-90)" }, star);
+              sv("circle", { r: 4.2, class: "ov-core" }, star);
+            } else if (st === "ready") {
+              sv("circle", { r: 13, class: "ov-halo ready" }, star);
+              sv("circle", { r: 6, class: "ov-ringstar" }, star);
+            } else if (st === "skipped") {
+              sv("circle", { r: 5.5, class: "ov-skipstar" }, star);
+            } else {
+              sv("circle", { r: 2.8, class: "ov-dim" }, star);
+            }
+            sv("circle", { r: 16, class: "ov-focus-ring" }, g);
             const topic = c.topics.find((t) => t.after === l.id);
-            // training levels: four dots at the right end of the line
+            // training levels: four small dots in an arc above the star
             if (topic) {
               const lvl = best(c, topic);
               for (let k = 1; k <= 4; k++) {
-                const dot = sv("circle", { cx: W - 44 - q.x + (k - 1) * 7, cy: 0, r: 2.6, class: "ov-pip" + (k <= lvl ? " on" : "") }, g);
+                const ang = (-150 + (k - 1) * 40) * Math.PI / 180;
+                const dot = sv("circle", { cx: (Math.cos(ang) * 15).toFixed(1), cy: (Math.sin(ang) * 15).toFixed(1), r: 1.9, class: "ov-pip" + (k <= lvl ? " on" : "") }, g);
                 if (k <= lvl) dot.style.fill = "var(--lv" + k + "-a)";
               }
             }
-            const room = Math.floor((W - q.x - half - 12 - (topic ? 40 : 10)) / 5.7);
-            const t = sv("text", { class: "ov-label side", x: half + 9, y: q.compact ? 11 : 4 }, g);
-            t.textContent = l.title.length > room ? l.title.slice(0, room - 1).trimEnd() + "…" : l.title;
-            const open = () => { focusId = l.id; paint(); showSheet(l); };
+            const room = Math.max(10, Math.floor((q.w - 6) / 4.9));
+            wrapTitle(l.title, room).forEach((line, k) => {
+              const t = sv("text", { class: "ov-label", x: 0, y: 25 + k * 10.5 }, g);
+              t.textContent = line;
+            });
+            const open = () => {
+              focusId = l.id;
+              treeBox.querySelectorAll(".ov-node.focus").forEach((n) => n.classList.remove("focus"));
+              g.classList.add("focus");
+              showSheet(l);
+            };
             g.addEventListener("click", open);
             g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
           });
@@ -269,8 +334,8 @@
         sheet.innerHTML = "";
         sheet.style.setProperty("--cc", c.color || "#d2502c");
         const close = el("button", { class: "ov-sheet-close", type: "button", "aria-label": "Schließen", text: "×" });
-        close.addEventListener("click", () => { sheet.classList.remove("open"); focusId = null; paint(); });
-        const status = { done: "Geschafft", skipped: "Übersprungen", started: "Begonnen", ready: "Bereit", later: "Baut auf anderen Lektionen auf" }[st];
+        close.addEventListener("click", () => { sheet.classList.remove("open"); focusId = null; treeBox.querySelectorAll(".ov-node.focus").forEach((n) => n.classList.remove("focus")); });
+        const status = { done: "Abgeschlossen", skipped: "Übersprungen", started: "Begonnen", ready: "Als Nächstes frei", later: "Baut auf anderen Lektionen auf" }[st];
         sheet.append(close,
           el("div", { class: "ov-sheet-kicker", text: c.title + " · " + l.chapter }),
           el("div", { class: "ov-sheet-title", text: l.title }),
@@ -309,6 +374,7 @@
 
       function paint() { paintCards(); paintTabs(); paintTrees(); }
       paint();
+      setTimeout(() => root.classList.add("ov-settled"), 1400);
       if (o.focus && lessonIndex.has(o.focus)) {
         focusId = o.focus;
         paint();

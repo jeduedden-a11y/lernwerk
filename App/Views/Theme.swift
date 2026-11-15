@@ -129,6 +129,61 @@ extension View {
     func readableColumn(_ maxWidth: CGFloat = 760) -> some View {
         frame(maxWidth: maxWidth).frame(maxWidth: .infinity)
     }
+
+    /// Comes up once when the page first appears, a moment after the elements above it.
+    func appearOnce(_ index: Int = 0) -> some View { modifier(AppearOnce(index: index)) }
+
+    /// Marks the view a push zooms out of (iOS zoom transition); the destination uses the same id.
+    func zoomSource(_ id: String) -> some View { modifier(ZoomSource(id: id)) }
+}
+
+/// Motion is off when iOS or Lernwerk's own setting asks for less of it.
+struct MotionSettings {
+    static func reduced(system: Bool) -> Bool { system || UserDefaults.standard.bool(forKey: "reduceMotion") }
+}
+
+/// Entrance, once per page: fade in and rise a little, staggered by index. Nothing keeps moving afterwards.
+struct AppearOnce: ViewModifier {
+    var index: Int
+    @State private var shown = false
+    @Environment(\.accessibilityReduceMotion) private var systemReduce
+
+    func body(content: Content) -> some View {
+        let still = MotionSettings.reduced(system: systemReduce)
+        content
+            .opacity(shown || still ? 1 : 0)
+            .offset(y: shown || still ? 0 : 14)
+            .onAppear {
+                guard !shown else { return }
+                withAnimation(.spring(duration: 0.5, bounce: 0.12).delay(Double(min(index, 8)) * 0.045)) { shown = true }
+            }
+    }
+}
+
+private struct ZoomNamespaceKey: EnvironmentKey {
+    static let defaultValue: Namespace.ID? = nil
+}
+
+extension EnvironmentValues {
+    /// Namespace of the home stack's zoom transitions (subjects and courses).
+    var zoomNamespace: Namespace.ID? {
+        get { self[ZoomNamespaceKey.self] }
+        set { self[ZoomNamespaceKey.self] = newValue }
+    }
+}
+
+struct ZoomSource: ViewModifier {
+    var id: String
+    @Environment(\.zoomNamespace) private var namespace
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if let namespace {
+            content.matchedTransitionSource(id: id, in: namespace)
+        } else {
+            content
+        }
+    }
 }
 
 /// Slight press-down for custom tappable tiles.
@@ -197,15 +252,22 @@ struct ProgressLine: View {
     var value: Double
     var tint: Color
     var height: CGFloat = 6
+    /// Grows from zero the first time it appears, then follows changes with a spring.
+    @State private var shown = false
+    @Environment(\.accessibilityReduceMotion) private var systemReduce
 
     var body: some View {
+        let still = MotionSettings.reduced(system: systemReduce)
+        let v = shown || still ? min(1, max(0, value)) : 0
         GeometryReader { geo in
             ZStack(alignment: .leading) {
                 Capsule().fill(Color.primary.opacity(0.08))
-                Capsule().fill(tint).frame(width: max(height, geo.size.width * min(1, max(0, value))))
+                Capsule().fill(tint).frame(width: max(height, geo.size.width * v))
             }
         }
         .frame(height: height)
+        .animation(still ? nil : .spring(duration: 0.8, bounce: 0.1), value: v)
+        .onAppear { shown = true }
         .accessibilityElement()
         .accessibilityValue(Text("\(Int((value * 100).rounded())) Prozent"))
     }
@@ -216,15 +278,22 @@ struct GoalRing: View {
     var value: Double
     var tint: Color = .accentColor
     var lineWidth: CGFloat = 7
+    /// Draws itself from zero the first time it appears.
+    @State private var shown = false
+    @Environment(\.accessibilityReduceMotion) private var systemReduce
 
     var body: some View {
+        let still = MotionSettings.reduced(system: systemReduce)
+        let v = shown || still ? min(1, max(0.001, value)) : 0.001
         ZStack {
             Circle().stroke(Color.primary.opacity(0.1), lineWidth: lineWidth)
             Circle()
-                .trim(from: 0, to: min(1, max(0.001, value)))
+                .trim(from: 0, to: v)
                 .stroke(tint, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
         }
+        .animation(still ? nil : .spring(duration: 0.9, bounce: 0.08), value: v)
+        .onAppear { shown = true }
     }
 }
 

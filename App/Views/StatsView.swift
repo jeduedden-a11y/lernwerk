@@ -13,10 +13,15 @@ struct StatsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     SummaryGrid()
+                        .appearOnce(0)
                     WeakSpotsCard(target: $practiceTarget)
+                        .appearOnce(1)
                     TrafficLightCard()
+                        .appearOnce(2)
                     XPChartCard(window: $window)
+                        .appearOnce(3)
                     ExamHistoryCard(target: $examTarget)
+                        .appearOnce(4)
                     ForEach(model.subjects) { subject in
                         SectionTitle(title: subject.title, trailing: "\(Int((model.progress(of: subject) * 100).rounded())) %")
                         ForEach(model.courses(in: subject)) { course in
@@ -31,7 +36,7 @@ struct StatsView: View {
                 .padding(.bottom, 24)
                 .readableColumn()
             }
-            .background { TintBackground(tints: [.green, .mint]) }
+            .background { TintBackground(tints: [Color.accentColor]) }
             .navigationTitle("Fortschritt")
             .navigationDestination(for: Course.self) { course in
                 CourseView(course: course)
