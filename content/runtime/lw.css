@@ -913,3 +913,15 @@ body {
 .ov-key.later i { width: 6px; height: 6px; border: 0; background: var(--label-3); margin: 0 2.5px; }
 .ov-sky-label { opacity: 0.85; paint-order: stroke; stroke: var(--sky); stroke-width: 4px; stroke-linejoin: round; }
 .ov-band-title.ov-sky-label { fill: var(--label-3); font-size: 9px; letter-spacing: 0.12em; }
+
+/* short explanation first, the full one on request */
+.lw-more { margin-top: 12px; }
+.lw-more-btn { appearance: none; border: 0; background: var(--accent-soft); color: var(--accent); font: inherit; font-size: 0.86em; font-weight: 650; padding: 7px 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.lw-more-btn::after { content: ""; width: 6px; height: 6px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform 0.25s ease; }
+.lw-more.open .lw-more-btn::after { transform: translateY(1px) rotate(-135deg); }
+.lw-more-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.32s ease; }
+.lw-more.open .lw-more-body { grid-template-rows: 1fr; }
+.lw-more-body > div { overflow: hidden; min-height: 0; }
+.lw-more-body .lw-md { padding-top: 10px; }
+.lw-reduce-motion .lw-more-body, .lw-reduce-motion .lw-more-btn::after { transition: none; }
+@media (prefers-reduced-motion: reduce) { .lw-more-body, .lw-more-btn::after { transition: none; } }

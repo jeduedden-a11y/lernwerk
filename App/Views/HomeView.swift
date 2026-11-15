@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 import LernwerkCore
 
 // Home screen: progress per subject at a glance, three actions, and every subject with its next lesson.
@@ -117,9 +118,10 @@ enum HomeDate {
     }
 }
 
-/// Progress of every subject as one row of bars: the width follows the size of the subject, the height how much of
-/// it is done. The bars grow once when the page opens; a tap on one finds its subject below. Below the bars: points
-/// today, days in a row, due reviews. The title row opens Fortschritt.
+/// Progress on the Lernen tab: the share of all lessons as one large number, a capsule in which every subject fills
+/// its part in its colour, the subjects as small glass marks, and the points of the last seven days with the daily
+/// goal. Everything grows once when the page opens; a tap on a part or a mark finds the subject below, a tap on a day
+/// shows its points, the title opens Fortschritt.
 struct ProgressOverview: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var scheme
@@ -127,90 +129,179 @@ struct ProgressOverview: View {
     var onPick: (Subject) -> Void
     @State private var grown = false
     @State private var picks = 0
+    @State private var selectedDay: String?
+
+    private struct Day: Identifiable {
+        var label: String
+        var xp: Int
+        var isToday: Bool
+        var id: String { label }
+    }
 
     var body: some View {
         let still = MotionSettings.reduced(system: systemReduce)
+        let up = grown || still
         let subjects = model.subjects
         let ready = subjects.map { s in model.courses(in: s).reduce(0) { $0 + $1.readyLessons.count } }
         let settled = subjects.map { s in model.courses(in: s).reduce(0) { $0 + model.state.settledCount(in: $1) } }
         let total = ready.reduce(0, +)
         let done = settled.reduce(0, +)
+        let pct = total == 0 ? 0 : Int((Double(done) / Double(total) * 100).rounded())
+        let days = week
         let goal = max(1, model.state.dailyGoal)
-        let up = grown || still
-        VStack(alignment: .leading, spacing: 12) {
-            Button {
-                model.selectedTab = .stats
-            } label: {
-                HStack(alignment: .firstTextBaseline) {
-                    Text("Fortschritt").font(.headline)
-                    Spacer(minLength: 8)
-                    Text("\(up ? done : 0) von \(total) Lektionen")
-                        .font(.subheadline.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                        .contentTransition(.numericText(value: Double(up ? done : 0)))
-                    Image(systemName: "chevron.right")
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.tertiary)
-                }
-                .foregroundStyle(.primary)
-                .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityHint("Öffnet den Fortschritt")
-
-            GeometryReader { geo in
-                let gap: CGFloat = 3
-                let width = max(0, geo.size.width - gap * CGFloat(max(0, subjects.count - 1)))
-                HStack(alignment: .bottom, spacing: gap) {
-                    ForEach(Array(subjects.enumerated()), id: \.element.id) { i, subject in
-                        let share = ready[i] == 0 ? 0 : Double(settled[i]) / Double(ready[i])
-                        let w = total == 0 ? width / CGFloat(max(1, subjects.count)) : width * CGFloat(ready[i]) / CGFloat(total)
-                        ZStack(alignment: .bottom) {
-                            Rectangle().fill(Color.primary.opacity(0.08))
-                            Rectangle()
-                                .fill(subject.pigment(scheme))
-                                .frame(height: max(3, geo.size.height * (up ? share : 0)))
-                                .animation(still ? nil : .spring(duration: 0.75, bounce: 0.12).delay(Double(i) * 0.04), value: up)
-                        }
-                        .frame(width: w)
-                        .contentShape(.rect)
-                        .onTapGesture {
-                            picks += 1
-                            onPick(subject)
-                        }
-                        .accessibilityElement()
-                        .accessibilityLabel("\(subject.title), \(Int((share * 100).rounded())) Prozent")
-                        .accessibilityAddTraits(.isButton)
-                        .accessibilityAction { onPick(subject) }
+        let due = model.dueCards.count
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .firstTextBaseline) {
+                Button {
+                    model.selectedTab = .stats
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("Fortschritt").font(.headline)
+                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(.tertiary)
                     }
+                    .foregroundStyle(.primary)
+                    .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint("Öffnet den Fortschritt")
+                Spacer(minLength: 8)
+                if due > 0 {
+                    Button {
+                        picks += 1
+                        model.startReview()
+                    } label: {
+                        Label("\(due) fällig", systemImage: "arrow.counterclockwise")
+                            .font(.footnote.weight(.semibold))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(Color.accentColor)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .accessibilityHint("Startet die Wiederholung")
                 }
             }
-            .frame(height: 58)
-            .clipShape(.rect(cornerRadius: 10, style: .continuous))
 
-            HStack(spacing: 0) {
-                stat(up ? model.todayXP : 0, "/\(goal)", "Punkte heute")
-                Divider().frame(height: 28)
-                stat(up ? model.streak : 0, "", model.streak == 1 ? "Tag in Folge" : "Tage in Folge")
-                Divider().frame(height: 28)
-                stat(up ? model.dueCards.count : 0, "", "fällig")
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text("\(up ? pct : 0) %")
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .contentTransition(.numericText(value: Double(up ? pct : 0)))
+                Text("\(done) von \(total) Lektionen")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
-            .animation(still ? nil : .smooth(duration: 0.8), value: up)
+            .animation(still ? nil : .smooth(duration: 0.9), value: up)
+            .accessibilityElement(children: .combine)
+
+            // every subject fills its share of all lessons, in its colour
+            GeometryReader { geo in
+                let gap: CGFloat = 2
+                let parts = subjects.indices.filter { settled[$0] > 0 }
+                let usable = max(0, geo.size.width - gap * CGFloat(max(0, parts.count - 1)))
+                ZStack(alignment: .leading) {
+                    Capsule().fill(Color.primary.opacity(0.08))
+                    HStack(spacing: gap) {
+                        ForEach(Array(parts.enumerated()), id: \.element) { k, i in
+                            let w = total == 0 ? 0 : usable * CGFloat(settled[i]) / CGFloat(total)
+                            Rectangle()
+                                .fill(LinearGradient(colors: [subjects[i].pigment(scheme), subjects[i].pigment(scheme).opacity(0.78)], startPoint: .top, endPoint: .bottom))
+                                .frame(width: up ? w : 0)
+                                .shadow(color: subjects[i].pigment(scheme).opacity(scheme == .dark ? 0.55 : 0), radius: 5)
+                                .animation(still ? nil : .spring(duration: 0.8, bounce: 0.1).delay(Double(k) * 0.05), value: up)
+                                .contentShape(.rect)
+                                .onTapGesture {
+                                    picks += 1
+                                    onPick(subjects[i])
+                                }
+                        }
+                    }
+                    // a soft gloss on top, like light on glass
+                    Capsule()
+                        .fill(LinearGradient(colors: [Color.white.opacity(scheme == .dark ? 0.22 : 0.35), .clear], startPoint: .top, endPoint: .center))
+                        .allowsHitTesting(false)
+                }
+                .clipShape(.capsule)
+            }
+            .frame(height: 14)
+            .accessibilityHidden(true)
+
+            // the subjects as small marks: colour, name, own progress
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 104), spacing: 6, alignment: .leading)], alignment: .leading, spacing: 6) {
+                ForEach(Array(subjects.enumerated()), id: \.element.id) { i, subject in
+                    let share = ready[i] == 0 ? 0 : Double(settled[i]) / Double(ready[i])
+                    Button {
+                        picks += 1
+                        onPick(subject)
+                    } label: {
+                        HStack(spacing: 6) {
+                            Circle().fill(subject.pigment(scheme)).frame(width: 7, height: 7)
+                            Text(subject.title).font(.caption.weight(.semibold)).lineLimit(1)
+                            Spacer(minLength: 2)
+                            Text("\(Int((share * 100).rounded()))")
+                                .font(.caption2.monospacedDigit())
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 6)
+                        .foregroundStyle(.primary)
+                        .background(Color.primary.opacity(0.06), in: .capsule)
+                        .contentShape(.capsule)
+                    }
+                    .buttonStyle(PressableStyle())
+                    .accessibilityLabel("\(subject.title), \(Int((share * 100).rounded())) Prozent")
+                }
+            }
+
+            Divider().opacity(0.6)
+
+            // the last seven days, today strongest, the daily goal as a line
+            let sum = days.reduce(0) { $0 + $1.xp }
+            let picked = selectedDay.flatMap { label in days.first { $0.label == label } }
+            HStack(alignment: .firstTextBaseline) {
+                Text(picked.map { $0.isToday ? "Heute" : $0.label } ?? "Diese Woche")
+                    .font(.subheadline.weight(.semibold))
+                Spacer(minLength: 8)
+                Text(picked.map { "\($0.xp) Punkte" } ?? "\(sum) Punkte · \(model.streak) \(model.streak == 1 ? "Tag" : "Tage") in Folge")
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundStyle(.secondary)
+                    .contentTransition(.numericText())
+            }
+            .animation(.smooth(duration: 0.2), value: selectedDay)
+            Chart {
+                ForEach(days) { d in
+                    BarMark(x: .value("Tag", d.label), y: .value("Punkte", up ? d.xp : 0), width: .ratio(0.46))
+                        .cornerRadius(5)
+                        .foregroundStyle(d.isToday ? AnyShapeStyle(Color.accentColor.gradient) : AnyShapeStyle(Color.accentColor.opacity(0.42).gradient))
+                        .opacity(selectedDay == nil || selectedDay == d.label ? 1 : 0.35)
+                        .accessibilityLabel(d.isToday ? "Heute" : d.label)
+                        .accessibilityValue("\(d.xp) Punkte")
+                }
+                RuleMark(y: .value("Tagesziel", goal))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                    .foregroundStyle(Color.secondary.opacity(0.7))
+            }
+            .chartYAxis(.hidden)
+            .chartYScale(domain: 0...max(goal, days.map(\.xp).max() ?? 0) + goal / 5)
+            .chartXSelection(value: $selectedDay)
+            .frame(height: 96)
+            .animation(still ? nil : .spring(duration: 0.8, bounce: 0.1), value: up)
         }
-        .card(padding: 14, radius: 24)
+        .card(padding: 16, radius: 26)
         .sensoryFeedback(.selection, trigger: picks)
+        .sensoryFeedback(.selection, trigger: selectedDay)
         .onAppear { grown = true }
     }
 
-    private func stat(_ value: Int, _ suffix: String, _ label: String) -> some View {
-        VStack(spacing: 1) {
-            Text("\(value)\(suffix)")
-                .font(.headline.monospacedDigit())
-                .contentTransition(.numericText(value: Double(value)))
-            Text(label).font(.caption2).foregroundStyle(.secondary)
+    /// The last seven days, oldest first, named by their weekday ("Mo", "Di", ...).
+    private var week: [Day] {
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: Date())
+        return (0..<7).reversed().compactMap { i in
+            guard let d = cal.date(byAdding: .day, value: -i, to: today) else { return nil }
+            let label = d.formatted(.dateTime.weekday(.abbreviated).locale(germanLocale)).replacingOccurrences(of: ".", with: "")
+            return Day(label: label, xp: model.state.xp(on: DayKey.key(for: d)), isToday: i == 0)
         }
-        .frame(maxWidth: .infinity)
-        .accessibilityElement(children: .combine)
     }
 }
 

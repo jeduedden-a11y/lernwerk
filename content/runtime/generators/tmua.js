@@ -38,14 +38,42 @@
   const fmul = (a, b) => fr(a[0] * b[0], a[1] * b[1]);
   const fdiv = (a, b) => fr(a[0] * b[1], a[1] * b[0]);
   const ftex = (a) => (a[1] === 1 ? String(a[0]) : (a[0] < 0 ? "-" : "") + "\\frac{" + Math.abs(a[0]) + "}{" + a[1] + "}");
-  /** numeric options, ascending and distinct, the correct one marked; at most n */
-  function numeric(correct, wrong, show, n) {
+  /** numeric options, ascending and distinct, the correct one marked: eight, as in the test. When the given
+   *  distractors run out, values of the same kind fill up (integers stay integers, fractions fractions, nothing
+   *  turns negative that was not); noFill keeps to the given ones (when another value could also be right). */
+  function numeric(correct, wrong, show, n, noFill) {
+    const want = 8;
     const key = (v) => (Array.isArray(v) ? v[0] / v[1] : v).toFixed(9);
     const seen = new Set([key(correct)]);
     const all = [{ v: correct, correct: true }];
-    wrong.forEach((w) => { if (w == null || !isFinite(Array.isArray(w) ? w[0] / w[1] : w)) return; const k = key(w); if (seen.has(k) || all.length >= (n || 6)) return; seen.add(k); all.push({ v: w }); });
+    const add = (w) => { if (w == null || !isFinite(Array.isArray(w) ? w[0] / w[1] : w)) return; const k = key(w); if (seen.has(k) || all.length >= want) return; seen.add(k); all.push({ v: w }); };
+    wrong.forEach(add);
+    if (!noFill && all.length < want) fillers(correct, all.map((x) => x.v)).forEach(add);
     const val = (x) => (Array.isArray(x.v) ? x.v[0] / x.v[1] : x.v);
     return all.sort((a, b) => val(a) - val(b)).map((x) => ({ md: show(x.v), correct: !!x.correct }));
+  }
+  /** more values like the given ones: near the right answer, unevenly on both sides, so its place does not show */
+  function fillers(c, have) {
+    const val = (v) => (Array.isArray(v) ? v[0] / v[1] : v);
+    const vals = have.map(val);
+    const nonneg = vals.every((v) => v >= 0);
+    const unit = vals.every((v) => v >= 0 && v <= 1);
+    const up = (Math.abs(Math.round(val(c) * 997)) % 2) === 0;
+    const order = (up ? [1, 2, -1, 3, 4, -2, 5, -3, 6, 7, -4, 8, -5] : [-1, -2, 1, -3, -4, 2, -5, 3, -6, -7, 4, -8, 5]);
+    const out = [];
+    if (Array.isArray(c)) {
+      const [p, q] = c;
+      order.forEach((d) => out.push(fr(p + d, q)));
+      [[p, q + 1], [p, q - 1], [2 * p, q], [p, 2 * q], [q, p]].forEach(([x, y]) => { if (y > 0) out.push(fr(x, y)); });
+    } else if (Number.isInteger(c) && vals.every(Number.isInteger)) {
+      const m = Math.abs(c), stepv = m >= 1000 ? 100 : m >= 200 ? 10 : m >= 40 ? 5 : 1;
+      order.forEach((d) => out.push(c + d * stepv));
+      out.push(2 * c, 3 * c, -c);
+    } else {
+      const m = Math.abs(val(c)) || 1, stepv = unit ? 0.05 : Math.pow(10, Math.floor(Math.log10(m)) - 1);
+      order.forEach((d) => out.push(+(val(c) + d * stepv).toFixed(6)));
+    }
+    return out.filter((v) => { const x = val(v); return isFinite(x) && (!nonneg || x >= 0) && (!unit || (x >= 0 && x <= 1)); });
   }
   const step = (md, options, explain) => ({ type: "choice", lang: "en", shuffle: false, md, options, explain });
   const answer = (options) => LETTERS[options.findIndex((o) => o.correct)];
@@ -126,8 +154,11 @@
       for (let d = 2; d <= 3 * m0 && pool.none.length < 8; d++) if (cls(d) === "none") pool.none.push(d);
       if (!pool[kind].length) return step("Let $n$ be a positive integer. Which one of the following is a necessary and sufficient condition for $n^2$ to be divisible by 48?", numeric(12, [6, 8, 24, 48, 9], (d) => "$n$ is divisible by $" + d + "$"), "**12** ist notwendig und hinreichend.");
       const right = G.pick(pool[kind]);
-      const others = G.shuffle(["nas", "nns", "snn", "none"].filter((c) => c !== kind).flatMap((c) => G.shuffle(pool[c]).slice(0, 2)));
-      const opts = numeric(right, others, (d) => "$n$ is divisible by $" + d + "$", 6);
+      // seven distractors, taken in turn from the other classes (never from the asked one: that would be a second right answer)
+      const bags = ["nas", "nns", "snn", "none"].filter((c) => c !== kind).map((c) => G.shuffle(pool[c].slice()));
+      const others = [];
+      for (let round = 0; others.length < 7 && bags.some((x) => x.length); round++) bags.forEach((x) => { if (x.length && others.length < 7) others.push(x.shift()); });
+      const opts = numeric(right, others, (d) => "$n$ is divisible by $" + d + "$", 8, true);
       const ask = { nas: "a **necessary and sufficient**", nns: "a **necessary but not sufficient**", snn: "a **sufficient but not necessary**" }[kind];
       const fac = Object.keys(f).map((p) => p + (f[p] > 1 ? "^{" + f[p] + "}" : "")).join(" \\cdot ");
       const mfac = Object.keys(f).map((p) => { const e = Math.ceil(f[p] / k); return p + (e > 1 ? "^{" + e + "}" : ""); }).join(" \\cdot ");
@@ -210,21 +241,21 @@
   // ------------------------------------------------------------------ Etappe 5: negation
   const NEG = [
     { lv: 1, s: "Every student in the class owns a calculator.", right: "At least one student in the class does not own a calculator.",
-      wrong: ["No student in the class owns a calculator.", "Every student in the class does not own a calculator.", "At least one student in the class owns a calculator.", "Exactly one student in the class does not own a calculator."] },
+      wrong: ["No student in the class owns a calculator.", "Every student in the class does not own a calculator.", "At least one student in the class owns a calculator.", "Exactly one student in the class does not own a calculator.", "At most one student in the class owns a calculator.", "Some students in the class own a calculator and some do not.", "Every student in the class owns more than one calculator."] },
     { lv: 1, s: "All of the numbers $a$, $b$ and $c$ are positive.", right: "At least one of the numbers $a$, $b$ and $c$ is zero or negative.",
-      wrong: ["All of the numbers $a$, $b$ and $c$ are negative.", "None of the numbers $a$, $b$ and $c$ is positive.", "At least one of the numbers $a$, $b$ and $c$ is negative.", "Exactly one of the numbers $a$, $b$ and $c$ is not positive."] },
+      wrong: ["All of the numbers $a$, $b$ and $c$ are negative.", "None of the numbers $a$, $b$ and $c$ is positive.", "At least one of the numbers $a$, $b$ and $c$ is negative.", "Exactly one of the numbers $a$, $b$ and $c$ is not positive.", "At least one of the numbers $a$, $b$ and $c$ is positive.", "At most one of the numbers $a$, $b$ and $c$ is positive.", "Exactly two of the numbers $a$, $b$ and $c$ are positive."] },
     { lv: 2, s: "For every real number $x$ with $x > 0$, $f(x) > 1$.", right: "There is a real number $x$ with $x > 0$ and $f(x) \\le 1$.",
-      wrong: ["For every real number $x$ with $x > 0$, $f(x) \\le 1$.", "There is a real number $x$ with $x \\le 0$ and $f(x) \\le 1$.", "There is a real number $x$ with $x > 0$ and $f(x) < 1$.", "For every real number $x$ with $x \\le 0$, $f(x) \\le 1$."] },
+      wrong: ["For every real number $x$ with $x > 0$, $f(x) \\le 1$.", "There is a real number $x$ with $x \\le 0$ and $f(x) \\le 1$.", "There is a real number $x$ with $x > 0$ and $f(x) < 1$.", "For every real number $x$ with $x \\le 0$, $f(x) \\le 1$.", "There is a real number $x$ with $x > 0$ and $f(x) > 1$.", "For every real number $x$ with $x \\le 0$, $f(x) > 1$.", "There is no real number $x$ with $x > 0$ and $f(x) \\le 1$."] },
     { lv: 2, s: "There is a prime number $p$ such that $p + 2$ is also prime.", right: "For every prime number $p$, the number $p + 2$ is not prime.",
-      wrong: ["There is a prime number $p$ such that $p + 2$ is not prime.", "For every number $p$ that is not prime, $p + 2$ is prime.", "For every prime number $p$, the number $p + 2$ is prime.", "There is a number $p$ that is not prime such that $p + 2$ is not prime."] },
+      wrong: ["There is a prime number $p$ such that $p + 2$ is not prime.", "For every number $p$ that is not prime, $p + 2$ is prime.", "For every prime number $p$, the number $p + 2$ is prime.", "There is a number $p$ that is not prime such that $p + 2$ is not prime.", "There is a prime number $p$ such that $p + 2$ is prime and $p + 4$ is not prime.", "For every prime number $p$, the number $p + 2$ is even.", "There are at least two prime numbers $p$ such that $p + 2$ is prime."] },
     { lv: 3, s: "For every integer $n$, if $n$ is even, then $n^2$ is divisible by 8.", right: "There is an even integer $n$ such that $n^2$ is not divisible by 8.",
-      wrong: ["For every integer $n$, if $n$ is odd, then $n^2$ is not divisible by 8.", "For every integer $n$, if $n$ is even, then $n^2$ is not divisible by 8.", "There is an odd integer $n$ such that $n^2$ is divisible by 8.", "For every integer $n$, if $n^2$ is not divisible by 8, then $n$ is odd."] },
+      wrong: ["For every integer $n$, if $n$ is odd, then $n^2$ is not divisible by 8.", "For every integer $n$, if $n$ is even, then $n^2$ is not divisible by 8.", "There is an odd integer $n$ such that $n^2$ is divisible by 8.", "For every integer $n$, if $n^2$ is not divisible by 8, then $n$ is odd.", "There is an even integer $n$ such that $n^2$ is divisible by 8.", "There is an odd integer $n$ such that $n^2$ is not divisible by 8.", "For every integer $n$, if $n^2$ is divisible by 8, then $n$ is even."] },
     { lv: 3, s: "Whenever it is sunny, Ann goes swimming or plays tennis.", right: "On at least one sunny day, Ann neither goes swimming nor plays tennis.",
-      wrong: ["Whenever it is not sunny, Ann neither goes swimming nor plays tennis.", "On at least one sunny day, Ann does not go swimming or does not play tennis.", "Whenever it is sunny, Ann neither goes swimming nor plays tennis.", "On at least one day that is not sunny, Ann goes swimming or plays tennis."] },
+      wrong: ["Whenever it is not sunny, Ann neither goes swimming nor plays tennis.", "On at least one sunny day, Ann does not go swimming or does not play tennis.", "Whenever it is sunny, Ann neither goes swimming nor plays tennis.", "On at least one day that is not sunny, Ann goes swimming or plays tennis.", "On at least one sunny day, Ann goes swimming and plays tennis.", "Whenever Ann goes swimming or plays tennis, it is sunny.", "On every sunny day, Ann goes swimming but does not play tennis."] },
     { lv: 4, s: "For every $\\varepsilon > 0$ there is an $N$ such that $|a_n| < \\varepsilon$ for all $n > N$.", right: "There is an $\\varepsilon > 0$ such that for every $N$ there is an $n > N$ with $|a_n| \\ge \\varepsilon$.",
-      wrong: ["For every $\\varepsilon > 0$ there is an $N$ such that $|a_n| \\ge \\varepsilon$ for all $n > N$.", "There is an $\\varepsilon > 0$ and an $N$ such that $|a_n| \\ge \\varepsilon$ for all $n > N$.", "For every $\\varepsilon > 0$ and every $N$ there is an $n > N$ with $|a_n| \\ge \\varepsilon$.", "There is an $\\varepsilon > 0$ such that for every $N$, $|a_n| \\ge \\varepsilon$ for all $n > N$."] },
+      wrong: ["For every $\\varepsilon > 0$ there is an $N$ such that $|a_n| \\ge \\varepsilon$ for all $n > N$.", "There is an $\\varepsilon > 0$ and an $N$ such that $|a_n| \\ge \\varepsilon$ for all $n > N$.", "For every $\\varepsilon > 0$ and every $N$ there is an $n > N$ with $|a_n| \\ge \\varepsilon$.", "There is an $\\varepsilon > 0$ such that for every $N$, $|a_n| \\ge \\varepsilon$ for all $n > N$.", "There is an $\\varepsilon > 0$ such that for every $N$ there is an $n > N$ with $|a_n| < \\varepsilon$.", "For every $N$ there is an $\\varepsilon > 0$ such that $|a_n| \\ge \\varepsilon$ for all $n > N$.", "There is an $N$ such that for every $\\varepsilon > 0$, $|a_n| \\ge \\varepsilon$ for all $n > N$."] },
     { lv: 4, s: "Every positive integer can be written as the sum of at most four square numbers.", right: "Some positive integer cannot be written as the sum of four or fewer square numbers.",
-      wrong: ["No positive integer can be written as the sum of at most four square numbers.", "Every positive integer can be written as the sum of at least five square numbers.", "Some positive integer can be written as the sum of five or more square numbers.", "Some positive integer needs exactly five square numbers."] },
+      wrong: ["No positive integer can be written as the sum of at most four square numbers.", "Every positive integer can be written as the sum of at least five square numbers.", "Some positive integer can be written as the sum of five or more square numbers.", "Some positive integer needs exactly five square numbers.", "Some positive integer can be written as the sum of at most four square numbers.", "Every positive integer can be written as the sum of at most three square numbers.", "No positive integer can be written as the sum of exactly four square numbers."] },
   ];
   LW.generator("tmua-negation", {
     title: "Negation",
@@ -243,21 +274,21 @@
       const form = level <= 1 ? 0 : G.pick(level >= 4 ? [0, 1, 2, 2] : [0, 1, 2]);
       if (form === 2) {
         const r = G.pick([2, 3, 4]), k = r * r;
-        const opts = [`$a \\ge ${r}$`, `$a > ${r}$`, `$a \\ge ${k}$`, `$a \\le -${r}$ or $a \\ge ${r}$`, `$a \\ge 0$`, `$a > ${k}$`].map((md, i) => ({ md, correct: i === 0 }));
+        const opts = G.shuffle([`$a \\ge ${r}$`, `$a > ${r}$`, `$a \\ge ${k}$`, `$a \\le -${r}$ or $a \\ge ${r}$`, `$a \\ge 0$`, `$a > ${k}$`, `$a \\le ${r}$`, `$-${r} \\le a \\le ${r}$`].map((md, i) => ({ md, correct: i === 0 })));
         return step("Consider the statement: *for all real numbers $x$ with $x > a$, we have $x^2 > " + k + "$.* For which values of the real number $a$ is the statement true?", opts,
-          "**A.** Ist $a < 0$, liegt $x = 0$ im Bereich, und $0 > " + k + "$ ist falsch. Für $a \\ge 0$ sind alle $x > a$ positiv, und $x^2$ kommt $a^2$ beliebig nahe: nötig ist $a^2 \\ge " + k + "$, also $a \\ge " + r + "$. Am Rand $a = " + r + "$ gilt $x > " + r + "$, also $x^2 > " + k + "$: wahr, daher $\\ge$ und nicht $>$.");
+          "**" + answer(opts) + ".** Ist $a < 0$, liegt $x = 0$ im Bereich, und $0 > " + k + "$ ist falsch. Für $a \\ge 0$ sind alle $x > a$ positiv, und $x^2$ kommt $a^2$ beliebig nahe: nötig ist $a^2 \\ge " + k + "$, also $a \\ge " + r + "$. Am Rand $a = " + r + "$ gilt $x > " + r + "$, also $x^2 > " + k + "$: wahr, daher $\\ge$ und nicht $>$.");
       }
       const k = G.pick([2, 3, 4, 5, 6, 8]);
       const strict = form === 0 ? G.chance(0.5) : true;
       if (form === 0) {
         const rel = strict ? ">" : "\\ge";
-        const opts = [`$a \\ge ${k}$ only`, `$a \\le 0$ or $a \\ge ${k}$`, `$a < 0$ or $a > ${k}$`, `$0 \\le a \\le ${k}$`, `$a \\ge 0$`, `all real values of $a$`].map((md, i) => ({ md, correct: i === 1 }));
+        const opts = G.shuffle([`$a \\ge ${k}$ only`, `$a \\le 0$ or $a \\ge ${k}$`, `$a < 0$ or $a > ${k}$`, `$0 \\le a \\le ${k}$`, `$a \\ge 0$`, `all real values of $a$`, `$a \\le 0$ only`, `$a < 0$ or $a \\ge ${k}$`].map((md, i) => ({ md, correct: i === 1 })));
         return step("Consider the statement: *for all real numbers $x$ with $x > a$, we have $x^2 " + rel + " " + k + "a$.* For which values of the real number $a$ is the statement true?", opts,
-          "**B.** Fallunterscheidung nach $a$. Für $a < 0$ ist $" + k + "a < 0 \\le x^2$, also wahr. Für $a = 0$ folgt aus $x > 0$ sofort $x^2 > 0$. Für $a > 0$ sind alle $x$ positiv und $x^2$ kommt $a^2$ beliebig nahe, also braucht es $a^2 \\ge " + k + "a$, d. h. $a \\ge " + k + "$. Am Rand $a = " + k + "$: $x > " + k + "$ gibt $x^2 > " + k * k + " = " + k + "a$, wahr. Typische Fehler: nur $a > 0$ betrachten (A) oder die Ränder falsch setzen (C).");
+          "**" + answer(opts) + ".** Fallunterscheidung nach $a$. Für $a < 0$ ist $" + k + "a < 0 \\le x^2$, also wahr. Für $a = 0$ folgt aus $x > 0$ sofort $x^2 > 0$. Für $a > 0$ sind alle $x$ positiv und $x^2$ kommt $a^2$ beliebig nahe, also braucht es $a^2 \\ge " + k + "a$, d. h. $a \\ge " + k + "$. Am Rand $a = " + k + "$: $x > " + k + "$ gibt $x^2 > " + k * k + " = " + k + "a$, wahr. Typische Fehler: nur $a > 0$ betrachten oder die Ränder $a = 0$ und $a = " + k + "$ falsch setzen.");
       }
-      const opts = [`$a \\le 0$`, `$a < 0$`, `$a \\ge ${k}$`, `$a \\le 0$ or $a \\ge ${k}$`, `$0 \\le a \\le ${k}$`, `no real value of $a$`].map((md, i) => ({ md, correct: i === 0 }));
+      const opts = G.shuffle([`$a \\le 0$`, `$a < 0$`, `$a \\ge ${k}$`, `$a \\le 0$ or $a \\ge ${k}$`, `$0 \\le a \\le ${k}$`, `no real value of $a$`, `$a \\ge 0$`, `all real values of $a$`].map((md, i) => ({ md, correct: i === 0 })));
       return step("Consider the statement: *for all real numbers $x$ with $x < a$, we have $x^2 > " + k + "a$.* For which values of the real number $a$ is the statement true?", opts,
-        "**A.** Für $a > 0$ liegt $x = 0$ im Bereich, und $0 > " + k + "a$ ist falsch. Für $a < 0$ ist $" + k + "a < 0 < x^2$. Für $a = 0$ sind alle $x$ negativ, also $x^2 > 0$: wahr. Also genau $a \\le 0$.");
+        "**" + answer(opts) + ".** Für $a > 0$ liegt $x = 0$ im Bereich, und $0 > " + k + "a$ ist falsch. Für $a < 0$ ist $" + k + "a < 0 < x^2$. Für $a = 0$ sind alle $x$ negativ, also $x^2 > 0$: wahr. Also genau $a \\le 0$.");
     },
   });
 
@@ -433,19 +464,19 @@
     const k = G.int(2, 5);
     const q = G.int(1, 3), v = q + G.pick([2, 3]), e = 2 * q + 1 - v, p = q * q - v * e;
     return [
-      { lv: 1, claim: "$1 = 2$.", lines: ["Let $a$ and $b$ be real numbers with $a = b$.", "Then $a^2 = ab$, so $a^2 - b^2 = ab - b^2$.", "Factorising, $(a + b)(a - b) = b(a - b)$.", "Dividing both sides by $a - b$ gives $a + b = b$.", "Since $a = b$, this says $2b = b$, so $2 = 1$."],
+      { lv: 1, claim: "$1 = 2$.", claimTrue: false, lines: ["Let $a$ and $b$ be real numbers with $a = b$.", "Then $a^2 = ab$, so $a^2 - b^2 = ab - b^2$.", "Factorising, $(a + b)(a - b) = b(a - b)$.", "Dividing both sides by $a - b$ gives $a + b = b$.", "Since $a = b$, this says $2b = b$, so $2 = 1$."],
         err: 3, why: "In Zeile IV wird durch $a - b = 0$ geteilt." },
-      { lv: 2, claim: "The equation $\\sqrt{x + " + p + "} = x - " + q + "$ has two real solutions.", lines: ["Squaring both sides gives $x + " + p + " = (x - " + q + ")^2$.", "Expanding: $x^2 - " + (2 * q + 1) + "x + " + (q * q - p) + " = 0$.", "Factorising: $(x - " + v + ")(x " + (e < 0 ? "+ " + -e : "- " + e) + ") = 0$, so $x = " + v + "$ or $x = " + e + "$.", "Both values satisfy the squared equation, so both are solutions of the original equation."],
+      { lv: 2, claim: "The equation $\\sqrt{x + " + p + "} = x - " + q + "$ has two real solutions.", claimTrue: false, lines: ["Squaring both sides gives $x + " + p + " = (x - " + q + ")^2$.", "Expanding: $x^2 - " + (2 * q + 1) + "x + " + (q * q - p) + " = 0$.", "Factorising: $(x - " + v + ")(x " + (e < 0 ? "+ " + -e : "- " + e) + ") = 0$, so $x = " + v + "$ or $x = " + e + "$.", "Both values satisfy the squared equation, so both are solutions of the original equation."],
         err: 3, why: "Quadrieren ist keine Äquivalenzumformung: $x = " + e + "$ ergibt rechts $" + (e - q) + " < 0$, eine Wurzel ist aber nie negativ. Zeile IV schließt falsch, die Probe fehlt." },
-      { lv: 2, claim: "If $a < b$, then $\\frac{1}{a} > \\frac{1}{b}$, for all non-zero real numbers $a$ and $b$.", lines: ["Suppose $a < b$, where $a$ and $b$ are non-zero.", "Dividing both sides by $ab$ gives $\\frac{1}{b} < \\frac{1}{a}$.", "Hence $\\frac{1}{a} > \\frac{1}{b}$."],
+      { lv: 2, claim: "If $a < b$, then $\\frac{1}{a} > \\frac{1}{b}$, for all non-zero real numbers $a$ and $b$.", claimTrue: false, lines: ["Suppose $a < b$, where $a$ and $b$ are non-zero.", "Dividing both sides by $ab$ gives $\\frac{1}{b} < \\frac{1}{a}$.", "Hence $\\frac{1}{a} > \\frac{1}{b}$."],
         err: 1, why: "Zeile II: ist $ab < 0$ (etwa $a = -1$, $b = 1$), dreht sich das Ungleichheitszeichen beim Teilen um." },
-      { lv: 3, claim: "For every integer $n$, if $n^2$ is even, then $n$ is even.", lines: ["Suppose that $n$ is even, say $n = 2k$ for an integer $k$.", "Then $n^2 = 4k^2 = 2(2k^2)$.", "So $n^2$ is even.", "Therefore, if $n^2$ is even, then $n$ is even."],
+      { lv: 3, claim: "For every integer $n$, if $n^2$ is even, then $n$ is even.", claimTrue: true, lines: ["Suppose that $n$ is even, say $n = 2k$ for an integer $k$.", "Then $n^2 = 4k^2 = 2(2k^2)$.", "So $n^2$ is even.", "Therefore, if $n^2$ is even, then $n$ is even."],
         err: 3, why: "Zeilen I bis III zeigen nur die Umkehrung: aus „n gerade“ folgt „n² gerade“. Zeile IV zieht daraus die gewünschte Richtung, das ist kein gültiger Schluss (die Aussage stimmt zwar, ist aber nicht bewiesen)." },
-      { lv: 4, claim: "$n^2 + n + 1$ is even for every positive integer $n$.", lines: ["Suppose that $k^2 + k + 1$ is even for some positive integer $k$.", "Then $(k + 1)^2 + (k + 1) + 1 = (k^2 + k + 1) + 2(k + 1)$.", "This is the sum of two even numbers, so it is even.", "Hence, by induction, $n^2 + n + 1$ is even for every positive integer $n$."],
+      { lv: 4, claim: "$n^2 + n + 1$ is even for every positive integer $n$.", claimTrue: false, lines: ["Suppose that $k^2 + k + 1$ is even for some positive integer $k$.", "Then $(k + 1)^2 + (k + 1) + 1 = (k^2 + k + 1) + 2(k + 1)$.", "This is the sum of two even numbers, so it is even.", "Hence, by induction, $n^2 + n + 1$ is even for every positive integer $n$."],
         err: 3, why: "Der Induktionsschritt stimmt, aber der Anfang fehlt, und er scheitert: $1 + 1 + 1 = 3$ ist ungerade. Zeile IV beruft sich auf Induktion ohne Induktionsanfang." },
-      { lv: 4, claim: "For all real $x$, if $x^2 > " + k * k + "$, then $x > " + k + "$.", lines: ["Suppose $x^2 > " + k * k + "$.", "Then $x^2 - " + k * k + " > 0$, so $(x - " + k + ")(x + " + k + ") > 0$.", "Dividing by $x + " + k + "$ gives $x - " + k + " > 0$.", "So $x > " + k + "$."],
+      { lv: 4, claim: "For all real $x$, if $x^2 > " + k * k + "$, then $x > " + k + "$.", claimTrue: false, lines: ["Suppose $x^2 > " + k * k + "$.", "Then $x^2 - " + k * k + " > 0$, so $(x - " + k + ")(x + " + k + ") > 0$.", "Dividing by $x + " + k + "$ gives $x - " + k + " > 0$.", "So $x > " + k + "$."],
         err: 2, why: "Zeile III teilt durch $x + " + k + "$, ohne zu wissen, ob das positiv ist. Für $x = -" + (k + 1) + "$ ist $x^2 > " + k * k + "$, aber $x > " + k + "$ falsch." },
-      { lv: 1, claim: "The sum of any two odd numbers is odd.", lines: ["Let the two odd numbers be $2k + 1$ and $2k + 1$, where $k$ is an integer.", "Their sum is $4k + 2 = 2(2k + 1)$.", "So the sum is even, and the claim is false."],
+      { lv: 1, claim: "The sum of any two odd numbers is odd.", claimTrue: false, lines: ["Let the two odd numbers be $2k + 1$ and $2k + 1$, where $k$ is an integer.", "Their sum is $4k + 2 = 2(2k + 1)$.", "So the sum is even, and the claim is false."],
         err: 0, why: "Zeile I nimmt zweimal dieselbe Zahl: zwei beliebige ungerade Zahlen brauchen zwei Variablen, $2k + 1$ und $2m + 1$. (Das Ergebnis „gerade“ stimmt trotzdem, aber nur für gleiche Zahlen ist es hier gezeigt.)" },
     ].filter((x) => x.err >= 0 && x.lines.length);
   }
@@ -453,8 +484,15 @@
     title: "Errors in arguments",
     make(level, G) {
       const pf = G.pick(proofs(G).filter((x) => x.lv <= level + 1));
-      const opts = pf.lines.map((_, i) => ({ md: "line " + ROMAN[i], correct: i === pf.err })).concat([{ md: "there is no error", correct: false }]);
-      return step("A student attempts to prove the following claim.\n\n*Claim:* " + pf.claim + "\n\n" + listed(pf.lines) + "\n\nWhere is the **first** error in the argument?", opts, "**" + answer(opts) + ".** " + pf.why + " Prüfe bei jeder Zeile: Folgt sie zwingend aus den vorigen? Teilen, Quadrieren und Wurzelziehen sind die üblichen Stolperstellen.");
+      // as in Paper 2: two things at once, so there are eight answers; the right one and seven others
+      const where = pf.lines.map((_, i) => ({ text: "The first error is in line " + ROMAN[i], ok: i === pf.err })).concat([{ text: "There is no error in the argument", ok: false }]);
+      const all = [];
+      where.forEach((w) => [true, false].forEach((t) => all.push({ md: w.text + ", and the claim is " + (t ? "true" : "false") + ".", correct: w.ok && t === pf.claimTrue })));
+      const right = all.find((o) => o.correct);
+      const opts = [right].concat(G.shuffle(all.filter((o) => !o.correct)).slice(0, 7));
+      const order = all.filter((o) => opts.includes(o));
+      return step("A student attempts to prove the following claim.\n\n*Claim:* " + pf.claim + "\n\n" + listed(pf.lines) + "\n\nWhich one of the following is correct?", order,
+        "**" + answer(order) + ".** " + pf.why + " Die Behauptung selbst ist " + (pf.claimTrue ? "**wahr**: der Beweis ist falsch, die Aussage stimmt trotzdem." : "**falsch**.") + " Prüfe bei jeder Zeile: Folgt sie zwingend aus den vorigen? Teilen, Quadrieren und Wurzelziehen sind die üblichen Stolperstellen.");
     },
   });
 
@@ -501,7 +539,7 @@
           "**" + answer(opts) + ".** Mit $u = " + k + "x$ läuft $u$ von $0$ bis $" + 2 * k + "\\pi$, also über " + k + " volle Perioden. In jeder Periode trifft der Sinus einen Wert zwischen $-1$ und $1$ (ohne die Ränder) genau zweimal: $2 \\cdot " + k + " = " + 2 * k + "$.");
       }
       const t = G.pick(TRIG);
-      const opts = numeric(t.n, [0, 1, 2, 3, 4, 5, 6], String, 7);
+      const opts = numeric(t.n, [0, 1, 2, 3, 4, 5, 6, 7], String, 8);
       return step("How many solutions does the equation $" + t.eq + "$ have in the interval $0 \\le x < 2\\pi$?", opts,
         "**" + answer(opts) + ".** " + t.why + " Erst auf eine Funktion umformen (meist $\\sin$ oder $\\cos$), dann jede Lösung der Hilfsgleichung im Intervall zählen. Nie durch $\\sin x$ oder $\\cos x$ teilen: dabei gehen Lösungen verloren.");
     },
@@ -523,12 +561,12 @@
       const mid = ys.slice(1, -1).reduce((s, y) => s + y, 0);
       const est = (h / 2) * (ys[0] + 2 * mid + ys[n]);
       const fmtv = (v) => String(Math.round(v * 1000) / 1000);
-      const values = [est, h * (ys[0] + 2 * mid + ys[n]), (h / 2) * (ys[0] + mid + ys[n]), h * (ys[0] + mid)];
+      const values = [est, h * (ys[0] + 2 * mid + ys[n]), (h / 2) * (ys[0] + mid + ys[n]), h * (ys[0] + mid), h * (mid + ys[n]), (h / 2) * (ys[0] + ys[n])];
       const uniq = [];
       values.forEach((v) => { if (!uniq.some((u) => Math.abs(u - v) < 1e-9)) uniq.push(v); });
       const words = (over) => (over ? "an overestimate" : "an underestimate");
       const opts = [];
-      uniq.slice(0, 3).forEach((v) => [true, false].forEach((over) => opts.push({ v, over, md: "$" + fmtv(v) + "$, " + words(over), correct: Math.abs(v - est) < 1e-9 && over === F.convex })));
+      uniq.slice(0, 4).forEach((v) => [true, false].forEach((over) => opts.push({ v, over, md: "$" + fmtv(v) + "$, " + words(over), correct: Math.abs(v - est) < 1e-9 && over === F.convex })));
       opts.sort((p, q) => p.v - q.v || (p.over ? 1 : -1));
       const out = opts.map((o) => ({ md: o.md, correct: o.correct }));
       return step("The trapezium rule with " + n + " strips of equal width is used to estimate $\\int_{" + a + "}^{" + b + "} " + F.tex + "\\,dx$. Which one of the following gives the estimate and describes it correctly?", out,
@@ -577,7 +615,7 @@
   function topts(G, right, wrong) {
     const seen = new Set([right]);
     const all = [{ md: right, correct: true }];
-    wrong.forEach((w) => { if (w != null && !seen.has(w) && all.length < 6) { seen.add(w); all.push({ md: w, correct: false }); } });
+    wrong.forEach((w) => { if (w != null && !seen.has(w) && all.length < 8) { seen.add(w); all.push({ md: w, correct: false }); } });
     return G.shuffle(all);
   }
   function ptex(cs, v) {
@@ -665,7 +703,9 @@
         "**" + answer(opts) + ".** Mit dem Konjugierten $" + b + " + \\sqrt{" + s + "}$ erweitern: Der Nenner wird $" + b * b + " - " + s + " = " + d + "$, also $\\tfrac{" + k + "(" + b + " + \\sqrt{" + s + "})}{" + d + "} = " + right.slice(1, -1) + "$.");
     }
     if (level === 3) {
-      const cands = G.shuffle([[2, 7], [3, 3], [2, 6], [5, 1], [3, 2], [4, 2], [2, 5], [3, 1]]).slice(0, 4);
+      const pool = [[2, 7], [3, 3], [2, 6], [5, 1], [3, 2], [4, 2], [2, 5], [3, 1], [2, 3], [4, 1], [2, 2], [3, 5], [6, 1], [5, 2], [4, 3], [2, 10], [3, 6], [2, 11]];
+      const seenSq = new Set(), cands = [];
+      G.shuffle(pool).forEach((c) => { const v = c[0] * c[0] * c[1]; if (!seenSq.has(v) && cands.length < 8) { seenSq.add(v); cands.push(c); } });
       const sq = (c) => c[0] * c[0] * c[1];
       const sorted = cands.slice().sort((x, y) => sq(y) - sq(x));
       if (sq(sorted[0]) === sq(sorted[1])) return TR.surd(1, G);
@@ -1217,7 +1257,10 @@
       "translate by " + m + " to the left, then stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$",
       "stretch parallel to the $x$-axis by scale factor $" + b + "$, then translate by " + c + " to the left",
       "translate by " + c + " to the right, then stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$",
-      "stretch parallel to the $y$-axis by scale factor $" + b + "$, then translate by " + m + " to the left"]);
+      "stretch parallel to the $y$-axis by scale factor $" + b + "$, then translate by " + m + " to the left",
+      "stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$, then translate by " + c + " to the left",
+      "stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$, then translate by " + m + " to the right",
+      "translate by " + m + " to the right, then stretch parallel to the $y$-axis by scale factor $" + b + "$"]);
     return step("Which sequence of transformations maps the graph of $y = f(x)$ onto the graph of $y = f(" + b + "x + " + c + ")$?", opts,
       "**" + answer(opts) + ".** $f(" + b + "x + " + c + ") = f\\big(" + b + "(x + " + m + ")\\big)$. Erst $f(" + b + "x)$ (Stauchung mit $\\tfrac1{" + b + "}$), dann $x$ durch $x + " + m + "$ ersetzen: Verschiebung um " + m + " nach links. Erst um " + m + " verschieben und dann stauchen ergäbe $f(" + b + "x + " + m + ")$.");
   };
@@ -1282,8 +1325,9 @@
       const target = G.pick(GRAPHS);
       const own = Object.keys(PROPS).filter((k) => PROPS[k].test(target));
       const want = G.shuffle(own).slice(0, level <= 1 ? 2 : 3);
-      const others = G.shuffle(GRAPHS.filter((g) => g !== target)).slice(0, 4);
-      if (others.some((g) => want.every((k) => PROPS[k].test(g)))) continue;
+      const fails = GRAPHS.filter((g) => g !== target && !want.every((k) => PROPS[k].test(g)));
+      if (fails.length < 7) continue;
+      const others = G.shuffle(fails).slice(0, 7);
       if (GRAPHS.filter((g) => want.every((k) => PROPS[k].test(g))).length > 1 && level >= 3) continue;
       const opts = G.shuffle([target].concat(others)).map((g) => ({ md: "$" + g.tex + "$", correct: g === target }));
       const md = "Which of the following graphs " + want.map((k) => PROPS[k].en).join(", and ") + "?";
@@ -1784,4 +1828,95 @@
   LW.generator("tmua-r-koordinaten", trGroup("Coordinates and trigonometry", ["gerade", "kreis", "dreieckflaeche", "sektor", "trigperiode", "trigextrem"]));
   LW.generator("tmua-r-statistik", trGroup("Statistics and probability", ["mittelwert", "bedingt", "ohnezurueck"]));
   LW.generator("tmua-r-geometrie", trGroup("Geometry and vectors", ["raum", "vieleck", "aehnlich", "zusammengesetzt", "vektor"]));
+
+  // ---------------------------------------------------------------- eight options in every TMUA task
+  // A task with fewer gets more: the right answer with one of its numbers changed a little is a wrong answer of the
+  // same look (another interval, line, fraction or count). Options that are all numbers stay in ascending order as
+  // in the test; otherwise the new ones go to random places. The letter in the explanation follows the right answer.
+  const NUMTOK = /(\d+(?:\.\d+)?)/g;
+  const normOpt = (md) => String(md).replace(/\s+/g, "");
+  function optValue(md) {
+    let t = String(md).trim();
+    const ratio = /^\$\s*(\d+)\s*:\s*(\d+)\s*\$$/.exec(t);
+    if (ratio) return +ratio[2] ? +ratio[1] / +ratio[2] : NaN;
+    if (!/^\$[^$]*\$$/.test(t) && !/^£[\d.]+$/.test(t)) return NaN;
+    t = t.replace(/^\$|\$$/g, "").replace(/£/g, "").replace(/\^\\circ|\\%|\\,|\\!/g, "")
+      .replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, "(($1)/($2))").replace(/\\sqrt\{([^{}]*)\}/g, "sqrt($1)")
+      .replace(/\\cdot|\\times/g, "*").replace(/\\pi/g, "pi").replace(/[{}]/g, "").replace(/(\d)\s*pi/g, "$1*pi").replace(/\)\s*pi/g, ")*pi");
+    if (/[a-oq-zA-Z\\]/.test(t.replace(/sqrt|pi/g, ""))) return NaN;
+    const v = LW.parseNumber(t);
+    return isFinite(v) ? v : NaN;
+  }
+  function eight(m, G) {
+    if (!m || m.type !== "choice" || !Array.isArray(m.options) || m.options.length >= 8) return m;
+    const right = m.options.find((o) => o.correct);
+    if (!right) return m;
+    // Questions about properties ("which graph ..."), comparisons ("which is the largest"), conditions or sequences
+    // of transformations keep their own distractors: a changed number could satisfy them too.
+    if (/\b(largest|smallest|graphs|condition|sequence of transformations)\b/i.test(String(m.md))) return m;
+    const seen = new Set(m.options.map((o) => normOpt(o.md)));
+    const rightVal = optValue(right.md);
+    const extra = [];
+    // only the right answer is varied: one changed number makes a different value, set, point or equation, while a
+    // varied wrong answer could turn into an equivalent form of the right one
+    const sources = [right];
+    for (const src of sources) {
+      const toks = [];
+      String(src.md).replace(NUMTOK, (t, num, off) => { toks.push({ num, off }); return t; });
+      for (const tk of G.shuffle(toks)) {
+        for (const d of G.shuffle([1, -1, 2, -2, 3, 4, 5, -3, 6, 7, 8, 10, -4, -5])) {
+          if (m.options.length + extra.length >= 8) break;
+          const dec = (tk.num.split(".")[1] || "").length;
+          const nv = parseFloat(tk.num) + d * (dec ? Math.pow(10, -dec) : 1);
+          if (nv < 0) continue;
+          const md = src.md.slice(0, tk.off) + (dec ? nv.toFixed(dec) : String(nv)) + src.md.slice(tk.off + tk.num.length);
+          const v = optValue(md);
+          if (seen.has(normOpt(md)) || (isFinite(v) && isFinite(rightVal) && Math.abs(v - rightVal) < 1e-9)) continue;
+          // no empty range such as "-6 <= x - y <= -6"
+          const nums = (md.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+          if (/\\le[^$]*\\le/.test(md) && nums.length >= 2 && nums[0] >= nums[nums.length - 1]) continue;
+          seen.add(normOpt(md));
+          extra.push({ md, correct: false });
+        }
+      }
+      if (m.options.length + extra.length >= 8) break;
+    }
+    // answers without a number to vary: multiples of pi, or other lines
+    const room = () => m.options.length + extra.length < 8;
+    const offer = (md) => {
+      const v = optValue(md);
+      if (!room() || seen.has(normOpt(md)) || (isFinite(v) && isFinite(rightVal) && Math.abs(v - rightVal) < 1e-9)) return;
+      seen.add(normOpt(md));
+      extra.push({ md, correct: false });
+    };
+    if (room() && /\\pi/.test(right.md)) {
+      G.shuffle([[1, 6], [1, 4], [1, 3], [2, 3], [3, 4], [3, 2], [5, 2], [1, 1], [2, 1], [3, 1], [4, 1], [6, 1], [8, 1], [1, 2]])
+        .forEach(([a, b]) => offer(b === 1 ? (a === 1 ? "$\\pi$" : "$" + a + "\\pi$") : "$\\tfrac{" + (a === 1 ? "" : a) + "\\pi}{" + b + "}$"));
+    }
+    const line = /^\$y = (.*)\$$/.exec(right.md);
+    if (room() && line) {
+      const rhs = line[1];
+      G.shuffle(["$y = " + rhs + " + 2$", "$y = " + rhs + " - 2$", "$y = " + rhs + " + 1$", "$y = " + rhs + " - 3$", "$y = 2x$", "$y = -2x$", "$y = x + 3$", "$y = -x + 1$", "$y = 3x - 1$"]).forEach(offer);
+    }
+    if (room() && Number.isInteger(rightVal) && rightVal >= 0 && rightVal <= 12) {
+      for (let k = 0; k <= 16; k++) offer("$" + k + "$");
+    }
+    if (!extra.length) return m;
+    let options;
+    const vals = m.options.concat(extra).map((o) => optValue(o.md));
+    if (vals.every(isFinite)) {
+      options = m.options.concat(extra).map((o, i) => ({ o, v: vals[i] })).sort((x, y) => x.v - y.v).map((x) => x.o);
+    } else {
+      options = m.options.slice();
+      extra.forEach((o) => options.splice(G.int(0, options.length), 0, o));
+    }
+    const before = LETTERS[m.options.indexOf(right)], after = LETTERS[options.indexOf(right)];
+    const explain = typeof m.explain === "string" ? m.explain.replace("**" + before + ".**", "**" + after + ".**") : m.explain;
+    return Object.assign({}, m, { options, explain });
+  }
+  Object.keys(LW.generators).filter((name) => name.startsWith("tmua")).forEach((name) => {
+    const def = LW.generators[name];
+    const make = def.make;
+    def.make = (level, G, params) => eight(make(level, G, params), G);
+  });
 })();

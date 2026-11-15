@@ -32,7 +32,7 @@ def load(path: Path):
 
 
 def text_fields(step: dict):
-    for key in ("md", "explain", "hint", "wrong", "solution", "after", "prompt"):
+    for key in ("md", "more", "explain", "hint", "wrong", "solution", "after", "prompt"):
         if isinstance(step.get(key), str):
             yield key, step[key]
     # a vault note as a learning task: section titles, text blocks and captions

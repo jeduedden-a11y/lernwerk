@@ -14,7 +14,7 @@
   "use strict";
 
   const LW = (window.LW = window.LW || {});
-  LW.version = "1.9.1";
+  LW.version = "1.9.2";
   LW.api = 1;
   LW.widgets = LW.widgets || {};
   LW.widget = function (name, def) { LW.widgets[name] = def; };
@@ -2855,6 +2855,46 @@
     };
   }
 
+  // ------------------------------------------------------------------ short first, more on request
+  // A step shows its quintessence; "more" holds the full explanation behind a button at the end of the card. A long
+  // text step without "more" (not reworked yet) shows its first paragraphs and keeps the rest behind the button.
+
+  function splitLong(text) {
+    const md0 = String(text || "");
+    if (md0.length <= 420) return null;
+    const blocks = md0.split(/\n\s*\n/);
+    const head = [];
+    let len = 0, k = 0;
+    for (; k < blocks.length; k++) {
+      const b = blocks[k];
+      if (head.length && len >= 160) break;
+      head.push(b);
+      len += b.length;
+      // a table or a callout is shown whole and ends the short part
+      if (/^\s*[|>]/.test(b) && len >= 60) { k++; break; }
+    }
+    const rest = blocks.slice(k).join("\n\n").trim();
+    if (rest.length < 120) return null;
+    return { head: head.join("\n\n"), rest };
+  }
+  LW.splitLong = splitLong;
+
+  function moreBox(text) {
+    const inner = el("div", { class: "lw-md", html: md(text) });
+    const body = el("div", { class: "lw-more-body", "aria-hidden": "true" }, [el("div", null, [inner])]);
+    const label = el("span", { text: "Erweiterte Erklärung" });
+    const btn = el("button", { class: "lw-more-btn", type: "button", "aria-expanded": "false" }, [label]);
+    const box = el("div", { class: "lw-more" }, [btn, body]);
+    btn.addEventListener("click", () => {
+      const open = !box.classList.contains("open");
+      box.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      body.setAttribute("aria-hidden", open ? "false" : "true");
+      label.textContent = open ? "Weniger anzeigen" : "Erweiterte Erklärung";
+    });
+    return box;
+  }
+
   function showStep(i) {
     if (S.inst && S.inst.leave) S.inst.leave();
     S.cur = i;
@@ -2872,6 +2912,10 @@
         post({ type: "error", message: "Schritt " + (i + 1) + " (" + step.gen + "): " + e.message });
       }
     }
+    if (step.type === "text" && !step.more) {
+      const cut = splitLong(step.md);
+      if (cut) step = Object.assign({}, step, { md: cut.head, more: cut.rest });
+    }
     const render = R[step.type];
     try {
       inst = render ? render(step, stepContext()) : null;
@@ -2879,6 +2923,7 @@
       inst = null;
       post({ type: "error", message: "Schritt " + (i + 1) + ": " + e.message });
     }
+    if (inst && inst.el && step.more) inst.el.append(moreBox(step.more));
     if (!inst) {
       const card = shell(Object.assign({}, step, { md: null }), stepContext());
       card.append(el("div", { class: "lw-unsupported", text: "Dieser Schrittyp (" + step.type + ") braucht eine neuere Lernwerk-Version. Du kannst ihn überspringen." }));
