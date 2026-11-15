@@ -19,6 +19,155 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Drehung",
+      "md": "**Mal $i$ heißt Drehung um $90^\\circ$:** blau $z$, orange $i \\cdot z$ in der Gaußschen Zahlenebene.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          3
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "grid": true,
+        "height": 356,
+        "xLabel": "Re",
+        "yLabel": "Im",
+        "vars": [
+          {
+            "name": "PHI",
+            "min": 0,
+            "max": 6.3,
+            "value": 0.4,
+            "hidden": true
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "2*cos(PHI)",
+              "2*sin(PHI)"
+            ],
+            "color": "blue",
+            "width": 2.4
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "-2*sin(PHI)",
+              "2*cos(PHI)"
+            ],
+            "color": "orange",
+            "width": 2.4
+          }
+        ],
+        "points": [
+          {
+            "x": "2*cos(PHI)",
+            "y": "2*sin(PHI)",
+            "color": "blue",
+            "label": "z"
+          },
+          {
+            "x": "-2*sin(PHI)",
+            "y": "2*cos(PHI)",
+            "color": "orange",
+            "label": "iz"
+          }
+        ],
+        "readout": "z = {2*cos(PHI)|2} + {2*sin(PHI)|2} i · i·z = {-2*sin(PHI)|2} + {2*cos(PHI)|2} i"
+      },
+      "timeline": [
+        {
+          "caption": "z mit Betrag 2 und Winkel 23°.",
+          "set": {
+            "PHI": 0.4
+          }
+        },
+        {
+          "caption": "Wo z auch steht: i·z ist um 90° weitergedreht, gleich lang.",
+          "to": {
+            "PHI": 1.6
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Noch einmal mal i ergibt −z: i² = −1.",
+          "to": {
+            "PHI": 3.4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Mit $i^2 = -1$ wird $z = a + bi$ zu einem **Punkt der Ebene**. In **Polarform** $z = r(\\cos\\varphi + i\\sin\\varphi)$ multipliziert man, indem man die Beträge **multipliziert** und die Winkel **addiert**.",
+      "label": "Komplexe Zahlen",
+      "more": "**Rechnen:** addieren komponentenweise; multiplizieren mit $i^2 = -1$; konjugiert $\\bar z = a - bi$, und $z\\bar z = a^2 + b^2 = |z|^2$; dividieren durch Erweitern mit dem Konjugierten.\n\n**Betrag und Winkel:** $|z| = \\sqrt{a^2 + b^2}$, $\\tan\\varphi = \\tfrac{b}{a}$ mit Blick auf den Quadranten.\n\n**Quadratische Gleichungen** mit negativer Diskriminante haben zwei konjugierte komplexe Lösungen.\n\n**Formel von de Moivre:** $z^n = r^n(\\cos n\\varphi + i\\sin n\\varphi)$.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Gleichung ohne reelle Lösung:** $z^2 - 2z + 5 = 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "z = 1 \\pm \\sqrt{1 - 5} = 1 \\pm \\sqrt{-4}",
+            "why": "pq-Formel; der Radikand ist negativ."
+          },
+          {
+            "tex": "\\sqrt{-4} = 2i",
+            "why": "Denn (2i)² = 4i² = −4."
+          },
+          {
+            "tex": "z_{1,2} = 1 \\pm 2i",
+            "why": "Zwei konjugierte Lösungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurzel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösungen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Komplexe Zahlen (Grundlagen)",
@@ -149,6 +298,34 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Betrag",
+      "md": "Berechne $|3 + 4i|$.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\sqrt{9 + 16} = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$(1 + i)^2 = 2i$",
+      "answer": true,
+      "explain": "$1 + 2i + i^2 = 1 + 2i - 1 = 2i$.",
+      "label": "Rechnen",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "de Moivre",
+      "md": "$z = 2(\\cos 30^\\circ + i\\sin 30^\\circ)$. Welchen Betrag hat $z^3$?",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Beträge multiplizieren: $2^3 = 8$; der Winkel wird $90^\\circ$, also $z^3 = 8i$.",
+      "id": "vq3"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Berechne.",
@@ -209,12 +386,20 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ana-komplex",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "i² = −1; z = a + bi in der Gaußschen Ebene.",
         "Polarform r e^{iφ}: Beträge multiplizieren, Winkel addieren.",
-        "Mal i: Drehung um 90°."
+        "Mal i: Drehung um 90°.",
+        "Multiplizieren: Beträge mal, Winkel plus; mal i dreht um 90°."
       ],
       "id": "summary"
     }

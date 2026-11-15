@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$M^n\\vec v_0$ ist der Zustand nach $n$ Schritten. Man rechnet schrittweise oder erst $M^2 = M \\cdot M$. **Zyklische** Prozesse mit $M^k = E$ wiederholen sich alle $k$ Schritte.",
+      "label": "Verfahren",
+      "more": "**Bedeutung:** Der Eintrag $(i, j)$ von $M^2$ fasst alle Wege von $j$ nach $i$ in zwei Schritten zusammen, über jeden möglichen Zwischenzustand.\n\n**Schema:** $M^2$ durch Zeile mal Spalte, höhere Potenzen schrittweise ($M^3 = M^2 \\cdot M$) oder mit dem Rechner; dann mit dem Startvektor multiplizieren.\n\n**Langfristig:** Für reguläre Übergangsmatrizen nähert sich $M^n$ der Grenzmatrix. **Zyklisch:** Bei $M^3 = E$ ist der Bestand nach 3, 6, 9 Schritten wieder der Startbestand.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Zyklische Population:** Eier, Larven, Käfer mit $M = \\begin{pmatrix} 0 & 0 & 4 \\\\ 0{,}5 & 0 & 0 \\\\ 0 & 0{,}5 & 0 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "M^2 = \\begin{pmatrix} 0 & 2 & 0 \\\\ 0 & 0 & 2 \\\\ 0{,}25 & 0 & 0 \\end{pmatrix}",
+            "why": "Zeile mal Spalte."
+          },
+          {
+            "tex": "M^3 = M^2 \\cdot M = E",
+            "why": "Nach drei Schritten ist alles wie am Anfang."
+          },
+          {
+            "tex": "\\vec v_0 = (100, 0, 0) \\to (0, 50, 0) \\to (0, 0, 25) \\to (100, 0, 0)",
+            "why": "Der Zyklus: Eier, Larven, Käfer, wieder Eier."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kubik.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zyklus.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "$M^2$ ist **nicht** die Matrix der quadrierten Einträge. Und die Reihenfolge zählt: $M^n\\vec v$, die Matrix steht links vom Vektor.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Matrixpotenzen",
@@ -73,6 +135,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Potenz",
+      "md": "$M = \\begin{pmatrix} 1 & 1 \\\\ 0 & 1 \\end{pmatrix}$. Bestimme den Eintrag oben rechts von $M^5$.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Jede Multiplikation addiert 1 oben rechts: $M^n = \\begin{pmatrix} 1 & n \\\\ 0 & 1 \\end{pmatrix}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Gilt $M^3 = E$, dann ist der Zustand nach 6 Schritten wieder der Startzustand.",
+      "answer": true,
+      "explain": "$M^6 = (M^3)^2 = E$.",
+      "label": "Zyklus",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -115,6 +195,62 @@
       },
       "label": "A²",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "matrixpotenz"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "matrixpotenz"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "matrixpotenz"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "matrixpotenz"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "M^n v_0 = Zustand nach n Schritten; M^k = E heißt Zyklus der Länge k."
+      ]
     }
   ]
 }

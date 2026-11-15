@@ -78,6 +78,148 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Gradientenabstieg",
+      "md": "**Gradientenabstieg** auf $f(x) = (x - 2)^2 + 1$: Jeder Schritt geht ein Stück gegen die Steigung, $x_{n+1} = x_n - \\eta f'(x_n)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          6.5
+        ],
+        "y": [
+          0,
+          18
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -1,
+            "max": 7,
+            "value": 6,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "(x - 2)^2 + 1",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange",
+            "length": 0.8
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|3} · f′(x) = {2*(X - 2)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "η = 0,25, Start bei 6.",
+          "set": {
+            "X": 6
+          }
+        },
+        {
+          "caption": "Nächster Schritt: 4; der Abstand zum Minimum halbiert sich.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Dann 3, 2,5, 2,25: Das Verfahren nähert sich 2.",
+          "to": {
+            "X": 2.25
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Mit η = 1,1 von 3 aus: Der Schritt springt über das Minimum nach 0,8.",
+          "to": {
+            "X": 0.8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Und weiter nach 3,44: Das Verfahren schaukelt sich auf.",
+          "to": {
+            "X": 3.44
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Ist $f'(x) = 0$ nicht exakt lösbar, nähert man das Optimum schrittweise: **Newton** auf $f'$, **Intervallhalbierung** für den Vorzeichenwechsel von $f'$, oder **Gradientenabstieg** $x_{n+1} = x_n - \\eta f'(x_n)$.",
+      "label": "Verfahren",
+      "more": "**Newton für Extremstellen:** $x_{n+1} = x_n - \\dfrac{f'(x_n)}{f''(x_n)}$; sehr schnell nahe der Lösung, braucht aber $f''$ und einen guten Startwert.\n\n**Intervallhalbierung:** Wechselt $f'$ zwischen $a$ und $b$ das Vorzeichen, halbiert man das Intervall und behält die Hälfte mit dem Wechsel; langsam, aber sicher.\n\n**Gradientenabstieg:** einfach, auch in vielen Dimensionen (maschinelles Lernen). Die Schrittweite $\\eta$ entscheidet: zu klein, sehr langsam; zu groß, Schwingen oder Divergenz.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Gradientenabstieg mit $\\eta = 0{,}25$** für $f(x) = (x - 2)^2 + 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x_{n+1} = x_n - 0{,}25 \\cdot 2(x_n - 2) = x_n - 0{,}5(x_n - 2)",
+            "why": "f′(x) = 2(x − 2) einsetzen."
+          },
+          {
+            "tex": "x_{n+1} - 2 = 0{,}5\\,(x_n - 2)",
+            "why": "Der Abstand zum Minimum halbiert sich in jedem Schritt."
+          },
+          {
+            "tex": "6 \\to 4 \\to 3 \\to 2{,}5 \\to 2{,}25",
+            "why": "Iteration vom Startwert 6."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Schritt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folge.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Numerische Optimierungsverfahren",
@@ -135,6 +277,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Newton",
+      "md": "Newton-Verfahren für die Extremstelle von $f(x) = x^3 - 3x$ mit Startwert $x_0 = 2$: Berechne $x_1$.",
+      "answer": 1.25,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$f'(x) = 3x^2 - 3$, $f''(x) = 6x$: $x_1 = 2 - \\tfrac{9}{12} = 1{,}25$; exakt wäre die Extremstelle 1.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist die Schrittweite beim Gradientenabstieg zu klein, konvergiert das Verfahren gar nicht.",
+      "answer": false,
+      "explain": "Es konvergiert, nur sehr langsam; zu große Schritte sind das Problem.",
+      "label": "Schrittweite",
+      "id": "vq2"
+    },
+    {
       "type": "choice",
       "md": "Was passiert beim Gradientenabstieg, wenn die Schrittweite zu groß ist?",
       "options": [
@@ -153,12 +313,25 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "newton"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Numerisch: schrittweise Näherung.",
         "Gradientenabstieg: x − η f'(x).",
-        "Schrittweite zu klein: langsam; zu groß: divergent."
+        "Schrittweite zu klein: langsam; zu groß: divergent.",
+        "Gradientenabstieg: x − η f′(x); η zu groß führt zum Schwingen."
       ],
       "id": "summary"
     }

@@ -72,6 +72,151 @@
       "id": "w1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Zwei Zustände:** Pro Jahr wandern 10 % von A nach B und 20 % von B nach A. Start: 100 in A.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "M = \\begin{pmatrix} 0{,}9 & 0{,}2 \\\\ 0{,}1 & 0{,}8 \\end{pmatrix}",
+            "why": "Spalte 1: was aus A wird; Spalte 2: was aus B wird. Jede Spalte hat die Summe 1."
+          },
+          {
+            "tex": "\\vec v_1 = M\\begin{pmatrix} 100 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 90 \\\\ 10 \\end{pmatrix}",
+            "why": "Ein Schritt."
+          },
+          {
+            "tex": "\\vec v_2 = M\\vec v_1 = \\begin{pmatrix} 83 \\\\ 17 \\end{pmatrix}",
+            "why": "Zweiter Schritt: 0,9 · 90 + 0,2 · 10 = 83."
+          },
+          {
+            "tex": "M\\vec s = \\vec s,\\; s_1 + s_2 = 1 \\;\\Rightarrow\\; \\vec s = \\begin{pmatrix} 2/3 \\\\ 1/3 \\end{pmatrix}",
+            "why": "Stationäre Verteilung: −0,1 s₁ + 0,2 s₂ = 0 gibt s₁ = 2 s₂."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 2.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Langfristig.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Langfristig",
+      "md": "**Der Anteil in A über die Jahre:** Er fällt von 1 und nähert sich $\\tfrac23$; der Abstand schrumpft jedes Jahr um den Faktor 0,7.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          14
+        ],
+        "y": [
+          0.5,
+          1.05
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "vars": [
+          {
+            "name": "N",
+            "min": 0,
+            "max": 14,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "2/3 + (1/3)*0.7^x",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 0.6667,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "N",
+            "on": "a",
+            "color": "accent"
+          }
+        ],
+        "readout": "nach {N|0} Jahren: Anteil in A {2/3 + (1/3)*0.7^N|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Start: alle in A.",
+          "set": {
+            "N": 0
+          }
+        },
+        {
+          "caption": "Nach einem Jahr 0,9, nach zwei 0,83.",
+          "to": {
+            "N": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 5 Jahren 0,723.",
+          "to": {
+            "N": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Langfristig 2/3, unabhängig vom Start.",
+          "to": {
+            "N": 13
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "Spalte $j$ der **Übergangsmatrix** sagt, wohin der Bestand von Zustand $j$ geht; jede Spalte hat die Summe 1. Ein Schritt ist $\\vec v_{n+1} = M\\vec v_n$, nach $n$ Schritten $\\vec v_n = M^n\\vec v_0$.",
+      "label": "Übergänge",
+      "more": "**Vom Diagramm zur Matrix:** Spalte = von, Zeile = nach. Der Eintrag $m_{ij}$ ist der Anteil, der von Zustand $j$ nach Zustand $i$ wechselt.\n\n**Populationsmodelle (Leslie):** In der ersten Zeile stehen Geburtenraten, unter der Diagonale Überlebensraten; die Spaltensummen sind dann nicht 1.\n\n**Langfristig:** Die stationäre Verteilung erfüllt $M\\vec s = \\vec s$. Bei regulären Matrizen strebt jeder Start dagegen, und die Grenzmatrix $\\lim M^n$ hat in jeder Spalte $\\vec s$.\n\n**Rückwärts:** Den vorigen Zustand liefert $\\vec v_{n-1} = M^{-1}\\vec v_n$.",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Übergangsmatrizen und Populationsmodelle",
@@ -177,6 +322,39 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Ein Schritt",
+      "md": "$M = \\begin{pmatrix} 0{,}9 & 0{,}2 \\\\ 0{,}1 & 0{,}8 \\end{pmatrix}$, $\\vec v_0 = \\begin{pmatrix} 50 \\\\ 50 \\end{pmatrix}$. Wie viele sind nach einem Schritt im ersten Zustand?",
+      "answer": 55,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$0{,}9 \\cdot 50 + 0{,}2 \\cdot 50 = 55$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was gibt der Eintrag $m_{12}$ einer Übergangsmatrix an?",
+      "options": [
+        {
+          "md": "den Anteil, der von Zustand 2 nach Zustand 1 wechselt",
+          "correct": true
+        },
+        {
+          "md": "den Anteil, der von Zustand 1 nach Zustand 2 wechselt",
+          "why": "Spalte ist »von«, Zeile ist »nach«."
+        },
+        {
+          "md": "die Zahl der Individuen in Zustand 1"
+        },
+        {
+          "md": "die Summe der ersten Zeile"
+        }
+      ],
+      "explain": "Zeile 1, Spalte 2: von 2 nach 1.",
+      "label": "Lesen",
+      "id": "vq2"
+    },
+    {
       "type": "truefalse",
       "md": "Die stationäre Verteilung hängt bei einer regulären Übergangsmatrix nicht vom Startzustand ab.",
       "answer": true,
@@ -214,12 +392,37 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "uebergang"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "matrixpotenz"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "v₁ = M v₀, vₙ = Mⁿ v₀; Spaltensummen 1.",
         "Stationär: M s = s.",
-        "Grenzmatrix: gleiche Spalten, unabhängig vom Start."
+        "Grenzmatrix: gleiche Spalten, unabhängig vom Start.",
+        "Spalte = von, Zeile = nach; v_{n+1} = M v_n; langfristig M s = s."
       ],
       "id": "summary"
     }

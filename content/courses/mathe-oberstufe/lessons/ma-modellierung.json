@@ -14,6 +14,164 @@
   ],
   "steps": [
     {
+      "type": "anim",
+      "label": "Modell",
+      "md": "**Ein Modell an Daten anpassen:** Messwerte einer abkühlenden Tasse Tee (Punkte) und das Modell $T(t) = 20 + 70e^{-kt}$. Nur bei passendem $k$ trifft die Kurve die Daten.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          25
+        ],
+        "y": [
+          15,
+          95
+        ],
+        "grid": true,
+        "xLabel": "t in min",
+        "vars": [
+          {
+            "name": "KK",
+            "min": 0.01,
+            "max": 0.15,
+            "value": 0.02,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "m",
+            "expr": "20 + 70*exp(-KK*x)",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 20,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 90,
+            "color": "orange"
+          },
+          {
+            "x": 5,
+            "y": 72,
+            "color": "orange"
+          },
+          {
+            "x": 10,
+            "y": 57,
+            "color": "orange"
+          },
+          {
+            "x": 15,
+            "y": 49,
+            "color": "orange"
+          },
+          {
+            "x": 20,
+            "y": 41,
+            "color": "orange"
+          }
+        ],
+        "readout": "k = {KK|3} · Modell bei t = 20: {20 + 70*exp(-20*KK)|1} °C (gemessen 41 °C)"
+      },
+      "timeline": [
+        {
+          "caption": "k = 0,02: kühlt zu langsam ab.",
+          "set": {
+            "KK": 0.02
+          }
+        },
+        {
+          "caption": "k = 0,12: viel zu schnell.",
+          "to": {
+            "KK": 0.12
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k ≈ 0,064: passt zu den Messwerten.",
+          "to": {
+            "KK": 0.064
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Modellieren** ist ein Kreislauf: die Situation vereinfachen, in Mathematik übersetzen, rechnen, das Ergebnis zurück übersetzen und **prüfen**. Passt es nicht, wird das Modell verbessert.",
+      "label": "Modellieren",
+      "more": "**Der Kreislauf:** Realsituation, vereinfachtes Realmodell, mathematisches Modell, mathematische Lösung, Deutung in der Realität, Prüfung (Validierung) und gegebenenfalls ein neuer Durchlauf.\n\n**Gute Modelle** passen zu den Daten, sind so einfach wie möglich und liefern auch außerhalb der Messwerte sinnvolle Vorhersagen; ihre Annahmen werden offen genannt.\n\n**Problemlösen nach Pólya:** verstehen, einen Plan machen, ausführen, zurückschauen. **Heuristiken:** Skizze, Spezialfälle und Muster, rückwärts arbeiten, Analogien, Hilfsgrößen einführen.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Parameter aus einem Messwert:** $T(t) = 20 + 70e^{-kt}$ mit $T(10) = 57$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "20 + 70e^{-10k} = 57 \\;\\Rightarrow\\; e^{-10k} = \\tfrac{37}{70}",
+            "why": "Messwert einsetzen."
+          },
+          {
+            "tex": "k = \\tfrac{1}{10}\\ln\\tfrac{70}{37} \\approx 0{,}064",
+            "why": "Logarithmieren."
+          },
+          {
+            "tex": "T(20) = 20 + 70e^{-1{,}28} \\approx 39{,}5",
+            "why": "Vorhersage für 20 Minuten."
+          },
+          {
+            "tex": "\\text{gemessen: } 41 \\text{ °C}",
+            "why": "Prüfen: Die Abweichung ist klein, das Modell taugt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Parameter.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorhersage.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prüfung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Mathematische Modellierung (Kreislauf)",
@@ -112,6 +270,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Parameter",
+      "md": "Bestimme $k$ in $T(t) = 20 + 70e^{-kt}$ aus $T(10) = 57$ (drei Nachkommastellen).",
+      "answer": 0.064,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$e^{-10k} = \\tfrac{37}{70}$, also $k = \\tfrac{1}{10}\\ln\\tfrac{70}{37} \\approx 0{,}064$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Kreislauf",
       "md": "Ordne die Schritte des Modellierungskreislaufs.",
@@ -166,7 +334,8 @@
       "points": [
         "Kreislauf: vereinfachen, mathematisieren, lösen, deuten, validieren.",
         "Heurismen: Skizze, Spezialfall, rückwärts, systematisch probieren.",
-        "Modelle vereinfachen zweckmäßig."
+        "Modelle vereinfachen zweckmäßig.",
+        "Modellieren: übersetzen, rechnen, deuten, prüfen, verbessern."
       ],
       "id": "summary"
     }

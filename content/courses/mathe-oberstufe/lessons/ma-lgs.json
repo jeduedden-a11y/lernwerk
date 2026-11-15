@@ -19,6 +19,169 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Ebenen",
+      "md": "**Ein LGS im Raum:** Jede der drei Gleichungen ist eine Ebene. Die Lösung $(1 \\mid 2 \\mid 3)$ ist der Punkt, den alle drei gemeinsam haben.",
+      "widget": "raum",
+      "params": {
+        "box": 4,
+        "view": {
+          "az": 30,
+          "el": 22
+        },
+        "planes": [
+          {
+            "n": [
+              1,
+              1,
+              1
+            ],
+            "d": 6,
+            "p": [
+              1,
+              2,
+              3
+            ],
+            "size": 1.8,
+            "color": "blue"
+          },
+          {
+            "n": [
+              2,
+              -1,
+              1
+            ],
+            "d": 3,
+            "p": [
+              1,
+              2,
+              3
+            ],
+            "size": 1.8,
+            "color": "green"
+          },
+          {
+            "n": [
+              1,
+              2,
+              -1
+            ],
+            "d": 2,
+            "p": [
+              1,
+              2,
+              3
+            ],
+            "size": 1.8,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              1,
+              2,
+              3
+            ],
+            "label": "L"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Drei Ebenen, ein gemeinsamer Punkt: genau eine Lösung.",
+          "set": {
+            "az": 30,
+            "el": 22
+          }
+        },
+        {
+          "caption": "Gedreht: Je zwei Ebenen schneiden sich in einer Geraden, alle drei nur in L.",
+          "to": {
+            "az": 100,
+            "el": 30
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Von oben.",
+          "to": {
+            "az": 200,
+            "el": 60
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Mit **Zeilenumformungen** (vertauschen, vervielfachen, addieren) bringt man das LGS in **Stufenform** und löst von unten nach oben. Die letzte Zeile verrät die Lösungsmenge: eine Lösung, keine ($0 = c$) oder unendlich viele ($0 = 0$).",
+      "label": "Gauß",
+      "more": "**Erlaubte Umformungen** ändern die Lösungsmenge nicht: zwei Zeilen vertauschen, eine Zeile mit einer Zahl ungleich 0 multiplizieren, ein Vielfaches einer Zeile zu einer anderen addieren.\n\n**Die drei Fälle**, geometrisch für drei Ebenen: ein gemeinsamer Punkt; kein gemeinsamer Punkt (etwa zwei parallele Ebenen); eine gemeinsame Gerade oder Ebene. Bei unendlich vielen Lösungen wird eine Variable zum Parameter.\n\n**Homogene** Systeme (rechte Seite 0) haben immer die Lösung $\\vec 0$, oft noch mehr.\n\n**Häufige Fehler:** eine Zeile mit sich selbst verrechnen, Vorzeichen beim Abziehen, beim Rückwärtseinsetzen eine Variable übersehen.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Gauß-Algorithmus:** $x + y + z = 6$, $2x - y + z = 3$, $x + 2y - z = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\left(\\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\\\ 2 & -1 & 1 & 3 \\\\ 1 & 2 & -1 & 2 \\end{array}\\right)",
+            "why": "Erweiterte Koeffizientenmatrix."
+          },
+          {
+            "tex": "\\left(\\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\\\ 0 & -3 & -1 & -9 \\\\ 0 & 1 & -2 & -4 \\end{array}\\right)",
+            "why": "II − 2·I und III − I: x ist eliminiert."
+          },
+          {
+            "tex": "\\left(\\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\\\ 0 & -3 & -1 & -9 \\\\ 0 & 0 & -7 & -21 \\end{array}\\right)",
+            "why": "3·III + II: Stufenform."
+          },
+          {
+            "tex": "z = 3, \\; y = 2, \\; x = 1",
+            "why": "Rückwärts einsetzen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erste Spalte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stufenform.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Lineare Gleichungssysteme (LGS)",
@@ -213,6 +376,37 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Löse $x + y = 5$ und $x - y = 1$. Gib $x$ an.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Addieren: $2x = 6$, also $x = 3$ und $y = 2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe den Gauß-Algorithmus für drei Gleichungen in die richtige Reihenfolge.",
+      "items": [
+        "x aus der zweiten und dritten Zeile eliminieren",
+        "y aus der dritten Zeile eliminieren",
+        "z aus der letzten Zeile bestimmen",
+        "rückwärts einsetzen: erst y, dann x"
+      ],
+      "explain": "Die Reihenfolge: 1. x aus der zweiten und dritten Zeile eliminieren. 2. y aus der dritten Zeile eliminieren. 3. z aus der letzten Zeile bestimmen. 4. rückwärts einsetzen: erst y, dann x.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein homogenes LGS hat immer mindestens eine Lösung.",
+      "answer": true,
+      "explain": "Der Nullvektor erfüllt jede Gleichung mit rechter Seite 0.",
+      "label": "Homogen",
+      "id": "vq3"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Welche Lösungsmenge zeigt die letzte Zeile der Stufenform?",
@@ -253,12 +447,26 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "la-gauss",
+      "level": 3,
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "la-gauss",
+      "level": 4,
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Stufenform durch Zeilenumformungen.",
         "Rückwärts einsetzen.",
-        "Widerspruch: keine Lösung; Nullzeile: unendlich viele."
+        "Widerspruch: keine Lösung; Nullzeile: unendlich viele.",
+        "Stufenform, dann rückwärts einsetzen; die letzte Zeile zeigt die Lösungsmenge."
       ],
       "id": "summary"
     }

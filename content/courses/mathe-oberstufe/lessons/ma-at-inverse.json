@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Für $A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$ mit $ad - bc \\neq 0$ ist $A^{-1} = \\tfrac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}$. Größere Matrizen invertiert man mit Gauß-Jordan: $(A \\mid E) \\to (E \\mid A^{-1})$.",
+      "label": "Verfahren",
+      "more": "**Grundidee:** $A^{-1}$ macht $A$ rückgängig: $A \\cdot A^{-1} = A^{-1} \\cdot A = E$. Sie existiert genau dann, wenn $\\det A \\neq 0$.\n\n**2×2:** $a$ und $d$ tauschen, $b$ und $c$ mit Minus versehen, durch die Determinante teilen.\n\n**Anwendungen:** LGS $A\\vec x = \\vec b$ lösen mit $\\vec x = A^{-1}\\vec b$; einen Prozess rückwärts rechnen mit $\\vec v_{n-1} = M^{-1}\\vec v_n$.\n\n**Probe:** $A \\cdot A^{-1}$ muss die Einheitsmatrix ergeben.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $A = \\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\det A = 2 \\cdot 3 - 1 \\cdot 5 = 1",
+            "why": "Ungleich 0: A ist invertierbar."
+          },
+          {
+            "tex": "A^{-1} = \\frac11\\begin{pmatrix} 3 & -1 \\\\ -5 & 2 \\end{pmatrix}",
+            "why": "Diagonale tauschen, Nebendiagonale mit Minus."
+          },
+          {
+            "tex": "A \\cdot A^{-1} = \\begin{pmatrix} 6 - 5 & -2 + 2 \\\\ 15 - 15 & -5 + 6 \\end{pmatrix} = E",
+            "why": "Probe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Determinante.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Inverse.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Bei der 2×2-Formel **tauschen** $a$ und $d$ die Plätze, $b$ und $c$ bekommen nur ein **Minus**. Und am Ende durch die Determinante teilen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Inverse Matrix",
@@ -97,6 +159,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Eintrag",
+      "md": "Bestimme den Eintrag oben links von $\\begin{pmatrix} 4 & 2 \\\\ 1 & 1 \\end{pmatrix}^{-1}$.",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\det = 4 - 2 = 2$, $A^{-1} = \\tfrac12\\begin{pmatrix} 1 & -2 \\\\ -1 & 4 \\end{pmatrix}$, also $\\tfrac12$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede quadratische Matrix hat eine Inverse.",
+      "answer": false,
+      "explain": "Nur bei $\\det A \\neq 0$; $\\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}$ hat keine.",
+      "label": "Existenz",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -149,6 +229,38 @@
       },
       "label": "LGS mit Inverser",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "inverse"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "inverse"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Inverse nur bei det ≠ 0; 2×2: tauschen, Minus, durch det teilen."
+      ]
     }
   ]
 }

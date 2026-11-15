@@ -1171,6 +1171,50 @@
       "Lineares Gleichungssystem mit drei Unbekannten (Gauß): $r = " + a + "$, $s = " + b + "$, $t = " + c + "$. Probe durch Einsetzen.", 0);
   });
 
+  // ---------------------------------------------------------------- matrices and processes (Mathematik wave)
+  const mtex = (M) => "\\begin{pmatrix} " + M.map((r) => r.map(tnum).join(" & ")).join(" \\\\ ") + " \\end{pmatrix}";
+  const mmul = (A, B) => A.map((r) => B[0].map((_, j) => r.reduce((s, x, k) => s + x * B[k][j], 0)));
+  const mvec = (A, v) => A.map((r) => r.reduce((s, x, k) => s + x * v[k], 0));
+  const rint = (G, k, rows, cols) => Array.from({ length: rows }, () => Array.from({ length: cols }, () => G.int(-k, k)));
+  spec("matrixpotenz", (level, G) => {
+    if (level <= 1) {
+      const M = rint(G, 3, 2, 2), M2 = mmul(M, M), i = G.int(0, 1), j = G.int(0, 1);
+      return num("$M = " + mtex(M) + "$. Berechne den Eintrag in Zeile " + (i + 1) + ", Spalte " + (j + 1) + " von $M^2$.", M2[i][j],
+        "$M^2 = M \\cdot M$: Zeile " + (i + 1) + " mal Spalte " + (j + 1) + " ergibt $" + M[i].map((x, k) => par(x) + " \\cdot " + par(M[k][j])).join(" + ") + " = " + M2[i][j] + "$. Nicht die Einträge einzeln quadrieren.", 0);
+    }
+    if (level === 2) {
+      const M = rint(G, 2, 2, 2), v = [G.int(-3, 3), G.int(-3, 3)], v1 = mvec(M, v), v2 = mvec(M, v1);
+      return num("$M = " + mtex(M) + "$ und $\\vec v_0 = " + vec(v) + "$. Berechne die erste Koordinate von $\\vec v_2 = M^2\\vec v_0$.", v2[0],
+        "Schrittweise: $\\vec v_1 = M\\vec v_0 = " + vec(v1) + "$, $\\vec v_2 = M\\vec v_1 = " + vec(v2) + "$.", 0);
+    }
+    if (level === 3) {
+      const a = G.pick([0.9, 0.8, 0.7, 0.6]), b = G.pick([0.1, 0.2, 0.3, 0.4]), M = [[a, b], [+(1 - a).toFixed(2), +(1 - b).toFixed(2)]], v = [100, 0];
+      const v1 = mvec(M, v), v2 = mvec(M, v1);
+      return num("Übergangsmatrix $M = " + mtex(M) + "$, Startverteilung $\\vec v_0 = " + vec(v) + "$. Wie viele sind nach zwei Schritten im ersten Zustand?", v2[0],
+        "$\\vec v_1 = M\\vec v_0 = " + vec(v1.map((x) => +x.toFixed(2))) + "$, $\\vec v_2 = M\\vec v_1 = " + vec(v2.map((x) => +x.toFixed(2))) + "$.", 0.01);
+    }
+    const k = nz(G, -3, 3), n = G.int(3, 9);
+    return num("$M = " + mtex([[1, k], [0, 1]]) + "$. Bestimme den Eintrag oben rechts von $M^{" + n + "}$.", n * k,
+      "$M^2 = " + mtex([[1, 2 * k], [0, 1]]) + "$, $M^3 = " + mtex([[1, 3 * k], [0, 1]]) + "$: Jede Multiplikation addiert $" + k + "$ oben rechts. Also $M^{" + n + "}$ hat dort $" + n + " \\cdot " + par(k) + " = " + n * k + "$.", 0);
+  });
+  spec("verflechtung", (level, G) => {
+    if (level <= 2) {
+      const n = level === 1 ? 2 : 3, A = Array.from({ length: 2 }, () => Array.from({ length: n }, () => G.int(0, 5))), B = Array.from({ length: n }, () => Array.from({ length: 2 }, () => G.int(0, 4)));
+      const C = mmul(A, B), i = G.int(0, 1), j = G.int(0, 1);
+      return num("Berechne den Eintrag in Zeile " + (i + 1) + ", Spalte " + (j + 1) + " von $" + mtex(A) + " \\cdot " + mtex(B) + "$.", C[i][j],
+        "Zeile " + (i + 1) + " der ersten Matrix mal Spalte " + (j + 1) + " der zweiten: $" + A[i].map((x, k) => x + " \\cdot " + B[k][j]).join(" + ") + " = " + C[i][j] + "$.", 0);
+    }
+    const A = [[G.int(1, 4), G.int(0, 3)], [G.int(0, 3), G.int(1, 4)]], B = [[G.int(1, 3), G.int(0, 2)], [G.int(0, 2), G.int(1, 3)]], C = mmul(A, B);
+    if (level === 3) {
+      const x = [G.int(5, 30), G.int(5, 30)], r = mvec(C, x);
+      return num("Rohstoffe pro Zwischenprodukt: $A = " + mtex(A) + "$; Zwischenprodukte pro Endprodukt: $B = " + mtex(B) + "$. Bestellt werden " + x[0] + " Stück von $E_1$ und " + x[1] + " von $E_2$. Wie viele Einheiten von Rohstoff $R_1$ werden gebraucht?", r[0],
+        "Rohstoffe pro Endprodukt: $C = A \\cdot B = " + mtex(C) + "$. Bedarf $C \\cdot " + vec(x) + " = " + vec(r) + "$, also " + r[0] + " Einheiten $R_1$.", 0);
+    }
+    const stock = [G.int(60, 200), G.int(60, 200)], maxN = Math.min(...stock.map((s, i) => (C[i][0] > 0 ? Math.floor(s / C[i][0]) : Infinity)));
+    return num("Rohstoffe pro Zwischenprodukt: $A = " + mtex(A) + "$; Zwischenprodukte pro Endprodukt: $B = " + mtex(B) + "$. Auf Lager sind " + stock[0] + " Einheiten $R_1$ und " + stock[1] + " Einheiten $R_2$. Wie viele Stück von $E_1$ lassen sich höchstens herstellen, wenn nur $E_1$ produziert wird?", maxN,
+      "Rohstoffe pro Stück $E_1$: erste Spalte von $C = A \\cdot B = " + mtex(C) + "$, also " + C[0][0] + " von $R_1$ und " + C[1][0] + " von $R_2$. Der knappere Rohstoff begrenzt: $\\min\\left(\\lfloor \\tfrac{" + stock[0] + "}{" + C[0][0] + "} \\rfloor, \\lfloor \\tfrac{" + stock[1] + "}{" + C[1][0] + "} \\rfloor\\right) = " + maxN + "$.", 0);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
@@ -1178,7 +1222,7 @@
   LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch", "extremwertproblem", "schar", "oekonomie"]));
   LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum", "stammfunktion", "bestand"]));
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat", "geradenpunkt", "ebenenform", "durchstoss", "spiegelpunkt", "teilpunkt", "schatten", "linkombi"]));
-  LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang"]));
+  LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang", "matrixpotenz", "verflechtung"]));
   LW.generator("ma-r-stochastik", chapter("Abitur-Stochastik", ["poisson", "mindestens", "hypergeometrisch"]));
   LW.generator("ma-r-techniken", chapter("Rechentechniken", ["partiell", "substitution", "uneigentlich", "trapez", "polar", "geomreihe", "rotation"]));
 })();

@@ -16,6 +16,68 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Der Eintrag $(i, j)$ von $AB$ ist **Zeile $i$ von $A$ mal Spalte $j$ von $B$**. Multiplizieren geht nur, wenn $A$ so viele Spalten hat wie $B$ Zeilen: $(m \\times n) \\cdot (n \\times p)$ ergibt $m \\times p$.",
+      "label": "Verfahren",
+      "more": "**Schema:** Formate prüfen, Ergebnisformat festhalten, jeden Eintrag als Skalarprodukt einer Zeile mit einer Spalte berechnen.\n\n**Verflechtung (mehrstufige Produktion):** $A$ gibt die Rohstoffe pro Zwischenprodukt an, $B$ die Zwischenprodukte pro Endprodukt. Dann gibt $C = A \\cdot B$ die Rohstoffe pro Endprodukt. Für einen Auftrag $\\vec x$ (Stückzahlen der Endprodukte) braucht man $C\\vec x$ an Rohstoffen.\n\n**Begrenzung durch das Lager:** Der knappste Rohstoff bestimmt, wie viele Stück möglich sind.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Verflechtung:** $A = \\begin{pmatrix} 2 & 1 \\\\ 0 & 3 \\end{pmatrix}$ (Rohstoffe pro Zwischenprodukt), $B = \\begin{pmatrix} 1 & 4 \\\\ 2 & 1 \\end{pmatrix}$ (Zwischenprodukte pro Endprodukt).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "c_{11} = 2 \\cdot 1 + 1 \\cdot 2 = 4",
+            "why": "Rohstoff 1 pro Stück von Endprodukt 1."
+          },
+          {
+            "tex": "C = AB = \\begin{pmatrix} 4 & 9 \\\\ 6 & 3 \\end{pmatrix}",
+            "why": "Alle Einträge."
+          },
+          {
+            "tex": "C\\begin{pmatrix} 10 \\\\ 20 \\end{pmatrix} = \\begin{pmatrix} 220 \\\\ 120 \\end{pmatrix}",
+            "why": "Bedarf für 10 Stück E₁ und 20 Stück E₂."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Eintrag.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auftrag.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Die Reihenfolge folgt dem **Fluss** der Produktion: Rohstoffe pro Zwischenprodukt **mal** Zwischenprodukte pro Endprodukt, nicht umgekehrt.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Matrizenmultiplikation",
@@ -73,6 +135,38 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Eintrag",
+      "md": "Berechne den Eintrag in Zeile 1, Spalte 2 von $\\begin{pmatrix} 1 & 2 & 0 \\\\ 3 & -1 & 4 \\end{pmatrix} \\cdot \\begin{pmatrix} 2 & 1 \\\\ 0 & 3 \\\\ 1 & -2 \\end{pmatrix}$.",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$1 \\cdot 1 + 2 \\cdot 3 + 0 \\cdot (-2) = 7$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welches Format hat das Produkt einer $2 \\times 3$- mit einer $3 \\times 4$-Matrix?",
+      "options": [
+        {
+          "md": "$2 \\times 4$",
+          "correct": true
+        },
+        {
+          "md": "$3 \\times 3$"
+        },
+        {
+          "md": "$2 \\times 3$"
+        },
+        {
+          "md": "Das Produkt ist nicht definiert."
+        }
+      ],
+      "explain": "Außen stehen die Zeilen der ersten und die Spalten der zweiten Matrix.",
+      "label": "Format",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -125,6 +219,62 @@
       },
       "label": "Eintrag",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "verflechtung"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "verflechtung"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "verflechtung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "verflechtung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Zeile mal Spalte; Verflechtung: Rohstoffe pro Endprodukt = A · B."
+      ]
     }
   ]
 }
