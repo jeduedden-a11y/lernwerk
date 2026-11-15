@@ -16,6 +16,198 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel.** Federpendel: $D = 100\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$, $m = 0{,}25\\,\\mathrm{kg}$, Amplitude $5\\,\\mathrm{cm}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E = \\tfrac12 D\\hat y^2 = \\tfrac12\\cdot 100\\cdot 0{,}05^2\\,\\mathrm{J} = 0{,}125\\,\\mathrm{J}",
+            "why": "Gesamtenergie, abgelesen im Umkehrpunkt."
+          },
+          {
+            "tex": "\\tfrac12 m\\hat v^2 = E\\quad\\Rightarrow\\quad \\hat v = \\sqrt{\\frac{2E}{m}} = 1\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "In der Ruhelage ist alles Bewegungsenergie."
+          },
+          {
+            "tex": "\\tfrac12 m v^2 + \\tfrac12 D y^2 = E\\quad\\Rightarrow\\quad v(y) = \\sqrt{\\frac{D}{m}\\left(\\hat y^2 - y^2\\right)}",
+            "why": "Dazwischen teilen sich beide Formen die Energie."
+          },
+          {
+            "tex": "y = 3\\,\\mathrm{cm}:\\quad v = 20\\,\\mathrm{s}^{-1}\\cdot\\sqrt{0{,}0025 - 0{,}0009}\\,\\mathrm{m} = 0{,}8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Zahlenbeispiel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gesamtenergie.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höchstgeschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beliebige Auslenkung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Energieerhaltung bei der harmonischen Schwingung",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Energieerhaltung bei der harmonischen Schwingung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Gesamtenergie der Schwingung\"*, *\"Bestimmen Sie die Geschwindigkeit beim Durchgang durch die Ruhelage\"*, *\"Wie groß ist die kinetische Energie bei halber Auslenkung?\"*, *\"Zeigen Sie, dass die Summe aus kinetischer und potenzieller Energie konstant ist\"*, *\"An welcher Stelle sind beide Energieformen gleich groß?\"*.\n\nErkennungsmerkmal: Gefragt ist nach **Energie** oder nach einer **Geschwindigkeit an einer bestimmten Auslenkung** -- der Umweg über die Zeitfunktion ist dann unnötig."
+            }
+          ]
+        },
+        {
+          "title": "Der Energieansatz",
+          "blocks": [
+            {
+              "md": "> [!important] Die Gesamtenergie ist an den Umkehrpunkten am leichtesten abzulesen\n> In den **Umkehrpunkten** ruht der Körper: Die gesamte Energie steckt in der Spannenergie der Feder.\n> $$E_{ges} = \\tfrac12\\,D\\,A^2$$\n> In der **Ruhelage** ist die Feder entspannt: Die gesamte Energie ist kinetisch.\n> $$E_{ges} = \\tfrac12\\,m\\,v_{max}^2$$\n> Bei **beliebiger Auslenkung** $x$ verteilt sie sich:\n> $$\\tfrac12 D A^2 = \\tfrac12 D x^2 + \\tfrac12 m v^2$$\n>\n> Das Gleichsetzen der beiden Extremformen liefert unmittelbar\n> $$v_{max} = A\\sqrt{\\frac{D}{m}} = A\\,\\omega$$\n> -- dasselbe Ergebnis wie die Ableitung der Schwingungsgleichung, nun aber ohne Differenzieren. Genau darin liegt der Nutzen des Energieansatzes: Er verbindet Auslenkung und Geschwindigkeit **direkt**, ohne den Zeitpunkt zu kennen."
+            }
+          ]
+        },
+        {
+          "title": "Nach der Geschwindigkeit auflösen",
+          "blocks": [
+            {
+              "md": "$$v(x) = \\sqrt{\\frac{D}{m}\\left(A^2 - x^2\\right)} = \\omega\\sqrt{A^2 - x^2}$$\n\nDiese Formel ist der eigentliche Arbeitspferd des Aufgabentyps. Sie beantwortet die häufigste Frage -- \"wie schnell ist der Körper bei der Auslenkung $x$?\" -- in einem Schritt."
+            }
+          ]
+        },
+        {
+          "title": "Wie sich die Energie über die Zeit verteilt",
+          "blocks": [
+            {
+              "md": "Mit $x = A\\sin(\\omega t)$ und $v = A\\omega\\cos(\\omega t)$:\n$$E_{pot} = \\tfrac12 D A^2 \\sin^2(\\omega t), \\qquad E_{kin} = \\tfrac12 D A^2 \\cos^2(\\omega t)$$\n\nWegen $\\sin^2 + \\cos^2 = 1$ ist die Summe konstant -- das ist der geforderte Nachweis in einer Zeile.\n\n> [!tip] Die Energien schwingen doppelt so schnell wie der Körper\n> $\\sin^2(\\omega t) = \\tfrac12\\left(1 - \\cos(2\\omega t)\\right)$: Beide Energieanteile oszillieren mit der **doppelten Frequenz** um den Mittelwert $\\tfrac12 E_{ges}$. Anschaulich, weil die Feder pro voller Schwingung **zweimal** maximal gespannt ist -- einmal nach oben, einmal nach unten. Ein Diagramm der Energien zeigt daher zwei Maxima pro Periode, ein Diagramm der Auslenkung nur eines."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Gesamtenergie aus der Amplitude** bestimmen: $E_{ges} = \\tfrac12 D A^2$.\n2. **Bei gesuchter Maximalgeschwindigkeit** über $E_{ges} = \\tfrac12 m v_{max}^2$ auflösen, oder direkt $v_{max} = A\\omega$.\n3. **Bei gesuchter Geschwindigkeit an der Stelle $x$:** $v = \\omega\\sqrt{A^2 - x^2}$, oder als Energiebilanz $E_{kin} = E_{ges} - \\tfrac12 D x^2$.\n4. **Bei der Frage nach Gleichheit** $E_{kin} = E_{pot}$: Aus $\\tfrac12 D x^2 = \\tfrac12 E_{ges}$ folgt $x = \\dfrac{A}{\\sqrt2} \\approx 0{,}707\\,A$.\n5. **Einheitenkontrolle:** $[\\text{N/m}]\\cdot[\\text{m}^2] = \\text{N}\\,\\text{m} = \\text{J}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Federpendel mit $D = 25\\,\\text{N/m}$ und $m = 0{,}40\\,\\text{kg}$ schwingt mit der Amplitude $A = 12\\,\\text{cm}$. Berechnen Sie die Gesamtenergie, die maximale Geschwindigkeit sowie kinetische Energie und Geschwindigkeit bei halber Auslenkung.*\n\n**Schritt 1, Gesamtenergie:**\n$$E_{ges} = \\tfrac12 \\cdot 25 \\cdot (0{,}12)^2 = \\tfrac12 \\cdot 25 \\cdot 0{,}0144 = 0{,}18\\,\\text{J}$$\n\n**Schritt 2, Maximalgeschwindigkeit:**\n$$v_{max} = A\\sqrt{\\frac{D}{m}} = 0{,}12\\sqrt{\\frac{25}{0{,}40}} = 0{,}12\\cdot\\sqrt{62{,}5} = 0{,}12\\cdot7{,}906 \\approx 0{,}949\\,\\frac{\\text{m}}{\\text{s}}$$\n\n**Probe:** $\\tfrac12 m v_{max}^2 = \\tfrac12\\cdot0{,}40\\cdot0{,}949^2 = 0{,}18\\,\\text{J}$. Stimmt mit der Gesamtenergie überein.\n\n**Schritt 3, bei halber Auslenkung $x = 6{,}0\\,\\text{cm}$:**\n$$E_{pot} = \\tfrac12\\cdot25\\cdot(0{,}06)^2 = 0{,}045\\,\\text{J}$$\n$$E_{kin} = 0{,}18 - 0{,}045 = 0{,}135\\,\\text{J}$$\n$$v = \\sqrt{\\frac{2\\,E_{kin}}{m}} = \\sqrt{\\frac{2\\cdot0{,}135}{0{,}40}} = \\sqrt{0{,}675} \\approx 0{,}822\\,\\frac{\\text{m}}{\\text{s}}$$\n\n**Gegenprobe über die $v(x)$-Formel:** $v = 7{,}906\\cdot\\sqrt{0{,}12^2 - 0{,}06^2} = 7{,}906\\cdot\\sqrt{0{,}0108} = 7{,}906\\cdot0{,}1039 \\approx 0{,}822\\,\\text{m/s}$. Bestätigt.\n\n> [!important] Das kontraintuitive Zwischenergebnis\n> Bei **halber Auslenkung** ist die potenzielle Energie nur ein **Viertel** der Gesamtenergie, nicht die Hälfte -- weil $E_{pot} \\propto x^2$. Entsprechend sind noch drei Viertel der Energie kinetisch, und die Geschwindigkeit beträgt $\\sqrt{3}/2 \\approx 87\\,\\%$ des Maximalwerts. Der Körper ist auf halbem Weg zum Umkehrpunkt also noch fast so schnell wie in der Ruhelage.\n>\n> Die Stelle gleicher Energieanteile liegt nicht bei $A/2$, sondern bei $A/\\sqrt2 \\approx 0{,}71\\,A$. Diese beiden Werte zu verwechseln ist der charakteristische Fehler dieses Aufgabentyps."
+            }
+          ]
+        },
+        {
+          "title": "Die Analogie zum Schwingkreis",
+          "blocks": [
+            {
+              "md": "| Mechanisches Pendel | Elektromagnetischer Schwingkreis |\n|---|---|\n| Auslenkung $x$ | Ladung $Q$ |\n| Geschwindigkeit $v$ | Stromstärke $I$ |\n| Federkonstante $D$ | Kehrwert der Kapazität $1/C$ |\n| Masse $m$ | Induktivität $L$ |\n| $E_{pot} = \\tfrac12 D x^2$ | $E_{el} = \\tfrac{1}{2C}Q^2$ |\n| $E_{kin} = \\tfrac12 m v^2$ | $E_{mag} = \\tfrac12 L I^2$ |\n\nDie Energiebilanz ist strukturgleich; siehe **Elektromagnetischer Schwingkreis - Thomsonsche Gleichung anwenden**. Wer den mechanischen Fall verstanden hat, kann den elektrischen durch bloßes Ersetzen der Symbole behandeln -- eine der tragfähigsten Analogien der Oberstufenphysik."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$E_{pot}$ bei halber Auslenkung als halbe Gesamtenergie ansetzen.** Es ist ein Viertel, denn $E_{pot} \\propto x^2$.\n- **Die Stelle gleicher Energien bei $A/2$ vermuten.** Sie liegt bei $A/\\sqrt2$.\n- **Die Höhenenergie beim vertikalen Federpendel doppelt zählen.** Rechnet man die Auslenkung ab der **neuen Ruhelage** (Feder bereits durch die Gewichtskraft vorgedehnt), ist die Gewichtskraft bereits vollständig berücksichtigt. Ein zusätzlicher Term $mgh$ wäre eine Doppelzählung.\n- **Zentimeter nicht umrechnen.** Wegen des Quadrats geht der Fehler hundertfach ein.\n- **Annehmen, die Energien schwängen mit der Schwingungsfrequenz.** Sie oszillieren mit der doppelten Frequenz.\n- **Bei Dämpfung von Energieerhaltung sprechen.** Dann nimmt $E_{ges}$ ab, siehe **Gedämpfte Schwingung auswerten**."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Schwingungsgleichung aufstellen und auswerten** · **Federpendel - Periodendauer berechnen** · **Gedämpfte Schwingung auswerten** · **Elektromagnetischer Schwingkreis - Thomsonsche Gleichung anwenden** · **Energieerhaltungssatz anwenden**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Federpendel ($D = 40\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$) schwingt mit $\\hat y = 10\\,\\mathrm{cm}$. Wie groß ist seine Gesamtenergie?",
+      "answer": 0.2,
+      "tolerance": 0.002,
+      "placeholder": "J",
+      "explain": "$E = \\tfrac12\\cdot 40\\cdot 0{,}01\\,\\mathrm{J} = 0{,}2\\,\\mathrm{J}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Bei welcher Auslenkung sind Spann- und Bewegungsenergie gleich groß ($\\hat y = 10\\,\\mathrm{cm}$)?",
+      "answer": 7.07,
+      "tolerance": 0.03,
+      "placeholder": "cm",
+      "explain": "$\\tfrac12 D y^2 = \\tfrac12 E$: $y = \\tfrac{\\hat y}{\\sqrt2} \\approx 7{,}07\\,\\mathrm{cm}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Amplitude, wird die Schwingungsenergie {{0}}-mal so groß und die Höchstgeschwindigkeit {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$E \\sim \\hat y^2$, $\\hat v = \\hat y\\omega \\sim \\hat y$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Beim Durchgang durch die Ruhelage ist die Spannenergie null und die Bewegungsenergie gleich der Gesamtenergie.",
+      "answer": true,
+      "explain": "Bei $y = 0$ ist $\\tfrac12 Dy^2 = 0$.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +284,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schwingung-v",
+          "schwingung-energie"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$E = \\tfrac12 D\\hat y^2 = \\tfrac12 m\\hat v^2$; dazwischen $v(y) = \\sqrt{\\tfrac Dm(\\hat y^2 - y^2)}$."
+      ]
     }
   ]
 }

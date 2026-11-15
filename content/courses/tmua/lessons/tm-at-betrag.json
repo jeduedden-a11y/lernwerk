@@ -16,6 +16,284 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Fälle nach dem Vorzeichen des Inhalts** bilden: $|u| = u$ für $u \\ge 0$ und $|u| = -u$ für $u < 0$. Nur so verschwindet der Betrag.\n> 2. **Jeden Fall ohne Betrag lösen.**\n> 3. **Prüfen, ob die Lösung zum Fall passt**: Eine Lösung, die außerhalb ihres Falls liegt, gehört nicht dazu.\n> 4. Bei Ungleichungen die Abkürzungen: $|u| < a \\iff -a < u < a$, $|u| > a \\iff u < -a$ oder $u > a$ (für $a > 0$).",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Löse $|2x - 1| = x + 3$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x \\ge \\tfrac12:\\quad 2x - 1 = x + 3 \\;\\Rightarrow\\; x = 4",
+            "why": "Fall 1: Der Inhalt ist nicht negativ. 4 liegt im Fall."
+          },
+          {
+            "tex": "x < \\tfrac12:\\quad -(2x - 1) = x + 3 \\;\\Rightarrow\\; x = -\\tfrac23",
+            "why": "Fall 2: Der Inhalt ist negativ. −2/3 liegt im Fall."
+          },
+          {
+            "tex": "\\mathbb L = \\left\\{-\\tfrac23,\\ 4\\right\\}",
+            "why": "Zwei Lösungen. Probe: |−7/3| = 7/3 = −2/3 + 3."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fall 1.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fall 2.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Fälle",
+      "md": "**Die Fälle im Bild:** blau $y = |2x - 1|$, orange $y = x + 3$. Grün hinterlegt ist der jeweils betrachtete Fall.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          6
+        ],
+        "y": [
+          -1,
+          11
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "B",
+            "min": -3,
+            "max": 6,
+            "value": 3.25,
+            "hidden": true
+          },
+          {
+            "name": "Dd",
+            "min": 0,
+            "max": 5,
+            "value": 2.75,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "abs(2*x - 1)",
+            "color": "blue",
+            "samples": 400
+          },
+          {
+            "name": "g",
+            "expr": "x + 3",
+            "color": "orange"
+          }
+        ],
+        "vbands": [
+          {
+            "x": "B",
+            "d": "Dd",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": 4,
+            "y": 7,
+            "color": "blue",
+            "label": "x = 4"
+          },
+          {
+            "x": -0.6667,
+            "y": 2.3333,
+            "color": "blue",
+            "label": "x = −2/3"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Fall x ≥ 1/2: Dort ist |2x − 1| = 2x − 1, die Gerade 2x − 1 trifft x + 3 bei x = 4.",
+          "set": {
+            "B": 3.25,
+            "Dd": 2.75
+          }
+        },
+        {
+          "caption": "Fall x < 1/2: Dort ist |2x − 1| = 1 − 2x, Schnitt bei x = −2/3. Beide Lösungen liegen in ihrem Fall.",
+          "to": {
+            "B": -1.25,
+            "Dd": 1.75
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Die Fall-Lösung nicht prüfen: Bei $|x - 1| = 2x + 4$ liefert der Fall $x \\ge 1$ den Wert $-5$, der gar nicht im Fall liegt.\n- $|u| < a$ mit negativem $a$: keine Lösung, weil ein Betrag nie negativ ist.\n- Den Betrag einfach weglassen, als wäre der Inhalt immer positiv.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Betragsgleichungen und Betragsungleichungen",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Betragsgleichungen und Betragsungleichungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Gleichung oder Ungleichung enthält Beträge $\\lvert \\dots \\rvert$. Gefragt sind Lösungen, ihre Anzahl oder eine Lösungsmenge. Drei Werkzeuge stehen zur Wahl -- die Kunst ist, das schnellste zu erkennen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "**Werkzeug 1 -- Abstandsdeutung** (wenn nur $\\lvert x - a \\rvert$ gegen eine Konstante steht):\n- $\\lvert x - a \\rvert < r \\iff a - r < x < a + r$\n- $\\lvert x - a \\rvert > r \\iff x < a - r$ oder $x > a + r$\n\n**Werkzeug 2 -- Fallunterscheidung** (allgemein):\n1. Die Stellen bestimmen, an denen die Terme in den Beträgen null werden.\n2. In jedem Bereich den Betrag durch $+(\\dots)$ oder $-(\\dots)$ ersetzen.\n3. Im Bereich lösen und **prüfen, ob die Lösung im Bereich liegt**.\n\n**Werkzeug 3 -- Quadrieren** (wenn beide Seiten nichtnegativ sind, etwa $\\lvert A \\rvert = \\lvert B \\rvert$ oder $\\lvert A \\rvert < \\lvert B \\rvert$):\n- $\\lvert A \\rvert < \\lvert B \\rvert \\iff A^2 < B^2$, weil beide Seiten nichtnegativ sind.\n\n**Werkzeug 4 -- Anzahl über den Graphen:** $\\lvert f(x) \\rvert = c$ heißt $f(x) = c$ oder $f(x) = -c$; die Lösungen beider Gleichungen zählen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find all real solutions of $\\lvert 2x - 3 \\rvert = x + 1$.\n>\n> - **A** $x = 4$ only\n> - **B** $x = \\frac23$ only\n> - **C** $x = 4$ and $x = \\frac23$\n> - **D** $x = 4$ and $x = -\\frac23$\n> - **E** There are no real solutions.\n\n**Fall 1, $2x - 3 \\ge 0$, also $x \\ge \\tfrac32$:** $2x - 3 = x + 1$, also $x = 4$. Liegt im Bereich.\n\n**Fall 2, $x < \\tfrac32$:** $-(2x - 3) = x + 1$, also $3 - 2x = x + 1$, also $x = \\tfrac23$. Liegt im Bereich.\n\n**Probe:** $x = 4$: $\\lvert 5 \\rvert = 5$. $x = \\tfrac23$: $\\lvert -\\tfrac53 \\rvert = \\tfrac53 = \\tfrac23 + 1$.\n\nAntwort **C**.\n\n> [!warning] Die rechte Seite muss nichtnegativ sein\n> Ein Betrag ist nie negativ. Deshalb können nur $x$ mit $x + 1 \\ge 0$ Lösungen sein. Hätte die Rechnung einen Wert mit $x + 1 < 0$ geliefert, wäre er zu streichen -- genau das prüft die Bereichskontrolle in jedem Fall mit."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Bereichsprüfung auslassen** und Scheinlösungen angeben.\n- **$\\lvert x - a \\rvert < r$ als $x < a + r$ lösen** und die untere Grenze vergessen.\n- **Quadrieren, obwohl eine Seite negativ sein kann.**\n- **$\\lvert f(x) \\rvert = c$ nur als $f(x) = c$ behandeln.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the complete set of values of $x$ for which $\\lvert x - 2 \\rvert < 3$.\n>\n> - **A** $-1 < x < 5$\n> - **B** $x < 5$\n> - **C** $-5 < x < 1$\n> - **D** $x < -1$ or $x > 5$\n> - **E** $-3 < x < 3$\n\n> [!success]- Lösung\n> **A.** Abstand von 2 kleiner als 3: $2 - 3 < x < 2 + 3$.\n> C verschiebt in die falsche Richtung ($\\lvert x + 2 \\rvert$), D ist die Lösung von $> 3$.\n\n> [!question] Aufgabe 2\n> How many real solutions does the equation $\\lvert x^2 - 4 \\rvert = 3$ have?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 0\n\n> [!success]- Lösung\n> **D.** $x^2 - 4 = 3$ liefert $x = \\pm\\sqrt7$; $x^2 - 4 = -3$ liefert $x = \\pm 1$. Vier Lösungen.\n> Am Graphen: $\\lvert x^2 - 4 \\rvert$ ist eine Parabel, deren Teil unter der Achse nach oben geklappt ist. Die Gerade $y = 3$ liegt unterhalb des hochgeklappten Buckels (Höhe 4) und schneidet deshalb viermal.\n\n> [!question] Aufgabe 3\n> Find the complete set of values of $x$ for which $\\lvert x + 1 \\rvert > \\lvert x - 3 \\rvert$.\n>\n> - **A** $x > 1$\n> - **B** $x < 1$\n> - **C** $-1 < x < 3$\n> - **D** $x > 3$\n> - **E** $x > 2$\n\n> [!success]- Lösung\n> **A.** Abstandsdeutung: $x$ ist weiter von $-1$ entfernt als von $3$, liegt also rechts der Mitte $\\tfrac{-1 + 3}{2} = 1$.\n> Rechnerisch (beide Seiten nichtnegativ, Quadrieren erlaubt): $(x + 1)^2 > (x - 3)^2 \\iff 2x + 1 > -6x + 9 \\iff x > 1$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Quadratische Ungleichung lösen** · **Graphen mit Betrag skizzieren** · **Anzahl reeller Lösungen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Fälle",
+      "md": "Wie viele reelle Lösungen hat $|x + 2| = 2x - 1$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Fall $x \\ge -2$: $x + 2 = 2x - 1$, $x = 3$ (passt). Fall $x < -2$: $-x - 2 = 2x - 1$, $x = -\\tfrac13$ (passt nicht). Eine Lösung.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Solve $|3 - x| \\ge 4$.",
+      "options": [
+        {
+          "md": "$x \\le -1$ or $x > 7$",
+          "why": "Der Rand 7 gehört wegen $\\ge$ dazu."
+        },
+        {
+          "md": "$x \\le -7$ or $x \\ge 1$",
+          "why": "Vorzeichenfehler."
+        },
+        {
+          "md": "$x \\ge 7$",
+          "why": "Der zweite Teil fehlt."
+        },
+        {
+          "md": "$x \\le -1$ or $x \\ge 7$",
+          "correct": true
+        },
+        {
+          "md": "$-1 \\le x \\le 7$",
+          "why": "Das ist die Menge für $\\le 4$."
+        }
+      ],
+      "explain": "$|3 - x| = |x - 3|$, Abstand von 3 mindestens 4: $x \\le -1$ oder $x \\ge 7$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Ungleichung",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Ungleichung $|x - 5| < -1$ hat keine Lösung.",
+      "answer": true,
+      "explain": "Ein Betrag ist nie negativ, also auch nie kleiner als −1.",
+      "label": "Betrag",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Welche $x$ erfüllen $|x| + |x - 4| = 4$?",
+      "options": [
+        {
+          "md": "alle $x$ mit $0 \\le x \\le 4$",
+          "correct": true
+        },
+        {
+          "md": "nur $x = 0$ und $x = 4$",
+          "why": "Auch jeder Punkt dazwischen hat Abstandssumme 4."
+        },
+        {
+          "md": "nur $x = 2$",
+          "why": "Das ist nur die Mitte."
+        },
+        {
+          "md": "kein $x$",
+          "why": "Etwa $x = 1$: 1 + 3 = 4."
+        }
+      ],
+      "explain": "Als Abstände gelesen: Abstand zu 0 plus Abstand zu 4 ist genau dann 4, wenn x dazwischen liegt.",
+      "label": "Abstand",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -91,6 +369,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c3"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "betrag"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "betrag"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "betrag"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Fälle nach dem Vorzeichen des Inhalts, jede Fall-Lösung auf ihren Fall prüfen.",
+        "$|u| < a \\iff -a < u < a$; $|x - a|$ ist der Abstand von $x$ zu $a$."
+      ]
     }
   ]
 }

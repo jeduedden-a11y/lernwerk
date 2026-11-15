@@ -18,6 +18,276 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Hall-Effekt in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Hall-Effekt.svg",
+        "aspect": 1.62,
+        "alt": "Hall-Plättchen mit Strom, Feld, Lorentzkraft und Hallspannung"
+      },
+      "timeline": [
+        {
+          "caption": "Ein stromdurchflossenes Plättchen steht senkrecht in einem Magnetfeld.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Der Strom $I$ fließt längs durch das Plättchen: Ladungsträger bewegen sich mit der Driftgeschwindigkeit $v$.",
+          "to": {
+            "x": 0.22,
+            "y": 0.45,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das Feld $B$ steht senkrecht dazu; die Lorentzkraft $F_L$ drängt die Ladungsträger zu einer Seite.",
+          "to": {
+            "x": 0.5,
+            "y": 0.45,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Auf einer Seite sammelt sich Ladung, auf der anderen fehlt sie: Es entsteht die Querspannung $U_H$, die **Hallspannung**.",
+          "to": {
+            "x": 0.5,
+            "y": 0.75,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Sie wächst, bis die elektrische Kraft die Lorentzkraft ausgleicht. Dann gilt $U_H = \\tfrac{B I}{n q d}$.",
+          "to": {
+            "x": 0.22,
+            "y": 0.86,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Hallspannung.** Plättchen der Breite $b$ (quer zum Strom, wo $U_H$ gemessen wird) und Dicke $d$ (in Feldrichtung), Ladungsträgerdichte $n$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "q\\,E_H = q\\,v\\,B,\\qquad E_H = \\frac{U_H}{b}",
+            "why": "Gleichgewicht: Die elektrische Kraft des Querfeldes gleicht die Lorentzkraft aus; das Querfeld ist homogen über die Breite."
+          },
+          {
+            "tex": "U_H = v\\,B\\,b",
+            "why": "Nach der Hallspannung aufgelöst."
+          },
+          {
+            "tex": "I = n\\,q\\,v\\,A = n\\,q\\,v\\,b\\,d\\quad\\Rightarrow\\quad v = \\frac{I}{n\\,q\\,b\\,d}",
+            "why": "Der Strom aus Ladungsträgerdichte, Ladung, Driftgeschwindigkeit und Querschnitt $A = b d$."
+          },
+          {
+            "tex": "U_H = \\frac{B\\,I}{n\\,q\\,d} = R_H\\,\\frac{B\\,I}{d},\\qquad R_H = \\frac{1}{n q}",
+            "why": "Die Breite kürzt sich. $R_H$ heißt Hall-Konstante; kleine Ladungsträgerdichte, große Hallspannung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kräftegleichgewicht.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hallspannung über v.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Driftgeschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!important] Was der Hall-Effekt verrät\n> - **Hallsonde:** Bei festem Strom ist $U_H \\sim B$; dünne Halbleiterplättchen messen Magnetfelder.\n> - **Ladungsträgerdichte:** Aus $U_H$, $B$, $I$ und $d$ folgt $n = \\tfrac{B I}{q\\,d\\,U_H}$.\n> - **Vorzeichen der Ladungsträger:** Die Polarität der Hallspannung zeigt, ob negative Elektronen oder positive Löcher den Strom tragen (p-Halbleiter).\n\nIn Metallen ist $n \\approx 10^{29}\\,\\mathrm{m}^{-3}$, die Hallspannung nur Mikrovolt; in Halbleitern ($n \\approx 10^{21}\\,\\mathrm{m}^{-3}$) Millivolt.",
+      "label": "Anwendungen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Hall-Effekt",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Hall-Effekt.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Hall-Effekt** ist das Auftreten einer Querspannung (Hall-Spannung $U_H$) in einem stromdurchflossenen Leiter, der sich in einem Magnetfeld befindet. Er dient zur Messung von Magnetfeldern (Hall-Sonde) und liefert das Vorzeichen der Ladungsträger."
+            }
+          ]
+        },
+        {
+          "title": "Versuchsaufbau",
+          "blocks": [
+            {
+              "image": "vault:Hall-Effekt.svg"
+            }
+          ]
+        },
+        {
+          "title": "Erklärung und Formel",
+          "blocks": [
+            {
+              "md": "Die **Lorentzkraft** lenkt die bewegten Ladungsträger zu einer Seite ab, bis das entstehende Querfeld (Hall-Feld) die Lorentzkraft ausgleicht. Im Gleichgewicht:\n$$U_H = \\frac{B \\cdot I}{n \\cdot q \\cdot d}$$\nmit der Ladungsträgerdichte $n$ und der Dicke $d$ der Probe. Die Hall-Spannung ist proportional zur Flussdichte $B$ -- Grundlage der **Hall-Sonde** zur B-Feld-Messung."
+            }
+          ]
+        },
+        {
+          "title": "Der Gleichgewichtsgedanke",
+          "blocks": [
+            {
+              "md": "> [!important] Zwei Kräfte stellen sich selbst ins Gleichgewicht\n> Die Lorentzkraft drängt die Ladungsträger zu einer Seite. Dadurch entsteht dort ein Überschuss und auf der Gegenseite ein Mangel -- also ein **Querfeld**, das die weitere Ablenkung bremst.\n>\n> Die Wanderung endet, sobald sich beide Kräfte aufheben:\n> $$q\\,v\\,B = q\\,E_H = q\\,\\frac{U_H}{b}$$\n>\n> Das ist derselbe selbstregelnde Vorgang wie bei der Influenz: Die Ladungsverschiebung dauert genau so lange, bis sie sich selbst überflüssig macht. Siehe **Elektrische Ladung**.\n>\n> Dieselbe Gleichgewichtslogik trägt den **Wien-Filter** und den **Millikan-Versuch** -- in allen drei Fällen wird eine gesuchte Größe aus dem **Ausgleich zweier Kräfte** bestimmt. Wer das Muster erkennt, hat drei Versuche mit einem Ansatz."
+            }
+          ]
+        },
+        {
+          "title": "Was der Hall-Effekt verrät",
+          "blocks": [
+            {
+              "md": "$$U_H = \\frac{B\\,I}{n\\,q\\,d}$$\n\n| gesucht | Anwendung |\n|---|---|\n| **$B$** bei bekanntem Material | **Hall-Sonde** zur Magnetfeldmessung |\n| **$n$** bei bekanntem $B$ | Ladungsträgerdichte im Werkstoff |\n| **Vorzeichen** von $q$ | Art der Ladungsträger |\n\n> [!tip] Das Vorzeichen war die eigentliche Überraschung\n> Aus der Richtung der Hall-Spannung lässt sich ablesen, ob die Ladungsträger negativ oder positiv sind.\n>\n> Bei Metallen ergibt sich erwartungsgemäß negativ -- es sind Elektronen. Bei manchen **Halbleitern** dagegen positiv, obwohl es dort keine frei beweglichen positiven Teilchen gibt.\n>\n> Erklärt wird das durch die **Löcherleitung**: Fehlt in einem Bindungsgefüge ein Elektron, wandert die Fehlstelle wie ein positives Teilchen. Das ist die Grundlage der p-Dotierung, siehe **Dotierung - n- und p-Halbleiter charakterisieren** und **Bändermodell - Leiter, Halbleiter und Isolator unterscheiden**.\n>\n> Ein Messeffekt, der eine Modellvorstellung erzwang, die man sonst für einen Rechentrick halten könnte."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb dünne Proben verwendet werden",
+          "blocks": [
+            {
+              "md": "Die Dicke $d$ steht im Nenner -- je dünner die Probe, desto größer die Hall-Spannung. Deshalb bestehen Hall-Sonden aus sehr dünnen Halbleiterplättchen: Dort ist zusätzlich die Ladungsträgerdichte $n$ um Größenordnungen kleiner als in Metallen, was den Effekt nochmals verstärkt.\n\nIn einem Kupferdraht wäre die Hall-Spannung kaum messbar."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der Hall-Effekt ist die wichtigste praktische Anwendung der Lorentzkraft und das Standardverfahren der Magnetfeldmessung. Er verbindet **Magnetisches Feld**, **Elektrische Ladung** und in Q4 die Halbleiterphysik."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Hallspannung in die richtige Reihenfolge.",
+      "items": [
+        "Gleichgewicht: $q\\tfrac{U_H}{b} = q v B$",
+        "Driftgeschwindigkeit aus dem Strom: $v = \\tfrac{I}{n q b d}$",
+        "Einsetzen; die Breite kürzt sich",
+        "$U_H = \\tfrac{B I}{n q d}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Gleichgewicht: $q\\tfrac{U_H}{b} = q v B$. 2. Driftgeschwindigkeit aus dem Strom: $v = \\tfrac{I}{n q b d}$. 3. Einsetzen; die Breite kürzt sich. 4. $U_H = \\tfrac{B I}{n q d}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Kupferplättchen ($n = 8{,}5\\cdot 10^{28}\\,\\mathrm{m}^{-3}$, $d = 0{,}1\\,\\mathrm{mm}$) führt $10\\,\\mathrm{A}$ in einem Feld von $1\\,\\mathrm{T}$. Wie groß ist die Hallspannung?",
+      "answer": 7.34,
+      "tolerance": 0.05,
+      "placeholder": "µV",
+      "explain": "$U_H = \\tfrac{1\\cdot 10}{8{,}5\\cdot 10^{28}\\cdot 1{,}602\\cdot 10^{-19}\\cdot 10^{-4}}\\,\\mathrm{V} \\approx 7{,}3\\,\\mu\\mathrm{V}$: kaum messbar.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Halbleiterplättchen ($n = 10^{21}\\,\\mathrm{m}^{-3}$, $d = 1\\,\\mathrm{mm}$) führt $10\\,\\mathrm{mA}$ in $0{,}1\\,\\mathrm{T}$. Wie groß ist die Hallspannung?",
+      "answer": 6.24,
+      "tolerance": 0.05,
+      "placeholder": "mV",
+      "explain": "$U_H = \\tfrac{0{,}1\\cdot 0{,}01}{10^{21}\\cdot 1{,}602\\cdot 10^{-19}\\cdot 10^{-3}}\\,\\mathrm{V} \\approx 6{,}24\\,\\mathrm{mV}$: tausendfach größer als im Kupfer.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Gemessen werden $U_H = 5\\,\\mathrm{mV}$ bei $B = 0{,}2\\,\\mathrm{T}$, $I = 20\\,\\mathrm{mA}$, $d = 0{,}5\\,\\mathrm{mm}$. Wie groß ist die Ladungsträgerdichte? Gib sie in $10^{21}\\,\\mathrm{m}^{-3}$ an.",
+      "answer": 10.0,
+      "tolerance": 0.1,
+      "placeholder": "10²¹ /m³",
+      "explain": "$n = \\tfrac{B I}{e d U_H} = \\tfrac{0{,}2\\cdot 0{,}02}{1{,}602\\cdot 10^{-19}\\cdot 5\\cdot 10^{-4}\\cdot 5\\cdot 10^{-3}}\\,\\mathrm{m}^{-3} \\approx 1{,}0\\cdot 10^{22}\\,\\mathrm{m}^{-3}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Kehrt man die Richtung des Magnetfelds um, kehrt sich auch die Polarität der Hallspannung um.",
+      "answer": true,
+      "explain": "Die Lorentzkraft zeigt dann zur anderen Seite; die Ladungsträger sammeln sich gegenüber.",
+      "label": "Verständnis",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Woran erkennt man mit dem Hall-Effekt, dass in einem p-Halbleiter positive Ladungsträger den Strom tragen?",
+      "options": [
+        {
+          "md": "an der umgekehrten Polarität der Hallspannung gegenüber einem n-Leiter bei gleichem Strom und Feld",
+          "correct": true
+        },
+        {
+          "md": "an einer größeren Hallspannung",
+          "why": "Der Betrag hängt von der Dichte ab, nicht vom Vorzeichen."
+        },
+        {
+          "md": "an einer Hallspannung von null",
+          "why": "Die gibt es nur ohne Feld oder ohne Strom."
+        },
+        {
+          "md": "gar nicht",
+          "why": "Gerade das Vorzeichen ist ein klassischer Nachweis der Löcherleitung."
+        }
+      ],
+      "explain": "Positive Träger bewegen sich in Stromrichtung, negative entgegen; die Lorentzkraft drängt beide zur selben Seite, die Seite lädt sich also verschieden auf.",
+      "label": "Extrem",
+      "id": "vq6"
+    },
+    {
       "id": "gleich",
       "type": "choice",
       "md": "Wann ist die Hallspannung erreicht?",
@@ -58,13 +328,39 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "hall"
+        ]
+      },
+      "label": "Hallspannung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "hall"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Lorentzkraft trennt Ladungen quer zum Strom.",
         "Gleichgewicht: $U_H = \\frac{BI}{ned}$.",
-        "Hallsonden messen $B$, weil $U_H \\sim B$."
+        "Hallsonden messen $B$, weil $U_H \\sim B$.",
+        "Gleichgewicht $qE_H = qvB$ und $I = nqvbd$ ergeben $U_H = \\tfrac{BI}{nqd}$.",
+        "Hallsonden messen $B$ ($U_H \\sim B$); aus $U_H$ folgt die Ladungsträgerdichte und das Vorzeichen der Träger."
       ]
     }
   ]

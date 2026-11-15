@@ -15,6 +15,444 @@
       "md": "Energie bleibt immer erhalten, trotzdem kühlt Tee ab und wird nie von selbst wieder heiß. Die **Entropie** misst, auf wie viele Arten (Mikrozustände) sich ein Zustand verwirklichen lässt. Der **zweite Hauptsatz**: In einem abgeschlossenen System nimmt die Entropie nie ab; Vorgänge, die sie erhöhen, sind **irreversibel**.\n\nBei konstanter Temperatur gilt für zugeführte Wärme $\\Delta S = \\frac{Q}{T}$."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Innere Energie, Wärme, Temperatur\n> Die **innere Energie** $U$ ist die Summe der ungeordneten Bewegungs- und Wechselwirkungsenergien aller Teilchen eines Körpers. **Wärme** $Q$ ist Energie, die allein wegen eines Temperaturunterschieds übertragen wird. Die **absolute Temperatur** $T$ in Kelvin ($T = \\vartheta + 273{,}15\\,\\mathrm{K}$) misst die mittlere Bewegungsenergie der Teilchen; null Kelvin ist die tiefste denkbare Temperatur.\n\n> [!satz] Erster Hauptsatz\n> $\\Delta U = Q + W$: Die innere Energie ändert sich durch zugeführte Wärme $Q$ und am System verrichtete Arbeit $W$ (beide positiv, wenn sie dem System zugeführt werden). Das ist die Energieerhaltung mit Wärme; sie verbietet ein Perpetuum mobile erster Art.\n\n> [!definition] Entropie\n> Ein **Makrozustand** (Druck, Temperatur, Volumen) lässt sich durch viele **Mikrozustände** (Orte und Geschwindigkeiten aller Teilchen) verwirklichen; ihre Zahl sei $\\Omega$. Die **Entropie** ist $S = k_B\\ln\\Omega$ mit $k_B = 1{,}381\\cdot 10^{-23}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$ (Boltzmann). Für einen reversiblen Wärmeübergang bei der Temperatur $T$ gilt $\\Delta S = \\tfrac{Q}{T}$, Einheit $\\tfrac{\\mathrm{J}}{\\mathrm{K}}$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Zweiter Hauptsatz\n> In einem abgeschlossenen System nimmt die Entropie nie ab: $\\Delta S \\ge 0$. Gleichwertige Formulierungen:\n> \n> - **Clausius:** Wärme fließt nie von selbst vom kälteren zum wärmeren Körper.\n> - **Kelvin und Planck:** Keine periodisch arbeitende Maschine verwandelt Wärme vollständig in Arbeit (kein Perpetuum mobile zweiter Art).\n> \n> Vorgänge mit $\\Delta S > 0$ sind **irreversibel**, solche mit $\\Delta S = 0$ reversibel (ein idealisierter Grenzfall).",
+      "label": "Gesetz",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Warum Wärme nur von warm nach kalt fließt.** Die Wärme $Q > 0$ geht vom Körper mit $T_w$ zum Körper mit $T_k$; die Temperaturen ändern sich dabei kaum.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta S_w = -\\frac{Q}{T_w},\\qquad \\Delta S_k = +\\frac{Q}{T_k}",
+            "why": "Der warme Körper gibt ab, der kalte nimmt auf."
+          },
+          {
+            "tex": "\\Delta S_{ges} = Q\\left(\\frac{1}{T_k} - \\frac{1}{T_w}\\right)",
+            "why": "Die Bilanz des abgeschlossenen Systems."
+          },
+          {
+            "tex": "T_w > T_k\\quad\\Rightarrow\\quad \\Delta S_{ges} > 0",
+            "why": "Der Fluss von warm nach kalt erhöht die Entropie: erlaubt, und von selbst nicht umkehrbar."
+          },
+          {
+            "tex": "T_w < T_k\\quad\\Rightarrow\\quad \\Delta S_{ges} < 0",
+            "why": "Der umgekehrte Fluss würde sie verringern: Das verbietet der zweite Hauptsatz, obwohl die Energie erhalten bliebe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Beiträge.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Bilanz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erlaubte Richtung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verbotene Richtung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Entropiebilanz beim Wärmeübergang.** $1000\\,\\mathrm{J}$ fließen aus Wasser von $373\\,\\mathrm{K}$ in einen zweiten Körper mit der Temperatur $T_k$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          250,
+          400
+        ],
+        "y": [
+          -0.3,
+          1.4
+        ],
+        "xLabel": "T_k in K",
+        "yLabel": "ΔS in J/K",
+        "vars": [
+          {
+            "name": "Tk",
+            "min": 250,
+            "max": 400,
+            "value": 273,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "dS",
+            "expr": "1000*(1/x - 1/373)",
+            "color": "blue"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 373
+          }
+        ],
+        "points": [
+          {
+            "x": "Tk",
+            "on": "dS",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "labels": [
+          {
+            "x": 371,
+            "y": 1.25,
+            "text": "gleiche Temperatur",
+            "anchor": "end"
+          }
+        ],
+        "readout": "T_k = {Tk|0} K: Entropieänderung insgesamt **{1000*(1/Tk - 1/373)|3} J/K**"
+      },
+      "timeline": [
+        {
+          "caption": "Der zweite Körper ist $273\\,\\mathrm{K}$ kalt (Eiswasser). Die Bilanz: $1000\\,\\mathrm{J}\\cdot\\left(\\tfrac{1}{273} - \\tfrac{1}{373}\\right)\\tfrac{1}{\\mathrm{K}} \\approx 0{,}98\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$ neue Entropie.",
+          "set": {
+            "Tk": 273
+          }
+        },
+        {
+          "caption": "Je kleiner der Temperaturunterschied, desto weniger Entropie entsteht.",
+          "to": {
+            "Tk": 340
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei gleicher Temperatur entsteht keine Entropie mehr: der reversible Grenzfall. Er ist unendlich langsam, denn ohne Temperaturunterschied fließt keine Wärme.",
+          "to": {
+            "Tk": 373
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Rechts davon müsste die Wärme vom kälteren zum wärmeren Körper fließen. Die Bilanz wird negativ: Diese Richtung kommt von selbst nie vor.",
+          "to": {
+            "Tk": 395
+          },
+          "dur": 2200
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Klausuraufgabe: der Carnot-Wirkungsgrad aus dem zweiten Hauptsatz.** Eine Maschine nimmt pro Zyklus die Wärme $Q_w$ bei $T_w$ auf, gibt $Q_k$ bei $T_k$ ab und verrichtet die Arbeit $W = Q_w - Q_k$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta S_{ges} = -\\frac{Q_w}{T_w} + \\frac{Q_k}{T_k} \\ge 0",
+            "why": "Die Maschine selbst kehrt nach jedem Zyklus in ihren Anfangszustand zurück; es zählen nur die beiden Reservoire."
+          },
+          {
+            "tex": "Q_k \\ge Q_w\\,\\frac{T_k}{T_w}",
+            "why": "Ein Mindestanteil der Wärme muss an das kalte Reservoir gehen."
+          },
+          {
+            "tex": "W = Q_w - Q_k \\le Q_w\\left(1 - \\frac{T_k}{T_w}\\right)",
+            "why": "Die Arbeit ist höchstens der Rest."
+          },
+          {
+            "tex": "\\eta = \\frac{W}{Q_w} \\le \\eta_C = 1 - \\frac{T_k}{T_w}",
+            "why": "Der **Carnot-Wirkungsgrad**: Zwischen $600\\,\\mathrm{K}$ und $300\\,\\mathrm{K}$ höchstens $50\\,\\%$, auch mit perfekter Technik."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Entropiebilanz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mindestabwärme.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höchstarbeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Carnot-Grenze.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Entropie",
+      "path": "02 Wiki/Physik/01 E-Phase/Entropie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Innere Energie",
+          "blocks": [
+            {
+              "md": "Die **innere Energie** $U$ eines Körpers ist die Summe der ungeordneten Bewegungs- und Wechselwirkungsenergien seiner Teilchen; makroskopisch zeigt sie sich als **Temperatur**. Historisch löste dieser Begriff die Vorstellung eines \"Wärmestoffs\" ab."
+            }
+          ]
+        },
+        {
+          "title": "Erster Hauptsatz",
+          "blocks": [
+            {
+              "md": "> [!important] Energieerhaltung mit Wärme\n> $$\\Delta U = Q + W$$\n> Die innere Energie eines Systems ändert sich durch zugeführte **Wärme** $Q$ und verrichtete **Arbeit** $W$. Der erste Hauptsatz ist die Erweiterung der **Energieerhaltung** auf thermische Vorgänge -- er verbietet ein **Perpetuum mobile erster Art**."
+            }
+          ]
+        },
+        {
+          "title": "Reversible und irreversible Vorgänge",
+          "blocks": [
+            {
+              "md": "- **Reversibel** (idealisiert): Der Vorgang kann rückwärts ablaufen, ohne Spuren zu hinterlassen (z. B. reibungsfreies Pendel).\n- **Irreversibel** (real): Läuft von selbst nur in **eine** Richtung -- Wärme fließt von warm nach kalt, Reibung erzeugt Wärme, Gase durchmischen sich."
+            }
+          ]
+        },
+        {
+          "title": "Zweiter Hauptsatz und Entropie",
+          "blocks": [
+            {
+              "md": "Die **Entropie** $S$ ist ein Maß für die Anzahl der mikroskopischen Realisierungen eines makroskopischen Zustands -- anschaulich für die \"Unordnung\".\n\n> [!important] Entropiesatz\n> $$\\Delta S \\geq 0$$\n> In einem abgeschlossenen System kann die Entropie nur **zunehmen** oder gleich bleiben. Damit beschreibt sie die **Richtung** natürlicher Abläufe (den \"Zeitpfeil\") und verbietet ein **Perpetuum mobile zweiter Art** (Wärme nicht vollständig in Arbeit umwandelbar).\n\nBei reversibler Wärmezufuhr gilt $\\Delta S = \\dfrac{Q}{T}$."
+            }
+          ]
+        },
+        {
+          "title": "Wirkungsgrad",
+          "blocks": [
+            {
+              "md": "Der Wirkungsgrad einer Wärmekraftmaschine ist grundsätzlich begrenzt (**Carnot**):\n$$\\eta = \\frac{W_{nutz}}{Q_{zu}} \\le \\eta_{Carnot} = 1 - \\frac{T_{kalt}}{T_{warm}}$$"
+            },
+            {
+              "chart": {
+                "type": "bar",
+                "labels": [
+                  "Ottomotor",
+                  "Dieselmotor",
+                  "Gasturbine",
+                  "GuD-Kraftwerk",
+                  "Carnot (600/300 K)"
+                ],
+                "series": [
+                  {
+                    "title": "Wirkungsgrad / %",
+                    "data": [
+                      30,
+                      40,
+                      40,
+                      60,
+                      50
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "> [!note] Bezug zur Mechanik\n> Beim **inelastischen Stoß** und bei Reibung wird geordnete mechanische Energie in ungeordnete innere Energie umgewandelt: Die Energie bleibt erhalten (1. Hauptsatz), die Entropie steigt (2. Hauptsatz) -- deshalb springt ein Ball nie von selbst wieder hoch."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "innere Energie",
+          "Summe der ungeordneten Energien aller Teilchen"
+        ],
+        [
+          "Wärme",
+          "Energie, die wegen eines Temperaturunterschieds übergeht"
+        ],
+        [
+          "erster Hauptsatz",
+          "$\\Delta U = Q + W$"
+        ],
+        [
+          "zweiter Hauptsatz",
+          "$\\Delta S \\ge 0$ im abgeschlossenen System"
+        ],
+        [
+          "Entropie nach Boltzmann",
+          "$S = k_B\\ln\\Omega$"
+        ]
+      ],
+      "explain": "Der erste Hauptsatz bilanziert die Energie, der zweite gibt die Richtung der Vorgänge an.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Um wie viel steigt die Entropie, wenn $1\\,\\mathrm{kg}$ Eis bei $0\\,°\\mathrm{C}$ schmilzt (Schmelzwärme $334\\,\\tfrac{\\mathrm{kJ}}{\\mathrm{kg}}$)?",
+      "answer": 1223,
+      "tolerance": 3,
+      "placeholder": "J/K",
+      "explain": "$\\Delta S = \\tfrac{Q}{T} = \\tfrac{334\\,000\\,\\mathrm{J}}{273{,}15\\,\\mathrm{K}} \\approx 1223\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$500\\,\\mathrm{J}$ fließen von einem Körper mit $350\\,\\mathrm{K}$ zu einem mit $290\\,\\mathrm{K}$. Wie groß ist die Entropieänderung insgesamt?",
+      "answer": 0.296,
+      "tolerance": 0.003,
+      "placeholder": "J/K",
+      "explain": "$\\Delta S = 500\\,\\mathrm{J}\\cdot\\left(\\tfrac{1}{290} - \\tfrac{1}{350}\\right)\\tfrac{1}{\\mathrm{K}} \\approx 0{,}296\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} > 0$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des Carnot-Wirkungsgrads in die richtige Reihenfolge.",
+      "items": [
+        "Entropiebilanz der Reservoire: $-\\tfrac{Q_w}{T_w} + \\tfrac{Q_k}{T_k} \\ge 0$",
+        "Mindestabwärme: $Q_k \\ge Q_w\\tfrac{T_k}{T_w}$",
+        "Arbeit: $W = Q_w - Q_k \\le Q_w\\left(1 - \\tfrac{T_k}{T_w}\\right)$",
+        "Wirkungsgrad: $\\eta \\le 1 - \\tfrac{T_k}{T_w}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Entropiebilanz der Reservoire: $-\\tfrac{Q_w}{T_w} + \\tfrac{Q_k}{T_k} \\ge 0$. 2. Mindestabwärme: $Q_k \\ge Q_w\\tfrac{T_k}{T_w}$. 3. Arbeit: $W = Q_w - Q_k \\le Q_w\\left(1 - \\tfrac{T_k}{T_w}\\right)$. 4. Wirkungsgrad: $\\eta \\le 1 - \\tfrac{T_k}{T_w}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Carnot",
+      "md": "Ein Kraftwerk arbeitet mit Dampf von $550\\,°\\mathrm{C}$ und kühlt auf $30\\,°\\mathrm{C}$. Wie groß ist der größtmögliche Wirkungsgrad?",
+      "answer": 63.2,
+      "tolerance": 0.3,
+      "placeholder": "%",
+      "explain": "$\\eta_C = 1 - \\tfrac{303{,}15}{823{,}15} \\approx 63{,}2\\,\\%$. Reale Kraftwerke erreichen gut 45 Prozent.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Mit perfekter Technik ohne Reibung könnte eine Wärmekraftmaschine einen Wirkungsgrad von 100 Prozent erreichen.",
+      "answer": false,
+      "explain": "Der zweite Hauptsatz verlangt Abwärme an das kalte Reservoir: $\\eta \\le 1 - \\tfrac{T_k}{T_w} < 1$ für jedes $T_k > 0$.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Maschine wäre ein Perpetuum mobile zweiter Art?",
+      "options": [
+        {
+          "md": "ein Schiff, das dem Meerwasser Wärme entzieht und sie vollständig in Antriebsarbeit verwandelt",
+          "correct": true
+        },
+        {
+          "md": "eine Maschine, die ohne jede Energiezufuhr Arbeit liefert",
+          "why": "Das wäre eins der ersten Art; es verletzt schon den ersten Hauptsatz."
+        },
+        {
+          "md": "ein Wärmekraftwerk mit 40 Prozent Wirkungsgrad",
+          "why": "Das ist erlaubt und üblich."
+        },
+        {
+          "md": "ein Kühlschrank mit Stromanschluss",
+          "why": "Er bekommt Arbeit zugeführt und gibt mehr Wärme ab."
+        }
+      ],
+      "explain": "Die zweite Art verletzt nur den zweiten Hauptsatz: Energie bliebe erhalten, aber Wärme aus einem einzigen Reservoir würde vollständig zu Arbeit.",
+      "label": "Definitionen",
+      "id": "vq7"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Vorgänge erzeugen Entropie?",
+      "options": [
+        {
+          "md": "Reibung beim Bremsen",
+          "correct": true
+        },
+        {
+          "md": "Wärmeleitung von warm nach kalt",
+          "correct": true
+        },
+        {
+          "md": "Durchmischen von Tinte und Wasser",
+          "correct": true
+        },
+        {
+          "md": "ein unelastischer Stoß",
+          "correct": true
+        },
+        {
+          "md": "ein reibungsfrei schwingendes Pendel",
+          "why": "Ohne Reibung entsteht keine Entropie: idealisiert reversibel."
+        }
+      ],
+      "explain": "Irreversible Vorgänge erzeugen Entropie; reversible sind ein idealisierter Grenzfall.",
+      "label": "Irreversibel",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Um wie viel steigt die Entropie, wenn sich die Zahl der Mikrozustände verdoppelt ($k_B = 1{,}381\\cdot 10^{-23}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$)? Gib das Ergebnis in $10^{-24}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$ an.",
+      "answer": 9.57,
+      "tolerance": 0.05,
+      "placeholder": "10⁻²⁴ J/K",
+      "explain": "$\\Delta S = k_B\\ln(2\\Omega) - k_B\\ln\\Omega = k_B\\ln 2 \\approx 9{,}57\\cdot 10^{-24}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$. Winzig, weil ein einzelnes Teilchen kaum zählt; makroskopische Entropien entstehen aus Zahlen von der Größe $10^{23}$.",
+      "id": "vq9"
+    },
+    {
       "id": "tee",
       "type": "choice",
       "md": "Heißer Tee gibt Wärme an die kältere Luft ab. Was passiert mit der Gesamtentropie?",
@@ -55,13 +493,55 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "entropie",
+          "verdampfen"
+        ]
+      },
+      "label": "Entropie berechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "entropie-fluss",
+          "carnot"
+        ]
+      },
+      "label": "Bilanz und Wirkungsgrad",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "entropie",
+          "verdampfen"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Energie bleibt erhalten, Entropie wächst in abgeschlossenen Systemen.",
         "$\\Delta S = Q/T$ bei konstanter Temperatur (in Kelvin).",
-        "Irreversibel: Reibung, Wärmeleitung, Durchmischung."
+        "Irreversibel: Reibung, Wärmeleitung, Durchmischung.",
+        "$\\Delta U = Q + W$; Entropie $S = k_B\\ln\\Omega$, bei konstanter Temperatur $\\Delta S = \\tfrac{Q}{T}$ in Kelvin.",
+        "Zweiter Hauptsatz: $\\Delta S \\ge 0$; Wärmefluss warm nach kalt ergibt $Q\\left(\\tfrac{1}{T_k} - \\tfrac{1}{T_w}\\right) > 0$.",
+        "Aus der Entropiebilanz folgt die Carnot-Grenze $\\eta \\le 1 - \\tfrac{T_k}{T_w}$."
       ]
     }
   ]

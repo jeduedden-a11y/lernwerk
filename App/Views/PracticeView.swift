@@ -68,7 +68,7 @@ struct PracticeSheet: View {
                         }
                     }
 
-                    Text("Jede Runde besteht aus \(topic.count ?? 6) neuen Aufgaben mit anderen Zahlen oder Fällen. Ab 80 Prozent beim ersten Versuch gilt eine Stufe als geschafft.")
+                    Text("Jede Runde besteht aus \(topic.count ?? 6) neuen Aufgaben mit anderen Zahlen oder Fällen. Ab 80 Prozent beim ersten Versuch gilt eine Stufe als bestanden.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -134,7 +134,7 @@ struct LevelTile: View {
         }
         .shadow(color: level.colors[1].opacity(0.35), radius: 10, y: 4)
         .accessibilityElement(children: .combine)
-        .accessibilityHint(stat.mastered(level.value) ? "Geschafft. Startet eine neue Runde." : "Startet eine Runde.")
+        .accessibilityHint(stat.mastered(level.value) ? "Bestanden. Startet eine neue Runde." : "Startet eine Runde.")
     }
 }
 
@@ -164,7 +164,7 @@ struct LevelScaleBar: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(mastered == 0 ? "Noch keine Stufe geschafft" : "Geschafft bis \(Level(mastered).name)")
+        .accessibilityLabel(mastered == 0 ? "Noch keine Stufe bestanden" : "Bestanden bis \(Level(mastered).name)")
     }
 }
 
@@ -214,7 +214,7 @@ struct PracticeTopicRow: View {
 
     private func detail(_ unlocked: Bool, _ stat: PracticeStat) -> String {
         if !unlocked { return "Frei nach »\(model.lessonTitle(topic.after) ?? "der Lektion")«" }
-        if stat.highestMastered > 0 { return "Geschafft bis \(Level(stat.highestMastered).name)" + (showCourse ? " · \(course.title)" : "") }
+        if stat.highestMastered > 0 { return "Bestanden bis \(Level(stat.highestMastered).name)" + (showCourse ? " · \(course.title)" : "") }
         if stat.totalTasks > 0 { return "\(stat.totalTasks) Aufgaben geübt" + (showCourse ? " · \(course.title)" : "") }
         return showCourse ? course.title : "Bereit"
     }

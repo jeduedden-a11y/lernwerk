@@ -16,6 +16,378 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Wie schnell darf man durch die Kurve?** Kurvenradius $r = 50\\,\\mathrm{m}$; die Haftreibung muss die Zentripetalkraft liefern.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          120
+        ],
+        "y": [
+          0,
+          1.2
+        ],
+        "xLabel": "v in km/h",
+        "yLabel": "nötige Haftreibungszahl",
+        "vars": [
+          {
+            "name": "V",
+            "min": 0,
+            "max": 120,
+            "value": 30,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "mu",
+            "expr": "(x/3.6)^2/(50*9.81)",
+            "color": "blue",
+            "label": "nötig",
+            "labelAt": 80
+          },
+          {
+            "name": "tr",
+            "expr": "0.8",
+            "color": "green",
+            "dashed": true,
+            "label": "trockener Asphalt",
+            "labelAt": 2
+          },
+          {
+            "name": "na",
+            "expr": "0.4",
+            "color": "orange",
+            "dashed": true,
+            "label": "nasse Straße",
+            "labelAt": 2
+          }
+        ],
+        "points": [
+          {
+            "x": "V",
+            "on": "mu",
+            "color": "blue",
+            "guides": true
+          }
+        ],
+        "readout": "{V|0} km/h: nötige Haftreibungszahl **{(V/3.6)^2/(50*9.81)|2}**"
+      },
+      "timeline": [
+        {
+          "caption": "Aus $\\mu_H\\,m g \\ge m\\tfrac{v^2}{r}$ folgt: Die nötige Haftreibungszahl ist $\\tfrac{v^2}{r g}$. Bei $30\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ reicht fast jede Straße.",
+          "set": {
+            "V": 30
+          }
+        },
+        {
+          "caption": "Bei $50\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ ist $\\mu = 0{,}39$ nötig: Auf nasser Straße ($\\mu \\approx 0{,}4$) reicht es gerade noch.",
+          "to": {
+            "V": 50
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Auf trockenem Asphalt ($\\mu \\approx 0{,}8$) geht es bis $v_{max} = \\sqrt{0{,}8\\cdot 9{,}81\\cdot 50}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 71\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$.",
+          "to": {
+            "V": 71.3
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Die Kurve ist eine Parabel: Doppeltes Tempo verlangt die vierfache Haftung. Die Masse des Autos kommt nicht vor; ein voll beladener Lastwagen hat dieselbe Grenzgeschwindigkeit.",
+          "to": {
+            "V": 100
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Kettenkarussell.** Ein Sitz läuft auf einem Kreis mit dem Radius $r$; die Kette ist um $\\alpha$ gegen die Senkrechte ausgelenkt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_K\\cos\\alpha = m g",
+            "why": "Senkrecht keine Beschleunigung: Die senkrechte Komponente der Kettenkraft trägt das Gewicht."
+          },
+          {
+            "tex": "F_K\\sin\\alpha = m\\,\\frac{v^2}{r}",
+            "why": "Waagerecht liefert die andere Komponente die Zentripetalkraft."
+          },
+          {
+            "tex": "\\tan\\alpha = \\frac{v^2}{r\\,g}\\quad\\Rightarrow\\quad v = \\sqrt{r\\,g\\tan\\alpha}",
+            "why": "Geteilt: Masse und Kettenkraft fallen heraus. Leere und besetzte Sitze hängen gleich schräg."
+          },
+          {
+            "tex": "r = 6\\,\\mathrm{m},\\; \\alpha = 35^\\circ:\\quad v = \\sqrt{6\\cdot 9{,}81\\cdot 0{,}700}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 6{,}42\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Ein Zahlenbeispiel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Senkrecht.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Waagerecht.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teilen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlenbeispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Hammerwurf.** Die Kugel ($7{,}26\\,\\mathrm{kg}$) kreist kurz vor dem Abwurf mit $29\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ auf einem Kreis mit $r = 1{,}9\\,\\mathrm{m}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_Z = m\\,\\frac{v^2}{r} = 7{,}26\\cdot\\frac{29^2}{1{,}9}\\,\\mathrm{N} \\approx 3{,}2\\,\\mathrm{kN}",
+            "why": "Die Seilkraft liefert die Zentripetalkraft: das Gewicht von über $300\\,\\mathrm{kg}$."
+          },
+          {
+            "tex": "F_{Werfer} = F_Z",
+            "why": "Nach dem 3. Axiom zieht die Kugel den Werfer mit derselben Kraft nach außen; deshalb lehnt er sich weit zurück."
+          },
+          {
+            "tex": "v\\;\\text{tangential beim Loslassen}",
+            "why": "Lässt er los, fliegt die Kugel tangential in Richtung ihrer momentanen Geschwindigkeit weiter, nicht nach außen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Seilkraft.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenkraft am Werfer.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abwurf.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zentripetalkraft berechnen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Zentripetalkraft berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Zentripetalkraft, die für die Kurvenfahrt nötig ist\"*, *\"Wie groß muss die Haftreibungszahl mindestens sein, damit das Auto nicht ausbricht?\"*, *\"Mit welcher maximalen Geschwindigkeit kann die Kurve durchfahren werden?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Zentripetalkraft ist keine eigenständige Kraft, sondern ein Bedarf\n> Für eine Kreisbewegung ist stets eine zum Mittelpunkt gerichtete Kraft nötig:\n> $$F_z = \\frac{mv^2}{r} = m\\omega^2 r$$\n> Diese Kraft wird **von einer konkreten realen Kraft geliefert** -- Haftreibung bei der Kurvenfahrt, Gravitation bei Planetenbahnen, Lorentzkraft bei geladenen Teilchen im Magnetfeld, Seilspannung beim Kettenkarussell. Die Aufgabe besteht meist darin, $F_z$ mit dieser liefernden Kraft **gleichzusetzen**."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zentripetalkraft-Formel notieren:** $F_z = \\dfrac{mv^2}{r}$.\n2. **Kraftquelle identifizieren:** Welche reale Kraft übernimmt die Rolle der Zentripetalkraft?\n3. **Gleichsetzen:** liefernde Kraft $=F_z$.\n4. **Nach der gesuchten Größe auflösen** ($v_{\\max}$, $\\mu_{\\min}$, $r_{\\min}$, je nach Fragestellung).\n5. **Einheitenkontrolle und Plausibilität.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Auto der Masse $m=1200\\,\\text{kg}$ durchfährt eine Kurve mit Radius $r=50\\,\\text{m}$ bei $v=20\\,\\text{m/s}$ ($=72\\,\\text{km/h}$). Bestimmen Sie die benötigte Zentripetalkraft und die dafür mindestens erforderliche Haftreibungszahl.*\n\n**Schritt 1:**\n$$F_z = \\frac{1200\\cdot20^2}{50} = \\frac{1200\\cdot400}{50} = 9600\\,\\text{N}$$\n\n**Schritt 2/3:** Die Haftreibung liefert die Zentripetalkraft: $F_H = \\mu\\cdot F_N = \\mu\\cdot mg$ (auf ebener Fahrbahn ist $F_N=mg$).\n$$\\mu\\cdot mg = \\frac{mv^2}{r}$$\n\n**Schritt 4:** Die Masse kürzt sich heraus:\n$$\\mu_{\\min} = \\frac{v^2}{rg} = \\frac{400}{50\\cdot9{,}81} = \\frac{400}{490{,}5} \\approx 0{,}815$$\n\n*Es wird mindestens eine Haftreibungszahl von rund 0,82 benötigt -- ein realistischer Wert für trockenen Asphalt (typisch $\\mu\\approx0{,}7$ bis $1{,}0$), bei Nässe ($\\mu\\approx0{,}4$) würde das Auto in dieser Kurve bei dieser Geschwindigkeit ausbrechen.*\n\n**Einheitenkontrolle:** $\\dfrac{[\\text{m/s}]^2}{[\\text{m}]\\cdot[\\text{m/s}^2]}$ ist dimensionslos ✓ -- passend, da $\\mu$ eine reine Zahl ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Normalkraft mit Gewichtskraft gleichsetzen, ohne zu prüfen, ob die Fahrbahn geneigt ist.** Auf einer überhöhten Kurve ($\\alpha\\neq0$) ist $F_N \\neq mg$.\n- **Die Masse in der Formel behalten, wo sie sich eigentlich herauskürzt**, und dadurch fälschlich annehmen, das Ergebnis hänge von der Fahrzeugmasse ab -- bei reiner Haftreibungsbegrenzung ist $\\mu_{\\min}$ **masseunabhängig**.\n- **Zentripetalkraft mit \"Zentrifugalkraft\" verwechseln** und als real am Fahrzeug nach außen wirkende Kraft behandeln -- die Zentripetalkraft zeigt nach **innen**, zum Kreismittelpunkt.\n- **$v$ in km/h statt m/s einsetzen.**\n- **Bei Planetenbahnen die Gravitationskraft als zusätzliche Kraft neben der Zentripetalkraft ansetzen**, statt sie **mit** der Zentripetalkraft gleichzusetzen -- die Gravitation *ist* hier die Zentripetalkraft, keine separate Kraft."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Kreisbewegung** · **Winkelgeschwindigkeit, Umlaufzeit und Bahngeschwindigkeit umrechnen** · **Kräfteansatz nach dem 2. Newtonschen Axiom** · **Gravitation**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Auto ($1000\\,\\mathrm{kg}$) fährt mit $15\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ durch eine Kurve mit $r = 40\\,\\mathrm{m}$. Wie groß ist die nötige Zentripetalkraft?",
+      "answer": 5625,
+      "tolerance": 20,
+      "placeholder": "N",
+      "explain": "$F_Z = \\tfrac{m v^2}{r} = \\tfrac{1000\\cdot 225}{40}\\,\\mathrm{N} = 5625\\,\\mathrm{N}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Haftreibungszahl braucht ein Auto mindestens, das mit $54\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ durch eine Kurve mit $r = 30\\,\\mathrm{m}$ fährt?",
+      "answer": 0.765,
+      "tolerance": 0.005,
+      "placeholder": "",
+      "explain": "$v = 15\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\mu_{min} = \\tfrac{v^2}{r g} = \\tfrac{225}{294{,}3} \\approx 0{,}765$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Überhöhung",
+      "md": "Wie stark muss eine Kurve ($r = 400\\,\\mathrm{m}$) für $108\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ ohne Reibung geneigt sein?",
+      "answer": 12.9,
+      "tolerance": 0.2,
+      "placeholder": "°",
+      "explain": "$v = 30\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\tan\\alpha = \\tfrac{900}{3924} \\approx 0{,}229$, also $\\alpha \\approx 12{,}9°$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Eimer ($2\\,\\mathrm{kg}$) wird an einem Seil ($r = 1\\,\\mathrm{m}$) im senkrechten Kreis geschwungen und ist oben $4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ schnell. Wie groß ist die Seilkraft oben?",
+      "answer": 12.4,
+      "tolerance": 0.1,
+      "placeholder": "N",
+      "explain": "$F_S = m\\tfrac{v^2}{r} - m g = 32\\,\\mathrm{N} - 19{,}6\\,\\mathrm{N} \\approx 12{,}4\\,\\mathrm{N}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Der Eimer schwingt ohne Antrieb weiter. Wie groß ist die Seilkraft im tiefsten Punkt?",
+      "answer": 130.1,
+      "tolerance": 0.5,
+      "placeholder": "N",
+      "explain": "Energiesatz: $v_u^2 = v_o^2 + 4 g r = 16 + 39{,}24 = 55{,}24\\,\\tfrac{\\mathrm{m}^2}{\\mathrm{s}^2}$. Unten: $F_S = m\\tfrac{v_u^2}{r} + m g \\approx 110{,}5\\,\\mathrm{N} + 19{,}6\\,\\mathrm{N} \\approx 130{,}1\\,\\mathrm{N}$, genau $6 m g$ mehr als oben.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Kettenkarussell-Sitz läuft auf $r = 6\\,\\mathrm{m}$, die Kette ist um $35°$ ausgelenkt. Wie schnell ist der Sitz?",
+      "answer": 6.42,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$v = \\sqrt{r g\\tan\\alpha} = \\sqrt{6\\cdot 9{,}81\\cdot 0{,}700}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 6{,}42\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die größtmögliche Kurvengeschwindigkeit hängt nicht von der Masse des Fahrzeugs ab.",
+      "answer": true,
+      "explain": "$\\mu_H m g = \\tfrac{m v^2}{r}$: Die Masse kürzt sich, $v_{max} = \\sqrt{\\mu_H g r}$.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Was spürt man in einer schnellen Kurve als Druck nach außen, physikalisch gesehen?",
+      "options": [
+        {
+          "md": "die Tür oder den Sitz, der einen zur Kurvenmitte hin beschleunigt",
+          "correct": true
+        },
+        {
+          "md": "eine echte Zentrifugalkraft, die nach außen zieht",
+          "why": "Im Inertialsystem gibt es keine Kraft nach außen; der Körper will geradeaus weiter."
+        },
+        {
+          "md": "die Gegenkraft zur Zentripetalkraft am eigenen Körper",
+          "why": "Die Gegenkraft nach dem 3. Axiom greift am anderen Körper an, an Tür oder Sitz."
+        },
+        {
+          "md": "die Gewichtskraft",
+          "why": "Sie wirkt senkrecht."
+        }
+      ],
+      "explain": "Der Körper bewegt sich wegen seiner Trägheit geradeaus weiter, bis die Tür ihn auf die Kreisbahn zwingt. Ihr Druck ist es, was man spürt.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Kurve mit $r = 50\\,\\mathrm{m}$, $v = 72\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Ansatz: $\\mu_{min} = \\tfrac{v^2}{r g}$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "$\\mu_{min} = \\tfrac{72^2}{50\\cdot 9{,}81} \\approx 10{,}6$.",
+          "why": "Falsch: $v$ muss in $\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ stehen. Mit $20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$: $\\mu_{min} \\approx 0{,}82$."
+        },
+        {
+          "md": "Auf nasser Straße reicht die Haftung dann nicht.",
+          "why": "Richtig: $0{,}82 > 0{,}4$."
+        }
+      ],
+      "answer": 1,
+      "explain": "Werte über etwa 1,2 sind für Reifen unrealistisch und zeigen einen Einheitenfehler an.",
+      "id": "vq9"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +464,69 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "kurve-max",
+          "vertikalkreis"
+        ]
+      },
+      "label": "Rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "kurve-max",
+          "ueberhoehung"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "kegelpendel",
+          "ueberhoehung",
+          "vertikalkreis"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "kurve-max",
+          "kegelpendel"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Kurve: $\\mu_{min} = \\tfrac{v^2}{r g}$, $v_{max} = \\sqrt{\\mu_H g r}$; die Masse kürzt sich.",
+        "Kettenkarussell und überhöhte Kurve: $\\tan\\alpha = \\tfrac{v^2}{r g}$.",
+        "Senkrechter Kreis: oben $F_S = m\\tfrac{v^2}{r} - m g$, unten $F_S = m\\tfrac{v^2}{r} + m g$; ohne Antrieb unten $6 m g$ mehr."
+      ]
     }
   ]
 }

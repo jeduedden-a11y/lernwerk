@@ -15,6 +15,352 @@
       "md": "Wenn die Kraft von der Geschwindigkeit abhängt, etwa bei Luftreibung, gibt es oft keine einfache Formel für $v(t)$. Dann rechnet man in kleinen Zeitschritten $\\Delta t$ und tut in jedem Schritt so, als bliebe die Beschleunigung konstant:\n\n$$a_n = \\frac{F(v_n)}{m}, \\quad v_{n+1} = v_n + a_n\\,\\Delta t, \\quad s_{n+1} = s_n + v_n\\,\\Delta t.$$\n\nKleinere Schritte geben genauere Ergebnisse, kosten aber mehr Rechenschritte."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Begriffe der numerischen Simulation\n> - **Anfangswertproblem:** Gegeben sind ein Kraftgesetz $a = \\tfrac{F(v, s)}{m}$ und die Startwerte $s_0$, $v_0$; gesucht ist der zeitliche Verlauf.\n> - **Schrittweite** $\\Delta t$: der Zeitabstand zwischen zwei berechneten Zeilen.\n> - **Euler-Verfahren:** In jedem Schritt wird die Änderungsrate am **Anfang** des Schritts als konstant angenommen.\n> - **Diskretisierungsfehler:** Abweichung, weil sich die Rate innerhalb des Schritts in Wirklichkeit ändert; beim Euler-Verfahren etwa proportional zu $\\Delta t$.\n> - **Validierung:** Prüfen des Verfahrens an einem Fall mit bekannter exakter Lösung.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung des Euler-Verfahrens** aus der Definition der Ableitung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a(t) = \\dot v(t) = \\lim_{\\Delta t\\to 0}\\frac{v(t + \\Delta t) - v(t)}{\\Delta t}",
+            "why": "Die Beschleunigung ist die Ableitung der Geschwindigkeit."
+          },
+          {
+            "tex": "a(t) \\approx \\frac{v(t + \\Delta t) - v(t)}{\\Delta t}",
+            "why": "Für kleines, aber endliches $\\Delta t$: Differenzenquotient statt Grenzwert."
+          },
+          {
+            "tex": "v_{n+1} = v_n + a_n\\,\\Delta t,\\qquad a_n = \\frac{F(v_n)}{m}",
+            "why": "Nach dem neuen Wert aufgelöst; die Beschleunigung aus dem alten Wert."
+          },
+          {
+            "tex": "s_{n+1} = s_n + v_n\\,\\Delta t",
+            "why": "Dasselbe für den Ort mit der Geschwindigkeit als Änderungsrate."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableitung als Grenzwert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenzenquotient.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt für die Geschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt für den Ort.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Euler gegen die exakte Lösung.** Ein Boot gleitet aus; die Wasserreibung ist proportional zur Geschwindigkeit, $a = -k v$ mit $k = 1\\,\\mathrm{s}^{-1}$ und $v_0 = 1\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Exakt gilt $v = e^{-t}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "xLabel": "t in s",
+        "yLabel": "v in m/s",
+        "vars": [
+          {
+            "name": "H",
+            "min": 0.1,
+            "max": 1,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ex",
+            "expr": "exp(-x)",
+            "color": "gray",
+            "dashed": true,
+            "label": "exakt",
+            "labelAt": 3.2
+          },
+          {
+            "name": "eu",
+            "expr": "(1-H)^floor(x/H) * (1 - (x - H*floor(x/H)))",
+            "color": "blue",
+            "label": "Euler",
+            "labelAt": 1.2,
+            "samples": 900
+          }
+        ],
+        "readout": "Schrittweite {H|2} s: Euler nach 2 s **{(1-H)^floor(2/H)*(1 - (2 - H*floor(2/H)))|3} m/s**, exakt **{exp(-2)|3} m/s**"
+      },
+      "timeline": [
+        {
+          "caption": "Mit $\\Delta t = 1\\,\\mathrm{s}$ rechnet Euler: $v_1 = v_0 + a_0\\Delta t = 1 - 1\\cdot 1 = 0$. Das Boot stünde nach einer Sekunde still, ein grober Fehler.",
+          "set": {
+            "H": 1
+          }
+        },
+        {
+          "caption": "Halbe Schrittweite: $v$ halbiert sich pro Schritt, $v(2\\,\\mathrm{s}) \\approx 0{,}063$ statt $0{,}135$.",
+          "to": {
+            "H": 0.5
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "$\\Delta t = 0{,}25\\,\\mathrm{s}$: Der Fehler hat sich wieder etwa halbiert. Die Euler-Kurve liegt immer unter der exakten, weil sie die Bremsung am Schrittanfang ansetzt, wo sie am stärksten ist.",
+          "to": {
+            "H": 0.25
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $\\Delta t = 0{,}1\\,\\mathrm{s}$ liegen beide fast aufeinander. Der Fehler ist proportional zur Schrittweite: zehnfach feiner, etwa zehnfach genauer, aber zehnmal so viele Zeilen.",
+          "to": {
+            "H": 0.1
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Besser als Euler\n> Nimmt man im Wegschritt die **mittlere** Geschwindigkeit $\\tfrac12(v_n + v_{n+1})$ oder berechnet die Beschleunigung in der Mitte des Schritts (Verfahren von Heun, Mittelpunktverfahren), sinkt der Fehler mit $\\Delta t^2$: halbe Schrittweite, ein Viertel des Fehlers. Für den reibungsfreien Fall liefert der Mittelwertschritt sogar das exakte $s = \\tfrac12 g t^2$.\n\n> [!warning] Grenzen\n> Bei chaotischen Systemen wachsen kleine Fehler exponentiell an; eine Langzeitvorhersage ist dann grundsätzlich unmöglich, egal wie fein man rechnet.",
+      "label": "Genauigkeit",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Numerische Simulation von Bewegungen",
+      "path": "02 Wiki/Physik/01 E-Phase/Numerische Simulation von Bewegungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Lässt sich eine Bewegungsgleichung nicht geschlossen lösen (z. B. **Fall mit Luftwiderstand**), berechnet man die Bewegung **schrittweise** mit kleinen Zeitschritten $\\Delta t$ -- die **numerische Simulation** (Tabellenkalkulation oder Programm)."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee: Differenzenquotient statt Ableitung",
+          "blocks": [
+            {
+              "md": "Man ersetzt die Ableitung durch den Differenzenquotienten (Euler-Verfahren):\n$$a_n = \\frac{F(v_n)}{m}, \\qquad v_{n+1} = v_n + a_n \\cdot \\Delta t, \\qquad s_{n+1} = s_n + v_n \\cdot \\Delta t$$"
+            }
+          ]
+        },
+        {
+          "title": "Ablauf in der Tabellenkalkulation",
+          "blocks": [
+            {
+              "md": "| Spalte | Inhalt |\n|---|---|\n| $t$ | $t_{n+1} = t_n + \\Delta t$ |\n| $a$ | aus der Kraftgleichung, z. B. $g - \\tfrac{c_w\\rho A}{2m}v^2$ |\n| $v$ | $v_n + a_n\\Delta t$ |\n| $s$ | $s_n + v_n\\Delta t$ |\n\n> [!warning] Genauigkeit\n> Je kleiner $\\Delta t$, desto genauer die Simulation -- aber desto mehr Rechenschritte. Zu großes $\\Delta t$ führt zu deutlichen Abweichungen. Der Vergleich mit der analytischen Lösung (z. B. reibungsfreier Fall) dient der **Validierung** des Modells.\n\n> [!tip] Bezug zur Mathematik\n> Hier wird der Unterschied zwischen **Differenzenquotient** (endlicher Schritt) und **Differenzialquotient** (Grenzwert) unmittelbar praktisch -- derselbe Gedanke trägt später das **Induktionsgesetz**."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb numerisch gerechnet wird",
+          "blocks": [
+            {
+              "md": "> [!important] Die meisten realen Bewegungsgleichungen sind nicht geschlossen lösbar\n> Sobald die Kraft von der Geschwindigkeit abhängt -- wie beim Luftwiderstand $F_R \\sim v^2$ --, entsteht eine Differenzialgleichung, deren analytische Lösung über den Schulstoff hinausgeht.\n>\n> Die numerische Lösung umgeht das Problem, indem sie die Bewegung in **kleine Zeitschritte** zerlegt und innerhalb jedes Schritts die Kraft als konstant annimmt. Das ist eine Näherung, aber eine kontrollierbare.\n>\n> Der Ansatz ist damit weit allgemeiner als die geschlossene Lösung: Er funktioniert für **jede** Kraftgleichung, auch für solche, die man gar nicht hinschreiben kann, sondern nur tabellarisch kennt."
+            }
+          ]
+        },
+        {
+          "title": "Das Euler-Verfahren",
+          "blocks": [
+            {
+              "md": "$$a_n = \\frac{F(v_n)}{m} \\qquad v_{n+1} = v_n + a_n\\,\\Delta t \\qquad s_{n+1} = s_n + v_n\\,\\Delta t$$\n\n> [!warning] Das Verfahren rechnet systematisch zu klein oder zu groß\n> Innerhalb eines Schrittes wird die Geschwindigkeit als **konstant** angenommen, obwohl sie sich ändert. Bei einer beschleunigten Bewegung liegt der wahre Wert deshalb höher als der berechnete.\n>\n> Der Fehler wächst mit $\\Delta t$ und summiert sich über die Schritte auf. Er ist **systematisch**, nicht zufällig -- Wiederholen der Rechnung verkleinert ihn nicht.\n>\n> Abhilfen: kleineres $\\Delta t$, oder die Verwendung der **mittleren** Geschwindigkeit $\\tfrac12(v_n + v_{n+1})$ im Wegschritt. Letzteres kostet nichts und verbessert die Genauigkeit erheblich."
+            }
+          ]
+        },
+        {
+          "title": "Validierung",
+          "blocks": [
+            {
+              "md": "> [!tip] Das Modell wird am bekannten Fall geprüft\n> Bevor man einer Simulation vertraut, rechnet man einen Fall, dessen Lösung man kennt -- etwa den reibungsfreien Fall mit $s = \\tfrac12 g t^2$.\n>\n> Stimmt das Ergebnis, ist das Verfahren korrekt umgesetzt; weicht es ab, liegt entweder ein Programmierfehler vor oder $\\Delta t$ ist zu groß.\n>\n> Dieses Vorgehen -- **ein Verfahren zuerst an einem Fall mit bekannter Lösung prüfen** -- ist allgemeines wissenschaftliches Handwerk und gilt ebenso für Messverfahren und Rechenprogramme."
+            }
+          ]
+        },
+        {
+          "title": "Bezug zur Mathematik",
+          "blocks": [
+            {
+              "md": "| numerisch | analytisch |\n|---|---|\n| Differenzenquotient $\\dfrac{\\Delta v}{\\Delta t}$ | Differenzialquotient $\\dfrac{dv}{dt}$ |\n| Summe der Rechtecke | Integral |\n| endlicher Schritt | Grenzwert |\n\n> [!tip] Hier wird der Grenzwertbegriff praktisch fassbar\n> Man sieht unmittelbar, wie sich das Ergebnis dem exakten Wert nähert, wenn $\\Delta t$ kleiner wird -- der Grenzübergang wird zur beobachtbaren Zahlenfolge statt zu einer Definition.\n>\n> Derselbe Gedanke trägt später das **Induktionsgesetz**, in dem $\\dot\\Phi$ auftritt, und die **Reaktionsgeschwindigkeit** in der Chemie, wo Sekante und Tangente denselben Unterschied bezeichnen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Fall mit Luftwiderstand** -- der Standardfall, mit der Grenzgeschwindigkeit als Kontrolle\n- **Gedämpfte Schwingung** -- siehe **Gedämpfte Schwingung**\n- **Mehrkörperprobleme** in der Himmelsmechanik, für die es grundsätzlich keine geschlossene Lösung gibt\n- **Chaotische Systeme**, bei denen kleine Anfangsunterschiede exponentiell anwachsen\n\n> [!warning] Bei chaotischen Systemen versagt die Fehlerabschätzung\n> Dort verstärken sich Rundungsfehler exponentiell. Eine Langzeitvorhersage ist prinzipiell unmöglich -- nicht wegen des Verfahrens, sondern wegen der Natur des Systems. Siehe **Chaostheorie**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "cloze",
+      "label": "Definitionen",
+      "md": "Euler-Schritt: $v_{n+1} = v_n + $ {{0}} $\\cdot\\,\\Delta t$ und $s_{n+1} = s_n + $ {{1}} $\\cdot\\,\\Delta t$.",
+      "blanks": [
+        {
+          "accept": [
+            "a_n",
+            "a"
+          ]
+        },
+        {
+          "accept": [
+            "v_n",
+            "v"
+          ]
+        }
+      ],
+      "explain": "Neue Werte aus den alten: Geschwindigkeit mit der Beschleunigung am Schrittanfang, Ort mit der Geschwindigkeit am Schrittanfang.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Fall mit Luftreibung: $a = g - k v^2$ mit $k = 0{,}02\\,\\tfrac{1}{\\mathrm{m}}$, $v_0 = 0$, $\\Delta t = 0{,}5\\,\\mathrm{s}$. Wie groß ist $v_2$ nach dem Euler-Verfahren?",
+      "answer": 9.57,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$v_1 = 0 + 9{,}81\\cdot 0{,}5 = 4{,}905$; $a_1 = 9{,}81 - 0{,}02\\cdot 4{,}905^2 \\approx 9{,}329$; $v_2 = 4{,}905 + 9{,}329\\cdot 0{,}5 \\approx 9{,}57\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und welcher Weg $s_2$ ergibt sich dabei ($s_0 = 0$)?",
+      "answer": 2.45,
+      "tolerance": 0.02,
+      "placeholder": "m",
+      "explain": "$s_1 = s_0 + v_0\\Delta t = 0$, $s_2 = s_1 + v_1\\Delta t = 4{,}905\\cdot 0{,}5\\,\\mathrm{m} \\approx 2{,}45\\,\\mathrm{m}$. Der Wegschritt nutzt die alte Geschwindigkeit.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei konstanter Beschleunigung liefert das Euler-Verfahren die Geschwindigkeit exakt, den Weg aber zu klein.",
+      "answer": true,
+      "explain": "$v_n = n\\,a\\,\\Delta t$ ist exakt. Für den Weg nimmt Euler in jedem Schritt die kleinere Anfangsgeschwindigkeit; heraus kommt $\\tfrac12 a t^2 - \\tfrac12 a t\\,\\Delta t$, zu klein um einen Fehler proportional zu $\\Delta t$.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Warum prüft man eine Simulation zuerst am reibungsfreien Fall?",
+      "options": [
+        {
+          "md": "Weil dort die exakte Lösung bekannt ist und Programmier- oder Schrittweitenfehler auffallen.",
+          "correct": true
+        },
+        {
+          "md": "Weil der reibungsfreie Fall der wichtigste Anwendungsfall ist.",
+          "why": "Gerade der Fall mit Reibung ist der Grund für die Simulation."
+        },
+        {
+          "md": "Weil Euler nur ohne Reibung funktioniert.",
+          "why": "Euler funktioniert für jedes Kraftgesetz."
+        },
+        {
+          "md": "Weil die Tabellenkalkulation es verlangt.",
+          "why": "Es geht um Validierung."
+        }
+      ],
+      "explain": "Validierung: ein Verfahren an einem Fall mit bekannter Lösung prüfen, bevor man ihm bei unbekannten Fällen traut.",
+      "label": "Definitionen",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Halbiert man beim Euler-Verfahren die Schrittweite, wird der Fehler etwa {{0}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        }
+      ],
+      "explain": "Der Fehler ist proportional zu $\\Delta t$ (Verfahren erster Ordnung).",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Ausgleiten mit $a = -k v$, $k = 0{,}5\\,\\mathrm{s}^{-1}$, $v_0 = 4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\Delta t = 1\\,\\mathrm{s}$. Welchen Wert liefert Euler für $v_2$?",
+      "answer": 1,
+      "tolerance": 0.01,
+      "placeholder": "m/s",
+      "explain": "$v_1 = 4 - 0{,}5\\cdot 4\\cdot 1 = 2$, $v_2 = 2 - 0{,}5\\cdot 2\\cdot 1 = 1$. Exakt wäre $4\\,e^{-1} \\approx 1{,}47$: Bei so großer Schrittweite unterschätzt Euler deutlich.",
+      "id": "vq7"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Maßnahmen verkleinern den Fehler einer Euler-Simulation?",
+      "options": [
+        {
+          "md": "kleinere Schrittweite",
+          "correct": true
+        },
+        {
+          "md": "die mittlere statt der Anfangsgeschwindigkeit im Wegschritt",
+          "correct": true
+        },
+        {
+          "md": "die Rechnung mit derselben Schrittweite wiederholen",
+          "why": "Der Fehler ist systematisch; Wiederholen ändert nichts."
+        },
+        {
+          "md": "mehr Nachkommastellen bei den Startwerten",
+          "why": "Der Diskretisierungsfehler bleibt."
+        }
+      ],
+      "explain": "Systematische Fehler verschwinden nur durch ein besseres Verfahren oder eine feinere Schrittweite.",
+      "label": "Genauigkeit",
+      "id": "vq8"
+    },
+    {
       "id": "schritte",
       "type": "order",
       "label": "Reihenfolge",
@@ -44,13 +390,41 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "euler"
+        ]
+      },
+      "label": "Euler-Schritte",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "euler",
+          "grenzgeschwindigkeit"
+        ]
+      },
+      "label": "Mit Kontrolle",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Euler: Steigung am Anfang des Schritts verwenden.",
         "$v_{n+1} = v_n + a_n\\Delta t$, $s_{n+1} = s_n + v_n\\Delta t$.",
-        "Kleinere Schrittweite, kleinerer Fehler."
+        "Kleinere Schrittweite, kleinerer Fehler.",
+        "Euler aus dem Differenzenquotienten: $v_{n+1} = v_n + a_n\\Delta t$, $s_{n+1} = s_n + v_n\\Delta t$, mit $a_n$ aus dem Wert am Schrittanfang.",
+        "Der Fehler ist systematisch und etwa proportional zu $\\Delta t$; mittlere Werte im Schritt verbessern auf $\\Delta t^2$.",
+        "Validierung an einem Fall mit bekannter Lösung, etwa dem reibungsfreien Fall."
       ]
     }
   ]

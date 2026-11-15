@@ -180,6 +180,35 @@ final class AppModel {
 
     func subject(of course: Course) -> Subject? { subjects.first { $0.courses.contains(course.id) } }
 
+    /// When the learner last worked in a course: the newest change to one of its lessons.
+    func lastActivity(in course: Course) -> Date? {
+        state.lessons.values.filter { $0.courseId == course.id }.map(\.updatedAt).max()
+    }
+
+    func lastActivity(in subject: Subject) -> Date? {
+        let ids = Set(subject.courses)
+        return state.lessons.values.filter { ids.contains($0.courseId) }.map(\.updatedAt).max()
+    }
+
+    /// Subjects with the most recent work first; untouched ones keep the order of the index.
+    var subjectsByRecent: [Subject] {
+        let dated = subjects.enumerated().map { (offset: $0.offset, subject: $0.element, date: lastActivity(in: $0.element) ?? .distantPast) }
+        return dated.sorted { $0.date != $1.date ? $0.date > $1.date : $0.offset < $1.offset }.map { $0.subject }
+    }
+
+    /// The lesson to continue in a subject: the overall one when it belongs here, else the next open lesson of the
+    /// course worked in last, else of the first course with open lessons.
+    func nextLesson(in subject: Subject) -> (course: Course, lesson: LessonRef)? {
+        if let target = continueTarget, subject.courses.contains(target.course.id) { return target }
+        let ranked = courses(in: subject).enumerated()
+            .map { (offset: $0.offset, course: $0.element, date: lastActivity(in: $0.element) ?? .distantPast) }
+            .sorted { $0.date != $1.date ? $0.date > $1.date : $0.offset < $1.offset }
+        for entry in ranked {
+            if let next = entry.course.readyLessons.first(where: { !state.isSettled($0.id) }) { return (entry.course, next) }
+        }
+        return nil
+    }
+
     func progress(of subject: Subject) -> Double {
         let list = courses(in: subject)
         let ready = list.reduce(0) { $0 + $1.readyLessons.count }
@@ -390,7 +419,7 @@ final class AppModel {
             return ReviewItem(lessonUrl: lessonURL(c, card.lessonId), stepId: card.stepId)
         }
         presentedLesson = LessonSession(mode: .review, course: course, reviewItems: items, title: "Wiederholung",
-                                        accentHex: course?.color ?? courses.first?.color ?? "#5E5CE6")
+                                        accentHex: course?.color ?? courses.first?.color ?? "#D2502C")
     }
 
     // MARK: training
@@ -573,7 +602,7 @@ final class AppModel {
     func startMix() {
         let plan = mixPlan()
         guard !plan.items.isEmpty || !plan.picks.isEmpty else { return }
-        presentedLesson = LessonSession(mode: .mix, reviewItems: plan.items, title: "Tagesmix", accentHex: courses.first?.color ?? "#5E5CE6",
+        presentedLesson = LessonSession(mode: .mix, reviewItems: plan.items, title: "Tagesmix", accentHex: courses.first?.color ?? "#D2502C",
                                         picks: plan.picks, taskCount: plan.items.count + plan.picks.count)
     }
 

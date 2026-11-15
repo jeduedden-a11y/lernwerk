@@ -23,6 +23,551 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Beweis durch Fallunterscheidung\n> Man zerlegt die Voraussetzung in Fälle, die **zusammen alle Möglichkeiten abdecken** (gerade oder ungerade; Rest 0, 1 oder 2; $x < 0$ oder $x \\ge 0$), und beweist die Behauptung in **jedem** Fall einzeln. Fehlt ein Fall, ist der Beweis unvollständig.\n\n> [!definition] Widerlegung durch Gegenbeispiel\n> Eine Allaussage »für alle $x$: wenn $P(x)$, dann $Q(x)$« ist widerlegt, sobald **ein** Objekt $P$ erfüllt und $Q$ verletzt. Ein Gegenbeispiel muss im Grundbereich liegen und die Voraussetzung erfüllen.\n\n**Symmetrie spart Fälle:** Ist eine Aussage symmetrisch in $a$ und $b$, darf man ohne Einschränkung $a \\le b$ annehmen (*without loss of generality*).",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung durch Fälle: Welche Reste lassen Quadratzahlen bei Division durch 4?**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n = 2k:\\quad n^2 = 4k^2",
+            "why": "Fall 1, n gerade: Das Quadrat ist durch 4 teilbar, Rest 0."
+          },
+          {
+            "tex": "n = 2k + 1:\\quad n^2 = 4k^2 + 4k + 1 = 4(k^2 + k) + 1",
+            "why": "Fall 2, n ungerade: Rest 1."
+          },
+          {
+            "tex": "n^2 \\equiv 0 \\text{ oder } 1 \\pmod 4",
+            "why": "Die beiden Fälle decken alle ganzen Zahlen ab: Ein Quadrat lässt nie den Rest 2 oder 3."
+          },
+          {
+            "tex": "a^2 + b^2 \\equiv 0,\\ 1 \\text{ oder } 2 \\pmod 4",
+            "why": "Folgerung: Die Summe zweier Quadrate lässt nie den Rest 3. Zahlen wie 3, 7, 11, 4k + 3 sind keine Summe zweier Quadrate."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ungerade.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Alle Fälle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folgerung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung durch Fälle beim Betrag:** Für welche $x$ gilt $|x| + |x - 2| = 2$?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x < 0:\\quad -x + (2 - x) = 2 - 2x = 2 \\;\\Rightarrow\\; x = 0",
+            "why": "Fall 1: Beide Beträge werden mit Minus aufgelöst. Die Lösung x = 0 liegt nicht im Fall, also keine Lösung hier."
+          },
+          {
+            "tex": "0 \\le x \\le 2:\\quad x + (2 - x) = 2",
+            "why": "Fall 2: Die Gleichung ist für jedes x des Falls erfüllt."
+          },
+          {
+            "tex": "x > 2:\\quad x + (x - 2) = 2x - 2 = 2 \\;\\Rightarrow\\; x = 2",
+            "why": "Fall 3: Die Lösung x = 2 liegt nicht im Fall x > 2."
+          },
+          {
+            "tex": "\\mathbb{L} = \\{\\,x : 0 \\le x \\le 2\\,\\}",
+            "why": "Die Lösungsmenge ist das ganze Intervall: Der Abstand zu 0 plus der Abstand zu 2 ist genau dann 2, wenn x zwischen 0 und 2 liegt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fall 1.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fall 2.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fall 3.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Fälle",
+      "md": "**Die drei Fälle im Bild:** blau $y = |x| + |x - 2|$, orange die Höhe 2. Grün markiert ist der mittlere Fall.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          4
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 4,
+            "value": -1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "abs(x) + abs(x - 2)",
+            "color": "blue",
+            "samples": 400
+          }
+        ],
+        "hlines": [
+          {
+            "y": 2,
+            "color": "orange",
+            "dashed": false,
+            "width": 2
+          }
+        ],
+        "vbands": [
+          {
+            "x": 1,
+            "d": 1,
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "abs(X) + abs(X - 2)",
+            "color": "blue"
+          }
+        ],
+        "readout": "x = {X|2} · Fall {X < 0 ? 1 : (X <= 2 ? 2 : 3)} · Funktionswert {abs(X) + abs(X - 2)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Fall 1, x < 0: Der Graph ist die Gerade 2 − 2x und liegt über 2. Keine Lösung.",
+          "set": {
+            "X": -1.5
+          }
+        },
+        {
+          "caption": "Fall 2, 0 ≤ x ≤ 2: Der Graph liegt genau auf der Höhe 2. Jedes x dieses Falls ist Lösung.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Fall 3, x > 2: Der Graph ist 2x − 2 und steigt über 2. Keine Lösung.",
+          "to": {
+            "X": 3.2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Muster, die spät brechen, und wie man das Gegenbeispiel gezielt findet.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "p = 2, 3, 5, 7:\\quad 2^p - 1 = 3,\\ 7,\\ 31,\\ 127",
+            "why": "»Ist p prim, dann ist 2^p − 1 prim« stimmt für die ersten vier Primzahlen."
+          },
+          {
+            "tex": "p = 11:\\quad 2^{11} - 1 = 2047 = 23 \\cdot 89",
+            "why": "Gegenbeispiel: Vier Bestätigungen beweisen nichts."
+          },
+          {
+            "tex": "n^2 + n + 17 \\text{ prim für } n = 0, 1, \\dots, 15",
+            "why": "Ein Polynom, das lange Primzahlen liefert."
+          },
+          {
+            "tex": "n = 16:\\quad 16^2 + 16 + 17 = 16 \\cdot 17 + 17 = 17^2",
+            "why": "Gezielt suchen statt durchzählen: Man wählt n so, dass alle Summanden einen gemeinsamen Faktor haben."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bestätigungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bruch.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Polynom.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gezielt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Beweis durch Fallunterscheidung",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Beweis durch Fallunterscheidung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der Aufbau",
+          "blocks": [
+            {
+              "md": "Beim **Beweis durch Fallunterscheidung** (*proof by cases*) wird die Menge aller möglichen Situationen in Fälle zerlegt, die **zusammen alles abdecken**. Dann wird die Behauptung für jeden Fall einzeln bewiesen.\n\n$$(\\text{Fall 1 oder Fall 2 oder } \\dots) \\text{ ist immer wahr}, \\quad \\text{Fall } i \\Rightarrow \\text{Behauptung für jedes } i \\quad\\Longrightarrow\\quad \\text{Behauptung}$$\n\n> [!important] Die Fälle müssen erschöpfend sein\n> Überlappen dürfen sich die Fälle, eine **Lücke** darf es nicht geben. Die typischen Zerlegungen sind deshalb solche, bei denen Vollständigkeit offensichtlich ist:\n>\n> | Zerlegung | Fälle |\n> |---|---|\n> | Parität | $n$ gerade, $n$ ungerade |\n> | Rest bei Division durch 3 | $n = 3k$, $3k + 1$, $3k + 2$ |\n> | Vorzeichen | $x > 0$, $x = 0$, $x < 0$ |\n> | Betrag | $x \\ge 0$ (dann $\\lvert x \\rvert = x$), $x < 0$ (dann $\\lvert x \\rvert = -x$) |\n> | Größenvergleich | $a < b$, $a = b$, $a > b$ |\n>\n> Der häufigste Fehler ist ein vergessener Fall: die Null, der Gleichheitsfall, die negativen Zahlen."
+            }
+          ]
+        },
+        {
+          "title": "Ausgeführtes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Jedes Quadrat einer ganzen Zahl lässt bei Division durch 3 den Rest 0 oder 1\n> **Fall 1:** $n = 3k$. Dann $n^2 = 9k^2 = 3 \\cdot 3k^2$, Rest 0.\n> **Fall 2:** $n = 3k + 1$. Dann $n^2 = 9k^2 + 6k + 1 = 3(3k^2 + 2k) + 1$, Rest 1.\n> **Fall 3:** $n = 3k + 2$. Dann $n^2 = 9k^2 + 12k + 4 = 3(3k^2 + 4k + 1) + 1$, Rest 1.\n> Jede ganze Zahl fällt unter genau einen dieser Fälle. $\\blacksquare$\n>\n> **Folgerung:** Ist $n$ nicht durch 3 teilbar, so ist $n^2 + 2$ durch 3 teilbar -- denn $n^2$ lässt dann den Rest 1, und $1 + 2 = 3$. Ist $n$ durch 3 teilbar, lässt $n^2 + 2$ den Rest 2. Solche Folgerungen sind genau die Stellen, an denen Fallunterscheidung im TMUA Punkte bringt: Sie liefern einen Überblick über **alle** Möglichkeiten statt einer Vermutung aus Beispielen."
+            }
+          ]
+        },
+        {
+          "title": "Symmetrie spart Fälle",
+          "blocks": [
+            {
+              "md": "> [!tip] \"Ohne Beschränkung der Allgemeinheit\"\n> Ist eine Aussage symmetrisch in $a$ und $b$, genügt oft der Fall $a \\le b$; der andere folgt durch Vertauschen. Man schreibt dann *without loss of generality (WLOG), assume a ≤ b*.\n>\n> Die Abkürzung ist nur zulässig, wenn die Aussage **wirklich** symmetrisch ist. $a - b \\ge 0$ ist es nicht; wer dort \"ohne Beschränkung\" $a \\ge b$ annimmt, hat einen Fall unterschlagen."
+            }
+          ]
+        },
+        {
+          "title": "Fallunterscheidung beim Betrag",
+          "blocks": [
+            {
+              "md": "Aussagen mit Beträgen werden fast immer durch Fälle bewiesen, weil der Betrag selbst stückweise definiert ist:\n\n$$\\lvert x \\rvert = \\begin{cases} x & x \\ge 0 \\\\ -x & x < 0 \\end{cases}$$\n\n*Beispiel:* Für alle reellen $x$ gilt $\\lvert x \\rvert \\ge x$. Fall $x \\ge 0$: $\\lvert x \\rvert = x \\ge x$. Fall $x < 0$: $\\lvert x \\rvert = -x > 0 > x$. Beide Fälle sind erledigt, und zusammen decken sie alle reellen Zahlen ab."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Einen Fall vergessen**, meist $x = 0$ oder die negativen Zahlen.\n- **Fälle wählen, die nicht erschöpfend sind**, etwa *\"n is prime\"* und *\"n is even\"* -- die 9 fällt durch.\n- **\"Ohne Beschränkung der Allgemeinheit\" ohne Symmetrie.**\n- **In einem Fall die Fallannahme nicht benutzen:** Dann war die Unterscheidung überflüssig oder der Fall ist nicht wirklich bewiesen.\n\nVerwandt: **Direkter deduktiver Beweis** · **Widerspruchsbeweis** · **Vermutungen aus kleinen Fällen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Widerlegung durch Gegenbeispiel",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Widerlegung durch Gegenbeispiel.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Das Prinzip",
+          "blocks": [
+            {
+              "md": "Eine **Allaussage** -- *for all x, P(x)* -- ist falsch, sobald es **ein** Objekt gibt, für das P nicht gilt. Dieses Objekt heißt **Gegenbeispiel** (*counterexample*). Mehr braucht die Widerlegung nicht (*disproof by counterexample*).\n\nFür Implikationen *für alle x: wenn A(x), dann B(x)* muss das Gegenbeispiel zwei Dinge leisten:\n\n1. Es **erfüllt die Voraussetzung** A.\n2. Es **verletzt die Folgerung** B.\n\nEin Objekt, das A nicht erfüllt, sagt über die Implikation nichts -- für dieses Objekt ist sie sogar wahr.\n\n> [!warning] Existenzaussagen lassen sich so nicht widerlegen\n> *\"There is a prime between 90 and 96\"* wird nicht durch ein einzelnes Beispiel widerlegt, etwa durch 91. Um eine Existenzaussage zu widerlegen, müssen **alle** Kandidaten scheitern: 91, 92, 93, 94, 95 sind zusammengesetzt ($91 = 7 \\cdot 13$, $93 = 3 \\cdot 31$, $95 = 5 \\cdot 19$), also ist die Aussage falsch. Umgekehrt genügt für ihren **Beweis** ein einziges Beispiel."
+            }
+          ]
+        },
+        {
+          "title": "Wo Gegenbeispiele wohnen",
+          "blocks": [
+            {
+              "md": "> [!tip] Die Suchliste\n> Die meisten falschen Aussagen im TMUA scheitern an einer dieser Stellen. In dieser Reihenfolge prüfen:\n>\n> | Kandidat | typische Aussage, die daran scheitert |\n> |---|---|\n> | **Null** | *if x² = x then x = 1* |\n> | **negative Zahlen** | *if a > b then a² > b²* |\n> | **Brüche zwischen 0 und 1** | *x² ≥ x for all real x* |\n> | **die Primzahl 2** | *every prime is odd* |\n> | **irrationale Paare wie $\\sqrt2$ und $-\\sqrt2$** | *the sum of two irrationals is irrational* |\n> | **gleiche Werte** | *if a ≠ b then ...* wird mit $a = b$ oft übersehen |\n> | **Randwerte** der Voraussetzung | $x = 2$ bei *x ≥ 2*, der Gleichheitsfall bei $\\le$ |\n> | **Sonderfälle von Figuren** | gleichseitige, rechtwinklige, entartete Dreiecke |\n> | **einfache Funktionen** | $f(x) = 0$, $f(x) = x$, $f(x) = -x$, $f(x) = x^3$, $f(x) = \\lvert x \\rvert$ |"
+            }
+          ]
+        },
+        {
+          "title": "Muster, die spät brechen",
+          "blocks": [
+            {
+              "md": "Manche Aussagen stimmen für viele kleine Werte und scheitern dann doch. Das berühmteste Beispiel:\n\n$$n^2 + n + 41 \\text{ ist prim für } n = 0, 1, 2, \\dots, 39,$$\n\naber für $n = 40$ ergibt sich $1600 + 40 + 41 = 1681 = 41^2$. Vierzig bestätigende Beispiele beweisen nichts -- ein einziges Gegenbeispiel widerlegt alles. Wer das Gegenbeispiel sucht, sollte nicht durchzählen, sondern **gezielt** suchen: Hier liegt $n = 40$ nahe, weil dann alle drei Summanden den Faktor 41 enthalten ($40^2 + 40 = 40 \\cdot 41$), und ebenso $n = 41$."
+            }
+          ]
+        },
+        {
+          "title": "Gegenbeispiel zu welcher Aussage?",
+          "blocks": [
+            {
+              "md": "> [!important] Aussage und Umkehrung haben verschiedene Gegenbeispiele\n> Für *\"if n is divisible by 4, then n is even\"* gibt es kein Gegenbeispiel -- die Aussage ist wahr. Die Zahl 6 ist ein Gegenbeispiel zur **Umkehrung** *\"if n is even, then n is divisible by 4\"*. In Antwortoptionen stehen oft genau solche Werte, die eine verwandte, aber andere Aussage widerlegen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Ein Objekt wählen, das die Voraussetzung nicht erfüllt.**\n- **Eine Existenzaussage mit einem Beispiel \"widerlegen\".**\n- **Ein Gegenbeispiel zur Umkehrung für eines zur Aussage halten.**\n- **Aus vielen bestätigenden Beispielen auf Wahrheit schließen.**\n- **Den Grundbereich verlassen:** Ist $n$ als positive ganze Zahl gegeben, ist $n = -1$ kein zulässiges Gegenbeispiel.\n\nVerwandt: **Quantoren - für alle und es gibt** · **Vermutungen aus kleinen Fällen** · Aufgabentypen: **Gegenbeispiel auswählen** · **Wahrheitswert einer Implikation prüfen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Gegenbeispiel auswählen",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Gegenbeispiel auswählen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Allaussage oder Implikation wird vorgelegt, die Optionen sind konkrete Werte, Zahlenpaare oder Funktionen. Gefragt: *Which of the following is a counterexample to the statement?* Varianten: *Which value of n shows that the statement is false?*, *For which of the following is the statement not true?*"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Aussage in die Form bringen:** *für alle x: wenn A(x), dann B(x)*.\n2. **Für jede Option zuerst A prüfen.** Erfüllt sie die Voraussetzung nicht, ist sie **kein** Gegenbeispiel -- sofort streichen.\n3. **Für die übrigen B prüfen.** Ein Gegenbeispiel verletzt B.\n4. **Bei Unsicherheit mit der Suchliste abgleichen:** null, negative Zahlen, Brüche, die 2, $\\sqrt2$-Paare, gleiche Werte, Randwerte -- siehe **Widerlegung durch Gegenbeispiel**.\n5. **Prüfen, dass genau eine Option übrig bleibt.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Which one of the following values of $n$ is a counterexample to the statement\n> \"For every positive integer $n$, the number $n^2 + n + 11$ is prime\"?\n>\n> - **A** $n = 1$\n> - **B** $n = 3$\n> - **C** $n = 5$\n> - **D** $n = 9$\n> - **E** $n = 10$\n\n**Schritt 2:** Alle Optionen sind positive ganze Zahlen, die Voraussetzung ist also stets erfüllt.\n\n**Schritt 3:**\n\n| $n$ | $n^2 + n + 11$ | prim? |\n|---|---|---|\n| 1 | 13 | ja |\n| 3 | 23 | ja |\n| 5 | 41 | ja |\n| 9 | 101 | ja |\n| 10 | 121 | **nein**, $121 = 11^2$ |\n\nAntwort **E**.\n\n> [!tip] Der gezielte Blick statt Durchrechnen\n> Der Term $n^2 + n + 11$ enthält die 11. Wenn $n^2 + n = n(n+1)$ ebenfalls durch 11 teilbar ist, ist es die ganze Summe. Das passiert zuerst bei $n = 10$ (mit $10 \\cdot 11$). Wer das sieht, prüft E zuerst und ist in zehn Sekunden fertig."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Werte ankreuzen, die die Voraussetzung verletzen** -- dort ist die Implikation wahr.\n- **Ein Gegenbeispiel zur Umkehrung wählen.**\n- **Nur die erste passende Option prüfen**, ohne die Voraussetzung zu kontrollieren.\n- **Sich verrechnen, weil die Zahlen groß wirken:** $101$ ist prim; bis $\\sqrt{101} \\approx 10$ reicht die Probe mit 2, 3, 5, 7."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Which one of the following is a counterexample to the statement \"If $a$ and $b$ are irrational, then $ab$ is irrational\"?\n>\n> - **A** $a = \\sqrt2$, $b = \\sqrt3$\n> - **B** $a = \\sqrt2$, $b = \\sqrt8$\n> - **C** $a = \\pi$, $b = 2$\n> - **D** $a = \\sqrt2$, $b = 1 + \\sqrt2$\n> - **E** $a = \\sqrt3$, $b = \\sqrt{12} + 1$\n\n> [!success]- Lösung\n> **B.** $\\sqrt2 \\cdot \\sqrt8 = \\sqrt{16} = 4$, rational. Beide Faktoren sind irrational, die Voraussetzung ist erfüllt.\n> A: $\\sqrt6$ ist irrational. C: $b = 2$ ist rational, Voraussetzung verletzt. D: $\\sqrt2 + 2$ ist irrational. E: $\\sqrt3(2\\sqrt3 + 1) = 6 + \\sqrt3$ ist irrational.\n\n> [!question] Aufgabe 2\n> Which one of the following is a counterexample to the statement \"For all real numbers $x$ and $y$, if $x < y$ then $\\frac{1}{x} > \\frac{1}{y}$\"?\n>\n> - **A** $x = 1$, $y = 2$\n> - **B** $x = 2$, $y = 3$\n> - **C** $x = -2$, $y = -1$\n> - **D** $x = -1$, $y = 1$\n> - **E** $x = 3$, $y = 1$\n\n> [!success]- Lösung\n> **D.** $-1 < 1$, aber $\\tfrac{1}{-1} = -1 < 1 = \\tfrac11$.\n> A, B, C erfüllen die Aussage (für gleiche Vorzeichen stimmt sie). E verletzt die Voraussetzung ($3 < 1$ ist falsch).\n\n> [!question] Aufgabe 3\n> Which one of the following functions $f$, together with the value $a$, is a counterexample to the statement \"If $f'(a) = 0$, then $f$ has a maximum or a minimum at $x = a$\"?\n>\n> - **A** $f(x) = x^2$, $a = 0$\n> - **B** $f(x) = x^3$, $a = 0$\n> - **C** $f(x) = -x^2$, $a = 0$\n> - **D** $f(x) = x^4$, $a = 0$\n> - **E** $f(x) = x^2 - 2x$, $a = 1$\n\n> [!success]- Lösung\n> **B.** $f'(x) = 3x^2$, also $f'(0) = 0$. Aber $x^3$ ist streng monoton wachsend und hat bei 0 weder Maximum noch Minimum -- ein Sattelpunkt.\n> A, D und E haben bei $a$ ein Minimum, C ein Maximum."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Wahrheitswert einer Implikation prüfen** · **Fehlerhafte Beweiszeile finden** · **Stationäre Punkte bestimmen und klassifizieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis durch Fallunterscheidung. Nicht alle Bausteine gehören dazu.",
+      "given": "$n$ ist eine ganze Zahl.",
+      "claim": "$n^2$ lässt bei Division durch 3 den Rest 0 oder 1.",
+      "steps": [
+        "Jede ganze Zahl hat die Form $3k$, $3k + 1$ oder $3k + 2$ mit ganzem $k$.",
+        "Fall $n = 3k$: $n^2 = 9k^2 = 3 \\cdot 3k^2$, Rest 0.",
+        "Fall $n = 3k + 1$: $n^2 = 9k^2 + 6k + 1 = 3(3k^2 + 2k) + 1$, Rest 1.",
+        "Fall $n = 3k + 2$: $n^2 = 9k^2 + 12k + 4 = 3(3k^2 + 4k + 1) + 1$, Rest 1.",
+        "Die drei Fälle decken alle ganzen Zahlen ab; die Behauptung gilt."
+      ],
+      "distractors": [
+        {
+          "md": "Fall $n$ gerade und Fall $n$ ungerade.",
+          "why": "Diese Zerlegung passt zu Resten bei Division durch 2, nicht durch 3."
+        },
+        {
+          "md": "Für $n = 1, 2, 3$ ergeben sich die Reste 1, 1, 0.",
+          "why": "Drei Beispiele sind kein Beweis."
+        }
+      ],
+      "explain": "Bei Resten modulo 3 gibt es genau drei Fälle; jeder wird ausgerechnet und in die Form »3 · ganze Zahl + Rest« gebracht.",
+      "id": "vq1"
+    },
+    {
+      "type": "cloze",
+      "label": "Reste",
+      "md": "Bei Division durch 4 lässt das Quadrat einer geraden Zahl den Rest {{0}} und das Quadrat einer ungeraden Zahl den Rest {{1}}.",
+      "blanks": [
+        {
+          "accept": [
+            "0"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        }
+      ],
+      "explain": "$(2k)^2 = 4k^2$ und $(2k+1)^2 = 4(k^2 + k) + 1$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist keine Zahl der Form $4k + 3$ eine Summe zweier Quadratzahlen?",
+      "options": [
+        {
+          "md": "Quadrate lassen bei Division durch 4 nur die Reste 0 und 1, ihre Summe also 0, 1 oder 2.",
+          "correct": true
+        },
+        {
+          "md": "Weil $4k + 3$ immer eine Primzahl ist.",
+          "why": "$15 = 4 \\cdot 3 + 3$ ist keine Primzahl."
+        },
+        {
+          "md": "Weil man es für $k = 0, 1, 2$ nachgeprüft hat.",
+          "why": "Beispiele beweisen keine Allaussage."
+        },
+        {
+          "md": "Weil Quadratzahlen immer gerade sind.",
+          "why": "$9$ ist eine ungerade Quadratzahl."
+        }
+      ],
+      "explain": "Die Fallunterscheidung gerade/ungerade liefert die Reste der Quadrate; Addieren ergibt höchstens Rest 2.",
+      "label": "Folgerung",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Which value of $n$ is a counterexample to the statement *for every positive integer $n$, at least one of $6n - 1$ and $6n + 1$ is prime*?",
+      "options": [
+        {
+          "md": "4",
+          "why": "$23$ ist prim."
+        },
+        {
+          "md": "6",
+          "why": "$37$ ist prim."
+        },
+        {
+          "md": "15",
+          "why": "$89$ ist prim."
+        },
+        {
+          "md": "20",
+          "correct": true
+        },
+        {
+          "md": "25",
+          "why": "$149$ ist prim."
+        }
+      ],
+      "explain": "$n = 20$: $119 = 7 \\cdot 17$ und $121 = 11^2$, beide zusammengesetzt. Ein Gegenbeispiel muss **beide** Zahlen zusammengesetzt machen.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Gegenbeispiel",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Betrag",
+      "md": "Wie viele reelle Lösungen hat $|x| + |x - 2| = 4$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Fall $x < 0$: $2 - 2x = 4$, $x = -1$ (liegt im Fall). Fall $0 \\le x \\le 2$: $2 = 4$, keine Lösung. Fall $x > 2$: $2x - 2 = 4$, $x = 3$ (liegt im Fall). Zwei Lösungen.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Fallunterscheidung beweist eine Aussage nur, wenn die Fälle zusammen alle Möglichkeiten abdecken.",
+      "answer": true,
+      "explain": "Ein vergessener Fall ist eine Lücke, in der ein Gegenbeispiel stecken kann.",
+      "label": "Vollständigkeit",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "Which value of $x$ is a counterexample to: *for all real $x$, if $x^2 > 4$ then $x > 2$*?",
       "options": [
@@ -117,6 +662,13 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "beweis-zahlen",
+      "level": 2,
+      "label": "Beweis bauen",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "md": "Statement: *for all integers $a$ and $b$, if $a + b$ is even then $ab$ is even.* Which of the following is correct?",
       "options": [
@@ -148,7 +700,10 @@
       "points": [
         "Fallunterscheidung: vollständige Fälle, jeden einzeln.",
         "Gegenbeispiel: Voraussetzung wahr, Folgerung falsch.",
-        "Beispiele beweisen keine Allaussage."
+        "Beispiele beweisen keine Allaussage.",
+        "Fallunterscheidung: Fälle müssen alles abdecken (gerade/ungerade, Reste, Vorzeichen), jeder Fall wird bewiesen.",
+        "Quadrate lassen modulo 4 nur 0 oder 1, modulo 3 nur 0 oder 1.",
+        "Gegenbeispiele gezielt suchen: Werte, bei denen alle Summanden einen gemeinsamen Faktor haben."
       ],
       "id": "summary"
     }

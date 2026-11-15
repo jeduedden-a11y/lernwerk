@@ -19,6 +19,358 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Fehlerhafte Beweiszeile\n> Gesucht ist fast immer die **erste** Zeile, die nicht aus den vorigen folgt. Spätere Zeilen können korrekt aus einer falschen Zeile gefolgert sein: Sie sind gültig gefolgert, nur ist ihre Grundlage falsch.\n\n| Fehlerfamilie | typischer Fall | richtig wäre |\n|---|---|---|\n| Division durch etwas, das null sein kann | $ab = ac \\Rightarrow b = c$ | $a(b - c) = 0$, also $a = 0$ oder $b = c$ |\n| nicht umkehrbare Schritte | $a^2 = b^2 \\Rightarrow a = b$ | $a = b$ oder $a = -b$ |\n| Wurzel ohne $\\pm$ | $x^2 = 9 \\Rightarrow x = 3$ | $x = 3$ oder $x = -3$; $\\sqrt{x^2} = \\lvert x \\rvert$ |\n| Ungleichung mal unbekanntem Vorzeichen | $a < b \\Rightarrow ac < bc$ | nur für $c > 0$ |\n| falsche Rechenregel | $\\sqrt{a + b} = \\sqrt a + \\sqrt b$ | keine Vereinfachung |\n| logischer Fehler | Umkehrung bewiesen, Zirkelschluss, Beispiel statt Beweis, Fall vergessen | |",
+      "label": "Fehlerfamilien",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Wo beim Quadrieren der Fehler wirklich steckt.** Gesucht sind die Lösungen von $\\sqrt{x + 5} = x - 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sqrt{x + 5} = x - 1",
+            "why": "Die linke Seite ist nie negativ; also muss auch x − 1 ≥ 0 sein."
+          },
+          {
+            "tex": "\\Rightarrow\\; x + 5 = x^2 - 2x + 1",
+            "why": "Quadrieren ist erlaubt, gilt aber nur in Richtung ⇒."
+          },
+          {
+            "tex": "\\Rightarrow\\; x^2 - 3x - 4 = 0 \\;\\Rightarrow\\; x = 4 \\text{ oder } x = -1",
+            "why": "Jede Lösung liegt unter diesen beiden Werten."
+          },
+          {
+            "tex": "x = -1:\\quad \\sqrt{4} = 2 \\ne -2",
+            "why": "Probe: −1 ist eine Scheinlösung, entstanden durch das Quadrieren."
+          },
+          {
+            "tex": "\\mathbb{L} = \\{4\\}",
+            "why": "Falsch wäre erst die Zeile »also sind 4 und −1 Lösungen«: Dort wird aus einer Folgerung eine Äquivalenz gemacht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gleichung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadrieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kandidaten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Ungleichungen dürfen nicht beliebig kombiniert werden.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a < b,\\ c < d \\;\\Rightarrow\\; a + c < b + d",
+            "why": "Addieren ist immer erlaubt."
+          },
+          {
+            "tex": "-3 < 1,\\ -2 < 1 \\;\\text{ aber }\\; (-3)(-2) = 6 > 1",
+            "why": "Multiplizieren nur bei nichtnegativen Zahlen: Gegenbeispiel mit negativen Werten."
+          },
+          {
+            "tex": "1 < 2,\\ 0 < 10 \\;\\text{ aber }\\; 1 - 0 = 1 > -8 = 2 - 10",
+            "why": "Subtrahieren ist nie erlaubt."
+          },
+          {
+            "tex": "a < b \\;\\Rightarrow\\; \\tfrac1a > \\tfrac1b \\text{ nur bei gleichem Vorzeichen}",
+            "why": "Gegenbeispiel: −1 < 2, aber −1 < 1/2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Addieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Multiplizieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Subtrahieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kehrwerte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Prüfliste für jede Beweiszeile\n> 1. **Welche Operation** macht diese Zeile aus der vorigen (kürzen, quadrieren, multiplizieren, Umkehrfunktion)?\n> 2. **Gilt sie für alle zulässigen Werte?** Null, negative Zahlen, der zweite Winkel beim Sinus.\n> 3. **In welche Richtung** gilt der Schritt: nur $\\Rightarrow$ oder auch $\\Leftarrow$? Wird später $\\Leftarrow$ benutzt?\n> 4. **Folgt die Zeile** aus den vorigen, oder stimmt sie nur zufällig?",
+      "label": "Prüfliste",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Typische Fehler in Beweisen",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Typische Fehler in Beweisen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Die Spezifikation verlangt, **Fehler in angeblichen Beweisen zu erkennen** (*identifying errors in purported proofs*) und die **typischen Fehler** zu kennen. Sie nennt ausdrücklich zwei Beispiele: aus $ab = ac$ auf $b = c$ zu schließen und aus $\\sin A = \\sin B$ auf $A = B$.\n\nFast alle Fehler in solchen Aufgaben gehören zu wenigen Familien. Wer die Familien kennt, prüft jede Beweiszeile mit einer kurzen Checkliste statt mit einem vagen Gefühl."
+            }
+          ]
+        },
+        {
+          "title": "Die Fehlerfamilien",
+          "blocks": [
+            {
+              "md": "### 1. Division durch etwas, das null sein kann\n\n$$ab = ac \\;\\;\\Rightarrow\\;\\; b = c \\qquad \\text{nur wenn } a \\ne 0$$\n\nRichtig ist: $ab = ac \\iff a(b - c) = 0 \\iff a = 0$ oder $b = c$. Beim Kürzen geht die Lösung $a = 0$ verloren.\n\n> [!example] Der Klassiker \"1 = 2\"\n> Sei $a = b$. Dann $a^2 = ab$, also $a^2 - b^2 = ab - b^2$, also $(a+b)(a-b) = b(a-b)$. Kürzen durch $a - b$ liefert $a + b = b$, also $2b = b$, also $2 = 1$.\n> Der Fehler steckt im Kürzen: $a - b = 0$.\n\n### 2. Nicht umkehrbare Schritte beim Lösen von Gleichungen\n\n| Schritt | gilt | gilt nicht |\n|---|---|---|\n| Quadrieren | $a = b \\Rightarrow a^2 = b^2$ | $a^2 = b^2 \\Rightarrow a = b$ (es kann $a = -b$ sein) |\n| Wurzelziehen | $x^2 = 9 \\Rightarrow x = 3$ **oder** $x = -3$ | $x^2 = 9 \\Rightarrow x = 3$ |\n| Wurzel aus Quadrat | $\\sqrt{x^2} = \\lvert x \\rvert$ | $\\sqrt{x^2} = x$ |\n| Sinus | $A = B \\Rightarrow \\sin A = \\sin B$ | $\\sin A = \\sin B \\Rightarrow A = B$ (auch $A = 180° - B$, dazu Vielfache von $360°$) |\n\n> [!important] Quadrieren ist nicht falsch -- der Fehler ist die Umkehrung\n> Wer $\\sqrt{x + 5} = x - 1$ quadriert und $x = 4$ oder $x = -1$ erhält, hat korrekt gefolgert: **Jede Lösung** liegt unter diesen beiden Werten. Falsch wird es erst mit der Behauptung, **beide** seien Lösungen. Die Probe zeigt: $x = -1$ liefert $\\sqrt4 = 2 \\ne -2$. Der Fehler steht also in der Zeile, die aus der Folgerung eine Äquivalenz macht -- nicht beim Quadrieren.\n\n### 3. Ungleichungen mit Größen unbekannten Vorzeichens\n\n- **Multiplizieren oder Dividieren mit einer negativen Zahl** dreht das Zeichen. Bei einem Term wie $x + 2$ ist das Vorzeichen unbekannt -- Division ist dann ohne Fallunterscheidung unzulässig.\n- **Ungleichungen multiplizieren:** Aus $a < b$ und $c < d$ folgt $ac < bd$ nur für nichtnegative Zahlen. Gegenbeispiel: $-3 < 1$ und $-2 < 1$, aber $6 > 1$.\n- **Ungleichungen subtrahieren:** Aus $a < b$ und $c < d$ folgt **nicht** $a - c < b - d$. Addieren ist erlaubt, Subtrahieren nicht.\n- **Kehrwerte:** Aus $a < b$ folgt $\\tfrac1a > \\tfrac1b$ nur, wenn $a$ und $b$ dasselbe Vorzeichen haben.\n\n### 4. Falsche Rechenregeln\n\n| Fehlschluss | richtig |\n|---|---|\n| $(a + b)^2 = a^2 + b^2$ | $a^2 + 2ab + b^2$ |\n| $\\sqrt{a + b} = \\sqrt a + \\sqrt b$ | keine Vereinfachung |\n| $\\log(a + b) = \\log a + \\log b$ | $\\log(ab) = \\log a + \\log b$ |\n| $\\dfrac{a + b}{a} = b$ | $1 + \\dfrac ba$ |\n| $\\dfrac{1}{a + b} = \\dfrac1a + \\dfrac1b$ | keine Vereinfachung |\n\n### 5. Logische Fehler\n\n- **Zirkelschluss:** Die Behauptung wird irgendwo als Voraussetzung benutzt.\n- **Die Umkehrung bewiesen:** Gezeigt wird B ⇒ A statt A ⇒ B.\n- **Von der Behauptung zu etwas Wahrem gerechnet** und das als Beweis ausgegeben.\n- **Beispiel statt Beweis:** Eine Allaussage wird mit einigen Werten \"bewiesen\".\n- **Unvollständige Fallunterscheidung:** Ein Fall fehlt.\n- **Falsche Verneinung** am Anfang eines **Widerspruchsbeweises**.\n- **Existenz stillschweigend vorausgesetzt:** *\"Let n be the largest ...\"* -- gibt es ein größtes?"
+            }
+          ]
+        },
+        {
+          "title": "Die Prüfliste für jede Beweiszeile",
+          "blocks": [
+            {
+              "md": "> [!tip] Vier Fragen je Zeile\n> 1. **Welche Operation** macht diese Zeile aus der vorigen? (Kürzen, Quadrieren, Multiplizieren, Umkehrfunktion anwenden)\n> 2. **Gilt diese Operation für alle zulässigen Werte?** Null, negative Zahlen, der zweite Winkel beim Sinus.\n> 3. **In welche Richtung** gilt der Schritt? Nur ⇒ oder auch ⇐? Wird später ⇐ benutzt?\n> 4. **Folgt die Zeile aus den vorigen**, oder stimmt sie nur zufällig?\n>\n> Gefragt ist fast immer die **erste** fehlerhafte Zeile. Spätere Zeilen können korrekt aus einer falschen Zeile folgen -- sie sind dann gültig gefolgert, nur ist ihre Grundlage falsch."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler beim Fehlersuchen",
+          "blocks": [
+            {
+              "md": "- **Die Zeile mit dem falschen Ergebnis für die fehlerhafte halten.** Der Fehler liegt meist früher.\n- **Einen Schritt für falsch halten, weil er ungewohnt ist**, obwohl er gilt -- etwa das Quadrieren.\n- **Übersehen, dass die Behauptung selbst wahr sein kann**, obwohl der Beweis fehlerhaft ist. Ein falscher Beweis sagt nichts über die Wahrheit der Behauptung.\n\nVerwandt: **Fehlerhafte Beweiszeile finden** · **Direkter deduktiver Beweis** · **Trigonometrische Gleichungen** · **Lineare und quadratische Ungleichungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Fehlerhafte Beweiszeile finden",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Fehlerhafte Beweiszeile finden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein angeblicher Beweis oder Lösungsweg steht in **nummerierten Zeilen** da. Gefragt ist, wo der Fehler liegt: *Which line contains the first error?*, *Which of the following best describes the argument?* Oft lautet eine Option *The argument is correct*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Behauptung lesen und kurz prüfen:** Ist sie überhaupt wahr? Ein Gegenbeispiel zur Behauptung beweist, dass **irgendwo** ein Fehler steckt -- und zeigt oft, wo.\n2. **Zeile für Zeile die Operation benennen:** Umformen, Kürzen, Quadrieren, Wurzelziehen, Multiplizieren einer Ungleichung, Anwenden einer Umkehrfunktion.\n3. **Die vier Prüffragen** aus **Typische Fehler in Beweisen** stellen: gilt die Operation für alle zulässigen Werte, in welche Richtung gilt sie, folgt die Zeile wirklich aus den vorigen?\n4. **Mit dem Gegenbeispiel durch den Beweis gehen:** An welcher Zeile wird aus einer wahren Aussage für dieses Beispiel eine falsche? Genau dort liegt der erste Fehler.\n5. **Nicht bei der Zeile mit dem falschen Ergebnis stehen bleiben** -- der Fehler liegt meist davor.\n\n> [!tip] Das Gegenbeispiel als Sonde\n> Setzt man das Gegenbeispiel in jede Zeile ein, bleibt die Aussage bis zur fehlerhaften Zeile wahr und wird dort falsch. Das funktioniert auch bei Umformungsketten mit Gleichungen: Die erste Zeile, die das Gegenbeispiel nicht mehr erfüllt oder in der ein neuer, falscher Wert auftaucht, ist die gesuchte."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A student attempts to solve the equation $\\sqrt{x + 5} = x - 1$ as follows.\n>\n> (1) Squaring both sides: $x + 5 = x^2 - 2x + 1$\n> (2) Hence $x^2 - 3x - 4 = 0$\n> (3) Hence $(x - 4)(x + 1) = 0$\n> (4) Hence $x = 4$ or $x = -1$\n> (5) Therefore the equation has exactly two solutions, $x = 4$ and $x = -1$.\n>\n> Which one of the following is true?\n>\n> - **A** The argument is correct.\n> - **B** The first error is in line (1).\n> - **C** The first error is in line (2).\n> - **D** The first error is in line (3).\n> - **E** The first error is in line (4).\n> - **F** The first error is in line (5).\n\n**Schritt 1:** Probe: $x = 4$ liefert $\\sqrt9 = 3 = 4 - 1$, richtig. $x = -1$ liefert $\\sqrt4 = 2$, aber $-1 - 1 = -2$. Die Behauptung in (5) ist falsch; irgendwo steckt ein Fehler.\n\n**Schritt 2 und 3:** Zeile (1) quadriert. Das ist eine gültige Folgerung: Jede Lösung der Ausgangsgleichung erfüllt auch (1). Zeilen (2) bis (4) sind korrekte Umformungen. Bis hier ist gezeigt: *Wenn $x$ eine Lösung ist, dann $x = 4$ oder $x = -1$.*\n\n**Schritt 4:** Zeile (5) behauptet die Umkehrung: *Beide Werte sind Lösungen.* Das folgt nicht, weil Quadrieren nicht umkehrbar ist.\n\nAntwort **F**.\n\n> [!important] Warum B die häufigste falsche Antwort ist\n> Viele halten das Quadrieren selbst für den Fehler. Aber Quadrieren ist eine gültige Folgerung ($a = b \\Rightarrow a^2 = b^2$). Fehlerhaft ist erst die Zeile, die diese Einbahnstraße in beide Richtungen befährt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Zeile mit dem falschen Ergebnis wählen**, obwohl der Fehler früher liegt.\n- **Gültige, aber ungewohnte Schritte beanstanden** -- Quadrieren, Addieren von Gleichungen, Multiplizieren mit einer sicher positiven Zahl.\n- **Division durch einen Term übersehen**, der null oder negativ sein kann.\n- **Aus einem fehlerhaften Beweis schließen, die Behauptung sei falsch.** Beides ist unabhängig."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The following argument claims to prove: \"For all real numbers $x$, if $x^2 > 4$ then $x > 2$.\"\n>\n> (1) Suppose $x^2 > 4$.\n> (2) Then $x^2 - 4 > 0$.\n> (3) Hence $(x - 2)(x + 2) > 0$.\n> (4) Dividing both sides by $x + 2$ gives $x - 2 > 0$.\n> (5) Hence $x > 2$.\n>\n> Which line contains the first error?\n>\n> - **A** line (2)\n> - **B** line (3)\n> - **C** line (4)\n> - **D** line (5)\n> - **E** There is no error.\n\n> [!success]- Lösung\n> **C.** Sonde: $x = -3$ erfüllt (1) bis (3): $9 > 4$, $5 > 0$, $(-5)(-1) = 5 > 0$. In (4) wird durch $x + 2 = -1$ geteilt -- durch eine negative Zahl, ohne das Zeichen umzudrehen. Für $x = -3$ ergibt (4) die falsche Aussage $-5 > 0$.\n> Die Behauptung selbst ist falsch; richtig wäre *x > 2 oder x < −2*.\n\n> [!question] Aufgabe 2\n> A student attempts to find all solutions of $\\sin 2x = \\sin x$ for $0° \\le x \\le 360°$.\n>\n> (1) $\\sin 2x = \\sin x$\n> (2) Hence $2x = x$.\n> (3) Hence $x = 0°$.\n> (4) Checking: $\\sin 0° = 0 = \\sin 0°$, so $x = 0°$ is a solution.\n> (5) Therefore $x = 0°$ is the only solution in the interval.\n>\n> Which line contains the first error?\n>\n> - **A** line (2)\n> - **B** line (3)\n> - **C** line (4)\n> - **D** line (5)\n> - **E** There is no error.\n\n> [!success]- Lösung\n> **A.** Aus $\\sin A = \\sin B$ folgt nicht $A = B$ -- genau das Beispiel, das die Spezifikation nennt. Richtig: $\\sin 2x - \\sin x = \\sin x\\,(2\\cos x - 1) = 0$, also $\\sin x = 0$ oder $\\cos x = \\tfrac12$. Lösungen: $0°, 60°, 180°, 300°, 360°$.\n> Zeile (5) ist ebenfalls falsch, aber nicht der **erste** Fehler.\n\n> [!question] Aufgabe 3\n> The following argument claims to prove: \"For all real numbers $a, b, c, d$, if $a < b$ and $c < d$, then $ac < bd$.\"\n>\n> (1) We have $a < b$ and $c < d$.\n> (2) Multiplying the first inequality by $c$ gives $ac < bc$.\n> (3) Multiplying the second inequality by $b$ gives $bc < bd$.\n> (4) Combining (2) and (3) gives $ac < bd$.\n>\n> Which one of the following is true?\n>\n> - **A** The argument is correct.\n> - **B** The first error is in line (2).\n> - **C** The first error is in line (3).\n> - **D** The first error is in line (4).\n\n> [!success]- Lösung\n> **B.** Zeile (2) multipliziert mit $c$, dessen Vorzeichen unbekannt ist. Für $c < 0$ kehrt sich das Zeichen um. Gegenbeispiel: $a = -3$, $b = 1$, $c = -2$, $d = 1$: $ac = 6$, $bc = -2$, also gilt (2) nicht.\n> Zeile (3) hat dasselbe Problem mit $b$, ist aber nicht der erste Fehler. Zeile (4) wäre richtig, **falls** (2) und (3) gälten -- das Aneinanderhängen zweier Ungleichungen ist erlaubt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Beweisschritte ordnen** · **Gegenbeispiel auswählen** · **Trigonometrische Gleichung im Intervall lösen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Claim: the only real solution of $x^2 - 3x = x$ is $x = 4$. Which line contains the first error?",
+      "lines": [
+        {
+          "md": "Let $x$ be a real number with $x^2 - 3x = x$.",
+          "why": "Ausgangslage: korrekt."
+        },
+        {
+          "md": "Then $x^2 = 4x$.",
+          "why": "$3x$ auf beiden Seiten addiert: korrekt."
+        },
+        {
+          "md": "Dividing both sides by $x$ gives $x = 4$.",
+          "why": "Fehler: $x$ kann null sein, und $x = 0$ löst die Gleichung."
+        },
+        {
+          "md": "Hence $x = 4$ is the only solution.",
+          "why": "Folgt aus der fehlerhaften Zeile."
+        }
+      ],
+      "answer": 2,
+      "explain": "Richtig: $x^2 - 4x = 0 \\iff x(x - 4) = 0 \\iff x = 0$ oder $x = 4$. Durch das Kürzen ging $x = 0$ verloren.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Familien",
+      "md": "Ordne jedem fehlerhaften Schritt seine Fehlerfamilie zu.",
+      "pairs": [
+        [
+          "aus $ab = ac$ folgt $b = c$",
+          "Division durch etwas, das null sein kann"
+        ],
+        [
+          "aus $x^2 = 9$ folgt $x = 3$",
+          "Wurzel ohne ±"
+        ],
+        [
+          "$\\sqrt{a + b} = \\sqrt a + \\sqrt b$",
+          "falsche Rechenregel"
+        ],
+        [
+          "aus $a < b$ folgt $ac < bc$ für ein beliebiges $c$",
+          "Ungleichung mal unbekanntem Vorzeichen"
+        ],
+        [
+          "die Behauptung wird in Zeile 2 als bekannt benutzt",
+          "Zirkelschluss"
+        ]
+      ],
+      "explain": "Jede Familie hat ihre Kontrollfrage: Kann es null sein? Welches Vorzeichen? Gilt die Regel überhaupt?",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus $a < b$ und $c < d$ folgt stets $a - c < b - d$.",
+      "answer": false,
+      "explain": "$1 < 2$ und $0 < 10$, aber $1 - 0 = 1$ ist größer als $2 - 10 = -8$. Ungleichungen darf man addieren, nicht subtrahieren.",
+      "label": "Ungleichungen",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Beweis enthält die Zeile: »Für Winkel $A$, $B$ eines Dreiecks folgt aus $\\sin A = \\sin B$, dass $A = B$.« Was ist falsch?",
+      "options": [
+        {
+          "md": "Auch $A = 180^\\circ - B$ erfüllt $\\sin A = \\sin B$.",
+          "correct": true
+        },
+        {
+          "md": "Nichts, der Sinus ist im Dreieck umkehrbar.",
+          "why": "Zwischen $0^\\circ$ und $180^\\circ$ hat fast jeder Sinuswert zwei Winkel."
+        },
+        {
+          "md": "Es müsste $A = -B$ heißen.",
+          "why": "Negative Winkel kommen im Dreieck nicht vor."
+        },
+        {
+          "md": "Es müsste $A = 90^\\circ - B$ heißen.",
+          "why": "Das wäre der Zusammenhang von Sinus und Kosinus."
+        }
+      ],
+      "explain": "$\\sin A = \\sin(180^\\circ - A)$; das ist auch die Ursache des mehrdeutigen Falls beim Sinussatz.",
+      "label": "Nicht umkehrbar",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Prüfliste",
+      "md": "Bringe die vier Prüffragen in die Reihenfolge, in der man sie an eine Zeile stellt.",
+      "items": [
+        "Welche Operation macht diese Zeile aus der vorigen?",
+        "Gilt die Operation für alle zulässigen Werte?",
+        "Gilt der Schritt nur in eine Richtung, und wird die andere benutzt?",
+        "Folgt die Zeile tatsächlich aus den vorigen?"
+      ],
+      "explain": "Die Reihenfolge: 1. Welche Operation macht diese Zeile aus der vorigen?. 2. Gilt die Operation für alle zulässigen Werte?. 3. Gilt der Schritt nur in eine Richtung, und wird die andere benutzt?. 4. Folgt die Zeile tatsächlich aus den vorigen?.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Scheinlösung",
+      "md": "Wie viele reelle Lösungen hat $\\sqrt{x + 2} = x$ wirklich?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Quadrieren: $x^2 - x - 2 = 0$, also $x = 2$ oder $x = -1$. Probe: $\\sqrt4 = 2$ passt, $\\sqrt1 = 1 \\ne -1$ nicht. Nur $x = 2$.",
+      "id": "vq6"
+    },
+    {
       "type": "spot",
       "label": "Fehler finden",
       "md": "A 'proof' that $1 = 2$. Which line contains the first error?",
@@ -130,7 +482,10 @@
       "points": [
         "Division durch möglicherweise null, Quadrieren, Wurzel ohne ±.",
         "Zirkelschluss und Umkehrung statt Kontraposition.",
-        "Gesucht ist die erste falsche Zeile."
+        "Gesucht ist die erste falsche Zeile.",
+        "Gesucht ist die erste falsche Zeile; spätere können korrekt aus ihr folgen.",
+        "Quadrieren ist erlaubt, aber nur in Richtung ⇒; die Probe entlarvt Scheinlösungen.",
+        "Ungleichungen: addieren ja, subtrahieren nie, multiplizieren nur mit Nichtnegativem."
       ],
       "id": "summary"
     }

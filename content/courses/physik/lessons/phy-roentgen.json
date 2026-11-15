@@ -18,6 +18,454 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Röntgenspektrum in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Roentgenspektrum.svg",
+        "aspect": 1.84,
+        "alt": "Röntgenspektrum mit Kante und zwei Linien"
+      },
+      "timeline": [
+        {
+          "caption": "Intensität über der Wellenlänge: Bremsspektrum und charakteristische Linien.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Links beginnt das Spektrum scharf bei der Grenzwellenlänge $\\lambda_{min}$. Kürzere Wellen gibt es nicht.",
+          "to": {
+            "x": 0.22,
+            "y": 0.72,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Darüber ein breites Kontinuum: die Bremsstrahlung der in der Anode abgebremsten Elektronen.",
+          "to": {
+            "x": 0.55,
+            "y": 0.6,
+            "z": 1.7,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Darauf sitzen scharfe Linien, $K_\\alpha$ und $K_\\beta$: der Fingerabdruck des Anodenmaterials.",
+          "to": {
+            "x": 0.48,
+            "y": 0.36,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Grenze folgt aus $\\lambda_{min} = \\tfrac{h c}{e U}$; sie hängt nur von der Spannung ab.",
+          "to": {
+            "x": 0.65,
+            "y": 0.31,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Röntgenstrahlung\n> Sehr kurzwellige elektromagnetische Strahlung, etwa $10^{-8}$ bis $10^{-12}\\,\\mathrm{m}$. Sie entsteht, wenn schnelle Elektronen in einer Anode abgebremst werden. Ihre Photonen tragen Kilo-Elektronenvolt und wirken **ionisierend**.\n\n> [!definition] Röntgenröhre\n> Im Vakuum setzt eine **Glühkathode** Elektronen frei (die Heizspannung steuert ihre Zahl), die **Beschleunigungsspannung** $U$ gibt ihnen die Energie $eU$, in der **Anode** werden sie abgebremst.\n\n> [!definition] Bremsstrahlung und Grenzwellenlänge\n> Beim Abbremsen im Feld der Atomkerne entstehen Photonen aller Energien bis höchstens $eU$: ein **kontinuierliches** Spektrum mit scharfer Kante bei $\\lambda_{min} = \\tfrac{h c}{e U}$ (Duane-Hunt).\n\n> [!definition] Charakteristische Strahlung\n> Ein schnelles Elektron schlägt ein Elektron aus einer **inneren** Schale heraus; ein Elektron einer äußeren Schale rückt nach und sendet ein Photon fester Energie aus: $K_\\alpha$ (L nach K), $K_\\beta$ (M nach K). Die Linien hängen nur vom Anodenmaterial ab.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Grenzwellenlänge** (Duane-Hunt, der Photoeffekt rückwärts).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E_{kin} = e\\,U",
+            "why": "Jedes Elektron bringt nach der Beschleunigung die Energie eU mit."
+          },
+          {
+            "tex": "h f \\le e\\,U",
+            "why": "Ein Photon kann höchstens die ganze Energie eines Elektrons tragen; meist verteilt sie sich auf viele kleine Schritte."
+          },
+          {
+            "tex": "h f_{max} = \\frac{h c}{\\lambda_{min}} = e\\,U",
+            "why": "Der seltene Grenzfall: alles in einem einzigen Photon."
+          },
+          {
+            "tex": "\\lambda_{min} = \\frac{h c}{e U} \\approx \\frac{1240\\,\\mathrm{pm}}{U/\\mathrm{kV}}",
+            "why": "35 kV ergeben 35,4 pm; die Kante hängt nicht vom Anodenmaterial ab."
+          },
+          {
+            "tex": "h = \\frac{e\\,U\\,\\lambda_{min}}{c}",
+            "why": "Aus gemessener Kante und Spannung folgt das Wirkungsquantum: ein unabhängiger Weg zu h."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energie.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höchstens.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzfall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wirkungsquantum.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Das Spektrum einer Molybdän-Anode bei verschiedenen Spannungen.** Gestrichelt die Grenzwellenlänge.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          160
+        ],
+        "y": [
+          0,
+          2.8
+        ],
+        "xLabel": "λ in pm",
+        "yLabel": "Intensität (relativ)",
+        "vars": [
+          {
+            "name": "U",
+            "min": 10,
+            "max": 40,
+            "value": 15,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "I",
+            "expr": "(x > 1239.84/U ? 5000*(x/(1239.84/U) - 1)/(x*x) : 0) + (U > 20 ? 1.6*exp(-((x - 71)/1.2)^2) + 0.5*exp(-((x - 63)/1.2)^2) : 0)",
+            "color": "blue",
+            "samples": 900,
+            "domain": [
+              1,
+              160
+            ]
+          }
+        ],
+        "vlines": [
+          {
+            "x": "1239.84/U"
+          }
+        ],
+        "readout": "U = {U|0} kV: Grenzwellenlänge **{1239.84/U|1} pm**, höchste Photonenenergie {U|0} keV"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $15\\,\\mathrm{kV}$ nur Bremsspektrum, ab $\\lambda_{min} = 82{,}7\\,\\mathrm{pm}$. Für die Linien reicht die Energie nicht: Ein K-Elektron des Molybdäns herauszuschlagen kostet $20\\,\\mathrm{keV}$.",
+          "set": {
+            "U": 15
+          }
+        },
+        {
+          "caption": "Ab $20\\,\\mathrm{kV}$ erscheinen $K_\\beta$ ($63\\,\\mathrm{pm}$) und $K_\\alpha$ ($71\\,\\mathrm{pm}$). Die Kante ist nach $49{,}6\\,\\mathrm{pm}$ gewandert.",
+          "to": {
+            "U": 25
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Mehr Spannung: Die Kante wandert weiter nach links ($35{,}4\\,\\mathrm{pm}$), das Spektrum wird stärker. Die Linien bleiben, wo sie sind: Sie gehören zum Material, nicht zur Spannung.",
+          "to": {
+            "U": 35
+          },
+          "dur": 2200
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Moseley (1913).** Die Energie der $K_\\alpha$-Linie wächst mit der Kernladungszahl wie $(Z - 1)^2$, ungefähr $E \\approx 10{,}2\\,\\mathrm{eV}\\cdot(Z - 1)^2$. Damit wurde die **Ordnungszahl** im Periodensystem zu einer messbaren Größe, der Kernladung; einige Elemente mussten vertauscht werden, Lücken zeigten unentdeckte Elemente an.\n\n**Bragg-Reflexion.** Weil die Wellenlänge im Bereich der Atomabstände liegt, wirken Kristalle als Gitter: $2 d\\sin\\vartheta = k\\lambda$. So misst man Wellenlängen oder klärt Kristallstrukturen auf, 1953 etwa die Doppelhelix der DNA.\n\n**Anwendung und Schutz.** Knochen erscheinen hell, weil Calcium eine höhere Ordnungszahl hat als das Weichgewebe und stärker absorbiert; Kontrastmittel enthalten schwere Elemente wie Iod oder Barium. Röntgenstrahlung kann Bindungen spalten und die DNA schädigen: **Abstand, Abschirmung (Blei), kurze Aufenthaltsdauer**.",
+      "label": "Moseley und Anwendungen",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Röntgenstrahlung",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Roentgenstrahlung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Röntgenstrahlung** ist sehr kurzwellige elektromagnetische Strahlung ($10^{-8}$ bis $10^{-12}$ m), die entsteht, wenn schnelle Elektronen auf eine Anode treffen."
+            }
+          ]
+        },
+        {
+          "title": "Erzeugung",
+          "blocks": [
+            {
+              "md": "In der Röntgenröhre werden Elektronen mit der Spannung $U$ beschleunigt und im Anodenmaterial abrupt abgebremst."
+            }
+          ]
+        },
+        {
+          "title": "Das Spektrum",
+          "blocks": [
+            {
+              "image": "vault:Roentgenspektrum.svg"
+            },
+            {
+              "md": "Das Spektrum besteht aus zwei Anteilen:\n\n> [!note] Bremsspektrum (kontinuierlich)\n> Beim Abbremsen wird kinetische Energie in Photonen umgesetzt. Wird die **gesamte** Energie in **einem** Photon frei, entsteht die kurzwellige Grenze:\n> $$e\\,U = h\\,f_{max} = \\frac{h\\,c}{\\lambda_{min}} \\quad\\Rightarrow\\quad \\lambda_{min} = \\frac{h\\,c}{e\\,U}$$\n> $\\lambda_{min}$ hängt **nur von der Spannung** ab, nicht vom Anodenmaterial. Dies ist der **Photoeffekt** rückwärts und liefert eine weitere Messmethode für $h$.\n\n> [!note] Charakteristische Strahlung (Linien)\n> Ein Elektron schlägt ein **kernnahes** Elektron heraus; beim Nachrücken eines äußeren Elektrons wird ein Photon fester Energie frei ($K_\\alpha$, $K_\\beta$). Die Linienlage ist **elementspezifisch** -- Grundlage der Röntgenfluoreszenzanalyse."
+            }
+          ]
+        },
+        {
+          "title": "Bragg-Reflexion",
+          "blocks": [
+            {
+              "md": "An Kristallgittern (Netzebenenabstand $d$) interferiert Röntgenstrahlung konstruktiv, wenn gilt:\n$$2\\,d\\,\\sin\\theta = k\\,\\lambda$$\nDamit lassen sich **Kristallstrukturen** aufklären (Röntgenstrukturanalyse, z. B. die DNA-Doppelhelix) oder umgekehrt Wellenlängen messen."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung und Strahlenschutz",
+          "blocks": [
+            {
+              "md": "Medizinische Bildgebung nutzt die unterschiedliche Absorption in Knochen und Gewebe. Röntgenstrahlung ist **ionisierend**; es gelten die drei Schutzprinzipien: **Abstand**, **Abschirmung** (Blei), **Aufenthaltsdauer**."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Anteile des Spektrums",
+          "blocks": [
+            {
+              "md": "| Anteil | Entstehung | Merkmal |\n|---|---|---|\n| **Bremsspektrum** | Abbremsung der Elektronen im Anodenmaterial | kontinuierlich, mit scharfer **Grenzwellenlänge** |\n| **charakteristische Linien** | Elektronenübergänge in inneren Schalen | scharf, **materialabhängig** |\n\n> [!important] Die Grenzwellenlänge ist der eigentliche Prüfstein\n> Sie entsteht, wenn ein Elektron seine **gesamte** kinetische Energie in einem einzigen Photon abgibt:\n> $$e\\,U = \\frac{h\\,c}{\\lambda_{\\min}} \\;\\Longrightarrow\\; \\lambda_{\\min} = \\frac{h\\,c}{e\\,U}$$\n>\n> Bemerkenswert daran: Die Grenzwellenlänge hängt **nur von der Beschleunigungsspannung** ab, nicht vom Anodenmaterial. Das Material bestimmt allein die Lage der charakteristischen Linien.\n>\n> Klassisch wäre eine solche Grenze unerklärlich -- ein abbremsendes Elektron müsste beliebig kurzwellige Strahlung abgeben können. Die scharfe Kante ist damit ein direkter Beleg für die **Quantennatur** des Lichts, und aus ihr lässt sich das Plancksche Wirkungsquantum bestimmen.\n>\n> Es ist der **umgekehrte** Photoeffekt: Dort wird aus Licht ein Elektron, hier aus einem Elektron Licht. Siehe **Photoeffekt**."
+            }
+          ]
+        },
+        {
+          "title": "Die charakteristischen Linien",
+          "blocks": [
+            {
+              "md": "Ein schnelles Elektron schlägt ein Elektron aus einer inneren Schale heraus. Der freie Platz wird von einem Elektron aus einer höheren Schale aufgefüllt, und die Energiedifferenz wird als Photon abgegeben.\n\nWeil die inneren Niveaus fest zum Element gehören, ist die Linienlage ein **Fingerabdruck des Materials**.\n\n> [!tip] Daraus wurde die Ordnungszahl als physikalische Größe\n> Moseley fand 1913, dass die Wurzel der Linienfrequenz linear mit der Kernladungszahl wächst -- nicht mit der Atommasse.\n>\n> Damit war erwiesen, dass die **Ordnungszahl** im Periodensystem keine Zählnummer ist, sondern eine messbare physikalische Größe: die Kernladung. Einige Elemente mussten daraufhin vertauscht werden, und Lücken zeigten noch unentdeckte Elemente an.\n>\n> Ein physikalisches Messverfahren korrigierte damit die chemische Systematik."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung und Gefährdung",
+          "blocks": [
+            {
+              "md": "| Anwendung | Grundlage |\n|---|---|\n| Durchleuchtung | unterschiedliche Absorption je nach Ordnungszahl |\n| Computertomografie | Rekonstruktion aus vielen Richtungen |\n| **Kristallstrukturanalyse** | Wellenlänge im Bereich der Atomabstände |\n| Materialprüfung | Fehlstellen als Dichteunterschiede |\n\n> [!warning] Röntgenstrahlung ist ionisierend\n> Ihre Photonenenergie liegt weit über den Bindungsenergien in Molekülen. Sie kann daher Bindungen spalten und die DNA schädigen -- deshalb Bleischürze, kurze Belichtung und strenge Indikation.\n>\n> Knochen erscheinen hell, weil Calcium eine deutlich höhere Ordnungszahl hat als die Elemente des Weichgewebes und die Absorption stark mit ihr zunimmt. Deshalb werden auch Kontrastmittel mit schweren Elementen wie Iod oder Barium verwendet."
+            }
+          ]
+        },
+        {
+          "title": "Bragg-Reflexion",
+          "blocks": [
+            {
+              "md": "Weil die Wellenlänge im Bereich der Atomabstände liegt, wirken Kristalle als **Beugungsgitter**:\n$$2d\\sin\\theta = n\\lambda$$\n\nDaraus lassen sich Gitterabstände bestimmen -- die Grundlage der Strukturaufklärung von Kristallen und später der DNA-Doppelhelix."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Röntgenstrahlung verbindet die Beschleunigung im **elektrischen Feld** mit der Quantennatur des Lichts. Sie ergänzt den **Photoeffekt** als dessen Umkehrung und liefert über die Bragg-Bedingung ein Messverfahren für atomare Abstände."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "Bremsspektrum",
+          "kontinuierlich mit scharfer Kante"
+        ],
+        [
+          "Grenzwellenlänge",
+          "$\\lambda_{min} = \\tfrac{h c}{e U}$"
+        ],
+        [
+          "charakteristische Linien",
+          "hängen nur vom Anodenmaterial ab"
+        ],
+        [
+          "$K_\\alpha$",
+          "Übergang von L nach K"
+        ],
+        [
+          "Heizspannung",
+          "Zahl der Elektronen"
+        ],
+        [
+          "Beschleunigungsspannung",
+          "Energie der Elektronen"
+        ]
+      ],
+      "explain": "Spannung und Material wirken auf verschiedene Teile des Spektrums.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Grenzwellenlänge in die richtige Reihenfolge.",
+      "items": [
+        "Ein Elektron hat nach der Beschleunigung $E_{kin} = eU$",
+        "Ein Photon kann höchstens diese ganze Energie tragen",
+        "Grenzfall: $\\tfrac{h c}{\\lambda_{min}} = e U$",
+        "Aufgelöst: $\\lambda_{min} = \\tfrac{h c}{e U}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Ein Elektron hat nach der Beschleunigung $E_{kin} = eU$. 2. Ein Photon kann höchstens diese ganze Energie tragen. 3. Grenzfall: $\\tfrac{h c}{\\lambda_{min}} = e U$. 4. Aufgelöst: $\\lambda_{min} = \\tfrac{h c}{e U}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Grenzwellenlänge hat eine Röntgenröhre bei $35\\,\\mathrm{kV}$?",
+      "answer": 35.4,
+      "tolerance": 0.4,
+      "placeholder": "pm",
+      "explain": "$\\lambda_{min} = \\tfrac{h c}{e U} = \\tfrac{1240}{35}\\,\\mathrm{pm} \\approx 35{,}4\\,\\mathrm{pm}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Wirkungsquantum",
+      "md": "Bei $25\\,\\mathrm{kV}$ misst man die Kante bei $49{,}8\\,\\mathrm{pm}$. Welcher Wert für $h$ folgt daraus (in $10^{-34}\\,\\mathrm{Js}$)?",
+      "answer": 6.65,
+      "tolerance": 0.07,
+      "placeholder": "10⁻³⁴ Js",
+      "explain": "$h = \\tfrac{e U \\lambda_{min}}{c} = \\tfrac{1{,}602\\cdot 10^{-19}\\cdot 25\\cdot 10^{3}\\cdot 49{,}8\\cdot 10^{-12}}{3{,}00\\cdot 10^{8}}\\,\\mathrm{Js} \\approx 6{,}65\\cdot 10^{-34}\\,\\mathrm{Js}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Die Heizspannung wird erhöht, die Beschleunigungsspannung bleibt. Was ändert sich am Spektrum?",
+      "options": [
+        {
+          "md": "Es wird insgesamt intensiver; Kante und Linien bleiben an ihrer Stelle.",
+          "correct": true
+        },
+        {
+          "md": "Die Kante wandert zu kürzeren Wellenlängen.",
+          "why": "Das bewirkt nur die Beschleunigungsspannung."
+        },
+        {
+          "md": "Die Linien wandern.",
+          "why": "Ihre Lage hängt nur vom Anodenmaterial ab."
+        },
+        {
+          "md": "Nichts.",
+          "why": "Mehr Elektronen bedeuten mehr Photonen."
+        }
+      ],
+      "explain": "Heizspannung: Zahl der Elektronen. Beschleunigungsspannung: ihre Energie.",
+      "label": "Röhre",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Grenzwellenlänge hängt vom Anodenmaterial ab.",
+      "answer": false,
+      "explain": "Sie folgt allein aus $eU$: $\\lambda_{min} = \\tfrac{hc}{eU}$. Das Material bestimmt nur die Linien.",
+      "label": "Typischer Fehler",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Warum erscheinen die charakteristischen Linien erst oberhalb einer bestimmten Spannung?",
+      "options": [
+        {
+          "md": "Die Elektronen müssen genug Energie haben, um ein Elektron aus der innersten Schale herauszuschlagen.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Anode erst warm werden muss.",
+          "why": "Die Temperatur der Anode spielt dafür keine Rolle."
+        },
+        {
+          "md": "Weil die Linien von der Spannung erzeugt werden.",
+          "why": "Sie entstehen durch Übergänge in der Atomhülle des Anodenmaterials."
+        },
+        {
+          "md": "Weil das Bremsspektrum sie sonst überdeckt.",
+          "why": "Sie fehlen wirklich, sie werden nicht nur überdeckt."
+        }
+      ],
+      "explain": "Für Molybdän liegt diese Schwelle bei 20 keV.",
+      "label": "Linien",
+      "id": "vq7"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Schätze mit $E \\approx 10{,}2\\,\\mathrm{eV}\\cdot(Z - 1)^2$ die Wellenlänge der $K_\\alpha$-Linie von Kupfer ($Z = 29$) ab.",
+      "answer": 155,
+      "tolerance": 2,
+      "placeholder": "pm",
+      "explain": "$E \\approx 10{,}2\\cdot 28^2\\,\\mathrm{eV} \\approx 8{,}0\\,\\mathrm{keV}$, $\\lambda = \\tfrac{1240\\,\\mathrm{eV\\,nm}}{8000\\,\\mathrm{eV}} \\approx 0{,}155\\,\\mathrm{nm}$. Gemessen: $154\\,\\mathrm{pm}$.",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Röntgenstrahlung ist ionisierend, weil ihre Photonenenergie weit über den Bindungsenergien in Molekülen liegt.",
+      "answer": true,
+      "explain": "Kilo-Elektronenvolt gegen einige Elektronenvolt: Ein Photon kann Bindungen spalten und Atome ionisieren.",
+      "label": "Schutz",
+      "id": "vq9"
+    },
+    {
       "id": "spannung",
       "type": "choice",
       "md": "Die Röhrenspannung wird erhöht. Was passiert mit den charakteristischen Linien?",
@@ -61,13 +509,41 @@
       "label": "Bragg"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "duane-h",
+          "bragg-grenze"
+        ]
+      },
+      "label": "Wirkungsquantum und Glanzwinkel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "moseley",
+          "duane-hunt"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$\\lambda_{min} = \\frac{hc}{eU}$ (Duane-Hunt).",
         "Charakteristische Linien hängen nur vom Anodenmaterial ab.",
-        "Messung am Kristall: $2d\\sin\\vartheta = k\\lambda$."
+        "Messung am Kristall: $2d\\sin\\vartheta = k\\lambda$.",
+        "Duane-Hunt: $eU = \\tfrac{hc}{\\lambda_{min}}$, die Kante hängt nur von $U$ ab und liefert $h = \\tfrac{eU\\lambda_{min}}{c}$.",
+        "Charakteristische Linien ($K_\\alpha$: L nach K) sind Fingerabdrücke des Materials; Moseley: $E \\approx 10{,}2\\,\\mathrm{eV}(Z-1)^2$."
       ]
     }
   ]

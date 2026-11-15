@@ -65,7 +65,7 @@ struct ExamSheet: View {
                         rule("eye.slash", "Keine Rückmeldung zwischendurch. Was du nicht weißt, überspringst du.")
                         rule("timer", "Die Zeit läuft oben mit. Ist sie um, wird abgegeben, was da ist.")
                         rule("checklist", "Am Ende stehen alle Lösungen da und eine Auswertung pro Thema. Schwache Themen erscheinen im Fortschritt.")
-                        rule("arrow.up.right", "Jedes Thema kommt eine Stufe über dem, was du im Training geschafft hast, mindestens auf Mittel.")
+                        rule("arrow.up.right", "Jedes Thema kommt eine Stufe über dem, was du im Training bestanden hast, mindestens auf Mittel.")
                     }
                     .card()
 
@@ -82,7 +82,7 @@ struct ExamSheet: View {
                         }
                         if all.count > plan.topics.count {
                             let locked = all.count - plan.topics.count
-                            Text(locked == 1 ? "1 weiteres Thema kommt dazu, sobald seine Lektion geschafft ist." : "\(locked) weitere Themen kommen dazu, sobald ihre Lektionen geschafft sind.")
+                            Text(locked == 1 ? "1 weiteres Thema kommt dazu, sobald seine Lektion abgeschlossen ist." : "\(locked) weitere Themen kommen dazu, sobald ihre Lektionen abgeschlossen sind.")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

@@ -27,6 +27,464 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Triage\n> Jede Frage wird beim ersten Kontakt in höchstens einer Minute einer von drei Gruppen zugeordnet. Der Begriff stammt aus der Notfallmedizin: nicht der Reihe nach behandeln, sondern nach Aussicht.\n\n| Gruppe | Merkmal | Vorgehen |\n|---|---|---|\n| **A** | Weg sofort klar, kurze Rechnung | sofort lösen |\n| **B** | Weg klar, aber lang oder rechenintensiv | lösen, wenn die Zeitmarke es erlaubt, sonst markieren |\n| **C** | nach einer Minute kein Ansatz | Offensichtliches ausschließen, **vorläufig ankreuzen**, markieren, weiter |\n\n**Zwei Durchgänge:** Im ersten (Minute 0 bis etwa 55) laufen alle 20 Fragen der Reihe nach, A und B werden gelöst, C markiert. Im zweiten (bis Minute 73) kommen die markierten Fragen nach Aussicht geordnet dran, nicht nach Nummer. Die letzten zwei Minuten prüfen nur: Hat jede Frage eine Antwort?\n\n| Minute | mindestens erreicht |\n|---|---|\n| 14 | Frage 5 |\n| 28 | Frage 10 |\n| 41 | Frage 15 |\n| 55 | Frage 20 |",
+      "label": "Triage",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Zeitplan",
+      "md": "**Zeitplan im ersten Durchgang:** blau der Plan mit rund 2,75 Minuten pro Frage, grün die Zeitmarken, orange ein Durchgang, in dem eine Frage bei Minute 10 hängen bleibt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          75
+        ],
+        "y": [
+          0,
+          21
+        ],
+        "xLabel": "Minute",
+        "yLabel": "erledigte Fragen",
+        "vars": [
+          {
+            "name": "S",
+            "min": 0,
+            "max": 15,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "plan",
+            "expr": "x*20/55",
+            "domain": [
+              0,
+              55
+            ],
+            "color": "blue",
+            "label": "Plan",
+            "labelAt": 33
+          },
+          {
+            "name": "ist",
+            "expr": "min(20, x < 10 ? x/2.75 : (x < 10 + S ? 10/2.75 : (x - S)/2.75))",
+            "color": "orange",
+            "samples": 400
+          }
+        ],
+        "points": [
+          {
+            "x": 14,
+            "y": 5,
+            "color": "green"
+          },
+          {
+            "x": 28,
+            "y": 10,
+            "color": "green"
+          },
+          {
+            "x": 41,
+            "y": 15,
+            "color": "green"
+          },
+          {
+            "x": 55,
+            "y": 20,
+            "color": "green"
+          }
+        ],
+        "readout": "An einer Frage festgefahren: {S|0} min · nach 28 Minuten erledigt: {min(20, 28 < 10 + S ? 10/2.75 : (28 - S)/2.75)|1} Fragen (Marke: 10)"
+      },
+      "timeline": [
+        {
+          "caption": "Ohne Stau liegt der orange Verlauf auf dem Plan und erreicht jede Zeitmarke.",
+          "set": {
+            "S": 0
+          }
+        },
+        {
+          "caption": "Vier Minuten an einer festgefahrenen Frage: Der ganze Rest verschiebt sich nach rechts.",
+          "to": {
+            "S": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Acht Minuten: Nach 28 Minuten sind erst gut 7 Fragen erledigt. Das liegt nicht am Rechentempo, sondern an der einen Frage.",
+          "to": {
+            "S": 8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Mit Triage kostet dieselbe Frage im ersten Durchgang nur eine Minute: markieren, vorläufig ankreuzen, weiter.",
+          "to": {
+            "S": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Warum die sechste Minute an einer festgefahrenen Frage wenig bringt.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{alle Fragen zählen gleich: } 1 \\text{ Rohpunkt}",
+            "why": "Eine schwere Frage ist nicht mehr wert als eine leichte."
+          },
+          {
+            "tex": "\\text{Ertrag der nächsten Minute} = P(\\text{Lösung in dieser Minute})",
+            "why": "Entscheidend ist, was die nächste Minute im Mittel bringt."
+          },
+          {
+            "tex": "\\text{festgefahren: } P \\text{ klein}, \\quad \\text{ungelesene Frage: } P \\text{ groß}",
+            "why": "Fünf erfolglose Minuten sprechen gegen die sechste; unter den ungelesenen Fragen sind im Mittel einige A-Fragen."
+          },
+          {
+            "tex": "\\text{investierte Minuten sind verloren, ob man weitermacht oder nicht}",
+            "why": "Der Sunk-Cost-Fehler: Bereits verbrauchte Zeit ist kein Grund weiterzumachen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gleiche Punkte.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzertrag.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Versunkene Kosten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Fehlerprotokoll\n> Jede falsch beantwortete (oder nur geratene) Frage bekommt eine Zeile: Fragenummer, **Kategorie**, Sicherheit (sicher, unsicher, geraten), Aufgabentyp und Datum der nächsten Wiederholung.\n\n| Kategorie | Merkmal | Reparatur |\n|---|---|---|\n| Wissenslücke | Stoff unbekannt oder nicht abrufbar | Konzept neu lernen, Kernaussage aus dem Gedächtnis aufschreiben |\n| fehlende Idee | Stoff bekannt, Ansatz nicht gefunden | Aufgabentyp neu: Erkennungsmerkmale und Schema |\n| Rechenfehler | Ansatz richtig, Rechnung falsch | Rechenweg kürzen, Kontrollschritt einbauen |\n| Lesefehler | Frage falsch verstanden (*not*, *smallest*, *must*) | letzten Satz vor dem Rechnen genau lesen |\n| Logikfehler | Umkehrschluss, Quantor oder Verneinung falsch | Logik-Etappen wiederholen |\n| Zeitfehler | nicht bearbeitet oder aus Zeitnot geraten | früher markieren |\n| Übertragungsfehler | Zahl oder Zeichen falsch vom Bildschirm abgeschrieben | gezielt abschreiben, vor dem Ankreuzen zurücklesen |\n\n**Diagnose im zweiten Versuch:** Jede falsche Frage wird erst noch einmal ohne Zeitdruck und ohne Lösung versucht. Gelingt sie sofort, war es Zeit oder Lesen; gelingt sie nach längerem Nachdenken, fehlte die Idee; gelingt sie gar nicht, fehlt Wissen. Erst danach wird die Lösung gelesen.\n\n**Wiederholen in wachsenden Abständen:** nach einem Tag, nach einer Woche, nach einem Monat, jeweils ohne Blick auf die Lösung.",
+      "label": "Fehlerprotokoll",
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Am Computer.** Die Aufgabe steht auf dem Bildschirm und lässt sich nicht beschriften. Gerechnet wird auf einem abwischbaren Noteboard. Daraus entsteht eine eigene Fehlerquelle, der **Übertragungsfehler**: aus $x^2 - 3x$ wird beim Abschreiben $x^2 + 3x$, aus $\\le$ wird $<$.\n\nDrei Gewohnheiten helfen: nur das Nötige abschreiben, das aber vollständig; vor dem Ankreuzen zurück zum Bildschirm (ist das Berechnete das Gefragte?); das Board in Felder mit Fragenummern teilen, damit angefangene Rechnungen im zweiten Durchgang wieder auffindbar sind.",
+      "label": "Computerformat",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Fehlerprotokoll und Auswertung",
+      "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Fehlerprotokoll und Auswertung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Warum protokollieren",
+          "blocks": [
+            {
+              "md": "Fehler sind nicht zufällig verteilt. Bei fast allen Kandidaten stammt die Mehrheit der verlorenen Punkte aus **zwei oder drei** Ursachen, die sich über viele Aufgaben wiederholen. Wer diese Ursachen kennt, kann gezielt reparieren; wer nur weitere Aufgaben rechnet, wiederholt sie.\n\nDas Protokoll hat deshalb einen einzigen Zweck: aus einzelnen Fehlern **Muster** zu machen."
+            }
+          ]
+        },
+        {
+          "title": "Die sieben Kategorien",
+          "blocks": [
+            {
+              "md": "| Kategorie | Kürzel | Merkmal | Reparatur |\n|---|---|---|---|\n| Wissenslücke | `wissen` | Stoff war unbekannt oder nicht abrufbar | Konzeptnotiz erneut, Kernaussage aus dem Gedächtnis aufschreiben |\n| fehlende Idee | `idee` | Stoff bekannt, Ansatz nicht gefunden | Aufgabentyp erneut: Erkennungsmerkmale und Schema |\n| Rechenfehler | `rechnen` | Ansatz richtig, Rechnung falsch | Rechenweg verkürzen, Kontrollschritt einbauen |\n| Lesefehler | `lesen` | Frage falsch verstanden (*not*, *smallest*, *must*) | Letzten Satz der Frage vor dem Rechnen unterstreichen, am Bildschirm zurücklesen |\n| Logikfehler | `logik` | Umkehrschluss, Quantor, Negation falsch | Block 03: **Umkehrung und Kontraposition**, **Negation von Aussagen** |\n| Zeitfehler | `zeit` | nicht bearbeitet oder aus Zeitnot geraten | **Zeitmanagement und Triage**: früher markieren |\n| Übertragungsfehler | `uebertrag` | Zahl oder Zeichen falsch vom Bildschirm übernommen | **Prüfungstag und Computerformat**: gezielt abschreiben, zurücklesen |\n\n> [!important] Die Diagnose des zweiten Versuchs\n> Ob ein Fehler an Wissen, Idee oder Zeit lag, ist im Moment des Fehlers kaum zu erkennen. Deshalb wird jede falsche Aufgabe **einmal ohne Zeitdruck und ohne Lösung** erneut versucht:\n>\n> - Gelingt sie jetzt sofort, war es **Zeit** oder **Lesen**.\n> - Gelingt sie nach längerem Nachdenken, war es die **Idee**.\n> - Gelingt sie gar nicht, weil etwas Grundlegendes fehlt, war es **Wissen**.\n>\n> Erst danach wird die Lösung gelesen. Wer sie sofort liest, verliert die Diagnose."
+            }
+          ]
+        },
+        {
+          "title": "Das Format einer Protokollzeile",
+          "blocks": [
+            {
+              "md": "Jede Zeile ist ein Listeneintrag mit **Dataview-Inline-Feldern**. So werten **00 Probeläufe und Altpaper - TMUA** und die Tabelle unten automatisch aus:\n\n```markdown\n- [frage:: P2-07] [kategorie:: logik] [sicherheit:: unsicher] [typ:: [[Notwendig oder hinreichend entscheiden]]] [wiederholen:: 2026-10-12] Umkehrung mit Kontraposition verwechselt. Die vier Formen einmal am Beispiel aufschreiben.\n```\n\n| Feld | Inhalt |\n|---|---|\n| `frage` | Paper und Nummer (`P1-12`) oder Übungsaufgabe (`Ü-3`) |\n| `kategorie` | eines der sieben Kürzel |\n| `sicherheit` | `sicher`, `unsicher` oder `geraten` -- auch bei richtigen Antworten, die geraten waren |\n| `typ` | Link auf den Aufgabentyp, zu dem die Frage gehört |\n| `wiederholen` | Datum der nächsten Wiederholung |\n\nProtokolliert wird in den Notizen unter `Protokolle`: Vorlagen **_Vorlage - Probelauf (TMUA)** und **_Vorlage - Übungseinheit (TMUA)**."
+            }
+          ]
+        },
+        {
+          "title": "Wiederholen in wachsenden Abständen",
+          "blocks": [
+            {
+              "md": "Eine korrigierte Aufgabe ist nicht gelernt. Sie wird nach **einem Tag**, nach **einer Woche** und nach **einem Monat** erneut gelöst -- jeweils ohne Blick auf die Lösung. Nach jedem gelungenen Durchgang rückt das Datum im Feld `wiederholen` weiter; nach dem dritten Erfolg entfällt es.\n\n### Fällige Wiederholungen"
+            }
+          ]
+        },
+        {
+          "title": "Der Lernstand einer Notiz",
+          "blocks": [
+            {
+              "md": "Jede Konzept- und Aufgabentyp-Notiz trägt im Frontmatter das Feld `lernstand`:\n\n| Wert | Bedeutung | Kriterium |\n|---|---|---|\n| `offen` | noch nicht bearbeitet | -- |\n| `gelernt` | durchgearbeitet | Schema verstanden, Übungsaufgaben einmal gelöst |\n| `sicher` | beherrscht | Übungsaufgaben **nach mindestens einer Woche** erneut fehlerfrei in der Zeit |\n\n> [!warning] Wiedererkennen ist nicht Können\n> Wer eine Lösung liest und denkt *\"klar, so geht das\"*, hat sie wiedererkannt -- nicht gelöst. Der Unterschied zeigt sich erst eine Woche später. Deshalb hängt `sicher` an einem zeitversetzten zweiten Versuch und nicht am Gefühl nach dem ersten.\n\nVerwandt: **00 Probeläufe und Altpaper - TMUA** · **Zeitmanagement und Triage**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Prüfungstag und Computerformat",
+      "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Prüfungstag und Computerformat.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was sich durch den Computer ändert",
+          "blocks": [
+            {
+              "md": "Seit 2024 wird der TMUA nicht mehr auf Papier geschrieben, sondern **am Bildschirm in einem Pearson-VUE-Testzentrum**. Der Stoff ist unverändert. Geändert hat sich die Arbeitsumgebung -- und damit entstehen Fehlerquellen, die in den alten Papers nicht vorkommen.\n\n> [!warning] Belegstand\n> Offiziell bestätigt sind: computerbasiert, Pearson-Zentren in über 180 Ländern, kein Taschenrechner, kein Wörterbuch. Die Einzelheiten zu Noteboard, Markierfunktion und fehlender Pause stammen aus Erfahrungsberichten und Anbieterseiten. Vor dem Test mit der Buchungsbestätigung und dem Pearson-Übungstest abgleichen.\n\n| Merkmal | Papier (bis 2023) | Computer (seit 2024) |\n|---|---|---|\n| Aufgabe lesen | im Heft, beschreibbar | am Bildschirm, **nicht beschreibbar** |\n| Rechnen | im Heft neben der Aufgabe | auf einem abwischbaren **Noteboard** mit Stift |\n| Überblick | durch Blättern | Übersichtsseite mit Status je Frage |\n| Markieren | Kringel im Heft | Markierfunktion (*flag*) |\n| Pause zwischen den Papers | -- | **keine**, beide Papers direkt hintereinander |"
+            }
+          ]
+        },
+        {
+          "title": "Die neue Fehlerquelle: Übertragen",
+          "blocks": [
+            {
+              "md": "Weil die Aufgabe nicht beschrieben werden kann, müssen Zahlen, Terme und Bedingungen **abgeschrieben** werden. Aus $x^2 - 3x$ wird auf dem Board schnell $x^2 + 3x$, aus $\\le$ ein $<$. Solche Fehler heißen im **Fehlerprotokoll** **Übertragungsfehler** und bekommen eine eigene Kategorie, weil ihre Reparatur eine andere ist als bei Rechenfehlern.\n\n> [!tip] Drei Gewohnheiten gegen Übertragungsfehler\n> 1. **Nur das Nötige abschreiben**, das aber vollständig: die Gleichung, die Bedingung, das Gesuchte.\n> 2. **Vor dem Ankreuzen zurück zum Bildschirm:** Ist das berechnete Objekt das gefragte? *Smallest*, *largest*, *not*?\n> 3. **Das Board in Felder teilen** und jedes Feld mit der Fragenummer beschriften. Im zweiten Durchgang findet sich die angefangene Rechnung dann wieder."
+            }
+          ]
+        },
+        {
+          "title": "Folgen für das Training",
+          "blocks": [
+            {
+              "md": "| Gewohnheit | Umsetzung in den Probeläufen |\n|---|---|\n| Lesen am Bildschirm | Papers als PDF am Monitor öffnen, nicht ausdrucken |\n| Rechnen auf begrenzter Fläche | ein DIN-A4-Whiteboard oder ein einzelnes Blatt je Paper |\n| Durchhalten über 150 Minuten | beide Papers ohne Pause hintereinander |\n| Bedienung | die zwei Pearson-Übungstests in der Woche 20.09. bis 26.09.2027 |"
+            }
+          ]
+        },
+        {
+          "title": "Ablauf am Testtag",
+          "blocks": [
+            {
+              "md": "1. **Anreise** so planen, dass etwa 30 Minuten vor Beginn Zeit bleibt. Wer deutlich zu spät kommt, riskiert den Ausschluss und die Gebühr.\n2. **Lichtbildausweis mit Unterschrift**, der Name muss exakt der Buchung entsprechen. Bei Abweichungen (zweiter Vorname, Umlaute) vorher mit der Buchung abgleichen.\n3. **Persönliche Gegenstände** kommen in ein Schließfach; mitgenommen werden darf praktisch nichts.\n4. **Test:** Paper 1, dann direkt Paper 2. Trinken und Pause **vorher**."
+            }
+          ]
+        },
+        {
+          "title": "Die Tage davor",
+          "blocks": [
+            {
+              "md": "> [!important] Was in der letzten Woche nicht mehr passiert\n> Keine neuen Papers, keine neuen Aufgabentypen. Die letzte Woche dient der **offenen Fehlerliste**, den Notizen dieses Blocks und dem Schlaf. Ein unbekanntes Paper drei Tage vor dem Test liefert keine Information mehr, die sich noch nutzen ließe -- nur Unruhe.\n\n**Am Vortag:** Ausweis, Buchungsbestätigung, Anfahrt geprüft; kurze Wiederholung von **Zeitmanagement und Triage**; früh schlafen."
+            }
+          ]
+        },
+        {
+          "title": "Buchung",
+          "blocks": [
+            {
+              "md": "Die Buchung erfolgt über das UAT-UK-Konto. LSE rät ausdrücklich zur frühen Sitzung, weil dann die Auswahl an Zeitfenstern und Zentren am größten ist. Im **Lernpfad** ist deshalb eine eigene Frist gesetzt: **spätestens in der Woche 30.08. bis 05.09.2027 buchen**, sobald die Buchung offen ist.\n\nWer einen Nachteilsausgleich braucht, muss ihn deutlich früher beantragen; die Frist lag 2026 rund zwei Wochen vor dem Buchungsschluss.\n\nVerwandt: **Zeitmanagement und Triage** · **00 Prüfungsstruktur - TMUA** · **00 Probeläufe und Altpaper - TMUA**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Probelauf -- Satz JJJJ",
+      "path": "02 Wiki/TMUA/Protokolle/_Vorlage - Probelauf (TMUA).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Probelauf -- Satz JJJJ",
+          "blocks": [
+            {
+              "md": "> [!info] So wird diese Vorlage benutzt\n> Datei kopieren, umbenennen in `Probelauf JJJJ-MM-TT - Satz`, Frontmatter ausfüllen. Die Fehlerliste unten verwendet **Dataview-Inline-Felder**; **00 Probeläufe und Altpaper - TMUA** wertet sie automatisch aus. Die Beispielzeile löschen. Ablauf und Auswertung: **Fehlerprotokoll und Auswertung**."
+            }
+          ]
+        },
+        {
+          "title": "Bedingungen",
+          "blocks": [
+            {
+              "md": "- 75 plus 75 Minuten direkt hintereinander\n- kein Taschenrechner, keine Formelsammlung\n- Aufgaben am Bildschirm gelesen, gerechnet auf einem separaten Blatt oder Board\n- je Frage Sicherheit notiert: s sicher, u unsicher, g geraten\n- Abweichungen von diesen Bedingungen:"
+            }
+          ]
+        },
+        {
+          "title": "Ergebnis",
+          "blocks": [
+            {
+              "md": "| | richtig (von 20) | davon geraten | Minuten nach Frage 10 |\n|---|---|---|---|\n| Paper 1 | | | |\n| Paper 2 | | | |"
+            }
+          ]
+        },
+        {
+          "title": "Fehlerliste",
+          "blocks": [
+            {
+              "md": "Eine Zeile je Frage, die falsch, unsicher oder geraten war -- auch wenn sie zufällig richtig ist.\n\nKategorien: `wissen` · `idee` · `rechnen` · `lesen` · `logik` · `zeit` · `uebertrag`\n\n- [frage:: P1-00] [kategorie:: idee] [sicherheit:: unsicher] [typ:: **Parameterbedingung über die Diskriminante**] Ursache in einem Satz. Reparatur in einem Satz."
+            }
+          ]
+        },
+        {
+          "title": "Zeitverlauf",
+          "blocks": [
+            {
+              "md": "Wo ging die Zeit verloren? Welche Frage hätte früher übersprungen werden müssen?"
+            }
+          ]
+        },
+        {
+          "title": "Drei Konsequenzen für die nächsten zwei Wochen",
+          "blocks": [
+            {
+              "md": "1.\n2.\n3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sort",
+      "label": "Triage",
+      "md": "Ordne jede Frage beim ersten Lesen einer Triage-Gruppe zu.",
+      "categories": [
+        "A: sofort lösen",
+        "B: lösen, wenn Zeit ist",
+        "C: ankreuzen, markieren, weiter"
+      ],
+      "items": [
+        {
+          "md": "Der Weg ist klar, eine Zeile Rechnung.",
+          "cat": "A: sofort lösen"
+        },
+        {
+          "md": "Der Weg ist klar, aber es sind fünf Fallunterscheidungen.",
+          "cat": "B: lösen, wenn Zeit ist"
+        },
+        {
+          "md": "Nach einer Minute ist kein Ansatz in Sicht.",
+          "cat": "C: ankreuzen, markieren, weiter"
+        },
+        {
+          "md": "Bekanntes Verfahren, aber lange Bruchrechnung.",
+          "cat": "B: lösen, wenn Zeit ist"
+        },
+        {
+          "md": "Man erkennt sofort ein Gegenbeispiel.",
+          "cat": "A: sofort lösen"
+        }
+      ],
+      "explain": "Die Gruppe richtet sich nach Aussicht und Aufwand, nicht nach der Nummer der Frage.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Fehlerprotokoll",
+      "md": "Ordne jeder Fehlerkategorie ihr Merkmal zu.",
+      "pairs": [
+        [
+          "Wissenslücke",
+          "Stoff war unbekannt oder nicht abrufbar"
+        ],
+        [
+          "fehlende Idee",
+          "Stoff bekannt, Ansatz nicht gefunden"
+        ],
+        [
+          "Lesefehler",
+          "»not« oder »smallest« überlesen"
+        ],
+        [
+          "Logikfehler",
+          "Umkehrung statt Kontraposition benutzt"
+        ],
+        [
+          "Übertragungsfehler",
+          "Vorzeichen beim Abschreiben vom Bildschirm vertauscht"
+        ]
+      ],
+      "explain": "Jede Kategorie hat eine eigene Reparatur. Deshalb lohnt die genaue Zuordnung.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Auswertung",
+      "md": "Bringe die Auswertung einer falschen Frage in die richtige Reihenfolge.",
+      "items": [
+        "noch einmal ohne Zeitdruck und ohne Lösung versuchen",
+        "daraus die Kategorie bestimmen",
+        "erst jetzt die Lösung lesen",
+        "Protokollzeile mit Kategorie und Wiederholungsdatum anlegen",
+        "nach einem Tag, einer Woche und einem Monat erneut lösen"
+      ],
+      "explain": "Wer die Lösung sofort liest, verliert die Diagnose: Danach lässt sich nicht mehr unterscheiden, ob Wissen, Idee oder Zeit gefehlt hat.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Nach 28 Minuten stehst du erst bei Frage 7. Was ist die wahrscheinlichste Ursache?",
+      "options": [
+        {
+          "md": "Mindestens eine Frage hat zu lange gedauert.",
+          "correct": true
+        },
+        {
+          "md": "Du rechnest grundsätzlich zu langsam.",
+          "why": "Mit 2,75 Minuten pro Frage wären es 10 Fragen; drei fehlen, das ist typisch für eine festgefahrene Frage."
+        },
+        {
+          "md": "Die Zeitmarken sind zu streng.",
+          "why": "Sie sind erreichbar, weil C-Fragen im ersten Durchgang nur eine Minute bekommen."
+        },
+        {
+          "md": "Du hast zu viele Fragen markiert.",
+          "why": "Markieren spart Zeit, es kostet keine."
+        }
+      ],
+      "explain": "Ein Rückstand von drei Fragen entsteht fast immer durch eine Frage, an der man hängen geblieben ist.",
+      "label": "Zeitmarken",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Nach fünf erfolglosen Minuten an einer Frage lohnt sich die sechste besonders, weil schon so viel investiert ist.",
+      "answer": false,
+      "explain": "Das ist der Sunk-Cost-Fehler. Die fünf Minuten sind verloren, ob man weitermacht oder nicht. Zählen darf nur der erwartete Ertrag der nächsten Minute, und der ist bei einer ungelesenen Frage höher.",
+      "label": "Grenzertrag",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Auch bei einer C-Frage wird sofort eine Antwort angekreuzt.",
+      "answer": true,
+      "explain": "Die vorläufige Antwort sichert den Erwartungswert, falls die Zeit für den zweiten Durchgang nicht reicht. Die Markierung sorgt dafür, dass die Frage wieder auftaucht.",
+      "label": "Triage",
+      "id": "vq6"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Ordne die Fehlerursache zu.",
@@ -87,7 +545,10 @@
       "points": [
         "Triage: markieren, raten, weiter, zurückkommen.",
         "Optionen nutzen: einsetzen, ausschließen, abschätzen.",
-        "Fehlerprotokoll mit Ursache, Wiederholung nach Tagen."
+        "Fehlerprotokoll mit Ursache, Wiederholung nach Tagen.",
+        "Zeitmarken im ersten Durchgang: Minute 14, 28, 41, 55 für die Fragen 5, 10, 15, 20.",
+        "Sieben Fehlerkategorien; die Diagnose kommt aus dem zweiten Versuch ohne Lösung.",
+        "Wiederholung nach einem Tag, einer Woche und einem Monat."
       ],
       "id": "summary"
     }

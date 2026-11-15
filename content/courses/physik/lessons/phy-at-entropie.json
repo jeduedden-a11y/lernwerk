@@ -16,6 +16,267 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Eis schmilzt im Zimmer.** $1\\,\\mathrm{kg}$ Eis von $0\\,°\\mathrm{C}$ schmilzt in einem Zimmer von $25\\,°\\mathrm{C}$, das sich dabei kaum abkühlt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "Q = m\\,q_s = 1\\,\\mathrm{kg}\\cdot 334\\,\\tfrac{\\mathrm{kJ}}{\\mathrm{kg}} = 334\\,\\mathrm{kJ}",
+            "why": "Die Schmelzwärme fließt aus dem Zimmer ins Eis."
+          },
+          {
+            "tex": "\\Delta S_{Eis} = \\frac{334\\,000\\,\\mathrm{J}}{273{,}15\\,\\mathrm{K}} \\approx +1223\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}},\\qquad \\Delta S_{Zimmer} = -\\frac{334\\,000\\,\\mathrm{J}}{298{,}15\\,\\mathrm{K}} \\approx -1120\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}",
+            "why": "Kelvin, und die Vorzeichen: aufnehmend positiv, abgebend negativ."
+          },
+          {
+            "tex": "\\Delta S_{ges} \\approx +103\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} > 0",
+            "why": "Der Vorgang ist irreversibel; das Wasser gefriert im warmen Zimmer nie von selbst wieder."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wärme.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beide Entropieänderungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bilanz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Extrem: Mischen von heißem und kaltem Wasser.** $1\\,\\mathrm{kg}$ Wasser von $80\\,°\\mathrm{C}$ und $1\\,\\mathrm{kg}$ von $20\\,°\\mathrm{C}$ mischen sich zu $50\\,°\\mathrm{C}$. Die Temperaturen ändern sich jetzt stark, also integriert man.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "dS = \\frac{dQ}{T} = \\frac{m\\,c\\,dT}{T}",
+            "why": "Ein kleiner Wärmeschritt bei der momentanen Temperatur; $c = 4186\\,\\tfrac{\\mathrm{J}}{\\mathrm{kg\\,K}}$."
+          },
+          {
+            "tex": "\\Delta S = m\\,c\\int_{T_1}^{T_2}\\frac{dT}{T} = m\\,c\\ln\\frac{T_2}{T_1}",
+            "why": "Integriert: der natürliche Logarithmus."
+          },
+          {
+            "tex": "\\Delta S_{heiß} = 4186\\cdot\\ln\\frac{323{,}15}{353{,}15}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx -371{,}6\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}},\\qquad \\Delta S_{kalt} = 4186\\cdot\\ln\\frac{323{,}15}{293{,}15}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx +407{,}9\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}",
+            "why": "Beide Wassermengen getrennt."
+          },
+          {
+            "tex": "\\Delta S_{ges} \\approx +36{,}2\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}",
+            "why": "Positiv, obwohl gleich viel Wärme hin- wie hergeht: Das kalte Wasser nimmt sie bei niedrigerer Temperatur auf."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein kleiner Schritt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beide Teile.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bilanz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Entropieänderung berechnen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Entropieänderung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Entropieänderung beim Wärmeübergang\"*, *\"Zeigen Sie, dass die Gesamtentropie zunimmt\"*, *\"Wie groß ist die Entropieänderung des Systems und der Umgebung?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundformel",
+          "blocks": [
+            {
+              "md": "> [!important] Wärme durch Temperatur\n> Bei einem Wärmeübergang $Q$ bei (näherungsweise konstanter) absoluter Temperatur $T$ gilt:\n> $$\\Delta S = \\frac{Q}{T}$$\n> Entscheidend ist die **Vorzeichenkonvention**: Der abgebende Körper verliert Entropie ($Q<0$, also $\\Delta S<0$), der aufnehmende gewinnt Entropie ($Q>0$, also $\\Delta S>0$). Da der kältere Körper die **kleinere** Temperatur im Nenner hat, gewinnt er **mehr** Entropie, als der wärmere verliert -- die Gesamtbilanz ist stets positiv.\n>\n> Einheit: $[\\text{J/K}]$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beteiligte Körper identifizieren** (System und Umgebung, oder zwei Körper in Kontakt).\n2. **Temperaturen in Kelvin umrechnen** -- die Formel gilt ausschließlich mit **absoluten** Temperaturen.\n3. **Für jeden Körper einzeln** $\\Delta S = \\dfrac{Q}{T}$ berechnen, mit korrektem Vorzeichen für $Q$.\n4. **Gesamtentropieänderung** als Summe bilden.\n5. **Prüfen:** $\\Delta S_{\\text{ges}} \\geq 0$? Ein negatives Ergebnis wäre ein Rechenfehler (oder ein nicht abgeschlossenes System)."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Körper der Temperatur $T_1=300\\,\\text{K}$ gibt $Q=1000\\,\\text{J}$ Wärme an einen kälteren Körper mit $T_2=280\\,\\text{K}$ ab. Die Temperaturen ändern sich dabei nur unwesentlich. Berechnen Sie die Entropieänderung beider Körper und die Gesamtbilanz.*\n\n**Schritt 3 (warmer Körper, gibt ab):**\n$$\\Delta S_1 = \\frac{-1000}{300} \\approx -3{,}333\\,\\text{J/K}$$\n\n**Schritt 3 (kalter Körper, nimmt auf):**\n$$\\Delta S_2 = \\frac{+1000}{280} \\approx +3{,}571\\,\\text{J/K}$$\n\n**Schritt 4:**\n$$\\Delta S_{\\text{ges}} = -3{,}333 + 3{,}571 \\approx +0{,}238\\,\\text{J/K}$$\n\n**Schritt 5:** Die Gesamtentropie **nimmt zu** ✓ -- konsistent mit dem zweiten Hauptsatz.\n\n> [!tip] Warum der Wärmefluss nur in eine Richtung geht\n> Rechnet man denselben Vorgang **umgekehrt** durch (kalter Körper gibt $1000\\,\\text{J}$ an den wärmeren ab), ergäbe sich $\\Delta S_{\\text{ges}} = -3{,}571 + 3{,}333 = -0{,}238\\,\\text{J/K}$ -- eine **Abnahme** der Gesamtentropie. Genau das verbietet der zweite Hauptsatz. Die Entropiebilanz liefert damit die quantitative Begründung dafür, warum Wärme von selbst niemals vom kälteren zum wärmeren Körper fließt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Celsius statt Kelvin verwenden.** Die Formel setzt die **absolute** Temperatur voraus -- bei $0\\,^\\circ\\text{C}$ stünde sonst eine Division durch null.\n- **Vorzeichen von $Q$ vergessen.** Der abgebende Körper hat $Q<0$; wird das übersehen, ergibt sich fälschlich eine doppelte Entropiezunahme.\n- **Die Formel bei stark veränderlicher Temperatur anwenden.** $\\Delta S=\\dfrac{Q}{T}$ gilt für näherungsweise konstante Temperatur; bei großen Temperaturänderungen wäre eine Integration nötig (über den Abiturstoff hinaus, aber der Gültigkeitsbereich sollte benannt werden).\n- **Entropie mit Energie verwechseln.** Die Energie bleibt beim Wärmeübergang erhalten (1. Hauptsatz), die Entropie **nimmt zu** (2. Hauptsatz) -- zwei unterschiedliche Aussagen über denselben Vorgang.\n- **Ein negatives Gesamtergebnis akzeptieren**, statt es als Rechenfehler zu erkennen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Entropie** · **Reversible und irreversible Prozesse unterscheiden** · **Energieerhaltungssatz anwenden**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Um wie viel steigt die Entropie, wenn $500\\,\\mathrm{g}$ Eis bei $0\\,°\\mathrm{C}$ schmelzen ($q_s = 334\\,\\tfrac{\\mathrm{kJ}}{\\mathrm{kg}}$)?",
+      "answer": 611.4,
+      "tolerance": 1,
+      "placeholder": "J/K",
+      "explain": "$\\Delta S = \\tfrac{0{,}5\\cdot 334\\,000}{273{,}15}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx 611\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$2000\\,\\mathrm{J}$ fließen von $400\\,\\mathrm{K}$ zu $300\\,\\mathrm{K}$. Wie groß ist die Entropieänderung insgesamt?",
+      "answer": 1.667,
+      "tolerance": 0.01,
+      "placeholder": "J/K",
+      "explain": "$\\Delta S = 2000\\cdot\\left(\\tfrac{1}{300} - \\tfrac{1}{400}\\right)\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx 1{,}67\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Um wie viel steigt die Entropie, wenn $1\\,\\mathrm{kg}$ Wasser bei $100\\,°\\mathrm{C}$ verdampft ($r_V = 2257\\,\\tfrac{\\mathrm{kJ}}{\\mathrm{kg}}$)?",
+      "answer": 6049,
+      "tolerance": 10,
+      "placeholder": "J/K",
+      "explain": "$\\Delta S = \\tfrac{2\\,257\\,000}{373{,}15}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx 6049\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$, rund fünfmal so viel wie beim Schmelzen: Gas hat viel mehr Mikrozustände als Flüssigkeit.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei $\\Delta S = \\tfrac{Q}{T}$ darf man die Temperatur auch in Grad Celsius einsetzen, wenn man konsequent bleibt.",
+      "answer": false,
+      "explain": "Die Formel braucht die absolute Temperatur. Bei $0\\,°\\mathrm{C}$ stünde sonst eine Division durch null.",
+      "label": "Typischer Fehler",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "$1\\,\\mathrm{kg}$ Wasser von $90\\,°\\mathrm{C}$ wird mit $1\\,\\mathrm{kg}$ Wasser von $10\\,°\\mathrm{C}$ gemischt. Wie groß ist die Entropieänderung insgesamt ($c = 4186\\,\\tfrac{\\mathrm{J}}{\\mathrm{kg\\,K}}$)?",
+      "answer": 64.6,
+      "tolerance": 0.8,
+      "placeholder": "J/K",
+      "explain": "$T_m = 323{,}15\\,\\mathrm{K}$; $4186\\cdot\\left(\\ln\\tfrac{323{,}15}{363{,}15} + \\ln\\tfrac{323{,}15}{283{,}15}\\right)\\tfrac{\\mathrm{J}}{\\mathrm{K}} = 4186\\cdot(-0{,}1167 + 0{,}1321)\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx 64{,}6\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$. Größerer Temperaturunterschied, mehr Entropie.",
+      "id": "vq5"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "$1000\\,\\mathrm{J}$ fließen von $300\\,\\mathrm{K}$ zu $250\\,\\mathrm{K}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$\\Delta S_{warm} = \\tfrac{1000}{300}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} \\approx 3{,}33\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$",
+          "why": "Falsch: Der warme Körper gibt Wärme ab, $Q < 0$, also $-3{,}33\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$."
+        },
+        {
+          "md": "$\\Delta S_{kalt} = \\tfrac{1000}{250}\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}} = 4\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$\\Delta S_{ges} = 0{,}67\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$",
+          "why": "Richtig ist dieser Wert erst mit dem Minuszeichen in der ersten Zeile."
+        }
+      ],
+      "answer": 0,
+      "explain": "Ohne Vorzeichen käme $7{,}33\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$ heraus; richtig ist $-3{,}33 + 4 = 0{,}67\\,\\tfrac{\\mathrm{J}}{\\mathrm{K}}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Eine Rechnung liefert für einen abgeschlossenen Vorgang $\\Delta S_{ges} < 0$. Was folgt daraus?",
+      "options": [
+        {
+          "md": "Die Rechnung ist falsch, oder das System war nicht abgeschlossen.",
+          "correct": true
+        },
+        {
+          "md": "Der Vorgang läuft besonders schnell ab.",
+          "why": "Das Vorzeichen sagt nichts über die Geschwindigkeit."
+        },
+        {
+          "md": "Es wurde Energie vernichtet.",
+          "why": "Energie bleibt immer erhalten."
+        },
+        {
+          "md": "Der Vorgang ist reversibel.",
+          "why": "Reversibel hieße $\\Delta S_{ges} = 0$."
+        }
+      ],
+      "explain": "Im abgeschlossenen System gilt $\\Delta S \\ge 0$ ohne Ausnahme.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +353,55 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "entropie-fluss",
+          "verdampfen"
+        ]
+      },
+      "label": "Bilanz",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "verdampfen",
+          "entropie"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "verdampfen",
+          "carnot"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\Delta S = \\tfrac{Q}{T}$ mit $T$ in Kelvin, $Q$ mit Vorzeichen; Bilanz über alle beteiligten Körper.",
+        "Bei veränderlicher Temperatur: $\\Delta S = m c\\ln\\tfrac{T_2}{T_1}$.",
+        "Ein negatives Gesamtergebnis zeigt einen Rechenfehler oder ein offenes System."
+      ]
     }
   ]
 }

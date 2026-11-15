@@ -18,6 +18,443 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Schwingkreis in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Schwingkreis.svg",
+        "aspect": 1.76,
+        "alt": "Schwingkreis aus Kondensator und Spule"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Kondensator und eine Spule bilden einen geschlossenen Kreis.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Der geladene Kondensator speichert $E_{el} = \\tfrac12 C U^2$ im elektrischen Feld.",
+          "to": {
+            "x": 0.18,
+            "y": 0.54,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Er entlädt sich über die Spule; der Strom baut dort ein Magnetfeld mit $E_{mag} = \\tfrac12 L I^2$ auf. Ist der Kondensator leer, treibt die Selbstinduktion den Strom weiter und lädt ihn umgekehrt auf.",
+          "to": {
+            "x": 0.82,
+            "y": 0.55,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "So pendelt die Energie hin und her, mit der Periodendauer $T = 2\\pi\\sqrt{LC}$ (Thomson).",
+          "to": {
+            "x": 0.5,
+            "y": 0.84,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Analogie zum Federpendel: $L \\leftrightarrow m$, $\\tfrac1C \\leftrightarrow D$, $Q \\leftrightarrow y$, $I \\leftrightarrow v$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.93,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Thomsonschen Gleichung.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U_C + U_L = 0:\\quad \\frac{Q}{C} + L\\,\\dot I = 0",
+            "why": "Maschenregel im geschlossenen Kreis ohne Widerstand."
+          },
+          {
+            "tex": "I = \\dot Q\\quad\\Rightarrow\\quad L\\,\\ddot Q = -\\frac{1}{C}\\,Q",
+            "why": "Der Strom ist die Änderung der Ladung."
+          },
+          {
+            "tex": "m\\,\\ddot y = -D\\,y\\quad\\leftrightarrow\\quad L\\,\\ddot Q = -\\tfrac1C\\,Q",
+            "why": "Dieselbe Gleichung wie beim Federpendel mit $m \\to L$, $D \\to \\tfrac1C$."
+          },
+          {
+            "tex": "\\omega = \\frac{1}{\\sqrt{LC}},\\qquad T = 2\\pi\\sqrt{LC}",
+            "why": "Aus $\\omega = \\sqrt{\\tfrac Dm}$ übertragen: die Thomsonsche Gleichung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Maschenregel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schwingungsgleichung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Analogie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Thomson.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Energiependeln im Schwingkreis.** Bezogen auf die Gesamtenergie; Periodendauer $T$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          0,
+          1.15
+        ],
+        "xLabel": "t / T",
+        "yLabel": "E / E_ges",
+        "vars": [
+          {
+            "name": "P",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "Eel",
+            "expr": "cos(2*pi*x)^2",
+            "color": "blue",
+            "label": "Kondensator",
+            "labelAt": 0.02
+          },
+          {
+            "name": "Emag",
+            "expr": "sin(2*pi*x)^2",
+            "color": "orange",
+            "label": "Spule",
+            "labelAt": 0.2
+          },
+          {
+            "name": "Eg",
+            "expr": "1",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "vlines": [
+          {
+            "x": "P"
+          }
+        ],
+        "points": [
+          {
+            "x": "P",
+            "on": "Eel",
+            "color": "blue"
+          },
+          {
+            "x": "P",
+            "on": "Emag",
+            "color": "orange"
+          }
+        ],
+        "readout": "t = {P|2} T: elektrisch **{100*cos(2*pi*P)^2|0} %**, magnetisch **{100*sin(2*pi*P)^2|0} %**"
+      },
+      "timeline": [
+        {
+          "caption": "Zu Beginn steckt die ganze Energie im elektrischen Feld des geladenen Kondensators; es fließt noch kein Strom.",
+          "set": {
+            "P": 0
+          }
+        },
+        {
+          "caption": "Nach einer Viertelperiode ist der Kondensator leer, der Strom am größten: Die ganze Energie steckt im Magnetfeld der Spule.",
+          "to": {
+            "P": 0.25
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Nach einer halben Periode ist der Kondensator umgekehrt geladen. Die Energie pendelt zweimal pro Periode hin und her.",
+          "to": {
+            "P": 0.5
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Die Summe bleibt konstant (gestrichelt), solange kein Widerstand Energie in Wärme umwandelt; real klingt die Schwingung ab.",
+          "to": {
+            "P": 1
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Größter Strom aus der Energiebilanz.** Der Kondensator wird auf $U_0$ geladen und entlädt sich über die Spule.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\tfrac12 C U_0^2 = \\tfrac12 L\\hat I^2",
+            "why": "Die ganze elektrische Energie wird zu magnetischer Energie, wenn der Kondensator leer ist."
+          },
+          {
+            "tex": "\\hat I = U_0\\sqrt{\\frac{C}{L}}",
+            "why": "Mit $L = 10\\,\\mathrm{mH}$, $C = 1\\,\\mu\\mathrm{F}$, $U_0 = 10\\,\\mathrm{V}$: $\\hat I = 0{,}1\\,\\mathrm{A}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energiebilanz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Größter Strom.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Elektromagnetischer Schwingkreis",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Elektromagnetischer Schwingkreis.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **elektromagnetische Schwingkreis** besteht aus einem **Kondensator** ($C$) und einer **Spule** ($L$). Die Energie pendelt periodisch zwischen dem elektrischen Feld des Kondensators und dem magnetischen Feld der Spule -- das **elektrische Analogon** zur mechanischen Schwingung."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau und Energiependeln",
+          "blocks": [
+            {
+              "image": "vault:Schwingkreis.svg"
+            },
+            {
+              "md": "Der geladene Kondensator entlädt sich über die Spule ($E_{el} \\to E_{mag}$); das zusammenbrechende Magnetfeld lädt den Kondensator umgekehrt wieder auf ($E_{mag} \\to E_{el}$) -- und so fort."
+            }
+          ]
+        },
+        {
+          "title": "Thomson'sche Schwingungsgleichung",
+          "blocks": [
+            {
+              "md": "$$T = 2\\pi \\sqrt{L\\,C}, \\qquad f = \\frac{1}{2\\pi\\sqrt{L\\,C}}$$"
+            }
+          ]
+        },
+        {
+          "title": "Mechanisch-elektrische Analogie",
+          "blocks": [
+            {
+              "md": "| mechanisch | elektrisch |\n|---|---|\n| Masse $m$ (Trägheit) | Induktivität $L$ |\n| Federkonstante $D$ | Kehrwert der Kapazität $\\tfrac{1}{C}$ |\n| Auslenkung $y$ | Ladung $Q$ |\n| Geschwindigkeit $v$ | Stromstärke $I$ |\n| $E_{kin}=\\tfrac12 m v^2$ | $E_{mag}=\\tfrac12 L I^2$ |\n| $E_{pot}=\\tfrac12 D y^2$ | $E_{el}=\\tfrac12 \\tfrac{Q^2}{C}$ |\n\n> [!tip] Bedeutung\n> Diese Analogie ist ein Musterbeispiel dafür, dass **dieselben mathematischen Strukturen** ganz verschiedene physikalische Bereiche beschreiben. Reale Schwingkreise sind gedämpft; von außen angeregt zeigen sie **Resonanz** (Sender/Empfänger)."
+            }
+          ]
+        },
+        {
+          "title": "Die Analogie im Einzelnen",
+          "blocks": [
+            {
+              "md": "> [!important] Die Entsprechung ist vollständig, nicht bloß eine Merkhilfe\n> Beide Systeme werden von derselben Differenzialgleichung beschrieben. Deshalb lässt sich jede Aussage übersetzen:\n>\n> | mechanisch | elektrisch | gemeinsame Rolle |\n> |---|---|---|\n> | Masse $m$ | Induktivität $L$ | **Trägheit** |\n> | Federkonstante $D$ | $1/C$ | **Rückstellung** |\n> | Auslenkung $y$ | Ladung $Q$ | Zustandsgröße |\n> | Geschwindigkeit $v$ | Strom $I$ | deren Ableitung |\n> | Reibung | ohmscher Widerstand | **Dämpfung** |\n> | $T = 2\\pi\\sqrt{m/D}$ | $T = 2\\pi\\sqrt{LC}$ | Periodendauer |\n>\n> Bemerkenswert ist die Stellung der Kapazität: Sie entspricht dem **Kehrwert** der Federkonstante. Ein großer Kondensator wirkt wie eine weiche Feder -- er nimmt viel Ladung bei geringer Spannung auf, so wie eine weiche Feder viel Weg bei geringer Kraft zulässt.\n>\n> Wer die Zuordnung einmal hat, kann Schwingkreisaufgaben mechanisch lösen und umgekehrt."
+            }
+          ]
+        },
+        {
+          "title": "Der Ablauf in vier Vierteln",
+          "blocks": [
+            {
+              "md": "| Phase | Kondensator | Spule | mechanisch |\n|---|---|---|---|\n| 1 | voll geladen, $E_{el}$ max | stromlos | Umkehrpunkt |\n| 2 | entlädt sich | Strom steigt, $E_{mag}$ max | Ruhelage durchlaufen |\n| 3 | umgekehrt geladen | Strom fällt | anderer Umkehrpunkt |\n| 4 | entlädt sich zurück | Strom steigt gegenläufig | zurück |\n\n> [!tip] Die Spule verhindert, dass der Vorgang bei Phase 2 endet\n> Ohne Spule wäre der Kondensator nach der Entladung leer und der Vorgang beendet. Die Selbstinduktion hält den Strom jedoch aufrecht, wenn er abzunehmen beginnt -- und lädt den Kondensator dadurch **umgekehrt** auf.\n>\n> Das ist die Rolle der Trägheit: So wie eine schwingende Masse die Ruhelage überschießt, überschießt der Strom die Entladung. Siehe **Selbstinduktion und Induktivität**."
+            }
+          ]
+        },
+        {
+          "title": "Dämpfung und Rückkopplung",
+          "blocks": [
+            {
+              "md": "> [!warning] Jeder reale Schwingkreis ist gedämpft\n> Der ohmsche Widerstand der Spulenwicklung entzieht Energie, die als Wärme abgeführt wird. Die Amplitude klingt exponentiell ab -- genau wie bei der **gedämpften mechanischen Schwingung**.\n>\n> Für Dauerbetrieb muss Energie im richtigen Takt nachgeliefert werden. Genau das leistet die **Rückkopplungsschaltung** eines Senders: Ein Teil des Schwingkreissignals steuert die Energiezufuhr.\n>\n> Damit wird der Schwingkreis zum **Oszillator** -- dem Herzstück jedes Senders, jeder Uhr und jedes Prozessortakts."
+            }
+          ]
+        },
+        {
+          "title": "Vom Schwingkreis zur Welle",
+          "blocks": [
+            {
+              "md": "> [!important] Ein geöffneter Schwingkreis strahlt ab\n> Zieht man die Kondensatorplatten auseinander, tritt das elektrische Feld nach außen. Im Grenzfall entsteht ein gestreckter Leiter -- der **Hertzsche Dipol**.\n>\n> Das sich ändernde elektrische Feld erzeugt ein magnetisches und umgekehrt. Beide Felder halten sich gegenseitig aufrecht und lösen sich von der Quelle: Es entsteht eine **elektromagnetische Welle**.\n>\n> Das ist der Übergang von der gebundenen Schwingung zur freien Ausbreitung und die Grundlage jeder Funkübertragung. Bemerkenswert daran: Das Feld erweist sich hier endgültig als eigenständiger Energieträger, nicht bloß als Rechenhilfe. Siehe **Elektromagnetische Induktion** und **Mechanische Wellen**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der Schwingkreis überträgt die **Harmonische Schwingung** auf elektrische Größen und verbindet **Kondensator und Kapazität** mit **Selbstinduktion und Induktivität**. Er ist die Brücke von Q1 nach Q2 und von der Schwingung zur Welle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Analogie",
+      "md": "Ordne jeder Größe des Schwingkreises ihr Gegenstück beim Federpendel zu.",
+      "pairs": [
+        [
+          "Induktivität $L$",
+          "Masse $m$"
+        ],
+        [
+          "$\\tfrac1C$",
+          "Federkonstante $D$"
+        ],
+        [
+          "Ladung $Q$",
+          "Auslenkung $y$"
+        ],
+        [
+          "Strom $I$",
+          "Geschwindigkeit $v$"
+        ],
+        [
+          "$\\tfrac12 L I^2$",
+          "$\\tfrac12 m v^2$"
+        ]
+      ],
+      "explain": "Beide gehorchen derselben Differenzialgleichung; die Spule ist das träge Element, der Kondensator das rückstellende.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Frequenz hat ein Schwingkreis mit $L = 10\\,\\mathrm{mH}$ und $C = 1\\,\\mu\\mathrm{F}$?",
+      "answer": 1592,
+      "tolerance": 5,
+      "placeholder": "Hz",
+      "explain": "$f = \\tfrac{1}{2\\pi\\sqrt{LC}} = \\tfrac{1}{2\\pi\\cdot 10^{-4}}\\,\\mathrm{Hz} \\approx 1592\\,\\mathrm{Hz}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Anwendung",
+      "md": "Welche Kapazität braucht ein Radio mit $L = 0{,}25\\,\\mathrm{mH}$, um auf $1\\,\\mathrm{MHz}$ abgestimmt zu sein?",
+      "answer": 101,
+      "tolerance": 1,
+      "placeholder": "pF",
+      "explain": "$C = \\tfrac{1}{4\\pi^2 f^2 L} = \\tfrac{1}{39{,}48\\cdot 10^{12}\\cdot 2{,}5\\cdot 10^{-4}}\\,\\mathrm{F} \\approx 101\\,\\mathrm{pF}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Thomsonschen Gleichung in die richtige Reihenfolge.",
+      "items": [
+        "Maschenregel: $\\tfrac QC + L\\dot I = 0$",
+        "Mit $I = \\dot Q$: $L\\ddot Q = -\\tfrac1C Q$",
+        "Vergleich mit $m\\ddot y = -Dy$",
+        "$\\omega = \\tfrac{1}{\\sqrt{LC}}$, $T = 2\\pi\\sqrt{LC}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Maschenregel: $\\tfrac QC + L\\dot I = 0$. 2. Mit $I = \\dot Q$: $L\\ddot Q = -\\tfrac1C Q$. 3. Vergleich mit $m\\ddot y = -Dy$. 4. $\\omega = \\tfrac{1}{\\sqrt{LC}}$, $T = 2\\pi\\sqrt{LC}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Wie muss man einen Schwingkreis verändern, damit er mit doppelter Frequenz schwingt?",
+      "options": [
+        {
+          "md": "die Kapazität (oder die Induktivität) auf ein Viertel verkleinern",
+          "correct": true
+        },
+        {
+          "md": "die Kapazität halbieren",
+          "why": "$f \\sim \\tfrac{1}{\\sqrt C}$: Halbieren gibt nur den Faktor $\\sqrt2$."
+        },
+        {
+          "md": "die Ladespannung verdoppeln",
+          "why": "Die Spannung ändert die Amplitude, nicht die Frequenz."
+        },
+        {
+          "md": "die Induktivität verdoppeln",
+          "why": "Das senkt die Frequenz."
+        }
+      ],
+      "explain": "$f = \\tfrac{1}{2\\pi\\sqrt{LC}}$: Faktor 2 verlangt $LC$ auf ein Viertel.",
+      "label": "Proportionalität",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Nach einer Viertelperiode ist der Kondensator entladen und der Strom am größten.",
+      "answer": true,
+      "explain": "Dann steckt die ganze Energie im Magnetfeld der Spule.",
+      "label": "Energie",
+      "id": "vq6"
+    },
+    {
       "id": "analogie",
       "type": "sort",
       "label": "Zuordnen",
@@ -82,13 +519,40 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "schwingkreis-strom",
+          "thomson"
+        ]
+      },
+      "label": "Strom und Frequenz",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "thomson"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Energie pendelt zwischen Kondensator und Spule.",
         "$T = 2\\pi\\sqrt{LC}$.",
-        "Analogie: $L$ wie Masse, $1/C$ wie Federhärte."
+        "Analogie: $L$ wie Masse, $1/C$ wie Federhärte.",
+        "Maschenregel ergibt $L\\ddot Q = -\\tfrac1C Q$, also $T = 2\\pi\\sqrt{LC}$ (Thomson).",
+        "Energie pendelt: $\\tfrac12 C U_0^2 = \\tfrac12 L\\hat I^2$; Analogie $L \\leftrightarrow m$, $\\tfrac1C \\leftrightarrow D$."
       ]
     }
   ]

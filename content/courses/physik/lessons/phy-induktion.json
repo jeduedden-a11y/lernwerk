@@ -18,6 +18,447 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Induktion in deiner Skizze: Ein Magnet bewegt sich in eine Spule.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Elektromagnetische Induktion.svg",
+        "aspect": 1.64,
+        "alt": "Magnet bewegt sich in eine Spule mit Messgerät"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Stabmagnet, eine Spule und ein Messgerät.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Der Magnet bewegt sich mit $v$ auf die Spule zu: Der magnetische Fluss durch die Spule wächst.",
+          "to": {
+            "x": 0.28,
+            "y": 0.47,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "In jeder der $N$ Windungen entsteht eine Spannung; sie addieren sich.",
+          "to": {
+            "x": 0.6,
+            "y": 0.6,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das Messgerät schlägt nur aus, solange sich der Fluss ändert; ruht der Magnet, zeigt es null.",
+          "to": {
+            "x": 0.85,
+            "y": 0.47,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das Induktionsgesetz $U_{ind} = -N\\tfrac{\\Delta\\Phi}{\\Delta t}$ und die Lenzsche Regel: Das Minus steht für die Gegenwirkung.",
+          "to": {
+            "x": 0.5,
+            "y": 0.87,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Magnetischer Fluss\n> Der **magnetische Fluss** durch eine Fläche $A$ ist $\\Phi = B\\cdot A_\\perp = B A\\cos\\varphi$, wobei $A_\\perp$ die Fläche senkrecht zum Feld und $\\varphi$ der Winkel zwischen Feld und Flächennormale ist. Einheit: $1\\,\\mathrm{Wb} = 1\\,\\mathrm{T\\,m^2} = 1\\,\\mathrm{V\\,s}$ (Weber).\n\n> [!satz] Induktionsgesetz\n> Ändert sich der Fluss durch eine Spule mit $N$ Windungen, entsteht die Induktionsspannung $U_{ind} = -N\\,\\dot\\Phi$, bei gleichmäßiger Änderung $U_{ind} = -N\\tfrac{\\Delta\\Phi}{\\Delta t}$. Der Fluss ändert sich, wenn sich $B$ ändert (Transformator), wenn sich $A$ ändert (bewegter Leiter) oder wenn sich der Winkel ändert (Generator).\n\n> [!satz] Lenzsche Regel\n> Der induzierte Strom ist so gerichtet, dass sein Magnetfeld der Ursache der Induktion entgegenwirkt. Das Minuszeichen im Induktionsgesetz drückt das aus.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Bewegungsinduktion aus der Lorentzkraft.** Ein Stab der Länge $l$ bewegt sich mit $v$ senkrecht durch das Feld $B$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_L = e\\,v\\,B",
+            "why": "Die Elektronen im Stab bewegen sich mit ihm; auf jedes wirkt die Lorentzkraft längs des Stabs."
+          },
+          {
+            "tex": "e\\,E = e\\,v\\,B\\quad\\Rightarrow\\quad E = v\\,B",
+            "why": "Die Elektronen sammeln sich an einem Ende, bis das entstehende elektrische Feld die Lorentzkraft ausgleicht."
+          },
+          {
+            "tex": "U = E\\,l = B\\,l\\,v",
+            "why": "Die Spannung zwischen den Stabenden."
+          },
+          {
+            "tex": "\\frac{\\Delta A}{\\Delta t} = l\\,v\\quad\\Rightarrow\\quad U = B\\,\\frac{\\Delta A}{\\Delta t} = \\frac{\\Delta\\Phi}{\\Delta t}",
+            "why": "Dasselbe Ergebnis aus dem Induktionsgesetz: Der Stab überstreicht pro Sekunde die Fläche $l v$. Beide Sichtweisen passen zusammen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Lorentzkraft.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichgewicht.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spannung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich mit dem Flussgesetz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Nur die Änderung zählt.** Der Fluss durch eine Spule ($N = 1$) wird hochgefahren, gehalten und schnell abgeschaltet.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          6
+        ],
+        "y": [
+          -2.5,
+          2.6
+        ],
+        "xLabel": "t in s",
+        "yLabel": "Φ in mWb, U in mV",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 6,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "Phi",
+            "expr": "x<2 ? x : (x<4 ? 2 : (x<5 ? 2 - 2*(x-4) : 0))",
+            "color": "blue",
+            "label": "Fluss",
+            "labelAt": 2.6,
+            "samples": 900
+          },
+          {
+            "name": "Ui",
+            "expr": "x<2 ? -1 : (x<4 ? 0 : (x<5 ? 2 : 0))",
+            "color": "orange",
+            "label": "Induktionsspannung",
+            "labelAt": 2.2,
+            "samples": 900
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "Phi",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "Ui",
+            "color": "orange"
+          }
+        ],
+        "readout": "t = {T|1} s: Fluss **{T<2 ? T : (T<4 ? 2 : (T<5 ? 2-2*(T-4) : 0))|2} mWb**, Spannung **{T<2 ? -1 : (T<4 ? 0 : (T<5 ? 2 : 0))|1} mV**"
+      },
+      "timeline": [
+        {
+          "caption": "Der Fluss steigt gleichmäßig um $1\\,\\mathrm{mWb}$ pro Sekunde: Die Spannung ist konstant $-1\\,\\mathrm{mV}$. Das Minus heißt: Der Strom, den sie antreiben würde, schwächt den Anstieg.",
+          "set": {
+            "T": 1.5
+          }
+        },
+        {
+          "caption": "Der Fluss bleibt konstant, egal wie groß: keine Spannung.",
+          "to": {
+            "T": 3.2
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Schnelles Abschalten in $1\\,\\mathrm{s}$: doppelt so schnelle Änderung, doppelte Spannung, und umgekehrtes Vorzeichen.",
+          "to": {
+            "T": 4.6
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Die Spannung ist die negative Steigung des Flusses: $U = -\\dot\\Phi$. Die Fläche unter der Spannungskurve ist die gesamte Flussänderung.",
+          "to": {
+            "T": 6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Lenzsche Regel und Energieerhaltung\n> Würde der induzierte Strom seine Ursache verstärken, beschleunigte ein einmal angestoßener Magnet sich selbst immer weiter: Energie aus dem Nichts. Die Lenzsche Regel ist deshalb eine Folge der Energieerhaltung.\n> \n> Wer einen Leiter durch ein Feld bewegt und dabei Strom fließen lässt, muss gegen die bremsende Kraft $F = I l B$ Arbeit verrichten; genau diese Arbeit wird als elektrische Energie frei.",
+      "label": "Gesetz",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Elektromagnetische Induktion",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Elektromagnetische Induktion.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Bei der **elektromagnetischen Induktion** (Michael Faraday, 1831) entsteht in einer Leiterschleife eine **Induktionsspannung**, wenn sich der von ihr umfasste **magnetische Fluss** zeitlich ändert."
+            }
+          ]
+        },
+        {
+          "title": "Versuchsaufbau",
+          "blocks": [
+            {
+              "image": "vault:Elektromagnetische Induktion.svg"
+            }
+          ]
+        },
+        {
+          "title": "Magnetischer Fluss",
+          "blocks": [
+            {
+              "md": "Der magnetische Fluss durch eine Fläche $A$ (senkrecht durchsetzt) ist:\n$$\\Phi = B \\cdot A$$\nEr ändert sich, wenn sich $B$ **oder** $A$ (oder der Winkel) ändert."
+            }
+          ]
+        },
+        {
+          "title": "Induktionsgesetz",
+          "blocks": [
+            {
+              "md": "$$U_{ind} = -N \\cdot \\frac{\\Delta \\Phi}{\\Delta t}$$\nfür $N$ Windungen; allgemein (LK) in differenzieller Form $U_{ind} = -N \\dot{\\Phi}$. Quantitativ vor allem für stückweise lineare Änderung von $A$ oder $B$."
+            }
+          ]
+        },
+        {
+          "title": "Lenz'sche Regel",
+          "blocks": [
+            {
+              "md": "> [!important] Richtung des Induktionsstroms\n> Das Minuszeichen drückt die **Lenz'sche Regel** aus: Der Induktionsstrom ist stets so gerichtet, dass er seiner **Ursache entgegenwirkt**. Dies folgt direkt aus der **Energieerhaltung** -- sonst entstünde ein Perpetuum mobile. Demonstration: **Wirbelstrombremse**."
+            }
+          ]
+        },
+        {
+          "title": "Drei Wege, den Fluss zu ändern",
+          "blocks": [
+            {
+              "md": "$\\Phi = B \\cdot A \\cdot \\cos\\alpha$ -- entsprechend gibt es drei Möglichkeiten, eine Induktionsspannung zu erzeugen:\n1. **$B$ ändern** (Magnet bewegen, Strom in einer Feldspule ändern)\n2. **$A$ ändern** (Leiterschleife aus dem Feld ziehen, Fläche verformen)\n3. **$\\alpha$ ändern** (Schleife drehen) -- Prinzip des **Generator**s"
+            }
+          ]
+        },
+        {
+          "title": "Induktion im bewegten Leiter",
+          "blocks": [
+            {
+              "md": "Bewegt sich ein Leiter der Länge $l$ mit $v$ senkrecht durch ein Feld $B$, gilt:\n$$U_{ind} = B \\cdot l \\cdot v$$\nUrsache ist die **Lorentzkraft** auf die Ladungsträger im Leiter."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen und Vertiefung",
+          "blocks": [
+            {
+              "md": "- **Selbstinduktion und Induktivität** -- Induktion durch den eigenen sich ändernden Strom\n- **Generator** -- Erzeugung von Wechselspannung\n- **Transformator** -- Spannungswandlung"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Formel zu.",
+      "pairs": [
+        [
+          "magnetischer Fluss",
+          "$\\Phi = B A\\cos\\varphi$"
+        ],
+        [
+          "Induktionsgesetz",
+          "$U_{ind} = -N\\dot\\Phi$"
+        ],
+        [
+          "Bewegungsinduktion",
+          "$U = B l v$"
+        ],
+        [
+          "Einheit Weber",
+          "$1\\,\\mathrm{Wb} = 1\\,\\mathrm{V\\,s}$"
+        ],
+        [
+          "Lenzsche Regel",
+          "Die Wirkung ist der Ursache entgegengerichtet."
+        ]
+      ],
+      "explain": "Der Fluss misst, wie viel Feld eine Fläche durchsetzt; induziert wird nur bei seiner Änderung.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Bewegungsinduktion aus der Lorentzkraft in die richtige Reihenfolge.",
+      "items": [
+        "Lorentzkraft auf die Elektronen im Stab: $F_L = e v B$",
+        "Die Elektronen sammeln sich an einem Ende",
+        "Gleichgewicht: $e E = e v B$",
+        "Spannung: $U = E l = B l v$"
+      ],
+      "explain": "Die Reihenfolge: 1. Lorentzkraft auf die Elektronen im Stab: $F_L = e v B$. 2. Die Elektronen sammeln sich an einem Ende. 3. Gleichgewicht: $e E = e v B$. 4. Spannung: $U = E l = B l v$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Spule ($200$ Windungen, $50\\,\\mathrm{cm}^2$) steht senkrecht in einem Feld von $0{,}4\\,\\mathrm{T}$, das in $20\\,\\mathrm{ms}$ gleichmäßig auf null sinkt. Wie groß ist die induzierte Spannung (Betrag)?",
+      "answer": 20,
+      "tolerance": 0.1,
+      "placeholder": "V",
+      "explain": "$|U| = N\\tfrac{\\Delta B\\cdot A}{\\Delta t} = 200\\cdot\\tfrac{0{,}4\\cdot 0{,}005}{0{,}02}\\,\\mathrm{V} = 20\\,\\mathrm{V}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Winkel",
+      "md": "Eine Spule ($100$ Windungen, $100\\,\\mathrm{cm}^2$) steht senkrecht in $0{,}5\\,\\mathrm{T}$ und wird in $10\\,\\mathrm{ms}$ um $90°$ gedreht. Wie groß ist die mittlere Induktionsspannung?",
+      "answer": 50,
+      "tolerance": 0.3,
+      "placeholder": "V",
+      "explain": "Der Fluss sinkt von $BA = 5\\,\\mathrm{mWb}$ auf null: $\\bar U = N\\tfrac{\\Delta\\Phi}{\\Delta t} = 100\\cdot\\tfrac{0{,}005}{0{,}01}\\,\\mathrm{V} = 50\\,\\mathrm{V}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Bewegungsinduktion",
+      "md": "Ein Flugzeug (Spannweite $60\\,\\mathrm{m}$) fliegt mit $250\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ waagerecht; die senkrechte Komponente des Erdfelds ist $40\\,\\mu\\mathrm{T}$. Welche Spannung liegt zwischen den Flügelspitzen?",
+      "answer": 0.6,
+      "tolerance": 0.005,
+      "placeholder": "V",
+      "explain": "$U = B l v = 40\\cdot 10^{-6}\\cdot 60\\cdot 250\\,\\mathrm{V} = 0{,}6\\,\\mathrm{V}$. Nutzen lässt sie sich nicht: Ein mitfliegender Messdraht erfährt dieselbe Spannung.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ohne Bewegung gibt es keine Induktion.",
+      "answer": false,
+      "explain": "Es genügt, dass sich das Feld ändert: Im Transformator bewegt sich nichts, und trotzdem wird induziert.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "multi",
+      "md": "Wodurch kann man in einer ruhenden Spule eine Spannung induzieren?",
+      "options": [
+        {
+          "md": "indem man die Stärke des Magnetfelds ändert",
+          "correct": true
+        },
+        {
+          "md": "indem man die Spule im Feld dreht",
+          "correct": true
+        },
+        {
+          "md": "indem man die Spulenfläche im Feld verkleinert",
+          "correct": true
+        },
+        {
+          "md": "indem man ein starkes konstantes Feld anlegt",
+          "why": "Ein konstanter Fluss induziert nichts."
+        },
+        {
+          "md": "indem man die Spule parallel zu den Feldlinien verschiebt, im homogenen Feld",
+          "why": "Der Fluss bleibt dabei gleich."
+        }
+      ],
+      "explain": "Alles, was $\\Phi = BA\\cos\\varphi$ ändert, induziert.",
+      "label": "Ursachen",
+      "id": "vq7"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Halbiert man die Zeit, in der sich der Fluss ändert, wird die Induktionsspannung {{0}}-mal so groß; verdoppelt man die Windungszahl, wird sie {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$U = N\\tfrac{\\Delta\\Phi}{\\Delta t}$.",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ohne die Lenzsche Regel wäre ein Perpetuum mobile möglich.",
+      "answer": true,
+      "explain": "Ein Induktionsstrom, der seine Ursache verstärkt, würde sich selbst immer weiter antreiben und Energie aus dem Nichts liefern.",
+      "label": "Klausur",
+      "id": "vq9"
+    },
+    {
       "id": "ruhe",
       "type": "choice",
       "md": "Ein starker Magnet liegt ruhig in einer Spule. Was zeigt das Voltmeter?",
@@ -68,13 +509,42 @@
       "label": "Bewegungsinduktion"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "leiterschleife",
+          "induktion"
+        ]
+      },
+      "label": "Fluss und Schleife",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "leiterschleife",
+          "bewegungsinduktion"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$U_{ind} = -N\\dot\\Phi$ mit $\\Phi = BA$.",
         "Nur Änderungen induzieren.",
-        "Lenz: die Induktion wirkt ihrer Ursache entgegen."
+        "Lenz: die Induktion wirkt ihrer Ursache entgegen.",
+        "$\\Phi = BA\\cos\\varphi$ in Weber; $U_{ind} = -N\\dot\\Phi$, induziert wird nur bei Änderung von $B$, $A$ oder $\\varphi$.",
+        "Bewegungsinduktion $U = Blv$, aus der Lorentzkraft und aus dem Flussgesetz gleichermaßen.",
+        "Lenzsche Regel: Die Induktion wirkt ihrer Ursache entgegen, eine Folge der Energieerhaltung."
       ]
     }
   ]

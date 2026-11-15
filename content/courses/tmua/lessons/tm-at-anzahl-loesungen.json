@@ -16,6 +16,259 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Als $f(x) = g(x)$ schreiben**, mit zwei Graphen, die man skizzieren kann.\n> 2. **Beide Graphen skizzieren**, mit Achsenschnitten, Asymptoten und Wachstum.\n> 3. **Schnittpunkte zählen**, auch weit draußen und auf der negativen Seite.\n> 4. **Grenzfälle prüfen:** Berührt eine Gerade nur? Kommt ein Graph einer Asymptote nur nahe?",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Wie viele Lösungen hat $x^3 - 3x = 1$?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = x^3 - 3x,\\quad g(x) = 1",
+            "why": "Kubische Kurve gegen waagerechte Gerade."
+          },
+          {
+            "tex": "f'(x) = 3x^2 - 3 = 0 \\;\\Rightarrow\\; x = \\pm 1",
+            "why": "Extremstellen der Kurve."
+          },
+          {
+            "tex": "f(-1) = 2,\\quad f(1) = -2",
+            "why": "Hochpunkt (−1, 2), Tiefpunkt (1, −2)."
+          },
+          {
+            "tex": "-2 < 1 < 2 \\;\\Rightarrow\\; 3 \\text{ Schnittpunkte}",
+            "why": "Eine Gerade zwischen Tief- und Hochpunkt schneidet dreimal."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Aufteilen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Extrema.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Werte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zählen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Zählen",
+      "md": "**Zählen am Bild:** blau $y = \\sin x$, orange die Gerade $y = \\tfrac{x}{k}$ für wachsendes $k$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -16,
+          16
+        ],
+        "y": [
+          -1.6,
+          1.6
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "k",
+            "min": 1,
+            "max": 16,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "blue",
+            "samples": 800
+          },
+          {
+            "name": "g",
+            "expr": "x/k",
+            "color": "orange"
+          }
+        ],
+        "readout": "Gerade y = x / {k|1}"
+      },
+      "timeline": [
+        {
+          "caption": "k = 2: Die Gerade ist steil, nur drei Schnittpunkte: 0 und zwei symmetrische.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "k = 5: Die Gerade verlässt den Streifen −1 bis 1 erst bei |x| = 5; noch drei Schnittpunkte.",
+          "to": {
+            "k": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 10: sieben Schnittpunkte. Rechts von 0 zählt man, wie viele Bögen die Gerade noch kreuzen.",
+          "to": {
+            "k": 10
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 15: Je flacher die Gerade, desto mehr Bögen erreicht sie.",
+          "to": {
+            "k": 15
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Nur rechts von der y-Achse skizzieren und negative Lösungen übersehen ($x^2 = 2^x$ hat eine bei $x \\approx -0{,}77$).\n- Die Krümmung falsch einschätzen: Exponentialfunktionen überholen jede Potenz, aber erst weit rechts.\n- Berührung als zwei Schnittpunkte zählen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Anzahl reeller Lösungen bestimmen",
+      "path": "02 Wiki/TMUA/12 Graphen von Funktionen/Aufgabentypen/Anzahl reeller Lösungen bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist **wie viele** Lösungen eine Gleichung hat -- nicht welche. Oder: für welche Parameterwerte es genau eine, zwei, drei Lösungen gibt. Das ist eine der häufigsten Fragestellungen des ganzen Tests, weil sie sich ohne Taschenrechner und ohne lange Rechnung entscheiden lässt."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Werkzeuge",
+          "blocks": [
+            {
+              "md": "| Situation | Werkzeug |\n|---|---|\n| quadratische Gleichung | **Diskriminante** $b^2 - 4ac$ |\n| $f(x) = k$ mit kubischem oder anderem $f$ | **Extremwerte** von $f$ bestimmen, Höhe $k$ durchschieben |\n| $f(x) = g(x)$ mit zwei bekannten Kurven | **Skizze** beider Graphen, Schnittpunkte zählen |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema für den Parameterfall",
+          "blocks": [
+            {
+              "md": "1. **Die Gleichung in die Form $f(x) = k$ bringen** -- alles Variable auf eine Seite, den Parameter allein auf die andere.\n2. **$f$ untersuchen:** stationäre Punkte über $f'(x) = 0$, zugehörige $y$-Werte berechnen.\n3. **Die Fälle abzählen:** oberhalb des Maximums, genau auf dem Maximum, dazwischen, genau auf dem Minimum, unterhalb.\n4. **Die Randfälle einzeln notieren** -- dort ändert sich die Anzahl, und genau danach wird gefragt."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> For which values of $k$ does the equation $x^3 - 3x = k$ have exactly three distinct real solutions?\n>\n> - **A** $-2 < k < 2$\n> - **B** $k > 2$\n> - **C** $-2 \\le k \\le 2$\n> - **D** $k < -2$ or $k > 2$\n> - **E** all real $k$\n\n**Schritt 2:** $f(x) = x^3 - 3x$, also $f'(x) = 3x^2 - 3 = 0$ und $x = \\pm 1$.\n$f(-1) = -1 + 3 = 2$ (Maximum), $f(1) = 1 - 3 = -2$ (Minimum).\n\n**Schritt 3:** Die waagerechte Gerade $y = k$ schneidet die Kurve\n\n| $k$ | Schnittpunkte |\n|---|---|\n| $k > 2$ | 1 |\n| $k = 2$ | 2 (einer davon eine Berührung) |\n| $-2 < k < 2$ | **3** |\n| $k = -2$ | 2 |\n| $k < -2$ | 1 |\n\nAntwort **A**.\n\n> [!important] Die Randfälle gehören nicht dazu\n> Option C ist die Falle: Bei $k = 2$ ist die Kurve die Gerade **berührend**, es gibt nur **zwei verschiedene** Lösungen -- die Berührstelle ist eine doppelte Nullstelle. Das Wort *distinct* entscheidet die Aufgabe.\n>\n> Tatsächlich ist $x^3 - 3x - 2 = (x + 1)^2(x - 2)$: eine doppelte und eine einfache Nullstelle."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Randfälle mitzählen**, obwohl *distinct* verlangt ist.\n- **Eine Berührung als zwei Schnittpunkte werten.**\n- **Bei der Diskriminante $\\ge$ statt $>$** verwenden, wenn zwei **verschiedene** Lösungen gefragt sind.\n- **Den Definitionsbereich vergessen**, wenn ein Nenner oder eine Wurzel im Spiel ist.\n- **Die Gleichung lösen wollen**, obwohl nur die Anzahl gefragt ist."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> How many distinct real solutions does $x^3 - 3x = 2$ have?\n>\n> - **A** 2\n> - **B** 3\n> - **C** 1\n> - **D** 0\n> - **E** 4\n\n> [!success]- Lösung\n> **A.** $k = 2$ ist genau der Maximalwert -- der Grenzfall aus dem Beispiel oben.\n> Explizit: $x^3 - 3x - 2 = (x + 1)^2(x - 2)$, also $x = -1$ (doppelt) und $x = 2$. **Zwei verschiedene** Lösungen.\n> B ist die Antwort für alle, die die doppelte Nullstelle doppelt zählen.\n\n> [!question] Aufgabe 2\n> How many real solutions does $\\dfrac1x = x - 2$ have?\n>\n> - **A** 2\n> - **B** 1\n> - **C** 0\n> - **D** 3\n> - **E** infinitely many\n\n> [!success]- Lösung\n> **A.** Multiplizieren mit $x$ (erlaubt, denn $x = 0$ ist ohnehin ausgeschlossen): $1 = x^2 - 2x$, also $x^2 - 2x - 1 = 0$.\n> Diskriminante $4 + 4 = 8 > 0$ -- zwei Lösungen, und keine von beiden ist null (denn $0$ erfüllt die Gleichung nicht).\n> Grafisch: Die Gerade $y = x - 2$ schneidet jeden der beiden Hyperbeläste genau einmal.\n> Die Prüfung auf $x = 0$ gehört zum Verfahren, auch wenn sie hier nichts ausschließt.\n\n> [!question] Aufgabe 3\n> For which values of $m$ does the line $y = mx + 1$ meet the curve $y = x^2$ at two distinct points?\n>\n> - **A** all real $m$\n> - **B** $m > 2$ or $m < -2$\n> - **C** $-2 < m < 2$\n> - **D** $m \\ne 0$\n> - **E** no values of $m$\n\n> [!success]- Lösung\n> **A.** Gleichsetzen: $x^2 = mx + 1$, also $x^2 - mx - 1 = 0$.\n> Diskriminante: $m^2 + 4$. Das ist für **jedes** reelle $m$ positiv, denn $m^2 \\ge 0$.\n> Anschaulich: Jede Gerade durch $(0, 1)$ verläuft im Inneren der Parabel und muss sie deshalb auf beiden Seiten schneiden.\n> B und C sind die Antworten für alle, die die Diskriminante als $m^2 - 4$ berechnen -- das Vorzeichen des konstanten Glieds ist hier entscheidend."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Graphen mit Betrag skizzieren** · **Trigonometrische Gleichung im Intervall lösen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Kubisch",
+      "md": "Wie viele reelle Lösungen hat $x^3 - 3x = 3$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Die Gerade y = 3 liegt über dem Hochpunkt (−1, 2): ein Schnittpunkt.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "How many real solutions does $\\dfrac1x = x^2$ have?",
+      "options": [
+        {
+          "md": "0"
+        },
+        {
+          "md": "1",
+          "correct": true
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "3"
+        },
+        {
+          "md": "4"
+        }
+      ],
+      "explain": "$x^3 = 1$ mit $x \\ne 0$: nur $x = 1$. Grafisch: Der linke Ast von $\\tfrac1x$ ist negativ, $x^2$ nie.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Grafisch",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Gleichung $2^x = -x$ hat genau eine reelle Lösung.",
+      "answer": true,
+      "explain": "$2^x$ ist positiv und steigt, $-x$ fällt: Sie schneiden sich genau einmal, bei einem negativen $x$.",
+      "label": "Monotonie",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +324,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f(x) = g(x) als Schnittpunkte zweier Graphen zählen, negative Seite nicht vergessen.",
+        "Extremwerte entscheiden, wie oft eine waagerechte Gerade schneidet."
+      ]
     }
   ]
 }

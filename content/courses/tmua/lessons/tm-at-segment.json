@@ -16,6 +16,159 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Winkel im Bogenmaß** am Mittelpunkt bestimmen.\n> 2. **Sektorfläche** $\\tfrac12 r^2\\theta$.\n> 3. **Dreiecksfläche** aus zwei Radien und dem eingeschlossenen Winkel: $\\tfrac12 r^2\\sin\\theta$.\n> 4. **Segment = Sektor − Dreieck** (kleines Segment); das große Segment ist Kreis minus kleines Segment.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Kleines Segment bei $r = 6$, $\\theta = \\tfrac{\\pi}{3}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Sektor} = \\tfrac12 \\cdot 36 \\cdot \\tfrac\\pi3 = 6\\pi",
+            "why": "Sektorfläche."
+          },
+          {
+            "tex": "\\text{Dreieck} = \\tfrac12 \\cdot 36 \\cdot \\sin\\tfrac\\pi3 = 18 \\cdot \\tfrac{\\sqrt3}{2} = 9\\sqrt3",
+            "why": "Fläche mit dem Sinus des eingeschlossenen Winkels."
+          },
+          {
+            "tex": "\\text{Segment} = 6\\pi - 9\\sqrt3 \\approx 3{,}26",
+            "why": "Abziehen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Sektor.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dreieck.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Segment.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Den Winkel in Grad in die Formel setzen.\n- Für das Dreieck $\\tfrac12 r^2$ ohne den Sinus nehmen.\n- Sektor und Dreieck addieren statt abziehen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Segmentfläche berechnen",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Aufgabentypen/Segmentfläche berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Aufgabe nennt einen **Radius** und einen **Mittelpunktswinkel** (oder gibt Bogenlänge bzw. Umfang vor) und fragt nach Bogenlänge, Sektorfläche, Segmentfläche oder einem Umfang. Erkennungsmerkmal: Der Winkel steht **im Bogenmaß** -- als Vielfaches von $\\pi$ oder als nackte Zahl wie $\\theta = 2$.\n\nAntworten sind fast immer **exakt** verlangt, also in der Form $a\\pi - b\\sqrt3$. Wer dezimal rechnet, findet die Option nicht."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Prüfen, in welchem Maß der Winkel steht.** Steht ein Gradzeichen, zuerst mit $\\tfrac{\\pi}{180}$ umrechnen.\n2. **Die passende Formel wählen:**\n\n| gesucht | Formel |\n|---|---|\n| Bogenlänge | $b = r\\theta$ |\n| Sektorfläche | $A_\\text{Sek} = \\tfrac12 r^2\\theta$ |\n| Dreiecksfläche (zwei Radien) | $A_\\Delta = \\tfrac12 r^2\\sin\\theta$ |\n| Segmentfläche | $A_\\text{Seg} = \\tfrac12 r^2(\\theta - \\sin\\theta)$ |\n| Sektorumfang | $U = 2r + r\\theta$ |\n\n3. **Beim Segment getrennt rechnen:** erst Sektor, dann Dreieck, dann subtrahieren. Das ist weniger fehleranfällig als die zusammengefasste Formel und liefert die Zwischenergebnisse, die in den Antwortoptionen als Fallen auftauchen.\n4. **Exakt stehen lassen.** $\\sin\\tfrac{2\\pi}{3} = \\tfrac{\\sqrt3}{2}$ nicht in eine Dezimalzahl verwandeln."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A chord of a circle of radius 10 subtends an angle of $\\tfrac{2\\pi}{3}$ at the centre. Find the exact area of the minor segment.\n>\n> - **A** $\\dfrac{100\\pi}{3} - 25\\sqrt3$\n> - **B** $\\dfrac{100\\pi}{3}$\n> - **C** $\\dfrac{100\\pi}{3} - 50\\sqrt3$\n> - **D** $\\dfrac{200\\pi}{3} - 25\\sqrt3$\n> - **E** $25\\sqrt3 - \\dfrac{100\\pi}{3}$\n\n**Sektor:** $\\tfrac12 \\cdot 10^2 \\cdot \\tfrac{2\\pi}{3} = \\tfrac{100\\pi}{3}$.\n\n**Dreieck:** $\\tfrac12 \\cdot 10^2 \\cdot \\sin\\tfrac{2\\pi}{3} = 50 \\cdot \\tfrac{\\sqrt3}{2} = 25\\sqrt3$.\n\n**Segment:** $\\tfrac{100\\pi}{3} - 25\\sqrt3$. Antwort **A**.\n\n> [!tip] Die Plausibilitätsprobe\n> $\\tfrac{100\\pi}{3} \\approx 104{,}7$ und $25\\sqrt3 \\approx 43{,}3$, also Segment $\\approx 61{,}4$. Das muss **kleiner als der Sektor** und **größer als null** sein -- damit fallen B und E sofort weg. Zu jedem Ergebnis dieser Art gehört diese Zehn-Sekunden-Kontrolle."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Grad in die Bogenmaßformeln einsetzen.** Ein Sektor mit $r = 6$ und $60°$ hat die Fläche $6\\pi$, nicht $\\tfrac12 \\cdot 36 \\cdot 60 = 1080$.\n- **Sektor statt Segment** angeben (Option B im Beispiel) oder **Dreieck statt Segment**.\n- **Die Differenz verkehrt herum** bilden (Option E) -- die Segmentfläche ist positiv, weil $\\theta > \\sin\\theta$ für $\\theta > 0$.\n- **Beim Sektorumfang die beiden Radien vergessen**; beim Segmentumfang den Bogen durch die Sehne ersetzen (oder umgekehrt).\n- **$\\tfrac12 r^2\\theta$ und $r\\theta$ verwechseln** -- die Fläche trägt das Quadrat, die Länge nicht."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> A sector of a circle of radius 4 has angle $\\tfrac{\\pi}{2}$. Find the exact area of the corresponding segment.\n>\n> - **A** $4\\pi - 8$\n> - **B** $4\\pi$\n> - **C** $8\\pi - 4$\n> - **D** $2\\pi - 8$\n> - **E** $8$\n\n> [!success]- Lösung\n> **A.** Sektor $\\tfrac12 \\cdot 16 \\cdot \\tfrac{\\pi}{2} = 4\\pi$; Dreieck $\\tfrac12 \\cdot 16 \\cdot \\sin\\tfrac{\\pi}{2} = 8$; Segment $4\\pi - 8 \\approx 4{,}57$.\n> Hier ist das Dreieck rechtwinklig und gleichschenklig -- man kann es auch als $\\tfrac12 \\cdot 4 \\cdot 4$ sehen.\n\n> [!question] Aufgabe 2\n> A sector of a circle of radius 4 has perimeter 20. Find its area.\n>\n> - **A** 24\n> - **B** 40\n> - **C** 20\n> - **D** 16\n> - **E** 48\n\n> [!success]- Lösung\n> **A.** Der Umfang besteht aus zwei Radien und dem Bogen: $2 \\cdot 4 + 4\\theta = 20$, also $\\theta = 3$.\n> Fläche $\\tfrac12 \\cdot 16 \\cdot 3 = 24$.\n> Wer die Radien vergisst, erhält $\\theta = 5$ und damit 40 -- Option B. Die Probe: $\\theta = 5$ wäre größer als $\\pi$, der Sektor also mehr als ein Halbkreis, bei Umfang 20 und Radius 4 unmöglich.\n\n> [!question] Aufgabe 3\n> The area of a sector of a circle of radius 6 with angle $60°$ is\n>\n> - **A** $6\\pi$\n> - **B** $12\\pi$\n> - **C** $1080$\n> - **D** $2\\pi$\n> - **E** $36\\pi$\n\n> [!success]- Lösung\n> **A.** $60° = \\tfrac{\\pi}{3}$, also $\\tfrac12 \\cdot 36 \\cdot \\tfrac{\\pi}{3} = 6\\pi$. Alternativ über den Anteil: $\\tfrac{60}{360} \\cdot 36\\pi = 6\\pi$.\n> C ist die Gradfalle $\\tfrac12 \\cdot 36 \\cdot 60$; D ist die **Bogenlänge** $6 \\cdot \\tfrac{\\pi}{3} = 2\\pi$; E ist die ganze Kreisfläche."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zusammengesetzte Flächen und Körper berechnen** · **Mehrdeutiger Fall beim Sinussatz** · **Flächen- und Volumeneinheiten umrechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Warum zieht man beim kleinen Segment das Dreieck vom Sektor ab?",
+      "options": [
+        {
+          "md": "Der Sektor besteht aus dem Dreieck zwischen den Radien und dem Segment zwischen Sehne und Bogen.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Dreieck größer ist als der Sektor.",
+          "why": "Es ist kleiner."
+        },
+        {
+          "md": "Weil man so den Umfang erhält.",
+          "why": "Es geht um Flächen."
+        },
+        {
+          "md": "Das ist nur bei rechten Winkeln so.",
+          "why": "Es gilt für jeden Winkel kleiner als π."
+        }
+      ],
+      "explain": "Sektor = Dreieck + Segment.",
+      "label": "Idee",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist das kleine Segment bei $r = 2$ und $\\theta = \\tfrac\\pi2$? Auf drei Nachkommastellen.",
+      "answer": 1.142,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$\\tfrac12 \\cdot 4 \\cdot \\tfrac\\pi2 - \\tfrac12 \\cdot 4 \\cdot 1 = \\pi - 2 \\approx 1{,}142$.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -67,6 +220,51 @@
       "lang": "en",
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "sektor"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "sektor"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "sektor"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Segment = $\\tfrac12 r^2\\theta - \\tfrac12 r^2\\sin\\theta$, Winkel im Bogenmaß.",
+        "Großes Segment = Kreis minus kleines Segment."
+      ]
     }
   ]
 }

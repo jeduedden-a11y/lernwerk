@@ -19,6 +19,356 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Steigung und Geradengleichungen\n> Die **Steigung** (*gradient*) durch $(x_1, y_1)$ und $(x_2, y_2)$ ist $m = \\dfrac{y_2 - y_1}{x_2 - x_1}$. Eine Gerade lässt sich schreiben als $y = mx + c$ (Achsenabschnitt $c$), als $y - y_1 = m(x - x_1)$ (Punkt und Steigung) oder als $ax + by = c$.\n\n> [!definition] Parallel und senkrecht\n> Parallele Geraden haben dieselbe Steigung. Zwei Geraden mit den Steigungen $m_1$ und $m_2$ stehen **senkrecht** aufeinander, wenn $m_1 m_2 = -1$, also $m_2 = -\\tfrac{1}{m_1}$ (negativer Kehrwert).\n\n**Mittelpunkt** einer Strecke: $\\left(\\tfrac{x_1 + x_2}{2}, \\tfrac{y_1 + y_2}{2}\\right)$; **Länge**: $\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ (Pythagoras).",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum senkrechte Steigungen das Produkt $-1$ haben.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Richtung } (1, m) \\text{ gehört zur Steigung } m",
+            "why": "Ein Schritt nach rechts, m Schritte nach oben."
+          },
+          {
+            "tex": "(1, m) \\text{ um } 90^\\circ \\text{ gedreht: } (-m, 1)",
+            "why": "Eine Vierteldrehung vertauscht die Koordinaten und kehrt ein Vorzeichen um."
+          },
+          {
+            "tex": "\\text{Steigung von } (-m, 1):\\ \\frac{1}{-m} = -\\frac1m",
+            "why": "Steigung ist Höhe durch Breite."
+          },
+          {
+            "tex": "m \\cdot \\left(-\\frac1m\\right) = -1",
+            "why": "Das Produkt ist −1; für waagerechte Geraden (m = 0) ist die Senkrechte eine senkrechte Linie x = konstant."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Richtung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Drehen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Steigung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Senkrecht",
+      "md": "**Senkrecht im Bild:** blau eine Gerade mit Steigung $m$ durch den Ursprung, orange die Senkrechte mit Steigung $-\\tfrac1m$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          4
+        ],
+        "y": [
+          -4,
+          4
+        ],
+        "height": 330,
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "m",
+            "min": -3,
+            "max": 3,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "g",
+            "expr": "m*x",
+            "color": "blue"
+          },
+          {
+            "name": "s",
+            "expr": "-x/m",
+            "color": "orange"
+          }
+        ],
+        "readout": "m = {m|2} · senkrecht −1/m = {-1/m|2} · Produkt {m*(-1/m)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "m = 1/2: Die Senkrechte hat die Steigung −2.",
+          "set": {
+            "m": 0.5
+          }
+        },
+        {
+          "caption": "m = 2: Senkrechte −1/2. Steile und flache Geraden tauschen die Rollen.",
+          "to": {
+            "m": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "m = −1: Senkrechte 1. Das Produkt bleibt −1.",
+          "to": {
+            "m": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Die Gerade durch $(1, 2)$ senkrecht zu $2x + 3y = 6$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "3y = -2x + 6 \\;\\Rightarrow\\; y = -\\tfrac23 x + 2",
+            "why": "Nach y auflösen: Steigung −2/3."
+          },
+          {
+            "tex": "m_\\perp = \\tfrac32",
+            "why": "Negativer Kehrwert."
+          },
+          {
+            "tex": "y - 2 = \\tfrac32(x - 1) \\;\\Rightarrow\\; y = \\tfrac32 x + \\tfrac12",
+            "why": "Punkt-Steigungs-Form."
+          },
+          {
+            "tex": "\\text{y-Achse bei } \\tfrac12",
+            "why": "Achsenabschnitt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Senkrecht.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Achsenabschnitt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Geraden in der Ebene",
+      "path": "02 Wiki/TMUA/06 Koordinatengeometrie/Geraden in der Ebene.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Steigung",
+          "blocks": [
+            {
+              "md": "Die **Steigung** (*gradient*) einer Geraden durch $(x_1, y_1)$ und $(x_2, y_2)$ ist\n\n$$m = \\frac{y_2 - y_1}{x_2 - x_1}.$$\n\nSie gibt an, um wie viel $y$ wächst, wenn $x$ um 1 wächst. Senkrechte Geraden $x = k$ haben keine Steigung."
+            }
+          ]
+        },
+        {
+          "title": "Die Gleichungsformen",
+          "blocks": [
+            {
+              "md": "| Form | englisch | Verwendung |\n|---|---|---|\n| $y = mx + c$ | *gradient-intercept form* | Steigung und y-Achsenabschnitt ablesen |\n| $y - y_1 = m(x - x_1)$ | *point-gradient form* | Gerade durch einen Punkt mit bekannter Steigung -- die schnellste Form |\n| $ax + by + c = 0$ | *general form* | oft in Antwortoptionen; Steigung $-\\tfrac ab$ |\n\nDie Spezifikation verlangt ausdrücklich, wie $m$ und $c$ den Graphen von $y = mx + c$ verändern (MM8.3): $m$ dreht die Gerade um den Punkt $(0, c)$, $c$ verschiebt sie senkrecht."
+            }
+          ]
+        },
+        {
+          "title": "Parallel und senkrecht",
+          "blocks": [
+            {
+              "md": "| Lage | Bedingung |\n|---|---|\n| parallel | $m_1 = m_2$ |\n| **senkrecht** (*perpendicular*) | $m_1 \\cdot m_2 = -1$, also $m_2 = -\\dfrac{1}{m_1}$ |\n\n> [!important] Warum das Produkt −1 ist\n> Dreht man eine Gerade mit Richtung $(1, m)$ um 90°, erhält man die Richtung $(-m, 1)$, also die Steigung $\\frac{1}{-m}$. Deshalb gilt $m_1 m_2 = -1$ -- negativer Kehrwert. Die häufigste falsche Antwortoption ist nur der Kehrwert oder nur das negative Vorzeichen."
+            }
+          ]
+        },
+        {
+          "title": "Abstand und Mittelpunkt",
+          "blocks": [
+            {
+              "md": "$$\\text{Abstand } AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}, \\qquad \\text{Mittelpunkt } M = \\left(\\frac{x_1 + x_2}{2},\\ \\frac{y_1 + y_2}{2}\\right).$$\n\nDie Abstandsformel ist der **Satz des Pythagoras** im Koordinatensystem."
+            }
+          ]
+        },
+        {
+          "title": "Die Mittelsenkrechte",
+          "blocks": [
+            {
+              "md": "Die **Mittelsenkrechte** (*perpendicular bisector*) einer Strecke $AB$ ist die Menge aller Punkte, die von $A$ und $B$ gleich weit entfernt sind. Sie geht durch den Mittelpunkt von $AB$ und steht senkrecht auf $AB$.\n\n> [!example] Mittelsenkrechte von A(1, 2) und B(5, 6)\n> Mittelpunkt $(3, 4)$, Steigung von $AB$: $\\tfrac44 = 1$, also Steigung der Senkrechten $-1$.\n> $y - 4 = -(x - 3)$, also $y = -x + 7$.\n> Probe: Der Punkt $(0, 7)$ hat von $A$ den Abstand $\\sqrt{1 + 25} = \\sqrt{26}$ und von $B$ ebenfalls $\\sqrt{25 + 1} = \\sqrt{26}$.\n\nAnwendung: Der Mittelpunkt eines Kreises durch drei Punkte ist der Schnittpunkt zweier Mittelsenkrechter -- siehe **Kreise in der Koordinatenebene**."
+            }
+          ]
+        },
+        {
+          "title": "Schnittpunkte mit den Achsen",
+          "blocks": [
+            {
+              "md": "Den y-Achsenabschnitt liefert $x = 0$, den x-Achsenabschnitt $y = 0$. Für $3x + 4y = 24$: $(0, 6)$ und $(8, 0)$. Die Gerade bildet mit den Achsen ein Dreieck mit Fläche $\\tfrac12 \\cdot 8 \\cdot 6 = 24$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Senkrechte Steigung nur als Kehrwert** oder nur mit geändertem Vorzeichen.\n- **Steigung aus der allgemeinen Form falsch ablesen:** Bei $3x + 4y = 7$ ist $m = -\\tfrac34$, nicht $3$ oder $\\tfrac34$.\n- **In der Abstandsformel die Wurzel vergessen.**\n- **$x_1$ und $x_2$ in Zähler und Nenner der Steigung verschieden anordnen.**\n\nVerwandt: **Kreise in der Koordinatenebene** · Aufgabentypen: **Senkrechte und Mittelsenkrechte aufstellen** · **Flächeninhalt im Koordinatensystem**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Senkrecht",
+      "md": "Ordne jeder Geraden die Steigung einer Senkrechten zu.",
+      "pairs": [
+        [
+          "$y = 3x + 1$",
+          "$-\\tfrac13$"
+        ],
+        [
+          "$y = -\\tfrac12 x$",
+          "$2$"
+        ],
+        [
+          "$2x + y = 5$",
+          "$\\tfrac12$"
+        ],
+        [
+          "$x - 4y = 3$",
+          "$-4$"
+        ]
+      ],
+      "explain": "Erst die Steigung ablesen (nach y auflösen), dann den negativen Kehrwert bilden.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Länge",
+      "md": "Wie lang ist die Strecke von $(-2, 3)$ nach $(4, 11)$?",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\sqrt{6^2 + 8^2} = 10$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Geraden $y = 2x + 1$ und $y = 2x - 5$ schneiden sich nicht.",
+      "answer": true,
+      "explain": "Gleiche Steigung, verschiedene Achsenabschnitte: parallel.",
+      "label": "Parallel",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "The line through $(1, 2)$ perpendicular to $2x + 3y = 6$ crosses the $y$-axis at",
+      "options": [
+        {
+          "md": "$-\\tfrac12$"
+        },
+        {
+          "md": "$\\tfrac12$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac32$"
+        },
+        {
+          "md": "$2$"
+        },
+        {
+          "md": "$\\tfrac72$"
+        }
+      ],
+      "explain": "Steigung der Senkrechten $\\tfrac32$; $y = 2 + \\tfrac32(x - 1)$, bei $x = 0$: $\\tfrac12$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Senkrechte",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Punkt ist der Mittelpunkt von $(-3, 5)$ und $(7, -1)$?",
+      "options": [
+        {
+          "md": "$(2, 2)$",
+          "correct": true
+        },
+        {
+          "md": "$(5, 3)$",
+          "why": "Differenz halbiert statt Summe."
+        },
+        {
+          "md": "$(4, 4)$",
+          "why": "Summe, nicht halbiert."
+        },
+        {
+          "md": "$(10, -6)$",
+          "why": "Differenz der Koordinaten."
+        }
+      ],
+      "explain": "Koordinaten mitteln.",
+      "label": "Mittelpunkt",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "The line through $(1, 2)$ perpendicular to $2x + 3y = 6$ crosses the $y$-axis at",
       "options": [
@@ -42,12 +392,50 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "gerade"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "gerade"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gerade"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Steigung aus zwei Punkten.",
         "Senkrecht: m₁ · m₂ = −1.",
-        "Mittelpunkt und Abstand."
+        "Mittelpunkt und Abstand.",
+        "Steigung $\\tfrac{\\Delta y}{\\Delta x}$; senkrecht $m_1 m_2 = -1$, weil die Drehung $(1, m) \\to (-m, 1)$ ist.",
+        "Mittelpunkt: Koordinaten mitteln; Länge: Pythagoras."
       ],
       "id": "summary"
     }

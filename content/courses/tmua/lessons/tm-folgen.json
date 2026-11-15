@@ -27,6 +27,567 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Folge, explizit und rekursiv\n> Eine **Folge** ordnet jeder positiven ganzen Zahl $n$ ein Glied $a_n$ zu. **Explizit** heißt: $a_n$ direkt aus $n$ berechnen ($a_n = 3n + 2$). **Rekursiv** heißt: ein Startwert und eine Regel, die jedes Glied aus dem Vorgänger macht ($a_1 = 5$, $a_{n+1} = a_n + 3$).\n\n| Typ | Kennzeichen | explizite Form |\n|---|---|---|\n| arithmetisch | feste Differenz $d$ | $a_n = a_1 + (n-1)d$ |\n| geometrisch | fester Quotient $r$ | $a_n = a_1\\,r^{\\,n-1}$ |\n| quadratisch | zweite Differenzen konstant | $a_n = an^2 + bn + c$ |\n| periodisch | Werte wiederholen sich nach $p$ Schritten | $a_{n+p} = a_n$ |\n\n> [!definition] Verhalten einer Folge\n> **Monoton wachsend**, wenn $a_{n+1} \\ge a_n$ für alle $n$ (fallend entsprechend); **beschränkt**, wenn alle Glieder zwischen zwei festen Zahlen liegen; **konvergent** gegen $L$, wenn die Glieder $L$ beliebig nahe kommen und nahe bleiben.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum die zweiten Differenzen einer quadratischen Folge $2a$ sind.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_n = an^2 + bn + c",
+            "why": "Ansatz für eine quadratische Folge."
+          },
+          {
+            "tex": "a_{n+1} - a_n = a(2n + 1) + b",
+            "why": "Erste Differenz: $(n+1)^2 - n^2 = 2n + 1$, das $c$ fällt weg."
+          },
+          {
+            "tex": "(a_{n+2} - a_{n+1}) - (a_{n+1} - a_n) = 2a",
+            "why": "Zweite Differenz: konstant, auch b fällt weg."
+          },
+          {
+            "tex": "2,\\ 7,\\ 14,\\ 23,\\ 34:\\quad 5,\\ 7,\\ 9,\\ 11 \\;\\Rightarrow\\; 2a = 2,\\ a = 1",
+            "why": "Beispiel: Die zweiten Differenzen sind 2."
+          },
+          {
+            "tex": "a_n - n^2 = 1,\\ 3,\\ 5,\\ 7,\\ 9 = 2n - 1",
+            "why": "Den quadratischen Teil abziehen; übrig bleibt eine arithmetische Folge."
+          },
+          {
+            "tex": "a_n = n^2 + 2n - 1",
+            "why": "Probe mit n = 3: 9 + 6 − 1 = 14."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erste Differenz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweite Differenz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rest.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Periodische Rekursion.** $a_1 = 3$, $a_{n+1} = 1 - \\dfrac{1}{a_n}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_1 = 3",
+            "why": "Startwert."
+          },
+          {
+            "tex": "a_2 = 1 - \\tfrac13 = \\tfrac23",
+            "why": "Regel anwenden."
+          },
+          {
+            "tex": "a_3 = 1 - \\tfrac32 = -\\tfrac12",
+            "why": "Und noch einmal."
+          },
+          {
+            "tex": "a_4 = 1 - (-2) = 3 = a_1",
+            "why": "Der Startwert kehrt zurück: Periode 3."
+          },
+          {
+            "tex": "a_{100}:\\ 100 = 3 \\cdot 33 + 1 \\;\\Rightarrow\\; a_{100} = a_1 = 3",
+            "why": "Nur der Rest des Index bei Division durch die Periodenlänge zählt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweites Glied.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Drittes.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Periode.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rest.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Periodisch",
+      "md": "**Die periodische Folge im Bild:** $a_1 = 3$, $a_{n+1} = 1 - \\tfrac{1}{a_n}$.",
+      "widget": "sequence",
+      "params": {
+        "rec": {
+          "a1": 3,
+          "next": "1 - 1/a"
+        },
+        "mode": "terms",
+        "nMax": 12,
+        "n": 1,
+        "yRange": [
+          -1,
+          3.5
+        ],
+        "readout": "n = {N|0}: Glied {a|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Das erste Glied ist 3.",
+          "set": {
+            "N": 1
+          }
+        },
+        {
+          "caption": "Zwei weitere Glieder: zwei Drittel und minus ein halb.",
+          "to": {
+            "N": 3
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "Danach wiederholt sich alles: 3, 2/3, −1/2, 3, 2/3, −1/2, …",
+          "to": {
+            "N": 9
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "Jedes Glied mit Index 3k + 1 ist 3, mit 3k + 2 ist es 2/3, mit 3k ist es −1/2.",
+          "to": {
+            "N": 12
+          },
+          "dur": 1500
+        }
+      ],
+      "int": [
+        "N"
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "anim",
+      "label": "Konvergent",
+      "md": "**Eine konvergente Rekursion:** $a_1 = 2$, $a_{n+1} = \\tfrac12\\left(a_n + \\tfrac{2}{a_n}\\right)$. Grün gestrichelt der Grenzwert $\\sqrt2$.",
+      "widget": "sequence",
+      "params": {
+        "rec": {
+          "a1": 2,
+          "next": "(a + 2/a)/2"
+        },
+        "mode": "terms",
+        "nMax": 8,
+        "n": 1,
+        "yRange": [
+          1.3,
+          2.05
+        ],
+        "limit": "sqrt(2)",
+        "limitLabel": "√2 ≈ 1,41421",
+        "readout": "n = {N|0}: Glied {a|6}"
+      },
+      "timeline": [
+        {
+          "caption": "Start bei 2.",
+          "set": {
+            "N": 1
+          }
+        },
+        {
+          "caption": "1,5 und dann 1,41667: Die Folge fällt monoton.",
+          "to": {
+            "N": 3
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "Ab dem vierten Glied ist sie von √2 auf sechs Stellen nicht mehr zu unterscheiden: Sie ist beschränkt, fallend und konvergiert.",
+          "to": {
+            "N": 8
+          },
+          "dur": 1500
+        }
+      ],
+      "int": [
+        "N"
+      ],
+      "id": "ve5"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Glieder bestimmen\n> - **Quadratisch:** zweite Differenz halbieren ergibt $a$; $an^2$ abziehen; der Rest ist arithmetisch, daraus $b$ und $c$.\n> - **Periodisch:** Glieder ausrechnen, bis der Startwert wiederkehrt; dann den Index durch die Periodenlänge teilen und den Rest benutzen.\n> - **Rekursiv mit Summe** ($u_{n+1} = u_n + f(n)$): einige Glieder ausrechnen und ein Muster vermuten, dann prüfen.",
+      "label": "Verfahren",
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Explizite und rekursive Folgen",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Explizite und rekursive Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Zwei Arten, eine Folge anzugeben",
+          "blocks": [
+            {
+              "md": "Eine **Folge** (*sequence*) ordnet jeder natürlichen Zahl $n$ ein Glied $u_n$ zu (*term*). Die Spezifikation (MM2.1) nennt zwei Beschreibungen:\n\n| Art | englisch | Beispiel | Stärke |\n|---|---|---|---|\n| **explizit** | *formula for the nth term*, *position-to-term rule* | $u_n = n^2 + 2n$ | jedes Glied direkt berechenbar |\n| **rekursiv** | *recurrence relation*, *term-to-term rule* | $x_{n+1} = \\dfrac{1}{1 - x_n}$, $x_1 = 2$ | beschreibt, wie ein Glied aus dem vorigen entsteht |\n\n> [!important] Eine Rekursion braucht einen Startwert\n> $x_{n+1} = 2x_n$ allein legt keine Folge fest; erst mit $x_1 = 3$ entsteht $3, 6, 12, \\dots$. Bei Rekursionen, die auf zwei Vorgänger zurückgreifen ($u_{n+2} = u_{n+1} + u_n$), braucht es zwei Startwerte."
+            }
+          ]
+        },
+        {
+          "title": "Das Verhalten einer Folge",
+          "blocks": [
+            {
+              "md": "| Verhalten | englisch | Beispiel |\n|---|---|---|\n| wachsend | *increasing* | $u_n = 2n + 1$ |\n| fallend | *decreasing* | $u_n = \\tfrac1n$ |\n| periodisch | *periodic* | $2, -1, \\tfrac12, 2, -1, \\tfrac12, \\dots$ |\n| konvergent | *convergent*, strebt gegen einen Grenzwert | $u_n = 1 - \\tfrac{1}{2^n} \\to 1$ |\n| alternierend | *oscillating*, *alternating* | $u_n = (-1)^n$ |"
+            }
+          ]
+        },
+        {
+          "title": "Periodische Rekursionen",
+          "blocks": [
+            {
+              "md": "Der TMUA liebt Rekursionen, die sich nach wenigen Schritten **wiederholen**. Dann lässt sich jedes Glied -- auch das 2027. -- über den Rest bei Division durch die Periodenlänge bestimmen.\n\n> [!example] Periode 3\n> $x_1 = 2$, $x_{n+1} = \\dfrac{1}{1 - x_n}$:\n> $$x_1 = 2,\\quad x_2 = \\frac{1}{1 - 2} = -1,\\quad x_3 = \\frac{1}{1 - (-1)} = \\frac12,\\quad x_4 = \\frac{1}{1 - \\frac12} = 2.$$\n> Ab $x_4$ wiederholt sich alles, weil jedes Glied nur vom vorigen abhängt. Also $x_n = 2$ für $n = 1, 4, 7, \\dots$, allgemein für $n$ mit Rest 1 bei Division durch 3. Da $100 = 3 \\cdot 33 + 1$, ist $x_{100} = 2$.\n\n> [!tip] Warum sich eine Wiederholung sofort fortsetzt\n> Bei einer Rekursion $x_{n+1} = f(x_n)$ bestimmt jedes Glied alle folgenden. Taucht ein Wert zum zweiten Mal auf, läuft die Folge ab dort exakt wie beim ersten Mal. Deshalb genügt es, **bis zur ersten Wiederholung** zu rechnen -- die Periode ist dann bewiesen, nicht nur vermutet."
+            }
+          ]
+        },
+        {
+          "title": "Lineare und quadratische Folgen",
+          "blocks": [
+            {
+              "md": "Aus den ersten Gliedern lässt sich die explizite Formel über **Differenzen** gewinnen (M4.19):\n\n| Folge | erste Differenzen | zweite Differenzen | Typ |\n|---|---|---|---|\n| $5, 8, 11, 14$ | $3, 3, 3$ | -- | linear: $u_n = 3n + 2$ |\n| $3, 8, 15, 24$ | $5, 7, 9$ | $2, 2$ | quadratisch |\n\nBei einer quadratischen Folge $u_n = an^2 + bn + c$ ist die zweite Differenz konstant **$2a$**. Hier also $a = 1$; aus $u_1 = 3$ und $u_2 = 8$ folgen $b = 2$ und $c = 0$: $u_n = n^2 + 2n$."
+            }
+          ]
+        },
+        {
+          "title": "Nützliche Standardfolgen",
+          "blocks": [
+            {
+              "md": "| Folge | Formel |\n|---|---|\n| gerade Zahlen | $2n$ |\n| ungerade Zahlen | $2n - 1$ |\n| Quadratzahlen | $n^2$ |\n| Dreieckszahlen $1, 3, 6, 10$ | $\\tfrac{n(n+1)}{2}$ |\n| Zweierpotenzen | $2^{n-1}$ oder $2^n$ -- auf den Startindex achten |\n| Fibonacci $1, 1, 2, 3, 5$ | $u_{n+2} = u_{n+1} + u_n$ |"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Index verschieben:** Beginnt die Folge bei $n = 0$ oder bei $n = 1$? Das 100. Glied ist $u_{100}$ oder $u_{99}$.\n- **Den Rest falsch zuordnen:** Bei Periode 3 und Rest 0 ist das Glied das **dritte** des Zyklus, nicht das erste.\n- **Eine Periode vermuten, ohne die Wiederholung abzuwarten.**\n- **Aus drei Gliedern eine eindeutige Formel ableiten wollen** -- drei Glieder legen eine quadratische Folge fest, aber nicht jede beliebige.\n\nVerwandt: **Arithmetische und geometrische Reihen** · **Vermutungen aus kleinen Fällen** · Aufgabentypen: **Periodische Rekursion auswerten** · **n-tes Glied einer quadratischen Folge bestimmen** · im Mathematikbestand: **Folgen und Konvergenz**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "n-tes Glied einer quadratischen Folge bestimmen",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Aufgabentypen/n-tes Glied einer quadratischen Folge bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die ersten Glieder einer Folge sind gegeben, die ersten Differenzen sind nicht konstant, die zweiten schon. Gefragt ist die **Formel für das n-te Glied**, ein weit entferntes Glied oder die Position eines bestimmten Wertes. Variante: Die Form $an^2 + bn + c$ ist vorgegeben, dazu zwei oder drei Glieder."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Erste und zweite Differenzen** bilden.\n2. **Zweite Differenz konstant $= 2a$**, also $a$ bestimmen.\n3. **$an^2$ von den Gliedern abziehen**: Übrig bleibt eine lineare Folge $bn + c$.\n4. **$b$ und $c$** aus dieser linearen Folge ablesen (Differenz $= b$).\n5. **Probe** mit einem dritten Glied.\n\n> [!tip] Schritt 3 statt Gleichungssystem\n> Statt drei Gleichungen in $a$, $b$, $c$ zu lösen, zieht man $an^2$ ab. Aus $3, 8, 15, 24$ wird mit $a = 1$: $3 - 1, 8 - 4, 15 - 9, 24 - 16 = 2, 4, 6, 8$ -- offensichtlich $2n$. Also $u_n = n^2 + 2n$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The first five terms of a sequence are $2, 7, 14, 23, 34$. What is the 20th term?\n>\n> - **A** 439\n> - **B** 441\n> - **C** 399\n> - **D** 419\n> - **E** 459\n\n**Schritt 1:** Erste Differenzen $5, 7, 9, 11$; zweite Differenzen $2, 2, 2$.\n\n**Schritt 2:** $2a = 2$, $a = 1$.\n\n**Schritt 3:** $2 - 1, 7 - 4, 14 - 9, 23 - 16 = 1, 3, 5, 7$, also $2n - 1$.\n\n**Schritt 4:** $u_n = n^2 + 2n - 1$.\n\n**Schritt 5:** $u_5 = 25 + 10 - 1 = 34$. Passt. $u_{20} = 400 + 40 - 1 = 439$.\n\nAntwort **A**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$a$ gleich der zweiten Differenz setzen** statt der Hälfte.\n- **Beim Abziehen von $an^2$ den Index verschieben.**\n- **Die Position eines Wertes nicht prüfen:** Ist $403$ ein Glied? Nur wenn die Gleichung eine **positive ganze** Lösung hat."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The $n$th term of a sequence is $n^2 + 3$. Which term of the sequence is equal to 403?\n>\n> - **A** the 18th\n> - **B** the 19th\n> - **C** the 20th\n> - **D** the 21st\n> - **E** 403 is not a term of the sequence\n\n> [!success]- Lösung\n> **C.** $n^2 + 3 = 403 \\iff n^2 = 400 \\iff n = 20$ (die negative Lösung ist kein Index).\n\n> [!question] Aufgabe 2\n> The $n$th term of a sequence is $an^2 + bn$. The 2nd term is 10 and the 5th term is 55. What is the 10th term?\n>\n> - **A** 110\n> - **B** 210\n> - **C** 205\n> - **D** 200\n> - **E** 220\n\n> [!success]- Lösung\n> **B.** $4a + 2b = 10$ und $25a + 5b = 55$, also $2a + b = 5$ und $5a + b = 11$. Subtrahieren: $3a = 6$, $a = 2$, $b = 1$.\n> $u_{10} = 200 + 10 = 210$.\n\n> [!question] Aufgabe 3\n> The first four terms of a sequence are $5, 11, 19, 29$. Given that the sequence is quadratic, which one of the following is its $n$th term?\n>\n> - **A** $n^2 + 3n + 1$\n> - **B** $2n^2 + 4$\n> - **C** $n^2 + 5n - 1$\n> - **D** $6n - 1$\n> - **E** $n^2 + 2n + 2$\n\n> [!success]- Lösung\n> **A.** Differenzen $6, 8, 10$, zweite Differenz 2, also $a = 1$. $5 - 1, 11 - 4, 19 - 9, 29 - 16 = 4, 7, 10, 13 = 3n + 1$.\n> Alternativ Optionen einsetzen: $n = 1$ und $n = 2$ lassen A und D übrig (C liefert $5$ und $13$, E liefert $5$ und $10$). D ist linear und scheitert bei $n = 3$ mit 17 statt 19 -- ein gutes Beispiel dafür, dass zwei Testwerte nicht immer genügen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Periodische Rekursion auswerten** · **Summe einer arithmetischen Reihe bestimmen** · **Antwortoptionen strategisch nutzen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Periodische Rekursion auswerten",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Aufgabentypen/Periodische Rekursion auswerten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Folge ist rekursiv gegeben, und gefragt ist ein **weit entferntes Glied** ($x_{100}$, $u_{2027}$) oder die **Summe sehr vieler Glieder**. Ausrechnen bis dahin ist unmöglich -- also muss sich die Folge wiederholen. Die Rekursion enthält typischerweise Brüche wie $\\frac{1}{1 - x}$, $\\frac{x + 1}{x - 1}$ oder Differenzen wie $u_{n+2} = u_{n+1} - u_n$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Die ersten Glieder exakt berechnen** -- als Brüche, nicht als Dezimalzahlen.\n2. **Bis zur ersten Wiederholung** rechnen. Bei einer Rekursion mit einem Vorgänger genügt ein wiederkehrender Wert; bei zwei Vorgängern muss ein wiederkehrendes **Paar** auftreten.\n3. **Periodenlänge $p$ ablesen.**\n4. **Position im Zyklus bestimmen:** Rest von $n$ bei Division durch $p$. Rest 0 heißt: letztes Glied des Zyklus.\n5. **Für Summen:** Summe über einen vollen Zyklus mal Anzahl voller Zyklen, plus die Summe des angebrochenen Rests."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A sequence is defined by $x_1 = 2$ and $x_{n+1} = \\dfrac{1}{1 - x_n}$ for $n \\ge 1$. What is the value of $x_{100}$?\n>\n> - **A** $-1$\n> - **B** $\\frac12$\n> - **C** 2\n> - **D** $-\\frac12$\n> - **E** 100\n\n**Schritt 1 und 2:** $x_1 = 2$, $x_2 = -1$, $x_3 = \\tfrac12$, $x_4 = 2$ -- Wiederholung.\n\n**Schritt 3:** Periode 3.\n\n**Schritt 4:** $100 = 3 \\cdot 33 + 1$, Rest 1, also erstes Glied des Zyklus: $x_{100} = 2$.\n\nAntwort **C**.\n\n> [!tip] Nebenrechnung Summe\n> Die Summe der ersten 99 Glieder umfasst genau 33 Zyklen: $33 \\cdot \\left(2 - 1 + \\tfrac12\\right) = 33 \\cdot \\tfrac32 = 49{,}5$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Rest 0 falsch zuordnen:** Bei Periode 3 ist $x_{99}$ das **dritte** Glied des Zyklus, also $\\tfrac12$.\n- **Mit Dezimalzahlen rechnen** und die Wiederholung wegen Rundung nicht erkennen.\n- **Bei zwei Vorgängern zu früh abbrechen:** $1, 3, 2, -1, -3, -2, 1, 3$ -- erst das Paar $(1, 3)$ bestätigt die Periode 6.\n- **Den Startindex verschieben**, wenn die Folge bei $x_0$ beginnt."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> A sequence is defined by $a_1 = 3$ and $a_{n+1} = \\dfrac{a_n + 1}{a_n - 1}$ for $n \\ge 1$. What is the value of $a_{2027}$?\n>\n> - **A** 2\n> - **B** 3\n> - **C** $-1$\n> - **D** $\\frac12$\n> - **E** 2027\n\n> [!success]- Lösung\n> **B.** $a_2 = \\tfrac42 = 2$, $a_3 = \\tfrac31 = 3$ -- Periode 2. Glieder mit ungeradem Index sind 3, mit geradem 2. Der Index 2027 ist ungerade.\n\n> [!question] Aufgabe 2\n> A sequence is defined by $u_1 = 1$, $u_2 = 3$ and $u_{n+2} = u_{n+1} - u_n$ for $n \\ge 1$. What is the sum of the first 100 terms?\n>\n> - **A** 0\n> - **B** 5\n> - **C** 1\n> - **D** 3\n> - **E** 6\n\n> [!success]- Lösung\n> **B.** Die Folge lautet $1, 3, 2, -1, -3, -2, 1, 3, \\dots$ -- Periode 6, und die Summe eines Zyklus ist 0.\n> $100 = 6 \\cdot 16 + 4$: 16 volle Zyklen tragen nichts bei, es bleiben die ersten vier Glieder $1 + 3 + 2 - 1 = 5$.\n\n> [!question] Aufgabe 3\n> A sequence is defined by $x_1 = 3$ and $x_{n+1} = 1 - \\dfrac{1}{x_n}$ for $n \\ge 1$. What is the value of $x_{50}$?\n>\n> - **A** 3\n> - **B** $\\frac23$\n> - **C** $-\\frac12$\n> - **D** $\\frac13$\n> - **E** $-2$\n\n> [!success]- Lösung\n> **B.** $x_2 = 1 - \\tfrac13 = \\tfrac23$, $x_3 = 1 - \\tfrac32 = -\\tfrac12$, $x_4 = 1 + 2 = 3$ -- Periode 3.\n> $50 = 3 \\cdot 16 + 2$, Rest 2: zweites Glied des Zyklus, $\\tfrac23$.\n> Bemerkenswert: Die Abbildung $x \\mapsto 1 - \\tfrac1x$ hat für **jeden** zulässigen Startwert die Periode 3."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**n-tes Glied einer quadratischen Folge bestimmen** · **Lange Schlussketten strukturieren** · **Summe einer arithmetischen Reihe bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Quadratisch",
+      "md": "Die Folge 1, 6, 15, 28, 45, … ist quadratisch. Wie lautet ihr 10. Glied?",
+      "answer": 190,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Erste Differenzen 5, 9, 13, 17, zweite Differenzen 4, also $a = 2$. $a_n - 2n^2 = -1, -2, -3, \\ldots = -n$, also $a_n = 2n^2 - n$ und $a_{10} = 200 - 10 = 190$.",
+      "id": "vq1"
+    },
+    {
+      "type": "cloze",
+      "label": "Herleitung",
+      "md": "Bei $a_n = an^2 + bn + c$ sind die zweiten Differenzen konstant gleich {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "2a",
+            "2·a",
+            "2*a"
+          ]
+        }
+      ],
+      "explain": "Erste Differenz $a(2n+1) + b$, zweite Differenz $2a$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "$u_1 = 3$ and $u_{n+1} = \\dfrac{u_n - 1}{u_n + 1}$. What is $u_{50}$?",
+      "options": [
+        {
+          "md": "$-2$"
+        },
+        {
+          "md": "$-\\tfrac{1}{3}$"
+        },
+        {
+          "md": "$\\tfrac{1}{2}$",
+          "correct": true
+        },
+        {
+          "md": "$1$"
+        },
+        {
+          "md": "$3$"
+        }
+      ],
+      "explain": "$3 \\to \\tfrac24 = \\tfrac12 \\to \\tfrac{-1/2}{3/2} = -\\tfrac13 \\to \\tfrac{-4/3}{2/3} = -2 \\to \\tfrac{-3}{-1} = 3$: Periode 4. $50 = 4 \\cdot 12 + 2$, also $u_{50} = u_2 = \\tfrac12$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Periodisch",
+      "id": "vq3"
+    },
+    {
+      "type": "sort",
+      "label": "Typen",
+      "md": "Welcher Typ von Folge liegt vor?",
+      "categories": [
+        "arithmetisch",
+        "geometrisch",
+        "quadratisch",
+        "periodisch"
+      ],
+      "items": [
+        {
+          "md": "7, 4, 1, −2, …",
+          "cat": "arithmetisch"
+        },
+        {
+          "md": "10, 5, 2,5, 1,25, …",
+          "cat": "geometrisch"
+        },
+        {
+          "md": "1, 4, 9, 16, …",
+          "cat": "quadratisch"
+        },
+        {
+          "md": "2, 7, 1, 2, 7, 1, …",
+          "cat": "periodisch"
+        },
+        {
+          "md": "3, 8, 13, 18, …",
+          "cat": "arithmetisch"
+        },
+        {
+          "md": "2, 5, 10, 17, …",
+          "cat": "quadratisch"
+        }
+      ],
+      "explain": "Erste Differenzen konstant: arithmetisch; Quotienten konstant: geometrisch; zweite Differenzen konstant: quadratisch.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine streng monoton wachsende Folge wächst immer über jede Grenze.",
+      "answer": false,
+      "explain": "$a_n = 1 - \\tfrac1n$ wächst streng monoton und bleibt unter 1; sie konvergiert gegen 1.",
+      "label": "Verhalten",
+      "id": "vq5"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Verfahren für das $n$-te Glied einer quadratischen Folge in die richtige Reihenfolge.",
+      "items": [
+        "erste und zweite Differenzen bilden",
+        "die zweite Differenz halbieren: das ist der Faktor vor $n^2$",
+        "den quadratischen Teil von jedem Glied abziehen",
+        "aus der übrigen arithmetischen Folge den linearen Teil und die Konstante ablesen",
+        "mit einem Glied die Probe machen"
+      ],
+      "explain": "Die Reihenfolge: 1. erste und zweite Differenzen bilden. 2. die zweite Differenz halbieren: das ist der Faktor vor $n^2$. 3. den quadratischen Teil von jedem Glied abziehen. 4. aus der übrigen arithmetischen Folge den linearen Teil und die Konstante ablesen. 5. mit einem Glied die Probe machen.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Arithmetisch",
+      "md": "$a_1 = 5$ und $a_{n+1} = a_n + 4$. Das wievielte Glied ist 201?",
+      "answer": 50,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Explizit $a_n = 5 + 4(n - 1) = 4n + 1$. Aus $4n + 1 = 201$ folgt $n = 50$.",
+      "id": "vq7"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Die Folge 3, 8, 15, 24, 35, … ist quadratisch. Wie lautet das 20. Glied?",
@@ -84,6 +645,13 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-folgen",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "md": "The sequence $u_n$ is defined by $u_1 = 1$ and $u_{n+1} = u_n + 2n + 1$. What is $u_{10}$?",
       "options": [
@@ -116,7 +684,9 @@
       "points": [
         "Quadratische Folge: zweite Differenzen 2a.",
         "Periodische Rekursion: Periode finden, Rest nutzen.",
-        "Explizite Formel durch Teleskopieren der Differenzen."
+        "Explizite Formel durch Teleskopieren der Differenzen.",
+        "Quadratische Folge: zweite Differenz $= 2a$; den Teil $an^2$ abziehen, Rest arithmetisch.",
+        "Periodische Rekursion: bis zur Wiederkehr rechnen, dann der Rest des Index modulo Periodenlänge."
       ],
       "id": "summary"
     }

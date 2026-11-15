@@ -19,6 +19,434 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Funktion, Definitions- und Wertebereich\n> Eine **Funktion** ordnet jedem zulässigen $x$ genau einen Wert $f(x)$ zu. Der **Definitionsbereich** (*domain*) sind die zulässigen $x$, der **Wertebereich** (*range*) alle angenommenen Werte. $\\sqrt x$ verlangt $x \\ge 0$, $\\tfrac1x$ verlangt $x \\ne 0$.\n\n> [!definition] Gerade und ungerade Funktionen\n> $f$ ist **gerade**, wenn $f(-x) = f(x)$ für alle $x$ (Achsensymmetrie zur y-Achse), und **ungerade**, wenn $f(-x) = -f(x)$ (Punktsymmetrie zum Ursprung).\n\n> [!definition] Betragsfunktion\n> $|x| = x$ für $x \\ge 0$ und $|x| = -x$ für $x < 0$. Der Betrag ist der Abstand zur Null; $|x - a|$ ist der Abstand von $x$ zu $a$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Wertebereich und Symmetrie.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "|x - 1| \\ge 0 \\;\\Rightarrow\\; 3 - |x - 1| \\le 3",
+            "why": "Der Betrag ist nie negativ; abgezogen kann er nur verkleinern."
+          },
+          {
+            "tex": "x = 1:\\ 3 - 0 = 3",
+            "why": "Der Wert 3 wird angenommen; jeder kleinere ebenso. Wertebereich: f(x) ≤ 3."
+          },
+          {
+            "tex": "f(x) = x^3 - x:\\ f(-x) = -x^3 + x = -f(x)",
+            "why": "Ungerade: punktsymmetrisch zum Ursprung."
+          },
+          {
+            "tex": "g(x) = x^4 - 3x^2:\\ g(-x) = g(x)",
+            "why": "Gerade Exponenten allein ergeben eine gerade Funktion."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Betrag.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wertebereich.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ungerade.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Wann berührt eine Gerade eine Parabel?** Gerade $y = 4x + c$, Parabel $y = x^2 + 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 + 1 = 4x + c",
+            "why": "Gemeinsame Punkte: Gleichsetzen."
+          },
+          {
+            "tex": "x^2 - 4x + (1 - c) = 0",
+            "why": "Eine quadratische Gleichung in x."
+          },
+          {
+            "tex": "\\Delta = 16 - 4(1 - c) = 12 + 4c",
+            "why": "Zwei, ein oder kein Schnittpunkt je nach Vorzeichen."
+          },
+          {
+            "tex": "\\text{Tangente} \\iff \\Delta = 0 \\iff c = -3",
+            "why": "Genau ein gemeinsamer Punkt: Berührung, hier bei x = 2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gleichsetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ordnen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diskriminante.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangente.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Tangente",
+      "md": "**Die Gerade $y = 4x + c$ gleitet an der Parabel $y = x^2 + 1$ vorbei.**",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          5
+        ],
+        "y": [
+          -4,
+          20
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "c",
+            "min": -6,
+            "max": 3,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "p",
+            "expr": "x^2 + 1",
+            "color": "blue",
+            "samples": 300
+          },
+          {
+            "name": "g",
+            "expr": "4*x + c",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "2 - sqrt(3 + c)",
+            "y": "4*(2 - sqrt(3 + c)) + c",
+            "color": "green"
+          },
+          {
+            "x": "2 + sqrt(3 + c)",
+            "y": "4*(2 + sqrt(3 + c)) + c",
+            "color": "green"
+          }
+        ],
+        "readout": "c = {c|1} · Δ = 12 + 4c = {12 + 4*c|1} · Schnittpunkte: {c > -2.999 ? 2 : (c > -3.001 ? 1 : 0)}"
+      },
+      "timeline": [
+        {
+          "caption": "c = 2: Δ = 20, zwei Schnittpunkte.",
+          "set": {
+            "c": 2
+          }
+        },
+        {
+          "caption": "c = −1: Die Schnittpunkte rücken zusammen.",
+          "to": {
+            "c": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = −3: Δ = 0, die Gerade berührt bei x = 2. Das ist die Tangente.",
+          "to": {
+            "c": -3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = −5: Δ < 0, die Gerade verfehlt die Parabel.",
+          "to": {
+            "c": -5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Gleichungssysteme:** Ein lineares System mit zwei Unbekannten hat eine Lösung (Geraden schneiden sich), keine (parallel) oder unendlich viele (identisch). Bei einem linear-quadratischen System löst man die lineare Gleichung nach einer Variablen auf und setzt ein; die Diskriminante der entstehenden quadratischen Gleichung zählt die Schnittpunkte.\n\n**Symmetrische Systeme** wie $x + y = 7$, $xy = 12$ löst man über Vieta: $x$ und $y$ sind die Lösungen von $t^2 - 7t + 12 = 0$, also 3 und 4.",
+      "label": "Systeme",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Funktionseigenschaften und Betragsfunktion",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Funktionseigenschaften und Betragsfunktion.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Eine Funktion als Zuordnung",
+          "blocks": [
+            {
+              "md": "Die Spezifikation verlangt (MM1.7) ein qualitatives Verständnis, dass eine Funktion eine **viele-zu-eins-Zuordnung** ist, manchmal auch eine **eins-zu-eins-Zuordnung** (*many-to-one*, *one-to-one mapping*).\n\n| Begriff | bedeutet | Beispiel |\n|---|---|---|\n| Funktion | jedem zulässigen $x$ wird **genau ein** Wert zugeordnet | $f(x) = x^2$ |\n| viele-zu-eins | verschiedene $x$ dürfen denselben Wert haben | $f(2) = f(-2) = 4$ |\n| eins-zu-eins | verschiedene $x$ haben verschiedene Werte | $g(x) = x^3$ |\n| keine Funktion | ein $x$ mit zwei Werten | $y = \\pm\\sqrt x$ |\n\n> [!tip] Der waagerechte und der senkrechte Test\n> **Senkrecht:** Trifft jede senkrechte Gerade den Graphen höchstens einmal, ist es eine Funktion. **Waagerecht:** Trifft zusätzlich jede waagerechte Gerade den Graphen höchstens einmal, ist sie eins-zu-eins.\n>\n> Warum das im TMUA zählt: Die Gleichung $f(x) = c$ hat so viele Lösungen, wie die waagerechte Gerade $y = c$ den Graphen schneidet. Viele-zu-eins-Funktionen erzeugen mehrere Lösungen -- genau die, die man beim Umkehren übersieht. $x^2 = 9$ hat zwei Lösungen, weil $x \\mapsto x^2$ viele-zu-eins ist."
+            }
+          ]
+        },
+        {
+          "title": "Definitionsbereich und Wertebereich",
+          "blocks": [
+            {
+              "md": "- **Definitionsbereich** (*domain*): die zulässigen Eingaben. $\\sqrt x$ verlangt $x \\ge 0$, $\\tfrac1x$ verlangt $x \\ne 0$, $\\log_a x$ verlangt $x > 0$.\n- **Wertebereich** (*range*): die tatsächlich angenommenen Werte. $x^2 + 6x + 10 = (x + 3)^2 + 1$ hat den Wertebereich $[1, \\infty)$ -- abgelesen über die **quadratische Ergänzung**."
+            }
+          ]
+        },
+        {
+          "title": "Die Wurzelfunktion",
+          "blocks": [
+            {
+              "md": "$\\sqrt x$ bezeichnet stets die **nichtnegative** Wurzel. Deshalb ist $\\sqrt{x^2} = \\lvert x \\rvert$ und nicht $x$, und die Gleichung $\\sqrt{x + 5} = x - 1$ kann nur Lösungen mit $x - 1 \\ge 0$ haben."
+            }
+          ]
+        },
+        {
+          "title": "Die Betragsfunktion",
+          "blocks": [
+            {
+              "md": "$$\\lvert x \\rvert = \\begin{cases} x & \\text{für } x \\ge 0 \\\\ -x & \\text{für } x < 0 \\end{cases}$$\n\nDer Graph ist ein **V** mit Spitze im Ursprung. Die Spezifikation verlangt, ihn skizzieren zu können (MM8.1, *the modulus function*).\n\n> [!important] Der Betrag als Abstand\n> $\\lvert x - a \\rvert$ ist der **Abstand** von $x$ zu $a$ auf der Zahlengeraden. Diese Deutung löst viele Aufgaben ohne Rechnung:\n>\n> - $\\lvert x - 1 \\rvert < 2$: alle Zahlen mit Abstand unter 2 von der 1, also $-1 < x < 3$.\n> - $\\lvert x + 1 \\rvert > \\lvert x - 3 \\rvert$: näher an 3 als an $-1$, also rechts der Mitte 1: $x > 1$.\n\n**Rechenregeln:**\n\n| Regel | Bemerkung |\n|---|---|\n| $\\lvert ab \\rvert = \\lvert a \\rvert \\cdot \\lvert b \\rvert$ | gilt immer |\n| $\\lvert a + b \\rvert \\le \\lvert a \\rvert + \\lvert b \\rvert$ | Dreiecksungleichung, Gleichheit bei gleichem Vorzeichen |\n| $\\lvert a \\rvert^2 = a^2$ | deshalb darf man Betragsungleichungen mit nichtnegativen Seiten quadrieren |\n| $\\lvert a \\rvert = \\lvert b \\rvert \\iff a = b$ oder $a = -b$ | Grundlage der Fallunterscheidung |"
+            }
+          ]
+        },
+        {
+          "title": "Nicht verlangt",
+          "blocks": [
+            {
+              "md": "Verkettete Funktionen und Umkehrfunktionen kommen in der TMUA-Spezifikation **nicht** vor -- die Wörter *composite* und *inverse function* tauchen dort nicht auf. Die Transformationen von Graphen (MM8.2) werden zwar hintereinander ausgeführt, aber als Verschiebungen und Streckungen, nicht als Verkettung beliebiger Funktionen. Siehe **Transformationen von Graphen**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **$\\sqrt{x^2} = x$** statt $\\lvert x \\rvert$.\n- **Bei $f(x) = c$ nur eine Lösung suchen**, obwohl $f$ viele-zu-eins ist.\n- **Den Definitionsbereich ignorieren** und Lösungen außerhalb davon angeben.\n- **$\\lvert a + b \\rvert = \\lvert a \\rvert + \\lvert b \\rvert$ für allgemeingültig halten.**\n\nVerwandt: **Standardgraphen skizzieren** · Aufgabentypen: **Betragsgleichungen und Betragsungleichungen** · **Graphen mit Betrag skizzieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Gleichungssysteme und Schnittpunkte",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Gleichungssysteme und Schnittpunkte.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Gleichungssystem und Graphen",
+          "blocks": [
+            {
+              "md": "Ein **Gleichungssystem** (*simultaneous equations*) verlangt Werte, die **alle** Gleichungen zugleich erfüllen. Geometrisch sind das die **Schnittpunkte** der zugehörigen Graphen -- die Spezifikation verlangt diese Deutung ausdrücklich (MM8.7):\n\n$$\\text{Lösungen des Systems} \\;\\Longleftrightarrow\\; \\text{gemeinsame Punkte der Graphen}.$$\n\nWer die Anzahl der Lösungen wissen will, muss sie oft gar nicht ausrechnen -- eine Skizze oder die Diskriminante genügt."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Systeme mit zwei Unbekannten",
+          "blocks": [
+            {
+              "md": "Zwei Verfahren: **Einsetzen** (*substitution*) und **Addieren** (*elimination*). Drei mögliche Ergebnisse:\n\n| Lage der Geraden | Lösungen | Erkennungszeichen |\n|---|---|---|\n| schneiden sich | genau eine | verschiedene Steigungen |\n| parallel, verschieden | keine | gleiche Steigung, verschiedener Achsenabschnitt |\n| identisch | unendlich viele | eine Gleichung ist Vielfaches der anderen |"
+            }
+          ]
+        },
+        {
+          "title": "Linear-quadratische Systeme",
+          "blocks": [
+            {
+              "md": "Die Spezifikation nennt diesen Fall eigens (MM1.4): eine lineare und eine quadratische Gleichung.\n\n**Verfahren:** Die lineare Gleichung nach einer Variablen auflösen, in die quadratische einsetzen, die entstehende quadratische Gleichung lösen, die zweite Koordinate aus der **linearen** Gleichung bestimmen.\n\n> [!example] Gerade und Kreis\n> $y = x + 1$ und $x^2 + y^2 = 13$. Einsetzen: $x^2 + (x+1)^2 = 13$, also $2x^2 + 2x - 12 = 0$, also $x^2 + x - 6 = (x + 3)(x - 2) = 0$.\n> $x = 2$ liefert $y = 3$; $x = -3$ liefert $y = -2$. Schnittpunkte $(2, 3)$ und $(-3, -2)$.\n\n> [!important] Die zweite Koordinate aus der linearen Gleichung\n> Wer $y$ aus der quadratischen Gleichung bestimmt, erhält zu jedem $x$ oft **zwei** Werte ($y = \\pm\\sqrt{\\dots}$) -- und damit Scheinlösungen, die nicht auf der Geraden liegen. Die lineare Gleichung liefert zu jedem $x$ genau das richtige $y$."
+            }
+          ]
+        },
+        {
+          "title": "Anzahl der Schnittpunkte ohne Rechnen",
+          "blocks": [
+            {
+              "md": "Nach dem Einsetzen entscheidet die **Diskriminante** der entstandenen Gleichung:\n\n- $\\Delta > 0$: zwei Schnittpunkte,\n- $\\Delta = 0$: ein Berührpunkt -- die Gerade ist **Tangente**,\n- $\\Delta < 0$: kein gemeinsamer Punkt.\n\nBei zwei quadratischen Gleichungen (etwa Kreis und Parabel) kann es bis zu vier Schnittpunkte geben. Dort hilft oft das Einsetzen einer ganzen Teilgröße, etwa $x^2 = y + 5$, und anschließend das Zählen: Jeder positive Wert für $x^2$ liefert zwei Punkte, der Wert 0 einen, negative Werte keinen."
+            }
+          ]
+        },
+        {
+          "title": "Symmetrische Systeme",
+          "blocks": [
+            {
+              "md": "Bei Systemen wie $x + y = 5$, $xy = 6$ fragt der TMUA oft gar nicht nach $x$ und $y$, sondern nach einem **symmetrischen Ausdruck**:\n\n$$x^2 + y^2 = (x + y)^2 - 2xy = 25 - 12 = 13.$$\n\nDie Werte selbst ($2$ und $3$) werden nicht gebraucht. Solche Umformungen sparen im Test viel Zeit."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Die zweite Koordinate aus der quadratischen Gleichung bestimmen** und Scheinlösungen mitnehmen.\n- **Nur die x-Werte angeben**, wenn nach Punkten gefragt ist.\n- **Beim Einsetzen Klammern vergessen:** $(x + 1)^2$, nicht $x^2 + 1$.\n- **Bei zwei Quadratischen die Fälle $x^2 < 0$ übersehen**, die keinen Punkt liefern.\n\nVerwandt: **Quadratische Funktionen und Diskriminante** · **Lösungen grafisch deuten** · **Kreise in der Koordinatenebene** · Aufgabentypen: **Linear-quadratisches Gleichungssystem lösen** · **Parameterbedingung über die Diskriminante**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Wertebereich",
+      "md": "Ordne jeder Funktion ihren Wertebereich zu.",
+      "pairs": [
+        [
+          "$f(x) = x^2 + 2$",
+          "$f(x) \\ge 2$"
+        ],
+        [
+          "$f(x) = 5 - |x|$",
+          "$f(x) \\le 5$"
+        ],
+        [
+          "$f(x) = \\sqrt{x} - 1$",
+          "$f(x) \\ge -1$"
+        ],
+        [
+          "$f(x) = -(x - 3)^2$",
+          "$f(x) \\le 0$"
+        ]
+      ],
+      "explain": "Jeweils den Baustein ansehen, der nie negativ ist (Quadrat, Betrag, Wurzel), und verfolgen, wie er verschoben oder gespiegelt wird.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = x^3 - x$ ist eine ungerade Funktion.",
+      "answer": true,
+      "explain": "$f(-x) = -x^3 + x = -(x^3 - x) = -f(x)$.",
+      "label": "Symmetrie",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "What is the largest possible domain of $f(x) = \\sqrt{4 - x^2}$?",
+      "options": [
+        {
+          "md": "$x \\ge -2$",
+          "why": "Für $x > 2$ ist der Radikand negativ."
+        },
+        {
+          "md": "$-2 \\le x \\le 2$",
+          "correct": true
+        },
+        {
+          "md": "$-4 \\le x \\le 4$",
+          "why": "Der Radikand ist $4 - x^2$, nicht $4 - |x|$."
+        },
+        {
+          "md": "$x \\le 2$",
+          "why": "Auch für $x < -2$ wird $4 - x^2$ negativ."
+        },
+        {
+          "md": "all real $x$",
+          "why": "Für $x = 3$ ist $4 - 9 < 0$."
+        }
+      ],
+      "explain": "Die Wurzel verlangt $4 - x^2 \\ge 0$, also $x^2 \\le 4$ und $-2 \\le x \\le 2$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Definitionsbereich",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Tangente",
+      "md": "Für welches $c$ ist die Gerade $y = 6x + c$ eine Tangente an $y = x^2 + 4$?",
+      "answer": -5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x^2 - 6x + 4 - c = 0$ mit $\\Delta = 36 - 4(4 - c) = 20 + 4c = 0$, also $c = -5$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Die Zahlen $x$ und $y$ erfüllen $x + y = 9$ und $xy = 20$. Welche Gleichung haben beide als Lösungen?",
+      "options": [
+        {
+          "md": "$t^2 - 9t + 20 = 0$",
+          "correct": true
+        },
+        {
+          "md": "$t^2 + 9t + 20 = 0$",
+          "why": "Vorzeichen: Die Summe steht mit Minus vor $t$."
+        },
+        {
+          "md": "$t^2 - 20t + 9 = 0$",
+          "why": "Summe und Produkt vertauscht."
+        },
+        {
+          "md": "$t^2 - 9t - 20 = 0$",
+          "why": "Das Produkt steht mit Plus als Absolutglied."
+        }
+      ],
+      "explain": "Nach Vieta: $(t - x)(t - y) = t^2 - (x + y)t + xy$. Lösungen 4 und 5.",
+      "label": "Systeme",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "The line $y = 2x + c$ is a tangent to the curve $y = x^2 + 3$. What is $c$?",
       "options": [
@@ -66,12 +494,50 @@
       "id": "c2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "lgs"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "lgs"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "betrag"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Gerade/ungerade über f(−x).",
         "Betrag: Fallunterscheidung oder Spiegelung.",
-        "Gerade und Kurve: gleichsetzen, Diskriminante."
+        "Gerade und Kurve: gleichsetzen, Diskriminante.",
+        "Wertebereich über den nie negativen Baustein; gerade: f(−x) = f(x), ungerade: f(−x) = −f(x).",
+        "Gerade und Parabel: gleichsetzen; Δ > 0 schneiden, Δ = 0 berühren (Tangente), Δ < 0 verfehlen."
       ],
       "id": "summary"
     }

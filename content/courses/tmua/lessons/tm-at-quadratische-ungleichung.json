@@ -16,6 +16,288 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Alles auf eine Seite**, sodass rechts 0 steht; bei negativem Leitkoeffizienten notfalls mit $-1$ multiplizieren und das Zeichen umdrehen.\n> 2. **Nullstellen bestimmen**, durch Faktorisieren oder die Lösungsformel.\n> 3. **Parabel skizzieren:** nach oben geöffnet heißt negativ zwischen, positiv außerhalb der Nullstellen.\n> 4. **Bereich ablesen und Ränder** nach $<$ oder $\\le$ ein- oder ausschließen.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Löse $2x^2 + x \\ge 6$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "2x^2 + x - 6 \\ge 0",
+            "why": "Alles auf eine Seite."
+          },
+          {
+            "tex": "(2x - 3)(x + 2) \\ge 0",
+            "why": "Faktorisieren: Nullstellen 3/2 und −2."
+          },
+          {
+            "tex": "x \\le -2 \\quad\\text{oder}\\quad x \\ge \\tfrac32",
+            "why": "Nach oben geöffnet: außerhalb der Nullstellen nicht negativ; wegen ≥ mit Rändern."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ordnen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstellen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ablesen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ablesen",
+      "md": "**Ablesen statt rechnen:** blau $y = 2x^2 + x - 6$, grün die Bereiche mit $y \\ge 0$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          3
+        ],
+        "y": [
+          -8,
+          10
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -4,
+            "max": 3,
+            "value": -3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "2*x^2 + x - 6",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "vbands": [
+          {
+            "x": -3,
+            "d": 1,
+            "color": "green"
+          },
+          {
+            "x": 2.25,
+            "d": 0.75,
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": -2,
+            "y": 0,
+            "color": "orange",
+            "label": "−2"
+          },
+          {
+            "x": 1.5,
+            "y": 0,
+            "color": "orange",
+            "label": "3/2"
+          },
+          {
+            "x": "X",
+            "y": "f(X)",
+            "color": "blue"
+          }
+        ],
+        "readout": "x = {X|2} · y = {f(X)|2} · Ungleichung erfüllt: {f(X) >= 0 ? 1 : 0} (1 = ja)"
+      },
+      "timeline": [
+        {
+          "caption": "Links von −2 liegt die Parabel über der Achse: erfüllt.",
+          "set": {
+            "X": -3
+          }
+        },
+        {
+          "caption": "Zwischen den Nullstellen liegt sie darunter: nicht erfüllt.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechts von 3/2 wieder darüber. Die Nullstellen selbst gehören wegen ≥ dazu.",
+          "to": {
+            "X": 2.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Die Wurzel ziehen: Aus $x^2 > 9$ folgt nicht nur $x > 3$.\n- Durch $x$ teilen und dabei einen Teil der Lösungen verlieren.\n- Beim Multiplizieren mit einer negativen Zahl das Zeichen nicht umdrehen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Quadratische Ungleichung lösen",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Quadratische Ungleichung lösen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist die vollständige Lösungsmenge einer quadratischen Ungleichung, allein oder in Kombination mit einer zweiten Bedingung: *Find the complete set of values of x for which ...*, *Which of the following is the solution set of ...?*, *x satisfies both ... and ...*. Die Optionen unterscheiden sich meist an Rändern und in *and* gegen *or*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Alles auf eine Seite:** $ax^2 + bx + c \\;\\square\\; 0$ mit $\\square \\in \\{<, \\le, >, \\ge\\}$. **Nie durch einen Term mit $x$ teilen.**\n2. **Nullstellen bestimmen**, am liebsten durch Faktorisieren.\n3. **Skizze der Parabel** über der Zahlengeraden: für $a > 0$ nach oben geöffnet.\n4. **Ablesen:** $< 0$ zwischen den Nullstellen, $> 0$ außerhalb (für $a > 0$).\n5. **Ränder** nach $\\le$ und $\\ge$ einschließen, nach $<$ und $>$ ausschließen.\n6. **Bei mehreren Bedingungen** alle Lösungsmengen auf **eine** Zahlengerade zeichnen und Durchschnitt (*and*) oder Vereinigung (*or*) bilden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the complete set of values of $x$ for which $2x^2 + x - 6 \\le 0$.\n>\n> - **A** $-2 \\le x \\le \\frac32$\n> - **B** $x \\le -2$ or $x \\ge \\frac32$\n> - **C** $-\\frac32 \\le x \\le 2$\n> - **D** $-2 < x < \\frac32$\n> - **E** $x \\le \\frac32$\n\n**Schritt 2:** $2x^2 + x - 6 = (2x - 3)(x + 2)$, Nullstellen $x = \\tfrac32$ und $x = -2$.\n\n**Schritt 3 und 4:** $a = 2 > 0$, Parabel nach oben offen. $\\le 0$ gilt zwischen den Nullstellen.\n\n**Schritt 5:** $\\le$ schließt die Ränder ein.\n\nAntwort **A**.\n\n> [!tip] Faktorisieren bei $a \\ne 1$\n> Gesucht sind zwei Zahlen mit Produkt $a \\cdot c = -12$ und Summe $b = 1$: $4$ und $-3$. Dann $2x^2 + 4x - 3x - 6 = 2x(x + 2) - 3(x + 2) = (2x - 3)(x + 2)$. Option C entsteht aus vertauschten Vorzeichen der Nullstellen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Durch $x$ teilen:** Aus $x^2 > 3x$ wird fälschlich $x > 3$, der Bereich $x < 0$ fehlt.\n- **Innen und außen verwechseln**, besonders bei $a < 0$. Im Zweifel einen Testwert zwischen den Nullstellen einsetzen.\n- **Ränder falsch behandeln.**\n- **Bei \"and\" die Vereinigung bilden**, bei \"or\" den Durchschnitt."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the complete set of values of $x$ for which $x^2 > 3x$.\n>\n> - **A** $x > 3$\n> - **B** $x < 0$ or $x > 3$\n> - **C** $0 < x < 3$\n> - **D** $x > 0$\n> - **E** $x < 3$\n\n> [!success]- Lösung\n> **B.** $x^2 - 3x > 0 \\iff x(x - 3) > 0$: außerhalb der Nullstellen 0 und 3.\n> A ist das Ergebnis der unzulässigen Division durch $x$. Testwert $x = -1$: $1 > -3$ -- wahr, also gehört der negative Bereich dazu.\n\n> [!question] Aufgabe 2\n> Find the complete set of values of $x$ that satisfy both $x + 4 > 3x$ and $x^2 - 3x - 4 < 0$.\n>\n> - **A** $-1 < x < 2$\n> - **B** $x < 2$\n> - **C** $-1 < x < 4$\n> - **D** $2 < x < 4$\n> - **E** $x < -1$\n\n> [!success]- Lösung\n> **A.** Erste Bedingung: $4 > 2x$, also $x < 2$. Zweite: $(x - 4)(x + 1) < 0$, also $-1 < x < 4$.\n> Beide zugleich (Durchschnitt): $-1 < x < 2$.\n\n> [!question] Aufgabe 3\n> Find the complete set of values of $x$ that satisfy both $x^2 \\le 9$ and $x^2 \\ge 2x$.\n>\n> - **A** $-3 \\le x \\le 0$ or $2 \\le x \\le 3$\n> - **B** $0 \\le x \\le 2$\n> - **C** $-3 \\le x \\le 3$\n> - **D** $x \\le 0$ or $x \\ge 2$\n> - **E** $2 \\le x \\le 3$\n\n> [!success]- Lösung\n> **A.** $x^2 \\le 9 \\iff -3 \\le x \\le 3$. $x^2 - 2x \\ge 0 \\iff x(x - 2) \\ge 0 \\iff x \\le 0$ oder $x \\ge 2$.\n> Durchschnitt auf der Zahlengeraden: die beiden Randstücke $[-3, 0]$ und $[2, 3]$.\n> E ist die Antwort, wenn man $x^2 \\ge 2x$ durch $x$ teilt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Betragsgleichungen und Betragsungleichungen** · **Parameterwerte für wahre Aussagen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Solve $x^2 < 4x$.",
+      "options": [
+        {
+          "md": "$x < 0$ or $x > 4$",
+          "why": "Das ist die Menge für $>$."
+        },
+        {
+          "md": "$0 \\le x \\le 4$",
+          "why": "Die Ränder sind ausgeschlossen."
+        },
+        {
+          "md": "$-4 < x < 4$",
+          "why": "Kein Bezug zu den Nullstellen 0 und 4."
+        },
+        {
+          "md": "$x < 4$",
+          "why": "Wer durch $x$ teilt, verliert die Bedingung $x > 0$."
+        },
+        {
+          "md": "$0 < x < 4$",
+          "correct": true
+        }
+      ],
+      "explain": "$x^2 - 4x = x(x - 4) < 0$: zwischen den Nullstellen 0 und 4.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Lösen",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Zählen",
+      "md": "Wie viele ganze Zahlen erfüllen $x^2 - 6x + 5 \\le 0$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$(x - 1)(x - 5) \\le 0 \\iff 1 \\le x \\le 5$: fünf ganze Zahlen.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Löse $-x^2 + 2x + 3 > 0$.",
+      "options": [
+        {
+          "md": "$-1 < x < 3$",
+          "correct": true
+        },
+        {
+          "md": "$x < -1$ oder $x > 3$",
+          "why": "Nach dem Multiplizieren mit −1 dreht sich das Zeichen um."
+        },
+        {
+          "md": "$x > 3$",
+          "why": "Der Bereich liegt zwischen den Nullstellen."
+        },
+        {
+          "md": "$-3 < x < 1$",
+          "why": "Vorzeichen der Nullstellen vertauscht."
+        }
+      ],
+      "explain": "Mit $-1$ multiplizieren: $x^2 - 2x - 3 < 0 \\iff (x - 3)(x + 1) < 0$.",
+      "label": "Negativer Leitkoeffizient",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Ungleichung $x^2 \\ge 0$ gilt für alle reellen Zahlen.",
+      "answer": true,
+      "explain": "Ein Quadrat ist nie negativ.",
+      "label": "Sonderfall",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -67,6 +349,51 @@
       "lang": "en",
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "qungleichung"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "qungleichung"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "qungleichung"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Auf null bringen, Nullstellen, Skizze, Bereich ablesen, Ränder beachten.",
+        "Nie die Wurzel ziehen oder durch x teilen."
+      ]
     }
   ]
 }

@@ -3,73 +3,887 @@
   "title": "Wann »wenn P, dann Q« wahr ist",
   "subtitle": "Etappe 1: Implikationen lesen, Gegenbeispiele finden, Optionen nutzen",
   "vault": [
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Implikation und Äquivalenz.md", "title": "Implikation und Äquivalenz" },
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Wahrheitswert einer Implikation prüfen.md", "title": "Wahrheitswert einer Implikation prüfen" },
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aussagen und logische Verknüpfungen.md", "title": "Aussagen und logische Verknüpfungen" },
-    { "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Antwortoptionen strategisch nutzen.md", "title": "Antwortoptionen strategisch nutzen" }
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Implikation und Äquivalenz.md",
+      "title": "Implikation und Äquivalenz"
+    },
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Wahrheitswert einer Implikation prüfen.md",
+      "title": "Wahrheitswert einer Implikation prüfen"
+    },
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aussagen und logische Verknüpfungen.md",
+      "title": "Aussagen und logische Verknüpfungen"
+    },
+    {
+      "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Antwortoptionen strategisch nutzen.md",
+      "title": "Antwortoptionen strategisch nutzen"
+    }
   ],
   "steps": [
     {
-      "id": "format", "type": "text",
+      "id": "format",
+      "type": "text",
       "md": "Im TMUA hat jede Aufgabe genau eine richtige Antwort unter bis zu acht Optionen, **A** bis **H**. Falsche Antworten kosten nichts: **keine Aufgabe leer lassen**.\n\nDie Optionen sind selbst Information. Lauten sie »none of them«, »I only«, »I and II only« und so weiter, reicht es oft, **eine** der drei Aussagen sicher zu entscheiden: Ist I falsch, fallen vier der acht Optionen weg."
     },
     {
-      "id": "kern", "type": "text",
+      "id": "kern",
+      "type": "text",
       "md": "Eine **Implikation** »wenn $P$, dann $Q$« (*if P, then Q*) ist nur in einem einzigen Fall falsch: $P$ ist wahr und $Q$ ist falsch.\n\nIst $P$ falsch, gilt die Implikation, egal was $Q$ tut. Eine Aussage über **alle** reellen Zahlen, »für alle $x$: wenn $P(x)$, dann $Q(x)$«, ist deshalb schon falsch, wenn es ein einziges $x$ gibt, das $P$ erfüllt und $Q$ verletzt: ein **Gegenbeispiel**."
     },
     {
-      "id": "tafel", "type": "choice",
+      "type": "text",
+      "md": "> [!definition] Aussage (*statement*)\n> Ein Satz, der entweder wahr oder falsch ist. »$7$ ist eine Primzahl« ist eine Aussage, »$x > 2$« noch nicht: Das ist eine **Aussageform**, die erst durch einen Wert für $x$ oder durch »für alle $x$« beziehungsweise »es gibt ein $x$« wahr oder falsch wird.\n\n> [!definition] Die Verknüpfungen\n> - **nicht $P$** (*not P*) ist wahr, wenn $P$ falsch ist.\n> - **$P$ und $Q$** (*P and Q*) ist wahr, wenn beide wahr sind.\n> - **$P$ oder $Q$** (*P or Q*) ist wahr, wenn **mindestens eine** wahr ist; das mathematische Oder schließt »beide« ein.\n> - **wenn $P$, dann $Q$** (*if P then Q*, $P \\Rightarrow Q$) ist nur falsch, wenn $P$ wahr und $Q$ falsch ist.\n> - **$P$ genau dann, wenn $Q$** (*P if and only if Q*, $P \\Leftrightarrow Q$) ist wahr, wenn beide denselben Wahrheitswert haben.\n\n$P$ heißt **Voraussetzung** (*hypothesis*), $Q$ **Folgerung** (*conclusion*).",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "widget",
+      "label": "Wahrheitstafel",
+      "md": "Die Verknüpfungen auf einen Blick. Achte auf die Spalte der Implikation: nur in der zweiten Zeile steht f.",
+      "widget": "truth-table",
+      "params": {
+        "vars": [
+          "P",
+          "Q"
+        ],
+        "columns": [
+          {
+            "label": "P \\wedge Q",
+            "expr": "P & Q"
+          },
+          {
+            "label": "P \\vee Q",
+            "expr": "P | Q"
+          },
+          {
+            "label": "P \\Rightarrow Q",
+            "expr": "P => Q"
+          },
+          {
+            "label": "P \\Leftrightarrow Q",
+            "expr": "P <=> Q"
+          }
+        ]
+      },
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Wann eine Implikation wahr ist, und was ihr Gegenteil ist.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{»Wenn es regnet, nehme ich einen Schirm mit.«}",
+            "why": "Eine Implikation ist ein Versprechen. Gebrochen ist es nur, wenn es regnet und kein Schirm dabei ist."
+          },
+          {
+            "tex": "P \\text{ falsch} \\;\\Rightarrow\\; (P \\Rightarrow Q) \\text{ wahr}",
+            "why": "Regnet es nicht, ist das Versprechen nicht gebrochen, gleich ob ein Schirm dabei ist: leer wahr (*vacuously true*)."
+          },
+          {
+            "tex": "(P \\Rightarrow Q) \\;\\equiv\\; (\\text{nicht } P) \\text{ oder } Q",
+            "why": "Beide Seiten sind genau im Fall »P wahr, Q falsch« falsch, sonst wahr."
+          },
+          {
+            "tex": "\\text{nicht}(P \\Rightarrow Q) \\;\\equiv\\; P \\text{ und nicht } Q",
+            "why": "Das Gegenteil einer Implikation ist keine Implikation, sondern ein Und: genau der eine verbotene Fall."
+          },
+          {
+            "tex": "\\text{»für alle } x: P(x) \\Rightarrow Q(x)\\text{« ist falsch} \\iff \\text{es gibt } x \\text{ mit } P(x) \\text{ und nicht } Q(x)",
+            "why": "Darum widerlegt ein einziges Gegenbeispiel eine Allaussage. Es muss die Voraussetzung erfüllen und die Folgerung verletzen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Versprechen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Falsche Voraussetzung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichwertige Form.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verneinung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenbeispiel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Zahlengerade",
+      "md": "**Wahrheitsmengen auf der Zahlengeraden:** blau die Zahlen mit $x^2 > 4$, orange die mit $x > 2$. Der Punkt auf einer Zeile leuchtet, wenn der Testwert die Aussage erfüllt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          4
+        ],
+        "y": [
+          0,
+          2.8
+        ],
+        "grid": false,
+        "xLabel": "x",
+        "vars": [
+          {
+            "name": "X",
+            "min": -4,
+            "max": 4,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "r0s0",
+            "expr": "2",
+            "domain": [
+              -4,
+              -2
+            ],
+            "color": "blue",
+            "width": 7,
+            "samples": 4
+          },
+          {
+            "name": "r0s1",
+            "expr": "2",
+            "domain": [
+              2,
+              4
+            ],
+            "color": "blue",
+            "width": 7,
+            "samples": 4
+          },
+          {
+            "name": "r1s0",
+            "expr": "1",
+            "domain": [
+              2,
+              4
+            ],
+            "color": "orange",
+            "width": 7,
+            "samples": 4
+          }
+        ],
+        "labels": [
+          {
+            "x": 3.84,
+            "y": 2.36,
+            "text": "P: x² > 4",
+            "anchor": "end",
+            "color": "blue"
+          },
+          {
+            "x": 3.84,
+            "y": 1.3599999999999999,
+            "text": "Q: x > 2",
+            "anchor": "end",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "(X^2 > 4) ? 2 : -9",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "(X > 2) ? 1 : -9",
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "y": 0,
+            "color": "label"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "vbands": [
+          {
+            "x": -3.0,
+            "d": 1.0,
+            "color": "red"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Geprüft wird: für alle reellen x, wenn x² > 4, dann x > 2. Bei x = 3 gelten beide, die Implikation ist hier erfüllt.",
+          "set": {
+            "X": 3
+          }
+        },
+        {
+          "caption": "Bei x = 0 ist die Voraussetzung falsch. Die Implikation verspricht hier nichts und ist für diesen Wert wahr.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = −3 gilt x² > 4, aber nicht x > 2: ein Gegenbeispiel. Rot markiert sind alle Gegenbeispiele.",
+          "to": {
+            "X": -3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Allaussage ist also falsch. Wahr wäre sie genau dann, wenn die blaue Menge ganz in der orangen läge.",
+          "to": {
+            "X": -2.6
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Umkehrung »wenn x > 2, dann x² > 4« ist wahr: Die orange Menge liegt ganz in der blauen.",
+          "to": {
+            "X": 3.4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Dieselbe Implikation $P \\Rightarrow Q$ in vielen Formulierungen.** Die Spezifikation nennt *if A then B*, *A if B*, *A only if B* und *A if and only if B* ausdrücklich.\n\n| Formulierung | bedeutet |\n|---|---|\n| *if P then Q*, *P implies Q* | $P \\Rightarrow Q$ |\n| *Q if P*, *Q whenever P* | $P \\Rightarrow Q$: »if« steht vor der Voraussetzung, egal an welcher Stelle im Satz |\n| ***P only if Q*** | $P \\Rightarrow Q$: »only if« steht vor der Folgerung |\n| *P is sufficient for Q* | $P \\Rightarrow Q$ |\n| *Q is necessary for P* | $P \\Rightarrow Q$ |\n| *P if and only if Q* | $P \\Rightarrow Q$ und $Q \\Rightarrow P$ |\n\n> [!warning] »only if« ist die gefährlichste Formulierung\n> *You can vote only if you are at least 18* heißt nicht, dass jeder ab 18 wählen darf. Es heißt: Wer wählt, ist mindestens 18. Also **wählen $\\Rightarrow$ mindestens 18**.\n\nEine Implikation ist **keine Ursache**: »wenn $n$ durch 4 teilbar ist, dann ist $n$ gerade« behauptet nur, dass der eine Fall nie ohne den anderen vorkommt.",
+      "label": "Formulierungen",
+      "id": "ve5"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Wahrheitswert einer Implikation prüfen\n> 1. Voraussetzung und Folgerung als **Mengen** schreiben (zum Beispiel $x^2 > 4$ als $x < -2$ oder $x > 2$).\n> 2. Prüfen, ob die Menge der Voraussetzung **ganz** in der Menge der Folgerung liegt.\n> 3. Wenn nicht: ein Element aus »Voraussetzung ohne Folgerung« ist das Gegenbeispiel.\n> 4. Ohne Mengenbild Testwerte in dieser Reihenfolge: negative Zahlen, Zahlen zwischen 0 und 1, die Ränder (0, 1, Grenzen der Bedingung), große Zahlen.",
+      "label": "Verfahren",
+      "id": "ve6"
+    },
+    {
+      "id": "ve7",
+      "type": "anim",
+      "md": "**Herleitung: Wie ein einziges Urteil die Optionen halbiert** (Fragen der Form *which of I, II, III is/are true*).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{none},\\ \\text{I},\\ \\text{II},\\ \\text{III},\\ \\text{I+II},\\ \\text{I+III},\\ \\text{II+III},\\ \\text{I+II+III}",
+            "why": "Die acht Optionen A bis H: jede Teilmenge der drei Aussagen."
+          },
+          {
+            "tex": "\\text{I falsch} \\;\\Rightarrow\\; \\text{streiche I, I+II, I+III, I+II+III}",
+            "why": "Jede Aussage steckt in genau vier der acht Optionen: Ein Urteil streicht vier."
+          },
+          {
+            "tex": "\\text{II wahr} \\;\\Rightarrow\\; \\text{streiche none, III}",
+            "why": "Von den übrigen vier fallen die zwei ohne II weg."
+          },
+          {
+            "tex": "\\text{übrig: II, II+III} \\;\\Rightarrow\\; \\text{nur III entscheidet}",
+            "why": "Zuerst die leichteste Aussage entscheiden, nicht die erste."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Acht Optionen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erstes Urteil.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweites Urteil.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rest.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Implikation und Äquivalenz",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Implikation und Äquivalenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Implikation \"wenn A, dann B\"",
+          "blocks": [
+            {
+              "md": "Die **Implikation** (*if A then B*, *A implies B*) behauptet: **In jedem Fall, in dem A wahr ist, ist auch B wahr.** Sie ist genau dann falsch, wenn A wahr und B falsch ist -- und nur dann.\n\n| A | B | wenn A, dann B |\n|---|---|---|\n| w | w | w |\n| w | f | **f** |\n| f | w | w |\n| f | f | w |\n\n> [!important] Die Implikation als Versprechen\n> *\"If it rains, I will bring an umbrella.\"* Wann ist das Versprechen gebrochen? Nur wenn es regnet **und** kein Schirm dabei ist. Regnet es nicht, ist das Versprechen nicht gebrochen -- ganz gleich, ob ein Schirm dabei ist oder nicht.\n>\n> Deshalb ist eine Implikation mit falscher Voraussetzung **wahr**. Man nennt das *vacuously true* (leer wahr). Die Aussage *\"If 2 + 2 = 5, then every integer is prime\"* ist wahr -- sie behauptet nichts über eine Welt, in der $2 + 2 = 4$ gilt.\n\nDaraus folgt eine nützliche Umschreibung:\n\n$$\\text{wenn A, dann B} \\;\\equiv\\; (\\text{nicht A}) \\text{ oder } B$$\n\nBeide sind genau im Fall *A wahr, B falsch* falsch. Die Verneinung der Implikation ist damit **keine Implikation**, sondern ein Und: *A und nicht B* -- siehe **Negation von Aussagen**."
+            }
+          ]
+        },
+        {
+          "title": "Implikationen mit Variablen",
+          "blocks": [
+            {
+              "md": "Im TMUA enthalten Implikationen fast immer eine Variable: *\"If x > 2, then x² > 4.\"* Gemeint ist stets die **Allaussage** *\"for every real x: if x > 2, then x² > 4\"*.\n\n- Sie ist **wahr**, wenn es kein $x$ gibt, für das die Voraussetzung gilt und die Folgerung nicht.\n- Sie ist **falsch**, sobald **ein** solches $x$ existiert -- ein **Gegenbeispiel** (*counterexample*).\n\n*Beispiel:* *\"If n is prime, then n is odd\"* ist falsch, denn $n = 2$ ist prim und gerade. Dass alle anderen Primzahlen ungerade sind, rettet die Aussage nicht.\n\n> [!warning] Werte mit falscher Voraussetzung sind keine Gegenbeispiele\n> Für *\"if x > 2, then x² > 9\"* ist $x = 1$ **kein** Gegenbeispiel: Die Voraussetzung $1 > 2$ ist falsch, die Implikation für diesen Wert also wahr. Ein Gegenbeispiel muss die Voraussetzung **erfüllen** und die Folgerung **verletzen** -- hier etwa $x = 2{,}5$ mit $6{,}25 < 9$."
+            }
+          ]
+        },
+        {
+          "title": "Die sprachlichen Formen",
+          "blocks": [
+            {
+              "md": "Dieselbe Implikation A ⇒ B lässt sich auf viele Arten sagen. Die Spezifikation nennt ausdrücklich *if A then B*, *A if B*, *A only if B* und *A if and only if B*.\n\n| Formulierung | bedeutet | Merkhilfe |\n|---|---|---|\n| *if A then B* | A ⇒ B | Grundform |\n| *A implies B* | A ⇒ B | |\n| *B if A* | A ⇒ B | das \"if\" steht vor der **Voraussetzung**, egal wo im Satz |\n| ***A only if B*** | **A ⇒ B** | \"only if\" steht vor der **Folgerung** |\n| *B whenever A* | A ⇒ B | |\n| *A is sufficient for B* | A ⇒ B | siehe **Notwendige und hinreichende Bedingungen** |\n| *B is necessary for A* | A ⇒ B | |\n\n> [!important] \"Only if\" ist die gefährlichste Formulierung im ganzen Test\n> *\"A only if B\"* heißt: A kann **nur dann** eintreten, wenn B eintritt. Tritt B nicht ein, ist A ausgeschlossen. Also gilt: Wann immer A, dann B -- **A ⇒ B**.\n>\n> Der Instinkt liest es umgekehrt, weil \"if B\" wie eine Voraussetzung klingt. Prüfstein: *\"You can vote only if you are at least 18\"* heißt nicht, dass jeder ab 18 wählen darf (Staatsangehörigkeit, Registrierung). Es heißt: Wer wählt, ist mindestens 18. **Wählen ⇒ mindestens 18.**"
+            }
+          ]
+        },
+        {
+          "title": "Die Äquivalenz \"genau dann, wenn\"",
+          "blocks": [
+            {
+              "md": "*A if and only if B* (kurz *iff*) verbindet beide Richtungen:\n\n$$A \\iff B \\quad\\text{bedeutet}\\quad (A \\Rightarrow B) \\text{ und } (B \\Rightarrow A).$$\n\nSie ist genau dann wahr, wenn A und B **denselben Wahrheitswert** haben. Die Formulierung zerfällt wörtlich in ihre beiden Hälften: *A if B* (B ⇒ A) und *A only if B* (A ⇒ B).\n\n*Beispiel:* Für eine ganze Zahl $n$ gilt *\"n is odd if and only if n² is odd\"*. Die Richtung ⇒ folgt aus $(2k+1)^2 = 2(2k^2+2k)+1$; die Richtung ⇐ über die **Kontraposition**: Ist $n$ gerade, ist auch $n^2$ gerade."
+            }
+          ]
+        },
+        {
+          "title": "Implikation ist keine Ursache",
+          "blocks": [
+            {
+              "md": "> [!info] Logische Folge und Kausalität sind verschiedene Dinge\n> *\"If n is divisible by 4, then n is even\"* behauptet nicht, dass die Teilbarkeit durch 4 die Geradheit **verursacht**. Die Implikation sagt nur etwas über Wahrheitswerte: Es gibt keinen Fall, in dem das eine wahr und das andere falsch ist.\n>\n> Das erklärt auch, warum *\"If the moon is made of cheese, then 7 is prime\"* wahr ist: Die Implikation fragt nicht nach einem inhaltlichen Zusammenhang."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Die Implikation für falsch halten, weil die Voraussetzung falsch ist.** Sie ist dann wahr.\n- **\"A only if B\" als B ⇒ A lesen.** Richtig ist A ⇒ B.\n- **Ein Beispiel für einen Beweis halten:** Dass die Implikation für $x = 3$ stimmt, zeigt nichts über alle $x$.\n- **Werte als Gegenbeispiel wählen, die die Voraussetzung nicht erfüllen.**\n- **In Definitionen gelesenes \"if\" als \"iff\" übertragen.** Im Alltag der Mathematik steht in Definitionen oft \"if\" für \"iff\"; in Logikaufgaben des TMUA gilt das Wort wörtlich.\n\nVerwandt: **Umkehrung und Kontraposition** · **Notwendige und hinreichende Bedingungen** · Aufgabentypen: **Wahrheitswert einer Implikation prüfen** · **Äquivalente Umformulierungen erkennen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Wahrheitswert einer Implikation prüfen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Wahrheitswert einer Implikation prüfen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine oder mehrere Aussagen der Form *if ..., then ...* werden vorgelegt, meist mit einer Variable und einem Grundbereich. Gefragt ist, welche davon wahr sind -- oft im Raster *I only*, *I and II only* und so weiter, manchmal auch: *For which value of x is the statement false?*\n\nErkennungsmerkmale: *Which of the following statements is/are true?*, *if*, *only if*, *whenever*, *for all real x*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Grundbereich festhalten:** reell, ganzzahlig, positiv?\n2. **Versteckten Allquantor mitlesen:** *If x > 1, then ...* heißt *für alle x: wenn x > 1, dann ...*\n3. **\"Only if\" übersetzen:** *A only if B* ist A ⇒ B.\n4. **Gezielt ein Gegenbeispiel suchen:** einen Wert, der die **Voraussetzung erfüllt** und die **Folgerung verletzt**. Gute Kandidaten: 0, negative Zahlen, Brüche zwischen 0 und 1, die kleinste Primzahl 2, Randwerte der Voraussetzung.\n5. **Findet sich keines, ein kurzes Argument** für alle Fälle suchen -- oft über Umformen oder die **Kontraposition**.\n6. **Optionen streichen**, sobald eine Aussage entschieden ist.\n\n> [!tip] Die Suchreihenfolge für Gegenbeispiele\n> Die meisten falschen Implikationen im TMUA scheitern an einer von fünf Stellen: **null**, **negativen Zahlen**, **Zahlen zwischen 0 und 1**, der **Primzahl 2**, **irrationalen Zahlen wie $\\sqrt2$**. Wer diese fünf in dieser Reihenfolge durchgeht, findet in der Regel das Gegenbeispiel in unter einer Minute."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Which of the following statements is/are true?\n>\n> I If $n$ is a prime number, then $n + 2$ is not a prime number.\n> II If $n$ is an integer and $n^2$ is divisible by 4, then $n$ is even.\n> III If $x$ is a real number with $x > 1$, then $x^2 > x$.\n>\n> - **A** none of them\n> - **B** I only\n> - **C** II only\n> - **D** III only\n> - **E** I and II only\n> - **F** II and III only\n> - **G** I and III only\n> - **H** I, II and III\n\n**Aussage I:** Gegenbeispiel suchen -- eine Primzahl $n$, für die $n + 2$ ebenfalls prim ist. $n = 3$ liefert $5$, prim. **Falsch.** Damit fallen B, E, G, H.\n\n**Aussage III** (die leichtere der beiden übrigen): $x^2 - x = x(x - 1)$. Für $x > 1$ sind beide Faktoren positiv, also $x^2 > x$. **Wahr.** Damit fallen A und C.\n\nÜbrig: D und F. Sie unterscheiden sich nur in Aussage II.\n\n**Aussage II:** Über die Kontraposition: Ist $n$ ungerade, so ist $n^2$ ungerade und damit erst recht nicht durch 4 teilbar. Also gilt die Aussage. **Wahr.**\n\nAntwort **F**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Werte als Gegenbeispiel werten, die die Voraussetzung nicht erfüllen.** Für *\"if x > 2, then x² > 9\"* ist $x = 1$ kein Gegenbeispiel -- die Implikation ist für $x = 1$ wahr.\n- **Nur positive ganze Zahlen testen**, wenn der Grundbereich reell ist.\n- **Eine Aussage für wahr halten, weil sie für \"fast alle\" Werte stimmt.** Ein Gegenbeispiel genügt.\n- **\"Only if\" umgekehrt lesen.**\n- **Die Voraussetzung mit zwei Teilen nur halb prüfen:** In II muss $n$ eine ganze Zahl **und** $n^2$ durch 4 teilbar sein."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Which of the following statements is/are true for all real numbers $x$?\n>\n> I If $x^2 = x$, then $x = 1$.\n> II If $x < 0$, then $x^3 < x$.\n> III If $x \\ne 0$, then $x + \\dfrac{1}{x} \\ge 2$.\n>\n> - **A** none of them\n> - **B** I only\n> - **C** II only\n> - **D** III only\n> - **E** I and II only\n> - **F** I and III only\n> - **G** II and III only\n> - **H** I, II and III\n\n> [!success]- Lösung\n> **A.** Alle drei sind falsch.\n> I: $x^2 = x$ hat auch die Lösung $x = 0$. Gegenbeispiel $x = 0$.\n> II: $x^3 < x$ heißt $x(x^2 - 1) < 0$. Für $-1 < x < 0$ sind beide Faktoren negativ, das Produkt also positiv. Gegenbeispiel $x = -\\tfrac12$: $x^3 = -\\tfrac18 > -\\tfrac12$.\n> III: Für negative $x$ ist die linke Seite negativ. Gegenbeispiel $x = -1$: $-2 < 2$.\n> Alle drei Fallen stehen in der Suchreihenfolge: null, Brüche zwischen $-1$ und $0$, negative Zahlen.\n\n> [!question] Aufgabe 2\n> Consider the statement: \"If $x > 2$, then $x^2 > 9$.\" For which one of the following values of $x$ is this statement **false**?\n>\n> - **A** $x = 1$\n> - **B** $x = 2.5$\n> - **C** $x = 3.5$\n> - **D** $x = 4$\n> - **E** $x = -4$\n\n> [!success]- Lösung\n> **B.** Falsch ist die Implikation nur, wenn die Voraussetzung wahr und die Folgerung falsch ist. $x = 2{,}5$: $2{,}5 > 2$ ist wahr, $6{,}25 > 9$ ist falsch.\n> Bei A und E ist die Voraussetzung falsch -- die Implikation ist dort **wahr**. Bei C und D sind beide Teile wahr.\n\n> [!question] Aufgabe 3\n> Which of the following statements is/are true?\n>\n> I If $x$ is irrational, then $x^2$ is irrational.\n> II If $x^2$ is irrational, then $x$ is irrational.\n> III If $x$ and $y$ are both irrational, then $x + y$ is irrational.\n>\n> - **A** none of them\n> - **B** I only\n> - **C** II only\n> - **D** III only\n> - **E** I and II only\n> - **F** II and III only\n\n> [!success]- Lösung\n> **C.**\n> I: $x = \\sqrt2$ ist irrational, $x^2 = 2$ nicht. Falsch.\n> II: Kontraposition: Ist $x$ rational, $x = \\tfrac pq$, so ist $x^2 = \\tfrac{p^2}{q^2}$ rational. Wahr.\n> III: $x = \\sqrt2$, $y = -\\sqrt2$: beide irrational, Summe $0$ rational. Falsch.\n> I und II sind Umkehrungen voneinander -- ein gutes Beispiel dafür, dass die Umkehrung einer wahren Aussage falsch sein kann."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Gegenbeispiel auswählen** · **Äquivalente Umformulierungen erkennen** · **Notwendig oder hinreichend entscheiden**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Aussagen und logische Verknüpfungen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aussagen und logische Verknüpfungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was eine Aussage ist",
+          "blocks": [
+            {
+              "md": "Eine **Aussage** (*statement*) ist ein Satz, der **entweder wahr oder falsch** ist -- nicht beides und nicht keines von beiden. Die Mathematik arbeitet mit diesem Zweiwertigkeitsprinzip, dem Satz vom ausgeschlossenen Dritten.\n\n| Satz | Aussage? | Grund |\n|---|---|---|\n| *7 is a prime number.* | ja, wahr | |\n| *Every square number is even.* | ja, falsch | $9$ ist ungerade |\n| *Every even number greater than 2 is the sum of two primes.* | ja | wahr oder falsch, auch wenn bis heute niemand weiß, welches (Goldbach-Vermutung) |\n| *x > 3* | **nein** | der Wahrheitswert hängt von $x$ ab |\n| *Solve x² = 4.* | nein | eine Aufforderung |\n\n> [!important] Aussageformen werden erst durch Belegung oder Quantor zur Aussage\n> Ein Satz mit freier Variable wie $x > 3$ heißt **Aussageform** (*open sentence*). Er wird zur Aussage, sobald $x$ belegt wird (*\"5 > 3\"*, wahr) oder ein Quantor davorsteht (*\"for all real x, x > 3\"*, falsch). Im TMUA steht der Quantor oft **unsichtbar** im Satz: *\"If n is prime, then n is odd\"* meint *\"for every integer n ...\"* -- und ist deshalb falsch, weil $n = 2$ ein Gegenbeispiel ist. Siehe **Quantoren - für alle und es gibt**."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Grundverknüpfungen",
+          "blocks": [
+            {
+              "md": "| Verknüpfung | englisch | wahr genau dann, wenn ... |\n|---|---|---|\n| **nicht A** (Negation) | *not A* | A falsch ist |\n| **A und B** (Konjunktion) | *A and B* | **beide** wahr sind |\n| **A oder B** (Disjunktion) | *A or B* | **mindestens eine** wahr ist -- auch beide |\n\n> [!warning] Mathematisches \"oder\" ist immer einschließend\n> Im Alltag schließt \"Tee oder Kaffee\" meist beides aus. In der Mathematik -- und laut Spezifikation ausdrücklich im TMUA (*or, meaning inclusive or*) -- ist *A or B* auch dann wahr, wenn beide Teile wahr sind. Die Aussage *\"6 is even or 6 is divisible by 3\"* ist wahr, obwohl sogar beides zutrifft.\n>\n> Ist das ausschließende Oder gemeint, steht es ausdrücklich da: *exactly one of*, *either ... or ... but not both*.\n\n### Wahrheitswerte im Überblick\n\nDie Spezifikation verlangt keine formalen Wahrheitstafeln. Als Denkhilfe ist die Übersicht trotzdem nützlich, weil sie zeigt, dass es bei zwei Aussagen nur **vier Fälle** gibt:\n\n| A | B | nicht A | A und B | A oder B |\n|---|---|---|---|---|\n| w | w | f | **w** | **w** |\n| w | f | f | f | **w** |\n| f | w | w | f | **w** |\n| f | f | w | f | f |"
+            }
+          ]
+        },
+        {
+          "title": "Übersetzen zwischen Umgangssprache und Logik",
+          "blocks": [
+            {
+              "md": "| Formulierung | logische Form |\n|---|---|\n| *both A and B* | A und B |\n| *neither A nor B* | nicht A **und** nicht B |\n| *at least one of A, B* | A oder B |\n| *exactly one of A, B* | (A oder B) und nicht (A und B) |\n| *not both A and B* | nicht A **oder** nicht B |\n| *A but not B* | A und nicht B |\n\n> [!tip] \"But\" ist logisch ein \"and\"\n> *\"x is positive but not an integer\"* bedeutet schlicht *x ist positiv und x ist keine ganze Zahl*. Das \"but\" drückt einen Kontrast in der Erwartung aus, keinen logischen Unterschied."
+            }
+          ]
+        },
+        {
+          "title": "Die Regeln von De Morgan",
+          "blocks": [
+            {
+              "md": "Beim Verneinen einer Verknüpfung **kehrt sich die Verknüpfung um**:\n\n$$\\text{nicht}(A \\text{ und } B) \\;\\equiv\\; (\\text{nicht } A) \\text{ oder } (\\text{nicht } B)$$\n$$\\text{nicht}(A \\text{ oder } B) \\;\\equiv\\; (\\text{nicht } A) \\text{ und } (\\text{nicht } B)$$\n\n**Begründung ohne Tafel:** *A und B* verlangt, dass beides stimmt. Damit das scheitert, genügt es, dass **eines** nicht stimmt -- das ist ein Oder. *A oder B* verlangt nur eines. Damit das scheitert, muss **beides** nicht stimmen -- das ist ein Und.\n\n*Beispiel:* Das Gegenteil von *\"n is even and n is greater than 10\"* ist *\"n is odd **or** n is at most 10\"* -- nicht *\"n is odd and n is at most 10\"*. Die Zahl 4 erfüllt die Verneinung (sie ist nicht größer als 10), obwohl sie gerade ist."
+            }
+          ]
+        },
+        {
+          "title": "Warum dieser Stoff im TMUA zählt",
+          "blocks": [
+            {
+              "md": "Die Verknüpfungen sind die Bausteine aller weiteren Logik: Die **Implikation** lässt sich als *nicht A oder B* schreiben, ihre Verneinung als *A und nicht B*; die **Negation von Aussagen** ist ohne De Morgan nicht zu machen. Wer hier unsicher ist, verliert Punkte an Stellen, an denen er sie gar nicht vermutet -- bei Ungleichungen etwa, wo *\"x < −2 or x > 2\"* die Lösung von $x^2 > 4$ ist und seine Verneinung *\"−2 ≤ x ≤ 2\"*."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Oder ausschließend lesen** und eine Aussage für falsch halten, weil beide Teile wahr sind.\n- **Beim Verneinen die Verknüpfung behalten:** nicht(A und B) als nicht A und nicht B.\n- **\"Neither ... nor\" als Oder übersetzen.** Es verneint beide Teile gleichzeitig: nicht A und nicht B.\n- **Aussageformen bewerten**, ohne den unsichtbaren Quantor mitzulesen.\n\nVerwandt: **Implikation und Äquivalenz** · **Negation von Aussagen** · **Quantoren - für alle und es gibt** · philosophischer Hintergrund in **Logik**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz4",
+      "type": "note",
+      "title": "Antwortoptionen strategisch nutzen",
+      "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Antwortoptionen strategisch nutzen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der Grundgedanke",
+          "blocks": [
+            {
+              "md": "Eine Multiple-Choice-Frage enthält mehr Information als eine offene: Sie verrät, dass **genau eine** der angebotenen Optionen richtig ist. Wer vier Optionen widerlegt, hat die fünfte bewiesen -- ohne sie je hergeleitet zu haben.\n\nIm Abitur wäre das kein zulässiger Weg, weil dort der Lösungsweg bewertet wird. Im TMUA zählt allein das Kreuz. Das macht Verfahren legitim, die sonst unsauber wären: **Werte einsetzen, Grenzfälle prüfen, Optionen ausschließen.**\n\n> [!important] Die logische Grundlage\n> Einsetzen konkreter Werte kann eine Allaussage nie **beweisen**, aber jederzeit **widerlegen** -- ein einziges Gegenbeispiel genügt. Im Multiple-Choice-Format ist das keine Schwäche: Scheitern vier Optionen an Gegenbeispielen, bleibt die fünfte übrig, und die Voraussetzung, dass genau eine richtig ist, erledigt den Rest. Siehe **Widerlegung durch Gegenbeispiel**."
+            }
+          ]
+        },
+        {
+          "title": "Sechs Techniken",
+          "blocks": [
+            {
+              "md": "### 1. Werte einsetzen, die Optionen trennen\nBei Formeln in $n$ oder $x$: kleine, einfache Werte einsetzen und mit jeder Option vergleichen.\n\n*Beispiel:* Die Summe der ersten $n$ ungeraden Zahlen ist gesucht, Optionen $n^2$, $n^2+1$, $2n-1$, $\\tfrac{n(n+1)}{2}$. Für $n = 1$ ist die Summe 1: Es bleiben $n^2$ und $2n-1$ sowie $\\tfrac{n(n+1)}{2}$. Für $n = 2$ ist die Summe $1 + 3 = 4$: Nur $n^2$ liefert 4.\n\n> [!warning] Werte wählen, die nicht zu viel gemeinsam haben\n> $x = 0$ und $x = 1$ lassen viele Ausdrücke zusammenfallen ($x^2 = x$, $\\sqrt{x} = x$). Nach einem ersten Test mit 0 oder 1 immer einen **allgemeinen** Wert wie 2, 3 oder $-2$ nachschieben.\n\n### 2. Randwerte bei Lösungsmengen testen\nOptionen der Form *the complete set of values of k* unterscheiden sich fast immer an den Rändern: strenge oder nicht strenge Ungleichung, eingeschlossener oder ausgeschlossener Randpunkt.\n\n*Beispiel:* Für welche $k$ hat $x^2 + kx + 4 = 0$ keine reelle Lösung? Test $k = 0$: $x^2 + 4 = 0$ hat keine Lösung, also muss die richtige Option $k = 0$ enthalten. Test $k = 4$: $x^2 + 4x + 4 = (x+2)^2 = 0$ hat eine (doppelte) Lösung, also muss $k = 4$ **ausgeschlossen** sein. Damit ist $-4 < k < 4$ gefunden, noch bevor die Diskriminante aufgeschrieben ist.\n\n### 3. Grenzfälle und Extremfälle\nBei Ausdrücken mit Parametern den Parameter gegen einen Grenzwert laufen lassen: gegen 0, gegen unendlich, gleich einem anderen Parameter. Eine Flächenformel, die für $a \\to 0$ nicht gegen 0 geht, ist falsch.\n\n### 4. Plausibilität von Vorzeichen, Größe und Einheit\nWahrscheinlichkeiten liegen zwischen 0 und 1, Flächen sind positiv, eine Länge hat keine Einheit zum Quadrat. Grobe Abschätzungen schließen oft die Hälfte der Optionen aus, bevor gerechnet wird -- siehe **Kopfrechnen und Abschätzen ohne Taschenrechner**.\n\n### 5. Die Struktur der Optionen lesen\nUnterscheiden sich die Optionen nur in **einem** Merkmal -- etwa im Vorzeichen, im Faktor 2 oder in der Frage, ob ein Randpunkt dazugehört --, dann prüft die Aufgabe genau dieses Merkmal. Die Rechnung kann sich darauf konzentrieren.\n\n### 6. Das Raster der Aussagenfragen ausnutzen\nPaper 2 fragt oft: *Which of the following statements is/are true?* mit Optionen wie *none*, *I only*, *II only*, *I and II only*, *I, II and III*.\n\n| Schritt | Vorgehen |\n|---|---|\n| 1 | die **leichteste** Aussage zuerst entscheiden, nicht die erste |\n| 2 | alle Optionen streichen, die dieser Entscheidung widersprechen |\n| 3 | nur noch die Aussagen prüfen, in denen sich die verbliebenen Optionen unterscheiden |\n\nStehen nach zwei Entscheidungen nur noch *I and II only* und *I, II and III* zur Wahl, bleibt allein Aussage III zu prüfen -- die anderen sind erledigt."
+            }
+          ]
+        },
+        {
+          "title": "Wann Einsetzen nicht reicht",
+          "blocks": [
+            {
+              "md": "> [!warning] Grenzen der Methode\n> - Wenn **zwei** Optionen nach allen naheliegenden Tests übrig bleiben, muss die Unterscheidung inhaltlich erfolgen. Weitere Zufallswerte helfen dann selten.\n> - Bei Fragen nach *must be true* genügt ein Beispiel, das die Aussage **erfüllt**, nicht -- es braucht ein Argument für alle Fälle oder den Ausschluss aller anderen Optionen.\n> - Bei *could be true* (kann wahr sein) genügt dagegen **ein** Beispiel. Die beiden Formulierungen verlangen entgegengesetzte Beweislasten."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Einen einzigen Testwert für ausreichend halten**, obwohl zwei Optionen für diesen Wert übereinstimmen.\n- **Die Voraussetzung vergessen**: Ist $n$ als positive ganze Zahl gegeben, sind $n = 0$ oder $n = \\tfrac12$ keine zulässigen Testwerte.\n- **Randpunkte ungeprüft lassen**: Die richtige und die häufigste falsche Option unterscheiden sich meist genau dort.\n- **Vorzeitig ankreuzen**, weil die erste getestete Option passt -- ohne zu prüfen, ob eine zweite ebenfalls passt.\n\nVerwandt: **Zeitmanagement und Triage** · **Widerlegung durch Gegenbeispiel** · **Quantoren - für alle und es gibt**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "widget",
+      "label": "Wahrheitstafel ausfüllen",
+      "md": "Fülle die Spalten aus und vergleiche: »wenn $P$, dann $Q$« und »(nicht $P$) oder $Q$«. Tippe auf die Felder, um zwischen w und f zu wechseln.",
+      "widget": "truth-table",
+      "params": {
+        "vars": [
+          "P",
+          "Q"
+        ],
+        "columns": [
+          {
+            "label": "P \\Rightarrow Q",
+            "expr": "P => Q",
+            "ask": true
+          },
+          {
+            "label": "\\neg P \\vee Q",
+            "expr": "!P | Q",
+            "ask": true
+          }
+        ]
+      },
+      "goal": {},
+      "explain": "Beide Spalten lauten w, f, w, w. Die Implikation ist nur im Fall »$P$ wahr, $Q$ falsch« falsch, und genau dort ist auch »(nicht $P$) oder $Q$« falsch.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Formulierungen",
+      "md": "Ordne jeder Formulierung ihre Bedeutung zu.",
+      "pairs": [
+        [
+          "*$P$ if $Q$*",
+          "$Q \\Rightarrow P$"
+        ],
+        [
+          "*$P$ only if $Q$*",
+          "$P \\Rightarrow Q$"
+        ],
+        [
+          "*$P$ if and only if $Q$*",
+          "$P \\Leftrightarrow Q$"
+        ],
+        [
+          "*$P$ or $Q$*",
+          "mindestens eine der beiden ist wahr"
+        ],
+        [
+          "*not ($P$ and $Q$)*",
+          "höchstens eine der beiden ist wahr"
+        ]
+      ],
+      "explain": "»if« steht vor der Voraussetzung, »only if« vor der Folgerung; das mathematische Oder schließt den Fall »beide« ein.",
+      "id": "vq2"
+    },
+    {
+      "type": "cloze",
+      "label": "Verneinung",
+      "md": "Die Verneinung von »wenn $P$, dann $Q$« lautet: $P$ {{0}} nicht $Q$.",
+      "blanks": [
+        {
+          "accept": [
+            "und",
+            "and"
+          ]
+        }
+      ],
+      "explain": "$\\text{nicht}(P \\Rightarrow Q) \\equiv P$ und nicht $Q$: der eine Fall, in dem das Versprechen gebrochen ist.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Aussage *if $2 + 2 = 5$, then $7$ is even* ist wahr.",
+      "answer": true,
+      "explain": "Die Voraussetzung ist falsch, also ist die Implikation leer wahr. Sie behauptet nichts über eine Welt, in der $2 + 2 = 4$ gilt.",
+      "label": "Leer wahr",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Which value of $x$ is a counterexample to the statement *if $x^3 > x$, then $x > 1$*?",
+      "options": [
+        {
+          "md": "$-2$",
+          "why": "$(-2)^3 = -8 > -2$ ist falsch: Die Voraussetzung gilt nicht."
+        },
+        {
+          "md": "$-\\tfrac{1}{2}$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac{1}{2}$",
+          "why": "$\\tfrac18 > \\tfrac12$ ist falsch: keine Voraussetzung."
+        },
+        {
+          "md": "$1$",
+          "why": "$1 > 1$ ist falsch: keine Voraussetzung."
+        },
+        {
+          "md": "$2$",
+          "why": "$8 > 2$ und $2 > 1$: bestätigt nur."
+        }
+      ],
+      "explain": "Für $x = -\\tfrac12$ ist $x^3 = -\\tfrac18 > -\\tfrac12$, die Voraussetzung gilt, aber $x > 1$ nicht. Die Menge von $x^3 > x$ ist $-1 < x < 0$ oder $x > 1$; der Teil $-1 < x < 0$ liefert die Gegenbeispiele.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Gegenbeispiel",
+      "id": "vq5"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Lösungsschema in die richtige Reihenfolge.",
+      "items": [
+        "Voraussetzung und Folgerung als Mengen schreiben",
+        "prüfen, ob die Menge der Voraussetzung ganz in der Menge der Folgerung liegt",
+        "wenn nicht: ein Element aus »Voraussetzung ohne Folgerung« als Gegenbeispiel wählen",
+        "ohne Mengenbild: negative Zahlen, Zahlen zwischen 0 und 1, Ränder, große Zahlen testen"
+      ],
+      "explain": "Die Reihenfolge: 1. Voraussetzung und Folgerung als Mengen schreiben. 2. prüfen, ob die Menge der Voraussetzung ganz in der Menge der Folgerung liegt. 3. wenn nicht: ein Element aus »Voraussetzung ohne Folgerung« als Gegenbeispiel wählen. 4. ohne Mengenbild: negative Zahlen, Zahlen zwischen 0 und 1, Ränder, große Zahlen testen.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Optionen",
+      "md": "Bei einer Frage mit den acht Optionen *none, I only, …, I, II and III* hast du sicher entschieden, dass Aussage I falsch ist. Wie viele Optionen bleiben?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Optionen",
+      "explain": "Aussage I steckt in genau vier Optionen (I only, I and II, I and III, I, II and III); diese fallen weg.",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "label": "Aussagen I, II, III",
+      "lang": "en",
+      "shuffle": false,
+      "md": "Which of the following statements is/are true for all real numbers $x$?\n\n**I**  If $x > 1$, then $x^2 > x$.\n\n**II**  If $x^2 > x$, then $x > 1$.\n\n**III**  If $x < 0$, then $x^3 < x^2$.",
+      "options": [
+        {
+          "md": "none of them"
+        },
+        {
+          "md": "I only"
+        },
+        {
+          "md": "II only"
+        },
+        {
+          "md": "III only"
+        },
+        {
+          "md": "I and II only"
+        },
+        {
+          "md": "I and III only",
+          "correct": true
+        },
+        {
+          "md": "II and III only"
+        },
+        {
+          "md": "I, II and III"
+        }
+      ],
+      "explain": "**F.** I: Aus $x > 1$ folgt $x > 0$, Multiplizieren mit $x$ ergibt $x^2 > x$. II ist die Umkehrung von I und scheitert an $x = -1$: $1 > -1$, aber nicht $-1 > 1$. III: Für $x < 0$ ist $x^3$ negativ und $x^2$ positiv.",
+      "id": "vq8"
+    },
+    {
+      "id": "tafel",
+      "type": "choice",
       "md": "In welchem Fall ist »wenn $P$, dann $Q$« falsch?",
       "options": [
-        { "md": "$P$ wahr, $Q$ falsch", "correct": true },
-        { "md": "$P$ falsch, $Q$ wahr", "why": "Ist die Voraussetzung falsch, verspricht die Implikation nichts, sie ist wahr." },
-        { "md": "$P$ falsch, $Q$ falsch", "why": "Auch hier ist die Voraussetzung falsch: die Implikation ist wahr." },
-        { "md": "$P$ wahr, $Q$ wahr", "why": "Das ist genau der Fall, den die Implikation verspricht." }
+        {
+          "md": "$P$ wahr, $Q$ falsch",
+          "correct": true
+        },
+        {
+          "md": "$P$ falsch, $Q$ wahr",
+          "why": "Ist die Voraussetzung falsch, verspricht die Implikation nichts, sie ist wahr."
+        },
+        {
+          "md": "$P$ falsch, $Q$ falsch",
+          "why": "Auch hier ist die Voraussetzung falsch: die Implikation ist wahr."
+        },
+        {
+          "md": "$P$ wahr, $Q$ wahr",
+          "why": "Das ist genau der Fall, den die Implikation verspricht."
+        }
       ],
       "explain": "Nur »Voraussetzung erfüllt, Folgerung verletzt« widerlegt eine Implikation."
     },
     {
-      "id": "gegenbeispiel", "type": "choice", "lang": "en",
+      "id": "gegenbeispiel",
+      "type": "choice",
+      "lang": "en",
       "md": "Which value of $x$ is a counterexample to the statement *if $x^2 > 4$, then $x > 2$*?",
       "options": [
-        { "md": "$x = -3$", "correct": true },
-        { "md": "$x = 3$", "why": "Erfüllt Voraussetzung und Folgerung, bestätigt also nur." },
-        { "md": "$x = 0$", "why": "$0 > 4$ ist falsch: die Voraussetzung gilt nicht, also kein Gegenbeispiel." },
-        { "md": "$x = 2$", "why": "$4 > 4$ ist falsch: auch hier gilt die Voraussetzung nicht." },
-        { "md": "$x = -2$", "why": "$4 > 4$ ist falsch, also keine Voraussetzung." }
+        {
+          "md": "$x = -3$",
+          "correct": true
+        },
+        {
+          "md": "$x = 3$",
+          "why": "Erfüllt Voraussetzung und Folgerung, bestätigt also nur."
+        },
+        {
+          "md": "$x = 0$",
+          "why": "$0 > 4$ ist falsch: die Voraussetzung gilt nicht, also kein Gegenbeispiel."
+        },
+        {
+          "md": "$x = 2$",
+          "why": "$4 > 4$ ist falsch: auch hier gilt die Voraussetzung nicht."
+        },
+        {
+          "md": "$x = -2$",
+          "why": "$4 > 4$ ist falsch, also keine Voraussetzung."
+        }
       ],
       "explain": "$x = -3$: $9 > 4$ stimmt, aber $-3 > 2$ nicht. Ein Gegenbeispiel muss die Voraussetzung **erfüllen**."
     },
     {
-      "id": "umkehrung", "type": "text",
+      "id": "umkehrung",
+      "type": "text",
       "md": "Die **Umkehrung** (*converse*) von »wenn $P$, dann $Q$« ist »wenn $Q$, dann $P$«. Beide sind verschiedene Aussagen: »wenn $x > 2$, dann $x^2 > 4$« ist wahr, die Umkehrung »wenn $x^2 > 4$, dann $x > 2$« scheitert an $x = -3$.\n\nStehen in einer Aufgabe zwei Aussagen, die Umkehrungen voneinander sind, ist das fast immer Absicht: genau dort liegt die Falle."
     },
     {
-      "id": "testwerte", "type": "order", "label": "Reihenfolge",
+      "id": "testwerte",
+      "type": "order",
+      "label": "Reihenfolge",
       "md": "Eine Allaussage über reelle Zahlen soll geprüft werden. Bringe die Testwerte in die Reihenfolge, in der sie sich am häufigsten lohnen.",
-      "items": ["negative Zahlen, etwa $-2$", "Zahlen zwischen 0 und 1, etwa $\\tfrac12$", "die Ränder der Bedingungen, etwa $0$ und $1$", "große positive Zahlen"],
+      "items": [
+        "negative Zahlen, etwa $-2$",
+        "Zahlen zwischen 0 und 1, etwa $\\tfrac12$",
+        "die Ränder der Bedingungen, etwa $0$ und $1$",
+        "große positive Zahlen"
+      ],
       "explain": "Quadrate, Kehrwerte und dritte Potenzen verhalten sich bei negativen Zahlen und zwischen 0 und 1 anders als gewohnt: dort kippen die meisten Aussagen. Ränder entscheiden über $<$ oder $\\le$."
     },
     {
-      "id": "drei", "type": "choice", "lang": "en", "shuffle": false,
+      "id": "drei",
+      "type": "choice",
+      "lang": "en",
+      "shuffle": false,
       "md": "Which of the following statements is/are true for all real numbers $x$?\n\n**I**  If $x < -1$, then $x^2 > 1$.\n\n**II**  If $x^2 > x$, then $x > 1$.\n\n**III**  If $0 < x < 1$, then $x^3 < x$.",
       "options": [
-        { "md": "none of them" }, { "md": "I only" }, { "md": "II only" }, { "md": "III only" },
-        { "md": "I and II only" }, { "md": "I and III only", "correct": true }, { "md": "II and III only" }, { "md": "I, II and III" }
+        {
+          "md": "none of them"
+        },
+        {
+          "md": "I only"
+        },
+        {
+          "md": "II only"
+        },
+        {
+          "md": "III only"
+        },
+        {
+          "md": "I and II only"
+        },
+        {
+          "md": "I and III only",
+          "correct": true
+        },
+        {
+          "md": "II and III only"
+        },
+        {
+          "md": "I, II and III"
+        }
       ],
       "explain": "**F.** I: aus $x < -1$ folgt $|x| > 1$, also $x^2 > 1$. II scheitert an $x = -1$: $1 > -1$, aber $-1 > 1$ ist falsch. III: für $0 < x < 1$ ist $x^2 < 1$, mit $x > 0$ malgenommen $x^3 < x$. Wer II mit einer negativen Zahl testet, streicht sofort C, E, G und H."
     },
-    { "id": "g1", "type": "gen", "gen": "tmua-implikation", "level": 1, "label": "Implications" },
-    { "id": "g2", "type": "gen", "gen": "tmua-implikation", "level": 2, "label": "Implications" },
-    { "id": "g3", "type": "gen", "gen": "tmua-implikation", "level": 3, "label": "Converse trap" },
     {
-      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "id": "g1",
+      "type": "gen",
+      "gen": "tmua-implikation",
+      "level": 1,
+      "label": "Implications"
+    },
+    {
+      "id": "g2",
+      "type": "gen",
+      "gen": "tmua-implikation",
+      "level": 2,
+      "label": "Implications"
+    },
+    {
+      "id": "g3",
+      "type": "gen",
+      "gen": "tmua-implikation",
+      "level": 3,
+      "label": "Converse trap"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-implikation",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
       "points": [
         "»Wenn $P$, dann $Q$« ist nur falsch, wenn $P$ gilt und $Q$ nicht.",
         "Eine Allaussage fällt mit einem einzigen Gegenbeispiel; es muss die Voraussetzung erfüllen.",
         "Umkehrung und Original sind verschiedene Aussagen; Paare davon sind die klassische Falle.",
         "Zuerst negative Zahlen, Zahlen zwischen 0 und 1 und die Ränder testen.",
-        "Optionen nutzen: eine sicher entschiedene Aussage streicht die Hälfte der Antworten."
+        "Optionen nutzen: eine sicher entschiedene Aussage streicht die Hälfte der Antworten.",
+        "»wenn $P$, dann $Q$« $\\equiv$ »(nicht $P$) oder $Q$«; die Verneinung ist »$P$ und nicht $Q$«.",
+        "Allaussage wahr genau dann, wenn die Wahrheitsmenge der Voraussetzung in der der Folgerung liegt.",
+        "*Q if P* und *P only if Q* bedeuten beide $P \\Rightarrow Q$."
       ]
     }
   ]

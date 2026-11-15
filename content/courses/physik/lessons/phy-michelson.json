@@ -18,6 +18,225 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Michelson-Interferometer in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Michelson-Interferometer.svg",
+        "aspect": 1.55,
+        "alt": "Michelson-Interferometer"
+      },
+      "timeline": [
+        {
+          "caption": "Aufbau mit Laser, Strahlteiler, zwei Spiegeln und Schirm.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Der Laserstrahl trifft auf einen halbdurchlässigen Strahlteiler und wird in zwei Teilstrahlen zerlegt (Amplitudenteilung).",
+          "to": {
+            "x": 0.3,
+            "y": 0.57,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Teilstrahl 1 läuft zum festen Spiegel $S_1$ und zurück.",
+          "to": {
+            "x": 0.42,
+            "y": 0.3,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Teilstrahl 2 läuft zum verschiebbaren Spiegel $S_2$ und zurück.",
+          "to": {
+            "x": 0.75,
+            "y": 0.5,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Am Schirm überlagern sich beide. Verschiebt man $S_2$ um $\\Delta d$, ändert sich der Gangunterschied um $2\\Delta d$; es wandern $N = \\tfrac{2\\Delta d}{\\lambda}$ Streifen vorbei.",
+          "to": {
+            "x": 0.5,
+            "y": 0.86,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Streifenzahl.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta s = 2\\,(l_2 - l_1)",
+            "why": "Jeder Teilstrahl läuft seinen Arm hin und zurück."
+          },
+          {
+            "tex": "\\Delta(\\Delta s) = 2\\,\\Delta d",
+            "why": "Verschiebt man $S_2$ um $\\Delta d$, verlängert sich Arm 2 hin und zurück."
+          },
+          {
+            "tex": "\\text{ein Streifen pro } \\lambda\\text{ Gangunterschied}\\quad\\Rightarrow\\quad 2\\,\\Delta d = N\\,\\lambda",
+            "why": "Jedes Mal, wenn sich $\\Delta s$ um eine Wellenlänge ändert, folgt hell auf hell."
+          },
+          {
+            "tex": "\\lambda = 633\\,\\mathrm{nm},\\; N = 1000:\\quad \\Delta d = \\frac{N\\lambda}{2} \\approx 0{,}32\\,\\mathrm{mm}",
+            "why": "Längenmessung auf Bruchteile eines Mikrometers genau."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gangunterschied.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spiegelverschiebung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Streifenzahl.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!important] Bedeutung\n> Mit diesem Gerät suchten Michelson und Morley 1887 einen Unterschied der Lichtgeschwindigkeit in verschiedene Richtungen relativ zum vermuteten Äther und fanden keinen; das wurde zu einer Grundlage der Relativitätstheorie. Heute messen Laserinterferometer mit Armen von vier Kilometern Gravitationswellen: Längenänderungen von einem Tausendstel eines Protonendurchmessers.",
+      "label": "Bedeutung",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Michelson-Interferometer",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Michelson-Interferometer.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Das **Michelson-Interferometer** teilt einen Lichtstrahl an einem halbdurchlässigen Spiegel (Strahlteiler) in zwei Teilstrahlen, schickt sie durch zwei Arme zu Spiegeln und überlagert sie wieder. Weil beide aus derselben Welle stammen, interferieren sie; schon Wegänderungen von Bruchteilen einer Wellenlänge verschieben das Streifenmuster."
+            }
+          ]
+        },
+        {
+          "title": "Versuchsaufbau",
+          "blocks": [
+            {
+              "image": "vault:Michelson-Interferometer.svg"
+            }
+          ]
+        },
+        {
+          "title": "Gangunterschied und Streifenzählung",
+          "blocks": [
+            {
+              "md": "Jeder Arm wird **zweimal** durchlaufen (hin und zurück):\n$$\\Delta s = 2\\,(l_2 - l_1)$$\nVerschiebt man Spiegel $S_2$ um $\\Delta d$, ändert sich $\\Delta s$ um $2\\Delta d$. Am Detektor ziehen dabei $N$ helle Streifen vorbei:\n$$2\\,\\Delta d = N\\,\\lambda \\qquad\\Longrightarrow\\qquad \\lambda = \\frac{2\\,\\Delta d}{N}$$\n\n> [!example] Beispiel\n> Laser mit $\\lambda = 633\\,\\text{nm}$, Spiegelverschiebung $\\Delta d = 10{,}0\\,\\mu\\text{m}$: $N = \\dfrac{2\\cdot10{,}0\\,\\mu\\text{m}}{0{,}633\\,\\mu\\text{m}} \\approx 32$ Streifen.\n\n> [!warning] Häufigster Fehler\n> Den Faktor 2 vergessen. Der Strahl durchläuft die Verschiebung **hin und zurück**."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Längenmessung** mit Nanometer-Genauigkeit, Bestimmung von Wellenlängen und Brechzahlen (Gasküvette in einem Arm).\n- **Michelson-Morley-Versuch (1887):** Suche nach dem \"Äther\". Das Nullergebnis ist eine Grundlage der **Speziellen Relativitätstheorie**.\n- **Gravitationswellen-Detektoren** (LIGO): Michelson-Interferometer mit 4 km Armlänge, Nachweis 2015."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Kohärenz durch **Amplitudenteilung** wie bei der **Interferenz an dünnen Schichten**; Grundlagen in **Beugung und Interferenz**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Beim Verschieben eines Spiegels um $58{,}0\\,\\mu\\mathrm{m}$ wandern 200 Streifen vorbei. Welche Wellenlänge hat das Licht?",
+      "answer": 580,
+      "tolerance": 1,
+      "placeholder": "nm",
+      "explain": "$\\lambda = \\tfrac{2\\Delta d}{N} = \\tfrac{116\\,\\mu\\mathrm{m}}{200} = 580\\,\\mathrm{nm}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Streifenzahl in die richtige Reihenfolge.",
+      "items": [
+        "Jeder Teilstrahl läuft seinen Arm zweimal",
+        "Spiegelverschiebung $\\Delta d$ ändert den Gangunterschied um $2\\Delta d$",
+        "Ein Streifen pro Wellenlänge Gangunterschied",
+        "$2\\Delta d = N\\lambda$"
+      ],
+      "explain": "Die Reihenfolge: 1. Jeder Teilstrahl läuft seinen Arm zweimal. 2. Spiegelverschiebung $\\Delta d$ ändert den Gangunterschied um $2\\Delta d$. 3. Ein Streifen pro Wellenlänge Gangunterschied. 4. $2\\Delta d = N\\lambda$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "In einen Arm stellt man eine $5\\,\\mathrm{cm}$ lange Gasküvette. Beim Auspumpen wandern bei $633\\,\\mathrm{nm}$ 43 Streifen vorbei. Wie groß ist $n - 1$ für das Gas? Gib es in $10^{-4}$ an.",
+      "answer": 2.72,
+      "tolerance": 0.03,
+      "placeholder": "10⁻⁴",
+      "explain": "Der optische Weg ändert sich um $2(n - 1)l = N\\lambda$: $n - 1 = \\tfrac{43\\cdot 633\\cdot 10^{-9}}{0{,}1} \\approx 2{,}72\\cdot 10^{-4}$, der Wert für Luft.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Spiegel, der um eine halbe Wellenlänge verschoben wird, lässt genau einen Streifen vorbeiwandern.",
+      "answer": true,
+      "explain": "$2\\Delta d = 2\\cdot\\tfrac\\lambda2 = \\lambda$: eine Wellenlänge Gangunterschied, ein Streifen.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
       "id": "zaehlen",
       "type": "numeric",
       "label": "Rechnen",
@@ -52,13 +271,38 @@
       "explain": "Gangunterschied $2\\Delta s$, also ein Streifen pro $\\frac{\\lambda}{2}$."
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "michelson"
+        ]
+      },
+      "label": "Streifen zählen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "michelson"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Zwei Teilstrahlen, ein Spiegel beweglich.",
         "Ein Streifen pro $\\frac{\\lambda}{2}$ Spiegelverschiebung.",
-        "Präzisionsmessung von Längen und Wellenlängen."
+        "Präzisionsmessung von Längen und Wellenlängen.",
+        "Amplitudenteilung, zwei Arme; Spiegelverschiebung $\\Delta d$ ändert $\\Delta s$ um $2\\Delta d$: $2\\Delta d = N\\lambda$."
       ]
     }
   ]

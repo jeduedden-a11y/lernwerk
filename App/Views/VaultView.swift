@@ -406,6 +406,33 @@ struct VaultNoteSheet: View {
     }
 }
 
+/// The vault note of a lesson in the column beside it (iPad); links open inside the column.
+struct VaultNoteColumn: View {
+    let path: String
+    let onClose: () -> Void
+    @State private var stack: [VaultRoute] = []
+
+    var body: some View {
+        NavigationStack(path: $stack) {
+            VaultNoteReader(path: path, heading: nil, push: { stack.append($0) }, showLessons: false)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            onClose()
+                        } label: {
+                            Label("Schließen", systemImage: "xmark")
+                        }
+                    }
+                }
+                .navigationDestination(for: VaultRoute.self) { route in
+                    if case .note(let p, let heading) = route {
+                        VaultNoteReader(path: p, heading: heading, push: { stack.append($0) }, showLessons: false)
+                    }
+                }
+        }
+    }
+}
+
 /// Identifies the vault note a lesson shows in its sheet.
 struct VaultNoteTarget: Identifiable {
     var path: String

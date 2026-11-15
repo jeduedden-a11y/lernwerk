@@ -16,6 +16,255 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Nullstellen im Intervall bestimmen:** Dort wechselt der Graph die Seite der Achse.\n> 2. **Das Intervall an den Nullstellen teilen.**\n> 3. **Jedes Teilintegral einzeln berechnen.**\n> 4. **Beträge addieren:** Teile unter der Achse liefern negative Integrale, als Fläche zählen sie positiv.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Fläche zwischen $y = x^3 - x$ und der x-Achse für $-1 \\le x \\le 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^3 - x = x(x - 1)(x + 1)",
+            "why": "Nullstellen −1, 0, 1."
+          },
+          {
+            "tex": "\\int_{-1}^0 (x^3 - x)\\,dx = \\left[\\tfrac14 x^4 - \\tfrac12 x^2\\right]_{-1}^0 = \\tfrac14",
+            "why": "Links liegt der Graph über der Achse."
+          },
+          {
+            "tex": "\\int_0^1 (x^3 - x)\\,dx = -\\tfrac14",
+            "why": "Rechts darunter."
+          },
+          {
+            "tex": "\\int_{-1}^1 = 0,\\qquad \\text{Fläche} = \\tfrac14 + \\tfrac14 = \\tfrac12",
+            "why": "Das Integral über alles ist null, die Fläche nicht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Nullstellen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Links.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rechts.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fläche.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Vorzeichen",
+      "md": "**Integral gegen Fläche:** blau $y = x^2 - 1$, orange der Teil unter der Achse, grün der darüber, jeweils von 0 bis $b$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          2.2
+        ],
+        "y": [
+          -1.3,
+          3.3
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "B",
+            "min": 0.2,
+            "max": 2,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 1",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": "min(B, 1)",
+            "color": "orange",
+            "opacity": 0.3
+          },
+          {
+            "f": "f",
+            "from": 1,
+            "to": "max(B, 1)",
+            "color": "green",
+            "opacity": 0.3
+          }
+        ],
+        "readout": "b = {B|3} · Integral {B^3/3 - B|3} · Fläche {B <= 1 ? B - B^3/3 : B^3/3 - B + 4/3|3}"
+      },
+      "timeline": [
+        {
+          "caption": "b = 1: Alles liegt unter der Achse. Integral −2/3, Fläche 2/3.",
+          "set": {
+            "B": 1
+          }
+        },
+        {
+          "caption": "b = √3 ≈ 1,732: Das Integral ist null, weil sich oben und unten aufheben. Die Fläche ist 4/3.",
+          "to": {
+            "B": 1.7321
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "b = 2: Integral 2/3, Fläche 2.",
+          "to": {
+            "B": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Über das ganze Intervall integrieren und das Ergebnis als Fläche angeben.\n- Eine Nullstelle im Intervall übersehen.\n- Das Vorzeichen eines Teilintegrals mitnehmen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Fläche bei Vorzeichenwechsel berechnen",
+      "path": "02 Wiki/TMUA/11 Integralrechnung/Aufgabentypen/Fläche bei Vorzeichenwechsel berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist der **Flächeninhalt** zwischen einer Kurve und der $x$-Achse, und die Kurve hat im Integrationsbereich mindestens eine **Nullstelle**. Erkennungsmerkmale: *„the total area enclosed\"*, *„the area between the curve and the $x$-axis\"* -- im Gegensatz zu *„evaluate the integral\"*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Nullstellen bestimmen** und prüfen, welche im Intervall liegen.\n2. **Das Intervall an den Nullstellen zerlegen.**\n3. **Über jedes Teilintervall einzeln integrieren.**\n4. **Beträge addieren.**\n5. **Symmetrie nutzen**, wenn die Funktion gerade oder ungerade ist -- das halbiert die Arbeit.\n\n> [!important] Der Test prüft genau diese Unterscheidung\n> Die Antwortoptionen enthalten fast immer **beide** Zahlen: den Wert des Integrals und den Flächeninhalt. Wer die Frage nur überfliegt, trifft die falsche.\n>\n> Eine Kurzskizze der Kurve kostet zehn Sekunden und beantwortet die Frage, ob überhaupt ein Vorzeichenwechsel vorliegt -- siehe **Standardgraphen skizzieren**."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the total area enclosed between the curve $y = x^3 - x$ and the $x$-axis.\n>\n> - **A** $\\tfrac12$\n> - **B** 0\n> - **C** $\\tfrac14$\n> - **D** 1\n> - **E** $\\tfrac34$\n\n**Schritt 1:** $x^3 - x = x(x-1)(x+1)$, Nullstellen bei $-1$, $0$, $1$. Die Kurve schließt also zwei Flächenstücke ein.\n\n**Schritt 3:** $\\displaystyle\\int_0^1 (x^3 - x)\\,\\mathrm dx = \\left[\\frac{x^4}{4} - \\frac{x^2}{2}\\right]_0^1 = \\frac14 - \\frac12 = -\\frac14$.\n\n**Schritt 5:** Die Funktion ist **ungerade**, das Stück auf $[-1, 0]$ ist das gespiegelte Gegenstück -- sein Integral ist $+\\tfrac14$.\n\n**Schritt 4:** Gesamtfläche $\\tfrac14 + \\tfrac14 = \\tfrac12$. Antwort **A**.\n\nOption B ist der Wert von $\\int_{-1}^{1}$, also das Integral statt der Fläche; C ist nur eines der beiden Stücke."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Über das ganze Intervall in einem Zug integrieren.**\n- **Die Beträge nicht nehmen**, sondern die Teilergebnisse vorzeichenbehaftet addieren.\n- **Eine Nullstelle übersehen** -- besonders die bei $x = 0$, wenn ein Faktor $x$ ausgeklammert werden muss.\n- **Nur ein Teilstück angeben.**\n- **Die Symmetrie falsch anwenden:** Bei einer **geraden** Funktion sind die Teilintegrale gleich, bei einer **ungeraden** entgegengesetzt gleich."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the total area enclosed between the curve $y = x^2 - 4$, the $x$-axis and the lines $x = 0$ and $x = 3$.\n>\n> - **A** $\\tfrac{23}{3}$\n> - **B** $-3$\n> - **C** 3\n> - **D** $\\tfrac{16}{3}$\n> - **E** $\\tfrac73$\n\n> [!success]- Lösung\n> **A.** Nullstelle im Intervall bei $x = 2$.\n> $$\\int_0^2 (x^2 - 4)\\,\\mathrm dx = \\left[\\frac{x^3}{3} - 4x\\right]_0^2 = \\frac83 - 8 = -\\frac{16}{3},$$\n> $$\\int_2^3 (x^2 - 4)\\,\\mathrm dx = \\left(9 - 12\\right) - \\left(\\frac83 - 8\\right) = -3 + \\frac{16}{3} = \\frac73.$$\n> Fläche: $\\tfrac{16}{3} + \\tfrac73 = \\tfrac{23}{3}$.\n> B ist das Integral über $[0, 3]$, D und E sind die Teilstücke.\n\n> [!question] Aufgabe 2\n> Evaluate $\\displaystyle\\int_{-2}^{2}\\left(x^3 + 3x^2\\right)\\mathrm dx$.\n>\n> - **A** 16\n> - **B** 0\n> - **C** 32\n> - **D** 8\n> - **E** 12\n\n> [!success]- Lösung\n> **A.** Hier ist das **Integral** gefragt, nicht die Fläche -- also kein Zerlegen.\n> $x^3$ ist ungerade, sein Integral über das symmetrische Intervall ist null. $3x^2$ ist gerade:\n> $$\\int_{-2}^{2} 3x^2\\,\\mathrm dx = 2\\int_0^2 3x^2\\,\\mathrm dx = 2\\Big[x^3\\Big]_0^2 = 2 \\cdot 8 = 16.$$\n> Wer stumpf einsetzt, erhält $\\left[\\tfrac{x^4}{4} + x^3\\right]_{-2}^{2} = 12 - (-4) = 16$ -- dasselbe, nur langsamer.\n> E ist der obere Klammerwert allein, also die vergessene untere Grenze.\n\n> [!question] Aufgabe 3\n> Find the area enclosed between the curve $y = 4 - x^2$ and the $x$-axis.\n>\n> - **A** $\\tfrac{32}{3}$\n> - **B** $\\tfrac{16}{3}$\n> - **C** 16\n> - **D** $\\tfrac{8}{3}$\n> - **E** 8\n\n> [!success]- Lösung\n> **A.** Nullstellen bei $x = \\pm 2$; dazwischen liegt die Kurve **oberhalb** der Achse, es gibt also keinen Vorzeichenwechsel.\n> Die Funktion ist gerade:\n> $$A = 2\\int_0^2\\left(4 - x^2\\right)\\mathrm dx = 2\\left[4x - \\frac{x^3}{3}\\right]_0^2 = 2\\left(8 - \\frac83\\right) = 2 \\cdot \\frac{16}{3} = \\frac{32}{3}.$$\n> B ist die halbe Fläche -- die Falle für alle, die die Symmetrie nutzen und den Faktor 2 vergessen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Integralbedingung mit Parameter lösen** · **Flächeninhalt im Koordinatensystem** · **Über- oder Unterschätzung der Trapezregel**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Fläche",
+      "md": "Wie groß ist die Fläche zwischen $y = x(x - 2)$, der x-Achse und den Geraden $x = 0$ und $x = 3$? Gib sie auf drei Nachkommastellen an.",
+      "answer": 2.667,
+      "tolerance": 0.005,
+      "placeholder": "",
+      "explain": "$\\int_0^2 = -\\tfrac43$, $\\int_2^3 = \\tfrac43$; Fläche $\\tfrac83 \\approx 2{,}667$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is $\\displaystyle\\int_{-2}^{2} x^3\\,dx$?",
+      "options": [
+        {
+          "md": "-8"
+        },
+        {
+          "md": "0",
+          "correct": true
+        },
+        {
+          "md": "4"
+        },
+        {
+          "md": "8"
+        },
+        {
+          "md": "16"
+        }
+      ],
+      "explain": "$\\left[\\tfrac14 x^4\\right]_{-2}^2 = 4 - 4 = 0$; die Fläche wäre 8.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Symmetrie",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Hat ein Integral den Wert 0, dann schließen Graph und x-Achse keine Fläche ein.",
+      "answer": false,
+      "explain": "Flächen über und unter der Achse können sich genau aufheben.",
+      "label": "Falle",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -78,6 +327,51 @@
       },
       "label": "Rechentraining",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "integralwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "integralwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "integralwert"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Fläche: an Nullstellen teilen, Teilintegrale einzeln, Beträge addieren.",
+        "Ein Integral von 0 heißt nicht, dass keine Fläche eingeschlossen ist."
+      ]
     }
   ]
 }

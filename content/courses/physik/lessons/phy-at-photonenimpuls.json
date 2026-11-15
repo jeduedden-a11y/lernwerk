@@ -16,6 +16,329 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "**Der begriffliche Kern.** Photonen haben keine Ruhemasse und trotzdem Impuls: Aus $E^2 = (pc)^2 + (m_0c^2)^2$ folgt mit $m_0 = 0$ direkt $p = \\tfrac{E}{c} = \\tfrac{h}{\\lambda}$. Die Formel $p = m v$ ist hier nicht anwendbar; wer sie ansetzt, erhält null.\n\n**Lösungsschema.**\n1. Energie eines Photons: $E_{Ph} = \\tfrac{hc}{\\lambda}$. Bei Sonnenlicht nimmt man meist die Wellenlänge des Intensitätsmaximums als Näherung und sagt das dazu.\n2. Photonen pro Sekunde: $N = \\tfrac{P}{E_{Ph}} = \\tfrac{S\\,A}{E_{Ph}}$ mit der Bestrahlungsstärke $S$ und der Fläche $A$.\n3. Kraft gleich Impulsübertrag pro Sekunde: $F = N\\,\\Delta p$.\n4. Beschleunigung $a = \\tfrac{F}{m}$, gegebenenfalls Geschwindigkeit nach einer Zeit.\n5. Ergebnis einordnen: winzig, aber ohne Treibstoff dauerhaft.\n\n| Fall | Impulsübertrag je Photon | Kraft |\n|---|---|---|\n| vollständige Absorption | $\\tfrac{h}{\\lambda}$ | $\\tfrac{S A}{c}$ |\n| vollständige Reflexion | $\\tfrac{2h}{\\lambda}$ | $\\tfrac{2 S A}{c}$ |\n\nDer Umweg über die Photonenzahl ist rechnerisch verzichtbar, zeigt aber den Teilchencharakter; beide Wege müssen dasselbe liefern.",
+      "label": "Lösungsschema",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung am Sonnensegel** ($S = 1361\\,\\mathrm{W/m^2}$, $A = 1000\\,\\mathrm{m^2}$, vollständig reflektierend, Sonde $m = 100\\,\\mathrm{kg}$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "N = \\frac{S A}{E_{Ph}} = \\frac{S A\\,\\lambda}{h c}",
+            "why": "Photonen pro Sekunde."
+          },
+          {
+            "tex": "F = N\\cdot\\frac{2h}{\\lambda} = \\frac{S A\\lambda}{h c}\\cdot\\frac{2h}{\\lambda} = \\frac{2 S A}{c}",
+            "why": "Reflexion: doppelter Impulsübertrag; die Wellenlänge kürzt sich heraus."
+          },
+          {
+            "tex": "F = \\frac{2\\cdot 1361\\cdot 1000}{3\\cdot 10^8}\\,\\mathrm{N} \\approx 9{,}1\\,\\mathrm{mN}",
+            "why": "Wenige Millinewton auf tausend Quadratmeter."
+          },
+          {
+            "tex": "a = \\frac{F}{m} \\approx 9{,}1\\cdot 10^{-5}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s^2}}",
+            "why": "Winzig im Vergleich zu jedem Raketenantrieb."
+          },
+          {
+            "tex": "v = a\\,t \\approx 9{,}1\\cdot 10^{-5}\\cdot 3{,}15\\cdot 10^{7}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 2{,}9\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}",
+            "why": "Nach einem Jahr, bei als konstant angenommener Kraft."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Photonenzahl.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kraft.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beschleunigung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein Jahr.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Ein Sonnensegel über ein Jahr** ($A = 1000\\,\\mathrm{m^2}$, reflektierend, $m = 100\\,\\mathrm{kg}$, Kraft als konstant angenommen).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          365
+        ],
+        "y": [
+          0,
+          3.2
+        ],
+        "xLabel": "t in Tagen",
+        "yLabel": "v in km/s",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 365,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "0.0000908*x*86.4",
+            "color": "blue",
+            "label": "Geschwindigkeit",
+            "labelAt": 200
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "v",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Nach {T|0} Tagen: v = **{0.0000908*T*86.4|2} km/s**, Strecke {0.000339*T*T|1} Mio. km"
+      },
+      "timeline": [
+        {
+          "caption": "Die Kraft beträgt nur $9{,}1\\,\\mathrm{mN}$, die Beschleunigung $9\\cdot 10^{-5}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s^2}}$. Am Anfang passiert scheinbar nichts.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Nach einem Monat: schon rund 240 m/s, ohne einen Tropfen Treibstoff.",
+          "to": {
+            "T": 30
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Nach einem Jahr: fast $2{,}9\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$. Winzige Kraft, aber dauerhaft. In Wirklichkeit nimmt sie mit dem Abstand zur Sonne ab.",
+          "to": {
+            "T": 365
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Größenordnungen zur Kontrolle.** Sonnenlicht drückt in Erdnähe mit etwa $4{,}5\\,\\mu\\mathrm{N}$ auf einen Quadratmeter schwarzer Fläche, reflektierend mit dem Doppelten. Ein Segel von $1000\\,\\mathrm{m^2}$ kommt auf wenige Millinewton. Ein Laserpointer mit $1\\,\\mathrm{mW}$ sendet rund $3\\cdot 10^{15}$ Photonen pro Sekunde, drückt aber nur mit $3\\,\\mathrm{pN}$.\n\n> [!warning] Typische Fallen\n> - Eine Kraft im Newtonbereich ist um Zehnerpotenzen falsch, meist durch nm, die nicht in m umgerechnet wurden.\n> - Absorption und Reflexion verwechseln: Der Aufgabentext legt fest, welcher Fall gilt.\n> - $p = m v$ für Photonen ansetzen.",
+      "label": "Größenordnungen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Photonenimpuls und Strahlungsdruck berechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Photonenimpuls und Strahlungsdruck berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Licht übt eine Kraft aus -- Sonnensegel, optische Pinzette, Kometenschweif, Laserkühlung. Erkennbar an *\"Bestrahlungsstärke in Watt pro Quadratmeter\"*, *\"schätze die Anzahl der Photonen ab, die je Sekunde auftreffen\"*, *\"berechne die Beschleunigung der Raumsonde\"*.\n\nOperatoren: **Schätze ab**, **Berechne**, **Beurteile das Endergebnis im Sachzusammenhang**.\n\n> [!important] Photonen haben Impuls, obwohl sie keine Masse haben\n> Das ist der begriffliche Kern. Aus der relativistischen Energie-Impuls-Beziehung folgt für masselose Teilchen $E = p\\,c$, also\n> $$p = \\frac{E}{c} = \\frac{h}{\\lambda}$$\n> Die klassische Formel $p = m v$ ist hier nicht anwendbar -- wer sie ansetzt, erhält null und damit keinen Antrieb, obwohl Sonnensegel nachweislich funktionieren."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Energie eines einzelnen Photons** bestimmen: $E_{\\text{Ph}} = \\tfrac{h c}{\\lambda}$. Die Wellenlänge des Intensitätsmaximums wird meist als Näherung vorgegeben -- diese Annahme ist zu benennen.\n2. **Photonenzahl je Sekunde** aus der Gesamtleistung:\n   $$N = \\frac{P}{E_{\\text{Ph}}} = \\frac{S \\cdot A}{E_{\\text{Ph}}}$$\n   mit der Bestrahlungsstärke $S$ und der Segelfläche $A$.\n3. **Impulsübertrag je Sekunde**, also die Kraft:\n   $$F = N \\cdot \\Delta p$$\n4. **Beschleunigung** über $a = \\tfrac{F}{m}$, gegebenenfalls Geschwindigkeit nach einer Zeitspanne.\n5. **Ergebnis einordnen.** Die Beschleunigung ist winzig, wirkt aber ohne Treibstoff dauerhaft -- diese Deutung ist Teil der Antwort."
+            }
+          ]
+        },
+        {
+          "title": "Absorption gegen Reflexion",
+          "blocks": [
+            {
+              "md": "> [!tip] Reflexion überträgt den doppelten Impuls\n> | Fall | Impulsübertrag je Photon |\n> |---|---|\n> | vollständige **Absorption** | $\\Delta p = \\dfrac{h}{\\lambda}$ |\n> | vollständige **Reflexion** | $\\Delta p = \\dfrac{2h}{\\lambda}$ |\n>\n> Beim Rückprall kehrt sich der Photonenimpuls um, die Änderung ist also doppelt so groß -- dieselbe Überlegung wie beim elastischen Stoß gegen eine Wand.\n>\n> Reale Sonnensegel sind deshalb hochreflektierend verspiegelt. Der Aufgabentext gibt vor, welcher Fall gilt; die Unterscheidung ist ein beliebter Prüfpunkt."
+            }
+          ]
+        },
+        {
+          "title": "Der Zusammenhang mit dem Strahlungsdruck",
+          "blocks": [
+            {
+              "md": "$$p_{\\text{Strahlung}} = \\frac{S}{c} \\quad \\text{(Absorption)} \\qquad p_{\\text{Strahlung}} = \\frac{2S}{c} \\quad \\text{(Reflexion)}$$\n\n> [!info] Der Umweg über die Photonenzahl ist verzichtbar\n> Die Kraft ergibt sich unmittelbar aus $F = \\tfrac{S \\cdot A}{c}$. Aufgaben verlangen aber häufig den ausdrücklichen Weg über die Photonenzahl, weil er den Teilchencharakter sichtbar macht.\n>\n> Beide Wege liefern dasselbe -- der Vergleich taugt als Kontrolle."
+            }
+          ]
+        },
+        {
+          "title": "Größenordnungen",
+          "blocks": [
+            {
+              "md": "> [!warning] Das Ergebnis muss winzig aussehen\n> Bei der Solarkonstante von rund $1361\\,\\tfrac{\\text{W}}{\\text{m}^2}$ liefert ein Quadratmeter absorbierender Fläche eine Kraft von etwa $4{,}5\\,\\mu\\text{N}$. Ein Segel von $1000\\,\\text{m}^2$ kommt damit auf wenige Millinewton.\n>\n> Wer eine Kraft im Newtonbereich erhält, hat um mehrere Zehnerpotenzen danebengegriffen -- meist durch eine verrutschte Einheit bei der Wellenlänge in Nanometern.\n>\n> Die Nutzbarkeit ergibt sich aus der **Dauer**: Eine Beschleunigung von $10^{-4}\\,\\tfrac{\\text{m}}{\\text{s}^2}$ über ein Jahr summiert sich auf mehrere Kilometer je Sekunde -- ohne jeden Treibstoff."
+            }
+          ]
+        },
+        {
+          "title": "Anschluss",
+          "blocks": [
+            {
+              "md": "Verwandt ist **De-Broglie-Wellenlänge berechnen**, die dieselbe Beziehung in umgekehrter Richtung nutzt: Auch Teilchen mit Masse haben eine Wellenlänge $\\lambda = \\tfrac{h}{p}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe ihren Ausdruck zu.",
+      "pairs": [
+        [
+          "Impulsübertrag bei Absorption",
+          "$\\tfrac{h}{\\lambda}$"
+        ],
+        [
+          "Impulsübertrag bei Reflexion",
+          "$\\tfrac{2h}{\\lambda}$"
+        ],
+        [
+          "Kraft bei Absorption",
+          "$\\tfrac{S A}{c}$"
+        ],
+        [
+          "Kraft bei Reflexion",
+          "$\\tfrac{2 S A}{c}$"
+        ],
+        [
+          "Photonen pro Sekunde",
+          "$\\tfrac{S A}{E_{Ph}}$"
+        ]
+      ],
+      "explain": "Reflexion kehrt den Impuls um und überträgt deshalb das Doppelte.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Rechnung zum Sonnensegel in die richtige Reihenfolge.",
+      "items": [
+        "Photonenenergie $E_{Ph} = \\tfrac{hc}{\\lambda}$",
+        "Photonen pro Sekunde $N = \\tfrac{S A}{E_{Ph}}$",
+        "Kraft $F = N\\cdot\\tfrac{2h}{\\lambda} = \\tfrac{2SA}{c}$",
+        "Beschleunigung $a = \\tfrac{F}{m}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Photonenenergie $E_{Ph} = \\tfrac{hc}{\\lambda}$. 2. Photonen pro Sekunde $N = \\tfrac{S A}{E_{Ph}}$. 3. Kraft $F = N\\cdot\\tfrac{2h}{\\lambda} = \\tfrac{2SA}{c}$. 4. Beschleunigung $a = \\tfrac{F}{m}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein vollständig reflektierendes Sonnensegel mit $1000\\,\\mathrm{m^2}$ steht senkrecht im Sonnenlicht ($S = 1361\\,\\mathrm{W/m^2}$). Welche Kraft erfährt es?",
+      "answer": 9.08,
+      "tolerance": 0.1,
+      "placeholder": "mN",
+      "explain": "$F = \\tfrac{2 S A}{c} = \\tfrac{2\\cdot 1361\\cdot 1000}{3\\cdot 10^8}\\,\\mathrm{N} \\approx 9{,}1\\cdot 10^{-3}\\,\\mathrm{N}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Sonde aus der letzten Aufgabe hat $100\\,\\mathrm{kg}$. Welche Geschwindigkeit erreicht sie nach einem Jahr ($365$ Tage) aus der Ruhe, wenn die Kraft konstant bleibt?",
+      "answer": 2.86,
+      "tolerance": 0.04,
+      "placeholder": "km/s",
+      "explain": "$a = \\tfrac{F}{m} \\approx 9{,}08\\cdot 10^{-5}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s^2}}$, $v = a t = 9{,}08\\cdot 10^{-5}\\cdot 3{,}15\\cdot 10^7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 2{,}86\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Laserpointer strahlt $1\\,\\mathrm{mW}$ bei $650\\,\\mathrm{nm}$. Wie viele Photonen sendet er pro Sekunde aus?",
+      "answer": 3.27,
+      "tolerance": 0.04,
+      "placeholder": "10¹⁵ /s",
+      "explain": "$E_{Ph} = \\tfrac{hc}{\\lambda} \\approx 3{,}06\\cdot 10^{-19}\\,\\mathrm{J}$, $N = \\tfrac{P}{E_{Ph}} \\approx 3{,}27\\cdot 10^{15}$ pro Sekunde.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Mit welcher Kraft drückt derselbe Laserstrahl auf eine schwarze Fläche, die ihn vollständig absorbiert?",
+      "answer": 3.34,
+      "tolerance": 0.04,
+      "placeholder": "pN",
+      "explain": "$F = \\tfrac{P}{c} = \\tfrac{10^{-3}}{3\\cdot 10^8}\\,\\mathrm{N} \\approx 3{,}3\\cdot 10^{-12}\\,\\mathrm{N}$: unmerklich, trotz Billiarden Photonen pro Sekunde.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Mitschüler rechnet für Photonen $p = m_0 v = 0$ und folgert, Sonnensegel könnten nicht funktionieren. Was ist falsch?",
+      "options": [
+        {
+          "md": "Für masselose Teilchen gilt $p = \\tfrac{E}{c} = \\tfrac{h}{\\lambda}$; $p = m_0 v$ ist nicht anwendbar.",
+          "correct": true
+        },
+        {
+          "md": "Nichts, Sonnensegel funktionieren tatsächlich nicht.",
+          "why": "IKAROS hat 2010 den Antrieb durch Licht nachgewiesen."
+        },
+        {
+          "md": "Er hat vergessen, mit 2 zu multiplizieren.",
+          "why": "Zweimal null bleibt null."
+        },
+        {
+          "md": "Er hätte die Lichtgeschwindigkeit einsetzen müssen.",
+          "why": "Auch das ergibt mit der Ruhemasse null wieder null."
+        }
+      ],
+      "explain": "Der Impuls von Licht kommt aus seiner Energie, nicht aus einer Ruhemasse.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für ein Sonnensegel von $100\\,\\mathrm{m^2}$ in Erdnähe ist eine Kraft von einigen Newton plausibel.",
+      "answer": false,
+      "explain": "Reflektierend sind es $\\tfrac{2\\cdot 1361\\cdot 100}{3\\cdot 10^8}\\,\\mathrm{N} \\approx 0{,}9\\,\\mathrm{mN}$. Newton wären um mehrere Zehnerpotenzen zu viel.",
+      "label": "Größenordnung",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +415,41 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "sonnensegel",
+          "photonenstrom"
+        ]
+      },
+      "label": "Sonnensegel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "sonnensegel",
+          "photonenstrom"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Sonnensegel: $N = \\tfrac{SA}{E_{Ph}}$, $F = N\\,\\Delta p$, reflektiert $F = \\tfrac{2SA}{c}$; winzige Beschleunigung, aber dauerhaft.",
+        "Kontrolle: Licht drückt mit etwa $4{,}5\\,\\mu\\mathrm{N}$ pro Quadratmeter (absorbiert); Ergebnisse im Newtonbereich sind falsch."
+      ]
     }
   ]
 }

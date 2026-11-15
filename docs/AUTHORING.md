@@ -224,6 +224,8 @@ Diese Funktionen steuert der native Rahmen; Lektionen brauchen dafür nichts Bes
 - `LW.speech()` liefert den aktuellen Schritt als Text zum Vorlesen; Formeln werden in Worte übersetzt (`\frac` wird »durch«, `^` wird »hoch«). Deshalb trägt jede gerenderte Formel ihren TeX-Quelltext in `data-tex`.
 - Zahlenfelder bekommen eine Reihe mit Rechenzeichen. Setzt die App die Tastaturleiste (`theme.nativeKeys`), bleibt die Reihe verborgen; die App schreibt über `LW.insertText` ins Feld. Fehlt die Leiste einmal (etwa bei der schwebenden iPad-Tastatur), schaltet die App `nativeKeys` aus und die Reihe erscheint.
 - `theme.reduceMotion` lässt Animationen sofort ans Ende springen (wie die Systemeinstellung »Bewegung reduzieren«).
+- **Taschenrechner** (App, `CalculatorPanel.swift`, Rechenkern `CalcEngine` in LernwerkCore mit Tests): wissenschaftlich, Grad oder Bogenmaß, Zweitbelegung, Konstanten aus Physik und Chemie, Verlauf. »Einsetzen« ruft `LW.fillAnswer(text)`: Der Wert landet im zuletzt benutzten, sonst im ersten leeren Antwortfeld des Schritts, ohne dass die Tastatur aufgeht. Große und kleine Zahlen kommen als `m*10^k`, das lesen die Antwortfelder. In TMUA-Papers (`format: "tmua"`) gibt es keinen Rechner.
+- **Notiz neben der Frage**: Auf dem iPhone liegt die Vault-Notiz als Fenster über den Knöpfen, auf dem iPad als Spalte; die Lektion bleibt sichtbar und scrollbar, die App setzt den unteren Rand (`LW.setInsets`) und holt die Frage nach oben (`LW.revealCurrent`). »Frage übernehmen« holt `LW.questionMarkdown()`: den Schritt als Markdown mit Formeln, Vault-Grafik als Einbettung und Antwortoptionen als Liste.
 - Hilfeleiter: `hints` (oder `hint`) kommen zuerst, dann `way` (Lösungsweg Zeile für Zeile) oder die Sätze von `explain`. Wer den Lösungsweg aufdeckt, löst die Aufgabe nicht mehr »beim ersten Versuch«.
 
 ## Visualisierungen mit Ziel
@@ -326,7 +328,9 @@ Daraus entstehen ohne weitere Arbeit: die Formelspalte neben jeder Lektion (iPad
 
 ## Grafiken aus dem Vault
 
-`"image": "vault:Dateiname.svg"` an einem Schritt zeigt eine Grafik aus dem Vault (aufgelöst wie `![[Dateiname.svg]]`). Die App liest sie aus ihrer verschlüsselten Wiki-Kopie, die Testumgebung (`tools/serve.ps1`) direkt aus dem Vault. Vault-Inhalte kommen so nie ins öffentliche Inhalts-Repo. `caption` setzt eine Bildunterschrift.
+`"image": "vault:Dateiname.svg"` an einem Schritt zeigt eine Grafik aus dem Vault (aufgelöst wie `![[Dateiname.svg]]`). Die App liest sie aus ihrer verschlüsselten Wiki-Kopie, die Testumgebung (`tools/serve.ps1`) direkt aus dem Vault. Die Grafikdateien selbst kommen nicht ins Repo, nur ihr Name. `caption` setzt eine Bildunterschrift.
+
+**Hell und dunkel:** `runtime/graphics.js` passt jede Grafik dem Erscheinungsbild an. Ein Diagramm für hellen Grund (dunkle Schrift, weißer oder durchsichtiger Hintergrund) bekommt für den dunklen Modus eine umgefärbte Fassung: dunkle Schrift wird hell, weiße Flächen und blasse Füllungen werden dunkel, farbige Linien behalten ihren Farbton. Ein Diagramm für dunklen Grund bekommt umgekehrt eine helle Fassung. SVGs werden im Quelltext umgefärbt und bleiben scharf, Rasterbilder pixelweise; Fotos bleiben, wie sie sind. Wechselt das Erscheinungsbild, wechselt die Grafik mit. `"imageFit": false` am Schritt lässt eine Grafik unverändert. Der Vault-Tab der App nutzt dieselbe Datei als Kopie (`App/Resources/Notes/graphics.js`, nach `notes.js` geladen); beide Dateien gleich halten.
 
 ## Abitur: Klausuraufgaben mit Erwartungshorizont
 

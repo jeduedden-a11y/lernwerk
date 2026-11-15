@@ -16,6 +16,388 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Die eine Größe, aus der alles folgt\n> $\\gamma = \\tfrac{1}{\\sqrt{1 - \\beta^2}}$ mit $\\beta = \\tfrac{v}{c}$, und $\\Delta t = \\gamma\\,\\Delta t_0$. Die Eigenzeit $\\Delta t_0$ ist immer die **kürzeste** gemessene Zeitspanne.\n\n| $\\beta$ | $\\gamma$ |\n|---|---|\n| 0,1 | 1,005 |\n| 0,5 | 1,155 |\n| 0,8 | 1,667 |\n| 0,9 | 2,294 |\n| 0,99 | 7,089 |\n| 0,999 | 22,37 |\n\n> [!warning] Welche Zeit ist die Eigenzeit?\n> Die einer Uhr, die **relativ zum Vorgang ruht**: beim Myon die mitfliegende Uhr, bei der Raumfahrt die Uhr an Bord, beim Satelliten die Satellitenuhr. Wer $\\Delta t_0$ und $\\Delta t$ vertauscht, liegt um $\\gamma^2$ daneben.\n\n**Kleine Geschwindigkeiten.** Ein Verkehrsflugzeug hat $\\beta \\approx 8\\cdot 10^{-7}$, also $\\gamma - 1 \\approx 3\\cdot 10^{-13}$; ein Taschenrechner zeigt dafür einfach 1. Rechne mit $\\gamma - 1 \\approx \\tfrac12\\beta^2$. Über zehn Flugstunden summiert sich das auf rund zehn Nanosekunden (Hafele-Keating 1971); GPS-Uhren gehen durch ihre Geschwindigkeit täglich rund $7\\,\\mu\\mathrm{s}$ nach.",
+      "label": "Zeitdilatation",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Myonen** ($\\tau_0 = 2{,}197\\,\\mu\\mathrm{s}$, $v = 0{,}998\\,c$, $10\\,\\mathrm{km}$ Atmosphäre).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "s_{klass} = v\\,\\tau_0 = 0{,}998\\cdot 2{,}998\\cdot 10^8\\cdot 2{,}197\\cdot 10^{-6}\\,\\mathrm{m} \\approx 657\\,\\mathrm{m}",
+            "why": "Ohne Zeitdilatation zerfielen sie weit oben."
+          },
+          {
+            "tex": "\\gamma = \\frac{1}{\\sqrt{1 - 0{,}998^2}} = \\frac{1}{\\sqrt{0{,}003996}} \\approx 15{,}82",
+            "why": "Lorentzfaktor."
+          },
+          {
+            "tex": "\\tau = \\gamma\\,\\tau_0 \\approx 34{,}8\\,\\mu\\mathrm{s}",
+            "why": "Lebensdauer im Erdsystem."
+          },
+          {
+            "tex": "s = v\\,\\tau \\approx 10{,}4\\,\\mathrm{km}",
+            "why": "Sie erreichen den Boden: ein direkter Beleg der Zeitdilatation."
+          },
+          {
+            "tex": "\\text{Myonsystem: } L = \\frac{10\\,\\mathrm{km}}{15{,}82} \\approx 632\\,\\mathrm{m}",
+            "why": "Aus Sicht des Myons ist die Atmosphäre verkürzt; dasselbe Ergebnis."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Klassisch.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lorentzfaktor.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lebensdauer.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Reichweite.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Myonsystem.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Zwillingsparadoxon im Raum-Zeit-Diagramm.** Grün der Erdzwilling, blau der Reisende mit $0{,}8\\,c$, gestrichelt ein Lichtstrahl.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          5
+        ],
+        "y": [
+          0,
+          10.5
+        ],
+        "xLabel": "Ort in Lichtjahren",
+        "yLabel": "Erdzeit in Jahren",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 10,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              10
+            ],
+            "color": "green",
+            "width": 3
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              4,
+              5
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              4,
+              5
+            ],
+            "to": [
+              0,
+              10
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              5,
+              5
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.4
+          }
+        ],
+        "points": [
+          {
+            "x": "T < 5 ? 0.8*T : 0.8*(10 - T)",
+            "y": "T",
+            "color": "orange"
+          },
+          {
+            "x": 0,
+            "y": "T",
+            "color": "green"
+          }
+        ],
+        "readout": "Erdzeit **{T|1} Jahre**, Uhr des Reisenden **{0.6*T|1} Jahre**"
+      },
+      "timeline": [
+        {
+          "caption": "Start: Der Reisende fliegt mit $0{,}8\\,c$ los ($\\gamma = \\tfrac53$). Seine Weltlinie ist steiler als die des Lichts.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Umkehr nach 5 Erdjahren in 4 Lichtjahren Entfernung. An Bord sind erst 3 Jahre vergangen.",
+          "to": {
+            "T": 5
+          },
+          "dur": 3000
+        },
+        {
+          "caption": "Zurück nach 10 Erdjahren: Der Reisende ist nur 6 Jahre älter geworden. Nur er hat beim Umkehren das Inertialsystem gewechselt; deshalb ist die Lage nicht symmetrisch.",
+          "to": {
+            "T": 10
+          },
+          "dur": 3000
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Das Zwillingsparadoxon.** Scheinbar müsste aus Sicht des Reisenden der Erdzwilling jünger bleiben. Die Lage ist aber nicht symmetrisch: Nur der Reisende muss umkehren, also beschleunigen, und wechselt dabei das Inertialsystem; nur er spürt eine Kraft. Die Formel $\\Delta t = \\gamma\\Delta t_0$ gilt zwischen Inertialsystemen, und der Erdzwilling bleibt durchgehend in einem.\n\n> [!warning] Typische Fallen\n> Eigenzeit und Laborzeit vertauschen; durch $\\gamma$ teilen statt malnehmen; $\\tfrac{v}{c}$ statt $\\tfrac{v^2}{c^2}$ unter die Wurzel; $v$ in m/s nicht durch $c$ teilen; die Zeitdilatation für eine Täuschung halten (Atomuhren messen sie); bei kleinen Geschwindigkeiten direkt rechnen statt mit $\\tfrac12\\beta^2$.",
+      "label": "Zwillinge",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zeitdilatation berechnen",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Zeitdilatation berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Wie viel Zeit vergeht für den ruhenden Beobachter?\"*, *\"Berechnen Sie die Lebensdauer des Myons im Laborsystem\"*, *\"Um wie viel geht die Uhr im Satelliten nach?\"*, *\"Erklären Sie das Zwillingsparadoxon\"*, *\"Ab welcher Geschwindigkeit wird der Effekt merklich?\"*.\n\nErkennungsmerkmal: Ein Vorgang wird aus **zwei verschiedenen Bezugssystemen** betrachtet, die sich relativ zueinander bewegen."
+            }
+          ]
+        },
+        {
+          "title": "Der Lorentzfaktor",
+          "blocks": [
+            {
+              "md": "> [!important] Die eine Größe, aus der alles folgt\n> $$\\gamma = \\frac{1}{\\sqrt{1 - \\dfrac{v^2}{c^2}}} = \\frac{1}{\\sqrt{1-\\beta^2}}, \\qquad \\beta = \\frac{v}{c}$$\n> $$\\boxed{\\;\\Delta t = \\gamma\\cdot\\Delta t_0\\;}$$\n> mit der **Eigenzeit** $\\Delta t_0$ -- gemessen von einer Uhr, die **am Ort des Geschehens ruht**.\n>\n> Da $\\gamma \\geq 1$ ist, gilt stets $\\Delta t \\geq \\Delta t_0$: Die im bewegten System gemessene Zeitspanne ist die **kürzeste**, jede andere ist länger. Bewegte Uhren gehen langsamer.\n\n| $\\beta = v/c$ | $\\gamma$ | Abweichung |\n|---|---|---|\n| 0,1 | 1,005 | 0,5 % |\n| 0,5 | 1,155 | 15 % |\n| 0,8 | 1,667 | 67 % |\n| 0,9 | 2,294 | 129 % |\n| 0,99 | 7,089 | Faktor 7 |\n| 0,999 | 22,37 | Faktor 22 |\n\n> [!tip] Warum der Effekt im Alltag unbemerkt bleibt\n> Bis etwa $10\\,\\%$ der Lichtgeschwindigkeit liegt $\\gamma$ unter 1,005 -- die Abweichung bleibt unter einem halben Prozent. Ein Verkehrsflugzeug erreicht $\\beta \\approx 8\\cdot10^{-7}$, entsprechend $\\gamma - 1 \\approx 3\\cdot10^{-13}$. Über einen zehnstündigen Flug summiert sich das auf etwa zehn Nanosekunden.\n>\n> Genau diese Größenordnung wurde 1971 im **Hafele-Keating-Experiment** mit Atomuhren an Bord von Linienflugzeugen tatsächlich gemessen -- der Effekt ist also kein Gedankenexperiment, sondern messtechnischer Alltag. Bei **GPS-Satelliten** muss er sogar aktiv korrigiert werden: Ohne Berücksichtigung beider relativistischer Effekte (Geschwindigkeit und Gravitation) liefe die Positionsbestimmung binnen eines Tages um mehrere Kilometer aus dem Ruder."
+            }
+          ]
+        },
+        {
+          "title": "Welche Zeit ist die Eigenzeit?",
+          "blocks": [
+            {
+              "md": "> [!warning] Die entscheidende und meistgestellte Frage\n> **Eigenzeit $\\Delta t_0$** ist die Zeitspanne, die eine Uhr misst, die **relativ zum Ereignis ruht** -- also am selben Ort anwesend ist, wo der Vorgang stattfindet.\n>\n> | Situation | Eigenzeit wird gemessen von |\n> |---|---|\n> | Myon zerfällt | Uhr, die **mit dem Myon** mitfliegt |\n> | Raumschiff-Reise | Uhr **an Bord** |\n> | Satellitenuhr | Uhr **im Satelliten** |\n> | Teilchen im Beschleuniger | mitbewegtes Bezugssystem |\n>\n> Merkregel: Die Eigenzeit ist immer die **kleinere** Zahl. Wer $\\Delta t_0$ und $\\Delta t$ vertauscht, dividiert statt zu multiplizieren und erhält einen um $\\gamma^2$ falschen Wert."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Bezugssysteme benennen** und festlegen, welches Ereignis wo stattfindet.\n2. **Eigenzeit identifizieren:** die im mitbewegten System gemessene Dauer.\n3. **$\\beta = v/c$ bilden** und $\\gamma$ berechnen.\n4. **Einsetzen:** $\\Delta t = \\gamma\\,\\Delta t_0$.\n5. **Plausibilität prüfen:** Das Ergebnis muss **größer** als die Eigenzeit sein.\n6. **Einheitenkontrolle:** $\\gamma$ ist dimensionslos; $\\Delta t$ trägt die Einheit von $\\Delta t_0$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Myonen",
+          "blocks": [
+            {
+              "md": "*Myonen entstehen in etwa 10 km Höhe durch kosmische Strahlung und haben im Ruhesystem die mittlere Lebensdauer $\\tau_0 = 2{,}197\\,\\mu\\text{s}$. Sie bewegen sich mit $v = 0{,}998\\,c$. Zeigen Sie, dass sie ohne Zeitdilatation die Erdoberfläche nicht erreichen könnten, mit Zeitdilatation aber schon.*\n\n**Klassische Rechnung:**\n$$s = v\\cdot\\tau_0 = 0{,}998\\cdot2{,}998\\cdot10^{8}\\cdot2{,}197\\cdot10^{-6} \\approx 657\\,\\text{m}$$\nNur rund 660 Meter -- die Myonen müssten weit oberhalb der Erdoberfläche zerfallen. Tatsächlich werden sie am Boden aber in großer Zahl gemessen.\n\n**Schritt 3, Lorentzfaktor:**\n$$\\gamma = \\frac{1}{\\sqrt{1 - 0{,}998^2}} = \\frac{1}{\\sqrt{1 - 0{,}996004}} = \\frac{1}{\\sqrt{0{,}003996}} = \\frac{1}{0{,}06322} \\approx 15{,}82$$\n\n**Schritt 4, Lebensdauer im Laborsystem:**\n$$\\tau = \\gamma\\,\\tau_0 = 15{,}82\\cdot2{,}197\\,\\mu\\text{s} \\approx 34{,}8\\,\\mu\\text{s}$$\n\n**Reichweite:**\n$$s = v\\cdot\\tau = 0{,}998\\cdot2{,}998\\cdot10^{8}\\cdot34{,}8\\cdot10^{-6} \\approx 1{,}04\\cdot10^{4}\\,\\text{m} = 10{,}4\\,\\text{km}$$\n\nDie Myonen erreichen also den Boden -- und zwar gerade eben. Der gemessene Myonenfluss auf Meereshöhe ist damit ein **direkter experimenteller Beleg** der Zeitdilatation und historisch einer der ersten.\n\n> [!important] Dieselbe Beobachtung aus dem Myonensystem\n> Aus Sicht des Myons vergehen tatsächlich nur $2{,}197\\,\\mu\\text{s}$ -- seine eigene Uhr geht völlig normal. Wie erreicht es dann den Boden?\n>\n> Für das Myon ist die **Atmosphäre verkürzt**: Statt 10 km misst es nur $10\\,\\text{km}/15{,}82 \\approx 632\\,\\text{m}$, und diese Strecke schafft es in seiner Eigenzeit bequem. Beide Beschreibungen führen auf dasselbe beobachtbare Ergebnis, nutzen aber verschiedene Effekte -- Zeitdilatation im Erdsystem, **Längenkontraktion** im Myonensystem.\n>\n> Dass beide Rechnungen übereinstimmen müssen, ist kein Zufall, sondern Ausdruck des Relativitätsprinzips: Kein Bezugssystem ist ausgezeichnet, und beobachtbare Tatsachen (kommt das Myon an?) dürfen nicht davon abhängen, aus welchem System man rechnet."
+            }
+          ]
+        },
+        {
+          "title": "Das Zwillingsparadoxon",
+          "blocks": [
+            {
+              "md": "Ein Zwilling fliegt mit hoher Geschwindigkeit fort und kehrt zurück; der andere bleibt auf der Erde. Der Reisende ist bei der Rückkehr **jünger**.\n\n> [!warning] Warum das kein Widerspruch ist\n> Der scheinbare Widerspruch lautet: Aus Sicht des Reisenden bewegt sich doch der Erdzwilling -- müsste dann nicht dieser jünger sein? Die Situation scheint symmetrisch.\n>\n> **Sie ist es nicht.** Der Reisende muss **umkehren** und dabei beschleunigen, wechselt also das Inertialsystem. Der Erdzwilling bleibt durchgehend in einem einzigen Inertialsystem. Die Zeitdilatationsformel gilt aber nur zwischen Inertialsystemen -- der Reisende darf sie nicht ununterbrochen anwenden.\n>\n> Die Asymmetrie liegt also in der **Beschleunigungsphase**, und sie ist physikalisch real: Nur einer der beiden spürt beim Umkehren eine Kraft. Das Paradoxon ist damit keines, sondern nur eine Aufforderung, genau zu prüfen, welches System tatsächlich ein Inertialsystem ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Eigenzeit und Laborzeit vertauschen.** Die Eigenzeit ist stets die kürzere.\n- **Mit $\\gamma$ dividieren statt zu multiplizieren.** Kontrolle: $\\Delta t > \\Delta t_0$.\n- **$v^2/c^2$ als $v/c$ ansetzen.** Unter der Wurzel steht das Quadrat.\n- **$\\beta$ nicht bilden.** Bei $v$ in m/s muss durch $c$ geteilt werden.\n- **Die Zeitdilatation als Messfehler oder optische Täuschung deuten.** Sie ist real und mit Atomuhren nachgewiesen.\n- **Das Zwillingsparadoxon symmetrisch behandeln.** Die Beschleunigungsphase bricht die Symmetrie.\n- **Bei kleinen Geschwindigkeiten zu wenige Nachkommastellen mitführen.** Bei $\\gamma - 1 \\approx 10^{-13}$ ist die Differenz zur Eins die eigentlich gesuchte Größe; der Taschenrechner liefert bei direkter Rechnung schlicht 1."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Längenkontraktion berechnen** · **Relativistische Energie und Masse-Energie-Äquivalenz berechnen** · **Zerfallsgesetz anwenden** · **Spezielle Relativitätstheorie**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Eigenzeit",
+      "md": "Wer misst die Eigenzeit? Ordne zu.",
+      "pairs": [
+        [
+          "Myon zerfällt",
+          "eine mit dem Myon mitfliegende Uhr"
+        ],
+        [
+          "Raumschiffreise",
+          "die Uhr an Bord"
+        ],
+        [
+          "Satellitenuhr",
+          "die Uhr im Satelliten"
+        ],
+        [
+          "Teilchen im Beschleuniger",
+          "eine im Teilchensystem ruhende Uhr"
+        ]
+      ],
+      "explain": "Die Eigenzeit misst immer eine Uhr am Ort des Vorgangs; sie ist die kürzeste Zeitspanne.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe den Myon-Nachweis in die richtige Reihenfolge.",
+      "items": [
+        "Klassisch: $s = v\\tau_0 \\approx 657\\,\\mathrm{m}$, zu kurz",
+        "Lorentzfaktor $\\gamma \\approx 15{,}8$",
+        "Im Erdsystem $\\tau = \\gamma\\tau_0 \\approx 34{,}8\\,\\mu\\mathrm{s}$",
+        "Reichweite $s = v\\tau \\approx 10{,}4\\,\\mathrm{km}$: Sie kommen an"
+      ],
+      "explain": "Die Reihenfolge: 1. Klassisch: $s = v\\tau_0 \\approx 657\\,\\mathrm{m}$, zu kurz. 2. Lorentzfaktor $\\gamma \\approx 15{,}8$. 3. Im Erdsystem $\\tau = \\gamma\\tau_0 \\approx 34{,}8\\,\\mu\\mathrm{s}$. 4. Reichweite $s = v\\tau \\approx 10{,}4\\,\\mathrm{km}$: Sie kommen an.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist $\\gamma$ für $v = 0{,}998\\,c$?",
+      "answer": 15.8,
+      "tolerance": 0.15,
+      "placeholder": "",
+      "explain": "$\\gamma = \\tfrac{1}{\\sqrt{1 - 0{,}998^2}} = \\tfrac{1}{\\sqrt{0{,}003996}} \\approx 15{,}8$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche mittlere Lebensdauer haben diese Myonen ($\\tau_0 = 2{,}197\\,\\mu\\mathrm{s}$) im Erdsystem?",
+      "answer": 34.8,
+      "tolerance": 0.4,
+      "placeholder": "µs",
+      "explain": "$\\tau = 15{,}82\\cdot 2{,}197\\,\\mu\\mathrm{s} \\approx 34{,}8\\,\\mu\\mathrm{s}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Ein GPS-Satellit fliegt mit $3{,}87\\,\\mathrm{km/s}$. Um wie viele Mikrosekunden geht seine Uhr allein dadurch pro Tag nach?",
+      "answer": 7.2,
+      "tolerance": 0.1,
+      "placeholder": "µs",
+      "explain": "$\\tfrac12\\left(\\tfrac{3870}{3\\cdot 10^8}\\right)^2\\cdot 86\\,400\\,\\mathrm{s} \\approx 7{,}2\\cdot 10^{-6}\\,\\mathrm{s}$. Die Schwerkraft wirkt entgegengesetzt und stärker; insgesamt gehen GPS-Uhren vor.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Zwilling reist mit $0{,}8\\,c$ und kehrt nach 10 Erdjahren zurück. Wie viele Jahre sind für ihn vergangen?",
+      "answer": 6.0,
+      "tolerance": 0.05,
+      "placeholder": "Jahre",
+      "explain": "$\\Delta t_0 = \\tfrac{\\Delta t}{\\gamma} = 10\\cdot 0{,}6 = 6$ Jahre.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Eigenzeit ist immer die längere der beiden Zeitspannen.",
+      "answer": false,
+      "explain": "Sie ist die kürzere: $\\Delta t = \\gamma\\Delta t_0 \\ge \\Delta t_0$.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist das Zwillingsparadoxon kein Widerspruch?",
+      "options": [
+        {
+          "md": "Nur der Reisende wechselt beim Umkehren das Inertialsystem; die Lage ist nicht symmetrisch.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Zeitdilatation nur eine optische Täuschung ist.",
+          "why": "Sie ist real; Atomuhren messen sie."
+        },
+        {
+          "md": "Weil beide gleich alt bleiben.",
+          "why": "Der Reisende ist tatsächlich jünger."
+        },
+        {
+          "md": "Weil die Erde sich auch bewegt.",
+          "why": "Die Erdbewegung ist hier fast gleichförmig und spielt keine Rolle."
+        }
+      ],
+      "explain": "Die Beschleunigungsphase bricht die Symmetrie.",
+      "label": "Zwillinge",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +474,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "uhrengang"
+        ]
+      },
+      "label": "Atomuhren und GPS",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "uhrengang",
+          "zeitdilatation"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\Delta t = \\gamma\\Delta t_0$, die Eigenzeit ist die kürzeste; bei kleinen $v$: $\\gamma - 1 \\approx \\tfrac12\\beta^2$.",
+        "Myonen belegen die Zeitdilatation; das Zwillingsparadoxon löst der Wechsel des Inertialsystems beim Umkehren."
+      ]
     }
   ]
 }

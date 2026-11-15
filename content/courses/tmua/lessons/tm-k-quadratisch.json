@@ -19,6 +19,491 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Drei Formen, drei Informationen\n> - **Normalform** $ax^2 + bx + c$: Der Schnittpunkt mit der y-Achse ist $(0, c)$.\n> - **Scheitelform** $a(x - p)^2 + q$: Der Scheitel ist $(p, q)$; $q$ ist der kleinste ($a > 0$) oder größte ($a < 0$) Wert.\n> - **Faktorisierte Form** $a(x - x_1)(x - x_2)$: Die Nullstellen $x_1$, $x_2$ stehen da.\n\n> [!definition] Diskriminante\n> $\\Delta = b^2 - 4ac$. Ist $\\Delta > 0$, gibt es zwei verschiedene reelle Nullstellen; bei $\\Delta = 0$ eine doppelte; bei $\\Delta < 0$ keine reelle.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Lösungsformel durch quadratische Ergänzung.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "ax^2 + bx + c = 0 \\;\\Rightarrow\\; x^2 + \\frac ba x = -\\frac ca",
+            "why": "Durch a teilen (a ≠ 0) und das Absolutglied hinüberbringen."
+          },
+          {
+            "tex": "x^2 + \\frac ba x + \\left(\\frac{b}{2a}\\right)^2 = \\left(\\frac{b}{2a}\\right)^2 - \\frac ca",
+            "why": "Das Quadrat der halben Vorzahl auf beiden Seiten addieren."
+          },
+          {
+            "tex": "\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a^2}",
+            "why": "Links ein vollständiges Quadrat, rechts auf einen Nenner gebracht."
+          },
+          {
+            "tex": "x + \\frac{b}{2a} = \\pm\\frac{\\sqrt{b^2 - 4ac}}{2a}",
+            "why": "Wurzelziehen ist nur möglich, wenn b² − 4ac ≥ 0: Das ist die Rolle der Diskriminante."
+          },
+          {
+            "tex": "x_{1,2} = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}",
+            "why": "Bei Δ = 0 fallen beide Lösungen zusammen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Normieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurzel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die drei Fälle der Diskriminante im Bild.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:TMUA Diskriminante Faelle.svg",
+        "aspect": 1.9,
+        "alt": "Drei Parabeln für positive, verschwindende und negative Diskriminante"
+      },
+      "timeline": [
+        {
+          "caption": "Die Diskriminante entscheidet über die Zahl der Nullstellen, hier für eine nach oben geöffnete Parabel.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Δ > 0: Die Parabel schneidet die x-Achse zweimal, zwei verschiedene reelle Nullstellen.",
+          "to": {
+            "x": 0.17,
+            "y": 0.46,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Δ = 0: Der Scheitel liegt auf der Achse, eine doppelte Nullstelle; der Graph berührt.",
+          "to": {
+            "x": 0.5,
+            "y": 0.46,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Δ < 0: Die Parabel bleibt ganz über der Achse, keine reelle Nullstelle.",
+          "to": {
+            "x": 0.82,
+            "y": 0.46,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Dieselbe Rechnung zählt Schnittpunkte von Gerade und Parabel: gleichsetzen, dann entscheidet Δ der neuen Gleichung.",
+          "to": {
+            "x": 0.45,
+            "y": 0.9,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Diskriminante",
+      "md": "**Die Nullstellen von $y = x^2 + 2x + c$:** Mit wachsendem $c$ wandert die Parabel nach oben.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -5,
+          3
+        ],
+        "y": [
+          -4,
+          8
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "c",
+            "min": -3,
+            "max": 4,
+            "value": -3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 + 2*x + c",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "-1 - sqrt(1 - c)",
+            "y": 0,
+            "color": "orange"
+          },
+          {
+            "x": "-1 + sqrt(1 - c)",
+            "y": 0,
+            "color": "orange"
+          },
+          {
+            "x": -1,
+            "y": "c - 1",
+            "color": "green",
+            "label": "Scheitel"
+          }
+        ],
+        "readout": "c = {c|1} · Δ = 4 − 4c = {4 - 4*c|1} · Nullstellen: {c < 0.999 ? 2 : (c < 1.001 ? 1 : 0)}"
+      },
+      "timeline": [
+        {
+          "caption": "c = −3: Δ = 16, zwei Nullstellen bei −3 und 1.",
+          "set": {
+            "c": -3
+          }
+        },
+        {
+          "caption": "c = 0: Δ = 4, Nullstellen bei −2 und 0.",
+          "to": {
+            "c": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 1: Δ = 0, der Scheitel (−1, 0) liegt auf der Achse: eine doppelte Nullstelle.",
+          "to": {
+            "c": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 3: Δ = −8, die Parabel schwebt über der Achse. Keine reelle Nullstelle.",
+          "to": {
+            "c": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Herleitung: Summe und Produkt der Nullstellen** (Satz von Vieta).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a(x - x_1)(x - x_2) = ax^2 - a(x_1 + x_2)x + a\\,x_1 x_2",
+            "why": "Die faktorisierte Form ausmultiplizieren."
+          },
+          {
+            "tex": "\\equiv ax^2 + bx + c",
+            "why": "Mit der Normalform vergleichen."
+          },
+          {
+            "tex": "x_1 + x_2 = -\\frac ba, \\qquad x_1 x_2 = \\frac ca",
+            "why": "Koeffizientenvergleich. Damit lassen sich Summen von Schnittstellen ohne Lösen angeben."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausmultiplizieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleichen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vieta.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Quadratische Ungleichungen:** alles auf eine Seite bringen, die Nullstellen bestimmen, die Parabel skizzieren und ablesen. Bei $a > 0$ ist der Term **zwischen** den Nullstellen negativ und **außerhalb** positiv. Die Ränder gehören bei $\\le$ und $\\ge$ dazu, bei $<$ und $>$ nicht.\n\nNie die Wurzel ziehen oder durch $x$ teilen: Aus $x^2 > 9$ folgt $x < -3$ **oder** $x > 3$.",
+      "label": "Ungleichungen",
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Quadratische Funktionen und Diskriminante",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Quadratische Funktionen und Diskriminante.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Drei Formen, drei Informationen",
+          "blocks": [
+            {
+              "md": "Eine quadratische Funktion lässt sich auf drei Arten schreiben, und jede verrät etwas anderes:\n\n| Form | englisch | zeigt sofort |\n|---|---|---|\n| $ax^2 + bx + c$ | *standard form* | Öffnung ($a$), y-Achsenabschnitt ($c$) |\n| $a(x + p)^2 + q$ | *completed square form* | **Scheitel** $(-p, q)$, Symmetrieachse $x = -p$, kleinster oder größter Wert |\n| $a(x - x_1)(x - x_2)$ | *factorised form* | **Nullstellen** $x_1, x_2$ |\n\nDie Spezifikation verlangt ausdrücklich, zu verstehen, wie $a$, $b$ und $c$ in $y = a(x + b)^2 + c$ den Graphen verändern (MM8.4): $a$ streckt und spiegelt, $b$ verschiebt waagerecht (um $-b$), $c$ verschiebt senkrecht."
+            }
+          ]
+        },
+        {
+          "title": "Quadratische Ergänzung",
+          "blocks": [
+            {
+              "md": "Die **quadratische Ergänzung** (*completing the square*) überführt die Normalform in die Scheitelform:\n\n$$x^2 + bx + c = \\left(x + \\frac b2\\right)^2 - \\frac{b^2}{4} + c.$$\n\nBei $a \\ne 1$ zuerst $a$ aus den ersten beiden Summanden ausklammern:\n\n$$2x^2 - 12x + 23 = 2(x^2 - 6x) + 23 = 2\\left[(x - 3)^2 - 9\\right] + 23 = 2(x - 3)^2 + 5.$$\n\nAblesbar: Scheitel $(3, 5)$, **kleinster Wert 5** bei $x = 3$, keine reelle Nullstelle.\n\n> [!important] Die quadratische Ergänzung ist das Extremwertwerkzeug ohne Ableitung\n> Weil $(x - 3)^2 \\ge 0$ für alle $x$, ist $2(x-3)^2 + 5 \\ge 5$ -- mit Gleichheit genau bei $x = 3$. Das beweist den kleinsten Wert, ohne zu differenzieren. Im TMUA ist dieser Weg oft schneller als die Ableitung, und er funktioniert auch für Ausdrücke wie $\\dfrac{1}{x^2 - 2x + 5}$, deren größter Wert der Kehrwert des kleinsten Nennerwertes ist."
+            }
+          ]
+        },
+        {
+          "title": "Die Lösungsformel und die Diskriminante",
+          "blocks": [
+            {
+              "md": "Die Nullstellen von $ax^2 + bx + c$ sind\n\n$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}.$$\n\nDer Ausdruck unter der Wurzel heißt **Diskriminante** (*discriminant*), $\\Delta = b^2 - 4ac$:\n\n| $\\Delta$ | Nullstellen | Graph |\n|---|---|---|\n| $> 0$ | zwei verschiedene reelle (*two distinct real roots*) | schneidet die x-Achse zweimal |\n| $= 0$ | eine doppelte (*one repeated root*, *equal roots*) | berührt die x-Achse |\n| $< 0$ | keine reelle (*no real roots*) | liegt ganz ober- oder unterhalb |"
+            },
+            {
+              "image": "vault:TMUA Diskriminante Faelle.svg"
+            },
+            {
+              "md": "> [!tip] Die Diskriminante zählt auch Schnittpunkte\n> Wie oft schneidet die Gerade $y = kx - 2$ die Parabel $y = x^2 + 2$? Gleichsetzen: $x^2 - kx + 4 = 0$. Die Diskriminante $k^2 - 16$ entscheidet: zwei Schnittpunkte für $\\lvert k \\rvert > 4$, eine **Tangente** für $k = \\pm 4$, kein Schnittpunkt dazwischen. Dieser Aufgabentyp ist im TMUA einer der häufigsten überhaupt -- siehe **Parameterbedingung über die Diskriminante**."
+            }
+          ]
+        },
+        {
+          "title": "Summe und Produkt der Nullstellen",
+          "blocks": [
+            {
+              "md": "Hat $ax^2 + bx + c$ die Nullstellen $x_1, x_2$, so gilt nach Ausmultiplizieren von $a(x - x_1)(x - x_2)$:\n\n$$x_1 + x_2 = -\\frac ba, \\qquad x_1 x_2 = \\frac ca.$$\n\nDie Spezifikation nennt diese Beziehung nicht eigens, aber sie folgt aus der faktorisierten Form und erspart oft das Ausrechnen der Nullstellen -- etwa wenn nur nach deren Summe gefragt ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Bei $a \\ne 1$ die quadratische Ergänzung ohne Ausklammern** durchführen.\n- **Vorzeichen der Verschiebung:** $(x + 3)^2$ hat den Scheitel bei $x = -3$.\n- **Bei Parameteraufgaben den Fall $a = 0$ übersehen:** Ist der Leitkoeffizient selbst ein Parameterausdruck, kann die Gleichung für einen Wert linear werden.\n- **\"Zwei reelle Lösungen\" mit \"zwei verschiedene reelle Lösungen\" verwechseln:** Ob $\\Delta = 0$ zugelassen ist, entscheidet über $>$ oder $\\ge$.\n\nVerwandt: **Gleichungssysteme und Schnittpunkte** · **Transformationen von Graphen** · Aufgabentypen: **Quadratische Ergänzung zur Extremwertbestimmung** · **Parameterbedingung über die Diskriminante** · im Mathematikbestand: **abc-Formel**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lineare und quadratische Ungleichungen",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Lineare und quadratische Ungleichungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Warum Ungleichungen eine eigene Notiz brauchen",
+          "blocks": [
+            {
+              "md": "Im deutschen Unterricht werden Ungleichungen meist nebenbei behandelt; im TMUA sind sie allgegenwärtig -- als eigene Aufgaben, in Parameterbedingungen (*the complete set of values of k*), in Logikfragen (*if x² > 4 then ...*). Und sie haben eine eigene Fehlerquelle, die es bei Gleichungen nicht gibt: das **Vorzeichen** beim Multiplizieren."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Ungleichungen",
+          "blocks": [
+            {
+              "md": "Erlaubt sind dieselben Umformungen wie bei Gleichungen, mit einer Ausnahme:\n\n> [!important] Multiplizieren oder Dividieren mit einer negativen Zahl dreht das Zeichen\n> $-2x > 6 \\iff x < -3$. Grund: Multiplikation mit $-1$ spiegelt die Zahlengerade am Nullpunkt, und die Reihenfolge kehrt sich um.\n>\n> Daraus folgt eine zweite Regel, die in Beweisaufgaben immer wieder verletzt wird: **Mit einem Term unbekannten Vorzeichens darf nicht multipliziert oder dividiert werden**, ohne Fälle zu unterscheiden. Aus $x^2 > 3x$ folgt nicht $x > 3$ -- für negative $x$ wäre das Zeichen umzukehren, und bei $x = 0$ ist die Division gar nicht erlaubt."
+            }
+          ]
+        },
+        {
+          "title": "Quadratische Ungleichungen",
+          "blocks": [
+            {
+              "md": "**Verfahren** (*sign diagram* oder Skizze):\n\n1. Alles auf eine Seite bringen: $ax^2 + bx + c > 0$ (oder $<$, $\\ge$, $\\le$).\n2. Nullstellen bestimmen, am besten durch Faktorisieren.\n3. Parabel skizzieren -- nach oben geöffnet für $a > 0$.\n4. Ablesen: **Oberhalb** der Achse liegt die Parabel **außerhalb** der Nullstellen, **unterhalb** zwischen ihnen (für $a > 0$).\n\n| Ungleichung ($a > 0$, Nullstellen $x_1 < x_2$) | Lösungsmenge |\n|---|---|\n| $a(x - x_1)(x - x_2) < 0$ | $x_1 < x < x_2$ |\n| $a(x - x_1)(x - x_2) > 0$ | $x < x_1$ **oder** $x > x_2$ |\n| $\\le$ bzw. $\\ge$ | dieselben Bereiche **mit** den Randpunkten |\n\n> [!example] Zwei Beispiele\n> $x^2 - x - 6 < 0 \\iff (x - 3)(x + 2) < 0 \\iff -2 < x < 3$.\n>\n> $x^2 \\ge 4x \\iff x^2 - 4x \\ge 0 \\iff x(x - 4) \\ge 0 \\iff x \\le 0$ oder $x \\ge 4$.\n> Wer im zweiten Beispiel durch $x$ teilt, erhält nur $x \\ge 4$ und verliert den ganzen Bereich $x \\le 0$.\n\n> [!tip] Keine Nullstellen: dann gilt die Ungleichung überall oder nirgends\n> Hat $ax^2 + bx + c$ die Diskriminante $\\Delta < 0$, wechselt der Term nie das Vorzeichen. Für $a > 0$ ist er dann **für alle** $x$ positiv. Das ist die Grundlage aller Aufgaben der Form *\"for which k is x² + kx + 9 > 0 for all x\"*."
+            }
+          ]
+        },
+        {
+          "title": "Und, oder und Lösungsmengen",
+          "blocks": [
+            {
+              "md": "Lösungsmengen werden mit den Verknüpfungen aus **Aussagen und logische Verknüpfungen** kombiniert:\n\n- **Beide** Bedingungen (*and*): Durchschnitt der Mengen. $x > 1$ und $x^2 < 9$ ergibt $1 < x < 3$.\n- **Mindestens eine** (*or*): Vereinigung. Die Lösung von $x^2 > 4$ ist $x < -2$ **oder** $x > 2$ -- nie \"$-2 > x > 2$\", das wäre leer.\n- **Verneinung** kehrt Und und Oder um: Die Verneinung von $x < -2$ oder $x > 2$ ist $-2 \\le x \\le 2$."
+            }
+          ]
+        },
+        {
+          "title": "Ungleichungen in zwei Variablen",
+          "blocks": [
+            {
+              "md": "Eine lineare Ungleichung wie $y > 2x - 1$ beschreibt eine **Halbebene**: alle Punkte oberhalb der Geraden $y = 2x - 1$, die Gerade selbst gestrichelt (weil $>$ und nicht $\\ge$). Mehrere solcher Bedingungen beschreiben ein Gebiet, dessen Punkte alle Bedingungen erfüllen. Die Spezifikation verlangt, solche Lösungsmengen darzustellen und zu deuten (M4.17)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Durch $x$ oder einen Term mit $x$ teilen.** Stattdessen alles auf eine Seite bringen und faktorisieren.\n- **Zeichen beim Multiplizieren mit Negativem nicht umdrehen.**\n- **Die \"Oder\"-Lösung als Doppelungleichung schreiben.**\n- **Randpunkte** bei $\\le$ und $\\ge$ vergessen -- oder bei $<$ und $>$ einschließen.\n- **Wurzeln ziehen:** Aus $x^2 < 9$ folgt $-3 < x < 3$, nicht nur $x < 3$.\n\nVerwandt: **Quadratische Funktionen und Diskriminante** · **Funktionseigenschaften und Betragsfunktion** · Aufgabentypen: **Quadratische Ungleichung lösen** · **Betragsgleichungen und Betragsungleichungen** · **Parameterwerte für wahre Aussagen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Formen",
+      "md": "Welche Form verrät was?",
+      "pairs": [
+        [
+          "$ax^2 + bx + c$",
+          "den Schnittpunkt mit der y-Achse"
+        ],
+        [
+          "$a(x - p)^2 + q$",
+          "den Scheitelpunkt"
+        ],
+        [
+          "$a(x - x_1)(x - x_2)$",
+          "die Nullstellen"
+        ],
+        [
+          "$b^2 - 4ac$",
+          "die Anzahl der reellen Nullstellen"
+        ]
+      ],
+      "explain": "Jede Form hat ihre Stärke; Umrechnen geht durch Ausmultiplizieren, quadratisches Ergänzen oder Faktorisieren.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Lösungsformel in die richtige Reihenfolge.",
+      "items": [
+        "durch $a$ teilen und $\\tfrac ca$ auf die andere Seite bringen",
+        "$\\left(\\tfrac{b}{2a}\\right)^2$ auf beiden Seiten addieren",
+        "links das Quadrat $\\left(x + \\tfrac{b}{2a}\\right)^2$ erkennen",
+        "die Wurzel ziehen, mit $\\pm$",
+        "nach $x$ auflösen"
+      ],
+      "explain": "Die Reihenfolge: 1. durch $a$ teilen und $\\tfrac ca$ auf die andere Seite bringen. 2. $\\left(\\tfrac{b}{2a}\\right)^2$ auf beiden Seiten addieren. 3. links das Quadrat $\\left(x + \\tfrac{b}{2a}\\right)^2$ erkennen. 4. die Wurzel ziehen, mit $\\pm$. 5. nach $x$ auflösen.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Diskriminante",
+      "md": "Berechne die Diskriminante von $2x^2 - 3x - 5$.",
+      "answer": 49,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\Delta = (-3)^2 - 4 \\cdot 2 \\cdot (-5) = 9 + 40 = 49$: zwei Nullstellen, $x = \\tfrac{3 \\pm 7}{4}$, also $\\tfrac52$ und $-1$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "For which value of $k$ does $x^2 - 6x + k = 0$ have equal roots?",
+      "options": [
+        {
+          "md": "-9"
+        },
+        {
+          "md": "3"
+        },
+        {
+          "md": "6"
+        },
+        {
+          "md": "9",
+          "correct": true
+        },
+        {
+          "md": "36"
+        }
+      ],
+      "explain": "Gleiche Nullstellen heißt $\\Delta = 36 - 4k = 0$, also $k = 9$; dann ist $x^2 - 6x + 9 = (x - 3)^2$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Doppelte Nullstelle",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Vieta",
+      "md": "Die Gleichung $3x^2 - 12x + 5 = 0$ hat zwei Lösungen. Wie groß ist ihre Summe?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Vieta: $x_1 + x_2 = -\\tfrac ba = \\tfrac{12}{3} = 4$, ohne die Lösungen auszurechnen.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Haben $a$ und $c$ verschiedene Vorzeichen, dann hat $ax^2 + bx + c = 0$ zwei verschiedene reelle Lösungen.",
+      "answer": true,
+      "explain": "Dann ist $-4ac > 0$, also $\\Delta = b^2 - 4ac > 0$, egal wie $b$ aussieht.",
+      "label": "Diskriminante",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "For how many integer values of $k$ does $x^2 + kx + 9 = 0$ have no real roots?",
       "options": [
@@ -72,12 +557,50 @@
       "id": "c2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "diskriminante"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "qungleichung"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ergaenzung"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "D = b² − 4ac: Anzahl der Nullstellen.",
         "Quadratische Ergänzung: Scheitel.",
-        "Ungleichung: Nullstellen, Skizze, Bereich ablesen."
+        "Ungleichung: Nullstellen, Skizze, Bereich ablesen.",
+        "Lösungsformel aus quadratischer Ergänzung; $\\Delta = b^2 - 4ac$ entscheidet über 2, 1 oder 0 Nullstellen.",
+        "Vieta: $x_1 + x_2 = -\\tfrac ba$, $x_1 x_2 = \\tfrac ca$; Ungleichungen über die Skizze der Parabel."
       ],
       "id": "summary"
     }

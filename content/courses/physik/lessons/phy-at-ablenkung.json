@@ -16,6 +16,360 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die Bahn durch den Ablenkkondensator.** $U_B = 1000\\,\\mathrm{V}$, Platten $5\\,\\mathrm{cm}$ lang im Abstand $2\\,\\mathrm{cm}$, Schirm $20\\,\\mathrm{cm}$ hinter dem Plattenende.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          27
+        ],
+        "y": [
+          -4.5,
+          4.5
+        ],
+        "xLabel": "x in cm",
+        "yLabel": "y in cm",
+        "vars": [
+          {
+            "name": "U",
+            "min": 0,
+            "max": 320,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "bahn",
+            "expr": "x<=5 ? U*x*x/8000 : U/320 + U/800*(x-5)",
+            "color": "blue",
+            "domain": [
+              0,
+              25
+            ],
+            "samples": 600
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              1
+            ],
+            "to": [
+              5,
+              1
+            ],
+            "color": "gray",
+            "width": 3
+          },
+          {
+            "from": [
+              0,
+              -1
+            ],
+            "to": [
+              5,
+              -1
+            ],
+            "color": "gray",
+            "width": 3
+          },
+          {
+            "from": [
+              25,
+              -4.2
+            ],
+            "to": [
+              25,
+              4.2
+            ],
+            "color": "green",
+            "width": 3
+          },
+          {
+            "from": [
+              2.5,
+              0
+            ],
+            "to": [
+              25,
+              "0.028125*U"
+            ],
+            "color": "orange",
+            "dashed": true,
+            "width": 1.6
+          }
+        ],
+        "points": [
+          {
+            "x": 25,
+            "y": "0.028125*U",
+            "color": "orange"
+          }
+        ],
+        "readout": "U_y = {U|0} V: Ablenkung am Plattenende **{U/32|2} mm**, auf dem Schirm **{0.028125*U|2} cm**"
+      },
+      "timeline": [
+        {
+          "caption": "Ohne Ablenkspannung fliegt der Strahl geradeaus in die Schirmmitte.",
+          "set": {
+            "U": 0
+          }
+        },
+        {
+          "caption": "Mit $U_y = 100\\,\\mathrm{V}$: im Kondensator eine Parabel, danach eine Gerade. Am Plattenende ist der Strahl $3{,}1\\,\\mathrm{mm}$ abgelenkt, auf dem Schirm $2{,}8\\,\\mathrm{cm}$.",
+          "to": {
+            "U": 100
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Die orange gestrichelte Linie beginnt in der Kondensatormitte und trifft den Leuchtfleck: Die gerade Bahn scheint aus der Mitte des Kondensators zu kommen. Deshalb gilt $Y = s\\tan\\alpha$ mit $s$ ab Kondensatormitte.",
+          "to": {
+            "U": 200
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $U_y = 320\\,\\mathrm{V}$ streift der Strahl die Plattenkante ($y = 1\\,\\mathrm{cm}$ bei $x = 5\\,\\mathrm{cm}$). Bei noch größerer Spannung träfe er die Platte.",
+          "to": {
+            "U": 320
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel.** $U_B = 2000\\,\\mathrm{V}$, $U_y = 150\\,\\mathrm{V}$, $l = 4\\,\\mathrm{cm}$, $d = 1{,}5\\,\\mathrm{cm}$, Schirm $25\\,\\mathrm{cm}$ von der Kondensatormitte.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y = \\frac{U_y\\,l^2}{4\\,d\\,U_B} = \\frac{150\\cdot 0{,}04^2}{4\\cdot 0{,}015\\cdot 2000}\\,\\mathrm{m} = 2{,}0\\,\\mathrm{mm}",
+            "why": "Ablenkung am Plattenende; sie ist kleiner als $\\tfrac d2 = 7{,}5\\,\\mathrm{mm}$, der Strahl kommt also heraus."
+          },
+          {
+            "tex": "\\tan\\alpha = \\frac{U_y\\,l}{2\\,d\\,U_B} = \\frac{150\\cdot 0{,}04}{2\\cdot 0{,}015\\cdot 2000} = 0{,}1,\\qquad \\alpha \\approx 5{,}71^\\circ",
+            "why": "Austrittswinkel."
+          },
+          {
+            "tex": "Y = s\\tan\\alpha = 25\\,\\mathrm{cm}\\cdot 0{,}1 = 2{,}5\\,\\mathrm{cm}",
+            "why": "Auslenkung auf dem Schirm."
+          },
+          {
+            "tex": "U_{y,max} = \\frac{2\\,d^2\\,U_B}{l^2} = \\frac{2\\cdot 0{,}015^2\\cdot 2000}{0{,}04^2}\\,\\mathrm{V} \\approx 563\\,\\mathrm{V}",
+            "why": "Aus $y = \\tfrac d2$: Darüber trifft der Strahl die Platte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ablenkung im Kondensator.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Austrittswinkel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schirm.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzspannung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Braunsche Röhre - Ablenkung im Querfeld berechnen",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Aufgabentypen/Braunsche Röhre - Ablenkung im Querfeld berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Ablenkung des Elektronenstrahls auf dem Schirm\"*, *\"Bestimmen Sie die Ablenkempfindlichkeit der Röhre\"*, *\"Welche Ablenkspannung ist erforderlich, damit der Leuchtfleck um ... verschoben wird?\"*, *\"Zeigen Sie, dass die Ablenkung proportional zur Ablenkspannung ist\"*.\n\nErkennungsmerkmal: Ein Elektronenstrahl wird zunächst **längs** beschleunigt und durchläuft anschließend einen **Querkondensator**, hinter dem ein Schirm im Abstand $a$ steht."
+            }
+          ]
+        },
+        {
+          "title": "Der Ansatz: waagerechter Wurf mit elektrischer Statt Gewichtskraft",
+          "blocks": [
+            {
+              "md": "> [!important] Die vollständige Analogie\n> Die Bewegung zerfällt in zwei unabhängige Teilbewegungen -- exakt wie beim **waagerechten Wurf**:\n>\n> | | Waagerechter Wurf | Braunsche Röhre |\n> |---|---|---|\n> | längs | $x = v_0 t$, kräftefrei | $x = v_0 t$, kräftefrei |\n> | quer | $y = \\tfrac12 g t^2$ | $y = \\tfrac12 a_y t^2$ mit $a_y = \\dfrac{eU_y}{m_e d}$ |\n> | Bahnform | Wurfparabel | Parabel im Plattenbereich |\n>\n> Nach dem Verlassen der Platten wirkt keine Kraft mehr: Das Elektron fliegt **geradlinig** weiter, tangential zur Parabel am Austrittspunkt. Die Bahn besteht damit aus einem Parabelstück und einer daran anschließenden Geraden."
+            }
+          ]
+        },
+        {
+          "title": "Die zwei Formeln",
+          "blocks": [
+            {
+              "md": "**Ablenkung innerhalb der Platten** (Plattenlänge $L$):\n$$y_1 = \\frac{U_y\\,L^2}{4\\,d\\,U_B}$$\n\n**Gesamtablenkung auf dem Schirm** im Abstand $a$ vom Plattenende:\n$$\\boxed{\\;y = \\frac{U_y\\,L\\,\\left(\\tfrac{L}{2} + a\\right)}{2\\,d\\,U_B}\\;}$$\n\n> [!tip] Warum die halbe Plattenlänge auftaucht\n> Verlängert man die geradlinige Bahn hinter den Platten rückwärts, so schneidet sie die ursprüngliche Flugrichtung genau in der **Mitte** des Plattenbereichs. Das Elektron verhält sich also so, als wäre es an diesem einen Punkt schlagartig um den Ablenkwinkel geknickt worden. Der Term $\\tfrac{L}{2} + a$ ist damit nichts anderes als der Abstand dieses gedachten Knickpunkts vom Schirm. Diese Konstruktion zu kennen erspart die getrennte Rechnung aus Parabel- und Geradenstück."
+            }
+          ]
+        },
+        {
+          "title": "Was die Formel über die Röhre sagt",
+          "blocks": [
+            {
+              "md": "$$y \\propto \\frac{U_y}{U_B}$$\n\n- **Proportional zur Ablenkspannung $U_y$** -- deshalb bildet die Röhre ein Signal unverzerrt ab, und deshalb ist eine Oszilloskopanzeige direkt in Volt kalibrierbar.\n- **Umgekehrt proportional zur Beschleunigungsspannung $U_B$** -- ein schnellerer Strahl verweilt kürzer im Ablenkfeld und wird weniger abgelenkt. Höhere Helligkeit erkauft man sich also mit geringerer Empfindlichkeit.\n- **Unabhängig von Ladung und Masse.** Sowohl $e$ als auch $m_e$ kürzen sich vollständig heraus, weil sie in Beschleunigung und Ablenkung gleichermaßen eingehen. Die Ablenkung ist eine reine Funktion der Geometrie und der beiden Spannungen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Geometrie sortieren:** $L$ = Plattenlänge, $d$ = Plattenabstand, $a$ = Abstand Plattenende bis Schirm.\n2. **Einheiten in SI**, insbesondere Plattenabstände in Millimeter und Längen in Zentimeter umrechnen.\n3. **Gesamtablenkung einsetzen:** $y = \\dfrac{U_y L (\\tfrac{L}{2} + a)}{2 d U_B}$.\n4. **Bei Umkehraufgaben** nach $U_y$ oder $U_B$ auflösen.\n5. **Ablenkempfindlichkeit** als $\\dfrac{y}{U_y}$ angeben, üblich in cm/V oder mm/V.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{V}]\\cdot[\\text{m}]\\cdot[\\text{m}]}{[\\text{m}]\\cdot[\\text{V}]} = [\\text{m}]$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*In einer Braunschen Röhre werden Elektronen mit $U_B = 2000\\,\\text{V}$ beschleunigt. Sie durchlaufen anschließend einen Ablenkkondensator der Plattenlänge $L = 4{,}0\\,\\text{cm}$ und des Plattenabstands $d = 8{,}0\\,\\text{mm}$, an dem die Spannung $U_y = 60\\,\\text{V}$ anliegt. Der Schirm steht $a = 25\\,\\text{cm}$ hinter dem Plattenende. Berechnen Sie die Ablenkung des Leuchtflecks und die Ablenkempfindlichkeit.*\n\n**Schritt 2, Umrechnung:** $L = 0{,}040\\,\\text{m}$, $d = 8{,}0\\cdot10^{-3}\\,\\text{m}$, $a = 0{,}25\\,\\text{m}$.\n\n**Schritt 3:**\n$$y = \\frac{60 \\cdot 0{,}040 \\cdot \\left(0{,}020 + 0{,}25\\right)}{2 \\cdot 8{,}0\\cdot10^{-3} \\cdot 2000}$$\nZähler: $60\\cdot0{,}040 = 2{,}40$; mal $0{,}270$ ergibt $0{,}648$.\nNenner: $2\\cdot8{,}0\\cdot10^{-3}\\cdot2000 = 32{,}0$.\n$$y = \\frac{0{,}648}{32{,}0} = 0{,}02025\\,\\text{m} \\approx 2{,}0\\,\\text{cm}$$\n\n**Schritt 5, Ablenkempfindlichkeit:**\n$$\\frac{y}{U_y} = \\frac{2{,}025\\,\\text{cm}}{60\\,\\text{V}} \\approx 0{,}034\\,\\frac{\\text{cm}}{\\text{V}}$$\n\n**Probe über die Kinematik** (unabhängiger Weg):\nEintrittsgeschwindigkeit $v_0 = \\sqrt{2eU_B/m_e} = \\sqrt{2\\cdot1{,}602\\cdot10^{-19}\\cdot2000/9{,}109\\cdot10^{-31}} \\approx 2{,}65\\cdot10^{7}\\,\\text{m/s}$.\nFlugzeit zwischen den Platten $t = L/v_0 = 0{,}040/2{,}65\\cdot10^{7} \\approx 1{,}51\\cdot10^{-9}\\,\\text{s}$.\nQuerbeschleunigung $a_y = \\dfrac{eU_y}{m_e d} = \\dfrac{1{,}602\\cdot10^{-19}\\cdot60}{9{,}109\\cdot10^{-31}\\cdot8{,}0\\cdot10^{-3}} \\approx 1{,}32\\cdot10^{15}\\,\\text{m/s}^2$.\nAblenkung in den Platten $y_1 = \\tfrac12 a_y t^2 \\approx 1{,}5\\cdot10^{-3}\\,\\text{m} = 0{,}15\\,\\text{cm}$.\nAustrittswinkel: $\\tan\\alpha = \\dfrac{a_y t}{v_0}$, Zusatzablenkung $a\\cdot\\tan\\alpha \\approx 1{,}875\\,\\text{cm}$.\nSumme: $0{,}15 + 1{,}875 = 2{,}025\\,\\text{cm}$. **Beide Wege stimmen exakt überein.**\n\n> [!note] Zur Größenordnung der Geschwindigkeit\n> $2{,}65\\cdot10^{7}\\,\\text{m/s}$ sind rund 8,8 % der Lichtgeschwindigkeit. Die relativistische Korrektur liegt damit unter einem halben Prozent und wird in der Schulrechnung zu Recht vernachlässigt. Bei Beschleunigungsspannungen im Bereich von zehntausenden Volt wäre das nicht mehr zulässig -- ein häufiger Diskussionspunkt in Bewertungsaufgaben."
+            }
+          ]
+        },
+        {
+          "title": "Ablenkung durch ein Magnetfeld statt eines E-Feldes",
+          "blocks": [
+            {
+              "md": "| | Elektrische Ablenkung | Magnetische Ablenkung |\n|---|---|---|\n| Bahn im Ablenkbereich | Parabel | Kreisbogen |\n| Ablenkung $\\propto$ | $U_y$, also linear | $B$, aber über $r = mv/(eB)$ |\n| Abhängigkeit von $U_B$ | $y \\propto 1/U_B$ | $r \\propto \\sqrt{U_B}$ |\n| Praxis | Oszilloskop (schnell, präzise) | Fernsehröhre (große Winkel, kurze Bauform) |\n\nFernsehröhren wurden magnetisch abgelenkt, weil sich damit Ablenkwinkel über $100^\\circ$ erreichen lassen; Oszilloskope arbeiten elektrostatisch, weil das Verfahren trägheitsfrei und exakt linear ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nur die Ablenkung innerhalb der Platten berechnen** und den Schirmabstand vergessen. Im Beispiel wären das 0,15 cm statt 2,0 cm -- ein Faktor 13.\n- **Den Schirmabstand ab Plattenanfang statt ab Plattenende messen.** Die Aufgabenstellung ist genau zu lesen; manche Aufgaben geben den Abstand auch ab Plattenmitte an, dann entfällt der Term $L/2$.\n- **Plattenabstand $d$ und Plattenlänge $L$ vertauschen.** $d$ steht im Nenner, $L$ quadratisch beziehungsweise linear im Zähler.\n- **Die Gewichtskraft berücksichtigen.** Sie ist gegenüber der elektrischen Kraft um etwa fünfzehn Zehnerpotenzen kleiner.\n- **Annehmen, die Ablenkung hänge von der Elektronenmasse ab.** Beide Teilchengrößen kürzen sich heraus.\n- **Millimeter nicht umrechnen.** $8{,}0\\,\\text{mm} = 8{,}0\\cdot10^{-3}\\,\\text{m}$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Kraft auf eine Ladung im homogenen Feld berechnen** · **Beschleunigungsspannung und kinetische Energie berechnen** · **Feldstärke im Plattenkondensator berechnen** · **Waagerechter Wurf - Wurfweite und Fallzeit berechnen** · **Braunsche Röhre**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$U_B = 1500\\,\\mathrm{V}$, $U_y = 120\\,\\mathrm{V}$, $l = 6\\,\\mathrm{cm}$, $d = 2\\,\\mathrm{cm}$. Wie groß ist die Ablenkung am Plattenende?",
+      "answer": 3.6,
+      "tolerance": 0.03,
+      "placeholder": "mm",
+      "explain": "$y = \\tfrac{120\\cdot 0{,}06^2}{4\\cdot 0{,}02\\cdot 1500}\\,\\mathrm{m} = 3{,}6\\,\\mathrm{mm}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Unter welchem Winkel tritt der Strahl dabei aus?",
+      "answer": 6.84,
+      "tolerance": 0.05,
+      "placeholder": "°",
+      "explain": "$\\tan\\alpha = \\tfrac{120\\cdot 0{,}06}{2\\cdot 0{,}02\\cdot 1500} = 0{,}12$, $\\alpha \\approx 6{,}84°$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Welche Ablenkspannung darf bei diesen Daten ($U_B = 1500\\,\\mathrm{V}$, $l = 6\\,\\mathrm{cm}$, $d = 2\\,\\mathrm{cm}$) höchstens anliegen, damit der Strahl die Platten nicht trifft?",
+      "answer": 333,
+      "tolerance": 2,
+      "placeholder": "V",
+      "explain": "$y = \\tfrac d2$: $U_{y,max} = \\tfrac{2 d^2 U_B}{l^2} = \\tfrac{2\\cdot 0{,}0004\\cdot 1500}{0{,}0036}\\,\\mathrm{V} \\approx 333\\,\\mathrm{V}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Warum kommen Ladung und Masse des Teilchens in der Ablenkformel nicht vor?",
+      "options": [
+        {
+          "md": "Größere Masse macht das Teilchen langsamer, aber im selben Maß träger quer; beides gleicht sich aus, ebenso bei der Ladung.",
+          "correct": true
+        },
+        {
+          "md": "Weil Elektronen masselos sind.",
+          "why": "$m_e = 9{,}109\\cdot 10^{-31}\\,\\mathrm{kg}$."
+        },
+        {
+          "md": "Weil sie in der Konstanten stecken.",
+          "why": "Es gibt keine solche Konstante."
+        },
+        {
+          "md": "Weil sie sich nur bei Elektronen kürzen.",
+          "why": "Für jedes mit derselben Spannung beschleunigte geladene Teilchen gilt dieselbe Formel."
+        }
+      ],
+      "explain": "In $y = \\tfrac12\\tfrac{qU_y}{md}\\tfrac{l^2}{v_0^2}$ steht $v_0^2 = \\tfrac{2qU_B}{m}$; $\\tfrac qm$ kürzt sich.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Verlängerung der geraden Bahn hinter dem Kondensator schneidet die Mittellinie genau in der Kondensatormitte.",
+      "answer": true,
+      "explain": "$y = \\tfrac{U_y l^2}{4dU_B} = \\tfrac l2\\tan\\alpha$: Die Tangente am Plattenende trifft die Achse bei $\\tfrac l2$. Eine Eigenschaft jeder Parabel aus dem Scheitel.",
+      "label": "Herleitung",
+      "id": "vq5"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Lösungsweg für die Schirmauslenkung. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$\\tan\\alpha = \\tfrac{U_y l}{2 d U_B} = 0{,}1$",
+          "why": "Richtig."
+        },
+        {
+          "md": "Der Schirm steht $20\\,\\mathrm{cm}$ hinter dem **Plattenende**, also $Y = 20\\,\\mathrm{cm}\\cdot 0{,}1 = 2\\,\\mathrm{cm}$.",
+          "why": "Falsch: Die Gerade beginnt scheinbar in der Kondensatormitte. Mit $l = 4\\,\\mathrm{cm}$ ist $s = 22\\,\\mathrm{cm}$, $Y = 2{,}2\\,\\mathrm{cm}$ (oder: $y$ am Ende plus $20\\,\\mathrm{cm}\\cdot\\tan\\alpha$)."
+        },
+        {
+          "md": "Bei größerer Beschleunigungsspannung wird Y kleiner.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Entweder $Y = s\\tan\\alpha$ ab der Mitte, oder $Y = y + L\\tan\\alpha$ ab dem Plattenende; beides gibt dasselbe.",
+      "id": "vq6"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +446,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "schirmablenkung",
+          "austrittswinkel"
+        ]
+      },
+      "label": "Schirm und Winkel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "schirmablenkung"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$y = \\tfrac{U_y l^2}{4dU_B}$, $\\tan\\alpha = \\tfrac{U_y l}{2dU_B}$, $Y = s\\tan\\alpha$ ab Kondensatormitte.",
+        "Höchstzulässige Ablenkspannung aus $y = \\tfrac d2$: $U_{y,max} = \\tfrac{2d^2U_B}{l^2}$."
+      ]
     }
   ]
 }

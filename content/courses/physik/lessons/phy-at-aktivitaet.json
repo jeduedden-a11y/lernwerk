@@ -16,6 +16,382 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Aktivität ist Zerfallsrate\n> $A = \\left|\\tfrac{\\Delta N}{\\Delta t}\\right| = \\lambda N$ in Becquerel, $1\\,\\mathrm{Bq}$ = ein Zerfall pro Sekunde. Sie verbindet die Zerfallswahrscheinlichkeit $\\lambda$ eines Kerns mit dem, was ein Zählrohr misst, und klingt wie $N$ ab: $A(t) = A_0 e^{-\\lambda t}$.\n\n**Teilchenzahl aus der Masse.** $N = \\tfrac{m}{M}\\,N_A$ mit der molaren Masse $M$ (in g/mol etwa die Massenzahl) und $N_A = 6{,}022\\cdot 10^{23}\\,\\mathrm{mol^{-1}}$.\n\n> [!warning] Zwei Einheitenfallen\n> $m$ und $M$ in derselben Masseneinheit, sonst fehlt ein Faktor 1000 oder mehr. Für Becquerel muss $\\lambda$ in $\\mathrm{s^{-1}}$ stehen: Tage mal 86 400, Jahre mal rund $3{,}16\\cdot 10^7$.\n\n**Lösungsschema.** $\\lambda = \\tfrac{\\ln 2}{T_{1/2}}$ in $\\mathrm{s^{-1}}$; $N = \\tfrac{m}{M}N_A$; $A = \\lambda N$; zeitlich $A(t) = A_0 e^{-\\lambda t}$; umgekehrt $m = \\tfrac{A\\,M}{\\lambda N_A}$.",
+      "label": "Aktivität",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel:** $1{,}0\\,\\mu\\mathrm{g}$ Iod-131 ($M = 131\\,\\mathrm{g/mol}$, $T_{1/2} = 8{,}02\\,\\mathrm{d}$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "T_{1/2} = 8{,}02\\cdot 86\\,400\\,\\mathrm{s} = 6{,}929\\cdot 10^5\\,\\mathrm{s},\\quad \\lambda = \\frac{0{,}6931}{6{,}929\\cdot 10^5\\,\\mathrm{s}} \\approx 1{,}000\\cdot 10^{-6}\\,\\mathrm{s^{-1}}",
+            "why": "Ein Kern zerfällt mit etwa einem Millionstel pro Sekunde."
+          },
+          {
+            "tex": "N = \\frac{1{,}0\\cdot 10^{-6}\\,\\mathrm{g}}{131\\,\\mathrm{g/mol}}\\cdot 6{,}022\\cdot 10^{23}\\,\\mathrm{mol^{-1}} \\approx 4{,}60\\cdot 10^{15}",
+            "why": "Masse und molare Masse beide in Gramm."
+          },
+          {
+            "tex": "A_0 = \\lambda N \\approx 4{,}60\\cdot 10^{9}\\,\\mathrm{Bq} = 4{,}6\\,\\mathrm{GBq}",
+            "why": "Ein Mikrogramm: Milliarden Zerfälle pro Sekunde."
+          },
+          {
+            "tex": "A(30\\,\\mathrm{d}) = A_0\\cdot\\left(\\tfrac12\\right)^{30/8{,}02} \\approx 4{,}60\\cdot 10^{9}\\cdot 0{,}0748\\,\\mathrm{Bq} \\approx 0{,}34\\,\\mathrm{GBq}",
+            "why": "Die Aktivität klingt mit derselben Halbwertszeit ab."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerfallskonstante.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teilchenzahl.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aktivität.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nach 30 Tagen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Hohe Aktivität heißt schnelles Verschwinden.** Gleich viele Kerne, blau $T_{1/2} = 1\\,\\mathrm{d}$, orange $T_{1/2} = 8\\,\\mathrm{d}$; die Flächen unter den Kurven zählen die bisherigen Zerfälle.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          0.75
+        ],
+        "xLabel": "t in Tagen",
+        "yLabel": "Aktivität (relativ)",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 20,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "A1",
+            "expr": "0.6931*0.5^x",
+            "color": "blue"
+          },
+          {
+            "name": "A2",
+            "expr": "0.08664*0.5^(x/8)",
+            "color": "orange"
+          }
+        ],
+        "areas": [
+          {
+            "f": "A1",
+            "from": 0,
+            "to": "X",
+            "color": "blue"
+          },
+          {
+            "f": "A2",
+            "from": 0,
+            "to": "X",
+            "color": "orange"
+          }
+        ],
+        "labels": [
+          {
+            "x": 4,
+            "y": 0.66,
+            "text": "kurzlebig, 1 Tag",
+            "anchor": "start",
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": 0.58,
+            "text": "langlebig, 8 Tage",
+            "anchor": "start",
+            "color": "orange"
+          }
+        ],
+        "readout": "Bis Tag {X|0} zerfallen: kurzlebig **{100*(1 - 0.5^X)|0} %**, langlebig **{100*(1 - 0.5^(X/8))|0} %** der Kerne"
+      },
+      "timeline": [
+        {
+          "caption": "Gleich viele Kerne, verschiedene Halbwertszeiten: Das kurzlebige Nuklid startet mit achtfacher Aktivität, denn $A = \\lambda N$.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "Nach drei Tagen ist es zu 88 % zerfallen, das langlebige erst zu 23 %.",
+          "to": {
+            "X": 3
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Auf lange Sicht zerfallen bei beiden alle Kerne; die Gesamtfläche unter jeder Kurve ist dieselbe. Nach 20 Tagen hat das langlebige erst 82 % hinter sich und strahlt noch lange weiter.",
+          "to": {
+            "X": 20
+          },
+          "dur": 2800
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Aktivität und Dosis sind verschiedene Größen.**\n\n| Größe | Einheit | misst |\n|---|---|---|\n| Aktivität | Becquerel (Bq) | Zerfälle pro Sekunde **in der Quelle** |\n| Energiedosis | Gray (Gy) = J/kg | absorbierte Energie **pro Masse Gewebe** |\n| Äquivalentdosis | Sievert (Sv) | Energiedosis mal Strahlungswichtungsfaktor (Alpha etwa 20) |\n\nEin Alphastrahler außerhalb des Körpers ist fast harmlos, die Hornhaut hält die Strahlung auf; eingeatmet ist er gefährlich.\n\n| Quelle | Aktivität |\n|---|---|\n| menschlicher Körper | rund 8000 Bq |\n| Rauchmelder mit Americium-241 | rund 30 000 Bq |\n| Präparat für die Diagnostik | einige $10^8$ Bq |\n| Bestrahlungsquelle in der Therapie | einige $10^{14}$ Bq |\n\n> [!warning] Zählrate ist nicht Aktivität\n> Ein Zählrohr erfasst nur den Teil der Strahlung, der es trifft und anspricht; vom Messwert ist zudem der Nulleffekt abzuziehen. Die Aktivität ist stets größer als die Zählrate. Ein Gemisch zweier Nuklide klingt nicht nach einem einfachen Exponentialgesetz ab.",
+      "label": "Dosis und Messung",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Aktivität berechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Aktivität berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Aktivität der Probe\"*, *\"Wie viele Zerfälle pro Sekunde finden statt?\"*, *\"Bestimmen Sie die Aktivität nach ... Tagen\"*, *\"Welche Masse des Präparats ist nötig, um eine Aktivität von ... zu erreichen?\"*.\n\nErkennungsmerkmal: Gefragt ist eine **Zerfallsrate** in Becquerel, oder eine Masse beziehungsweise Stoffmenge ist gegeben."
+            }
+          ]
+        },
+        {
+          "title": "Die Definition",
+          "blocks": [
+            {
+              "md": "> [!important] Aktivität ist Zerfallsrate\n> $$A = \\left|\\frac{\\Delta N}{\\Delta t}\\right| = \\lambda\\,N \\qquad [A] = \\frac{1}{\\text{s}} = 1\\,\\text{Bq (Becquerel)}$$\n> Ein Becquerel bedeutet **ein Zerfall pro Sekunde**. Die Aktivität ist der Teilchenzahl proportional und klingt daher nach demselben Exponentialgesetz ab:\n> $$A(t) = A_0\\,e^{-\\lambda t} = \\lambda\\,N_0\\,e^{-\\lambda t}$$\n>\n> Der Zusammenhang $A = \\lambda N$ ist die Brücke zwischen der **mikroskopischen** Größe $\\lambda$ (Zerfallswahrscheinlichkeit eines Kerns) und der **makroskopischen** Messgröße $A$ (was ein Zählrohr registriert)."
+            }
+          ]
+        },
+        {
+          "title": "Die Teilchenzahl aus der Masse",
+          "blocks": [
+            {
+              "md": "Fast immer ist nicht $N$ gegeben, sondern eine Masse. Der Umweg führt über die Stoffmenge:\n$$N = \\frac{m}{M}\\cdot N_A, \\qquad N_A = 6{,}022\\cdot10^{23}\\,\\text{mol}^{-1}$$\nmit der molaren Masse $M$, die zahlenmäßig der Massenzahl in $\\text{g/mol}$ entspricht.\n\n> [!warning] Die Einheitenfalle dieses Aufgabentyps\n> $M$ wird üblicherweise in $\\text{g/mol}$ angegeben, $m$ aber oft in Kilogramm oder Mikrogramm. Beide müssen dieselbe Masseneinheit tragen, sonst weicht das Ergebnis um Faktor 1000 oder mehr ab.\n>\n> Zweite Falle: Für eine Aktivität in Becquerel muss $\\lambda$ in $\\text{s}^{-1}$ vorliegen. Eine in Tagen oder Jahren gegebene Halbwertszeit ist zwingend umzurechnen -- bei Jahren beträgt der Faktor rund $3{,}16\\cdot10^{7}$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zerfallskonstante in $\\text{s}^{-1}$** bestimmen: $\\lambda = \\dfrac{\\ln 2}{T_{1/2}[\\text{s}]}$.\n2. **Teilchenzahl bestimmen:** $N = \\dfrac{m}{M}\\,N_A$, mit $m$ und $M$ in derselben Masseneinheit.\n3. **Aktivität:** $A = \\lambda N$.\n4. **Bei Zeitabhängigkeit:** $A(t) = A_0 e^{-\\lambda t}$.\n5. **Bei Umkehraufgaben** nach $m$ auflösen: $m = \\dfrac{A\\,M}{\\lambda\\,N_A}$.\n6. **Einheitenkontrolle:** $[\\text{s}^{-1}]\\cdot[1] = [\\text{s}^{-1}] = [\\text{Bq}]$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Probe enthält $m = 1{,}0\\,\\mu\\text{g}$ Iod-131 ($M = 131\\,\\text{g/mol}$, $T_{1/2} = 8{,}02\\,\\text{d}$). Berechnen Sie die Teilchenzahl, die Anfangsaktivität und die Aktivität nach 30 Tagen.*\n\n**Schritt 1:**\n$$T_{1/2} = 8{,}02\\cdot86400 = 6{,}929\\cdot10^{5}\\,\\text{s} \\quad\\Longrightarrow\\quad \\lambda = \\frac{0{,}6931}{6{,}929\\cdot10^{5}} \\approx 1{,}000\\cdot10^{-6}\\,\\text{s}^{-1}$$\n\n**Schritt 2:**\n$$N = \\frac{1{,}0\\cdot10^{-6}\\,\\text{g}}{131\\,\\text{g/mol}}\\cdot6{,}022\\cdot10^{23}\\,\\text{mol}^{-1} = 7{,}634\\cdot10^{-9}\\cdot6{,}022\\cdot10^{23} \\approx 4{,}60\\cdot10^{15}$$\n\n**Schritt 3:**\n$$A_0 = \\lambda\\,N = 1{,}000\\cdot10^{-6}\\cdot4{,}60\\cdot10^{15} \\approx 4{,}60\\cdot10^{9}\\,\\text{Bq} = 4{,}6\\,\\text{GBq}$$\n\n**Schritt 4, nach 30 Tagen:** Aus der vorangehenden Rechnung ist der Restanteil nach 30 Tagen bekannt: $e^{-\\lambda t} = 0{,}0748$.\n$$A(30\\,\\text{d}) = 4{,}60\\cdot10^{9}\\cdot0{,}0748 \\approx 3{,}44\\cdot10^{8}\\,\\text{Bq} = 0{,}34\\,\\text{GBq}$$\n\n> [!important] Was die Zahl bedeutet\n> Ein einziges Mikrogramm liefert 4,6 Milliarden Zerfälle pro Sekunde. Die Diskrepanz zwischen der winzigen Masse und der enormen Aktivität erklärt sich aus der Avogadro-Konstanten: In einem Mikrogramm stecken bereits $4{,}6\\cdot10^{15}$ Kerne. Selbst eine Zerfallswahrscheinlichkeit von nur einem Millionstel pro Sekunde ergibt bei dieser Zahl Milliarden Ereignisse.\n>\n> Das ist zugleich der Grund, weshalb radioaktive Präparate in der Medizin in **Nanogramm**-Mengen dosiert werden und weshalb Kontaminationen auch dann gefährlich sind, wenn die beteiligte Stoffmenge chemisch völlig unbedeutend ist."
+            }
+          ]
+        },
+        {
+          "title": "Aktivität und Dosis sind verschiedene Dinge",
+          "blocks": [
+            {
+              "md": "> [!warning] Eine häufig verwischte Unterscheidung\n>\n> | Größe | Einheit | Was gemessen wird |\n> |---|---|---|\n> | **Aktivität** | Becquerel (Bq) | Zerfälle pro Sekunde **in der Quelle** |\n> | **Energiedosis** | Gray (Gy) = J/kg | absorbierte Energie **pro Masse des Gewebes** |\n> | **Äquivalentdosis** | Sievert (Sv) | Energiedosis mal Strahlungswichtungsfaktor |\n>\n> Die Aktivität sagt für sich genommen **nichts** über die biologische Wirkung aus. Entscheidend sind zusätzlich die Strahlungsart (Alphastrahlung wirkt bei gleicher Energie rund zwanzigmal schädigender als Beta- oder Gammastrahlung), der Abstand, die Abschirmung und die Frage, ob das Nuklid inkorporiert wurde.\n>\n> Ein Alphastrahler außerhalb des Körpers ist praktisch harmlos -- die Strahlung wird bereits von der Hornschicht absorbiert. Derselbe Strahler eingeatmet ist erheblich gefährlich. Aufgaben zur Strahlenschutzbewertung zielen auf genau diese Differenzierung."
+            }
+          ]
+        },
+        {
+          "title": "Größenordnungen zur Orientierung",
+          "blocks": [
+            {
+              "md": "| Quelle | Aktivität |\n|---|---|\n| menschlicher Körper (natürliches K-40 und C-14) | rund 8000 Bq |\n| Rauchmelder mit Am-241 | rund 30 000 Bq |\n| medizinisches Präparat für die Diagnostik | einige $10^{8}$ Bq |\n| Bestrahlungsquelle in der Therapie | einige $10^{14}$ Bq |\n\nDass ein Mensch selbst mehrere tausend Becquerel aufweist, ist ein nützlicher Anker: Aktivität allein ist kein Gefahrenmaß."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\lambda$ in falscher Zeiteinheit einsetzen.** Becquerel verlangt $\\text{s}^{-1}$.\n- **Masse und molare Masse in verschiedenen Einheiten führen.** Beide in Gramm oder beide in Kilogramm.\n- **Die Avogadro-Konstante vergessen.** Ohne sie fehlt der Faktor $10^{23}$.\n- **Aktivität und Dosis gleichsetzen.** Siehe Warnung oben.\n- **Bei zusammengesetzten Präparaten die Anteile nicht trennen.** Jedes Nuklid hat eigenes $\\lambda$; die Gesamtaktivität ist die Summe der Einzelaktivitäten und folgt **keinem** einfachen Exponentialgesetz mehr.\n- **Die Aktivität als konstant behandeln.** Sie klingt mit derselben Halbwertszeit ab wie die Teilchenzahl.\n- **Die gemessene Zählrate mit der Aktivität gleichsetzen.** Ein Zählrohr erfasst nur den Bruchteil, der seinen Detektorraumwinkel trifft; die tatsächliche Aktivität ist stets größer als die Zählrate."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zerfallsgesetz anwenden** · **Halbwertszeit und Zerfallskonstante umrechnen** · **Radioaktiver Zerfall**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe ihre Einheit oder Formel zu.",
+      "pairs": [
+        [
+          "Aktivität",
+          "Becquerel, Zerfälle pro Sekunde"
+        ],
+        [
+          "Energiedosis",
+          "Gray = J/kg"
+        ],
+        [
+          "Äquivalentdosis",
+          "Sievert"
+        ],
+        [
+          "Teilchenzahl",
+          "$N = \\tfrac{m}{M}N_A$"
+        ],
+        [
+          "Zerfallskonstante",
+          "$\\lambda = \\tfrac{\\ln 2}{T_{1/2}}$"
+        ]
+      ],
+      "explain": "Becquerel beschreibt die Quelle, Gray und Sievert die Wirkung im Gewebe.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Begründe, dass die Aktivität mit derselben Halbwertszeit abklingt wie die Teilchenzahl.",
+      "items": [
+        "$A = \\lambda N$",
+        "$N = N_0 e^{-\\lambda t}$ einsetzen",
+        "$A = \\lambda N_0 e^{-\\lambda t}$",
+        "$A = A_0 e^{-\\lambda t}$ mit $A_0 = \\lambda N_0$: dieselbe Halbwertszeit"
+      ],
+      "explain": "Die Reihenfolge: 1. $A = \\lambda N$. 2. $N = N_0 e^{-\\lambda t}$ einsetzen. 3. $A = \\lambda N_0 e^{-\\lambda t}$. 4. $A = A_0 e^{-\\lambda t}$ mit $A_0 = \\lambda N_0$: dieselbe Halbwertszeit.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Aktivität hat $1\\,\\mathrm{g}$ Radium-226 ($M = 226\\,\\mathrm{g/mol}$, $T_{1/2} = 1600\\,\\mathrm{a}$, $1\\,\\mathrm{a} = 3{,}156\\cdot 10^7\\,\\mathrm{s}$)?",
+      "answer": 36.6,
+      "tolerance": 0.6,
+      "placeholder": "GBq",
+      "explain": "$\\lambda = \\tfrac{0{,}6931}{1600\\cdot 3{,}156\\cdot 10^7\\,\\mathrm{s}} \\approx 1{,}37\\cdot 10^{-11}\\,\\mathrm{s^{-1}}$, $N = \\tfrac{1}{226}\\cdot 6{,}022\\cdot 10^{23} \\approx 2{,}66\\cdot 10^{21}$, $A \\approx 3{,}66\\cdot 10^{10}\\,\\mathrm{Bq}$. Daher die alte Einheit Curie, $3{,}7\\cdot 10^{10}\\,\\mathrm{Bq}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Wie viel Cobalt-60 ($M = 60\\,\\mathrm{g/mol}$, $T_{1/2} = 5{,}27\\,\\mathrm{a}$) enthält eine Therapiequelle mit $10^{14}\\,\\mathrm{Bq}$?",
+      "answer": 2.39,
+      "tolerance": 0.05,
+      "placeholder": "g",
+      "explain": "$\\lambda = \\tfrac{0{,}6931}{5{,}27\\cdot 3{,}156\\cdot 10^7\\,\\mathrm{s}} \\approx 4{,}17\\cdot 10^{-9}\\,\\mathrm{s^{-1}}$, $N = \\tfrac{A}{\\lambda} \\approx 2{,}40\\cdot 10^{22}$, $m = \\tfrac{N}{N_A}M \\approx 2{,}4\\,\\mathrm{g}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Iod-131-Probe aus dem Beispiel hat anfangs $4{,}60\\,\\mathrm{GBq}$. Welche Aktivität bleibt nach 30 Tagen ($T_{1/2} = 8{,}02\\,\\mathrm{d}$)?",
+      "answer": 0.344,
+      "tolerance": 0.01,
+      "placeholder": "GBq",
+      "explain": "$A = 4{,}60\\,\\mathrm{GBq}\\cdot\\left(\\tfrac12\\right)^{30/8{,}02} \\approx 4{,}60\\cdot 0{,}0748\\,\\mathrm{GBq} \\approx 0{,}34\\,\\mathrm{GBq}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Zählrohr misst an einer Quelle 200 Impulse pro Sekunde. Hat die Quelle die Aktivität 200 Bq?",
+      "options": [
+        {
+          "md": "Nein, sie ist größer: Das Zählrohr erfasst nur einen Teil der Strahlung, und der Nulleffekt ist abzuziehen.",
+          "correct": true
+        },
+        {
+          "md": "Ja, jeder Zerfall wird gezählt.",
+          "why": "Die Strahlung geht in alle Richtungen; nur ein kleiner Raumwinkel trifft das Rohr."
+        },
+        {
+          "md": "Nein, sie ist kleiner, weil der Nulleffekt dazukommt.",
+          "why": "Der Nulleffekt erhöht die Zählrate; die Aktivität bleibt trotzdem größer als der Rest."
+        },
+        {
+          "md": "Das hängt von der Halbwertszeit ab.",
+          "why": "Die Halbwertszeit ändert nichts am Verhältnis von Zählrate und Aktivität."
+        }
+      ],
+      "explain": "Zählrate gleich Aktivität mal Nachweiswahrscheinlichkeit, plus Nulleffekt.",
+      "label": "Messung",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Präparat aus zwei verschiedenen Nukliden klingt nach einem einfachen Exponentialgesetz ab.",
+      "answer": false,
+      "explain": "Die Gesamtaktivität ist die Summe zweier Exponentialfunktionen mit verschiedenem $\\lambda$; im ln-Diagramm entsteht ein Knick.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist ein Alphastrahler außerhalb des Körpers wenig gefährlich, eingeatmet aber sehr?",
+      "options": [
+        {
+          "md": "Alphastrahlung wird schon von der obersten Hautschicht gestoppt, gibt aber im Gewebe ihre Energie auf kurzer Strecke sehr dicht ab.",
+          "correct": true
+        },
+        {
+          "md": "Weil Alphastrahlung im Körper stärker wird.",
+          "why": "Die Strahlung ändert sich nicht; nur die Abschirmung fehlt."
+        },
+        {
+          "md": "Weil Alphastrahler im Körper schneller zerfallen.",
+          "why": "Die Halbwertszeit hängt nicht vom Ort ab."
+        },
+        {
+          "md": "Weil die Aktivität im Körper größer ist.",
+          "why": "Die Aktivität bleibt dieselbe."
+        }
+      ],
+      "explain": "Deshalb hat Alphastrahlung den Wichtungsfaktor 20.",
+      "label": "Strahlenschutz",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +468,39 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "aktivitaet-masse"
+        ]
+      },
+      "label": "Aktivität aus der Masse",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "aktivitaet-masse"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$A = \\lambda N$ mit $N = \\tfrac{m}{M}N_A$ und $\\lambda$ in $\\mathrm{s^{-1}}$; $A(t) = A_0 e^{-\\lambda t}$ mit derselben Halbwertszeit.",
+        "Becquerel misst die Quelle, Gray und Sievert die Wirkung; Zählrate ist kleiner als die Aktivität."
+      ]
     }
   ]
 }

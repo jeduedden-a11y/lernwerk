@@ -18,6 +18,341 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Wien-Filter in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Wien-Filter.svg",
+        "aspect": 1.91,
+        "alt": "Wien-Filter mit gekreuzten Feldern"
+      },
+      "timeline": [
+        {
+          "caption": "Ein elektrisches und ein magnetisches Feld kreuzen sich senkrecht zur Flugrichtung.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Ionen fliegen mit der Geschwindigkeit $v$ von links herein.",
+          "to": {
+            "x": 0.18,
+            "y": 0.5,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das elektrische Feld $E$ des Kondensators zieht positive Ionen zur negativen Platte; die Kraft $qE$ hängt nicht vom Tempo ab.",
+          "to": {
+            "x": 0.42,
+            "y": 0.5,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das Magnetfeld (in die Ebene) liefert die Lorentzkraft $qvB$ in die Gegenrichtung; sie wächst mit dem Tempo.",
+          "to": {
+            "x": 0.5,
+            "y": 0.52,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Nur bei $qE = qvB$, also $v = \\tfrac{E}{B}$, heben sich beide auf: Diese Ionen fliegen geradeaus durch die Blende.",
+          "to": {
+            "x": 0.5,
+            "y": 0.89,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Kräfte im Wien-Filter**, pro Ladung: $E = 2\\cdot 10^4\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}}$, $B = 0{,}1\\,\\mathrm{T}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          4
+        ],
+        "xLabel": "v in 10⁵ m/s",
+        "yLabel": "F/q in 10⁴ N/C",
+        "vars": [
+          {
+            "name": "V",
+            "min": 0,
+            "max": 4,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "Fel",
+            "expr": "2",
+            "color": "orange",
+            "label": "elektrisch: E",
+            "labelAt": 0.1
+          },
+          {
+            "name": "Fm",
+            "expr": "x",
+            "color": "blue",
+            "label": "magnetisch: v B",
+            "labelAt": 3.0
+          }
+        ],
+        "vlines": [
+          {
+            "x": "V"
+          }
+        ],
+        "points": [
+          {
+            "x": "V",
+            "on": "Fm",
+            "color": "blue"
+          },
+          {
+            "x": "V",
+            "on": "Fel",
+            "color": "orange"
+          }
+        ],
+        "readout": "v = {V|2} · 10⁵ m/s: resultierende Kraft pro Ladung **{V - 2|2} · 10⁴ N/C** (positiv: Richtung Lorentzkraft)"
+      },
+      "timeline": [
+        {
+          "caption": "Langsame Ionen: Die elektrische Kraft überwiegt, sie werden zur Seite der elektrischen Kraft abgelenkt.",
+          "set": {
+            "V": 0.5
+          }
+        },
+        {
+          "caption": "Bei $v = \\tfrac EB = 2\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ sind beide gleich: keine Ablenkung, das Ion passiert die Blende.",
+          "to": {
+            "V": 2
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Schnelle Ionen: Die Lorentzkraft überwiegt, sie werden zur anderen Seite abgelenkt.",
+          "to": {
+            "V": 3.5
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "In der Formel stehen weder Masse noch Ladung: Das Filter sortiert nach der Geschwindigkeit, für alle Ionen gleich."
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Durchlassgeschwindigkeit.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_{el} = q\\,E = q\\,\\frac{U}{d},\\qquad F_L = q\\,v\\,B",
+            "why": "Die beiden Kräfte auf ein Ion, entgegengesetzt gerichtet."
+          },
+          {
+            "tex": "q\\,E = q\\,v_0\\,B\\quad\\Rightarrow\\quad v_0 = \\frac{E}{B} = \\frac{U}{d\\,B}",
+            "why": "Gleichgewicht; die Ladung kürzt sich."
+          },
+          {
+            "tex": "v > v_0:\\; F_L > F_{el},\\qquad v < v_0:\\; F_L < F_{el}",
+            "why": "Schnellere werden zur Seite der Lorentzkraft, langsamere zur Seite der elektrischen Kraft abgelenkt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Kräfte.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichgewicht.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abweichende Geschwindigkeiten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wien-Filter",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Wien-Filter.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Wien-Filter** (Geschwindigkeitsfilter) ist eine Anordnung aus **gekreuztem** elektrischem und magnetischem Feld, die aus einem Strahl geladener Teilchen nur solche einer bestimmten Geschwindigkeit geradlinig durchlässt."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau und Wirkung",
+          "blocks": [
+            {
+              "image": "vault:Wien-Filter.svg"
+            },
+            {
+              "md": "Das **E-Feld** übt die Kraft $q E$ (nach unten), das **B-Feld** die Lorentzkraft $q v B$ (nach oben) aus. Nur wenn sich beide **aufheben**, fliegt das Teilchen unabgelenkt:\n$$q E = q v B \\quad\\Rightarrow\\quad v = \\frac{E}{B}$$\nTeilchen mit anderer Geschwindigkeit werden abgelenkt und ausgeblendet. Anwendung: Vorstufe im **Massenspektrometer**."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb die Masse keine Rolle spielt",
+          "blocks": [
+            {
+              "md": "$$q\\,E = q\\,v\\,B \\;\\Longrightarrow\\; v = \\frac{E}{B}$$\n\n> [!important] Sowohl Ladung als auch Masse kürzen sich heraus\n> Die Ladung steht in beiden Kräften und fällt weg. Die Masse tritt gar nicht erst auf, weil keine Beschleunigung betrachtet wird, sondern nur ein Kräftegleichgewicht.\n>\n> Daraus folgt die eigentliche Leistung des Geräts: Es filtert **ausschließlich nach der Geschwindigkeit**, unabhängig von Masse und Ladung der Teilchen.\n>\n> Genau das macht es zur unverzichtbaren Vorstufe im **Massenspektrometer**: Erst wenn alle Teilchen dieselbe Geschwindigkeit haben, ist der Bahnradius im nachfolgenden Magnetfeld ein Maß für die **Masse** allein.\n>\n> Ohne Geschwindigkeitsfilter wäre der Radius von Masse **und** Geschwindigkeit abhängig, und eine Trennung nach Masse unmöglich."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb die Filterung überhaupt nötig ist",
+          "blocks": [
+            {
+              "md": "Aus einer Ionenquelle treten die Teilchen mit einer breiten Geschwindigkeitsverteilung aus -- ähnlich der Maxwell-Boltzmann-Verteilung thermischer Bewegung. Ohne Filterung ergäbe sich im Massenspektrometer kein scharfer Auftreffpunkt, sondern ein breiter Streifen.\n\n> [!tip] Der Filter arbeitet subtraktiv\n> Er beschleunigt nichts und ändert keine Geschwindigkeit -- er lässt lediglich die passenden Teilchen durch und blendet alle anderen aus.\n>\n> Der Preis ist eine geringe **Ausbeute**: Der weit überwiegende Teil des Strahls wird verworfen. Für ein Analysegerät ist das hinnehmbar, für einen Beschleuniger wäre es untragbar."
+            }
+          ]
+        },
+        {
+          "title": "Die Kräftegleichgewichts-Familie",
+          "blocks": [
+            {
+              "md": "| Versuch | Kraft 1 | Kraft 2 | bestimmt wird |\n|---|---|---|---|\n| **Wien-Filter** | elektrisch | Lorentz | Geschwindigkeit |\n| **Millikan-Versuch** | elektrisch | Gewicht und Reibung | Elementarladung |\n| **Hall-Effekt** | elektrisch (Querfeld) | Lorentz | Flussdichte, Ladungsträger |\n| **Bestimmung der spezifischen Ladung** | Lorentz | Zentripetalbedarf | Verhältnis $e/m$ |\n\n> [!tip] Vier Versuche, ein Ansatz\n> In allen Fällen wird eine unmessbare Größe zugänglich, indem man zwei Kräfte gegeneinander stellt und den Gleichgewichtsfall auswertet.\n>\n> Das ist ein allgemeines Messprinzip der Physik: Statt eine Größe direkt zu messen, sucht man einen Zustand, in dem sie sich aus bekannten Größen ergibt. Wer den Ansatz erkennt, kann alle vier Versuche mit demselben Schema behandeln."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der Wien-Filter verbindet **Elektrisches Feld** und **Magnetisches Feld** zu einer gemeinsamen Anwendung und ist die Vorstufe des **Massenspektrometers**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Zwischen Platten im Abstand $2\\,\\mathrm{cm}$ liegen $400\\,\\mathrm{V}$, das Magnetfeld hat $0{,}1\\,\\mathrm{T}$. Welche Geschwindigkeit passiert das Filter?",
+      "answer": 2,
+      "tolerance": 0.02,
+      "placeholder": "10⁵ m/s",
+      "explain": "$v_0 = \\tfrac{U}{dB} = \\tfrac{400}{0{,}02\\cdot 0{,}1}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 2\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Flussdichte braucht man bei $E = 10^5\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}}$, damit Ionen mit $5\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ passieren?",
+      "answer": 0.2,
+      "tolerance": 0.002,
+      "placeholder": "T",
+      "explain": "$B = \\tfrac{E}{v_0} = \\tfrac{10^5}{5\\cdot 10^5}\\,\\mathrm{T} = 0{,}2\\,\\mathrm{T}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Ion ist schneller als die Durchlassgeschwindigkeit. Wohin wird es abgelenkt?",
+      "options": [
+        {
+          "md": "zur Seite der Lorentzkraft",
+          "correct": true
+        },
+        {
+          "md": "zur Seite der elektrischen Kraft",
+          "why": "Die elektrische Kraft hängt nicht von $v$ ab; die Lorentzkraft wächst mit $v$ und überwiegt."
+        },
+        {
+          "md": "gar nicht",
+          "why": "Das gilt nur genau bei $v_0$."
+        },
+        {
+          "md": "Das hängt von seiner Masse ab.",
+          "why": "Die Richtung hängt nur davon ab, welche Kraft überwiegt."
+        }
+      ],
+      "explain": "$F_L = qvB > qE$.",
+      "label": "Verständnis",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Wien-Filter, das für Protonen eingestellt ist, lässt auch Elektronen derselben Geschwindigkeit geradeaus durch.",
+      "answer": true,
+      "explain": "Bei negativer Ladung kehren sich beide Kräfte um; sie heben sich weiterhin bei v = E/B auf.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Spannung am Kondensator, wird die Durchlassgeschwindigkeit {{0}}-mal so groß; verdoppelt man zusätzlich $B$, ist sie {{1}}-mal so groß wie zu Beginn.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        }
+      ],
+      "explain": "$v_0 = \\tfrac{U}{dB}$.",
+      "id": "vq5"
+    },
+    {
       "id": "schneller",
       "type": "choice",
       "md": "Ein Teilchen ist schneller als $E/B$. Wohin wird es abgelenkt?",
@@ -51,13 +386,39 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "wien"
+        ]
+      },
+      "label": "Wien-Filter",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "wien"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$qE = qvB$ ergibt $v = E/B$.",
         "Unabhängig von Masse und Ladung.",
-        "Oft Vorstufe des Massenspektrometers."
+        "Oft Vorstufe des Massenspektrometers.",
+        "Gekreuzte Felder: $qE = qvB$ ergibt $v_0 = \\tfrac EB = \\tfrac{U}{dB}$, unabhängig von Masse und Ladung.",
+        "Schnellere Teilchen zur Seite der Lorentzkraft, langsamere zur Seite der elektrischen Kraft."
       ]
     }
   ]

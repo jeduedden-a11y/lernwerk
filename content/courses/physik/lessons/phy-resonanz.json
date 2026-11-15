@@ -47,11 +47,213 @@
           {
             "name": "A",
             "expr": "1/sqrt((1 - x^2)^2 + (2*D*x)^2)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Bei Resonanz etwa {1/(2*D)|1}-fache Überhöhung"
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Freie und erzwungene Schwingung\n> Eine **freie** Schwingung läuft nach einem Anstoß mit der **Eigenfrequenz** $f_0$ des Schwingers. Bei einer **erzwungenen** Schwingung treibt ein **Erreger** periodisch mit der Erregerfrequenz $f_E$; nach dem Einschwingen schwingt der Schwinger mit $f_E$. **Resonanz** heißt: $f_E \\approx f_0$; dann wird die Amplitude am größten.\n\n> [!satz] Amplitude und Phase\n> Mit $\\eta = \\tfrac{f_E}{f_0}$ und dem Dämpfungsgrad $D$ (Lehrsche Dämpfung) gilt $\\tfrac{\\hat y}{\\hat y_{stat}} = \\tfrac{1}{\\sqrt{(1 - \\eta^2)^2 + (2D\\eta)^2}}$. Bei schwacher Dämpfung ist die Überhöhung in Resonanz etwa $\\tfrac{1}{2D}$. Die Phasenverschiebung zwischen Erreger und Schwinger ist weit unterhalb der Resonanz fast $0°$, in Resonanz $90°$, weit oberhalb fast $180°$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Phasenverschiebung zwischen Erreger und Schwinger** bei schwacher Dämpfung ($D = 0{,}1$).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          3
+        ],
+        "y": [
+          0,
+          190
+        ],
+        "xLabel": "f_E / f_0",
+        "yLabel": "Phase in °",
+        "vars": [
+          {
+            "name": "E",
+            "min": 0,
+            "max": 3,
+            "value": 0.2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ph",
+            "expr": "x<1 ? atan(0.2*x/(1-x*x))*180/pi : (x>1 ? 180 + atan(0.2*x/(1-x*x))*180/pi : 90)",
+            "color": "blue",
+            "samples": 900
+          }
+        ],
+        "hlines": [
+          {
+            "y": 90
+          }
+        ],
+        "points": [
+          {
+            "x": "E",
+            "on": "ph",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Frequenzverhältnis {E|2}: Der Schwinger hinkt dem Erreger um **{E<1 ? atan(0.2*E/(1-E*E))*180/pi : (E>1 ? 180 + atan(0.2*E/(1-E*E))*180/pi : 90)|0}°** hinterher; Amplitude **{1/sqrt((1-E*E)^2 + 0.04*E*E)|1}**-fach statisch"
+      },
+      "timeline": [
+        {
+          "caption": "Langsame Anregung: Der Schwinger folgt dem Erreger fast im Gleichtakt, mit der statischen Auslenkung.",
+          "set": {
+            "E": 0.2
+          }
+        },
+        {
+          "caption": "In Resonanz ($f_E = f_0$) hinkt er genau eine Viertelperiode hinterher, und die Amplitude ist am größten: hier fünffach.",
+          "to": {
+            "E": 1
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Schnelle Anregung: Er schwingt fast gegenphasig und nur noch mit kleiner Amplitude; er ist zu träge, um zu folgen.",
+          "to": {
+            "E": 2.5
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Der Sprung der Phase um 180 Grad ist umso steiler, je schwächer die Dämpfung; ein Kennzeichen jeder Resonanz."
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "> [!warning] Resonanz in der Technik\n> Brücken, Gebäude und Maschinen haben Eigenfrequenzen. Die Londoner Millennium Bridge geriet im Jahr 2000 seitlich ins Schwingen, weil Fußgänger unbewusst im Takt der Brücke liefen; sie musste mit Dämpfern nachgerüstet werden. Hochhäuser wie Taipei 101 tragen große Schwingungstilger. Erwünscht ist Resonanz dagegen beim Radioempfang, in Musikinstrumenten und in der Kernspintomographie.",
+      "label": "Anwendungen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Erzwungene Schwingung und Resonanz",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Erzwungene Schwingung und Resonanz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Wird ein schwingfähiges System periodisch von außen mit der **Erregerfrequenz** $f_E$ angetrieben, führt es nach einer Einschwingphase eine **erzwungene Schwingung** mit **genau dieser** Frequenz aus (nicht mit seiner Eigenfrequenz). Stimmt $f_E$ nahezu mit der **Eigenfrequenz** $f_0$ überein, wächst die Amplitude stark an -- **Resonanz**."
+            }
+          ]
+        },
+        {
+          "title": "Amplitude und Phase",
+          "blocks": [
+            {
+              "md": "$$A(f_E) = \\frac{A_0}{\\sqrt{\\left(1 - \\frac{f_E^2}{f_0^2}\\right)^2 + \\left(2\\delta \\frac{f_E}{f_0}\\right)^2}}$$\n\n| Bereich | Amplitude | Phasenverschiebung |\n|---|---|---|\n| $f_E \\ll f_0$ | klein, folgt dem Erreger | ca. 0 Grad (in Phase) |\n| $f_E = f_0$ | **Maximum** (Resonanz) | 90 Grad |\n| $f_E \\gg f_0$ | sehr klein | ca. 180 Grad (gegenphasig) |"
+            }
+          ]
+        },
+        {
+          "title": "Resonanzkatastrophe",
+          "blocks": [
+            {
+              "md": "Bei sehr schwacher **Dämpfung** kann die Amplitude so groß werden, dass das System zerstört wird. Klassische Beispiele: Brückenschwingungen (marschierende Truppen lösen den Gleichschritt auf), Maschinenschwingungen, Weingläser im Schallfeld.\n\n> [!tip] Erwünschte Resonanz\n> Resonanz wird gezielt genutzt bei Musikinstrumenten (Resonanzkörper), beim **Abstimmen von Radioempfängern** (Anpassen der Eigenfrequenz des **Schwingkreises** an die Sendefrequenz), bei der Mikrowelle und in der Kernspintomografie (MRT)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Federpendel ($200\\,\\mathrm{g}$, $D = 80\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$) wird angeregt. Bei welcher Erregerfrequenz tritt Resonanz auf?",
+      "answer": 3.18,
+      "tolerance": 0.02,
+      "placeholder": "Hz",
+      "explain": "$f_0 = \\tfrac{1}{2\\pi}\\sqrt{\\tfrac Dm} = \\tfrac{1}{2\\pi}\\sqrt{400}\\,\\mathrm{Hz} \\approx 3{,}18\\,\\mathrm{Hz}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Mit welcher Frequenz schwingt ein angeregter Schwinger nach dem Einschwingen?",
+      "options": [
+        {
+          "md": "mit der Erregerfrequenz",
+          "correct": true
+        },
+        {
+          "md": "mit seiner Eigenfrequenz",
+          "why": "Nur ohne Anregung, nach einem Anstoß."
+        },
+        {
+          "md": "mit dem Mittelwert beider Frequenzen",
+          "why": "Es gibt keine Mittelung."
+        },
+        {
+          "md": "mit der Differenz beider Frequenzen",
+          "why": "Das wäre eine Schwebung während des Einschwingens."
+        }
+      ],
+      "explain": "Der Erreger gibt den Takt vor; die Eigenfrequenz bestimmt nur, wie stark der Schwinger antwortet.",
+      "label": "Definitionen",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Wie groß ist die Amplitudenüberhöhung in Resonanz bei einem Dämpfungsgrad von $D = 0{,}05$ (näherungsweise)?",
+      "answer": 10,
+      "tolerance": 0.1,
+      "placeholder": "",
+      "explain": "$\\tfrac{\\hat y}{\\hat y_{stat}} \\approx \\tfrac{1}{2D} = 10$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "In Resonanz hinkt der Schwinger dem Erreger um eine Viertelperiode hinterher.",
+      "answer": true,
+      "explain": "Die Phasenverschiebung beträgt dort $90°$: Der Erreger drückt immer dann am stärksten, wenn der Schwinger am schnellsten ist; so wird ihm pro Periode am meisten Energie zugeführt.",
+      "label": "Phase",
+      "id": "vq4"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Maßnahmen verringern die Gefahr einer Resonanzkatastrophe an einer Brücke?",
+      "options": [
+        {
+          "md": "die Dämpfung erhöhen",
+          "correct": true
+        },
+        {
+          "md": "die Eigenfrequenz von der Anregungsfrequenz wegschieben",
+          "correct": true
+        },
+        {
+          "md": "Schwingungstilger einbauen",
+          "correct": true
+        },
+        {
+          "md": "die Brücke leichter bauen, ohne die Steifigkeit zu ändern",
+          "why": "Das verschiebt die Eigenfrequenz nur, ohne zu dämpfen; es kann auch schaden."
+        },
+        {
+          "md": "im Gleichschritt darüber marschieren",
+          "why": "Das regt genau periodisch an; Soldaten brechen deshalb den Gleichschritt."
+        }
+      ],
+      "explain": "Dämpfung begrenzt die Überhöhung, Verstimmung vermeidet sie.",
+      "label": "Anwendung",
+      "id": "vq5"
     },
     {
       "id": "takt",
@@ -87,13 +289,28 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "resonanz",
+          "federpendel"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx1"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Erzwungen schwingt der Körper mit der Erregerfrequenz.",
         "Resonanz: Erregerfrequenz gleich Eigenfrequenz, größte Amplitude.",
-        "Weniger Dämpfung, höhere und schmalere Resonanzkurve."
+        "Weniger Dämpfung, höhere und schmalere Resonanzkurve.",
+        "Erzwungen schwingt der Körper mit $f_E$; Resonanz bei $f_E \\approx f_0$, Überhöhung etwa $\\tfrac{1}{2D}$.",
+        "Phase: $0°$ unterhalb, $90°$ in Resonanz, $180°$ oberhalb; Dämpfung begrenzt die Amplitude."
       ]
     }
   ]

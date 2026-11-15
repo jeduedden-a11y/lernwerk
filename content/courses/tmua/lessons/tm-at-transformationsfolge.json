@@ -16,6 +16,189 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Den neuen Term in die Form $a\\,f\\big(b(x + c)\\big) + d$ bringen**, also innen $b$ ausklammern.\n> 2. **Innen** wirkt die Reihenfolge umgekehrt zur Rechnung: erst mit $\\tfrac1b$ strecken, dann um $c$ verschieben; oder erst um $bc$ verschieben, dann strecken.\n> 3. **Außen** wirkt sie wie gelesen: erst mit $a$ strecken, dann um $d$ verschieben.\n> 4. **Mit einem Punkt kontrollieren:** Einen Punkt des Ausgangsgraphen durch die Folge schicken und in die neue Gleichung einsetzen.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Von $y = x^2$ zu $y = 2(x - 3)^2 + 1$, und von $f(x)$ zu $f(2x + 6)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 \\;\\to\\; (x - 3)^2",
+            "why": "Um 3 nach rechts."
+          },
+          {
+            "tex": "(x - 3)^2 \\;\\to\\; 2(x - 3)^2 \\;\\to\\; 2(x - 3)^2 + 1",
+            "why": "Erst strecken, dann um 1 nach oben."
+          },
+          {
+            "tex": "\\text{umgekehrt: } (x - 3)^2 + 1 \\to 2\\big((x - 3)^2 + 1\\big) = 2(x - 3)^2 + 2",
+            "why": "Außen zuerst verschieben, dann strecken: Das ergibt eine andere Kurve."
+          },
+          {
+            "tex": "f(2x + 6) = f\\big(2(x + 3)\\big)",
+            "why": "Innen ausklammern."
+          },
+          {
+            "tex": "f(x) \\to f(2x) \\to f\\big(2(x + 3)\\big)",
+            "why": "Erst Faktor 1/2 in x-Richtung, dann 3 nach links; oder erst 6 nach links, dann Faktor 1/2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Verschieben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Außen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Reihenfolge.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Innen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- $f(2x + 6)$ als »um 6 nach links, dann stauchen« und zugleich als »um 3 nach links, dann stauchen« deuten; nur die passende Paarung stimmt.\n- Außen erst verschieben und dann strecken.\n- Die Richtung der Verschiebung bei $f(x + c)$ falsch herum lesen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformationsfolge bestimmen",
+      "path": "02 Wiki/TMUA/12 Graphen von Funktionen/Aufgabentypen/Transformationsfolge bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Zwei Kurven sind gegeben, und gefragt ist die **Transformation** zwischen ihnen -- oder umgekehrt: Eine Transformation ist beschrieben, und gesucht ist die neue Gleichung. Eine dritte Variante nennt einen Punkt auf $y = f(x)$ und fragt nach dem entsprechenden Punkt auf der transformierten Kurve."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Innen oder außen?** Innerhalb der Klammer wirkt es waagerecht und gegenläufig, außerhalb senkrecht und wie geschrieben.\n2. **Bei zusammengesetzten Argumenten ausklammern:** $f(2x + 6) = f\\!\\left(2(x+3)\\right)$.\n3. **Reihenfolge festlegen** -- waagerecht und senkrecht sind voneinander unabhängig, innerhalb einer Richtung aber nicht.\n4. **Mit einem Punkt kontrollieren.**\n\n> [!important] Die Punktprobe schlägt jede Merkregel\n> Statt sich die Richtungen zu merken, führt man einen Punkt mit. Liegt $(4, 6)$ auf $y = f(x)$, so liegt auf\n>\n> | Kurve | Punkt | Warum |\n> |---|---|---|\n> | $y = f(x) + 3$ | $(4, 9)$ | $y$-Wert wächst |\n> | $y = f(x + 3)$ | $(1, 6)$ | bei $x = 1$ ist das Argument 4 |\n> | $y = 2f(x)$ | $(4, 12)$ | $y$-Wert verdoppelt |\n> | $y = f(2x)$ | $(2, 6)$ | bei $x = 2$ ist das Argument 4 |\n>\n> Die beiden mittleren Zeilen sind die, an denen Aufgaben scheitern -- und die Probe braucht keine Regel, nur Einsetzen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The graph of $y = f(x)$ is transformed to the graph of $y = f(2x) - 3$. Which sequence of transformations achieves this?\n>\n> - **A** a horizontal stretch with scale factor $\\tfrac12$, then a translation 3 units down\n> - **B** a horizontal stretch with scale factor 2, then a translation 3 units down\n> - **C** a translation 3 units down, then a horizontal stretch with scale factor 2\n> - **D** a vertical stretch with scale factor 2, then a translation 3 units down\n> - **E** a horizontal stretch with scale factor $\\tfrac12$, then a translation 3 units left\n\n**Schritt 1:** Die 2 steht **innen**, wirkt also waagerecht und gegenläufig: Streckfaktor $\\tfrac12$, die Kurve wird zur $y$-Achse hin gestaucht. Die $-3$ steht **außen**: Verschiebung um 3 nach unten.\n\nAntwort **A**.\n\n**Punktprobe:** $(4, 6)$ auf $y = f(x)$ wird zu $(2, 3)$ -- die $x$-Koordinate halbiert, die $y$-Koordinate um 3 kleiner. Das passt zu A.\n\nOption B verwechselt Streckfaktor und Kehrwert, D liest die 2 als äußeren Faktor."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Waagerechte Streckung mit dem Faktor statt dem Kehrwert** angeben.\n- **$f(x + a)$ nach rechts verschieben.**\n- **Bei $f(bx + c)$ nicht ausklammern** und um $c$ statt um $\\tfrac cb$ verschieben.\n- **Zwei Transformationen derselben Richtung vertauschen.**\n- **Senkrechte Streckung und waagerechte Stauchung verwechseln** -- bei $y = x^2$ sehen sie identisch aus, bei jeder anderen Kurve nicht."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The graph of $y = x^2$ is translated so that its image is $y = (x - 3)^2 + 2$. The translation is\n>\n> - **A** 3 right and 2 up\n> - **B** 3 left and 2 up\n> - **C** 3 right and 2 down\n> - **D** 2 right and 3 up\n> - **E** 3 left and 2 down\n\n> [!success]- Lösung\n> **A.** Der Scheitel wandert von $(0,0)$ nach $(3, 2)$.\n> Das Minuszeichen in $(x - 3)^2$ bedeutet eine Verschiebung nach **rechts** -- das ist der Punkt, an dem die meisten Fehler passieren. Die Probe mit dem Scheitel klärt es sofort: $(x-3)^2$ wird null bei $x = 3$.\n\n> [!question] Aufgabe 2\n> The graph of $y = f(x)$ is translated 2 units to the left and then stretched vertically with scale factor 3. The new equation is\n>\n> - **A** $y = 3f(x + 2)$\n> - **B** $y = 3f(x - 2)$\n> - **C** $y = f(3x + 2)$\n> - **D** $y = 3f(x) + 2$\n> - **E** $y = f(x + 2) + 3$\n\n> [!success]- Lösung\n> **A.** Nach links heißt $+2$ **innen**, senkrechte Streckung heißt Faktor 3 **außen**.\n> D ist eine Verschiebung nach oben, E eine Verschiebung nach oben statt einer Streckung -- beides Verwechslungen von Streckung und Verschiebung.\n> Hier ist die Reihenfolge ausnahmsweise gleichgültig, weil die eine Transformation waagerecht und die andere senkrecht wirkt.\n\n> [!question] Aufgabe 3\n> The point $(4, 6)$ lies on the curve $y = f(x)$. Which point must lie on the curve $y = f(2x)$?\n>\n> - **A** $(2, 6)$\n> - **B** $(8, 6)$\n> - **C** $(4, 12)$\n> - **D** $(4, 3)$\n> - **E** $(2, 12)$\n\n> [!success]- Lösung\n> **A.** Gesucht ist das $x$ mit $2x = 4$, also $x = 2$; der $y$-Wert bleibt 6.\n> B verschiebt in die falsche Richtung, C gehört zu $y = 2f(x)$.\n> **Die Denkweise:** Die Klammer verändert das **Argument**, nicht den Funktionswert. Wo vorher 4 hineinging, muss jetzt 2 stehen, damit wieder 4 ankommt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Graph einer Gleichung zuordnen** · **Graphen mit Betrag skizzieren** · **Quadratische Ergänzung zur Extremwertbestimmung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Folge bildet $y = x^2$ auf $y = 3(x + 1)^2 - 4$ ab?",
+      "options": [
+        {
+          "md": "um 1 nach links, Streckung mit Faktor 3 parallel zur y-Achse, um 4 nach unten",
+          "correct": true
+        },
+        {
+          "md": "um 1 nach rechts, Streckung mit Faktor 3, um 4 nach unten",
+          "why": "$(x + 1)^2$ schiebt nach links."
+        },
+        {
+          "md": "um 1 nach links, um 4 nach unten, dann Streckung mit Faktor 3",
+          "why": "So entstünde $3(x + 1)^2 - 12$."
+        },
+        {
+          "md": "Streckung mit Faktor $\\tfrac13$, um 1 nach links, um 4 nach unten",
+          "why": "Die 3 steht außen: Faktor 3 in y-Richtung."
+        }
+      ],
+      "explain": "Innen verschieben, außen erst strecken, dann verschieben.",
+      "label": "Folge",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Punkt",
+      "md": "Der Punkt $(2, 5)$ liegt auf $y = f(x)$. Welche y-Koordinate hat der Punkt mit $x = 3$ auf $y = 2f(x - 1) + 3$?",
+      "answer": 13,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Bei $x = 3$ ist $x - 1 = 2$, also $2f(2) + 3 = 2 \\cdot 5 + 3 = 13$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Reihenfolge »erst strecken mit Faktor 2, dann um 1 nach oben« liefert dasselbe wie »erst um 1 nach oben, dann strecken mit Faktor 2«.",
+      "answer": false,
+      "explain": "$2f(x) + 1$ gegen $2(f(x) + 1) = 2f(x) + 2$.",
+      "label": "Reihenfolge",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -67,6 +250,51 @@
       "lang": "en",
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Form $a\\,f(b(x + c)) + d$; außen erst strecken, dann verschieben; innen ausklammern.",
+        "Einen Punkt durch die Folge schicken und prüfen."
+      ]
     }
   ]
 }

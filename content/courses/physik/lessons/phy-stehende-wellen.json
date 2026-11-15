@@ -60,11 +60,364 @@
           {
             "name": "y",
             "expr": "2*sin(k*pi*x)*cos(2*pi*t)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Ordnung {k|0}: {k+1|0} Knoten, Wellenlänge {2/k|2} m"
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Eigenschwingungen einer Saite in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Stehende Welle.svg",
+        "aspect": 1.57,
+        "alt": "Eigenschwingungen einer Saite mit Knoten und Bäuchen"
+      },
+      "timeline": [
+        {
+          "caption": "Eine an beiden Enden eingespannte Saite in ihren ersten drei Eigenschwingungen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Grundschwingung** ($n = 1$): ein Bauch, die Enden sind Knoten. Die Saite ist eine halbe Wellenlänge lang.",
+          "to": {
+            "x": 0.5,
+            "y": 0.3,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Bauch:** Hier schwingt die Saite am stärksten.",
+          "to": {
+            "x": 0.34,
+            "y": 0.27,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Knoten:** Hier bleibt die Saite immer in Ruhe. Bei $n = 2$ liegt ein Knoten in der Mitte.",
+          "to": {
+            "x": 0.51,
+            "y": 0.52,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Allgemein passen $n$ halbe Wellenlängen auf die Saite: $L = n\\tfrac\\lambda2$, also $f_n = n\\tfrac{c}{2L}$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.92,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der stehenden Welle als Überlagerung.** Zwei gleiche Wellen laufen gegeneinander (am Ende reflektiert).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y_1 = \\hat y\\sin(\\omega t - k x),\\qquad y_2 = \\hat y\\sin(\\omega t + k x),\\qquad k = \\frac{2\\pi}{\\lambda}",
+            "why": "Eine nach rechts, eine nach links laufende Welle."
+          },
+          {
+            "tex": "y = y_1 + y_2 = 2\\hat y\\cos(k x)\\sin(\\omega t)",
+            "why": "Additionstheorem $\\sin\\alpha + \\sin\\beta = 2\\sin\\tfrac{\\alpha + \\beta}{2}\\cos\\tfrac{\\alpha - \\beta}{2}$."
+          },
+          {
+            "tex": "\\text{Knoten}: \\cos(kx) = 0 \\;\\Rightarrow\\; x = \\frac\\lambda4,\\; \\frac{3\\lambda}4,\\;\\ldots",
+            "why": "Dort ist $y$ zu jeder Zeit null; Abstand benachbarter Knoten $\\tfrac\\lambda2$."
+          },
+          {
+            "tex": "\\text{Bäuche}: |\\cos(kx)| = 1:\\quad \\text{Amplitude } 2\\hat y",
+            "why": "Jeder Ort schwingt mit seiner eigenen, festen Amplitude; nichts wandert."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Wellen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Knoten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bäuche.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Aus zwei laufenden Wellen wird eine stehende.** Blau und orange laufen gegeneinander ($\\lambda = 1\\,\\mathrm{m}$), grün ist die Summe.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          2
+        ],
+        "y": [
+          -2.3,
+          2.3
+        ],
+        "xLabel": "x in m",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "t",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "w1",
+            "expr": "sin(2*pi*(t - x))",
+            "color": "blue",
+            "dashed": true,
+            "samples": 500
+          },
+          {
+            "name": "w2",
+            "expr": "sin(2*pi*(t + x))",
+            "color": "orange",
+            "dashed": true,
+            "samples": 500
+          },
+          {
+            "name": "sm",
+            "expr": "sin(2*pi*(t - x)) + sin(2*pi*(t + x))",
+            "color": "green",
+            "width": 3.2,
+            "samples": 500
+          }
+        ],
+        "points": [
+          {
+            "x": 0.25,
+            "on": "sm",
+            "color": "gray"
+          },
+          {
+            "x": 0.75,
+            "on": "sm",
+            "color": "gray"
+          },
+          {
+            "x": 1.25,
+            "on": "sm",
+            "color": "gray"
+          },
+          {
+            "x": 1.75,
+            "on": "sm",
+            "color": "gray"
+          }
+        ],
+        "readout": "t = {t|2} T: Die Knoten bei 0,25 m, 0,75 m, 1,25 m und 1,75 m bleiben in Ruhe."
+      },
+      "timeline": [
+        {
+          "caption": "Die beiden gestrichelten Wellen laufen in entgegengesetzte Richtungen.",
+          "set": {
+            "t": 0
+          }
+        },
+        {
+          "caption": "Ihre Summe (grün) wandert nicht: Sie schwingt an festen Orten auf und ab. Die grauen Punkte, die Knoten, bewegen sich nie; dort löschen sich die beiden Wellen immer aus.",
+          "to": {
+            "t": 0.5
+          },
+          "dur": 3200
+        },
+        {
+          "caption": "Zwischen den Knoten liegen die Bäuche mit doppelter Amplitude. Knotenabstand $\\tfrac\\lambda2 = 0{,}5\\,\\mathrm{m}$.",
+          "to": {
+            "t": 1
+          },
+          "dur": 3200
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Eigenfrequenzen\n> - **Beide Enden fest** (Saite) oder **beide offen** (offene Pfeife): $L = n\\tfrac{\\lambda}{2}$, $f_n = n\\tfrac{c}{2L}$, alle Vielfachen der Grundfrequenz.\n> - **Ein Ende fest, eines offen** (gedackte Pfeife): am festen Ende ein Knoten, am offenen ein Bauch, $L = (2n - 1)\\tfrac{\\lambda}{4}$, $f = (2n - 1)\\tfrac{c}{4L}$: nur ungerade Vielfache, Grundton eine Oktave tiefer als bei der offenen Pfeife.\n> - Auf einer Saite ist $c = \\sqrt{\\tfrac{F}{\\mu}}$ mit der Spannkraft $F$ und dem Massenbelag $\\mu$: Stärker spannen, höherer Ton.",
+      "label": "Gesetz",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Stehende Wellen",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Stehende Wellen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **stehende Welle** entsteht durch Überlagerung zweier gegenläufiger Wellen gleicher Frequenz und Amplitude -- typischerweise einer hinlaufenden Welle und ihrer **Reflexion**. Anders als bei der laufenden Welle wandert das Muster nicht: Es gibt ortsfeste **Knoten** (immer in Ruhe) und **Bäuche** (maximale Auslenkung)."
+            }
+          ]
+        },
+        {
+          "title": "Reflexion und Phasensprung",
+          "blocks": [
+            {
+              "md": "> [!important] Festes und loses Ende\n> - **Festes Ende** (z. B. eingespannte Saite, geschlossenes Rohrende): Reflexion mit **Phasensprung** um $\\pi$ ($\\lambda/2$) -- dort entsteht ein **Knoten**.\n> - **Loses/offenes Ende** (offenes Rohrende): Reflexion **ohne** Phasensprung -- dort entsteht ein **Bauch**.\n>\n> Aus dieser einen Regel folgen alle drei Randbedingungsfälle unten."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Randbedingungen",
+          "blocks": [
+            {
+              "image": "vault:Stehende Welle.svg"
+            },
+            {
+              "md": "| Fall | Enden | Bedingung | Wellenlänge | Frequenzen | Obertöne |\n|---|---|---|---|---|---|\n| **fest - fest** | 2 Knoten | $L = n\\cdot\\frac{\\lambda}{2}$ | $\\lambda_n = \\frac{2L}{n}$ | $f_n = n\\cdot\\frac{c}{2L}$ | alle ($n = 1,2,3,\\dots$) |\n| **offen - offen** | 2 Bäuche | $L = n\\cdot\\frac{\\lambda}{2}$ | $\\lambda_n = \\frac{2L}{n}$ | $f_n = n\\cdot\\frac{c}{2L}$ | alle ($n = 1,2,3,\\dots$) |\n| **offen - fest** | 1 Bauch, 1 Knoten | $L = (2n-1)\\cdot\\frac{\\lambda}{4}$ | $\\lambda_n = \\frac{4L}{2n-1}$ | $f_n = (2n-1)\\cdot\\frac{c}{4L}$ | nur **ungerade** (1, 3, 5, …) |\n\n> [!tip] Merksatz\n> **fest-fest** und **offen-offen** verhalten sich rechnerisch **gleich** (beide $\\lambda/2$-Bedingung). Der Sonderfall ist die **gedackte Pfeife** (offen-fest): Sie braucht nur ein **Viertel** der Wellenlänge und klingt daher bei gleicher Länge eine **Oktave tiefer** -- und ihr fehlen alle geradzahligen Obertöne, was ihren charakteristischen Klang erklärt."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschwingungen und Obertöne",
+          "blocks": [
+            {
+              "md": "Die tiefste mögliche Schwingung ($n=1$) heißt **Grundschwingung**, alle höheren **Oberschwingungen** (Obertöne). Das Frequenzverhältnis der Obertöne bestimmt die **Klangfarbe** eines Instruments."
+            }
+          ]
+        },
+        {
+          "title": "Abstand von Knoten und Bäuchen",
+          "blocks": [
+            {
+              "md": "Zwischen zwei benachbarten Knoten (bzw. zwei Bäuchen) liegt stets $\\frac{\\lambda}{2}$; zwischen einem Knoten und dem benachbarten Bauch $\\frac{\\lambda}{4}$. Damit lässt sich aus einem gemessenen Knotenabstand direkt die Wellenlänge bestimmen (**Kundt'sches Rohr**, Quincke'sches Rohr).\n\n> [!important] Bezug zur modernen Physik\n> Diskrete Eigenschwingungen sind die Grundlage des **wellenmechanischen Atommodells**: Beschreibt man das Elektron als stehende Materiewelle auf einer Bahn ($2\\pi r = n\\lambda$), folgen daraus unmittelbar die **diskreten Energieniveaus** des **Bohr'schen Atommodells** (Q3)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Gitarrensaite ($L = 65\\,\\mathrm{cm}$) hat die Grundfrequenz $110\\,\\mathrm{Hz}$. Wie schnell laufen Wellen auf ihr?",
+      "answer": 143,
+      "tolerance": 0.5,
+      "placeholder": "m/s",
+      "explain": "$c = 2 L f_1 = 2\\cdot 0{,}65\\cdot 110\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 143\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Grundfrequenz hat eine gedackte Pfeife von $50\\,\\mathrm{cm}$ Länge ($c = 343\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$)?",
+      "answer": 171.5,
+      "tolerance": 0.5,
+      "placeholder": "Hz",
+      "explain": "$f_1 = \\tfrac{c}{4L} = \\tfrac{343}{2}\\,\\mathrm{Hz} = 171{,}5\\,\\mathrm{Hz}$; eine offene Pfeife gleicher Länge hätte $343\\,\\mathrm{Hz}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der stehenden Welle in die richtige Reihenfolge.",
+      "items": [
+        "Zwei gegenläufige Wellen: $\\hat y\\sin(\\omega t \\mp kx)$",
+        "Addieren mit dem Additionstheorem",
+        "$y = 2\\hat y\\cos(kx)\\sin(\\omega t)$",
+        "Knoten bei $\\cos(kx) = 0$, Abstand $\\tfrac\\lambda2$"
+      ],
+      "explain": "Die Reihenfolge: 1. Zwei gegenläufige Wellen: $\\hat y\\sin(\\omega t \\mp kx)$. 2. Addieren mit dem Additionstheorem. 3. $y = 2\\hat y\\cos(kx)\\sin(\\omega t)$. 4. Knoten bei $\\cos(kx) = 0$, Abstand $\\tfrac\\lambda2$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Wie weit liegen ein Knoten und der nächste Bauch auseinander?",
+      "options": [
+        {
+          "md": "eine Viertelwellenlänge",
+          "correct": true
+        },
+        {
+          "md": "eine halbe Wellenlänge",
+          "why": "Das ist der Abstand zweier Knoten."
+        },
+        {
+          "md": "eine ganze Wellenlänge",
+          "why": "Dazwischen liegen zwei Knoten und zwei Bäuche."
+        },
+        {
+          "md": "Das hängt von der Frequenz ab.",
+          "why": "In Wellenlängen ausgedrückt ist der Abstand immer $\\tfrac\\lambda4$."
+        }
+      ],
+      "explain": "Knoten bei $\\tfrac\\lambda4$, Bäuche bei $0$ und $\\tfrac\\lambda2$ (in der Herleitung oben).",
+      "label": "Definitionen",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Eine Saite ($\\mu = 5\\,\\tfrac{\\mathrm{g}}{\\mathrm{m}}$, $L = 65\\,\\mathrm{cm}$) ist mit $70\\,\\mathrm{N}$ gespannt. Wie hoch ist ihr Grundton?",
+      "answer": 91.0,
+      "tolerance": 0.5,
+      "placeholder": "Hz",
+      "explain": "$c = \\sqrt{\\tfrac{70}{0{,}005}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 118{,}3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $f_1 = \\tfrac{c}{2L} \\approx 91\\,\\mathrm{Hz}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei einer gedackten Pfeife fehlen die geradzahligen Vielfachen der Grundfrequenz.",
+      "answer": true,
+      "explain": "Knoten am geschlossenen, Bauch am offenen Ende: Es passen nur $1, 3, 5, \\ldots$ Viertelwellenlängen hinein. Das gibt ihr den dunkleren Klang.",
+      "label": "Pfeifen",
+      "id": "vq6"
     },
     {
       "id": "knoten",
@@ -100,13 +453,41 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "pfeife",
+          "saite"
+        ]
+      },
+      "label": "Pfeife und Saite",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "stehende-welle",
+          "saite"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Stehende Welle: Überlagerung gegenläufiger Wellen.",
         "Knotenabstand $\\lambda/2$.",
-        "Beidseitig fest: $f_k = k\\frac{c}{2l}$."
+        "Beidseitig fest: $f_k = k\\frac{c}{2l}$.",
+        "Stehende Welle: $y = 2\\hat y\\cos(kx)\\sin(\\omega t)$; Knotenabstand $\\tfrac\\lambda2$, Knoten-Bauch $\\tfrac\\lambda4$.",
+        "Beide Enden gleich: $f_n = n\\tfrac{c}{2L}$; gedackt: $f = (2n - 1)\\tfrac{c}{4L}$; Saite $c = \\sqrt{\\tfrac F\\mu}$."
       ]
     }
   ]

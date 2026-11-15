@@ -23,6 +23,368 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Prozent als Faktor\n> $p\\,\\%$ heißt $\\tfrac{p}{100}$. Eine Erhöhung um $p\\,\\%$ ist die Multiplikation mit $1 + \\tfrac{p}{100}$, eine Senkung die mit $1 - \\tfrac{p}{100}$. Der **Ausgangswert** vor einer Änderung ist Endwert geteilt durch den Faktor.\n\n> [!definition] Prozentpunkte\n> Steigt ein Anteil von 20 % auf 25 %, ist das ein Plus von **5 Prozentpunkten**, aber von **25 Prozent** des Ausgangsanteils.\n\n> [!definition] Zinseszins und iterative Prozesse\n> Wächst eine Größe jedes Jahr mit demselben Faktor $q$, ist $N_n = N_0 \\cdot q^n$: eine geometrische Folge.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum Prozente sich nicht addieren.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(1 + 0{,}2)(1 - 0{,}2) = 1 - 0{,}04 = 0{,}96",
+            "why": "+20 % und dann −20 %: Die Faktoren werden multipliziert."
+          },
+          {
+            "tex": "(1 + p)(1 - p) = 1 - p^2 < 1",
+            "why": "Allgemein bleibt immer ein Verlust, weil die Senkung auf den größeren Wert wirkt."
+          },
+          {
+            "tex": "1{,}25 \\cdot x = 150 \\;\\Rightarrow\\; x = \\frac{150}{1{,}25} = 120",
+            "why": "Rückwärts: durch den Faktor teilen. 150 − 25 % = 112,50 nimmt die falsche Grundmenge."
+          },
+          {
+            "tex": "1{,}1^{\\,n} \\ge 2:\\ 1{,}1^7 \\approx 1{,}95,\\ 1{,}1^8 \\approx 2{,}14",
+            "why": "Schwelle: Bei 10 % Zins verdoppelt sich ein Betrag nach 8 vollen Jahren."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Hin und zurück.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Allgemein.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rückwärts.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schwelle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Zinseszins",
+      "md": "**Zinseszins gegen einfachen Zins:** 1000 Pfund zu 10 % pro Jahr. Blau mit Zinseszins $1000 \\cdot 1{,}1^t$, orange ohne, $1000(1 + 0{,}1\\,t)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          7000
+        ],
+        "xLabel": "Jahre",
+        "yLabel": "Pfund",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 20,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "z",
+            "expr": "1000*1.1^x",
+            "color": "blue",
+            "label": "Zinseszins",
+            "labelAt": 14
+          },
+          {
+            "name": "e",
+            "expr": "1000*(1 + 0.1*x)",
+            "color": "orange",
+            "label": "einfach",
+            "labelAt": 16
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "z(X)",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "e(X)",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "nach {X|0} Jahren: {z(X)|2} gegen {e(X)|2} Pfund"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 2 Jahren: 1210 gegen 1200. Der Unterschied sind die Zinsen auf die ersten Zinsen.",
+          "set": {
+            "X": 2
+          }
+        },
+        {
+          "caption": "Nach 8 Jahren hat sich der Betrag mit Zinseszins mehr als verdoppelt.",
+          "to": {
+            "X": 8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 20 Jahren: rund 6727 gegen 3000. Exponentielles Wachstum überholt lineares immer.",
+          "to": {
+            "X": 20
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Brüche, Dezimalzahlen, Prozente im Kopf:** $\\tfrac18 = 0{,}125 = 12{,}5\\,\\%$, $\\tfrac38 = 37{,}5\\,\\%$, $\\tfrac16 \\approx 16{,}7\\,\\%$. Faktoren tauschen hilft: 8 % von 25 sind 25 % von 8, also 2.\n\n**Halbwertszeit** und Abklingen funktionieren genauso mit einem Faktor kleiner als 1: Nach $n$ Halbwertszeiten ist noch $\\left(\\tfrac12\\right)^n$ übrig.",
+      "label": "Kopfrechnen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Brüche, Dezimalzahlen und Prozente",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Brüche, Dezimalzahlen und Prozente.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der Rahmen: Zahlbereiche",
+          "blocks": [
+            {
+              "md": "$$\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$$\n\nEine Zahl ist **rational** (M2.10), wenn sie sich als $\\tfrac pq$ mit ganzen $p$, $q \\ne 0$ schreiben lässt. Das ist gleichbedeutend damit, dass ihre Dezimaldarstellung **abbricht oder periodisch** ist. Beide Richtungen dieser Äquivalenz werden in Paper 2 geprüft.\n\n| Fall | Beispiel | rational? |\n|---|---|---|\n| abbrechend | $0{,}375 = \\tfrac38$ | ja |\n| periodisch | $0{,}\\overline{27} = \\tfrac{3}{11}$ | ja |\n| nicht periodisch | $\\sqrt2$, $\\pi$ | nein |\n\n> [!important] Wann bricht ein Bruch ab?\n> Genau dann, wenn der **gekürzte** Nenner nur die Primfaktoren 2 und 5 enthält. $\\tfrac{7}{40}$ bricht ab ($40 = 2^3 \\cdot 5$), $\\tfrac{7}{12}$ nicht ($12 = 2^2 \\cdot 3$). Die Periodenlänge von $\\tfrac1n$ hängt allein vom zu 10 teilerfremden Anteil von $n$ ab."
+            }
+          ]
+        },
+        {
+          "title": "Bruchrechnen ohne Taschenrechner",
+          "blocks": [
+            {
+              "md": "Die Regeln sind bekannt; entscheidend ist die **Reihenfolge der Arbeitsschritte**, denn im Test zählt jede Sekunde:\n\n1. **Erst kürzen, dann multiplizieren.** $\\tfrac{18}{35} \\cdot \\tfrac{25}{27}$ wird über Kreuz gekürzt zu $\\tfrac{2}{7} \\cdot \\tfrac{5}{3} = \\tfrac{10}{21}$.\n2. **Beim Addieren den kleinsten gemeinsamen Nenner nehmen**, nicht das Produkt.\n3. **Doppelbrüche** mit dem Kehrwert auflösen: $\\dfrac{a/b}{c/d} = \\dfrac ab \\cdot \\dfrac dc$.\n4. **Gemischte Zahlen sofort umwandeln.** Im Test erscheinen Antwortoptionen fast immer als unechte Brüche."
+            }
+          ]
+        },
+        {
+          "title": "Dezimalzahl und Bruch",
+          "blocks": [
+            {
+              "md": "| Richtung | Verfahren |\n|---|---|\n| abbrechend $\\to$ Bruch | Ziffern über die passende Zehnerpotenz, dann kürzen: $0{,}375 = \\tfrac{375}{1000} = \\tfrac38$ |\n| periodisch $\\to$ Bruch | mit $10^k$ multiplizieren und subtrahieren (siehe **Periodische Dezimalzahl in einen Bruch umwandeln**) |\n| Bruch $\\to$ Dezimalzahl | schriftliche Division |\n\nDie **Kurzform** für reinperiodische Zahlen: Periode über ebenso viele Neunen.\n\n$$0{,}\\overline{7} = \\tfrac79, \\qquad 0{,}\\overline{36} = \\tfrac{36}{99} = \\tfrac{4}{11}, \\qquad 0{,}\\overline{123} = \\tfrac{123}{999} = \\tfrac{41}{333}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Prozente",
+          "blocks": [
+            {
+              "md": "Ein Prozentsatz ist ein **Multiplikator**. Diese eine Umstellung erledigt fast alle Aufgaben:\n\n| Vorgang | Multiplikator |\n|---|---|\n| $+ 15\\,\\%$ | $1{,}15$ |\n| $- 15\\,\\%$ | $0{,}85$ |\n| $+ 100\\,\\%$ | $2$ |\n| $- 100\\,\\%$ | $0$ |\n\n- **Hintereinander ausgeführte Änderungen** werden **multipliziert**, nie addiert: $+25\\,\\%$ gefolgt von $-20\\,\\%$ ergibt $1{,}25 \\cdot 0{,}8 = 1$, also keine Änderung.\n- **Umkehraufgaben** (*reverse percentage*, M3.2) werden **dividiert**: Ist der Preis nach $+15\\,\\%$ gleich 46, so war er vorher $46 : 1{,}15 = 40$.\n- **Prozentuale Änderung** berechnet sich stets auf den **Ausgangswert**: $\\dfrac{\\text{neu} - \\text{alt}}{\\text{alt}}$.\n\n> [!warning] Die häufigste Falle des ganzen Blocks\n> $+20\\,\\%$ und danach $-20\\,\\%$ führen **nicht** zurück zum Ausgangswert, sondern auf $1{,}2 \\cdot 0{,}8 = 0{,}96$, also $-4\\,\\%$. Der Grund: Die zweite Änderung bezieht sich auf den bereits vergrößerten Wert.\n>\n> Genauso gilt: Steigt ein Preis um $50\\,\\%$, muss er um $\\tfrac13$ (nicht um $50\\,\\%$) fallen, um wieder beim Ausgangswert zu landen."
+            }
+          ]
+        },
+        {
+          "title": "Prozente, Brüche und Dezimalzahlen im Kopf",
+          "blocks": [
+            {
+              "md": "| Bruch | Dezimal | Prozent |\n|---|---|---|\n| $\\tfrac18$ | $0{,}125$ | $12{,}5\\,\\%$ |\n| $\\tfrac16$ | $0{,}1\\overline{6}$ | $16{,}\\overline{6}\\,\\%$ |\n| $\\tfrac15$ | $0{,}2$ | $20\\,\\%$ |\n| $\\tfrac13$ | $0{,}\\overline{3}$ | $33{,}\\overline{3}\\,\\%$ |\n| $\\tfrac38$ | $0{,}375$ | $37{,}5\\,\\%$ |\n| $\\tfrac23$ | $0{,}\\overline{6}$ | $66{,}\\overline{6}\\,\\%$ |\n| $\\tfrac78$ | $0{,}875$ | $87{,}5\\,\\%$ |\n\nDiese sieben Zeilen sparen im Test mehr Zeit als jede Rechentechnik -- siehe **Kopfrechnen und Abschätzen ohne Taschenrechner**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Prozentsätze addieren** statt multiplizieren.\n- **Bei der Umkehraufgabe mit $0{,}85$ multiplizieren**, statt durch $1{,}15$ zu dividieren.\n- **Die prozentuale Änderung auf den neuen Wert beziehen.**\n- **$0{,}\\overline{9} \\ne 1$ annehmen.** Es gilt $0{,}\\overline{9} = \\tfrac99 = 1$ -- gelegentlich Gegenstand einer Paper-2-Aussage.\n- **Beim Bruchaddieren die Zähler ohne Hauptnenner addieren.**\n\nVerwandt: **Wachstum, Zinseszins und iterative Prozesse** · Aufgabentypen: **Periodische Dezimalzahl in einen Bruch umwandeln** · **Aufeinanderfolgende prozentuale Änderungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Wachstum, Zinseszins und iterative Prozesse",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Wachstum, Zinseszins und iterative Prozesse.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der eine Baustein",
+          "blocks": [
+            {
+              "md": "Jede Wachstums- und Zerfallsaufgabe des Tests hat dieselbe Form:\n\n$$A_n = A_0 \\cdot r^n$$\n\nmit dem **Multiplikator** $r$ pro Zeitschritt. Alles Weitere ist Interpretation von $r$:\n\n| Vorgang | $r$ |\n|---|---|\n| $+5\\,\\%$ pro Jahr (Zinseszins) | $1{,}05$ |\n| $-20\\,\\%$ pro Jahr (*depreciation*) | $0{,}8$ |\n| Verdopplung pro Schritt | $2$ |\n| Halbierung pro Halbwertszeit | $0{,}5$ |\n\n> [!example] Zinseszins\n> 1000 zu $5\\,\\%$ über 3 Jahre: $1000 \\cdot 1{,}05^3 = 1157{,}625$.\n> **Einfache Zinsen** wären $1000 + 3 \\cdot 50 = 1150$ -- die Differenz ist genau der Zins auf die Zinsen. Im Englischen heißen die beiden Modelle *compound interest* und *simple interest*; welches gemeint ist, steht im Aufgabentext."
+            }
+          ]
+        },
+        {
+          "title": "Die Verbindung zu geometrischen Folgen",
+          "blocks": [
+            {
+              "md": "$A_n = A_0 r^n$ **ist** eine geometrische Folge mit dem Quotienten $r$. Alles aus **Explizite und rekursive Folgen** und **Arithmetische und geometrische Reihen** gilt weiter:\n\n- $r > 1$: unbeschränktes Wachstum,\n- $0 < r < 1$: Zerfall gegen null, Summe aller Schritte konvergiert,\n- die **Summenformel** beantwortet Fragen nach der insgesamt zurückgelegten Strecke oder dem Gesamtbetrag über alle Jahre."
+            }
+          ]
+        },
+        {
+          "title": "Wann ist eine Schwelle erreicht?",
+          "blocks": [
+            {
+              "md": "Die Frage *„nach wie vielen Jahren übersteigt der Betrag …?\"* führt formal auf einen Logarithmus (siehe **Exponential- und Logarithmusrechnung**). Ohne Taschenrechner löst man sie im Test anders: **durch Probieren mit Zwischenergebnissen**, die man ohnehin kennt.\n\n> [!tip] Die Verdopplungsregel\n> Bei $p\\,\\%$ Wachstum pro Periode dauert eine Verdopplung ungefähr $\\dfrac{70}{p}$ Perioden.\n> Bei $7\\,\\%$: etwa 10 Perioden -- tatsächlich ist $1{,}07^{10} \\approx 1{,}97$, die Verdopplung fällt ins elfte Jahr. Bei $2\\,\\%$: etwa 35 Perioden, tatsächlich $1{,}02^{36} \\approx 2{,}04$.\n>\n> Die Regel ist eine **Näherung**, aber sie genügt fast immer, um unter fünf Antwortoptionen die richtige zu finden. Eine Aufgabe, in der zwei Optionen benachbart sind, verlangt dann noch eine gezielte Potenzrechnung."
+            }
+          ]
+        },
+        {
+          "title": "Halbwertszeit",
+          "blocks": [
+            {
+              "md": "Beträgt die Halbwertszeit $T$, so gilt nach der Zeit $t$\n\n$$A(t) = A_0 \\cdot \\left(\\tfrac12\\right)^{t/T}.$$\n\nNach zweieinhalb Halbwertszeiten bleibt $0{,}5^{2{,}5} \\approx 0{,}177$, also knapp $18\\,\\%$."
+            }
+          ]
+        },
+        {
+          "title": "Iterative Prozesse",
+          "blocks": [
+            {
+              "md": "M3.11 nennt ausdrücklich auch **iterative Verfahren**: eine Rekursion $x_{n+1} = f(x_n)$, die man wiederholt anwendet.\n\n> [!example] Ein konvergierendes Verfahren\n> $x_{n+1} = \\sqrt{x_n + 2}$ mit $x_0 = 1$:\n> $$1 \\to 1{,}732 \\to 1{,}932 \\to 1{,}983 \\to 1{,}996 \\to \\dots$$\n> Die Folge nähert sich 2. Der **Grenzwert** $L$ erfüllt die Fixpunktgleichung $L = \\sqrt{L + 2}$, also $L^2 - L - 2 = 0$ und damit $L = 2$ (die Lösung $L = -1$ entfällt, weil eine Wurzel nicht negativ ist).\n\n> [!important] So beantwortet man Iterationsaufgaben im Test\n> Gefragt ist fast nie der Wert nach 20 Schritten, sondern:\n> - **der Grenzwert** -- über die Fixpunktgleichung $L = f(L)$,\n> - **ob die Folge steigt oder fällt** -- ein bis zwei Schritte rechnen genügt,\n> - **ob sie überhaupt konvergiert** -- manche Startwerte führen zu wachsenden Werten.\n>\n> Die Fixpunktgleichung ersetzt jede längere Rechnung. Umgekehrt gilt: Existiert ein Grenzwert, **muss** er die Fixpunktgleichung erfüllen -- aber dass die Gleichung eine Lösung hat, garantiert noch keine Konvergenz. Genau dieser Unterschied ist ein beliebter Paper-2-Prüfstein (siehe **Notwendige und hinreichende Bedingungen**)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Einfache und Zinseszinsen verwechseln.**\n- **Den Multiplikator aus einer Abnahme falsch bilden:** $-15\\,\\%$ ist $0{,}85$, nicht $-0{,}15$ und nicht $0{,}15$.\n- **Bei der Verdopplungsfrage abrunden.** Ist die Schwelle im zehnten Jahr noch nicht erreicht, lautet die Antwort 11.\n- **Den Fixpunkt mit dem Startwert verwechseln.**\n- **Eine negative Lösung der Fixpunktgleichung mitnehmen**, obwohl der Definitionsbereich sie ausschließt.\n\nVerwandt: **Explizite und rekursive Folgen** · **Periodische Rekursion auswerten** · Aufgabentyp: **Aufeinanderfolgende prozentuale Änderungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Faktoren",
+      "md": "Ein Preis steigt zweimal hintereinander um 10 %. Um wie viel Prozent ist er insgesamt gestiegen?",
+      "answer": 21,
+      "tolerance": 0,
+      "placeholder": "%",
+      "explain": "$1{,}1^2 = 1{,}21$: insgesamt 21 %, nicht 20 %.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Nach einer Senkung um 20 % kostet eine Ware 64 €. Was kostete sie vorher?",
+      "answer": 80,
+      "tolerance": 0,
+      "placeholder": "€",
+      "explain": "$x \\cdot 0{,}8 = 64$, also $x = 80$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "£2000 is invested at 5% compound interest per year. How much is it worth after 2 years?",
+      "options": [
+        {
+          "md": "£2205",
+          "correct": true
+        },
+        {
+          "md": "£2100"
+        },
+        {
+          "md": "£2210"
+        },
+        {
+          "md": "£2250"
+        },
+        {
+          "md": "£2200"
+        }
+      ],
+      "explain": "$2000 \\cdot 1{,}05^2 = 2000 \\cdot 1{,}1025 = 2205$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Zinseszins",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Preis, der um 50 % steigt und danach um 50 % fällt, ist wieder beim Ausgangswert.",
+      "answer": false,
+      "explain": "$1{,}5 \\cdot 0{,}5 = 0{,}75$: Er liegt 25 % unter dem Start.",
+      "label": "Faktoren",
+      "id": "vq4"
+    },
+    {
+      "type": "match",
+      "label": "Faktoren",
+      "md": "Ordne jeder Änderung ihren Faktor zu.",
+      "pairs": [
+        [
+          "+15 %",
+          "1,15"
+        ],
+        [
+          "−15 %",
+          "0,85"
+        ],
+        [
+          "+150 %",
+          "2,5"
+        ],
+        [
+          "−2 %",
+          "0,98"
+        ]
+      ],
+      "explain": "Erhöhung: 1 plus Anteil; Senkung: 1 minus Anteil.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Schwelle",
+      "md": "Ein Betrag wird jährlich mit 10 % verzinst. Nach wie vielen vollen Jahren hat er sich erstmals mindestens verdoppelt?",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "Jahre",
+      "explain": "$1{,}1^7 \\approx 1{,}949$ reicht nicht, $1{,}1^8 \\approx 2{,}144$ schon.",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "A price rises by 20% and then falls by 20%. What is the overall change?",
       "options": [
@@ -69,12 +431,50 @@
       "id": "c2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "prozent"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "prozent"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "prozent"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Prozente als Faktoren.",
         "Mehrere Änderungen: Faktoren multiplizieren.",
-        "Zinseszins: N₀ · qⁿ."
+        "Zinseszins: N₀ · qⁿ.",
+        "Prozente als Faktoren multiplizieren; $(1 + p)(1 - p) = 1 - p^2$; rückwärts durch den Faktor teilen.",
+        "Zinseszins $N_0 q^n$ ist eine geometrische Folge; Prozentpunkte sind keine Prozente."
       ],
       "id": "summary"
     }

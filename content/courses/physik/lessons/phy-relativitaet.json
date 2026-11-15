@@ -51,7 +51,7 @@
           {
             "name": "g",
             "expr": "1/sqrt(1 - x^2)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -64,6 +64,452 @@
         ],
         "readout": "γ = {1/sqrt(1 - b^2)|3}: eine bewegte Uhr geht um diesen Faktor langsamer."
       }
+    },
+    {
+      "type": "text",
+      "md": "**Ausgangspunkt.** Das Michelson-Morley-Experiment (1887) sollte die Bewegung der Erde gegen einen „Äther“ nachweisen, das vermutete Trägermedium des Lichts. Es fand nichts: Die Lichtgeschwindigkeit war in allen Richtungen gleich. Einstein zog 1905 die Konsequenz.\n\n> [!definition] Inertialsystem\n> Ein Bezugssystem, in dem ein kräftefreier Körper ruht oder sich geradlinig gleichförmig bewegt. Zwei Inertialsysteme bewegen sich mit konstanter Geschwindigkeit gegeneinander.\n\n> [!satz] Die Postulate der Speziellen Relativitätstheorie\n> 1. **Relativitätsprinzip:** Die physikalischen Gesetze gelten in allen Inertialsystemen gleich; keines ist ausgezeichnet.\n> 2. **Konstanz der Lichtgeschwindigkeit:** Licht hat im Vakuum in jedem Inertialsystem die Geschwindigkeit $c \\approx 3{,}00\\cdot 10^8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, unabhängig von der Bewegung der Quelle und des Beobachters.\n\n> [!definition] Eigenzeit, Eigenlänge, Lorentzfaktor\n> Die **Eigenzeit** $\\Delta t_0$ misst eine Uhr, die am Ort des Geschehens ruht. Die **Eigenlänge** $L_0$ misst man im Ruhesystem des Körpers. Der **Lorentzfaktor** $\\gamma = \\tfrac{1}{\\sqrt{1 - v^2/c^2}} \\ge 1$ bestimmt alle Effekte.\n\n> [!definition] Relativität der Gleichzeitigkeit\n> Zwei Ereignisse an verschiedenen Orten, die in einem System gleichzeitig sind, sind es in einem dazu bewegten System nicht.",
+      "label": "Postulate und Begriffe",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Zeitdilatation mit der Lichtuhr.** Ein Lichtblitz läuft zwischen zwei Spiegeln im Abstand $L$ hin und her; ein Hin und Zurück ist ein Tick.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta t_0 = \\frac{2L}{c}",
+            "why": "In der mitbewegten Uhr läuft das Licht senkrecht hin und zurück: die Eigenzeit eines Ticks."
+          },
+          {
+            "tex": "\\left(\\frac{c\\,\\Delta t}{2}\\right)^2 = L^2 + \\left(\\frac{v\\,\\Delta t}{2}\\right)^2",
+            "why": "Von außen bewegt sich die Uhr mit v; das Licht läuft schräg. Pythagoras für den halben Weg, mit demselben c (zweites Postulat)."
+          },
+          {
+            "tex": "\\Delta t^2\\left(c^2 - v^2\\right) = 4L^2 \\;\\Rightarrow\\; \\Delta t = \\frac{2L}{\\sqrt{c^2 - v^2}}",
+            "why": "Nach Δt aufgelöst."
+          },
+          {
+            "tex": "\\Delta t = \\frac{2L}{c}\\cdot\\frac{1}{\\sqrt{1 - v^2/c^2}} = \\gamma\\,\\Delta t_0",
+            "why": "Die bewegte Uhr tickt um den Faktor γ langsamer."
+          },
+          {
+            "tex": "L = \\frac{L_0}{\\gamma}",
+            "why": "Längenkontraktion: Beide Systeme müssen beim Myon dieselbe Ankunft vorhersagen (Herleitung in der Lektion zur Längenkontraktion)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ruhende Uhr.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bewegte Uhr.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeitdilatation.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Längenkontraktion.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die Lichtuhr von außen.** Grün der Lichtweg in der ruhenden Uhr, blau in der Uhr, die sich mit $v$ nach rechts bewegt (Spiegelabstand 1).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          8
+        ],
+        "y": [
+          -0.1,
+          1.3
+        ],
+        "xLabel": "Weg der Uhr",
+        "yLabel": "Höhe",
+        "grid": false,
+        "vars": [
+          {
+            "name": "b",
+            "min": 0,
+            "max": 0.95,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [],
+        "hlines": [
+          {
+            "y": 0,
+            "color": "gray"
+          },
+          {
+            "y": 1,
+            "color": "gray"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              1
+            ],
+            "color": "green",
+            "width": 3
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "b/sqrt(1 - b^2)",
+              1
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              "b/sqrt(1 - b^2)",
+              1
+            ],
+            "to": [
+              "2*b/sqrt(1 - b^2)",
+              0
+            ],
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "readout": "v = {b|2} c: Ein Tick dauert von außen **{1/sqrt(1 - b^2)|2}**-mal so lang wie in der Uhr selbst"
+      },
+      "timeline": [
+        {
+          "caption": "Ruhende Uhr: Das Licht läuft senkrecht hoch und wieder herunter.",
+          "set": {
+            "b": 0
+          }
+        },
+        {
+          "caption": "Mit $0{,}6\\,c$: Von außen läuft das Licht schräg, der Weg ist länger. Licht wird dabei nicht schneller, also dauert der Tick $1{,}25$-mal so lang.",
+          "to": {
+            "b": 0.6
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Mit $0{,}9\\,c$: Faktor $2{,}29$. Jede Uhr im bewegten System, auch ein Herzschlag, geht genauso langsamer.",
+          "to": {
+            "b": 0.9
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Myonen auf dem Weg zum Boden** ($v = 0{,}998\\,c$, $\\tau_0 = 2{,}197\\,\\mu\\mathrm{s}$): Anteil der noch nicht zerfallenen Myonen über der zurückgelegten Strecke.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "xLabel": "Flugstrecke in km",
+        "yLabel": "Anteil der Myonen",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 10,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "kl",
+            "expr": "exp(-x/0.657)",
+            "color": "orange"
+          },
+          {
+            "name": "rel",
+            "expr": "exp(-x/10.4)",
+            "color": "blue"
+          }
+        ],
+        "labels": [
+          {
+            "x": 5,
+            "y": 0.95,
+            "text": "mit Zeitdilatation",
+            "anchor": "start",
+            "color": "blue"
+          },
+          {
+            "x": 1.2,
+            "y": 0.25,
+            "text": "ohne Zeitdilatation",
+            "anchor": "start",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "rel",
+            "color": "blue",
+            "guides": true
+          },
+          {
+            "x": "X",
+            "on": "kl",
+            "color": "orange"
+          }
+        ],
+        "readout": "Nach {X|1} km: ohne Zeitdilatation {100*exp(-X/0.657)|2} %, mit Zeitdilatation **{100*exp(-X/10.4)|1} %**"
+      },
+      "timeline": [
+        {
+          "caption": "Ohne Zeitdilatation käme ein Myon im Mittel nur $657\\,\\mathrm{m}$ weit.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "Nach 2 km wären klassisch nur noch 5 % übrig.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Nach 10 km klassisch praktisch keines mehr. Gemessen kommen aber viele an: Mit $\\gamma = 15{,}8$ ist die mittlere Flugstrecke $10{,}4\\,\\mathrm{km}$, und 38 % erreichen den Boden.",
+          "to": {
+            "X": 10
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Zwei Sichtweisen, ein Ergebnis.** Im Erdsystem lebt das Myon wegen der Zeitdilatation länger. Im Myonsystem lebt es normal kurz, aber die Atmosphäre ist auf $\\tfrac{10\\,\\mathrm{km}}{15{,}8} \\approx 632\\,\\mathrm{m}$ verkürzt. Ob es ankommt, darf nicht vom Bezugssystem abhängen.\n\n**Belege im Alltag.** Atomuhren in Verkehrsflugzeugen gingen 1971 (Hafele-Keating) um Nanosekunden anders als am Boden, wie berechnet. GPS-Satelliten müssen ihre Uhren korrigieren; ohne Relativitätstheorie liefe die Ortung binnen eines Tages um Kilometer davon.\n\n> [!warning] Gültigkeitsbereich\n> Für $v \\ll c$ ist $\\gamma \\approx 1$: Die newtonsche Mechanik ist der Grenzfall der Speziellen Relativitätstheorie. Beschleunigte Systeme und Gravitation beschreibt erst die Allgemeine Relativitätstheorie.",
+      "label": "Belege",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Spezielle Relativitätstheorie",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Spezielle Relativitätstheorie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Spezielle Relativitätstheorie** (Albert Einstein, 1905) beschreibt Raum und Zeit für Bezugssysteme, die sich mit **konstanter** Geschwindigkeit zueinander bewegen. Sie löst den Widerspruch zwischen der newtonschen Mechanik und der Konstanz der Lichtgeschwindigkeit."
+            }
+          ]
+        },
+        {
+          "title": "Ausgangspunkt: Michelson-Morley",
+          "blocks": [
+            {
+              "md": "Das Experiment (1887) sollte die Bewegung der Erde gegen den \"Äther\" nachweisen -- und ergab **kein** Ergebnis. Die Lichtgeschwindigkeit war in **allen** Richtungen gleich. Der Äther war überflüssig."
+            }
+          ]
+        },
+        {
+          "title": "Die zwei Postulate",
+          "blocks": [
+            {
+              "md": "1. **Relativitätsprinzip**: Die physikalischen Gesetze sind in allen **Inertialsystemen** gleich.\n2. **Konstanz der Lichtgeschwindigkeit**: $c \\approx 3{,}0\\cdot10^8\\ \\tfrac{\\text{m}}{\\text{s}}$ ist in jedem Inertialsystem gleich -- unabhängig von der Bewegung von Quelle und Beobachter."
+            }
+          ]
+        },
+        {
+          "title": "Der Lorentzfaktor",
+          "blocks": [
+            {
+              "md": "$$\\gamma = \\frac{1}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$\n\n### Interaktiv: Relativistische Effekte"
+            }
+          ]
+        },
+        {
+          "title": "Die Konsequenzen",
+          "blocks": [
+            {
+              "md": "> [!note] Zeitdilatation\n> Bewegte Uhren gehen langsamer: $$\\Delta t = \\gamma \\cdot \\Delta t_0$$ ($\\Delta t_0$ = Eigenzeit im mitbewegten System.)\n\n> [!note] Längenkontraktion\n> Bewegte Längen erscheinen in Bewegungsrichtung verkürzt: $$l = \\frac{l_0}{\\gamma}$$\n\n> [!note] Relativität der Gleichzeitigkeit\n> Zwei Ereignisse, die in einem System gleichzeitig sind, sind es in einem dazu bewegten System **nicht**.\n\n> [!note] Masse-Energie-Äquivalenz\n> $$E = \\gamma\\, m\\, c^2, \\qquad E_0 = m c^2$$ Die **Ruheenergie** $E_0$ ist die theoretische Grundlage der Energiefreisetzung bei **Kernspaltung und Fusion**."
+            }
+          ]
+        },
+        {
+          "title": "Experimenteller Beleg: Myonen",
+          "blocks": [
+            {
+              "md": "Myonen der kosmischen Strahlung haben im Ruhesystem nur $2{,}2\\ \\mu$s Lebensdauer -- klassisch könnten sie den Erdboden nie erreichen. Tatsächlich werden sie gemessen:\n- **Erdsystem**: Die Zeit der Myonen ist **dilatiert**.\n- **Myonensystem**: Die Atmosphäre ist **längenkontrahiert**.\n\nBeide Beschreibungen liefern dasselbe Ergebnis -- ein Musterbeispiel für die Konsistenz der Theorie.\n\n> [!warning] Gültigkeitsbereich\n> Für $v \\ll c$ gilt $\\gamma \\approx 1$: Die newtonsche Mechanik ist der **Grenzfall** der SRT für kleine Geschwindigkeiten. Beschleunigte Systeme und Gravitation behandelt erst die Allgemeine Relativitätstheorie."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "Relativitätsprinzip",
+          "Gesetze in allen Inertialsystemen gleich"
+        ],
+        [
+          "Konstanz der Lichtgeschwindigkeit",
+          "c hängt nicht von Quelle und Beobachter ab"
+        ],
+        [
+          "Eigenzeit",
+          "misst eine Uhr am Ort des Geschehens"
+        ],
+        [
+          "Eigenlänge",
+          "im Ruhesystem des Körpers gemessen"
+        ],
+        [
+          "Lorentzfaktor",
+          "$\\gamma = \\tfrac{1}{\\sqrt{1 - v^2/c^2}}$"
+        ]
+      ],
+      "explain": "Eigenzeit und Eigenlänge werden im Ruhesystem gemessen.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung mit der Lichtuhr in die richtige Reihenfolge.",
+      "items": [
+        "Ruhende Uhr: $\\Delta t_0 = \\tfrac{2L}{c}$",
+        "Bewegte Uhr: $\\left(\\tfrac{c\\Delta t}{2}\\right)^2 = L^2 + \\left(\\tfrac{v\\Delta t}{2}\\right)^2$",
+        "Aufgelöst: $\\Delta t = \\tfrac{2L}{\\sqrt{c^2 - v^2}}$",
+        "$\\Delta t = \\gamma\\,\\Delta t_0$"
+      ],
+      "explain": "Die Reihenfolge: 1. Ruhende Uhr: $\\Delta t_0 = \\tfrac{2L}{c}$. 2. Bewegte Uhr: $\\left(\\tfrac{c\\Delta t}{2}\\right)^2 = L^2 + \\left(\\tfrac{v\\Delta t}{2}\\right)^2$. 3. Aufgelöst: $\\Delta t = \\tfrac{2L}{\\sqrt{c^2 - v^2}}$. 4. $\\Delta t = \\gamma\\,\\Delta t_0$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist der Lorentzfaktor bei $v = 0{,}8\\,c$?",
+      "answer": 1.667,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\gamma = \\tfrac{1}{\\sqrt{1 - 0{,}64}} = \\tfrac{1}{0{,}6} \\approx 1{,}667$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Myonen mit $v = 0{,}998\\,c$ und $\\tau_0 = 2{,}197\\,\\mu\\mathrm{s}$: Welche mittlere Flugstrecke haben sie im Erdsystem?",
+      "answer": 10.4,
+      "tolerance": 0.15,
+      "placeholder": "km",
+      "explain": "$\\gamma \\approx 15{,}8$, $s = v\\gamma\\tau_0 \\approx 0{,}998\\cdot 3\\cdot 10^8\\cdot 15{,}8\\cdot 2{,}197\\cdot 10^{-6}\\,\\mathrm{m} \\approx 10{,}4\\,\\mathrm{km}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Hafele-Keating: Eine Atomuhr fliegt $10\\,\\mathrm{h}$ mit $250\\,\\mathrm{m/s}$. Um wie viele Nanosekunden geht sie (nur Geschwindigkeitseffekt) nach? Nutze $\\gamma - 1 \\approx \\tfrac12\\tfrac{v^2}{c^2}$.",
+      "answer": 12.5,
+      "tolerance": 0.3,
+      "placeholder": "ns",
+      "explain": "$\\tfrac12\\left(\\tfrac{250}{3\\cdot 10^8}\\right)^2\\cdot 36\\,000\\,\\mathrm{s} \\approx 1{,}25\\cdot 10^{-8}\\,\\mathrm{s}$. Direkt mit dem Taschenrechner käme für $\\gamma$ einfach 1 heraus.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Lichtgeschwindigkeit hängt davon ab, wie schnell sich die Lichtquelle bewegt.",
+      "answer": false,
+      "explain": "Nach dem zweiten Postulat ist c in jedem Inertialsystem gleich, auch für Licht aus bewegten Quellen.",
+      "label": "Postulate",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Für einen Beobachter am Bahndamm schlagen zwei Blitze gleichzeitig an beiden Enden eines fahrenden Zuges ein. Was stellt ein Fahrgast in der Zugmitte fest?",
+      "options": [
+        {
+          "md": "Das Licht des vorderen Blitzes erreicht ihn zuerst; für ihn waren die Einschläge nicht gleichzeitig.",
+          "correct": true
+        },
+        {
+          "md": "Beide Lichtblitze erreichen ihn gleichzeitig.",
+          "why": "Er fährt dem vorderen Licht entgegen und dem hinteren davon."
+        },
+        {
+          "md": "Der hintere Blitz erreicht ihn zuerst.",
+          "why": "Er bewegt sich auf den vorderen zu."
+        },
+        {
+          "md": "Er sieht gar keinen Blitz.",
+          "why": "Das Licht erreicht ihn sehr wohl."
+        }
+      ],
+      "explain": "Gleichzeitigkeit an verschiedenen Orten hängt vom Bezugssystem ab.",
+      "label": "Gleichzeitigkeit",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für Geschwindigkeiten weit unter c gehen die Formeln der Relativitätstheorie in die newtonsche Mechanik über.",
+      "answer": true,
+      "explain": "Dann ist $\\gamma \\approx 1$; Zeitdilatation und Längenkontraktion werden unmerklich.",
+      "label": "Grenzfall",
+      "id": "vq8"
     },
     {
       "id": "myon",
@@ -109,13 +555,41 @@
       "label": "Längenkontraktion"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "myon",
+          "uhrengang"
+        ]
+      },
+      "label": "Myonen und Atomuhren",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "zeitdilatation",
+          "myon"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Lichtgeschwindigkeit in allen Inertialsystemen gleich.",
         "$\\Delta t = \\gamma\\Delta t_0$, $L = L_0/\\gamma$.",
-        "$E = \\gamma mc^2$; Effekte erst nahe $c$ spürbar."
+        "$E = \\gamma mc^2$; Effekte erst nahe $c$ spürbar.",
+        "Postulate: Relativitätsprinzip und gleiches c in allen Inertialsystemen; daraus folgt mit der Lichtuhr Δt = γΔt₀.",
+        "Myonen: Zeitdilatation im Erdsystem, Längenkontraktion im Myonsystem, dasselbe Ergebnis."
       ]
     }
   ]

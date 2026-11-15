@@ -16,6 +16,269 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Die lineare Gleichung nach einer Variablen auflösen**, am besten nach der, die keinen Bruch erzeugt.\n> 2. **In die quadratische Gleichung einsetzen**: Es bleibt eine quadratische Gleichung in einer Variablen.\n> 3. **Lösen**, oder nur die Diskriminante ansehen, wenn nach der Zahl der Schnittpunkte gefragt ist; nach Vieta, wenn eine Summe gefragt ist.\n> 4. **Zu jeder Lösung die zweite Koordinate** aus der linearen Gleichung berechnen: Schnittpunkte sind Paare.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Schnittpunkte von $y = 2x - 1$ und $x^2 + y^2 = 10$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 + (2x - 1)^2 = 10",
+            "why": "Einsetzen."
+          },
+          {
+            "tex": "5x^2 - 4x - 9 = 0",
+            "why": "Ausmultiplizieren: x² + 4x² − 4x + 1 = 10."
+          },
+          {
+            "tex": "(5x - 9)(x + 1) = 0 \\;\\Rightarrow\\; x = \\tfrac95 \\text{ oder } x = -1",
+            "why": "Faktorisieren."
+          },
+          {
+            "tex": "\\left(\\tfrac95,\\ \\tfrac{13}{5}\\right),\\quad (-1,\\ -3)",
+            "why": "Die y-Werte aus y = 2x − 1."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ordnen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Gerade und Kreis",
+      "md": "**Gerade und Kreis:** $y = x + c$ gleitet über den Kreis $x^2 + y^2 = 8$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -5.6,
+          5.6
+        ],
+        "y": [
+          -4.6,
+          4.6
+        ],
+        "height": 300,
+        "grid": false,
+        "vars": [
+          {
+            "name": "c",
+            "min": -6,
+            "max": 6,
+            "value": 6,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ko",
+            "expr": "sqrt(8 - x^2)",
+            "domain": [
+              -2.8284,
+              2.8284
+            ],
+            "color": "blue",
+            "samples": 400
+          },
+          {
+            "name": "ku",
+            "expr": "-sqrt(8 - x^2)",
+            "domain": [
+              -2.8284,
+              2.8284
+            ],
+            "color": "blue",
+            "samples": 400
+          },
+          {
+            "name": "g",
+            "expr": "x + c",
+            "color": "orange"
+          }
+        ],
+        "readout": "c = {c|1} · Δ = 64 − 4c² = {64 - 4*c^2|1} · Schnittpunkte: {abs(c) < 3.999 ? 2 : (abs(c) < 4.001 ? 1 : 0)}"
+      },
+      "timeline": [
+        {
+          "caption": "c = 6: Die Gerade verfehlt den Kreis, Δ < 0.",
+          "set": {
+            "c": 6
+          }
+        },
+        {
+          "caption": "c = 4: Sie berührt ihn, Δ = 0: eine Tangente.",
+          "to": {
+            "c": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 1: zwei Schnittpunkte, Δ > 0.",
+          "to": {
+            "c": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = −4: die zweite Tangente auf der anderen Seite.",
+          "to": {
+            "c": -4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Nur die $x$-Werte angeben.\n- Beim Einsetzen $(2x - 1)^2$ als $4x^2 - 1$ rechnen.\n- Durch $x$ teilen und dabei die Lösung $x = 0$ verlieren.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Linear-quadratisches Gleichungssystem lösen",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Linear-quadratisches Gleichungssystem lösen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine lineare und eine quadratische Gleichung in $x$ und $y$ sollen gemeinsam gelöst werden -- Gerade und Parabel, Gerade und Kreis, oder zwei Bedingungen an zwei Unbekannte in einer Sachaufgabe. Gefragt sind die Lösungen, die Schnittpunkte, deren Abstand oder ein Ausdruck in $x$ und $y$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Die lineare Gleichung** nach der bequemeren Variablen auflösen.\n2. **In die quadratische Gleichung einsetzen** -- mit Klammern.\n3. **Die entstandene quadratische Gleichung** auf Normalform bringen und lösen.\n4. **Die zweite Koordinate aus der linearen Gleichung** bestimmen.\n5. **Prüfen, was gefragt ist:** Punkte, Abstand, Summe, ein symmetrischer Ausdruck?\n\n> [!tip] Symmetrische Ausdrücke ohne Lösen\n> Sind $x + y$ und $xy$ bekannt, lassen sich viele Ausdrücke direkt berechnen:\n> $$x^2 + y^2 = (x+y)^2 - 2xy, \\qquad (x - y)^2 = (x+y)^2 - 4xy, \\qquad \\frac1x + \\frac1y = \\frac{x + y}{xy}.$$\n> Wenn die Aufgabe nach so einem Ausdruck fragt, ist das Lösen des Systems ein Umweg."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The line $y = 2x - 1$ meets the curve $y = x^2 - 2x + 2$ at the points $A$ and $B$. What is the distance $AB$?\n>\n> - **A** $2\\sqrt5$\n> - **B** 4\n> - **C** $\\sqrt{10}$\n> - **D** $2\\sqrt{10}$\n> - **E** 20\n\n**Schritt 2 und 3:** $x^2 - 2x + 2 = 2x - 1 \\iff x^2 - 4x + 3 = 0 \\iff (x - 1)(x - 3) = 0$.\n\n**Schritt 4:** $x = 1$ liefert $y = 1$, $x = 3$ liefert $y = 5$. Also $A(1, 1)$, $B(3, 5)$.\n\n**Schritt 5:** $AB = \\sqrt{(3-1)^2 + (5-1)^2} = \\sqrt{4 + 16} = \\sqrt{20} = 2\\sqrt5$.\n\nAntwort **A**.\n\n> [!tip] Der Abstand zweier Punkte auf einer Geraden\n> Liegen beide Punkte auf einer Geraden mit Steigung $m$, gilt $AB = \\lvert x_B - x_A \\rvert \\sqrt{1 + m^2}$. Hier: $2 \\cdot \\sqrt{1 + 4} = 2\\sqrt5$. Man braucht die y-Koordinaten gar nicht."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Beim Einsetzen die Klammer vergessen:** $(2x - 1)^2 \\ne 4x^2 - 1$.\n- **Die zweite Koordinate aus der quadratischen Gleichung** berechnen und dadurch Scheinpunkte erhalten.\n- **Nur die x-Differenz als Abstand nehmen.**\n- **Bei zwei quadratischen Gleichungen Fälle mit negativem $x^2$ mitzählen.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The real numbers $x$ and $y$ satisfy $x + y = 5$ and $xy = 6$. What is the value of $x^2 + y^2$?\n>\n> - **A** 13\n> - **B** 25\n> - **C** 37\n> - **D** 19\n> - **E** 1\n\n> [!success]- Lösung\n> **A.** $x^2 + y^2 = (x + y)^2 - 2xy = 25 - 12 = 13$. (Die Werte selbst sind 2 und 3 -- aber sie werden nicht gebraucht.)\n> C entsteht aus $25 + 12$, B aus $(x + y)^2$ ohne Korrektur.\n\n> [!question] Aufgabe 2\n> The line $y = x + 1$ meets the circle $x^2 + y^2 = 13$ at the points $P$ and $Q$. What is the sum of the $y$-coordinates of $P$ and $Q$?\n>\n> - **A** $-1$\n> - **B** 0\n> - **C** 1\n> - **D** 5\n> - **E** 13\n\n> [!success]- Lösung\n> **C.** $x^2 + (x + 1)^2 = 13 \\iff 2x^2 + 2x - 12 = 0 \\iff x^2 + x - 6 = 0$, also $x = 2$ oder $x = -3$. Die y-Werte aus der Geraden: $3$ und $-2$, Summe 1.\n> Schneller: Die Summe der x-Werte ist $-1$ (Summe der Nullstellen), also die der y-Werte $-1 + 2 = 1$.\n\n> [!question] Aufgabe 3\n> How many points of intersection do the circle $x^2 + y^2 = 25$ and the parabola $y = x^2 - 5$ have?\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 3\n> - **E** 4\n\n> [!success]- Lösung\n> **D.** Aus der Parabel $x^2 = y + 5$ in den Kreis: $y + 5 + y^2 = 25 \\iff y^2 + y - 20 = 0 \\iff (y + 5)(y - 4) = 0$.\n> $y = 4$: $x^2 = 9$, zwei Punkte $(\\pm 3, 4)$. $y = -5$: $x^2 = 0$, ein Punkt $(0, -5)$ -- dort berühren sich die Kurven.\n> Insgesamt drei Punkte. Wer für jedes $y$ automatisch zwei Punkte zählt, kreuzt E an."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Lage von Gerade und Kreis bestimmen** · **Anzahl reeller Lösungen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Vieta",
+      "md": "Wie groß ist die Summe der $x$-Koordinaten der Schnittpunkte von $y = x + 2$ und $y = x^2 - 3x + 5$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x^2 - 4x + 3 = 0$; nach Vieta ist die Summe 4 (die Lösungen sind 1 und 3).",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "For which values of $c$ does the line $y = x + c$ touch the circle $x^2 + y^2 = 18$?",
+      "options": [
+        {
+          "md": "$c = \\pm\\sqrt{18}$",
+          "why": "Das wäre der Radius."
+        },
+        {
+          "md": "$c = 6$ or $c = -6$",
+          "correct": true
+        },
+        {
+          "md": "$c = 6$ only",
+          "why": "Es gibt zwei Tangenten."
+        },
+        {
+          "md": "$-6 < c < 6$",
+          "why": "Das ist der Bereich mit zwei Schnittpunkten."
+        },
+        {
+          "md": "$c = 3$ or $c = -3$",
+          "why": "Die Rechnung führt auf $c^2 = 36$."
+        }
+      ],
+      "explain": "$2x^2 + 2cx + c^2 - 18 = 0$ mit $\\Delta = 4c^2 - 8(c^2 - 18) = 144 - 4c^2 = 0$, also $c = \\pm6$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Tangente",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Gerade kann einen Kreis in drei Punkten schneiden.",
+      "answer": false,
+      "explain": "Einsetzen führt auf eine quadratische Gleichung, die höchstens zwei Lösungen hat.",
+      "label": "Anzahl",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +334,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "lgs"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "lgs"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "lgs"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Linear auflösen, einsetzen, quadratisch lösen, zweite Koordinate dazu; Δ zählt die Schnittpunkte.",
+        "Summen von Schnittstellen über Vieta, ohne die Punkte zu berechnen."
+      ]
     }
   ]
 }

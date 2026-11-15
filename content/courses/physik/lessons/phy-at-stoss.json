@@ -16,6 +16,533 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Stoßarten\n> - **Elastisch:** Impuls und Bewegungsenergie bleiben erhalten; die Körper trennen sich wieder (Billardkugeln, Gasteilchen).\n> - **Unelastisch:** Nur der Impuls bleibt erhalten; ein Teil der Bewegungsenergie wird zu Verformung und Wärme.\n> - **Vollständig unelastisch:** Die Körper bewegen sich danach gemeinsam weiter; der Verlust an Bewegungsenergie ist dann am größten.\n\n> [!definition] Zentraler Stoß\n> Bewegen sich die Körper vor und nach dem Stoß auf derselben Geraden, heißt der Stoß **zentral** (gerade). Dann reicht eine Achse mit Vorzeichen: Geschwindigkeiten gegen die positive Richtung sind negativ.\n\n> [!definition] Stoßzahl\n> Das Verhältnis $k = -\\tfrac{v_1' - v_2'}{v_1 - v_2}$ der Relativgeschwindigkeiten nachher und vorher misst, wie elastisch ein Stoß ist: $k = 1$ elastisch, $k = 0$ vollständig unelastisch, dazwischen unelastisch.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Formeln für den elastischen Stoß** (zentral).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2'",
+            "why": "Impulserhaltung."
+          },
+          {
+            "tex": "\\tfrac12 m_1 v_1^2 + \\tfrac12 m_2 v_2^2 = \\tfrac12 m_1 v_1'^2 + \\tfrac12 m_2 v_2'^2",
+            "why": "Energieerhaltung: beim elastischen Stoß zusätzlich gültig."
+          },
+          {
+            "tex": "m_1\\,(v_1 - v_1') = m_2\\,(v_2' - v_2)",
+            "why": "Impulssatz sortiert: Körper 1 links, Körper 2 rechts."
+          },
+          {
+            "tex": "m_1\\,(v_1 - v_1')(v_1 + v_1') = m_2\\,(v_2' - v_2)(v_2' + v_2)",
+            "why": "Energiesatz mal 2, ebenso sortiert und mit der dritten binomischen Formel geschrieben."
+          },
+          {
+            "tex": "v_1 + v_1' = v_2 + v_2'\\quad\\Leftrightarrow\\quad v_1 - v_2 = -(v_1' - v_2')",
+            "why": "Die vierte Zeile durch die dritte geteilt ($v_1 \\ne v_1'$): Die **Relativgeschwindigkeit kehrt sich um**, ihr Betrag bleibt."
+          },
+          {
+            "tex": "v_1' = \\frac{(m_1 - m_2)\\,v_1 + 2 m_2 v_2}{m_1 + m_2},\\qquad v_2' = \\frac{(m_2 - m_1)\\,v_2 + 2 m_1 v_1}{m_1 + m_2}",
+            "why": "$v_2' = v_1 + v_1' - v_2$ in den Impulssatz eingesetzt und nach $v_1'$ aufgelöst; $v_2'$ folgt durch Tauschen der Indizes."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die beiden Erhaltungssätze.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sortieren und faktorisieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Relativgeschwindigkeit kehrt sich um.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Endformeln.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Elastischer Stoß auf einen ruhenden Körper:** die Geschwindigkeiten danach in Abhängigkeit vom Massenverhältnis.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          5
+        ],
+        "y": [
+          -1.1,
+          2.1
+        ],
+        "xLabel": "m₂ / m₁",
+        "yLabel": "v' / v₁",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 5,
+            "value": 0.05,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "u1",
+            "expr": "(1 - x)/(1 + x)",
+            "color": "blue",
+            "label": "Körper 1",
+            "labelAt": 3.5
+          },
+          {
+            "name": "u2",
+            "expr": "2/(1 + x)",
+            "color": "orange",
+            "label": "Körper 2",
+            "labelAt": 3.5
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "u1",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "u2",
+            "color": "orange"
+          }
+        ],
+        "readout": "Massenverhältnis {X|2}: Körper 1 danach **{(1 - X)/(1 + X)|2}** · v₁, Körper 2 **{2/(1 + X)|2}** · v₁"
+      },
+      "timeline": [
+        {
+          "caption": "Körper 1 trifft mit $v_1$ den ruhenden Körper 2. Aus den Stoßformeln mit $v_2 = 0$: $\\tfrac{v_1'}{v_1} = \\tfrac{m_1 - m_2}{m_1 + m_2}$ und $\\tfrac{v_2'}{v_1} = \\tfrac{2 m_1}{m_1 + m_2}$.",
+          "set": {
+            "X": 0.05
+          }
+        },
+        {
+          "caption": "**Leichter Partner:** Beide fliegen vorwärts weiter. Der getroffene wird schneller als $v_1$, im Grenzfall fast doppelt so schnell, so wie ein Tennisball vom Schläger.",
+          "to": {
+            "X": 0.3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "**Gleiche Massen:** $v_1' = 0$, $v_2' = v_1$. Die Geschwindigkeiten werden getauscht wie beim Kugelstoßpendel.",
+          "to": {
+            "X": 1
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "**Schwerer Partner:** Körper 1 prallt zurück, und Körper 2 nimmt immer weniger Geschwindigkeit mit.",
+          "to": {
+            "X": 3
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $m_2 = 5\\,m_1$ prallt Körper 1 schon mit zwei Dritteln von $v_1$ zurück. Im Grenzfall einer Wand ($m_2 \\to \\infty$) gilt $v_1' = -v_1$: Der Betrag bleibt, der Impuls ändert sich um $2 m_1 v_1$.",
+          "to": {
+            "X": 5
+          },
+          "dur": 2000
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Klausuraufgabe: ballistisches Pendel.** Ein Geschoss ($m = 10\\,\\mathrm{g}$) bleibt in einem hängenden Holzklotz ($M = 2\\,\\mathrm{kg}$) stecken; der Klotz schwingt $h = 5\\,\\mathrm{cm}$ hoch. Wie schnell war das Geschoss?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\tfrac12 (m + M)\\,V^2 = (m + M)\\,g\\,h\\quad\\Rightarrow\\quad V = \\sqrt{2 g h} \\approx 0{,}990\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "**Zweiter Vorgang, rückwärts gerechnet:** Beim Hochschwingen gilt der Energiesatz."
+          },
+          {
+            "tex": "m\\,v = (m + M)\\,V",
+            "why": "**Erster Vorgang:** Der Einschuss ist ein vollständig unelastischer Stoß. Hier gilt nur der Impulssatz."
+          },
+          {
+            "tex": "v = \\frac{m + M}{m}\\,V = 201\\cdot 0{,}990\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 199\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Umgestellt und eingesetzt."
+          },
+          {
+            "tex": "\\frac{E'}{E} = \\frac{m}{m + M} \\approx 0{,}5\\,\\%",
+            "why": "Fast die ganze Bewegungsenergie des Geschosses wird zu Wärme und Verformung. Wer den Energiesatz über den Stoß hinweg anwendet, erhält $v = \\sqrt{2 g h\\,\\tfrac{m + M}{m}} \\approx 14\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, ein völlig falsches Ergebnis."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Hochschwingen: Energiesatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einschuss: Impulssatz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Energieverlust.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel mit Gegenverkehr.** Auto 1 ($1000\\,\\mathrm{kg}$, $20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ nach Osten) und Auto 2 ($1500\\,\\mathrm{kg}$, $10\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ nach Westen) verkeilen sich.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "p = 1000\\cdot 20\\,\\mathrm{N\\,s} + 1500\\cdot(-10)\\,\\mathrm{N\\,s} = 5000\\,\\mathrm{N\\,s}",
+            "why": "Osten positiv: Die Geschwindigkeit nach Westen ist negativ."
+          },
+          {
+            "tex": "v' = \\frac{5000}{2500}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Beide rutschen gemeinsam mit 2 m/s nach Osten."
+          },
+          {
+            "tex": "E = \\tfrac12\\cdot 1000\\cdot 20^2\\,\\mathrm{J} + \\tfrac12\\cdot 1500\\cdot 10^2\\,\\mathrm{J} = 275\\,\\mathrm{kJ}",
+            "why": "Bewegungsenergie vorher. Vorzeichen spielen keine Rolle, die Geschwindigkeit steht im Quadrat."
+          },
+          {
+            "tex": "E' = \\tfrac12\\cdot 2500\\cdot 2^2\\,\\mathrm{J} = 5\\,\\mathrm{kJ}\\quad\\Rightarrow\\quad \\Delta E = 270\\,\\mathrm{kJ}",
+            "why": "Fast alles wird zu Verformung: Arbeit an den Knautschzonen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Impuls mit Vorzeichen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gemeinsame Geschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energie vorher.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energie nachher.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Impulserhaltung bei Stößen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Impulserhaltung bei Stößen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Zwei Wagen stoßen zusammen und koppeln\"*, *\"Berechnen Sie die Geschwindigkeiten nach dem elastischen Stoß\"*, *\"Mit welcher Geschwindigkeit bewegt sich das System nach dem Zusammenstoß?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Der Gesamtimpuls eines abgeschlossenen Systems bleibt erhalten\n> $$p_{\\text{vorher}} = p_{\\text{nachher}} \\qquad\\Longleftrightarrow\\qquad m_1v_1 + m_2v_2 = m_1v_1' + m_2v_2'$$\n> Das gilt **unabhängig davon, ob der Stoß elastisch oder inelastisch ist** -- solange keine äußeren Kräfte auf das System wirken. Was sich beim inelastischen Stoß zusätzlich ändert: die kinetische Energie bleibt **nicht** erhalten, ein Teil wird in Wärme, Verformung oder Schall umgewandelt."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Stoßarten",
+          "blocks": [
+            {
+              "md": "| | Elastischer Stoß | Perfekt inelastischer Stoß |\n|---|---|---|\n| Impuls | erhalten | erhalten |\n| kinetische Energie | erhalten | **nicht** erhalten |\n| Ergebnis | zwei getrennte Körper mit neuen Geschwindigkeiten | Körper bewegen sich gemeinsam weiter |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema (perfekt inelastischer Stoß)",
+          "blocks": [
+            {
+              "md": "1. **Impulse vor dem Stoß** für beide Körper berechnen: $p_1=m_1v_1$, $p_2=m_2v_2$ (Vorzeichen nach Bewegungsrichtung!).\n2. **Gesamtimpuls bilden:** $p_{\\text{ges}} = p_1+p_2$.\n3. **Gemeinsame Geschwindigkeit** nach dem Stoß:\n$$v' = \\frac{p_{\\text{ges}}}{m_1+m_2}$$\n4. **Einheitenkontrolle** und Vorzeichen interpretieren (positive/negative Bewegungsrichtung)."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema (elastischer Stoß, informativ)",
+          "blocks": [
+            {
+              "md": "Bei elastischem Stoß liefern Impuls- **und** Energieerhaltung gemeinsam zwei Gleichungen für zwei Unbekannte ($v_1'$, $v_2'$):\n$$v_1' = \\frac{(m_1-m_2)v_1 + 2m_2v_2}{m_1+m_2}, \\qquad v_2' = \\frac{(m_2-m_1)v_2 + 2m_1v_1}{m_1+m_2}$$"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: perfekt inelastischer Stoß",
+          "blocks": [
+            {
+              "md": "*Ein Eisenbahnwaggon der Masse $m_1=1000\\,\\text{kg}$ rollt mit $v_1=5\\,\\text{m/s}$ auf einen ruhenden Waggon der Masse $m_2=1500\\,\\text{kg}$ zu und koppelt beim Zusammenstoß an. Bestimmen Sie die gemeinsame Geschwindigkeit nach dem Stoß.*\n\n**Schritt 1/2:**\n$$p_{\\text{ges}} = m_1v_1 + m_2\\cdot0 = 1000\\cdot5 = 5000\\,\\text{kg}\\cdot\\text{m/s}$$\n\n**Schritt 3:**\n$$v' = \\frac{5000}{1000+1500} = \\frac{5000}{2500} = 2\\,\\text{m/s}$$\n\n*Beide Waggons bewegen sich nach dem Kuppeln gemeinsam mit $2\\,\\text{m/s}$ weiter.*\n\n**Energiekontrolle (zeigt den Energieverlust):** $E_{\\text{kin,vorher}} = \\tfrac12\\cdot1000\\cdot5^2 = 12500\\,\\text{J}$, $E_{\\text{kin,nachher}} = \\tfrac12\\cdot2500\\cdot2^2 = 5000\\,\\text{J}$ -- $7500\\,\\text{J}$ wurden beim Kuppelvorgang in Verformung und Wärme umgewandelt."
+            }
+          ]
+        },
+        {
+          "title": "Sonderfall elastischer Stoß gleicher Massen",
+          "blocks": [
+            {
+              "md": "> [!tip] Geschwindigkeiten werden vollständig ausgetauscht\n> Für $m_1=m_2$ liefert die elastische Stoßformel $v_1'=v_2$ und $v_2'=v_1$ -- die beiden Körper **tauschen** ihre Geschwindigkeiten vollständig. Das ist das bekannte Bild der Newton-Wiege (Kugelstoßpendel)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen der Geschwindigkeiten bei entgegengesetzter Bewegungsrichtung vergessen.** Bewegt sich der zweite Körper der Bewegungsrichtung des ersten entgegen, muss seine Geschwindigkeit mit negativem Vorzeichen eingesetzt werden.\n- **Bei elastischen Stößen kinetische Energie als konstant für den inelastischen Fall annehmen.** Nur beim elastischen Stoß bleibt sie erhalten.\n- **Impulserhaltung mit Energieerhaltung verwechseln oder beides gleichzeitig für den inelastischen Fall ansetzen wollen.** Beim perfekt inelastischen Stoß liefert **nur** die Impulserhaltung die Lösung -- die Energiebilanz zeigt danach lediglich den Verlust.\n- **Massen und Geschwindigkeiten vertauschen** in der Bruchformel des elastischen Stoßes.\n- **System nicht als abgeschlossen erkennen**, wenn zusätzliche äußere Kräfte (z. B. Reibung während des Stoßvorgangs) wirken -- dann ist die einfache Impulserhaltung nur näherungsweise gültig."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Impulserhaltung** · **Energieerhaltungssatz anwenden** · **Actio-Reactio-Aufgaben** · **Kräfteansatz nach dem 2. Newtonschen Axiom**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der elastischen Stoßformeln in die richtige Reihenfolge.",
+      "items": [
+        "Impulssatz und Energiesatz aufschreiben",
+        "Beide nach Körpern sortieren: $m_1(v_1 - v_1') = m_2(v_2' - v_2)$",
+        "Den Energiesatz mit der dritten binomischen Formel schreiben und durch den Impulssatz teilen",
+        "$v_1 + v_1' = v_2 + v_2'$ in den Impulssatz einsetzen und auflösen"
+      ],
+      "explain": "Die Reihenfolge: 1. Impulssatz und Energiesatz aufschreiben. 2. Beide nach Körpern sortieren: $m_1(v_1 - v_1') = m_2(v_2' - v_2)$. 3. Den Energiesatz mit der dritten binomischen Formel schreiben und durch den Impulssatz teilen. 4. $v_1 + v_1' = v_2 + v_2'$ in den Impulssatz einsetzen und auflösen.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was gilt beim elastischen zentralen Stoß für die Relativgeschwindigkeit der beiden Körper?",
+      "options": [
+        {
+          "md": "Ihr Betrag bleibt gleich, ihre Richtung kehrt sich um.",
+          "correct": true
+        },
+        {
+          "md": "Sie bleibt nach Betrag und Richtung gleich.",
+          "why": "Dann würden die Körper ineinander weiterlaufen."
+        },
+        {
+          "md": "Sie wird null.",
+          "why": "Das ist der vollständig unelastische Stoß."
+        },
+        {
+          "md": "Sie halbiert sich.",
+          "why": "Das wäre ein unelastischer Stoß mit der Stoßzahl 0,5."
+        }
+      ],
+      "explain": "Aus beiden Erhaltungssätzen folgt $v_1 - v_2 = -(v_1' - v_2')$: Stoßzahl $k = 1$.",
+      "label": "Definitionen",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Kugel ($1\\,\\mathrm{kg}$, $6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$) stößt elastisch und zentral auf eine ruhende Kugel ($2\\,\\mathrm{kg}$). Welche Geschwindigkeit hat die erste Kugel danach (mit Vorzeichen)?",
+      "answer": -2,
+      "tolerance": 0.02,
+      "placeholder": "m/s",
+      "explain": "$v_1' = \\tfrac{m_1 - m_2}{m_1 + m_2}\\,v_1 = -\\tfrac13\\cdot 6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = -2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$: Sie prallt zurück, weil der Partner schwerer ist.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und die zweite Kugel?",
+      "answer": 4,
+      "tolerance": 0.02,
+      "placeholder": "m/s",
+      "explain": "$v_2' = \\tfrac{2 m_1}{m_1 + m_2}\\,v_1 = \\tfrac23\\cdot 6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Probe: Impuls $1\\cdot(-2) + 2\\cdot 4 = 6$ wie vorher, Energie $2\\,\\mathrm{J} + 16\\,\\mathrm{J} = 18\\,\\mathrm{J}$ wie vorher.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wagen 1 ($800\\,\\mathrm{kg}$, $15\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$) und Wagen 2 ($1200\\,\\mathrm{kg}$, $5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ in Gegenrichtung) verkeilen sich. Wie schnell rutschen sie gemeinsam (Richtung von Wagen 1 positiv)?",
+      "answer": 3,
+      "tolerance": 0.02,
+      "placeholder": "m/s",
+      "explain": "$v' = \\tfrac{800\\cdot 15 - 1200\\cdot 5}{2000}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = \\tfrac{6000}{2000}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = 3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie viel Bewegungsenergie wird bei diesem Zusammenstoß in Verformung und Wärme umgewandelt?",
+      "answer": 96,
+      "tolerance": 0.5,
+      "placeholder": "kJ",
+      "explain": "Vorher $\\tfrac12\\cdot 800\\cdot 225\\,\\mathrm{J} + \\tfrac12\\cdot 1200\\cdot 25\\,\\mathrm{J} = 105\\,\\mathrm{kJ}$, nachher $\\tfrac12\\cdot 2000\\cdot 9\\,\\mathrm{J} = 9\\,\\mathrm{kJ}$. Umgewandelt: $96\\,\\mathrm{kJ}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Ballistisches Pendel: Ein Geschoss ($20\\,\\mathrm{g}$) bleibt in einem Klotz ($4\\,\\mathrm{kg}$) stecken, der danach $10\\,\\mathrm{cm}$ hochschwingt. Wie schnell war das Geschoss?",
+      "answer": 281.5,
+      "tolerance": 2,
+      "placeholder": "m/s",
+      "explain": "$V = \\sqrt{2\\cdot 9{,}81\\cdot 0{,}1}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 1{,}401\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$; $v = \\tfrac{4{,}02}{0{,}02}\\cdot 1{,}401\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 282\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq7"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Ballistisches Pendel: Was gilt in welchem Abschnitt?",
+      "categories": [
+        "Einschuss (Stoß)",
+        "Hochschwingen"
+      ],
+      "items": [
+        {
+          "md": "Der Impulssatz liefert die Geschwindigkeit danach.",
+          "cat": "Einschuss (Stoß)"
+        },
+        {
+          "md": "Bewegungsenergie wird zu Wärme und Verformung.",
+          "cat": "Einschuss (Stoß)"
+        },
+        {
+          "md": "Die mechanische Energie bleibt erhalten.",
+          "cat": "Hochschwingen"
+        },
+        {
+          "md": "Bewegungsenergie wird zu Lageenergie.",
+          "cat": "Hochschwingen"
+        }
+      ],
+      "explain": "Jeder Abschnitt hat seinen Erhaltungssatz. Den Energiesatz über den Stoß hinweg anzuwenden, ist der klassische Fehler.",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei jedem Stoß bleibt der Impuls jedes einzelnen Körpers erhalten.",
+      "answer": false,
+      "explain": "Erhalten bleibt nur die Summe. Gerade dass Impuls von einem Körper auf den anderen übergeht, macht den Stoß aus.",
+      "label": "Definitionen",
+      "id": "vq9"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Aussagen über den elastischen zentralen Stoß auf einen ruhenden Körper stimmen?",
+      "options": [
+        {
+          "md": "Bei gleichen Massen bleibt der stoßende Körper liegen.",
+          "correct": true
+        },
+        {
+          "md": "Ist der getroffene Körper schwerer, prallt der stoßende zurück.",
+          "correct": true
+        },
+        {
+          "md": "Der getroffene Körper wird nie schneller als $2 v_1$.",
+          "correct": true
+        },
+        {
+          "md": "Der getroffene Körper ist danach nie schneller als der stoßende vorher.",
+          "why": "Für $m_2 < m_1$ ist $v_2' = \\tfrac{2m_1}{m_1 + m_2}\\,v_1 > v_1$."
+        },
+        {
+          "md": "Bei gleichen Massen rollen beide mit $\\tfrac{v_1}{2}$ weiter.",
+          "why": "Das wäre der vollständig unelastische Stoß."
+        }
+      ],
+      "explain": "$v_2' = \\tfrac{2m_1}{m_1 + m_2}v_1$ liegt zwischen $0$ und $2v_1$; $v_1'$ wechselt bei $m_1 = m_2$ das Vorzeichen.",
+      "label": "Sonderfälle",
+      "id": "vq10"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -104,6 +631,74 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ballistisch",
+          "stoss-gegen"
+        ]
+      },
+      "label": "Rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ballistisch",
+          "stoss-gegen"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ballistisch"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ballistisch",
+          "stoss-elastisch"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx4"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-energie",
+      "level": 3,
+      "label": "Stöße",
+      "id": "vx5"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Elastisch: $v_1' = \\tfrac{(m_1 - m_2)v_1 + 2m_2 v_2}{m_1 + m_2}$, hergeleitet aus Impuls- und Energiesatz; die Relativgeschwindigkeit kehrt sich um.",
+        "Gleiche Massen tauschen die Geschwindigkeiten; an einer Wand kehrt sich die Geschwindigkeit um.",
+        "Ballistisches Pendel: erst Impulssatz (Stoß), dann Energiesatz (Hochschwingen), nie den Energiesatz über den Stoß hinweg."
+      ]
     }
   ]
 }

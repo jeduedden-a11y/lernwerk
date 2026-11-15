@@ -23,6 +23,559 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Vermutung (*conjecture*)\n> Eine Aussage, die aus Beispielen oder kleinen Fällen gewonnen, aber noch nicht bewiesen ist. Kleine Fälle **zeigen** ein Muster, sie **beweisen** es nicht. Für einen Beweis braucht man ein Argument für ein beliebiges $n$; für eine Widerlegung ein einziges Gegenbeispiel.\n\n> [!definition] Schlusskette\n> Aus $A \\Rightarrow B$ und $B \\Rightarrow C$ folgt $A \\Rightarrow C$. Lange Ketten baut man, indem man jede Aussage als Pfeil schreibt und auch die Kontrapositionen als Pfeile hinzunimmt; Umkehrungen sind keine gültigen Pfeile.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: von kleinen Fällen zur bewiesenen Vermutung.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "1\\cdot2\\cdot3\\cdot4 + 1 = 25 = 5^2,\\quad 2\\cdot3\\cdot4\\cdot5 + 1 = 121 = 11^2",
+            "why": "Kleine Fälle: Das Produkt von vier aufeinanderfolgenden Zahlen plus 1 scheint ein Quadrat zu sein."
+          },
+          {
+            "tex": "3\\cdot4\\cdot5\\cdot6 + 1 = 361 = 19^2",
+            "why": "Die Wurzeln 5, 11, 19 sind jeweils das Produkt der äußeren Zahlen plus 1: 1·4 + 1, 2·5 + 1, 3·6 + 1."
+          },
+          {
+            "tex": "\\text{Vermutung: } n(n+1)(n+2)(n+3) + 1 = (n^2 + 3n + 1)^2",
+            "why": "Das Muster als Aussage über ein beliebiges n."
+          },
+          {
+            "tex": "m = n(n + 3) = n^2 + 3n, \\quad (n + 1)(n + 2) = m + 2",
+            "why": "Beweisidee: äußere und innere Faktoren paaren."
+          },
+          {
+            "tex": "m(m + 2) + 1 = m^2 + 2m + 1 = (m + 1)^2",
+            "why": "Damit ist die Vermutung für jedes n bewiesen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fälle.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Muster.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vermutung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Paaren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beweis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Muster",
+      "md": "**Ein Muster, das bricht:** $n$ Punkte auf einem Kreis, alle Verbindungsstrecken gezogen, nie drei durch einen Punkt. Blau die tatsächliche Zahl der Gebiete, orange gestrichelt die Vermutung $2^{n-1}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          7.5
+        ],
+        "y": [
+          0,
+          66
+        ],
+        "xLabel": "Punkte n",
+        "yLabel": "Gebiete",
+        "grid": false,
+        "vars": [
+          {
+            "name": "M",
+            "min": 1,
+            "max": 7,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "2^(x - 1)",
+            "domain": [
+              1,
+              "M"
+            ],
+            "color": "orange",
+            "dashed": true,
+            "samples": 200
+          },
+          {
+            "name": "mo",
+            "expr": "(x^4 - 6*x^3 + 23*x^2 - 18*x + 24)/24",
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": "M >= 1 ? 1 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 2,
+            "y": "M >= 2 ? 2 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": "M >= 3 ? 4 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": "M >= 4 ? 8 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 5,
+            "y": "M >= 5 ? 16 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 6,
+            "y": "M >= 6 ? 31 : -100",
+            "color": "blue"
+          },
+          {
+            "x": 7,
+            "y": "M >= 7 ? 57 : -100",
+            "color": "blue"
+          }
+        ],
+        "readout": "n = {floor(M + 0.001)|0}: Gebiete {mo(floor(M + 0.001))|0} · Vermutung {2^(floor(M + 0.001) - 1)|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Punkt: ein Gebiet. Zwei Punkte, eine Sehne: zwei Gebiete.",
+          "set": {
+            "M": 2
+          }
+        },
+        {
+          "caption": "Drei Punkte: 4 Gebiete, vier Punkte: 8.",
+          "to": {
+            "M": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Fünf Punkte: 16. Die Verdopplung scheint gesichert, die Vermutung 2^(n−1) liegt nahe.",
+          "to": {
+            "M": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Sechs Punkte: 31, nicht 32. Fünf Bestätigungen haben nichts bewiesen.",
+          "to": {
+            "M": 6
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Sieben Punkte: 57 statt 64. Die richtige Formel ist C(n,4) + C(n,2) + 1.",
+          "to": {
+            "M": 7
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung einer langen Schlusskette.** Gegeben: $A \\Rightarrow B$; $C \\Rightarrow$ nicht $B$; nicht $D \\Rightarrow C$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A \\Rightarrow B",
+            "why": "Erster Pfeil, wie gegeben."
+          },
+          {
+            "tex": "C \\Rightarrow \\neg B \\;\\equiv\\; B \\Rightarrow \\neg C",
+            "why": "Zweite Aussage durch ihre Kontraposition ersetzen, damit sie an B anschließt."
+          },
+          {
+            "tex": "\\neg D \\Rightarrow C \\;\\equiv\\; \\neg C \\Rightarrow D",
+            "why": "Dritte Aussage ebenso umdrehen."
+          },
+          {
+            "tex": "A \\Rightarrow B \\Rightarrow \\neg C \\Rightarrow D",
+            "why": "Die Pfeile schließen aneinander an."
+          },
+          {
+            "tex": "\\text{also } A \\Rightarrow D \\text{ und } \\neg D \\Rightarrow \\neg A",
+            "why": "Folgerung samt Kontraposition; nicht folgt dagegen D ⇒ A."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Erster Pfeil.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umdrehen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umdrehen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kette.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folgerung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Beweisschritte ordnen und Ketten verfolgen\n> 1. **Ersten Schritt** suchen: Er benutzt nur die Voraussetzung (oder die Annahme); **letzten Schritt**: Er nennt die Behauptung.\n> 2. **Verbindungswörter** lesen: *hence, therefore, so* schließen aus dem Vorigen; *since, because* liefern eine Begründung nach.\n> 3. Jeder Schritt darf nur frühere Schritte benutzen; was eine Größe einführt (»let $n = 2k + 1$«), steht vor ihrer Verwendung.\n> 4. Bei Ketten: jede Aussage als Pfeil, Kontrapositionen hinzufügen, Pfeilen folgen; was keine Pfeilfolge erreicht, folgt nicht.",
+      "label": "Verfahren",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vermutungen aus kleinen Fällen",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Vermutungen aus kleinen Fällen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Das Verfahren",
+          "blocks": [
+            {
+              "md": "Die Spezifikation verlangt, **aus kleinen Fällen Vermutungen aufzustellen und sie dann zu begründen** (*make conjectures based on small cases, and then justify these conjectures*). Das ist die Arbeitsweise der Mathematik im Kleinen:\n\n1. **Systematisch rechnen:** $n = 1, 2, 3, 4, 5$ -- vollständig und ordentlich in einer Tabelle.\n2. **Muster suchen:** Differenzen, Quotienten, Faktorisierung, Parität, letzte Ziffer.\n3. **Vermutung formulieren**, als präzise Aussage für alle $n$.\n4. **Begründen:** algebraisch, über eine Umformung, eine Paarbildung oder ein Abzählargument.\n5. **Oder widerlegen**, wenn die Begründung scheitert -- oft bricht das Muster an einer Stelle, an der ein neues Phänomen einsetzt.\n\n> [!important] Ein Muster ist eine Vermutung, kein Ergebnis\n> Das Lehrbuchbeispiel: $n$ Punkte auf einem Kreis, jeder mit jedem durch eine Sehne verbunden, die Punkte so gelegt, dass sich nie drei Sehnen in einem Punkt schneiden. Die Zahl der Gebiete im Kreis:\n>\n> | $n$ | 1 | 2 | 3 | 4 | 5 | 6 |\n> |---|---|---|---|---|---|---|\n> | Gebiete | 1 | 2 | 4 | 8 | 16 | **31** |\n>\n> Fünf Werte legen $2^{n-1}$ nahe -- der sechste bricht das Muster. Die tatsächliche Formel ist $\\binom n4 + \\binom n2 + 1$. Wer im TMUA ein Muster aus drei Werten fortschreibt, ohne es zu begründen, geht dieses Risiko ein."
+            }
+          ]
+        },
+        {
+          "title": "Werkzeuge zur Mustersuche",
+          "blocks": [
+            {
+              "md": "| Werkzeug | erkennt | Beispiel |\n|---|---|---|\n| erste Differenzen | lineare Muster | $3, 7, 11, 15$: Differenz 4, also $4n - 1$ |\n| zweite Differenzen | quadratische Muster | konstante zweite Differenz $2a$ bei $an^2 + bn + c$ |\n| Quotienten | geometrische Muster | $3, 6, 12, 24$: Faktor 2 |\n| Faktorisieren | versteckte Produkte | $2, 6, 12, 20$ ist $1 \\cdot 2, 2 \\cdot 3, 3 \\cdot 4, 4 \\cdot 5$ |\n| letzte Ziffern, Reste | Zyklen | $7^n$ endet auf $7, 9, 3, 1, 7, \\dots$ |"
+            }
+          ]
+        },
+        {
+          "title": "Zwei ausgeführte Beispiele",
+          "blocks": [
+            {
+              "md": "> [!example] Die Summe der ersten n ungeraden Zahlen\n> $1 = 1$, $1 + 3 = 4$, $1 + 3 + 5 = 9$, $1 + 3 + 5 + 7 = 16$. **Vermutung:** Die Summe ist $n^2$.\n>\n> **Begründung durch Paarbildung:** Schreibt man die Summe $S = 1 + 3 + \\dots + (2n-1)$ einmal vorwärts und einmal rückwärts untereinander, ergibt jedes Paar $2n$. Es sind $n$ Paare, also $2S = 2n \\cdot n$ und $S = n^2$.\n>\n> Geometrisch: Jede ungerade Zahl ist ein Winkel, der ein $(k-1) \\times (k-1)$-Quadrat zum $k \\times k$-Quadrat ergänzt.\n\n> [!example] Die letzte Ziffer von 7²⁰²⁶\n> Die letzten Ziffern der Potenzen $7^1, 7^2, 7^3, 7^4$ sind $7, 9, 3, 1$; danach wiederholt sich der Zyklus, weil nur die letzte Ziffer die nächste bestimmt und $1 \\cdot 7 = 7$ wieder am Anfang steht.\n>\n> **Begründung des Zyklus:** Die letzte Ziffer von $7^{n+1}$ hängt nur von der letzten Ziffer von $7^n$ ab. Sobald eine Ziffer wiederkehrt, wiederholt sich alles.\n>\n> $2026 = 4 \\cdot 506 + 2$, also steht $7^{2026}$ an zweiter Stelle im Zyklus: letzte Ziffer **9**."
+            }
+          ]
+        },
+        {
+          "title": "Im TMUA",
+          "blocks": [
+            {
+              "md": "Der Stoff tritt in drei Formen auf:\n\n- **Wert für großes n:** Eine rekursiv definierte Folge oder ein Muster ist gegeben, gefragt ist das 100. Glied. Hier hilft das Finden eines Zyklus oder einer geschlossenen Formel -- siehe **Periodische Rekursion auswerten**.\n- **Welche Vermutung stimmt?** Mehrere Formeln passen zu den ersten Werten; nur eine hält allgemein. Hier hilft ein weiterer Wert oder eine Begründung.\n- **Kleinste Ausnahme:** *What is the smallest n for which the statement fails?* -- gezielt dort suchen, wo ein neuer Effekt einsetzt, etwa ein gemeinsamer Faktor."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Zu wenige Fälle** rechnen, sodass mehrere Formeln passen.\n- **Unsystematisch rechnen** und einen Fall auslassen, der das Muster verändert.\n- **Das Muster ohne Begründung fortschreiben.**\n- **Den Startwert falsch indizieren:** Beginnt die Folge bei $n = 0$ oder $n = 1$?\n\nVerwandt: **Widerlegung durch Gegenbeispiel** · **Explizite und rekursive Folgen** · im Mathematikbestand: **Problemlösestrategien (Mathematik)**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Beweisschritte ordnen",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Beweisschritte ordnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Sätze eines Beweises stehen **durcheinander**, bezeichnet mit Buchstaben. Gefragt ist die Reihenfolge, in der sie einen gültigen Beweis ergeben -- *Which of the following orders gives a correct proof?* Die Optionen sind Buchstabenfolgen wie *Q P R S*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beweisart bestimmen:** Beginnt ein Satz mit *Suppose* ... *not* oder *Assume that ... is rational*? Dann ist es ein Widerspruchsbeweis, und dieser Satz steht **am Anfang**.\n2. **Anfang finden:** Der Satz, der eine Variable **einführt** (*Let n = 2k + 1*) oder die Annahme trifft, kommt zuerst. Ein Satz, der eine Variable benutzt, kann nicht vor ihrer Einführung stehen.\n3. **Ende finden:** Die Behauptung selbst oder *... which is a contradiction* steht zuletzt.\n4. **Abhängigkeiten notieren:** Für jeden Satz fragen, welche anderen er voraussetzt. Worte wie *hence*, *then*, *this expression*, *but* verweisen auf Vorheriges.\n5. **Optionen prüfen:** Jede Folge daraufhin durchgehen, ob ein Satz etwas benutzt, das erst später kommt.\n\n> [!warning] Die Rückwärtsfalle\n> Eine beliebte falsche Option beginnt mit der **Behauptung** und endet bei einer offensichtlich wahren Aussage. Das ist die Suchrichtung, nicht die Beweisrichtung -- siehe **Direkter deduktiver Beweis**."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The following statements can be arranged to give a proof that $\\log_2 3$ is irrational.\n>\n> (P) Raising both sides of this equation to the power $q$ gives $2^p = 3^q$.\n> (Q) Suppose that $\\log_2 3 = \\frac{p}{q}$, where $p$ and $q$ are positive integers.\n> (R) But $2^p$ is even and $3^q$ is odd, which is a contradiction.\n> (S) By the definition of a logarithm, $2^{p/q} = 3$.\n>\n> Which of the following orders gives a correct proof?\n>\n> - **A** Q, S, P, R\n> - **B** Q, P, S, R\n> - **C** S, Q, P, R\n> - **D** Q, S, R, P\n> - **E** P, Q, S, R\n\n**Schritt 1:** Q beginnt mit *Suppose* und nimmt das Gegenteil der Behauptung an -- Widerspruchsbeweis, Q steht vorn. Das streicht C und E.\n\n**Schritt 3:** R enthält *contradiction* -- R steht am Ende. Das streicht D.\n\n**Schritt 4:** S folgt aus Q (Definition des Logarithmus). P verweist mit *this equation* auf die Gleichung aus S. Also Q, S, P, R. Option B stellt P vor S -- dann verweist *this equation* ins Leere.\n\nAntwort **A**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Einen Satz vor die Einführung seiner Variablen stellen.**\n- **Die Behauptung an den Anfang setzen** (Rückwärtsfalle).\n- **Allgemeine Tatsachen falsch einordnen:** Ein Satz wie *\"of two consecutive integers, one is even\"* passt oft an mehrere Stellen; entscheidend ist, dass er **vor** seiner Anwendung steht.\n- **Den Widerspruchssatz nicht ans Ende stellen.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The following statements can be arranged to prove that if $n$ is an odd integer, then $n^2 - 1$ is divisible by 8.\n>\n> (P) Then $n^2 - 1 = 4k^2 + 4k = 4k(k + 1)$.\n> (Q) Let $n = 2k + 1$ for some integer $k$.\n> (R) The factor $k(k + 1)$ in this expression is a product of two consecutive integers, so it is even.\n> (S) Therefore $4k(k + 1)$ is divisible by 8.\n>\n> Which of the following orders gives a correct proof?\n>\n> - **A** Q, P, R, S\n> - **B** P, Q, R, S\n> - **C** Q, R, S, P\n> - **D** R, Q, P, S\n> - **E** Q, P, S, R\n\n> [!success]- Lösung\n> **A.** Q führt $k$ ein und steht zuerst. P rechnet mit $n = 2k + 1$. R verweist mit *this expression* auf P. S folgert aus R.\n> E stellt die Folgerung S vor ihre Begründung R.\n\n> [!question] Aufgabe 2\n> The following statements can be arranged to prove that there are infinitely many prime numbers.\n>\n> (P) Consider the number $N = p_1 p_2 \\cdots p_k + 1$.\n> (Q) Suppose that there are only finitely many primes, $p_1, p_2, \\dots, p_k$.\n> (R) When $N$ is divided by any $p_i$, the remainder is 1, so none of $p_1, \\dots, p_k$ divides $N$.\n> (S) But $N > 1$, so $N$ has a prime factor, and this prime factor is not in the list -- a contradiction.\n>\n> Which of the following orders gives a correct proof?\n>\n> - **A** Q, P, R, S\n> - **B** P, Q, R, S\n> - **C** Q, R, P, S\n> - **D** Q, P, S, R\n> - **E** P, R, Q, S\n\n> [!success]- Lösung\n> **A.** Q ist die Annahme und steht vorn. P benutzt die Liste aus Q. R benutzt $N$ aus P. S braucht R (*is not in the list*) und enthält den Widerspruch.\n> B und E definieren $N$ mit den $p_i$, bevor die Liste eingeführt ist. C benutzt $N$ vor seiner Definition. D behauptet in S, der Primfaktor liege nicht in der Liste, bevor R das begründet.\n\n> [!question] Aufgabe 3\n> The following statements can be arranged to prove that for all positive real numbers $a$ and $b$, $\\frac{a + b}{2} \\ge \\sqrt{ab}$.\n>\n> (P) So $a - 2\\sqrt{ab} + b \\ge 0$.\n> (Q) $(\\sqrt a - \\sqrt b)^2 \\ge 0$, since it is the square of a real number.\n> (R) So $a + b \\ge 2\\sqrt{ab}$, and dividing by 2 gives the result.\n> (S) Expanding this square gives $a - 2\\sqrt{ab} + b$.\n>\n> Which of the following orders gives a correct proof?\n>\n> - **A** Q, S, P, R\n> - **B** S, Q, P, R\n> - **C** R, P, S, Q\n> - **D** Q, P, S, R\n> - **E** S, P, Q, R\n\n> [!success]- Lösung\n> **A.** Q liefert die sichere Ausgangstatsache. S verweist mit *this square* auf Q und formt um. P überträgt Q mit S. R ist die Behauptung.\n> C ist die **Rückwärtsfalle**: Sie beginnt mit der Behauptung und endet bei etwas Wahrem. D benutzt in P die Umformung aus S, bevor sie gezeigt ist. B und E beginnen mit S, dessen *this square* dann ins Leere verweist; E folgert zudem P ohne Q."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Fehlerhafte Beweiszeile finden** · **Annahme für den Widerspruchsbeweis formulieren** · **Folgerungen aus gegebenen Aussagen ziehen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Lange Schlussketten strukturieren",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Lange Schlussketten strukturieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Spezifikation nennt *problems requiring a sophisticated chain of reasoning to solve* (Prf5). Gemeint sind Aufgaben, bei denen keine einzelne Technik reicht, sondern mehrere kleine Schlüsse aufeinander aufbauen: Rätsel mit Wahrheitssagern und Lügnern, Aufgaben mit einer unveränderlichen Größe (Invariante), Schubfachargumente, Abzählprobleme mit Nebenbedingungen.\n\nErkennungsmerkmal: Die Aufgabe ist kurz formuliert, aber kein Standardverfahren passt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Alle Vorgaben nummeriert aufschreiben** -- auf dem Board, nicht im Kopf.\n2. **Unbekannte benennen.** Wer war es, welche Zahl bleibt, wie viele Elemente?\n3. **Zwischenergebnisse nummerieren** und jeweils notieren, aus welchen Vorgaben sie folgen.\n4. **Fälle systematisch trennen**, wenn eine Unbekannte nur wenige Werte annehmen kann -- jeden Fall bis zum Ende oder zum Widerspruch führen.\n5. **Nach einer Invariante suchen**, wenn ein Vorgang wiederholt wird: Welche Größe (Parität, Summe, Rest) ändert sich bei keinem Schritt?\n6. **Das Ergebnis gegen alle Vorgaben prüfen.**\n\n> [!tip] Drei Denkwerkzeuge\n> | Werkzeug | Idee | typische Frage |\n> |---|---|---|\n> | **Invariante** | eine Größe, die jeder Schritt unverändert lässt | Welche Endzustände sind möglich? |\n> | **Schubfachprinzip** | $n + 1$ Objekte in $n$ Fächern: ein Fach hat mindestens zwei | Wie viele muss man mindestens wählen, damit ...? |\n> | **Extremalprinzip** | das kleinste oder größte Objekt betrachten | Gibt es ein Element mit ...? |"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The numbers $1, 2, 3, \\dots, 10$ are written on a board. In each step, two numbers $a$ and $b$ are erased and replaced by $\\lvert a - b \\rvert$. After nine steps, one number remains. Which one of the following could be the remaining number?\n>\n> - **A** 0\n> - **B** 2\n> - **C** 5\n> - **D** 10\n> - **E** 11\n\n**Schritt 1 und 2:** Gesucht ist die Menge möglicher Endzahlen.\n\n**Schritt 5, Invariante:** Ersetzt man $a$ und $b$ durch $\\lvert a - b \\rvert$, ändert sich die Summe aller Zahlen um $(a + b) - \\lvert a - b \\rvert$. Das ist $2\\min(a, b)$, also gerade. Die **Parität der Summe** bleibt daher erhalten. Am Anfang ist die Summe $1 + 2 + \\dots + 10 = 55$, ungerade. Also ist die Endzahl ungerade. Das streicht A, B und D.\n\n**Zweite Beobachtung:** $\\lvert a - b \\rvert$ ist nie größer als die größere der beiden Zahlen. Die größte Zahl auf der Tafel wächst also nie über 10. Das streicht E.\n\n**Schritt 6:** Übrig bleibt C. Dass die 5 tatsächlich erreichbar ist, zeigt eine konkrete Folge: Die Paare $(10, 9)$, $(8, 7)$, $(6, 4)$ und $(3, 2)$ liefern $1, 1, 2, 1$; an der Tafel stehen dann $1, 1, 1, 1, 2, 5$. Aus $(2, 1)$ wird $1$, es bleiben $1, 1, 1, 1, 5$. Zweimal wird $(1, 1)$ zu $0$ und jeweils $(5, 0)$ wieder zu $5$. Nach neun Schritten steht die 5 allein.\n\nAntwort **C**.\n\n> [!important] Die Invariante beweist Unmöglichkeit, nicht Möglichkeit\n> Die Paritätsüberlegung zeigt, dass gerade Endzahlen **unmöglich** sind. Dass eine bestimmte ungerade Zahl **erreichbar** ist, zeigt sie nicht. Im Multiple-Choice-Format genügt die Unmöglichkeit oft, weil nur eine Option übrig bleibt -- im Beweis wäre die Erreichbarkeit eigens zu zeigen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Im Kopf rechnen** und nach dem dritten Zwischenschritt die erste Vorgabe vergessen.\n- **Nach dem ersten passenden Fall aufhören**, obwohl ein zweiter Fall ebenfalls passt.\n- **Invariante und Monotonie verwechseln:** Eine Größe, die nur fällt, ist keine Invariante, aber ebenfalls nützlich.\n- **Beim Schubfachprinzip die Fächer falsch wählen** -- die Fächer müssen so gebaut sein, dass zwei Objekte im selben Fach die gesuchte Eigenschaft erzwingen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> On an island, every inhabitant is either a knight, who always tells the truth, or a knave, who always lies. Inhabitant A says: \"At least one of A and B is a knave.\" What are A and B?\n>\n> - **A** A and B are both knights.\n> - **B** A is a knight and B is a knave.\n> - **C** A is a knave and B is a knight.\n> - **D** A and B are both knaves.\n> - **E** This cannot be determined.\n\n> [!success]- Lösung\n> **B.** Fall 1: A ist ein Lügner. Dann ist seine Aussage falsch, also ist **keiner** ein Lügner -- auch A nicht. Widerspruch.\n> Fall 2: A ist ein Ritter. Dann ist die Aussage wahr, also ist mindestens einer ein Lügner; da A es nicht ist, ist es B.\n\n> [!question] Aufgabe 2\n> What is the smallest number of integers that must be chosen from $1, 2, \\dots, 20$ to guarantee that two of the chosen integers have a sum of 21?\n>\n> - **A** 10\n> - **B** 11\n> - **C** 12\n> - **D** 20\n> - **E** 21\n\n> [!success]- Lösung\n> **B.** Fächer: die zehn Paare $(1, 20), (2, 19), \\dots, (10, 11)$, jedes mit Summe 21. Bei elf gewählten Zahlen liegen zwei im selben Paar (Schubfachprinzip).\n> Zehn reichen nicht: Die Zahlen $1$ bis $10$ enthalten kein solches Paar, weil jede Summe höchstens $9 + 10 = 19$ ist.\n\n> [!question] Aufgabe 3\n> The integers $x$, $y$ and $z$ satisfy $x + y + z = 0$. Which of the following must be true?\n>\n> I $x^3 + y^3 + z^3 = 3xyz$\n> II $xyz$ is even\n> III $x^2 + y^2 + z^2$ is even\n>\n> - **A** I only\n> - **B** II only\n> - **C** III only\n> - **D** I and II only\n> - **E** II and III only\n> - **F** I, II and III\n\n> [!success]- Lösung\n> **F.** I: Setze $z = -(x + y)$. Dann $x^3 + y^3 - (x + y)^3 = -3x^2y - 3xy^2 = -3xy(x + y) = 3xyz$.\n> II: Die Summe ist gerade, also ist die Anzahl der ungeraden Zahlen unter $x, y, z$ gerade -- 0 oder 2. In beiden Fällen ist mindestens eine Zahl gerade, also das Produkt.\n> III: $n^2$ hat dieselbe Parität wie $n$. Also hat $x^2 + y^2 + z^2$ dieselbe Parität wie $x + y + z = 0$ -- gerade."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Folgerungen aus gegebenen Aussagen ziehen** · **Periodische Rekursion auswerten** · **Beweis durch Fallunterscheidung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Vermutung",
+      "md": "Von welcher Zahl ist $5 \\cdot 6 \\cdot 7 \\cdot 8 + 1$ das Quadrat?",
+      "answer": 41,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Nach der bewiesenen Formel: $n = 5$, $n^2 + 3n + 1 = 25 + 15 + 1 = 41$. Probe: $1680 + 1 = 1681 = 41^2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "label": "Aussagen I, II, III",
+      "lang": "en",
+      "shuffle": false,
+      "md": "It is given that $A \\Rightarrow B$ and that $C \\Rightarrow (\\text{not } B)$. Which of the following must be true?\n\n**I**  $A \\Rightarrow (\\text{not } C)$\n\n**II**  $C \\Rightarrow (\\text{not } A)$\n\n**III**  $(\\text{not } A) \\Rightarrow C$",
+      "options": [
+        {
+          "md": "none of them"
+        },
+        {
+          "md": "I only"
+        },
+        {
+          "md": "II only"
+        },
+        {
+          "md": "III only"
+        },
+        {
+          "md": "I and II only",
+          "correct": true
+        },
+        {
+          "md": "I and III only"
+        },
+        {
+          "md": "II and III only"
+        },
+        {
+          "md": "I, II and III"
+        }
+      ],
+      "explain": "**E.** Aus $C \\Rightarrow$ nicht $B$ wird per Kontraposition $B \\Rightarrow$ nicht $C$, also $A \\Rightarrow B \\Rightarrow$ nicht $C$ (I). II ist die Kontraposition von I. III folgt nicht: Ist $A$ falsch, sagen die Pfeile nichts über $C$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "If it is sunny, Ann goes swimming. If Ann goes swimming, she does not study. If Ann does not study, she worries. Which of the following must be true?",
+      "options": [
+        {
+          "md": "If it is not sunny, Ann does not worry.",
+          "why": "Inversion: folgt nicht."
+        },
+        {
+          "md": "If Ann studies, it is not sunny, and she does not worry.",
+          "why": "Der erste Teil stimmt (Kontraposition), der zweite folgt nicht."
+        },
+        {
+          "md": "If it is sunny, Ann worries.",
+          "correct": true
+        },
+        {
+          "md": "If Ann worries, it is sunny.",
+          "why": "Umkehrung der Kette."
+        },
+        {
+          "md": "Ann worries only if she goes swimming.",
+          "why": "Das hieße: worries ⇒ swims, eine Umkehrung."
+        }
+      ],
+      "explain": "Sonnig ⇒ schwimmen ⇒ nicht lernen ⇒ sorgen: Die Kette ergibt »wenn sonnig, dann sorgt sie sich«.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Kette",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Stimmt eine Vermutung für $n = 1, 2, 3, 4, 5$, dann stimmt sie für alle $n$.",
+      "answer": false,
+      "explain": "Die Kreisteilung liefert 1, 2, 4, 8, 16 und dann 31 statt 32.",
+      "label": "Vermutung",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Kette",
+      "md": "Aus $A \\Rightarrow B$ und $B \\Rightarrow C$ folgt $A \\Rightarrow C$. Die Kontraposition dieser Folgerung lautet: nicht $C \\Rightarrow$ {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "nicht A",
+            "nicht a",
+            "¬A",
+            "not A"
+          ]
+        }
+      ],
+      "explain": "Kontraposition: vertauschen und verneinen.",
+      "id": "vq5"
+    },
+    {
+      "type": "order",
+      "label": "Beweis ordnen",
+      "md": "Order the steps of a proof that the sum of three consecutive odd numbers is divisible by 3.",
+      "items": [
+        "Let the numbers be $2k - 1$, $2k + 1$ and $2k + 3$ for an integer $k$.",
+        "Their sum is $6k + 3$.",
+        "So the sum equals $3(2k + 1)$.",
+        "Since $2k + 1$ is an integer, the sum is divisible by 3."
+      ],
+      "explain": "Die Reihenfolge: 1. Let the numbers be $2k - 1$, $2k + 1$ and $2k + 3$ for an integer $k$. 2. Their sum is $6k + 3$. 3. So the sum equals $3(2k + 1)$. 4. Since $2k + 1$ is an integer, the sum is divisible by 3.",
+      "id": "vq6"
+    },
+    {
       "type": "order",
       "label": "Beweis ordnen",
       "md": "Order the steps of a proof that $n^2 - 1$ is divisible by 8 for every odd integer $n$.",
@@ -101,6 +654,13 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "beweis-zahlen",
+      "level": 3,
+      "label": "Beweis bauen",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "lang": "en",
       "label": "Abschlussaufgabe",
@@ -149,7 +709,9 @@
       "points": [
         "Kleine Fälle liefern Vermutungen, keine Beweise.",
         "Lange Ketten: einzelne Pfeile, Kontrapositionen nutzen.",
-        "Beweisschritte ordnen: Was setzt welcher Schritt voraus?"
+        "Beweisschritte ordnen: Was setzt welcher Schritt voraus?",
+        "Kleine Fälle liefern Vermutungen, keine Beweise; die Kreisteilung bricht bei sechs Punkten (31 statt 32).",
+        "Schlussketten: Pfeile und ihre Kontrapositionen verbinden, nie Umkehrungen."
       ],
       "id": "summary"
     }

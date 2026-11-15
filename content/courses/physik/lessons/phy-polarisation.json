@@ -47,7 +47,7 @@
           {
             "name": "I",
             "expr": "cos(x*pi/180)^2",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -60,6 +60,257 @@
         ],
         "readout": "Durchgelassen: {100*cos(th*pi/180)^2|0} Prozent"
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Polarisation\n> Bei einer Transversalwelle schwingt das Feld quer zur Ausbreitung. Schwingt es nur in **einer** Richtung, heißt die Welle **linear polarisiert**. Natürliches Licht ist unpolarisiert: Die Schwingungsrichtung wechselt ständig und regellos. Ein **Polarisationsfilter** lässt nur die Komponente längs seiner Durchlassrichtung passieren. Dass Licht polarisierbar ist, beweist, dass es eine Transversalwelle ist.\n\n> [!satz] Gesetz von Malus\n> Fällt linear polarisiertes Licht der Intensität $I_1$ auf einen Filter, dessen Durchlassrichtung den Winkel $\\theta$ mit der Schwingungsrichtung bildet, kommt $I = I_1\\cos^2\\theta$ hindurch. Unpolarisiertes Licht verliert am ersten Filter die Hälfte: $I_1 = \\tfrac12 I_0$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung des Gesetzes von Malus.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E_\\parallel = E\\cos\\theta",
+            "why": "Die Feldamplitude wird in eine Komponente längs und eine quer zur Durchlassrichtung zerlegt; nur die erste kommt durch."
+          },
+          {
+            "tex": "I \\sim E^2",
+            "why": "Die Intensität einer Welle ist proportional zum Quadrat ihrer Amplitude."
+          },
+          {
+            "tex": "I = I_1\\cos^2\\theta",
+            "why": "Bei $60°$ kommt ein Viertel durch, bei $90°$ (gekreuzte Filter) nichts."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Intensität.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Malus.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Das Drei-Filter-Paradox.** Zwei gekreuzte Filter sperren alles. Stellt man einen dritten Filter unter dem Winkel $\\theta$ dazwischen, kommt wieder Licht durch.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          90
+        ],
+        "y": [
+          0,
+          0.3
+        ],
+        "xLabel": "θ des mittleren Filters in °",
+        "yLabel": "I / I₁",
+        "vars": [
+          {
+            "name": "th",
+            "min": 0,
+            "max": 90,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "dr",
+            "expr": "cos(pi*x/180)^2*sin(pi*x/180)^2",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "th",
+            "on": "dr",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Mittlerer Filter bei {th|0}°: Durchlass **{100*cos(pi*th/180)^2*sin(pi*th/180)^2|1} %** des Lichts hinter dem ersten Filter"
+      },
+      "timeline": [
+        {
+          "caption": "Mittlerer Filter parallel zum ersten ($0°$): Er ändert nichts, und der dritte, gekreuzte Filter sperrt alles.",
+          "set": {
+            "th": 0
+          }
+        },
+        {
+          "caption": "Bei $45°$: Der mittlere Filter lässt $\\cos^2 45° = \\tfrac12$ durch und dreht dabei die Schwingungsrichtung; der letzte wieder die Hälfte. Zusammen $25\\,\\%$.",
+          "to": {
+            "th": 45
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Allgemein $I = I_1\\cos^2\\theta\\,\\sin^2\\theta = \\tfrac14 I_1\\sin^2(2\\theta)$. Ein Filter, der nur wegnimmt, macht die Anordnung durchlässiger, weil er die Schwingungsrichtung neu festlegt.",
+          "to": {
+            "th": 75
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Polarisation durch Reflexion (Brewster)\n> Unter dem Brewster-Winkel $\\tan\\theta_B = n$ ist das reflektierte Licht vollständig polarisiert (Glas: $56{,}3°$, Wasser: $53{,}1°$). Polarisierende Sonnenbrillen sperren deshalb die waagerechte Schwingungsrichtung und unterdrücken Spiegelungen auf Wasser und Straße.",
+      "label": "Anwendung",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Polarisation",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Polarisation.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Transversalwelle ist **linear polarisiert**, wenn ihre Schwingungsrichtung in einer festen Ebene liegt. Beim Licht ist das die Schwingungsebene des elektrischen Feldvektors. Natürliches Licht (Glühlampe, Sonne) ist **unpolarisiert**: Die Schwingungsrichtung wechselt regellos."
+            }
+          ]
+        },
+        {
+          "title": "Warum Polarisation ein Beweis ist",
+          "blocks": [
+            {
+              "md": "Nur **Transversalwellen** besitzen eine ausgezeichnete Richtung senkrecht zur Ausbreitung -- Longitudinalwellen lassen sich nicht polarisieren. Dass Licht polarisierbar ist, belegt deshalb, dass Licht eine **Transversalwelle** ist (siehe **Mechanische Wellen**)."
+            }
+          ]
+        },
+        {
+          "title": "Gesetz von Malus",
+          "blocks": [
+            {
+              "md": "Ein Polarisationsfilter lässt nur die Feldkomponente parallel zu seiner Durchlassrichtung passieren. Fällt linear polarisiertes Licht der Intensität $I_0$ unter dem Winkel $\\varphi$ zwischen Polarisationsrichtung und Durchlassrichtung ein:\n$$E = E_0\\cos\\varphi \\qquad\\Longrightarrow\\qquad I = I_0\\cos^2\\varphi$$\nUnpolarisiertes Licht wird durch den ersten Filter auf $I_0/2$ geschwächt. Zwei **gekreuzte** Filter ($\\varphi = 90°$) sperren vollständig.\n\n> [!tip] Das Drei-Filter-Paradoxon\n> Zwischen zwei gekreuzte Filter wird ein dritter unter $45°$ gestellt: Plötzlich kommt wieder Licht durch, nämlich $\\tfrac{I_0}{2}\\cos^2 45°\\cos^2 45° = \\tfrac{I_0}{8}$. Der mittlere Filter **dreht** die Polarisationsrichtung -- er filtert nicht einfach etwas weg."
+            }
+          ]
+        },
+        {
+          "title": "Polarisation durch Reflexion (Brewster)",
+          "blocks": [
+            {
+              "md": "An einer Glas- oder Wasseroberfläche ist das reflektierte Licht teilweise polarisiert, vollständig beim **Brewster-Winkel**, wenn reflektierter und gebrochener Strahl senkrecht aufeinander stehen:\n$$\\tan\\alpha_B = \\frac{n_2}{n_1} \\qquad\\text{(Glas, } n = 1{,}5\\text{: } \\alpha_B \\approx 56°\\text{)}$$\nPolarisierende Sonnenbrillen nutzen das, um Spiegelungen auf Wasser und Straße zu unterdrücken."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "LCD-Bildschirme, 3D-Kino, Spannungsoptik (Kunststoffbauteile zwischen gekreuzten Filtern zeigen Spannungsfarben), Fotografie."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Ergänzt **Mechanische Wellen** (Transversalität) und **Reflexion und Brechung** (Brewster-Winkel)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Unpolarisiertes Licht ($I_0 = 400\\,\\tfrac{\\mathrm{W}}{\\mathrm{m}^2}$) durchläuft zwei Filter unter $30°$. Wie groß ist die Intensität dahinter?",
+      "answer": 150,
+      "tolerance": 1,
+      "placeholder": "W/m²",
+      "explain": "$I = \\tfrac12 I_0\\cos^2 30° = 200\\cdot 0{,}75\\,\\tfrac{\\mathrm{W}}{\\mathrm{m}^2} = 150\\,\\tfrac{\\mathrm{W}}{\\mathrm{m}^2}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Zwischen zwei gekreuzten Filtern steht ein dritter unter $30°$ zum ersten. Wie viel Prozent des Lichts hinter dem ersten Filter kommen durch?",
+      "answer": 18.75,
+      "tolerance": 0.1,
+      "placeholder": "%",
+      "explain": "$\\cos^2 30°\\cdot\\cos^2 60° = 0{,}75\\cdot 0{,}25 = 18{,}75\\,\\%$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des Gesetzes von Malus in die richtige Reihenfolge.",
+      "items": [
+        "Feldamplitude zerlegen: $E_\\parallel = E\\cos\\theta$",
+        "Intensität ist proportional zu $E^2$",
+        "$I = I_1\\cos^2\\theta$"
+      ],
+      "explain": "Die Reihenfolge: 1. Feldamplitude zerlegen: $E_\\parallel = E\\cos\\theta$. 2. Intensität ist proportional zu $E^2$. 3. $I = I_1\\cos^2\\theta$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Warum lässt sich Schall in Luft nicht polarisieren?",
+      "options": [
+        {
+          "md": "Er ist eine Longitudinalwelle; es gibt keine Schwingungsrichtung quer zur Ausbreitung.",
+          "correct": true
+        },
+        {
+          "md": "Weil er zu langsam ist.",
+          "why": "Die Geschwindigkeit spielt keine Rolle."
+        },
+        {
+          "md": "Weil seine Wellenlänge zu groß ist.",
+          "why": "Mit passenden Filtern ginge es bei Transversalwellen auch mit großer Wellenlänge."
+        },
+        {
+          "md": "Weil Luft keine Filter hat.",
+          "why": "Es liegt an der Art der Welle."
+        }
+      ],
+      "explain": "Polarisation setzt eine Transversalwelle voraus.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Unter welchem Winkel ist von Glas ($n = 1{,}5$) reflektiertes Licht vollständig polarisiert?",
+      "answer": 56.3,
+      "tolerance": 0.2,
+      "placeholder": "°",
+      "explain": "$\\tan\\theta_B = n = 1{,}5$, $\\theta_B \\approx 56{,}3°$.",
+      "id": "vq5"
     },
     {
       "id": "schall",
@@ -96,13 +347,39 @@
       "explain": "$\\cos^2 60^\\circ = 0{,}25$."
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "malus"
+        ]
+      },
+      "label": "Malus",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "malus"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Polarisation gibt es nur bei Transversalwellen.",
         "Malus: $I = I_0\\cos^2\\theta$.",
-        "Gekreuzte Filter sperren."
+        "Gekreuzte Filter sperren.",
+        "Polarisation nur bei Transversalwellen; Malus $I = I_1\\cos^2\\theta$ aus $E_\\parallel = E\\cos\\theta$ und $I \\sim E^2$; unpolarisiert: $I_1 = \\tfrac12 I_0$.",
+        "Drei Filter: $I = \\tfrac14 I_1\\sin^2(2\\theta)$; Brewster $\\tan\\theta_B = n$."
       ]
     }
   ]

@@ -16,6 +16,179 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Additivität:** $\\int_a^b + \\int_b^c = \\int_a^c$, also $\\int_b^c = \\int_a^c - \\int_a^b$.\n> 2. **Linearität:** $\\int (pf + q) = p\\int f + q \\cdot (\\text{Intervalllänge})$.\n> 3. **Grenzen tauschen** kehrt das Vorzeichen um: $\\int_b^a f = -\\int_a^b f$.\n> 4. **Integralfunktion:** $F(x) = \\int_a^x f(t)\\,dt$ hat $F' = f$ und $F(a) = 0$. Steht oben ein Term wie $x^2$, berechnet man erst das Integral und leitet dann ab (ohne Kettenregel).",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** $F(x) = \\displaystyle\\int_2^x (3t^2 - 1)\\,dt$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F(x) = \\left[t^3 - t\\right]_2^x = x^3 - x - 6",
+            "why": "Integrieren und Grenzen einsetzen."
+          },
+          {
+            "tex": "F(2) = 8 - 2 - 6 = 0",
+            "why": "Bei der unteren Grenze ist die Integralfunktion null."
+          },
+          {
+            "tex": "F'(x) = 3x^2 - 1 = f(x)",
+            "why": "Ableiten gibt den Integranden zurück."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Untere Grenze.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Bei vertauschten Grenzen das Vorzeichen vergessen.\n- Bei $\\int (f + 3)$ die Konstante nur einmal statt über die ganze Länge addieren.\n- Bei oberer Grenze $x^2$ einfach $f(x^2)$ als Ableitung angeben.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Integralfunktion ableiten und Intervalle zusammenfügen",
+      "path": "02 Wiki/TMUA/11 Integralrechnung/Aufgabentypen/Integralfunktion ableiten und Intervalle zusammenfügen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Aufgabe nennt **Werte von Integralen**, ohne die Funktion zu verraten -- etwa $\\int_1^4 f = 10$ -- und fragt nach einem anderen Integral derselben Funktion. Oder eine Funktion ist als Integral mit variabler oberer Grenze definiert, $F(x) = \\int_a^x f(t)\\,\\mathrm dt$, und gefragt ist ihre Ableitung.\n\nBeides prüft **Struktur statt Rechnung**: Es gibt nichts zu integrieren, nur Regeln anzuwenden. Das macht diesen Typ zu einer der schnellsten Aufgaben des Tests -- wenn man die Regeln parat hat."
+            }
+          ]
+        },
+        {
+          "title": "Die Regeln",
+          "blocks": [
+            {
+              "md": "$$\\int_a^b f + \\int_b^c f = \\int_a^c f, \\qquad \\int_a^b f = -\\int_b^a f, \\qquad \\int_a^a f = 0,$$\n\n$$\\int_a^b k\\,f = k\\int_a^b f, \\qquad \\int_a^b (f + g) = \\int_a^b f + \\int_a^b g,$$\n\n$$\\frac{\\mathrm d}{\\mathrm dx}\\int_a^x f(t)\\,\\mathrm dt = f(x).$$\n\nDie letzte Zeile ist der **Hauptsatz**: Integrieren mit variabler oberer Grenze und Ableiten heben sich auf. Die untere Grenze $a$ ist dabei völlig gleichgültig -- sie verschiebt $F$ nur um eine Konstante.\n\n> [!important] Was sich **nicht** zerlegen lässt\n> $$\\int_a^b f\\,g \\ne \\left(\\int_a^b f\\right)\\left(\\int_a^b g\\right), \\qquad \\int_a^b \\frac fg \\ne \\frac{\\int_a^b f}{\\int_a^b g}.$$\n> Nur **Summen** und **konstante Faktoren** dürfen herausgezogen werden. Produkte und Quotienten nicht -- genau wie beim Ableiten. Diese Nicht-Regeln tauchen in Paper 2 als fehlerhafte Beweiszeile auf."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Given $\\displaystyle\\int_1^4 f(x)\\,\\mathrm dx = 10$ and $\\displaystyle\\int_1^2 f(x)\\,\\mathrm dx = 3$, find $\\displaystyle\\int_2^4 f(x)\\,\\mathrm dx$.\n>\n> - **A** 7\n> - **B** 13\n> - **C** $-7$\n> - **D** 30\n> - **E** cannot be determined\n\n**Regel:** $\\displaystyle\\int_1^2 f + \\int_2^4 f = \\int_1^4 f$.\n\n**Einsetzen:** $3 + \\int_2^4 f = 10$, also $\\int_2^4 f = 7$. Antwort **A**.\n\nOption E ist hier falsch -- aber bei diesem Aufgabentyp gelegentlich richtig: Aus $\\int_1^4 f = 10$ allein folgt über $\\int_1^2 f$ nichts. Man muss jedes Mal prüfen, ob die gegebenen Intervalle wirklich aneinandergrenzen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Grenzen umdrehen, ohne das Vorzeichen anzupassen.**\n- **Integrale addieren, deren Intervalle sich überlappen** oder eine Lücke lassen.\n- **Ein Produkt oder einen Quotienten zerlegen.**\n- **Beim Hauptsatz die Variable verwechseln:** $\\tfrac{\\mathrm d}{\\mathrm dx}\\int_a^x f(t)\\,\\mathrm dt = f(x)$, nicht $f(t)$.\n- **$\\int_a^x$ mit fester oberer Grenze ableiten** -- dann ist das Integral eine **Konstante** und die Ableitung null."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Given $\\displaystyle\\int_0^3 f(x)\\,\\mathrm dx = 5$ and $\\displaystyle\\int_3^7 f(x)\\,\\mathrm dx = -2$, find $\\displaystyle\\int_0^7 f(x)\\,\\mathrm dx$.\n>\n> - **A** 3\n> - **B** 7\n> - **C** $-3$\n> - **D** $-10$\n> - **E** cannot be determined\n\n> [!success]- Lösung\n> **A.** Die Intervalle grenzen bei $x = 3$ aneinander: $5 + (-2) = 3$.\n> B ist die Differenz -- die Falle für alle, die das negative Vorzeichen als „abziehen\" statt als Wert lesen.\n\n> [!question] Aufgabe 2\n> Given $\\displaystyle\\int_2^5 f(x)\\,\\mathrm dx = 9$, find $\\displaystyle\\int_5^2 3f(x)\\,\\mathrm dx$.\n>\n> - **A** $-27$\n> - **B** 27\n> - **C** $-9$\n> - **D** 3\n> - **E** $-3$\n\n> [!success]- Lösung\n> **A.** Zwei Schritte: Der Faktor 3 wird herausgezogen ($3 \\cdot 9 = 27$), das Vertauschen der Grenzen kehrt das Vorzeichen um ($-27$).\n> B vergisst das Vertauschen, C den Faktor. Beide Schritte einzeln sind trivial -- die Aufgabe prüft, ob man **beide** bemerkt.\n\n> [!question] Aufgabe 3\n> The function $F$ is defined by $F(x) = \\displaystyle\\int_1^x 3t^2\\,\\mathrm dt$. What is $F'(2)$?\n>\n> - **A** 12\n> - **B** 8\n> - **C** 7\n> - **D** 6\n> - **E** 4\n\n> [!success]- Lösung\n> **A.** Nach dem Hauptsatz ist $F'(x) = 3x^2$, also $F'(2) = 12$.\n> Zur Kontrolle explizit: $F(x) = \\Big[t^3\\Big]_1^x = x^3 - 1$, und $F'(x) = 3x^2$. Die untere Grenze liefert nur die Konstante $-1$, die beim Ableiten verschwindet.\n> C ist $F(2) = 8 - 1 = 7$ und B ist $2^3 = 8$ -- beides **Funktionswerte**, keine Ableitungswerte."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Integralbedingung mit Parameter lösen** · **Folgerungen aus gegebenen Aussagen ziehen** · **Fläche bei Vorzeichenwechsel berechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Grenzen",
+      "md": "$\\displaystyle\\int_0^5 f(x)\\,dx = 7$. Welchen Wert hat $\\displaystyle\\int_5^0 f(x)\\,dx$?",
+      "answer": -7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Grenzen tauschen kehrt das Vorzeichen um.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Linearität",
+      "md": "$\\displaystyle\\int_0^2 f(x)\\,dx = 3$ und $\\displaystyle\\int_2^6 f(x)\\,dx = 5$. Berechne $\\displaystyle\\int_0^6 \\big(f(x) + 1\\big)\\,dx$.",
+      "answer": 14,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$3 + 5 + 6 \\cdot 1 = 14$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$F(x) = \\displaystyle\\int_a^x f(t)\\,dt$ hat an der Stelle $x = a$ den Wert 0.",
+      "answer": true,
+      "explain": "Ein Integral über ein Intervall der Länge 0 ist 0.",
+      "label": "Integralfunktion",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "What is the value of $\\dfrac{d}{dx}\\displaystyle\\int_0^x \\left(t^2 + 1\\right)dt$ at $x = 3$?",
+      "options": [
+        {
+          "md": "3"
+        },
+        {
+          "md": "9"
+        },
+        {
+          "md": "10",
+          "correct": true
+        },
+        {
+          "md": "12"
+        },
+        {
+          "md": "27"
+        }
+      ],
+      "explain": "$F' = f$: $3^2 + 1 = 10$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Ableitung",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -92,6 +265,51 @@
       },
       "label": "Rechentraining",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Additivität, Linearität (Konstante mal Länge), Vorzeichenwechsel beim Tauschen.",
+        "$F(x) = \\int_a^x f$: $F' = f$, $F(a) = 0$; bei oberer Grenze $x^2$ erst integrieren, dann ableiten."
+      ]
     }
   ]
 }

@@ -60,7 +60,7 @@
           {
             "name": "y",
             "expr": "h - 9.81*x^2/(2*v0^2)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Flugzeit {sqrt(2*h/9.81)|2} s, Wurfweite {v0*sqrt(2*h/9.81)|2} m"
@@ -82,6 +82,450 @@
           "h": 10
         }
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der waagerechte Wurf in deiner Skizze. Die Kamera geht die beiden Teilbewegungen durch.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Waagerechter Wurf.svg",
+        "aspect": 1.6,
+        "alt": "Waagerechter Wurf mit den Geschwindigkeitskomponenten"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Körper verlässt die Kante waagerecht. Zwei Bewegungen laufen gleichzeitig ab, ohne sich zu stören.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Abwurf:** waagerecht mit $v_0$, senkrecht mit der Geschwindigkeit null.",
+          "to": {
+            "x": 0.2,
+            "y": 0.28,
+            "z": 2.4,
+            "s": 0.28
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Waagerecht:** keine Kraft, also bleibt $v_x = v_0$ nach dem Trägheitsgesetz.",
+          "to": {
+            "x": 0.71,
+            "y": 0.48,
+            "z": 2.4,
+            "s": 0.28
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Senkrecht:** freier Fall, $v_y = g\\,t$ wächst gleichmäßig.",
+          "to": {
+            "x": 0.64,
+            "y": 0.66,
+            "z": 2.4,
+            "s": 0.28
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Bahnkurve:** Eliminiert man die Zeit, bleibt die Parabel $y = \\tfrac{g}{2v_0^2}x^2$.",
+          "to": {
+            "x": 0.76,
+            "y": 0.83,
+            "z": 2.4,
+            "s": 0.28
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Geschwindigkeit ist in jedem Punkt die Vektorsumme beider Komponenten.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Unabhängigkeitsprinzip (Superpositionsprinzip)\n> Wirken auf einen Körper mehrere Bewegungen, so überlagern sie sich, ohne sich gegenseitig zu beeinflussen. Beim waagerechten Wurf wirkt die Gewichtskraft nur **senkrecht**: Waagerecht bleibt die Geschwindigkeit $v_0$ (Trägheitsgesetz), senkrecht fällt der Körper frei.\n> \n> Folgerung: Ein waagerecht geworfener und ein gleichzeitig fallen gelassener Körper treffen **gleichzeitig** auf.",
+      "label": "Gesetz",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung von Fallzeit, Wurfweite und Aufprallgeschwindigkeit.** Achsen: $x$ waagerecht, $y$ senkrecht nach unten, Ursprung im Abwurfpunkt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x(t) = v_0\\,t,\\qquad y(t) = \\tfrac12 g\\,t^2",
+            "why": "Gleichförmig in $x$, freier Fall in $y$."
+          },
+          {
+            "tex": "y(t_F) = h\\quad\\Rightarrow\\quad t_F = \\sqrt{\\frac{2h}{g}}",
+            "why": "Am Boden ist die Fallstrecke gleich der Höhe $h$. Die Fallzeit hängt **nicht** von $v_0$ ab."
+          },
+          {
+            "tex": "w = x(t_F) = v_0\\sqrt{\\frac{2h}{g}}",
+            "why": "Die Wurfweite ist die waagerechte Strecke während der Fallzeit."
+          },
+          {
+            "tex": "v_x = v_0,\\qquad v_y = g\\,t_F = \\sqrt{2gh}",
+            "why": "Die Komponenten beim Aufprall."
+          },
+          {
+            "tex": "v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{v_0^2 + 2gh},\\qquad \\tan\\beta = \\frac{v_y}{v_x}",
+            "why": "Betrag mit Pythagoras, denn die Komponenten stehen senkrecht. $\\beta$ ist der Winkel gegen die Waagerechte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die beiden Teilbewegungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fallzeit aus der Höhe.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurfweite.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aufprallgeschwindigkeit als Vektorsumme.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Bahnkurve.** Gesucht ist die Bahn im Raum, $y$ als Funktion von $x$, ohne Zeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x = v_0\\,t\\quad\\Rightarrow\\quad t = \\frac{x}{v_0}",
+            "why": "Die erste Gleichung nach der Zeit auflösen."
+          },
+          {
+            "tex": "y = \\tfrac12 g\\left(\\frac{x}{v_0}\\right)^2",
+            "why": "In die zweite einsetzen."
+          },
+          {
+            "tex": "y(x) = \\frac{g}{2v_0^2}\\,x^2",
+            "why": "Eine Parabel mit dem Scheitel im Abwurfpunkt. Je größer $v_0$, desto flacher; die Fallzeit bleibt trotzdem gleich."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zeit eliminieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Wurfparabel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Waagerechter Wurf",
+      "path": "02 Wiki/Physik/01 E-Phase/Waagerechter Wurf.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **waagerechte Wurf** ist die **Überlagerung** (Superposition) zweier unabhängiger Bewegungen: einer gleichförmigen Bewegung in $x$-Richtung und eines **freien Falls** in $y$-Richtung. Die Bewegungen beeinflussen sich nicht (Unabhängigkeitsprinzip)."
+            }
+          ]
+        },
+        {
+          "title": "Bewegungsgleichungen",
+          "blocks": [
+            {
+              "md": "$$x(t) = v_0 \\cdot t \\qquad y(t) = \\tfrac{1}{2} g t^2$$"
+            }
+          ]
+        },
+        {
+          "title": "Bahnkurve (Wurfparabel)",
+          "blocks": [
+            {
+              "md": "Setzt man $t = \\tfrac{x}{v_0}$ ein, ergibt sich eine **Parabel**:\n$$y(x) = \\frac{g}{2 v_0^2} \\, x^2$$"
+            },
+            {
+              "image": "vault:Waagerechter Wurf.svg"
+            }
+          ]
+        },
+        {
+          "title": "Bahnkurve für v0 = 5 m/s",
+          "blocks": [
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0",
+                  "0.5",
+                  "1.0",
+                  "1.5",
+                  "2.0",
+                  "2.5",
+                  "3.0"
+                ],
+                "series": [
+                  {
+                    "title": "Fallhöhe y / m (Wurfweite x auf der Achse)",
+                    "data": [
+                      0,
+                      0.049,
+                      0.196,
+                      0.441,
+                      0.785,
+                      1.226,
+                      1.766
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "> [!tip] Kernaussage\n> Die Fallzeit hängt **nur von der Höhe** ab, nicht von $v_0$: Ein waagerecht geworfener und ein fallen gelassener Körper treffen gleichzeitig auf dem Boden auf."
+            }
+          ]
+        },
+        {
+          "title": "Das Unabhängigkeitsprinzip",
+          "blocks": [
+            {
+              "md": "> [!important] Die beiden Teilbewegungen wissen nichts voneinander\n> Das ist der eigentliche Gehalt des Themas und zugleich der überraschendste Befund: Die waagerechte Bewegung beeinflusst den Fall nicht, und der Fall beeinflusst die waagerechte Bewegung nicht.\n>\n> Der Grund liegt in der Vektorzerlegung: Die Gewichtskraft wirkt **ausschließlich senkrecht**. In waagerechter Richtung wirkt keine Kraft, also gilt dort das Trägheitsgesetz -- gleichförmige Bewegung.\n>\n> Daraus folgt der klassische Demonstrationsversuch: Ein waagerecht abgeschossener und ein gleichzeitig fallen gelassener Körper treffen **gleichzeitig** auf. Die Fallzeit hängt allein von der Höhe ab.\n>\n> $$t = \\sqrt{\\frac{2h}{g}}$$\n>\n> Das widerspricht der Anschauung so deutlich, dass es regelmäßig geprüft wird. Wer die Zerlegung in unabhängige Komponenten verstanden hat, sagt es ohne Rechnung vorher."
+            }
+          ]
+        },
+        {
+          "title": "Die Zerlegung als allgemeines Werkzeug",
+          "blocks": [
+            {
+              "md": "| Bewegung | waagerecht | senkrecht |\n|---|---|---|\n| **waagerechter Wurf** | gleichförmig | freier Fall |\n| **Schiefer Wurf** | gleichförmig | Wurf nach oben mit Fall |\n| Ladung im Querfeld | gleichförmig | gleichmäßig beschleunigt |\n\n> [!tip] Dieselbe Zerlegung trägt die Braunsche Röhre\n> Ein Elektron, das ein Querfeld durchfliegt, führt exakt einen waagerechten Wurf aus -- nur ist die beschleunigende Kraft elektrisch statt gravitativ. Die Bahnkurve ist dieselbe Parabel.\n>\n> Damit ist der waagerechte Wurf aus der E-Phase die Vorbereitung auf die **Braunsche Röhre** und die Ablenkung im **Elektrisches Feld** in Q1. Ein Aufgabentyp, zwei Halbjahre."
+            }
+          ]
+        },
+        {
+          "title": "Die Bahnkurve",
+          "blocks": [
+            {
+              "md": "$$y(x) = \\frac{g}{2v_0^2}\\,x^2$$\n\nDie Zeit ist eliminiert -- übrig bleibt eine **Parabel**. Bemerkenswert: Je größer $v_0$, desto flacher die Parabel, aber die Fallzeit bleibt gleich.\n\n> [!warning] Bahnkurve und Zeitverlauf sind zu unterscheiden\n> Das $y(x)$-Diagramm zeigt die **Bahn im Raum**, das $y(t)$-Diagramm den **zeitlichen Ablauf**. Beide sind Parabeln, bedeuten aber Verschiedenes.\n>\n> In der Bahnkurve sind die Punkte **nicht** gleichmäßig über die Zeit verteilt: Gegen Ende liegen sie enger in $x$, weil die Bahn steiler wird. Ein Diagramm ohne Achsenbeschriftung ist hier nicht deutbar."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der waagerechte Wurf führt das Superpositionsprinzip ein, das anschließend den **schiefen Wurf**, die Ablenkung im **Elektrisches Feld** und die **Braunsche Röhre** trägt. Er verbindet **Kinematik** und **Freier Fall**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Flugzeug fliegt waagerecht mit konstanter Geschwindigkeit und lässt ein Paket fallen. Ohne Luftwiderstand ist das Paket beim Aufprall genau unter dem Flugzeug.",
+      "answer": true,
+      "explain": "Das Paket behält die waagerechte Geschwindigkeit des Flugzeugs ($v_x = v_0$) und fällt dazu frei. Waagerecht bleibt es also immer unter dem Flugzeug.",
+      "label": "Unabhängigkeit",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum bleibt die waagerechte Geschwindigkeit beim waagerechten Wurf konstant?",
+      "options": [
+        {
+          "md": "Waagerecht wirkt keine Kraft, also gilt dort das Trägheitsgesetz.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Erdanziehung waagerecht nicht wirken kann, solange der Körper fällt.",
+          "why": "Die Gewichtskraft wirkt immer, aber senkrecht."
+        },
+        {
+          "md": "Weil die Luft den Körper waagerecht vorwärts schiebt.",
+          "why": "Ohne Luftwiderstand gibt es keine Luftkraft; mit Luftwiderstand würde er waagerecht langsamer."
+        },
+        {
+          "md": "Weil sich waagerechte und senkrechte Kraft aufheben.",
+          "why": "Waagerecht wirkt gar keine Kraft."
+        }
+      ],
+      "explain": "Die Gewichtskraft zeigt senkrecht nach unten. Ohne waagerechte Kraft keine waagerechte Beschleunigung.",
+      "label": "Verständnis",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Bahnkurve in die richtige Reihenfolge.",
+      "items": [
+        "Bewegung zerlegen: $x = v_0 t$, $y = \\tfrac12 g t^2$",
+        "Die waagerechte Gleichung nach $t$ umstellen: $t = \\tfrac{x}{v_0}$",
+        "In die senkrechte Gleichung einsetzen",
+        "Vereinfachen: $y = \\tfrac{g}{2v_0^2}x^2$"
+      ],
+      "explain": "Die Reihenfolge: 1. Bewegung zerlegen: $x = v_0 t$, $y = \\tfrac12 g t^2$. 2. Die waagerechte Gleichung nach $t$ umstellen: $t = \\tfrac{x}{v_0}$. 3. In die senkrechte Gleichung einsetzen. 4. Vereinfachen: $y = \\tfrac{g}{2v_0^2}x^2$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Kugel rollt mit $4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ waagerecht von einer $1{,}25\\,\\mathrm{m}$ hohen Kante. Wie weit von der Kante landet sie?",
+      "answer": 2.02,
+      "tolerance": 0.02,
+      "placeholder": "m",
+      "explain": "$t = \\sqrt{\\tfrac{2\\cdot 1{,}25}{9{,}81}}\\,\\mathrm{s} \\approx 0{,}505\\,\\mathrm{s}$, $w = v_0 t \\approx 2{,}02\\,\\mathrm{m}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Körper wird aus $5\\,\\mathrm{m}$ Höhe mit $5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ waagerecht geworfen. Unter welchem Winkel gegen die Waagerechte trifft er auf?",
+      "answer": 63.2,
+      "tolerance": 0.3,
+      "placeholder": "°",
+      "explain": "$v_y = \\sqrt{2gh} = \\sqrt{98{,}1}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 9{,}90\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\tan\\beta = \\tfrac{9{,}90}{5} \\approx 1{,}98$, also $\\beta \\approx 63{,}2°$.",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Vervierfacht man die Abwurfhöhe, wird die Fallzeit {{0}}-mal so lang und die Wurfweite {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$t_F = \\sqrt{2h/g}$ wächst mit der Wurzel der Höhe, $w = v_0 t_F$ ebenso.",
+      "id": "vq6"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Lösungsweg für die Aufprallgeschwindigkeit. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$v_x = v_0 = 3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$v_y = g\\,t_F = 4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$",
+          "why": "Richtig für diese Zahlen."
+        },
+        {
+          "md": "$v = v_x + v_y = 7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$",
+          "why": "Falsch: Die Komponenten stehen senkrecht aufeinander, der Betrag kommt aus dem Pythagoras: $\\sqrt{9 + 16} = 5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$."
+        }
+      ],
+      "answer": 2,
+      "explain": "Geschwindigkeiten sind Vektoren; senkrechte Komponenten addiert man geometrisch.",
+      "id": "vq7"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Größen hängen beim waagerechten Wurf (feste Höhe) von der Abwurfgeschwindigkeit $v_0$ ab?",
+      "options": [
+        {
+          "md": "die Wurfweite",
+          "correct": true
+        },
+        {
+          "md": "der Betrag der Aufprallgeschwindigkeit",
+          "correct": true
+        },
+        {
+          "md": "wie flach die Bahnkurve ist",
+          "correct": true
+        },
+        {
+          "md": "die Fallzeit",
+          "why": "Sie hängt nur von der Höhe ab."
+        },
+        {
+          "md": "die senkrechte Komponente der Aufprallgeschwindigkeit",
+          "why": "$v_y = \\sqrt{2gh}$ hängt nur von der Höhe ab."
+        }
+      ],
+      "explain": "Alles Waagerechte skaliert mit $v_0$, alles Senkrechte nur mit $h$.",
+      "label": "Unabhängigkeit",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Elektron, das senkrecht zu den Feldlinien in einen Plattenkondensator fliegt, beschreibt dieselbe Bahnform wie ein waagerecht geworfener Ball.",
+      "answer": true,
+      "explain": "Waagerecht gleichförmig, quer dazu gleichmäßig beschleunigt durch die elektrische Kraft: Die Bahn ist eine Parabel. Das ist die Grundlage der Braunschen Röhre.",
+      "label": "Klausur",
+      "id": "vq9"
     },
     {
       "id": "doppelt",
@@ -123,7 +567,10 @@
       "points": [
         "Waagerecht gleichförmig, senkrecht freier Fall: beide Bewegungen stören sich nicht.",
         "Fallzeit $t = \\sqrt{2h/g}$, unabhängig von $v_0$.",
-        "Bahn: $y = -\\frac{g}{2v_0^2}x^2$, eine Parabel."
+        "Bahn: $y = -\\frac{g}{2v_0^2}x^2$, eine Parabel.",
+        "Unabhängigkeitsprinzip: waagerecht gleichförmig (keine Kraft), senkrecht freier Fall.",
+        "$t_F = \\sqrt{2h/g}$, $w = v_0 t_F$, $v = \\sqrt{v_0^2 + 2gh}$, $\\tan\\beta = v_y/v_x$.",
+        "Bahnkurve durch Eliminieren der Zeit: $y = \\tfrac{g}{2v_0^2}x^2$."
       ]
     }
   ]

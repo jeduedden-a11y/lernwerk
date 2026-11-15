@@ -13,7 +13,7 @@ struct PrimaryState: Equatable {
 
 /// What the column beside a lesson shows on the iPad.
 enum PlayerColumn: Hashable {
-    case pad, formulas
+    case pad, formulas, calc, note, vault
 }
 
 struct FinishedSheet: Identifiable {
@@ -48,6 +48,11 @@ struct LessonPlayerView: View {
     @State private var trainAfterFinish: PracticeTopic?
     @State private var reviewAfterFinish = false
     @State private var showPad = false
+    /// iPhone: the vault note is written in a panel above the buttons, the lesson stays readable above it.
+    @State private var notePanel = false
+    /// iPhone: the calculator sits in a panel above the buttons; its input and history live as long as the lesson.
+    @State private var calcPanel = false
+    @State private var calc = CalculatorState()
     @State private var column: PlayerColumn?
     @State private var showFormulaSheet = false
     @State private var vaultNote: VaultNoteTarget?
@@ -64,11 +69,21 @@ struct LessonPlayerView: View {
     /// The course of the session has a formula book: the formula button and the formula column appear.
     private var hasFormulas: Bool { session.course.flatMap { model.formulaBook($0) } != nil }
     private var padOpen: Bool { padAsColumn ? column == .pad : showPad }
+    private var noteInline: Bool { notePanel && !padAsColumn }
+    /// No calculator in a TMUA paper: the real test allows none.
+    private var calculatorAllowed: Bool { session.format != "tmua" }
+    private var calcInline: Bool { calcPanel && !padAsColumn && !keyboardUp }
+    private var calcOpen: Bool { padAsColumn ? column == .calc : calcPanel }
+    private var noteOpen: Bool { padAsColumn ? column == .note : notePanel }
+    /// iPhone: the vault note being read sits in a half-height sheet, the question stays visible above it.
+    private var vaultSheetUp: Bool { vaultNote != nil && !padAsColumn }
     private var formulasOpen: Bool { padAsColumn ? column == .formulas : showFormulaSheet }
 
     var body: some View {
         GeometryReader { geo in
             let padHeight = min(380, max(220, geo.size.height * 0.4))
+            let noteHeight = min(320, max(210, geo.size.height * 0.34))
+            let calcHeight: CGFloat = geo.size.height < 700 ? 300 : 330
             ZStack {
                 TintBackground(tints: [accent, accent.opacity(0.6)])
                 LessonWebView(locator: model.locator, controller: controller, startOptions: startOptions(geo), onMessage: handle)
@@ -86,16 +101,40 @@ struct LessonPlayerView: View {
                             .padding(.horizontal, 12)
                             .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: .bottom).combined(with: .opacity))
                     }
-                    bottomBar
+                    if calcInline {
+                        CalculatorPanel(state: calc, accent: accent, compact: true, onInsert: insertFromCalculator) { calcPanel = false }
+                            .frame(height: calcHeight)
+                            .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .shadow(color: .black.opacity(0.18), radius: 18, y: 6)
+                            .padding(.horizontal, 12)
+                            .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: .bottom).combined(with: .opacity))
+                    }
+                    if noteInline, let course = session.course, let lesson = session.lesson {
+                        LessonNotePanel(course: course, lesson: lesson, meta: session.meta, stepID: session.meta?.stepIDs[safe: stepIndex],
+                                        question: { controller.questionMarkdown($0) }) { notePanel = false }
+                            .frame(height: keyboardUp ? Self.noteTypingHeight : noteHeight)
+                            .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+                            .shadow(color: .black.opacity(0.18), radius: 18, y: 6)
+                            .padding(.horizontal, 12)
+                            .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: .bottom).combined(with: .opacity))
+                    }
+                    // while a note is typed the buttons step aside, so the question keeps as much room as possible
+                    if !(noteInline && keyboardUp) {
+                        bottomBar
+                    }
                 }
                 .padding(.bottom, geo.safeAreaInsets.bottom > 0 ? 0 : 12)
                 .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: padInline)
+                .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: noteInline)
+                .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: calcInline)
             }
-            .onChange(of: padInline) { _, inline in
-                // the page gets room below the last step, so nothing hides behind the pad
-                let bottom = geo.safeAreaInsets.bottom + 96 + (inline ? padHeight + 10 : 0)
-                controller.setInsets(top: geo.safeAreaInsets.top + 64, bottom: bottom)
-                if inline { controller.revealCurrent() }
+            .onChange(of: bottomPanel(geo, padHeight: padHeight, noteHeight: noteHeight, calcHeight: calcHeight)) { old, new in
+                // the page gets room below the last step, so nothing hides behind a panel; opening one scrolls the
+                // current question back to the top of what stays visible
+                controller.setInsets(top: geo.safeAreaInsets.top + 64, bottom: geo.safeAreaInsets.bottom + 96 + new)
+                if new > old { controller.revealCurrent() }
             }
         }
         .inspector(isPresented: Binding(get: { padAsColumn && column != nil }, set: { if !$0 { column = nil } })) {
@@ -111,8 +150,11 @@ struct LessonPlayerView: View {
             }
         }
         .sheet(item: $vaultNote) { target in
+            // half height first, and the lesson stays usable behind it: the question remains readable
             VaultNoteSheet(path: target.path)
                 .environment(model)
+                .presentationDetents([.medium, .large])
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
         }
         .task {
             if session.mode == .lesson, let course = session.course, let lesson = session.lesson {
@@ -154,6 +196,50 @@ struct LessonPlayerView: View {
             Text(runtimeError ?? "")
         }
         .statusBarHidden(false)
+    }
+
+    /// Height a panel or sheet takes from the bottom of the lesson (iPhone); 0 when none is open.
+    private func bottomPanel(_ geo: GeometryProxy, padHeight: CGFloat, noteHeight: CGFloat, calcHeight: CGFloat) -> CGFloat {
+        if padInline { return padHeight + 10 }
+        if calcInline { return calcHeight + 10 }
+        if noteInline { return (keyboardUp ? Self.noteTypingHeight : noteHeight) + 10 }
+        if vaultSheetUp { return (geo.size.height * 0.5).rounded() }
+        return 0
+    }
+
+    private static let noteTypingHeight: CGFloat = 150
+
+    private func toggleNote() {
+        if padAsColumn {
+            column = column == .note ? nil : .note
+        } else {
+            notePanel.toggle()
+            if notePanel { showPad = false; calcPanel = false }
+        }
+    }
+
+    private func toggleCalculator() {
+        if padAsColumn {
+            column = column == .calc ? nil : .calc
+        } else {
+            calcPanel.toggle()
+            if calcPanel {
+                showPad = false
+                notePanel = false
+                controller.endEditing()
+            }
+        }
+    }
+
+    /// The calculator's "Einsetzen": the result goes into the answer field of the current step.
+    private func insertFromCalculator(_ text: String) {
+        controller.fillAnswer(text) { ok in
+            if ok {
+                tap += 1
+            } else {
+                model.toast = "Dieser Schritt hat kein Feld für eine Zahl."
+            }
+        }
     }
 
     private func afterCompletion() {
@@ -208,7 +294,17 @@ struct LessonPlayerView: View {
 
                 HStack(spacing: 0) {
                     toolButton("pencil.and.scribble", label: padOpen ? "Notizblatt schließen" : "Notizblatt öffnen", active: padOpen) {
-                        if padAsColumn { column = column == .pad ? nil : .pad } else { showPad.toggle() }
+                        if padAsColumn {
+                            column = column == .pad ? nil : .pad
+                        } else {
+                            showPad.toggle()
+                            if showPad { notePanel = false; calcPanel = false }
+                        }
+                    }
+                    if calculatorAllowed {
+                        toolButton("plus.forwardslash.minus", label: calcOpen ? "Rechner schließen" : "Taschenrechner", active: calcOpen) {
+                            toggleCalculator()
+                        }
                     }
                     if hasFormulas {
                         toolButton("function", label: formulasOpen ? "Formeln schließen" : "Formeln zeigen", active: formulasOpen) {
@@ -220,22 +316,22 @@ struct LessonPlayerView: View {
                     }
                     if session.mode == .lesson {
                         if padAsColumn || wikiPath == nil {
-                            toolButton("square.and.pencil", label: "Notiz für den Vault schreiben", active: false) {
-                                showNote = true
+                            toolButton("square.and.pencil", label: noteOpen ? "Notiz schließen" : "Notiz für den Vault schreiben", active: noteOpen) {
+                                toggleNote()
                             }
                         }
                         if let wikiPath {
                             if padAsColumn {
-                                toolButton("book.closed", label: "Notiz im Vault lesen", active: false) {
-                                    vaultNote = VaultNoteTarget(path: wikiPath)
+                                toolButton("book.closed", label: column == .vault ? "Vault-Notiz schließen" : "Notiz im Vault lesen", active: column == .vault) {
+                                    column = column == .vault ? nil : .vault
                                 }
                             } else {
                                 // narrow screens: writing and reading the vault note share one button
                                 Menu {
                                     Button {
-                                        showNote = true
+                                        toggleNote()
                                     } label: {
-                                        Label("Notiz für den Vault schreiben", systemImage: "square.and.pencil")
+                                        Label(notePanel ? "Notiz schließen" : "Notiz für den Vault schreiben", systemImage: "square.and.pencil")
                                     }
                                     Button {
                                         vaultNote = VaultNoteTarget(path: wikiPath)
@@ -262,21 +358,45 @@ struct LessonPlayerView: View {
         .padding(.horizontal, 16)
     }
 
-    /// iPad: notepad or formulas beside the lesson, switched with a segmented control.
+    /// The lesson has a vault note to write (lessons, not training or exams).
+    private var canWriteNote: Bool { session.mode == .lesson && session.course != nil && session.lesson != nil }
+
+    /// iPad: notepad, formulas, the note being written or the vault note beside the lesson, switched with a
+    /// segmented control; the lesson stays fully visible.
     @ViewBuilder private var sideColumn: some View {
         VStack(spacing: 0) {
-            if hasFormulas {
+            if hasFormulas || calculatorAllowed || canWriteNote || wikiPath != nil {
                 Picker("Spalte", selection: Binding(get: { column ?? .pad }, set: { column = $0 })) {
                     Text("Notizblatt").tag(PlayerColumn.pad)
-                    Text("Formeln").tag(PlayerColumn.formulas)
+                    if hasFormulas { Text("Formeln").tag(PlayerColumn.formulas) }
+                    if calculatorAllowed { Text("Rechner").tag(PlayerColumn.calc) }
+                    if canWriteNote { Text("Notiz").tag(PlayerColumn.note) }
+                    if wikiPath != nil { Text("Vault").tag(PlayerColumn.vault) }
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
             }
-            if column == .formulas, let course = session.course {
-                FormulaPanel(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex, topInset: 4)
-            } else {
+            switch column ?? .pad {
+            case .formulas:
+                if let course = session.course {
+                    FormulaPanel(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex, topInset: 4)
+                }
+            case .calc:
+                if calculatorAllowed {
+                    CalculatorPanel(state: calc, accent: accent, compact: false, onInsert: insertFromCalculator) { column = nil }
+                    Spacer(minLength: 0)
+                }
+            case .note:
+                if let course = session.course, let lesson = session.lesson {
+                    LessonNotePanel(course: course, lesson: lesson, meta: session.meta, stepID: session.meta?.stepIDs[safe: stepIndex],
+                                    question: { controller.questionMarkdown($0) }) { column = nil }
+                }
+            case .vault:
+                if let wikiPath {
+                    VaultNoteColumn(path: wikiPath) { column = nil }
+                }
+            case .pad:
                 ScratchPad(drawing: $drawing, systemTools: isPad) { column = nil }
             }
         }
@@ -560,7 +680,7 @@ struct CompletionView: View {
                             Button {
                                 onRound(session.level)
                             } label: {
-                                Label("Noch eine Runde", systemImage: "arrow.clockwise")
+                                Label("Neue Runde", systemImage: "arrow.clockwise")
                                     .font(.headline)
                                     .frame(maxWidth: .infinity)
                             }
@@ -624,22 +744,22 @@ struct CompletionView: View {
 
     private var title: String {
         switch session.mode {
-        case .review: return "Wiederholung geschafft"
-        case .practice: return passed ? "Stufe sitzt" : "Runde geschafft"
-        case .lesson: return "Lektion geschafft"
-        case .exam: return session.format == "tmua" ? "Paper ausgewertet" : (passed ? "Klausur sitzt" : "Klausur ausgewertet")
-        case .mix: return "Tagesmix geschafft"
+        case .review: return "Wiederholung abgeschlossen"
+        case .practice: return passed ? "Stufe bestanden" : "Runde abgeschlossen"
+        case .lesson: return "Lektion abgeschlossen"
+        case .exam: return session.format == "tmua" ? "Paper ausgewertet" : "Klausur ausgewertet"
+        case .mix: return "Tagesmix abgeschlossen"
         }
     }
 
     private var summary: String {
         let n = result.results.count
-        if n == 0 { return "Weiter so." }
+        if n == 0 { return "Keine Aufgaben in dieser Runde." }
         switch session.mode {
         case .practice:
             if passed && session.level < 4 { return "\(correct) von \(n) Aufgaben sofort gelöst. Bereit für \(Level(session.level + 1).name)." }
             if passed { return "\(correct) von \(n) Aufgaben sofort gelöst, auf der höchsten Stufe." }
-            return "\(correct) von \(n) Aufgaben sofort gelöst. Ab 80 Prozent gilt eine Stufe als geschafft, jede Runde bringt neue Aufgaben."
+            return "\(correct) von \(n) Aufgaben sofort gelöst. Ab 80 Prozent gilt eine Stufe als bestanden, jede Runde bringt neue Aufgaben."
         case .exam:
             let time = result.exam?.timeUp == true ? "Die Zeit war abgelaufen. " : ""
             if session.format == "tmua" {

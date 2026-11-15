@@ -16,6 +16,352 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "**Lösungsschema.**\n1. **Impuls beschaffen:** direkt $p = m v$, über die Bewegungsenergie $p = \\sqrt{2 m E_{kin}}$ oder über die Beschleunigungsspannung $p = \\sqrt{2 m q U}$.\n2. **Masse einsetzen:** Elektron $m_e = 9{,}109\\cdot 10^{-31}\\,\\mathrm{kg}$, Proton $1{,}673\\cdot 10^{-27}\\,\\mathrm{kg}$, Neutron fast gleich.\n3. **Alles in SI-Einheiten:** Gramm in Kilogramm, eV in Joule.\n4. **Einsetzen:** $\\lambda = \\tfrac{h}{p}$.\n5. **Umkehraufgaben:** $U = \\tfrac{h^2}{2 m_e e\\,\\lambda^2}$ oder $v = \\tfrac{h}{m\\lambda}$.\n6. **Größenordnung bewerten:** Nur wenn $\\lambda$ mit Spalt oder Hindernis vergleichbar ist, ist der Welleneffekt beobachtbar.\n7. **Einheitenkontrolle:** $\\tfrac{\\mathrm{Js}}{\\mathrm{kg\\cdot m/s}} = \\tfrac{\\mathrm{kg\\,m^2\\,s^{-1}}}{\\mathrm{kg\\,m\\,s^{-1}}} = \\mathrm{m}$.",
+      "label": "Lösungsschema",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel:** Elektronen nach $U = 100\\,\\mathrm{V}$, verglichen mit einem Tennisball ($58\\,\\mathrm{g}$, $50\\,\\mathrm{m/s}$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "v = \\sqrt{\\frac{2 e U}{m_e}} = \\sqrt{\\frac{2\\cdot 1{,}602\\cdot 10^{-19}\\cdot 100}{9{,}109\\cdot 10^{-31}}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 5{,}93\\cdot 10^{6}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Rund 2 % der Lichtgeschwindigkeit: klassisch rechnen ist erlaubt."
+          },
+          {
+            "tex": "p = m_e v \\approx 5{,}40\\cdot 10^{-24}\\,\\mathrm{kg}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Der Impuls."
+          },
+          {
+            "tex": "\\lambda = \\frac{h}{p} = \\frac{6{,}626\\cdot 10^{-34}}{5{,}40\\cdot 10^{-24}}\\,\\mathrm{m} \\approx 1{,}23\\cdot 10^{-10}\\,\\mathrm{m} = 123\\,\\mathrm{pm}",
+            "why": "So groß wie Atomabstände: Kristalle wirken als Gitter."
+          },
+          {
+            "tex": "\\frac{1{,}226\\,\\mathrm{nm}}{\\sqrt{100}} = 122{,}6\\,\\mathrm{pm}",
+            "why": "Kontrolle mit der Zahlenwertform."
+          },
+          {
+            "tex": "\\lambda_{Ball} = \\frac{6{,}626\\cdot 10^{-34}}{0{,}058\\cdot 50}\\,\\mathrm{m} \\approx 2{,}3\\cdot 10^{-34}\\,\\mathrm{m}",
+            "why": "Zwanzig Zehnerpotenzen unter einem Atomkern: vorhanden, aber nie beobachtbar."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Impuls.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wellenlänge.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontrolle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tennisball.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die Wurzel dämpft.** De-Broglie-Wellenlänge von Elektronen über der Spannung; blau bei $U$, orange bei $4U$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1000
+        ],
+        "y": [
+          0,
+          250
+        ],
+        "xLabel": "U in V",
+        "yLabel": "λ in pm",
+        "vars": [
+          {
+            "name": "U",
+            "min": 25,
+            "max": 250,
+            "value": 50,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "l",
+            "expr": "1226.5/sqrt(x)",
+            "color": "blue",
+            "domain": [
+              24.1,
+              1000
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "l",
+            "color": "blue",
+            "guides": true
+          },
+          {
+            "x": "4*U",
+            "on": "l",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "λ({U|0} V) = {1226.5/sqrt(U)|1} pm, λ({4*U|0} V) = **{1226.5/sqrt(4*U)|1} pm**: genau die Hälfte"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $50\\,\\mathrm{V}$: $\\lambda \\approx 173\\,\\mathrm{pm}$; bei $200\\,\\mathrm{V}$ (orange) nur halb so viel.",
+          "set": {
+            "U": 50
+          }
+        },
+        {
+          "caption": "Bei $100\\,\\mathrm{V}$ und $400\\,\\mathrm{V}$: $123\\,\\mathrm{pm}$ gegen $61\\,\\mathrm{pm}$. Vierfache Spannung, halbe Wellenlänge.",
+          "to": {
+            "U": 100
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Bei $250\\,\\mathrm{V}$ und $1000\\,\\mathrm{V}$: $78\\,\\mathrm{pm}$ gegen $39\\,\\mathrm{pm}$. Deshalb arbeiten Elektronenmikroskope mit sehr hohen Spannungen.",
+          "to": {
+            "U": 250
+          },
+          "dur": 1800
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Wann Quanteneffekte sichtbar werden.**\n\n| Objekt | typische Wellenlänge | beobachtbar an |\n|---|---|---|\n| Elektron nach $100\\,\\mathrm{V}$ | $\\approx 120\\,\\mathrm{pm}$ | Kristallgitter |\n| Elektron nach $100\\,\\mathrm{kV}$ | $\\approx 3{,}7\\,\\mathrm{pm}$ (relativistisch) | Elektronenmikroskop |\n| thermisches Neutron ($2200\\,\\mathrm{m/s}$) | $\\approx 180\\,\\mathrm{pm}$ | Kristallgitter |\n| Fulleren $\\mathrm{C_{60}}$ ($220\\,\\mathrm{m/s}$) | $\\approx 2{,}5\\,\\mathrm{pm}$ | Nanogitter (1999) |\n| Tennisball | $\\approx 10^{-34}\\,\\mathrm{m}$ | nichts |\n\n**Typische Fallen.**\n- Für Materieteilchen die **tatsächliche** Geschwindigkeit einsetzen, nie $c$.\n- $\\tfrac{h}{m c}$ ist die Compton-Wellenlänge, keine De-Broglie-Wellenlänge.\n- Die Wurzel nicht vergessen: vierfache Spannung, halbe Wellenlänge.\n- Gramm in Kilogramm umrechnen.\n- Makroskopische Körper **haben** eine Materiewelle, sie ist nur unbeobachtbar klein.\n- Photonen nicht mit der Teilchenformel rechnen: $\\lambda = \\tfrac{hc}{E}$ statt $\\tfrac{h}{\\sqrt{2mE}}$.",
+      "label": "Größenordnungen und Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "De-Broglie-Wellenlänge berechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/De-Broglie-Wellenlänge berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die De-Broglie-Wellenlänge des Elektrons\"*, *\"Welche Beschleunigungsspannung ist nötig, damit die Wellenlänge ... beträgt?\"*, *\"Begründen Sie, weshalb bei makroskopischen Körpern keine Interferenz beobachtbar ist\"*, *\"Erklären Sie den Nachweis über die Elektronenbeugung am Graphitkristall\"*.\n\nErkennungsmerkmal: Einem **Teilchen** wird eine **Wellenlänge** zugeordnet -- oder umgekehrt."
+            }
+          ]
+        },
+        {
+          "title": "Die De-Broglie-Beziehung",
+          "blocks": [
+            {
+              "md": "> [!important] Jedem Teilchen eine Welle\n> $$\\lambda = \\frac{h}{p} = \\frac{h}{m\\,v}$$\n> Louis de Broglie übertrug 1924 die für Photonen bekannte Beziehung $p = h/\\lambda$ auf **Materie**. Die Kühnheit lag darin, dass für Photonen die Welleneigenschaft unstrittig war -- de Broglie postulierte die Umkehrung: Auch dem, was man für ein Teilchen hielt, kommt eine Wellenlänge zu.\n>\n> Bestätigt wurde das 1927 durch **Elektronenbeugung am Kristallgitter** (Davisson und Germer): Elektronen erzeugen an einer Graphitfolie dieselben Beugungsringe wie Röntgenstrahlung passender Wellenlänge. Der Kristall wirkt als natürliches Gitter mit Netzebenenabständen in der Größenordnung von 100 pm -- genau der Bereich, in dem die De-Broglie-Wellenlänge beschleunigter Elektronen liegt."
+            }
+          ]
+        },
+        {
+          "title": "Die Arbeitsformel für beschleunigte Elektronen",
+          "blocks": [
+            {
+              "md": "Aus $eU = \\tfrac12 mv^2$ folgt $p = mv = \\sqrt{2\\,m_e\\,e\\,U}$, damit\n\n$$\\boxed{\\;\\lambda = \\frac{h}{\\sqrt{2\\,m_e\\,e\\,U}}\\;} \\qquad\\text{bzw. praktisch}\\qquad \\lambda \\approx \\frac{1{,}226\\,\\text{nm}}{\\sqrt{U[\\text{V}]}}$$\n\nDie zweite Form ist eine nützliche Kontrollformel: Bei 100 V ergibt sie unmittelbar 122,6 pm.\n\n> [!tip] Die Wurzel dämpft alles\n> Wegen $\\lambda \\propto 1/\\sqrt U$ muss die Beschleunigungsspannung **vervierfacht** werden, um die Wellenlänge zu halbieren. Das ist der Grund, weshalb Elektronenmikroskope mit Spannungen von hunderttausend Volt arbeiten: Nur so werden Wellenlängen im Pikometerbereich erreicht -- und da das Auflösungsvermögen jedes abbildenden Verfahrens durch die Wellenlänge begrenzt ist, liegt darin ihr Vorteil gegenüber dem Lichtmikroskop, dessen Auflösung bei etwa 200 nm endet."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Impuls beschaffen.** Entweder direkt $p = mv$, oder über die Beschleunigungsspannung $p = \\sqrt{2m_e e U}$, oder über die kinetische Energie $p = \\sqrt{2mE_{kin}}$.\n2. **Masse einsetzen.** Elektron: $m_e = 9{,}109\\cdot10^{-31}\\,\\text{kg}$; Proton: $1{,}673\\cdot10^{-27}\\,\\text{kg}$; Neutron praktisch gleich.\n3. **Einheiten in SI.**\n4. **Einsetzen:** $\\lambda = h/p$.\n5. **Bei Umkehraufgaben** nach $U$ oder $v$ auflösen: $U = \\dfrac{h^2}{2m_e e \\lambda^2}$.\n6. **Größenordnung bewerten:** Ist $\\lambda$ vergleichbar mit den Abmessungen des Hindernisses, sind Quanteneffekte beobachtbar; ist sie um Zehnerpotenzen kleiner, nicht.\n7. **Einheitenkontrolle:** $\\dfrac{[\\text{Js}]}{[\\text{kg}]\\cdot[\\text{m/s}]} = \\dfrac{\\text{kg}\\,\\text{m}^2\\,\\text{s}^{-1}}{\\text{kg}\\,\\text{m}\\,\\text{s}^{-1}} = \\text{m}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Elektronen werden mit $U = 100\\,\\text{V}$ beschleunigt. Berechnen Sie ihre De-Broglie-Wellenlänge. Vergleichen Sie mit einem Tennisball der Masse $58\\,\\text{g}$ bei $50\\,\\text{m/s}$.*\n\n**Schritt 1, Impuls:**\n$$v = \\sqrt{\\frac{2\\cdot1{,}602\\cdot10^{-19}\\cdot100}{9{,}109\\cdot10^{-31}}} \\approx 5{,}93\\cdot10^{6}\\,\\frac{\\text{m}}{\\text{s}}$$\n$$p = m_e v = 9{,}109\\cdot10^{-31}\\cdot5{,}93\\cdot10^{6} \\approx 5{,}40\\cdot10^{-24}\\,\\text{kg}\\,\\frac{\\text{m}}{\\text{s}}$$\n\n**Schritt 4:**\n$$\\lambda = \\frac{6{,}626\\cdot10^{-34}}{5{,}40\\cdot10^{-24}} \\approx 1{,}23\\cdot10^{-10}\\,\\text{m} = 123\\,\\text{pm}$$\n\n**Kontrolle über die Praxisformel:** $\\dfrac{1{,}226\\,\\text{nm}}{\\sqrt{100}} = 0{,}1226\\,\\text{nm} = 122{,}6\\,\\text{pm}$. Bestätigt.\n\n**Größenordnungsvergleich:** 123 pm liegt in derselben Größenordnung wie typische Atomabstände im Kristall (etwa 100 bis 300 pm) -- deshalb funktioniert die Elektronenbeugung am Graphitgitter, und deshalb ist diese Spannung im Schulversuch üblich.\n\n**Tennisball:**\n$$\\lambda = \\frac{6{,}626\\cdot10^{-34}}{0{,}058\\cdot50} = \\frac{6{,}626\\cdot10^{-34}}{2{,}9} \\approx 2{,}3\\cdot10^{-34}\\,\\text{m}$$\n\n> [!important] Warum makroskopische Interferenz unbeobachtbar ist\n> $2{,}3\\cdot10^{-34}\\,\\text{m}$ ist etwa **zwanzig Zehnerpotenzen kleiner als ein Atomkern**. Beugung wird aber nur sichtbar, wenn die Wellenlänge mit den Abmessungen des Hindernisses vergleichbar ist. Es existiert kein Spalt dieser Größe und könnte auch keiner existieren.\n>\n> Der entscheidende Punkt für die Argumentation: Die Welleneigenschaft des Tennisballs ist **nicht abwesend**, sondern nur unbeobachtbar klein. Die Quantenmechanik hört an der Grenze zum Alltag nicht auf zu gelten -- ihre Effekte werden lediglich unmessbar. Das ist die präzise Formulierung, die in Prüfungen erwartet wird; die Aussage \"für große Körper gilt die Quantenmechanik nicht\" ist falsch."
+            }
+          ]
+        },
+        {
+          "title": "Wann Quanteneffekte sichtbar werden",
+          "blocks": [
+            {
+              "md": "| Objekt | Typische $\\lambda$ | Beobachtbar an |\n|---|---|---|\n| Elektron bei 100 V | $\\approx 120\\,\\text{pm}$ | Kristallgitter |\n| Elektron bei 100 kV | $\\approx 3{,}9\\,\\text{pm}$ | Elektronenmikroskop |\n| Neutron, thermisch | $\\approx 180\\,\\text{pm}$ | Kristallgitter (Neutronenbeugung) |\n| Fullerenmolekül $\\text{C}_{60}$ | $\\approx 2{,}5\\,\\text{pm}$ | speziellen Nanogittern (nachgewiesen 1999) |\n| Tennisball | $\\approx 10^{-34}\\,\\text{m}$ | nichts |\n\nDass sogar $\\text{C}_{60}$-Moleküle mit 60 Kohlenstoffatomen Interferenz zeigen, ist ein wichtiges Argument: Die Grenze zwischen Quanten- und Alltagswelt ist keine scharfe, sondern eine Frage der experimentellen Sorgfalt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Lichtgeschwindigkeit für Materieteilchen einsetzen.** $\\lambda = h/(mv)$ verlangt die **tatsächliche** Teilchengeschwindigkeit.\n- **$\\lambda = h/(mc)$ statt $h/(mv)$ verwenden.** Der Ausdruck mit $c$ ist die Compton-Wellenlänge, eine andere Größe.\n- **Die Wurzel bei der Spannungsumrechnung vergessen.** Vierfache Spannung halbiert die Wellenlänge.\n- **Gramm nicht umrechnen.** $58\\,\\text{g} = 0{,}058\\,\\text{kg}$.\n- **Behaupten, makroskopische Körper hätten keine Materiewelle.** Sie haben eine, nur unbeobachtbar klein.\n- **Bei sehr hohen Spannungen klassisch rechnen.** Ab etwa 100 kV wird die relativistische Korrektur beim Elektron merklich.\n- **Photonen- und Materiewellenlänge mit derselben Formel behandeln.** Für Photonen gilt $\\lambda = hc/E$, für Materie $\\lambda = h/\\sqrt{2mE_{kin}}$ -- die Energieabhängigkeit ist eine andere."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Photoeffekt auswerten** · **Doppelspalt mit Quantenobjekten interpretieren** · **Beschleunigungsspannung und kinetische Energie berechnen** · **Beugung am Spalt und Gitter berechnen** · **Welle-Teilchen-Dualismus**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Formelwahl",
+      "md": "Was ist gegeben? Ordne die passende Formel zu.",
+      "pairs": [
+        [
+          "Geschwindigkeit eines Teilchens",
+          "$\\lambda = \\tfrac{h}{m v}$"
+        ],
+        [
+          "Bewegungsenergie eines Teilchens",
+          "$\\lambda = \\tfrac{h}{\\sqrt{2 m E_{kin}}}$"
+        ],
+        [
+          "Beschleunigungsspannung eines Elektrons",
+          "$\\lambda = \\tfrac{h}{\\sqrt{2 m_e e U}}$"
+        ],
+        [
+          "Energie eines Photons",
+          "$\\lambda = \\tfrac{h c}{E}$"
+        ],
+        [
+          "keine Materiewelle, sondern Compton-Wellenlänge",
+          "$\\tfrac{h}{m_e c}$"
+        ]
+      ],
+      "explain": "Erst den Impuls beschaffen, dann teilen.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein thermisches Neutron ($m_n = 1{,}675\\cdot 10^{-27}\\,\\mathrm{kg}$) fliegt mit $2200\\,\\mathrm{m/s}$. Welche De-Broglie-Wellenlänge hat es?",
+      "answer": 180,
+      "tolerance": 2,
+      "placeholder": "pm",
+      "explain": "$\\lambda = \\tfrac{h}{m_n v} = \\tfrac{6{,}626\\cdot 10^{-34}}{1{,}675\\cdot 10^{-27}\\cdot 2200}\\,\\mathrm{m} \\approx 1{,}80\\cdot 10^{-10}\\,\\mathrm{m}$: passend für Neutronenbeugung an Kristallen.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Beschleunigungsspannung brauchen Elektronen für $\\lambda = 10\\,\\mathrm{pm}$ (nichtrelativistisch)?",
+      "answer": 15.0,
+      "tolerance": 0.2,
+      "placeholder": "kV",
+      "explain": "$U = \\left(\\tfrac{1{,}226\\,\\mathrm{nm}}{0{,}010\\,\\mathrm{nm}}\\right)^2\\,\\mathrm{V} \\approx 1{,}50\\cdot 10^4\\,\\mathrm{V}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Ein Fulleren-Molekül $\\mathrm{C_{60}}$ (Masse $720\\,\\mathrm{u}$, $1\\,\\mathrm{u} = 1{,}661\\cdot 10^{-27}\\,\\mathrm{kg}$) fliegt mit $220\\,\\mathrm{m/s}$. Welche De-Broglie-Wellenlänge hat es?",
+      "answer": 2.52,
+      "tolerance": 0.03,
+      "placeholder": "pm",
+      "explain": "$m = 720\\cdot 1{,}661\\cdot 10^{-27}\\,\\mathrm{kg} \\approx 1{,}20\\cdot 10^{-24}\\,\\mathrm{kg}$, $\\lambda = \\tfrac{h}{m v} \\approx 2{,}5\\cdot 10^{-12}\\,\\mathrm{m}$. Trotzdem wurde Interferenz nachgewiesen.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Proton und ein Elektron haben dieselbe Bewegungsenergie. Wie verhalten sich ihre Wellenlängen?",
+      "options": [
+        {
+          "md": "Die des Protons ist rund 43-mal kleiner.",
+          "correct": true
+        },
+        {
+          "md": "Die des Protons ist rund 1836-mal kleiner.",
+          "why": "Das gälte bei gleicher Geschwindigkeit; bei gleicher Energie steht die Masse unter der Wurzel."
+        },
+        {
+          "md": "Beide sind gleich.",
+          "why": "$\\lambda = \\tfrac{h}{\\sqrt{2mE}}$ hängt von der Masse ab."
+        },
+        {
+          "md": "Die des Elektrons ist kleiner.",
+          "why": "Das leichtere Elektron hat den kleineren Impuls und damit die größere Wellenlänge."
+        }
+      ],
+      "explain": "$\\tfrac{\\lambda_p}{\\lambda_e} = \\sqrt{\\tfrac{m_e}{m_p}} = \\tfrac{1}{\\sqrt{1836}} \\approx \\tfrac{1}{43}$.",
+      "label": "Proportionalität",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Compton-Wellenlänge $\\tfrac{h}{m_e c}$ ist die De-Broglie-Wellenlänge eines Elektrons.",
+      "answer": false,
+      "explain": "Sie enthält $c$ statt der tatsächlichen Geschwindigkeit und ist eine andere Größe; die De-Broglie-Wellenlänge ist $\\tfrac{h}{m_e v}$.",
+      "label": "Typischer Fehler",
+      "id": "vq6"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Lösungsweg für die Wellenlänge von Elektronen nach $100\\,\\mathrm{V}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$E_{kin} = e U = 1{,}602\\cdot 10^{-17}\\,\\mathrm{J}$",
+          "why": "Richtig: 100 eV in Joule."
+        },
+        {
+          "md": "$\\lambda = \\tfrac{h c}{E_{kin}} \\approx 1{,}24\\cdot 10^{-8}\\,\\mathrm{m}$",
+          "why": "Falsch: Das ist die Photonenformel. Für Elektronen gilt $\\lambda = \\tfrac{h}{\\sqrt{2 m_e E_{kin}}}$."
+        },
+        {
+          "md": "Also $\\lambda \\approx 12{,}4\\,\\mathrm{nm}$",
+          "why": "Folgt nur aus dem Fehler; richtig wären $123\\,\\mathrm{pm}$, hundertmal weniger."
+        }
+      ],
+      "answer": 1,
+      "explain": "Richtig: $p = \\sqrt{2 m_e E_{kin}} \\approx 5{,}40\\cdot 10^{-24}\\,\\mathrm{kg\\,\\tfrac{m}{s}}$ und $\\lambda = \\tfrac{h}{p} \\approx 123\\,\\mathrm{pm}$.",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +438,42 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "debroglie-proton",
+          "debroglie-neutron"
+        ]
+      },
+      "label": "Andere Teilchen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "debroglie-proton",
+          "elektronen-doppelspalt",
+          "beugungsring"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Schema: Impuls beschaffen ($mv$, $\\sqrt{2mE}$, $\\sqrt{2meU}$), dann $\\lambda = \\tfrac{h}{p}$, Größenordnung bewerten.",
+        "Gleiche Energie: $\\lambda \\sim \\tfrac{1}{\\sqrt m}$; gleiche Geschwindigkeit: $\\lambda \\sim \\tfrac{1}{m}$; $\\tfrac{h}{mc}$ ist keine Materiewellenlänge."
+      ]
     }
   ]
 }

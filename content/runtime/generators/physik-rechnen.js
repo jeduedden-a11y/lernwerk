@@ -46,6 +46,48 @@
     v: { r: ["r", "Hebelarm", "m", 0.1, 0.5, 2, 1, "cm", 0.01], F: ["F", "Kraft", "N", 20, 200, 0], al: ["\\alpha", "Winkel", "°", 30, 90, 0, DEG] },
     o: { M: ["M", "Drehmoment", "N·m", 3, 1, (x) => x.r * x.F * Math.sin(x.al)] },
     tex: { M: "M = r\\,F\\,\\sin\\alpha" }, inv: { F: "F = \\frac{M}{r\\sin\\alpha}" }, invKeys: ["F", "r"] });
+  // rotation, friction and heat beyond the basic types
+  spec("hebel", { ctx: "An einem Hebel greift im Abstand $r_1$ vom Drehpunkt die Last $F_1$ an. Auf der anderen Seite soll im Abstand $r_2$ eine Kraft $F_2$ senkrecht zum Hebel für Gleichgewicht sorgen.",
+    v: { F1: ["F_1", "Last", "N", 50, 2000, 0], r1: ["r_1", "Lastarm", "cm", 5, 100, 0, 0.01, "m", 1], r2: ["r_2", "Kraftarm", "cm", 20, 300, 0, 0.01, "m", 1] },
+    o: { F2: ["F_2", "nötige Kraft", "N", 3, 1, (x) => (x.F1 * x.r1) / x.r2] },
+    tex: { F2: "F_1\\,r_1 = F_2\\,r_2 \\;\\Rightarrow\\; F_2 = \\frac{F_1\\,r_1}{r_2}" }, inv: { r2: "r_2 = \\frac{F_1\\,r_1}{F_2}", F1: "F_1 = \\frac{F_2\\,r_2}{r_1}" } });
+  spec("rollen", { ctx: "Ein Körper rollt ohne zu gleiten aus der Ruhe eine schiefe Ebene hinab; der Höhenunterschied ist $h$. Sein Trägheitsmoment ist $I = k\\,m r^2$ (Vollkugel $k = 0{,}4$, Vollzylinder $k = 0{,}5$, Hohlzylinder $k = 1$).",
+    v: { h: ["h", "Höhenunterschied", "m", 0.2, 5, 2, 1, "cm", 0.01], k: ["k", "Formfaktor", "", 0.4, 1, 1] },
+    o: { v: ["v", "Geschwindigkeit unten", "m/s", 3, 1, (x) => Math.sqrt((2 * g * x.h) / (1 + x.k))] },
+    tex: { v: "m g h = \\tfrac12 m v^2 + \\tfrac12 I\\omega^2 = \\tfrac12 m v^2\\,(1 + k) \\;\\Rightarrow\\; v = \\sqrt{\\frac{2 g h}{1 + k}}" }, inv: { h: "h = \\frac{(1 + k)\\,v^2}{2g}" }, invKeys: ["h"], cst: CG });
+  spec("rotationsenergie", { ctx: "Ein Schwungrad (Vollzylinder mit der Masse $m$ und dem Radius $r$) dreht sich mit der Drehzahl $n$.",
+    v: { m: ["m", "Masse", "kg", 5, 200, 0], r: ["r", "Radius", "cm", 10, 80, 0, 0.01, "m", 1], n: ["n", "Drehzahl", "1/min", 300, 6000, 0, 1 / 60] },
+    o: { E: ["E_{rot}", "Rotationsenergie", "kJ", 3, 1e3, (x) => 0.5 * (0.5 * x.m * x.r * x.r) * Math.pow(2 * Math.PI * x.n, 2)] },
+    tex: { E: "I = \\tfrac12 m r^2,\\; \\omega = 2\\pi f,\\; E_{rot} = \\tfrac12 I\\omega^2" }, inv: { n: "n = 60\\,\\mathrm{s}\\cdot\\frac{1}{2\\pi}\\sqrt{\\frac{2 E_{rot}}{I}}" }, invKeys: ["n"] });
+  spec("anlaufen", { ctx: "Ein Motor treibt ein Schwungrad mit dem Trägheitsmoment $I$ aus der Ruhe mit dem konstanten Drehmoment $M$ an.",
+    v: { I: ["I", "Trägheitsmoment", "kg·m²", 0.05, 5, 2], M: ["M", "Drehmoment", "N·m", 0.5, 50, 1], t: ["t", "Zeit", "s", 1, 30, 0] },
+    o: { w: ["\\omega", "Winkelgeschwindigkeit nach der Zeit t", "1/s", 3, 1, (x) => (x.M * x.t) / x.I], n: ["n", "Drehzahl nach der Zeit t", "1/min", 3, 1 / 60, (x) => (x.M * x.t) / x.I / (2 * Math.PI)] },
+    tex: { w: "M = I\\,\\alpha \\;\\Rightarrow\\; \\omega = \\alpha\\,t = \\frac{M\\,t}{I}", n: "\\omega = \\frac{M\\,t}{I},\\; n = \\frac{60\\,\\mathrm{s}\\cdot\\omega}{2\\pi}" },
+    inv: { M: "M = \\frac{I\\,\\omega}{t}", t: "t = \\frac{I\\,\\omega}{M}" }, invOut: "w", ok: (x) => (x.M * x.t) / x.I < 2000 });
+  spec("drehimpuls-scheibe", { ctx: "Eine Drehscheibe (Trägheitsmoment $I$) dreht sich reibungsfrei mit der Winkelgeschwindigkeit $\\omega_1$. Ein Kind (Masse $m$) springt aus dem Stand auf den Rand der Scheibe im Abstand $r$ von der Achse.",
+    v: { I: ["I", "Trägheitsmoment der Scheibe", "kg·m²", 50, 500, 0], w1: ["\\omega_1", "Winkelgeschwindigkeit vorher", "1/s", 0.5, 3, 1], m: ["m", "Masse des Kindes", "kg", 20, 60, 0], r: ["r", "Abstand von der Achse", "m", 1, 3, 1, 1, "cm", 0.01] },
+    o: { w2: ["\\omega_2", "Winkelgeschwindigkeit danach", "1/s", 3, 1, (x) => (x.I * x.w1) / (x.I + x.m * x.r * x.r)] },
+    tex: { w2: "I\\,\\omega_1 = (I + m r^2)\\,\\omega_2 \\;\\Rightarrow\\; \\omega_2 = \\frac{I\\,\\omega_1}{I + m r^2}" }, inv: { I: "I = \\frac{m r^2\\,\\omega_2}{\\omega_1 - \\omega_2}" }, invKeys: ["I"] });
+  spec("carnot", { ctx: "Eine Wärmekraftmaschine arbeitet zwischen einem heißen Reservoir der Temperatur $\\vartheta_w$ und einem kalten der Temperatur $\\vartheta_k$.",
+    v: { tw: ["\\vartheta_w", "Temperatur heiß", "°C", 150, 900, 0], tk: ["\\vartheta_k", "Temperatur kalt", "°C", 5, 60, 0] },
+    o: { eta: ["\\eta_C", "größtmöglicher Wirkungsgrad", "%", 3, 0.01, (x) => 1 - (x.tk + 273.15) / (x.tw + 273.15)] },
+    tex: { eta: "\\eta_C = 1 - \\frac{T_k}{T_w}\\quad\\text{mit } T = \\vartheta + 273{,}15\\,\\mathrm{K}" }, noInv: true });
+  spec("entropie-fluss", { ctx: "Ein Körper der Temperatur $\\vartheta_w$ gibt die Wärme $Q$ an einen kälteren Körper der Temperatur $\\vartheta_k$ ab; beide Temperaturen ändern sich dabei kaum.",
+    v: { Q: ["Q", "Wärme", "J", 100, 10000, 0, 1, "kJ", 1e3], tw: ["\\vartheta_w", "Temperatur warm", "°C", 40, 300, 0], tk: ["\\vartheta_k", "Temperatur kalt", "°C", 2, 35, 0] },
+    o: { S: ["\\Delta S_{ges}", "Entropieänderung insgesamt", "J/K", 3, 1, (x) => x.Q / (x.tk + 273.15) - x.Q / (x.tw + 273.15)] },
+    tex: { S: "\\Delta S_{ges} = \\frac{Q}{T_k} - \\frac{Q}{T_w}\\quad\\text{(Temperaturen in Kelvin)}" }, noInv: true });
+  spec("verdampfen", { ctx: "Wasser der Masse $m$ verdampft bei 100 °C (373 K) vollständig. Die spezifische Verdampfungswärme ist 2257 kJ/kg.",
+    v: { m: ["m", "Masse", "g", 10, 2000, 0, 1e-3, "kg", 1] },
+    o: { S: ["\\Delta S", "Entropiezunahme", "J/K", 3, 1, (x) => (x.m * 2257e3) / 373.15] },
+    tex: { S: "\\Delta S = \\frac{Q}{T} = \\frac{m\\,r_V}{T}" }, inv: { m: "m = \\frac{T\\,\\Delta S}{r_V}" } });
+  spec("luftleistung", { ctx: "Ein Auto (Luftwiderstandsbeiwert $c_w$, Stirnfläche $A$) fährt mit konstanter Geschwindigkeit $v$. Die Luftdichte ist $\\rho = 1{,}2\\,\\mathrm{kg/m^3}$.",
+    v: { cw: ["c_w", "Luftwiderstandsbeiwert", "", 0.22, 0.45, 2], A: ["A", "Stirnfläche", "m²", 1.8, 3, 1], v: ["v", "Geschwindigkeit", "km/h", 50, 220, 0, 1 / 3.6, "m/s", 1] },
+    o: { P: ["P", "Leistung gegen den Luftwiderstand", "kW", 3, 1e3, (x) => 0.5 * x.cw * 1.2 * x.A * Math.pow(x.v, 3)] },
+    tex: { P: "P = F_L\\,v = \\tfrac12 c_w \\rho A v^2\\cdot v = \\tfrac12 c_w \\rho A v^3" }, inv: { v: "v = \\sqrt[3]{\\frac{2P}{c_w \\rho A}}" }, invKeys: ["v"] });
+  spec("stokes", { ctx: "Ein kugelförmiges Wassertröpfchen (Radius $r$, Dichte $1000\\,\\mathrm{kg/m^3}$) sinkt in Luft (Viskosität $\\eta = 1{,}8\\cdot 10^{-5}\\,\\mathrm{Pa\\,s}$) mit konstanter Geschwindigkeit. Die Reibung folgt dem Stokes-Gesetz $F_R = 6\\pi\\eta r v$; den Auftrieb vernachlässigt man.",
+    v: { r: ["r", "Radius", "µm", 1, 40, 1, 1e-6] },
+    o: { v: ["v", "Sinkgeschwindigkeit", "mm/s", 3, 1e-3, (x) => (2 * x.r * x.r * 1000 * g) / (9 * 1.8e-5)] },
+    tex: { v: "\\tfrac43\\pi r^3\\rho\\,g = 6\\pi\\eta r v \\;\\Rightarrow\\; v = \\frac{2 r^2 \\rho\\,g}{9\\eta}" }, inv: { r: "r = \\sqrt{\\frac{9\\eta v}{2\\rho g}}" }, cst: CG });
   spec("kepler3", { ctx: "Zwei Planeten umkreisen denselben Stern. Planet 1 hat die große Halbachse $a_1$ und die Umlaufdauer $T_1$, Planet 2 die große Halbachse $a_2$.",
     v: { a1: ["a_1", "Halbachse von Planet 1", "AE", 0.5, 2, 2], T1: ["T_1", "Umlaufdauer von Planet 1", "d", 80, 800, 0], a2: ["a_2", "Halbachse von Planet 2", "AE", 1, 30, 1] },
     o: { T2: ["T_2", "Umlaufdauer von Planet 2", "d", 3, 1, (x) => x.T1 * Math.pow(x.a2 / x.a1, 1.5)] },
@@ -95,6 +137,66 @@
     v: { al: ["\\alpha", "Neigungswinkel", "°", 15, 50, 0, DEG], mu: ["\\mu", "Gleitreibungszahl", "", 0.05, 0.25, 2] },
     o: { a: ["a", "Beschleunigung", "m/s²", 3, 1, (x) => g * (Math.sin(x.al) - x.mu * Math.cos(x.al))] },
     tex: { a: "m a = m g \\sin\\alpha - \\mu\\,m g\\cos\\alpha \\;\\Rightarrow\\; a = g(\\sin\\alpha - \\mu\\cos\\alpha)" }, inv: { mu: "\\mu = \\tan\\alpha - \\frac{a}{g\\cos\\alpha}" }, invKeys: ["mu"], cst: CG });
+  // dynamics beyond the basic types: recoil, impulse, coupled bodies, energy with friction, pendulum, loop
+  spec("rueckstoss", { ctx: "Eine Person springt waagerecht von einem ruhenden Boot ab. Der Wasserwiderstand wird vernachlässigt.",
+    v: { m: ["m", "Masse der Person", "kg", 40, 95, 0], v: ["v", "Absprunggeschwindigkeit der Person", "m/s", 1, 5, 1, 1, "km/h", 1 / 3.6], M: ["M", "Masse des Bootes", "kg", 60, 400, 0, 1, "t", 1e3] },
+    o: { V: ["V", "Rückstoßgeschwindigkeit des Bootes (Betrag)", "m/s", 3, 1, (x) => (x.m * x.v) / x.M] },
+    tex: { V: "0 = m v + M V \\;\\Rightarrow\\; |V| = \\frac{m}{M}\\,v" }, inv: { M: "M = \\frac{m v}{|V|}", v: "v = \\frac{M\\,|V|}{m}", m: "m = \\frac{M\\,|V|}{v}" } });
+  spec("schub", { ctx: "Ein Raketentriebwerk stößt in jeder Sekunde die Gasmasse $\\mu$ mit der Ausströmgeschwindigkeit $u$ (relativ zur Rakete) nach hinten aus.",
+    v: { mu: ["\\mu", "Massenstrom", "kg/s", 50, 3000, 0, 1, "t/s", 1e3], u: ["u", "Ausströmgeschwindigkeit", "m/s", 1500, 4500, 0, 1, "km/s", 1e3] },
+    o: { F: ["F", "Schubkraft", "kN", 3, 1e3, (x) => x.mu * x.u] },
+    tex: { F: "F = \\frac{\\Delta m}{\\Delta t}\\,u = \\mu\\,u" }, inv: { mu: "\\mu = \\frac{F}{u}", u: "u = \\frac{F}{\\mu}" } });
+  spec("kraftstoss", { ctx: "Ein Körper der Masse $m$ wird aus der Geschwindigkeit $v$ innerhalb der Zeit $\\Delta t$ bis zum Stillstand abgebremst.",
+    v: { m: ["m", "Masse", "kg", 0.2, 8, 1, 1, "g", 1e-3], v: ["v", "Anfangsgeschwindigkeit", "m/s", 2, 30, 1, 1, "km/h", 1 / 3.6], dt: ["\\Delta t", "Bremszeit", "ms", 5, 300, 0, 1e-3, "s", 1] },
+    o: { F: ["\\bar F", "mittlere Bremskraft", "N", 3, 1, (x) => (x.m * x.v) / x.dt] },
+    tex: { F: "\\bar F = \\frac{\\Delta p}{\\Delta t} = \\frac{m\\,v}{\\Delta t}" }, inv: { dt: "\\Delta t = \\frac{m v}{\\bar F}", m: "m = \\frac{\\bar F\\,\\Delta t}{v}", v: "v = \\frac{\\bar F\\,\\Delta t}{m}" } });
+  spec("aufzug", { ctx: "Ein Aufzug der Gesamtmasse $m$ fährt nach oben an und wird dabei gleichmäßig mit $a$ beschleunigt.",
+    v: { m: ["m", "Gesamtmasse", "kg", 300, 1500, 0, 1, "t", 1e3], a: ["a", "Beschleunigung", "m/s²", 0.3, 2.5, 1] },
+    o: { F: ["F_S", "Seilkraft", "kN", 3, 1e3, (x) => x.m * (g + x.a)] },
+    tex: { F: "F_S - m g = m a \\;\\Rightarrow\\; F_S = m\\,(g + a)" }, inv: { a: "a = \\frac{F_S}{m} - g", m: "m = \\frac{F_S}{g + a}" }, cst: CG });
+  spec("gekoppelt", { ctx: "Ein Wagen der Masse $m_1$ rollt reibungsfrei auf einem Tisch. Ein Faden über eine Rolle an der Tischkante verbindet ihn mit einem frei hängenden Körper der Masse $m_2$.",
+    v: { m1: ["m_1", "Masse des Wagens", "kg", 0.2, 3, 2, 1, "g", 1e-3], m2: ["m_2", "Masse des hängenden Körpers", "kg", 0.02, 1, 2, 1, "g", 1e-3] },
+    o: { a: ["a", "Beschleunigung beider Körper", "m/s²", 3, 1, (x) => (x.m2 * g) / (x.m1 + x.m2)], F: ["F_S", "Fadenkraft", "N", 3, 1, (x) => (x.m1 * x.m2 * g) / (x.m1 + x.m2)] },
+    tex: { a: "(m_1 + m_2)\\,a = m_2\\,g \\;\\Rightarrow\\; a = \\frac{m_2}{m_1 + m_2}\\,g", F: "F_S = m_1 a = \\frac{m_1 m_2}{m_1 + m_2}\\,g" },
+    inv: { m2: "m_2 = \\frac{m_1\\,a}{g - a}", m1: "m_1 = m_2\\left(\\frac{g}{a} - 1\\right)" }, invOut: "a", cst: CG });
+  spec("energie-reibung", { ctx: "Ein Schlitten der Masse $m$ gleitet aus der Ruhe einen Hang hinab, der $h$ hoch ist, und ist unten $v$ schnell.",
+    v: { m: ["m", "Masse", "kg", 5, 80, 0], h: ["h", "Höhenunterschied", "m", 2, 30, 1, 1, "cm", 0.01], v: ["v", "Geschwindigkeit unten", "m/s", 2, 20, 1, 1, "km/h", 1 / 3.6] },
+    o: { W: ["W_R", "in Wärme umgewandelte Energie (Reibungsarbeit)", "J", 3, 1, (x) => x.m * g * x.h - 0.5 * x.m * x.v * x.v] },
+    tex: { W: "m g h = \\tfrac12 m v^2 + W_R \\;\\Rightarrow\\; W_R = m g h - \\tfrac12 m v^2" }, inv: { v: "v = \\sqrt{2 g h - \\frac{2 W_R}{m}}", h: "h = \\frac{W_R + \\tfrac12 m v^2}{m g}" }, invKeys: ["v", "h"],
+    ok: (x) => x.m * g * x.h - 0.5 * x.m * x.v * x.v > 0.15 * x.m * g * x.h, cst: CG });
+  spec("energie-wurf", { ctx: "Ein Ball wird aus der Höhe $h_0$ über dem Boden mit der Geschwindigkeit $v_0$ senkrecht nach oben geworfen (ohne Luftwiderstand).",
+    v: { h0: ["h_0", "Abwurfhöhe", "m", 0.5, 20, 1, 1, "cm", 0.01], v0: ["v_0", "Abwurfgeschwindigkeit", "m/s", 2, 25, 1, 1, "km/h", 1 / 3.6] },
+    o: { H: ["h_{max}", "größte Höhe über dem Boden", "m", 3, 1, (x) => x.h0 + (x.v0 * x.v0) / (2 * g)], v: ["v_B", "Geschwindigkeit beim Aufprall auf den Boden", "m/s", 3, 1, (x) => Math.sqrt(x.v0 * x.v0 + 2 * g * x.h0)] },
+    tex: { H: "m g h_0 + \\tfrac12 m v_0^2 = m g h_{max} \\;\\Rightarrow\\; h_{max} = h_0 + \\frac{v_0^2}{2g}", v: "\\tfrac12 m v_0^2 + m g h_0 = \\tfrac12 m v_B^2 \\;\\Rightarrow\\; v_B = \\sqrt{v_0^2 + 2 g h_0}" },
+    inv: { v0: "v_0 = \\sqrt{2g\\,(h_{max} - h_0)}" }, invKeys: ["v0"], invOut: "H", cst: CG });
+  spec("pendel-energie", { ctx: "Ein Fadenpendel der Länge $l$ wird um den Winkel $\\varphi$ ausgelenkt und aus der Ruhe losgelassen (ohne Reibung).",
+    v: { l: ["l", "Fadenlänge", "m", 0.3, 3, 2, 1, "cm", 0.01], ph: ["\\varphi", "Auslenkwinkel", "°", 10, 80, 0, DEG] },
+    o: { v: ["v", "Geschwindigkeit im tiefsten Punkt", "m/s", 3, 1, (x) => Math.sqrt(2 * g * x.l * (1 - Math.cos(x.ph)))], h: ["h", "Höhe des Startpunkts über dem tiefsten Punkt", "cm", 3, 0.01, (x) => x.l * (1 - Math.cos(x.ph))] },
+    tex: { v: "h = l\\,(1 - \\cos\\varphi),\\; m g h = \\tfrac12 m v^2 \\;\\Rightarrow\\; v = \\sqrt{2 g l\\,(1 - \\cos\\varphi)}", h: "h = l\\,(1 - \\cos\\varphi)" },
+    inv: { l: "l = \\frac{v^2}{2 g\\,(1 - \\cos\\varphi)}" }, invKeys: ["l"], invOut: "v", cst: CG });
+  spec("looping", { ctx: "Ein Wagen startet aus der Ruhe auf einer reibungsfreien Bahn und soll einen Looping mit dem Radius $r$ durchfahren, ohne im obersten Punkt aus der Bahn zu fallen.",
+    v: { r: ["r", "Radius des Loopings", "m", 2, 15, 1, 1, "cm", 0.01] },
+    o: { h: ["h_{min}", "Mindesthöhe des Starts über dem tiefsten Punkt", "m", 3, 1, (x) => 2.5 * x.r] },
+    tex: { h: "m\\,\\frac{v_o^2}{r} = m g,\\; m g h = m g\\cdot 2r + \\tfrac12 m v_o^2 \\;\\Rightarrow\\; h_{min} = \\tfrac52\\,r" }, inv: { r: "r = \\tfrac25\\,h_{min}" } });
+  spec("haftreibung", { ctx: "Ein Klotz liegt auf einem Brett, dessen Neigung langsam vergrößert wird. Die Haftreibungszahl zwischen Klotz und Brett ist $\\mu_H$.",
+    v: { mu: ["\\mu_H", "Haftreibungszahl", "", 0.15, 1.1, 2] },
+    o: { al: ["\\alpha", "Neigungswinkel, bei dem der Klotz zu rutschen beginnt", "°", 3, DEG, (x) => Math.atan(x.mu)] },
+    tex: { al: "m g\\sin\\alpha = \\mu_H\\,m g\\cos\\alpha \\;\\Rightarrow\\; \\tan\\alpha = \\mu_H" }, inv: { mu: "\\mu_H = \\tan\\alpha" } });
+  spec("zug-schraeg", { ctx: "Eine Kiste der Masse $m$ wird mit der Kraft $F$ unter dem Winkel $\\beta$ zur Waagerechten schräg nach oben über einen waagerechten Boden gezogen. Die Gleitreibungszahl ist $\\mu$.",
+    v: { m: ["m", "Masse", "kg", 5, 50, 0], F: ["F", "Zugkraft", "N", 30, 300, 0], be: ["\\beta", "Zugwinkel", "°", 10, 50, 0, DEG], mu: ["\\mu", "Gleitreibungszahl", "", 0.1, 0.5, 2] },
+    o: { a: ["a", "Beschleunigung", "m/s²", 3, 1, (x) => (x.F * Math.cos(x.be) - x.mu * (x.m * g - x.F * Math.sin(x.be))) / x.m] },
+    tex: { a: "m a = F\\cos\\beta - \\mu\\,(m g - F\\sin\\beta)" }, inv: { F: "F = \\frac{m\\,(a + \\mu g)}{\\cos\\beta + \\mu\\sin\\beta}" }, invKeys: ["F"],
+    ok: (x) => x.F * Math.sin(x.be) < 0.8 * x.m * g && (x.F * Math.cos(x.be) - x.mu * (x.m * g - x.F * Math.sin(x.be))) / x.m > 0.3, cst: CG });
+  spec("ballistisch", { ctx: "Ein Geschoss der Masse $m$ bleibt in einem an Fäden hängenden Holzklotz der Masse $M$ stecken. Der Klotz schwingt danach um die Höhe $h$ nach oben (ballistisches Pendel).",
+    v: { m: ["m", "Masse des Geschosses", "g", 2, 30, 0, 1e-3, "kg", 1], M: ["M", "Masse des Klotzes", "kg", 0.5, 5, 1, 1, "g", 1e-3], h: ["h", "Steighöhe", "cm", 1, 25, 1, 0.01, "m", 1] },
+    o: { v: ["v", "Geschwindigkeit des Geschosses", "m/s", 3, 1, (x) => ((x.m + x.M) / x.m) * Math.sqrt(2 * g * x.h)] },
+    tex: { v: "V = \\sqrt{2 g h},\\; m v = (m + M)\\,V \\;\\Rightarrow\\; v = \\frac{m + M}{m}\\,\\sqrt{2 g h}" }, inv: { h: "h = \\frac{1}{2g}\\left(\\frac{m\\,v}{m + M}\\right)^2" }, invKeys: ["h"],
+    ok: (x) => ((x.m + x.M) / x.m) * Math.sqrt(2 * g * x.h) < 1200, cst: CG });
+  spec("stoss-gegen", { ctx: "Zwei Wagen fahren auf einer Schiene aufeinander zu und koppeln beim Zusammenstoß. Wagen 1 fährt nach rechts, Wagen 2 nach links.",
+    v: { m1: ["m_1", "Masse von Wagen 1", "kg", 0.5, 3, 1, 1, "g", 1e-3], v1: ["v_1", "Geschwindigkeit von Wagen 1", "m/s", 1, 5, 1, 1, "cm/s", 0.01], m2: ["m_2", "Masse von Wagen 2", "kg", 0.2, 2, 1, 1, "g", 1e-3], v2: ["v_2", "Geschwindigkeit von Wagen 2 (Betrag)", "m/s", 0.5, 3, 1, 1, "cm/s", 0.01] },
+    o: { v: ["v'", "gemeinsame Geschwindigkeit nach rechts", "m/s", 3, 1, (x) => (x.m1 * x.v1 - x.m2 * x.v2) / (x.m1 + x.m2)] },
+    tex: { v: "m_1 v_1 + m_2\\,(-v_2) = (m_1 + m_2)\\,v' \\;\\Rightarrow\\; v' = \\frac{m_1 v_1 - m_2 v_2}{m_1 + m_2}" }, noInv: true,
+    ok: (x) => (x.m1 * x.v1 - x.m2 * x.v2) / (x.m1 + x.m2) > 0.1 });
   spec("schiefer-wurf", { ctx: "Ein Ball wird vom Boden mit $v_0$ unter dem Winkel $\\alpha$ zur Waagerechten abgeworfen (ohne Luftwiderstand).",
     v: { v0: ["v_0", "Abwurfgeschwindigkeit", "m/s", 5, 30, 1, 1, "km/h", 1 / 3.6], al: ["\\alpha", "Abwurfwinkel", "°", 15, 75, 0, DEG] },
     o: { w: ["w", "Wurfweite", "m", 3, 1, (x) => (x.v0 * x.v0 * Math.sin(2 * x.al)) / g], H: ["h_{max}", "Wurfhöhe", "m", 3, 1, (x) => Math.pow(x.v0 * Math.sin(x.al), 2) / (2 * g)] },
@@ -111,6 +213,49 @@
     v: { m: ["m", "Masse", "kg", 800, 2000, 0, 1, "t", 1e3], v: ["v", "Geschwindigkeit", "km/h", 20, 100, 0, 1 / 3.6, "m/s", 1], r: ["r", "Kurvenradius", "m", 20, 200, 0] },
     o: { F: ["F_Z", "nötige Zentripetalkraft", "kN", 3, 1e3, (x) => (x.m * x.v * x.v) / x.r] },
     tex: { F: "F_Z = \\frac{m v^2}{r}" }, inv: { r: "r = \\frac{m v^2}{F_Z}", v: "v = \\sqrt{\\frac{F_Z r}{m}}" } });
+  // circular motion and gravitation beyond the basic types
+  const CGM = "G = 6,674 · 10⁻¹¹ m³/(kg·s²), Erdmasse 5,97 · 10²⁴ kg, Erdradius 6371 km";
+  spec("drehzahl", { ctx: "Ein Rad mit dem Radius $r$ dreht sich gleichförmig mit der Drehzahl $n$.",
+    v: { n: ["n", "Drehzahl", "1/min", 100, 6000, 0, 1 / 60], r: ["r", "Radius", "cm", 2, 50, 1, 0.01, "mm", 0.001] },
+    o: { w: ["\\omega", "Winkelgeschwindigkeit", "1/s", 3, 1, (x) => 2 * Math.PI * x.n], v: ["v", "Bahngeschwindigkeit am Rand", "m/s", 3, 1, (x) => 2 * Math.PI * x.n * x.r] },
+    tex: { w: "f = \\frac{n}{60\\,\\mathrm{s}},\\; \\omega = 2\\pi f", v: "v = \\omega\\,r = 2\\pi f\\,r" }, inv: { r: "r = \\frac{v}{2\\pi f}", n: "n = 60\\,\\mathrm{s}\\cdot\\frac{v}{2\\pi r}" }, invOut: "v" });
+  spec("kurve-max", { ctx: "Ein Fahrzeug durchfährt eine waagerechte Kurve mit dem Radius $r$. Die Haftreibungszahl zwischen Reifen und Straße ist $\\mu_H$.",
+    v: { r: ["r", "Kurvenradius", "m", 10, 300, 0, 1, "km", 1e3], mu: ["\\mu_H", "Haftreibungszahl", "", 0.2, 1.0, 2] },
+    o: { v: ["v_{max}", "größte mögliche Geschwindigkeit", "km/h", 3, 1 / 3.6, (x) => Math.sqrt(x.mu * g * x.r)] },
+    tex: { v: "\\mu_H\\,m g = m\\,\\frac{v^2}{r} \\;\\Rightarrow\\; v_{max} = \\sqrt{\\mu_H\\,g\\,r}" }, inv: { r: "r = \\frac{v_{max}^2}{\\mu_H\\,g}", mu: "\\mu_H = \\frac{v_{max}^2}{g\\,r}" }, cst: CG });
+  spec("ueberhoehung", { ctx: "Eine Kurve mit dem Radius $r$ ist so geneigt (überhöht), dass ein Fahrzeug sie mit der Geschwindigkeit $v$ ganz ohne Reibung durchfahren kann.",
+    v: { r: ["r", "Kurvenradius", "m", 20, 500, 0, 1, "km", 1e3], v: ["v", "Geschwindigkeit", "m/s", 8, 45, 1, 1, "km/h", 1 / 3.6] },
+    o: { al: ["\\alpha", "Neigungswinkel der Fahrbahn", "°", 3, DEG, (x) => Math.atan((x.v * x.v) / (x.r * g))] },
+    tex: { al: "F_N\\sin\\alpha = m\\,\\frac{v^2}{r},\\; F_N\\cos\\alpha = m g \\;\\Rightarrow\\; \\tan\\alpha = \\frac{v^2}{r\\,g}" }, inv: { v: "v = \\sqrt{r\\,g\\tan\\alpha}", r: "r = \\frac{v^2}{g\\tan\\alpha}" },
+    ok: (x) => Math.atan((x.v * x.v) / (x.r * g)) < 60 * DEG, cst: CG });
+  spec("kegelpendel", { ctx: "Ein Sitz eines Kettenkarussells läuft gleichförmig auf einem Kreis mit dem Radius $r$; die Kette ist dabei um den Winkel $\\alpha$ gegen die Senkrechte ausgelenkt.",
+    v: { r: ["r", "Bahnradius", "m", 3, 12, 1, 1, "cm", 0.01], al: ["\\alpha", "Auslenkwinkel", "°", 15, 60, 0, DEG] },
+    o: { v: ["v", "Bahngeschwindigkeit", "m/s", 3, 1, (x) => Math.sqrt(x.r * g * Math.tan(x.al))], T: ["T", "Umlaufdauer", "s", 3, 1, (x) => (2 * Math.PI * x.r) / Math.sqrt(x.r * g * Math.tan(x.al))] },
+    tex: { v: "\\tan\\alpha = \\frac{F_Z}{F_G} = \\frac{v^2}{r\\,g} \\;\\Rightarrow\\; v = \\sqrt{r\\,g\\tan\\alpha}", T: "T = \\frac{2\\pi r}{v} = 2\\pi\\sqrt{\\frac{r}{g\\tan\\alpha}}" }, inv: { r: "r = \\frac{v^2}{g\\tan\\alpha}" }, invKeys: ["r"], invOut: "v", cst: CG });
+  spec("vertikalkreis", { ctx: "Ein Eimer Wasser (Gesamtmasse $m$) wird an einem Seil auf einem senkrechten Kreis mit dem Radius $r$ geschwungen. Im obersten Punkt ist er $v$ schnell.",
+    v: { m: ["m", "Masse", "kg", 0.5, 5, 1, 1, "g", 1e-3], r: ["r", "Radius", "m", 0.5, 1.5, 2, 1, "cm", 0.01], v: ["v", "Geschwindigkeit oben", "m/s", 3, 8, 1] },
+    o: { F: ["F_S", "Seilkraft im obersten Punkt", "N", 3, 1, (x) => (x.m * x.v * x.v) / x.r - x.m * g] },
+    tex: { F: "F_S + m g = m\\,\\frac{v^2}{r} \\;\\Rightarrow\\; F_S = m\\,\\frac{v^2}{r} - m g" }, inv: { v: "v = \\sqrt{r\\left(\\frac{F_S}{m} + g\\right)}" }, invKeys: ["v"],
+    ok: (x) => (x.v * x.v) / x.r > 1.2 * g, cst: CG });
+  spec("ortsfaktor", { ctx: "Ein Körper befindet sich in der Höhe $h$ über der Erdoberfläche.",
+    v: { h: ["h", "Höhe", "km", 10, 40000, 0, 1e3] },
+    o: { g: ["g(h)", "Ortsfaktor in dieser Höhe", "m/s²", 3, 1, (x) => (G * ME) / Math.pow(RE + x.h, 2)] },
+    tex: { g: "g(h) = G\\,\\frac{M_E}{(R_E + h)^2}" }, inv: { h: "h = \\sqrt{\\frac{G M_E}{g}} - R_E" }, cst: CGM });
+  spec("zentralmasse", { ctx: "Ein Mond umkreist einen Planeten auf einer nahezu kreisförmigen Bahn mit dem Radius $r$ in der Umlaufdauer $T$.",
+    v: { r: ["r", "Bahnradius", "km", 5000, 2000000, 0, 1e3], T: ["T", "Umlaufdauer", "d", 0.3, 30, 2, 86400, "h", 3600] },
+    o: { M: ["M", "Masse des Planeten", "10²⁴ kg", 3, 1e24, (x) => (4 * Math.PI * Math.PI * Math.pow(x.r, 3)) / (G * x.T * x.T)] },
+    tex: { M: "G\\,\\frac{M m}{r^2} = m\\,\\frac{4\\pi^2}{T^2}\\,r \\;\\Rightarrow\\; M = \\frac{4\\pi^2 r^3}{G\\,T^2}" }, inv: { T: "T = 2\\pi\\sqrt{\\frac{r^3}{G M}}", r: "r = \\sqrt[3]{\\frac{G M T^2}{4\\pi^2}}" },
+    ok: (x) => { const M = (4 * Math.PI * Math.PI * Math.pow(x.r, 3)) / (G * x.T * x.T); return M > 1e22 && M < 5e27; }, cst: "G = 6,674 · 10⁻¹¹ m³/(kg·s²)" });
+  spec("bahnhoehe", { ctx: "Ein Satellit soll die Erde auf einer Kreisbahn in der Umlaufdauer $T$ umrunden.",
+    v: { T: ["T", "Umlaufdauer", "h", 1.6, 30, 2, 3600, "min", 60] },
+    o: { h: ["h", "Bahnhöhe über der Erdoberfläche", "km", 3, 1e3, (x) => Math.cbrt((G * ME * x.T * x.T) / (4 * Math.PI * Math.PI)) - RE] },
+    tex: { h: "G\\,\\frac{M_E m}{r^2} = m\\,\\frac{4\\pi^2}{T^2}\\,r \\;\\Rightarrow\\; r = \\sqrt[3]{\\frac{G M_E T^2}{4\\pi^2}},\\; h = r - R_E" }, inv: { T: "T = 2\\pi\\sqrt{\\frac{(R_E + h)^3}{G M_E}}" },
+    ok: (x) => Math.cbrt((G * ME * x.T * x.T) / (4 * Math.PI * Math.PI)) - RE > 150e3, cst: CGM });
+  spec("flucht-orbit", { ctx: "Eine Sonde umkreist die Erde auf einer Kreisbahn in der Höhe $h$. Von dort soll sie das Schwerefeld der Erde verlassen.",
+    v: { h: ["h", "Bahnhöhe", "km", 200, 36000, 0, 1e3] },
+    o: { dv: ["\\Delta v", "nötige Geschwindigkeitszunahme", "km/s", 3, 1e3, (x) => (Math.SQRT2 - 1) * Math.sqrt((G * ME) / (RE + x.h))], vF: ["v_F", "Fluchtgeschwindigkeit in dieser Höhe", "km/s", 3, 1e3, (x) => Math.sqrt((2 * G * ME) / (RE + x.h))] },
+    tex: { dv: "v_K = \\sqrt{\\frac{G M_E}{R_E + h}},\\; v_F = \\sqrt2\\,v_K \\;\\Rightarrow\\; \\Delta v = (\\sqrt2 - 1)\\,v_K", vF: "\\tfrac12 m v_F^2 = G\\,\\frac{M_E m}{R_E + h} \\;\\Rightarrow\\; v_F = \\sqrt{\\frac{2 G M_E}{R_E + h}}" },
+    inv: { h: "h = \\frac{2 G M_E}{v_F^2} - R_E" }, invOut: "vF", cst: CGM });
   spec("vt", { ctx: "Ein Zug beschleunigt aus dem Stand gleichmäßig in der Zeit $t_1$ auf $v$, fährt dann die Zeit $t_2$ gleichförmig und bremst in $t_3$ gleichmäßig bis zum Stillstand.",
     v: { v: ["v", "Höchstgeschwindigkeit", "m/s", 10, 40, 0, 1, "km/h", 1 / 3.6], t1: ["t_1", "Beschleunigungszeit", "s", 10, 60, 0], t2: ["t_2", "Fahrzeit mit konstantem Tempo", "s", 20, 120, 0, 1, "min", 60], t3: ["t_3", "Bremszeit", "s", 10, 50, 0] },
     o: { s: ["s", "Gesamtstrecke", "m", 3, 1, (x) => 0.5 * x.v * x.t1 + x.v * x.t2 + 0.5 * x.v * x.t3], a: ["a", "Beschleunigung beim Anfahren", "m/s²", 3, 1, (x) => x.v / x.t1] },
@@ -134,6 +279,40 @@
     v: { UB: ["U_B", "Beschleunigungsspannung", "V", 500, 3000, 0, 1, "kV", 1e3], Uy: ["U_y", "Ablenkspannung", "V", 20, 200, 0], l: ["l", "Plattenlänge", "cm", 3, 8, 1, 0.01, "mm", 1e-3], d: ["d", "Plattenabstand", "cm", 1, 4, 1, 0.01, "mm", 1e-3] },
     o: { y: ["y", "Ablenkung am Plattenende", "mm", 3, 1e-3, (x) => (x.Uy * x.l * x.l) / (4 * x.d * x.UB)] },
     tex: { y: "y = \\frac{U_y\\,l^2}{4\\,d\\,U_B}" }, inv: { Uy: "U_y = \\frac{4\\,d\\,U_B\\,y}{l^2}", UB: "U_B = \\frac{U_y\\,l^2}{4\\,d\\,y}" }, ok: (x) => (x.Uy * x.l * x.l) / (4 * x.d * x.UB) < x.d / 2 });
+  // electric field beyond the basic types: point charges, potential, screen deflection, energy density, discharge, Stokes
+  const KC = 8.988e9, CK = "k = 1/(4πε₀) = 8,988 · 10⁹ N·m²/C²";
+  spec("coulomb", { ctx: "Zwei kleine geladene Kugeln mit den Ladungen $q_1$ und $q_2$ haben den Mittelpunktsabstand $r$ (in Luft).",
+    v: { q1: ["q_1", "Ladung 1", "nC", 1, 500, 0, 1e-9, "µC", 1e-6], q2: ["q_2", "Ladung 2", "nC", 1, 500, 0, 1e-9, "µC", 1e-6], r: ["r", "Abstand", "cm", 2, 50, 1, 0.01, "mm", 1e-3] },
+    o: { F: ["F", "Coulombkraft", "mN", 3, 1e-3, (x) => (KC * x.q1 * x.q2) / (x.r * x.r)] },
+    tex: { F: "F = \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{q_1 q_2}{r^2}" }, inv: { r: "r = \\sqrt{\\frac{q_1 q_2}{4\\pi\\varepsilon_0 F}}", q2: "q_2 = \\frac{4\\pi\\varepsilon_0 F r^2}{q_1}" }, cst: CK });
+  spec("punktfeld", { ctx: "Eine Punktladung $Q$ erzeugt ein radiales elektrisches Feld. Betrachtet wird ein Punkt im Abstand $r$.",
+    v: { Q: ["Q", "Ladung", "nC", 1, 100, 0, 1e-9, "pC", 1e-12], r: ["r", "Abstand", "cm", 1, 50, 1, 0.01, "mm", 1e-3] },
+    o: { E: ["E", "Feldstärke", "kV/m", 3, 1e3, (x) => (KC * x.Q) / (x.r * x.r)], phi: ["\\varphi", "Potenzial (Nullpunkt im Unendlichen)", "V", 3, 1, (x) => (KC * x.Q) / x.r] },
+    tex: { E: "E = \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{Q}{r^2}", phi: "\\varphi = \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{Q}{r}" }, inv: { r: "r = \\sqrt{\\frac{Q}{4\\pi\\varepsilon_0 E}}" }, invKeys: ["r"], invOut: "E", cst: CK });
+  spec("schirmablenkung", { ctx: "In einer Braunschen Röhre fliegt ein mit $U_B$ beschleunigtes Elektron mittig durch einen Ablenkkondensator (Länge $l$, Plattenabstand $d$, Spannung $U_y$). Der Schirm steht im Abstand $s$ von der Mitte des Kondensators.",
+    v: { UB: ["U_B", "Beschleunigungsspannung", "V", 500, 3000, 0, 1, "kV", 1e3], Uy: ["U_y", "Ablenkspannung", "V", 20, 150, 0], l: ["l", "Plattenlänge", "cm", 3, 6, 1, 0.01], d: ["d", "Plattenabstand", "cm", 1, 3, 1, 0.01], s: ["s", "Abstand Kondensatormitte bis Schirm", "cm", 15, 40, 0, 0.01, "m", 1] },
+    o: { Y: ["Y", "Auslenkung auf dem Schirm", "cm", 3, 0.01, (x) => (x.s * x.Uy * x.l) / (2 * x.d * x.UB)] },
+    tex: { Y: "\\tan\\alpha = \\frac{U_y\\,l}{2\\,d\\,U_B},\\; Y = s\\tan\\alpha = \\frac{s\\,U_y\\,l}{2\\,d\\,U_B}" }, inv: { Uy: "U_y = \\frac{2\\,d\\,U_B\\,Y}{s\\,l}" }, invKeys: ["Uy"],
+    ok: (x) => (x.Uy * x.l * x.l) / (4 * x.d * x.UB) < x.d / 2 });
+  spec("austrittswinkel", { ctx: "Ein mit $U_B$ beschleunigtes Elektron durchfliegt einen Ablenkkondensator (Länge $l$, Plattenabstand $d$, Spannung $U_y$).",
+    v: { UB: ["U_B", "Beschleunigungsspannung", "V", 500, 3000, 0, 1, "kV", 1e3], Uy: ["U_y", "Ablenkspannung", "V", 20, 200, 0], l: ["l", "Plattenlänge", "cm", 3, 8, 1, 0.01, "mm", 1e-3], d: ["d", "Plattenabstand", "cm", 1, 4, 1, 0.01, "mm", 1e-3] },
+    o: { al: ["\\alpha", "Austrittswinkel gegen die Einflugrichtung", "°", 3, DEG, (x) => Math.atan((x.Uy * x.l) / (2 * x.d * x.UB))] },
+    tex: { al: "\\tan\\alpha = \\frac{v_y}{v_0} = \\frac{a\\,t}{v_0} = \\frac{U_y\\,l}{2\\,d\\,U_B}" }, noInv: true, ok: (x) => (x.Uy * x.l * x.l) / (4 * x.d * x.UB) < x.d / 2 });
+  spec("energiedichte", { ctx: "In einem Plattenkondensator (Luft) herrscht ein homogenes Feld der Feldstärke $E$.",
+    v: { E: ["E", "Feldstärke", "kV/m", 10, 3000, 0, 1e3, "V/cm", 100] },
+    o: { w: ["w", "Energiedichte des Feldes", "J/m³", 3, 1, (x) => 0.5 * eps0 * x.E * x.E] },
+    tex: { w: "w = \\frac{W}{V} = \\frac{\\tfrac12 C U^2}{A d} = \\tfrac12\\,\\varepsilon_0 E^2" }, inv: { E: "E = \\sqrt{\\frac{2w}{\\varepsilon_0}}" }, cst: "ε₀ = 8,854 · 10⁻¹² As/(Vm)" });
+  spec("rc-entladung", { ctx: "Ein Kondensator der Kapazität $C$ ist auf $U_0$ geladen und entlädt sich über einen Widerstand $R$.",
+    v: { C: ["C", "Kapazität", "µF", 1, 1000, 0, 1e-6, "mF", 1e-3], R: ["R", "Widerstand", "kΩ", 1, 100, 0, 1e3, "Ω", 1], U0: ["U_0", "Anfangsspannung", "V", 5, 50, 0] },
+    o: { th: ["t_{1/2}", "Halbwertszeit der Spannung", "s", 3, 1, (x) => x.R * x.C * Math.LN2], tau: ["\\tau", "Zeitkonstante", "s", 3, 1, (x) => x.R * x.C] },
+    tex: { th: "U(t) = U_0\\,e^{-t/(RC)},\\; \\tfrac12 = e^{-t_{1/2}/(RC)} \\;\\Rightarrow\\; t_{1/2} = RC\\ln 2", tau: "\\tau = R\\,C" }, inv: { C: "C = \\frac{\\tau}{R}", R: "R = \\frac{\\tau}{C}" }, invOut: "tau", noPow: ["U0"],
+    ok: (x) => x.R * x.C > 0.005 && x.R * x.C < 200 });
+  spec("millikan-stokes", { ctx: "Ein Öltröpfchen (Dichte 875 kg/m³) sinkt ohne Feld mit der konstanten Geschwindigkeit $v$ durch Luft (Viskosität 1,81 · 10⁻⁵ Pa·s). Mit eingeschaltetem Feld (Plattenabstand 6,0 mm) schwebt es bei der Spannung $U$.",
+    v: { v: ["v", "Sinkgeschwindigkeit", "µm/s", 20, 200, 0, 1e-6, "mm/s", 1e-3], U: ["U", "Schwebespannung", "V", 100, 600, 0] },
+    o: { q: ["q", "Ladung des Tröpfchens", "10⁻¹⁹ C", 3, 1e-19, (x) => { const r = Math.sqrt((9 * 1.81e-5 * x.v) / (2 * 875 * g)); return (4 / 3) * Math.PI * r * r * r * 875 * g * 6e-3 / x.U; }] },
+    tex: { q: "6\\pi\\eta r v = \\tfrac43\\pi r^3\\rho g \\Rightarrow r = \\sqrt{\\frac{9\\eta v}{2\\rho g}},\\; q = \\frac{m g d}{U} = \\frac{\\tfrac43\\pi r^3\\rho\\,g\\,d}{U}" }, noInv: true, cst: CG,
+    // measured data are consistent with the quantisation: q is close to a whole multiple of e
+    ok: (x) => { const r = Math.sqrt((9 * 1.81e-5 * x.v) / (2 * 875 * g)); const n = ((4 / 3) * Math.PI * r * r * r * 875 * g * 6e-3 / x.U) / e; return n >= 0.95 && n < 12 && Math.abs(n - Math.round(n)) < 0.03 * Math.round(n) + 0.02; } });
   spec("plattenfeld", { ctx: "An einem Plattenkondensator mit dem Plattenabstand $d$ liegt die Spannung $U$.",
     v: { U: ["U", "Spannung", "V", 10, 5000, 0, 1, "kV", 1e3], d: ["d", "Plattenabstand", "mm", 1, 50, 0, 1e-3, "cm", 0.01] },
     o: { E: ["E", "Feldstärke", "kV/m", 3, 1e3, (x) => x.U / x.d] },
@@ -142,6 +321,29 @@
     v: { B: ["B", "Flussdichte", "mT", 50, 800, 0, 1e-3, "T", 1], I: ["I", "Stromstärke", "mA", 5, 50, 0, 1e-3, "A", 1], n: ["n", "Ladungsträgerdichte", "10²¹ m⁻³", 1, 20, 0, 1e21], d: ["d", "Dicke", "mm", 0.5, 2, 1, 1e-3, "µm", 1e-6] },
     o: { U: ["U_H", "Hallspannung", "mV", 3, 1e-3, (x) => (x.B * x.I) / (x.n * e * x.d)] },
     tex: { U: "U_H = \\frac{B\\,I}{n\\,e\\,d}" }, inv: { n: "n = \\frac{B\\,I}{e\\,d\\,U_H}", B: "B = \\frac{n\\,e\\,d\\,U_H}{I}" }, cst: CE });
+  // induction beyond the basic types
+  spec("generator", { ctx: "Eine Spule mit $N$ Windungen und der Fläche $A$ dreht sich mit der Drehzahl $n$ gleichmäßig in einem homogenen Magnetfeld $B$.",
+    v: { N: ["N", "Windungszahl", "", 50, 1000, 0], A: ["A", "Spulenfläche", "cm²", 20, 400, 0, 1e-4], B: ["B", "Flussdichte", "mT", 20, 500, 0, 1e-3, "T", 1], n: ["n", "Drehzahl", "1/min", 300, 3000, 0, 1 / 60] },
+    o: { U: ["\\hat U", "Scheitelwert der Induktionsspannung", "V", 3, 1, (x) => x.N * x.B * x.A * 2 * Math.PI * x.n] },
+    tex: { U: "\\Phi = B A\\cos(\\omega t),\\; U = -N\\dot\\Phi = N B A\\,\\omega\\sin(\\omega t),\\; \\hat U = N B A\\cdot 2\\pi f" }, inv: { B: "B = \\frac{\\hat U}{N A\\,\\omega}", N: "N = \\frac{\\hat U}{B A\\,\\omega}" } });
+  spec("spulenenergie", { ctx: "Durch eine Spule mit der Induktivität $L$ fließt der Strom $I$.",
+    v: { L: ["L", "Induktivität", "mH", 1, 1000, 0, 1e-3, "H", 1], I: ["I", "Stromstärke", "A", 0.1, 5, 1, 1, "mA", 1e-3] },
+    o: { E: ["E_{mag}", "im Magnetfeld gespeicherte Energie", "mJ", 3, 1e-3, (x) => 0.5 * x.L * x.I * x.I] },
+    tex: { E: "E_{mag} = \\tfrac12 L I^2" }, inv: { I: "I = \\sqrt{\\frac{2E_{mag}}{L}}", L: "L = \\frac{2E_{mag}}{I^2}" } });
+  spec("einschalten", { ctx: "Eine Spule (Induktivität $L$) liegt in Reihe mit dem Widerstand $R$ an der Gleichspannung $U_0$ und wird eingeschaltet.",
+    v: { L: ["L", "Induktivität", "mH", 10, 2000, 0, 1e-3, "H", 1], R: ["R", "Widerstand", "Ω", 5, 500, 0], U0: ["U_0", "Spannung", "V", 2, 24, 0] },
+    o: { tau: ["\\tau", "Zeitkonstante", "ms", 3, 1e-3, (x) => x.L / x.R], I: ["I_{end}", "Stromstärke nach langer Zeit", "mA", 3, 1e-3, (x) => x.U0 / x.R] },
+    tex: { tau: "U_0 = R I + L\\dot I \\;\\Rightarrow\\; I(t) = \\frac{U_0}{R}\\left(1 - e^{-t/\\tau}\\right),\\; \\tau = \\frac{L}{R}", I: "I_{end} = \\frac{U_0}{R}" }, inv: { L: "L = \\tau\\,R" }, invKeys: ["L"], invOut: "tau",
+    ok: (x) => x.L / x.R > 1e-4 && x.L / x.R < 1 });
+  spec("fernleitung", { ctx: "Ein Kraftwerk überträgt die Leistung $P$ bei der Spannung $U$ über eine Leitung mit dem Widerstand $R$.",
+    v: { P: ["P", "übertragene Leistung", "MW", 1, 500, 0, 1e6, "kW", 1e3], R: ["R", "Leitungswiderstand", "Ω", 1, 20, 1], U: ["U", "Übertragungsspannung", "kV", 10, 400, 0, 1e3, "V", 1] },
+    o: { PV: ["P_V", "Leistungsverlust in der Leitung", "kW", 3, 1e3, (x) => Math.pow(x.P / x.U, 2) * x.R] },
+    tex: { PV: "I = \\frac{P}{U},\\; P_V = I^2 R = \\frac{P^2 R}{U^2}" }, inv: { U: "U = P\\sqrt{\\frac{R}{P_V}}" }, invKeys: ["U"],
+    ok: (x) => Math.pow(x.P / x.U, 2) * x.R < 0.3 * x.P });
+  spec("leiterschleife", { ctx: "Eine rechteckige Leiterschleife (Breite $b$, $N$ Windungen) wird mit der konstanten Geschwindigkeit $v$ senkrecht zu den Feldlinien aus einem homogenen Magnetfeld $B$ herausgezogen.",
+    v: { b: ["b", "Breite der Schleife", "cm", 2, 30, 0, 0.01, "mm", 1e-3], N: ["N", "Windungszahl", "", 1, 200, 0], v: ["v", "Geschwindigkeit", "cm/s", 1, 100, 0, 0.01, "m/s", 1], B: ["B", "Flussdichte", "mT", 10, 800, 0, 1e-3, "T", 1] },
+    o: { U: ["U_{ind}", "Induktionsspannung", "mV", 3, 1e-3, (x) => x.N * x.B * x.b * x.v] },
+    tex: { U: "U_{ind} = N\\,\\frac{\\Delta\\Phi}{\\Delta t} = N B\\,\\frac{\\Delta A}{\\Delta t} = N B\\,b\\,v" }, inv: { v: "v = \\frac{U_{ind}}{N B b}", B: "B = \\frac{U_{ind}}{N b v}" } });
   spec("induktion", { ctx: "Eine Spule mit $N$ Windungen und der Querschnittsfläche $A$ steht senkrecht in einem Magnetfeld, dessen Flussdichte in der Zeit $\\Delta t$ gleichmäßig um $\\Delta B$ zunimmt. Gefragt ist der Betrag der Spannung.",
     v: { N: ["N", "Windungszahl", "", 50, 2000, 0], A: ["A", "Querschnittsfläche", "cm²", 5, 100, 0, 1e-4, "m²", 1], dB: ["\\Delta B", "Änderung der Flussdichte", "mT", 10, 500, 0, 1e-3, "T", 1], dt: ["\\Delta t", "Zeit", "ms", 5, 500, 0, 1e-3, "s", 1] },
     o: { U: ["U_{ind}", "Induktionsspannung", "V", 3, 1, (x) => (x.N * x.A * x.dB) / x.dt] },
@@ -166,6 +368,28 @@
     v: { n: ["n", "Zahl der Spalte", "", 2, 20, 0], U: ["U", "Spannung je Spalt", "kV", 10, 100, 0, 1e3, "V", 1], f: ["f", "Frequenz", "MHz", 5, 30, 0, 1e6, "Hz", 1] },
     o: { E: ["E_n", "Energie nach n Spalten", "keV", 3, 1e3 * e, (x) => x.n * e * x.U], l: ["l_n", "Länge der n-ten Driftröhre", "cm", 3, 0.01, (x) => Math.sqrt((2 * x.n * e * x.U) / mp) / (2 * x.f)] },
     tex: { E: "E_n = n\\,e\\,U", l: "l_n = \\frac{v_n}{2f} = \\frac{1}{2f}\\sqrt{\\frac{2 n e U}{m_p}}" }, inv: { U: "U = \\frac{E_n}{n\\,e}" }, invKeys: ["U"], invOut: "E", cst: CE + ", mₚ = 1,673 · 10⁻²⁷ kg" });
+  // magnetic field beyond the basic types
+  spec("spule", { ctx: "Eine lange, luftgefüllte Spule hat $N$ Windungen auf der Länge $l$ und wird vom Strom $I$ durchflossen.",
+    v: { N: ["N", "Windungszahl", "", 100, 3000, 0], l: ["l", "Spulenlänge", "cm", 10, 60, 0, 0.01, "m", 1], I: ["I", "Stromstärke", "A", 0.2, 5, 1, 1, "mA", 1e-3] },
+    o: { B: ["B", "Flussdichte im Inneren", "mT", 3, 1e-3, (x) => (mu0 * x.N * x.I) / x.l] },
+    tex: { B: "B = \\mu_0\\,\\frac{N\\,I}{l}" }, inv: { I: "I = \\frac{B\\,l}{\\mu_0 N}", N: "N = \\frac{B\\,l}{\\mu_0 I}" }, cst: "μ₀ = 4π · 10⁻⁷ Vs/(Am)" });
+  spec("leiterkraft", { ctx: "Ein gerader Leiter der Länge $l$ liegt senkrecht zu den Feldlinien in einem homogenen Magnetfeld $B$ und wird vom Strom $I$ durchflossen.",
+    v: { l: ["l", "Leiterlänge im Feld", "cm", 2, 30, 0, 0.01, "mm", 1e-3], I: ["I", "Stromstärke", "A", 0.5, 10, 1, 1, "mA", 1e-3], B: ["B", "Flussdichte", "mT", 10, 500, 0, 1e-3, "T", 1] },
+    o: { F: ["F", "Kraft auf den Leiter", "mN", 3, 1e-3, (x) => x.I * x.l * x.B] },
+    tex: { F: "F = I\\,l\\,B" }, inv: { B: "B = \\frac{F}{I\\,l}", I: "I = \\frac{F}{l\\,B}" } });
+  spec("zyklotron", { ctx: "In einem Zyklotron (Flussdichte $B$, Radius der Dosen $R$) werden Protonen beschleunigt.",
+    v: { B: ["B", "Flussdichte", "T", 0.5, 2, 2], R: ["R", "Dosenradius", "cm", 20, 100, 0, 0.01, "m", 1] },
+    o: { f: ["f", "Frequenz der Wechselspannung", "MHz", 3, 1e6, (x) => (e * x.B) / (2 * Math.PI * mp)], E: ["E_{max}", "Endenergie", "MeV", 3, 1e6 * e, (x) => Math.pow(e * x.B * x.R, 2) / (2 * mp)] },
+    tex: { f: "T = \\frac{2\\pi m}{e B} \\;\\Rightarrow\\; f = \\frac{e B}{2\\pi m}", E: "r = \\frac{m v}{e B} \\le R \\;\\Rightarrow\\; E_{max} = \\frac{(e B R)^2}{2m}" }, inv: { B: "B = \\frac{2\\pi m f}{e}" }, invKeys: ["B"], invOut: "f",
+    cst: "e = 1,602 · 10⁻¹⁹ C, mₚ = 1,673 · 10⁻²⁷ kg, 1 MeV = 1,602 · 10⁻¹³ J" });
+  spec("helmholtz", { ctx: "Ein Helmholtz-Spulenpaar hat den Spulenradius $R$ und je $N$ Windungen; beide werden vom Strom $I$ durchflossen.",
+    v: { R: ["R", "Spulenradius", "cm", 10, 30, 0, 0.01, "m", 1], N: ["N", "Windungen je Spule", "", 50, 300, 0], I: ["I", "Spulenstrom", "A", 0.5, 3, 2, 1, "mA", 1e-3] },
+    o: { B: ["B", "Flussdichte in der Mitte", "mT", 3, 1e-3, (x) => Math.pow(0.8, 1.5) * mu0 * x.N * x.I / x.R] },
+    tex: { B: "B = \\left(\\tfrac45\\right)^{3/2}\\mu_0\\,\\frac{N\\,I}{R}" }, inv: { I: "I = \\frac{B\\,R}{(4/5)^{3/2}\\,\\mu_0 N}" }, invKeys: ["I"], cst: "μ₀ = 4π · 10⁻⁷ Vs/(Am)" });
+  spec("schraube", { ctx: "Ein Elektron fliegt mit der Geschwindigkeit $v$ unter dem Winkel $\\alpha$ zu den Feldlinien in ein homogenes Magnetfeld $B$ und läuft auf einer Schraubenbahn.",
+    v: { v: ["v", "Geschwindigkeit", "10⁶ m/s", 1, 20, 1, 1e6], al: ["\\alpha", "Winkel zu den Feldlinien", "°", 15, 75, 0, DEG], B: ["B", "Flussdichte", "mT", 1, 20, 1, 1e-3] },
+    o: { r: ["r", "Radius der Schraube", "mm", 3, 1e-3, (x) => (me * x.v * Math.sin(x.al)) / (e * x.B)], h: ["h", "Ganghöhe", "cm", 3, 0.01, (x) => (x.v * Math.cos(x.al) * 2 * Math.PI * me) / (e * x.B)] },
+    tex: { r: "r = \\frac{m\\,v\\sin\\alpha}{e B}", h: "h = v\\cos\\alpha\\cdot T = v\\cos\\alpha\\cdot\\frac{2\\pi m}{e B}" }, noInv: true, cst: CE + ", " + CME });
   spec("lorentz", { ctx: "Ein Elektron fliegt mit $v$ senkrecht zu den Feldlinien durch ein homogenes Magnetfeld $B$.",
     v: { v: ["v", "Geschwindigkeit", "10⁶ m/s", 1, 30, 1, 1e6, "km/s", 1e3], B: ["B", "Flussdichte", "mT", 1, 100, 0, 1e-3, "T", 1] },
     o: { F: ["F_L", "Lorentzkraft", "10⁻¹⁵ N", 3, 1e-15, (x) => e * x.v * x.B] },
@@ -192,6 +416,32 @@
     tex: { v: "q E = q v B \\;\\Rightarrow\\; v = \\frac{E}{B} = \\frac{U}{d\\,B}" }, inv: { U: "U = v\\,d\\,B", B: "B = \\frac{U}{d\\,v}" } });
 
   // ---------------------------------------------------------------- Q2: oscillations and waves
+  // optics beyond the basic types
+  spec("doppelspalt", { ctx: "Licht der Wellenlänge $\\lambda$ fällt auf einen Doppelspalt mit dem Spaltabstand $d$; der Schirm steht im Abstand $L$.",
+    v: { la: ["\\lambda", "Wellenlänge", "nm", 400, 700, 0, 1e-9], d: ["d", "Spaltabstand", "mm", 0.1, 1, 2, 1e-3, "µm", 1e-6], L: ["L", "Schirmabstand", "m", 1, 5, 1, 1, "cm", 0.01] },
+    o: { x: ["x_1", "Abstand des ersten Maximums von der Mitte", "mm", 3, 1e-3, (x) => x.L * Math.tan(Math.asin(x.la / x.d))] },
+    tex: { x: "d\\sin\\alpha_1 = \\lambda,\\; x_1 = L\\tan\\alpha_1 \\approx \\frac{\\lambda L}{d}" }, inv: { la: "\\lambda = d\\sin\\left(\\arctan\\frac{x_1}{L}\\right) \\approx \\frac{x_1 d}{L}" }, invKeys: ["la"] });
+  spec("einzelspalt", { ctx: "Licht der Wellenlänge $\\lambda$ fällt auf einen Einzelspalt der Breite $b$; der Schirm steht im Abstand $L$.",
+    v: { la: ["\\lambda", "Wellenlänge", "nm", 400, 700, 0, 1e-9], b: ["b", "Spaltbreite", "µm", 20, 300, 0, 1e-6, "mm", 1e-3], L: ["L", "Schirmabstand", "m", 1, 4, 1] },
+    o: { w: ["w", "Breite des zentralen Maximums (zwischen den ersten Minima)", "cm", 3, 0.01, (x) => 2 * x.L * Math.tan(Math.asin(x.la / x.b))] },
+    tex: { w: "b\\sin\\alpha_1 = \\lambda,\\; w = 2L\\tan\\alpha_1 \\approx \\frac{2\\lambda L}{b}" }, inv: { b: "b = \\frac{\\lambda}{\\sin\\left(\\arctan\\frac{w}{2L}\\right)} \\approx \\frac{2\\lambda L}{w}" }, invKeys: ["b"] });
+  spec("entspiegelung", { ctx: "Eine Glasoberfläche soll für Licht der Wellenlänge $\\lambda$ (in Luft) mit einer dünnen Schicht der Brechzahl $n$ entspiegelt werden (senkrechter Einfall, kleinste Dicke; die Schicht ist optisch dünner als das Glas).",
+    v: { la: ["\\lambda", "Wellenlänge", "nm", 400, 700, 0, 1e-9], n: ["n", "Brechzahl der Schicht", "", 1.25, 1.45, 2] },
+    o: { d: ["d", "Schichtdicke", "nm", 3, 1e-9, (x) => x.la / (4 * x.n)] },
+    tex: { d: "2 n d = \\frac{\\lambda}{2} \\;\\Rightarrow\\; d = \\frac{\\lambda}{4n}" }, inv: { la: "\\lambda = 4 n d" }, invKeys: ["la"] });
+  spec("michelson", { ctx: "In einem Michelson-Interferometer mit Laserlicht der Wellenlänge $\\lambda$ wird ein Spiegel um $\\Delta d$ verschoben.",
+    v: { la: ["\\lambda", "Wellenlänge", "nm", 400, 700, 0, 1e-9], dd: ["\\Delta d", "Spiegelverschiebung", "µm", 10, 500, 0, 1e-6, "mm", 1e-3] },
+    o: { N: ["N", "Zahl der vorbeiwandernden Streifen", "", 3, 1, (x) => (2 * x.dd) / x.la] },
+    tex: { N: "2\\,\\Delta d = N\\,\\lambda \\;\\Rightarrow\\; N = \\frac{2\\,\\Delta d}{\\lambda}" }, inv: { la: "\\lambda = \\frac{2\\,\\Delta d}{N}", dd: "\\Delta d = \\frac{N\\lambda}{2}" } });
+  spec("malus", { ctx: "Unpolarisiertes Licht der Intensität $I_0$ fällt auf zwei Polarisationsfilter, deren Durchlassrichtungen den Winkel $\\theta$ einschließen.",
+    v: { I0: ["I_0", "Intensität des einfallenden Lichts", "W/m²", 10, 1000, 0], th: ["\\theta", "Winkel zwischen den Filtern", "°", 10, 80, 0, DEG] },
+    o: { I: ["I", "Intensität hinter dem zweiten Filter", "W/m²", 3, 1, (x) => 0.5 * x.I0 * Math.pow(Math.cos(x.th), 2)] },
+    tex: { I: "I_1 = \\tfrac12 I_0,\\; I = I_1\\cos^2\\theta = \\tfrac12 I_0\\cos^2\\theta" }, inv: { I0: "I_0 = \\frac{2I}{\\cos^2\\theta}" }, invKeys: ["I0"] });
+  spec("lichtleiter", { ctx: "Ein Lichtleiter hat einen Kern mit der Brechzahl $n_1$ und einen Mantel mit der Brechzahl $n_2 < n_1$; Licht tritt aus Luft in die Stirnfläche ein.",
+    v: { n1: ["n_1", "Brechzahl des Kerns", "", 1.45, 1.65, 3], n2: ["n_2", "Brechzahl des Mantels", "", 1.38, 1.6, 3] },
+    o: { th: ["\\theta_{max}", "größter Eintrittswinkel, bei dem das Licht im Kern bleibt", "°", 3, DEG, (x) => Math.asin(Math.min(1, Math.sqrt(x.n1 * x.n1 - x.n2 * x.n2)))], g: ["\\alpha_g", "Grenzwinkel der Totalreflexion an der Mantelgrenze", "°", 3, DEG, (x) => Math.asin(x.n2 / x.n1)] },
+    tex: { th: "\\sin\\theta_{max} = n_1\\cos\\alpha_g = \\sqrt{n_1^2 - n_2^2}", g: "\\sin\\alpha_g = \\frac{n_2}{n_1}" }, noInv: true,
+    ok: (x) => x.n2 < x.n1 - 0.01 && x.n1 * x.n1 - x.n2 * x.n2 < 0.95 });
   spec("gitter", { ctx: "Laserlicht der Wellenlänge $\\lambda$ fällt senkrecht auf ein Gitter mit $N$ Strichen pro Millimeter. Der Schirm steht im Abstand $e$.",
     v: { N: ["N", "Strichzahl", "1/mm", 100, 600, 0, 1e3], e: ["e", "Schirmabstand", "m", 0.5, 3, 1, 1, "cm", 0.01], lam: ["\\lambda", "Wellenlänge", "nm", 400, 700, 0, 1e-9, "µm", 1e-6] },
     o: { a: ["a_1", "Abstand des Maximums 1. Ordnung von der Mitte", "cm", 3, 0.01, (x) => x.e * Math.tan(Math.asin(x.lam * x.N))] },
@@ -204,10 +454,37 @@
     v: { n: ["n", "Brechzahl", "", 1.3, 2.4, 2] },
     o: { ag: ["\\alpha_G", "Grenzwinkel der Totalreflexion", "°", 3, DEG, (x) => Math.asin(1 / x.n)] },
     tex: { ag: "\\sin\\alpha_G = \\frac{1}{n}" }, inv: { n: "n = \\frac{1}{\\sin\\alpha_G}" } });
+  // waves beyond the basic types
+  spec("doppler-beobachter", { ctx: "Ein Radfahrer fährt mit $v$ auf eine ruhende Schallquelle der Frequenz $f$ zu. Schall breitet sich mit 343 m/s aus.",
+    v: { f: ["f", "Frequenz der Quelle", "Hz", 300, 2000, 0, 1, "kHz", 1e3], v: ["v", "Geschwindigkeit des Beobachters", "km/h", 10, 120, 0, 1 / 3.6, "m/s", 1] },
+    o: { fb: ["f_B", "gehörte Frequenz", "Hz", 4, 1, (x) => x.f * (1 + x.v / 343)] },
+    tex: { fb: "f_B = f\\left(1 + \\frac{v}{c}\\right)" }, inv: { v: "v = c\\left(\\frac{f_B}{f} - 1\\right)" }, invKeys: ["v"] });
+  spec("pfeife", { ctx: "Eine an einem Ende geschlossene Orgelpfeife (gedackte Pfeife) hat die Länge $L$. Schall breitet sich mit 343 m/s aus.",
+    v: { L: ["L", "Länge der Pfeife", "cm", 10, 300, 0, 0.01, "m", 1] },
+    o: { f1: ["f_1", "Grundfrequenz", "Hz", 3, 1, (x) => 343 / (4 * x.L)], f3: ["f_3", "Frequenz des ersten Obertons", "Hz", 3, 1, (x) => (3 * 343) / (4 * x.L)] },
+    tex: { f1: "L = \\frac{\\lambda}{4} \\;\\Rightarrow\\; f_1 = \\frac{c}{4L}", f3: "L = \\frac{3\\lambda}{4} \\;\\Rightarrow\\; f_3 = \\frac{3c}{4L}" }, inv: { L: "L = \\frac{c}{4 f_1}" }, invOut: "f1" });
+  spec("saite", { ctx: "Eine Saite der Länge $L$ ist mit der Kraft $F$ gespannt; ein Meter der Saite hat die Masse $\\mu$ (Massenbelag).",
+    v: { L: ["L", "Saitenlänge", "cm", 30, 120, 0, 0.01, "m", 1], F: ["F", "Spannkraft", "N", 20, 400, 0], mu: ["\\mu", "Massenbelag", "g/m", 0.5, 20, 1, 1e-3, "kg/m", 1] },
+    o: { f: ["f_1", "Grundfrequenz", "Hz", 3, 1, (x) => Math.sqrt(x.F / x.mu) / (2 * x.L)], c: ["c", "Wellengeschwindigkeit auf der Saite", "m/s", 3, 1, (x) => Math.sqrt(x.F / x.mu)] },
+    tex: { f: "c = \\sqrt{\\frac{F}{\\mu}},\\; f_1 = \\frac{c}{2L}", c: "c = \\sqrt{\\frac{F}{\\mu}}" }, inv: { F: "F = \\mu\\,(2 L f_1)^2" }, invKeys: ["F"], invOut: "f" });
   spec("doppler", { ctx: "Ein Krankenwagen mit der Sirenenfrequenz $f$ fährt mit $v$ auf einen ruhenden Beobachter zu. Schall breitet sich mit 343 m/s aus.",
     v: { f: ["f", "Sirenenfrequenz", "Hz", 400, 1200, 0, 1, "kHz", 1e3], v: ["v", "Geschwindigkeit", "km/h", 30, 150, 0, 1 / 3.6, "m/s", 1] },
     o: { fb: ["f_B", "gehörte Frequenz", "Hz", 4, 1, (x) => (x.f * 343) / (343 - x.v)] },
     tex: { fb: "f_B = \\frac{f}{1 - \\frac{v}{c}}" }, inv: { v: "v = c\\left(1 - \\frac{f}{f_B}\\right)" }, invKeys: ["v"] });
+  // oscillations beyond the basic types
+  spec("schwingung-v", { ctx: "Ein Körper schwingt harmonisch mit der Amplitude $\\hat y$ und der Periodendauer $T$.",
+    v: { y: ["\\hat y", "Amplitude", "cm", 1, 30, 1, 0.01, "mm", 1e-3], T: ["T", "Periodendauer", "s", 0.2, 5, 2, 1, "ms", 1e-3] },
+    o: { v: ["\\hat v", "größte Geschwindigkeit", "m/s", 3, 1, (x) => (x.y * 2 * Math.PI) / x.T], a: ["\\hat a", "größte Beschleunigung", "m/s²", 3, 1, (x) => x.y * Math.pow((2 * Math.PI) / x.T, 2)] },
+    tex: { v: "y = \\hat y\\sin(\\omega t),\\; v = \\dot y = \\hat y\\,\\omega\\cos(\\omega t) \\;\\Rightarrow\\; \\hat v = \\hat y\\,\\omega = \\frac{2\\pi\\hat y}{T}", a: "a = \\ddot y = -\\hat y\\,\\omega^2\\sin(\\omega t) \\;\\Rightarrow\\; \\hat a = \\hat y\\,\\omega^2" },
+    inv: { y: "\\hat y = \\frac{\\hat v\\,T}{2\\pi}" }, invKeys: ["y"], invOut: "v" });
+  spec("federn", { ctx: "Ein Körper der Masse $m$ hängt an zwei Federn mit den Federkonstanten $D_1$ und $D_2$, die nebeneinander (parallel) befestigt sind.",
+    v: { m: ["m", "Masse", "g", 50, 2000, 0, 1e-3, "kg", 1], D1: ["D_1", "Federkonstante 1", "N/m", 5, 200, 0], D2: ["D_2", "Federkonstante 2", "N/m", 5, 200, 0] },
+    o: { T: ["T", "Periodendauer", "s", 3, 1, (x) => 2 * Math.PI * Math.sqrt(x.m / (x.D1 + x.D2))] },
+    tex: { T: "D = D_1 + D_2 \\text{ (parallel)},\\; T = 2\\pi\\sqrt{\\frac{m}{D_1 + D_2}}" }, inv: { m: "m = (D_1 + D_2)\\left(\\frac{T}{2\\pi}\\right)^2" }, invKeys: ["m"] });
+  spec("schwingkreis-strom", { ctx: "Ein Kondensator der Kapazität $C$ wird auf $U_0$ aufgeladen und dann über eine Spule der Induktivität $L$ entladen (ungedämpfter Schwingkreis).",
+    v: { C: ["C", "Kapazität", "µF", 0.5, 100, 1, 1e-6, "nF", 1e-9], L: ["L", "Induktivität", "mH", 5, 2000, 0, 1e-3, "H", 1], U0: ["U_0", "Ladespannung", "V", 5, 100, 0] },
+    o: { I: ["\\hat I", "größte Stromstärke", "mA", 3, 1e-3, (x) => x.U0 * Math.sqrt(x.C / x.L)] },
+    tex: { I: "\\tfrac12 C U_0^2 = \\tfrac12 L\\hat I^2 \\;\\Rightarrow\\; \\hat I = U_0\\sqrt{\\frac{C}{L}}" }, inv: { U0: "U_0 = \\hat I\\sqrt{\\frac{L}{C}}" }, invKeys: ["U0"] });
   spec("thomson", { ctx: "Ein Schwingkreis besteht aus einer Spule mit der Induktivität $L$ und einem Kondensator mit der Kapazität $C$.",
     v: { L: ["L", "Induktivität", "mH", 1, 500, 0, 1e-3, "H", 1], C: ["C", "Kapazität", "µF", 0.1, 50, 1, 1e-6, "nF", 1e-9] },
     o: { f: ["f", "Eigenfrequenz", "Hz", 3, 1, (x) => 1 / (2 * Math.PI * Math.sqrt(x.L * x.C))] },
@@ -303,6 +580,147 @@
     v: { N0: ["N_0", "Anfangszahl", "10⁶", 1, 100, 0, 1e6], T: ["T_{1/2}", "Halbwertszeit", "min", 1, 60, 0, 60, "s", 1], t: ["t", "Zeit", "min", 1, 200, 0, 60, "h", 3600] },
     o: { N: ["N(t)", "Zahl der noch nicht zerfallenen Kerne", "10⁶", 3, 1e6, (x) => x.N0 * Math.pow(0.5, x.t / x.T)] },
     tex: { N: "N(t) = N_0 \\left(\\tfrac12\\right)^{t/T_{1/2}}" }, inv: { t: "t = T_{1/2}\\,\\frac{\\ln(N_0/N)}{\\ln 2}" }, invKeys: ["t"], ok: (x) => x.t / x.T < 6 });
+  // quantum objects beyond the basic types
+  const LC = h / (me * c), mn = 1.675e-27, SOL = 1361;
+  spec("photon", { ctx: "Ein Photon hat die Wellenlänge $\\lambda$.",
+    v: { lam: ["\\lambda", "Wellenlänge", "nm", 200, 800, 0, 1e-9, "µm", 1e-6] },
+    o: { E: ["E", "Energie", "eV", 3, e, (x) => (h * c) / x.lam], m: ["m", "dynamische Masse", "10⁻³⁶ kg", 3, 1e-36, (x) => h / (c * x.lam)], p: ["p", "Impuls", "10⁻²⁷ kg·m/s", 3, 1e-27, (x) => h / x.lam] },
+    tex: { E: "E = h f = \\frac{h c}{\\lambda}", m: "m = \\frac{E}{c^2} = \\frac{h}{c\\,\\lambda}", p: "p = \\frac{E}{c} = \\frac{h}{\\lambda}" },
+    inv: { lam: "\\lambda = \\frac{h c}{E}" }, invOut: "E", cst: CH + ", " + CC + ", " + CE });
+  spec("compton", { ctx: "Röntgenstrahlung der Wellenlänge $\\lambda$ wird an quasi-freien Elektronen gestreut und unter dem Streuwinkel $\\varphi$ beobachtet.",
+    v: { lam: ["\\lambda", "Wellenlänge vor der Streuung", "pm", 20, 100, 1, 1e-12, "nm", 1e-9], phi: ["\\varphi", "Streuwinkel", "°", 30, 150, 0, DEG] },
+    o: { dl: ["\\Delta\\lambda", "Zunahme der Wellenlänge", "pm", 3, 1e-12, (x) => LC * (1 - Math.cos(x.phi))], l2: ["\\lambda'", "Wellenlänge nach der Streuung", "pm", 3, 1e-12, (x) => x.lam + LC * (1 - Math.cos(x.phi))] },
+    tex: { dl: "\\Delta\\lambda = \\frac{h}{m_e c}\\,(1 - \\cos\\varphi)", l2: "\\lambda' = \\lambda + \\frac{h}{m_e c}\\,(1 - \\cos\\varphi)" },
+    inv: { phi: "\\cos\\varphi = 1 - \\frac{m_e c}{h}\\,\\Delta\\lambda" }, invKeys: ["phi"], invOut: "dl", noPow: true, cst: "h/(mₑc) = 2,43 pm" });
+  spec("sonnensegel", { ctx: "Ein Sonnensegel der Fläche $A$ steht in Erdnähe senkrecht zum Sonnenlicht (Bestrahlungsstärke $S = 1361\\,\\mathrm{W/m^2}$) und reflektiert es vollständig. Die Sonde hat samt Segel die Masse $m$.",
+    v: { A: ["A", "Segelfläche", "m²", 100, 5000, 0], m: ["m", "Masse der Sonde", "kg", 20, 500, 0, 1, "t", 1e3] },
+    o: { F: ["F", "Kraft des Lichts", "mN", 3, 1e-3, (x) => (2 * SOL * x.A) / c], a: ["a", "Beschleunigung", "µm/s²", 3, 1e-6, (x) => (2 * SOL * x.A) / (c * x.m)] },
+    tex: { F: "F = \\frac{2 S A}{c}", a: "a = \\frac{F}{m} = \\frac{2 S A}{c\\,m}" }, inv: { A: "A = \\frac{F\\,c}{2 S}" }, invKeys: ["A"], invOut: "F", cst: CC });
+  spec("led", { ctx: "Eine Leuchtdiode sendet Licht der Wellenlänge $\\lambda$ aus. Sie beginnt zu leuchten, sobald ein Elektron beim Durchlaufen der Spannung $U$ die Energie eines Photons gewinnt.",
+    v: { lam: ["\\lambda", "Wellenlänge", "nm", 450, 950, 0, 1e-9, "µm", 1e-6] },
+    o: { U: ["U", "Schwellenspannung", "V", 3, 1, (x) => (h * c) / (e * x.lam)] },
+    tex: { U: "e U = h f = \\frac{h c}{\\lambda} \\;\\Rightarrow\\; U = \\frac{h c}{e\\,\\lambda}" }, inv: { lam: "\\lambda = \\frac{h c}{e U}" }, cst: CH + ", " + CC + ", " + CE });
+  spec("gegenfeld-zwei", { ctx: "Bei der Gegenfeldmethode misst man an einer Kathode mit Licht der Wellenlänge $\\lambda_1$ die Gegenspannung $U_1$. Dann wird dieselbe Kathode mit Licht der Wellenlänge $\\lambda_2$ bestrahlt.",
+    v: { l1: ["\\lambda_1", "erste Wellenlänge", "nm", 300, 450, 0, 1e-9], U1: ["U_1", "erste Gegenspannung", "V", 0.3, 1.8, 2], l2: ["\\lambda_2", "zweite Wellenlänge", "nm", 250, 450, 0, 1e-9] },
+    o: { U2: ["U_2", "Gegenspannung bei der zweiten Wellenlänge", "V", 3, 1, (x) => x.U1 + ((h * c) / e) * (1 / x.l2 - 1 / x.l1)] },
+    tex: { U2: "e U_2 - e U_1 = h c\\left(\\frac{1}{\\lambda_2} - \\frac{1}{\\lambda_1}\\right) \\;\\Rightarrow\\; U_2 = U_1 + \\frac{h c}{e}\\left(\\frac{1}{\\lambda_2} - \\frac{1}{\\lambda_1}\\right)" },
+    inv: { U1: "U_1 = U_2 - \\frac{h c}{e}\\left(\\frac{1}{\\lambda_2} - \\frac{1}{\\lambda_1}\\right)" }, invKeys: ["U1"], noPow: true,
+    ok: (x) => { const W = (h * c) / (e * x.l1) - x.U1, U2 = x.U1 + ((h * c) / e) * (1 / x.l2 - 1 / x.l1); return W > 1.9 && W < 2.6 && U2 > 0.2 && Math.abs(x.l1 - x.l2) > 30e-9; },
+    cst: CH + ", " + CC + ", " + CE });
+  spec("photonenstrom", { ctx: "Licht der Wellenlänge $\\lambda$ trifft mit der Bestrahlungsstärke $S$ senkrecht auf eine Fläche $A$.",
+    v: { lam: ["\\lambda", "Wellenlänge", "nm", 250, 700, 0, 1e-9], S: ["S", "Bestrahlungsstärke", "W/m²", 0.5, 20, 1, 1, "mW/cm²", 10], A: ["A", "Fläche", "cm²", 0.5, 10, 1, 1e-4, "mm²", 1e-6] },
+    o: { N: ["N", "Zahl der Photonen pro Sekunde", "10¹⁴ /s", 3, 1e14, (x) => (x.S * x.A * x.lam) / (h * c)] },
+    tex: { N: "N = \\frac{P}{E_{Ph}} = \\frac{S\\,A\\,\\lambda}{h c}" }, inv: { S: "S = \\frac{N\\,h c}{A\\,\\lambda}", A: "A = \\frac{N\\,h c}{S\\,\\lambda}" }, invKeys: ["S", "A"], cst: CH + ", " + CC });
+  spec("debroglie-proton", { ctx: "Protonen werden aus der Ruhe mit der Spannung $U$ beschleunigt (nichtrelativistisch).",
+    v: { U: ["U", "Beschleunigungsspannung", "V", 100, 20000, 0, 1, "kV", 1e3] },
+    o: { la: ["\\lambda", "De-Broglie-Wellenlänge", "pm", 3, 1e-12, (x) => h / Math.sqrt(2 * mp * e * x.U)] },
+    tex: { la: "\\lambda = \\frac{h}{p} = \\frac{h}{\\sqrt{2 m_p e U}}" }, inv: { U: "U = \\frac{h^2}{2 m_p e \\lambda^2}" }, cst: CH + ", " + CE + ", mₚ = 1,673 · 10⁻²⁷ kg" });
+  spec("debroglie-neutron", { ctx: "Ein Neutron aus einem Forschungsreaktor fliegt mit der Geschwindigkeit $v$.",
+    v: { v: ["v", "Geschwindigkeit", "m/s", 300, 5000, 0, 1, "km/s", 1e3] },
+    o: { la: ["\\lambda", "De-Broglie-Wellenlänge", "pm", 3, 1e-12, (x) => h / (mn * x.v)], E: ["E_{kin}", "Bewegungsenergie", "meV", 3, 1e-3 * e, (x) => 0.5 * mn * x.v * x.v] },
+    tex: { la: "\\lambda = \\frac{h}{m_n v}", E: "E_{kin} = \\tfrac12 m_n v^2" }, inv: { v: "v = \\frac{h}{m_n \\lambda}" }, invOut: "la", cst: CH + ", mₙ = 1,675 · 10⁻²⁷ kg, 1 eV = 1,602 · 10⁻¹⁹ J" });
+  spec("elektronen-doppelspalt", { ctx: "Elektronen werden aus der Ruhe mit der Spannung $U$ beschleunigt und fallen auf einen Doppelspalt mit dem Spaltabstand $d$. Der Schirm steht im Abstand $L$ (kleine Winkel).",
+    v: { U: ["U", "Beschleunigungsspannung", "V", 50, 1000, 0, 1, "kV", 1e3], d: ["d", "Spaltabstand", "nm", 200, 2000, 0, 1e-9, "µm", 1e-6], L: ["L", "Abstand zum Schirm", "m", 0.3, 2, 2, 1, "cm", 0.01] },
+    o: { a: ["a", "Abstand benachbarter Maxima", "µm", 3, 1e-6, (x) => ((h / Math.sqrt(2 * me * e * x.U)) * x.L) / x.d] },
+    tex: { a: "a = \\frac{\\lambda L}{d}, \\quad \\lambda = \\frac{h}{\\sqrt{2 m_e e U}}" }, inv: { d: "d = \\frac{\\lambda L}{a}", L: "L = \\frac{a\\,d}{\\lambda}" }, invKeys: ["d", "L"], cst: CH + ", " + CE + ", " + CME });
+  spec("beugungsring", { ctx: "In einer Elektronenbeugungsröhre werden Elektronen mit der Spannung $U$ beschleunigt und an einer Graphitfolie gebeugt. Der Leuchtschirm ist $L$ von der Folie entfernt; betrachtet wird der Ring zum Netzebenenabstand $d$ (erste Ordnung, kleine Winkel).",
+    v: { U: ["U", "Beschleunigungsspannung", "kV", 2.5, 7, 1, 1e3, "V", 1], L: ["L", "Abstand Folie bis Schirm", "cm", 10, 16, 1, 0.01, "m", 1], d: ["d", "Netzebenenabstand", "pm", 120, 250, 0, 1e-12, "nm", 1e-9] },
+    o: { r: ["r", "Ringradius", "mm", 3, 1e-3, (x) => (x.L * h) / (Math.sqrt(2 * me * e * x.U) * x.d)] },
+    tex: { r: "r \\approx \\frac{L\\,\\lambda}{d}, \\quad \\lambda = \\frac{h}{\\sqrt{2 m_e e U}}" }, inv: { d: "d \\approx \\frac{L\\,\\lambda}{r}" }, invKeys: ["d"], cst: CH + ", " + CE + ", " + CME });
+  spec("unschaerfe", { ctx: "Ein Elektron ist auf einen Bereich der Breite $\\Delta x$ eingeschränkt, etwa durch einen Spalt oder ein Atom.",
+    v: { dx: ["\\Delta x", "Ortsunschärfe", "pm", 50, 5000, 0, 1e-12, "nm", 1e-9] },
+    o: { dv: ["\\Delta v", "kleinstmögliche Geschwindigkeitsunschärfe", "km/s", 3, 1e3, (x) => h / (4 * Math.PI * me * x.dx)], dp: ["\\Delta p", "kleinstmögliche Impulsunschärfe", "10⁻²⁶ kg·m/s", 3, 1e-26, (x) => h / (4 * Math.PI * x.dx)] },
+    tex: { dv: "\\Delta x\\,\\Delta p \\ge \\frac{h}{4\\pi} \\;\\Rightarrow\\; \\Delta v \\ge \\frac{h}{4\\pi\\,m_e\\,\\Delta x}", dp: "\\Delta p \\ge \\frac{h}{4\\pi\\,\\Delta x}" },
+    inv: { dx: "\\Delta x \\ge \\frac{h}{4\\pi\\,m_e\\,\\Delta v}" }, invOut: "dv", cst: CH + ", " + CME });
+  // atomic shell and X-rays beyond the basic types
+  spec("moseley", { ctx: "Für die $K_\\alpha$-Linie eines Elements mit der Kernladungszahl $Z$ gilt nach Moseley näherungsweise $E \\approx 13{,}6\\,\\mathrm{eV}\\cdot (Z - 1)^2\\cdot\\left(1 - \\tfrac14\\right)$: Ein Elektron springt von $n = 2$ nach $n = 1$, das verbliebene K-Elektron schirmt eine Kernladung ab.",
+    v: { Z: ["Z", "Kernladungszahl", "", 20, 50, 0] },
+    o: { E: ["E", "Energie der Kα-Linie", "keV", 3, 1e3 * e, (x) => 10.2 * e * (x.Z - 1) * (x.Z - 1)], la: ["\\lambda", "Wellenlänge der Kα-Linie", "pm", 3, 1e-12, (x) => (h * c) / (10.2 * e * (x.Z - 1) * (x.Z - 1))] },
+    tex: { E: "E \\approx 10{,}2\\,\\mathrm{eV}\\cdot (Z - 1)^2", la: "\\lambda = \\frac{h c}{E} \\approx \\frac{h c}{10{,}2\\,\\mathrm{eV}\\cdot (Z - 1)^2}" }, inv: { Z: "Z = 1 + \\sqrt{\\frac{E}{10{,}2\\,\\mathrm{eV}}}" }, noPow: true,
+    cst: CH + ", " + CC + ", 1 eV = 1,602 · 10⁻¹⁹ J" });
+  spec("bragg-grenze", { ctx: "Die Strahlung einer Röntgenröhre mit der Spannung $U$ fällt auf einen Kristall mit dem Netzebenenabstand $d$. Unterhalb eines kleinsten Glanzwinkels $\\vartheta_{min}$ gibt es in erster Ordnung keine Reflexion mehr.",
+    v: { U: ["U", "Röhrenspannung", "kV", 10, 50, 0, 1e3, "V", 1], d: ["d", "Netzebenenabstand", "pm", 200, 400, 0, 1e-12, "nm", 1e-9] },
+    o: { th: ["\\vartheta_{min}", "kleinster Glanzwinkel", "°", 3, DEG, (x) => Math.asin((h * c) / (e * x.U) / (2 * x.d))] },
+    tex: { th: "\\lambda_{min} = \\frac{h c}{e U},\\qquad \\sin\\vartheta_{min} = \\frac{\\lambda_{min}}{2d}" }, inv: { U: "U = \\frac{h c}{2 e d\\sin\\vartheta_{min}}" }, invKeys: ["U"], noPow: true,
+    cst: CH + ", " + CC + ", " + CE });
+  // radioactivity beyond the basic types
+  const NA = 6.022e23;
+  spec("aktivitaet-masse", { ctx: "Ein Präparat enthält die Masse $m$ eines Nuklids mit der molaren Masse $M$ und der Halbwertszeit $T_{1/2}$.",
+    v: { m: ["m", "Masse", "µg", 0.1, 10, 2, 1e-9, "mg", 1e-6], M: ["M", "molare Masse", "g/mol", 20, 240, 0, 1e-3], T: ["T_{1/2}", "Halbwertszeit", "d", 1, 100, 1, 86400, "h", 3600] },
+    o: { A: ["A", "Aktivität", "GBq", 3, 1e9, (x) => (Math.log(2) / x.T) * (x.m / x.M) * NA] },
+    tex: { A: "A = \\lambda N = \\frac{\\ln 2}{T_{1/2}}\\cdot\\frac{m}{M}\\,N_A" }, inv: { m: "m = \\frac{A\\,M\\,T_{1/2}}{\\ln 2\\cdot N_A}" }, invKeys: ["m"],
+    cst: "Avogadro-Konstante 6,022 · 10²³ mol⁻¹" });
+  spec("zaehlrate", { ctx: "Ein Zählrohr misst an einem Präparat (nach Abzug des Nulleffekts) zunächst die Zählrate $A_1$; nach der Zeit $t$ ist sie auf $A_2$ gesunken.",
+    v: { A1: ["A_1", "Zählrate am Anfang", "1/s", 200, 2000, 0], T: ["T_{1/2}", "Halbwertszeit", "min", 2, 60, 1, 60, "s", 1], t: ["t", "Zeit zwischen den Messungen", "min", 1, 120, 0, 60, "h", 3600] },
+    o: { A2: ["A_2", "Zählrate nach der Zeit t", "1/s", 3, 1, (x) => x.A1 * Math.pow(0.5, x.t / x.T)] },
+    tex: { A2: "A_2 = A_1\\left(\\tfrac12\\right)^{t/T_{1/2}}" }, inv: { T: "T_{1/2} = \\frac{t\\,\\ln 2}{\\ln(A_1/A_2)}" }, invKeys: ["T"], noPow: true,
+    ok: (x) => x.t / x.T > 0.3 && x.t / x.T < 5 });
+  spec("c14", { ctx: "Lebendes Material zeigt pro Minute und Gramm Kohlenstoff $15{,}3$ Zerfälle von Kohlenstoff-14 ($T_{1/2} = 5730\\,\\mathrm{a}$). Eine Probe aus einem Fund zeigt nur noch die Zerfallsrate $R$.",
+    v: { R: ["R", "Zerfallsrate der Probe", "1/(min·g)", 0.5, 14, 1] },
+    o: { t: ["t", "Alter des Fundes", "a", 3, 1, (x) => (5730 * Math.log(15.3 / x.R)) / Math.log(2)] },
+    tex: { t: "R = 15{,}3\\cdot\\left(\\tfrac12\\right)^{t/T_{1/2}} \\;\\Rightarrow\\; t = T_{1/2}\\,\\frac{\\ln(15{,}3/R)}{\\ln 2}" }, inv: { R: "R = 15{,}3\\cdot\\left(\\tfrac12\\right)^{t/T_{1/2}}" }, noPow: true });
+  spec("halbwertsdicke", { ctx: "Gammastrahlung durchdringt eine Bleischicht der Dicke $d$. Die Halbwertsdicke $d_{1/2}$ ist die Schichtdicke, nach der die Intensität auf die Hälfte gesunken ist.",
+    v: { h: ["d_{1/2}", "Halbwertsdicke", "cm", 0.4, 1.5, 1, 0.01, "mm", 0.001], d: ["d", "Dicke der Schicht", "cm", 0.5, 8, 1, 0.01, "mm", 0.001] },
+    o: { P: ["I/I_0", "durchgelassener Anteil", "%", 3, 0.01, (x) => Math.pow(0.5, x.d / x.h)] },
+    tex: { P: "\\frac{I}{I_0} = \\left(\\tfrac12\\right)^{d/d_{1/2}}" }, inv: { d: "d = d_{1/2}\\,\\frac{\\ln(I_0/I)}{\\ln 2}" }, invKeys: ["d"], noPow: true, ok: (x) => x.d / x.h < 8 });
+  // special relativity beyond the basic types
+  const TAUMU = 2.197e-6, MEC2 = me * c * c;
+  spec("myon", { ctx: "Myonen entstehen hoch in der Atmosphäre und fliegen mit $v$ zur Erde; ihre mittlere Lebensdauer in ihrem eigenen System ist $\\tau_0 = 2{,}197\\,\\mu\\mathrm{s}$.",
+    v: { v: ["v", "Geschwindigkeit", "c", 0.95, 0.9995, 4, c] },
+    o: { s: ["s", "mittlere Flugstrecke im Erdsystem", "km", 3, 1e3, (x) => (x.v * TAUMU) / Math.sqrt(1 - Math.pow(x.v / c, 2))], s0: ["s_{klass}", "Flugstrecke ohne Zeitdilatation", "m", 3, 1, (x) => x.v * TAUMU] },
+    tex: { s: "s = v\\,\\gamma\\,\\tau_0 = \\frac{v\\,\\tau_0}{\\sqrt{1 - v^2/c^2}}", s0: "s_{klass} = v\\,\\tau_0" }, noInv: true, noPow: true, cst: CC });
+  spec("rel-geschwindigkeit", { ctx: "Ein Elektron ($m_e c^2 = 511\\,\\mathrm{keV}$) wird aus der Ruhe mit der Spannung $U$ beschleunigt.",
+    v: { U: ["U", "Beschleunigungsspannung", "kV", 20, 3000, 0, 1e3, "MV", 1e6] },
+    o: { b: ["v", "Geschwindigkeit", "c", 3, c, (x) => c * Math.sqrt(1 - 1 / Math.pow(1 + (e * x.U) / MEC2, 2))], ga: ["\\gamma", "Lorentzfaktor", "", 3, 1, (x) => 1 + (e * x.U) / MEC2] },
+    tex: { b: "\\gamma = 1 + \\frac{e U}{m_e c^2},\\qquad v = c\\sqrt{1 - \\frac{1}{\\gamma^2}}", ga: "E_{kin} = e U = (\\gamma - 1)\\,m_e c^2 \\;\\Rightarrow\\; \\gamma = 1 + \\frac{e U}{m_e c^2}" },
+    inv: { U: "U = \\frac{(\\gamma - 1)\\,m_e c^2}{e}" }, invOut: "ga", noPow: true });
+  spec("masse-energie", { ctx: "Eine Masse $m$ wird vollständig in Energie umgewandelt; das gelingt nur bei der Paarvernichtung von Materie und Antimaterie.",
+    v: { m: ["m", "Masse", "g", 0.01, 10, 2, 1e-3, "mg", 1e-6] },
+    o: { E: ["E", "Energie", "GWh", 3, 3.6e12, (x) => x.m * c * c] },
+    tex: { E: "E = m\\,c^2" }, inv: { m: "m = \\frac{E}{c^2}" }, cst: CC + ", 1 GWh = 3,6 · 10¹² J" });
+  spec("uhrengang", { ctx: "Eine Atomuhr bewegt sich mit der Geschwindigkeit $v$ (Flugzeug oder Satellit). Um wie viel geht sie nach der Zeit $t$ gegenüber einer ruhenden Uhr nach? Für $v \\ll c$ gilt $\\gamma - 1 \\approx \\tfrac12\\tfrac{v^2}{c^2}$; die Schwerkraft bleibt hier unberücksichtigt.",
+    v: { v: ["v", "Geschwindigkeit", "km/s", 0.2, 8, 2, 1e3, "km/h", 1 / 3.6], t: ["t", "Dauer", "h", 1, 24, 0, 3600, "d", 86400] },
+    o: { d: ["\\Delta t - \\Delta t_0", "Gangunterschied", "ns", 3, 1e-9, (x) => 0.5 * Math.pow(x.v / c, 2) * x.t] },
+    tex: { d: "\\Delta t - \\Delta t_0 = (\\gamma - 1)\\,\\Delta t_0 \\approx \\tfrac12\\frac{v^2}{c^2}\\,t" }, inv: { v: "v = c\\sqrt{\\frac{2\\,(\\Delta t - \\Delta t_0)}{t}}" }, invKeys: ["v"], cst: CC });
+  // nuclear energy beyond the basic types
+  spec("uran-energie", { ctx: "In einem Reaktor wird die Masse $m$ Uran-235 vollständig gespalten; jede Spaltung setzt etwa $200\\,\\mathrm{MeV}$ frei ($M = 235\\,\\mathrm{g/mol}$). Steinkohle liefert $30\\,\\mathrm{MJ/kg}$.",
+    v: { m: ["m", "Masse Uran-235", "g", 1, 1000, 0, 1e-3, "kg", 1] },
+    o: { E: ["E", "freigesetzte Energie", "TJ", 3, 1e12, (x) => (x.m / 0.235) * NA * 200e6 * e], K: ["m_K", "Masse Steinkohle mit derselben Energie", "t", 3, 1e3, (x) => ((x.m / 0.235) * NA * 200e6 * e) / 30e6] },
+    tex: { E: "E = \\frac{m}{M}\\,N_A\\cdot 200\\,\\mathrm{MeV}", K: "m_K = \\frac{E}{30\\,\\mathrm{MJ/kg}}" }, inv: { m: "m = \\frac{E\\,M}{N_A\\cdot 200\\,\\mathrm{MeV}}" }, invOut: "E",
+    cst: "Avogadro-Konstante 6,022 · 10²³ mol⁻¹, 1 MeV = 1,602 · 10⁻¹³ J" });
+  spec("massenabnahme", { ctx: "Ein Kernkraftwerk gibt die thermische Leistung $P$ ab. Um wie viel nimmt die Masse des Brennstoffs in der Zeit $t$ ab?",
+    v: { P: ["P", "thermische Leistung", "GW", 0.5, 4, 1, 1e9, "MW", 1e6], t: ["t", "Zeit", "d", 1, 365, 0, 86400, "h", 3600] },
+    o: { m: ["\\Delta m", "Massenabnahme", "g", 3, 1e-3, (x) => (x.P * x.t) / (c * c)] },
+    tex: { m: "\\Delta m = \\frac{E}{c^2} = \\frac{P\\,t}{c^2}" }, inv: { P: "P = \\frac{\\Delta m\\,c^2}{t}" }, invKeys: ["P", "t"], cst: CC });
+  // stars, cosmology and semiconductors
+  spec("wien", { ctx: "Ein Stern strahlt annähernd wie ein schwarzer Körper der Oberflächentemperatur $T$ (Wiensches Verschiebungsgesetz $\\lambda_{max}\\,T = 2{,}898\\cdot 10^{-3}\\,\\mathrm{m\\,K}$).",
+    v: { T: ["T", "Oberflächentemperatur", "K", 2500, 30000, 0] },
+    o: { la: ["\\lambda_{max}", "Wellenlänge des Strahlungsmaximums", "nm", 3, 1e-9, (x) => 2.898e-3 / x.T] },
+    tex: { la: "\\lambda_{max} = \\frac{2{,}898\\cdot 10^{-3}\\,\\mathrm{m\\,K}}{T}" }, inv: { T: "T = \\frac{2{,}898\\cdot 10^{-3}\\,\\mathrm{m\\,K}}{\\lambda_{max}}" } });
+  spec("stefan-boltzmann", { ctx: "Die Leuchtkraft eines Sterns ist $L = 4\\pi R^2\\,\\sigma T^4$. Im Vergleich mit der Sonne ($T_\\odot = 5778\\,\\mathrm{K}$) gilt $\\frac{L}{L_\\odot} = \\left(\\frac{R}{R_\\odot}\\right)^2\\left(\\frac{T}{T_\\odot}\\right)^4$.",
+    v: { R: ["R", "Radius", "Sonnenradien", 0.1, 50, 2], T: ["T", "Oberflächentemperatur", "K", 3000, 25000, 0] },
+    o: { L: ["L", "Leuchtkraft", "Sonnenleuchtkräfte", 3, 1, (x) => x.R * x.R * Math.pow(x.T / 5778, 4)] },
+    tex: { L: "\\frac{L}{L_\\odot} = \\left(\\frac{R}{R_\\odot}\\right)^2\\left(\\frac{T}{T_\\odot}\\right)^4" }, inv: { R: "\\frac{R}{R_\\odot} = \\sqrt{\\frac{L/L_\\odot}{(T/T_\\odot)^4}}" }, invKeys: ["R"] });
+  spec("hubble-zeit", { ctx: "Unter der vereinfachenden Annahme einer immer gleich schnellen Expansion ist das Weltalter etwa $t_H = \\frac{1}{H_0}$ ($1\\,\\mathrm{Mpc} = 3{,}086\\cdot 10^{19}\\,\\mathrm{km}$, $1\\,\\mathrm{a} = 3{,}156\\cdot 10^{7}\\,\\mathrm{s}$).",
+    v: { H: ["H_0", "Hubble-Konstante", "km/(s·Mpc)", 50, 90, 1] },
+    o: { t: ["t_H", "Hubble-Zeit", "Mrd. Jahre", 3, 1, (x) => 3.086e19 / x.H / 3.156e7 / 1e9] },
+    tex: { t: "t_H = \\frac{1}{H_0} = \\frac{3{,}086\\cdot 10^{19}\\,\\mathrm{km}}{H_0\\cdot 1\\,\\mathrm{Mpc}}" }, inv: { H: "H_0 = \\frac{1}{t_H}" } });
+  spec("parallaxe", { ctx: "Ein naher Stern zeigt im Lauf eines Jahres die Parallaxe $p$. Es gilt $d = \\frac{1}{p}$ mit $d$ in Parsec und $p$ in Bogensekunden; $1\\,\\mathrm{pc} = 3{,}26$ Lichtjahre.",
+    v: { p: ["p", "Parallaxe", "Millibogensekunden", 2, 800, 1, 1e-3] },
+    o: { d: ["d", "Entfernung", "pc", 3, 1, (x) => 1 / x.p], lj: ["d", "Entfernung", "Lichtjahre", 3, 1, (x) => 3.26 / x.p] },
+    tex: { d: "d = \\frac{1}{p}\\ \\text{(pc, mit } p \\text{ in Bogensekunden)}", lj: "d = \\frac{3{,}26\\,\\mathrm{Lj}}{p}\\ \\text{(} p \\text{ in Bogensekunden)}" }, inv: { p: "p = \\frac{1}{d}" }, invOut: "d" });
+  spec("galaxie-entfernung", { ctx: "Die Wasserstofflinie $\\mathrm{H}_\\alpha$ ($\\lambda_0 = 656{,}3\\,\\mathrm{nm}$) erscheint im Licht einer Galaxie um $\\Delta\\lambda$ zu längeren Wellen verschoben; $H_0 = 70\\,\\mathrm{km/(s\\cdot Mpc)}$.",
+    v: { dl: ["\\Delta\\lambda", "Verschiebung", "nm", 0.5, 40, 1] },
+    o: { d: ["d", "Entfernung der Galaxie", "Mpc", 3, 1, (x) => ((x.dl / 656.3) * 299800) / 70] },
+    tex: { d: "z = \\frac{\\Delta\\lambda}{\\lambda_0},\\quad v \\approx z\\,c,\\quad d = \\frac{v}{H_0}" }, inv: { dl: "\\Delta\\lambda = \\frac{H_0\\,d}{c}\\,\\lambda_0" }, cst: CC });
+  spec("rotverschiebung-rel", { ctx: "Für große Rotverschiebungen gilt die relativistische Dopplerformel $1 + z = \\sqrt{\\frac{1 + \\beta}{1 - \\beta}}$ mit $\\beta = \\frac{v}{c}$ (für eine Bewegung durch den Raum).",
+    v: { z: ["z", "Rotverschiebung", "", 0.1, 3, 2] },
+    o: { b: ["\\beta", "Geschwindigkeit in Einheiten von c", "", 3, 1, (x) => (Math.pow(1 + x.z, 2) - 1) / (Math.pow(1 + x.z, 2) + 1)] },
+    tex: { b: "(1 + z)^2 = \\frac{1 + \\beta}{1 - \\beta} \\;\\Rightarrow\\; \\beta = \\frac{(1 + z)^2 - 1}{(1 + z)^2 + 1}" }, inv: { z: "z = \\sqrt{\\frac{1 + \\beta}{1 - \\beta}} - 1" }, noPow: true });
+  spec("bandluecke", { ctx: "Ein Halbleiter hat die Bandlücke $E_g$. Photonen mit mindestens dieser Energie heben Elektronen vom Valenz- ins Leitungsband; eine LED aus dem Material sendet Photonen mit etwa $E_g$ aus.",
+    v: { E: ["E_g", "Bandlücke", "eV", 0.6, 3.5, 2, e] },
+    o: { la: ["\\lambda", "zugehörige Wellenlänge", "nm", 3, 1e-9, (x) => (h * c) / x.E] },
+    tex: { la: "\\lambda = \\frac{h c}{E_g} \\approx \\frac{1240\\,\\mathrm{nm}}{E_g/\\mathrm{eV}}" }, inv: { E: "E_g = \\frac{h c}{\\lambda}" }, cst: CH + ", " + CC + ", " + CE });
 
   // ---------------------------------------------------------------- Q4: modern physics
   spec("kernenergie", { ctx: "Bei einer Kernreaktion nimmt die Gesamtmasse um $\\Delta m$ ab.",
@@ -464,6 +882,95 @@
     return numericStep(md, ans, "MeV", "Massendefekt $\\Delta m = Z m_p + N m_n - m_K = " + Z + " \\cdot 1{,}007276 + " + N + " \\cdot 1{,}008665 - " + String(mk).replace(".", "{,}") + " \\approx " + G.tex(sig(dm, 4), 6) + "\\,\\mathrm{u}$. Bindungsenergie $E_B = \\Delta m\\,c^2 \\approx " + G.tex(sig(EB, 4), 6) + "\\,\\mathrm{MeV}$" + (askPer ? ", pro Nukleon $\\frac{E_B}{A} \\approx " + G.tex(sig(per, 3), 6) + "\\,\\mathrm{MeV}$. Eisen liegt mit etwa 8,8 MeV am höchsten: leichte Kerne gewinnen Energie durch Fusion, schwere durch Spaltung." : ". Die Kernmasse ist kleiner als die Summe der Nukleonenmassen: diese Differenz wurde beim Zusammenbau als Energie frei."));
   } });
 
+  // h from a measured cut-off wavelength (the answer follows from the values shown, measurement error included)
+  spec("duane-h", { custom(level, G) {
+    const U = G.pick([20, 25, 30, 35, 40, 45]);
+    const lam = G.round(((h * c) / (e * U * 1e3)) / 1e-12 * (1 + (G.r() - 0.5) * 0.04), 1);
+    const hv = (e * U * 1e3 * lam * 1e-12) / 3.0e8 / 1e-34;
+    const md = "Bei einer Röntgenröhre mit der Spannung $U = " + U + "\\,\\mathrm{kV}$ bricht das Bremsspektrum bei $\\lambda_{min} = " + G.tex(lam, 1) + "\\,\\mathrm{pm}$ ab. Bestimme daraus das Plancksche Wirkungsquantum $h$ in $10^{-34}\\,\\mathrm{Js}$.\n\nKonstanten: " + CE + ", " + CC + ".";
+    return numericStep(md, hv, "10⁻³⁴ Js", "Ein Elektron gibt höchstens seine ganze Energie $eU$ an ein Photon ab: $e U = \\frac{h c}{\\lambda_{min}}$, also $h = \\frac{e U \\lambda_{min}}{c} = \\frac{1{,}602\\cdot 10^{-19}\\cdot " + U + "\\cdot 10^{3}\\cdot " + G.tex(lam, 1) + "\\cdot 10^{-12}}{3{,}00\\cdot 10^{8}}\\,\\mathrm{Js} \\approx " + G.tex(sig(hv, 3), 6) + "\\cdot 10^{-34}\\,\\mathrm{Js}$. Literaturwert: $6{,}626\\cdot 10^{-34}\\,\\mathrm{Js}$.");
+  } });
+  // Franck-Hertz: maxima shifted by a contact voltage, the spacing averaged over several periods
+  spec("fh-maxima", { custom(level, G) {
+    const hg = level < 3 || G.chance(0.6);
+    const dE = hg ? 4.9 : 18.7, gas = hg ? "Quecksilberdampf" : "Neon";
+    const off = G.round(0.2 + G.r() * 1.4, 1), n = G.pick([3, 4, 5]);
+    const U = [];
+    for (let k = 1; k <= n; k++) U.push(G.round(off + k * dE + (G.r() - 0.5) * (hg ? 0.2 : 0.6), 1));
+    const dU = (U[n - 1] - U[0]) / (n - 1);
+    const askLam = hg && level >= 2 && G.chance(0.5);
+    const list = U.map((u) => G.tex(u, 1) + "\\,\\mathrm{V}").join(",\\; ");
+    const md = "In einer Franck-Hertz-Röhre mit " + gas + " liegen die Maxima des Auffängerstroms bei $" + list + "$. " + (askLam
+      ? "Welche Wellenlänge hat das Licht, das die angeregten Atome beim Zurückfallen aussenden? Werte möglichst genau aus (in nm).\n\nHilfe: $h c = 1240\\,\\mathrm{eV\\,nm}$."
+      : "Bestimme die Anregungsenergie möglichst genau (in eV).");
+    const how = "Den Abstand über alle Perioden mitteln: $\\Delta U = \\frac{" + G.tex(U[n - 1], 1) + " - " + G.tex(U[0], 1) + "}{" + (n - 1) + "}\\,\\mathrm{V} \\approx " + G.tex(sig(dU, 3), 6) + "\\,\\mathrm{V}$, also $E = e\\,\\Delta U \\approx " + G.tex(sig(dU, 3), 6) + "\\,\\mathrm{eV}$. Die Lage des ersten Maximums enthält zusätzlich eine Kontaktspannung und taugt nicht.";
+    return askLam ? numericStep(md, 1240 / dU, "nm", how + " Dann $\\lambda = \\frac{1240\\,\\mathrm{eV\\,nm}}{E} \\approx " + G.tex(sig(1240 / dU, 3), 6) + "\\,\\mathrm{nm}$, ultraviolett.")
+      : numericStep(md, dU, "eV", how);
+  } });
+  // which upper level belongs to a measured hydrogen line
+  spec("linie-zuordnen", { custom(level, G) {
+    const n1 = level >= 3 ? G.pick([1, 2, 3]) : 2;
+    const n2 = n1 + G.pick([1, 2, 3, 4]);
+    const dE = 13.6 * (1 / (n1 * n1) - 1 / (n2 * n2));
+    const lam = G.round(1239.84 / dE, 1);
+    const ser = { 1: "Lyman", 2: "Balmer", 3: "Paschen" }[n1];
+    const md = "Im Spektrum des Wasserstoffs ($E_n = -13{,}6\\,\\mathrm{eV}/n^2$) misst man eine Linie der " + ser + "-Serie (Endniveau $n_1 = " + n1 + "$) bei $\\lambda = " + G.tex(lam, 1) + "\\,\\mathrm{nm}$. Aus welchem Niveau $n_2$ kommt das Elektron?\n\nHilfe: $h c = 1240\\,\\mathrm{eV\\,nm}$.";
+    return numericStep(md, n2, "", "Photonenenergie $\\Delta E = \\frac{1240}{" + G.tex(lam, 1) + "}\\,\\mathrm{eV} \\approx " + G.tex(sig(dE, 3), 6) + "\\,\\mathrm{eV}$. Aus $\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\frac{1}{" + n1 * n1 + "} - \\frac{1}{n_2^2}\\right)$ folgt $\\frac{1}{n_2^2} = \\frac{1}{" + n1 * n1 + "} - \\frac{\\Delta E}{13{,}6\\,\\mathrm{eV}}$, also $n_2 = " + n2 + "$.");
+  } });
+
+  // nuclear reactions with tabulated atomic masses (charges balance on both sides, so the electron masses cancel)
+  const NUC = { D: ["^2_1\\mathrm{H}", 2.014102], T: ["^3_1\\mathrm{H}", 3.016049], H: ["^1_1\\mathrm{H}", 1.007825], n: ["^1_0\\mathrm{n}", 1.008665], He3: ["^3_2\\mathrm{He}", 3.016029],
+    He4: ["^4_2\\mathrm{He}", 4.002602], Li6: ["^6_3\\mathrm{Li}", 6.015123], U235: ["^{235}_{92}\\mathrm{U}", 235.04393], Ba141: ["^{141}_{56}\\mathrm{Ba}", 140.914411], Kr92: ["^{92}_{36}\\mathrm{Kr}", 91.926156] };
+  const REAKTIONEN = [
+    ["Fusion von Deuterium und Tritium", [["D", 1], ["T", 1]], [["He4", 1], ["n", 1]]],
+    ["Fusion zweier Deuteriumkerne", [["D", 2]], [["He3", 1], ["n", 1]]],
+    ["Fusion zweier Deuteriumkerne (zweiter Zweig)", [["D", 2]], [["T", 1], ["H", 1]]],
+    ["Erzeugung von Tritium aus Lithium", [["Li6", 1], ["n", 1]], [["He4", 1], ["T", 1]]],
+    ["Spaltung von Uran-235", [["U235", 1], ["n", 1]], [["Ba141", 1], ["Kr92", 1], ["n", 3]]],
+  ];
+  spec("kern-reaktion", { custom(level, G) {
+    const [name, pre, post] = G.pick(REAKTIONEN);
+    const side = (arr) => arr.map(([k, n]) => (n > 1 ? n + "\\," : "") + "{}" + NUC[k][0]).join(" + ");
+    const mass = (arr) => arr.reduce((s, [k, n]) => s + n * NUC[k][1], 0);
+    const A = pre.reduce((s, [k, n]) => s + n * Math.round(NUC[k][1]), 0);
+    const dm = mass(pre) - mass(post), E = dm * 931.5;
+    const keys = Array.from(new Set(pre.concat(post).map(([k]) => k)));
+    const list = keys.map((k) => "$m(" + NUC[k][0] + ") = " + String(NUC[k][1]).replace(".", "{,}") + "\\,\\mathrm{u}$").join(", ");
+    const perNuc = level >= 3;
+    const md = "Bei der " + name + " läuft die Reaktion $" + side(pre) + " \\to " + side(post) + "$ ab. Atommassen: " + list + "; $1\\,\\mathrm{u}\\cdot c^2 = 931{,}5\\,\\mathrm{MeV}$.\n\n" +
+      (perNuc ? "Wie viel Energie wird pro beteiligtem Nukleon frei (in MeV)?" : "Wie viel Energie wird bei einer Reaktion frei (in MeV)?");
+    const how = "Massen vorher $" + G.tex(mass(pre), 6) + "\\,\\mathrm{u}$, nachher $" + G.tex(mass(post), 6) + "\\,\\mathrm{u}$, also $\\Delta m = " + G.tex(dm, 6) + "\\,\\mathrm{u}$ und $E = \\Delta m\\cdot 931{,}5\\,\\tfrac{\\mathrm{MeV}}{\\mathrm{u}} \\approx " + G.tex(sig(E, 4), 6) + "\\,\\mathrm{MeV}$.";
+    return perNuc ? numericStep(md, E / A, "MeV", how + " Beteiligt sind " + A + " Nukleonen: $\\frac{E}{" + A + "} \\approx " + G.tex(sig(E / A, 3), 6) + "\\,\\mathrm{MeV}$. Fusion liefert pro Nukleon mehrfach so viel wie Spaltung.")
+      : numericStep(md, E, "MeV", how);
+  } });
+
+  // logistic map: fixed point, a few iterations (rounded like by hand), Feigenbaum ratio
+  spec("logistik", { custom(level, G) {
+    const L = "x_{n+1} = r\\,x_n(1 - x_n)";
+    if (level <= 1) {
+      const r = G.round(1.2 + G.r() * 1.7, 2);
+      return numericStep("Für die logistische Gleichung $" + L + "$ mit $r = " + G.tex(r, 2) + "$ strebt die Folge gegen einen festen Wert. Berechne diesen Fixpunkt $x^*$.", 1 - 1 / r, "",
+        "Fixpunkt: $x^* = r x^*(1 - x^*)$; durch $x^* \\ne 0$ teilen gibt $1 = r(1 - x^*)$, also $x^* = 1 - \\frac{1}{r} = 1 - \\frac{1}{" + G.tex(r, 2) + "} \\approx " + G.tex(sig(1 - 1 / r, 3), 6) + "$.");
+    }
+    if (level >= 4 && G.chance(0.4)) {
+      const first = G.chance(0.5);
+      const q = first ? (3.449 - 3) / (3.544 - 3.449) : (3.544 - 3.449) / (3.5644 - 3.544);
+      return numericStep("Die ersten Periodenverdopplungen der logistischen Gleichung liegen bei $r_1 = 3{,}000$, $r_2 = 3{,}449$, $r_3 = 3{,}544$ und $r_4 = 3{,}5644$. Berechne das Verhältnis " + (first ? "$\\frac{r_2 - r_1}{r_3 - r_2}$" : "$\\frac{r_3 - r_2}{r_4 - r_3}$") + ".", q, "",
+        "Eingesetzt " + (first ? "$\\frac{0{,}449}{0{,}095}$" : "$\\frac{0{,}095}{0{,}0204}$") + " $\\approx " + G.tex(sig(q, 3), 6) + "$. Die Verhältnisse nähern sich der Feigenbaum-Konstanten $\\delta \\approx 4{,}669$, die für viele ganz verschiedene Systeme gleich ist.");
+    }
+    const chaos = level >= 3, n = chaos ? 3 : 2;
+    let r = 3, xs = [0.5];
+    for (let t = 0; t < 30; t++) {
+      r = chaos ? G.round(3.6 + G.r() * 0.4, 2) : G.round(2.5 + G.r(), 2);
+      xs = [G.round(0.1 + G.r() * 0.8, 2)];
+      for (let i = 0; i < n; i++) xs.push(G.round(r * xs[i] * (1 - xs[i]), 4));
+      if (xs[n] > 0.15) break;
+    }
+    return numericStep("Berechne für $" + L + "$ mit $r = " + G.tex(r, 2) + "$ und $x_0 = " + G.tex(xs[0], 2) + "$ den Wert $x_" + n + "$. Runde jeden Zwischenwert auf vier Nachkommastellen.", xs[n], "",
+      xs.slice(1).map((x, i) => "$x_" + (i + 1) + " = " + G.tex(r, 2) + "\\cdot " + G.tex(xs[i], 4) + "\\cdot(1 - " + G.tex(xs[i], 4) + ") \\approx " + G.tex(x, 4) + "$").join(", ") + "." +
+      (chaos ? " Im chaotischen Bereich wachsen schon kleine Rundungsunterschiede schnell an." : ""));
+  } });
+
   const make = (level, G, params) => makeWith(T, level, G, params);
   LW.generator("phy-rechnen", { title: "Physik rechnen", make });
   // the same engine for other subjects: LW.rechenEngine(specs) returns a make function; specs as above
@@ -477,19 +984,24 @@
   const make = LW.generators["phy-rechnen"].make;
   const chapter = (typ) => ({ title: "Physik rechnen", make: (level, G) => make(level, G, { typ }) });
   LW.generator("phy-r-kinematik", chapter(["waagerechter-wurf", "schiefer-wurf", "fall", "bewegungsgleichung", "begegnung", "verfolgung", "vt", "wurf-bahn"]));
-  LW.generator("phy-r-dynamik", chapter(["schiefe-ebene", "energie-fall", "energie-feder", "stoss", "stoss-elastisch"]));
-  LW.generator("phy-r-kreis", chapter(["kreis", "zentripetal", "gravitation", "satellit", "flucht", "kepler3"]));
-  LW.generator("phy-r-rotation", chapter(["drehmoment", "drehimpuls", "grenzgeschwindigkeit", "entropie", "euler"]));
-  LW.generator("phy-r-efeld", chapter(["plattenfeld", "kraft-feld", "kondensator", "kondensator-getrennt", "ablenkung", "beschleunigung-u", "millikan"]));
-  LW.generator("phy-r-bfeld", chapter(["lorentz", "bahnradius", "fadenstrahl", "wien", "massenspektrometer", "hall", "linac"]));
-  LW.generator("phy-r-induktion", chapter(["induktion", "bewegungsinduktion", "induktivitaet", "selbstinduktion", "trafo"]));
-  LW.generator("phy-r-schwingungen", chapter(["federpendel", "fadenpendel", "schwingung-energie", "schwingung-y", "daempfung", "resonanz", "thomson"]));
-  LW.generator("phy-r-wellen", chapter(["welle-c", "welle-y", "stehende-welle", "doppler", "schwebung", "superposition"]));
-  LW.generator("phy-r-optik", chapter(["gitter", "snellius", "grenzwinkel"]));
-  LW.generator("phy-r-quanten", chapter(["photoeffekt", "photonenimpuls", "debroglie"]));
-  LW.generator("phy-r-atom", chapter(["bohr", "spektrallinie", "franck-hertz", "duane-hunt", "bragg"]));
-  LW.generator("phy-r-kern", chapter(["zerfall", "halbwertszeit", "aktivitaet"]));
-  LW.generator("phy-r-relativ", chapter(["zeitdilatation", "laengenkontraktion", "rel-energie"]));
-  LW.generator("phy-r-q4kern", chapter(["bindungsenergie", "kernenergie"]));
-  LW.generator("phy-r-astro", chapter(["hubble", "rotverschiebung"]));
+  LW.generator("phy-r-dynamik", chapter(["schiefe-ebene", "energie-fall", "energie-feder", "stoss", "stoss-elastisch", "rueckstoss", "schub", "kraftstoss", "aufzug",
+    "gekoppelt", "energie-reibung", "energie-wurf", "pendel-energie", "looping", "haftreibung", "zug-schraeg", "ballistisch", "stoss-gegen"]));
+  LW.generator("phy-r-kreis", chapter(["kreis", "zentripetal", "gravitation", "satellit", "flucht", "kepler3", "drehzahl", "kurve-max", "ueberhoehung", "kegelpendel",
+    "vertikalkreis", "ortsfaktor", "zentralmasse", "bahnhoehe", "flucht-orbit"]));
+  LW.generator("phy-r-rotation", chapter(["drehmoment", "drehimpuls", "grenzgeschwindigkeit", "entropie", "euler", "hebel", "rollen", "rotationsenergie", "anlaufen",
+    "drehimpuls-scheibe", "carnot", "entropie-fluss", "verdampfen", "luftleistung", "stokes"]));
+  LW.generator("phy-r-efeld", chapter(["plattenfeld", "kraft-feld", "kondensator", "kondensator-getrennt", "ablenkung", "beschleunigung-u", "millikan", "coulomb", "punktfeld",
+    "schirmablenkung", "austrittswinkel", "energiedichte", "rc-entladung", "millikan-stokes"]));
+  LW.generator("phy-r-bfeld", chapter(["lorentz", "bahnradius", "fadenstrahl", "wien", "massenspektrometer", "hall", "linac", "spule", "leiterkraft", "zyklotron", "helmholtz", "schraube"]));
+  LW.generator("phy-r-induktion", chapter(["induktion", "bewegungsinduktion", "induktivitaet", "selbstinduktion", "trafo", "generator", "spulenenergie", "einschalten", "fernleitung", "leiterschleife"]));
+  LW.generator("phy-r-schwingungen", chapter(["federpendel", "fadenpendel", "schwingung-energie", "schwingung-y", "daempfung", "resonanz", "thomson", "schwingung-v", "federn", "schwingkreis-strom"]));
+  LW.generator("phy-r-wellen", chapter(["welle-c", "welle-y", "stehende-welle", "doppler", "schwebung", "superposition", "doppler-beobachter", "pfeife", "saite"]));
+  LW.generator("phy-r-optik", chapter(["gitter", "snellius", "grenzwinkel", "doppelspalt", "einzelspalt", "entspiegelung", "michelson", "malus", "lichtleiter"]));
+  LW.generator("phy-r-quanten", chapter(["photoeffekt", "photonenimpuls", "debroglie", "photon", "compton", "sonnensegel", "led", "gegenfeld-zwei", "photonenstrom",
+    "debroglie-proton", "debroglie-neutron", "elektronen-doppelspalt", "beugungsring", "unschaerfe"]));
+  LW.generator("phy-r-atom", chapter(["bohr", "spektrallinie", "franck-hertz", "duane-hunt", "bragg", "moseley", "bragg-grenze", "duane-h", "fh-maxima", "linie-zuordnen"]));
+  LW.generator("phy-r-kern", chapter(["zerfall", "halbwertszeit", "aktivitaet", "aktivitaet-masse", "zaehlrate", "c14", "halbwertsdicke"]));
+  LW.generator("phy-r-relativ", chapter(["zeitdilatation", "laengenkontraktion", "rel-energie", "myon", "rel-geschwindigkeit", "masse-energie", "uhrengang"]));
+  LW.generator("phy-r-q4kern", chapter(["bindungsenergie", "kernenergie", "kern-reaktion", "uran-energie", "massenabnahme"]));
+  LW.generator("phy-r-astro", chapter(["hubble", "rotverschiebung", "wien", "stefan-boltzmann", "hubble-zeit", "parallaxe", "galaxie-entfernung", "rotverschiebung-rel", "bandluecke", "logistik"]));
 })();

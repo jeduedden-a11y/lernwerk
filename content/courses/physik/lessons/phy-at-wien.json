@@ -16,6 +16,171 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel.** Ein Wien-Filter mit Plattenabstand $1{,}5\\,\\mathrm{cm}$ und $B = 0{,}12\\,\\mathrm{T}$ soll Ionen mit $4\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ durchlassen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E = v_0\\,B = 4\\cdot 10^5\\cdot 0{,}12\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}} = 4{,}8\\cdot 10^4\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}}",
+            "why": "Nötige Feldstärke."
+          },
+          {
+            "tex": "U = E\\,d = 4{,}8\\cdot 10^4\\cdot 0{,}015\\,\\mathrm{V} = 720\\,\\mathrm{V}",
+            "why": "Nötige Spannung."
+          },
+          {
+            "tex": "v = 5\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}:\\quad F_{res} = q\\,(vB - E) = q\\cdot 1{,}2\\cdot 10^4\\,\\tfrac{\\mathrm{V}}{\\mathrm{m}}",
+            "why": "Ein schnelleres Ion spürt eine resultierende Kraft zur Seite der Lorentzkraft."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Feldstärke.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spannung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abweichendes Ion.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wien-Filter - Geschwindigkeitsselektion berechnen",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Aufgabentypen/Wien-Filter - Geschwindigkeitsselektion berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Geschwindigkeit, mit der die Teilchen den Filter unabgelenkt durchqueren\"*, *\"Welche Spannung muss am Kondensator anliegen, damit Teilchen der Geschwindigkeit ... durchgelassen werden?\"*, *\"Begründen Sie, weshalb der Filter unabhängig von Masse und Ladung der Teilchen wirkt\"*.\n\nErkennungsmerkmal: **Gekreuzte Felder** -- ein elektrisches und ein magnetisches Feld stehen senkrecht aufeinander **und** senkrecht zur Flugrichtung -- verbunden mit der Bedingung \"**unabgelenkt**\", \"geradlinig\", \"geht geradeaus hindurch\"."
+            }
+          ]
+        },
+        {
+          "title": "Der Ansatz: zwei Kräfte, die sich aufheben",
+          "blocks": [
+            {
+              "md": "> [!important] Die Filterbedingung\n> Die elektrische Kraft $F_{el} = qE$ und die Lorentzkraft $F_L = qvB$ sind so orientiert, dass sie einander entgegenwirken. Unabgelenkt durchfliegt ein Teilchen genau dann, wenn sie sich exakt kompensieren:\n> $$q\\,E = q\\,v\\,B$$\n> Die Ladung $q$ kürzt sich vollständig heraus:\n> $$\\boxed{\\;v = \\frac{E}{B} = \\frac{U}{d\\,B}\\;}$$\n> Dabei ist $E = U/d$ die Feldstärke des Plattenkondensators, siehe **Feldstärke im Plattenkondensator berechnen**.\n\n> [!tip] Warum das Kürzen von $q$ die eigentliche Pointe ist\n> Weil weder $q$ noch $m$ in der Bedingung übrig bleiben, hängt die durchgelassene Geschwindigkeit **ausschließlich** von den eingestellten Feldern ab -- nicht davon, welches Teilchen fliegt. Ein Elektron, ein Proton und ein zweifach geladenes Uranion mit derselben Geschwindigkeit passieren denselben Filter gleichermaßen unabgelenkt.\n>\n> Der Filter selektiert also **nach Geschwindigkeit und nach nichts sonst**. Genau deshalb ist er die ideale Vorstufe eines **Massenspektrometers**: Er liefert einen Strahl einheitlicher Geschwindigkeit, sodass im nachgeschalteten Magnetfeld der Radius $r = mv/(qB)$ nur noch das Verhältnis $m/q$ abbildet."
+            }
+          ]
+        },
+        {
+          "title": "Was mit den anderen Teilchen geschieht",
+          "blocks": [
+            {
+              "md": "| Fall | Überwiegende Kraft | Ablenkung |\n|---|---|---|\n| $v < E/B$ | elektrische Kraft ($qE > qvB$) | in Richtung der elektrischen Kraft |\n| $v = E/B$ | Gleichgewicht | keine, das Teilchen passiert |\n| $v > E/B$ | Lorentzkraft ($qvB > qE$) | in Richtung der Lorentzkraft |\n\nZu langsame und zu schnelle Teilchen werden also **zu entgegengesetzten Seiten** abgelenkt und an einer Blende abgefangen. Diese Fallunterscheidung ist ein häufiger Begründungsauftrag und lässt sich ohne Rechnung allein aus der $v$-Abhängigkeit der beiden Kräfte begründen: $F_{el}$ ist von $v$ unabhängig, $F_L$ wächst linear mit $v$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Geometrie prüfen:** $\\vec E \\perp \\vec B \\perp \\vec v$. Nur dann gilt die einfache Bedingung.\n2. **Feldstärke bestimmen:** meist über $E = U/d$ aus Kondensatorspannung und Plattenabstand.\n3. **Filterbedingung ansetzen:** $qE = qvB$, dann $q$ kürzen.\n4. **Nach der gesuchten Größe auflösen:** $v = E/B$, oder umgekehrt $U = v\\,B\\,d$ bzw. $B = E/v$.\n5. **Bei nachgeschaltetem Magnetfeld** mit $r = mv/(qB_2)$ weiterrechnen, siehe **Bahnradius im Magnetfeld berechnen**.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{V/m}]}{[\\text{T}]} = \\dfrac{\\text{V}\\,\\text{m}^{-1}}{\\text{V s}\\,\\text{m}^{-2}} = \\dfrac{\\text{m}}{\\text{s}}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Wien-Filter besteht aus einem Plattenkondensator mit Plattenabstand $d = 5{,}0\\,\\text{mm}$, an dem die Spannung $U = 200\\,\\text{V}$ anliegt, und einem dazu senkrechten Magnetfeld der Flussdichte $B = 20\\,\\text{mT}$. Berechnen Sie die Geschwindigkeit der unabgelenkt durchfliegenden Teilchen. Welche Beschleunigungsspannung wäre nötig, um Elektronen auf diese Geschwindigkeit zu bringen?*\n\n**Schritt 2, Feldstärke:**\n$$E = \\frac{U}{d} = \\frac{200}{5{,}0\\cdot10^{-3}} = 4{,}0\\cdot10^{4}\\,\\frac{\\text{V}}{\\text{m}}$$\n\n**Schritt 4, Filterbedingung:**\n$$v = \\frac{E}{B} = \\frac{4{,}0\\cdot10^{4}}{20\\cdot10^{-3}} = \\frac{4{,}0\\cdot10^{4}}{2{,}0\\cdot10^{-2}} = 2{,}0\\cdot10^{6}\\,\\frac{\\text{m}}{\\text{s}}$$\n\n**Zusatzfrage, Beschleunigungsspannung:** Aus $eU_B = \\tfrac12 m_e v^2$ folgt\n$$U_B = \\frac{m_e v^2}{2e} = \\frac{9{,}109\\cdot10^{-31}\\cdot(2{,}0\\cdot10^{6})^2}{2\\cdot1{,}602\\cdot10^{-19}} = \\frac{3{,}644\\cdot10^{-18}}{3{,}204\\cdot10^{-19}} \\approx 11{,}4\\,\\text{V}$$\n\n**Probe:** Rückrechnung $v = \\sqrt{2eU_B/m_e} = \\sqrt{2\\cdot1{,}602\\cdot10^{-19}\\cdot11{,}4 / 9{,}109\\cdot10^{-31}} \\approx 2{,}0\\cdot10^{6}\\,\\text{m/s}$. Bestätigt.\n\n**Plausibilität:** $2\\cdot10^{6}\\,\\text{m/s}$ entspricht etwa $0{,}7\\,\\%$ der Lichtgeschwindigkeit -- relativistische Korrekturen sind hier noch vernachlässigbar. Die geringe Beschleunigungsspannung von rund 11 V zeigt zugleich, wie leicht Elektronen wegen ihrer winzigen Masse auf hohe Geschwindigkeiten zu bringen sind."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zu benachbarten Aufgabentypen",
+          "blocks": [
+            {
+              "md": "> [!warning] Drei Konstellationen, die leicht verwechselt werden\n>\n> | Aufbau | Bedingung | Ergebnis hängt ab von |\n> |---|---|---|\n> | **Wien-Filter**: $\\vec E \\perp \\vec B$, Teilchen fliegt hindurch | $qE = qvB$ | nur von $E$ und $B$ |\n> | **Millikan-Schwebefall**: $\\vec E$ vertikal, Schwerkraft als Gegenspieler | $qE = mg$ | von $m$ und $q$ |\n> | **Kreisbahn im reinen $B$-Feld**: kein $E$-Feld | $qvB = mv^2/r$ | von $m$, $q$, $v$, $B$ |\n>\n> Der entscheidende Unterschied zum **Millikan-Versuch**: Dort ist die Gewichtskraft der Gegenspieler und die Teilcheneigenschaften bleiben in der Gleichung stehen. Beim Wien-Filter fällt alles Teilchenspezifische heraus."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Gewichtskraft mitnehmen.** Bei Elektronen und Ionen ist sie gegenüber den elektromagnetischen Kräften um viele Zehnerpotenzen kleiner und wird vernachlässigt -- im Gegensatz zum Millikan-Versuch mit seinen vergleichsweise massereichen Öltröpfchen.\n- **Annehmen, der Filter selektiere nach Masse oder Ladung.** Er tut es ausdrücklich **nicht**; die Masseanalyse leistet erst das nachgeschaltete Magnetfeld.\n- **$E$ und $U$ verwechseln.** In $v = E/B$ steht die **Feldstärke** in V/m, nicht die Spannung in Volt. Ohne die Division durch $d$ ist das Ergebnis um den Faktor $1/d$ falsch.\n- **Millimeter und Millitesla nicht umrechnen.** $5{,}0\\,\\text{mm} = 5{,}0\\cdot10^{-3}\\,\\text{m}$, $20\\,\\text{mT} = 2{,}0\\cdot10^{-2}\\,\\text{T}$.\n- **Die Richtungen so wählen, dass sich die Kräfte addieren statt aufheben.** Bei paralleler statt antiparalleler Orientierung wird jedes Teilchen abgelenkt und der Filter lässt nichts durch. Die Anordnung muss aus der Skizze abgelesen und begründet werden.\n- **Die Ablenkrichtung zu schneller Teilchen falsch angeben.** Sie werden in Richtung der **Lorentzkraft** abgelenkt, also entgegengesetzt zu den zu langsamen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Lorentzkraft berechnen** · **Bahnradius im Magnetfeld berechnen** · **Hall-Spannung berechnen** · **Feldstärke im Plattenkondensator berechnen** · **Millikan-Versuch auswerten** · **Wien-Filter** · **Massenspektrometer**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Spannung braucht ein Wien-Filter ($d = 1\\,\\mathrm{cm}$, $B = 0{,}05\\,\\mathrm{T}$), damit Teilchen mit $3\\cdot 10^6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ passieren?",
+      "answer": 1500,
+      "tolerance": 5,
+      "placeholder": "V",
+      "explain": "$U = v_0 B d = 3\\cdot 10^6\\cdot 0{,}05\\cdot 0{,}01\\,\\mathrm{V} = 1500\\,\\mathrm{V}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was passiert mit der Durchlassgeschwindigkeit, wenn man die Ladung der Teilchen verdoppelt?",
+      "options": [
+        {
+          "md": "Nichts; sie hängt nicht von der Ladung ab.",
+          "correct": true
+        },
+        {
+          "md": "Sie halbiert sich.",
+          "why": "Beide Kräfte verdoppeln sich gleichermaßen."
+        },
+        {
+          "md": "Sie verdoppelt sich.",
+          "why": "$v_0 = \\tfrac EB$ enthält $q$ nicht."
+        },
+        {
+          "md": "Das Filter funktioniert dann nicht mehr.",
+          "why": "Es funktioniert für jede Ladung."
+        }
+      ],
+      "explain": "$qE = qvB$: $q$ kürzt sich.",
+      "label": "Verständnis",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Kehrt man nur das Magnetfeld um, lässt das Filter keine Teilchen mehr geradeaus durch.",
+      "answer": true,
+      "explain": "Dann zeigen elektrische Kraft und Lorentzkraft in dieselbe Richtung und können sich nicht mehr aufheben.",
+      "label": "Verständnis",
+      "id": "vq3"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +257,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "wien",
+          "massenspektrometer"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$v_0 = \\tfrac EB = \\tfrac{U}{dB}$; Ladung und Masse kürzen sich; beide Felder müssen gegeneinander wirken."
+      ]
     }
   ]
 }

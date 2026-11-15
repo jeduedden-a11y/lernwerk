@@ -16,6 +16,153 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Eckpunkte notieren**, am besten gegen den Uhrzeigersinn.\n> 2. **Formel** $A = \\tfrac12\\left|x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)\\right|$ anwenden; sie entsteht, wenn man das Dreieck in Trapeze zur x-Achse zerlegt.\n> 3. **Oder geometrisch:** umschließendes Rechteck zeichnen und die drei rechtwinkligen Ecken-Dreiecke abziehen.\n> 4. **Kontrolle:** Liegt eine Seite auf einer Achse oder parallel dazu, ist Grundseite mal Höhe durch 2 am schnellsten.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Dreieck mit $(1, 1)$, $(5, 2)$, $(3, 6)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Rechteck: } 1 \\le x \\le 5,\\ 1 \\le y \\le 6:\\ 4 \\cdot 5 = 20",
+            "why": "Umschließendes Rechteck."
+          },
+          {
+            "tex": "\\text{Ecken-Dreiecke: } \\tfrac12 \\cdot 4 \\cdot 1 + \\tfrac12 \\cdot 2 \\cdot 4 + \\tfrac12 \\cdot 2 \\cdot 5 = 2 + 4 + 5",
+            "why": "Die drei rechtwinkligen Dreiecke an den Seiten."
+          },
+          {
+            "tex": "A = 20 - 11 = 9",
+            "why": "Abziehen."
+          },
+          {
+            "tex": "\\tfrac12\\left|1(2 - 6) + 5(6 - 1) + 3(1 - 2)\\right| = \\tfrac12 \\cdot 18 = 9",
+            "why": "Probe mit der Formel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Rechteck.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ecken.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abziehen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Den Betrag vergessen: Bei Umlauf im Uhrzeigersinn wird der Ausdruck negativ.\n- Den Faktor $\\tfrac12$ vergessen.\n- Beim Rechteck-Verfahren ein Ecken-Dreieck doppelt oder gar nicht abziehen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Flächeninhalt im Koordinatensystem",
+      "path": "02 Wiki/TMUA/06 Koordinatengeometrie/Aufgabentypen/Flächeninhalt im Koordinatensystem.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Ecken eines Dreiecks oder Vierecks sind als Koordinaten gegeben -- direkt oder als Schnittpunkte von Geraden --, und gesucht ist der Flächeninhalt. Die Spezifikation verlangt, geometrische Probleme im Koordinatensystem zu lösen (M5.10)."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ecken bestimmen**, gegebenenfalls als Schnittpunkte von Geraden oder mit den Achsen.\n2. **Skizze** mit allen Ecken.\n3. **Verfahren wählen:**\n   - Liegt eine Seite **auf einer Achse oder parallel dazu**: $\\tfrac12 \\cdot$ Grundseite $\\cdot$ Höhe.\n   - Sonst **Rechteckmethode**: das umschließende achsenparallele Rechteck nehmen und die rechtwinkligen Dreiecke an den Rändern abziehen.\n   - Oder die **Gaußsche Trapezformel** (*shoelace formula*) für die Ecken $(x_1, y_1), \\dots, (x_n, y_n)$ in Umlaufreihenfolge:\n     $$A = \\tfrac12 \\left\\lvert x_1 y_2 - x_2 y_1 + x_2 y_3 - x_3 y_2 + \\dots + x_n y_1 - x_1 y_n \\right\\rvert.$$\n4. **Plausibilität:** Die Fläche muss kleiner sein als das umschließende Rechteck.\n\n> [!info] Die Trapezformel steht nicht in der Spezifikation\n> Sie ist ein zulässiges Werkzeug, aber kein Pflichtstoff. Die Rechteckmethode kommt ohne Formel aus und ist bei Dreiecken genauso schnell."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> What is the area of the triangle with vertices $A(1, 1)$, $B(7, 3)$ and $C(3, 6)$?\n>\n> - **A** 13\n> - **B** 26\n> - **C** 15\n> - **D** 30\n> - **E** 17\n\n**Schritt 3, Rechteckmethode:** Umschließendes Rechteck von $x = 1$ bis $7$ und $y = 1$ bis $6$: $6 \\cdot 5 = 30$.\n\nAbzuziehen sind drei rechtwinklige Dreiecke:\n- zwischen $A$ und $B$: Katheten 6 und 2, Fläche 6,\n- zwischen $B$ und $C$: Katheten 4 und 3, Fläche 6,\n- zwischen $C$ und $A$: Katheten 2 und 5, Fläche 5.\n\n$30 - 17 = 13$.\n\n**Kontrolle mit der Trapezformel:** $\\tfrac12 \\lvert 1 \\cdot 3 - 7 \\cdot 1 + 7 \\cdot 6 - 3 \\cdot 3 + 3 \\cdot 1 - 1 \\cdot 6 \\rvert = \\tfrac12 \\lvert 3 - 7 + 42 - 9 + 3 - 6 \\rvert = 13$.\n\nAntwort **A**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bei der Trapezformel die Umlaufreihenfolge nicht einhalten** -- bei Vierecken ergibt eine gekreuzte Reihenfolge Unsinn.\n- **Den Faktor $\\tfrac12$ vergessen** (Option B).\n- **Beim Abziehen ein Randdreieck übersehen** oder das Rechteck falsch begrenzen (Option E ist die Summe der Randdreiecke)."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The line $3x + 4y = 24$ and the coordinate axes enclose a triangle. What is its area?\n>\n> - **A** 24\n> - **B** 48\n> - **C** 12\n> - **D** 20\n> - **E** 96\n\n> [!success]- Lösung\n> **A.** Achsenschnittpunkte $(8, 0)$ und $(0, 6)$. Fläche $\\tfrac12 \\cdot 8 \\cdot 6 = 24$.\n\n> [!question] Aufgabe 2\n> What is the area of the quadrilateral with vertices $(0, 0)$, $(5, 0)$, $(6, 4)$ and $(1, 3)$, taken in this order?\n>\n> - **A** 17\n> - **B** 34\n> - **C** 20\n> - **D** 15\n> - **E** 18\n\n> [!success]- Lösung\n> **A.** Trapezformel: $0 \\cdot 0 - 5 \\cdot 0 = 0$; $5 \\cdot 4 - 6 \\cdot 0 = 20$; $6 \\cdot 3 - 1 \\cdot 4 = 14$; $1 \\cdot 0 - 0 \\cdot 3 = 0$. Summe 34, Hälfte 17.\n> Rechteckmethode: Rechteck $6 \\times 4 = 24$, abzuziehen die Dreiecke $\\tfrac12 \\cdot 1 \\cdot 4 = 2$ (rechts unten), $\\tfrac12 \\cdot 5 \\cdot 1 = 2{,}5$ (oben), $\\tfrac12 \\cdot 1 \\cdot 3 = 1{,}5$ (links) und das Eckrechteck oben links mit $1 \\cdot 1 = 1$: $24 - 7 = 17$.\n\n> [!question] Aufgabe 3\n> What is the area of the region enclosed by the lines $y = x$, $y = 6 - x$ and the $x$-axis?\n>\n> - **A** 9\n> - **B** 18\n> - **C** 6\n> - **D** 12\n> - **E** 4.5\n\n> [!success]- Lösung\n> **A.** Ecken $(0, 0)$, $(6, 0)$ und der Schnittpunkt $(3, 3)$. Grundseite 6, Höhe 3, Fläche 9."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zusammengesetzte Flächen und Körper berechnen** · **Senkrechte und Mittelsenkrechte aufstellen** · **Fläche bei Vorzeichenwechsel berechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Grundseite",
+      "md": "Wie groß ist die Fläche des Dreiecks mit den Ecken $(0, 0)$, $(6, 0)$ und $(2, 5)$?",
+      "answer": 15,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Grundseite 6 auf der x-Achse, Höhe 5: $\\tfrac12 \\cdot 6 \\cdot 5 = 15$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Vertauscht man die Reihenfolge zweier Ecken in der Formel, ändert sich nur das Vorzeichen des Ausdrucks im Betrag.",
+      "answer": true,
+      "explain": "Deshalb steht der Betrag in der Formel.",
+      "label": "Betrag",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +218,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "dreieckflaeche"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "dreieckflaeche"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "dreieckflaeche"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Formel mit Betrag und 1/2, oder umschließendes Rechteck minus Ecken-Dreiecke.",
+        "Seite auf einer Achse: Grundseite mal Höhe durch 2."
+      ]
     }
   ]
 }

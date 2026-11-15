@@ -50,11 +50,523 @@
           {
             "name": "N",
             "expr": "0.5^(x/T)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Nach 30 min sind noch {100*0.5^(30/T)|1} Prozent der Kerne übrig."
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Strahlungsarten und Abschirmung in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Kernphysik Zerfall.svg",
+        "aspect": 1.96,
+        "alt": "Alpha, Beta und Gamma vor Papier, Aluminium und Blei"
+      },
+      "timeline": [
+        {
+          "caption": "Drei Strahlungsarten aus einer Quelle und drei Abschirmungen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "$\\alpha$-Strahlung, Heliumkerne: stark ionisierend, aber schon ein Blatt Papier hält sie auf.",
+          "to": {
+            "x": 0.25,
+            "y": 0.55,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "$\\beta$-Strahlung, schnelle Elektronen oder Positronen: durchdringt Papier, einige Millimeter Aluminium stoppen sie.",
+          "to": {
+            "x": 0.45,
+            "y": 0.55,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "$\\gamma$-Strahlung, energiereiche Photonen: sehr durchdringend; erst dicke Bleischichten schwächen sie stark.",
+          "to": {
+            "x": 0.75,
+            "y": 0.55,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Von Alpha über Beta zu Gamma nimmt das Ionisierungsvermögen ab und die Durchdringung zu.",
+          "to": {
+            "x": 0.5,
+            "y": 0.93,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Radioaktiver Zerfall\n> Instabile Atomkerne wandeln sich **spontan** unter Aussendung von Strahlung um. Wann ein einzelner Kern zerfällt, ist zufällig; viele Kerne folgen einem strengen Gesetz.\n\n| Art | Teilchen | Kernänderung | Abschirmung |\n|---|---|---|---|\n| $\\alpha$ | Heliumkern $^4_2\\mathrm{He}$ | $Z - 2$, $A - 4$ | Papier, wenige cm Luft |\n| $\\beta^-$ | Elektron, im Kern $n \\to p + e^- + \\bar\\nu$ | $Z + 1$, $A$ gleich | Aluminiumblech |\n| $\\beta^+$ | Positron, $p \\to n + e^+ + \\nu$ | $Z - 1$, $A$ gleich | Aluminiumblech |\n| $\\gamma$ | Photon | keine, nur Energieabgabe | dickes Blei |\n\n> [!definition] Zerfallskonstante, Halbwertszeit, Aktivität\n> Die **Zerfallskonstante** $\\lambda$ ist die Wahrscheinlichkeit pro Zeit, dass ein Kern zerfällt. Die **Halbwertszeit** $T_{1/2}$ ist die Zeit, nach der die Hälfte einer großen Zahl von Kernen zerfallen ist. Die **Aktivität** $A = \\lambda N$ zählt die Zerfälle pro Sekunde, Einheit Becquerel: $1\\,\\mathrm{Bq} = 1\\,\\tfrac{1}{\\mathrm{s}}$.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung des Zerfallsgesetzes** aus einer festen Zerfallswahrscheinlichkeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta N = -\\lambda\\,N\\,\\Delta t",
+            "why": "In der kurzen Zeit Δt zerfällt jeder Kern mit der Wahrscheinlichkeit λΔt; im Mittel also λNΔt Kerne. Ein Kern hat kein Alter: λ bleibt immer gleich."
+          },
+          {
+            "tex": "\\dot N = -\\lambda\\,N",
+            "why": "Für Δt gegen null: Die Abnahme ist dem Bestand proportional."
+          },
+          {
+            "tex": "N(t) = N_0\\,e^{-\\lambda t}",
+            "why": "Die einzige Funktion, deren Ableitung ein festes Vielfaches von ihr selbst ist."
+          },
+          {
+            "tex": "N(T_{1/2}) = \\tfrac12 N_0:\\quad e^{-\\lambda T_{1/2}} = \\tfrac12 \\;\\Rightarrow\\; T_{1/2} = \\frac{\\ln 2}{\\lambda}",
+            "why": "Logarithmieren."
+          },
+          {
+            "tex": "N(t) = N_0\\left(\\tfrac12\\right)^{t/T_{1/2}},\\qquad A(t) = \\lambda N = A_0\\,e^{-\\lambda t}",
+            "why": "Gleichwertige Schreibweise; die Aktivität klingt mit derselben Halbwertszeit ab."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zufall.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenzialgleichung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Halbwertszeit.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aktivität.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Zerfallskurve, Halbwertszeit und mittlere Lebensdauer.** Orange die Anfangstangente, grün die mittlere Lebensdauer $\\tau$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          12
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "xLabel": "t (in Zeiteinheiten)",
+        "yLabel": "N in % von N₀",
+        "vars": [
+          {
+            "name": "T",
+            "min": 1,
+            "max": 4,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "N",
+            "expr": "100*0.5^(x/T)",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "N",
+            "at": 0,
+            "length": 12,
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T/0.6931",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "N",
+            "color": "blue",
+            "label": "50 %"
+          },
+          {
+            "x": "2*T",
+            "on": "N",
+            "color": "blue",
+            "label": "25 %"
+          },
+          {
+            "x": "3*T",
+            "on": "N",
+            "color": "blue",
+            "label": "12,5 %"
+          }
+        ],
+        "readout": "T½ = {T|1}: λ = ln 2 / T½ = {0.6931/T|3}, mittlere Lebensdauer τ = 1/λ = **{T/0.6931|2}**"
+      },
+      "timeline": [
+        {
+          "caption": "Jede Halbwertszeit halbiert den Rest: 50 %, 25 %, 12,5 %. Null wird nie erreicht.",
+          "set": {
+            "T": 2
+          }
+        },
+        {
+          "caption": "Doppelte Halbwertszeit: Die Kurve fällt langsamer, $\\lambda = \\tfrac{\\ln 2}{T_{1/2}}$ ist halb so groß.",
+          "to": {
+            "T": 4
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Die Anfangstangente trifft die Zeitachse bei $\\tau = \\tfrac{1}{\\lambda} \\approx 1{,}44\\,T_{1/2}$. Nach $\\tau$ ist noch $\\tfrac1e \\approx 36{,}8\\,\\%$ übrig, nicht $50\\,\\%$."
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Kerne altern nicht.** Ein frisch entstandener Kern und einer, der seit Millionen Jahren existiert, zerfallen im nächsten Zeitintervall mit derselben Wahrscheinlichkeit. Deshalb zerfällt pro Zeit immer derselbe **Anteil**, nicht dieselbe Anzahl: exponentielle Abnahme.\n\n| Nuklid | Halbwertszeit |\n|---|---|\n| Polonium-214 | 164 µs |\n| Iod-131 | 8,02 d |\n| Cäsium-137 | 30,2 a |\n| Kohlenstoff-14 | 5730 a |\n| Uran-238 | 4,5 Milliarden a |\n\n> [!warning] Nach zwei Halbwertszeiten ist nicht alles zerfallen\n> Es bleibt ein Viertel, nach drei ein Achtel, nach zehn rund ein Promille, aber nie null. Faustregel: Nach zehn Halbwertszeiten gilt eine Probe als praktisch abgeklungen; bei Cäsium-137 sind das rund 300 Jahre.\n\n**Aktivität ist kein Gefahrenmaß.** Die Wirkung hängt zusätzlich von Strahlungsart, Energie, innerer oder äußerer Belastung und Verweildauer im Körper ab; man bewertet sie mit der **Äquivalentdosis** in Sievert. Der menschliche Körper selbst hat durch Kalium-40 und Kohlenstoff-14 rund 8000 Bq.\n\n**Radiokarbonmethode.** Lebende Organismen halten ihren C-14-Anteil konstant; nach dem Tod sinkt er mit $T_{1/2} = 5730\\,\\mathrm{a}$. Nach etwa zehn Halbwertszeiten, rund 50 000 Jahren, ist zu wenig übrig.",
+      "label": "Zufall und Anwendungen",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Radioaktiver Zerfall",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Radioaktiver Zerfall.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Beim **radioaktiven Zerfall** wandeln sich instabile Atomkerne spontan unter Aussendung von Strahlung um. Der Zerfall des **einzelnen** Kerns ist rein zufällig, das Verhalten **großer** Kernzahlen jedoch streng gesetzmäßig -- ein statistisches Gesetz."
+            }
+          ]
+        },
+        {
+          "title": "Strahlungsarten",
+          "blocks": [
+            {
+              "image": "vault:Kernphysik Zerfall.svg"
+            },
+            {
+              "md": "| Art | Teilchen | Kernänderung | Reichweite |\n|---|---|---|---|\n| $\\alpha$ | $^4_2\\text{He}$ | $Z-2$, $A-4$ | wenige cm Luft, Papier schirmt ab |\n| $\\beta^-$ | Elektron ($n \\to p + e^- + \\bar{\\nu}$) | $Z+1$, $A$ gleich | einige m Luft, Alublech |\n| $\\beta^+$ | Positron ($p \\to n + e^+ + \\nu$) | $Z-1$, $A$ gleich | wie $\\beta^-$ |\n| $\\gamma$ | Photon | keine (nur Energieabgabe) | sehr durchdringend, Blei |"
+            }
+          ]
+        },
+        {
+          "title": "Zerfallsgesetz",
+          "blocks": [
+            {
+              "md": "$$N(t) = N_0 \\cdot e^{-\\lambda t}, \\qquad A(t) = \\lambda\\,N(t) = A_0 e^{-\\lambda t}$$\nDie **Aktivität** $A$ (Einheit Becquerel) gibt die Zerfälle pro Sekunde an."
+            }
+          ]
+        },
+        {
+          "title": "Halbwertszeit",
+          "blocks": [
+            {
+              "md": "$$T_{1/2} = \\frac{\\ln 2}{\\lambda}$$\nNach $n$ Halbwertszeiten ist noch der Anteil $\\left(\\tfrac{1}{2}\\right)^n$ vorhanden."
+            },
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+                ],
+                "series": [
+                  {
+                    "title": "Anteil N/N₀ (in Halbwertszeiten)",
+                    "data": [
+                      1.0,
+                      0.5,
+                      0.25,
+                      0.125,
+                      0.0625,
+                      0.031,
+                      0.016,
+                      0.008
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "> [!tip] Logarithmische Auswertung\n> Trägt man $\\ln N$ gegen $t$ auf, entsteht eine **Gerade** mit der Steigung $-\\lambda$ -- die Standardmethode zur Bestimmung der Halbwertszeit aus Messdaten."
+            }
+          ]
+        },
+        {
+          "title": "Zerfallsreihen und Anwendungen",
+          "blocks": [
+            {
+              "md": "Instabile Kerne zerfallen oft über mehrere Stufen (z. B. Uran-Radium-Reihe) bis zu einem stabilen Bleiisotop. Die **C-14-Methode** nutzt $T_{1/2} = 5730$ a zur Altersbestimmung organischer Funde.\n\nEnergetische Grundlagen (Massendefekt, Bindungsenergie, Spaltung, Fusion) siehe **Kernphysik und Bindungsenergie** (Q4)."
+            }
+          ]
+        },
+        {
+          "title": "Die Zufälligkeit des Einzelereignisses",
+          "blocks": [
+            {
+              "md": "> [!important] Man kann nicht sagen, wann ein bestimmter Kern zerfällt\n> Der Zerfall ist ein **echter Zufallsprozess**. Ein Kern hat kein Alter und keine Vorgeschichte -- die Zerfallswahrscheinlichkeit im nächsten Zeitintervall ist für einen frisch entstandenen und einen seit Millionen Jahren bestehenden Kern **identisch**.\n>\n> Vorhersagbar ist nur das Verhalten **vieler** Kerne. Das ist derselbe Übergang wie in der Stochastik: Der Einzelfall bleibt offen, die Verteilung ist scharf.\n>\n> Daraus folgt die Struktur des Zerfallsgesetzes: Die Zahl der Zerfälle je Zeit ist der **vorhandenen** Zahl proportional --\n> $$\\dot N = -\\lambda N \\;\\Longrightarrow\\; N(t) = N_0\\,e^{-\\lambda t}$$\n>\n> Diese Bauform kehrt überall dort wieder, wo der Verlust dem Bestand proportional ist: bei der **gedämpften Schwingung**, bei der Kondensatorentladung und in der Chemie bei Reaktionen erster Ordnung."
+            }
+          ]
+        },
+        {
+          "title": "Halbwertszeit und Zerfallskonstante",
+          "blocks": [
+            {
+              "md": "$$T_{1/2} = \\frac{\\ln 2}{\\lambda}$$\n\n| Nuklid | Halbwertszeit |\n|---|---|\n| Polonium-214 | 164 Mikrosekunden |\n| Iod-131 | 8 Tage |\n| Cäsium-137 | 30 Jahre |\n| Kohlenstoff-14 | 5730 Jahre |\n| Uran-238 | 4,5 Milliarden Jahre |\n\n*Literaturwerte.*\n\n> [!warning] Nach zwei Halbwertszeiten ist nicht alles zerfallen\n> Es bleibt ein Viertel. Nach drei ein Achtel, nach zehn rund ein Tausendstel -- aber nie exakt null.\n>\n> Die naheliegende Vorstellung, zwei Halbwertszeiten bedeuteten vollständigen Zerfall, ist der häufigste Fehler des Themas. Sie entsteht aus der irrigen Annahme, die Anteile addierten sich.\n>\n> Praktische Faustregel: Nach **zehn** Halbwertszeiten ist die Aktivität auf unter ein Promille gesunken. Bei Cäsium-137 sind das rund 300 Jahre."
+            }
+          ]
+        },
+        {
+          "title": "Aktivität",
+          "blocks": [
+            {
+              "md": "$$A = \\lambda\\,N \\qquad [A] = \\text{Bq} = \\text{Zerfälle je Sekunde}$$\n\n> [!important] Aktivität und Gefährlichkeit sind zweierlei\n> Die Aktivität zählt nur die Zerfälle. Wie schädlich sie sind, hängt zusätzlich ab von:\n>\n> | Faktor | Bedeutung |\n> |---|---|\n> | **Strahlungsart** | Alpha stark ionisierend, aber leicht abschirmbar |\n> | **Energie** | bestimmt die Reichweite im Gewebe |\n> | **innere oder äußere** Belastung | Alphastrahler sind vor allem inkorporiert gefährlich |\n> | **Verweildauer** im Körper | biologische Halbwertszeit |\n>\n> Deshalb genügt die Angabe in Becquerel nicht zur Bewertung -- man braucht die **Äquivalentdosis** in Sievert, die Strahlungsart und Gewebeempfindlichkeit einrechnet.\n>\n> Ein kurzlebiges Nuklid hat hohe Aktivität, ist aber rasch verschwunden; ein langlebiges belastet über Jahrhunderte bei geringer Aktivität. Beide Extreme sind problematisch, aber auf verschiedene Weise."
+            }
+          ]
+        },
+        {
+          "title": "Die Altersbestimmung",
+          "blocks": [
+            {
+              "md": "Bei der **Radiokarbonmethode** wird ausgenutzt, dass lebende Organismen ihren Kohlenstoff-14-Anteil durch Stoffwechsel konstant halten. Mit dem Tod endet der Austausch, und der Anteil sinkt exponentiell.\n\n> [!tip] Die Methode hat eine natürliche Reichweitengrenze\n> Nach etwa zehn Halbwertszeiten, also rund 50 000 Jahren, ist zu wenig Kohlenstoff-14 übrig, um es zuverlässig zu messen.\n>\n> Für ältere Proben nutzt man langlebigere Zerfallsreihen -- Uran-Blei reicht über Milliarden Jahre. Die Wahl des Nuklids richtet sich nach dem erwarteten Alter, ganz wie die Wahl eines Messbereichs.\n>\n> Voraussetzung ist stets ein **bekannter Anfangswert**. Dass der Kohlenstoff-14-Gehalt der Atmosphäre nicht ganz konstant war, macht eine Kalibrierung nötig -- etwa über Jahresringe."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der radioaktive Zerfall liefert das Standardbeispiel für exponentielle Prozesse und für den Übergang vom zufälligen Einzelereignis zur sicheren Statistik. Er verbindet **Kernphysik und Bindungsenergie** mit Anwendungen in Medizin, Datierung und Energieversorgung."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Zerfallsart ihre Kernänderung zu.",
+      "pairs": [
+        [
+          "$\\alpha$",
+          "$Z - 2$, $A - 4$, ein Heliumkern"
+        ],
+        [
+          "$\\beta^-$",
+          "$n \\to p + e^- + \\bar\\nu$, $Z + 1$"
+        ],
+        [
+          "$\\beta^+$",
+          "$p \\to n + e^+ + \\nu$, $Z - 1$"
+        ],
+        [
+          "$\\gamma$",
+          "nur Energieabgabe, Z und A bleiben"
+        ],
+        [
+          "Aktivität",
+          "Zerfälle pro Sekunde in Becquerel"
+        ]
+      ],
+      "explain": "Bei Betazerfällen bleibt die Massenzahl gleich, weil sich nur ein Nukleon umwandelt.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des Zerfallsgesetzes in die richtige Reihenfolge.",
+      "items": [
+        "Feste Zerfallswahrscheinlichkeit: $\\Delta N = -\\lambda N\\Delta t$",
+        "$\\dot N = -\\lambda N$",
+        "$N(t) = N_0 e^{-\\lambda t}$",
+        "Aus $e^{-\\lambda T_{1/2}} = \\tfrac12$: $T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Feste Zerfallswahrscheinlichkeit: $\\Delta N = -\\lambda N\\Delta t$. 2. $\\dot N = -\\lambda N$. 3. $N(t) = N_0 e^{-\\lambda t}$. 4. Aus $e^{-\\lambda T_{1/2}} = \\tfrac12$: $T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "sort",
+      "label": "Strahlungsarten",
+      "md": "Ordne jede Eigenschaft einer Strahlungsart zu.",
+      "categories": [
+        "$\\alpha$",
+        "$\\beta$",
+        "$\\gamma$"
+      ],
+      "items": [
+        {
+          "md": "Kern aus zwei Protonen und zwei Neutronen",
+          "cat": "$\\alpha$"
+        },
+        {
+          "md": "wird schon von einem Blatt Papier gestoppt",
+          "cat": "$\\alpha$"
+        },
+        {
+          "md": "schnelles Elektron aus dem Kern",
+          "cat": "$\\beta$"
+        },
+        {
+          "md": "durchdringt Papier, aber nicht einige Millimeter Aluminium",
+          "cat": "$\\beta$"
+        },
+        {
+          "md": "energiereiches Photon",
+          "cat": "$\\gamma$"
+        },
+        {
+          "md": "ändert weder Z noch A",
+          "cat": "$\\gamma$"
+        }
+      ],
+      "explain": "Ionisierungsvermögen nimmt von Alpha zu Gamma ab, die Durchdringung zu.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Radium-226 ($Z = 88$) ist ein Alphastrahler. Welche Massenzahl hat der Tochterkern?",
+      "answer": 222,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$^{226}_{88}\\mathrm{Ra} \\to {}^{222}_{86}\\mathrm{Rn} + {}^4_2\\mathrm{He}$: Radon-222.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viel Prozent der Kerne sind nach fünf Halbwertszeiten noch nicht zerfallen?",
+      "answer": 3.125,
+      "tolerance": 0.05,
+      "placeholder": "%",
+      "explain": "$\\left(\\tfrac12\\right)^5 = \\tfrac{1}{32} \\approx 3{,}1\\,\\%$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viel Prozent sind nach zehn Halbwertszeiten noch übrig?",
+      "answer": 0.0977,
+      "tolerance": 0.002,
+      "placeholder": "%",
+      "explain": "$\\left(\\tfrac12\\right)^{10} = \\tfrac{1}{1024} \\approx 0{,}098\\,\\%$, rund ein Promille.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Wie groß ist die mittlere Lebensdauer von Iod-131 ($T_{1/2} = 8{,}02\\,\\mathrm{d}$)?",
+      "answer": 11.57,
+      "tolerance": 0.1,
+      "placeholder": "d",
+      "explain": "$\\tau = \\tfrac{1}{\\lambda} = \\tfrac{T_{1/2}}{\\ln 2} \\approx 1{,}44\\cdot 8{,}02\\,\\mathrm{d} \\approx 11{,}6\\,\\mathrm{d}$.",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Kern, der schon sehr lange existiert, zerfällt mit größerer Wahrscheinlichkeit bald.",
+      "answer": false,
+      "explain": "Kerne altern nicht: Die Zerfallswahrscheinlichkeit pro Zeit ist für alle Kerne gleich.",
+      "label": "Zufall",
+      "id": "vq8"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Rauchmelder hat rund 30 000 Bq, der menschliche Körper rund 8000 Bq. Ist der Rauchmelder deshalb fast viermal so gefährlich?",
+      "options": [
+        {
+          "md": "Nein, die Aktivität allein sagt nichts über die Wirkung; es kommt auf Strahlungsart, Energie, Abstand und Aufnahme in den Körper an.",
+          "correct": true
+        },
+        {
+          "md": "Ja, die Gefahr ist der Aktivität proportional.",
+          "why": "Die Wirkung bewertet man mit der Äquivalentdosis, nicht mit Becquerel."
+        },
+        {
+          "md": "Nein, der Körper strahlt gar nicht.",
+          "why": "Kalium-40 und Kohlenstoff-14 im Körper zerfallen ständig."
+        },
+        {
+          "md": "Ja, Becquerel misst die Dosis.",
+          "why": "Becquerel zählt Zerfälle in der Quelle."
+        }
+      ],
+      "explain": "Der Alphastrahler im Rauchmelder wird schon von Luft und Gehäuse abgeschirmt.",
+      "label": "Strahlenschutz",
+      "id": "vq9"
     },
     {
       "id": "rest",
@@ -90,13 +602,41 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "aktivitaet-masse",
+          "halbwertsdicke"
+        ]
+      },
+      "label": "Aktivität und Abschirmung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "zaehlrate",
+          "c14"
+        ]
+      },
+      "label": "Halbwertszeit und Alter",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Einzelzerfall zufällig, viele Kerne folgen $N_0 e^{-\\lambda t}$.",
         "$T_{1/2} = \\frac{\\ln 2}{\\lambda}$.",
-        "Aktivität $A = \\lambda N$ in Bq."
+        "Aktivität $A = \\lambda N$ in Bq.",
+        "Aus fester Zerfallswahrscheinlichkeit folgt $\\dot N = -\\lambda N$, also $N = N_0 e^{-\\lambda t}$ und $T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$.",
+        "$\\alpha$: $Z-2$, $A-4$; $\\beta^\\mp$: $Z\\pm1$; $\\gamma$: nur Energie. Mittlere Lebensdauer $\\tau = 1{,}44\\,T_{1/2}$."
       ]
     }
   ]

@@ -23,6 +23,372 @@
       "md": "Die schriftliche Prüfung besteht aus **zwei Prüfungsteilen**, jeweils mit Aufgabenvorschlägen zu 50 Bewertungseinheiten: einer zur **Quanten-, Atom- und Röntgenphysik**, einer zu **elektrischen und magnetischen Feldern, Schwingungen und Wellen**. Wie viele Vorschläge du bearbeitest, regelt die jeweilige Formatangabe; kläre das mit deiner Lehrkraft.\n\nErlaubt sind Taschenrechner, Formelsammlungen und die **Operatorenliste**. Die Operatoren sagen genau, was verlangt ist."
     },
     {
+      "type": "text",
+      "md": "**Der Rahmen.** Zwei Prüfungsteile mit Vorschlägen zu je **50 BE**: Teil 1 Quanten-, Atom- und Röntgenphysik, Teil 2 elektrische und magnetische Felder, Schwingungen und Wellen. Hilfsmittel: Taschenrechner, Formelsammlungen, Wörterbuch und die **Operatorenliste**. Wie viele Vorschläge zu bearbeiten sind, regelt die Formatangabe des Jahrgangs; das klärst du mit deiner Lehrkraft.\n\n**Wiederkehrende Aufgabenzuschnitte.**\n\n| Teil 1 (Quantenphysik) | Teil 2 (Felder, Schwingungen, Wellen) |\n|---|---|\n| Aufbau skizzieren und beschriften | Feldlinienbild zeichnen und begründen |\n| Spektrum oder Kennlinie qualitativ skizzieren | Größen berechnen |\n| Entstehung erklären | Änderungen qualitativ verfolgen |\n| Formel aus einem Energieansatz herleiten, dann rechnen | Formel aus einem Kraftansatz herleiten |\n| Termschema auswerten | Messreihe auswerten, linearisieren |\n| Modellgrenzen prüfen | Einheiten betrachten, Diagramme zeichnen |\n\n> [!important] Drei Kompetenzen, die jede Klausur prüft\n> **Zeichnen und beschriften** (Aufbau, Feldlinien, Kraftpfeile): ohne Rechenrisiko, gut vorzubereiten. **In Materialien eintragen**: 2025 rund 20 der 50 BE eines Vorschlags. **Plausibilität prüfen**: Einheiten, Größenordnung, Gültigkeit des Ansatzes.",
+      "label": "Aufbau",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: eine Messreihe linearisieren** (Beispiel Fadenstrahlrohr bei festem $B$, verschiedene Spannungen $U$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{e}{m} = \\frac{2U}{B^2 r^2}",
+            "why": "Bekannte Beziehung aus Energie- und Kraftansatz."
+          },
+          {
+            "tex": "r^2 = \\frac{2}{(e/m)\\,B^2}\\cdot U",
+            "why": "Nach der Größe umstellen, die man misst, als Funktion der Größe, die man einstellt."
+          },
+          {
+            "tex": "y = r^2,\\quad x = U:\\qquad y = m\\,x",
+            "why": "r² über U aufgetragen ist eine Ursprungsgerade; r über U wäre gekrümmt und schwer auszuwerten."
+          },
+          {
+            "tex": "m = \\frac{2}{(e/m)\\,B^2} \\;\\Rightarrow\\; \\frac{e}{m} = \\frac{2}{m\\,B^2}",
+            "why": "Die gesuchte Konstante folgt aus der Steigung der Ausgleichsgeraden; alle Messpunkte zählen mit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Beziehung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umstellen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konstante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Von BE zu Notenpunkten** (übliche Zuordnung aus deiner Notiz): Notenpunkte über dem Anteil der erreichten BE.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          100
+        ],
+        "y": [
+          0,
+          16
+        ],
+        "xLabel": "erreichte BE in %",
+        "yLabel": "Notenpunkte",
+        "vars": [
+          {
+            "name": "P",
+            "min": 0,
+            "max": 100,
+            "value": 30,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "N",
+            "expr": "x >= 40 ? min(15, floor((x - 40)/5) + 4) : (x >= 33 ? 3 : (x >= 27 ? 2 : (x >= 20 ? 1 : 0)))",
+            "color": "blue",
+            "samples": 1000
+          }
+        ],
+        "points": [
+          {
+            "x": "P",
+            "on": "N",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "{P|0} % der BE, bei 50 BE also {P/2|1} BE: **{P >= 40 ? min(15, floor((P - 40)/5) + 4) : (P >= 33 ? 3 : (P >= 27 ? 2 : (P >= 20 ? 1 : 0)))|0} Notenpunkte**"
+      },
+      "timeline": [
+        {
+          "caption": "Unter 20 % gibt es keinen Punkt, ab 20 % einen.",
+          "set": {
+            "P": 22
+          }
+        },
+        {
+          "caption": "Ab 40 % (vier Punkte) bringt jede weitere Stufe von 5 % einen Notenpunkt: bei 50 BE also alle 2,5 BE.",
+          "to": {
+            "P": 50
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Ab 70 % sind es 10 Punkte, ab 95 % die vollen 15. Wer gezielt sichere Teilaufgaben löst, gewinnt Stufe um Stufe.",
+          "to": {
+            "P": 96
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Zeitplanung und Punktehygiene.** Bei rund 100 Minuten für 50 BE sind es etwa **zwei Minuten pro BE**. Die Aufgaben sind nicht nach Schwierigkeit sortiert: erst alles lesen, BE notieren, sichere Teile zuerst. Wer an einer Rechnung hängt, rechnet mit dem Wert „zur Kontrolle“ weiter und verliert nur den einen Schritt.\n\n**Operatoren genau lesen.** *Nennen*, *beschreiben* und *skizzieren* verlangen Wiedergabe; *erklären*, *herleiten*, *auswerten* und *beurteilen* einen begründeten Weg. Wer statt zu erklären nur beschreibt, verschenkt die Punkte für die Begründung.\n\n**Themen.** 2025 kamen Relativitätstheorie, Kernphysik, Astrophysik und Chaostheorie nicht vor; Schwerpunkte waren Felder, Induktion, Schwingungen und Wellen, Quantenobjekte, Atommodelle und Röntgenstrahlung.",
+      "label": "Strategie",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Klausurstruktur - Landesabitur Hessen (Physik)",
+      "path": "02 Wiki/Physik/00 Klausurstruktur - Landesabitur Hessen (Physik).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Klausurstruktur Landesabitur Hessen -- Physik",
+          "blocks": [
+            {
+              "md": "> [!info] Zweck dieser Datei\n> Rekonstruktion des Prüfungsformats aus der Originalklausur Grundkurs 2025 und den offiziellen Formatangaben zum Abitur 2026. **Kein Aufgabentext ist übernommen** -- festgehalten sind Aufbau, Punkteverteilung und die wiederkehrenden Aufgabenzuschnitte."
+            }
+          ]
+        },
+        {
+          "title": "Der Rahmen",
+          "blocks": [
+            {
+              "md": "| Merkmal | Angabe |\n|---|---|\n| Prüfungstermin 2026 | 23.04.2026, Nachtermin 27.05.2026 |\n| Aufbau | zwei Prüfungsteile mit je zwei Aufgabenvorschlägen |\n| Bewertungseinheiten | **50 BE je Vorschlag** |\n| Hilfsmittel | Rechtschreibwörterbuch, Taschenrechner, mathematisch-naturwissenschaftliche Formelsammlung, physikalische Formelsammlung, Operatorenliste |\n\n> [!warning] Den Auswahlmodus mit der Fachlehrkraft klären\n> Die Klausur 2025 bestand aus Prüfungsteil 1 mit den Vorschlägen A1 und A2 sowie Prüfungsteil 2 mit B1 und B2 -- je 50 BE. Die Formatangabe für 2026 nennt dagegen *\"vier Vorschläge, aus denen drei ausgewählt werden\"*, was auf ein älteres Format hindeutet; 2023 gab es tatsächlich fünf Vorschläge (A1, A2, B1, B2, B3).\n>\n> Der Bearbeitungsumfang ist damit die einzige Unsicherheit dieser Übersicht. Alles Übrige ist aus der Originalklausur belegt."
+            }
+          ]
+        },
+        {
+          "title": "Die thematische Zweiteilung",
+          "blocks": [
+            {
+              "md": "> [!important] Quantenphysik gegen klassische Feld- und Wellenphysik\n> Die beiden Prüfungsteile trennen die Sachgebiete klar, und zwar in beiden untersuchten Jahrgängen gleich:\n>\n> | Teil | Sachgebiet | Vorschläge 2025 |\n> |---|---|---|\n> | **1** | Quanten-, Atom- und Röntgenphysik | A1 Röntgenfluoreszenz, A2 Fotoeffekt und Materiewellen |\n> | **2** | elektrische und magnetische Felder, Schwingungen und Wellen | B1 Kondensator und Fadenstrahlrohr, B2 Schwingungen und Schall |\n>\n> Wer sich also in einem der beiden Blöcke sicher fühlt, kann darauf setzen -- aber nur innerhalb des jeweiligen Teils, denn beide Teile werden bearbeitet."
+            }
+          ]
+        },
+        {
+          "title": "Wiederkehrende Aufgabenzuschnitte",
+          "blocks": [
+            {
+              "md": "### Prüfungsteil 1 -- Quantenphysik\n\n1. **Aufbau skizzieren und beschriften.** Röntgenröhre mit Schaltung, Nachtsichtgerät, Versuchsanordnung. Zeichnen ist Punktbestandteil, nicht Beiwerk.\n2. **Spektrum oder Kennlinie qualitativ skizzieren** und die Merkmale beschriften -- kurzwellige Grenze, kontinuierlicher und charakteristischer Anteil.\n3. **Entstehung erklären.** Bremsstrahlung, charakteristische Linien, Einfluss des Anodenmaterials.\n4. **Formel herleiten** aus einem Energieansatz, dann **damit rechnen**.\n5. **Termschema auswerten** -- Übergangsenergien und Wellenlängen bestimmen, Elemente identifizieren.\n6. **Ein Modell auf seine Grenzen prüfen** -- etwa nachweisen, dass eine nichtrelativistische Rechnung hier unzulässig wäre.\n\n### Prüfungsteil 2 -- Felder, Schwingungen, Wellen\n\n1. **Feldlinienbild zeichnen und begründen**, einschließlich Influenz und feldfreiem Innenraum.\n2. **Größen berechnen** -- Kapazität, Spannung, Energie, Federkonstante, Periodendauer.\n3. **Änderungen qualitativ verfolgen** -- was geschieht bei getrennter gegenüber angeschlossener Spannungsquelle.\n4. **Formel aus einem Kraftansatz herleiten**, dann anwenden.\n5. **Messreihe auswerten** -- fehlende Werte berechnen, Wertepaare eintragen, Proportionalität am Diagramm begründen.\n6. **Einheitenbetrachtung** als eigenständiger Prüfauftrag.\n7. **Diagramme zeichnen** -- Überlagerung zweier Schwingungen, stehende Welle mit Knoten und Bäuchen."
+            }
+          ]
+        },
+        {
+          "title": "Was die Klausur besonders macht",
+          "blocks": [
+            {
+              "md": "> [!important] Zeichnen und Beschriften sind hoch gewichtet\n> In der Klausur 2025 entfielen in Prüfungsteil 2 rund 20 der 50 BE auf Aufgaben, deren Kern das **Eintragen in vorgegebene Materialien** war: Feldlinien, Kraftpfeile, Elektronenbahn, Polung, Messpunkte, Schwingungsverläufe.\n>\n> Das ist ungewöhnlich viel und wird in der Vorbereitung fast immer vernachlässigt, weil sich Zeichnen schlechter üben lässt als Rechnen. Es sind aber die zuverlässigsten Punkte der ganzen Prüfung -- sie hängen nicht an einer fehlerfreien Rechenkette.\n\n> [!tip] Die experimentelle Auswertung ist ein eigener Schwerpunkt\n> Messwerte ergänzen, geeignete Größen gegeneinander auftragen, Linearität feststellen und daraus eine Konstante bestimmen -- dieser Dreischritt trug 2025 allein 14 BE.\n>\n> Der Kunstgriff ist stets derselbe: Man trägt nicht die Rohdaten auf, sondern eine **umgerechnete Größe**, sodass ein linearer Zusammenhang entsteht. Siehe **Messreihe linearisieren und Konstante bestimmen**."
+            }
+          ]
+        },
+        {
+          "title": "Zeitplanung und Punktehygiene",
+          "blocks": [
+            {
+              "md": "> [!info] Die Aufgaben sind nicht nach Schwierigkeit sortiert\n> Innerhalb eines Vorschlags stehen die punktreichsten Teile oft in der Mitte. Ein vollständiger Durchgang durch alle Teilaufgaben mit Notierung der BE lohnt sich, bevor man beginnt.\n>\n> Teilaufgaben mit *\"zur Kontrolle\"*-Angabe entkoppeln die Folgeaufgabe vom eigenen Ergebnis. Wer bei einer Rechnung hängenbleibt, kann mit dem angegebenen Wert weiterarbeiten und verliert nur die Punkte des einen Schritts."
+            }
+          ]
+        },
+        {
+          "title": "Anschluss im Vault",
+          "blocks": [
+            {
+              "md": "Inhaltliche Abdeckung siehe **00 Aufgabentypen - Vollständigkeitsraster (Physik)**, der Abgleich mit der Originalklausur steht in **00 Abgleich Originalklausur - Aufgabentypen (Physik)**."
+            }
+          ]
+        },
+        {
+          "title": "Quellen",
+          "blocks": [
+            {
+              "md": "Originalklausur Landesabitur Hessen Physik Grundkurs 2025 sowie die Formatangaben zum Abitur 2026, eingesehen über SchulLV. Übernommen wurde ausschließlich die Struktur."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Abgleich Originalklausur - Aufgabentypen (Physik)",
+      "path": "02 Wiki/Physik/00 Abgleich Originalklausur - Aufgabentypen (Physik).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Abgleich: Originalklausur gegen das Aufgabentypen-Raster",
+          "blocks": [
+            {
+              "md": "> [!info] Was geprüft wurde\n> Jede Teilaufgabe der Landesabiturklausur Hessen Physik Grundkurs 2025 -- alle vier Vorschläge -- wurde einem Aufgabentyp der Vault-Sammlung zugeordnet."
+            }
+          ]
+        },
+        {
+          "title": "Befund",
+          "blocks": [
+            {
+              "md": "| | Anzahl |\n|---|---|\n| geprüfte Teilaufgaben (vier Vorschläge) | 34 |\n| durch bestehende Aufgabentypen abgedeckt | 26 |\n| **ohne Entsprechung im Raster** | **8** |"
+            }
+          ]
+        },
+        {
+          "title": "Die Lücken",
+          "blocks": [
+            {
+              "md": "| Fehlender Typ | belegt durch |\n|---|---|\n| **Röntgenröhre - Aufbau und Spektrum erklären** | A1 1.1 bis 1.3 und 1.6 |\n| **Photonenimpuls und Strahlungsdruck berechnen** | A2 2.1 und 2.2 |\n| **Feldlinienbilder zeichnen und Influenz erklären** | B1 1.1 bis 1.4 |\n| **Kondensator bei getrennter und angeschlossener Spannungsquelle** | B1 2.2 |\n| **Spezifische Ladung im Fadenstrahlrohr bestimmen** | B1 3.1 bis 3.4 |\n| **Messreihe linearisieren und Konstante bestimmen** | B1 3.4.1 |\n| **Einheitenkontrolle und Größenordnungsabschätzung** | B1 3.4.2, A1 Aufgabe 3 |\n| **Überlagerung von Wellen grafisch konstruieren** | B2 3.1 und 3.2 |"
+            }
+          ]
+        },
+        {
+          "title": "Was der Abgleich über die Prüfung verrät",
+          "blocks": [
+            {
+              "md": "> [!important] Das Raster war rechenlastig, die Klausur ist es nicht\n> Die 74 bestehenden Aufgabentypen sind überwiegend Rechentypen -- \"berechne die Lorentzkraft\", \"bestimme die Halbwertszeit\". Die Klausur verlangt daneben in erheblichem Umfang **Zeichnen, Erklären und experimentelles Auswerten**.\n>\n> Genau dort lagen alle acht Lücken. Das ist kein Zufall, sondern ein systematischer blinder Fleck: Aufgabentypen werden beim Aufbau einer Sammlung intuitiv als Rechenverfahren gedacht.\n\n> [!tip] Drei Kompetenzen, die jede Klausur prüft\n> **Aufbau zeichnen und beschriften** -- Röntgenröhre, Fadenstrahlrohr, Schaltung. Ohne Rechenrisiko, gut vorbereitbar.\n>\n> **In vorgegebene Materialien eintragen** -- Feldlinien, Kraftpfeile, Messpunkte, Schwingungsverläufe. 2025 rund 20 BE allein in Vorschlag B1.\n>\n> **Ein Ergebnis auf Plausibilität prüfen** -- Einheiten, Größenordnung, Gültigkeitsbereich des Ansatzes. Erscheint regelmäßig als eigene Teilaufgabe.\n\n> [!info] Themen, die 2025 nicht vorkamen\n> Relativitätstheorie, Kernphysik, Astrophysik und Chaosphysik traten in keinem der vier Vorschläge auf. Der Themenkatalog 2026 nennt sie ebenfalls nicht -- Schwerpunkt sind elektrische und magnetische Felder, Induktion, Schwingungen und Wellen, Quantenobjekte, Atommodelle und Röntgenstrahlung.\n>\n> Die entsprechenden Notizen im Vault bleiben bestehen, sind aber für die Klausurvorbereitung nachrangig."
+            }
+          ]
+        },
+        {
+          "title": "Anschluss",
+          "blocks": [
+            {
+              "md": "Klausuraufbau siehe **00 Klausurstruktur - Landesabitur Hessen (Physik)**, Gesamtbestand siehe **00 Aufgabentypen - Vollständigkeitsraster (Physik)**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Operatoren",
+      "md": "Was verlangt der Operator? Ordne zu.",
+      "pairs": [
+        [
+          "Nennen",
+          "ohne Begründung angeben"
+        ],
+        [
+          "Beschreiben",
+          "geordnet in Fachsprache wiedergeben"
+        ],
+        [
+          "Erklären",
+          "auf Gesetze zurückführen"
+        ],
+        [
+          "Herleiten",
+          "durch Umformen aus Bekanntem gewinnen"
+        ],
+        [
+          "Beurteilen",
+          "ein begründetes Urteil fällen"
+        ]
+      ],
+      "explain": "Wiedergabe oder begründeter Weg: Der Operator entscheidet.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Auswertung",
+      "md": "Bringe das Vorgehen beim Linearisieren in die richtige Reihenfolge.",
+      "items": [
+        "Physikalische Beziehung aufschreiben",
+        "Nach der Messgröße umstellen",
+        "Größen so wählen, dass eine Gerade entsteht (etwa r² über U)",
+        "Steigung der Ausgleichsgeraden bestimmen und die Konstante berechnen"
+      ],
+      "explain": "Die Reihenfolge: 1. Physikalische Beziehung aufschreiben. 2. Nach der Messgröße umstellen. 3. Größen so wählen, dass eine Gerade entsteht (etwa r² über U). 4. Steigung der Ausgleichsgeraden bestimmen und die Konstante berechnen.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für einen Vorschlag mit 50 BE hast du rund 100 Minuten. Wie viele Minuten solltest du einer Teilaufgabe mit 7 BE geben?",
+      "answer": 14,
+      "tolerance": 0,
+      "placeholder": "min",
+      "explain": "Zwei Minuten pro BE: $7\\cdot 2 = 14$ Minuten.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Du erreichst 36 von 50 BE. Wie viele Notenpunkte sind das (ab 70 % 10, ab 75 % 11 Punkte)?",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "Punkte",
+      "explain": "$\\tfrac{36}{50} = 72\\,\\%$: 10 Punkte.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele von 50 BE brauchst du mindestens für 13 Notenpunkte (ab 85 %)?",
+      "answer": 42.5,
+      "tolerance": 0.5,
+      "placeholder": "BE",
+      "explain": "$0{,}85\\cdot 50 = 42{,}5$ BE.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zeichnen und Beschriften bringen im Physik-Abitur kaum Punkte.",
+      "answer": false,
+      "explain": "2025 entfielen in einem Vorschlag rund 20 der 50 BE auf Eintragungen in Materialien; es sind die sichersten Punkte.",
+      "label": "Kompetenzen",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Sachgebiete trennen die beiden Prüfungsteile?",
+      "options": [
+        {
+          "md": "Teil 1 Quanten-, Atom- und Röntgenphysik; Teil 2 Felder, Schwingungen und Wellen.",
+          "correct": true
+        },
+        {
+          "md": "Teil 1 Mechanik, Teil 2 Elektrizität.",
+          "why": "Mechanik ist Grundlage, aber kein eigener Prüfungsteil."
+        },
+        {
+          "md": "Teil 1 Rechnen, Teil 2 Erklären.",
+          "why": "Beide Teile verlangen beides."
+        },
+        {
+          "md": "Teil 1 Pflicht, Teil 2 freiwillig.",
+          "why": "Beide Teile werden bearbeitet."
+        }
+      ],
+      "explain": "Die Zweiteilung war 2023 und 2025 gleich.",
+      "label": "Aufbau",
+      "id": "vq7"
+    },
+    {
       "id": "operatoren",
       "type": "sort",
       "label": "Operatoren",
@@ -84,13 +450,30 @@
       "explain": "Rund 2 Minuten pro BE; schwierige Teile lieber zurückstellen als festbeißen."
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "fadenstrahl",
+          "gitter",
+          "photoeffekt",
+          "duane-hunt"
+        ]
+      },
+      "label": "Gemischte Abituraufgaben",
+      "id": "vx1"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Zwei Prüfungsteile: Quantenphysik und klassische Feld- und Wellenphysik.",
         "Je Vorschlag 50 BE; Zeit nach BE einteilen.",
-        "Operatoren genau lesen: nennen ist nicht erklären."
+        "Operatoren genau lesen: nennen ist nicht erklären.",
+        "Zwei Prüfungsteile zu je 50 BE pro Vorschlag; rund 2 Minuten pro BE; Operatoren entscheiden über die Punkte.",
+        "Linearisieren: so auftragen, dass eine Gerade entsteht, die Konstante aus der Steigung; Zeichnen und Eintragen sind sichere Punkte."
       ]
     }
   ]

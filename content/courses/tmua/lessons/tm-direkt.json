@@ -27,6 +27,499 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Direkter Beweis\n> Eine Kette gültiger Schritte von den **Voraussetzungen** zur **Behauptung**. Jeder Schritt ist eine Definition, eine schon bewiesene Tatsache oder eine erlaubte Umformung.\n\n| Eigenschaft | Darstellung mit einer ganzen Zahl $k$ oder $m$ |\n|---|---|\n| $n$ gerade | $n = 2k$ |\n| $n$ ungerade | $n = 2k + 1$ |\n| $a$ teilt $b$ ($a \\mid b$) | $b = a \\cdot m$ |\n| Rest bei Division durch 3 | $n = 3k$, $3k + 1$ oder $3k + 2$ |\n\nZwei Tatsachen tragen viele Beweise: **Von zwei aufeinanderfolgenden ganzen Zahlen ist genau eine gerade**, also ist $k(k+1)$ stets gerade. **Von drei aufeinanderfolgenden ist genau eine durch 3 teilbar**, also ist $(n-1)n(n+1)$ stets durch 6 teilbar.",
+      "label": "Werkzeuge",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: zwei direkte Beweise.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a \\mid b \\text{ und } b \\mid c:\\quad b = a\\,m,\\;\\; c = b\\,l",
+            "why": "Behauptung: Dann teilt a auch c. Die Voraussetzungen werden in Gleichungen übersetzt."
+          },
+          {
+            "tex": "c = (a\\,m)\\,l = a\\,(m\\,l)",
+            "why": "Einsetzen. Weil ml eine ganze Zahl ist, gilt a | c."
+          },
+          {
+            "tex": "n = 2k + 1,\\;\\; m = 2l + 1",
+            "why": "Zweite Behauptung: Das Produkt zweier ungerader Zahlen ist ungerade. Zwei verschiedene Buchstaben k und l, die Zahlen müssen nicht gleich sein."
+          },
+          {
+            "tex": "n\\,m = 4kl + 2k + 2l + 1 = 2\\,(2kl + k + l) + 1",
+            "why": "Ausmultiplizieren und so umformen, dass die Form 2·(ganze Zahl) + 1 sichtbar wird."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Übersetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folgern.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Form 2j + 1.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Folgerungen aus gegebenen Aussagen.** Gegeben ist $a > b > 0$. Was folgt **zwingend**?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a^2 - b^2 = (a - b)(a + b) > 0 \\;\\Rightarrow\\; a^2 > b^2",
+            "why": "Beide Faktoren sind positiv: folgt."
+          },
+          {
+            "tex": "\\frac{a}{ab} > \\frac{b}{ab} \\;\\Rightarrow\\; \\frac1b > \\frac1a",
+            "why": "Division durch das positive ab dreht nichts um: Der Kehrwert der größeren Zahl ist kleiner."
+          },
+          {
+            "tex": "a - b > 1 \\text{ ?}\\quad a = 2,\\ b = 1{,}5",
+            "why": "Folgt nicht: Ein einziges Beispiel, das die Voraussetzung erfüllt und die Aussage verletzt, genügt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Quadrate.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kehrwerte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenbeispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schlusskette",
+      "md": "**Eine Schlusskette im Mengenbild.** $A$: Primzahlen größer als 2, $B$: ungerade Zahlen, $C$: durch 4 teilbare Zahlen.",
+      "widget": "venn",
+      "params": {
+        "sets": 3,
+        "labels": [
+          "prim > 2",
+          "ungerade",
+          "4 | n"
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Gegeben: Jede Primzahl größer als 2 ist ungerade. Die Teile von A außerhalb von B sind leer.",
+          "do": {
+            "show": [
+              "100",
+              "101"
+            ]
+          }
+        },
+        {
+          "caption": "Gegeben: Keine ungerade Zahl ist durch 4 teilbar. B und C überschneiden sich nicht.",
+          "do": {
+            "show": [
+              "011",
+              "111"
+            ]
+          }
+        },
+        {
+          "caption": "Für A bleibt nur der Bereich in B ohne C: Keine Primzahl größer als 2 ist durch 4 teilbar.",
+          "do": {
+            "show": [
+              "110"
+            ]
+          }
+        },
+        {
+          "caption": "Was nicht folgt: dass jede ungerade Zahl prim ist. Der Bereich »ungerade, nicht prim« darf besetzt sein (9, 15, …).",
+          "do": {
+            "show": [
+              "010"
+            ]
+          }
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Folgerungen aus gegebenen Aussagen ziehen\n> 1. Jede gegebene Aussage als Implikation oder Mengenbeziehung schreiben (»alle $A$ sind $B$« heißt $A \\Rightarrow B$, »kein $B$ ist $C$« heißt $B \\Rightarrow$ nicht $C$).\n> 2. Ketten bilden: aus $A \\Rightarrow B$ und $B \\Rightarrow C$ folgt $A \\Rightarrow C$; Kontrapositionen dürfen mitbenutzt werden, Umkehrungen nie.\n> 3. Jede Option prüfen: **must be true** verlangt einen Beweis aus der Kette, **could be true** nur einen möglichen Fall.\n> 4. Für »folgt nicht« ein Beispiel bauen, das alle Gegebenheiten erfüllt und die Option verletzt.",
+      "label": "Verfahren",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Direkter deduktiver Beweis",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Direkter deduktiver Beweis.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der Aufbau",
+          "blocks": [
+            {
+              "md": "Ein **direkter Beweis** (*direct deductive proof*) beginnt bei etwas, das bekannt oder vorausgesetzt ist, und erreicht die Behauptung über eine Kette von Schritten, von denen **jeder aus den vorherigen folgt**:\n\n$$\\text{Voraussetzung} \\Rightarrow S_1 \\Rightarrow S_2 \\Rightarrow \\dots \\Rightarrow \\text{Behauptung}$$\n\nWeil jede Implikation die Wahrheit weiterreicht, ist die Behauptung wahr, sobald die Voraussetzung es ist. Jeder einzelne Schritt muss dabei **für alle zulässigen Fälle** gelten -- nicht nur für die Zahlen, an die man beim Schreiben denkt.\n\n> [!important] Die Richtung der Pfeile ist der ganze Beweis\n> Ein Beweis läuft **von der Voraussetzung zur Behauptung**. Wer von der Behauptung ausgeht und bei etwas Wahrem wie $0 = 0$ ankommt, hat nur gezeigt: *Wenn die Behauptung gilt, dann gilt 0 = 0*. Das ist wertlos, denn aus Falschem lässt sich Wahres folgern.\n>\n> Rückwärtsarbeiten ist als **Suche** nach dem Beweis erlaubt und oft klug. Als **Beweis** taugt es nur, wenn jeder Schritt umkehrbar ist ($\\Leftrightarrow$) -- und das muss geprüft, nicht angenommen werden."
+            }
+          ]
+        },
+        {
+          "title": "Werkzeuge für ganze Zahlen",
+          "blocks": [
+            {
+              "md": "Die meisten Beweisaufgaben im TMUA handeln von ganzen Zahlen. Vier Darstellungen tragen fast alles:\n\n| Eigenschaft | Darstellung |\n|---|---|\n| $n$ gerade | $n = 2k$ mit ganzem $k$ |\n| $n$ ungerade | $n = 2k + 1$ |\n| $a$ teilt $b$ | $b = a \\cdot m$ mit ganzem $m$ |\n| Rest bei Division durch 3 | $n = 3k$, $3k + 1$ oder $3k + 2$ |\n\nDazu kommen zwei Tatsachen, die immer wieder gebraucht werden:\n\n- **Von zwei aufeinanderfolgenden ganzen Zahlen ist genau eine gerade.** Also ist $k(k+1)$ stets gerade.\n- **Von drei aufeinanderfolgenden ganzen Zahlen ist genau eine durch 3 teilbar.** Also ist $(n-1)n(n+1)$ stets durch 6 teilbar."
+            }
+          ]
+        },
+        {
+          "title": "Zwei ausgeführte Beweise",
+          "blocks": [
+            {
+              "md": "> [!example] Die Summe dreier aufeinanderfolgender ganzer Zahlen ist durch 3 teilbar\n> Die drei Zahlen seien $n - 1$, $n$, $n + 1$. Ihre Summe ist $(n-1) + n + (n+1) = 3n$, also ein Vielfaches von 3. $\\blacksquare$\n>\n> Die Wahl der **mittleren** Zahl als Variable ist der eigentliche Einfall: Mit $n$, $n+1$, $n+2$ ginge es auch ($3n + 3 = 3(n+1)$), aber die symmetrische Darstellung macht das Ergebnis sofort sichtbar.\n\n> [!example] Ist $n$ ungerade, so ist $n^2 - 1$ durch 8 teilbar\n> Sei $n = 2k + 1$. Dann\n> $$n^2 - 1 = 4k^2 + 4k = 4k(k+1).$$\n> Das Produkt $k(k+1)$ zweier aufeinanderfolgender Zahlen ist gerade, also $k(k+1) = 2m$. Damit $n^2 - 1 = 8m$. $\\blacksquare$\n>\n> Die Rechnung allein zeigt nur die Teilbarkeit durch 4. Den Faktor 2 liefert erst die Tatsache über aufeinanderfolgende Zahlen -- ein typisches Muster: Nach der Algebra kommt ein **Zahlenargument**."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen ziehen",
+          "blocks": [
+            {
+              "md": "Die Spezifikation verlangt auch, aus gegebenen Aussagen **Folgerungen abzuleiten** (*deduce implications from given statements*, Prf2). Das ist ein direkter Beweis in kleinem Maßstab: Gegeben ist etwa $a > b > 0$, gefragt, welche Aussagen daraus **zwingend** folgen.\n\n- $a^2 > b^2$ folgt, denn $a^2 - b^2 = (a-b)(a+b)$ ist ein Produkt zweier positiver Faktoren.\n- $\\tfrac1a < \\tfrac1b$ folgt: Division von $a > b$ durch das positive $ab$.\n- $a - b > 1$ folgt **nicht**: $a = 2$, $b = 1{,}5$.\n\nSiehe **Folgerungen aus gegebenen Aussagen ziehen**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Von der Behauptung aus rechnen** und bei einer wahren Aussage ankommen.\n- **Einen Schritt nur für positive Zahlen begründen**, obwohl auch negative zugelassen sind -- etwa beim Multiplizieren von Ungleichungen.\n- **Beispiele statt Beweis:** Dass die Aussage für $n = 1, 2, 3$ stimmt, beweist nichts über $n = 4$.\n- **Die Variable zu speziell wählen:** \"Sei $n = 2k$\" beweist nur den Fall gerader Zahlen.\n- **Unbegründete Zwischenbehauptungen**, besonders bei Teilbarkeit: \"und das ist durch 8 teilbar\" braucht ein Argument.\n\nVerwandt: **Beweis durch Fallunterscheidung** · **Widerspruchsbeweis** · **Beweisschritte ordnen** · Einstieg im Mathematikbestand: **Beweisverfahren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Folgerungen aus gegebenen Aussagen ziehen",
+      "path": "02 Wiki/TMUA/13 Beweis und Fehleranalyse/Aufgabentypen/Folgerungen aus gegebenen Aussagen ziehen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Einige Tatsachen werden vorausgesetzt -- über Zahlen, Funktionen oder Personen. Gefragt ist, was daraus folgt:\n\n- *Which of the following **must** be true?*\n- *Which of the following **could** be true?*\n- *Which of the following **cannot** be true?*\n\nDie drei Formulierungen verlangen verschiedene Arten von Begründung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Die Vorgaben präzise aufschreiben**, am besten als Gleichungen, Ungleichungen oder Aussagen mit Buchstaben.\n2. **Frageform bestimmen:**\n\n| Frage | ja belegt durch | nein belegt durch |\n|---|---|---|\n| *must be true* | ein Argument für alle mit den Vorgaben verträglichen Fälle | **einen** verträglichen Fall, in dem die Aussage falsch ist |\n| *could be true* | **einen** verträglichen Fall, in dem sie wahr ist | ein Argument, dass sie in keinem verträglichen Fall wahr ist |\n| *cannot be true* | ein Argument, dass sie nie wahr ist | einen verträglichen Fall, in dem sie wahr ist |\n\n3. **Verträgliche Beispiele konstruieren**, die die Vorgaben erfüllen und möglichst verschieden sind. Sie widerlegen *must* und belegen *could*.\n4. **Für die verbleibenden Aussagen ein kurzes Argument führen.**\n5. **Optionsraster nutzen** wie in **Antwortoptionen strategisch nutzen**.\n\n> [!important] Das verträgliche Beispiel ist das Hauptwerkzeug\n> Die meisten *must be true*-Aussagen, die falsch sind, scheitern an einem einzigen Beispiel, das alle Vorgaben erfüllt. Die Kunst liegt darin, das Beispiel **verträglich** zu halten: Ein Beispiel, das eine Vorgabe verletzt, beweist nichts."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The real numbers $a$ and $b$ satisfy $a > b > 0$. Which of the following must be true?\n>\n> I $a^2 > b^2$\n> II $\\frac1a > \\frac1b$\n> III $a - b > b - a$\n>\n> - **A** none of them\n> - **B** I only\n> - **C** II only\n> - **D** III only\n> - **E** I and II only\n> - **F** I and III only\n> - **G** II and III only\n> - **H** I, II and III\n\n**I:** $a^2 - b^2 = (a - b)(a + b)$, beide Faktoren positiv. **Muss wahr sein.**\n\n**II:** Verträgliches Beispiel $a = 2$, $b = 1$: $\\tfrac12 > 1$ ist falsch. **Muss nicht wahr sein** -- es ist sogar immer falsch.\n\n**III:** $a - b > 0$ und $b - a < 0$, also $a - b > b - a$. **Muss wahr sein.**\n\nAntwort **F**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- ***Must* und *could* verwechseln** -- und damit die Beweislast umdrehen.\n- **Beispiele wählen, die eine Vorgabe verletzen**, etwa $b = 0$ bei $b > 0$.\n- **Nur ein Beispiel prüfen** und daraus *must be true* schließen.\n- **Übersehen, dass Vorgaben Werte nur teilweise festlegen:** Eine Funktion, von der man nur $f(x+1) = 2f(x)$ und $f(0)$ kennt, ist an nicht ganzzahligen Stellen nicht bestimmt."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> A function $f$ satisfies $f(x) > 0$ and $f(x + 1) = 2f(x)$ for all real $x$, and $f(0) = 3$. Which of the following must be true?\n>\n> I $f(2) = 12$\n> II $f(-1) = 1.5$\n> III $f(0.5) = 3\\sqrt2$\n>\n> - **A** I only\n> - **B** II only\n> - **C** III only\n> - **D** I and II only\n> - **E** I and III only\n> - **F** I, II and III\n\n> [!success]- Lösung\n> **D.** $f(1) = 2f(0) = 6$, $f(2) = 12$. Aus $f(0) = 2f(-1)$ folgt $f(-1) = 1{,}5$.\n> III folgt nicht: Die Vorgaben verbinden nur Stellen im Abstand 1. Der Wert $f(0{,}5)$ ist frei wählbar, solange er positiv ist; etwa $f(x) = 3 \\cdot 2^x$ liefert $3\\sqrt2$, eine andere Funktion mit denselben Vorgaben aber einen anderen Wert. Verträgliches Gegenbeispiel: $f(x) = 3 \\cdot 2^x \\cdot \\left(1 + \\tfrac12 \\sin^2(\\pi x)\\right)$ erfüllt alle Vorgaben und hat $f(0{,}5) = 4{,}5\\sqrt2$.\n\n> [!question] Aufgabe 2\n> A vase was broken. Exactly one of the following three statements is true.\n>\n> (1) Ana broke the vase.\n> (2) Ben broke the vase.\n> (3) Ana did not break the vase.\n>\n> Which one of the following must be true?\n>\n> - **A** Ana broke the vase.\n> - **B** Ana did not break the vase.\n> - **C** Ben did not break the vase.\n> - **D** Ben broke the vase.\n> - **E** None of A to D must be true.\n\n> [!success]- Lösung\n> **C.** (1) und (3) verneinen einander, also ist **genau eine** von ihnen wahr. Da insgesamt nur eine Aussage wahr ist, muss (2) falsch sein: Ben war es nicht.\n> Ob Ana es war, bleibt offen -- beide Möglichkeiten sind mit der Vorgabe verträglich (die Vase könnte auch jemand Drittes zerbrochen haben).\n\n> [!question] Aufgabe 3\n> The integers $x$ and $y$ are such that $x + y$ is even and $xy$ is odd. Which of the following must be true?\n>\n> I $x$ is odd.\n> II $x - y$ is even.\n> III $x^2 + y^2$ is divisible by 4.\n>\n> - **A** I only\n> - **B** II only\n> - **C** III only\n> - **D** I and II only\n> - **E** I and III only\n> - **F** I, II and III\n\n> [!success]- Lösung\n> **D.** Ein Produkt ist nur dann ungerade, wenn beide Faktoren ungerade sind: I gilt. Die Differenz zweier ungerader Zahlen ist gerade: II gilt.\n> III: Ungerade Quadrate lassen bei Division durch 4 den Rest 1, die Summe also den Rest 2. Verträgliches Gegenbeispiel $x = y = 1$: $1 + 1 = 2$. III ist sogar **nie** wahr."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Lange Schlussketten strukturieren** · **Wahrheitswert einer Implikation prüfen** · **Parameterwerte für wahre Aussagen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Probeläufe und Altpaper - TMUA",
+      "path": "02 Wiki/TMUA/00 Probeläufe und Altpaper - TMUA.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Probeläufe und Altpaper",
+          "blocks": [
+            {
+              "md": "> [!info] Zweck dieser Datei\n> Die offiziellen Testsätze sind die knappste Ressource der ganzen Vorbereitung: **neun vollständige Sätze** aus der Papierzeit (Early Specimen, 2016 bis 2023) und **zwei Pearson-Übungstests** im aktuellen Computerformat. Jeder Satz lässt sich nur **einmal** unverfälscht als Messung nutzen -- wer eine Frage schon kennt, misst beim zweiten Mal sein Gedächtnis.\n>\n> Diese Datei legt fest, welcher Satz wann eingesetzt wird, wie ein Probelauf abläuft und wie er ausgewertet wird. In den Lernnotizen wird **keine Originalfrage** einer Lektion zugeordnet."
+            }
+          ]
+        },
+        {
+          "title": "Das offizielle Material",
+          "blocks": [
+            {
+              "md": "| Material | Format | Einsatz | Fundort |\n|---|---|---|---|\n| Content Specification (Fassung 2026) | PDF | Referenz, jederzeit | [UAT-UK, PDF](https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2024/05/03165619/TMUA_Content_Specification.pdf) |\n| *Notes on Logic and Proof* | Skript | Begleitlektüre zu Block 03 und 13 | [UAT-UK, PDF](https://uat-wp.s3.eu-west-2.amazonaws.com/wp-content/uploads/2025/06/25160507/Notes_on_Logic_and_Proof_June2025.pdf) |\n| *Notes on Mathematics* für TMUA und ESAT | Skript | Nachschlagen zu Sektion 1 | [UAT-UK, Vorbereitungsseite](https://esat-tmua.ac.uk/prepare/) |\n| Early Specimen, Paper 1 und 2 | PDF mit Lösungsschlüssel und ausgearbeiteten Lösungen | **Kontrollpunkt** am Ende des Lernguides, März 2027 | [UAT-UK, Archiv](https://esat-tmua.ac.uk/tmua-preparation-materials/) |\n| Sätze 2016 bis 2023, je Paper 1 und 2 | PDF mit Lösungsschlüssel und ausgearbeiteten Lösungen | Kontrollpunkte und Probeläufe | [UAT-UK, Archiv](https://esat-tmua.ac.uk/tmua-preparation-materials/) |\n| Pearson VUE *Specimen Test* und *Sample Exam* | am Bildschirm, aktuelles Format | letzte Woche vor der Schlussphase | [Pearson VUE, UAT-UK](https://www.pearsonvue.com/us/en/uatuk.html) |\n\n> [!warning] Alte Papers, neues Format\n> Die Sätze 2016 bis 2023 stammen aus der Zeit vor UAT-UK und wurden auf Papier geschrieben. Seit 2024 läuft der Test am Bildschirm; Erfahrungsberichte beschreiben die neuen Fragen als **textlastiger und stärker in Sachkontexte eingebettet**, bei unverändertem Stoff. Zwei Folgen: Beim Probelauf die Aufgaben **am Bildschirm lesen** und auf einem separaten Blatt rechnen -- und die beiden Pearson-Tests nicht vorher verbrauchen, weil nur sie das aktuelle Tempo zeigen."
+            }
+          ]
+        },
+        {
+          "title": "Einsatzplan",
+          "blocks": [
+            {
+              "md": "| Satz | Zeitpunkt | Zweck |\n|---|---|---|\n| Early Specimen, Paper 2 | 06./07.03.2027 | Kontrollpunkt am Ende des **00 Lernguide - TMUA**, Teil 1; bewusst keine Baseline ohne Vorbereitung |\n| Early Specimen, Paper 1 | 13./14.03.2027 | Kontrollpunkt, Teil 2 |\n| 2016, beide Papers | 26./27.06.2027 | Kontrollpunkt vor dem Sommerblock |\n| 2017, 2018, 2019, 2020 | August 2027, je eine Woche | Probeläufe mit Reparatur |\n| 2021, 2022, 2023 | 30.08. bis 19.09.2027 | Probeläufe in der Schlussphase |\n| Pearson *Specimen Test* und *Sample Exam* | 20.09. bis 26.09.2027 | Tempo und Bedienung im Computerformat |"
+            }
+          ]
+        },
+        {
+          "title": "Ablauf eines Probelaufs",
+          "blocks": [
+            {
+              "md": "1. **Bedingungen herstellen:** 75 plus 75 Minuten ohne Pause, kein Taschenrechner, keine Formelsammlung, Handy aus dem Raum. Aufgaben am Bildschirm lesen, auf **einem** Blatt oder Board rechnen -- wie im Testzentrum.\n2. **Je Frage die Sicherheit notieren:** `s` sicher, `u` unsicher, `g` geraten. Das ist die wichtigste Zusatzinformation: Eine richtig geratene Antwort ist ein Fehler, der zufällig nicht aufgefallen ist.\n3. **Zeitmarken setzen:** Minute nach Frage 10 im ersten Durchgang notieren. Richtwert: höchstens 28 Minuten (siehe **Zeitmanagement und Triage**).\n4. **Keine Frage leer lassen.** Es gibt keine Minuspunkte; in der letzten Minute wird jede offene Frage angekreuzt."
+            }
+          ]
+        },
+        {
+          "title": "Auswertung in fünf Schritten",
+          "blocks": [
+            {
+              "md": "1. **Korrigieren** mit dem Lösungsschlüssel, noch ohne die ausgearbeiteten Lösungen.\n2. **Zweiter Versuch ohne Zeit** an allen falschen, unsicheren und geratenen Fragen. Was jetzt gelingt, war ein Zeit- oder Lesefehler, kein Wissensfehler.\n3. **Erst dann die ausgearbeiteten Lösungen** lesen -- nur für die Fragen, die auch im zweiten Versuch misslangen.\n4. **Jede dieser Fragen protokollieren**: eine Zeile mit Kategorie, Sicherheit und zugehörigem Aufgabentyp, nach **Fehlerprotokoll und Auswertung**.\n5. **Drei Konsequenzen** für die nächsten zwei Wochen festlegen -- konkret als Aufgabentypen, die erneut durchgearbeitet werden.\n\n> [!tip] Rohwert und Skala\n> Als grobe Umrechnung dient die Angabe aus **00 Prüfungsstruktur - TMUA**: rund 26 von 40 entsprechen etwa 7,0, rund 34 von 40 etwa 8,0. Für das Arbeitsziel 7,5 heißt das **mindestens 29 von 40**. Die Umrechnung ist eine Größenordnung, keine amtliche Tabelle."
+            }
+          ]
+        },
+        {
+          "title": "Fehler nach Aufgabentyp",
+          "blocks": [
+            {
+              "md": "> [!important] Die Auswertungstabellen sind der eigentliche Nutzen\n> Ein einzelner Probelauf sagt wenig. Nach drei oder vier Sätzen zeigen die beiden Tabellen oben, ob die Punkte an **Wissen**, an **Ideen**, am **Lesen** oder an der **Zeit** verloren gehen -- und für jede dieser Ursachen gibt es eine andere Reparatur. Wer nur Probeläufe schreibt, ohne auszuwerten, übt den Fehler mit."
+            }
+          ]
+        },
+        {
+          "title": "Vorlagen",
+          "blocks": [
+            {
+              "md": "- **_Vorlage - Probelauf (TMUA)** -- für vollständige oder halbe Testsätze\n- **_Vorlage - Übungseinheit (TMUA)** -- für die wöchentliche Arbeit mit den eigenen Übungsaufgaben"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den direkten Beweis. Nicht alle Bausteine gehören dazu.",
+      "given": "$n$ und $m$ sind ungerade ganze Zahlen.",
+      "claim": "$n\\,m$ ist ungerade.",
+      "steps": [
+        "Schreibe $n = 2k + 1$ und $m = 2l + 1$ mit ganzen Zahlen $k$ und $l$.",
+        "Dann ist $n\\,m = 4kl + 2k + 2l + 1$.",
+        "Also ist $n\\,m = 2(2kl + k + l) + 1$ mit der ganzen Zahl $2kl + k + l$.",
+        "Damit hat $n\\,m$ die Form $2j + 1$ und ist ungerade."
+      ],
+      "distractors": [
+        {
+          "md": "Schreibe $n = 2k + 1$ und $m = 2k + 1$.",
+          "why": "Derselbe Buchstabe würde $n = m$ erzwingen; der Beweis gälte dann nur für Quadrate."
+        },
+        {
+          "md": "Für $n = 3$ und $m = 5$ ist $n\\,m = 15$ ungerade, also stimmt die Behauptung.",
+          "why": "Ein Beispiel beweist keine Allaussage."
+        }
+      ],
+      "explain": "Erst die Voraussetzungen in Formeln übersetzen (mit zwei verschiedenen Buchstaben), dann umformen, bis die Form der Behauptung dasteht.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Werkzeuge",
+      "md": "Ordne jeder Eigenschaft ihre Darstellung zu ($k$, $m$ ganze Zahlen).",
+      "pairs": [
+        [
+          "$n$ ist gerade",
+          "$n = 2k$"
+        ],
+        [
+          "$n$ ist ungerade",
+          "$n = 2k + 1$"
+        ],
+        [
+          "$a$ teilt $b$",
+          "$b = a\\,m$"
+        ],
+        [
+          "$n$ lässt bei Division durch 3 den Rest 2",
+          "$n = 3k + 2$"
+        ]
+      ],
+      "explain": "Mit diesen Darstellungen wird aus einer Aussage über Zahlen eine Rechnung.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "label": "Aussagen I, II, III",
+      "lang": "en",
+      "shuffle": false,
+      "md": "It is given that $a > b > 0$. Which of the following must be true?\n\n**I**  $a^2 > b^2$\n\n**II**  $\\dfrac1a > \\dfrac1b$\n\n**III**  $a - b > 1$",
+      "options": [
+        {
+          "md": "none of them"
+        },
+        {
+          "md": "I only",
+          "correct": true
+        },
+        {
+          "md": "II only"
+        },
+        {
+          "md": "III only"
+        },
+        {
+          "md": "I and II only"
+        },
+        {
+          "md": "I and III only"
+        },
+        {
+          "md": "II and III only"
+        },
+        {
+          "md": "I, II and III"
+        }
+      ],
+      "explain": "**B.** I folgt aus $a^2 - b^2 = (a-b)(a+b) > 0$. II ist falsch herum: Der Kehrwert der größeren Zahl ist kleiner. III scheitert an $a = 2$, $b = 1{,}5$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist $(n - 1)\\,n\\,(n + 1)$ für jede ganze Zahl $n$ durch 6 teilbar?",
+      "options": [
+        {
+          "md": "Unter drei aufeinanderfolgenden Zahlen ist mindestens eine gerade und genau eine durch 3 teilbar.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Produkt dreier Zahlen immer durch 6 teilbar ist.",
+          "why": "$1 \\cdot 1 \\cdot 5 = 5$ ist es nicht; es kommt auf das Aufeinanderfolgen an."
+        },
+        {
+          "md": "Weil $n^3 - n$ für $n = 2, 3, 4$ durch 6 teilbar ist.",
+          "why": "Beispiele beweisen keine Allaussage."
+        },
+        {
+          "md": "Weil $n^3$ durch 6 teilbar ist.",
+          "why": "Für $n = 1$ ist $n^3 = 1$."
+        }
+      ],
+      "explain": "Faktor 2 aus der geraden Zahl, Faktor 3 aus dem Vielfachen von 3; da 2 und 3 teilerfremd sind, teilt 6 das Produkt.",
+      "label": "Werkzeuge",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "All members of a club who swim also cycle. No member who cycles plays tennis. Which of the following must be true?",
+      "options": [
+        {
+          "md": "Every member who does not play tennis cycles.",
+          "why": "Die Kette liefert nur Aussagen über Schwimmer und Radfahrer."
+        },
+        {
+          "md": "No member who swims plays tennis.",
+          "correct": true
+        },
+        {
+          "md": "Some member who cycles also plays tennis.",
+          "why": "Das widerspricht direkt der zweiten Aussage."
+        },
+        {
+          "md": "Every member who cycles also swims.",
+          "why": "Das ist die Umkehrung der ersten Aussage."
+        },
+        {
+          "md": "Some member swims.",
+          "why": "Die Aussagen behaupten nicht, dass es überhaupt Schwimmer gibt."
+        }
+      ],
+      "explain": "Schwimmen ⇒ Radfahren und Radfahren ⇒ kein Tennis ergibt Schwimmen ⇒ kein Tennis.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Schlusskette",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Drei Beispiele, für die eine Aussage stimmt, beweisen die Allaussage, wenn sie zufällig gewählt sind.",
+      "answer": false,
+      "explain": "Beispiele zeigen nichts über die übrigen Fälle; nur ein Beweis für ein beliebiges Objekt deckt alle ab.",
+      "label": "Beweis",
+      "id": "vq6"
+    },
+    {
       "type": "order",
       "label": "Beweis",
       "md": "Beweise: Die Summe zweier ungerader Zahlen ist gerade. Ordne.",
@@ -80,6 +573,13 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "beweis-zahlen",
+      "level": 1,
+      "label": "Beweis bauen",
+      "id": "vx1"
+    },
+    {
       "type": "text",
       "md": "Ab jetzt lohnen **Probeläufe** mit Altpapers: einzelne Aufgaben auf Zeit (3:45), danach Fehlerprotokoll. Die vollständigen Papers kommen in den Etappen 18 und 19.",
       "id": "t2"
@@ -116,7 +616,9 @@
       "points": [
         "Direkter Beweis: Voraussetzung algebraisch ausdrücken, umformen, Behauptung ablesen.",
         "Folgerungen: Implikationen verketten, Umkehrungen meiden.",
-        "Unerfüllbare Voraussetzung: Implikation leer wahr."
+        "Unerfüllbare Voraussetzung: Implikation leer wahr.",
+        "Direkter Beweis: Voraussetzungen als Formeln ($2k$, $2k+1$, $b = am$), umformen bis zur Form der Behauptung.",
+        "Folgerungen: Implikationen verketten, Kontrapositionen nutzen, Umkehrungen nie; »folgt nicht« zeigt ein Beispiel."
       ],
       "id": "summary"
     }

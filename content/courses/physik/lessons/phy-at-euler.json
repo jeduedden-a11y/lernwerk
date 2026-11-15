@@ -16,6 +16,217 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel.** Fall mit $a = g - k v^2$, $k = 0{,}05\\,\\tfrac{1}{\\mathrm{m}}$, $v_0 = 0$, $s_0 = 0$, $\\Delta t = 0{,}5\\,\\mathrm{s}$. Drei Schritte.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_0 = 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}:\\quad v_1 = 0 + 9{,}81\\cdot 0{,}5 = 4{,}905\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}},\\quad s_1 = 0 + 0\\cdot 0{,}5 = 0",
+            "why": "Erster Schritt: Ohne Geschwindigkeit gibt es noch keine Reibung und im Euler-Schritt noch keinen Weg."
+          },
+          {
+            "tex": "a_1 = 9{,}81 - 0{,}05\\cdot 4{,}905^2 \\approx 8{,}607:\\quad v_2 \\approx 9{,}209,\\quad s_2 = 0 + 4{,}905\\cdot 0{,}5 \\approx 2{,}453",
+            "why": "Zweiter Schritt, alles aus den Werten von Schritt 1."
+          },
+          {
+            "tex": "a_2 = 9{,}81 - 0{,}05\\cdot 9{,}209^2 \\approx 5{,}570:\\quad v_3 \\approx 11{,}99,\\quad s_3 \\approx 2{,}453 + 9{,}209\\cdot 0{,}5 \\approx 7{,}06",
+            "why": "Dritter Schritt."
+          },
+          {
+            "tex": "v_G = \\sqrt{\\frac{g}{k}} = \\sqrt{196{,}2}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 14{,}0\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Plausibilität: Die Werte steigen und bleiben unter der Grenzgeschwindigkeit, an die sie sich annähern."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Schritt 1.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 2.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 3.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontrolle mit der Grenzgeschwindigkeit.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Eine Tabelle sauber führen\n> Spalten $n$, $t_n$, $v_n$, $s_n$, $a_n$. In jeder Zeile zuerst $a_n$ aus $v_n$, dann die nächste Zeile aus dieser. Wer $s_{n+1}$ mit $v_{n+1}$ statt $v_n$ berechnet, rechnet ein anderes Verfahren (halbimplizites Euler); in Klausuren ist die Standardform verlangt, wenn nichts anderes steht.",
+      "label": "Vorgehen",
+      "id": "ve2"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Euler-Verfahren anwenden",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Euler-Verfahren anwenden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie mit dem Euler-Verfahren und $\\Delta t=\\dots$ die Geschwindigkeit nach den ersten drei Sekunden\"*, *\"Vervollständigen Sie die Tabelle der numerischen Simulation\"*, *\"Die Bewegungsgleichung lässt sich nicht geschlossen lösen -- simulieren Sie schrittweise\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Differenzenquotient statt Ableitung\n> Lässt sich eine Bewegungsgleichung nicht analytisch (geschlossen) lösen -- etwa bei geschwindigkeitsabhängiger Reibung --, wird die Bewegung in kleinen Zeitschritten $\\Delta t$ **schrittweise angenähert**:\n> $$a_n = \\frac{F(v_n)}{m}, \\qquad v_{n+1} = v_n + a_n\\cdot\\Delta t, \\qquad s_{n+1} = s_n + v_n\\cdot\\Delta t$$\n> Jeder neue Wert wird aus dem **vorherigen** berechnet -- die Beschleunigung wird für jeden Schritt als in diesem Intervall konstant angenommen (linearer Fehler, der mit kleinerem $\\Delta t$ abnimmt)."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Kraftgleichung aufstellen** und daraus $a(v)$ ableiten, z. B. $a = g - \\dfrac{c_w\\rho A}{2m}v^2$.\n2. **Starttabelle anlegen** mit $t_0=0$, $v_0$, $s_0$ (meist beide null).\n3. **Schrittweise iterieren:** in jeder Zeile zuerst $a_n$ aus $v_n$ berechnen, dann $v_{n+1}$ und $s_{n+1}$ daraus bilden.\n4. **So oft wiederholen**, wie Zeitschritte gefragt sind.\n5. **Plausibilität prüfen:** nähert sich $v_n$ für wachsendes $n$ der erwarteten Grenzgeschwindigkeit an (siehe **Grenzgeschwindigkeit bei Reibung berechnen**)?"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Simulieren Sie den freien Fall mit vereinfachtem quadratischem Luftwiderstand über $a=g-k v^2$ mit $k=0{,}01\\,\\text{s}^2/\\text{m}^2 \\cdot \\text{m/s}^2$ (illustrativer Wert), Startwerte $v_0=0$, $s_0=0$, Schrittweite $\\Delta t=1\\,\\text{s}$. Führen Sie drei Schritte durch.*\n\n| $n$ | $t_n$ / s | $v_n$ / (m/s) | $s_n$ / m | $a_n = g-kv_n^2$ / (m/s²) |\n|---|---|---|---|---|\n| 0 | 0 | 0 | 0 | $9{,}81-0 = 9{,}81$ |\n| 1 | 1 | $0+9{,}81\\cdot1=9{,}81$ | $0+0\\cdot1=0$ | $9{,}81-0{,}01\\cdot9{,}81^2\\approx8{,}85$ |\n| 2 | 2 | $9{,}81+8{,}85\\cdot1\\approx18{,}66$ | $0+9{,}81\\cdot1=9{,}81$ | $9{,}81-0{,}01\\cdot18{,}66^2\\approx6{,}33$ |\n| 3 | 3 | $18{,}66+6{,}33\\cdot1\\approx24{,}99$ | $9{,}81+18{,}66\\cdot1\\approx28{,}47$ | -- |\n\n*Nach drei Sekunden liefert die Simulation $v_3\\approx25{,}0\\,\\text{m/s}$ und $s_3\\approx28{,}5\\,\\text{m}$.*\n\n**Kontrollüberlegung:** Ohne Reibung ($k=0$) würde die Formel $v=gt$ nach $3\\,\\text{s}$ den Wert $29{,}43\\,\\text{m/s}$ liefern -- der simulierte Wert $25{,}0\\,\\text{m/s}$ liegt plausibel darunter, da Reibung die Beschleunigung zunehmend bremst."
+            }
+          ]
+        },
+        {
+          "title": "Genauigkeit und Fehlerquelle",
+          "blocks": [
+            {
+              "md": "Je größer $\\Delta t$, desto größer der **Diskretisierungsfehler** -- die tatsächliche Beschleunigung ändert sich innerhalb eines Schritts, wird aber als konstant behandelt. Zur Kontrolle wird die Simulation oft mit kleinerem $\\Delta t$ wiederholt: nähern sich die Ergebnisse einem stabilen Wert an, gilt die Simulation als hinreichend genau. Bei reibungsfreien Bewegungen liefert das Euler-Verfahren einen Vergleichswert, der gegen die exakte analytische Lösung konvergieren sollte -- eine gute Validierungsmethode."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$v_{n+1}$ statt $v_n$ in die Streckenformel $s_{n+1}=s_n+v_n\\Delta t$ einsetzen.** Das Euler-Verfahren in dieser Standardform verwendet für den Streckenzuwachs die Geschwindigkeit **zu Beginn** des Schritts, nicht die bereits aktualisierte.\n- **Die Beschleunigung nur einmal zu Beginn berechnen** und für alle Schritte konstant halten, statt sie in jedem Schritt neu aus der aktuellen Geschwindigkeit zu bestimmen.\n- **Falsches $\\Delta t$ verwenden** oder es zwischen den Zeilen inkonsistent ändern.\n- **Bei der Interpretation vergessen, dass es sich um eine Näherung handelt** und das Ergebnis als exakt ausgeben, ohne den Diskretisierungsfehler zu erwähnen.\n- **Vorzeichen der Reibungskraft falsch setzen** -- sie wirkt der Bewegungsrichtung entgegen, beim Fallen also bremsend, mit negativem Beitrag zur Beschleunigung."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Numerische Simulation von Bewegungen** · **Grenzgeschwindigkeit bei Reibung berechnen** · **Newton-Verfahren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Fall mit $a = g - k v^2$, $k = 0{,}1\\,\\tfrac{1}{\\mathrm{m}}$, $v_0 = 0$, $\\Delta t = 0{,}2\\,\\mathrm{s}$: Wie groß ist $v_2$?",
+      "answer": 3.85,
+      "tolerance": 0.02,
+      "placeholder": "m/s",
+      "explain": "$v_1 = 9{,}81\\cdot 0{,}2 = 1{,}962$; $a_1 = 9{,}81 - 0{,}1\\cdot 1{,}962^2 \\approx 9{,}425$; $v_2 = 1{,}962 + 9{,}425\\cdot 0{,}2 \\approx 3{,}85\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und $s_2$ (mit $s_0 = 0$)?",
+      "answer": 0.392,
+      "tolerance": 0.003,
+      "placeholder": "m",
+      "explain": "$s_1 = 0$, $s_2 = s_1 + v_1\\Delta t = 1{,}962\\cdot 0{,}2\\,\\mathrm{m} \\approx 0{,}392\\,\\mathrm{m}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Kontrolle",
+      "md": "Welcher Grenzgeschwindigkeit nähert sich diese Simulation?",
+      "answer": 9.9,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$a = 0$: $v_G = \\sqrt{\\tfrac{g}{k}} = \\sqrt{98{,}1}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 9{,}90\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Beim Euler-Schritt von $v_1$ nach $v_2$ wird die Beschleunigung mit $v_2$ berechnet.",
+      "answer": false,
+      "explain": "$v_2$ ist ja gesucht. Euler nimmt $a_1 = a(v_1)$ am Anfang des Schritts.",
+      "label": "Typischer Fehler",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Eine Simulation liefert für den Fall mit Luftreibung Werte über der Grenzgeschwindigkeit. Was ist wahrscheinlich passiert?",
+      "options": [
+        {
+          "md": "Ein Vorzeichenfehler bei der Reibung oder eine viel zu große Schrittweite",
+          "correct": true
+        },
+        {
+          "md": "Das ist physikalisch richtig: Reibung beschleunigt.",
+          "why": "Reibung bremst."
+        },
+        {
+          "md": "Die Grenzgeschwindigkeit wurde falsch definiert.",
+          "why": "$v_G = \\sqrt{g/k}$ folgt direkt aus $a = 0$."
+        },
+        {
+          "md": "Das passiert immer am Anfang.",
+          "why": "Am Anfang ist $v$ klein."
+        }
+      ],
+      "explain": "Aus der Ruhe muss $v_n$ monoton gegen $v_G$ steigen. Sehr große Schritte können darüber hinausschießen, dann schwingt die Simulation; kleinere Schritte beheben das.",
+      "label": "Plausibilität",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Vorgehen",
+      "md": "In einer Tabelle wird zuerst {{0}} aus der aktuellen Geschwindigkeit berechnet, dann die neue Geschwindigkeit.",
+      "blanks": [
+        {
+          "accept": [
+            "a_n",
+            "die Beschleunigung",
+            "Beschleunigung",
+            "a"
+          ]
+        }
+      ],
+      "explain": "Die Beschleunigung hängt von der Geschwindigkeit ab und wird in jeder Zeile neu berechnet.",
+      "id": "vq6"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -72,6 +283,39 @@
       },
       "level": 2,
       "label": "Einheiten umrechnen"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "euler"
+        ]
+      },
+      "label": "Mehr Schritte",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "euler"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Pro Zeile: $a_n = g - k v_n^2$, dann $v_{n+1} = v_n + a_n\\Delta t$ und $s_{n+1} = s_n + v_n\\Delta t$.",
+        "Plausibilität: monoton steigend gegen $v_G = \\sqrt{g/k}$, unter dem reibungsfreien Wert $g t$."
+      ]
     }
   ]
 }

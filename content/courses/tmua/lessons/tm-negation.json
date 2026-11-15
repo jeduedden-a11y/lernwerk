@@ -23,6 +23,837 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Verneinung (*negation*)\n> Die Verneinung einer Aussage ist die Aussage, die **genau dann wahr ist, wenn die ursprüngliche falsch ist**. Nicht das »Gegenteil« im Alltagssinn, sondern genau das, was übrig bleibt.\n>\n> **Kontrollfrage:** In jedem denkbaren Fall muss genau eine der beiden Aussagen wahr sein. Gibt es einen Fall, in dem beide falsch sind, ist der Vorschlag zu stark (»alle« zu »keine« verneint).\n\n| Aussage | Verneinung |\n|---|---|\n| für alle $x$ gilt $P$ | es gibt ein $x$, für das $P$ **nicht** gilt |\n| es gibt ein $x$ mit $P$ | für alle $x$ gilt $P$ **nicht** |\n| $A$ und $B$ | nicht $A$ **oder** nicht $B$ |\n| $A$ oder $B$ | nicht $A$ **und** nicht $B$ |\n| wenn $A$, dann $B$ | $A$ **und** nicht $B$ |\n| $x > 3$ | $x \\le 3$ |\n| $x = 3$ | $x \\ne 3$ |\n\nDie Verneinung **ändert den Grundbereich nicht**: Aus »für alle positiven ganzen Zahlen $n$« wird »es gibt eine positive ganze Zahl $n$«.",
+      "label": "Definition und Regeln",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Regeln von De Morgan** und ihrer Fassung für Quantoren.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{nicht}(A \\text{ und } B) \\text{ wahr} \\iff (A \\text{ und } B) \\text{ falsch}",
+            "why": "Die Verneinung tauscht den Wahrheitswert."
+          },
+          {
+            "tex": "\\iff \\text{mindestens eine von } A, B \\text{ ist falsch}",
+            "why": "»und« ist nur wahr, wenn beide wahr sind."
+          },
+          {
+            "tex": "\\iff (\\text{nicht } A) \\text{ oder } (\\text{nicht } B)",
+            "why": "Das einschließende Oder sagt genau »mindestens eine«."
+          },
+          {
+            "tex": "\\text{nicht}(A \\text{ oder } B) \\iff (\\text{nicht } A) \\text{ und } (\\text{nicht } B)",
+            "why": "Ebenso: »oder« ist nur falsch, wenn beide falsch sind."
+          },
+          {
+            "tex": "\\text{nicht}(\\text{für alle } x: P(x)) \\iff \\text{es gibt } x: \\text{nicht } P(x)",
+            "why": "Eine Allaussage ist ein »und« über alle Objekte; sie ist falsch, sobald es eine Ausnahme gibt."
+          },
+          {
+            "tex": "\\text{nicht}(\\text{es gibt } x: P(x)) \\iff \\text{für alle } x: \\text{nicht } P(x)",
+            "why": "Eine Existenzaussage ist ein »oder« über alle Objekte; sie ist falsch, wenn keines passt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Und verneinen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mindestens eine.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "De Morgan.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Oder verneinen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Allquantor.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Existenzquantor.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "widget",
+      "label": "Wahrheitstafel",
+      "md": "Die Regeln von De Morgan als Tafel: Die erste und zweite Spalte stimmen überein, ebenso die dritte und vierte.",
+      "widget": "truth-table",
+      "params": {
+        "vars": [
+          "A",
+          "B"
+        ],
+        "columns": [
+          {
+            "label": "\\neg(A \\wedge B)",
+            "expr": "!(A & B)"
+          },
+          {
+            "label": "\\neg A \\vee \\neg B",
+            "expr": "!A | !B"
+          },
+          {
+            "label": "\\neg(A \\vee B)",
+            "expr": "!(A | B)"
+          },
+          {
+            "label": "\\neg A \\wedge \\neg B",
+            "expr": "!A & !B"
+          }
+        ]
+      },
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung: Verneinung von außen nach innen.** Die Aussage: *for every positive integer $n$ there is a prime $p$ with $n < p \\le 2n$*.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{nicht}\\,[\\,\\text{für alle } n \\text{ gibt es } p:\\ n < p \\text{ und } p \\le 2n\\,]",
+            "why": "Die Verneinung steht zunächst ganz außen."
+          },
+          {
+            "tex": "\\text{es gibt } n:\\ \\text{nicht}\\,[\\,\\text{es gibt } p:\\ n < p \\text{ und } p \\le 2n\\,]",
+            "why": "Erster Quantor: »für alle« wird »es gibt«, die Verneinung wandert nach innen."
+          },
+          {
+            "tex": "\\text{es gibt } n \\text{, sodass für alle } p:\\ \\text{nicht}\\,[\\,n < p \\text{ und } p \\le 2n\\,]",
+            "why": "Zweiter Quantor: »es gibt« wird »für alle«. Die Reihenfolge erst n, dann p bleibt."
+          },
+          {
+            "tex": "\\text{es gibt } n \\text{, sodass für alle } p:\\ p \\le n \\text{ oder } p > 2n",
+            "why": "Kern nach De Morgan: »und« wird »oder«, $<$ wird $\\ge$, $\\le$ wird $>$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Außen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erster Quantor.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweiter Quantor.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kern.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Kontrollfrage",
+      "md": "**Die Kontrollfrage im Film:** blau die Aussage $S$: $x < -1$ oder $x > 1$, orange ihre Verneinung $-1 \\le x \\le 1$, grün ein falscher Vorschlag $-1 < x < 1$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          3
+        ],
+        "y": [
+          0,
+          3.8
+        ],
+        "grid": false,
+        "xLabel": "x",
+        "vars": [
+          {
+            "name": "X",
+            "min": -3,
+            "max": 3,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "r0s0",
+            "expr": "3",
+            "domain": [
+              -3,
+              -1
+            ],
+            "color": "blue",
+            "width": 7,
+            "samples": 4
+          },
+          {
+            "name": "r0s1",
+            "expr": "3",
+            "domain": [
+              1,
+              3
+            ],
+            "color": "blue",
+            "width": 7,
+            "samples": 4
+          },
+          {
+            "name": "r1s0",
+            "expr": "2",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "orange",
+            "width": 7,
+            "samples": 4
+          },
+          {
+            "name": "r2s0",
+            "expr": "1",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "green",
+            "width": 7,
+            "samples": 4
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.88,
+            "y": 3.36,
+            "text": "S: x < −1 oder x > 1",
+            "anchor": "end",
+            "color": "blue"
+          },
+          {
+            "x": 2.88,
+            "y": 2.36,
+            "text": "nicht S: −1 ≤ x ≤ 1",
+            "anchor": "end",
+            "color": "orange"
+          },
+          {
+            "x": 2.88,
+            "y": 1.3599999999999999,
+            "text": "falsch: −1 < x < 1",
+            "anchor": "end",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "(X < -1 || X > 1) ? 3 : -9",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "(X >= -1 && X <= 1) ? 2 : -9",
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "y": "(X > -1 && X < 1) ? 1 : -9",
+            "color": "green"
+          },
+          {
+            "x": "X",
+            "y": 0,
+            "color": "label"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "vbands": []
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = −2 gilt S, die Verneinung nicht: genau eine der beiden ist wahr.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "Bei x = 0 gilt die Verneinung, S nicht. Auch der grüne Vorschlag gilt hier.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Am Rand x = 1 entscheidet es sich: S ist falsch (1 > 1 gilt nicht), die richtige Verneinung wahr.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Der grüne Vorschlag ist bei x = 1 ebenfalls falsch. Dann wären S und »Verneinung« zugleich falsch: Grün ist keine Verneinung.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = 2 gilt wieder S allein. Die richtige Verneinung erfüllt die Kontrollfrage an jeder Stelle.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Parameterfrage\n> Eine Aussage enthält einen Quantor **und** einen Parameter, meist $k$ oder $a$. Gefragt ist die Menge der Parameterwerte, für die sie wahr (oder falsch) ist. Die Logik legt fest, **welche** Bedingung an den Parameter zu stellen ist, die Algebra rechnet sie aus.\n\n| Aussage | Bedingung an den Parameter |\n|---|---|\n| für alle $x$: $ax^2 + bx + c > 0$ (mit $a > 0$) | keine reelle Nullstelle: Diskriminante $< 0$ |\n| es gibt $x$ mit $ax^2 + bx + c = 0$ | Diskriminante $\\ge 0$ |\n| für alle $x$: wenn $x \\in P$, dann $x \\in Q$ | die Menge $P$ liegt in der Menge $Q$ |\n\n**Randwerte einzeln prüfen**, und wird nach »falsch« gefragt, das Komplement der gefundenen Menge nehmen.",
+      "label": "Parameterfragen",
+      "id": "ve6"
+    },
+    {
+      "id": "ve7",
+      "type": "anim",
+      "md": "**Herleitung: Für welche $k$ gilt $x^2 + kx + 4 > 0$ für alle reellen $x$?**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{für alle } x:\\ x^2 + kx + 4 > 0",
+            "why": "Die nach oben geöffnete Parabel darf die x-Achse weder schneiden noch berühren."
+          },
+          {
+            "tex": "\\iff \\Delta = k^2 - 4 \\cdot 1 \\cdot 4 < 0",
+            "why": "Keine reelle Nullstelle heißt negative Diskriminante."
+          },
+          {
+            "tex": "\\iff k^2 < 16 \\iff -4 < k < 4",
+            "why": "Quadratische Ungleichung lösen."
+          },
+          {
+            "tex": "k = 4:\\ x^2 + 4x + 4 = (x + 2)^2 = 0 \\text{ bei } x = -2",
+            "why": "Randwert prüfen: Die Parabel berührt die Achse, »größer als 0« gilt dort nicht. Also strenge Ungleichung."
+          },
+          {
+            "tex": "\\text{Aussage falsch} \\iff k \\le -4 \\text{ oder } k \\ge 4",
+            "why": "Die Verneinung: das Komplement der Lösungsmenge."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diskriminante.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rand.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Komplement.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Parameter",
+      "md": "**Die Parabel $y = x^2 + kx + 4$ für wachsendes $k$:** Die Aussage »für alle $x$ ist $y > 0$« gilt, solange der Scheitel über der Achse liegt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -7,
+          3
+        ],
+        "y": [
+          -4,
+          10
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "k",
+            "min": -6,
+            "max": 6,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 + k*x + 4",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "-k/2",
+            "y": "4 - k^2/4",
+            "color": "orange",
+            "label": "Scheitel"
+          }
+        ],
+        "readout": "k = {k|2} · tiefster Wert 4 − k²/4 = {4 - k^2/4|2} · Diskriminante k² − 16 = {k^2 - 16|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei k = 0 liegt der Scheitel bei y = 4: Die Aussage ist wahr.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "k = 3: Der Scheitel sinkt auf 1,75, die Diskriminante ist negativ. Noch wahr.",
+          "to": {
+            "k": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 4: Der Scheitel berührt die Achse bei x = −2. Dort ist y = 0, also nicht größer als 0: falsch.",
+          "to": {
+            "k": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 5: Zwei Nullstellen, zwischen ihnen ist y negativ. Die Aussage ist für alle k ab 4 falsch, aus Symmetrie ebenso für alle k bis −4.",
+          "to": {
+            "k": 5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve8"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Negation von Aussagen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Negation von Aussagen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was die Verneinung leisten muss",
+          "blocks": [
+            {
+              "md": "Die **Negation** (*negation*) einer Aussage ist die Aussage, die **genau dann wahr ist, wenn die ursprüngliche falsch ist**. Nicht das \"Gegenteil\" im Alltagssinn, nicht das Extrem am anderen Ende -- sondern exakt das, was übrig bleibt, wenn die Aussage nicht stimmt.\n\n> [!important] Die Kontrollfrage\n> Eine vorgeschlagene Verneinung ist nur dann richtig, wenn in **jedem denkbaren Fall** genau eine der beiden Aussagen wahr ist. Gibt es einen Fall, in dem beide falsch sind, ist die Verneinung **zu stark** -- der klassische Fehler, \"alle\" mit \"keine\" zu verneinen.\n>\n> *Beispiel:* Zu *\"all students passed\"* ist *\"no student passed\"* nicht die Verneinung. Haben manche bestanden und manche nicht, sind beide Sätze falsch. Die Verneinung lautet *\"at least one student did not pass\"*."
+            }
+          ]
+        },
+        {
+          "title": "Die Regeln",
+          "blocks": [
+            {
+              "md": "| Aussage | Verneinung |\n|---|---|\n| für alle $x$ gilt P | es gibt ein $x$, für das P **nicht** gilt |\n| es gibt ein $x$ mit P | für alle $x$ gilt P **nicht** |\n| A und B | nicht A **oder** nicht B |\n| A oder B | nicht A **und** nicht B |\n| wenn A, dann B | **A und nicht B** |\n| A genau dann, wenn B | genau eine von beiden ist wahr |\n| $x > 3$ | $x \\le 3$ |\n| $x = 3$ | $x \\ne 3$ |\n\n> [!warning] Die Verneinung einer Implikation ist keine Implikation\n> *\"If it rains, the match is cancelled\"* wird nicht durch *\"If it rains, the match is not cancelled\"* verneint, sondern durch ***\"It rains and the match is not cancelled.\"*** Eine Implikation ist nur im Fall *A wahr, B falsch* falsch -- und genau diesen Fall beschreibt die Verneinung. Siehe **Implikation und Äquivalenz**.\n>\n> Mit verstecktem Allquantor: Die Verneinung von *\"if n is prime, then n is odd\"* (für alle $n$) lautet *\"there is a prime n that is even\"* -- und die ist wahr, $n = 2$."
+            }
+          ]
+        },
+        {
+          "title": "Das Verfahren für verschachtelte Aussagen",
+          "blocks": [
+            {
+              "md": "Die Verneinung wird **von außen nach innen durchgeschoben**. Bei jedem Schritt kehrt sich das Element um, an dem sie vorbeikommt:\n\n1. **Quantoren** tauschen: *für alle* wird *es gibt*, *es gibt* wird *für alle*. Die Reihenfolge bleibt.\n2. **Verknüpfungen** tauschen: *und* wird *oder*, *oder* wird *und*.\n3. Eine **Implikation** *wenn A, dann B* wird zu *A und nicht B*.\n4. Am Ende wird die **innerste Aussage** verneint: $<$ wird $\\ge$, $=$ wird $\\ne$.\n\n*Beispiel:* Die Aussage *\"for every real x there is an integer n with n > x\"* -- die ganzen Zahlen sind nach oben unbeschränkt.\n\n| Schritt | Ausdruck |\n|---|---|\n| Ausgang | nicht [ für alle $x$ gibt es $n$ mit $n > x$ ] |\n| Quantor 1 | es gibt $x$, sodass nicht [ es gibt $n$ mit $n > x$ ] |\n| Quantor 2 | es gibt $x$, sodass für alle $n$ gilt: nicht $n > x$ |\n| innen | **es gibt ein reelles $x$, sodass für alle ganzen $n$ gilt: $n \\le x$** |\n\nDie Verneinung behauptet also, eine reelle Zahl liege über allen ganzen Zahlen. Sie ist falsch -- also ist die Ausgangsaussage wahr.\n\n> [!tip] Die Probe am Beispiel\n> Nach dem Verneinen einen konkreten Fall einsetzen und prüfen, ob genau eine der beiden Aussagen wahr ist. Die Probe dauert eine halbe Minute und findet fast jeden Umkehrfehler."
+            }
+          ]
+        },
+        {
+          "title": "Verneinung und Grundbereich",
+          "blocks": [
+            {
+              "md": "Die Verneinung **ändert den Grundbereich nicht.** Die Verneinung von *\"for all positive integers n, n² ≥ n\"* lautet *\"there is a positive integer n with n² < n\"* -- nicht *\"... a real number ...\"*. Wer beim Verneinen den Bereich wechselt, erhält eine andere Aussage."
+            }
+          ]
+        },
+        {
+          "title": "Wo Verneinung im TMUA gebraucht wird",
+          "blocks": [
+            {
+              "md": "- **Direkt:** *Which of the following is the negation of ...?*\n- **Im Widerspruchsbeweis:** Die Annahme ist die Verneinung der Behauptung -- falsch verneint, wird der ganze Beweis wertlos. Siehe **Widerspruchsbeweis** und **Annahme für den Widerspruchsbeweis formulieren**.\n- **In der Kontraposition:** Voraussetzung und Folgerung werden verneint. Siehe **Umkehrung und Kontraposition**.\n- **Bei Ungleichungen:** Die Verneinung von *\"x < −1 or x > 1\"* ist *\"−1 ≤ x ≤ 1\"*."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **\"Alle\" mit \"keine\" verneinen.** Richtig: *mindestens eines nicht*.\n- **Die Implikation als Implikation verneinen.** Richtig: *A und nicht B*.\n- **Bei Quantoren die Reihenfolge ändern.** Die Quantoren tauschen ihre Art, nicht ihren Platz.\n- **$<$ zu $>$ statt zu $\\ge$ verneinen.**\n- **Nur den ersten Teil verneinen**, etwa bei *\"there exists x such that for all y\"* nur den äußeren Quantor.\n\nVerwandt: **Aussagen und logische Verknüpfungen** · **Quantoren - für alle und es gibt** · Aufgabentyp: **Quantifizierte Aussagen negieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Quantifizierte Aussagen negieren",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Quantifizierte Aussagen negieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist die Verneinung einer Aussage mit einem oder mehreren Quantoren, oft zusätzlich mit *and*, *or* oder *if*. Signalformeln: *Which of the following is the negation of ...?*, *Which statement is true exactly when ... is false?*, *To disprove ..., it is sufficient to show that ...*"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Die Aussage in Bausteine zerlegen:** Quantoren in ihrer Reihenfolge, dann der innere Kern (Verknüpfung, Implikation, Ungleichung).\n2. **Quantoren von außen nach innen umkehren:** *für alle* wird *es gibt*, *es gibt* wird *für alle*. Die **Reihenfolge bleibt**, der **Grundbereich bleibt**.\n3. **Den Kern verneinen:**\n   - *A und B* wird *nicht A oder nicht B*\n   - *A oder B* wird *nicht A und nicht B*\n   - *wenn A, dann B* wird *A und nicht B*\n   - $<$ wird $\\ge$, $\\le$ wird $>$, $=$ wird $\\ne$\n4. **Die Optionen gegen das Ergebnis halten** -- Wort für Wort, besonders bei *or* und *and*.\n5. **Probe an einem Fall:** Genau eine der beiden Aussagen muss wahr sein."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Which of the following is the negation of the statement\n> \"For every positive integer $n$, there is a prime $p$ such that $n < p \\le 2n$\"?\n>\n> - **A** For every positive integer $n$, there is no prime $p$ such that $n < p \\le 2n$.\n> - **B** There is a positive integer $n$ such that for every prime $p$, $p \\le n$ or $p > 2n$.\n> - **C** There is a positive integer $n$ such that for every prime $p$, $p \\le n$ and $p > 2n$.\n> - **D** There is a positive integer $n$ and a prime $p$ such that $p \\le n$ or $p > 2n$.\n> - **E** For every prime $p$, there is a positive integer $n$ such that $p \\le n$ or $p > 2n$.\n\n**Schritt 1:** Quantoren: *für alle n*, dann *es gibt p*. Kern: $n < p$ **und** $p \\le 2n$.\n\n**Schritt 2:** *es gibt n*, dann *für alle p*.\n\n**Schritt 3:** Der Kern ist ein Und aus zwei Ungleichungen. Verneint: $p \\le n$ **oder** $p > 2n$.\n\n**Ergebnis:** *Es gibt eine positive ganze Zahl n, sodass für jede Primzahl p gilt: p ≤ n oder p > 2n.* Das ist **B**.\n\n**Die Optionen im Einzelnen:**\n- A verneint nur den inneren Quantor und behält *für alle* -- zu stark.\n- C verneint das Und falsch zu einem Und; $p \\le n$ und $p > 2n$ können nie gleichzeitig gelten.\n- D dreht nur den ersten Quantor um und lässt den zweiten als *es gibt* stehen.\n- E vertauscht die Reihenfolge der Quantoren.\n\n> [!info] Nebenbei\n> Die Ausgangsaussage ist das **Bertrandsche Postulat**, ein bewiesener Satz der Zahlentheorie. Ihre Verneinung ist also falsch -- aber das ist für die Aufgabe unerheblich. Gefragt ist die Form, nicht der Wahrheitswert."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nur einen der beiden Quantoren umkehren.**\n- **Die Reihenfolge der Quantoren ändern.** Aus *für alle n, es gibt p* wird *es gibt n, für alle p* -- nicht *für alle p, es gibt n*.\n- **Und zu Und verneinen.** De Morgan kehrt die Verknüpfung um.\n- **Die Implikation als Implikation verneinen:** Die Verneinung von *für alle x: wenn P, dann Q* ist *es gibt x mit P und nicht Q*.\n- **\"Alle\" durch \"keine\" verneinen** -- das ist ein zu starker Gegensatz."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Which of the following is the negation of \"Every student in the class owns a bicycle or a scooter\"?\n>\n> - **A** Every student in the class owns neither a bicycle nor a scooter.\n> - **B** Some student in the class owns neither a bicycle nor a scooter.\n> - **C** Some student in the class does not own a bicycle or does not own a scooter.\n> - **D** No student in the class owns both a bicycle and a scooter.\n> - **E** Some student in the class owns a bicycle but not a scooter.\n\n> [!success]- Lösung\n> **B.** *Für alle Schüler: Fahrrad oder Roller.* Verneint: *Es gibt einen Schüler: nicht Fahrrad **und** nicht Roller* -- also weder noch.\n> A ist zu stark (alle statt einer). C verneint das Oder falsch; *nicht Fahrrad oder nicht Roller* trifft auch auf jemanden zu, der nur ein Fahrrad besitzt. D und E sind andere Aussagen.\n\n> [!question] Aufgabe 2\n> Which of the following is the negation of \"For all real numbers $x$, if $x > 0$ then $x^2 > x$\"?\n>\n> - **A** For all real numbers $x$, if $x > 0$ then $x^2 \\le x$.\n> - **B** There exists a real number $x$ such that $x > 0$ and $x^2 \\le x$.\n> - **C** There exists a real number $x$ such that $x \\le 0$ and $x^2 \\le x$.\n> - **D** There exists a real number $x$ such that if $x > 0$ then $x^2 \\le x$.\n> - **E** For all real numbers $x$, $x \\le 0$ or $x^2 > x$.\n\n> [!success]- Lösung\n> **B.** Allquantor wird Existenzquantor; die Implikation *wenn P, dann Q* wird *P und nicht Q*.\n> A und D behalten die Implikation. E ist gleichwertig zur **Ausgangsaussage** (nicht P oder Q), nicht zu ihrer Verneinung.\n> Probe: $x = \\tfrac12$ erfüllt B ($\\tfrac14 \\le \\tfrac12$). Die Verneinung ist also wahr, die Ausgangsaussage falsch -- genau eine der beiden stimmt.\n\n> [!question] Aufgabe 3\n> Let $S$ be a set of real numbers. Which of the following is the negation of \"There exists a real number $M$ such that $x \\le M$ for all $x$ in $S$\"?\n>\n> - **A** For every real number $M$, there exists $x$ in $S$ such that $x > M$.\n> - **B** There exists a real number $M$ such that $x > M$ for all $x$ in $S$.\n> - **C** For every real number $M$, $x > M$ for all $x$ in $S$.\n> - **D** There exists $x$ in $S$ such that $x > M$ for every real number $M$.\n> - **E** For every $x$ in $S$, there exists a real number $M$ such that $x > M$.\n\n> [!success]- Lösung\n> **A.** Quantorfolge *es gibt M, für alle x* wird *für alle M, es gibt x*; der Kern $x \\le M$ wird $x > M$.\n> Die Ausgangsaussage heißt *S ist nach oben beschränkt*, ihre Verneinung *S ist nach oben unbeschränkt*: Jede Schranke $M$ wird von einem Element übertroffen.\n> D vertauscht die Reihenfolge und behauptet eine Zahl, die jede reelle Zahl übertrifft -- die gibt es nicht. E ist für jede Menge trivial wahr ($M = x - 1$)."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Quantorenreihenfolge beurteilen** · **Annahme für den Widerspruchsbeweis formulieren** · **Äquivalente Umformulierungen erkennen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Parameterwerte für wahre Aussagen bestimmen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Parameterwerte für wahre Aussagen bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Aussage enthält einen Quantor **und** einen Parameter, meist $a$, $c$ oder $k$. Gefragt ist die Menge der Parameterwerte, für die die Aussage wahr (oder falsch) ist:\n\n- *For which values of k is the statement \"for all real x, ...\" true?*\n- *Find the complete set of values of a for which \"if x > a, then ...\" is true.*\n- *For which values of m is there an integer n such that ...?*\n\nDer Typ verbindet Logik und Algebra: Die Logik legt fest, **welche** Bedingung an den Parameter zu stellen ist, die Algebra rechnet sie aus."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Quantor und Kern trennen.** Was muss für alle $x$ gelten, was für ein $x$?\n2. **In eine Bedingung an den Parameter übersetzen:**\n\n| Aussage | Bedingung |\n|---|---|\n| für alle $x$: $ax^2 + bx + c > 0$ (mit $a > 0$) | keine reelle Nullstelle: Diskriminante $< 0$ |\n| es gibt $x$ mit $ax^2 + bx + c = 0$ | Diskriminante $\\ge 0$ |\n| für alle $x$: wenn $x \\in P$, dann $x \\in Q$ | Menge P liegt in Menge Q |\n| es gibt $x$ in P mit Eigenschaft Q | P und Q überschneiden sich |\n\n3. **Die Bedingung lösen.**\n4. **Randwerte einzeln prüfen.** Gerade bei strengen gegen nicht strenge Ungleichungen entscheidet der Rand über die richtige Option.\n5. **Bei \"falsch\" die Verneinung nehmen:** Die Aussage ist genau für die Parameter falsch, für die sie nicht wahr ist -- also das Komplement der gefundenen Menge."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the complete set of values of $a$ for which the following statement is true:\n> \"For all real numbers $x$, if $x > a$ then $x^2 > 4$.\"\n>\n> - **A** $a > 2$\n> - **B** $a \\ge 2$\n> - **C** $a \\ge -2$\n> - **D** $-2 \\le a \\le 2$\n> - **E** $a \\le -2$ or $a \\ge 2$\n\n**Schritt 1:** Allaussage über eine Implikation. Sie ist wahr, wenn **jedes** $x > a$ auch $x^2 > 4$ erfüllt.\n\n**Schritt 2:** Mengenbild: $\\{x > a\\}$ muss in $\\{x < -2\\} \\cup \\{x > 2\\}$ liegen. Ein Intervall der Form $(a, \\infty)$ kann nicht im linken Teil $(-\\infty, -2)$ liegen, also muss es in $(2, \\infty)$ liegen.\n\n**Schritt 3:** $(a, \\infty) \\subseteq (2, \\infty)$ genau dann, wenn $a \\ge 2$.\n\n**Schritt 4, Rand:** $a = 2$: Jedes $x > 2$ erfüllt $x^2 > 4$. Wahr, also gehört $a = 2$ dazu. $a = 1{,}9$: $x = 1{,}95$ ist größer als $a$, aber $x^2 = 3{,}8025 < 4$. Falsch.\n\nAntwort **B**.\n\n> [!warning] Warum E falsch ist\n> E enthält $a \\le -2$. Für $a = -3$ ist aber etwa $x = 0 > -3$ mit $0^2 < 4$ ein Gegenbeispiel. Die Menge $(-3, \\infty)$ reicht über die Lücke $[-2, 2]$ hinweg. Wer die Lösungsmenge von $x^2 > 4$ einfach auf den Parameter überträgt, landet bei E."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Lösungsmenge der inneren Ungleichung für die Parametermenge halten** -- sie ist nur ein Zwischenschritt.\n- **Randwerte ungeprüft lassen.** Strenge und nicht strenge Ungleichungen im Ergebnis entscheiden zwischen zwei Optionen.\n- **Den Leitkoeffizienten übersehen:** \"Für alle $x$: quadratischer Term $> 0$\" verlangt zusätzlich eine nach oben geöffnete Parabel.\n- **\"Wahr\" und \"falsch\" verwechseln**, wenn nach den Werten gefragt ist, für die die Aussage **falsch** ist."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the complete set of values of $k$ for which the statement \"there exists a real number $x$ such that $x^2 + kx + k = 0$\" is **false**.\n>\n> - **A** $0 < k < 4$\n> - **B** $k < 0$ or $k > 4$\n> - **C** $0 \\le k \\le 4$\n> - **D** $k > 4$\n> - **E** $k < 4$\n\n> [!success]- Lösung\n> **A.** Die Existenzaussage ist falsch, wenn die Gleichung **keine** reelle Lösung hat: $k^2 - 4k < 0$, also $k(k - 4) < 0$, also $0 < k < 4$.\n> Rand: $k = 0$ liefert $x^2 = 0$ mit Lösung $x = 0$ -- die Aussage ist dort wahr, also gehört $k = 0$ nicht zur gesuchten Menge. Ebenso $k = 4$ mit $x = -2$.\n\n> [!question] Aufgabe 2\n> Find the complete set of values of $c$ for which the following statement is true:\n> \"For all real numbers $x$, if $\\lvert x \\rvert < 1$ then $\\lvert x - c \\rvert < 3$.\"\n>\n> - **A** $-2 < c < 2$\n> - **B** $-2 \\le c \\le 2$\n> - **C** $-4 \\le c \\le 4$\n> - **D** $c \\le 2$\n> - **E** $-1 \\le c \\le 1$\n\n> [!success]- Lösung\n> **B.** Die Menge $\\{\\lvert x \\rvert < 1\\} = (-1, 1)$ muss in $\\{\\lvert x - c \\rvert < 3\\} = (c - 3, c + 3)$ liegen. Das verlangt $c - 3 \\le -1$ und $c + 3 \\ge 1$, also $-2 \\le c \\le 2$.\n> Rand $c = 2$: $(-1, 1) \\subseteq (-1, 5)$ -- wahr, denn $-1$ selbst gehört nicht zu $(-1, 1)$. Deshalb ist der Rand eingeschlossen und A zu eng.\n\n> [!question] Aufgabe 3\n> For which of the values $m = 1, 2, 3, 4$ is the following statement true?\n> \"For every integer $n$, the number $n^2 + m$ is not divisible by 4.\"\n>\n> - **A** $m = 1$ only\n> - **B** $m = 2$ only\n> - **C** $m = 1$ and $m = 2$ only\n> - **D** $m = 1$ and $m = 3$ only\n> - **E** $m = 2$ and $m = 4$ only\n> - **F** $m = 1$, $m = 2$ and $m = 3$ only\n\n> [!success]- Lösung\n> **C.** Ein Quadrat lässt bei Division durch 4 den Rest 0 (gerades $n$) oder 1 (ungerades $n$). Also hat $n^2 + m$ den Rest $m$ oder $m + 1$.\n> $m = 1$: Reste 1 und 2 -- nie durch 4 teilbar. Wahr.\n> $m = 2$: Reste 2 und 3. Wahr.\n> $m = 3$: Rest $3 + 1 = 4$, also durch 4 teilbar für ungerades $n$; etwa $1 + 3 = 4$. Falsch.\n> $m = 4$: $n = 2$ liefert $4 + 4 = 8$. Falsch."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Notwendig oder hinreichend entscheiden** · **Quantorenreihenfolge beurteilen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "widget",
+      "label": "Wahrheitstafel ausfüllen",
+      "md": "Fülle die Spalten aus und vergleiche: Welche Spalten stimmen überein?",
+      "widget": "truth-table",
+      "params": {
+        "vars": [
+          "A",
+          "B"
+        ],
+        "columns": [
+          {
+            "label": "\\neg(A \\wedge B)",
+            "expr": "!(A & B)",
+            "ask": true
+          },
+          {
+            "label": "\\neg A \\vee \\neg B",
+            "expr": "!A | !B",
+            "ask": true
+          },
+          {
+            "label": "\\neg A \\wedge \\neg B",
+            "expr": "!A & !B",
+            "ask": true
+          }
+        ]
+      },
+      "goal": {},
+      "explain": "$\\neg(A \\wedge B)$ und $\\neg A \\vee \\neg B$ lauten beide f, w, w, w. Die dritte Spalte f, f, f, w gehört zu $\\neg(A \\vee B)$: Wer »und« zu »und« verneint, macht die Aussage zu stark.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is the negation of the statement *for every real number $x$ there is an integer $n$ with $n > x$*?",
+      "options": [
+        {
+          "md": "There is a real number $x$ and an integer $n$ with $n \\le x$.",
+          "why": "Der innere Quantor ist nicht umgedreht."
+        },
+        {
+          "md": "There is a real number $x$ such that for every integer $n$, $n < x$.",
+          "why": "$>$ wird zu $\\le$, nicht zu $<$."
+        },
+        {
+          "md": "There is an integer $n$ such that for every real number $x$, $n \\le x$.",
+          "why": "Die Reihenfolge der Quantoren wurde vertauscht."
+        },
+        {
+          "md": "For every real number $x$ there is no integer $n$ with $n > x$.",
+          "why": "Der äußere Quantor ist nicht umgedreht."
+        },
+        {
+          "md": "There is a real number $x$ such that for every integer $n$, $n \\le x$.",
+          "correct": true
+        }
+      ],
+      "explain": "Von außen nach innen: für alle $x$ wird es gibt $x$, es gibt $n$ wird für alle $n$, $n > x$ wird $n \\le x$. Reihenfolge und Grundbereiche bleiben.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Verneinung",
+      "id": "vq2"
+    },
+    {
+      "type": "match",
+      "label": "Regeln",
+      "md": "Ordne jeder Aussage ihre Verneinung zu.",
+      "pairs": [
+        [
+          "$x > 3$",
+          "$x \\le 3$"
+        ],
+        [
+          "$A$ und $B$",
+          "nicht $A$ oder nicht $B$"
+        ],
+        [
+          "$A$ oder $B$",
+          "nicht $A$ und nicht $B$"
+        ],
+        [
+          "wenn $A$, dann $B$",
+          "$A$ und nicht $B$"
+        ],
+        [
+          "alle Schwäne sind weiß",
+          "mindestens ein Schwan ist nicht weiß"
+        ]
+      ],
+      "explain": "Jede Verneinung muss die Kontrollfrage bestehen: in jedem Fall genau eine der beiden wahr.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "»No student passed« ist die Verneinung von »all students passed«.",
+      "answer": false,
+      "explain": "Haben manche bestanden und manche nicht, sind beide Sätze falsch. Die Verneinung lautet »at least one student did not pass«.",
+      "label": "Kontrollfrage",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Verfahren für verschachtelte Verneinungen in die richtige Reihenfolge.",
+      "items": [
+        "die Aussage in Quantoren (der Reihe nach) und Kern zerlegen",
+        "die Quantoren von außen nach innen umdrehen, Reihenfolge und Grundbereich behalten",
+        "den Kern verneinen: De Morgan, Implikation zu »A und nicht B«, Ungleichungszeichen umkehren",
+        "Probe: In jedem Fall muss genau eine der beiden Aussagen wahr sein"
+      ],
+      "explain": "Die Reihenfolge: 1. die Aussage in Quantoren (der Reihe nach) und Kern zerlegen. 2. die Quantoren von außen nach innen umdrehen, Reihenfolge und Grundbereich behalten. 3. den Kern verneinen: De Morgan, Implikation zu »A und nicht B«, Ungleichungszeichen umkehren. 4. Probe: In jedem Fall muss genau eine der beiden Aussagen wahr sein.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Parameter",
+      "md": "Für wie viele ganze Zahlen $k$ gilt $x^2 - 2kx + 2k + 3 > 0$ für alle reellen $x$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Werte",
+      "explain": "Diskriminante $4k^2 - 4(2k + 3) < 0 \\iff k^2 - 2k - 3 < 0 \\iff (k - 3)(k + 1) < 0 \\iff -1 < k < 3$. Ganze Zahlen: 0, 1, 2. Die Ränder $-1$ und $3$ gehören nicht dazu, weil die Parabel dort die Achse berührt.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "For which values of the real constant $k$ is the statement *there is a real number $x$ with $x^2 + kx + 4 = 0$* true?",
+      "options": [
+        {
+          "md": "$k \\ge 4$",
+          "why": "Aus Symmetrie gehören auch die negativen Werte dazu."
+        },
+        {
+          "md": "all real $k$",
+          "why": "Für $k = 0$ hat $x^2 + 4 = 0$ keine reelle Lösung."
+        },
+        {
+          "md": "$k \\le -4$ or $k \\ge 4$",
+          "correct": true
+        },
+        {
+          "md": "$k < -4$ or $k > 4$",
+          "why": "Die Ränder fehlen: Bei $k = \\pm 4$ gibt es die doppelte Nullstelle $x = \\mp 2$."
+        },
+        {
+          "md": "$-4 < k < 4$",
+          "why": "Das ist genau die Menge, für die die Aussage falsch ist."
+        }
+      ],
+      "explain": "Es gibt eine Lösung genau dann, wenn $\\Delta = k^2 - 16 \\ge 0$, also $k \\le -4$ oder $k \\ge 4$. Die Ränder gehören dazu.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Parameter",
+      "id": "vq7"
+    },
+    {
+      "type": "cloze",
+      "label": "Grundbereich",
+      "md": "Beim Verneinen bleibt die Reihenfolge der Quantoren erhalten, und auch der Grundbereich ändert sich {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "nicht"
+          ]
+        }
+      ],
+      "explain": "Wer beim Verneinen von ganzen zu reellen Zahlen wechselt, verneint eine andere Aussage.",
+      "id": "vq8"
+    },
+    {
       "type": "choice",
       "md": "What is the negation of: *every student in the class has a phone or a laptop*?",
       "options": [
@@ -139,6 +970,20 @@
       "id": "g5"
     },
     {
+      "type": "gen",
+      "gen": "tmua-negation",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-parameter",
+      "level": 3,
+      "label": "Parameter",
+      "id": "vx2"
+    },
+    {
       "type": "choice",
       "md": "Statement S: *for every integer $n$, if $n^2$ is a multiple of 4 then $n$ is a multiple of 4.* Which of the following is correct?",
       "options": [
@@ -168,7 +1013,10 @@
         "nicht ∀ = ∃ nicht; nicht ∃ = ∀ nicht.",
         "nicht (P und Q) = nicht P oder nicht Q.",
         "nicht (P ⇒ Q) = P und nicht Q.",
-        "Parameter: Bedingung aufstellen, Ränder einzeln prüfen."
+        "Parameter: Bedingung aufstellen, Ränder einzeln prüfen.",
+        "Verneinung: in jedem Fall genau eine von beiden wahr; »alle« wird »mindestens einer nicht«, nicht »keiner«.",
+        "Von außen nach innen: Quantoren tauschen ihre Art, nicht ihren Platz; und/oder tauschen; Implikation wird »A und nicht B«.",
+        "Parameterfragen: Logik liefert die Bedingung (oft Diskriminante), Ränder einzeln prüfen, bei »falsch« das Komplement."
       ],
       "id": "summary"
     }

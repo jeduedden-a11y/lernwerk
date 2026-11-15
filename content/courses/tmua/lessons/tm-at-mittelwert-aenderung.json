@@ -16,6 +16,153 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Über die Summe gehen:** Summe = Mittelwert mal Anzahl.\n> 2. **Die Summe ändern:** Werte abziehen, hinzufügen oder ersetzen.\n> 3. **Neue Anzahl** bestimmen.\n> 4. **Neuer Mittelwert** = neue Summe durch neue Anzahl; bei zwei Gruppen gewichtet mitteln.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Der Mittelwert von 10 Zahlen ist 12. Die Zahl 30 wird entfernt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Summe} = 10 \\cdot 12 = 120",
+            "why": "Mittelwert mal Anzahl."
+          },
+          {
+            "tex": "120 - 30 = 90",
+            "why": "Ohne die 30."
+          },
+          {
+            "tex": "\\frac{90}{9} = 10",
+            "why": "Neue Anzahl 9."
+          },
+          {
+            "tex": "12 - \\frac{30}{10} = 9 \\text{ ist falsch}",
+            "why": "Den Mittelwert direkt zu korrigieren übersieht, dass sich auch die Anzahl ändert."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ändern.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Neu.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Falle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Den Mittelwert selbst statt der Summe verändern.\n- Bei zwei Gruppen die Mittelwerte ungewichtet mitteln.\n- Die neue Anzahl nicht anpassen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Mittelwert nach Änderung der Daten",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Aufgabentypen/Mittelwert nach Änderung der Daten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein Datensatz wird verändert -- ein Wert kommt hinzu, fällt weg oder wird ersetzt, oder alle Werte werden mit derselben Zahl verrechnet -- und gefragt ist der neue Mittelwert oder der veränderte Wert."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Vom Mittelwert auf die Summe umschalten:** $\\text{Summe} = \\bar x \\cdot n$.\n2. **Die Änderung an der Summe ausführen**, nicht am Mittelwert.\n3. **Die neue Anzahl bestimmen** -- sie ändert sich beim Hinzufügen oder Weglassen mit.\n4. **Zurückteilen.**\n\n**Ausnahme:** Werden **alle** Werte gleich behandelt, überträgt sich die Operation direkt auf den Mittelwert:\n\n$$y_i = a x_i + b \\quad\\Longrightarrow\\quad \\bar y = a\\bar x + b.$$\n\nDann ist keine Summe nötig.\n\n> [!important] Warum die Summe der richtige Zwischenschritt ist\n> Mittelwerte lassen sich nicht einfach addieren oder mitteln: Der Mittelwert zweier Gruppen ist **nicht** das Mittel ihrer Mittelwerte, wenn die Gruppen verschieden groß sind. Summen dagegen addieren sich immer. Deshalb führt der Umweg über die Summe zuverlässig zum Ziel."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The mean of ten numbers is 7. One further number is added and the mean of the eleven numbers is 8. What is the added number?\n>\n> - **A** 18\n> - **B** 8\n> - **C** 15\n> - **D** 1\n> - **E** 11\n\n**Schritt 1:** Alte Summe $= 10 \\cdot 7 = 70$.\n\n**Schritt 3:** Neue Summe $= 11 \\cdot 8 = 88$.\n\n**Differenz:** $88 - 70 = 18$. Antwort **A**.\n\n> [!tip] Die Kontrollüberlegung\n> Damit der Mittelwert von 7 auf 8 steigt, muss die neue Zahl den **eigenen** Platz füllen (8) **und** alle zehn bisherigen Werte um je 1 anheben: $8 + 10 = 18$. Diese Denkweise ist schneller als die Rechnung und schützt vor der Option 8 -- der Falle für alle, die nur den neuen Mittelwert einsetzen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Anzahl nicht anpassen.**\n- **Mit Mittelwerten statt mit Summen rechnen.**\n- **Zwei Gruppenmittelwerte mitteln**, obwohl die Gruppen unterschiedlich groß sind.\n- **Bei $y = ax + b$ den Summanden $b$ ebenfalls mit $n$ multiplizieren.**\n- **Median statt Mittelwert berechnen** -- die Aufgabenstellung genau lesen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> The mean of five numbers is 12. Four of them are 10, 11, 13 and 15. What is the fifth?\n>\n> - **A** 11\n> - **B** 12\n> - **C** 49\n> - **D** 9\n> - **E** 13\n\n> [!success]- Lösung\n> **A.** Gesamtsumme $5 \\cdot 12 = 60$; die vier bekannten ergeben $10 + 11 + 13 + 15 = 49$; also $60 - 49 = 11$.\n> C ist die Zwischensumme -- eine Option, die zuverlässig dabei ist, wenn ein Zwischenergebnis auffällig aussieht.\n\n> [!question] Aufgabe 2\n> The mean of six numbers is 9. Each number is doubled and then 3 is added. What is the new mean?\n>\n> - **A** 21\n> - **B** 12\n> - **C** 24\n> - **D** 111\n> - **E** 18\n\n> [!success]- Lösung\n> **A.** Alle Werte werden gleich behandelt, also überträgt sich die Operation direkt: $2 \\cdot 9 + 3 = 21$.\n> E vergisst die $+3$, D ist die neue **Summe** $2 \\cdot 54 + 3 = 111$ ohne abschließende Division.\n> Die Streuung verdoppelt sich übrigens; die Addition von 3 ändert sie nicht.\n\n> [!question] Aufgabe 3\n> A set of 20 numbers has mean 8. One further number is included and the mean becomes $8{,}5$. What is the new number?\n>\n> - **A** $18{,}5$\n> - **B** $8{,}5$\n> - **C** $10{,}5$\n> - **D** $28{,}5$\n> - **E** $0{,}5$\n\n> [!success]- Lösung\n> **A.** $20 \\cdot 8 = 160$ und $21 \\cdot 8{,}5 = 178{,}5$, also $178{,}5 - 160 = 18{,}5$.\n> Kontrolle mit der Überlegung von oben: $8{,}5$ für den eigenen Platz plus $20 \\cdot 0{,}5 = 10$ für die Anhebung der übrigen -- zusammen $18{,}5$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Histogramm mit ungleichen Klassenbreiten auswerten** · **Verhältnisse zusammenführen und aufteilen** · **Aufeinanderfolgende prozentuale Änderungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Hinzufügen",
+      "md": "Der Mittelwert von 8 Zahlen ist 15. Eine neunte Zahl kommt dazu, danach ist der Mittelwert 16. Wie groß ist die neunte Zahl?",
+      "answer": 24,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$9 \\cdot 16 - 8 \\cdot 15 = 144 - 120 = 24$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Mittelwert zweier Gruppen ist das Mittel ihrer beiden Mittelwerte.",
+      "answer": false,
+      "explain": "Nur bei gleich großen Gruppen; sonst gewichtet mit den Anzahlen.",
+      "label": "Gewichtet",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +218,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Über die Summe rechnen: Mittelwert mal Anzahl.",
+        "Zwei Gruppen: gewichtet mitteln."
+      ]
     }
   ]
 }

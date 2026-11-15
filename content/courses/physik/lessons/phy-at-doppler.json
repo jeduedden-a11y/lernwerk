@@ -16,6 +16,192 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Geschwindigkeit aus dem Tonsprung.** Ein Zug pfeift beim Vorbeifahren; vorher hört man $520\\,\\mathrm{Hz}$, danach $440\\,\\mathrm{Hz}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_+ = \\frac{f}{1 - v/c},\\qquad f_- = \\frac{f}{1 + v/c}",
+            "why": "Annäherung und Entfernung."
+          },
+          {
+            "tex": "\\frac{f_+}{f_-} = \\frac{c + v}{c - v} = \\frac{520}{440}",
+            "why": "Geteilt: Die unbekannte Pfeiffrequenz kürzt sich."
+          },
+          {
+            "tex": "v = c\\,\\frac{f_+ - f_-}{f_+ + f_-} = 343\\cdot\\frac{80}{960}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 28{,}6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Aufgelöst: rund $103\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$."
+          },
+          {
+            "tex": "f = f_+\\left(1 - \\frac vc\\right) \\approx 476{,}7\\,\\mathrm{Hz}",
+            "why": "Die Frequenz der Pfeife selbst."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Gleichungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verhältnis.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Pfeiffrequenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Dopplerverschiebung berechnen",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Dopplerverschiebung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Welche Frequenz nimmt der ruhende Beobachter wahr?\"*, *\"Berechnen Sie die Geschwindigkeit des Fahrzeugs aus der gemessenen Frequenzverschiebung\"*, *\"Um wie viel Hertz ändert sich der Ton beim Vorbeifahren?\"*, *\"Begründen Sie, weshalb es einen Unterschied macht, ob sich die Quelle oder der Beobachter bewegt\"*.\n\nErkennungsmerkmal: **Relativbewegung** zwischen Schallquelle und Beobachter, verbunden mit einer Frequenzangabe."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Fälle sind nicht gleichwertig",
+          "blocks": [
+            {
+              "md": "> [!important] Das ist der Kern des Aufgabentyps\n> **Bewegte Quelle, ruhender Beobachter:** Die Quelle läuft ihren eigenen Wellenbergen hinterher (oder von ihnen weg) und **staucht die Wellenlänge** im Raum.\n> $$f' = f\\cdot\\frac{c}{c \\mp v_Q} \\qquad \\text{(oben: Annäherung, unten: Entfernung)}$$\n>\n> **Bewegter Beobachter, ruhende Quelle:** Die Wellenlänge im Raum bleibt unverändert; der Beobachter läuft den Bergen entgegen und trifft pro Sekunde **mehr davon an**.\n> $$f' = f\\cdot\\frac{c \\pm v_B}{c} \\qquad \\text{(oben: Annäherung, unten: Entfernung)}$$\n>\n> Beide Formeln liefern bei gleicher Relativgeschwindigkeit **verschiedene** Ergebnisse. Physikalisch verändert nur der erste Fall die Welle selbst, der zweite lediglich die Abtastrate.\n\n| | bewegte Quelle | bewegter Beobachter |\n|---|---|---|\n| Was sich ändert | die **Wellenlänge im Raum** | die **Antreffrate** |\n| Formel | $c/(c \\mp v_Q)$ | $(c \\pm v_B)/c$ |\n| Bei $v \\to c$ | Nenner geht gegen null, $f' \\to \\infty$ (Machscher Kegel) | $f'$ bleibt endlich, verdoppelt sich höchstens |\n| Verschwindet die Welle? | bei Entfernung nie | bei $v_B = c$ und Entfernung wird $f' = 0$ |\n\n> [!tip] Warum das kein akademischer Unterschied ist\n> Beim Schall gibt es ein **Medium** -- die Luft. Sie definiert ein ausgezeichnetes Bezugssystem, und deshalb ist es messbar, wer sich relativ zu ihr bewegt. Beim **Licht** gibt es kein solches Medium; dort hängt die Dopplerverschiebung ausschließlich von der Relativgeschwindigkeit ab, und die beiden Fälle fallen zusammen. Der relativistische Dopplereffekt ist deshalb symmetrisch, der akustische nicht.\n>\n> Genau darauf zielt der häufigste Begründungsauftrag zu diesem Thema."
+            }
+          ]
+        },
+        {
+          "title": "Wie groß der Unterschied ist",
+          "blocks": [
+            {
+              "md": "Eine Reihenentwicklung zeigt, dass beide Formeln in erster Ordnung übereinstimmen:\n$$\\frac{c}{c-v} \\approx 1 + \\frac{v}{c} + \\left(\\frac{v}{c}\\right)^2, \\qquad \\frac{c+v}{c} = 1 + \\frac{v}{c}$$\n\nDer Unterschied ist also von der Ordnung $(v/c)^2$ und bei kleinen Geschwindigkeiten winzig -- bei Alltagsgeschwindigkeiten im Verkehr liegt er im Bereich weniger Hertz. Er wächst aber quadratisch und wird bei $v$ nahe $c$ dramatisch."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Klären, wer sich bewegt.** Das entscheidet über die Formel und ist der wichtigste Schritt.\n2. **Richtung bestimmen:** Annäherung erhöht die Frequenz, Entfernung senkt sie. Diese Vorzeichenprüfung ersetzt das Auswendiglernen der Formelvorzeichen.\n3. **Schallgeschwindigkeit** einsetzen, in Luft bei $20^\\circ\\text{C}$ etwa $c = 343\\,\\text{m/s}$.\n4. **Geschwindigkeiten in m/s umrechnen:** $1\\,\\text{km/h} = \\dfrac{1}{3{,}6}\\,\\text{m/s}$.\n5. **Einsetzen und rechnen.**\n6. **Bei Umkehraufgaben** nach $v$ auflösen: Aus $f' = fc/(c - v_Q)$ folgt $v_Q = c\\left(1 - \\dfrac{f}{f'}\\right)$.\n7. **Einheitenkontrolle:** Der Bruch ist dimensionslos, $f'$ trägt die Einheit von $f$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Rettungswagen fährt mit $v = 25\\,\\text{m/s}$ und sendet einen Ton der Frequenz $f = 800\\,\\text{Hz}$ aus. Schallgeschwindigkeit $c = 343\\,\\text{m/s}$. Berechnen Sie die vom ruhenden Beobachter wahrgenommene Frequenz bei Annäherung und bei Entfernung sowie den gesamten Frequenzsprung beim Vorbeifahren. Vergleichen Sie mit dem Fall, dass sich stattdessen der Beobachter mit derselben Geschwindigkeit auf den ruhenden Wagen zubewegt.*\n\n**Schritt 1 und 2:** Bewegte Quelle. Bei Annäherung wird der Nenner kleiner, die Frequenz steigt.\n\n**Schritt 5, Annäherung:**\n$$f' = 800\\cdot\\frac{343}{343 - 25} = 800\\cdot\\frac{343}{318} = 800\\cdot1{,}0786 \\approx 863\\,\\text{Hz}$$\n\n**Entfernung:**\n$$f'' = 800\\cdot\\frac{343}{343 + 25} = 800\\cdot\\frac{343}{368} = 800\\cdot0{,}9321 \\approx 746\\,\\text{Hz}$$\n\n**Frequenzsprung beim Vorbeifahren:**\n$$\\Delta f = 863 - 746 = 117\\,\\text{Hz}$$\nDas entspricht knapp einer kleinen Terz -- der charakteristische, deutlich hörbare Tonhöhensprung, wenn das Fahrzeug passiert.\n\n**Vergleichsfall, bewegter Beobachter:**\n$$f' = 800\\cdot\\frac{343 + 25}{343} = 800\\cdot\\frac{368}{343} = 800\\cdot1{,}0729 \\approx 858\\,\\text{Hz}$$\n\n**Der Unterschied:** $863 - 858 = 5\\,\\text{Hz}$. Bei $v/c = 25/343 \\approx 7{,}3\\,\\%$ liegt der Unterschied damit bei etwa $0{,}5\\,\\%$ der Frequenz -- also tatsächlich in der Größenordnung $(v/c)^2 \\approx 0{,}53\\,\\%$, wie die Reihenentwicklung vorhersagt. Die Übereinstimmung bestätigt die Näherungsbetrachtung.\n\n**Umkehrprobe:** Aus der gemessenen Frequenz 863 Hz zurückgerechnet:\n$$v_Q = 343\\left(1 - \\frac{800}{863}\\right) = 343\\cdot0{,}0730 \\approx 25{,}0\\,\\frac{\\text{m}}{\\text{s}}$$\nDie Ausgangsgeschwindigkeit wird reproduziert."
+            }
+          ]
+        },
+        {
+          "title": "Der Überschallfall",
+          "blocks": [
+            {
+              "md": "Erreicht die Quelle die Schallgeschwindigkeit ($v_Q = c$), wird der Nenner null -- alle Wellenfronten überlagern sich zu einer einzigen Front hoher Amplitude. Bei $v_Q > c$ läuft die Quelle ihren eigenen Wellen davon; die Fronten bilden einen **Machschen Kegel** mit dem Öffnungswinkel\n$$\\sin\\theta = \\frac{c}{v_Q}$$\nDer als Knall wahrgenommene Druckstoß ist kein einmaliges Ereignis beim Durchbrechen der Schallmauer, sondern begleitet das Flugzeug dauerhaft -- er wird nur dort gehört, wo der Kegel gerade den Boden überstreicht. Diese Präzisierung ist ein häufiger Deutungsauftrag."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Radarfalle und Verkehrsradar:** Die Frequenzverschiebung des reflektierten Signals liefert die Geschwindigkeit. Weil die Welle zweimal verschoben wird (Fahrzeug als bewegter Empfänger, dann als bewegte Quelle), verdoppelt sich der Effekt.\n- **Doppler-Sonographie:** Frequenzverschiebung an strömenden Blutkörperchen macht Fließgeschwindigkeiten sichtbar.\n- **Rotverschiebung ferner Galaxien:** Die Spektrallinien sind zu größeren Wellenlängen verschoben -- die Grundlage der Beobachtung, dass sich das Universum ausdehnt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Formeln für bewegte Quelle und bewegten Beobachter verwechseln.** Sie liefern unterschiedliche Ergebnisse; die Aufgabenstellung ist genau zu lesen.\n- **Das Vorzeichen im Nenner falsch setzen.** Kontrolle: Annäherung muss stets eine **höhere** Frequenz ergeben. Ein Ergebnis unter der Ausgangsfrequenz bei Annäherung ist sicher falsch.\n- **km/h nicht umrechnen.** $90\\,\\text{km/h} = 25\\,\\text{m/s}$.\n- **Behaupten, nur die Relativgeschwindigkeit zähle.** Beim Schall nicht -- das Medium definiert ein Bezugssystem.\n- **Annehmen, der Überschallknall trete nur einmal auf.** Er begleitet das Flugzeug dauerhaft.\n- **Die Wellenlänge beim bewegten Beobachter als verändert ansehen.** Sie bleibt im Raum unverändert; nur die Antreffrate ändert sich.\n- **Beim Radar den Faktor 2 vergessen.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Schwebungsfrequenz berechnen** · **Wellenlänge, Frequenz und Ausbreitungsgeschwindigkeit umrechnen** · **Wellengleichung aufstellen und auswerten** · **Dopplereffekt und Schwebung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine nahende Quelle wird mit dem $1{,}1$-fachen ihrer Frequenz gehört. Wie schnell ist sie ($c = 343\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$)?",
+      "answer": 31.2,
+      "tolerance": 0.2,
+      "placeholder": "m/s",
+      "explain": "$1{,}1 = \\tfrac{1}{1 - v/c}$: $v = c\\left(1 - \\tfrac{1}{1{,}1}\\right) \\approx 31{,}2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Ein Zug: vorher $630\\,\\mathrm{Hz}$, nachher $570\\,\\mathrm{Hz}$. Wie schnell fährt er?",
+      "answer": 17.15,
+      "tolerance": 0.1,
+      "placeholder": "m/s",
+      "explain": "$v = 343\\cdot\\tfrac{60}{1200}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 17{,}2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Eine Quelle nähert sich mit halber Schallgeschwindigkeit. Welche Frequenz hört ein ruhender Beobachter?",
+      "options": [
+        {
+          "md": "die doppelte",
+          "correct": true
+        },
+        {
+          "md": "das Anderthalbfache",
+          "why": "Das wäre der bewegte Beobachter: $1 + \\tfrac12$."
+        },
+        {
+          "md": "die halbe",
+          "why": "Bei Annäherung steigt die Frequenz."
+        },
+        {
+          "md": "die gleiche",
+          "why": "Die Bewegung staucht die Wellenlänge."
+        }
+      ],
+      "explain": "$f' = \\tfrac{f}{1 - 0{,}5} = 2f$.",
+      "label": "Typischer Fehler",
+      "id": "vq3"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +278,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "doppler",
+          "doppler-beobachter"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Aus beiden Tönen eines Vorbeifahrenden: $v = c\\,\\tfrac{f_+ - f_-}{f_+ + f_-}$; Quelle und Beobachter nicht verwechseln."
+      ]
     }
   ]
 }

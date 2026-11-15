@@ -16,6 +16,257 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Auf die Form $ax^2 + bx + c = 0$ bringen**, mit dem Parameter in den Koeffizienten.\n> 2. **Die Diskriminante $\\Delta = b^2 - 4ac$ aufstellen**, als Term im Parameter.\n> 3. **Die passende Bedingung lösen:** zwei verschiedene Lösungen $\\Delta > 0$, genau eine $\\Delta = 0$, keine reelle $\\Delta < 0$, »reelle Lösungen« $\\Delta \\ge 0$.\n> 4. **Den Sonderfall $a = 0$ prüfen:** Dann ist die Gleichung linear und folgt anderen Regeln.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Für welche $k$ hat $(k - 1)x^2 + 4x + (k + 2) = 0$ keine reelle Lösung?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "k = 1:\\ 4x + 3 = 0 \\text{ hat die Lösung } x = -\\tfrac34",
+            "why": "Sonderfall: linear, also eine Lösung. k = 1 gehört nicht dazu."
+          },
+          {
+            "tex": "\\Delta = 16 - 4(k - 1)(k + 2) < 0",
+            "why": "Für k ≠ 1: keine reelle Lösung heißt negative Diskriminante."
+          },
+          {
+            "tex": "4 - (k^2 + k - 2) < 0 \\iff k^2 + k - 6 > 0",
+            "why": "Durch 4 teilen und umordnen."
+          },
+          {
+            "tex": "(k + 3)(k - 2) > 0 \\iff k < -3 \\text{ oder } k > 2",
+            "why": "Die nach oben geöffnete Parabel in k ist außerhalb der Nullstellen positiv."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Sonderfall.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umformen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Parameter",
+      "md": "**Der Parameter im Bild:** $y = kx^2 + 4x + k$ für verschiedene $k$. Die Zahl der Nullstellen hängt an $\\Delta = 16 - 4k^2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -5,
+          5
+        ],
+        "y": [
+          -8,
+          8
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "k",
+            "min": -3,
+            "max": 3,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "k*x^2 + 4*x + k",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "readout": "k = {k|2} · Δ = 16 − 4k² = {16 - 4*k^2|2} · Nullstellen: {abs(k) < 0.001 ? 1 : (abs(k) < 1.999 ? 2 : (abs(k) < 2.001 ? 1 : 0))}"
+      },
+      "timeline": [
+        {
+          "caption": "k = 3: Δ < 0, die Parabel bleibt über der Achse.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "k = 2: Δ = 0, sie berührt die Achse bei x = −1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 1: zwei Nullstellen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 0: Die Funktion ist die Gerade 4x mit genau einer Nullstelle; die Diskriminante sagt hier nichts.",
+          "to": {
+            "k": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = −1: wieder zwei Nullstellen, die Parabel ist nach unten geöffnet.",
+          "to": {
+            "k": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Den Fall $a = 0$ übersehen.\n- »Zwei verschiedene« ($\\Delta > 0$) mit »reelle« ($\\Delta \\ge 0$) verwechseln.\n- Bei der Ungleichung in $k$ die Richtung falsch ablesen; eine Skizze der Parabel in $k$ hilft.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Parameterbedingung über die Diskriminante",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Parameterbedingung über die Diskriminante.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine quadratische Gleichung oder ein Schnittproblem enthält einen Parameter, meist $k$ oder $m$. Gefragt ist die Menge der Parameterwerte, für die es **zwei**, **eine** oder **keine** reelle Lösung gibt -- oder für die eine Gerade **Tangente** ist. Signalformeln: *two distinct real roots*, *equal roots*, *repeated root*, *no real roots*, *meets the curve at two points*, *is a tangent to*.\n\nDas ist einer der häufigsten Aufgabentypen in Paper 1 überhaupt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Bei Schnittproblemen gleichsetzen** und alles auf eine Seite bringen: $ax^2 + bx + c = 0$, wobei $a$, $b$, $c$ vom Parameter abhängen dürfen.\n2. **Den Leitkoeffizienten prüfen:** Kann $a = 0$ werden? Dann ist die Gleichung für diesen Parameterwert **linear** und muss gesondert behandelt werden.\n3. **Diskriminante aufstellen:** $\\Delta = b^2 - 4ac$.\n4. **Bedingung wählen:**\n\n| verlangt | Bedingung |\n|---|---|\n| zwei verschiedene reelle Lösungen, zwei Schnittpunkte | $\\Delta > 0$ |\n| eine doppelte Lösung, Tangente, Berührpunkt | $\\Delta = 0$ |\n| keine reelle Lösung, kein Schnittpunkt | $\\Delta < 0$ |\n| reelle Lösungen (mindestens eine) | $\\Delta \\ge 0$ |\n\n5. **Die Ungleichung im Parameter lösen** -- sie ist meist selbst quadratisch, siehe **Quadratische Ungleichung lösen**.\n6. **Randwerte und den Fall $a = 0$ gegen die Optionen prüfen.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the complete set of values of $k$ for which the line $y = kx - 2$ meets the curve $y = x^2 + 2$ at two distinct points.\n>\n> - **A** $-4 < k < 4$\n> - **B** $k < -4$ or $k > 4$\n> - **C** $k > 4$\n> - **D** $k < -2$ or $k > 2$\n> - **E** $k \\le -4$ or $k \\ge 4$\n\n**Schritt 1:** $x^2 + 2 = kx - 2 \\iff x^2 - kx + 4 = 0$.\n\n**Schritt 2:** Leitkoeffizient 1, kein Sonderfall.\n\n**Schritt 3 und 4:** $\\Delta = k^2 - 16 > 0$.\n\n**Schritt 5:** $k^2 > 16 \\iff k < -4$ oder $k > 4$.\n\n**Schritt 6:** Für $k = 4$ ist $\\Delta = 0$, die Gerade berührt die Parabel nur -- also sind die Ränder ausgeschlossen. E fällt weg.\n\nAntwort **B**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den Fall $a = 0$ übersehen**, wenn der Leitkoeffizient den Parameter enthält. Für diesen Wert gibt es genau eine Lösung (oder keine), aber nie zwei.\n- **$>$ und $\\ge$ verwechseln:** *two distinct* verlangt $\\Delta > 0$, *real roots* allein $\\Delta \\ge 0$.\n- **Die quadratische Ungleichung im Parameter falsch lösen:** $k^2 > 16$ heißt $\\lvert k \\rvert > 4$, nicht $k > 4$.\n- **Vor dem Gleichsetzen nicht alles auf eine Seite bringen** und dann $b$ oder $c$ falsch ablesen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the complete set of values of $k$ for which the equation $(k - 1)x^2 + 4x + (k + 2) = 0$ has two distinct real roots.\n>\n> - **A** $-3 < k < 2$\n> - **B** $-3 < k < 2$ and $k \\ne 1$\n> - **C** $k < -3$ or $k > 2$\n> - **D** $-2 < k < 3$\n> - **E** $-2 < k < 3$ and $k \\ne 1$\n\n> [!success]- Lösung\n> **B.** $\\Delta = 16 - 4(k - 1)(k + 2) > 0 \\iff 4 - (k^2 + k - 2) > 0 \\iff k^2 + k - 6 < 0 \\iff (k + 3)(k - 2) < 0 \\iff -3 < k < 2$.\n> Für $k = 1$ ist die Gleichung aber $4x + 3 = 0$ -- linear, mit **einer** Lösung. Dieser Wert muss ausgeschlossen werden. A ist die Antwort derer, die Schritt 2 überspringen.\n\n> [!question] Aufgabe 2\n> Find all values of $k$ for which the equation $x^2 + (k - 3)x + k = 0$ has equal roots.\n>\n> - **A** $k = 1$ or $k = 9$\n> - **B** $k = 3$\n> - **C** $k = -1$ or $k = -9$\n> - **D** $k = 0$ or $k = 3$\n> - **E** $k = 9$ only\n\n> [!success]- Lösung\n> **A.** $\\Delta = (k - 3)^2 - 4k = k^2 - 10k + 9 = (k - 1)(k - 9) = 0$.\n> Probe $k = 1$: $x^2 - 2x + 1 = (x - 1)^2$. Probe $k = 9$: $x^2 + 6x + 9 = (x + 3)^2$.\n\n> [!question] Aufgabe 3\n> The line $y = mx$ is a tangent to the curve $y = x^2 + 4$. What are the possible values of $m$?\n>\n> - **A** $4$ only\n> - **B** $4$ and $-4$\n> - **C** $2$ and $-2$\n> - **D** $2$ only\n> - **E** $16$ and $-16$\n\n> [!success]- Lösung\n> **B.** $x^2 - mx + 4 = 0$ braucht $\\Delta = m^2 - 16 = 0$, also $m = \\pm 4$.\n> Die Parabel ist symmetrisch zur y-Achse, die Ursprungsgerade also auch: Zu jeder Tangente mit Steigung $m$ gibt es eine gespiegelte mit $-m$. Wer nur $m = 4$ angibt, hat die Wurzel einseitig gezogen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Linear-quadratisches Gleichungssystem lösen** · **Lage von Gerade und Kreis bestimmen** · **Parameterwerte für wahre Aussagen bestimmen** · **Monotoniebedingung mit Parameter**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "For which values of $k$ does $x^2 + (k - 2)x + 1 = 0$ have two distinct real roots?",
+      "options": [
+        {
+          "md": "$k > 4$",
+          "why": "Auch negative $k$ passen."
+        },
+        {
+          "md": "$k \\le 0$ or $k \\ge 4$",
+          "why": "Bei $k = 0$ und $k = 4$ ist die Lösung doppelt."
+        },
+        {
+          "md": "$0 < k < 4$",
+          "why": "Das ist der Bereich ohne reelle Lösung."
+        },
+        {
+          "md": "$k < -2$ or $k > 2$",
+          "why": "Rechenfehler."
+        },
+        {
+          "md": "$k < 0$ or $k > 4$",
+          "correct": true
+        }
+      ],
+      "explain": "$\\Delta = (k - 2)^2 - 4 > 0 \\iff |k - 2| > 2 \\iff k < 0$ oder $k > 4$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Zwei Lösungen",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Zählen",
+      "md": "Für wie viele ganze Zahlen $k$ hat $2x^2 + kx + 8 = 0$ keine reelle Lösung?",
+      "answer": 15,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\Delta = k^2 - 64 < 0 \\iff -8 < k < 8$: die ganzen Zahlen von $-7$ bis $7$, also 15.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine quadratische Gleichung hat genau dann reelle Lösungen, wenn ihre Diskriminante nicht negativ ist.",
+      "answer": true,
+      "explain": "Aus der Lösungsformel: Die Wurzel aus $\\Delta$ existiert genau für $\\Delta \\ge 0$.",
+      "label": "Diskriminante",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -67,6 +318,51 @@
       "lang": "en",
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "diskriminante"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "diskriminante"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "diskriminante"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\Delta$ als Term im Parameter, passende Ungleichung lösen; »reell« heißt $\\Delta \\ge 0$.",
+        "Den Fall a = 0 immer gesondert prüfen."
+      ]
     }
   ]
 }

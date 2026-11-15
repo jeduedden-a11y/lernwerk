@@ -16,6 +16,180 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Auswertung einer Messkurve.** Abgelesene Amplituden in aufeinanderfolgenden Perioden ($T = 0{,}5\\,\\mathrm{s}$): $4{,}0$; $3{,}6$; $3{,}24$; $2{,}92\\,\\mathrm{cm}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{3{,}6}{4{,}0} = \\frac{3{,}24}{3{,}6} = \\frac{2{,}92}{3{,}24} \\approx 0{,}90",
+            "why": "Konstantes Verhältnis: exponentielle Dämpfung."
+          },
+          {
+            "tex": "\\Lambda = \\ln\\frac{1}{0{,}9} \\approx 0{,}105,\\qquad \\delta = \\frac{\\Lambda}{T} \\approx 0{,}21\\,\\mathrm{s}^{-1}",
+            "why": "Logarithmisches Dekrement und Abklingkonstante."
+          },
+          {
+            "tex": "t_{1/2} = \\frac{\\ln 2}{\\delta} \\approx 3{,}3\\,\\mathrm{s}",
+            "why": "Nach 3,3 s ist die Amplitude halbiert, nach etwa 6,6 Perioden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Verhältnisse.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abklingkonstante.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Halbwertszeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gedämpfte Schwingung auswerten",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Gedämpfte Schwingung auswerten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Dämpfungskonstante aus den gemessenen Amplituden\"*, *\"Nach wie vielen Schwingungen ist die Amplitude auf die Hälfte gesunken?\"*, *\"Berechnen Sie die Halbwertszeit der Amplitude\"*, *\"Beschreiben Sie den Unterschied zwischen Schwingfall, aperiodischem Grenzfall und Kriechfall\"*, *\"Erklären Sie, wohin die Schwingungsenergie verschwindet\"*.\n\nErkennungsmerkmal: Die Amplitude **nimmt ab**, meist gegeben durch zwei Messwerte zu verschiedenen Zeiten oder durch eine abklingende Kurve im Diagramm."
+            }
+          ]
+        },
+        {
+          "title": "Das Abklinggesetz",
+          "blocks": [
+            {
+              "md": "> [!important] Exponentielle Einhüllende\n> Bei geschwindigkeitsproportionaler Reibung -- dem Standardfall in Aufgaben -- klingt die Amplitude exponentiell ab:\n> $$A(t) = A_0\\,e^{-\\delta\\,t}$$\n> Die vollständige Bewegung lautet damit\n> $$x(t) = A_0\\,e^{-\\delta t}\\,\\sin(\\omega_d t + \\varphi_0)$$\n> Die Exponentialfunktion ist die **Einhüllende**, der Sinus die eigentliche Schwingung darin. $\\delta$ heißt Abklingkonstante und hat die Einheit $\\text{s}^{-1}$.\n>\n> Entscheidend: Nicht die Amplitude nimmt um einen **festen Betrag** ab, sondern um einen festen **Anteil** pro Zeitintervall. Das Verhältnis zweier Amplituden im Abstand einer Periode ist deshalb konstant:\n> $$\\frac{A_n}{A_{n+1}} = e^{\\delta T} = \\text{const}$$\n> Der Logarithmus dieses Verhältnisses, $\\Lambda = \\delta T$, heißt **logarithmisches Dekrement**."
+            }
+          ]
+        },
+        {
+          "title": "Die Frequenz sinkt leicht",
+          "blocks": [
+            {
+              "md": "$$\\omega_d = \\sqrt{\\omega_0^2 - \\delta^2}$$\n\nEine gedämpfte Schwingung ist also **langsamer** als die ungedämpfte. Bei schwacher Dämpfung ($\\delta \\ll \\omega_0$) ist der Unterschied vernachlässigbar -- im Rechenbeispiel unten liegt er bei etwa 0,01 %. Bei starker Dämpfung wird er erheblich, und bei $\\delta = \\omega_0$ verschwindet die Schwingung ganz."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Fälle",
+          "blocks": [
+            {
+              "md": "| Fall | Bedingung | Verhalten | Anwendung |\n|---|---|---|---|\n| **Schwingfall** | $\\delta < \\omega_0$ | mehrere abklingende Schwingungen | Federpendel in Luft, Stimmgabel |\n| **Aperiodischer Grenzfall** | $\\delta = \\omega_0$ | **schnellste** Rückkehr in die Ruhelage ohne Überschwingen | Zeigerinstrumente, Türschließer, Stoßdämpfer |\n| **Kriechfall** | $\\delta > \\omega_0$ | langsames Zurückkriechen, kein Überschwingen | überdämpfte Systeme, träge Regelkreise |\n\n> [!important] Warum der Grenzfall technisch der interessanteste ist\n> Man könnte vermuten, je stärker die Dämpfung, desto schneller die Beruhigung. Das Gegenteil trifft zu: Jenseits von $\\delta = \\omega_0$ wird das System **wieder langsamer**, weil die Reibung nun auch die Rückkehrbewegung behindert. Das Optimum liegt exakt am Grenzfall.\n>\n> Deshalb werden Stoßdämpfer und Messgeräte genau auf diesen Punkt ausgelegt: schnellstmögliche Beruhigung, aber ohne dass der Zeiger über den Wert hinausschießt oder das Auto nachwippt. Diese Begründung ist ein häufiger Bewertungsauftrag."
+            }
+          ]
+        },
+        {
+          "title": "Wohin die Energie geht",
+          "blocks": [
+            {
+              "md": "Wegen $E \\propto A^2$ klingt die Energie **doppelt so schnell** ab wie die Amplitude:\n$$E(t) = E_0\\,e^{-2\\delta t}$$\n\nHalbiert sich die Amplitude, ist nur noch ein **Viertel** der Energie vorhanden. Die Differenz ist nicht verschwunden, sondern in **innere Energie** übergegangen -- Reibungswärme in Luft, Aufhängung und Material. Der Energieerhaltungssatz gilt unverändert; verletzt ist lediglich die Erhaltung der **mechanischen** Energie. Der Vorgang ist irreversibel, die Entropie nimmt zu."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zwei Amplituden mit zugehörigen Zeiten** aus Diagramm oder Text entnehmen.\n2. **Verhältnis bilden und logarithmieren:**\n$$\\delta = \\frac{1}{t_2 - t_1}\\,\\ln\\!\\left(\\frac{A_1}{A_2}\\right)$$\n3. **Halbwertszeit der Amplitude:** $t_{1/2} = \\dfrac{\\ln 2}{\\delta}$.\n4. **Amplitude zu beliebiger Zeit:** $A(t) = A_0 e^{-\\delta t}$.\n5. **Anzahl der Schwingungen** bis zu einer Restamplitude: $n = \\dfrac{t}{T}$, anschließend auf ganze Schwingungen runden.\n6. **Für die Energie** $\\delta$ verdoppeln.\n7. **Einheitenkontrolle:** $[\\delta] = \\text{s}^{-1}$, der Exponent $\\delta t$ ist dimensionslos."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Federpendel mit der Periodendauer $T = 0{,}795\\,\\text{s}$ schwingt mit der Anfangsamplitude $A_0 = 12{,}0\\,\\text{cm}$. Nach zehn vollen Schwingungen beträgt die Amplitude nur noch $4{,}2\\,\\text{cm}$. Bestimmen Sie die Abklingkonstante, die Halbwertszeit der Amplitude und die Amplitude nach fünf Schwingungen. Wie viel Prozent der Anfangsenergie sind nach zehn Schwingungen noch vorhanden?*\n\n**Schritt 1:** $t_2 - t_1 = 10\\,T = 7{,}95\\,\\text{s}$.\n\n**Schritt 2:**\n$$\\delta = \\frac{1}{7{,}95}\\ln\\!\\left(\\frac{12{,}0}{4{,}2}\\right) = \\frac{\\ln(2{,}857)}{7{,}95} = \\frac{1{,}0498}{7{,}95} \\approx 0{,}132\\,\\text{s}^{-1}$$\n\n**Schritt 3, Halbwertszeit:**\n$$t_{1/2} = \\frac{\\ln 2}{0{,}132} = \\frac{0{,}6931}{0{,}132} \\approx 5{,}25\\,\\text{s}$$\nDas entspricht $\\dfrac{5{,}25}{0{,}795} \\approx 6{,}6$ Schwingungen bis zur Halbierung.\n\n**Schritt 4, nach fünf Schwingungen** ($t = 3{,}975\\,\\text{s}$):\n$$A = 12{,}0\\cdot e^{-0{,}132\\cdot3{,}975} = 12{,}0\\cdot e^{-0{,}5249} = 12{,}0\\cdot0{,}5916 \\approx 7{,}1\\,\\text{cm}$$\n\n**Probe:** Nach zehn Schwingungen müsste sich derselbe Faktor nochmals anwenden lassen: $7{,}1\\cdot0{,}5916 \\approx 4{,}2\\,\\text{cm}$. Genau der gegebene Messwert -- die Konstanz des Amplitudenverhältnisses pro festem Zeitintervall ist damit bestätigt.\n\n**Schritt 6, Energieanteil nach zehn Schwingungen:**\n$$\\frac{E}{E_0} = \\left(\\frac{A}{A_0}\\right)^2 = \\left(\\frac{4{,}2}{12{,}0}\\right)^2 = 0{,}35^2 = 0{,}1225 \\approx 12{,}3\\,\\%$$\nVon der Anfangsenergie sind also nur noch gut ein Achtel vorhanden, obwohl die Amplitude noch gut ein Drittel beträgt.\n\n**Frequenzkorrektur:** Mit $\\omega_0 = 2\\pi/T \\approx 7{,}90\\,\\text{s}^{-1}$ und $\\delta = 0{,}132\\,\\text{s}^{-1}$ ist $\\omega_d = \\sqrt{7{,}90^2 - 0{,}132^2} = 7{,}899\\,\\text{s}^{-1}$ -- eine Abweichung von rund $0{,}01\\,\\%$. Die Dämpfung ist so schwach, dass die Periodendauer praktisch unverändert bleibt; die Näherung $\\omega_d \\approx \\omega_0$ ist hier ausdrücklich zulässig."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Lineare statt exponentieller Abnahme unterstellen.** Verliert die Amplitude in der ersten Sekunde 2 cm, verliert sie in der zweiten **nicht** wieder 2 cm, sondern denselben prozentualen Anteil.\n- **Amplituden- und Energiehalbwertszeit gleichsetzen.** Die Energie klingt doppelt so schnell ab; ihre Halbwertszeit ist nur halb so lang.\n- **Beim Auslesen zweier Amplituden die Zeitdifferenz falsch ansetzen.** Zehn Schwingungen sind $10\\,T$, nicht $T$.\n- **Von Energieerhaltung sprechen.** Erhalten bleibt die Gesamtenergie einschließlich der Reibungswärme, nicht die mechanische Energie.\n- **Den aperiodischen Grenzfall als \"besonders stark gedämpft\" beschreiben.** Er ist der **schnellste** Fall; noch stärkere Dämpfung verlangsamt wieder.\n- **$\\omega_d = \\omega_0$ ohne Kommentar setzen**, wenn die Dämpfung stark ist. Bei schwacher Dämpfung ist die Näherung zulässig, sollte aber begründet werden.\n- **Den Taschenrechner im Zehnerlogarithmus rechnen lassen.** Benötigt wird der natürliche Logarithmus."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Schwingungsgleichung aufstellen und auswerten** · **Energieerhaltung bei der harmonischen Schwingung** · **Resonanzfrequenz und Amplitudenüberhöhung bestimmen** · **Federpendel - Periodendauer berechnen** · **Gedämpfte Schwingung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Amplitude fällt pro Periode ($T = 1\\,\\mathrm{s}$) auf $80\\,\\%$. Wie groß ist die Abklingkonstante?",
+      "answer": 0.223,
+      "tolerance": 0.002,
+      "placeholder": "1/s",
+      "explain": "$\\delta = \\tfrac{\\ln(1/0{,}8)}{1\\,\\mathrm{s}} \\approx 0{,}223\\,\\mathrm{s}^{-1}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Nach wie vielen Perioden ist die Amplitude unter ein Zehntel gefallen?",
+      "answer": 11,
+      "tolerance": 0.1,
+      "placeholder": "",
+      "explain": "$0{,}8^n < 0{,}1$: $n > \\tfrac{\\ln 0{,}1}{\\ln 0{,}8} \\approx 10{,}3$, also nach 11 Perioden.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei exponentieller Dämpfung wird die Amplitude nach endlicher Zeit exakt null.",
+      "answer": false,
+      "explain": "$e^{-\\delta t}$ wird nie null; praktisch verschwindet die Schwingung, wenn sie im Rauschen untergeht.",
+      "label": "Verständnis",
+      "id": "vq3"
+    },
+    {
+      "type": "cloze",
+      "label": "Halbwertszeit",
+      "md": "Halbiert sich die Amplitude alle $2\\,\\mathrm{s}$, ist sie nach $6\\,\\mathrm{s}$ auf den {{0}}-ten Teil gefallen.",
+      "blanks": [
+        {
+          "accept": [
+            "8"
+          ],
+          "numeric": true,
+          "tolerance": 0.08
+        }
+      ],
+      "explain": "Drei Halbwertszeiten: $2^3 = 8$.",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +266,26 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "daempfung"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Konstantes Amplitudenverhältnis $q$ pro Periode: $\\delta = \\tfrac{\\ln(1/q)}{T}$, $t_{1/2} = \\tfrac{\\ln2}{\\delta}$."
+      ]
     }
   ]
 }

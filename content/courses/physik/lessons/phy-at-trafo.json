@@ -16,6 +16,202 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel mit Verlusten.** Ein Netzteil-Transformator ($N_1 = 2300$, $N_2 = 120$) liefert sekundär $1{,}5\\,\\mathrm{A}$; primär werden $0{,}09\\,\\mathrm{A}$ bei $230\\,\\mathrm{V}$ gemessen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U_2 = \\frac{120}{2300}\\cdot 230\\,\\mathrm{V} = 12\\,\\mathrm{V}",
+            "why": "Spannungsübersetzung (Leerlauf, ideal)."
+          },
+          {
+            "tex": "P_2 = U_2 I_2 = 12\\cdot 1{,}5\\,\\mathrm{W} = 18\\,\\mathrm{W}",
+            "why": "Abgegebene Leistung."
+          },
+          {
+            "tex": "P_1 = 230\\cdot 0{,}09\\,\\mathrm{W} = 20{,}7\\,\\mathrm{W}",
+            "why": "Aufgenommene Leistung."
+          },
+          {
+            "tex": "\\eta = \\frac{P_2}{P_1} \\approx 87\\,\\%",
+            "why": "Wirkungsgrad: Der Rest wird in Kupfer (Wicklungen) und Eisen (Ummagnetisieren, Wirbelströme) zu Wärme. Lamellierte Kerne verringern die Wirbelströme."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Spannung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Leistung sekundär.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Leistung primär.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wirkungsgrad.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformator - Übersetzungsverhältnis und Leistungsbilanz",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Aufgabentypen/Transformator - Übersetzungsverhältnis und Leistungsbilanz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Sekundärspannung\"*, *\"Wie viele Windungen muss die Sekundärspule haben?\"*, *\"Bestimmen Sie den Primärstrom bei der angegebenen Belastung\"*, *\"Berechnen Sie den Wirkungsgrad\"*, *\"Erklären Sie, weshalb elektrische Energie über weite Strecken mit Hochspannung übertragen wird\"*, *\"Begründen Sie, weshalb ein Transformator mit Gleichspannung nicht funktioniert\"*.\n\nErkennungsmerkmal: **Zwei Spulen auf einem gemeinsamen Eisenkern**, angegeben durch Windungszahlen $N_1$ und $N_2$."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Grundgleichungen",
+          "blocks": [
+            {
+              "md": "> [!important] Spannungen wie die Windungen, Ströme umgekehrt\n> **Spannungsübersetzung** (gilt auch unbelastet):\n> $$\\frac{U_1}{U_2} = \\frac{N_1}{N_2} \\qquad\\Longleftrightarrow\\qquad U_2 = U_1\\,\\frac{N_2}{N_1}$$\n>\n> **Stromübersetzung** (gilt nur beim belasteten, verlustfrei angenommenen Transformator):\n> $$\\frac{I_1}{I_2} = \\frac{N_2}{N_1}$$\n>\n> Beides zusammen ergibt die **Leistungsbilanz** des idealen Transformators:\n> $$P_1 = U_1 I_1 = U_2 I_2 = P_2$$\n\n> [!tip] Woher die Spannungsgleichung kommt\n> Beide Spulen umschließen denselben, vom Eisenkern geführten Fluss $\\Phi(t)$. Nach dem Induktionsgesetz gilt $U_1 = -N_1\\dot\\Phi$ und $U_2 = -N_2\\dot\\Phi$. Da $\\dot\\Phi$ für beide identisch ist, kürzt es sich im Quotienten vollständig heraus -- übrig bleibt allein das Verhältnis der Windungszahlen. Die Übersetzung hängt damit weder von der Frequenz noch von der Kerngeometrie ab, solange der Fluss vollständig geführt wird."
+            }
+          ]
+        },
+        {
+          "title": "Warum nur mit Wechselspannung",
+          "blocks": [
+            {
+              "md": "Der Transformator setzt eine **zeitliche Flussänderung** voraus. Bei Gleichspannung ist der Fluss nach dem Einschaltvorgang konstant, $\\dot\\Phi = 0$, und die Sekundärspannung ist null. Lediglich im Moment des Ein- und Ausschaltens tritt ein kurzer Spannungsstoß auf. Zugleich fließt bei Gleichspannung durch die Primärspule ein nur vom ohmschen Widerstand begrenzter Strom, der die Wicklung überhitzt -- weshalb der Versuch nicht nur wirkungslos, sondern zerstörend ist."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zuordnen, welche Seite primär und welche sekundär ist.** Primär ist die an die Quelle angeschlossene Spule.\n2. **Übersetzungsverhältnis bilden:** $\\ddot u = N_1/N_2$. Ist $N_2 > N_1$, liegt ein **Hochspanntransformator** vor, sonst ein Heruntertransformator.\n3. **Sekundärspannung berechnen:** $U_2 = U_1 \\cdot N_2/N_1$.\n4. **Bei Belastung** Sekundärstrom aus dem Verbraucher bestimmen ($I_2 = U_2/R$ oder aus der geforderten Leistung), dann $I_1 = I_2 \\cdot N_2/N_1$.\n5. **Wirkungsgrad**, sofern nach realen Verhältnissen gefragt: $\\eta = \\dfrac{P_2}{P_1}$.\n6. **Einheitenkontrolle:** Windungszahlen sind dimensionslos, die Verhältnisse also einheitenrein; $[\\text{V}]\\cdot[\\text{A}] = [\\text{W}]$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Klingeltransformator wird primär mit $U_1 = 230\\,\\text{V}$ betrieben. Die Primärspule hat $N_1 = 920$ Windungen, die Sekundärspule $N_2 = 40$. Sekundärseitig fließt bei angeschlossener Klingel ein Strom von $I_2 = 2{,}0\\,\\text{A}$. Berechnen Sie die Sekundärspannung, die übertragene Leistung und den Primärstrom bei idealer Übertragung. Wie groß wäre der Primärstrom bei einem Wirkungsgrad von 85 %?*\n\n**Schritt 2:** $\\ddot u = \\dfrac{920}{40} = 23$ -- ein Heruntertransformator mit dem Verhältnis 23 zu 1.\n\n**Schritt 3, Sekundärspannung:**\n$$U_2 = 230 \\cdot \\frac{40}{920} = \\frac{230}{23} = 10{,}0\\,\\text{V}$$\n\n**Schritt 4, Leistung und Primärstrom:**\n$$P_2 = U_2\\,I_2 = 10{,}0 \\cdot 2{,}0 = 20{,}0\\,\\text{W}$$\nBei idealer Übertragung ist $P_1 = P_2 = 20{,}0\\,\\text{W}$, also\n$$I_1 = \\frac{P_1}{U_1} = \\frac{20{,}0}{230} \\approx 0{,}087\\,\\text{A} = 87\\,\\text{mA}$$\n\n**Probe über die Stromübersetzung:** $I_1 = I_2 \\cdot \\dfrac{N_2}{N_1} = 2{,}0 \\cdot \\dfrac{40}{920} \\approx 0{,}087\\,\\text{A}$. Bestätigt.\n\n**Schritt 5, realer Fall:** Bei $\\eta = 0{,}85$ muss primär mehr Leistung zugeführt werden:\n$$P_1 = \\frac{P_2}{\\eta} = \\frac{20{,}0}{0{,}85} \\approx 23{,}5\\,\\text{W} \\quad\\Longrightarrow\\quad I_1 = \\frac{23{,}5}{230} \\approx 0{,}102\\,\\text{A}$$\n\n**Interpretation:** Die Spannung wird auf ein Dreiundzwanzigstel heruntergesetzt, der Strom im selben Verhältnis heraufgesetzt. Der Transformator wandelt also nicht Energie, sondern verteilt sie zwischen den Faktoren Spannung und Strom um."
+            }
+          ]
+        },
+        {
+          "title": "Warum Hochspannungsleitungen",
+          "blocks": [
+            {
+              "md": "> [!important] Die quadratische Abhängigkeit\n> Die Verlustleistung in einer Leitung mit dem Widerstand $R_L$ beträgt\n> $$P_V = I^2 R_L$$\n> Sie hängt vom **Strom** ab, nicht von der Spannung. Wird bei gleicher übertragener Leistung $P = UI$ die Spannung verzehnfacht, sinkt der Strom auf ein Zehntel -- und die Verlustleistung auf ein **Hundertstel**.\n>\n> Genau darin besteht der Nutzen des Transformators im Stromnetz: Am Kraftwerk wird auf mehrere hunderttausend Volt hochtransformiert, beim Verbraucher wieder auf 230 V heruntergesetzt. Ohne diesen Zwischenschritt wären Übertragungsdistanzen von hunderten Kilometern energetisch nicht darstellbar. Dass Wechselspannung sich transformieren lässt, Gleichspannung dagegen nicht ohne Weiteres, war das entscheidende Argument im historischen Stromkrieg zwischen Tesla und Edison."
+            }
+          ]
+        },
+        {
+          "title": "Der reale Transformator und seine Verluste",
+          "blocks": [
+            {
+              "md": "| Verlustart | Ursache | Gegenmaßnahme |\n|---|---|---|\n| **Wirbelstromverluste** | Im massiven Eisenkern induzierte Ringströme | Kern aus gegeneinander isolierten Blechen |\n| **Hystereseverluste** | Ständiges Ummagnetisieren des Eisens | weichmagnetisches Material mit schmaler Hystereseschleife |\n| **Kupferverluste** | Ohmscher Widerstand der Wicklungen, $P = I^2R$ | größerer Drahtquerschnitt |\n| **Streuverluste** | Nicht der gesamte Fluss durchsetzt beide Spulen | geschlossener Kern, verschachtelte Wicklung |\n\nGroße Netztransformatoren erreichen Wirkungsgrade über 99 %, kleine Steckernetzteile deutlich weniger.\n\n> [!warning] Unbelastet und belastet sind verschiedene Fälle\n> Die Spannungsgleichung $U_1/U_2 = N_1/N_2$ gilt für beide Betriebszustände. Die Stromgleichung setzt dagegen Belastung voraus. Im **Leerlauf** ist $I_2 = 0$; primär fließt dann nur ein kleiner Magnetisierungsstrom, der den Fluss aufbaut. Aufgaben, die nach dem Primärstrom \"ohne angeschlossenen Verbraucher\" fragen, zielen genau auf diese Unterscheidung."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Primär und sekundär vertauschen.** Das Ergebnis ist dann um den Faktor $\\ddot u^2$ falsch. Primär ist die Seite mit der Quelle.\n- **Die Stromübersetzung falsch herum ansetzen.** Spannungen verhalten sich **wie** die Windungszahlen, Ströme **umgekehrt**. Nur so bleibt die Leistung erhalten.\n- **Annehmen, ein Transformator erhöhe die Leistung.** Er verteilt sie lediglich zwischen Spannung und Strom um; im realen Fall wird sie sogar kleiner.\n- **Bei der Leitungsverlustrechnung die Betriebsspannung statt des Stroms einsetzen.** $P_V = I^2 R_L$ hängt vom Strom ab.\n- **Den Transformator an Gleichspannung betreiben.** Ohne Flussänderung keine Sekundärspannung -- und die Primärwicklung überhitzt.\n- **Den Wirkungsgrad in die falsche Richtung anwenden.** Es gilt $P_1 = P_2/\\eta$; die Primärleistung ist **größer** als die Sekundärleistung."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Induktionsspannung berechnen** · **Bewegungsinduktion berechnen** · **Induktivität und Selbstinduktionsspannung berechnen** · **Lenzsche Regel anwenden** · **Transformator** · **Generator**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Transformator setzt $230\\,\\mathrm{V}$ auf $11{,}5\\,\\mathrm{V}$ herab; sekundär fließen $6\\,\\mathrm{A}$. Welcher Strom fließt primär (ideal)?",
+      "answer": 0.3,
+      "tolerance": 0.003,
+      "placeholder": "A",
+      "explain": "$I_1 = I_2\\tfrac{U_2}{U_1} = 6\\cdot\\tfrac{11{,}5}{230}\\,\\mathrm{A} = 0{,}3\\,\\mathrm{A}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Windungen braucht die Sekundärspule, wenn die Primärspule $1150$ hat und aus $230\\,\\mathrm{V}$ genau $6\\,\\mathrm{V}$ werden sollen?",
+      "answer": 30,
+      "tolerance": 0.2,
+      "placeholder": "",
+      "explain": "$N_2 = N_1\\tfrac{U_2}{U_1} = 1150\\cdot\\tfrac{6}{230} = 30$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Wirkungsgrad",
+      "md": "Ein Transformator nimmt $50\\,\\mathrm{W}$ auf und gibt $46\\,\\mathrm{W}$ ab. Wie groß ist sein Wirkungsgrad?",
+      "answer": 92,
+      "tolerance": 0.3,
+      "placeholder": "%",
+      "explain": "$\\eta = \\tfrac{46}{50} = 92\\,\\%$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist der Eisenkern eines Transformators aus dünnen, gegeneinander isolierten Blechen aufgebaut?",
+      "options": [
+        {
+          "md": "um Wirbelströme im Kern und damit Verluste klein zu halten",
+          "correct": true
+        },
+        {
+          "md": "damit der Kern leichter ist",
+          "why": "Das Gewicht ist nicht der Grund."
+        },
+        {
+          "md": "damit mehr Fluss hindurchgeht",
+          "why": "Die Bleche ändern den Fluss kaum."
+        },
+        {
+          "md": "aus Kostengründen",
+          "why": "Massive Kerne wären einfacher herzustellen."
+        }
+      ],
+      "explain": "Der wechselnde Fluss induziert auch im Eisen Spannungen; isolierte Bleche unterbrechen die Strombahnen der Wirbelströme.",
+      "label": "Technik",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +288,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "trafo",
+          "fernleitung"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\tfrac{U_2}{U_1} = \\tfrac{N_2}{N_1}$, ideal $\\tfrac{I_2}{I_1} = \\tfrac{N_1}{N_2}$; real $\\eta = \\tfrac{P_2}{P_1} < 1$ wegen Kupfer- und Eisenverlusten."
+      ]
     }
   ]
 }

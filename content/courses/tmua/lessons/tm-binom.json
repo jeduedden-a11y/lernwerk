@@ -27,6 +27,618 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Binomialkoeffizient\n> $\\binom nk$ (»$n$ über $k$«) ist die Anzahl der Möglichkeiten, $k$ von $n$ Dingen ohne Beachtung der Reihenfolge auszuwählen: $\\binom nk = \\dfrac{n!}{k!\\,(n-k)!}$. Es gilt $\\binom nk = \\binom{n}{n-k}$ und $\\binom n0 = \\binom nn = 1$.\n\n> [!satz] Binomischer Lehrsatz\n> $(a + b)^n = \\sum_{k=0}^{n} \\binom nk\\, a^{n-k}\\, b^k$. Das **allgemeine Glied** ist $\\binom nk a^{n-k} b^k$; es enthält $b^k$.\n\n**Pascalsches Dreieck:** Jede Zahl ist die Summe der beiden darüber, $\\binom nk = \\binom{n-1}{k-1} + \\binom{n-1}{k}$. Die Zeile für $n = 5$ lautet 1, 5, 10, 10, 5, 1; für $n = 6$ lautet sie 1, 6, 15, 20, 15, 6, 1.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Woher die Koeffizienten kommen.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(a + b)^n = \\underbrace{(a + b)(a + b)\\cdots(a + b)}_{n \\text{ Klammern}}",
+            "why": "Ausmultiplizieren heißt: aus jeder Klammer entweder a oder b nehmen und multiplizieren."
+          },
+          {
+            "tex": "a^{n-k} b^k \\text{ entsteht, wenn genau } k \\text{ Klammern ihr } b \\text{ beitragen}",
+            "why": "Die übrigen n − k Klammern liefern a."
+          },
+          {
+            "tex": "\\text{Anzahl dieser Wahlen} = \\binom nk",
+            "why": "k Klammern aus n auswählen, die Reihenfolge spielt keine Rolle."
+          },
+          {
+            "tex": "(a + b)^n = \\sum_{k=0}^{n} \\binom nk a^{n-k} b^k",
+            "why": "Gleiche Produkte zusammenfassen: der binomische Lehrsatz."
+          },
+          {
+            "tex": "\\binom nk = \\binom{n-1}{k-1} + \\binom{n-1}{k}",
+            "why": "Pascal: Entweder trägt die letzte Klammer b bei (dann k − 1 aus den übrigen n − 1) oder a (dann k aus n − 1)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Klammern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Glied.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zählen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lehrsatz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Pascal.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: einzelne Koeffizienten ohne alles auszumultiplizieren.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(2 + 3x)^5:\\quad x^2 \\text{ aus } \\binom52 2^3 (3x)^2",
+            "why": "Das Glied mit $x^2$: b = 3x zweimal, a = 2 dreimal."
+          },
+          {
+            "tex": "= 10 \\cdot 8 \\cdot 9\\,x^2 = 720\\,x^2",
+            "why": "Die Potenz gilt für den ganzen Ausdruck 3x, nicht nur für x."
+          },
+          {
+            "tex": "(1 + x)^5(1 - 2x) = (1 + 5x + 10x^2 + \\dots)(1 - 2x)",
+            "why": "Produkt zweier Klammern: Von der ersten braucht man nur die Glieder bis $x^2$."
+          },
+          {
+            "tex": "x^2:\\ 10 \\cdot 1 + 5 \\cdot (-2) = 0",
+            "why": "Alle Paare sammeln, deren Exponenten sich zu 2 addieren."
+          },
+          {
+            "tex": "(1 + x)^n \\approx 1 + nx + \\binom n2 x^2",
+            "why": "Näherung für kleines x: $1{,}01^{10} \\approx 1 + 0{,}1 + 45 \\cdot 0{,}0001 = 1{,}1045$ (genau 1,10462)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Glied wählen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausrechnen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sammeln.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Näherung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Histogramm mit ungleichen Klassenbreiten\n> Die Höhe einer Säule ist die **Häufigkeitsdichte** $= \\dfrac{\\text{Häufigkeit}}{\\text{Klassenbreite}}$. Die **Fläche** einer Säule ist die Häufigkeit. Wer die Höhe als Häufigkeit liest, macht den häufigsten Fehler.\n\n> [!definition] Summenhäufigkeit und Streudiagramm\n> Die **Summenhäufigkeit** (*cumulative frequency*) zählt alle Werte bis zur oberen Klassengrenze; ihr Graph steigt monoton, Median und Quartile liest man bei der Hälfte und den Vierteln der Gesamtzahl ab. Ein **Streudiagramm** (*scatter diagram*) zeigt Wertepaare; liegen sie nahe einer steigenden Geraden, ist die Korrelation positiv, bei einer fallenden negativ.",
+      "label": "Histogramme",
+      "id": "ve4"
+    },
+    {
+      "type": "anim",
+      "label": "Histogramm",
+      "md": "**Fläche statt Höhe:** ein Histogramm mit den Klassen 0 bis 10, 10 bis 25, 25 bis 30 und 30 bis 50. Orange markiert ist ein Bereich; seine Fläche ist die Anzahl der Werte darin.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          50
+        ],
+        "y": [
+          0,
+          5
+        ],
+        "xLabel": "Zeit t",
+        "yLabel": "Häufigkeitsdichte",
+        "grid": false,
+        "vars": [
+          {
+            "name": "A",
+            "min": 0,
+            "max": 50,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "B",
+            "min": 0,
+            "max": 50,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "h",
+            "expr": "x < 10 ? 2 : (x < 25 ? 4 : (x < 30 ? 3 : 2))",
+            "domain": [
+              0,
+              50
+            ],
+            "color": "blue",
+            "samples": 600
+          },
+          {
+            "name": "F",
+            "expr": "x < 10 ? 2*x : (x < 25 ? 20 + 4*(x - 10) : (x < 30 ? 80 + 3*(x - 25) : 95 + 2*(x - 30)))",
+            "hidden": true
+          }
+        ],
+        "areas": [
+          {
+            "f": "h",
+            "from": "A",
+            "to": "B",
+            "color": "orange",
+            "opacity": 0.35
+          }
+        ],
+        "readout": "von {A|0} bis {B|0}: Breite {B - A|0}, Fläche = Anzahl {F(B) - F(A)|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Erste Klasse: Breite 10, Dichte 2, also 20 Werte.",
+          "set": {
+            "A": 0,
+            "B": 10
+          }
+        },
+        {
+          "caption": "Zweite Klasse: Breite 15, Dichte 4, also 60 Werte. Sie ist die häufigste, obwohl ihre Säule nicht doppelt so hoch ist.",
+          "to": {
+            "A": 10,
+            "B": 25
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Dritte Klasse: Breite 5, Dichte 3, nur 15 Werte, trotz der hohen Säule.",
+          "to": {
+            "A": 25,
+            "B": 30
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Vierte Klasse: Breite 20, Dichte 2, also 40 Werte.",
+          "to": {
+            "A": 30,
+            "B": 50
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Zwischen 20 und 35 schätzt man 5 · 4 + 5 · 3 + 5 · 2 = 45 Werte, unter der Annahme, dass die Werte in jeder Klasse gleichmäßig verteilt sind.",
+          "to": {
+            "A": 20,
+            "B": 35
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Binomischer Lehrsatz",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Binomischer Lehrsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Der Satz",
+          "blocks": [
+            {
+              "md": "Für positive ganze Zahlen $n$ gilt (*binomial expansion*):\n\n$$(a + b)^n = \\sum_{k=0}^{n} \\binom nk a^{n-k} b^k = a^n + \\binom n1 a^{n-1}b + \\binom n2 a^{n-2}b^2 + \\dots + b^n.$$\n\nDer Spezialfall der Spezifikation (MM2.4) ist $(1 + x)^n$; verlangt sind aber auch Ausdrücke der Form $(a + f(x))^n$, etwa $(2 - x)^5$ oder $\\left(2x - \\tfrac1x\\right)^6$. Die Schreibweisen $n!$ und $\\binom nr$ (auch ${}^nC_r$) gehören dazu."
+            }
+          ]
+        },
+        {
+          "title": "Woher die Koeffizienten kommen",
+          "blocks": [
+            {
+              "md": "> [!important] Der Binomialkoeffizient zählt Auswahlen\n> Beim Ausmultiplizieren von $(a + b)^n$ wählt man aus jeder der $n$ Klammern entweder $a$ oder $b$. Der Summand $a^{n-k}b^k$ entsteht so oft, wie es Möglichkeiten gibt, die $k$ Klammern auszuwählen, aus denen $b$ kommt -- also $\\binom nk$-mal. Deshalb heißen die Zahlen **Binomialkoeffizienten**, und deshalb tauchen sie auch in der Kombinatorik auf. Siehe **Systematisches Abzählen**.\n\n$$\\binom nk = \\frac{n!}{k!\\,(n-k)!}, \\qquad \\binom nk = \\binom n{n-k}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Das Pascalsche Dreieck",
+          "blocks": [
+            {
+              "md": "| $n$ | Koeffizienten |\n|---|---|\n| 0 | 1 |\n| 1 | 1 · 1 |\n| 2 | 1 · 2 · 1 |\n| 3 | 1 · 3 · 3 · 1 |\n| 4 | 1 · 4 · 6 · 4 · 1 |\n| 5 | 1 · 5 · 10 · 10 · 5 · 1 |\n| 6 | 1 · 6 · 15 · 20 · 15 · 6 · 1 |\n\nJeder Eintrag ist die Summe der beiden darüber: $\\binom nk = \\binom{n-1}{k-1} + \\binom{n-1}{k}$."
+            }
+          ]
+        },
+        {
+          "title": "Das allgemeine Glied",
+          "blocks": [
+            {
+              "md": "Fast jede TMUA-Aufgabe zu diesem Thema fragt nach **einem einzigen Koeffizienten**. Dafür wird nie die ganze Entwicklung gebraucht, nur das **allgemeine Glied**:\n\n$$T_k = \\binom nk a^{n-k} b^k.$$\n\n> [!example] Koeffizient von x³ in (2 − x)⁵\n> $a = 2$, $b = -x$, $n = 5$. Für $x^3$ braucht es $k = 3$:\n> $$\\binom53 \\cdot 2^2 \\cdot (-x)^3 = 10 \\cdot 4 \\cdot (-1) \\cdot x^3 = -40x^3.$$\n> Das Vorzeichen steckt in $(-x)^3$ -- der häufigste Fehler ist, es zu vergessen.\n\n> [!example] Konstantes Glied in (2x − 1/x)⁶\n> Allgemeines Glied: $\\binom6k (2x)^{6-k}\\left(-\\tfrac1x\\right)^k$. Die Potenz von $x$ ist $6 - k - k = 6 - 2k$; konstant für $k = 3$:\n> $$\\binom63 \\cdot 2^3 \\cdot (-1)^3 = 20 \\cdot 8 \\cdot (-1) = -160.$$"
+            }
+          ]
+        },
+        {
+          "title": "Produkte von Klammern",
+          "blocks": [
+            {
+              "md": "Steht vor der Potenz ein weiterer Faktor, etwa $(1 + 2x)(1 - x)^6$, entsteht der Koeffizient von $x^2$ aus **zwei** Beiträgen: $1 \\cdot$ (Koeffizient von $x^2$ in $(1-x)^6$) plus $2x \\cdot$ (Koeffizient von $x^1$ in $(1-x)^6$), also $15 + 2 \\cdot (-6) = 3$."
+            }
+          ]
+        },
+        {
+          "title": "Näherungen",
+          "blocks": [
+            {
+              "md": "Für kleines $x$ werden die höheren Potenzen vernachlässigbar:\n\n$$(1 + x)^n \\approx 1 + nx + \\binom n2 x^2.$$\n\nEtwa $1{,}02^{10} \\approx 1 + 0{,}2 + 45 \\cdot 0{,}0004 = 1{,}218$ -- der genaue Wert ist $1{,}2190$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Das Vorzeichen von $b$ vergessen** bei $(a - b)^n$.\n- **Die Potenz von $a$ vergessen:** In $(2 - x)^5$ trägt jeder Summand eine Potenz von 2.\n- **$k$ und $n - k$ vertauschen** -- bei symmetrischen Koeffizienten folgenlos, bei den Potenzen nicht.\n- **Bei Produkten nur einen Beitrag berücksichtigen.**\n\nVerwandt: **Systematisches Abzählen** · Aufgabentyp: **Koeffizient in einer Binomialentwicklung bestimmen** · im Mathematikbestand: **Kombinatorik** · **Binomialverteilung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Koeffizient in einer Binomialentwicklung bestimmen",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Aufgabentypen/Koeffizient in einer Binomialentwicklung bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist ein **einzelner Koeffizient** oder das **konstante Glied** einer Entwicklung $(a + b)^n$ -- auch mit negativen Potenzen wie $\\frac1x$ oder mit einem zusätzlichen Faktor davor. Variante: Eine Bedingung an zwei Koeffizienten legt einen Parameter fest."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **$a$, $b$ und $n$ bestimmen** -- mit Vorzeichen und Koeffizienten: bei $(2 - x)^5$ ist $b = -x$.\n2. **Allgemeines Glied aufschreiben:** $T_k = \\binom nk a^{n-k} b^k$.\n3. **Die Potenz von $x$ in $T_k$ als Funktion von $k$** ausdrücken und gleich der gesuchten Potenz setzen.\n4. **$k$ bestimmen**, Koeffizient ausrechnen -- mit allen Faktoren und dem Vorzeichen.\n5. **Bei einem Faktor vor der Klammer:** alle Kombinationen sammeln, deren Potenzen sich zur gesuchten addieren."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the coefficient of $x^3$ in the expansion of $(2 - x)^5$.\n>\n> - **A** $-40$\n> - **B** 40\n> - **C** $-80$\n> - **D** $-10$\n> - **E** 80\n\n**Schritt 1:** $a = 2$, $b = -x$, $n = 5$.\n\n**Schritt 2 bis 4:** $T_k = \\binom5k 2^{5-k}(-x)^k$. Für $x^3$ ist $k = 3$: $\\binom53 \\cdot 2^2 \\cdot (-1)^3 = 10 \\cdot 4 \\cdot (-1) = -40$.\n\nAntwort **A**.\n\n> [!warning] Die typischen Distraktoren\n> B vergisst das Vorzeichen, C benutzt $2^3$ statt $2^2$ (Potenz von $a$ und $b$ vertauscht), D vergisst die Potenz von 2 ganz. Jede dieser Optionen entspricht einem echten Fehler -- deshalb lohnt es, das allgemeine Glied immer vollständig hinzuschreiben."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen** bei $(a - b)^n$.\n- **Potenz von $a$ vergessen.**\n- **Bei $\\left(x + \\frac1x\\right)^n$ die Potenz falsch zählen:** $x^{n-k} \\cdot x^{-k} = x^{n - 2k}$.\n- **Bei Produkten $(1 + 2x)(1 - x)^6$ nur einen Beitrag nehmen.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the term independent of $x$ in the expansion of $\\left(2x - \\dfrac1x\\right)^6$.\n>\n> - **A** $-160$\n> - **B** 160\n> - **C** $-20$\n> - **D** 20\n> - **E** $-80$\n\n> [!success]- Lösung\n> **A.** $T_k = \\binom6k (2x)^{6-k}\\left(-\\frac1x\\right)^k$, Potenz von $x$: $6 - 2k = 0$, also $k = 3$.\n> $\\binom63 \\cdot 2^3 \\cdot (-1)^3 = 20 \\cdot 8 \\cdot (-1) = -160$.\n\n> [!question] Aufgabe 2\n> Find the coefficient of $x^2$ in the expansion of $(1 + 2x)(1 - x)^6$.\n>\n> - **A** 3\n> - **B** 15\n> - **C** 27\n> - **D** $-12$\n> - **E** 30\n\n> [!success]- Lösung\n> **A.** In $(1 - x)^6 = 1 - 6x + 15x^2 - \\dots$ sind die ersten Koeffizienten $1, -6, 15$.\n> Beiträge zu $x^2$: $1 \\cdot 15x^2$ und $2x \\cdot (-6x) = -12x^2$. Summe $3$.\n> C entsteht mit $+6$ statt $-6$.\n\n> [!question] Aufgabe 3\n> In the expansion of $(1 + kx)^8$, where $k \\ne 0$, the coefficient of $x^2$ is 7 times the coefficient of $x$. What is the value of $k$?\n>\n> - **A** 2\n> - **B** $\\frac12$\n> - **C** 4\n> - **D** 7\n> - **E** $\\frac14$\n\n> [!success]- Lösung\n> **A.** Koeffizient von $x$: $\\binom81 k = 8k$. Von $x^2$: $\\binom82 k^2 = 28k^2$.\n> $28k^2 = 7 \\cdot 8k = 56k \\iff 28k(k - 2) = 0$, mit $k \\ne 0$ also $k = 2$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Nenner rational machen und Surds vergleichen** · **Ziehen ohne Zurücklegen mit Gegenereignis** · **Summe einer arithmetischen Reihe bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Histogramme, Summenhäufigkeit und Streudiagramme",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Histogramme, Summenhäufigkeit und Streudiagramme.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Histogramm -- die Fläche zählt, nicht die Höhe",
+          "blocks": [
+            {
+              "md": "Ein **Histogramm** im britischen Sinn hat auf der senkrechten Achse die **Häufigkeitsdichte** (*frequency density*), nicht die Häufigkeit:\n\n$$\\text{Häufigkeitsdichte} = \\frac{\\text{Häufigkeit}}{\\text{Klassenbreite}}, \\qquad \\text{Häufigkeit} = \\text{Fläche des Balkens}.$$\n\n> [!warning] Der Unterschied zum Balkendiagramm\n> Ein *bar chart* zeigt kategoriale Daten, hat Lücken zwischen den Balken und trägt die **Häufigkeit** auf der senkrechten Achse. Ein *histogram* zeigt stetige Daten, hat keine Lücken und trägt die **Dichte** auf.\n>\n> Im deutschen Unterricht werden beide meist „Histogramm\" genannt und mit gleich breiten Klassen gezeichnet -- dann fällt der Unterschied nicht auf. Der Test verwendet **absichtlich ungleiche** Klassenbreiten, und genau darauf zielen die Antwortoptionen."
+            }
+          ]
+        },
+        {
+          "title": "Summenhäufigkeit",
+          "blocks": [
+            {
+              "md": "Die **Summenhäufigkeitskurve** (*cumulative frequency*) trägt über jeder oberen Klassengrenze die Anzahl aller Werte auf, die höchstens so groß sind. Sie steigt monoton und endet bei der Gesamtzahl $n$.\n\nAblesen lässt sich daraus:\n\n| gesucht | ablesen bei |\n|---|---|\n| Median | $\\tfrac n2$ |\n| unteres Quartil $Q_1$ | $\\tfrac n4$ |\n| oberes Quartil $Q_3$ | $\\tfrac{3n}{4}$ |\n| Anzahl unter einem Wert $x$ | senkrecht bei $x$ |\n| Anzahl **über** $x$ | $n$ minus dem abgelesenen Wert |\n\n> [!important] Die Quartilspositionen sind Anteile von $n$, nicht von der Achse\n> Für den Median geht man bei $\\tfrac n2$ **waagerecht** in die Kurve hinein und liest den zugehörigen $x$-Wert ab. Umgekehrt wird ein Wert $x$ vorgegeben und die **Anzahl** abgelesen. Welche Richtung gemeint ist, entscheidet die Frage.\n\nEin **Kastendiagramm** (*box plot*) fasst dieselben fünf Zahlen zusammen: Minimum, $Q_1$, Median, $Q_3$, Maximum. Die Box umfasst den IQR, also die mittleren $50\\,\\%$ der Daten."
+            }
+          ]
+        },
+        {
+          "title": "Streudiagramme",
+          "blocks": [
+            {
+              "md": "Ein **Streudiagramm** (*scatter graph*) zeigt zwei Merkmale gleichzeitig. Beschrieben wird es durch die **Korrelation**:\n\n| Muster | Bezeichnung |\n|---|---|\n| beide Größen wachsen gemeinsam | positive Korrelation |\n| eine wächst, die andere fällt | negative Korrelation |\n| kein Muster | keine Korrelation |\n\nDie **Ausgleichsgerade** (*line of best fit*) dient zum Schätzen. Dabei unterscheidet man:\n\n- **Interpolation** -- Schätzen **innerhalb** des Datenbereichs: zulässig.\n- **Extrapolation** -- Schätzen **außerhalb**: unzuverlässig, weil der Zusammenhang dort nicht belegt ist.\n\n> [!warning] Korrelation ist keine Kausalität\n> Ein Zusammenhang im Streudiagramm belegt nicht, dass eine Größe die andere verursacht -- es kann eine dritte Größe geben, die beide beeinflusst. Diese Unterscheidung wird in Paper 2 auch logisch geprüft: Aus „immer wenn A, dann auch B\" folgt nicht „A verursacht B\" (siehe **Implikation und Äquivalenz**)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Die Balkenhöhe als Häufigkeit lesen.**\n- **Bei ungleichen Klassen die Dichten addieren** statt die Flächen.\n- **Klassengrenzen doppelt zählen:** $10 \\le x < 20$ und $20 \\le x < 30$ überschneiden sich nicht.\n- **Aus der Summenhäufigkeit den Median bei $\\tfrac{n+1}{2}$ ablesen** -- bei einer Kurve ist $\\tfrac n2$ die übliche Konvention.\n- **Extrapolieren und das Ergebnis als gesichert darstellen.**\n\nVerwandt: **Lage- und Streumaße** · **Graphen im Sachkontext deuten** · Aufgabentyp: **Histogramm mit ungleichen Klassenbreiten auswerten**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz4",
+      "type": "note",
+      "title": "Histogramm mit ungleichen Klassenbreiten auswerten",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Aufgabentypen/Histogramm mit ungleichen Klassenbreiten auswerten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein Histogramm mit **unterschiedlich breiten** Klassen ist beschrieben, und gefragt ist eine Häufigkeit, eine Häufigkeitsdichte, die Gesamtzahl oder eine Schätzung für einen Teilbereich einer Klasse.\n\nErkennungsmerkmal: In der Aufgabe steht *frequency density*, oder die Klassen haben erkennbar verschiedene Breiten."
+            }
+          ]
+        },
+        {
+          "title": "Die eine Gleichung",
+          "blocks": [
+            {
+              "md": "$$\\text{Häufigkeit} = \\text{Häufigkeitsdichte} \\times \\text{Klassenbreite}.$$\n\nAnders gesagt: **Die Häufigkeit ist die Fläche des Balkens.** Alles Weitere ist Umstellen.\n\n| gesucht | Rechnung |\n|---|---|\n| Häufigkeit einer Klasse | Dichte $\\times$ Breite |\n| Häufigkeitsdichte | Häufigkeit $:$ Breite |\n| Gesamtzahl | Summe **aller Flächen** |\n| Anteil einer Teilklasse | proportional zur Teilbreite |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Klassenbreiten notieren** -- obere minus untere Grenze.\n2. **Für jede Klasse die Fläche bilden.**\n3. **Addieren oder umstellen**, je nach Frage.\n4. **Bei Teilbereichen proportional aufteilen** und dabei angeben, dass es eine **Schätzung** ist.\n\n> [!important] Die Gleichverteilungsannahme\n> Fragt eine Aufgabe nach der Anzahl in einem Bereich, der eine Klasse nur teilweise abdeckt, nimmt man an, die Werte seien **innerhalb der Klasse gleichmäßig verteilt**. Das ist eine Annahme, keine Tatsache -- im britischen Material heißt die Frage deshalb *estimate*, und diese Annahme ausdrücklich zu nennen gehört zur vollständigen Antwort."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> In a histogram, the bar covering $10 \\le x < 30$ has frequency density $2{,}5$. How many values lie in this class?\n>\n> - **A** 50\n> - **B** 25\n> - **C** $2{,}5$\n> - **D** 20\n> - **E** 75\n\n**Schritt 1:** Klassenbreite $30 - 10 = 20$.\n\n**Schritt 2:** Häufigkeit $= 2{,}5 \\cdot 20 = 50$. Antwort **A**.\n\nOption B ist das Ergebnis mit der Breite 10 (der Zahlenwert der unteren Grenze), D die Klassenbreite selbst."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Dichte als Häufigkeit lesen.**\n- **Die Klassenbreite falsch bestimmen**, besonders bei Grenzen wie $0 \\le x < 5$ und $5 \\le x < 20$.\n- **Dichten addieren** statt Flächen.\n- **Bei einer Teilklasse die ganze Klasse zählen.**\n- **Die Gleichverteilungsannahme verschweigen**, wenn nach einer Begründung gefragt ist."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> A class of width 5 contains 30 values. What is its frequency density?\n>\n> - **A** 6\n> - **B** 150\n> - **C** 35\n> - **D** 25\n> - **E** $\\tfrac16$\n\n> [!success]- Lösung\n> **A.** $30 : 5 = 6$.\n> B ist das Produkt statt des Quotienten -- die häufigste Verwechslung, weil die Grundgleichung in beide Richtungen gebraucht wird.\n\n> [!question] Aufgabe 2\n> In a histogram, the bar covering $20 \\le x < 40$ represents 60 values. Estimate how many values lie between 25 and 35.\n>\n> - **A** 30\n> - **B** 60\n> - **C** 15\n> - **D** 20\n> - **E** 45\n\n> [!success]- Lösung\n> **A.** Der Bereich von 25 bis 35 ist 10 Einheiten breit, die ganze Klasse 20 -- also die Hälfte: $\\tfrac{10}{20} \\cdot 60 = 30$.\n> Das ist eine **Schätzung** unter der Annahme, dass die 60 Werte gleichmäßig über die Klasse verteilt sind.\n> C wäre das Ergebnis mit einer Breite von 5 statt 10.\n\n> [!question] Aufgabe 3\n> A histogram has two bars: $0 \\le x < 10$ with frequency density 3, and $10 \\le x < 30$ with frequency density $1{,}5$. What is the total frequency?\n>\n> - **A** 60\n> - **B** 45\n> - **C** $4{,}5$\n> - **D** 30\n> - **E** 90\n\n> [!success]- Lösung\n> **A.** Erste Klasse: $10 \\cdot 3 = 30$. Zweite Klasse: $20 \\cdot 1{,}5 = 30$. Zusammen 60.\n> C ist die Summe der **Dichten** -- der Fehler, den die ungleichen Klassenbreiten provozieren sollen.\n> Die zweite Klasse hat die kleinere Dichte, enthält aber **gleich viele** Werte: Sie ist doppelt so breit. Genau diesen Zusammenhang prüft der Aufgabentyp."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Mittelwert nach Änderung der Daten** · **Graphen im Sachkontext deuten** · **Proportionalitätsgleichung aufstellen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Koeffizient",
+      "md": "Welchen Koeffizienten hat $x^3$ in der Entwicklung von $(3 - x)^5$?",
+      "answer": -90,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\binom53 \\cdot 3^2 \\cdot (-x)^3 = 10 \\cdot 9 \\cdot (-1)\\,x^3 = -90\\,x^3$. Das Vorzeichen gehört zum Glied $-x$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Produkt",
+      "md": "Welchen Koeffizienten hat $x^2$ in $(1 + x)^4\\,(2 - x)$?",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$(1 + 4x + 6x^2 + \\dots)(2 - x)$: $6 \\cdot 2 + 4 \\cdot (-1) = 8$.",
+      "id": "vq2"
+    },
+    {
+      "type": "cloze",
+      "label": "Pascal",
+      "md": "In der Zeile $n = 6$ des Pascalschen Dreiecks steht $\\binom62 =$ {{0}} und $\\binom63 =$ {{1}}.",
+      "blanks": [
+        {
+          "accept": [
+            "15"
+          ],
+          "numeric": true,
+          "tolerance": 0.15
+        },
+        {
+          "accept": [
+            "20"
+          ],
+          "numeric": true,
+          "tolerance": 0.2
+        }
+      ],
+      "explain": "Zeile 6: 1, 6, 15, 20, 15, 6, 1.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des binomischen Lehrsatzes in die richtige Reihenfolge.",
+      "items": [
+        "$(a + b)^n$ als Produkt von $n$ Klammern schreiben",
+        "ein Glied $a^{n-k}b^k$ entsteht, wenn genau $k$ Klammern $b$ liefern",
+        "dafür gibt es $\\binom nk$ Möglichkeiten",
+        "gleiche Glieder zusammenfassen: $\\sum_k \\binom nk a^{n-k}b^k$"
+      ],
+      "explain": "Die Reihenfolge: 1. $(a + b)^n$ als Produkt von $n$ Klammern schreiben. 2. ein Glied $a^{n-k}b^k$ entsteht, wenn genau $k$ Klammern $b$ liefern. 3. dafür gibt es $\\binom nk$ Möglichkeiten. 4. gleiche Glieder zusammenfassen: $\\sum_k \\binom nk a^{n-k}b^k$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Which of the following is closest to $0.99^{10}$?",
+      "options": [
+        {
+          "md": "0.8"
+        },
+        {
+          "md": "0.9"
+        },
+        {
+          "md": "0.9045",
+          "correct": true
+        },
+        {
+          "md": "0.95"
+        },
+        {
+          "md": "0.99"
+        }
+      ],
+      "explain": "$(1 - 0{,}01)^{10} \\approx 1 - 10 \\cdot 0{,}01 + 45 \\cdot 0{,}0001 = 0{,}9045$; genau $0{,}90438$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Näherung",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Histogramm",
+      "md": "In einem Histogramm hat die Klasse $30 \\le t < 50$ die Häufigkeitsdichte $2{,}5$. Wie viele Werte liegen in dieser Klasse?",
+      "answer": 50,
+      "tolerance": 0,
+      "placeholder": "Werte",
+      "explain": "Fläche $= 20 \\cdot 2{,}5 = 50$.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Was gibt die Höhe einer Säule in einem Histogramm mit ungleichen Klassenbreiten an?",
+      "options": [
+        {
+          "md": "die Häufigkeitsdichte, also Häufigkeit pro Einheit der Klassenbreite",
+          "correct": true
+        },
+        {
+          "md": "die Häufigkeit der Klasse",
+          "why": "Das ist die Fläche, nicht die Höhe."
+        },
+        {
+          "md": "die relative Häufigkeit in Prozent",
+          "why": "Auch das wäre eine Fläche."
+        },
+        {
+          "md": "die Klassenbreite",
+          "why": "Die Breite ist die waagerechte Ausdehnung."
+        }
+      ],
+      "explain": "Höhe = Häufigkeit / Breite; deshalb ist die Fläche Breite mal Höhe die Häufigkeit.",
+      "label": "Histogramm",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für alle $0 \\le k \\le n$ gilt $\\binom nk = \\binom{n}{n-k}$.",
+      "answer": true,
+      "explain": "$k$ Dinge auswählen heißt zugleich, die übrigen $n - k$ wegzulassen.",
+      "label": "Symmetrie",
+      "id": "vq8"
+    },
+    {
       "type": "choice",
       "md": "What is the coefficient of $x^3$ in the expansion of $(2 + x)^5$?",
       "options": [
@@ -134,6 +746,13 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-binom",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "md": "The coefficient of $x^2$ in the expansion of $(1 + ax)^6$ is 60. What are the possible values of $a$?",
       "options": [
@@ -165,7 +784,9 @@
       "points": [
         "(a + b)ⁿ: Summand C(n,k) a^{n−k} b^k.",
         "Produkte: Beiträge aller Kombinationen addieren.",
-        "Histogramm: Höhe = Dichte, Fläche = Häufigkeit."
+        "Histogramm: Höhe = Dichte, Fläche = Häufigkeit.",
+        "Glied $\\binom nk a^{n-k}b^k$: $k$ von $n$ Klammern liefern $b$; Potenz und Vorzeichen gelten für den ganzen Ausdruck.",
+        "Histogramm: Höhe = Häufigkeitsdichte, Fläche = Häufigkeit."
       ],
       "id": "summary"
     }

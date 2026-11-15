@@ -6,6 +6,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     @AppStorage("reduceMotion") private var reduceMotion = false
+    @AppStorage("appearance") private var appearance = Appearance.dark.rawValue
     @AppStorage("reminderOn") private var reminderOn = false
     @AppStorage("reminderHour") private var reminderHour = 18
     @AppStorage("reminderMinute") private var reminderMinute = 0
@@ -43,7 +44,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Lernen")
                 } footer: {
-                    Text("Eine neue Lektion bringt 10 Punkte und 2 für jede Aufgabe, die beim ersten Versuch sitzt. In der Wiederholung gibt es 2 Punkte je Aufgabe und einen mehr, wenn sie sofort sitzt. Eine Klausur bringt 3 Punkte je richtiger Aufgabe und 10 dazu ab 80 Prozent.")
+                    Text("Eine neue Lektion bringt 10 Punkte und 2 für jede Aufgabe, die beim ersten Versuch richtig ist. In der Wiederholung gibt es 2 Punkte je Aufgabe und einen mehr, wenn sie sofort richtig ist. Eine Klausur bringt 3 Punkte je richtiger Aufgabe und 10 dazu ab 80 Prozent.")
                 }
 
                 Section {
@@ -66,6 +67,9 @@ struct SettingsView: View {
                 .task { notificationsDenied = await Reminders.shared.isDenied() }
 
                 Section {
+                    Picker("Erscheinungsbild", selection: $appearance) {
+                        ForEach(Appearance.allCases) { Text($0.label).tag($0.rawValue) }
+                    }
                     Toggle("Weniger Bewegung", isOn: $reduceMotion)
                 } header: {
                     Text("Darstellung")

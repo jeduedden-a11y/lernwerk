@@ -15,6 +15,697 @@
       "md": "Auf einer Kreisbahn mit konstantem Tempo ändert sich ständig die **Richtung** der Geschwindigkeit. Dafür braucht es eine Kraft zum Mittelpunkt, die **Zentripetalkraft**:\n\n$$F_Z = \\frac{m v^2}{r} = m\\,\\omega^2 r, \\qquad v = \\omega r = \\frac{2\\pi r}{T}.$$\n\nSie ist keine neue Kraftart: Seilkraft, Reibung oder Gravitation übernehmen ihre Rolle."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Umlaufdauer und Frequenz\n> Die **Umlaufdauer** (Periodendauer) $T$ ist die Zeit für einen vollen Umlauf, in Sekunden. Die **Frequenz** $f = \\tfrac1T$ zählt die Umläufe pro Sekunde, Einheit $1\\,\\mathrm{Hz} = 1\\,\\mathrm{s}^{-1}$. Die **Drehzahl** $n$ gibt dasselbe meist pro Minute an: $f = \\tfrac{n}{60\\,\\mathrm{s}}$.\n\n> [!definition] Bogenmaß und Winkelgeschwindigkeit\n> Ein Winkel im **Bogenmaß** ist das Verhältnis von Bogenlänge zu Radius, $\\varphi = \\tfrac{b}{r}$; ein voller Umlauf ist $2\\pi$, also $360° = 2\\pi$. Die **Winkelgeschwindigkeit** ist der überstrichene Winkel pro Zeit: $\\omega = \\tfrac{\\Delta\\varphi}{\\Delta t} = \\tfrac{2\\pi}{T} = 2\\pi f$, Einheit $\\mathrm{s}^{-1}$. Auf einer starren Scheibe ist sie für alle Punkte gleich.\n\n> [!definition] Bahngeschwindigkeit und Zentripetalbeschleunigung\n> Die **Bahngeschwindigkeit** $v$ ist der Betrag der Geschwindigkeit längs der Bahn; ihre Richtung ist stets **tangential**. Die **Zentripetalbeschleunigung** $a_Z$ ist die Beschleunigung, die nötig ist, um die Richtung der Geschwindigkeit ständig zu ändern; sie zeigt zum Mittelpunkt.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Bahngeschwindigkeit** aus dem Bogenmaß.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "b = r\\cdot\\varphi",
+            "why": "Definition des Bogenmaßes umgestellt: Die Bogenlänge ist Radius mal Winkel (in Radiant)."
+          },
+          {
+            "tex": "v = \\frac{\\Delta b}{\\Delta t} = r\\,\\frac{\\Delta\\varphi}{\\Delta t} = \\omega\\,r",
+            "why": "Der Weg pro Zeit auf der Bahn, mit konstantem Radius."
+          },
+          {
+            "tex": "v = \\frac{2\\pi r}{T} = 2\\pi f\\,r",
+            "why": "Für einen vollen Umlauf: Umfang $2\\pi r$ in der Zeit $T$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bogenlänge.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bahngeschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein voller Umlauf.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Geschwindigkeit und Beschleunigung auf der Kreisbahn.** Blau die Geschwindigkeit, orange die Beschleunigung.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.9,
+          1.9
+        ],
+        "y": [
+          -1.3,
+          1.3
+        ],
+        "grid": false,
+        "vars": [
+          {
+            "name": "P",
+            "min": 0,
+            "max": 6.3,
+            "value": 0.4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "oben",
+            "expr": "sqrt(max(0, 1 - x*x))",
+            "color": "gray",
+            "domain": [
+              -1,
+              1
+            ],
+            "samples": 900,
+            "width": 2
+          },
+          {
+            "name": "unten",
+            "expr": "-sqrt(max(0, 1 - x*x))",
+            "color": "gray",
+            "domain": [
+              -1,
+              1
+            ],
+            "samples": 900,
+            "width": 2
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "cos(P)",
+              "sin(P)"
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.4
+          },
+          {
+            "from": [
+              "cos(P)",
+              "sin(P)"
+            ],
+            "to": [
+              "cos(P) - 0.7*sin(P)",
+              "sin(P) + 0.7*cos(P)"
+            ],
+            "color": "blue",
+            "width": 3.5,
+            "label": "v"
+          },
+          {
+            "from": [
+              "cos(P)",
+              "sin(P)"
+            ],
+            "to": [
+              "0.45*cos(P)",
+              "0.45*sin(P)"
+            ],
+            "color": "orange",
+            "width": 3.5,
+            "label": "a"
+          }
+        ],
+        "points": [
+          {
+            "x": "cos(P)",
+            "y": "sin(P)",
+            "color": "blue"
+          }
+        ],
+        "readout": "Winkel {P*180/pi|0}°: v tangential, a zum Mittelpunkt, beide senkrecht zueinander"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Körper läuft gleichförmig auf einem Kreis. Die Geschwindigkeit (blau) zeigt immer tangential, also senkrecht zum Radius.",
+          "set": {
+            "P": 0.4
+          }
+        },
+        {
+          "caption": "Ihr Betrag bleibt gleich, aber ihre Richtung dreht sich mit. Jede Richtungsänderung ist eine Beschleunigung, und diese zeigt stets zum Mittelpunkt (orange).",
+          "to": {
+            "P": 2.0
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "$\\vec v$ und $\\vec a$ stehen in jedem Moment senkrecht aufeinander. Eine Kraft senkrecht zur Bewegung ändert nur die Richtung, nie den Betrag; sie verrichtet keine Arbeit.",
+          "to": {
+            "P": 3.9
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Fiele die Kraft zur Mitte weg, gäbe es keine Beschleunigung mehr: Der Körper flöge geradlinig in Richtung von $\\vec v$ weiter (Trägheitsgesetz), tangential, nicht nach außen.",
+          "to": {
+            "P": 6.28
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Zentripetalbeschleunigung, geometrisch.** In der kurzen Zeit $\\Delta t$ dreht sich der Ortsvektor um den Winkel $\\Delta\\varphi$, und der Geschwindigkeitsvektor dreht sich um denselben Winkel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "|\\Delta\\vec r| \\approx r\\,\\Delta\\varphi,\\qquad |\\Delta\\vec v| \\approx v\\,\\Delta\\varphi",
+            "why": "Zwei gleichschenklige Dreiecke mit demselben Spitzenwinkel: eins aus den Ortsvektoren (Schenkel $r$), eins aus den Geschwindigkeitsvektoren (Schenkel $v$)."
+          },
+          {
+            "tex": "\\frac{|\\Delta\\vec v|}{v} = \\frac{|\\Delta\\vec r|}{r}",
+            "why": "Die Dreiecke sind ähnlich, also stehen die Grundseiten im Verhältnis der Schenkel."
+          },
+          {
+            "tex": "a = \\frac{|\\Delta\\vec v|}{\\Delta t} = \\frac{v}{r}\\cdot\\frac{|\\Delta\\vec r|}{\\Delta t}",
+            "why": "Durch $\\Delta t$ geteilt."
+          },
+          {
+            "tex": "a_Z = \\frac{v}{r}\\cdot v = \\frac{v^2}{r} = \\omega^2 r",
+            "why": "Für $\\Delta t \\to 0$ wird $\\tfrac{|\\Delta\\vec r|}{\\Delta t}$ zur Bahngeschwindigkeit $v$. Die Richtung von $\\Delta\\vec v$ wird dabei senkrecht zu $\\vec v$: zum Mittelpunkt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei ähnliche Dreiecke.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verhältnisgleichung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Durch die Zeit teilen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzübergang.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Dieselbe Herleitung mit Ableitungen.** Der Ort auf dem Kreis mit $\\varphi = \\omega t$:",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec r(t) = r\\begin{pmatrix}\\cos\\omega t\\\\ \\sin\\omega t\\end{pmatrix}",
+            "why": "Ortsvektor eines Punkts, der gleichförmig umläuft."
+          },
+          {
+            "tex": "\\vec v(t) = \\dot{\\vec r} = r\\omega\\begin{pmatrix}-\\sin\\omega t\\\\ \\cos\\omega t\\end{pmatrix}",
+            "why": "Einmal abgeleitet (Kettenregel): Betrag $r\\omega$, senkrecht zu $\\vec r$, denn das Skalarprodukt ist null."
+          },
+          {
+            "tex": "\\vec a(t) = \\dot{\\vec v} = -r\\omega^2\\begin{pmatrix}\\cos\\omega t\\\\ \\sin\\omega t\\end{pmatrix} = -\\omega^2\\,\\vec r",
+            "why": "Noch einmal abgeleitet: Das Minuszeichen zeigt, dass $\\vec a$ dem Ortsvektor entgegen zum Mittelpunkt zeigt."
+          },
+          {
+            "tex": "|\\vec a| = \\omega^2 r = \\frac{v^2}{r}",
+            "why": "Mit $v = \\omega r$. Beide Wege liefern dasselbe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ortsvektor.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beschleunigung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Betrag.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Zentripetalkraft\n> Nach dem 2. Axiom braucht die Kreisbewegung eine resultierende Kraft zum Mittelpunkt: $F_Z = m\\,a_Z = m\\,\\tfrac{v^2}{r} = m\\,\\omega^2 r$.\n> \n> Die Zentripetalkraft ist **keine eigene Kraftart**, sondern eine Rolle: Haftreibung in der Kurve, Seilkraft beim Hammerwurf, Gravitation bei Mond und Satellit, Lorentzkraft bei Elektronen im Magnetfeld. In einer Kräftebilanz im Inertialsystem steht sie deshalb nie als zusätzlicher Posten.\n> \n> Die **Zentrifugalkraft** gibt es nur im mitrotierenden Bezugssystem; sie ist eine Scheinkraft und kein Gegenstück nach dem 3. Axiom. Das Gegenstück zur Zentripetalkraft greift am anderen Körper an, in der Kurve an der Straße.",
+      "label": "Gesetz",
+      "id": "ve6"
+    },
+    {
+      "id": "ve7",
+      "type": "anim",
+      "md": "**Kurven: Grenzgeschwindigkeit und Überhöhung.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mu_H\\,m g \\ge m\\,\\frac{v^2}{r}\\quad\\Rightarrow\\quad v_{max} = \\sqrt{\\mu_H\\,g\\,r}",
+            "why": "Waagerechte Kurve: Nur die Haftreibung kann die Zentripetalkraft liefern, höchstens $\\mu_H F_N = \\mu_H m g$. Die Masse kürzt sich."
+          },
+          {
+            "tex": "F_N\\cos\\alpha = m g,\\qquad F_N\\sin\\alpha = m\\,\\frac{v^2}{r}",
+            "why": "Geneigte Fahrbahn ohne Reibung: Die Normalkraft steht schräg. Ihre senkrechte Komponente trägt das Gewicht, ihre waagerechte liefert die Zentripetalkraft."
+          },
+          {
+            "tex": "\\tan\\alpha = \\frac{v^2}{r\\,g}",
+            "why": "Die zweite Gleichung durch die erste geteilt: der Neigungswinkel, bei dem die Kurve ohne Reibung gelingt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Waagerechte Kurve.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geneigte Kurve.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Neigungswinkel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve8",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Wassereimer im senkrechten Kreis** (Radius $r$). Warum fällt das Wasser oben nicht heraus, und wie schnell muss der Eimer dort mindestens sein?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_S + m g = m\\,\\frac{v_o^2}{r}",
+            "why": "Im obersten Punkt zeigen Seilkraft und Gewichtskraft beide nach unten, zum Mittelpunkt. Zusammen liefern sie die Zentripetalkraft."
+          },
+          {
+            "tex": "F_S \\ge 0\\quad\\Rightarrow\\quad v_o \\ge \\sqrt{g\\,r}",
+            "why": "Ein Seil kann nur ziehen. Grenzfall $F_S = 0$: Die Gewichtskraft allein reicht als Zentripetalkraft, das Wasser fällt genau auf der Kreisbahn."
+          },
+          {
+            "tex": "F_{S,u} - m g = m\\,\\frac{v_u^2}{r}",
+            "why": "Im tiefsten Punkt zeigt die Seilkraft nach oben (zur Mitte), die Gewichtskraft nach außen."
+          },
+          {
+            "tex": "v_u^2 = v_o^2 + 4 g r\\quad\\Rightarrow\\quad F_{S,u} - F_{S,o} = 6\\,m g",
+            "why": "Mit dem Energiesatz (Höhenunterschied $2r$) eingesetzt: Unten ist das Seil um sechs Gewichtskräfte stärker gespannt als oben."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Oben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mindestgeschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Unten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kreisbewegung",
+      "path": "02 Wiki/Physik/01 E-Phase/Kreisbewegung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **gleichförmige Kreisbewegung** ist eine Bewegung auf einer Kreisbahn mit konstantem Geschwindigkeitsbetrag. Obwohl der **Betrag** konstant ist, ändert sich die **Richtung** ständig -- es liegt also eine **Beschleunigung** vor (die Zentripetalbeschleunigung)."
+            }
+          ]
+        },
+        {
+          "title": "Größen",
+          "blocks": [
+            {
+              "md": "- **Bahngeschwindigkeit**: $$v = \\frac{2 \\pi r}{T} = \\omega \\cdot r$$\n- **Winkelgeschwindigkeit**: $$\\omega = \\frac{2\\pi}{T} = 2\\pi f$$\n- **Zentripetalbeschleunigung** (zum Mittelpunkt gerichtet): $$a_z = \\frac{v^2}{r} = \\omega^2 r$$"
+            }
+          ]
+        },
+        {
+          "title": "Zentripetalkraft",
+          "blocks": [
+            {
+              "md": "Nach dem 2. **Newton'schen Axiom** erfordert die Kreisbewegung eine ständig zum Mittelpunkt gerichtete **Zentripetalkraft**:\n$$F_z = m \\frac{v^2}{r} = m \\omega^2 r$$\nSie wird je nach Situation von unterschiedlichen Kräften geliefert: **Haftreibung** (Kurvenfahrt), **Gravitation** (Planetenbahn, siehe **Gravitation**), **Lorentzkraft** (Teilchen im **Magnetfeld**, Q1).\n\n> [!warning] Verbreiteter Fehler\n> Die \"Zentrifugalkraft\" (Fliehkraft) ist keine echte Kraft, sondern eine **Scheinkraft**, die nur im mitrotierenden (Nicht-Inertial-)Bezugssystem auftritt."
+            }
+          ]
+        },
+        {
+          "title": "Beschleunigung ohne Geschwindigkeitsänderung",
+          "blocks": [
+            {
+              "md": "> [!important] Der Betrag bleibt konstant, der Vektor nicht\n> Das ist die begriffliche Hürde des Themas. Beschleunigung ist die Änderung des **Geschwindigkeitsvektors** -- und ein Vektor ändert sich auch dann, wenn nur seine Richtung wechselt.\n>\n> Bei der gleichförmigen Kreisbewegung steht die Beschleunigung deshalb **senkrecht** auf der Geschwindigkeit und zeigt zum Mittelpunkt. Eine Beschleunigungskomponente in Bewegungsrichtung gäbe es nur, wenn sich auch der Betrag änderte.\n>\n> Merkhilfe: **Kraft parallel zur Bewegung ändert den Betrag, Kraft senkrecht dazu die Richtung.** Diese Unterscheidung trägt später die gesamte Bewegung geladener Teilchen in Feldern:\n>\n> | Feld | Kraftrichtung | Wirkung |\n> |---|---|---|\n> | **Elektrisches Feld** längs | parallel | beschleunigt, Energie ändert sich |\n> | **Elektrisches Feld** quer | senkrecht | Wurfparabel |\n> | **Magnetisches Feld**, Lorentzkraft | **immer senkrecht** | Kreisbahn, Energie bleibt |\n>\n> Dass die Lorentzkraft keine Arbeit verrichtet, folgt genau daraus -- sie steht stets senkrecht zur Bewegung."
+            }
+          ]
+        },
+        {
+          "title": "Die Zentripetalkraft ist keine eigene Kraftart",
+          "blocks": [
+            {
+              "md": "> [!warning] Sie bezeichnet eine Rolle, keine Ursache\n> \"Zentripetalkraft\" ist die Bezeichnung für **diejenige Kraft, die gerade die Kreisbewegung aufrechterhält**. Welche physikalische Kraft das leistet, hängt von der Situation ab:\n>\n> | Situation | Zentripetalkraft wird geliefert von |\n> |---|---|\n> | Kurvenfahrt | **Haftreibung** zwischen Reifen und Straße |\n> | Planetenbahn | **Gravitation** |\n> | Karussell | **Seilkraft** |\n> | Teilchen im Magnetfeld | **Lorentzkraft** |\n> | Elektron im Atommodell | **Coulombkraft** |\n>\n> In eine Kräftebilanz gehört daher nie \"Zentripetalkraft\" als eigener Posten -- sie ist stets eine der bereits genannten Kräfte in anderer Rolle.\n>\n> Es ist dieselbe Rollenlogik wie bei Säure und Base in der Chemie: Der Name bezeichnet die Funktion in einer bestimmten Situation."
+            }
+          ]
+        },
+        {
+          "title": "Die Zentrifugalkraft",
+          "blocks": [
+            {
+              "md": "> [!warning] Eine Scheinkraft, keine Gegenkraft\n> Die nach außen gerichtete Kraft, die man in der Kurve spürt, existiert nur im **mitrotierenden** Bezugssystem -- und das ist kein Inertialsystem, siehe **Newtonsche Axiome**.\n>\n> Aus der Sicht eines ruhenden Beobachters geschieht etwas anderes: Der Körper **will geradeaus** weiterfliegen (Trägheit), und die Zentripetalkraft zwingt ihn auf die Kreisbahn. Was man als Wegdrücken empfindet, ist die Wand, die einen zur Kurve zwingt.\n>\n> Sie ist auch **nicht** die Reaktionskraft im Sinne des dritten Axioms. Die Reaktion zur Zentripetalkraft greift am **anderen** Körper an -- bei der Kurvenfahrt an der Straße.\n>\n> Das Missverständnis ist so verbreitet, dass es in Prüfungen gezielt abgefragt wird."
+            }
+          ]
+        },
+        {
+          "title": "Der quadratische Zusammenhang",
+          "blocks": [
+            {
+              "md": "$$F_z = m\\frac{v^2}{r}$$\n\n> [!tip] Doppelte Geschwindigkeit erfordert vierfache Kraft\n> In einer Kurve mit doppeltem Tempo ist die vierfache Haftreibung nötig. Da diese aber begrenzt ist, hängt die maximale Kurvengeschwindigkeit nur von Reibungszahl und Radius ab:\n> $$v_{\\max} = \\sqrt{\\mu\\,g\\,r}$$\n>\n> Die Masse kürzt sich heraus -- ein beladener Lkw kann dieselbe Kurve gleich schnell nehmen wie ein leerer, solange die Reibungszahl gleich bleibt.\n>\n> Und der Zusammenhang erklärt die **Überhöhung** von Rennstrecken und Bahnkurven: Bei geneigter Fahrbahn liefert eine Komponente der Normalkraft einen Teil der Zentripetalkraft, sodass weniger Reibung nötig ist."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Kreisbewegung führt die vektorielle Natur der Beschleunigung ein und liefert die Grundlage für **Gravitation** und **Keplersche Gesetze**, für die Kreisbahn geladener Teilchen im **Magnetisches Feld** und für die Bahnradien im **Bohrsches Atommodell**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe ihre Formel zu.",
+      "pairs": [
+        [
+          "Frequenz",
+          "$f = \\tfrac1T$"
+        ],
+        [
+          "Winkelgeschwindigkeit",
+          "$\\omega = \\tfrac{2\\pi}{T}$"
+        ],
+        [
+          "Bahngeschwindigkeit",
+          "$v = \\omega r$"
+        ],
+        [
+          "Zentripetalbeschleunigung",
+          "$a_Z = \\tfrac{v^2}{r}$"
+        ],
+        [
+          "Zentripetalkraft",
+          "$F_Z = m\\omega^2 r$"
+        ]
+      ],
+      "explain": "Alles hängt an $T$: $f = \\tfrac1T$, $\\omega = 2\\pi f$, $v = \\omega r$, $a_Z = \\omega^2 r = \\tfrac{v^2}{r}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die geometrische Herleitung der Zentripetalbeschleunigung in die richtige Reihenfolge.",
+      "items": [
+        "Orts- und Geschwindigkeitsvektor drehen sich in $\\Delta t$ um denselben Winkel",
+        "Ähnliche Dreiecke: $\\tfrac{|\\Delta\\vec v|}{v} = \\tfrac{|\\Delta\\vec r|}{r}$",
+        "Durch $\\Delta t$ teilen: $a = \\tfrac{v}{r}\\cdot\\tfrac{|\\Delta\\vec r|}{\\Delta t}$",
+        "Grenzübergang $\\Delta t \\to 0$: $a_Z = \\tfrac{v^2}{r}$, zum Mittelpunkt"
+      ],
+      "explain": "Die Reihenfolge: 1. Orts- und Geschwindigkeitsvektor drehen sich in $\\Delta t$ um denselben Winkel. 2. Ähnliche Dreiecke: $\\tfrac{|\\Delta\\vec v|}{v} = \\tfrac{|\\Delta\\vec r|}{r}$. 3. Durch $\\Delta t$ teilen: $a = \\tfrac{v}{r}\\cdot\\tfrac{|\\Delta\\vec r|}{\\Delta t}$. 4. Grenzübergang $\\Delta t \\to 0$: $a_Z = \\tfrac{v^2}{r}$, zum Mittelpunkt.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie schnell bewegt sich ein Punkt am Äquator wegen der Erddrehung ($R = 6371\\,\\mathrm{km}$, $T = 24\\,\\mathrm{h}$)?",
+      "answer": 463,
+      "tolerance": 2,
+      "placeholder": "m/s",
+      "explain": "$v = \\tfrac{2\\pi R}{T} = \\tfrac{2\\pi\\cdot 6{,}371\\cdot 10^6\\,\\mathrm{m}}{86\\,400\\,\\mathrm{s}} \\approx 463\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, rund $1670\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die Zentripetalbeschleunigung dieses Punkts?",
+      "answer": 0.0337,
+      "tolerance": 0.0005,
+      "placeholder": "m/s²",
+      "explain": "$a_Z = \\tfrac{v^2}{R} = \\tfrac{463^2}{6{,}371\\cdot 10^6}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 0{,}034\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$: etwa ein Dreihundertstel von $g$. Deshalb ist $g$ am Äquator etwas kleiner als an den Polen.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Kind ($60\\,\\mathrm{kg}$) sitzt $4\\,\\mathrm{m}$ von der Achse eines Karussells, das sich in $5\\,\\mathrm{s}$ einmal dreht. Wie groß ist die nötige Zentripetalkraft?",
+      "answer": 379,
+      "tolerance": 2,
+      "placeholder": "N",
+      "explain": "$F_Z = m\\,\\omega^2 r = m\\,\\tfrac{4\\pi^2}{T^2}\\,r = 60\\cdot\\tfrac{39{,}48}{25}\\cdot 4\\,\\mathrm{N} \\approx 379\\,\\mathrm{N}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Zentripetalkraft verrichtet bei der gleichförmigen Kreisbewegung Arbeit am Körper.",
+      "answer": false,
+      "explain": "Sie steht stets senkrecht zur Bewegung, $W = F s\\cos 90° = 0$. Deshalb bleiben Tempo und Bewegungsenergie konstant.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Kurve",
+      "md": "Wie schnell darf ein Auto höchstens durch eine waagerechte Kurve mit $r = 80\\,\\mathrm{m}$ fahren, wenn $\\mu_H = 0{,}5$ ist?",
+      "answer": 71.3,
+      "tolerance": 0.5,
+      "placeholder": "km/h",
+      "explain": "$v_{max} = \\sqrt{\\mu_H\\,g\\,r} = \\sqrt{0{,}5\\cdot 9{,}81\\cdot 80}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 19{,}8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 71{,}3\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$, unabhängig von der Masse.",
+      "id": "vq7"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Fährt man mit doppeltem Tempo durch dieselbe Kurve, braucht man die {{0}}-fache Zentripetalkraft. Bei gleichem Tempo und doppeltem Radius braucht man das {{1}}-fache. Bei gleicher Umlaufdauer und doppeltem Radius das {{2}}-fache.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$F_Z = \\tfrac{m v^2}{r}$ bei festem $v$, aber $F_Z = m\\omega^2 r$ bei festem $\\omega$: Welche Größe festgehalten wird, entscheidet über die Abhängigkeit vom Radius.",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Überhöhung",
+      "md": "Unter welchem Winkel muss eine Kurve ($r = 200\\,\\mathrm{m}$) geneigt sein, damit man sie mit $90\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ ohne Reibung durchfährt?",
+      "answer": 17.7,
+      "tolerance": 0.2,
+      "placeholder": "°",
+      "explain": "$v = 25\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\tan\\alpha = \\tfrac{v^2}{r g} = \\tfrac{625}{1962} \\approx 0{,}319$, also $\\alpha \\approx 17{,}7°$.",
+      "id": "vq9"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie schnell muss ein Eimer im obersten Punkt eines senkrechten Kreises ($r = 0{,}9\\,\\mathrm{m}$) mindestens sein, damit das Wasser drin bleibt?",
+      "answer": 2.97,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$v_{min} = \\sqrt{g r} = \\sqrt{9{,}81\\cdot 0{,}9}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 2{,}97\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Dann liefert die Gewichtskraft allein die Zentripetalkraft.",
+      "id": "vq10"
+    },
+    {
+      "type": "multi",
+      "md": "Welche Kräfte können die Rolle der Zentripetalkraft übernehmen?",
+      "options": [
+        {
+          "md": "die Haftreibung zwischen Reifen und Straße",
+          "correct": true
+        },
+        {
+          "md": "die Gravitation der Erde auf den Mond",
+          "correct": true
+        },
+        {
+          "md": "die Seilkraft beim Hammerwurf",
+          "correct": true
+        },
+        {
+          "md": "die Lorentzkraft auf ein Elektron im Magnetfeld",
+          "correct": true
+        },
+        {
+          "md": "die Zentrifugalkraft",
+          "why": "Sie ist eine Scheinkraft im mitrotierenden System und zeigt nach außen."
+        }
+      ],
+      "explain": "Jede reale Kraft, die zum Mittelpunkt zeigt, kann die Rolle übernehmen.",
+      "label": "Definitionen",
+      "id": "vq11"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Kräftebilanz für ein Auto in der Kurve, von der Straße aus betrachtet. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Senkrecht: $F_N = m g$.",
+          "why": "Richtig für eine waagerechte Fahrbahn."
+        },
+        {
+          "md": "Waagerecht: $F_{Haft} - F_{Zentrifugal} = 0$, das Auto ist im Gleichgewicht.",
+          "why": "Falsch: Im Inertialsystem gibt es keine Zentrifugalkraft, und das Auto ist nicht im Gleichgewicht, denn es beschleunigt zum Mittelpunkt: $F_{Haft} = m\\tfrac{v^2}{r}$."
+        },
+        {
+          "md": "Die Haftreibung zeigt zum Kurvenmittelpunkt.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Von außen betrachtet ist die Haftreibung die einzige waagerechte Kraft; sie ist die Zentripetalkraft.",
+      "id": "vq12"
+    },
+    {
+      "type": "truefalse",
+      "md": "Im obersten Punkt eines Loopings drückt eine nach oben gerichtete Zentrifugalkraft die Insassen in den Sitz.",
+      "answer": false,
+      "explain": "Im Inertialsystem wirken auf die Insassen oben die Gewichtskraft und die Kraft des Sitzes, **beide nach unten**. Zusammen liefern sie die Zentripetalkraft. Das Gefühl, in den Sitz gedrückt zu werden, ist die Kraft des Sitzes auf den Körper.",
+      "label": "Klausur",
+      "id": "vq13"
+    },
+    {
       "id": "seil",
       "type": "choice",
       "md": "Ein Ball an einer Schnur wird im Kreis geschleudert, dann reißt die Schnur. Wie fliegt er weiter?",
@@ -64,13 +755,58 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "kreis",
+          "zentripetal",
+          "drehzahl"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "kurve-max",
+          "ueberhoehung",
+          "vertikalkreis"
+        ]
+      },
+      "label": "Kurven und Kreise",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "zentripetal",
+          "kegelpendel",
+          "kurve-max"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$v = \\omega r$, $\\omega = 2\\pi f = \\frac{2\\pi}{T}$.",
         "$F_Z = \\frac{m v^2}{r}$ zeigt zum Mittelpunkt.",
-        "Die Zentripetalkraft ist eine Rolle, die eine reale Kraft übernimmt."
+        "Die Zentripetalkraft ist eine Rolle, die eine reale Kraft übernimmt.",
+        "$\\omega = \\tfrac{2\\pi}{T} = 2\\pi f$, $v = \\omega r$; aus $b = r\\varphi$ hergeleitet.",
+        "$a_Z = \\tfrac{v^2}{r} = \\omega^2 r$ zum Mittelpunkt, geometrisch über ähnliche Dreiecke oder durch zweimaliges Ableiten von $\\vec r(t)$.",
+        "Kurve: $v_{max} = \\sqrt{\\mu_H g r}$; Überhöhung: $\\tan\\alpha = \\tfrac{v^2}{r g}$; senkrechter Kreis oben: $v \\ge \\sqrt{g r}$."
       ]
     }
   ]

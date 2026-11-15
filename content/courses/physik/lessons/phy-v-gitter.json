@@ -18,6 +18,256 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Gitter in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Beugungsgitter.svg",
+        "aspect": 1.77,
+        "alt": "Gitter mit Maxima nullter und erster Ordnung"
+      },
+      "timeline": [
+        {
+          "caption": "Laserlicht fällt auf ein Gitter mit sehr vielen Spalten im Abstand g.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Hinter jedem Spalt entsteht eine gebeugte Welle; alle überlagern sich.",
+          "to": {
+            "x": 0.25,
+            "y": 0.55,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Nur wo sich **alle** verstärken, also benachbarte Spalte den Gangunterschied $k\\lambda$ haben, entstehen helle, scharfe Maxima.",
+          "to": {
+            "x": 0.85,
+            "y": 0.4,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Maxima bei $g\\sin\\alpha_k = k\\lambda$, mit $k = 0$ in der Mitte.",
+          "to": {
+            "x": 0.5,
+            "y": 0.9,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Auswertung einer Messung.** Gitter mit $300$ Strichen pro mm, Schirm $e = 1{,}00\\,\\mathrm{m}$ entfernt, Abstand der beiden Maxima erster Ordnung $38{,}6\\,\\mathrm{cm}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "g = \\frac{1\\,\\mathrm{mm}}{300} \\approx 3{,}333\\,\\mu\\mathrm{m},\\qquad a_1 = \\frac{38{,}6\\,\\mathrm{cm}}{2} = 19{,}3\\,\\mathrm{cm}",
+            "why": "Gitterkonstante und Abstand von der Mitte; den Doppelabstand misst man genauer."
+          },
+          {
+            "tex": "\\tan\\alpha_1 = \\frac{a_1}{e} = 0{,}193\\quad\\Rightarrow\\quad \\alpha_1 \\approx 10{,}92^\\circ",
+            "why": "Winkel aus der Geometrie."
+          },
+          {
+            "tex": "\\lambda = g\\sin\\alpha_1 = 3{,}333\\,\\mu\\mathrm{m}\\cdot 0{,}1895 \\approx 632\\,\\mathrm{nm}",
+            "why": "Ein Helium-Neon-Laser (633 nm)."
+          },
+          {
+            "tex": "\\text{Kleinwinkelnäherung}: \\lambda \\approx \\frac{g\\,a_1}{e} \\approx 643\\,\\mathrm{nm}",
+            "why": "Rund $1{,}7\\,\\%$ daneben; bei Gittern sind die Winkel oft zu groß für die Näherung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Messwerte.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Winkel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wellenlänge.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich mit der Näherung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Beugung und Interferenz",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Beugung und Interferenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Beugung** ist die Ausbreitung einer Welle in den geometrischen Schattenraum hinter einem Hindernis oder Spalt. **Interferenz** ist die Überlagerung kohärenter Wellen zu einem ortsfesten Muster aus Verstärkung und Auslöschung."
+            }
+          ]
+        },
+        {
+          "title": "Huygens'sches Prinzip",
+          "blocks": [
+            {
+              "image": "vault:Huygens-Beugung.svg"
+            },
+            {
+              "md": "Jeder Punkt einer Wellenfront ist Ausgangspunkt einer **Elementarwelle**; die Einhüllende aller Elementarwellen bildet die neue Wellenfront. Damit erklären sich Beugung, **Reflexion und Brechung** gleichermaßen. Die Beugung ist umso stärker, je **kleiner die Öffnung im Vergleich zur Wellenlänge** ist."
+            }
+          ]
+        },
+        {
+          "title": "Kohärenz",
+          "blocks": [
+            {
+              "md": "Ein stabiles Interferenzmuster erfordert **kohärente** Wellen: gleiche Frequenz und **feste Phasenbeziehung**. Deshalb nutzt man Laser oder teilt eine einzige Welle auf (Doppelspalt)."
+            }
+          ]
+        },
+        {
+          "title": "Interferenzbedingungen",
+          "blocks": [
+            {
+              "md": "- **Konstruktiv** (Maximum): Gangunterschied $\\Delta s = k\\,\\lambda$\n- **Destruktiv** (Minimum): $\\Delta s = \\left(k + \\tfrac{1}{2}\\right)\\lambda$\n\nGangunterschied und Phasendifferenz hängen über $\\Delta\\varphi = 2\\pi\\,\\dfrac{\\Delta s}{\\lambda}$ zusammen."
+            },
+            {
+              "image": "vault:Doppelspalt Geometrie.svg"
+            },
+            {
+              "md": "Für $L \\gg d$ verlaufen beide Strahlen fast parallel, daher $\\Delta s = d\\sin\\alpha$; der Schirmort folgt aus $\\tan\\alpha = x/L$."
+            }
+          ]
+        },
+        {
+          "title": "Doppelspalt und Gitter",
+          "blocks": [
+            {
+              "image": "vault:Beugungsgitter.svg"
+            },
+            {
+              "md": "Für die **Maxima** gilt bei Spaltabstand bzw. Gitterkonstante $d$:\n$$d \\cdot \\sin\\alpha_k = k\\,\\lambda, \\qquad x_k \\approx \\frac{k\\,\\lambda\\,L}{d}\\ \\text{(Kleinwinkel)}$$\nViele Spalte (Gitter) erzeugen dieselben Maxima-Orte, aber **schärfer und heller** -- Grundlage der **Spektralanalyse**.\n\n- **Höchste Ordnung:** wegen $\\sin\\alpha \\le 1$ gilt $k_{max} = \\lfloor d/\\lambda \\rfloor$.\n- **Gitterkonstante** aus der Strichzahl: $d = 1/N$ (z. B. 600 Striche/mm $\\Rightarrow d = 1{,}67\\,\\mu\\text{m}$).\n- **Auflösungsvermögen:** $\\dfrac{\\lambda}{\\Delta\\lambda} = k\\cdot N_{beleuchtet}$.\n- Rot wird am Gitter **stärker** abgelenkt als Violett -- umgekehrt wie beim Prisma.\n\n> [!warning] Kleinwinkelnäherung beim Gitter\n> Beim Gitter sind die Winkel groß (oft über 15 Grad). Dann $\\alpha$ über $\\sin\\alpha = k\\lambda/d$ bestimmen und $x = L\\tan\\alpha$ berechnen -- **nicht** $x = k\\lambda L/d$."
+            }
+          ]
+        },
+        {
+          "title": "Einzelspalt",
+          "blocks": [
+            {
+              "md": "Beim Einzelspalt der Breite $b$ liefert dieselbe Formel dagegen die **Minima**:\n$$b \\cdot \\sin\\alpha_k = k\\,\\lambda$$\n\n> [!warning] Häufige Verwechslung\n> Gleiche Formel, **entgegengesetzte Bedeutung**: Beim Doppelspalt/Gitter sind es die **Maxima**, beim Einzelspalt die **Minima**."
+            },
+            {
+              "image": "vault:Einzelspalt Minima.svg"
+            },
+            {
+              "md": "Das zentrale Maximum ist doppelt so breit wie die Nebenmaxima: $\\Delta x_0 \\approx \\dfrac{2\\lambda L}{b}$."
+            }
+          ]
+        },
+        {
+          "title": "Intensitätsverläufe im Vergleich",
+          "blocks": [
+            {
+              "image": "vault:Intensitaetsverlaeufe Spalt Doppelspalt Gitter.svg"
+            },
+            {
+              "md": "Das reale Doppelspaltbild ist das Produkt aus Zweistrahl-Interferenz ($\\cos^2$) und Einzelspalt-Beugung (Hüllkurve). Fällt ein Interferenzmaximum auf ein Einzelspalt-Minimum, **fehlt** diese Ordnung."
+            }
+          ]
+        },
+        {
+          "title": "Weitere Interferenzphänomene",
+          "blocks": [
+            {
+              "md": "- **Dünne Schichten** (Ölfilm, Seifenblase): Interferenz an Ober- und Unterseite erzeugt Farben -- **Interferenz an dünnen Schichten**.\n- **Michelson-Interferometer**: Amplitudenteilung, $2\\Delta d = N\\lambda$ -- **Michelson-Interferometer**.\n- **Polarisation** belegt die Transversalität des Lichts -- **Polarisation**.\n- **Bragg-Reflexion** an Kristallen: $2d\\sin\\theta = k\\lambda$ (Röntgenstrukturanalyse, Q3).\n- **Aktive Geräuschunterdrückung**: gezielte destruktive Interferenz.\n\n> [!tip] Bedeutung\n> Interferenz ist der **entscheidende Nachweis des Wellencharakters**. Dass sie auch bei einzelnen Elektronen und Photonen auftritt (**Doppelspaltexperiment**, Q3), begründet den Welle-Teilchen-Dualismus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Gitter mit $500$ Strichen pro mm erzeugt das erste Maximum unter $17{,}1°$. Welche Wellenlänge hat das Licht?",
+      "answer": 588,
+      "tolerance": 2,
+      "placeholder": "nm",
+      "explain": "$\\lambda = g\\sin\\alpha = 2\\,\\mu\\mathrm{m}\\cdot\\sin 17{,}1° \\approx 588\\,\\mathrm{nm}$ (Natriumlicht).",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum sind die Maxima eines Gitters viel schärfer als die eines Doppelspalts?",
+      "options": [
+        {
+          "md": "Weil sich bei vielen Spalten schon kleine Abweichungen vom Gangunterschied kλ zu Auslöschung summieren.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Gitter mehr Licht absorbiert.",
+          "why": "Absorption macht nichts schärfer."
+        },
+        {
+          "md": "Weil die Spalte breiter sind.",
+          "why": "Breitere Spalte machen eher die Einhüllende schmaler."
+        },
+        {
+          "md": "Weil die Wellenlänge kleiner wird.",
+          "why": "Sie bleibt gleich."
+        }
+      ],
+      "explain": "Zwischen zwei Hauptmaxima liegen $N - 1$ Minima; mit wachsendem $N$ werden die Hauptmaxima schmal und hell.",
+      "label": "Verständnis",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Kleinwinkelnäherung ist bei einem Gitter mit 300 Strichen pro mm für rotes Licht immer ausreichend genau.",
+      "answer": false,
+      "explain": "Schon die erste Ordnung liegt bei etwa $11°$; der Fehler von rund 2 Prozent ist bei einer Präzisionsmessung zu groß. Über den Winkel rechnen.",
+      "label": "Auswerten",
+      "id": "vq3"
+    },
+    {
       "id": "ablauf",
       "type": "order",
       "label": "Durchführung",
@@ -108,13 +358,27 @@
       "label": "Auswerten"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gitter",
+          "doppelspalt"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$g\\sin\\alpha_k = k\\lambda$ und $\\tan\\alpha_k = \\frac{a_k}{e}$.",
         "Über den Winkel rechnen statt mit der Kleinwinkelnäherung.",
-        "Mehrere Schirmabstände machen das Ergebnis sicherer."
+        "Mehrere Schirmabstände machen das Ergebnis sicherer.",
+        "$g = \\tfrac1N$, $\\tan\\alpha_k = \\tfrac{a_k}{e}$, $\\lambda = \\tfrac{g\\sin\\alpha_k}{k}$; beim Gitter über den Winkel rechnen."
       ]
     }
   ]

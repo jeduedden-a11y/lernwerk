@@ -19,6 +19,326 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Bogenmaß (*radians*)\n> Ein Winkel misst **1 Radiant**, wenn der zugehörige Bogen so lang ist wie der Radius. Der volle Winkel misst $2\\pi$, also $180^\\circ = \\pi$; Umrechnung: Grad mal $\\tfrac{\\pi}{180}$.\n\n| Grad | 30 | 45 | 60 | 90 | 180 | 360 |\n|---|---|---|---|---|---|---|\n| Bogenmaß | $\\tfrac\\pi6$ | $\\tfrac\\pi4$ | $\\tfrac\\pi3$ | $\\tfrac\\pi2$ | $\\pi$ | $2\\pi$ |\n\n> [!satz] Bogen und Sektor\n> Mit $\\theta$ im Bogenmaß: Bogenlänge $s = r\\theta$, Sektorfläche $A = \\tfrac12 r^2\\theta$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung von Bogenlänge und Sektorfläche aus dem Anteil am Kreis.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Anteil am Vollkreis} = \\frac{\\theta}{2\\pi}",
+            "why": "Ein Sektor mit Winkel θ ist dieser Bruchteil des ganzen Kreises."
+          },
+          {
+            "tex": "s = \\frac{\\theta}{2\\pi} \\cdot 2\\pi r = r\\theta",
+            "why": "Bogen: Anteil vom Umfang."
+          },
+          {
+            "tex": "A = \\frac{\\theta}{2\\pi} \\cdot \\pi r^2 = \\tfrac12 r^2\\theta",
+            "why": "Fläche: Anteil von der Kreisfläche."
+          },
+          {
+            "tex": "\\theta = 1 \\Rightarrow s = r",
+            "why": "Die Definition des Radianten steckt in der Formel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Anteil.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bogen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fläche.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Radiant.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Radiant",
+      "md": "**Ein Radiant:** Der orange Bogen auf dem Kreis mit Radius 1 wächst mit dem Winkel $\\theta$; seine Länge ist $\\theta$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.5,
+          1.5
+        ],
+        "y": [
+          -1.3,
+          1.3
+        ],
+        "height": 300,
+        "grid": false,
+        "vars": [
+          {
+            "name": "TH",
+            "min": 0.05,
+            "max": 6.28,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ko",
+            "expr": "sqrt(1 - x^2)",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "gray",
+            "samples": 400,
+            "width": 1.5
+          },
+          {
+            "name": "ku",
+            "expr": "-sqrt(1 - x^2)",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "gray",
+            "samples": 400,
+            "width": 1.5
+          },
+          {
+            "name": "bo",
+            "expr": "sqrt(1 - x^2)",
+            "domain": [
+              "TH < 3.1416 ? cos(TH) : -1",
+              1
+            ],
+            "color": "orange",
+            "samples": 300,
+            "width": 4
+          },
+          {
+            "name": "bu",
+            "expr": "-sqrt(1 - x^2)",
+            "domain": [
+              -1,
+              "TH > 3.1416 ? cos(TH) : -1"
+            ],
+            "color": "orange",
+            "samples": 300,
+            "width": 4
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              1,
+              0
+            ],
+            "color": "blue"
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "cos(TH)",
+              "sin(TH)"
+            ],
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "cos(TH)",
+            "y": "sin(TH)",
+            "color": "orange"
+          }
+        ],
+        "readout": "θ = {TH|3} rad = {TH*180/pi|1}° · Bogenlänge {TH|3} · Sektorfläche ½θ = {TH/2|3}"
+      },
+      "timeline": [
+        {
+          "caption": "θ = 1: Der Bogen ist so lang wie der Radius, etwa 57,3 Grad.",
+          "set": {
+            "TH": 1
+          }
+        },
+        {
+          "caption": "θ = π/2 ≈ 1,571: ein Viertelkreis.",
+          "to": {
+            "TH": 1.5708
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "θ = π: ein Halbkreis, Bogenlänge π.",
+          "to": {
+            "TH": 3.1416
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "θ = 2π ≈ 6,283: der ganze Kreis, Umfang 2π.",
+          "to": {
+            "TH": 6.28
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bogenmaß und Kreissektor",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Bogenmaß und Kreissektor.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was das Bogenmaß misst",
+          "blocks": [
+            {
+              "md": "Ein Winkel im **Bogenmaß** (*radian measure*) ist die Länge des zugehörigen Bogens auf dem **Einheitskreis**. Ein voller Umlauf hat die Bogenlänge $2\\pi$, also\n\n$$2\\pi = 360°, \\qquad \\pi = 180°, \\qquad 1\\ \\text{rad} = \\frac{180°}{\\pi} \\approx 57{,}3°.$$\n\n| Grad | 30 | 45 | 60 | 90 | 120 | 135 | 150 | 180 | 270 | 360 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| Bogenmaß | $\\frac{\\pi}{6}$ | $\\frac{\\pi}{4}$ | $\\frac{\\pi}{3}$ | $\\frac{\\pi}{2}$ | $\\frac{2\\pi}{3}$ | $\\frac{3\\pi}{4}$ | $\\frac{5\\pi}{6}$ | $\\pi$ | $\\frac{3\\pi}{2}$ | $2\\pi$ |\n\n> [!tip] Umrechnen ohne Nachdenken\n> Von Grad ins Bogenmaß mit $\\tfrac{\\pi}{180}$ multiplizieren, zurück mit $\\tfrac{180}{\\pi}$. Kontrolle: Das Bogenmaß ist immer die **kleinere** Zahl (außer bei winzigen Winkeln unter 57°)."
+            }
+          ]
+        },
+        {
+          "title": "Bogen, Sektor, Segment",
+          "blocks": [
+            {
+              "md": "Für einen Winkel $\\theta$ **im Bogenmaß** und Radius $r$:\n\n| Größe | Formel im Bogenmaß | Formel in Grad |\n|---|---|---|\n| Bogenlänge $b$ | $r\\theta$ | $\\dfrac{\\theta}{360} \\cdot 2\\pi r$ |\n| Sektorfläche | $\\tfrac12 r^2\\theta$ | $\\dfrac{\\theta}{360} \\cdot \\pi r^2$ |\n| Segmentfläche | $\\tfrac12 r^2(\\theta - \\sin\\theta)$ | -- |\n\n> [!important] Warum das Bogenmaß die Formeln so kurz macht\n> Die Bogenlänge ist der Anteil $\\tfrac{\\theta}{2\\pi}$ des Umfangs $2\\pi r$, also $r\\theta$. Die Sektorfläche ist derselbe Anteil der Kreisfläche $\\pi r^2$, also $\\tfrac12 r^2 \\theta$. Die Faktoren $2\\pi$ kürzen sich weg -- genau deshalb rechnet man in der Analysis nur im Bogenmaß.\n>\n> **Die Formeln gelten nur im Bogenmaß.** Wer $\\theta$ in Grad einsetzt, erhält Unsinn."
+            }
+          ]
+        },
+        {
+          "title": "Das Segment",
+          "blocks": [
+            {
+              "md": "Ein **Segment** (*segment*) ist der Bereich zwischen einer Sehne und dem Bogen. Man erhält es als **Sektor minus Dreieck**:\n\n$$\\text{Segment} = \\underbrace{\\tfrac12 r^2 \\theta}_{\\text{Sektor}} - \\underbrace{\\tfrac12 r^2 \\sin\\theta}_{\\text{Dreieck aus zwei Radien}} = \\tfrac12 r^2(\\theta - \\sin\\theta).$$\n\nDas Dreieck hat zwei Seiten der Länge $r$ mit dem eingeschlossenen Winkel $\\theta$, seine Fläche also $\\tfrac12 r^2 \\sin\\theta$ -- die Formel aus **Sinussatz, Kosinussatz und Dreiecksfläche**.\n\n> [!example] Zahlenbeispiel\n> $r = 6$, $\\theta = \\tfrac{\\pi}{3}$ (also 60°):\n> Bogen $6 \\cdot \\tfrac{\\pi}{3} = 2\\pi$ · Sektor $\\tfrac12 \\cdot 36 \\cdot \\tfrac{\\pi}{3} = 6\\pi$ · Segment $6\\pi - \\tfrac12 \\cdot 36 \\cdot \\tfrac{\\sqrt3}{2} = 6\\pi - 9\\sqrt3$."
+            }
+          ]
+        },
+        {
+          "title": "Umfänge",
+          "blocks": [
+            {
+              "md": "Der **Umfang eines Sektors** besteht aus zwei Radien und dem Bogen: $2r + r\\theta$. Der Umfang eines Segments aus Sehne und Bogen; die Sehnenlänge folgt aus dem Kosinussatz: $\\sqrt{2r^2(1 - \\cos\\theta)}$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Grad in die Bogenmaßformeln einsetzen.**\n- **Sektor und Segment verwechseln.**\n- **Beim Umfang den Bogen allein nehmen** und die beiden Radien vergessen.\n- **$\\tfrac12 r^2\\theta$ und $r\\theta$ verwechseln** -- die Fläche trägt das Quadrat.\n\nVerwandt: **Flächen und Körper** · **Kreissätze** · Aufgabentyp: **Segmentfläche berechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Umrechnen",
+      "md": "Ordne Grad und Bogenmaß zu.",
+      "pairs": [
+        [
+          "30°",
+          "$\\tfrac\\pi6$"
+        ],
+        [
+          "135°",
+          "$\\tfrac{3\\pi}{4}$"
+        ],
+        [
+          "270°",
+          "$\\tfrac{3\\pi}{2}$"
+        ],
+        [
+          "120°",
+          "$\\tfrac{2\\pi}{3}$"
+        ]
+      ],
+      "explain": "Grad mal $\\tfrac{\\pi}{180}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "A sector of a circle of radius 6 has angle $\\tfrac{\\pi}{3}$. What is its area?",
+      "options": [
+        {
+          "md": "$2\\pi$"
+        },
+        {
+          "md": "$6\\pi$",
+          "correct": true
+        },
+        {
+          "md": "$3\\pi$"
+        },
+        {
+          "md": "$12\\pi$"
+        },
+        {
+          "md": "$36\\pi$"
+        }
+      ],
+      "explain": "$\\tfrac12 \\cdot 36 \\cdot \\tfrac{\\pi}{3} = 6\\pi$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Sektor",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Winkel",
+      "md": "Ein Bogen der Länge 10 liegt auf einem Kreis mit Radius 4. Wie groß ist der Winkel im Bogenmaß?",
+      "answer": 2.5,
+      "tolerance": 0.001,
+      "placeholder": "rad",
+      "explain": "$\\theta = \\tfrac sr = \\tfrac{10}{4} = 2{,}5$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Formel $A = \\tfrac12 r^2\\theta$ gilt auch, wenn $\\theta$ in Grad angegeben ist.",
+      "answer": false,
+      "explain": "Nur im Bogenmaß; in Grad wäre es $\\tfrac{\\theta}{360} \\pi r^2$.",
+      "label": "Einheit",
+      "id": "vq4"
+    },
+    {
       "type": "choice",
       "md": "A sector of a circle of radius 6 has angle $\\frac{\\pi}{3}$. What is its area?",
       "options": [
@@ -42,12 +362,38 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "sektor"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "sektor"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "2π = 360°.",
         "Bogen rθ, Sektor ½r²θ.",
-        "Nur im Bogenmaß gelten diese Formeln."
+        "Nur im Bogenmaß gelten diese Formeln.",
+        "$180^\\circ = \\pi$; Bogen $s = r\\theta$ und Sektor $A = \\tfrac12 r^2\\theta$ als Anteil $\\tfrac{\\theta}{2\\pi}$ des Kreises.",
+        "Die Formeln gelten nur im Bogenmaß."
       ],
       "id": "summary"
     }

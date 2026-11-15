@@ -60,11 +60,337 @@
           {
             "name": "y",
             "expr": "uy*min(x,5)^2/(8*ub) + uy*5*max(0,x-5)/(4*ub)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Ablenkung am Plattenende {uy*25/(8*ub)|2} cm, auf dem Schirm {uy*25/(8*ub) + uy*75/(4*ub)|2} cm"
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die Braunsche Röhre in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Braunsche Roehre.svg",
+        "aspect": 2.18,
+        "alt": "Braunsche Röhre mit Kathode, Ablenkplatten, Strahl und Schirm"
+      },
+      "timeline": [
+        {
+          "caption": "Elektronen werden erzeugt, beschleunigt, abgelenkt und auf einem Schirm sichtbar gemacht.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Kathode:** Eine Glühkathode setzt Elektronen frei (glühelektrischer Effekt). Die Spannung $U_B$ zwischen Kathode und Anode beschleunigt sie.",
+          "to": {
+            "x": 0.13,
+            "y": 0.62,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Ablenkplatten:** Die Spannung $U_y$ erzeugt ein Querfeld. Darin wirkt auf die Elektronen eine konstante Kraft senkrecht zur Flugrichtung.",
+          "to": {
+            "x": 0.39,
+            "y": 0.42,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Strahl:** Im Kondensator eine Parabel wie beim waagerechten Wurf, danach eine Gerade, denn außerhalb wirkt keine Kraft mehr.",
+          "to": {
+            "x": 0.55,
+            "y": 0.48,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Schirm:** Wo die Elektronen auftreffen, leuchtet die Schicht auf. Im Oszilloskop lenkt ein zweites Plattenpaar waagerecht ab.",
+          "to": {
+            "x": 0.88,
+            "y": 0.55,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die ganze Röhre ist luftleer, damit die Elektronen nicht an Gasteilchen stoßen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Ablenkung.** Elektron, beschleunigt mit $U_B$; Kondensator mit Länge $l$, Abstand $d$, Spannung $U_y$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "e\\,U_B = \\tfrac12 m v_0^2\\quad\\Rightarrow\\quad v_0 = \\sqrt{\\frac{2 e U_B}{m}}",
+            "why": "Energiesatz: Die Feldarbeit wird Bewegungsenergie."
+          },
+          {
+            "tex": "t = \\frac{l}{v_0},\\qquad a_y = \\frac{F}{m} = \\frac{e\\,U_y}{m\\,d}",
+            "why": "Waagerecht gleichförmig, senkrecht gleichmäßig beschleunigt mit $F = eE = e\\tfrac{U_y}{d}$."
+          },
+          {
+            "tex": "y = \\tfrac12 a_y t^2 = \\frac{e\\,U_y}{2 m d}\\cdot\\frac{l^2\\,m}{2 e U_B} = \\frac{U_y\\,l^2}{4\\,d\\,U_B}",
+            "why": "Ladung und Masse kürzen sich: Jedes Teilchen, mit derselben Spannung beschleunigt, folgt derselben Bahn."
+          },
+          {
+            "tex": "\\tan\\alpha = \\frac{v_y}{v_0} = \\frac{a_y t}{v_0} = \\frac{U_y\\,l}{2\\,d\\,U_B}",
+            "why": "Austrittswinkel."
+          },
+          {
+            "tex": "Y = s\\,\\tan\\alpha = \\frac{s\\,U_y\\,l}{2\\,d\\,U_B}",
+            "why": "Die gerade Bahn nach dem Kondensator scheint aus seiner Mitte zu kommen, denn $y = \\tfrac{l}{2}\\tan\\alpha$. $s$ ist der Abstand von der Kondensatormitte zum Schirm."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eintrittsgeschwindigkeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeit und Querbeschleunigung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ablenkung am Plattenende.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Austrittswinkel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auslenkung auf dem Schirm.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Braun'sche Röhre",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Braunsche Röhre.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Braun'sche Röhre** (Kathodenstrahlröhre) ist die Grundlage von Oszilloskop und älteren Bildröhren. Ein Elektronenstrahl wird beschleunigt, gezielt abgelenkt und auf einem Leuchtschirm sichtbar gemacht."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "image": "vault:Braunsche Roehre.svg"
+            }
+          ]
+        },
+        {
+          "title": "Funktion",
+          "blocks": [
+            {
+              "md": "1. **Elektronenkanone**: Die Beschleunigungsspannung $U_B$ erzeugt einen scharfen Elektronenstrahl mit $v = \\sqrt{2 e U_B / m}$.\n2. **Ablenkung**: Im Querfeld der Ablenkplatten durchläuft der Strahl eine **parabelförmige Bahn** -- exakt analog zum **waagerechten Wurf** (Superpositionsprinzip).\n3. **Schirm**: Der Auftreffpunkt leuchtet auf; seine Lage ist proportional zur Ablenkspannung $U_y$.\n\n> [!tip] Anwendung\n> Legt man an die x-Platten eine Sägezahnspannung (Zeitablenkung) und an die y-Platten das Messsignal, zeichnet das Oszilloskop einen **Spannungs-Zeit-Verlauf**."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Baugruppen und ihre Physik",
+          "blocks": [
+            {
+              "md": "| Baugruppe | Vorgang | zugrunde liegendes Thema |\n|---|---|---|\n| **Elektronenkanone** | Beschleunigung längs zum Feld | Energieerhaltung, $v = \\sqrt{2eU_B/m}$ |\n| **Ablenkplatten** | Ablenkung im Querfeld | **Wurfparabel** |\n| **Leuchtschirm** | Anregung und Lichtemission | Energieniveaus, siehe **Bohrsches Atommodell** |\n\n> [!important] Die Röhre vereint alle drei Bewegungsarten des Halbjahrs\n> Längsbeschleunigung, Querablenkung und geradlinige Drift kommen in einem Gerät zusammen. Deshalb ist sie der ergiebigste Aufgabentyp in Q1.\n>\n> Die Ablenkung ist dabei exakt ein waagerechter Wurf -- nur ist die Querkraft elektrisch statt gravitativ. Dieselbe Rechnung, anderes Feld."
+            }
+          ]
+        },
+        {
+          "title": "Der Zusammenhang der beiden Spannungen",
+          "blocks": [
+            {
+              "md": "$$y \\sim \\frac{U_y}{U_B}$$\n\n> [!important] Die Ablenkung hängt vom Verhältnis ab, nicht von $U_y$ allein\n> Eine höhere Beschleunigungsspannung macht die Elektronen schneller, verkürzt ihre Verweildauer im Ablenkfeld und vermindert dadurch die Ablenkung -- und zwar **linear**, obwohl $v$ quadratisch in die Bahngleichung eingeht.\n>\n> Der Grund: $v^2$ steht im Nenner der Bahngleichung, und $v^2$ ist proportional zu $U_B$. Die Quadrate heben sich auf.\n>\n> Praktische Folge: Die Beschleunigungsspannung muss stabil gehalten werden, sonst ändert sich die Ablenkempfindlichkeit des Oszilloskops. Und die Empfindlichkeit lässt sich gezielt einstellen, indem man $U_B$ verändert."
+            }
+          ]
+        },
+        {
+          "title": "Das Oszilloskop",
+          "blocks": [
+            {
+              "md": "| Platten | Signal | Wirkung |\n|---|---|---|\n| x-Platten | **Sägezahnspannung** | gleichmäßiger Zeitvorschub |\n| y-Platten | Messsignal | Auslenkung nach oben und unten |\n\n> [!tip] Der Sägezahn erzeugt die Zeitachse\n> Er steigt linear an und springt dann rasch zurück. Während des Anstiegs wandert der Leuchtpunkt gleichmäßig nach rechts, sodass sich das Messsignal als Funktion der Zeit abbildet.\n>\n> Damit ist das Oszilloskop ein Gerät, das eine **elektrische Größe in eine geometrische übersetzt** -- und zwar ohne Trägheit, weil Elektronen praktisch masselos reagieren. Genau darin lag sein Vorteil gegenüber mechanischen Schreibern.\n>\n> Stimmt die Sägezahnfrequenz mit der Signalfrequenz überein, steht das Bild still. Andernfalls wandert es -- daher der Triggerregler."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb die Röhre ein Vakuum braucht",
+          "blocks": [
+            {
+              "md": "Elektronen würden in Luft nach wenigen Zentimetern mit Gasteilchen zusammenstoßen und ihre gerichtete Bewegung verlieren. Erst das Hochvakuum erlaubt die freie Flugbahn.\n\nDas gilt für alle Elektronenstrahlversuche -- mit einer aufschlussreichen Ausnahme: Beim **Fadenstrahlrohr** ist gerade ein geringer Gasrest **erwünscht**, weil die angeregten Gasteilchen die Bahn sichtbar machen."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Braunsche Röhre bündelt **Bewegung von Ladungen im elektrischen Feld**, **Elektrisches Potenzial** und das Superpositionsprinzip aus der E-Phase zu einer geschlossenen Anwendung. Sie war jahrzehntelang die Grundlage von Fernseher, Monitor und Oszilloskop."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie schnell ist ein Elektron nach $1000\\,\\mathrm{V}$ Beschleunigungsspannung? Gib das Ergebnis in $10^7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ an.",
+      "answer": 1.876,
+      "tolerance": 0.01,
+      "placeholder": "10⁷ m/s",
+      "explain": "$v_0 = \\sqrt{\\tfrac{2\\cdot 1{,}602\\cdot 10^{-19}\\cdot 1000}{9{,}109\\cdot 10^{-31}}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 1{,}876\\cdot 10^7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, gut 6 Prozent der Lichtgeschwindigkeit.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Es fliegt durch Platten von $5\\,\\mathrm{cm}$ Länge im Abstand $2\\,\\mathrm{cm}$ mit $U_y = 100\\,\\mathrm{V}$. Wie groß ist die Ablenkung am Plattenende?",
+      "answer": 3.13,
+      "tolerance": 0.03,
+      "placeholder": "mm",
+      "explain": "$y = \\tfrac{U_y l^2}{4 d U_B} = \\tfrac{100\\cdot 0{,}05^2}{4\\cdot 0{,}02\\cdot 1000}\\,\\mathrm{m} \\approx 3{,}13\\,\\mathrm{mm}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Unter welchem Winkel verlässt es den Kondensator?",
+      "answer": 7.13,
+      "tolerance": 0.05,
+      "placeholder": "°",
+      "explain": "$\\tan\\alpha = \\tfrac{U_y l}{2 d U_B} = \\tfrac{100\\cdot 0{,}05}{2\\cdot 0{,}02\\cdot 1000} = 0{,}125$, also $\\alpha \\approx 7{,}13°$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Der Schirm steht $17{,}5\\,\\mathrm{cm}$ von der Kondensatormitte entfernt. Wie weit ist der Leuchtfleck aus der Mitte verschoben?",
+      "answer": 2.19,
+      "tolerance": 0.02,
+      "placeholder": "cm",
+      "explain": "$Y = s\\tan\\alpha = 17{,}5\\,\\mathrm{cm}\\cdot 0{,}125 \\approx 2{,}19\\,\\mathrm{cm}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Ablenkung in die richtige Reihenfolge.",
+      "items": [
+        "Energiesatz: $e U_B = \\tfrac12 m v_0^2$",
+        "Flugzeit im Kondensator: $t = \\tfrac{l}{v_0}$",
+        "Querbeschleunigung: $a_y = \\tfrac{e U_y}{m d}$",
+        "$y = \\tfrac12 a_y t^2 = \\tfrac{U_y l^2}{4 d U_B}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Energiesatz: $e U_B = \\tfrac12 m v_0^2$. 2. Flugzeit im Kondensator: $t = \\tfrac{l}{v_0}$. 3. Querbeschleunigung: $a_y = \\tfrac{e U_y}{m d}$. 4. $y = \\tfrac12 a_y t^2 = \\tfrac{U_y l^2}{4 d U_B}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Ablenkspannung, wird die Ablenkung {{0}}-mal so groß; verdoppelt man die Beschleunigungsspannung, wird sie {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        }
+      ],
+      "explain": "$y = \\tfrac{U_y l^2}{4 d U_B}$: proportional zu $U_y$, umgekehrt proportional zu $U_B$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Proton, mit derselben Spannung beschleunigt, folgt im selben Kondensator derselben Bahnform, nur zur anderen Seite.",
+      "answer": true,
+      "explain": "In der Ablenkformel kommen weder Ladung noch Masse vor. Das Proton ist zwar langsamer, bleibt aber genau so viel länger im Feld, dass sich alles ausgleicht.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist die Bahn nach dem Kondensator eine Gerade?",
+      "options": [
+        {
+          "md": "Außerhalb des Kondensators wirkt keine Kraft mehr; das Elektron fliegt nach dem Trägheitsgesetz geradlinig weiter.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Schwerkraft sie gerade zieht.",
+          "why": "Die Gewichtskraft eines Elektrons ist vernachlässigbar."
+        },
+        {
+          "md": "Weil der Schirm die Elektronen anzieht.",
+          "why": "Der Schirm übt keine nennenswerte Kraft aus."
+        },
+        {
+          "md": "Weil die Parabel nach einer Weile in eine Gerade übergeht.",
+          "why": "Die Parabel entsteht nur, solange die Kraft wirkt."
+        }
+      ],
+      "explain": "Parabel im Feld, Gerade danach: wie ein Ball, der waagerecht von einem Tisch rollt, nur ohne Gravitation nach dem Rand.",
+      "label": "Verständnis",
+      "id": "vq8"
     },
     {
       "id": "doppelt",
@@ -100,13 +426,54 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ablenkung",
+          "schirmablenkung"
+        ]
+      },
+      "label": "Ablenkung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "austrittswinkel",
+          "schirmablenkung"
+        ]
+      },
+      "label": "Winkel und Schirm",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ablenkung",
+          "schirmablenkung"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Beschleunigung: $eU_B = \\tfrac12 m v^2$.",
         "Im Querfeld eine Parabel, wie beim waagerechten Wurf.",
-        "Ablenkung $\\sim U_y / U_B$."
+        "Ablenkung $\\sim U_y / U_B$.",
+        "$v_0 = \\sqrt{\\tfrac{2eU_B}{m}}$; im Querfeld Parabel mit $y = \\tfrac{U_y l^2}{4dU_B}$, Ladung und Masse kürzen sich.",
+        "Austrittswinkel $\\tan\\alpha = \\tfrac{U_y l}{2dU_B}$; Schirmauslenkung $Y = s\\tan\\alpha$ mit $s$ ab Kondensatormitte."
       ]
     }
   ]

@@ -16,6 +16,217 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel.** $L = 50\\,\\mathrm{mH}$, $C = 2\\,\\mu\\mathrm{F}$; gesucht sind $T$, $f$ und die Kapazität für $1\\,\\mathrm{kHz}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "T = 2\\pi\\sqrt{LC} = 2\\pi\\sqrt{0{,}05\\cdot 2\\cdot 10^{-6}}\\,\\mathrm{s} = 2\\pi\\cdot 3{,}16\\cdot 10^{-4}\\,\\mathrm{s} \\approx 1{,}99\\,\\mathrm{ms}",
+            "why": "Alle Werte in SI-Einheiten."
+          },
+          {
+            "tex": "f = \\frac1T \\approx 503\\,\\mathrm{Hz}",
+            "why": "Frequenz."
+          },
+          {
+            "tex": "C' = \\frac{1}{4\\pi^2 f'^2 L} = \\frac{1}{39{,}48\\cdot 10^6\\cdot 0{,}05}\\,\\mathrm{F} \\approx 0{,}51\\,\\mu\\mathrm{F}",
+            "why": "Für die doppelte Frequenz braucht man ein Viertel der Kapazität: $\\tfrac{2\\,\\mu\\mathrm{F}}{4} \\approx 0{,}5\\,\\mu\\mathrm{F}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Periodendauer.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Frequenz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Neue Kapazität.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Elektromagnetischer Schwingkreis - Thomsonsche Gleichung anwenden",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Elektromagnetischer Schwingkreis - Thomsonsche Gleichung anwenden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Eigenfrequenz des Schwingkreises\"*, *\"Welche Kapazität ist erforderlich, um einen Sender bei ... MHz zu empfangen?\"*, *\"Bestimmen Sie die maximale Stromstärke im Schwingkreis\"*, *\"Beschreiben Sie den Energieaustausch zwischen Spule und Kondensator\"*, *\"Erklären Sie, weshalb ein realer Schwingkreis gedämpft ist\"*.\n\nErkennungsmerkmal: Eine **Spule** und ein **Kondensator** bilden einen geschlossenen Kreis; gegeben sind $L$ und $C$ oder eine Frequenz."
+            }
+          ]
+        },
+        {
+          "title": "Die Thomsonsche Schwingungsgleichung",
+          "blocks": [
+            {
+              "md": "> [!important] Die Formel und ihre Herkunft\n> $$\\boxed{\\;T = 2\\pi\\sqrt{L\\,C}\\;} \\qquad\\Longleftrightarrow\\qquad f = \\frac{1}{2\\pi\\sqrt{L\\,C}}, \\qquad \\omega = \\frac{1}{\\sqrt{L\\,C}}$$\n>\n> Sie entsteht aus der mechanischen Formel $T = 2\\pi\\sqrt{m/D}$ durch die Ersetzungen $m \\to L$ und $D \\to 1/C$. Das ist kein Zufall, sondern Ausdruck der vollständigen Analogie beider Systeme -- die zugrunde liegende Differenzialgleichung ist identisch."
+            }
+          ]
+        },
+        {
+          "title": "Die Analogie im Detail",
+          "blocks": [
+            {
+              "md": "| Mechanisches Pendel | Schwingkreis | Rolle |\n|---|---|---|\n| Auslenkung $x$ | Ladung $Q$ | was ausgelenkt wird |\n| Geschwindigkeit $v = \\dot x$ | Stromstärke $I = \\dot Q$ | Änderungsrate davon |\n| Masse $m$ | Induktivität $L$ | Trägheit |\n| Federkonstante $D$ | $1/C$ | Rückstellvermögen |\n| $E_{pot} = \\tfrac12 D x^2$ | $E_{el} = \\tfrac{1}{2C}Q^2 = \\tfrac12 C U^2$ | gespeichert im Kondensator |\n| $E_{kin} = \\tfrac12 m v^2$ | $E_{mag} = \\tfrac12 L I^2$ | gespeichert in der Spule |\n| Reibung | ohmscher Widerstand $R$ | Dämpfung |\n\n> [!tip] Warum die Kapazität als Kehrwert auftritt\n> Eine **große** Kapazität bedeutet, dass viel Ladung bei geringer Spannung gespeichert wird -- der Kondensator \"wehrt sich\" also nur schwach. Er entspricht damit einer **weichen** Feder mit kleinem $D$. Da weiche Federn und große Kapazitäten beide zu langsameren Schwingungen führen, muss $C$ dort stehen, wo $1/D$ steht. Wer sich diese Zuordnung einmal klargemacht hat, muss die Thomsonsche Formel nicht auswendig lernen."
+            }
+          ]
+        },
+        {
+          "title": "Der Schwingungsvorgang in vier Phasen",
+          "blocks": [
+            {
+              "md": "| Phase | Kondensator | Spule | Analogie zum Pendel |\n|---|---|---|---|\n| Start | voll geladen, $U$ maximal | stromlos | Umkehrpunkt, maximale Auslenkung |\n| Viertelperiode | entladen, $U = 0$ | $I$ maximal | Ruhelage, maximale Geschwindigkeit |\n| Halbe Periode | **umgekehrt** voll geladen | stromlos | gegenüberliegender Umkehrpunkt |\n| Dreiviertelperiode | entladen | $I$ maximal, umgekehrte Richtung | Ruhelage, Rückweg |\n\nDer entscheidende Punkt: Wenn der Kondensator vollständig entladen ist, hört der Strom **nicht** auf. Die Spule wirkt als Trägheit -- ihre Selbstinduktion hält den Strom aufrecht und lädt den Kondensator in umgekehrter Polarität wieder auf. Ohne diese Trägheit gäbe es keine Schwingung, ebenso wenig wie ein masseloses Federpendel schwingen könnte."
+            }
+          ]
+        },
+        {
+          "title": "Die Energiebilanz",
+          "blocks": [
+            {
+              "md": "$$E_{ges} = \\tfrac12 C\\,U_{max}^2 = \\tfrac12 L\\,I_{max}^2$$\n\nGleichsetzen liefert die Maximalstromstärke ohne Umweg über die Zeitfunktion:\n$$I_{max} = U_{max}\\sqrt{\\frac{C}{L}}$$\n\nDer Wurzelausdruck $\\sqrt{L/C}$ heißt **Wellenwiderstand** des Kreises und hat die Einheit Ohm."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **$L$ und $C$ in SI umrechnen:** $\\text{mH} \\to 10^{-3}\\,\\text{H}$, $\\mu\\text{F} \\to 10^{-6}\\,\\text{F}$, $\\text{nF} \\to 10^{-9}\\,\\text{F}$, $\\text{pF} \\to 10^{-12}\\,\\text{F}$.\n2. **Produkt $L\\cdot C$ bilden**, dann die Wurzel ziehen.\n3. **Einsetzen:** $T = 2\\pi\\sqrt{LC}$ bzw. $f = 1/T$.\n4. **Bei Umkehraufgaben** quadrieren: $C = \\dfrac{1}{4\\pi^2 f^2 L}$ bzw. $L = \\dfrac{1}{4\\pi^2 f^2 C}$.\n5. **Für Maximalwerte** die Energiebilanz nutzen.\n6. **Einheitenkontrolle:** $\\sqrt{[\\text{H}]\\cdot[\\text{F}]} = \\sqrt{\\dfrac{\\text{Vs}}{\\text{A}}\\cdot\\dfrac{\\text{As}}{\\text{V}}} = \\sqrt{\\text{s}^2} = \\text{s}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Schwingkreis besteht aus einer Spule mit $L = 2{,}5\\,\\text{mH}$ und einem Kondensator mit $C = 4{,}7\\,\\mu\\text{F}$. Der Kondensator ist zu Beginn auf $U_{max} = 12\\,\\text{V}$ geladen. Berechnen Sie Periodendauer, Eigenfrequenz, Gesamtenergie und maximale Stromstärke.*\n\n**Schritt 1:** $L = 2{,}5\\cdot10^{-3}\\,\\text{H}$, $C = 4{,}7\\cdot10^{-6}\\,\\text{F}$.\n\n**Schritt 2:**\n$$L\\,C = 2{,}5\\cdot10^{-3}\\cdot4{,}7\\cdot10^{-6} = 1{,}175\\cdot10^{-8}\\,\\text{s}^2$$\n$$\\sqrt{L\\,C} = 1{,}084\\cdot10^{-4}\\,\\text{s}$$\n\n**Schritt 3:**\n$$T = 2\\pi\\cdot1{,}084\\cdot10^{-4} \\approx 6{,}81\\cdot10^{-4}\\,\\text{s} = 0{,}681\\,\\text{ms}$$\n$$f = \\frac{1}{6{,}81\\cdot10^{-4}} \\approx 1{,}47\\cdot10^{3}\\,\\text{Hz} = 1{,}47\\,\\text{kHz}$$\n\n**Schritt 5, Gesamtenergie:**\n$$E = \\tfrac12 C\\,U_{max}^2 = \\tfrac12\\cdot4{,}7\\cdot10^{-6}\\cdot144 \\approx 3{,}38\\cdot10^{-4}\\,\\text{J}$$\n\n**Maximalstromstärke:**\n$$I_{max} = U_{max}\\sqrt{\\frac{C}{L}} = 12\\sqrt{\\frac{4{,}7\\cdot10^{-6}}{2{,}5\\cdot10^{-3}}} = 12\\cdot\\sqrt{1{,}88\\cdot10^{-3}} = 12\\cdot0{,}04336 \\approx 0{,}520\\,\\text{A}$$\n\n**Probe über die magnetische Energie:** $\\tfrac12 L I_{max}^2 = \\tfrac12\\cdot2{,}5\\cdot10^{-3}\\cdot0{,}520^2 = 3{,}38\\cdot10^{-4}\\,\\text{J}$. Identisch mit der elektrischen Anfangsenergie -- die Energiebilanz geht auf."
+            }
+          ]
+        },
+        {
+          "title": "Umkehraufgabe: den Empfänger abstimmen",
+          "blocks": [
+            {
+              "md": "*Welche Kapazität muss ein Drehkondensator haben, damit ein Kreis mit $L = 2{,}5\\,\\mu\\text{H}$ auf $f = 1{,}0\\,\\text{MHz}$ abgestimmt ist?*\n$$C = \\frac{1}{4\\pi^2 f^2 L} = \\frac{1}{4\\pi^2\\cdot(10^{6})^2\\cdot2{,}5\\cdot10^{-6}} \\approx 1{,}01\\cdot10^{-8}\\,\\text{F} \\approx 10\\,\\text{nF}$$\n\nDer Zusammenhang $f \\propto 1/\\sqrt{C}$ erklärt die Bauform älterer Radios: Zum Durchstimmen eines Frequenzbereichs um den Faktor 3 muss die Kapazität um den Faktor 9 verändert werden -- daher die großen, weit auffächernden Drehkondensatorplatten."
+            }
+          ]
+        },
+        {
+          "title": "Der reale, gedämpfte Schwingkreis",
+          "blocks": [
+            {
+              "md": "Jede Spule besitzt einen ohmschen Drahtwiderstand. Dadurch klingt die Amplitude exponentiell ab, genau wie beim mechanischen Pendel mit Reibung -- siehe **Gedämpfte Schwingung auswerten**. Die Energie wird als Wärme im Widerstand umgesetzt sowie zu einem geringen Teil als elektromagnetische Welle abgestrahlt. Letzteres ist beim Sendekreis nicht Verlust, sondern Zweck: Ein offener Schwingkreis, dessen Platten und Windungen weit auseinandergezogen sind, wird zum **Dipol** und strahlt gezielt ab."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Mikro-, Nano- und Pikofarad nicht umrechnen.** Der häufigste Fehler; $4{,}7\\,\\mu\\text{F}$ und $4{,}7\\,\\text{nF}$ unterscheiden sich um den Faktor 1000, in der Frequenz um rund 32.\n- **$L$ und $C$ addieren statt multiplizieren.** In der Wurzel steht das **Produkt**.\n- **Die Wurzel vergessen.** Vervierfachte Kapazität halbiert die Frequenz, viertelt sie nicht.\n- **$f$ und $\\omega$ verwechseln.** $\\omega = 1/\\sqrt{LC}$, aber $f = 1/(2\\pi\\sqrt{LC})$.\n- **Annehmen, der Strom sei null, wenn der Kondensator entladen ist.** Genau dann ist er **maximal** -- die Spule wirkt als Trägheit.\n- **Bei der Energiebilanz $U$ und $U_{max}$ verwechseln.** Die Gesamtenergie folgt aus dem **Scheitelwert**, nicht aus einem Momentanwert.\n- **Den realen Kreis als ungedämpft behandeln**, wenn ein Widerstand angegeben ist."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Energieerhaltung bei der harmonischen Schwingung** · **Federpendel - Periodendauer berechnen** · **Gedämpfte Schwingung auswerten** · **Resonanzfrequenz und Amplitudenüberhöhung bestimmen** · **Induktivität und Selbstinduktionsspannung berechnen** · **Kondensator - Kapazität, Ladung und Energie berechnen** · **Elektromagnetischer Schwingkreis**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$L = 0{,}4\\,\\mathrm{H}$, $C = 10\\,\\mu\\mathrm{F}$: Wie groß ist die Periodendauer?",
+      "answer": 12.6,
+      "tolerance": 0.1,
+      "placeholder": "ms",
+      "explain": "$T = 2\\pi\\sqrt{4\\cdot 10^{-6}}\\,\\mathrm{s} = 2\\pi\\cdot 2\\cdot 10^{-3}\\,\\mathrm{s} \\approx 12{,}6\\,\\mathrm{ms}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Welche Induktivität braucht man mit $C = 470\\,\\mathrm{nF}$ für $f = 2\\,\\mathrm{kHz}$?",
+      "answer": 13.5,
+      "tolerance": 0.1,
+      "placeholder": "mH",
+      "explain": "$L = \\tfrac{1}{4\\pi^2 f^2 C} = \\tfrac{1}{39{,}48\\cdot 4\\cdot 10^6\\cdot 4{,}7\\cdot 10^{-7}}\\,\\mathrm{H} \\approx 13{,}5\\,\\mathrm{mH}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Vervierfacht man die Kapazität, wird die Frequenz {{0}}-mal so groß; schiebt man einen Eisenkern in die Spule, der $L$ verhundertfacht, wird sie {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        },
+        {
+          "accept": [
+            "0,1"
+          ],
+          "numeric": true,
+          "tolerance": 0.001
+        }
+      ],
+      "explain": "$f \\sim \\tfrac{1}{\\sqrt{LC}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "$L = 20\\,\\mathrm{mH}$, $C = 50\\,\\mu\\mathrm{F}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$LC = 0{,}02\\cdot 50\\cdot 10^{-6}\\,\\mathrm{s}^2 = 10^{-6}\\,\\mathrm{s}^2$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$T = 2\\pi\\cdot 10^{-6}\\,\\mathrm{s}$",
+          "why": "Falsch: die Wurzel vergessen. $T = 2\\pi\\sqrt{10^{-6}}\\,\\mathrm{s} = 2\\pi\\cdot 10^{-3}\\,\\mathrm{s} \\approx 6{,}3\\,\\mathrm{ms}$."
+        },
+        {
+          "md": "$f = \\tfrac1T$",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Richtig: $f \\approx 159\\,\\mathrm{Hz}$.",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +303,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "thomson",
+          "schwingkreis-strom"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$T = 2\\pi\\sqrt{LC}$, $f = \\tfrac{1}{2\\pi\\sqrt{LC}}$; nach $L$ oder $C$ umgestellt $\\tfrac{1}{4\\pi^2 f^2\\,(\\cdot)}$."
+      ]
     }
   ]
 }

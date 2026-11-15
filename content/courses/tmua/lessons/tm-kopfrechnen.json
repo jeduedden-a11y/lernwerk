@@ -15,6 +15,470 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Werte, die sitzen sollten.**\n\n| $n$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n| $n^2$ | 4 | 9 | 16 | 25 | 36 | 49 | 64 | 81 | 100 | 121 | 144 |\n| $n^3$ | 8 | 27 | 64 | 125 | 216 | 343 | 512 | 729 | 1000 | 1331 | 1728 |\n| $2^n$ | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096 |\n\nDazu die Quadrate von 13 bis 25 (169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625), $3^n$ bis $3^8 = 6561$, die Fakultäten bis $8! = 40320$ und diese Paare:\n\n| Bruch | Dezimal | Wurzel | Näherung |\n|---|---|---|---|\n| $\\tfrac16$ | $0{,}1\\overline{6}$ | $\\sqrt2$ | 1,414 |\n| $\\tfrac17$ | $0{,}\\overline{142857}$ | $\\sqrt3$ | 1,732 |\n| $\\tfrac1{11}$ | $0{,}\\overline{09}$ | $\\sqrt5$ | 2,236 |\n| $\\tfrac1{12}$ | $0{,}08\\overline{3}$ | $\\sqrt{10}$ | 3,162 |\n| $\\tfrac1{16}$ | 0,0625 | $\\pi$ | 3,1416 |",
+      "label": "Grundwerte",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: dritte binomische Formel als Rechenwerkzeug** (*difference of two squares*).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(a - b)(a + b) = a^2 + ab - ab - b^2 = a^2 - b^2",
+            "why": "Ausmultiplizieren: Die gemischten Glieder heben sich weg."
+          },
+          {
+            "tex": "47 \\cdot 53 = (50 - 3)(50 + 3) = 2500 - 9 = 2491",
+            "why": "Zwei Faktoren symmetrisch um eine runde Zahl: Produkt als Differenz zweier Quadrate."
+          },
+          {
+            "tex": "99^2 = (100 - 1)^2 = 10000 - 200 + 1 = 9801",
+            "why": "Die erste und zweite binomische Formel helfen bei Quadraten nahe einer runden Zahl."
+          },
+          {
+            "tex": "9991 = 100^2 - 3^2 = 97 \\cdot 103",
+            "why": "Rückwärts gelesen zerlegt die Formel Zahlen: 9991 ist keine Primzahl."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Quadrate von Zahlen auf 5.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(10a + 5)^2 = 100a^2 + 100a + 25",
+            "why": "Erste binomische Formel; $a$ ist die Zahl vor der 5."
+          },
+          {
+            "tex": "= 100\\,a(a + 1) + 25",
+            "why": "Ausklammern: vorne steht $a(a+1)$, hinten immer 25."
+          },
+          {
+            "tex": "65^2:\\; a = 6,\\; 6 \\cdot 7 = 42 \\;\\Rightarrow\\; 4225",
+            "why": "Beispiel: 42 vor die 25 schreiben."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausmultiplizieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung: Wurzeln nahe einer Quadratzahl.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sqrt{n^2 + d} = n + \\varepsilon \\;\\Rightarrow\\; n^2 + d = n^2 + 2n\\varepsilon + \\varepsilon^2",
+            "why": "Ansatz: Die Wurzel liegt knapp neben $n$; quadrieren."
+          },
+          {
+            "tex": "d \\approx 2n\\varepsilon",
+            "why": "Für kleines $\\varepsilon$ ist $\\varepsilon^2$ winzig und fällt weg."
+          },
+          {
+            "tex": "\\sqrt{n^2 + d} \\approx n + \\frac{d}{2n}",
+            "why": "Die Näherungsformel; sie ist die Tangente an den Graphen der Wurzel."
+          },
+          {
+            "tex": "\\sqrt{2000} = \\sqrt{45^2 - 25} \\approx 45 - \\frac{25}{90} \\approx 44{,}72",
+            "why": "Beispiel: genauer Wert 44,721."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vernachlässigen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Näherung",
+      "md": "**Die Tangente als Rechenhilfe:** blau $y = \\sqrt{x}$, orange die Tangente bei $x = 2025 = 45^2$, also $y = 45 + \\tfrac{x - 2025}{90}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          1900,
+          2100
+        ],
+        "y": [
+          43.5,
+          46
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": 1900,
+            "max": 2100,
+            "value": 2025,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "w",
+            "expr": "sqrt(x)",
+            "color": "blue",
+            "label": "y = √x",
+            "labelAt": 1915
+          },
+          {
+            "name": "t",
+            "expr": "45 + (x - 2025)/90",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "sqrt(X)",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "45 + (X - 2025)/90",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "bei x = {X|0}: Tangente {45 + (X - 2025)/90|3} · genauer Wert {sqrt(X)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei 2025 berühren sich Kurve und Tangente: Dort ist die Wurzel genau 45.",
+          "set": {
+            "X": 2025
+          }
+        },
+        {
+          "caption": "Bei 2000 liefert die Tangente 44,722, der genaue Wert ist 44,721.",
+          "to": {
+            "X": 2000
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Selbst bei 1936 = 44² liegt die Tangente nur um 0,01 daneben.",
+          "to": {
+            "X": 1936
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Tangente liegt immer etwas über der Kurve: Die Näherung überschätzt die Wurzel ein wenig.",
+          "to": {
+            "X": 2090
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "type": "text",
+      "md": "**Vergleichen statt ausrechnen.**\n- **Potenzen** auf denselben Exponenten bringen: $2^{30} = (2^3)^{10} = 8^{10}$ und $3^{20} = (3^2)^{10} = 9^{10}$, also $3^{20} > 2^{30}$.\n- **Summen von Wurzeln** quadrieren: $(\\sqrt2 + \\sqrt3)^2 = 5 + 2\\sqrt6$. Wegen $\\sqrt6 < 2{,}5$ ist das kleiner als 10, also $\\sqrt2 + \\sqrt3 < \\sqrt{10}$.\n- **Brüche** über Kreuz vergleichen: $\\tfrac57$ gegen $\\tfrac{7}{10}$: $5 \\cdot 10 = 50 > 49 = 7 \\cdot 7$, also ist $\\tfrac57$ größer.\n- **Erst kürzen, dann multiplizieren:** $\\tfrac{36 \\cdot 35}{14 \\cdot 45} = \\tfrac{36}{45} \\cdot \\tfrac{35}{14} = \\tfrac45 \\cdot \\tfrac52 = 2$.\n\n> [!tip] Die Optionen bestimmen die Genauigkeit\n> Liegen die Optionen weit auseinander (12, 120, 1200), genügt die Größenordnung. Liegen sie eng beieinander oder sind es exakte Ausdrücke wie $2\\sqrt3$ und $\\sqrt{13}$, bleibt man exakt und vergleicht erst am Ende. Die Entscheidung fällt vor der Rechnung.",
+      "label": "Vergleichen",
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kopfrechnen und Abschätzen ohne Taschenrechner",
+      "path": "02 Wiki/TMUA/01 Strategie und Prüfungstechnik/Kopfrechnen und Abschätzen ohne Taschenrechner.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Warum das ein eigenes Thema ist",
+          "blocks": [
+            {
+              "md": "Der TMUA verbietet den Taschenrechner nicht, um Rechenfertigkeit zu prüfen, sondern um **Struktur** zu erzwingen: Die Aufgaben sind so gebaut, dass die Zahlen am Ende einfach werden -- wenn man den richtigen Weg wählt. Wer mit großen Zahlen rechnet, ist fast immer auf dem falschen Weg.\n\nTrotzdem kostet unsicheres Kopfrechnen Zeit und Punkte. Es lohnt sich, einen kleinen Vorrat an Werten **abrufbar** zu haben, statt ihn jedes Mal herzuleiten."
+            }
+          ]
+        },
+        {
+          "title": "Werte, die sitzen sollten",
+          "blocks": [
+            {
+              "md": "| $n$ | $n^2$ | $n^3$ | $2^n$ | $3^n$ | $n!$  |\n| --- | ----- | ----- | ----- | ----- | ----- |\n| 1   | 1     | 1     | 2     | 3     | 1     |\n| 2   | 4     | 8     | 4     | 9     | 2     |\n| 3   | 9     | 27    | 8     | 27    | 6     |\n| 4   | 16    | 64    | 16    | 81    | 24    |\n| 5   | 25    | 125   | 32    | 243   | 120   |\n| 6   | 36    | 216   | 64    | 729   | 720   |\n| 7   | 49    | 343   | 128   | 2187  | 5040  |\n| 8   | 64    | 512   | 256   | 6561  | 40320 |\n| 9   | 81    | 729   | 512   |       |       |\n| 10  | 100   | 1000  | 1024  |       |       |\n| 11  | 121   | 1331  | 2048  |       |       |\n| 12  | 144   | 1728  | 4096  |       |       |\n\n**Quadrate 13 bis 25:** 169 · 196 · 225 · 256 · 289 · 324 · 361 · 400 · 441 · 484 · 529 · 576 · 625. Dazu $5^4 = 625$ und $5^5 = 3125$.\n\n| Bruch         | Dezimal                 |     | Wurzel      | Näherung |\n| ------------- | ----------------------- | --- | ----------- | -------- |\n| $\\tfrac13$    | $0{,}\\overline{3}$      |     | $\\sqrt2$    | 1,414    |\n| $\\tfrac16$    | $0{,}1\\overline{6}$     |     | $\\sqrt3$    | 1,732    |\n| $\\tfrac17$    | $0{,}\\overline{142857}$ |     | $\\sqrt5$    | 2,236    |\n| $\\tfrac18$    | 0,125                   |     | $\\sqrt6$    | 2,449    |\n| $\\tfrac19$    | $0{,}\\overline{1}$      |     | $\\sqrt7$    | 2,646    |\n| $\\tfrac1{11}$ | $0{,}\\overline{09}$     |     | $\\sqrt{10}$ | 3,162    |\n| $\\tfrac1{12}$ | $0{,}08\\overline{3}$    |     | $\\pi$       | 3,1416   |\n| $\\tfrac1{16}$ | 0,0625                  |     | $\\pi^2$     | 9,87     |"
+            }
+          ]
+        },
+        {
+          "title": "Rechentechniken",
+          "blocks": [
+            {
+              "md": "> [!tip] Die dritte binomische Formel als Multiplikationswerkzeug\n> Liegen zwei Faktoren symmetrisch um eine runde Zahl, gilt $(a-b)(a+b) = a^2 - b^2$:\n> $$47 \\cdot 53 = 50^2 - 3^2 = 2500 - 9 = 2491, \\qquad 17 \\cdot 23 = 20^2 - 3^2 = 391.$$\n> Im Englischen heißt die Formel *difference of two squares*. Sie ist im TMUA das häufigste algebraische Werkzeug überhaupt -- beim Rechnen, Faktorisieren und beim Rationalmachen von Nennern.\n\n| Technik | Beispiel |\n|---|---|\n| Quadrate von Zahlen auf 5: $(10a+5)^2 = 100\\,a(a+1) + 25$ | $65^2$: $6 \\cdot 7 = 42$, also 4225 |\n| Faktoren tauschen bei Prozenten | 8 Prozent von 25 = 25 Prozent von 8 = 2 |\n| mit 25 multiplizieren: mal 100, durch 4 | $44 \\cdot 25 = 4400 / 4 = 1100$ |\n| **erst kürzen, dann multiplizieren** | $\\tfrac{36 \\cdot 35}{14 \\cdot 45} = \\tfrac{36}{45} \\cdot \\tfrac{35}{14} = \\tfrac45 \\cdot \\tfrac52 = 2$ |\n| Brüche vergleichen über Kreuzprodukt | $\\tfrac57$ gegen $\\tfrac7{10}$: $50 > 49$, also $\\tfrac57$ größer |\n| Wurzeln einschachteln | $7^2 = 49 < 50 < 64 = 8^2$, also $\\sqrt{50}$ knapp über 7 (genauer 7,07) |\n| Potenzen über gemeinsamen Exponenten vergleichen | $2^{30} = 8^{10}$, $3^{20} = 9^{10}$, also $3^{20} > 2^{30}$ |\n| Summen von Wurzeln über Quadrieren vergleichen | $(\\sqrt2 + \\sqrt3)^2 = 5 + 2\\sqrt6 \\approx 9{,}90 < 10$, also $\\sqrt2 + \\sqrt3 < \\sqrt{10}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Abschätzen statt Ausrechnen",
+          "blocks": [
+            {
+              "md": "> [!important] Die Optionen bestimmen die nötige Genauigkeit\n> Liegen die Antwortoptionen weit auseinander (etwa 12, 120, 1200), reicht eine Größenordnung. Liegen sie eng beieinander oder unterscheiden sie sich in exakten Ausdrücken ($2\\sqrt3$ gegen $\\sqrt{13}$), ist Abschätzen gefährlich -- dann **exakt** bleiben und erst am Ende vergleichen.\n>\n> Die Entscheidung fällt **vor** der Rechnung, beim Blick auf die Optionen. Das spart die Hälfte der Rechenzeit."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Zu früh runden.** Wer $\\sqrt3$ als 1,7 weiterverwendet und das Ergebnis quadriert, liegt schnell eine Option daneben.\n- **Kommafehler bei Zehnerpotenzen.** Bei Rechnungen mit $10^{-3}$ oder Einheitenumrechnungen die Größenordnung am Ende gegen den gesunden Menschenverstand prüfen -- siehe **Runden, Schranken und wissenschaftliche Schreibweise**.\n- **Große Produkte ausmultiplizieren**, die sich später kürzen würden. Ein Bruch wird erst vereinfacht, dann berechnet.\n- **Vorzeichen im Kopf verlieren.** Bei mehr als zwei Minuszeichen auf das Board schreiben.\n\nVerwandt: **Potenzen, Wurzeln und Surds** · **Antwortoptionen strategisch nutzen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Zahlen auf 5",
+      "md": "Berechne $65^2$ im Kopf.",
+      "answer": 4225,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$a = 6$: $6 \\cdot 7 = 42$, dahinter 25, also 4225.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Binomische Formel",
+      "md": "Berechne $48 \\cdot 52$ im Kopf.",
+      "answer": 2496,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$(50 - 2)(50 + 2) = 2500 - 4 = 2496$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Wurzel",
+      "md": "Schätze $\\sqrt{50}$ mit der Näherung $n + \\tfrac{d}{2n}$ auf zwei Nachkommastellen.",
+      "answer": 7.07,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\sqrt{49 + 1} \\approx 7 + \\tfrac{1}{14} \\approx 7{,}07$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Wurzelnäherung in die richtige Reihenfolge.",
+      "items": [
+        "Ansatz $\\sqrt{n^2 + d} = n + \\varepsilon$",
+        "Quadrieren: $n^2 + d = n^2 + 2n\\varepsilon + \\varepsilon^2$",
+        "$\\varepsilon^2$ vernachlässigen: $d \\approx 2n\\varepsilon$",
+        "$\\sqrt{n^2 + d} \\approx n + \\tfrac{d}{2n}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Ansatz $\\sqrt{n^2 + d} = n + \\varepsilon$. 2. Quadrieren: $n^2 + d = n^2 + 2n\\varepsilon + \\varepsilon^2$. 3. $\\varepsilon^2$ vernachlässigen: $d \\approx 2n\\varepsilon$. 4. $\\sqrt{n^2 + d} \\approx n + \\tfrac{d}{2n}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Formel",
+      "md": "Ergänze: $(10a + 5)^2 = 100\\,a\\,(a + k) + m$ mit $k =$ {{0}} und $m =$ {{1}}.",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        },
+        {
+          "accept": [
+            "25"
+          ],
+          "numeric": true,
+          "tolerance": 0.25
+        }
+      ],
+      "explain": "$(10a+5)^2 = 100a^2 + 100a + 25 = 100a(a+1) + 25$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Which of the following is the largest?",
+      "options": [
+        {
+          "md": "$5^{12}$"
+        },
+        {
+          "md": "$3^{20}$",
+          "correct": true
+        },
+        {
+          "md": "$2^{30}$"
+        },
+        {
+          "md": "$6^{10}$"
+        }
+      ],
+      "explain": "Auf gemeinsame Exponenten bringen: $2^{30} = 8^{10} < 9^{10} = 3^{20}$ und $6^{10} < 8^{10}$. Für die Fünf: $5^{12} = 25^6 < 32^6 = 2^{30}$. Am größten ist $3^{20}$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Potenzen",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Which of the following is true?",
+      "options": [
+        {
+          "md": "$\\sqrt2 + \\sqrt3 = \\sqrt{10}$"
+        },
+        {
+          "md": "$\\sqrt2 + \\sqrt3 < \\sqrt{10}$",
+          "correct": true
+        },
+        {
+          "md": "$\\sqrt2 + \\sqrt3 = \\sqrt5$"
+        },
+        {
+          "md": "$\\sqrt2 + \\sqrt3 > \\sqrt{10}$"
+        }
+      ],
+      "explain": "Quadrieren: $(\\sqrt2 + \\sqrt3)^2 = 5 + 2\\sqrt6$ und $2\\sqrt6 < 5$, also ist das Quadrat kleiner als 10.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Wurzeln",
+      "id": "vq7"
+    },
+    {
+      "type": "match",
+      "label": "Grundwerte",
+      "md": "Ordne jedem Bruch seine Dezimaldarstellung zu.",
+      "pairs": [
+        [
+          "$\\tfrac17$",
+          "$0{,}\\overline{142857}$"
+        ],
+        [
+          "$\\tfrac1{11}$",
+          "$0{,}\\overline{09}$"
+        ],
+        [
+          "$\\tfrac1{12}$",
+          "$0{,}08\\overline{3}$"
+        ],
+        [
+          "$\\tfrac1{16}$",
+          "$0{,}0625$"
+        ],
+        [
+          "$\\tfrac16$",
+          "$0{,}1\\overline{6}$"
+        ]
+      ],
+      "explain": "Diese Werte erkennt man in Optionen sofort wieder.",
+      "id": "vq8"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Berechne $99^2$ im Kopf.",
@@ -67,7 +531,10 @@
       "points": [
         "Zerlegen, binomische Formeln, Quadrate kennen.",
         "Brüche statt Dezimalzahlen.",
-        "Abschätzen, um Optionen auszuschließen."
+        "Abschätzen, um Optionen auszuschließen.",
+        "$(a-b)(a+b) = a^2 - b^2$ rechnet Produkte und zerlegt Zahlen wie $9991 = 97 \\cdot 103$.",
+        "$\\sqrt{n^2 + d} \\approx n + \\tfrac{d}{2n}$, die Tangente an den Wurzelgraphen.",
+        "Potenzen auf gleichen Exponenten bringen, Wurzelsummen quadrieren, Brüche über Kreuz vergleichen."
       ],
       "id": "summary"
     }

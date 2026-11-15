@@ -16,6 +16,420 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Energiedifferenz wird zum Photon\n> $\\Delta E = E_{n_2} - E_{n_1} = h f = \\tfrac{h c}{\\lambda}$; für Wasserstoff $\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$ mit $n_2 > n_1$, praktisch $\\lambda = \\tfrac{1240\\,\\mathrm{eV\\,nm}}{\\Delta E}$. Weil nur bestimmte Differenzen vorkommen, gibt es nur bestimmte Wellenlängen: Ein **Linienspektrum** beweist quantisierte Niveaus.\n\n| Serie | Endniveau | Bereich | Seriengrenze |\n|---|---|---|---|\n| Lyman | 1 | Ultraviolett | 91,2 nm |\n| Balmer | 2 | **sichtbar** | 364,7 nm |\n| Paschen | 3 | Infrarot | 820,4 nm |\n\n| Balmer-Linie | Übergang | $\\Delta E$ | $\\lambda$ | Farbe |\n|---|---|---|---|---|\n| $\\mathrm{H}_\\alpha$ | 3 nach 2 | 1,89 eV | 656 nm | rot |\n| $\\mathrm{H}_\\beta$ | 4 nach 2 | 2,55 eV | 486 nm | blaugrün |\n| $\\mathrm{H}_\\gamma$ | 5 nach 2 | 2,86 eV | 434 nm | violett |\n| Grenze | $\\infty$ nach 2 | 3,40 eV | 365 nm | UV |",
+      "label": "Übergänge und Serien",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Rydberg- und der Balmer-Formel** aus Bohrs Energieniveaus.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)",
+            "why": "Aus E_n = −13,6 eV/n²; das niedrigere Niveau steht zuerst, sonst wird ΔE negativ."
+          },
+          {
+            "tex": "\\frac{1}{\\lambda} = \\frac{\\Delta E}{h c} = R_H\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right)",
+            "why": "Rydberg-Formel."
+          },
+          {
+            "tex": "R_H = \\frac{13{,}6\\,\\mathrm{eV}}{h c} \\approx 1{,}097\\cdot 10^{7}\\,\\mathrm{m^{-1}}",
+            "why": "Aus Bohrs Theorie berechnet und aus Spektren gemessen: Die Werte stimmen überein."
+          },
+          {
+            "tex": "n_1 = 2:\\quad \\lambda = \\frac{4}{R_H}\\cdot\\frac{n_2^2}{n_2^2 - 4} = 364{,}6\\,\\mathrm{nm}\\cdot\\frac{n_2^2}{n_2^2 - 4}",
+            "why": "Balmers Formel von 1885, die er aus Messwerten erraten hatte, hier hergeleitet."
+          },
+          {
+            "tex": "n_2 \\to \\infty:\\quad \\lambda_\\infty = \\frac{h c\\,n_1^2}{13{,}6\\,\\mathrm{eV}}",
+            "why": "Seriengrenze: kürzeste Wellenlänge der Serie."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energiedifferenz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rydberg.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konstante.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Balmer.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Seriengrenze.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die Balmer-Serie:** Wellenlänge über dem Ausgangsniveau $n_2$; gestrichelt die Seriengrenze.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          3,
+          12
+        ],
+        "y": [
+          340,
+          680
+        ],
+        "xLabel": "Ausgangsniveau n₂",
+        "yLabel": "λ in nm",
+        "vars": [
+          {
+            "name": "N",
+            "min": 3,
+            "max": 12,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "l",
+            "expr": "364.66*x^2/(x^2 - 4)",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 364.66
+          }
+        ],
+        "points": [
+          {
+            "x": 3,
+            "y": 656.4,
+            "color": "green",
+            "label": "Hα"
+          },
+          {
+            "x": 4,
+            "y": 486.2,
+            "color": "green",
+            "label": "Hβ"
+          },
+          {
+            "x": 5,
+            "y": 434.1,
+            "color": "green",
+            "label": "Hγ"
+          },
+          {
+            "x": 6,
+            "y": 410.2,
+            "color": "green",
+            "label": "Hδ"
+          },
+          {
+            "x": "N",
+            "on": "l",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Übergang {N|0} → 2: λ = **{364.66*N^2/(N^2 - 4)|1} nm**"
+      },
+      "timeline": [
+        {
+          "caption": "$\\mathrm{H}_\\alpha$ (3 nach 2): $656\\,\\mathrm{nm}$, rot. Kleinster Sprung der Serie, längste Wellenlänge.",
+          "set": {
+            "N": 3
+          }
+        },
+        {
+          "caption": "$\\mathrm{H}_\\beta$ (4 nach 2): $486\\,\\mathrm{nm}$, blaugrün.",
+          "to": {
+            "N": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "$\\mathrm{H}_\\delta$ (6 nach 2): $410\\,\\mathrm{nm}$, violett. Die Abstände zwischen den Linien schrumpfen.",
+          "to": {
+            "N": 6
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Für große $n_2$ häufen sich die Linien an der Seriengrenze $364{,}7\\,\\mathrm{nm}$: Die Niveaus liegen immer dichter. Jenseits ist das Elektron frei, das Spektrum wird kontinuierlich.",
+          "to": {
+            "N": 12
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Emission und Absorption.**\n\n| | Emission | Absorption |\n|---|---|---|\n| Richtung | von hohem zu niedrigem Niveau | von niedrigem zu hohem |\n| Beobachtung | helle Linien auf dunklem Grund | dunkle Linien im kontinuierlichen Spektrum |\n| Lage der Linien | dieselbe | dieselbe |\n\nEin Atom absorbiert nur, was es auch aussenden kann, denn in beiden Fällen stehen dieselben Niveaudifferenzen zur Verfügung. Die dunklen **Fraunhofer-Linien** im Sonnenlicht stammen von kühlerem Gas der Sonnenatmosphäre; aus ihnen liest man die Zusammensetzung von Sternen ab. Helium wurde 1868 so in der Sonne entdeckt, rund dreißig Jahre vor seinem Nachweis auf der Erde.\n\n> [!warning] Typische Fallen\n> $n_1$ und $n_2$ vertauschen; die Serie nach dem Start- statt dem Endniveau benennen; die Seriengrenze für die längste Wellenlänge halten (sie ist die kürzeste); eV und J mischen; die Formel mit $13{,}6\\,\\mathrm{eV}$ auf Atome mit mehreren Elektronen anwenden; Linienspektren (Gase) mit dem kontinuierlichen Spektrum glühender Festkörper verwechseln.",
+      "label": "Emission und Absorption",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Spektrallinien aus Energieniveaus berechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Spektrallinien aus Energieniveaus berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Wellenlänge der $\\text{H}_\\alpha$-Linie\"*, *\"Welchem Übergang entspricht die Linie bei 486 nm?\"*, *\"Bestimmen Sie die Seriengrenze der Balmer-Serie\"*, *\"Erklären Sie, weshalb Emissions- und Absorptionsspektrum dieselben Linien zeigen\"*, *\"Weshalb ist das Spektrum diskret und nicht kontinuierlich?\"*.\n\nErkennungsmerkmal: Ein **Übergang zwischen zwei Energieniveaus** ist gegeben oder gesucht, verbunden mit einer Wellenlänge oder Frequenz."
+            }
+          ]
+        },
+        {
+          "title": "Die Übergangsgleichung",
+          "blocks": [
+            {
+              "md": "> [!important] Energiedifferenz wird zum Photon\n> $$\\Delta E = E_{n_2} - E_{n_1} = h\\,f = \\frac{h\\,c}{\\lambda}$$\n> Für Wasserstoff mit $E_n = -13{,}6\\,\\text{eV}/n^2$:\n> $$\\Delta E = 13{,}6\\,\\text{eV}\\left(\\frac{1}{n_1^2} - \\frac{1}{n_2^2}\\right), \\qquad n_2 > n_1$$\n> und daraus unmittelbar\n> $$\\lambda = \\frac{h\\,c}{\\Delta E} \\qquad\\text{bzw. praktisch}\\qquad \\lambda[\\text{nm}] = \\frac{1240}{\\Delta E[\\text{eV}]}$$\n>\n> Die Diskretheit der Niveaus überträgt sich damit direkt auf das Spektrum: Weil nur bestimmte Energiedifferenzen vorkommen, treten nur bestimmte Wellenlängen auf. Ein **Linienspektrum** ist der unmittelbare Beweis quantisierter Energieniveaus -- und das ist die Antwort auf die häufigste Begründungsfrage dieses Themas."
+            }
+          ]
+        },
+        {
+          "title": "Die Serien des Wasserstoffs",
+          "blocks": [
+            {
+              "md": "| Serie | Endniveau $n_1$ | Spektralbereich | Kürzeste Wellenlänge (Seriengrenze) |\n|---|---|---|---|\n| **Lyman** | 1 | Ultraviolett | 91,2 nm |\n| **Balmer** | 2 | **sichtbar** | 364,7 nm |\n| **Paschen** | 3 | Infrarot | 820,4 nm |\n\nNur die **Balmer-Serie** liegt im sichtbaren Bereich -- deshalb wurde sie zuerst entdeckt und deshalb ist sie der Standardgegenstand von Prüfungsaufgaben.\n\n| Balmer-Linie | Übergang | $\\Delta E$ | $\\lambda$ | Farbe |\n|---|---|---|---|---|\n| $\\text{H}_\\alpha$ | $3 \\to 2$ | 1,89 eV | 656 nm | rot |\n| $\\text{H}_\\beta$ | $4 \\to 2$ | 2,55 eV | 486 nm | blaugrün |\n| $\\text{H}_\\gamma$ | $5 \\to 2$ | 2,86 eV | 434 nm | violett |\n| Grenze | $\\infty \\to 2$ | 3,40 eV | 365 nm | UV |\n\n> [!tip] Warum die Linien nach außen zusammenrücken\n> Die Energieniveaus liegen für große $n$ immer dichter beieinander ($E_n \\propto -1/n^2$). Die Übergänge $5\\to2$, $6\\to2$, $7\\to2$ unterscheiden sich daher immer weniger, und die zugehörigen Linien häufen sich an der **Seriengrenze**. Dort geht die Serie in ein Kontinuum über: Jenseits davon ist das Elektron frei, und freie Elektronen haben beliebige, nicht quantisierte Energien.\n>\n> Ein Spektrum, dessen Linien sich zu einer Seite hin verdichten und dann in ein Kontinuum münden, ist damit ein direktes Abbild der $1/n^2$-Struktur der Niveaus."
+            }
+          ]
+        },
+        {
+          "title": "Emission und Absorption",
+          "blocks": [
+            {
+              "md": "| | Emission | Absorption |\n|---|---|---|\n| Richtung | von hohem zu niedrigem Niveau | von niedrigem zu hohem |\n| Beobachtung | **helle** Linien auf dunklem Grund | **dunkle** Linien im kontinuierlichen Spektrum |\n| Anregung | vorher zugeführte Energie | Licht durchläuft kaltes Gas |\n| Lage der Linien | **identisch** | **identisch** |\n\n> [!important] Die Fraunhoferschen Linien\n> Dass beide Spektren dieselben Wellenlängen zeigen, ist der Kern der Spektralanalyse: Die dunklen Linien im Sonnenspektrum entstehen, weil kühleres Gas in der Sonnenatmosphäre genau die Wellenlängen absorbiert, die es selbst emittieren würde. Aus ihrer Lage lässt sich die **chemische Zusammensetzung** eines Sterns bestimmen, den niemand jemals betreten wird. Helium wurde 1868 auf diesem Weg in der Sonne entdeckt -- rund dreißig Jahre bevor man es auf der Erde fand.\n>\n> Ein Atom absorbiert nur, was es auch emittieren kann, weil in beiden Fällen dieselben Niveaudifferenzen zur Verfügung stehen. Diese Symmetrie zu begründen ist ein häufiger Prüfungsauftrag."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Übergang identifizieren:** Start- und Zielniveau, $n_2 > n_1$.\n2. **Energiedifferenz berechnen:** $\\Delta E = 13{,}6\\left(\\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2}\\right)\\,\\text{eV}$.\n3. **In Wellenlänge umrechnen:** $\\lambda[\\text{nm}] = \\dfrac{1240}{\\Delta E[\\text{eV}]}$.\n4. **Bei Umkehraufgaben** aus $\\lambda$ die Energiedifferenz bestimmen und im Termschema den passenden Übergang suchen.\n5. **Seriengrenze:** $n_2 \\to \\infty$, also $\\Delta E = \\dfrac{13{,}6}{n_1^2}\\,\\text{eV}$.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{eV}]\\cdot[\\text{nm}]}{[\\text{eV}]} = [\\text{nm}]$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Berechnen Sie Energie und Wellenlänge der $\\text{H}_\\alpha$-Linie (Übergang $n = 3 \\to n = 2$) sowie die Seriengrenze der Balmer-Serie.*\n\n**Schritt 2:**\n$$\\Delta E = 13{,}6\\left(\\frac{1}{4} - \\frac{1}{9}\\right) = 13{,}6\\cdot\\frac{9 - 4}{36} = 13{,}6\\cdot\\frac{5}{36} \\approx 1{,}889\\,\\text{eV}$$\n\n**Kontrolle über die Einzelniveaus:** $E_2 = -3{,}40\\,\\text{eV}$, $E_3 = -1{,}511\\,\\text{eV}$; Differenz $-1{,}511 - (-3{,}40) = 1{,}889\\,\\text{eV}$. Bestätigt.\n\n**Schritt 3:**\n$$\\lambda = \\frac{1240}{1{,}889} \\approx 656\\,\\text{nm}$$\nDas ist tiefrotes Licht -- die charakteristische Farbe von Wasserstoffentladungsröhren und der Grund für das Rot vieler Emissionsnebel im Weltall.\n\n**Schritt 5, Seriengrenze:**\n$$\\Delta E_\\infty = \\frac{13{,}6}{4} = 3{,}40\\,\\text{eV} \\quad\\Longrightarrow\\quad \\lambda = \\frac{1240}{3{,}40} \\approx 365\\,\\text{nm}$$\n\n**Gegenprobe für $\\text{H}_\\beta$ ($4 \\to 2$):**\n$$\\Delta E = 13{,}6\\left(\\frac14 - \\frac{1}{16}\\right) = 13{,}6\\cdot\\frac{3}{16} = 2{,}55\\,\\text{eV} \\quad\\Longrightarrow\\quad \\lambda = \\frac{1240}{2{,}55} \\approx 486\\,\\text{nm}$$\nDer Literaturwert der $\\text{H}_\\beta$-Linie beträgt 486,1 nm -- die Übereinstimmung auf drei Stellen zeigt, wie präzise das Modell für Wasserstoff arbeitet."
+            }
+          ]
+        },
+        {
+          "title": "Verbindung zum Franck-Hertz-Versuch",
+          "blocks": [
+            {
+              "md": "Während die Spektralanalyse die Niveaus über **abgestrahlte Photonen** nachweist, zeigt der **Franck-Hertz-Versuch** dieselbe Quantisierung über **Stoßanregung** durch Elektronen. Beide Wege führen unabhängig voneinander zum selben Ergebnis -- ein starkes Argument dafür, dass die diskreten Niveaus eine Eigenschaft des Atoms sind und kein Artefakt der Messmethode."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$n_1$ und $n_2$ vertauschen.** In $\\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2}$ steht das **niedrigere** Niveau zuerst; sonst wird $\\Delta E$ negativ.\n- **Die Serie am falschen Niveau festmachen.** Die Serienbezeichnung richtet sich nach dem **Endniveau** der Emission, nicht nach dem Startniveau.\n- **Bei der Seriengrenze die längste statt der kürzesten Wellenlänge angeben.** Die Grenze entspricht der **größten** Energiedifferenz, also der **kleinsten** Wellenlänge.\n- **eV und Joule mischen.** Die Merkformel $1240$ setzt eV und nm voraus.\n- **Behaupten, Absorptions- und Emissionslinien lägen bei verschiedenen Wellenlängen.** Sie sind identisch.\n- **Das Linienspektrum mit dem kontinuierlichen Spektrum eines Glühkörpers verwechseln.** Nur einzelne Atome im Gaszustand liefern Linien; Festkörper strahlen kontinuierlich.\n- **Die Formel auf Mehrelektronenatome anwenden.** Der Faktor 13,6 eV gilt nur für Wasserstoff."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bohrsches Atommodell - Bahnradien und Energieniveaus berechnen** · **Photoeffekt auswerten** · **De-Broglie-Wellenlänge berechnen** · **Beugung am Spalt und Gitter berechnen** · **Bohrsches Atommodell** · **Franck-Hertz-Versuch**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Beschreibung zu.",
+      "pairs": [
+        [
+          "Lyman-Serie",
+          "Endniveau 1, Ultraviolett"
+        ],
+        [
+          "Balmer-Serie",
+          "Endniveau 2, sichtbar"
+        ],
+        [
+          "Paschen-Serie",
+          "Endniveau 3, Infrarot"
+        ],
+        [
+          "Seriengrenze",
+          "$n_2 \\to \\infty$, kürzeste Wellenlänge"
+        ],
+        [
+          "Fraunhofer-Linien",
+          "Absorption in der Sonnenatmosphäre"
+        ]
+      ],
+      "explain": "Serien heißen nach ihrem Endniveau.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Rydberg-Formel in die richtige Reihenfolge.",
+      "items": [
+        "$E_n = -\\tfrac{13{,}6\\,\\mathrm{eV}}{n^2}$",
+        "$\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$",
+        "$\\tfrac{1}{\\lambda} = \\tfrac{\\Delta E}{hc}$",
+        "$\\tfrac{1}{\\lambda} = R_H\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$ mit $R_H = \\tfrac{13{,}6\\,\\mathrm{eV}}{hc}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $E_n = -\\tfrac{13{,}6\\,\\mathrm{eV}}{n^2}$. 2. $\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$. 3. $\\tfrac{1}{\\lambda} = \\tfrac{\\Delta E}{hc}$. 4. $\\tfrac{1}{\\lambda} = R_H\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$ mit $R_H = \\tfrac{13{,}6\\,\\mathrm{eV}}{hc}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne die Wellenlänge der $\\mathrm{H}_\\beta$-Linie (4 nach 2).",
+      "answer": 486,
+      "tolerance": 2,
+      "placeholder": "nm",
+      "explain": "$\\Delta E = 13{,}6\\left(\\tfrac14 - \\tfrac1{16}\\right)\\,\\mathrm{eV} = 2{,}55\\,\\mathrm{eV}$, $\\lambda = \\tfrac{1240}{2{,}55}\\,\\mathrm{nm} \\approx 486\\,\\mathrm{nm}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Wellenlänge hat die Lyman-$\\alpha$-Linie (2 nach 1)?",
+      "answer": 121.6,
+      "tolerance": 1,
+      "placeholder": "nm",
+      "explain": "$\\Delta E = 13{,}6\\cdot\\tfrac34\\,\\mathrm{eV} = 10{,}2\\,\\mathrm{eV}$, $\\lambda = \\tfrac{1240}{10{,}2}\\,\\mathrm{nm} \\approx 122\\,\\mathrm{nm}$: Ultraviolett.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wo liegt die Seriengrenze der Balmer-Serie?",
+      "answer": 365,
+      "tolerance": 1.5,
+      "placeholder": "nm",
+      "explain": "$\\Delta E_\\infty = \\tfrac{13{,}6}{4}\\,\\mathrm{eV} = 3{,}40\\,\\mathrm{eV}$, $\\lambda = \\tfrac{1240}{3{,}40}\\,\\mathrm{nm} \\approx 365\\,\\mathrm{nm}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Herleitung",
+      "md": "Berechne die Rydberg-Konstante $R_H = \\tfrac{13{,}6\\,\\mathrm{eV}}{hc}$ in $10^7\\,\\mathrm{m^{-1}}$ ($hc = 1240\\,\\mathrm{eV\\,nm}$).",
+      "answer": 1.097,
+      "tolerance": 0.01,
+      "placeholder": "10⁷ m⁻¹",
+      "explain": "$R_H = \\tfrac{13{,}6}{1240}\\,\\mathrm{nm^{-1}} \\approx 0{,}01097\\,\\mathrm{nm^{-1}} = 1{,}097\\cdot 10^7\\,\\mathrm{m^{-1}}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Übergang erzeugt die Wasserstofflinie bei 434 nm?",
+      "options": [
+        {
+          "md": "von $n = 5$ nach $n = 2$",
+          "correct": true
+        },
+        {
+          "md": "von $n = 4$ nach $n = 2$",
+          "why": "Das ist die Linie bei 486 nm."
+        },
+        {
+          "md": "von $n = 3$ nach $n = 2$",
+          "why": "Das ist die rote Linie bei 656 nm."
+        },
+        {
+          "md": "von $n = 5$ nach $n = 1$",
+          "why": "Das läge im UV bei 95 nm."
+        }
+      ],
+      "explain": "$\\Delta E = \\tfrac{1240}{434}\\,\\mathrm{eV} \\approx 2{,}86\\,\\mathrm{eV} = 13{,}6\\left(\\tfrac14 - \\tfrac1{25}\\right)\\,\\mathrm{eV}$.",
+      "label": "Zuordnen",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Seriengrenze ist die längste Wellenlänge einer Serie.",
+      "answer": false,
+      "explain": "Sie gehört zur größten Energiedifferenz, also zur kürzesten Wellenlänge.",
+      "label": "Typischer Fehler",
+      "id": "vq8"
+    },
+    {
+      "type": "choice",
+      "md": "Warum liegen Absorptions- und Emissionslinien eines Gases bei denselben Wellenlängen?",
+      "options": [
+        {
+          "md": "In beiden Fällen stehen dieselben Niveaudifferenzen zur Verfügung.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Gas das Licht zurückspiegelt.",
+          "why": "Absorbiertes Licht wird nicht gespiegelt."
+        },
+        {
+          "md": "Weil Absorption und Emission gleichzeitig stattfinden.",
+          "why": "Die Gleichheit folgt aus den Niveaus, nicht aus der Gleichzeitigkeit."
+        },
+        {
+          "md": "Das stimmt nicht, Absorptionslinien liegen tiefer.",
+          "why": "Sie liegen an denselben Stellen."
+        }
+      ],
+      "explain": "Darauf beruht die Spektralanalyse von Sternen.",
+      "label": "Verständnis",
+      "id": "vq9"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Formel $\\Delta E = 13{,}6\\,\\mathrm{eV}\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$ gilt auch für Heliumatome.",
+      "answer": false,
+      "explain": "Sie gilt nur für Wasserstoff (und mit Z² für Ionen mit einem einzigen Elektron); Mehrelektronenatome brauchen die Quantenmechanik.",
+      "label": "Grenzen",
+      "id": "vq10"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -82,6 +496,40 @@
       },
       "level": 3,
       "label": "Rückwärts rechnen"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "linie-zuordnen"
+        ]
+      },
+      "label": "Linie zuordnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "linie-zuordnen",
+          "bohr"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Rydberg: $\\tfrac1\\lambda = R_H\\left(\\tfrac{1}{n_1^2} - \\tfrac{1}{n_2^2}\\right)$ mit $R_H = \\tfrac{13{,}6\\,\\mathrm{eV}}{hc}$; Balmer ($n_1 = 2$) ist sichtbar.",
+        "Linien häufen sich an der Seriengrenze (kürzeste Wellenlänge); Absorption und Emission liegen bei denselben Wellenlängen."
+      ]
     }
   ]
 }

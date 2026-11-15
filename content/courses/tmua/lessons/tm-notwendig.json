@@ -3,72 +3,962 @@
   "title": "Umkehrung, Kontraposition, notwendig und hinreichend",
   "subtitle": "Etappe 2: gleichwertige Umformulierungen und die Sprache der Bedingungen",
   "vault": [
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Umkehrung und Kontraposition.md", "title": "Umkehrung und Kontraposition" },
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Notwendige und hinreichende Bedingungen.md", "title": "Notwendige und hinreichende Bedingungen" },
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Äquivalente Umformulierungen erkennen.md", "title": "Äquivalente Umformulierungen erkennen" },
-    { "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Notwendig oder hinreichend entscheiden.md", "title": "Notwendig oder hinreichend entscheiden" }
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Umkehrung und Kontraposition.md",
+      "title": "Umkehrung und Kontraposition"
+    },
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Notwendige und hinreichende Bedingungen.md",
+      "title": "Notwendige und hinreichende Bedingungen"
+    },
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Äquivalente Umformulierungen erkennen.md",
+      "title": "Äquivalente Umformulierungen erkennen"
+    },
+    {
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Notwendig oder hinreichend entscheiden.md",
+      "title": "Notwendig oder hinreichend entscheiden"
+    }
   ],
   "steps": [
     {
-      "id": "vier", "type": "text",
+      "id": "vier",
+      "type": "text",
       "md": "Aus »wenn $P$, dann $Q$« lassen sich drei weitere Aussagen bauen:\n\n- **Umkehrung** (*converse*): wenn $Q$, dann $P$.\n- **Kontraposition** (*contrapositive*): wenn nicht $Q$, dann nicht $P$.\n- **Inverse**: wenn nicht $P$, dann nicht $Q$.\n\nNur die **Kontraposition** ist gleichwertig zum Original: Beide sind genau dann falsch, wenn $P$ gilt und $Q$ nicht. Die Inverse ist die Kontraposition der Umkehrung, sie steht und fällt mit der Umkehrung."
     },
     {
-      "id": "gleichwertig", "type": "choice", "lang": "en",
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die vier Aussagen, die sich aus einer Implikation bauen lassen, mit einem durchgehenden Beispiel.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:TMUA Umkehrung und Kontraposition.svg",
+        "aspect": 1.78,
+        "alt": "Vier Aussagen aus einer Implikation"
+      },
+      "timeline": [
+        {
+          "caption": "Aussage, Umkehrung, Inversion, Kontraposition: Gleichwertig sind nur die Paare auf den Diagonalen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Die Aussage: wenn 4 teilt n, dann ist n gerade. Sie ist wahr.",
+          "to": {
+            "x": 0.2,
+            "y": 0.29,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Umkehrung vertauscht Voraussetzung und Folgerung: wenn n gerade, dann 4 teilt n. Falsch, siehe n = 6.",
+          "to": {
+            "x": 0.73,
+            "y": 0.29,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Inversion verneint beide Teile: wenn 4 nicht teilt n, dann n ungerade. Ebenfalls falsch wegen n = 6.",
+          "to": {
+            "x": 0.2,
+            "y": 0.75,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Kontraposition vertauscht und verneint: wenn n ungerade, dann teilt 4 nicht n. Wahr, wie die Aussage.",
+          "to": {
+            "x": 0.73,
+            "y": 0.75,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "In der Mitte: Aussage und Kontraposition sind gleichwertig, ebenso Umkehrung und Inversion. Zwischen den anderen Paaren gibt es keinen Zusammenhang.",
+          "to": {
+            "x": 0.5,
+            "y": 0.52,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum die Kontraposition gleichwertig ist und die Umkehrung nicht.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P \\Rightarrow Q \\text{ falsch} \\iff P \\text{ wahr und } Q \\text{ falsch}",
+            "why": "Eine Implikation scheitert nur in einem Fall."
+          },
+          {
+            "tex": "\\neg Q \\Rightarrow \\neg P \\text{ falsch} \\iff \\neg Q \\text{ wahr und } \\neg P \\text{ falsch}",
+            "why": "Dieselbe Regel, angewandt auf die Kontraposition."
+          },
+          {
+            "tex": "\\iff Q \\text{ falsch und } P \\text{ wahr}",
+            "why": "Die doppelte Verneinung aufgelöst: genau derselbe Fall."
+          },
+          {
+            "tex": "(P \\Rightarrow Q) \\equiv (\\neg Q \\Rightarrow \\neg P)",
+            "why": "Beide scheitern im selben Fall, also haben sie immer denselben Wahrheitswert."
+          },
+          {
+            "tex": "Q \\Rightarrow P \\text{ falsch} \\iff Q \\text{ wahr und } P \\text{ falsch}",
+            "why": "Die Umkehrung scheitert in einem anderen Fall; sie kann wahr oder falsch sein, unabhängig vom Original."
+          },
+          {
+            "tex": "(Q \\Rightarrow P) \\equiv (\\neg P \\Rightarrow \\neg Q)",
+            "why": "Die Inversion ist die Kontraposition der Umkehrung und steht und fällt mit ihr."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Aussage.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontraposition.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleicher Fall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichwertig.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umkehrung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Inversion.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Hinreichend (*sufficient*)\n> $P$ ist hinreichend für $Q$, wenn $P \\Rightarrow Q$ gilt: $P$ allein genügt, damit $Q$ eintritt.\n\n> [!definition] Notwendig (*necessary*)\n> $Q$ ist notwendig für $P$, wenn $P \\Rightarrow Q$ gilt: Ohne $Q$ kein $P$. Eine notwendige Bedingung **folgt aus** der Zielaussage.\n\n> [!definition] Notwendig und hinreichend\n> $P$ ist notwendig und hinreichend für $Q$, wenn beide Richtungen gelten: $P \\Leftrightarrow Q$ (*if and only if*). Gilt keine Richtung, ist $P$ **weder notwendig noch hinreichend**.\n\nIm **Mengenbild** ist $P \\Rightarrow Q$ die Aussage »die Menge von $P$ liegt ganz in der Menge von $Q$«. Die hinreichende Bedingung ist die **kleinere** Menge, die notwendige die größere.",
+      "label": "Definitionen",
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Mengenbild für ganze Zahlen $n$: $P$ ist »4 teilt $n$«, $Q$ ist »$n$ ist gerade«.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:TMUA Notwendig und hinreichend.svg",
+        "aspect": 1.82,
+        "alt": "P liegt als kleinere Menge in Q"
+      },
+      "timeline": [
+        {
+          "caption": "Hinreichend und notwendig als Teilmengenbeziehung.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Die große Menge Q enthält die geraden Zahlen.",
+          "to": {
+            "x": 0.31,
+            "y": 0.45,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Darin liegt die Menge P der Vielfachen von 4: 4, 8, 12, −4. P liegt ganz in Q.",
+          "to": {
+            "x": 0.27,
+            "y": 0.6,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die 6 liegt in Q, aber nicht in P: Sie widerlegt Q ⇒ P.",
+          "to": {
+            "x": 0.5,
+            "y": 0.6,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Folgerungen: P ⇒ Q, also ist P hinreichend für Q und Q notwendig für P; Q ist nicht hinreichend, P nicht notwendig.",
+          "to": {
+            "x": 0.68,
+            "y": 0.43,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Merksatz: Die hinreichende Bedingung ist die kleinere Menge.",
+          "to": {
+            "x": 0.68,
+            "y": 0.77,
+            "z": 2.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "anim",
+      "label": "Mengenbild",
+      "md": "**Regionen statt Pfeile:** Zwei Aussageformen über dieselben Objekte als Mengen $P$ und $Q$. Markiert ist, was jeweils **leer** sein muss.",
+      "widget": "venn",
+      "params": {
+        "sets": 2,
+        "labels": [
+          "P",
+          "Q"
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Links die Objekte mit P, rechts die mit Q, in der Mitte die mit beiden.",
+          "do": {
+            "show": []
+          }
+        },
+        {
+          "caption": "P ⇒ Q heißt: Kein Objekt hat P ohne Q. Der markierte Bereich »P ohne Q« muss leer sein; jedes Objekt dort wäre ein Gegenbeispiel.",
+          "do": {
+            "show": [
+              "10"
+            ]
+          }
+        },
+        {
+          "caption": "Q ⇒ P heißt: Der Bereich »Q ohne P« ist leer.",
+          "do": {
+            "show": [
+              "01"
+            ]
+          }
+        },
+        {
+          "caption": "Sind beide Bereiche leer, haben P und Q genau dieselben Objekte: P ⇔ Q, notwendig und hinreichend.",
+          "do": {
+            "show": [
+              "10",
+              "01"
+            ]
+          }
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "id": "ve6",
+      "type": "anim",
+      "md": "**Herleitung: Wann ist $n^2$ durch 48 teilbar?** Der häufigste Aufgabentyp zu Bedingungen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n = 2^a \\cdot 3^b \\cdots \\;\\Rightarrow\\; n^2 = 2^{2a} \\cdot 3^{2b} \\cdots",
+            "why": "Beim Quadrieren verdoppelt sich jeder Exponent der Primfaktorzerlegung."
+          },
+          {
+            "tex": "48 = 2^4 \\cdot 3",
+            "why": "Zerlege die Zahl, durch die $n^2$ teilbar sein soll."
+          },
+          {
+            "tex": "2^4 \\mid n^2 \\iff 2a \\ge 4 \\iff a \\ge 2",
+            "why": "Für den Faktor $2^4$ in $n^2$ genügt $2^2$ in $n$."
+          },
+          {
+            "tex": "3 \\mid n^2 \\iff 2b \\ge 1 \\iff b \\ge 1",
+            "why": "Für den Faktor 3 in $n^2$ braucht $n$ einen Faktor 3."
+          },
+          {
+            "tex": "48 \\mid n^2 \\iff 2^2 \\cdot 3 = 12 \\mid n",
+            "why": "»12 teilt n« ist notwendig und hinreichend; »48 teilt n« wäre nur hinreichend."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Exponenten verdoppeln.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweier.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dreier.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: notwendig oder hinreichend entscheiden\n> 1. Beide Richtungen **getrennt** prüfen: Gilt $P \\Rightarrow Q$? Gilt $Q \\Rightarrow P$?\n> 2. Für jede Richtung entweder ein Gegenbeispiel suchen oder einen kurzen Beweis führen.\n> 3. Urteil ablesen: nur $P \\Rightarrow Q$ heißt $P$ hinreichend, nicht notwendig; nur $Q \\Rightarrow P$ heißt $P$ notwendig, nicht hinreichend; beide heißt notwendig und hinreichend; keine heißt weder noch.",
+      "label": "Verfahren",
+      "id": "ve7"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Umkehrung und Kontraposition",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Umkehrung und Kontraposition.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Vier Aussagen aus einer",
+          "blocks": [
+            {
+              "md": "Aus einer Implikation *wenn A, dann B* entstehen durch Vertauschen und Verneinen drei weitere:\n\n| Name | englisch | Form |\n|---|---|---|\n| Aussage | *statement* | wenn A, dann B |\n| **Umkehrung** | ***converse*** | wenn B, dann A |\n| **Kontraposition** | ***contrapositive*** | wenn nicht B, dann nicht A |\n| Inversion | *inverse* | wenn nicht A, dann nicht B |\n\nDie Spezifikation verlangt die Umkehrung, die Kontraposition und **die Beziehung zwischen den Wahrheitswerten** der drei. Die Inversion wird nicht eigens genannt, taucht aber in Antwortoptionen als Falle auf."
+            },
+            {
+              "image": "vault:TMUA Umkehrung und Kontraposition.svg"
+            }
+          ]
+        },
+        {
+          "title": "Die Kontraposition ist gleichwertig",
+          "blocks": [
+            {
+              "md": "> [!important] Aussage und Kontraposition sind immer beide wahr oder beide falsch\n> *Wenn A, dann B* ist genau dann falsch, wenn es einen Fall mit A wahr und B falsch gibt. *Wenn nicht B, dann nicht A* ist genau dann falsch, wenn es einen Fall mit *nicht B* wahr und *nicht A* falsch gibt -- also B falsch und A wahr. **Das ist derselbe Fall.** Beide Aussagen scheitern an denselben Gegenbeispielen und sind deshalb logisch gleichwertig (*logically equivalent*).\n>\n> Anschaulich: Wenn aus Regen immer nasse Straßen folgen, dann kann es bei trockener Straße nicht geregnet haben.\n\nAus demselben Grund sind **Umkehrung und Inversion** gleichwertig: Die Inversion ist die Kontraposition der Umkehrung."
+            }
+          ]
+        },
+        {
+          "title": "Die Umkehrung ist unabhängig",
+          "blocks": [
+            {
+              "md": "Über die Umkehrung sagt die Wahrheit der Aussage **nichts**. Alle vier Kombinationen kommen vor ($n$ eine ganze Zahl, $x$ reell):\n\n| Aussage | wahr? | Umkehrung | wahr? |\n|---|---|---|---|\n| wenn $n$ durch 4 teilbar, dann $n$ gerade | ja | wenn $n$ gerade, dann durch 4 teilbar | nein, $n = 6$ |\n| wenn $n$ gerade, dann durch 4 teilbar | nein | wenn durch 4 teilbar, dann gerade | ja |\n| wenn $n$ ungerade, dann $n^2$ ungerade | ja | wenn $n^2$ ungerade, dann $n$ ungerade | ja |\n| wenn $x > 0$, dann $x^2 > 1$ | nein, $x = \\tfrac12$ | wenn $x^2 > 1$, dann $x > 0$ | nein, $x = -2$ |\n\nSind Aussage und Umkehrung **beide** wahr, gilt die Äquivalenz *A iff B* -- siehe **Implikation und Äquivalenz**.\n\n> [!warning] Der häufigste Denkfehler überhaupt\n> Von *wenn A, dann B* auf *wenn B, dann A* zu schließen, heißt in der Logik **Bejahung des Konsequens** (*affirming the consequent*). Von *wenn A, dann B* auf *wenn nicht A, dann nicht B* zu schließen, heißt **Verneinung des Antezedens**. Beide Schlüsse sind ungültig -- und beide stecken hinter einem großen Teil der falschen Antworten in Paper 2."
+            }
+          ]
+        },
+        {
+          "title": "Die Kontraposition richtig bilden",
+          "blocks": [
+            {
+              "md": "Beim Verneinen gelten alle Regeln aus **Negation von Aussagen**:\n\n| Aussage | Kontraposition |\n|---|---|\n| wenn $x > 2$, dann $x^2 > 4$ | wenn $x^2 \\le 4$, dann $x \\le 2$ |\n| wenn $n$ prim und $n > 2$, dann $n$ ungerade | wenn $n$ gerade, dann $n$ nicht prim **oder** $n \\le 2$ |\n| wenn $a = 0$ oder $b = 0$, dann $ab = 0$ | wenn $ab \\ne 0$, dann $a \\ne 0$ **und** $b \\ne 0$ |\n\n> [!tip] Bei Und und Oder in der Voraussetzung wird die Verknüpfung umgedreht\n> Die Voraussetzung wird als Ganzes verneint -- mit De Morgan. Aus *A und C* wird *nicht A oder nicht C*. Wer nur die Einzelteile verneint und das Und behält, erhält eine andere, meist falsche Aussage."
+            }
+          ]
+        },
+        {
+          "title": "Kontraposition als Beweiswerkzeug",
+          "blocks": [
+            {
+              "md": "Manchmal ist die Kontraposition leichter zu beweisen als die Aussage selbst. Klassisch:\n\n*Behauptung:* Ist $n^2$ gerade, so ist $n$ gerade.\n\nDirekt ist das unhandlich, weil aus $n^2 = 2m$ nichts Brauchbares über $n$ folgt. Die **Kontraposition** lautet: Ist $n$ ungerade, so ist $n^2$ ungerade. Mit $n = 2k + 1$ folgt $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, also ungerade. Weil Aussage und Kontraposition gleichwertig sind, ist die Behauptung bewiesen.\n\nDas Verfahren ist verwandt mit dem **Widerspruchsbeweis**, aber nicht dasselbe: Die Kontraposition beweist eine andere, gleichwertige Aussage direkt, der Widerspruchsbeweis leitet aus der Annahme des Gegenteils einen Widerspruch her."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Umkehrung und Kontraposition verwechseln.** Die Kontraposition verneint **und** vertauscht.\n- **Aus der Wahrheit der Aussage die Wahrheit der Umkehrung folgern.**\n- **Beim Verneinen das Relationszeichen falsch drehen:** Die Verneinung von $x > 2$ ist $x \\le 2$, nicht $x < 2$.\n- **Die Inversion für die Kontraposition halten** -- sie verneint, vertauscht aber nicht.\n\nVerwandt: **Implikation und Äquivalenz** · **Notwendige und hinreichende Bedingungen** · Aufgabentyp: **Äquivalente Umformulierungen erkennen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Notwendige und hinreichende Bedingungen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Notwendige und hinreichende Bedingungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Eine Implikation, zwei Blickrichtungen",
+          "blocks": [
+            {
+              "md": "Die Begriffe *hinreichend* (*sufficient*) und *notwendig* (*necessary*) beschreiben dieselbe Implikation A ⇒ B von zwei Seiten:\n\n| Formulierung | bedeutet | Blickrichtung |\n|---|---|---|\n| **A ist hinreichend für B** | A ⇒ B | wer A hat, hat damit schon B |\n| **B ist notwendig für A** | A ⇒ B | ohne B gibt es kein A |\n| A ist notwendig und hinreichend für B | A ⇔ B | beide Richtungen |\n\n> [!important] Der Merksatz\n> **Hinreichend steht links vom Pfeil, notwendig rechts.** In A ⇒ B ist A die hinreichende Bedingung für B und B die notwendige Bedingung für A.\n>\n> Die zweite Hälfte folgt aus der **Kontraposition**: A ⇒ B ist gleichwertig mit *nicht B ⇒ nicht A*. Fehlt B, fehlt also zwangsläufig A -- B ist unverzichtbar, eben notwendig."
+            }
+          ]
+        },
+        {
+          "title": "Das Mengenbild",
+          "blocks": [
+            {
+              "md": "Eine Bedingung an eine Zahl lässt sich als die **Menge der Zahlen** lesen, die sie erfüllen. Dann gilt:\n\n$$P \\text{ hinreichend für } Q \\iff \\text{P-Menge} \\subseteq \\text{Q-Menge}$$"
+            },
+            {
+              "image": "vault:TMUA Notwendig und hinreichend.svg"
+            },
+            {
+              "md": "*Beispiel* für ganze Zahlen $n$: Die Menge der durch 4 teilbaren Zahlen liegt in der Menge der geraden Zahlen. Also ist *\"n ist durch 4 teilbar\"* hinreichend für *\"n ist gerade\"*, und *\"n ist gerade\"* ist notwendig für *\"n ist durch 4 teilbar\"*. Die Zahl 6 liegt in der großen, nicht in der kleinen Menge: Sie zeigt, dass Geradheit **nicht** hinreichend für Teilbarkeit durch 4 ist.\n\n> [!tip] Das Mengenbild ist bei Ungleichungen das schnellste Werkzeug\n> Bedingungen an reelle Zahlen sind Intervalle. *\"x > 3\"* ist hinreichend für *\"x² > 4\"*, weil das Intervall $(3, \\infty)$ ganz in der Lösungsmenge $\\{x < -2\\} \\cup \\{x > 2\\}$ liegt. Notwendig ist es nicht: $x = -5$ erfüllt $x^2 > 4$, aber nicht $x > 3$.\n>\n> Zwei Intervalle auf einen Zahlenstrahl zeichnen und prüfen, welches im anderen liegt -- das ersetzt jede Rechnung."
+            }
+          ]
+        },
+        {
+          "title": "Die vier möglichen Urteile",
+          "blocks": [
+            {
+              "md": "Für zwei Bedingungen P und Q gibt es genau vier Fälle, und genau diese stehen im TMUA fast immer als Antwortoptionen:\n\n| P ⇒ Q | Q ⇒ P | Urteil über P (für Q) | Beispiel für ganze Zahlen $n$ |\n|---|---|---|---|\n| ja | ja | notwendig und hinreichend | P: $n^2$ ungerade, Q: $n$ ungerade |\n| ja | nein | hinreichend, nicht notwendig | P: $12 \\mid n$, Q: $n$ gerade |\n| nein | ja | notwendig, nicht hinreichend | P: $n$ gerade, Q: $12 \\mid n$ |\n| nein | nein | weder noch | P: $n$ gerade, Q: $3 \\mid n$ |\n\nJedes \"nein\" wird durch **ein Gegenbeispiel** belegt, jedes \"ja\" durch ein Argument für alle Fälle."
+            }
+          ]
+        },
+        {
+          "title": "Sprachliche Entsprechungen",
+          "blocks": [
+            {
+              "md": "| Satz | Implikation | Rolle von B |\n|---|---|---|\n| *A if B* | B ⇒ A | B hinreichend für A |\n| *A only if B* | A ⇒ B | B notwendig für A |\n| *A if and only if B* | A ⇔ B | B notwendig und hinreichend |\n\n> [!warning] \"Notwendig\" heißt nicht \"verursacht\"\n> Dass Sauerstoff notwendig für ein Feuer ist, heißt nicht, dass Sauerstoff Feuer verursacht oder hinreicht. Eine notwendige Bedingung schließt nur aus: Ohne sie geht es nicht. Wer \"notwendig\" als \"führt zu\" liest, dreht den Pfeil um -- der häufigste Fehler in diesem Themenfeld."
+            }
+          ]
+        },
+        {
+          "title": "Mehrere Bedingungen",
+          "blocks": [
+            {
+              "md": "Bei mehreren Bedingungen gilt:\n\n- Werden Bedingungen mit **und** verknüpft, wird die Bedingung **stärker** (kleinere Menge). Eine stärkere Bedingung ist eher hinreichend und seltener notwendig.\n- Werden sie mit **oder** verknüpft, wird die Bedingung **schwächer** (größere Menge). Eine schwächere Bedingung ist eher notwendig und seltener hinreichend.\n\n*Beispiel* für die Gleichung $x^2 + bx + c = 0$: Die Bedingung $c < 0$ ist hinreichend für zwei verschiedene reelle Lösungen, denn dann ist $b^2 - 4c > 0$. Notwendig ist sie nicht -- $b = 5, c = 1$ liefert ebenfalls zwei Lösungen. Die Bedingung $b^2 > 4c$ ist notwendig und hinreichend; $b^2 \\ge 4c$ ist notwendig, aber nicht hinreichend, weil sie die doppelte Nullstelle zulässt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Den Pfeil umdrehen:** \"P ist notwendig für Q\" als P ⇒ Q lesen. Richtig ist Q ⇒ P.\n- **Nur eine Richtung prüfen** und dann \"notwendig und hinreichend\" ankreuzen.\n- **Den Grundbereich vergessen:** Ob eine Bedingung hinreichend ist, hängt davon ab, ob $x$ reell, ganz oder positiv ist.\n- **Beispiele für Beweise halten:** Dass P und Q für drei Werte zusammenfallen, zeigt keine Äquivalenz.\n\nVerwandt: **Implikation und Äquivalenz** · **Umkehrung und Kontraposition** · Aufgabentyp: **Notwendig oder hinreichend entscheiden**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Äquivalente Umformulierungen erkennen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Äquivalente Umformulierungen erkennen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Aussage wird vorgegeben, dazu mehrere Umformulierungen. Gefragt ist, welche davon **logisch gleichwertig** sind -- *logically equivalent*, *has the same meaning as*, *is equivalent to*. Oft werden bewusst Formulierungen gemischt: Kontraposition, Umkehrung, \"only if\", \"necessary\", \"sufficient\"."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Die Vorgabe in die Grundform A ⇒ B bringen.** A und B mit Buchstaben benennen.\n2. **Jede Option in dieselbe Grundform übersetzen**, mit der Tabelle unten.\n3. **Vergleichen:** Gleichwertig sind nur **A ⇒ B** selbst und die **Kontraposition** *nicht B ⇒ nicht A* (dazu *nicht A oder B*).\n4. **Umkehrung und Inversion aussortieren:** B ⇒ A und *nicht A ⇒ nicht B* sind **nicht** gleichwertig.\n\n| Formulierung | Grundform |\n|---|---|\n| *if A then B* · *A implies B* · *B if A* · *B whenever A* | A ⇒ B |\n| *A only if B* | A ⇒ B |\n| *A is sufficient for B* · *B is necessary for A* | A ⇒ B |\n| *if not B then not A* | A ⇒ B (Kontraposition) |\n| *not A or B* · *either not A, or B, or both* | A ⇒ B |\n| *if B then A* · *A if B* · *B only if A* | B ⇒ A (Umkehrung) |\n| *A is necessary for B* · *B is sufficient for A* | B ⇒ A |\n| *if not A then not B* | B ⇒ A (Inversion, gleichwertig zur Umkehrung) |\n\n> [!important] Form, nicht Inhalt\n> Gleichwertigkeit ist eine Frage der **logischen Form**. Zwei Aussagen können zufällig beide wahr sein, ohne gleichwertig zu sein. In Aufgaben mit konkreten mathematischen Aussagen hilft trotzdem eine Probe: Ist die Vorgabe wahr und eine Option falsch, kann die Option nicht gleichwertig sein."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Consider the statement S: \"If the train is late, then Ana misses the meeting.\"\n> Which of the following statements are logically equivalent to S?\n>\n> I If Ana does not miss the meeting, then the train is not late.\n> II The train is late only if Ana misses the meeting.\n> III Ana misses the meeting if the train is late.\n> IV If Ana misses the meeting, then the train is late.\n> V The train being late is necessary for Ana missing the meeting.\n> VI Either the train is not late, or Ana misses the meeting, or both.\n\n**Schritt 1:** A = *der Zug ist verspätet*, B = *Ana verpasst das Treffen*. S ist A ⇒ B.\n\n**Schritt 2:**\n\n| Aussage | Grundform                     | gleichwertig?      |\n| ------- | ----------------------------- | ------------------ |\n| I       | nicht B ⇒ nicht A             | ja, Kontraposition |\n| II      | A only if B, also A ⇒ B       | ja                 |\n| III     | B if A, also A ⇒ B            | ja                 |\n| IV      | B ⇒ A                         | nein, Umkehrung    |\n| V       | A notwendig für B, also B ⇒ A | nein, Umkehrung    |\n| VI      | nicht A oder B                | ja                 |\n\nGleichwertig sind **I, II, III und VI**.\n\n> [!tip] Aussage V sauber lesen\n> *\"The train being late is necessary for Ana missing the meeting\"* heißt: Ohne Verspätung kein verpasstes Treffen. Also: Wenn Ana das Treffen verpasst, war der Zug verspätet -- B ⇒ A. Das behauptet S nicht; Ana könnte das Treffen auch aus anderen Gründen verpassen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **\"A only if B\" als B ⇒ A lesen.** Richtig ist A ⇒ B.\n- **\"A if B\" mit \"if A then B\" gleichsetzen.** *A if B* ist B ⇒ A -- das \"if\" steht vor der Voraussetzung.\n- **Die Inversion für gleichwertig halten**, weil sie verneint wie die Kontraposition. Sie vertauscht aber nicht.\n- **Nach Inhalt statt nach Form urteilen**, besonders wenn alle Aussagen wahr klingen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Let $x$ be a real number. Which one of the following is logically equivalent to the statement \"$x > 2$ only if $x^2 > 4$\"?\n>\n> - **A** If $x^2 > 4$, then $x > 2$.\n> - **B** If $x \\le 2$, then $x^2 \\le 4$.\n> - **C** If $x^2 \\le 4$, then $x \\le 2$.\n> - **D** $x > 2$ is necessary for $x^2 > 4$.\n> - **E** $x^2 > 4$ if and only if $x > 2$.\n\n> [!success]- Lösung\n> **C.** Die Vorgabe ist *x > 2 ⇒ x² > 4*. Ihre Kontraposition lautet *x² ≤ 4 ⇒ x ≤ 2* -- das ist C.\n> A ist die Umkehrung, B die Inversion, D bedeutet *x² > 4 ⇒ x > 2* (Umkehrung), E behauptet beide Richtungen.\n> Probe über den Inhalt: Die Vorgabe ist wahr, A, B, D und E sind falsch (Gegenbeispiel jeweils $x = -3$). Nur C ist wahr.\n\n> [!question] Aufgabe 2\n> Let P and Q be statements. The statement \"P is necessary for Q\" is logically equivalent to which one of the following?\n>\n> - **A** If P, then Q.\n> - **B** If not Q, then not P.\n> - **C** Q only if P.\n> - **D** P only if Q.\n> - **E** P is sufficient for Q.\n\n> [!success]- Lösung\n> **C.** *P ist notwendig für Q* heißt Q ⇒ P. *Q only if P* heißt ebenfalls Q ⇒ P.\n> A, D und E bedeuten P ⇒ Q. B ist die Kontraposition von P ⇒ Q und bedeutet damit ebenfalls P ⇒ Q.\n\n> [!question] Aufgabe 3\n> Consider the statement: \"If a number is a multiple of 10, then it is even.\"\n> How many of the following four statements are logically equivalent to it?\n>\n> (1) If a number is even, then it is a multiple of 10.\n> (2) If a number is not even, then it is not a multiple of 10.\n> (3) A number is a multiple of 10 only if it is even.\n> (4) Every number is either not a multiple of 10, or even, or both.\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 3\n> - **E** 4\n\n> [!success]- Lösung\n> **D.** A = *Vielfaches von 10*, B = *gerade*. Die Vorgabe ist A ⇒ B.\n> (1) B ⇒ A: Umkehrung, nicht gleichwertig (und falsch: 4).\n> (2) nicht B ⇒ nicht A: Kontraposition, gleichwertig.\n> (3) A only if B, also A ⇒ B: gleichwertig.\n> (4) nicht A oder B für jede Zahl: gleichwertig.\n> Drei der vier Aussagen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Notwendig oder hinreichend entscheiden** · **Wahrheitswert einer Implikation prüfen** · **Quantifizierte Aussagen negieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz4",
+      "type": "note",
+      "title": "Notwendig oder hinreichend entscheiden",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Notwendig oder hinreichend entscheiden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Zwei Bedingungen werden gegenübergestellt, und gefragt ist ihre logische Beziehung. Die Antwortoptionen sind fast immer dieselben vier:\n\n- *P is necessary but not sufficient for Q*\n- *P is sufficient but not necessary for Q*\n- *P is necessary and sufficient for Q*\n- *P is neither necessary nor sufficient for Q*\n\nEine Variante fragt umgekehrt: *Which of the following conditions is sufficient (but not necessary) for ...?* -- dann wird jede Option einzeln gegen dieselbe Zielbedingung geprüft."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beide Bedingungen präzise hinschreiben**, mit Grundbereich. Wenn möglich als Menge oder Intervall.\n2. **Richtung festlegen:** *P hinreichend für Q* heißt P ⇒ Q. *P notwendig für Q* heißt Q ⇒ P.\n3. **P ⇒ Q prüfen:** ein Objekt suchen, das P erfüllt und Q verletzt. Gibt es eines, ist P **nicht hinreichend**. Gibt es keines (Argument oder Mengeninklusion), ist P hinreichend.\n4. **Q ⇒ P prüfen:** ein Objekt suchen, das Q erfüllt und P verletzt. Gibt es eines, ist P **nicht notwendig**.\n5. **Urteil ablesen:**\n\n| P ⇒ Q | Q ⇒ P | P ist für Q ... |\n|---|---|---|\n| ja | ja | notwendig und hinreichend |\n| ja | nein | hinreichend, nicht notwendig |\n| nein | ja | notwendig, nicht hinreichend |\n| nein | nein | weder notwendig noch hinreichend |\n\n6. **Kontrolle am Mengenbild:** Die hinreichende Bedingung ist die kleinere Menge."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Let $x$ be a real number. Consider the conditions\n> P: $x^2 < 9$\n> Q: $x < 3$\n> Which one of the following is true?\n>\n> - **A** P is necessary but not sufficient for Q.\n> - **B** P is sufficient but not necessary for Q.\n> - **C** P is necessary and sufficient for Q.\n> - **D** P is neither necessary nor sufficient for Q.\n\n**Schritt 1:** P bedeutet $-3 < x < 3$, also das Intervall $(-3, 3)$. Q ist das Intervall $(-\\infty, 3)$.\n\n**Schritt 3:** Liegt jedes $x$ aus $(-3, 3)$ in $(-\\infty, 3)$? Ja. Also P ⇒ Q, **P ist hinreichend**.\n\n**Schritt 4:** Gibt es ein $x$ mit $x < 3$, aber nicht $x^2 < 9$? Ja, $x = -4$: $-4 < 3$, aber $16 > 9$. Also nicht Q ⇒ P, **P ist nicht notwendig**.\n\n**Schritt 5:** Antwort **B**.\n\n**Schritt 6:** $(-3, 3)$ ist die kleinere Menge und liegt ganz in $(-\\infty, 3)$ -- die hinreichende Bedingung ist die engere. Passt.\n\n> [!tip] Der Schnellweg\n> Beide Bedingungen als Intervalle auf einen Zahlenstrahl. Liegt P in Q: hinreichend. Liegt Q in P: notwendig. Beides: äquivalent. Keines: weder noch. Die Frage ist in 30 Sekunden erledigt, wenn die Intervalle stimmen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Richtung verwechseln.** *P notwendig für Q* heißt Q ⇒ P, nicht P ⇒ Q. Vor jeder Prüfung den Pfeil hinschreiben.\n- **Nur eine Richtung prüfen** und bei \"ja\" sofort *necessary and sufficient* ankreuzen.\n- **Den Grundbereich überlesen.** *Let n be a positive integer* ändert die Mengen.\n- **Gegenbeispiele in der falschen Richtung suchen:** Für \"nicht hinreichend\" muss das Objekt P **erfüllen** und Q **verletzen** -- nicht umgekehrt.\n- **Randpunkte:** Bei $x^2 \\le 9$ statt $x^2 < 9$ ist $x = 3$ zulässig und verletzt $x < 3$. Dann wäre P nicht mehr hinreichend. Strenge und nicht strenge Ungleichungen genau lesen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Let $n$ be a positive integer. The condition \"$n$ is even\" is ____ for the condition \"$n$ is divisible by 12\".\n>\n> - **A** necessary but not sufficient\n> - **B** sufficient but not necessary\n> - **C** necessary and sufficient\n> - **D** neither necessary nor sufficient\n\n> [!success]- Lösung\n> **A.** P: $n$ gerade, Q: $12 \\mid n$.\n> P ⇒ Q? Gegenbeispiel $n = 2$: gerade, aber nicht durch 12 teilbar. Nicht hinreichend.\n> Q ⇒ P? Ist $n = 12k$, so ist $n = 2 \\cdot 6k$ gerade. Notwendig.\n> Mengenbild: Die Vielfachen von 12 liegen in den geraden Zahlen; die geraden Zahlen sind die größere Menge, also die notwendige Bedingung.\n\n> [!question] Aufgabe 2\n> Let $x$ and $y$ be real numbers. The condition $x > y$ is ____ for the condition $x^2 > y^2$.\n>\n> - **A** necessary but not sufficient\n> - **B** sufficient but not necessary\n> - **C** necessary and sufficient\n> - **D** neither necessary nor sufficient\n\n> [!success]- Lösung\n> **D.** P: $x > y$, Q: $x^2 > y^2$.\n> P ⇒ Q? $x = 1$, $y = -2$: $1 > -2$, aber $1 < 4$. Nicht hinreichend.\n> Q ⇒ P? $x = -3$, $y = 1$: $9 > 1$, aber $-3 < 1$. Nicht notwendig.\n> Die Falle: Für **positive** Zahlen wären beide Bedingungen äquivalent. Wer nur positive Testwerte wählt, kreuzt C an.\n\n> [!question] Aufgabe 3\n> Let $x$ be a real number. The condition $\\lvert x - 1 \\rvert < 2$ is ____ for the condition $-1 < x < 3$.\n>\n> - **A** necessary but not sufficient\n> - **B** sufficient but not necessary\n> - **C** necessary and sufficient\n> - **D** neither necessary nor sufficient\n\n> [!success]- Lösung\n> **C.** $\\lvert x - 1 \\rvert < 2$ heißt: Der Abstand von $x$ zu 1 ist kleiner als 2, also $-2 < x - 1 < 2$, also $-1 < x < 3$. Beide Bedingungen beschreiben **dieselbe Menge** -- sie sind äquivalent.\n\n> [!question] Aufgabe 4\n> Let $b$ and $c$ be real numbers. Which one of the following conditions is **sufficient but not necessary** for the equation $x^2 + bx + c = 0$ to have two distinct real roots?\n>\n> - **A** $b^2 > 4c$\n> - **B** $c < 0$\n> - **C** $b > 2$\n> - **D** $c > 0$\n> - **E** $b^2 \\ge 4c$\n\n> [!success]- Lösung\n> **B.** Zwei verschiedene reelle Lösungen gibt es genau dann, wenn $b^2 - 4c > 0$.\n> A: $b^2 > 4c$ ist genau diese Bedingung -- notwendig **und** hinreichend, also nicht die gesuchte.\n> B: Aus $c < 0$ folgt $-4c > 0$, also $b^2 - 4c > 0$ wegen $b^2 \\ge 0$. Hinreichend. Nicht notwendig: $b = 5$, $c = 1$ liefert $25 - 4 > 0$, also zwei Lösungen trotz $c > 0$.\n> C: $b = 3$, $c = 10$: $9 - 40 < 0$. Nicht hinreichend.\n> D: $c > 0$ allein erzwingt nichts; $b = 0$, $c = 1$ liefert keine Lösung.\n> E: $b^2 \\ge 4c$ lässt $b^2 = 4c$ zu, also eine doppelte Nullstelle. Notwendig, aber nicht hinreichend."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Äquivalente Umformulierungen erkennen** · **Wahrheitswert einer Implikation prüfen** · **Parameterbedingung über die Diskriminante**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "widget",
+      "label": "Wahrheitstafel ausfüllen",
+      "md": "Fülle die Spalten aus. Welche Spalte stimmt mit $P \\Rightarrow Q$ überein?",
+      "widget": "truth-table",
+      "params": {
+        "vars": [
+          "P",
+          "Q"
+        ],
+        "columns": [
+          {
+            "label": "P \\Rightarrow Q",
+            "expr": "P => Q"
+          },
+          {
+            "label": "\\neg Q \\Rightarrow \\neg P",
+            "expr": "!Q => !P",
+            "ask": true
+          },
+          {
+            "label": "Q \\Rightarrow P",
+            "expr": "Q => P",
+            "ask": true
+          },
+          {
+            "label": "\\neg P \\Rightarrow \\neg Q",
+            "expr": "!P => !Q",
+            "ask": true
+          }
+        ]
+      },
+      "goal": {},
+      "explain": "Die Kontraposition $\\neg Q \\Rightarrow \\neg P$ hat dieselbe Spalte wie die Aussage (w, f, w, w). Umkehrung und Inversion haben gemeinsam die Spalte w, w, f, w.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Begriffe",
+      "md": "Aus »wenn $P$, dann $Q$« entstehen drei weitere Aussagen. Ordne zu.",
+      "pairs": [
+        [
+          "Umkehrung (*converse*)",
+          "wenn $Q$, dann $P$"
+        ],
+        [
+          "Kontraposition (*contrapositive*)",
+          "wenn nicht $Q$, dann nicht $P$"
+        ],
+        [
+          "Inversion (*inverse*)",
+          "wenn nicht $P$, dann nicht $Q$"
+        ],
+        [
+          "Verneinung (*negation*)",
+          "$P$ und nicht $Q$"
+        ]
+      ],
+      "explain": "Nur die Kontraposition ist gleichwertig zur Aussage; die Verneinung ist keine Implikation.",
+      "id": "vq2"
+    },
+    {
+      "type": "sort",
+      "label": "Einordnen",
+      "md": "Es sei $n$ eine positive ganze Zahl. Ordne jede Bedingung ein, bezogen auf »$n$ ist durch 6 teilbar«.",
+      "categories": [
+        "hinreichend, nicht notwendig",
+        "notwendig, nicht hinreichend",
+        "notwendig und hinreichend",
+        "weder noch"
+      ],
+      "items": [
+        {
+          "md": "$n$ ist durch 12 teilbar",
+          "cat": "hinreichend, nicht notwendig"
+        },
+        {
+          "md": "$n$ ist gerade",
+          "cat": "notwendig, nicht hinreichend"
+        },
+        {
+          "md": "$n$ ist durch 2 und durch 3 teilbar",
+          "cat": "notwendig und hinreichend"
+        },
+        {
+          "md": "$n$ ist durch 4 teilbar",
+          "cat": "weder noch"
+        },
+        {
+          "md": "$n^2$ ist durch 36 teilbar",
+          "cat": "notwendig und hinreichend"
+        },
+        {
+          "md": "$n$ ist durch 3 teilbar",
+          "cat": "notwendig, nicht hinreichend"
+        }
+      ],
+      "explain": "Hinreichend ist eine Bedingung, deren Menge in der Menge der Vielfachen von 6 liegt (12, 24, …). Notwendig ist sie, wenn jedes Vielfache von 6 sie erfüllt. $36 \\mid n^2 \\iff 6 \\mid n$, weil sich die Exponenten beim Quadrieren verdoppeln.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "For real numbers $x$, the condition $x > 3$ is … for $x^2 > 9$.",
+      "options": [
+        {
+          "md": "necessary but not sufficient",
+          "why": "Notwendig hieße: aus $x^2 > 9$ folgt $x > 3$; das scheitert an $x = -4$."
+        },
+        {
+          "md": "necessary and sufficient",
+          "why": "Die Richtung $x^2 > 9 \\Rightarrow x > 3$ fehlt."
+        },
+        {
+          "md": "sufficient but not necessary",
+          "correct": true
+        },
+        {
+          "md": "neither necessary nor sufficient",
+          "why": "Aus $x > 3$ folgt sehr wohl $x^2 > 9$."
+        }
+      ],
+      "explain": "Aus $x > 3$ folgt $x^2 > 9$, also hinreichend. Umgekehrt erfüllt $x = -4$ die Ungleichung $x^2 > 9$, aber nicht $x > 3$: nicht notwendig.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Bedingung",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Which of the following is the contrapositive of *if $n^2$ is even, then $n$ is even*?",
+      "options": [
+        {
+          "md": "if $n$ is odd, then $n^2$ is even",
+          "why": "Vertauscht, aber nur die Folgerung verneint."
+        },
+        {
+          "md": "if $n^2$ is odd, then $n$ is odd",
+          "why": "Das ist die Inversion."
+        },
+        {
+          "md": "if $n$ is even, then $n^2$ is even",
+          "why": "Das ist die Umkehrung."
+        },
+        {
+          "md": "if $n$ is odd, then $n^2$ is odd",
+          "correct": true
+        }
+      ],
+      "explain": "Kontraposition: vertauschen **und** beide Teile verneinen. Aus »$n^2$ gerade $\\Rightarrow$ $n$ gerade« wird »$n$ ungerade $\\Rightarrow$ $n^2$ ungerade«.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Kontraposition",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Quadrate",
+      "md": "Welches ist die kleinste positive ganze Zahl $n$, für die $n^2$ durch 72 teilbar ist?",
+      "answer": 12,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$72 = 2^3 \\cdot 3^2$. Für $2^3 \\mid n^2$ braucht $n$ den Faktor $2^2$, für $3^2 \\mid n^2$ den Faktor 3. Also $12 \\mid n$, und $12^2 = 144 = 2 \\cdot 72$.",
+      "id": "vq6"
+    },
+    {
+      "type": "cloze",
+      "label": "Begriffe",
+      "md": "Gilt $P \\Rightarrow Q$, dann ist $P$ {{0}} für $Q$, und $Q$ ist {{1}} für $P$.",
+      "blanks": [
+        {
+          "accept": [
+            "hinreichend"
+          ]
+        },
+        {
+          "accept": [
+            "notwendig"
+          ]
+        }
+      ],
+      "explain": "Die kleinere Menge ist hinreichend, die größere notwendig.",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist die Umkehrung einer Implikation wahr, dann ist auch ihre Inversion wahr.",
+      "answer": true,
+      "explain": "Die Inversion ist die Kontraposition der Umkehrung; beide haben immer denselben Wahrheitswert.",
+      "label": "Inversion",
+      "id": "vq8"
+    },
+    {
+      "id": "gleichwertig",
+      "type": "choice",
+      "lang": "en",
       "md": "Which one of the following is equivalent to the statement *if a number is divisible by 4, then it is even*?",
       "options": [
-        { "md": "If a number is odd, then it is not divisible by 4.", "correct": true },
-        { "md": "If a number is even, then it is divisible by 4.", "why": "Das ist die Umkehrung; sie ist falsch (6)." },
-        { "md": "If a number is not divisible by 4, then it is odd.", "why": "Das ist die Inverse; sie ist falsch (6)." },
-        { "md": "A number is divisible by 4 if it is even.", "why": "»P, wenn Q« heißt Q ⇒ P: wieder die Umkehrung." }
+        {
+          "md": "If a number is odd, then it is not divisible by 4.",
+          "correct": true
+        },
+        {
+          "md": "If a number is even, then it is divisible by 4.",
+          "why": "Das ist die Umkehrung; sie ist falsch (6)."
+        },
+        {
+          "md": "If a number is not divisible by 4, then it is odd.",
+          "why": "Das ist die Inverse; sie ist falsch (6)."
+        },
+        {
+          "md": "A number is divisible by 4 if it is even.",
+          "why": "»P, wenn Q« heißt Q ⇒ P: wieder die Umkehrung."
+        }
       ],
       "explain": "Die Kontraposition: aus »nicht gerade« folgt »nicht durch 4 teilbar«."
     },
     {
-      "id": "sprache", "type": "text",
+      "id": "sprache",
+      "type": "text",
       "md": "»Wenn $P$, dann $Q$« hat viele Gesichter:\n\n- $P$ ist **hinreichend** für $Q$ (*sufficient*): $P$ allein genügt.\n- $Q$ ist **notwendig** für $P$ (*necessary*): ohne $Q$ kein $P$.\n- *$P$ only if $Q$*: $P$ nur dann, wenn $Q$.\n\nVorsicht: *$P$ if $Q$* heißt $Q \\Rightarrow P$, also die andere Richtung. *$P$ if and only if $Q$* behauptet beide Richtungen.\n\nMerkhilfe für »notwendig«: eine notwendige Bedingung **folgt aus** der Zielaussage."
     },
     {
-      "id": "nurwenn", "type": "choice", "lang": "en",
+      "id": "nurwenn",
+      "type": "choice",
+      "lang": "en",
       "md": "Which of the following means the same as *you can enter only if you have a ticket*?",
       "options": [
-        { "md": "If you enter, then you have a ticket.", "correct": true },
-        { "md": "If you have a ticket, then you can enter.", "why": "Das wäre »you can enter if you have a ticket«: die Umkehrung." },
-        { "md": "Having a ticket is sufficient for entering.", "why": "Hinreichend hieße: Ticket ⇒ Einlass. Gemeint ist das Gegenteil, das Ticket ist notwendig." },
-        { "md": "You can enter if you have a ticket.", "why": "»if« dreht die Richtung um." }
+        {
+          "md": "If you enter, then you have a ticket.",
+          "correct": true
+        },
+        {
+          "md": "If you have a ticket, then you can enter.",
+          "why": "Das wäre »you can enter if you have a ticket«: die Umkehrung."
+        },
+        {
+          "md": "Having a ticket is sufficient for entering.",
+          "why": "Hinreichend hieße: Ticket ⇒ Einlass. Gemeint ist das Gegenteil, das Ticket ist notwendig."
+        },
+        {
+          "md": "You can enter if you have a ticket.",
+          "why": "»if« dreht die Richtung um."
+        }
       ],
       "explain": "*P only if Q* heißt $P \\Rightarrow Q$: Wer drin ist, hatte ein Ticket. Das Ticket ist notwendig, nicht hinreichend."
     },
     {
-      "id": "zwoelf", "type": "sort", "label": "Einordnen",
+      "id": "zwoelf",
+      "type": "sort",
+      "label": "Einordnen",
       "md": "Es sei $n$ eine positive ganze Zahl. Ordne jede Bedingung ein, bezogen auf die Aussage »$n$ ist durch 12 teilbar«.",
-      "categories": ["notwendig, nicht hinreichend", "hinreichend, nicht notwendig", "notwendig und hinreichend", "weder noch"],
+      "categories": [
+        "notwendig, nicht hinreichend",
+        "hinreichend, nicht notwendig",
+        "notwendig und hinreichend",
+        "weder noch"
+      ],
       "items": [
-        { "md": "$n$ ist durch 6 teilbar", "cat": "notwendig, nicht hinreichend" },
-        { "md": "$n$ ist gerade", "cat": "notwendig, nicht hinreichend" },
-        { "md": "$n$ ist durch 24 teilbar", "cat": "hinreichend, nicht notwendig" },
-        { "md": "$n = 36$", "cat": "hinreichend, nicht notwendig" },
-        { "md": "$n$ ist durch 3 und durch 4 teilbar", "cat": "notwendig und hinreichend" },
-        { "md": "$n$ ist durch 8 teilbar", "cat": "weder noch" }
+        {
+          "md": "$n$ ist durch 6 teilbar",
+          "cat": "notwendig, nicht hinreichend"
+        },
+        {
+          "md": "$n$ ist gerade",
+          "cat": "notwendig, nicht hinreichend"
+        },
+        {
+          "md": "$n$ ist durch 24 teilbar",
+          "cat": "hinreichend, nicht notwendig"
+        },
+        {
+          "md": "$n = 36$",
+          "cat": "hinreichend, nicht notwendig"
+        },
+        {
+          "md": "$n$ ist durch 3 und durch 4 teilbar",
+          "cat": "notwendig und hinreichend"
+        },
+        {
+          "md": "$n$ ist durch 8 teilbar",
+          "cat": "weder noch"
+        }
       ],
       "explain": "Notwendig ist, was aus $12 \\mid n$ folgt (6, 2). Hinreichend ist, was $12 \\mid n$ erzwingt (24, die 36). Durch 3 und 4 teilbar ist dasselbe wie durch 12, weil 3 und 4 teilerfremd sind. Bei 8: $n = 12$ zeigt »nicht notwendig«, $n = 8$ »nicht hinreichend«."
     },
-    { "id": "g1", "type": "gen", "gen": "tmua-umformung", "level": 2, "label": "Equivalent statements" },
-    { "id": "g2", "type": "gen", "gen": "tmua-bedingung", "level": 2, "label": "Necessary or sufficient" },
     {
-      "id": "quadrate", "type": "text",
+      "id": "g1",
+      "type": "gen",
+      "gen": "tmua-umformung",
+      "level": 2,
+      "label": "Equivalent statements"
+    },
+    {
+      "id": "g2",
+      "type": "gen",
+      "gen": "tmua-bedingung",
+      "level": 2,
+      "label": "Necessary or sufficient"
+    },
+    {
+      "id": "quadrate",
+      "type": "text",
       "md": "Der häufigste Typ: Bedingungen für die Teilbarkeit eines **Quadrats**. Jeder Primfaktor kommt in $n^2$ doppelt so oft vor wie in $n$. Also ist $n^2$ genau dann durch $p^a$ teilbar, wenn $p^{\\lceil a/2 \\rceil}$ ein Teiler von $n$ ist.\n\nBeispiel: $48 = 2^4 \\cdot 3$. Für $2^4 \\mid n^2$ braucht es $2^2 \\mid n$, für $3 \\mid n^2$ braucht es $3 \\mid n$. Also: $48 \\mid n^2$ genau dann, wenn $12 \\mid n$. Die Falle ist, daraus $48 \\mid n$ zu machen."
     },
-    { "id": "g3", "type": "gen", "gen": "tmua-bedingung", "level": 3, "label": "Necessary or sufficient" },
-    { "id": "g4", "type": "gen", "gen": "tmua-umformung", "level": 4, "label": "Only if and if" },
     {
-      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "id": "g3",
+      "type": "gen",
+      "gen": "tmua-bedingung",
+      "level": 3,
+      "label": "Necessary or sufficient"
+    },
+    {
+      "id": "g4",
+      "type": "gen",
+      "gen": "tmua-umformung",
+      "level": 4,
+      "label": "Only if and if"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-bedingung",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
       "points": [
         "Nur die Kontraposition ist gleichwertig zum Original; Umkehrung und Inverse sind es nicht.",
         "$P \\Rightarrow Q$: $P$ hinreichend für $Q$, $Q$ notwendig für $P$, »$P$ only if $Q$«.",
         "»$P$ if $Q$« heißt $Q \\Rightarrow P$; »if and only if« verlangt beide Richtungen.",
         "Notwendig ist, was aus der Zielaussage folgt; hinreichend ist, was sie erzwingt.",
-        "$p^a \\mid n^2$ genau dann, wenn $p^{\\lceil a/2\\rceil} \\mid n$."
+        "$p^a \\mid n^2$ genau dann, wenn $p^{\\lceil a/2\\rceil} \\mid n$.",
+        "Nur die Kontraposition ist gleichwertig: $(P \\Rightarrow Q) \\equiv (\\neg Q \\Rightarrow \\neg P)$; Umkehrung und Inversion gehören zusammen.",
+        "Hinreichend ist die kleinere Menge, notwendig die größere; beide Richtungen getrennt prüfen.",
+        "$p^a \\mid n^2 \\iff p^{\\lceil a/2 \\rceil} \\mid n$, weil sich Exponenten beim Quadrieren verdoppeln."
       ]
     }
   ]

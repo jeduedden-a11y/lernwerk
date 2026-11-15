@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "content"
 TYPES = {"text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen",
-         "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade"}
+         "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note"}
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
 ALLOWED_SYMBOLS = re.compile("[✓←-⇿]")  # check mark and arrows are fine
 NUMBER = re.compile(r"^\s*[-−]?\d+([.,]\d+)?\s*(/\s*\d+([.,]\d+)?)?\s*$")
@@ -35,6 +35,15 @@ def text_fields(step: dict):
     for key in ("md", "explain", "hint", "wrong", "solution", "after", "prompt"):
         if isinstance(step.get(key), str):
             yield key, step[key]
+    # a vault note as a learning task: section titles, text blocks and captions
+    for i, sec in enumerate(step.get("sections") or []):
+        if isinstance(sec, dict):
+            if isinstance(sec.get("title"), str):
+                yield f"Abschnitt {i + 1} Titel", sec["title"]
+            for k, b in enumerate(sec.get("blocks") or []):
+                for key in ("md", "caption"):
+                    if isinstance(b, dict) and isinstance(b.get(key), str):
+                        yield f"Abschnitt {i + 1} Block {k + 1} {key}", b[key]
     for i, o in enumerate(step.get("options") or []):
         if isinstance(o, dict):
             for key in ("md", "why"):
@@ -126,6 +135,23 @@ def check_step(where: str, s: dict, widgets: set[str]) -> None:
         problem(where, "zu wenige pairs")
     if t == "reveal" and not s.get("solution"):
         problem(where, "solution fehlt")
+    if t == "note":
+        secs = s.get("sections") or []
+        if not secs:
+            problem(where, "sections fehlen")
+        for i, sec in enumerate(secs):
+            blocks = sec.get("blocks") if isinstance(sec, dict) else None
+            if not blocks:
+                problem(where, f"Abschnitt {i + 1} ohne blocks")
+                continue
+            for k, b in enumerate(blocks):
+                chart = b.get("chart") if isinstance(b, dict) else None
+                if isinstance(chart, dict):
+                    series = chart.get("series") or []
+                    if not chart.get("labels") or not series or not all(isinstance(x.get("data"), list) and x["data"] for x in series):
+                        problem(where, f"Abschnitt {i + 1} Block {k + 1}: Diagramm braucht labels und series mit data")
+                elif not (isinstance(b, dict) and (isinstance(b.get("md"), str) or (isinstance(b.get("image"), str) and b["image"].startswith("vault:")))):
+                    problem(where, f"Abschnitt {i + 1} Block {k + 1} braucht md, image (vault:) oder chart")
     if t == "sort":
         cats = s.get("categories") or []
         for k, it in enumerate(s.get("items") or []):

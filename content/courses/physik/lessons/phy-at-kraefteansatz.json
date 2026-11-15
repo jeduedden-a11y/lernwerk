@@ -16,6 +16,557 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Die wichtigsten Kräfte\n> - **Gewichtskraft** $F_G = m g$, senkrecht nach unten, mit $g = 9{,}81\\,\\tfrac{\\mathrm{N}}{\\mathrm{kg}}$.\n> - **Normalkraft** $F_N$: Kraft der Unterlage auf den Körper, senkrecht zur Unterlage. Ihr Betrag folgt aus der Bedingung, dass der Körper senkrecht zur Unterlage nicht beschleunigt.\n> - **Gleitreibung** $F_R = \\mu_G\\,F_N$, entgegen der Bewegung. **Haftreibung** ist so groß wie nötig, höchstens $F_{H,max} = \\mu_H\\,F_N$, mit $\\mu_H > \\mu_G$.\n> - **Seilkraft** $F_S$: zieht längs des Seils; in einem masselosen Seil über eine reibungsfreie Rolle ist sie überall gleich groß.\n\n> [!definition] Freikörperbild\n> Man schneidet den Körper gedanklich frei und zeichnet **nur die Kräfte, die auf ihn wirken**, als Pfeile an ihm ein. Kräfte, die er selbst auf andere Körper ausübt, gehören nicht hinein. Dann gilt für jede Richtung einzeln: $\\sum F_x = m a_x$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung von Hangabtriebskraft und Normalkraft** auf einer um $\\alpha$ geneigten Ebene.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec F_G = \\vec F_H + \\vec F_{\\perp}",
+            "why": "Die Gewichtskraft wird in eine Komponente **parallel** zur Ebene (Hangabtriebskraft) und eine **senkrecht** zur Ebene zerlegt."
+          },
+          {
+            "tex": "\\angle(\\vec F_G,\\,\\vec F_{\\perp}) = \\alpha",
+            "why": "$\\vec F_G$ steht senkrecht auf der Waagerechten, $\\vec F_{\\perp}$ senkrecht auf der Ebene. Winkel, deren Schenkel paarweise aufeinander senkrecht stehen, sind gleich groß."
+          },
+          {
+            "tex": "F_H = m g\\sin\\alpha,\\qquad F_{\\perp} = m g\\cos\\alpha",
+            "why": "Im rechtwinkligen Kräftedreieck ist $F_G$ die Hypotenuse; $F_H$ liegt dem Winkel $\\alpha$ gegenüber, $F_{\\perp}$ an ihm an."
+          },
+          {
+            "tex": "F_N = F_{\\perp} = m g\\cos\\alpha",
+            "why": "Senkrecht zur Ebene beschleunigt der Körper nicht, also drückt die Ebene genau dagegen."
+          },
+          {
+            "tex": "m a = m g\\sin\\alpha - \\mu\\,m g\\cos\\alpha\\quad\\Rightarrow\\quad a = g\\,(\\sin\\alpha - \\mu\\cos\\alpha)",
+            "why": "Kräftegleichung längs der Ebene beim Abwärtsgleiten mit Gleitreibung. Die Masse kürzt sich."
+          },
+          {
+            "tex": "\\alpha = 0:\\; F_H = 0,\\; F_N = m g\\qquad \\alpha = 90^\\circ:\\; F_H = m g,\\; F_N = 0",
+            "why": "Probe an den Grenzfällen: waagerechter Boden und freier Fall an der Wand. So prüft man, ob Sinus und Kosinus richtig verteilt sind."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Winkel im Kräftedreieck.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Komponenten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normalkraft.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kräftegleichung mit Reibung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe an den Grenzfällen.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Wann rutscht der Klotz?** Die Neigung einer Ebene wächst. Aufgetragen sind die Kräfte in Vielfachen der Gewichtskraft; die Haftreibungszahl ist $\\mu_H = 0{,}4$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          90
+        ],
+        "y": [
+          0,
+          1.1
+        ],
+        "xLabel": "α in °",
+        "yLabel": "F / (m g)",
+        "vars": [
+          {
+            "name": "A",
+            "min": 0,
+            "max": 90,
+            "value": 5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "FH",
+            "expr": "sin(pi*x/180)",
+            "color": "blue",
+            "label": "Hangabtrieb",
+            "labelAt": 52
+          },
+          {
+            "name": "FN",
+            "expr": "cos(pi*x/180)",
+            "color": "orange",
+            "label": "Normalkraft",
+            "labelAt": 70
+          },
+          {
+            "name": "FR",
+            "expr": "0.4*cos(pi*x/180)",
+            "color": "green",
+            "dashed": true,
+            "label": "größte Haftreibung",
+            "labelAt": 30
+          }
+        ],
+        "vlines": [
+          {
+            "x": "A"
+          }
+        ],
+        "points": [
+          {
+            "x": "A",
+            "on": "FH",
+            "color": "blue"
+          },
+          {
+            "x": "A",
+            "on": "FR",
+            "color": "green"
+          }
+        ],
+        "readout": "Neigung {A|1}°: Hangabtrieb **{sin(pi*A/180)|2}** · m g, größte Haftreibung **{0.4*cos(pi*A/180)|2}** · m g"
+      },
+      "timeline": [
+        {
+          "caption": "Bei flacher Neigung ist der Hangabtrieb (blau) kleiner als die größte mögliche Haftreibung (grün): Der Klotz bleibt liegen. Die Haftreibung ist dann genau so groß wie der Hangabtrieb, nicht größer.",
+          "set": {
+            "A": 5
+          }
+        },
+        {
+          "caption": "Mit wachsender Neigung wächst der Hangabtrieb; die Normalkraft und mit ihr die mögliche Haftreibung sinken.",
+          "to": {
+            "A": 15
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei $m g\\sin\\alpha = \\mu_H\\,m g\\cos\\alpha$, also $\\tan\\alpha = \\mu_H$, kreuzen sich die Kurven: hier bei $\\alpha = \\arctan 0{,}4 \\approx 21{,}8°$. Der Klotz beginnt zu rutschen, unabhängig von seiner Masse.",
+          "to": {
+            "A": 21.8
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Danach gleitet er mit $a = g\\,(\\sin\\alpha - \\mu_G\\cos\\alpha)$. Je steiler, desto schwächer drückt er auf die Ebene.",
+          "to": {
+            "A": 60
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $90°$ ist die Normalkraft null, und die Reibung verschwindet: freier Fall an der Wand entlang.",
+          "to": {
+            "A": 90
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Klausuraufgabe: zwei gekoppelte Körper.** Ein Wagen ($m_1 = 2\\,\\mathrm{kg}$) rollt reibungsfrei auf dem Tisch; ein Faden über eine Rolle verbindet ihn mit einem hängenden Gewicht ($m_2 = 1\\,\\mathrm{kg}$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m_1 a = F_S",
+            "why": "Freikörperbild des Wagens: In Bewegungsrichtung wirkt nur die Fadenkraft. Gewichtskraft und Normalkraft heben sich auf."
+          },
+          {
+            "tex": "m_2 a = m_2 g - F_S",
+            "why": "Freikörperbild des Gewichts: $m_2 g$ nach unten, Fadenkraft nach oben. Wegen des Fadens haben beide Körper **dieselbe** Beschleunigung."
+          },
+          {
+            "tex": "(m_1 + m_2)\\,a = m_2 g\\quad\\Rightarrow\\quad a = \\frac{m_2}{m_1 + m_2}\\,g = \\tfrac13\\cdot 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 3{,}27\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}",
+            "why": "Beide Gleichungen addiert: Die Fadenkraft fällt als innere Kraft heraus. Die Gewichtskraft des hängenden Körpers beschleunigt beide Massen."
+          },
+          {
+            "tex": "F_S = m_1 a \\approx 6{,}54\\,\\mathrm{N} < m_2 g = 9{,}81\\,\\mathrm{N}",
+            "why": "Die Fadenkraft ist kleiner als die Gewichtskraft des hängenden Körpers, sonst würde er nicht nach unten beschleunigen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wagen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hängender Körper.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Addieren: die Beschleunigung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fadenkraft.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Klausuraufgabe: schräger Zug.** Eine Kiste ($10\\,\\mathrm{kg}$) wird mit $F = 50\\,\\mathrm{N}$ unter $30°$ zur Waagerechten über den Boden gezogen ($\\mu = 0{,}3$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_x = F\\cos 30^\\circ \\approx 43{,}3\\,\\mathrm{N},\\qquad F_y = F\\sin 30^\\circ = 25\\,\\mathrm{N}",
+            "why": "Die Zugkraft zerlegen."
+          },
+          {
+            "tex": "F_N = m g - F_y = 98{,}1\\,\\mathrm{N} - 25\\,\\mathrm{N} = 73{,}1\\,\\mathrm{N}",
+            "why": "Senkrecht keine Beschleunigung: Der schräge Zug hebt die Kiste etwas an, die Normalkraft sinkt."
+          },
+          {
+            "tex": "F_R = \\mu\\,F_N \\approx 21{,}9\\,\\mathrm{N}",
+            "why": "Die Reibung hängt an der Normalkraft, nicht an der Gewichtskraft."
+          },
+          {
+            "tex": "a = \\frac{F_x - F_R}{m} = \\frac{43{,}3 - 21{,}9}{10}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 2{,}14\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}",
+            "why": "Kräftegleichung in Bewegungsrichtung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normalkraft.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Reibung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beschleunigung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kräfteansatz nach dem 2. Newtonschen Axiom",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Kräfteansatz nach dem 2. Newtonschen Axiom.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Beschleunigung des Körpers\"*, *\"Mit welcher Kraft muss gezogen werden, damit...\"*, *\"Wie groß ist die Normalkraft auf der schiefen Ebene?\"* -- Aufgaben, bei denen **mehrere Kräfte** auf einen Körper wirken und daraus die resultierende Bewegung folgt."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Die Summe aller Kräfte bestimmt die Beschleunigung\n> $$\\sum \\vec{F} = m\\cdot\\vec{a}$$\n> Wirken mehrere Kräfte gleichzeitig, wird zunächst die **resultierende Kraft** (vektorielle Summe) gebildet, erst dann durch die Masse geteilt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Freikörperbild zeichnen:** alle auf den Körper wirkenden Kräfte einzeichnen (Gewichtskraft $F_G=mg$, Normalkraft $F_N$, Reibungskraft $F_R$, Zugkraft, etc.).\n2. **Koordinatensystem wählen**, meist mit einer Achse in Bewegungsrichtung.\n3. **Kräfte in Komponenten zerlegen**, falls sie nicht bereits achsenparallel sind (z. B. bei schiefer Ebene: Zerlegung von $F_G$ in Hangabtriebskraft und Normalkraft-Komponente).\n4. **Newtonsches Grundgesetz je Achse aufstellen:** $\\sum F_x = ma_x$.\n5. **Nach $a$ auflösen.**\n6. **Einheitenkontrolle:** $1\\,\\text{N} = 1\\,\\text{kg}\\cdot\\text{m/s}^2$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Körper der Masse $m=5\\,\\text{kg}$ wird mit einer horizontalen Kraft $F=20\\,\\text{N}$ über eine raue, waagerechte Fläche gezogen. Der Gleitreibungskoeffizient beträgt $\\mu=0{,}2$. Bestimmen Sie die Beschleunigung.*\n\n**Schritt 1:** Kräfte: Zugkraft $F=20\\,\\text{N}$ (Bewegungsrichtung), Reibungskraft $F_R$ (entgegen der Bewegung), Gewichtskraft $F_G$ und Normalkraft $F_N$ (heben sich vertikal auf, da keine vertikale Beschleunigung).\n\n**Schritt 3/4:** Reibungskraft:\n$$F_R = \\mu\\cdot F_N = \\mu\\cdot mg = 0{,}2\\cdot5\\cdot9{,}81 = 9{,}81\\,\\text{N}$$\n\n**Schritt 4 (horizontale Achse):**\n$$\\sum F = F - F_R = 20 - 9{,}81 = 10{,}19\\,\\text{N}$$\n\n**Schritt 5:**\n$$a = \\frac{\\sum F}{m} = \\frac{10{,}19}{5} = 2{,}038\\,\\text{m/s}^2$$\n\n**Einheitenkontrolle:** $\\dfrac{[\\text{N}]}{[\\text{kg}]} = \\dfrac{[\\text{kg}\\cdot\\text{m/s}^2]}{[\\text{kg}]} = [\\text{m/s}^2]$ ✓."
+            }
+          ]
+        },
+        {
+          "title": "Zweites Beispiel: schiefe Ebene",
+          "blocks": [
+            {
+              "md": "*Ein Körper der Masse $m=10\\,\\text{kg}$ gleitet reibungsfrei eine um $\\alpha=30^\\circ$ geneigte Ebene hinab. Bestimmen Sie die Beschleunigung entlang der Ebene.*\n\nZerlegung der Gewichtskraft: Hangabtriebskraft $F_H = mg\\sin\\alpha$, Normalkraft-Komponente $F_N = mg\\cos\\alpha$ (senkrecht zur Ebene, wird von der Ebene kompensiert und beeinflusst die Bewegung entlang der Ebene ohne Reibung nicht).\n\n$$a = \\frac{F_H}{m} = g\\sin\\alpha = 9{,}81\\cdot\\sin(30^\\circ) = 9{,}81\\cdot0{,}5 = 4{,}905\\,\\text{m/s}^2$$\n\n*Bemerkenswert: Die Masse kürzt sich heraus -- auf einer reibungsfreien schiefen Ebene hängt die Beschleunigung nur vom Neigungswinkel ab, nicht von der Masse des Körpers.*"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Normalkraft mit der Gewichtskraft gleichsetzen**, obwohl auf einer schiefen Ebene oder bei zusätzlicher vertikaler Kraftkomponente $F_N \\neq F_G$ gilt.\n- **Reibungskraft aus der Zugkraft statt aus der Normalkraft berechnen.** $F_R = \\mu\\cdot F_N$, nicht $\\mu\\cdot F$.\n- **Bei der schiefen Ebene Sinus und Kosinus vertauschen.** Die Hangabtriebskraft (parallel zur Ebene) verwendet $\\sin\\alpha$, die Normalkraft-Komponente $\\cos\\alpha$.\n- **Vergessen, dass mehrere Kräfte vektoriell, nicht einfach betragsmäßig addiert werden**, wenn sie nicht auf derselben Achse liegen.\n- **Einheiten mischen** (z. B. Masse in Gramm statt Kilogramm) und dadurch die Beschleunigung um Zehnerpotenzen falsch berechnen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Newtonsche Axiome** · **Reibung und Grenzgeschwindigkeit** · **Energieerhaltungssatz anwenden** · **Actio-Reactio-Aufgaben**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Kraft ihre Formel zu.",
+      "pairs": [
+        [
+          "Gewichtskraft",
+          "$m g$"
+        ],
+        [
+          "Hangabtriebskraft",
+          "$m g\\sin\\alpha$"
+        ],
+        [
+          "Normalkraft auf der schiefen Ebene",
+          "$m g\\cos\\alpha$"
+        ],
+        [
+          "Gleitreibungskraft",
+          "$\\mu_G F_N$"
+        ],
+        [
+          "resultierende Kraft",
+          "$m a$"
+        ]
+      ],
+      "explain": "Sinus für die Komponente längs der Ebene, Kosinus senkrecht dazu; die Reibung immer aus der Normalkraft.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Beschleunigung auf der schiefen Ebene in die richtige Reihenfolge.",
+      "items": [
+        "Freikörperbild: Gewichtskraft, Normalkraft, Reibung",
+        "Gewichtskraft zerlegen: $F_H = m g\\sin\\alpha$, $F_{\\perp} = m g\\cos\\alpha$",
+        "Senkrecht zur Ebene keine Beschleunigung: $F_N = m g\\cos\\alpha$",
+        "Längs der Ebene: $m a = m g\\sin\\alpha - \\mu\\,m g\\cos\\alpha$"
+      ],
+      "explain": "Die Reihenfolge: 1. Freikörperbild: Gewichtskraft, Normalkraft, Reibung. 2. Gewichtskraft zerlegen: $F_H = m g\\sin\\alpha$, $F_{\\perp} = m g\\cos\\alpha$. 3. Senkrecht zur Ebene keine Beschleunigung: $F_N = m g\\cos\\alpha$. 4. Längs der Ebene: $m a = m g\\sin\\alpha - \\mu\\,m g\\cos\\alpha$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Körper gleitet eine um $20°$ geneigte Ebene hinab ($\\mu_G = 0{,}1$). Wie groß ist seine Beschleunigung?",
+      "answer": 2.43,
+      "tolerance": 0.02,
+      "placeholder": "m/s²",
+      "explain": "$a = g\\,(\\sin 20° - 0{,}1\\cos 20°) = 9{,}81\\cdot(0{,}342 - 0{,}094)\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 2{,}43\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Haftreibung",
+      "md": "Ab welchem Neigungswinkel rutscht ein Klotz mit $\\mu_H = 0{,}5$?",
+      "answer": 26.6,
+      "tolerance": 0.2,
+      "placeholder": "°",
+      "explain": "$\\tan\\alpha = \\mu_H = 0{,}5$, also $\\alpha = \\arctan 0{,}5 \\approx 26{,}6°$, unabhängig von der Masse.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Klotz ($2\\,\\mathrm{kg}$) ruht auf einer um $30°$ geneigten Ebene ($\\mu_H = 0{,}8$). Wie groß ist die Haftreibungskraft?",
+      "options": [
+        {
+          "md": "$9{,}81\\,\\mathrm{N}$, genau so groß wie der Hangabtrieb",
+          "correct": true
+        },
+        {
+          "md": "$\\mu_H F_N \\approx 13{,}6\\,\\mathrm{N}$",
+          "why": "Das ist nur der größtmögliche Wert. Wäre die Haftreibung größer als der Hangabtrieb, würde der Klotz bergauf beschleunigen."
+        },
+        {
+          "md": "$19{,}6\\,\\mathrm{N}$",
+          "why": "Das ist die ganze Gewichtskraft."
+        },
+        {
+          "md": "null, weil der Klotz ruht",
+          "why": "Ohne Haftreibung würde er rutschen."
+        }
+      ],
+      "explain": "Haftreibung ist so groß wie nötig: Ruhe heißt $F_{Haft} = F_H = m g\\sin 30° = 9{,}81\\,\\mathrm{N}$. Erst beim Rutschbeginn erreicht sie $\\mu_H F_N$.",
+      "label": "Klausur",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Gekoppelt",
+      "md": "Ein Wagen ($3\\,\\mathrm{kg}$) auf dem Tisch ist über eine Rolle mit einem hängenden Körper ($2\\,\\mathrm{kg}$) verbunden, alles reibungsfrei. Wie groß ist die Beschleunigung?",
+      "answer": 3.92,
+      "tolerance": 0.02,
+      "placeholder": "m/s²",
+      "explain": "$a = \\tfrac{m_2}{m_1 + m_2}\\,g = \\tfrac25\\cdot 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 3{,}92\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Gekoppelt",
+      "md": "Wie groß ist dabei die Fadenkraft?",
+      "answer": 11.77,
+      "tolerance": 0.05,
+      "placeholder": "N",
+      "explain": "$F_S = m_1 a = 3\\cdot 3{,}924\\,\\mathrm{N} \\approx 11{,}8\\,\\mathrm{N}$. Probe am hängenden Körper: $m_2\\,(g - a) = 2\\cdot 5{,}886\\,\\mathrm{N} \\approx 11{,}8\\,\\mathrm{N}$.",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist die Fadenkraft kleiner als die Gewichtskraft des hängenden Körpers?",
+      "options": [
+        {
+          "md": "Weil der hängende Körper nach unten beschleunigt; dafür muss die resultierende Kraft an ihm nach unten zeigen.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Rolle einen Teil der Kraft schluckt.",
+          "why": "Die Rolle ist reibungsfrei und masselos angenommen."
+        },
+        {
+          "md": "Weil der Wagen am Faden nach hinten zieht und sich die Kräfte aufheben.",
+          "why": "Dann gäbe es keine Beschleunigung."
+        },
+        {
+          "md": "Sie ist nicht kleiner, sondern gleich groß.",
+          "why": "Gleichheit gälte nur bei $a = 0$."
+        }
+      ],
+      "explain": "$m_2 a = m_2 g - F_S > 0$, also $F_S < m_2 g$.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zieht man eine Kiste schräg nach oben statt waagerecht, sinkt die Normalkraft und damit die Reibung.",
+      "answer": true,
+      "explain": "$F_N = m g - F\\sin\\beta$: Die senkrechte Komponente der Zugkraft trägt einen Teil des Gewichts.",
+      "label": "Verständnis",
+      "id": "vq9"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Kiste ($5\\,\\mathrm{kg}$), waagerechter Zug $F = 30\\,\\mathrm{N}$, $\\mu = 0{,}2$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Senkrecht: $F_N = m g = 49{,}05\\,\\mathrm{N}$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Reibung: $F_R = \\mu\\cdot F = 0{,}2\\cdot 30\\,\\mathrm{N} = 6\\,\\mathrm{N}$.",
+          "why": "Falsch: Die Reibung kommt aus der Normalkraft, $F_R = \\mu F_N \\approx 9{,}81\\,\\mathrm{N}$."
+        },
+        {
+          "md": "$a = \\tfrac{F - F_R}{m}$",
+          "why": "Der Ansatz ist richtig; nur der Wert von $F_R$ stimmt nicht."
+        }
+      ],
+      "answer": 1,
+      "explain": "Richtig: $a = \\tfrac{30 - 9{,}81}{5}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 4{,}04\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq10"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Eine Kiste ($20\\,\\mathrm{kg}$) wird mit $100\\,\\mathrm{N}$ unter $25°$ schräg nach oben gezogen ($\\mu = 0{,}25$). Wie groß ist ihre Beschleunigung?",
+      "answer": 2.61,
+      "tolerance": 0.03,
+      "placeholder": "m/s²",
+      "explain": "$F_N = 196{,}2\\,\\mathrm{N} - 100\\,\\mathrm{N}\\cdot\\sin 25° \\approx 153{,}9\\,\\mathrm{N}$, $F_R \\approx 38{,}5\\,\\mathrm{N}$, $F_x = 100\\,\\mathrm{N}\\cdot\\cos 25° \\approx 90{,}6\\,\\mathrm{N}$, also $a = \\tfrac{90{,}6 - 38{,}5}{20}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 2{,}61\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq11"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +643,72 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "gekoppelt",
+          "haftreibung",
+          "zug-schraeg"
+        ]
+      },
+      "label": "Rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "gekoppelt",
+          "zug-schraeg",
+          "aufzug"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "gekoppelt",
+          "haftreibung",
+          "zug-schraeg"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gekoppelt",
+          "zug-schraeg",
+          "aufzug"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Freikörperbild: nur Kräfte auf den Körper. Kräfte in Bewegungsrichtung und senkrecht dazu zerlegen, je Richtung $\\sum F = m a$.",
+        "Schiefe Ebene: $F_H = m g\\sin\\alpha$, $F_N = m g\\cos\\alpha$; Gleiten: $a = g\\,(\\sin\\alpha - \\mu\\cos\\alpha)$; Rutschbeginn bei $\\tan\\alpha = \\mu_H$.",
+        "Gekoppelte Körper: $a = \\tfrac{m_2}{m_1 + m_2}\\,g$; die Fadenkraft ist eine innere Kraft. Haftreibung ist nur so groß wie nötig."
+      ]
     }
   ]
 }

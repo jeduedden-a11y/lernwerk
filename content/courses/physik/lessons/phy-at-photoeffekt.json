@@ -20,6 +20,778 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "**Kern des Aufgabentyps.** $E_{kin,max} = h f - W_A$ ist eine reine Energiebilanz: Ein Photon gibt seine ganze Energie an **genau ein** Elektron ab, ein Teil löst es heraus, der Rest bleibt als Bewegungsenergie. Elektronen aus tieferen Schichten verlieren mehr, daher das Wort *maximal*.\n\n**Lösungsschema.**\n1. Photonenenergie $E_{Ph} = hf = \\tfrac{hc}{\\lambda}$; Kontrolle mit $E_{Ph} = \\tfrac{1240}{\\lambda}\\,\\mathrm{eV}$, $\\lambda$ in nm.\n2. Prüfen, ob überhaupt Elektronen austreten: nur bei $E_{Ph} > W_A$.\n3. $E_{kin,max} = h f - W_A$.\n4. Gegenspannung $U_0 = \\tfrac{E_{kin,max}}{e}$; in eV gerechnet derselbe Zahlenwert.\n5. Geschwindigkeit bei Bedarf: $v = \\sqrt{\\tfrac{2 E_{kin}}{m_e}}$.\n\n**Beispiel:** $W_A = 2{,}14\\,\\mathrm{eV}$, $\\lambda = 400\\,\\mathrm{nm}$. $E_{Ph} = \\tfrac{1240}{400}\\,\\mathrm{eV} = 3{,}10\\,\\mathrm{eV}$, $E_{kin,max} = 0{,}96\\,\\mathrm{eV}$, $U_0 = 0{,}96\\,\\mathrm{V}$, $v \\approx 5{,}8\\cdot 10^5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\lambda_G = \\tfrac{1240}{2{,}14}\\,\\mathrm{nm} \\approx 579\\,\\mathrm{nm}$: Rotes Licht bei $650\\,\\mathrm{nm}$ löst hier nichts mehr aus.",
+      "label": "Lösungsschema",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Auswertung** einer Messreihe mit der Gegenfeldmethode.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f = \\frac{c}{\\lambda},\\qquad E_{kin} = e\\,U_0",
+            "why": "Messwerte umrechnen: Wellenlänge in Frequenz, Gegenspannung in Energie."
+          },
+          {
+            "tex": "E_{kin} = h\\,f - W_A",
+            "why": "Eine Geradengleichung y = m x + b."
+          },
+          {
+            "tex": "m = h,\\qquad b = -W_A,\\qquad E_{kin} = 0 \\;\\Rightarrow\\; f = f_G",
+            "why": "Steigung, Achsenabschnitt und Nullstelle haben je eine physikalische Bedeutung."
+          },
+          {
+            "tex": "U_0 = \\frac{h}{e}\\,f - \\frac{W_A}{e}",
+            "why": "Im $U_0$-$f$-Diagramm ist die Steigung $\\tfrac{h}{e}$."
+          },
+          {
+            "tex": "E_{kin} = (h c)\\cdot\\frac{1}{\\lambda} - W_A",
+            "why": "Über $\\lambda$ aufgetragen entsteht ein Hyperbelast; über $\\tfrac{1}{\\lambda}$ eine Gerade mit der Steigung $h c$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Umrechnen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedeutungen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spannungsform.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Über 1/λ.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Auswertung der Messreihe M1** (Kathode A der Klausuraufgabe): $E_{kin}$ in $10^{-19}\\,\\mathrm{J}$ über $f$ in $10^{14}\\,\\mathrm{Hz}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          9
+        ],
+        "y": [
+          -4,
+          2.5
+        ],
+        "xLabel": "f in 10¹⁴ Hz",
+        "yLabel": "E_kin in 10⁻¹⁹ J",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 5.4,
+            "value": 5.4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "fit",
+            "expr": "0.656*x - 3.55",
+            "color": "blue",
+            "domain": [
+              "X",
+              8.8
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": 8.22,
+            "y": 1.87,
+            "color": "orange"
+          },
+          {
+            "x": 7.41,
+            "y": 1.27,
+            "color": "orange"
+          },
+          {
+            "x": 6.88,
+            "y": 0.98,
+            "color": "orange"
+          },
+          {
+            "x": 6.1,
+            "y": 0.43,
+            "color": "orange"
+          },
+          {
+            "x": 5.49,
+            "y": 0.08,
+            "color": "orange"
+          },
+          {
+            "x": 5.41,
+            "y": 0,
+            "color": "green"
+          },
+          {
+            "x": 0,
+            "y": "X < 0.05 ? -3.55 : 99",
+            "color": "green",
+            "label": "Achsenabschnitt"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              6,
+              0.386
+            ],
+            "to": [
+              8,
+              0.386
+            ],
+            "color": "green",
+            "width": 2
+          },
+          {
+            "from": [
+              8,
+              0.386
+            ],
+            "to": [
+              8,
+              1.698
+            ],
+            "color": "green",
+            "width": 2
+          }
+        ],
+        "readout": "Ausgleichsgerade ab f = {X|1} · 10¹⁴ Hz gezeichnet; Steigung 0,656 · 10⁻¹⁹ J pro 10¹⁴ Hz, also h ≈ 6,56 · 10⁻³⁴ Js"
+      },
+      "timeline": [
+        {
+          "caption": "Die fünf Messpunkte mit Photostrom und ihre Ausgleichsgerade. 578 nm und 615 nm fehlen: Dort gab es keinen Strom, also keinen Messwert.",
+          "set": {
+            "X": 5.4
+          }
+        },
+        {
+          "caption": "Steigungsdreieck (grün) an der Geraden, nicht an zwei Messpunkten: $\\Delta E = 1{,}31\\cdot 10^{-19}\\,\\mathrm{J}$ auf $\\Delta f = 2{,}0\\cdot 10^{14}\\,\\mathrm{Hz}$, also $h \\approx 6{,}56\\cdot 10^{-34}\\,\\mathrm{Js}$."
+        },
+        {
+          "caption": "Die Nullstelle ist die Grenzfrequenz: $f_G \\approx 5{,}4\\cdot 10^{14}\\,\\mathrm{Hz}$, also $\\lambda_G \\approx 555\\,\\mathrm{nm}$."
+        },
+        {
+          "caption": "Bis $f = 0$ verlängert: Achsenabschnitt $-W_A \\approx -3{,}55\\cdot 10^{-19}\\,\\mathrm{J}$, also $W_A \\approx 2{,}2\\,\\mathrm{eV}$. Die lange Verlängerung macht diesen Wert unsicherer als die Steigung.",
+          "to": {
+            "X": 0
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die Bestimmung von h mit Leuchtdioden in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:LED h-Bestimmung.svg",
+        "aspect": 1.9,
+        "alt": "LED-Schaltung und E-f-Diagramm"
+      },
+      "timeline": [
+        {
+          "caption": "Bestimmung von h mit Leuchtdioden.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Schaltung: regelbare Spannungsquelle, Strommesser, LED und Spannungsmesser.",
+          "to": {
+            "x": 0.2,
+            "y": 0.45,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Spannung langsam erhöhen, bis die LED gerade leuchtet. Dann gibt jedes Elektron seine Energie $e U$ als **ein** Photon ab: $e U \\approx h f$.",
+          "to": {
+            "x": 0.22,
+            "y": 0.81,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Für mehrere Farben $E = e U$ über $f = \\tfrac{c}{\\lambda}$ auftragen: Die Punkte liegen auf einer Geraden durch den Ursprung.",
+          "to": {
+            "x": 0.78,
+            "y": 0.45,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Ihre Steigung $\\tfrac{\\Delta E}{\\Delta f}$ ist $h$; im Unterricht ergab sich $6{,}66\\cdot 10^{-34}\\,\\mathrm{Js}$.",
+          "to": {
+            "x": 0.62,
+            "y": 0.89,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**LED und Photoeffekt im Vergleich.** In der LED läuft der Vorgang umgekehrt: Ein Elektron, das die Spannung $U$ durchläuft, gibt seine Energie $e U$ als ein Photon ab, $e U = h f$. Eine Austrittsarbeit muss nicht bezahlt werden, deshalb geht die Gerade im Idealfall **durch den Ursprung**. Beim Photoeffekt kostet das Herauslösen erst $W_A$: Achsenabschnitt $-W_A$.\n\n**Systematische Fehler.** Liegen alle Messpunkte um denselben Betrag zu tief (etwa weil gerade sichtbar zu früh festgelegt wird), verschiebt sich die Gerade parallel. Die **Steigung bleibt unberührt**, $h$ lässt sich trotzdem bestimmen.\n\n**Parallele Geraden.** Zwei Kathoden ergeben parallele Geraden: gleiche Steigung $h$, verschiedene Achsenabschnitte. Doppelte Intensität ändert an der Geraden gar nichts, sie liefert nur mehr Elektronen.",
+      "label": "LED und Fehler",
+      "id": "ve5"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Material M2 der Klausuraufgabe in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Klausur M2 Kathode B.svg",
+        "aspect": 1.36,
+        "alt": "Diagramm der Kathode B mit einer falschen Geraden C"
+      },
+      "timeline": [
+        {
+          "caption": "Material M2: Messpunkte und Ausgleichsgerade für Kathode B (blau), dazu die rote Gerade C eines Mitschülers.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Gerade C hat die doppelte Steigung, angeblich wegen doppelter Lichtintensität. Prüfe das an der Einstein-Gleichung.",
+          "to": {
+            "x": 0.85,
+            "y": 0.3,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die gestrichelte Verlängerung von B führt bis zur Energieachse; dort liest man $-W_A$ ab.",
+          "to": {
+            "x": 0.3,
+            "y": 0.75,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Photoeffekt auswerten",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Photoeffekt auswerten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die maximale kinetische Energie der Elektronen\"*, *\"Bestimmen Sie die Austrittsarbeit aus dem Diagramm\"*, *\"Welche Grenzfrequenz hat das Material?\"*, *\"Bestimmen Sie das Plancksche Wirkungsquantum aus der Steigung der Geraden\"*, *\"Erklären Sie, weshalb die Wellentheorie den Effekt nicht erklären kann\"*.\n\nErkennungsmerkmal: **Licht trifft auf eine Metalloberfläche**, Elektronen treten aus. Meist verbunden mit einer **Gegenfeldmethode** oder einem $E_{kin}$-$f$-Diagramm."
+            }
+          ]
+        },
+        {
+          "title": "Die Einstein-Gleichung",
+          "blocks": [
+            {
+              "md": "> [!important] Ein Photon, ein Elektron\n> $$E_{kin,max} = h\\,f - W_A$$\n> mit $h = 6{,}626\\cdot10^{-34}\\,\\text{Js}$, der Photonenenergie $E_{Ph} = hf = \\dfrac{hc}{\\lambda}$ und der materialabhängigen **Austrittsarbeit** $W_A$.\n>\n> Die Gleichung ist eine reine Energiebilanz: Ein Photon überträgt seine gesamte Energie an **genau ein** Elektron. Ein Teil wird gebraucht, um das Elektron aus dem Metall zu lösen ($W_A$), der Rest bleibt als kinetische Energie. Mehr als ein Photon pro Elektron kommt bei üblichen Intensitäten nicht vor -- deshalb der Zusatz \"maximal\": Elektronen aus tieferen Schichten verlieren unterwegs Energie und kommen langsamer heraus."
+            }
+          ]
+        },
+        {
+          "title": "Warum die Wellentheorie versagt",
+          "blocks": [
+            {
+              "md": "> [!important] Der eigentliche Prüfungsinhalt\n> Drei Beobachtungen widersprechen der klassischen Wellenvorstellung fundamental:\n>\n> | Beobachtung | Wellentheorie sagt vorher | Tatsächlich |\n> |---|---|---|\n> | **Grenzfrequenz** | bei genügend langer Bestrahlung tritt bei jeder Frequenz ein Effekt auf | unterhalb $f_g$ **niemals** ein Elektron, egal wie lange oder hell |\n> | **Intensität** | höhere Intensität bedeutet mehr Energie pro Elektron, also schnellere Elektronen | höhere Intensität liefert **mehr** Elektronen, aber **nicht schnellere** |\n> | **Zeitverzögerung** | Aufsammeln der Energie bräuchte messbare Zeit | Einsatz **sofort**, innerhalb von Nanosekunden |\n>\n> Die Erklärung ist in allen drei Fällen dieselbe: Energie wird nicht kontinuierlich über die Wellenfront verteilt, sondern in **Portionen** übertragen. Ein einzelnes Photon hat die Energie $hf$ -- reicht sie nicht aus, hilft auch eine Milliarde weiterer Photonen nicht, weil sie sich nicht addieren. Mehr Intensität bedeutet lediglich mehr Photonen, also mehr ausgelöste Elektronen bei unveränderter Einzelenergie.\n>\n> Genau diese Argumentation, nicht die Rechnung, ist der Kern der meisten Prüfungsaufgaben zum Photoeffekt."
+            }
+          ]
+        },
+        {
+          "title": "Die Gegenfeldmethode",
+          "blocks": [
+            {
+              "md": "Die kinetische Energie wird nicht direkt gemessen, sondern über eine **Gegenspannung** $U_0$, die den Photostrom gerade zum Erliegen bringt:\n$$e\\,U_0 = E_{kin,max} \\quad\\Longrightarrow\\quad E_{kin,max} = e\\,U_0$$\n\nDaraus die für die Auswertung zentrale Geradengleichung:\n$$U_0 = \\frac{h}{e}\\,f - \\frac{W_A}{e}$$\n\n| Im $U_0$-$f$-Diagramm | Bedeutung |\n|---|---|\n| **Steigung** | $h/e$ -- **materialunabhängig**, für alle Metalle gleich |\n| **$y$-Achsenabschnitt** | $-W_A/e$ -- materialabhängig |\n| **Nullstelle** | Grenzfrequenz $f_g = W_A/h$ |\n\n> [!tip] Warum die parallelen Geraden das stärkste Argument sind\n> Trägt man die Messreihen verschiedener Metalle auf, ergeben sich **parallele** Geraden -- gleiche Steigung, verschiedene Achsenabschnitte. Die Steigung ist eine Naturkonstante, unabhängig vom Material. Genau das war Millikans experimenteller Nachweis, dass $h$ tatsächlich fundamental ist und nicht ein Materialparameter. Aufgaben, die zwei Messreihen zeigen, zielen fast immer auf diese Deutung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Photonenenergie berechnen:** $E_{Ph} = hf$ oder $E_{Ph} = hc/\\lambda$.\n2. **In Elektronenvolt umrechnen**, falls die Austrittsarbeit in eV gegeben ist: durch $e = 1{,}602\\cdot10^{-19}$ teilen. Praktische Abkürzung: $E_{Ph}[\\text{eV}] = \\dfrac{1240}{\\lambda[\\text{nm}]}$.\n3. **Prüfen, ob überhaupt ein Effekt auftritt:** Nur wenn $E_{Ph} > W_A$, also $f > f_g$.\n4. **Kinetische Energie:** $E_{kin,max} = hf - W_A$.\n5. **Gegenspannung:** $U_0 = E_{kin,max}/e$ -- in eV gerechnet ist der Zahlenwert identisch.\n6. **Geschwindigkeit**, falls gefragt: $v = \\sqrt{2E_{kin}/m_e}$.\n7. **Einheitenkontrolle:** $[\\text{Js}]\\cdot[\\text{s}^{-1}] = \\text{J}$; $1\\,\\text{eV} = 1{,}602\\cdot10^{-19}\\,\\text{J}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Cäsium-Kathode mit der Austrittsarbeit $W_A = 2{,}14\\,\\text{eV}$ wird mit Licht der Wellenlänge $\\lambda = 400\\,\\text{nm}$ bestrahlt. Berechnen Sie Photonenenergie, maximale kinetische Energie, Gegenspannung und Grenzwellenlänge.*\n\n**Schritt 1 und 2, Photonenenergie:**\n$$E_{Ph} = \\frac{hc}{\\lambda} = \\frac{6{,}626\\cdot10^{-34}\\cdot2{,}998\\cdot10^{8}}{400\\cdot10^{-9}} \\approx 4{,}97\\cdot10^{-19}\\,\\text{J}$$\n$$E_{Ph} = \\frac{4{,}97\\cdot10^{-19}}{1{,}602\\cdot10^{-19}} \\approx 3{,}10\\,\\text{eV}$$\n\n**Kontrolle mit der Merkformel:** $\\dfrac{1240}{400} = 3{,}10\\,\\text{eV}$. Bestätigt.\n\n**Schritt 3:** $3{,}10\\,\\text{eV} > 2{,}14\\,\\text{eV}$ -- Elektronen treten aus.\n\n**Schritt 4:**\n$$E_{kin,max} = 3{,}10 - 2{,}14 = 0{,}96\\,\\text{eV} = 1{,}54\\cdot10^{-19}\\,\\text{J}$$\n\n**Schritt 5:** $U_0 = 0{,}96\\,\\text{V}$ -- in Elektronenvolt gerechnet ist der Zahlenwert der Gegenspannung identisch mit dem der Energie.\n\n**Schritt 6, Geschwindigkeit:**\n$$v = \\sqrt{\\frac{2\\cdot1{,}54\\cdot10^{-19}}{9{,}109\\cdot10^{-31}}} \\approx 5{,}81\\cdot10^{5}\\,\\frac{\\text{m}}{\\text{s}}$$\nDas sind rund $0{,}2\\,\\%$ der Lichtgeschwindigkeit -- die klassische Rechnung ist zulässig.\n\n**Grenzwellenlänge:**\n$$\\lambda_g = \\frac{hc}{W_A} = \\frac{1240\\,\\text{eV}\\,\\text{nm}}{2{,}14\\,\\text{eV}} \\approx 579\\,\\text{nm}$$\nCäsium reagiert also noch auf gelbes Licht -- der Grund, weshalb es in Photozellen verwendet wird. Rotes Licht bei 650 nm löst dagegen keine Elektronen mehr aus, unabhängig von der Intensität."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Intensität mit Photonenenergie verwechseln.** Hellere Beleuchtung liefert **mehr** Elektronen, nicht schnellere. Diese Unterscheidung ist der am häufigsten geprüfte Punkt des Themas.\n- **Nanometer nicht umrechnen** oder $hc$ falsch zusammensetzen. Die Merkformel $E[\\text{eV}] = 1240/\\lambda[\\text{nm}]$ ist die sicherste Kontrolle.\n- **Elektronenvolt und Joule mischen.** Innerhalb einer Gleichung konsequent eine Einheit verwenden.\n- **Die Austrittsarbeit addieren statt subtrahieren.** Sie wird vom Photon **abgezogen**; sie ist der Preis für das Verlassen des Metalls.\n- **Bei $E_{Ph} < W_A$ eine negative kinetische Energie angeben.** Dann tritt schlicht kein Elektron aus.\n- **Das \"maximal\" weglassen.** Nur Elektronen von der Oberfläche erreichen den vollen Wert; tiefere verlieren Energie.\n- **Die Steigung im $U_0$-$f$-Diagramm als materialabhängig deuten.** Sie ist $h/e$ und für alle Metalle gleich."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**De-Broglie-Wellenlänge berechnen** · **Doppelspalt mit Quantenobjekten interpretieren** · **Spektrallinien aus Energieniveaus berechnen** · **Beschleunigungsspannung und kinetische Energie berechnen** · **Photoeffekt** · **Welle-Teilchen-Dualismus**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Klausuraufgabe - Plancksches Wirkungsquantum aus E-f-Diagrammen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Klausuraufgabe - Plancksches Wirkungsquantum aus E-f-Diagrammen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Klausuraufgabe: Das Plancksche Wirkungsquantum aus Energie-Frequenz-Diagrammen",
+          "blocks": [
+            {
+              "md": "> [!info] Rahmen\n> **Bearbeitungszeit:** 70 Minuten · **40 BE** · **Hilfsmittel:** Taschenrechner, Lineal, kariertes oder Millimeterpapier\n> **Schwierigkeit:** bewusst über Klausurniveau -- mehrere Aufgaben enthalten Fallen, die erst beim genauen Hinsehen auffallen.\n> **Konstanten:** $e = 1{,}602\\cdot10^{-19}\\,\\text{C}$ · $c = 3{,}00\\cdot10^{8}\\,\\tfrac{\\text{m}}{\\text{s}}$ · $m_e = 9{,}109\\cdot10^{-31}\\,\\text{kg}$ · Literaturwert $h = 6{,}626\\cdot10^{-34}\\,\\text{Js}$ (nur dort verwenden, wo ausdrücklich erlaubt)"
+            }
+          ]
+        },
+        {
+          "title": "Einleitung",
+          "blocks": [
+            {
+              "md": "In einem Schülerlabor wird das Plancksche Wirkungsquantum auf zwei Wegen bestimmt: mit einer **Vakuum-Photozelle** nach der Gegenfeldmethode und mit **Leuchtdioden**. Bei der Photozelle fällt monochromatisches Licht auf die Kathode; zwischen Kathode und Anode wird eine Gegenspannung so lange erhöht, bis der Photostrom gerade verschwindet. Diese Spannung heißt $U_0$."
+            }
+          ]
+        },
+        {
+          "title": "Material",
+          "blocks": [
+            {
+              "md": "**M1: Messreihe an der Photozelle mit Kathode A**\n\n| $\\lambda$ in nm | 365 | 405 | 436 | 492 | 546 | 578 | 615 |\n|---|---|---|---|---|---|---|---|\n| $U_0$ in V | 1,17 | 0,79 | 0,61 | 0,27 | 0,05 | -- | -- |\n\n\"--\": Es ist auch ohne Gegenspannung **kein** Photostrom messbar.\n\n**M2: Messung an einer zweiten Kathode B**"
+            },
+            {
+              "image": "vault:Klausur M2 Kathode B.svg"
+            },
+            {
+              "md": "Blau: Messpunkte und Ausgleichsgerade für Kathode B. Ein Mitschüler hat zusätzlich die rote **Gerade C** eingezeichnet und dazu notiert: *\"Gleiche Kathode B, aber doppelte Lichtintensität -- deshalb doppelte Steigung.\"*\n\n**M3: Austrittsarbeiten (Tabellenwerte)**\n\n| Metall | Cäsium | Rubidium | Kalium | Natrium | Lithium | Zink |\n|---|---|---|---|---|---|---|\n| $W_A$ in eV | 1,95 | 2,13 | 2,25 | 2,28 | 2,46 | 4,34 |\n\n**M4: Messreihe mit Leuchtdioden**\n\nFür jede LED wird die Spannung $U$ bestimmt, bei der sie gerade sichtbar zu leuchten beginnt.\n\n| LED | Infrarot | Rot | Orange | Gelb | Grün | Blau |\n|---|---|---|---|---|---|---|\n| $\\lambda$ in nm | 940 | 660 | 625 | 590 | 525 | 470 |\n| $U$ in V | 1,22 | 1,75 | 1,88 | 1,96 | 2,25 | 2,51 |"
+            }
+          ]
+        },
+        {
+          "title": "Aufgaben",
+          "blocks": [
+            {
+              "md": "**1.1** Erläutern Sie, weshalb aus der Gegenspannung $U_0$ die maximale kinetische Energie der Photoelektronen folgt. Begründen Sie mithilfe von M1, weshalb für $578\\,\\text{nm}$ und $615\\,\\text{nm}$ kein Photostrom auftritt, obwohl die Lampe bei diesen Wellenlängen sehr hell leuchtet. **(4 BE)**\n\n**1.2** Stellen Sie die Messwerte aus M1 in einem Diagramm dar, in dem $E_{kin}$ (in $10^{-19}\\,\\text{J}$) über der Frequenz $f$ (in $10^{14}\\,\\text{Hz}$) aufgetragen ist. Bestimmen Sie aus einer Ausgleichsgeraden das Plancksche Wirkungsquantum $h$, die Grenzfrequenz $f_{gr}$ und die Austrittsarbeit $W_A$ der Kathode A. **(8 BE)**\n\n**1.3** Ermitteln Sie mit M3, aus welchem Metall Kathode A besteht. Beurteilen Sie, ob die Messgenauigkeit eine eindeutige Zuordnung zulässt. *Hinweis: Hier darf der Literaturwert von $h$ verwendet werden.* **(4 BE)**\n\n**1.4** Eine Mitschülerin trägt $E_{kin}$ direkt über der Wellenlänge $\\lambda$ auf und erhält keine Gerade. Begründen Sie dies. Geben Sie eine Auftragung an, die mit den $\\lambda$-Werten unmittelbar eine Gerade liefert, und zeigen Sie, welche Größe deren Steigung angibt. **(5 BE)**\n\n**1.5** Bestimmen Sie aus M2 die Austrittsarbeit von Kathode B auf zwei voneinander unabhängigen Wegen und identifizieren Sie das Material. Beurteilen Sie die Gerade C und die Notiz des Mitschülers. **(4 BE)**\n\n**1.6** Werten Sie M4 grafisch aus und bestimmen Sie $h$. Erläutern Sie, weshalb die Gerade im Idealfall durch den Ursprung verläuft, während beim Photoeffekt ein negativer Achsenabschnitt auftritt. Deuten Sie den tatsächlich gefundenen Achsenabschnitt und beurteilen Sie, welches der beiden Verfahren hier das genauere Ergebnis liefert. **(6 BE)**\n\n**1.7** Berechnen Sie für Licht der Wellenlänge $365\\,\\text{nm}$ Impuls und Masse eines Photons. Berechnen Sie die De-Broglie-Wellenlänge der schnellsten Photoelektronen, die dieses Licht aus Kathode A auslöst, und vergleichen Sie die Impulse von Photon und Elektron. **(5 BE)**\n\n**1.8** Skizzieren Sie, wie das $E_{kin}$-$f$-Diagramm nach der klassischen Wellentheorie für zwei verschiedene Lichtintensitäten aussehen müsste, und stellen Sie es dem beobachteten Diagramm gegenüber. **(4 BE)**\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "Erwartungshorizont",
+          "blocks": [
+            {
+              "md": "> [!tip] Gebrauch\n> Erst vollständig bearbeiten, dann aufklappen. Unter jeder Lösung stehen die Fallen, an denen die Aufgabe Punkte kostet.\n\n> [!success]- 1.1 Gegenspannung und fehlender Photostrom (4 BE)\n> **Gegenspannung:** Die Anode liegt gegenüber der Kathode auf negativem Potenzial; das Feld bremst die Elektronen. Ein Elektron verliert auf dem Weg zur Anode die Energie $e\\cdot U$. Der Strom verschwindet erst, wenn selbst die **schnellsten** Elektronen umkehren:\n> $$e\\cdot U_0 = E_{kin,max}$$\n> Elektronen aus tieferen Schichten haben weniger Energie und werden schon früher gestoppt -- deshalb liefert $U_0$ die **maximale** Energie.\n> **Kein Strom bei 578 nm und 615 nm:** Die Photonenenergien betragen $E_{Ph} = hc/\\lambda \\approx 2{,}15\\,\\text{eV}$ bzw. $2{,}02\\,\\text{eV}$. Aus den übrigen Messwerten folgt eine Austrittsarbeit von rund $2{,}2\\,\\text{eV}$ (siehe 1.2). Die Photonenenergie liegt also **unter** $W_A$, die Frequenz unter $f_{gr}$. Ein einzelnes Photon kann kein Elektron auslösen; da jedes Photon einzeln mit einem Elektron wechselwirkt, nützt auch hohe Intensität nichts -- sie liefert nur mehr Photonen derselben, zu kleinen Energie.\n> **Fallen:** \"Die Lampe ist zu schwach\" ist falsch. Die Begründung muss über die Energie **eines** Photons laufen.\n\n> [!success]- 1.2 Diagramm und Auswertung (8 BE)\n> **Umrechnung:** $f = c/\\lambda$, $\\;E_{kin} = e\\cdot U_0$\n>\n> | $\\lambda$ in nm | 365 | 405 | 436 | 492 | 546 |\n> |---|---|---|---|---|---|\n> | $f$ in $10^{14}\\,\\text{Hz}$ | 8,22 | 7,41 | 6,88 | 6,10 | 5,49 |\n> | $E_{kin}$ in $10^{-19}\\,\\text{J}$ | 1,87 | 1,27 | 0,98 | 0,43 | 0,08 |\n>"
+            },
+            {
+              "image": "vault:Klausur Loesung 1.2.svg"
+            },
+            {
+              "md": ">\n> **Steigung** (Steigungsdreieck an der Ausgleichsgeraden, nicht an zwei Messpunkten):\n> $$h = \\frac{\\Delta E_{kin}}{\\Delta f} \\approx \\frac{1{,}31\\cdot10^{-19}\\,\\text{J}}{2{,}0\\cdot10^{14}\\,\\text{Hz}} \\approx 6{,}6\\cdot10^{-34}\\,\\text{Js}$$\n> Akzeptiert werden Werte von etwa $6{,}4$ bis $6{,}8\\cdot10^{-34}\\,\\text{Js}$ (Regression: $6{,}56\\cdot10^{-34}\\,\\text{Js}$).\n> **Grenzfrequenz** (Schnittpunkt mit der $f$-Achse): $f_{gr} \\approx 5{,}4\\cdot10^{14}\\,\\text{Hz}$, also $\\lambda_{gr} = c/f_{gr} \\approx 555\\,\\text{nm}$.\n> **Austrittsarbeit** (Achsenabschnitt nach Verlängerung bis $f = 0$, oder $W_A = h\\cdot f_{gr}$): $W_A \\approx 3{,}55\\cdot10^{-19}\\,\\text{J} \\approx 2{,}2\\,\\text{eV}$.\n> **Kontrolle:** Die Grenzwellenlänge liegt zwischen 546 nm (Strom) und 578 nm (kein Strom) -- das passt zu M1.\n> **Fallen:**\n> - Die Werte für 578 nm und 615 nm als $E_{kin} = 0$ eintragen und mit in die Gerade nehmen. Dort gibt es **keine** Elektronen, also keinen Messwert -- sie würden die Gerade abknicken.\n> - $\\lambda$ nicht in Meter umrechnen oder $U_0$ direkt als Energie in Joule verwenden.\n> - Die Steigung aus zwei Messpunkten statt aus der Ausgleichsgeraden bestimmen.\n> - Den Achsenabschnitt ablesen, ohne die Gerade bis $f = 0$ zu verlängern -- die Achse muss dafür bis $-4\\cdot10^{-19}\\,\\text{J}$ reichen.\n\n> [!success]- 1.3 Kathodenmaterial und Genauigkeit (4 BE)\n> **Grafisch** ergab sich $W_A \\approx 2{,}2\\,\\text{eV}$. In Frage kommen Rubidium (2,13), Kalium (2,25) und Natrium (2,28); Cäsium, Lithium und Zink scheiden klar aus.\n> **Genauer mit dem Literaturwert von $h$:** Für jeden Messpunkt einzeln $W_A = hc/\\lambda - e U_0$:\n>\n> | $\\lambda$ in nm | 365 | 405 | 436 | 492 | 546 |\n> |---|---|---|---|---|---|\n> | $W_A$ in eV | 2,23 | 2,27 | 2,24 | 2,25 | 2,22 |\n>\n> Mittelwert $2{,}24\\,\\text{eV}$, Streuung etwa $\\pm0{,}02\\,\\text{eV}$. Damit ist **Rubidium ausgeschlossen**; **Kalium** passt am besten.\n> **Beurteilung:** Kalium (2,25 eV) und Natrium (2,28 eV) unterscheiden sich nur um $0{,}03\\,\\text{eV}$ -- das liegt an der Grenze der Messgenauigkeit (Spannungen auf $0{,}01\\,\\text{V}$ abgelesen, Ausgleichsgerade mit Steigung etwa 1 % unter dem Literaturwert). Eine **eindeutige** Unterscheidung zwischen Kalium und Natrium ist nicht gesichert; Kalium ist am wahrscheinlichsten.\n> **Fallen:** Den grafisch gefundenen Wert $2{,}21\\,\\text{eV}$ unkritisch dem nächstgelegenen Tabellenwert zuordnen. Wer erkennt, dass der Achsenabschnitt durch die lange Extrapolation besonders unsicher ist, und deshalb punktweise auswertet, erreicht die volle Punktzahl.\n\n> [!success]- 1.4 Auftragung über der Wellenlänge (5 BE)\n> **Keine Gerade:** $E_{kin} = \\dfrac{h\\cdot c}{\\lambda} - W_A$. $E_{kin}$ hängt von $1/\\lambda$ ab, nicht von $\\lambda$ -- über $\\lambda$ aufgetragen entsteht ein **Hyperbelast**, der mit wachsender Wellenlänge flacher wird.\n> **Lineare Auftragung:** $E_{kin}$ über $\\dfrac{1}{\\lambda}$. Dann gilt $E_{kin} = (h\\cdot c)\\cdot\\dfrac{1}{\\lambda} - W_A$ -- eine Gerade der Form $y = m\\cdot x + b$ mit\n> $$m = h\\cdot c \\qquad\\Rightarrow\\qquad h = \\frac{m}{c}$$\n> Achsenabschnitt weiterhin $-W_A$; die Nullstelle liegt bei $1/\\lambda_{gr}$. Mit den Daten aus M1: $m \\approx 6{,}56\\cdot10^{-34}\\,\\text{Js}\\cdot3{,}00\\cdot10^8\\,\\tfrac{\\text{m}}{\\text{s}} \\approx 1{,}97\\cdot10^{-25}\\,\\text{J m}$.\n> **Fallen:** \"Weil $c = \\lambda f$ ist, ist es egal, ob man $f$ oder $\\lambda$ aufträgt\" -- falsch, $f$ und $\\lambda$ sind **umgekehrt** proportional. Die Steigung über $1/\\lambda$ ist $hc$, nicht $h$.\n\n> [!success]- 1.5 Kathode B und Gerade C (4 BE)\n> **Weg 1, Grenzfrequenz:** Ablesen $f_{gr} \\approx 10{,}5\\cdot10^{14}\\,\\text{Hz}$; $\\;W_A = h\\cdot f_{gr} \\approx 6{,}626\\cdot10^{-34}\\cdot10{,}5\\cdot10^{14}\\,\\text{J} \\approx 6{,}96\\cdot10^{-19}\\,\\text{J} \\approx 4{,}34\\,\\text{eV}$.\n> **Weg 2, Achsenabschnitt:** Die verlängerte Gerade schneidet die $E$-Achse bei etwa $-7{,}0\\cdot10^{-19}\\,\\text{J}$, also $W_A \\approx 7{,}0\\cdot10^{-19}\\,\\text{J} \\approx 4{,}3\\,\\text{eV}$.\n> Beide Wege führen auf **Zink**. Die Gerade von B verläuft **parallel** zu der von A: gleiche Steigung $h$, nur verschobener Achsenabschnitt.\n> **Gerade C:** Die Notiz ist falsch. Die Steigung ist $h$ -- eine Naturkonstante, unabhängig von Material und Intensität. Doppelte Intensität bedeutet doppelt so viele Photonen derselben Energie: Es werden doppelt so viele Elektronen ausgelöst (größerer Photostrom), deren **maximale Energie bleibt aber gleich**. Die Messpunkte bei doppelter Intensität lägen also **auf der blauen Geraden B**. Eine Gerade mit doppelter Steigung würde bedeuten, dass sich $h$ verdoppelt.\n> **Fallen:** Bei Weg 2 ohne Verlängerung der Geraden ablesen; bei C die Intensität mit der Photonenenergie verwechseln.\n\n> [!success]- 1.6 Leuchtdioden (6 BE)\n> **Auswertung:** $f = c/\\lambda$, $\\;E = e\\cdot U$\n>\n> | LED | IR | Rot | Orange | Gelb | Grün | Blau |\n> |---|---|---|---|---|---|---|\n> | $f$ in $10^{14}\\,\\text{Hz}$ | 3,19 | 4,55 | 4,80 | 5,08 | 5,71 | 6,38 |\n> | $E$ in $10^{-19}\\,\\text{J}$ | 1,95 | 2,80 | 3,01 | 3,14 | 3,60 | 4,02 |\n>"
+            },
+            {
+              "image": "vault:Klausur Loesung 1.6.svg"
+            },
+            {
+              "md": ">\n> Steigung der Ausgleichsgeraden: $h \\approx 6{,}5\\cdot10^{-34}\\,\\text{Js}$ (Regression $6{,}50\\cdot10^{-34}\\,\\text{Js}$).\n> **Ursprungsgerade im Idealfall:** In der LED wird der Vorgang des Photoeffekts **umgekehrt**: Ein Elektron, das die Spannung $U$ durchläuft, erhält die Energie $e\\cdot U$ und gibt sie als **ein** Photon ab, $e\\cdot U = h\\cdot f$. Es muss keine Austrittsarbeit aufgebracht werden -- es gibt keinen Summanden, also keinen Achsenabschnitt. Beim Photoeffekt dagegen muss vom Photon erst $W_A$ \"bezahlt\" werden: $E_{kin} = h\\cdot f - W_A$, daher der Achsenabschnitt $-W_A$.\n> **Gefundener Achsenabschnitt:** etwa $-0{,}13\\cdot10^{-19}\\,\\text{J} \\approx -0{,}08\\,\\text{eV}$. Alle Messpunkte liegen um ungefähr denselben Betrag unter $h\\cdot f$. Das ist ein **systematischer** Fehler: Das Leuchten setzt nicht schlagartig ein, und \"gerade sichtbar\" wird bei etwas zu kleiner Spannung festgelegt. Ein konstanter Fehler verschiebt die Gerade parallel, **die Steigung bleibt davon unberührt** -- deshalb lässt sich $h$ trotzdem bestimmen.\n> **Vergleich:** Photozelle $6{,}56\\cdot10^{-34}\\,\\text{Js}$ (Abweichung $-1{,}0\\,\\%$), LED $6{,}50\\cdot10^{-34}\\,\\text{Js}$ (Abweichung $-1{,}9\\,\\%$). Hier ist die Photozelle genauer; beide Verfahren liefern $h$ aber mit wenigen Prozent Abweichung. Die LED-Methode hängt von einem subjektiven Kriterium (\"gerade sichtbar\") ab, die Gegenfeldmethode von der Messung kleiner Ströme nahe null.\n> **Fallen:** Die LED-Gerade zwingend durch den Ursprung legen; den Achsenabschnitt als \"Austrittsarbeit der LED\" deuten; die Infrarot-LED weglassen, weil man sie nicht leuchten sieht -- sie ist mit Kamera oder Fotodiode messbar und ein gültiger Punkt.\n\n> [!success]- 1.7 Photon und Elektron bei 365 nm (5 BE)\n> **Photon:** $p_{Ph} = \\dfrac{h}{\\lambda} = \\dfrac{6{,}626\\cdot10^{-34}}{365\\cdot10^{-9}}\\,\\tfrac{\\text{kg m}}{\\text{s}} = 1{,}82\\cdot10^{-27}\\,\\tfrac{\\text{kg m}}{\\text{s}}$; $\\;m_{Ph} = \\dfrac{h}{c\\cdot\\lambda} = 6{,}05\\cdot10^{-36}\\,\\text{kg}$\n> **Elektron:** $E_{kin} = e\\cdot U_0 = 1{,}17\\,\\text{eV} = 1{,}87\\cdot10^{-19}\\,\\text{J}$\n> $v = \\sqrt{2E_{kin}/m_e} = 6{,}42\\cdot10^{5}\\,\\tfrac{\\text{m}}{\\text{s}}$, $\\;p_e = m_e\\cdot v = 5{,}84\\cdot10^{-25}\\,\\tfrac{\\text{kg m}}{\\text{s}}$\n> $\\lambda_e = \\dfrac{h}{p_e} = 1{,}13\\cdot10^{-9}\\,\\text{m} = 1{,}13\\,\\text{nm}$\n> **Vergleich:** Das Elektron hat einen rund **320-mal größeren Impuls** als das Photon, obwohl seine Energie ($1{,}17\\,\\text{eV}$) kleiner ist als die des Photons ($3{,}40\\,\\text{eV}$). Grund: Für das Photon gilt $p = E/c$, für das Elektron $p = \\sqrt{2m_eE_{kin}}$ -- bei gleicher Energie hat ein Teilchen mit Ruhemasse einen viel größeren Impuls. Entsprechend ist seine Wellenlänge rund 320-mal kleiner.\n> **Folgerung:** Der Impuls des Elektrons stammt **nicht** allein vom Photon; der Impulsüberschuss wird vom Metallgitter aufgenommen. Die Energiebilanz $E_{Ph} = W_A + E_{kin}$ bleibt davon unberührt.\n> **Fallen:** $\\lambda_e = hc/E$ verwenden (Photonenformel); $E_{kin}$ in eV in die Wurzel einsetzen.\n\n> [!success]- 1.8 Klassische Erwartung (4 BE)"
+            },
+            {
+              "image": "vault:Klausur Loesung 1.8.svg"
+            },
+            {
+              "md": "> **Klassisch:** Die Energie der Welle steckt in der Amplitude; die Elektronen nehmen kontinuierlich Energie auf. $E_{kin}$ müsste mit der **Intensität** wachsen und von der Frequenz praktisch unabhängig sein -- waagerechte Linien, höher bei größerer Intensität, **ohne** Grenzfrequenz.\n> **Beobachtet:** Eine Gerade mit Steigung $h$, die erst bei $f_{gr}$ beginnt; für beide Intensitäten **dieselbe** Gerade. Die Intensität ändert nur die Zahl der Elektronen.\n> **Fallen:** Im klassischen Diagramm eine Grenzfrequenz einzeichnen oder die Intensität als Steigung darstellen."
+            }
+          ]
+        },
+        {
+          "title": "Bewertungsübersicht",
+          "blocks": [
+            {
+              "md": "| Aufgabe | Anforderungsbereich | BE |\n|---|---|---|\n| 1.1 | I-II | 4 |\n| 1.2 | II | 8 |\n| 1.3 | III | 4 |\n| 1.4 | II-III | 5 |\n| 1.5 | II-III | 4 |\n| 1.6 | III | 6 |\n| 1.7 | II-III | 5 |\n| 1.8 | II | 4 |\n| **Summe** | | **40** |"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Diagramme",
+      "md": "Ordne jedem Merkmal der Diagramme seine Bedeutung zu.",
+      "pairs": [
+        [
+          "Steigung im $E_{kin}$-$f$-Diagramm",
+          "$h$"
+        ],
+        [
+          "Steigung im $U_0$-$f$-Diagramm",
+          "$\\tfrac{h}{e}$"
+        ],
+        [
+          "Steigung über $\\tfrac{1}{\\lambda}$",
+          "$h c$"
+        ],
+        [
+          "Achsenabschnitt",
+          "$-W_A$"
+        ],
+        [
+          "Nullstelle",
+          "Grenzfrequenz $f_G$"
+        ]
+      ],
+      "explain": "Steigung und Achsenabschnitt immer an der Ausgleichsgeraden ablesen, nicht an einzelnen Messpunkten.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Begründung, warum $E_{kin}$ über $\\tfrac{1}{\\lambda}$ eine Gerade ergibt, in die richtige Reihenfolge.",
+      "items": [
+        "$E_{kin} = h f - W_A$",
+        "$f = \\tfrac{c}{\\lambda}$ einsetzen",
+        "$E_{kin} = h c\\cdot\\tfrac{1}{\\lambda} - W_A$",
+        "Gerade über $\\tfrac{1}{\\lambda}$ mit Steigung $hc$, also $h = \\tfrac{m}{c}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $E_{kin} = h f - W_A$. 2. $f = \\tfrac{c}{\\lambda}$ einsetzen. 3. $E_{kin} = h c\\cdot\\tfrac{1}{\\lambda} - W_A$. 4. Gerade über $\\tfrac{1}{\\lambda}$ mit Steigung $hc$, also $h = \\tfrac{m}{c}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bei $\\lambda = 365\\,\\mathrm{nm}$ misst man $U_0 = 1{,}17\\,\\mathrm{V}$. Wie groß ist die Austrittsarbeit, wenn man den Literaturwert von $h$ verwendet?",
+      "answer": 2.23,
+      "tolerance": 0.02,
+      "placeholder": "eV",
+      "explain": "$W_A = \\tfrac{hc}{\\lambda} - e U_0 = \\tfrac{1240}{365}\\,\\mathrm{eV} - 1{,}17\\,\\mathrm{eV} \\approx 3{,}40\\,\\mathrm{eV} - 1{,}17\\,\\mathrm{eV} \\approx 2{,}23\\,\\mathrm{eV}$. Punktweise ausgewertet passt Kalium ($2{,}25\\,\\mathrm{eV}$).",
+      "id": "vq3"
+    },
+    {
+      "type": "anim",
+      "label": "Lösung",
+      "md": "Die Lösung zu 1.2 in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Klausur Loesung 1.2.svg",
+        "aspect": 1.36,
+        "alt": "Lösungsdiagramm zur Messreihe M1"
+      },
+      "timeline": [
+        {
+          "caption": "Lösung 1.2: die fünf verwertbaren Messpunkte von Kathode A mit Ausgleichsgerade.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "578 nm und 615 nm lieferten keinen Strom: kein Messwert, nicht als null eintragen, sonst knickt die Gerade ab.",
+          "to": {
+            "x": 0.48,
+            "y": 0.4,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Steigungsdreieck an der Geraden: $\\Delta E \\approx 1{,}31\\cdot 10^{-19}\\,\\mathrm{J}$ auf $\\Delta f = 2{,}0\\cdot 10^{14}\\,\\mathrm{Hz}$, also $h \\approx 6{,}56\\cdot 10^{-34}\\,\\mathrm{Js}$.",
+          "to": {
+            "x": 0.8,
+            "y": 0.37,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Nullstelle: $f_{gr} \\approx 5{,}4\\cdot 10^{14}\\,\\mathrm{Hz}$, $\\lambda_{gr} \\approx 555\\,\\mathrm{nm}$.",
+          "to": {
+            "x": 0.62,
+            "y": 0.49,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Bis $f = 0$ verlängert: $-W_A \\approx -3{,}55\\cdot 10^{-19}\\,\\mathrm{J}$, $W_A \\approx 2{,}2\\,\\mathrm{eV}$.",
+          "to": {
+            "x": 0.2,
+            "y": 0.82,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Schwellenspannung erwartest du für eine grüne LED mit $\\lambda = 525\\,\\mathrm{nm}$?",
+      "answer": 2.36,
+      "tolerance": 0.03,
+      "placeholder": "V",
+      "explain": "$U = \\tfrac{h c}{e\\lambda} = \\tfrac{1240}{525}\\,\\mathrm{V} \\approx 2{,}36\\,\\mathrm{V}$. Gemessen wurden $2{,}25\\,\\mathrm{V}$: Das Leuchten wird etwas zu früh erkannt.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Warum verläuft die LED-Gerade im Idealfall durch den Ursprung, die Photoeffekt-Gerade aber nicht?",
+      "options": [
+        {
+          "md": "In der LED wird $e U$ ganz zu einem Photon, ohne Austrittsarbeit; beim Photoeffekt muss erst $W_A$ bezahlt werden.",
+          "correct": true
+        },
+        {
+          "md": "Weil LEDs kein Licht absorbieren.",
+          "why": "Darum geht es nicht; entscheidend ist der fehlende Summand."
+        },
+        {
+          "md": "Weil die LED-Messung genauer ist.",
+          "why": "Die Genauigkeit verschiebt die Gerade nicht grundsätzlich."
+        },
+        {
+          "md": "Weil in der LED $h$ kleiner ist.",
+          "why": "$h$ ist eine Naturkonstante."
+        }
+      ],
+      "explain": "LED: $eU = hf$. Photoeffekt: $E_{kin} = hf - W_A$.",
+      "label": "LED",
+      "id": "vq6"
+    },
+    {
+      "type": "anim",
+      "label": "Lösung",
+      "md": "Die Lösung zu 1.6 in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Klausur Loesung 1.6.svg",
+        "aspect": 1.42,
+        "alt": "Lösungsdiagramm zur LED-Messreihe"
+      },
+      "timeline": [
+        {
+          "caption": "Lösung 1.6: LED-Messreihe, E = e·U über f; gestrichelt die ideale Ursprungsgerade.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Steigung der Ausgleichsgeraden: $h \\approx 6{,}50\\cdot 10^{-34}\\,\\mathrm{Js}$.",
+          "to": {
+            "x": 0.6,
+            "y": 0.73,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Achsenabschnitt etwa $-0{,}13\\cdot 10^{-19}\\,\\mathrm{J}$: ein systematischer Fehler beim Kriterium gerade sichtbar. Er verschiebt die Gerade, die Steigung bleibt.",
+          "to": {
+            "x": 0.25,
+            "y": 0.86,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "vq7"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Kathode B hat die Grenzfrequenz $f_{gr} \\approx 10{,}5\\cdot 10^{14}\\,\\mathrm{Hz}$. Wie groß ist ihre Austrittsarbeit?",
+      "answer": 4.34,
+      "tolerance": 0.04,
+      "placeholder": "eV",
+      "explain": "$W_A = h f_{gr} = 6{,}626\\cdot 10^{-34}\\cdot 10{,}5\\cdot 10^{14}\\,\\mathrm{J} \\approx 6{,}96\\cdot 10^{-19}\\,\\mathrm{J} \\approx 4{,}34\\,\\mathrm{eV}$: Zink.",
+      "id": "vq8"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Mitschüler meint, doppelte Lichtintensität verdopple die Steigung der Geraden. Was stimmt?",
+      "options": [
+        {
+          "md": "Die Messpunkte lägen auf derselben Geraden; nur der Photostrom wäre doppelt so groß.",
+          "correct": true
+        },
+        {
+          "md": "Er hat recht, mehr Licht bedeutet mehr Energie pro Elektron.",
+          "why": "Mehr Licht bedeutet mehr Photonen derselben Energie."
+        },
+        {
+          "md": "Die Gerade würde parallel nach oben verschoben.",
+          "why": "Auch der Achsenabschnitt $-W_A$ hängt nicht von der Intensität ab."
+        },
+        {
+          "md": "Die Grenzfrequenz würde sich halbieren.",
+          "why": "Sie hängt nur vom Material ab."
+        }
+      ],
+      "explain": "Die Steigung ist $h$, unabhängig von Material und Intensität.",
+      "label": "Klausur",
+      "id": "vq9"
+    },
+    {
+      "type": "choice",
+      "md": "Wie sähe das $E_{kin}$-$f$-Diagramm nach der klassischen Wellentheorie aus?",
+      "options": [
+        {
+          "md": "Waagerechte Linien ohne Grenzfrequenz, höher bei größerer Intensität.",
+          "correct": true
+        },
+        {
+          "md": "Eine Gerade mit Steigung h, für alle Intensitäten gleich.",
+          "why": "Das ist die Beobachtung, die das Photonenmodell erklärt."
+        },
+        {
+          "md": "Eine Ursprungsgerade, steiler bei größerer Intensität.",
+          "why": "Klassisch hängt die Energie von der Intensität ab, nicht von der Frequenz."
+        },
+        {
+          "md": "Gar keine Elektronen bei hoher Frequenz.",
+          "why": "Klassisch spielt die Frequenz praktisch keine Rolle."
+        }
+      ],
+      "explain": "Klassisch steckt die Energie in der Amplitude; die Frequenz wäre egal.",
+      "label": "Wellenmodell",
+      "id": "vq10"
+    },
+    {
+      "type": "anim",
+      "label": "Lösung",
+      "md": "Die Lösung zu 1.8 in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Klausur Loesung 1.8.svg",
+        "aspect": 2.18,
+        "alt": "Klassische Erwartung gegen Beobachtung"
+      },
+      "timeline": [
+        {
+          "caption": "Lösung 1.8: klassische Erwartung und Beobachtung im Vergleich.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Klassisch: waagerechte Linien, höher bei größerer Intensität, keine Grenzfrequenz.",
+          "to": {
+            "x": 0.26,
+            "y": 0.55,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Beobachtet: eine Gerade, die erst bei der Grenzfrequenz beginnt; für I und 2I dieselbe.",
+          "to": {
+            "x": 0.75,
+            "y": 0.55,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "vq11"
+    },
+    {
+      "type": "truefalse",
+      "md": "Trägt man $E_{kin}$ über $\\lambda$ auf, erhält man eine Gerade mit der Steigung $h$.",
+      "answer": false,
+      "explain": "$E_{kin}$ hängt von $\\tfrac{1}{\\lambda}$ ab: Über $\\lambda$ entsteht ein Hyperbelast, über $\\tfrac{1}{\\lambda}$ eine Gerade mit Steigung $hc$.",
+      "label": "Typischer Fehler",
+      "id": "vq12"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -111,6 +883,42 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "gegenfeld-zwei",
+          "led"
+        ]
+      },
+      "label": "Zwei Messungen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "led",
+          "photon",
+          "photonenstrom"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Auswertung: $f = \\tfrac{c}{\\lambda}$, $E = eU_0$; Steigung $h$, Achsenabschnitt $-W_A$, Nullstelle $f_G$; über $\\tfrac{1}{\\lambda}$ Steigung $hc$.",
+        "LED: $eU \\approx hf$, im Idealfall eine Ursprungsgerade; ein konstanter Fehler verschiebt die Gerade, die Steigung bleibt."
+      ]
     }
   ]
 }

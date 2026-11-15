@@ -61,7 +61,7 @@
           {
             "name": "a",
             "expr": "x/m",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -74,6 +74,636 @@
         ],
         "readout": "Mit F = {F|1} N und m = {m|1} kg ist a = {F/m|2} m/s²."
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Kraft\n> Eine **Kraft** ist die Ursache dafür, dass sich der Bewegungszustand eines Körpers ändert (Betrag oder Richtung der Geschwindigkeit) oder dass er sich verformt. Sie ist ein **Vektor**: Zu ihr gehören Betrag, Richtung und Angriffspunkt. Einheit: $1\\,\\mathrm{N} = 1\\,\\mathrm{kg}\\cdot\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$, die Kraft, die einen Körper der Masse $1\\,\\mathrm{kg}$ mit $1\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ beschleunigt.\n\n> [!definition] Resultierende Kraft\n> Wirken mehrere Kräfte auf **einen** Körper, zählt ihre vektorielle Summe $\\vec F_{res} = \\vec F_1 + \\vec F_2 + \\ldots$ Zeichnerisch hängt man die Pfeile aneinander (Kräfteparallelogramm), rechnerisch addiert man Komponenten. Senkrechte Kräfte von $3\\,\\mathrm{N}$ und $4\\,\\mathrm{N}$ ergeben $5\\,\\mathrm{N}$, nicht $7\\,\\mathrm{N}$.\n\n> [!definition] Träge und schwere Masse\n> Die **träge Masse** misst den Widerstand eines Körpers gegen Beschleunigung ($F = m_t a$), die **schwere Masse** misst, wie stark die Gravitation an ihm zieht ($F_G = m_s g$). Beide werden in Kilogramm angegeben und sind experimentell gleich.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Die Newtonschen Axiome\n> **1. Trägheitsgesetz.** Ein Körper bleibt in Ruhe oder in gleichförmiger geradliniger Bewegung, solange keine resultierende Kraft auf ihn wirkt: $\\vec F_{res} = \\vec 0 \\;\\Leftrightarrow\\; \\vec v = \\text{konst.}$\n> \n> **2. Grundgleichung der Mechanik.** Die resultierende Kraft ist gleich der Impulsänderung pro Zeit, bei konstanter Masse gleich Masse mal Beschleunigung: $\\vec F_{res} = \\tfrac{\\Delta\\vec p}{\\Delta t} = m\\,\\vec a$.\n> \n> **3. Wechselwirkungsgesetz.** Übt ein Körper A auf einen Körper B eine Kraft aus, so übt B auf A eine gleich große, entgegengesetzt gerichtete Kraft aus: $\\vec F_{A\\to B} = -\\vec F_{B\\to A}$. Die beiden Kräfte greifen an **verschiedenen** Körpern an.",
+      "label": "Gesetz",
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Inertialsystem\n> Ein **Inertialsystem** ist ein Bezugssystem, in dem das Trägheitsgesetz gilt: Ein Körper ohne resultierende Kraft ruht oder bewegt sich gleichförmig geradlinig. Jedes Bezugssystem, das sich gegenüber einem Inertialsystem gleichförmig geradlinig bewegt, ist wieder eines. Die Erdoberfläche ist für die meisten Aufgaben näherungsweise ein Inertialsystem.\n\n> [!definition] Scheinkraft (Trägheitskraft)\n> In einem **beschleunigten** Bezugssystem scheinen Kräfte zu wirken, die keinen Wechselwirkungspartner haben: das Nach-hinten-Drücken im anfahrenden Bus, die Zentrifugalkraft im Karussell. Von außen, im Inertialsystem betrachtet, behält der Körper wegen seiner Trägheit seine Geschwindigkeit, und das Fahrzeug beschleunigt unter ihm weg.\n\nPrüfkriterium: Zu jeder echten Kraft gibt es nach dem 3. Axiom eine Gegenkraft an einem anderen Körper. Eine Scheinkraft hat keine.",
+      "label": "Bezugssysteme",
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Das 2. Axiom im Aufzug.** Auf die Kabine ($500\\,\\mathrm{kg}$) wirken nur die Seilkraft nach oben und die Gewichtskraft $m g = 4905\\,\\mathrm{N}$ nach unten.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          9
+        ],
+        "y": [
+          -3,
+          5
+        ],
+        "xLabel": "t in s",
+        "yLabel": "v und a",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 9,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "x<2 ? 2*x : (x<6 ? 4 : (x<8 ? 4-2*(x-6) : 0))",
+            "color": "blue",
+            "label": "v in m/s",
+            "labelAt": 3.2
+          },
+          {
+            "name": "a",
+            "expr": "x<2 ? 2 : (x<6 ? 0 : (x<8 ? -2 : 0))",
+            "color": "orange",
+            "label": "a in m/s²",
+            "labelAt": 0.3,
+            "samples": 900
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "v",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "a",
+            "color": "orange"
+          }
+        ],
+        "readout": "t = {T|1} s: Seilkraft **{500*(9.81 + (T<2 ? 2 : (T<6 ? 0 : (T<8 ? -2 : 0))))|0} N**, Gewichtskraft 4905 N"
+      },
+      "timeline": [
+        {
+          "caption": "Die Kabine steht. Blau ist ihre Geschwindigkeit, orange ihre Beschleunigung, beide nach oben positiv.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "**Anfahren:** $a = 2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ nach oben. Aus $F_S - m g = m a$ folgt $F_S = m\\,(g + a) = 500\\cdot 11{,}81\\,\\mathrm{N} = 5905\\,\\mathrm{N}$: mehr als die Gewichtskraft.",
+          "to": {
+            "T": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "**Gleichförmige Fahrt:** $a = 0$, also $F_S = m g = 4905\\,\\mathrm{N}$. Die Kabine fährt nach oben, und trotzdem ist die resultierende Kraft null: Trägheitsgesetz.",
+          "to": {
+            "T": 4.5
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "**Abbremsen:** $a = -2\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$, also $F_S = m\\,(g + a) = 3905\\,\\mathrm{N}$. Das Seil zieht schwächer als die Erde, deshalb wird die Kabine langsamer, fährt aber noch nach oben.",
+          "to": {
+            "T": 7
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Seilkraft hängt an der **Beschleunigung**, nicht an der Geschwindigkeit. Eine Waage in der Kabine zeigt aus demselben Grund beim Anfahren mehr und beim Abbremsen weniger an.",
+          "to": {
+            "T": 9
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Die Grundgleichung in Newtons eigener Form** und der Kraftstoß.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec F_{res} = \\frac{\\Delta\\vec p}{\\Delta t}",
+            "why": "Newton formulierte das 2. Axiom mit dem Impuls: Die resultierende Kraft ist die Impulsänderung pro Zeit (genauer: die Ableitung $\\dot{\\vec p}$)."
+          },
+          {
+            "tex": "\\frac{\\Delta\\vec p}{\\Delta t} = \\frac{m\\,\\Delta\\vec v}{\\Delta t} = m\\,\\vec a",
+            "why": "Bei konstanter Masse folgt die bekannte Form $\\vec F = m\\vec a$. Ändert sich die Masse, wie bei einer Rakete, gilt nur die Impulsform."
+          },
+          {
+            "tex": "\\Delta\\vec p = \\vec F\\cdot\\Delta t",
+            "why": "Umgestellt: der **Kraftstoß**. Bei veränderlicher Kraft ist er die Fläche unter dem $F$-$t$-Graphen."
+          },
+          {
+            "tex": "\\bar F = \\frac{\\Delta p}{\\Delta t}",
+            "why": "Ist die Impulsänderung vorgegeben, etwa weil ein Körper zum Stillstand kommen muss, ist die mittlere Kraft umso **kleiner**, je **länger** der Vorgang dauert."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kraft als Impulsänderung pro Zeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konstante Masse: F = m a.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Kraftstoß.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittlere Kraft bei vorgegebener Impulsänderung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Kraftstoß und Airbag.** Ein Kopf ($5\\,\\mathrm{kg}$) mit $10\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ muss auf null abgebremst werden: $\\Delta p = 50\\,\\mathrm{N\\,s}$, so oder so.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          60
+        ],
+        "y": [
+          0,
+          17
+        ],
+        "xLabel": "t in ms",
+        "yLabel": "F in kN",
+        "vars": [
+          {
+            "name": "d",
+            "min": 5,
+            "max": 50,
+            "value": 5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "hart",
+            "expr": "x<=5 ? 78.54/5*sin(pi*x/5) : 0",
+            "color": "orange",
+            "label": "ohne Airbag",
+            "labelAt": 2.5,
+            "samples": 900
+          },
+          {
+            "name": "weich",
+            "expr": "x<=d ? 78.54/d*sin(pi*x/d) : 0",
+            "color": "blue",
+            "label": "mit Airbag",
+            "labelAt": "d/2 + 2",
+            "samples": 900
+          }
+        ],
+        "areas": [
+          {
+            "f": "hart",
+            "from": 0,
+            "to": 5,
+            "color": "orange"
+          },
+          {
+            "f": "weich",
+            "from": 0,
+            "to": "d",
+            "color": "blue"
+          }
+        ],
+        "readout": "Bremszeit **{d|0} ms**: Spitzenkraft **{78.54/d|1} kN**, mittlere Kraft **{50/d|1} kN**. Die Fläche bleibt 50 N s."
+      },
+      "timeline": [
+        {
+          "caption": "Orange: Aufprall auf das harte Lenkrad, nach etwa $5\\,\\mathrm{ms}$ vorbei. Die Fläche unter dem $F$-$t$-Graphen ist der Kraftstoß $\\Delta p = 50\\,\\mathrm{N\\,s}$; die Kraft erreicht fast $16\\,\\mathrm{kN}$.",
+          "set": {
+            "d": 5
+          }
+        },
+        {
+          "caption": "Der Airbag verlängert die Bremszeit. Die Fläche muss gleich bleiben, also wird der Kraftverlauf flacher.",
+          "to": {
+            "d": 20
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Bei $50\\,\\mathrm{ms}$ ist die mittlere Kraft $\\tfrac{50\\,\\mathrm{N\\,s}}{0{,}05\\,\\mathrm{s}} = 1\\,\\mathrm{kN}$ statt $10\\,\\mathrm{kN}$: zehnfache Zeit, ein Zehntel der Kraft.",
+          "to": {
+            "d": 50
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Dasselbe Prinzip nutzen Knautschzone, Gurtstraffer, Helmpolster und das Einknicken der Beine bei der Landung nach einem Sprung: Die Impulsänderung ist vorgegeben, beeinflussen lässt sich nur die Zeit."
+        }
+      ],
+      "id": "ve6"
+    },
+    {
+      "id": "ve7",
+      "type": "anim",
+      "md": "**Warum alle Körper gleich schnell fallen.** Die Masse tritt in zwei Rollen auf.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F_G = m_s\\cdot g",
+            "why": "Die Gravitation zieht an der **schweren** Masse $m_s$."
+          },
+          {
+            "tex": "F_{res} = m_t\\cdot a",
+            "why": "Im 2. Axiom steht die **träge** Masse $m_t$."
+          },
+          {
+            "tex": "m_t\\,a = m_s\\,g\\quad\\Rightarrow\\quad a = \\frac{m_s}{m_t}\\,g",
+            "why": "Im freien Fall ist die Gewichtskraft die einzige Kraft."
+          },
+          {
+            "tex": "m_t = m_s\\quad\\Rightarrow\\quad a = g",
+            "why": "Experimente bestätigen die Gleichheit mindestens auf $10^{-13}$ genau. Deshalb fallen ohne Luftwiderstand alle Körper gleich schnell; Einstein machte daraus das Äquivalenzprinzip der Allgemeinen Relativitätstheorie."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Schwere Masse.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Träge Masse.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichsetzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Gleichheit der Massen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Newtonsche Axiome",
+      "path": "02 Wiki/Physik/01 E-Phase/Newtonsche Axiome.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die drei **Newton'schen Axiome** (Grundgesetze der Mechanik) verknüpfen die Bewegung eines Körpers (Kinematik) mit ihrer Ursache, der **Kraft** (Dynamik)."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Axiome",
+          "blocks": [
+            {
+              "md": "> [!note] 1. Axiom -- Trägheitsgesetz\n> Ein Körper bleibt in Ruhe oder gleichförmiger geradliniger Bewegung, solange keine resultierende Kraft auf ihn wirkt. Bezugssysteme, in denen dies gilt, heißen **Inertialsysteme**.\n\n> [!note] 2. Axiom -- Grundgleichung der Mechanik\n> Die Beschleunigung ist proportional zur resultierenden Kraft: $$\\vec{F} = m \\cdot \\vec{a}$$ Die Masse $m$ ist das Maß für die **Trägheit**.\n\n> [!note] 3. Axiom -- Wechselwirkungsprinzip (actio = reactio)\n> Übt Körper A auf Körper B eine Kraft aus, so wirkt B mit einer gleich großen, entgegengesetzten Kraft auf A: $$\\vec{F}_{A \\to B} = -\\vec{F}_{B \\to A}$$ Abzugrenzen vom **Kräftegleichgewicht** (beide Kräfte am selben Körper)."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Aus $\\vec{F} = m\\vec{a}$ folgen die **Energie-** und **Impulserhaltung** sowie die Bewegung geladener Teilchen im **elektrischen Feld** (Q1) und die **Harmonische Schwingung** (Q2)."
+            }
+          ]
+        },
+        {
+          "title": "Die häufigste Verwechslung",
+          "blocks": [
+            {
+              "md": "> [!warning] Wechselwirkungsprinzip und Kräftegleichgewicht sind verschiedene Dinge\n> Beide beschreiben zwei gleich große, entgegengesetzte Kräfte -- und werden deshalb ständig verwechselt. Das trennscharfe Kriterium ist, **woran die Kräfte angreifen**:\n>\n> | | Wechselwirkungsprinzip | Kräftegleichgewicht |\n> |---|---|---|\n> | Kräfte greifen an | an **zwei verschiedenen** Körpern | am **selben** Körper |\n> | Beispiel | Buch drückt auf Tisch, Tisch drückt auf Buch | Gewichtskraft und Normalkraft am Buch |\n> | Können sich aufheben | **nein** -- verschiedene Körper | **ja** |\n> | Gilt | immer | nur bei Ruhe oder gleichförmiger Bewegung |\n>\n> Aus dem Wechselwirkungsprinzip folgt **niemals**, dass sich Kräfte aufheben. Täten sie das, könnte nie eine Beschleunigung auftreten -- ein Pferd könnte keinen Wagen ziehen.\n>\n> Prüffrage bei Unsicherheit: **Wirken die beiden Kräfte auf denselben Körper?** Dann ist es ein Gleichgewicht."
+            }
+          ]
+        },
+        {
+          "title": "Was das erste Axiom eigentlich leistet",
+          "blocks": [
+            {
+              "md": "> [!important] Es definiert, in welchen Bezugssystemen die anderen beiden gelten\n> Das Trägheitsgesetz wirkt zunächst wie ein Sonderfall des zweiten Axioms mit $F = 0$. Sein eigentlicher Gehalt ist ein anderer: Es legt fest, dass es überhaupt **Inertialsysteme** gibt -- Bezugssysteme, in denen ein kräftefreier Körper sich gleichförmig bewegt.\n>\n> In einem beschleunigten Bezugssystem gilt das nicht. Im anfahrenden Bus scheint eine Kraft die Fahrgäste nach hinten zu drücken, obwohl keine wirkt -- tatsächlich behalten sie ihre Geschwindigkeit bei, während der Bus beschleunigt.\n>\n> Solche **Scheinkräfte** treten nur in Nicht-Inertialsystemen auf. Die Zentrifugalkraft ist der wichtigste Fall, siehe **Kreisbewegung**.\n>\n> Die Erde ist streng genommen kein Inertialsystem -- sie rotiert. Für Schulaufgaben ist die Abweichung vernachlässigbar, für Wetter und Meeresströmungen nicht (Corioliskraft)."
+            }
+          ]
+        },
+        {
+          "title": "Die Masse hat zwei Bedeutungen",
+          "blocks": [
+            {
+              "md": "| | träge Masse | schwere Masse |\n|---|---|---|\n| definiert über | $F = m\\,a$, Widerstand gegen Beschleunigung | $F = m\\,g$, Angriffspunkt der Gravitation |\n| gemessen mit | Beschleunigungsversuch | Waage |\n\n> [!tip] Dass beide gleich sind, ist keine Selbstverständlichkeit\n> Es gibt keinen logischen Grund, weshalb der Widerstand gegen Beschleunigung ausgerechnet proportional zur Gravitationswirkung sein sollte. Experimentell stimmen beide bis auf $10^{-13}$ überein.\n>\n> Genau daraus folgt, dass **alle Körper gleich schnell fallen**: In $m\\,a = m\\,g$ kürzt sich die Masse -- aber nur, weil links die träge und rechts die schwere gemeint ist und beide gleich sind.\n>\n> Einstein machte diese Gleichheit zum **Äquivalenzprinzip** und damit zum Ausgangspunkt der Allgemeinen Relativitätstheorie. Ein Detail aus der E-Phase trägt eine der beiden großen Theorien des 20. Jahrhunderts."
+            }
+          ]
+        },
+        {
+          "title": "Kräfte addieren sich vektoriell",
+          "blocks": [
+            {
+              "md": "Wirken mehrere Kräfte, entscheidet die **resultierende** Kraft. Sie wird durch vektorielle Addition bestimmt -- zeichnerisch im Kräfteparallelogramm, rechnerisch komponentenweise.\n\nBei der schiefen Ebene wird die Gewichtskraft in Hangabtriebs- und Normalkomponente zerlegt. Das ist zugleich die Standardanwendung der Trigonometrie in der Physik. Siehe **Reibung und Grenzgeschwindigkeit**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Axiome verbinden die **Kinematik** mit ihren Ursachen und tragen alles Weitere: **Energieerhaltung** und **Impulserhaltung** folgen aus ihnen, ebenso die **Kreisbewegung**, die Bewegung im **Elektrisches Feld** und die Rückstellkraft der **Harmonische Schwingung**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "1. Axiom",
+          "Ohne resultierende Kraft bleibt die Geschwindigkeit konstant."
+        ],
+        [
+          "2. Axiom",
+          "$\\vec F_{res} = \\tfrac{\\Delta\\vec p}{\\Delta t} = m\\,\\vec a$"
+        ],
+        [
+          "3. Axiom",
+          "Kräfte treten paarweise an zwei verschiedenen Körpern auf."
+        ],
+        [
+          "Inertialsystem",
+          "Bezugssystem, in dem das Trägheitsgesetz gilt"
+        ],
+        [
+          "Scheinkraft",
+          "Kraft ohne Wechselwirkungspartner in einem beschleunigten System"
+        ]
+      ],
+      "explain": "Das 1. Axiom legt fest, in welchen Bezugssystemen die anderen gelten: in Inertialsystemen.",
+      "id": "vq1"
+    },
+    {
+      "type": "cloze",
+      "label": "Definitionen",
+      "md": "$1\\,\\mathrm{N} = 1$ {{0}} $\\cdot\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$: Ein Newton beschleunigt einen Körper der Masse $1\\,\\mathrm{kg}$ mit {{1}} $\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Eine Tafel Schokolade ($100\\,\\mathrm{g}$) hat eine Gewichtskraft von etwa {{2}} N.",
+      "blanks": [
+        {
+          "accept": [
+            "kg",
+            "Kilogramm"
+          ]
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.05
+        }
+      ],
+      "explain": "Aus $F = m a$: $1\\,\\mathrm{N} = 1\\,\\mathrm{kg}\\cdot 1\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Gewichtskraft der Schokolade: $0{,}1\\,\\mathrm{kg}\\cdot 9{,}81\\,\\tfrac{\\mathrm{N}}{\\mathrm{kg}} \\approx 1\\,\\mathrm{N}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Vektoren",
+      "md": "Auf einen Körper ($2\\,\\mathrm{kg}$) wirken zwei Kräfte: $3\\,\\mathrm{N}$ nach Osten und $4\\,\\mathrm{N}$ nach Norden. Wie groß ist seine Beschleunigung?",
+      "answer": 2.5,
+      "tolerance": 0.02,
+      "placeholder": "m/s²",
+      "explain": "Die Kräfte stehen senkrecht: $F_{res} = \\sqrt{3^2 + 4^2}\\,\\mathrm{N} = 5\\,\\mathrm{N}$, also $a = \\tfrac{5\\,\\mathrm{N}}{2\\,\\mathrm{kg}} = 2{,}5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$, Richtung nordöstlich ($\\tan\\varphi = \\tfrac43$ gegen Osten).",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Im anfahrenden Bus kippt ein stehender Fahrgast nach hinten. Wie beschreibt das ein Beobachter auf dem Gehweg (Inertialsystem)?",
+      "options": [
+        {
+          "md": "Der Fahrgast behält wegen seiner Trägheit seine Geschwindigkeit; der Bus beschleunigt unter ihm nach vorn.",
+          "correct": true
+        },
+        {
+          "md": "Eine Kraft drückt den Fahrgast nach hinten.",
+          "why": "Diese Kraft hat keinen Wechselwirkungspartner. Sie ist eine Scheinkraft und existiert nur im beschleunigten Bus-System."
+        },
+        {
+          "md": "Die Luft im Bus schiebt ihn nach hinten.",
+          "why": "Die Luft bewegt sich mit dem Bus mit."
+        },
+        {
+          "md": "Die Gewichtskraft kippt ihn nach hinten.",
+          "why": "Sie wirkt senkrecht nach unten."
+        }
+      ],
+      "explain": "Im Inertialsystem gibt es keine Kraft nach hinten. Nur die Füße werden über die Reibung mitbeschleunigt; der Oberkörper bleibt zurück.",
+      "label": "Bezugssysteme",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Person ($70\\,\\mathrm{kg}$) steht im Aufzug auf einer Waage. Der Aufzug fährt mit $1{,}5\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$ nach oben an. Welche Kraft zeigt die Waage an?",
+      "answer": 791.7,
+      "tolerance": 2,
+      "placeholder": "N",
+      "explain": "$F_N - m g = m a$, also $F_N = m\\,(g + a) = 70\\cdot 11{,}31\\,\\mathrm{N} \\approx 792\\,\\mathrm{N}$ statt $687\\,\\mathrm{N}$ in Ruhe.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Aufzug fährt nach unten und bremst ab. Währenddessen zeigt eine Waage in der Kabine mehr an als in Ruhe.",
+      "answer": true,
+      "explain": "Abbremsen einer Abwärtsfahrt heißt: Die Beschleunigung zeigt nach **oben**. Wie beim Anfahren nach oben ist $F_N = m\\,(g + a) > m g$.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Begründung, warum alle Körper gleich schnell fallen, in die richtige Reihenfolge.",
+      "items": [
+        "Gewichtskraft an der schweren Masse: $F_G = m_s g$",
+        "2. Axiom mit der trägen Masse: $F_{res} = m_t a$",
+        "Im freien Fall: $m_t a = m_s g$",
+        "Mit $m_t = m_s$ folgt $a = g$ für jeden Körper"
+      ],
+      "explain": "Die Reihenfolge: 1. Gewichtskraft an der schweren Masse: $F_G = m_s g$. 2. 2. Axiom mit der trägen Masse: $F_{res} = m_t a$. 3. Im freien Fall: $m_t a = m_s g$. 4. Mit $m_t = m_s$ folgt $a = g$ für jeden Körper.",
+      "id": "vq7"
+    },
+    {
+      "type": "numeric",
+      "label": "Kraftstoß",
+      "md": "Ein Fußball ($0{,}43\\,\\mathrm{kg}$) wird aus der Ruhe auf $25\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ geschossen; der Fuß berührt ihn $8\\,\\mathrm{ms}$ lang. Wie groß ist die mittlere Kraft?",
+      "answer": 1344,
+      "tolerance": 7,
+      "placeholder": "N",
+      "explain": "$\\bar F = \\tfrac{\\Delta p}{\\Delta t} = \\tfrac{0{,}43\\cdot 25}{0{,}008}\\,\\mathrm{N} \\approx 1344\\,\\mathrm{N}$, etwa das Doppelte der Gewichtskraft eines Erwachsenen.",
+      "id": "vq8"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Bei gleicher Impulsänderung und doppelter Bremszeit wird die mittlere Kraft {{0}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        }
+      ],
+      "explain": "$\\bar F = \\tfrac{\\Delta p}{\\Delta t}$: Die Kraft ist umgekehrt proportional zur Zeit.",
+      "id": "vq9"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Das Pferd-Wagen-Paradox. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Das Pferd zieht den Wagen mit der Kraft $F$ nach vorn.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Nach dem 3. Axiom zieht der Wagen das Pferd mit $F$ nach hinten.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Die beiden Kräfte heben sich auf, deshalb kann der Wagen nicht beschleunigen.",
+          "why": "Falsch: Die Kräfte greifen an verschiedenen Körpern an. Für den Wagen zählen nur die Kräfte am Wagen: Zugkraft und Reibung."
+        }
+      ],
+      "answer": 2,
+      "explain": "Das Pferd kommt voran, weil der Boden es über die Haftreibung nach vorn schiebt, als Gegenkraft zu den Hufen, die den Boden nach hinten drücken. Ist diese Kraft größer als die Kraft des Wagens auf das Pferd, beschleunigt das Pferd samt Wagen.",
+      "id": "vq10"
+    },
+    {
+      "type": "multi",
+      "md": "Welche der Kräfte sind Scheinkräfte?",
+      "options": [
+        {
+          "md": "die Zentrifugalkraft, die man im Karussell spürt",
+          "correct": true
+        },
+        {
+          "md": "die Kraft, die einen im anfahrenden Bus nach hinten zu drücken scheint",
+          "correct": true
+        },
+        {
+          "md": "die Gewichtskraft",
+          "why": "Ihr Wechselwirkungspartner ist die Anziehung der Erde durch den Körper."
+        },
+        {
+          "md": "die Haftreibung der Straße auf die Reifen",
+          "why": "Gegenkraft: die Reifen auf die Straße."
+        },
+        {
+          "md": "die Normalkraft des Bodens",
+          "why": "Gegenkraft: der Körper drückt auf den Boden."
+        }
+      ],
+      "explain": "Scheinkräfte treten nur in beschleunigten Bezugssystemen auf und haben keinen Wechselwirkungspartner.",
+      "label": "Bezugssysteme",
+      "id": "vq11"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Fallschirmspringer sinkt mit konstanter Geschwindigkeit. Dann ist die Luftwiderstandskraft genau so groß wie seine Gewichtskraft.",
+      "answer": true,
+      "explain": "Konstante Geschwindigkeit heißt $a = 0$, also $F_{res} = 0$: Die beiden Kräfte am selben Körper bilden ein **Kräftegleichgewicht**. Ein Wechselwirkungspaar sind sie nicht.",
+      "label": "Klausur",
+      "id": "vq12"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Körper läuft mit konstantem Tempo auf einer Kreisbahn. Was gilt für die resultierende Kraft auf ihn?",
+      "options": [
+        {
+          "md": "Sie ist nicht null und zeigt zum Kreismittelpunkt.",
+          "correct": true
+        },
+        {
+          "md": "Sie ist null, weil das Tempo konstant ist.",
+          "why": "Die Richtung der Geschwindigkeit ändert sich ständig, also gibt es eine Beschleunigung."
+        },
+        {
+          "md": "Sie zeigt in Bewegungsrichtung.",
+          "why": "Dann würde der Körper schneller."
+        },
+        {
+          "md": "Sie zeigt nach außen.",
+          "why": "Nach außen zeigt nur die Scheinkraft im mitrotierenden System."
+        }
+      ],
+      "explain": "Jede Richtungsänderung ist eine Beschleunigung. Die Kraft, die sie bewirkt, heißt Zentripetalkraft, $F = m\\tfrac{v^2}{r}$; mehr dazu im Kapitel Kreisbewegung.",
+      "label": "Klausur",
+      "id": "vq13"
     },
     {
       "id": "traeg",
@@ -117,13 +747,58 @@
       "label": "Kräfteansatz"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "aufzug",
+          "kraftstoss"
+        ]
+      },
+      "label": "Aufzug und Kraftstoß",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "aufzug",
+          "kraftstoss"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "aufzug",
+          "kraftstoss",
+          "gekoppelt"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Ohne resultierende Kraft keine Änderung der Bewegung (Trägheit).",
         "$F = m\\,a$ mit der Summe aller Kräfte am Körper.",
-        "Kräftepaare nach dem 3. Axiom wirken an verschiedenen Körpern und heben sich deshalb nie auf."
+        "Kräftepaare nach dem 3. Axiom wirken an verschiedenen Körpern und heben sich deshalb nie auf.",
+        "$1\\,\\mathrm{N} = 1\\,\\mathrm{kg}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Kräfte sind Vektoren; es zählt die resultierende Kraft am betrachteten Körper.",
+        "Newtons Form: $\\vec F = \\tfrac{\\Delta\\vec p}{\\Delta t}$; Kraftstoß $\\Delta p = F\\,\\Delta t$. Längere Bremszeit, kleinere Kraft.",
+        "Aufzug: $F_S = m\\,(g + a)$ mit $a$ nach oben positiv. Die Kraft hängt an der Beschleunigung, nicht an der Geschwindigkeit.",
+        "Inertialsysteme: Dort gilt das Trägheitsgesetz. In beschleunigten Systemen erscheinen Scheinkräfte ohne Wechselwirkungspartner.",
+        "Aus $m_t a = m_s g$ und $m_t = m_s$ folgt: Alle Körper fallen gleich schnell."
       ]
     }
   ]

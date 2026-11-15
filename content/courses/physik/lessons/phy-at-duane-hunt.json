@@ -16,6 +16,384 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Die Duane-Hunt-Beziehung\n> Ein Elektron gewinnt nach der Röhrenspannung $U$ die Energie $eU$. Im Extremfall gibt es sie ganz an **ein** Photon ab: $e U = h f_{max} = \\tfrac{h c}{\\lambda_{min}}$, also $\\lambda_{min} = \\tfrac{h c}{e U}$, praktisch $\\lambda_{min} = \\tfrac{1240\\,\\mathrm{pm}}{U/\\mathrm{kV}}$. Mehr Energie kann kein Photon tragen, deshalb bricht das Spektrum dort **scharf** ab.\n\n**Der Photoeffekt rückwärts.** Beim Photoeffekt macht ein Photon ein Elektron, hier ein Elektron ein Photon; beide Male ist $h$ der Umrechnungsfaktor. Aus $h = \\tfrac{e U \\lambda_{min}}{c}$ folgt das Wirkungsquantum aus zwei gut messbaren Größen.\n\n| Anteil | Ursache | hängt ab von |\n|---|---|---|\n| Bremsspektrum | Abbremsen im Feld der Kerne | **nur** von der Röhrenspannung (Lage der Kante) |\n| charakteristische Linien | Übergänge in inneren Schalen | **nur** vom Anodenmaterial |\n\nDie Linien erscheinen erst, wenn $eU$ reicht, um ein Elektron aus der innersten Schale zu entfernen.",
+      "label": "Duane-Hunt",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel:** Röntgenröhre bei $U = 35\\,\\mathrm{kV}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\lambda_{min} = \\frac{6{,}626\\cdot 10^{-34}\\cdot 2{,}998\\cdot 10^{8}}{1{,}602\\cdot 10^{-19}\\cdot 3{,}5\\cdot 10^{4}}\\,\\mathrm{m} \\approx 3{,}54\\cdot 10^{-11}\\,\\mathrm{m}",
+            "why": "Kilovolt in Volt umgerechnet."
+          },
+          {
+            "tex": "\\frac{1240}{35}\\,\\mathrm{pm} \\approx 35{,}4\\,\\mathrm{pm}",
+            "why": "Kontrolle mit der Merkformel."
+          },
+          {
+            "tex": "E_{max} = 35\\,\\mathrm{keV} \\approx 5{,}61\\cdot 10^{-15}\\,\\mathrm{J}",
+            "why": "In keV ist der Zahlenwert der Spannung in kV."
+          },
+          {
+            "tex": "\\lambda_{min} \\sim \\frac{1}{U}:\\quad \\lambda_{min} \\to \\tfrac12\\lambda_{min} \\;\\text{bei}\\; 2U = 70\\,\\mathrm{kV}",
+            "why": "Umgekehrt proportional, nicht durch eine Wurzel gedämpft wie bei Materiewellen."
+          },
+          {
+            "tex": "35\\,\\mathrm{pm} < d \\approx 200 \\text{ bis } 300\\,\\mathrm{pm}",
+            "why": "Passend für Bragg-Reflexion an Kristallen; sichtbares Licht ist rund viertausendmal langwelliger."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Merkformel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höchste Energie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Proportionalität.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Größenordnung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Photon gegen Materiewelle:** relative Wellenlänge über der Spannung, bezogen auf $10\\,\\mathrm{kV}$. Blau die Grenzwellenlänge der Röntgenstrahlung, orange die De-Broglie-Wellenlänge der Elektronen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          5,
+          60
+        ],
+        "y": [
+          0,
+          2.1
+        ],
+        "xLabel": "U in kV",
+        "yLabel": "Wellenlänge relativ zu 10 kV",
+        "vars": [
+          {
+            "name": "U",
+            "min": 5,
+            "max": 60,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "10/x",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "sqrt(10/x)",
+            "color": "orange"
+          }
+        ],
+        "labels": [
+          {
+            "x": 22,
+            "y": 1.85,
+            "text": "Röntgen: λmin ~ 1/U",
+            "anchor": "start",
+            "color": "blue"
+          },
+          {
+            "x": 22,
+            "y": 1.62,
+            "text": "Elektronen: λ ~ 1/√U",
+            "anchor": "start",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "a",
+            "color": "blue",
+            "guides": true
+          },
+          {
+            "x": "U",
+            "on": "b",
+            "color": "orange"
+          }
+        ],
+        "readout": "U = {U|0} kV: λmin = {1239.84/U|1} pm ({1000/U|0} %), Elektronen {1226.5/sqrt(1000*U)|2} pm ({100*sqrt(10/U)|0} %)"
+      },
+      "timeline": [
+        {
+          "caption": "Bezugspunkt 10 kV: beide Kurven bei 1, also 100 %.",
+          "set": {
+            "U": 10
+          }
+        },
+        {
+          "caption": "Doppelte Spannung: Die Grenzwellenlänge halbiert sich, die Elektronenwellenlänge sinkt nur auf 71 %.",
+          "to": {
+            "U": 20
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Vierfache Spannung: Grenzwellenlänge auf ein Viertel, Elektronenwellenlänge auf die Hälfte. Photonen: $\\lambda \\sim \\tfrac1E$; Teilchen mit Masse: $\\lambda \\sim \\tfrac{1}{\\sqrt E}$.",
+          "to": {
+            "U": 40
+          },
+          "dur": 2200
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Warum die Röhre so heiß wird.** Nur etwa ein Prozent der elektrischen Leistung wird zu Röntgenstrahlung; die meisten Elektronen geben ihre Energie in vielen kleinen Schritten ab, überwiegend als Wärme. Der Grenzfall eines einzigen Photons ist gerade der seltenste. Leistungsstarke Röhren haben deshalb rotierende, gekühlte Anoden.\n\n> [!warning] Typische Fallen\n> - Kilovolt nicht in Volt umrechnen.\n> - $\\lambda_{min}$ ist die **kürzeste** Wellenlänge; das Spektrum reicht von dort zu längeren.\n> - Die Kante hängt nicht vom Anodenmaterial ab, die Linien nicht von der Spannung.\n> - $\\lambda \\sim \\tfrac{1}{\\sqrt U}$ gilt für Materiewellen, nicht für Photonen.\n> - Keine Austrittsarbeit abziehen: einige eV gegen zehntausende eV.",
+      "label": "Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Grenzwellenlänge der Bremsstrahlung berechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Grenzwellenlänge der Bremsstrahlung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Grenzwellenlänge des Bremsspektrums\"*, *\"Welche Röhrenspannung ist erforderlich, um Strahlung von ... zu erzeugen?\"*, *\"Erklären Sie das Zustandekommen der scharfen Kante im Spektrum\"*, *\"Bestimmen Sie aus der Grenzwellenlänge das Plancksche Wirkungsquantum\"*, *\"Weshalb hängt die Grenzwellenlänge nicht vom Anodenmaterial ab?\"*.\n\nErkennungsmerkmal: **Röntgenröhre** mit angegebener Beschleunigungs- beziehungsweise Röhrenspannung."
+            }
+          ]
+        },
+        {
+          "title": "Die Duane-Hunt-Beziehung",
+          "blocks": [
+            {
+              "md": "> [!important] Der Photoeffekt rückwärts\n> Ein Elektron durchläuft die Röhrenspannung $U$ und gewinnt die kinetische Energie $eU$. Beim Abbremsen in der Anode wird diese Energie in Photonen umgesetzt. Der **Extremfall** ist, dass ein Elektron seine gesamte Energie in **einem einzigen** Photon abgibt:\n> $$e\\,U = h\\,f_{max} = \\frac{h\\,c}{\\lambda_{min}}$$\n> $$\\boxed{\\;\\lambda_{min} = \\frac{h\\,c}{e\\,U}\\;} \\qquad\\text{praktisch}\\qquad \\lambda_{min}[\\text{pm}] = \\frac{1240}{U[\\text{kV}]}$$\n>\n> Mehr Energie als $eU$ kann ein Photon nicht tragen -- deshalb bricht das Spektrum bei $\\lambda_{min}$ **scharf** ab. Diese Kante ist die eigentliche Aussage des Versuchs.\n\n> [!tip] Warum der Vorgang der Umkehrung des Photoeffekts entspricht\n> Beim **Photoeffekt** erzeugt ein Photon ein Elektron bestimmter Energie; hier erzeugt ein Elektron ein Photon bestimmter Energie. Beide Male ist $h$ der Umrechnungsfaktor zwischen Teilchen- und Wellenbeschreibung, und beide Male liefert die Messung denselben Zahlenwert. Genau deshalb eignet sich die Grenzwellenlänge zur **Bestimmung von $h$**: Aus $h = \\dfrac{e\\,U\\,\\lambda_{min}}{c}$ folgt das Wirkungsquantum aus zwei gut messbaren Größen."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Anteile des Spektrums",
+          "blocks": [
+            {
+              "md": "| Anteil | Ursache | Lage | Hängt ab von |\n|---|---|---|---|\n| **Bremsspektrum** (kontinuierlich) | Abbremsung der Elektronen im Coulombfeld der Kerne | von $\\lambda_{min}$ aufwärts, breites Kontinuum | **nur** von der Röhrenspannung |\n| **Charakteristische Linien** ($K_\\alpha$, $K_\\beta$) | Herausschlagen innerer Elektronen, Auffüllen aus höheren Schalen | scharfe Peaks bei festen Wellenlängen | **nur** vom Anodenmaterial |\n\n> [!warning] Die häufigste Verwechslung des Themas\n> Die **Grenzwellenlänge** verschiebt sich bei Änderung der Röhrenspannung, die **charakteristischen Linien** nicht. Umgekehrt ändert ein Wechsel des Anodenmaterials die Linienlage, aber nicht die Kante.\n>\n> Der Grund liegt in den verschiedenen Mechanismen: Das Bremsspektrum entsteht durch einen **kontinuierlichen** Energieverlust ohne Beteiligung der Atomstruktur, die Linien durch **diskrete** Übergänge zwischen Schalen. Aufgaben mit zwei überlagerten Spektren zielen fast immer auf diese Unterscheidung.\n>\n> Zusatzbedingung: Die charakteristischen Linien erscheinen erst, wenn $eU$ ausreicht, um ein Elektron aus der innersten Schale zu entfernen. Unterhalb dieser Schwellenspannung zeigt das Spektrum nur das Kontinuum."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Röhrenspannung** in Volt notieren.\n2. **Einsetzen:** $\\lambda_{min} = \\dfrac{hc}{eU}$, oder mit der Merkformel $\\lambda_{min}[\\text{pm}] = \\dfrac{1240}{U[\\text{kV}]}$.\n3. **Maximale Photonenenergie** angeben, falls gefragt: $E_{max} = eU$; in keV ist der Zahlenwert identisch mit der Spannung in kV.\n4. **Bei Umkehraufgaben** nach $U$ auflösen: $U = \\dfrac{hc}{e\\,\\lambda_{min}}$.\n5. **Bei $h$-Bestimmung:** $h = \\dfrac{e\\,U\\,\\lambda_{min}}{c}$.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{Js}]\\cdot[\\text{m/s}]}{[\\text{C}]\\cdot[\\text{V}]} = \\dfrac{\\text{J}\\,\\text{m}}{\\text{J}} = \\text{m}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Röntgenröhre wird mit $U = 35\\,\\text{kV}$ betrieben. Berechnen Sie die Grenzwellenlänge und die maximale Photonenenergie. Welche Spannung wäre nötig, um die Grenzwellenlänge zu halbieren?*\n\n**Schritt 2:**\n$$\\lambda_{min} = \\frac{6{,}626\\cdot10^{-34}\\cdot2{,}998\\cdot10^{8}}{1{,}602\\cdot10^{-19}\\cdot3{,}5\\cdot10^{4}} = \\frac{1{,}986\\cdot10^{-25}}{5{,}607\\cdot10^{-15}} \\approx 3{,}54\\cdot10^{-11}\\,\\text{m} = 35{,}4\\,\\text{pm}$$\n\n**Kontrolle mit der Merkformel:** $\\dfrac{1240}{35} \\approx 35{,}4\\,\\text{pm}$. Bestätigt.\n\n**Schritt 3:** $E_{max} = 35\\,\\text{keV} = 35\\cdot10^{3}\\cdot1{,}602\\cdot10^{-19} \\approx 5{,}61\\cdot10^{-15}\\,\\text{J}$.\n\n**Halbierung der Grenzwellenlänge:** Wegen $\\lambda_{min} \\propto 1/U$ ist die **doppelte** Spannung nötig, also $70\\,\\text{kV}$. Der Zusammenhang ist umgekehrt proportional, nicht durch eine Wurzel gedämpft -- anders als bei der **De-Broglie-Wellenlänge**, wo $\\lambda \\propto 1/\\sqrt U$ gilt. Diese Gegenüberstellung ist ein beliebter Vergleichsauftrag.\n\n**Größenordnungsbewertung:** 35 pm liegt deutlich unterhalb typischer Atomabstände im Kristall (rund 200 bis 300 pm) und ist damit für **Bragg-Reflexion** geeignet. Sichtbares Licht mit 500 nm ist rund viertausendmal langwelliger -- der Grund, weshalb Kristallstrukturanalyse Röntgenstrahlung erfordert."
+            }
+          ]
+        },
+        {
+          "title": "Warum die Röhre so ineffizient ist",
+          "blocks": [
+            {
+              "md": "Nur etwa ein Prozent der zugeführten elektrischen Leistung wird in Röntgenstrahlung umgesetzt; der Rest erscheint als Wärme in der Anode. Der Grund: Die meisten Elektronen geben ihre Energie in **vielen kleinen** Stufen ab, wobei jeweils niederenergetische Photonen oder Gitterschwingungen entstehen. Der Extremfall der vollständigen Umsetzung in ein einziges Photon -- der die Grenzwellenlänge definiert -- ist gerade der **seltenste** Fall. Deshalb rotieren Anoden in leistungsfähigen Röhren und werden aktiv gekühlt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Kilovolt nicht umrechnen.** $35\\,\\text{kV} = 3{,}5\\cdot10^{4}\\,\\text{V}$.\n- **Grenzwellenlänge als längste statt kürzeste Wellenlänge deuten.** $\\lambda_{min}$ gehört zur **maximalen** Photonenenergie; das Spektrum erstreckt sich von dort zu **längeren** Wellenlängen.\n- **Annehmen, die Grenzwellenlänge hänge vom Anodenmaterial ab.** Sie hängt ausschließlich von $U$ ab -- genau das macht sie zur universellen Messgröße für $h$.\n- **Die charakteristischen Linien mit der Spannung verschieben wollen.** Sie sind materialspezifisch und ortsfest.\n- **$\\lambda \\propto 1/\\sqrt U$ ansetzen.** Diese Wurzel gilt für Materiewellen, nicht für Photonen.\n- **Die Austrittsarbeit einrechnen.** Anders als beim Photoeffekt spielt sie hier keine Rolle, da sie gegenüber $eU$ um drei bis vier Zehnerpotenzen kleiner ist."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bragg-Bedingung anwenden** · **Photoeffekt auswerten** · **De-Broglie-Wellenlänge berechnen** · **Beschleunigungsspannung und kinetische Energie berechnen** · **Spektrallinien aus Energieniveaus berechnen** · **Roentgenstrahlung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe ihren Ausdruck zu.",
+      "pairs": [
+        [
+          "Grenzwellenlänge",
+          "$\\tfrac{h c}{e U}$"
+        ],
+        [
+          "höchste Photonenenergie",
+          "$e U$"
+        ],
+        [
+          "Wirkungsquantum aus der Messung",
+          "$\\tfrac{e U\\lambda_{min}}{c}$"
+        ],
+        [
+          "Merkformel",
+          "$\\lambda_{min} = \\tfrac{1240\\,\\mathrm{pm}}{U/\\mathrm{kV}}$"
+        ],
+        [
+          "Lage der Linien",
+          "nur Anodenmaterial"
+        ]
+      ],
+      "explain": "Die Kante gehört zur Spannung, die Linien zum Material.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Begründung der scharfen Kante in die richtige Reihenfolge.",
+      "items": [
+        "Jedes Elektron bringt die Energie $eU$ mit",
+        "Ein Photon kann höchstens diese ganze Energie tragen",
+        "Größte Photonenenergie heißt kleinste Wellenlänge",
+        "Kürzere Wellenlängen kommen nicht vor: scharfe Kante"
+      ],
+      "explain": "Die Reihenfolge: 1. Jedes Elektron bringt die Energie $eU$ mit. 2. Ein Photon kann höchstens diese ganze Energie tragen. 3. Größte Photonenenergie heißt kleinste Wellenlänge. 4. Kürzere Wellenlängen kommen nicht vor: scharfe Kante.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Grenzwellenlänge hat eine Röhre bei $50\\,\\mathrm{kV}$?",
+      "answer": 24.8,
+      "tolerance": 0.3,
+      "placeholder": "pm",
+      "explain": "$\\lambda_{min} = \\tfrac{1240}{50}\\,\\mathrm{pm} \\approx 24{,}8\\,\\mathrm{pm}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Röhrenspannung braucht man für $\\lambda_{min} = 20\\,\\mathrm{pm}$?",
+      "answer": 62.0,
+      "tolerance": 0.7,
+      "placeholder": "kV",
+      "explain": "$U = \\tfrac{h c}{e\\lambda_{min}} = \\tfrac{1240}{20}\\,\\mathrm{kV} = 62\\,\\mathrm{kV}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Wirkungsquantum",
+      "md": "Bei $30\\,\\mathrm{kV}$ misst man $\\lambda_{min} = 41{,}5\\,\\mathrm{pm}$. Welchen Wert für $h$ ergibt das (in $10^{-34}\\,\\mathrm{Js}$)?",
+      "answer": 6.65,
+      "tolerance": 0.07,
+      "placeholder": "10⁻³⁴ Js",
+      "explain": "$h = \\tfrac{e U\\lambda_{min}}{c} = \\tfrac{1{,}602\\cdot 10^{-19}\\cdot 3\\cdot 10^4\\cdot 41{,}5\\cdot 10^{-12}}{3\\cdot 10^8}\\,\\mathrm{Js} \\approx 6{,}65\\cdot 10^{-34}\\,\\mathrm{Js}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Die Röhrenspannung wird vervierfacht. Wie ändert sich die Grenzwellenlänge?",
+      "options": [
+        {
+          "md": "Sie sinkt auf ein Viertel.",
+          "correct": true
+        },
+        {
+          "md": "Sie halbiert sich.",
+          "why": "Das gälte für Materiewellen, $\\lambda \\sim \\tfrac{1}{\\sqrt U}$."
+        },
+        {
+          "md": "Sie vervierfacht sich.",
+          "why": "Mehr Energie, kürzere Wellenlänge."
+        },
+        {
+          "md": "Sie bleibt gleich.",
+          "why": "$\\lambda_{min} = \\tfrac{hc}{eU}$ hängt von $U$ ab."
+        }
+      ],
+      "explain": "$\\lambda_{min} \\sim \\tfrac{1}{U}$.",
+      "label": "Proportionalität",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Wie beim Photoeffekt muss man beim Bremsspektrum eine Austrittsarbeit abziehen.",
+      "answer": false,
+      "explain": "Einige Elektronenvolt sind gegenüber zehntausenden Elektronenvolt vernachlässigbar.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum wird eine Röntgenröhre im Betrieb so heiß?",
+      "options": [
+        {
+          "md": "Fast alle Elektronen geben ihre Energie in vielen kleinen Schritten ab, überwiegend als Wärme; nur etwa 1 % wird Röntgenstrahlung.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Röntgenstrahlung die Anode erhitzt.",
+          "why": "Die Röntgenstrahlung verlässt die Anode größtenteils."
+        },
+        {
+          "md": "Weil die Glühkathode so heiß ist.",
+          "why": "Die Kathode glüht, aber die große Wärme entsteht in der Anode."
+        },
+        {
+          "md": "Weil die Grenzwellenlänge so kurz ist.",
+          "why": "Die Kante sagt nichts über die Wärme."
+        }
+      ],
+      "explain": "Der Grenzfall eines einzigen Photons ist der seltenste.",
+      "label": "Technik",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +470,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "duane-h"
+        ]
+      },
+      "label": "Wirkungsquantum bestimmen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "bragg-grenze",
+          "duane-hunt"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$eU = \\tfrac{hc}{\\lambda_{min}}$: Kante nur von $U$ abhängig, $\\lambda_{min} \\sim \\tfrac1U$; daraus $h = \\tfrac{eU\\lambda_{min}}{c}$.",
+        "Photonen $\\lambda \\sim \\tfrac1E$, Materiewellen $\\lambda \\sim \\tfrac{1}{\\sqrt E}$; nur etwa 1 % der Leistung wird Röntgenstrahlung."
+      ]
     }
   ]
 }

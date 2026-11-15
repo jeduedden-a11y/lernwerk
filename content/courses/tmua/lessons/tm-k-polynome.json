@@ -15,6 +15,396 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Polynom\n> Ein Ausdruck $a_n x^n + a_{n-1}x^{n-1} + \\dots + a_1 x + a_0$ mit Zahlen $a_i$ und $a_n \\ne 0$; $n$ ist der **Grad**, $a_0$ das **Absolutglied**.\n\n> [!definition] Division mit Rest\n> Zu jedem Polynom $f$ und jeder Zahl $a$ gibt es ein Polynom $q$ (eines Grades kleiner) und eine Zahl $r$ mit $f(x) = (x - a)\\,q(x) + r$. Das ist die Polynomdivision, wie die schriftliche Division mit Zahlen.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung von Restsatz und Faktorsatz.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = (x - a)\\,q(x) + r",
+            "why": "Division mit Rest durch den linearen Faktor."
+          },
+          {
+            "tex": "f(a) = (a - a)\\,q(a) + r = 0 + r",
+            "why": "x = a einsetzen: Der erste Summand verschwindet."
+          },
+          {
+            "tex": "\\text{Rest} = f(a)",
+            "why": "Restsatz: Den Rest bekommt man ohne Division."
+          },
+          {
+            "tex": "(x - a) \\text{ ist Faktor} \\iff r = 0 \\iff f(a) = 0",
+            "why": "Faktorsatz: Ein Faktor lässt keinen Rest."
+          },
+          {
+            "tex": "\\text{Division durch } (bx - c): \\text{ Rest } = f\\!\\left(\\tfrac cb\\right)",
+            "why": "Bei einem Vorfaktor setzt man die Nullstelle des Teilers ein."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Restsatz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktorsatz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorfaktor.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: alle Nullstellen von $x^3 - 2x^2 - 5x + 6$.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{ganzzahlige Nullstellen teilen } 6: \\ \\pm1, \\pm2, \\pm3, \\pm6",
+            "why": "Ist n eine ganzzahlige Nullstelle, dann ist n^3 − 2n^2 − 5n = −6, und links lässt sich n ausklammern: n teilt 6."
+          },
+          {
+            "tex": "f(1) = 1 - 2 - 5 + 6 = 0",
+            "why": "Der erste Kandidat passt: (x − 1) ist ein Faktor."
+          },
+          {
+            "tex": "x^3 - 2x^2 - 5x + 6 = (x - 1)(x^2 - x - 6)",
+            "why": "Faktor abspalten, durch Polynomdivision oder Koeffizientenvergleich."
+          },
+          {
+            "tex": "x^2 - x - 6 = (x - 3)(x + 2)",
+            "why": "Der quadratische Rest zerfällt weiter."
+          },
+          {
+            "tex": "\\text{Nullstellen: } 1,\\ 3,\\ -2",
+            "why": "Probe: Das Produkt der Nullstellen −6 ist −a_0/a_3 = −6."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kandidaten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Test.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abspalten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Restsatz",
+      "md": "**Der Rest als Funktionswert:** blau $f(x) = x^3 - 2x^2 - 5x + 6$. Der orange Punkt steht bei $x = a$; seine Höhe ist der Rest bei Division durch $(x - a)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          4
+        ],
+        "y": [
+          -10,
+          10
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "A",
+            "min": -3,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 2*x^2 - 5*x + 6",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "A",
+            "y": "f(A)",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "a = {A|1} · Rest bei Division durch (x − a): f(a) = {f(A)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "a = 0: Der Rest ist das Absolutglied 6.",
+          "set": {
+            "A": 0
+          }
+        },
+        {
+          "caption": "a = 1: Der Punkt liegt auf der Achse, Rest 0. Also ist (x − 1) ein Faktor.",
+          "to": {
+            "A": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = 2: Rest −4, kein Faktor.",
+          "to": {
+            "A": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = 3 und …",
+          "to": {
+            "A": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "… a = −2: wieder Rest 0. Jede Nullstelle liefert einen linearen Faktor.",
+          "to": {
+            "A": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Polynome - Faktorsatz und Restsatz",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Polynome - Faktorsatz und Restsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was die Spezifikation verlangt",
+          "blocks": [
+            {
+              "md": "MM1.6 nennt drei Dinge: Polynome **ausmultiplizieren und zusammenfassen**, **faktorisieren und dividieren** -- durch lineare Terme (auch der Form $ax + b$) und durch quadratische Terme -- sowie **Faktorsatz und Restsatz** anwenden."
+            }
+          ]
+        },
+        {
+          "title": "Polynomdivision",
+          "blocks": [
+            {
+              "md": "Die schriftliche Division funktioniert wie bei Zahlen: höchste Potenz durch höchste Potenz teilen, zurückmultiplizieren, abziehen, wiederholen. Es gilt immer\n\n$$p(x) = q(x) \\cdot d(x) + r(x), \\qquad \\text{Grad}(r) < \\text{Grad}(d).$$\n\nBeim Teilen durch einen **linearen** Term ist der Rest eine Zahl, beim Teilen durch einen **quadratischen** Term höchstens linear: $r(x) = ax + b$."
+            }
+          ]
+        },
+        {
+          "title": "Der Restsatz",
+          "blocks": [
+            {
+              "md": "> [!important] Restsatz (*Remainder Theorem*)\n> Der Rest bei Division von $p(x)$ durch $(x - a)$ ist $p(a)$.\n>\n> **Begründung:** Aus $p(x) = q(x)(x - a) + r$ folgt beim Einsetzen von $x = a$ sofort $p(a) = q(a) \\cdot 0 + r = r$.\n>\n> Für Teiler der Form $(ax + b)$ ist der Rest $p\\!\\left(-\\tfrac ba\\right)$ -- die Nullstelle des Teilers einsetzen."
+            }
+          ]
+        },
+        {
+          "title": "Der Faktorsatz",
+          "blocks": [
+            {
+              "md": "> [!important] Faktorsatz (*Factor Theorem*)\n> $(x - a)$ ist genau dann ein Faktor von $p(x)$, wenn $p(a) = 0$.\n>\n> Das ist der Restsatz mit Rest null. Er verbindet drei Sichtweisen: **Nullstelle** $a$ des Polynoms, **Faktor** $(x - a)$, **Schnittpunkt** des Graphen mit der x-Achse bei $x = a$.\n\n**Faktoren finden bei einem Kubik-Polynom:** Kandidaten für ganzzahlige Nullstellen sind die **Teiler des konstanten Gliedes** (bei Leitkoeffizient 1). Für $p(x) = x^3 - 6x^2 + 11x - 6$ also $\\pm1, \\pm2, \\pm3, \\pm6$. $p(1) = 0$, also ist $(x - 1)$ ein Faktor; Division liefert $x^2 - 5x + 6 = (x - 2)(x - 3)$. Ergebnis: $p(x) = (x-1)(x-2)(x-3)$."
+            }
+          ]
+        },
+        {
+          "title": "Unbekannte Koeffizienten bestimmen",
+          "blocks": [
+            {
+              "md": "Die typische TMUA-Aufgabe gibt ein Polynom mit Parametern und zwei Bedingungen vor:\n\n> [!example] Zwei Bedingungen, zwei Unbekannte\n> $p(x) = x^3 + ax^2 + bx - 6$ hat den Faktor $(x - 1)$ und lässt bei Division durch $(x + 1)$ den Rest $-8$.\n> Faktorsatz: $p(1) = 1 + a + b - 6 = 0$, also $a + b = 5$.\n> Restsatz: $p(-1) = -1 + a - b - 6 = -8$, also $a - b = -1$.\n> Addieren: $2a = 4$, $a = 2$, $b = 3$.\n\nBei **Division durch einen quadratischen Term** mit bekannten Nullstellen hilft der Ansatz $r(x) = cx + d$: Lässt $p$ bei Division durch $(x - 1)$ den Rest 5 und durch $(x + 2)$ den Rest $-1$, so ist der Rest bei Division durch $(x - 1)(x + 2)$ ein linearer Term $cx + d$ mit $c + d = 5$ und $-2c + d = -1$ -- also $2x + 3$."
+            }
+          ]
+        },
+        {
+          "title": "Polynome und ihre Nullstellen",
+          "blocks": [
+            {
+              "md": "- Ein Polynom vom Grad $n$ hat **höchstens $n$** reelle Nullstellen.\n- Ein Polynom **ungeraden** Grades hat **mindestens eine** reelle Nullstelle, weil es für große $\\lvert x \\rvert$ in entgegengesetzte Richtungen läuft.\n- Eine **doppelte** Nullstelle $(x - a)^2$ bedeutet: Der Graph berührt die Achse, statt sie zu schneiden.\n\nMehr dazu in **Lösungen grafisch deuten**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Beim Restsatz das falsche Vorzeichen einsetzen:** Teiler $(x + 2)$ heißt $p(-2)$.\n- **Bei $(2x - 1)$ den Wert 1 statt $\\tfrac12$ einsetzen.**\n- **Fehlende Potenzen bei der Division nicht als $0 \\cdot x^k$ mitführen** -- dann verrutschen die Spalten.\n- **Den Rest bei quadratischem Teiler als Zahl ansetzen**; er ist im Allgemeinen linear.\n\nVerwandt: **Terme umformen und Identitäten** · **Lösungen grafisch deuten** · Aufgabentyp: **Faktorsatz und Restsatz anwenden** · im Mathematikbestand: **Polynomdivision** · **Rest- und Faktorsatz**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Restsatz",
+      "md": "Welchen Rest lässt $x^3 + 2x^2 - x + 5$ bei Division durch $(x + 2)$?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f(-2) = -8 + 8 + 2 + 5 = 7$. Achtung: Bei $(x + 2)$ setzt man $-2$ ein.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$(x - 2)$ is a factor of $x^3 - 3x^2 + kx + 2$. What is the value of $k$?",
+      "options": [
+        {
+          "md": "-3"
+        },
+        {
+          "md": "-1"
+        },
+        {
+          "md": "0"
+        },
+        {
+          "md": "1",
+          "correct": true
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "3"
+        }
+      ],
+      "explain": "$f(2) = 8 - 12 + 2k + 2 = 2k - 2 = 0$, also $k = 1$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Faktorsatz",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Zahlen kommen als ganzzahlige Nullstellen von $x^3 + 4x^2 + x - 6$ in Frage?",
+      "options": [
+        {
+          "md": "nur die Teiler von 6: $\\pm1, \\pm2, \\pm3, \\pm6$",
+          "correct": true
+        },
+        {
+          "md": "alle ganzen Zahlen zwischen $-6$ und $6$",
+          "why": "Nur Teiler des Absolutglieds können es sein."
+        },
+        {
+          "md": "nur die Teiler von 4",
+          "why": "Entscheidend ist das Absolutglied, nicht der Koeffizient von $x^2$."
+        },
+        {
+          "md": "nur positive Zahlen",
+          "why": "Auch negative Teiler kommen in Frage."
+        }
+      ],
+      "explain": "Aus $n^3 + 4n^2 + n = 6$ lässt sich $n$ ausklammern: $n(n^2 + 4n + 1) = 6$, also teilt $n$ die Zahl 6. Hier ist $f(1) = 0$.",
+      "label": "Kandidaten",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Rest von $f(x)$ bei Division durch $(2x - 1)$ ist $f\\left(\\tfrac12\\right)$.",
+      "answer": true,
+      "explain": "$f(x) = (2x - 1)q(x) + r$; für $x = \\tfrac12$ verschwindet der erste Summand.",
+      "label": "Restsatz",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Vorgehen beim Faktorisieren eines kubischen Polynoms in die richtige Reihenfolge.",
+      "items": [
+        "Teiler des Absolutglieds als Kandidaten notieren",
+        "Kandidaten einsetzen, bis einer null ergibt",
+        "den linearen Faktor abspalten",
+        "den quadratischen Rest faktorisieren oder mit der Diskriminante prüfen"
+      ],
+      "explain": "Die Reihenfolge: 1. Teiler des Absolutglieds als Kandidaten notieren. 2. Kandidaten einsetzen, bis einer null ergibt. 3. den linearen Faktor abspalten. 4. den quadratischen Rest faktorisieren oder mit der Diskriminante prüfen.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Nullstellen",
+      "md": "Wie viele reelle Nullstellen hat $(x - 1)(x^2 + 4)$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x^2 + 4 > 0$ für alle reellen $x$; nur der Faktor $(x - 1)$ liefert eine Nullstelle.",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "When $x^3 + ax^2 - 4x + 3$ is divided by $(x - 2)$, the remainder is 7. What is $a$?",
       "options": [
@@ -49,12 +439,50 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Restsatz: Rest = f(a).",
         "Faktorsatz: f(a) = 0 ⇔ (x − a) ist Faktor.",
-        "Kandidaten: Teiler des Absolutglieds."
+        "Kandidaten: Teiler des Absolutglieds.",
+        "$f(x) = (x - a)q(x) + r$ mit $x = a$ eingesetzt: Rest $= f(a)$; Faktor genau dann, wenn $f(a) = 0$.",
+        "Ganzzahlige Nullstellen teilen das Absolutglied; Faktor abspalten, Rest weiter zerlegen."
       ],
       "id": "summary"
     }

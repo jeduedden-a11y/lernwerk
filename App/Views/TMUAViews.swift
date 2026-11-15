@@ -51,7 +51,7 @@ struct WeekBanner: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
-                Label("Lektion dieser Woche geschafft", systemImage: "checkmark.seal.fill")
+                Label("Lektion dieser Woche abgeschlossen", systemImage: "checkmark.seal.fill")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.green)
             }
@@ -135,7 +135,7 @@ struct MistakeLogCard: View {
                     .foregroundStyle(.secondary)
             }
             if list.isEmpty {
-                Text("Leer. Jede Aufgabe, die du im Training oder in einem Paper falsch löst, landet hier mit genau ihrem Wortlaut und kommt wieder, bis sie sitzt.")
+                Text("Falsch gelöste Aufgaben aus Training und Papers stehen hier im Wortlaut und kommen wieder, bis sie richtig gelöst sind.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

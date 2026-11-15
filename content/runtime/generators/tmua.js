@@ -567,4 +567,1221 @@
         "**" + answer(opts) + ".** Der Winkel im Halbkreis ist $90^\\circ$, also $\\angle CBA = " + (90 - t) + "^\\circ$. Im Dreieck $BCD$ ist der Außenwinkel bei $D$ die Summe der beiden nicht anliegenden Innenwinkel: $\\angle CDA = " + (90 - t) + "^\\circ + " + u + "^\\circ = " + ans + "^\\circ$.");
     },
   });
+
+  // ================================================================== Sommer blocks: tmua-rechnen
+  // Calculation types of the summer blocks, chosen with params.typ (one name or a list). Tasks in English as in the
+  // test, options in a fixed order (numbers ascending), explanations in German. Level 1 practises the idea, level 4 is
+  // test level.
+  const TR = {};
+  /** text options: the correct one plus distinct distractors, shuffled once (the step keeps that order) */
+  function topts(G, right, wrong) {
+    const seen = new Set([right]);
+    const all = [{ md: right, correct: true }];
+    wrong.forEach((w) => { if (w != null && !seen.has(w) && all.length < 6) { seen.add(w); all.push({ md: w, correct: false }); } });
+    return G.shuffle(all);
+  }
+  function ptex(cs, v) {
+    v = v || "x";
+    const n = cs.length - 1;
+    let s = "";
+    cs.forEach((c, i) => {
+      if (!c) return;
+      const p = n - i, a = Math.abs(c);
+      const coef = a === 1 && p > 0 ? "" : String(a);
+      const xs = p === 0 ? "" : p === 1 ? v : v + "^{" + p + "}";
+      s += (s ? (c < 0 ? " - " : " + ") : c < 0 ? "-" : "") + coef + xs;
+    });
+    return s || "0";
+  }
+  const pev = (cs, x) => cs.reduce((acc, c) => acc * x + c, 0);
+  const pm = (c) => (c < 0 ? "- " + -c : "+ " + c);
+  const xm = (a) => (a === 0 ? "x" : a > 0 ? "(x - " + a + ")" : "(x + " + -a + ")");
+  const fracOr = (v) => (Array.isArray(v) ? "$" + ftex(fr(v[0], v[1])) + "$" : "$" + v + "$");
+  const ipow = (b, e) => Math.round(Math.pow(b, e));
+  /** numeric options with nearby values as fallback distractors (used only when the real ones run out) */
+  const near = (c) => (Array.isArray(c) ? [[c[0] + c[1], c[1]], [c[0] - c[1], c[1]], [2 * c[0], c[1]], [c[0], 2 * c[1]], [c[0] + 2 * c[1], c[1]], [c[0] - 2 * c[1], c[1]]] : [c + 1, c - 1, c + 2, c * 2 || 3, c - 2]);
+  const nopts = (c, wrong, show) => numeric(c, wrong.concat(near(c)), show);
+  /** numbers inside English task texts: decimal point as in the test */
+  const en = (x, d) => String(+(+x).toFixed(d == null ? 4 : d));
+  const money = (x) => (Number.isInteger(+(+x).toFixed(6)) ? "£" + Math.round(x) : "£" + (+x).toFixed(2));
+
+  // ---------------------------------------------------------------- powers and roots
+  TR.potenz = (level, G) => {
+    const BASES = [[2, 2], [2, 3], [2, 4], [2, 5], [3, 2], [3, 3], [4, 2], [4, 3], [5, 2], [5, 3], [6, 2], [9, 2], [10, 3]];
+    if (level <= 1) {
+      const [r, q] = G.pick(BASES), a = ipow(r, q);
+      const p = G.pick(q === 2 ? [1, 3] : q === 3 ? [1, 2] : [1, 3]), neg = G.chance(0.5), val = ipow(r, p);
+      const right = neg ? [1, val] : val;
+      const wrong = neg ? [val, [1, ipow(r, q)], [-val, 1], [1, Math.round((a * p) / q) || 2]] : [[1, val], ipow(r, q), Math.round((a * p) / q), val * r];
+      const opts = nopts(right, wrong, fracOr);
+      return step("What is $" + a + "^{" + (neg ? "-" : "") + "\\frac{" + p + "}{" + q + "}}$?", opts,
+        "**" + answer(opts) + ".** $" + a + " = " + r + "^{" + q + "}$, also $" + a + "^{\\frac{" + p + "}{" + q + "}} = " + r + "^{" + p + "} = " + val + "$. " + (neg ? "Der negative Exponent bildet den Kehrwert: $\\tfrac{1}{" + val + "}$." : "Erst die Wurzel, dann die Potenz: Das hält die Zahlen klein."));
+    }
+    if (level === 2) {
+      const [r1, q1] = G.pick(BASES.filter((b) => b[0] <= 5)), [r2, q2] = G.pick(BASES.filter((b) => b[0] <= 5));
+      const pp = (q) => G.pick([1, 2, 3].filter((x) => x < q && gcd(x, q) === 1)), p1 = pp(q1), p2 = pp(q2);
+      const v1 = ipow(r1, p1), v2 = ipow(r2, p2);
+      const right = [v1, v2];
+      const opts = nopts(right, [[v2, v1], v1 * v2, [1, v1 * v2], [v1, v2 * v2], [v1 * v1, v2]], fracOr);
+      return step("Which of the following is equal to $" + ipow(r1, q1) + "^{\\frac{" + p1 + "}{" + q1 + "}} \\times " + ipow(r2, q2) + "^{-\\frac{" + p2 + "}{" + q2 + "}}$?", opts,
+        "**" + answer(opts) + ".** $" + ipow(r1, q1) + "^{\\frac{" + p1 + "}{" + q1 + "}} = " + r1 + "^{" + p1 + "} = " + v1 + "$ und $" + ipow(r2, q2) + "^{-\\frac{" + p2 + "}{" + q2 + "}} = \\tfrac{1}{" + r2 + "^{" + p2 + "}} = \\tfrac{1}{" + v2 + "}$. Produkt: $" + ftex(fr(v1, v2)) + "$.");
+    }
+    if (level === 3) {
+      // (2^m)^x = (2^n)^(x + k)  ->  m x = n x + n k
+      let m = G.int(2, 5), n = G.int(1, 4);
+      if (m === n) m += 1;
+      const k = G.pick([-3, -2, -1, 1, 2, 3]), x = fr(n * k, m - n);
+      const B1 = ipow(2, m), B2 = ipow(2, n);
+      const opts = nopts([x[0], x[1]], [[k, 1], [-x[0], x[1]], [n * k, m + n], [m * k, m - n], [k * (m - n), n]], fracOr);
+      return step("Solve the equation $" + B1 + "^{x} = " + B2 + "^{x " + pm(k) + "}$.", opts,
+        "**" + answer(opts) + ".** Gemeinsame Basis 2: $2^{" + m + "x} = 2^{" + n + "(x " + pm(k) + ")}$. Exponenten gleichsetzen: $" + m + "x = " + n + "x " + pm(n * k) + "$, also $" + (m - n) + "x = " + n * k + "$ und $x = " + ftex(x) + "$.");
+    }
+    const [r, q] = G.pick([[2, 2], [3, 2], [2, 3], [3, 3], [4, 2], [5, 2]]);
+    const c = ipow(r, q), a = q * G.int(1, 3), p = G.pick([1, 2]);
+    const e = (a * p) / q, coef = ipow(r, p);
+    const right = "$\\dfrac{1}{" + coef + "x^{" + e + "}}$";
+    const wrong = ["$" + coef + "x^{" + e + "}$", "$\\dfrac{x^{" + e + "}}{" + coef + "}$", "$\\dfrac{1}{" + coef + "x^{" + (a - p) + "}}$", "$-" + coef + "x^{" + e + "}$", "$\\dfrac{1}{" + Math.round((c * p) / q) + "x^{" + e + "}}$"];
+    const opts = topts(G, right, wrong);
+    return step("Simplify $\\left(" + c + "x^{" + a + "}\\right)^{-\\frac{" + p + "}{" + q + "}}$.", opts,
+      "**" + answer(opts) + ".** Der Exponent wirkt auf jeden Faktor: $" + c + "^{\\frac{" + p + "}{" + q + "}} = " + r + "^{" + p + "} = " + coef + "$ und $(x^{" + a + "})^{\\frac{" + p + "}{" + q + "}} = x^{" + e + "}$. Das Minus im Exponenten macht daraus den Kehrwert.");
+  };
+
+  TR.surd = (level, G) => {
+    if (level <= 1) {
+      const s = G.pick([2, 3, 5, 6, 7]), m = G.int(1, 4), n = G.int(1, 4);
+      const a = m * m * s, b = n * n * s, val = (m + n) * (m + n) * s;
+      const opts = nopts(val, [a + b, (m * m + n * n) * s, val + 2 * s, a * b, val - 2 * s].filter((v) => v > 0), (v) => "$" + v + "$");
+      return step("What is $\\left(\\sqrt{" + a + "} + \\sqrt{" + b + "}\\right)^2$?", opts,
+        "**" + answer(opts) + ".** $\\sqrt{" + a + "} = " + (m === 1 ? "" : m) + "\\sqrt{" + s + "}$ und $\\sqrt{" + b + "} = " + (n === 1 ? "" : n) + "\\sqrt{" + s + "}$, zusammen $" + (m + n) + "\\sqrt{" + s + "}$. Quadrat: $" + (m + n) * (m + n) + " \\cdot " + s + " = " + val + "$. Wer $a + b$ rechnet, vergisst das gemischte Glied $2\\sqrt{ab}$.");
+    }
+    if (level === 2) {
+      const [b, s] = G.pick([[3, 3], [3, 5], [3, 7], [2, 3], [4, 7], [4, 11], [5, 13], [5, 22]]);
+      const d = b * b - s, k = d * G.int(1, 3), t = k / d;
+      const right = "$" + (t * b) + " + " + (t === 1 ? "" : t) + "\\sqrt{" + s + "}$";
+      const T1 = t === 1 ? "" : t;
+      const wrong = ["$" + (t * b) + " - " + T1 + "\\sqrt{" + s + "}$", "$" + (k * b) + " + " + k + "\\sqrt{" + s + "}$", "$" + b + " + \\sqrt{" + s + "}$", "$" + (t * b) + " + \\sqrt{" + s + "}$", "$" + T1 + "\\sqrt{" + s + "} - " + (t * b) + "$"];
+      const opts = topts(G, right, wrong);
+      return step("Simplify $\\dfrac{" + k + "}{" + b + " - \\sqrt{" + s + "}}$.", opts,
+        "**" + answer(opts) + ".** Mit dem Konjugierten $" + b + " + \\sqrt{" + s + "}$ erweitern: Der Nenner wird $" + b * b + " - " + s + " = " + d + "$, also $\\tfrac{" + k + "(" + b + " + \\sqrt{" + s + "})}{" + d + "} = " + right.slice(1, -1) + "$.");
+    }
+    if (level === 3) {
+      const cands = G.shuffle([[2, 7], [3, 3], [2, 6], [5, 1], [3, 2], [4, 2], [2, 5], [3, 1]]).slice(0, 4);
+      const sq = (c) => c[0] * c[0] * c[1];
+      const sorted = cands.slice().sort((x, y) => sq(y) - sq(x));
+      if (sq(sorted[0]) === sq(sorted[1])) return TR.surd(1, G);
+      const show = (c) => (c[1] === 1 ? "$" + c[0] + "$" : "$" + c[0] + "\\sqrt{" + c[1] + "}$");
+      const opts = G.shuffle(cands.map((c) => ({ md: show(c), correct: c === sorted[0] })));
+      return step("Which of the following is the largest?", opts,
+        "**" + answer(opts) + ".** Unter die Wurzel ziehen und vergleichen: " + cands.map((c) => show(c) + " $= \\sqrt{" + sq(c) + "}$").join(", ") + ".");
+    }
+    const [a, b] = G.pick([[5, 3], [7, 5], [3, 2], [7, 3], [11, 7]]);
+    const d = a - b, ab = a * b;
+    // (sqrt a + sqrt b)/(sqrt a - sqrt b) = (a + b + 2 sqrt(ab))/(a - b)
+    const g = gcd(gcd(a + b, 2), d);
+    const p = (a + b) / g, q = 2 / g, den = d / g;
+    const right = den === 1 ? "$" + p + " + " + (q === 1 ? "" : q) + "\\sqrt{" + ab + "}$" : "$\\dfrac{" + p + " + " + (q === 1 ? "" : q) + "\\sqrt{" + ab + "}}{" + den + "}$";
+    const wrong = ["$\\dfrac{" + (a + b) + " + 2\\sqrt{" + ab + "}}{" + (a + b) + "}$", "$" + (a + b) + " + 2\\sqrt{" + ab + "}$", "$\\dfrac{" + (a - b) + "}{" + (a + b) + "}$", (d === 1 ? "$" + (a + b) + " - 2\\sqrt{" + ab + "}$" : "$\\dfrac{" + (a + b) + " - 2\\sqrt{" + ab + "}}{" + d + "}$"), "$1$"];
+    const opts = topts(G, right, wrong);
+    return step("Simplify $\\dfrac{\\sqrt{" + a + "} + \\sqrt{" + b + "}}{\\sqrt{" + a + "} - \\sqrt{" + b + "}}$.", opts,
+      "**" + answer(opts) + ".** Mit $\\sqrt{" + a + "} + \\sqrt{" + b + "}$ erweitern: Zähler $" + a + " + " + b + " + 2\\sqrt{" + ab + "}$, Nenner $" + a + " - " + b + " = " + d + "$.");
+  };
+
+  // ---------------------------------------------------------------- quadratics
+  TR.diskriminante = (level, G) => {
+    if (level <= 1) {
+      const a = G.pick([1, 2, 3, -1, -2]), b = G.int(-6, 6), c = G.int(-6, 6), D = b * b - 4 * a * c;
+      const n = D > 0 ? 2 : D === 0 ? 1 : 0;
+      const opts = [0, 1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+      return step("How many real roots does $" + ptex([a, b, c]) + " = 0$ have?", opts,
+        "**" + answer(opts) + ".** $\\Delta = b^2 - 4ac = " + b * b + " - 4 \\cdot " + (a < 0 ? "(" + a + ")" : a) + " \\cdot " + (c < 0 ? "(" + c + ")" : c) + " = " + D + "$: " + (n === 2 ? "positiv, zwei Nullstellen." : n === 1 ? "null, eine doppelte Nullstelle." : "negativ, keine reelle Nullstelle."));
+    }
+    if (level === 2) {
+      const m = G.int(2, 6), c = m * m;
+      const count = 4 * m - 1;
+      const opts = nopts(count, [count + 2, count - 2, 2 * m - 1, 2 * m + 1, 4 * m + 1], (v) => "$" + v + "$");
+      return step("For how many integer values of $k$ does $x^2 + kx + " + c + " = 0$ have no real roots?", opts,
+        "**" + answer(opts) + ".** Keine reelle Nullstelle: $k^2 - " + 4 * c + " < 0$, also $-" + 2 * m + " < k < " + 2 * m + "$. Die ganzen Zahlen von $-" + (2 * m - 1) + "$ bis $" + (2 * m - 1) + "$ sind $" + count + "$ Stück; die Ränder $\\pm " + 2 * m + "$ geben eine doppelte Nullstelle.");
+    }
+    if (level === 3) {
+      const b = G.int(2, 5);
+      const right = "$-" + b + " < k < " + b + "$ and $k \\ne 0$";
+      const wrong = ["$-" + b + " < k < " + b + "$", "$k < -" + b + "$ or $k > " + b + "$", "$-" + b + " \\le k \\le " + b + "$ and $k \\ne 0$", "$0 < k < " + b + "$", "$-" + 2 * b + " < k < " + 2 * b + "$ and $k \\ne 0$"];
+      const opts = topts(G, right, wrong);
+      return step("For which values of $k$ does $kx^2 + " + 2 * b + "x + k = 0$ have two distinct real roots?", opts,
+        "**" + answer(opts) + ".** Für $k = 0$ ist die Gleichung linear und hat nur eine Lösung, also $k \\ne 0$. Sonst: $\\Delta = " + 4 * b * b + " - 4k^2 > 0 \\iff k^2 < " + b * b + " \\iff -" + b + " < k < " + b + "$.");
+    }
+    const m = 2 * G.int(1, 4) * G.sign(), p = G.int(-3, 6), cval = p - (m * m) / 4;
+    const opts = nopts(cval, [p + (m * m) / 4, p - m * m, p, -cval, p - m / 2].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("The line $y = " + m + "x + c$ is a tangent to the curve $y = x^2 " + pm(p) + "$. What is the value of $c$?", opts,
+      "**" + answer(opts) + ".** Gleichsetzen: $x^2 " + pm(-m) + "x " + pm(p) + " - c = 0$. Tangente heißt genau ein gemeinsamer Punkt, also $\\Delta = " + m * m + " - 4(" + p + " - c) = 0$ und $c = " + p + " - " + (m * m) / 4 + " = " + cval + "$.");
+  };
+
+  TR.qungleichung = (level, G) => {
+    let r1 = G.int(-5, 4), r2 = G.int(-4, 6);
+    if (r2 <= r1) r2 = r1 + G.int(2, 5);
+    const b = -(r1 + r2), c = r1 * r2;
+    if (level <= 1) {
+      const right = "$" + r1 + " < x < " + r2 + "$";
+      const opts = topts(G, right, ["$x < " + r1 + "$ or $x > " + r2 + "$", "$" + r1 + " \\le x \\le " + r2 + "$", "$" + -r2 + " < x < " + -r1 + "$", "$x > " + r2 + "$"]);
+      return step("Solve $" + ptex([1, b, c]) + " < 0$.", opts,
+        "**" + answer(opts) + ".** Nullstellen $" + r1 + "$ und $" + r2 + "$; die nach oben geöffnete Parabel ist zwischen ihnen negativ. Ränder ausgeschlossen, weil $< 0$ streng ist.");
+    }
+    if (level === 2) {
+      // x^2 >= p x + q  with roots r1, r2
+      const right = "$x \\le " + r1 + "$ or $x \\ge " + r2 + "$";
+      const opts = topts(G, right, ["$" + r1 + " \\le x \\le " + r2 + "$", "$x \\ge " + r2 + "$", "$x < " + r1 + "$ or $x > " + r2 + "$", "$x \\le " + -r2 + "$ or $x \\ge " + -r1 + "$"]);
+      return step("Solve $x^2 \\ge " + ptex([-b, -c]) + "$.", opts,
+        "**" + answer(opts) + ".** Alles auf eine Seite: $" + ptex([1, b, c]) + " \\ge 0$, Nullstellen $" + r1 + "$ und $" + r2 + "$. Die Parabel ist außerhalb der Nullstellen positiv; wegen $\\ge$ gehören die Ränder dazu. Wer durch $x$ teilt oder die Wurzel zieht, verliert einen Teil.");
+    }
+    if (level === 3) {
+      const a = G.pick([1, 2, -1, -2]), n = r2 - r1 - 1, inside = a > 0;
+      const opts = nopts(n, [n + 1, n + 2, r2 - r1, Math.max(0, n - 1)], (v) => "$" + v + "$");
+      return step("How many integers $x$ satisfy $" + (a === 1 ? "" : a === -1 ? "-" : a) + xm(r1) + xm(r2) + (inside ? " < 0" : " > 0") + "$?", opts,
+        "**" + answer(opts) + ".** " + (a < 0 ? "Das negative Vorzeichen dreht die Parabel nach unten; " : "") + "Die Ungleichung gilt genau für $" + r1 + " < x < " + r2 + "$. Ganze Zahlen dazwischen: $" + n + "$.");
+    }
+    // x^2 + kx + k + d > 0 for all x  ->  k^2 - 4k - 4d < 0
+    const [lo, hi] = G.pick([[-2, 6], [-4, 8], [-6, 10]]);
+    // k^2 - (lo+hi) k + lo*hi < 0 must be k^2 - 4k - 4d: lo + hi = 4, lo*hi = -4d
+    const d = -(lo * hi) / 4;
+    const right = "$" + lo + " < k < " + hi + "$";
+    const opts = topts(G, right, ["$k < " + lo + "$ or $k > " + hi + "$", "$" + lo + " \\le k \\le " + hi + "$", "$k > " + hi + "$", "$" + -hi + " < k < " + -lo + "$"]);
+    return step("For which values of $k$ is $x^2 + kx + k " + pm(d) + " > 0$ for all real $x$?", opts,
+      "**" + answer(opts) + ".** Keine reelle Nullstelle: $k^2 - 4(k " + pm(d) + ") < 0 \\iff k^2 - 4k " + pm(-4 * d) + " < 0 \\iff (k " + pm(-lo) + ")(k " + pm(-hi) + ") < 0$. Am Rand berührt die Parabel die Achse, dort gilt $> 0$ nicht.");
+  };
+
+  TR.ergaenzung = (level, G) => {
+    if (level <= 1) {
+      const h = G.int(-5, 5) || 2, k = G.int(-6, 9), b = -2 * h, c = h * h + k;
+      const opts = nopts(k, [c, -k, k + h, h, c - b].filter((v, i, a) => a.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("What is the minimum value of $" + ptex([1, b, c]) + "$?", opts,
+        "**" + answer(opts) + ".** Quadratisch ergänzen: $" + ptex([1, b, c]) + " = " + xm(h) + "^2 " + pm(k) + "$. Das Quadrat ist mindestens 0, also ist das Minimum $" + k + "$ (bei $x = " + h + "$).");
+    }
+    if (level === 2) {
+      const a = G.pick([2, 3]), h = G.int(-4, 4) || 3, k = G.int(-5, 9), b = -2 * a * h, c = a * h * h + k;
+      const opts = nopts(k, [c, k - a * h * h, a * k, h, c - (b * b) / 4].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("What is the minimum value of $" + ptex([a, b, c]) + "$?", opts,
+        "**" + answer(opts) + ".** $" + a + " $ ausklammern: $" + a + "\\left(x^2 " + pm(-2 * h) + "x\\right) " + pm(c) + " = " + a + xm(h) + "^2 " + pm(k) + "$. Minimum $" + k + "$ bei $x = " + h + "$.");
+    }
+    if (level === 3) {
+      const h = G.int(-4, 4) || 2, k = G.int(1, 6), b = -2 * h, c = h * h + k;
+      const opts = nopts([1, k], [[1, c], k, [-1, k], [1, h * h]].filter((v) => Array.isArray(v) ? v[1] !== 0 : true), fracOr);
+      return step("What is the maximum value of $\\dfrac{1}{" + ptex([1, b, c]) + "}$ for real $x$?", opts,
+        "**" + answer(opts) + ".** Der Nenner $" + xm(h) + "^2 + " + k + "$ ist mindestens $" + k + "$ und immer positiv. Ein Bruch mit festem Zähler ist am größten, wenn der Nenner am kleinsten ist: $\\tfrac{1}{" + k + "}$.");
+    }
+    const a = G.pick([2, 3]), h = G.int(1, 5), k = G.int(1, 12), b = 2 * a * h, c = k - a * h * h;
+    const opts = nopts(k, [c, -k, k + a, a * h, k - a].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("What is the maximum value of $" + ptex([-a, b, c]) + "$?", opts,
+      "**" + answer(opts) + ".** $-" + a + "\\left(x^2 - " + 2 * h + "x\\right) " + pm(c) + " = -" + a + "(x - " + h + ")^2 + " + k + "$. Das Quadrat mit negativem Faktor ist höchstens 0: Maximum $" + k + "$ bei $x = " + h + "$.");
+  };
+
+  // ---------------------------------------------------------------- polynomials
+  TR.restsatz = (level, G) => {
+    if (level <= 1) {
+      const cs = [1, G.int(-4, 4), G.int(-6, 6), G.int(-8, 8)], r = G.pick([-2, -1, 1, 2, 3]);
+      const R = pev(cs, r);
+      const opts = nopts(R, [pev(cs, -r), R + 2 * r, cs[3], R - cs[3], -R].filter((v, i, a) => a.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("What is the remainder when $" + ptex(cs) + "$ is divided by $" + xm(r) + "$?", opts,
+        "**" + answer(opts) + ".** Restsatz: Der Rest ist $f(" + r + ") = " + R + "$. Häufigster Fehler: $f(" + -r + ")$ statt $f(" + r + ")$.");
+    }
+    if (level === 2) {
+      const a = G.int(-4, 4), b = G.int(-6, 6), c = G.int(-6, 6), r = G.pick([-2, -1, 1, 2, 3]);
+      const R = pev([1, a, b, c], r);
+      const opts = nopts(a, [-a, a + 1, a - 1, a + 2, Math.round((R - r * r * r) / (r * r))].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("When $x^3 + ax^2 " + pm(b) + "x " + pm(c) + "$ is divided by $" + xm(r) + "$, the remainder is $" + R + "$. What is the value of $a$?", opts,
+        "**" + answer(opts) + ".** $f(" + r + ") = " + r * r * r + " + " + r * r + "a " + pm(b * r) + " " + pm(c) + " = " + R + "$, also $" + r * r + "a = " + (R - r * r * r - b * r - c) + "$ und $a = " + a + "$.");
+    }
+    if (level === 3) {
+      const r = G.pick([-3, -2, -1, 1, 2]), p = G.int(-4, 4), q = G.int(-8, 8);
+      const k = -(r * r * r + p * r * r + q) / r;
+      if (!Number.isInteger(k)) return TR.restsatz(2, G);
+      const opts = nopts(k, [-k, k + 1, k - 2, Math.round((r * r * r + p * r * r + q) / r)].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("$" + xm(r) + "$ is a factor of $x^3 " + pm(p) + "x^2 + kx " + pm(q) + "$. What is the value of $k$?", opts,
+        "**" + answer(opts) + ".** Faktorsatz: $f(" + r + ") = 0$, also $" + r * r * r + " " + pm(p * r * r) + " " + pm(r) + "k " + pm(q) + " = 0$ und $k = " + k + "$.");
+    }
+    // f = x^3 + a x^2 + b x + 6 with factor (x - 1) and remainder R on division by (x + 2)
+    const a = G.int(-4, 4), b = -7 - a, R = pev([1, a, b, 6], -2);
+    const opts = nopts(a, [b, -a, a + 2, a - 2, R].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("$f(x) = x^3 + ax^2 + bx + 6$ has a factor $(x - 1)$, and the remainder when $f(x)$ is divided by $(x + 2)$ is $" + R + "$. What is the value of $a$?", opts,
+      "**" + answer(opts) + ".** $f(1) = 0$: $1 + a + b + 6 = 0$, also $b = -7 - a$. $f(-2) = " + R + "$: $-8 + 4a - 2b + 6 = " + R + "$. Einsetzen: $-2 + 4a + 14 + 2a = " + R + "$, also $6a = " + (R - 12) + "$ und $a = " + a + "$ (dazu $b = " + b + "$).");
+  };
+
+  // ---------------------------------------------------------------- algebraic fractions and rearranging
+  TR.umstellen = (level, G) => {
+    if (level <= 2) {
+      const a = G.int(2, 5), b = G.int(1, 7), c = G.int(1, 4);
+      const right = "$x = \\dfrac{" + c + "y + " + b + "}{y - " + a + "}$";
+      const wrong = ["$x = \\dfrac{" + c + "y - " + b + "}{y - " + a + "}$", "$x = \\dfrac{" + c + "y + " + b + "}{y + " + a + "}$", "$x = \\dfrac{y + " + b + "}{" + c + "y - " + a + "}$", "$x = \\dfrac{y - " + b + "}{" + a + " - " + c + "y}$", "$x = \\dfrac{" + b + " - " + c + "y}{y - " + a + "}$"];
+      const opts = topts(G, right, wrong);
+      return step("Make $x$ the subject of $y = \\dfrac{" + a + "x + " + b + "}{x - " + c + "}$.", opts,
+        "**" + answer(opts) + ".** Mit dem Nenner multiplizieren: $y(x - " + c + ") = " + a + "x + " + b + "$. Alle $x$ auf eine Seite: $xy - " + a + "x = " + c + "y + " + b + "$. Ausklammern: $x(y - " + a + ") = " + c + "y + " + b + "$, dann teilen.");
+    }
+    if (level === 3) {
+      const p = G.int(1, 6), q = G.int(1, 6);
+      if (p === q) return TR.umstellen(2, G);
+      const right = "$\\dfrac{x + " + p + "}{x - " + q + "}$";
+      const wrong = ["$\\dfrac{x + " + p + "}{x + " + q + "}$", "$\\dfrac{" + p + "}{-" + q + "}$", "$\\dfrac{x - " + p + "}{x - " + q + "}$", "$\\dfrac{x + " + q + "}{x - " + p + "}$", "$x + " + p + "$"];
+      const opts = topts(G, right, wrong);
+      return step("Simplify $\\dfrac{" + ptex([1, p + q, p * q]) + "}{x^2 - " + q * q + "}$.", opts,
+        "**" + answer(opts) + ".** Zähler und Nenner faktorisieren: $\\tfrac{(x + " + p + ")(x + " + q + ")}{(x - " + q + ")(x + " + q + ")}$. Gekürzt wird nur ein gemeinsamer **Faktor**, nie ein Summand.");
+    }
+    const a = G.int(1, 6), b = G.int(1, 6);
+    const right = "$x = \\dfrac{" + b + "y^2 + " + a + "}{y^2 - 1}$";
+    const wrong = ["$x = \\dfrac{" + b + "y^2 - " + a + "}{y^2 - 1}$", "$x = \\dfrac{" + b + "y + " + a + "}{y - 1}$", "$x = \\dfrac{" + a + "y^2 + " + b + "}{y^2 - 1}$", "$x = \\dfrac{" + b + "y^2 + " + a + "}{1 - y^2}$", "$x = \\sqrt{\\dfrac{" + b + "y + " + a + "}{y - 1}}$"];
+    const opts = topts(G, right, wrong);
+    return step("Make $x$ the subject of $y = \\sqrt{\\dfrac{x + " + a + "}{x - " + b + "}}$.", opts,
+      "**" + answer(opts) + ".** Quadrieren: $y^2 = \\tfrac{x + " + a + "}{x - " + b + "}$. Mit dem Nenner multiplizieren: $y^2 x - " + b + "y^2 = x + " + a + "$. Sortieren: $x(y^2 - 1) = " + b + "y^2 + " + a + "$.");
+  };
+
+  // ---------------------------------------------------------------- absolute values
+  TR.betrag = (level, G) => {
+    if (level <= 2) {
+      const a = level <= 1 ? 1 : 2, b = G.int(1, 6) * G.sign(), c = G.int(2, 9);
+      // |a x + b| < c  ->  (-c - b)/a < x < (c - b)/a
+      const lo = fr(-c - b, a), hi = fr(c - b, a);
+      const t = (f) => ftex(f);
+      const right = "$" + t(lo) + " < x < " + t(hi) + "$";
+      const wrong = ["$x < " + t(lo) + "$ or $x > " + t(hi) + "$", "$" + t(fr(-c + b, a)) + " < x < " + t(fr(c + b, a)) + "$", "$" + t(lo) + " \\le x \\le " + t(hi) + "$", "$x < " + t(hi) + "$", "$" + t(fr(-c - b, 1)) + " < x < " + t(fr(c - b, 1)) + "$"];
+      const opts = topts(G, right, wrong);
+      return step("Solve $|" + (a === 1 ? "" : a) + "x " + pm(b) + "| < " + c + "$.", opts,
+        "**" + answer(opts) + ".** $|u| < " + c + "$ heißt $-" + c + " < u < " + c + "$: $-" + c + " < " + (a === 1 ? "" : a) + "x " + pm(b) + " < " + c + "$. " + pm(-b).replace("+ ", "Addiere ").replace("- ", "Subtrahiere ") + (a === 1 ? "." : " und teile durch " + a + "."));
+    }
+    if (level === 3) {
+      // |x - p| = m x + q : count solutions by cases
+      const p = G.pick([-3, -2, -1, 1, 2, 3]), m = G.pick([2, 3, -2]), q = G.pick([-4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
+      let n = 0;
+      const sols = [];
+      const x1 = (p + q) / (1 - m); // case x >= p: x - p = m x + q
+      if (x1 >= p - 1e-9) { n += 1; sols.push(x1); }
+      const x2 = (p - q) / (1 + m); // case x < p: p - x = m x + q
+      if (x2 < p - 1e-9) { n += 1; sols.push(x2); }
+      const opts = [0, 1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+      return step("How many real solutions does $|x " + pm(-p) + "| = " + m + "x " + pm(q) + "$ have?", opts,
+        "**" + answer(opts) + ".** Fall $x \\ge " + p + "$: $x " + pm(-p) + " = " + m + "x " + pm(q) + "$ gibt $x = " + G.tex(x1, 3) + "$, " + (x1 >= p - 1e-9 ? "liegt im Fall." : "liegt nicht im Fall.") + " Fall $x < " + p + "$: $" + p + " - x = " + m + "x " + pm(q) + "$ gibt $x = " + G.tex(x2, 3) + "$, " + (x2 < p - 1e-9 ? "liegt im Fall." : "liegt nicht im Fall.") + " Jede Fall-Lösung muss zum Fall passen.");
+    }
+    const r = G.int(2, 4), a = r * r, b = G.pick([1, 2, 3, a, a + 2, a + 5].filter((v) => v !== 0));
+    const n = b > a ? 2 : b === a ? 3 : 4;
+    const opts = [1, 2, 3, 4, 5].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+    return step("How many real solutions does $|x^2 - " + a + "| = " + b + "$ have?", opts,
+      "**" + answer(opts) + ".** $x^2 - " + a + " = " + b + "$ gibt $x^2 = " + (a + b) + "$, zwei Lösungen. $x^2 - " + a + " = -" + b + "$ gibt $x^2 = " + (a - b) + "$: " + (a - b > 0 ? "zwei weitere." : a - b === 0 ? "nur $x = 0$." : "keine.") + " Im Bild: Der Graph von $|x^2 - " + a + "|$ hat die Spitze $(0, " + a + ")$; die Höhe " + b + " liegt " + (b > a ? "darüber." : b === a ? "genau auf der Spitze." : "darunter."));
+  };
+
+  // ---------------------------------------------------------------- equations in quadratic form
+  TR.qform = (level, G) => {
+    if (level <= 1) {
+      const p = G.pick([1, 4, 9, -1, -4]), q = G.pick([1, 4, 9, 16, -4, -9]);
+      if (p === q) return TR.qform(1, G);
+      const n = (p > 0 ? 2 : 0) + (q > 0 ? 2 : 0);
+      const opts = [0, 1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+      return step("How many real solutions does $" + ptex([1, 0, -(p + q), 0, p * q]) + " = 0$ have?", opts,
+        "**" + answer(opts) + ".** Mit $u = x^2$: $u^2 " + pm(-(p + q)) + "u " + pm(p * q) + " = 0$, also $u = " + p + "$ oder $u = " + q + "$. Jedes positive $u$ liefert zwei Lösungen $x = \\pm\\sqrt{u}$, ein negatives keine.");
+    }
+    if (level <= 3) {
+      const base = level === 2 ? 2 : 3;
+      const e1 = G.int(0, 3), e2 = G.int(1, 4);
+      if (e1 === e2) return TR.qform(level, G);
+      const p = ipow(base, e1), q = ipow(base, e2);
+      const bigBase = base * base;
+      const opts = nopts(e1 + e2, [p + q, e1 * e2, p * q, Math.max(e1, e2), e1 + e2 + 1].filter((v, i, a) => a.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("What is the sum of the solutions of $" + bigBase + "^x - " + (p + q) + " \\cdot " + base + "^x + " + p * q + " = 0$?", opts,
+        "**" + answer(opts) + ".** $" + bigBase + "^x = (" + base + "^x)^2$. Mit $u = " + base + "^x$: $u^2 - " + (p + q) + "u + " + p * q + " = 0$, also $u = " + p + "$ oder $u = " + q + "$. Dann $x = " + e1 + "$ oder $x = " + e2 + "$, Summe $" + (e1 + e2) + "$. Die Summe der $u$-Werte ist nicht gefragt.");
+    }
+    const s1 = G.int(1, 4), s2 = G.int(2, 6);
+    if (s1 === s2) return TR.qform(4, G);
+    const opts = nopts(s1 * s1 + s2 * s2, [s1 + s2, s1 * s2, (s1 + s2) * (s1 + s2), s1 * s1 * s2 * s2].filter((v, i, a) => a.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("What is the sum of the solutions of $x - " + (s1 + s2) + "\\sqrt{x} + " + s1 * s2 + " = 0$?", opts,
+      "**" + answer(opts) + ".** Mit $u = \\sqrt x \\ge 0$: $u^2 - " + (s1 + s2) + "u + " + s1 * s2 + " = 0$, also $u = " + s1 + "$ oder $u = " + s2 + "$ (beide nicht negativ). Dann $x = " + s1 * s1 + "$ oder $x = " + s2 * s2 + "$, Summe $" + (s1 * s1 + s2 * s2) + "$.");
+  };
+
+  // ---------------------------------------------------------------- line and circle / parabola
+  TR.lgs = (level, G) => {
+    if (level <= 1) {
+      const r2 = G.pick([2, 8, 18, 5, 10, 13]), c = G.int(-6, 6);
+      // y = x + c and x^2 + y^2 = r2: 2x^2 + 2cx + c^2 - r2 = 0, D = 8 r2 - 4 c^2
+      const D = 8 * r2 - 4 * c * c, n = D > 0 ? 2 : D === 0 ? 1 : 0;
+      const opts = [0, 1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+      return step("At how many points does the line $y = x " + pm(c) + "$ meet the circle $x^2 + y^2 = " + r2 + "$?", opts,
+        "**" + answer(opts) + ".** Einsetzen: $x^2 + (x " + pm(c) + ")^2 = " + r2 + "$, also $2x^2 " + pm(2 * c) + "x " + pm(c * c - r2) + " = 0$ mit $\\Delta = " + 4 * c * c + " - 8(" + (c * c - r2) + ") = " + D + "$. " + (n === 2 ? "Positiv: zwei Schnittpunkte." : n === 1 ? "Null: Die Gerade berührt den Kreis." : "Negativ: kein gemeinsamer Punkt."));
+    }
+    if (level === 2) {
+      const m = G.int(-3, 3), b = G.int(-4, 4), c = G.pick([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]), d = G.int(-5, 5);
+      // y = m x + c and y = x^2 + b x + d: x^2 + (b - m) x + (d - c) = 0
+      const D = (b - m) * (b - m) - 4 * (d - c);
+      if (D <= 0) return TR.lgs(2, G);
+      const opts = nopts(m - b, [b - m, d - c, c - d, m + b, m - b + 1, m - b - 2, b - m + 3].filter((v, i, a) => a.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("The line $y = " + (m === 0 ? "" : m === 1 ? "x" : m === -1 ? "-x" : m + "x") + (m === 0 ? c : " " + pm(c)) + "$ meets the curve $y = " + ptex([1, b, d]) + "$ at two points. What is the sum of their $x$-coordinates?", opts,
+        "**" + answer(opts) + ".** Gleichsetzen: $" + ptex([1, b - m, d - c]) + " = 0$. Nach Vieta ist die Summe der Lösungen $-\\tfrac{b}{a} = " + (m - b) + "$, ohne die Lösungen selbst zu berechnen.");
+    }
+    if (level === 3) {
+      const [m, c, r2] = G.pick([[1, 1, 13], [2, 0, 20], [1, -1, 25], [-1, 2, 10], [3, 0, 10], [1, 3, 17]]);
+      const num = -2 * m * c, den = 1 + m * m;
+      const opts = nopts(fr(num, den), [fr(2 * m * c, den), fr(num, 1), fr(c * c - r2, den), [0, 1], fr(num + den, den), fr(num - 2 * den, den), fr(2 * m * c + den, den)], fracOr);
+      return step("The line $y = " + (m === 1 ? "" : m === -1 ? "-" : m) + "x" + (c ? " " + pm(c) : "") + "$ meets the circle $x^2 + y^2 = " + r2 + "$ at two points. What is the sum of their $x$-coordinates?", opts,
+        "**" + answer(opts) + ".** Einsetzen: $x^2 + (" + (m === 1 ? "" : m === -1 ? "-" : m) + "x" + (c ? " " + pm(c) : "") + ")^2 = " + r2 + "$ gibt $" + den + "x^2 " + pm(2 * m * c) + "x " + pm(c * c - r2) + " = 0$. Summe der Lösungen: $-\\tfrac{" + 2 * m * c + "}{" + den + "} = " + ftex(fr(num, den)) + "$.");
+    }
+    const s = G.int(1, 4), r2 = 2 * s * s;
+    const right = "$c = " + 2 * s + "$ or $c = -" + 2 * s + "$";
+    const opts = topts(G, right, ["$c = " + 2 * s + "$ only", "$c = \\pm" + s + "$", "$-" + 2 * s + " < c < " + 2 * s + "$", "$c = \\pm" + r2 + "$", "$c = \\pm\\sqrt{" + r2 + "}$"]);
+    return step("For which values of $c$ does the line $y = x + c$ meet the circle $x^2 + y^2 = " + r2 + "$ at exactly one point?", opts,
+      "**" + answer(opts) + ".** $2x^2 + 2cx + c^2 - " + r2 + " = 0$ mit $\\Delta = 4c^2 - 8(c^2 - " + r2 + ") = " + 8 * r2 + " - 4c^2 = 0$, also $c^2 = " + 2 * r2 + "$ und $c = \\pm " + 2 * s + "$. Zwei Tangenten, je eine auf jeder Seite.");
+  };
+
+  // ---------------------------------------------------------------- percentages, divisibility, proportion, units, ratios
+  TR.prozent = (level, G) => {
+    if (level <= 1) {
+      const p = G.pick([10, 20, 25, 30, 40, 50]), loss = (p * p) / 100;
+      const opts = topts(G, "a decrease of " + en(loss, 2) + "%", ["no change", "a decrease of " + p + "%", "an increase of " + en(loss, 2) + "%", "a decrease of " + 2 * p + "%", "a decrease of " + en(loss / 2, 2) + "%"]);
+      return step("A price rises by " + p + "% and then falls by " + p + "%. What is the overall change?", opts,
+        "**" + answer(opts) + ".** Faktoren statt Prozentpunkte: $" + G.tex(1 + p / 100, 2) + " \\cdot " + G.tex(1 - p / 100, 2) + " = " + G.tex(1 - loss / 100, 4) + "$, also ein Minus von $" + G.tex(loss, 2) + "\\,\\%$.");
+    }
+    if (level === 2) {
+      const [p, base] = G.pick([[25, 120], [20, 150], [50, 80], [12.5, 160], [40, 75], [60, 45], [5, 240]]);
+      const now = base * (1 + p / 100);
+      const opts = nopts(base, [now * (1 - p / 100), now - p, base + p, now / (1 - p / 100)].map((v) => +v.toFixed(2)).filter((v, i, a) => a.indexOf(v) === i), money);
+      return step("After an increase of " + en(p, 1) + "%, a price is " + money(now) + ". What was the original price?", opts,
+        "**" + answer(opts) + ".** Neu $= \\text{alt} \\cdot " + G.tex(1 + p / 100, 3) + "$, also alt $= \\tfrac{" + G.tex(now, 2) + "}{" + G.tex(1 + p / 100, 3) + "} = " + G.tex(base, 2) + "$. Wer " + G.fmt(p, 1) + " % vom neuen Preis abzieht, nimmt die falsche Grundmenge.");
+    }
+    if (level === 3) {
+      const [P, r, n] = G.pick([[1000, 10, 2], [2000, 5, 2], [500, 20, 3], [1000, 10, 3], [800, 25, 2], [5000, 2, 2]]);
+      const v = P * Math.pow(1 + r / 100, n);
+      const opts = nopts(+v.toFixed(2), [P * (1 + (r * n) / 100), v + P * r / 100, P * Math.pow(1 + r / 100, n - 1), P * Math.pow(1 + r / 100, n + 1)].map((x) => +x.toFixed(2)).filter((x, i, a) => a.indexOf(x) === i), money);
+      return step("£" + P + " is invested at " + r + "% compound interest per year. How much is it worth after " + n + " years?", opts,
+        "**" + answer(opts) + ".** Jedes Jahr Faktor $" + G.tex(1 + r / 100, 2) + "$: $" + P + " \\cdot " + G.tex(1 + r / 100, 2) + "^{" + n + "} = " + G.tex(v, 2) + "$. Einfacher Zins ($" + P + " \\cdot (1 + " + n + " \\cdot " + G.tex(r / 100, 2) + ")$) vergisst die Zinsen auf Zinsen.");
+    }
+    const a = G.pick([10, 20, 25, 50]), b = G.pick([10, 20, 40, 50]), c = G.pick([10, 20, 25]);
+    const f = (1 + a / 100) * (1 - b / 100) * (1 + c / 100), ch = +(100 * (f - 1)).toFixed(2);
+    const opts = nopts(ch, [a - b + c, +(100 * ((1 + a / 100) * (1 - b / 100) - 1)).toFixed(2), +(-ch).toFixed(2), +(100 * (f - 1) + 1).toFixed(2)].filter((v, i, arr) => arr.indexOf(v) === i), (v) => (v > 0 ? "+" : "") + en(v, 2) + "%");
+    return step("A quantity is increased by " + a + "%, then decreased by " + b + "%, then increased by " + c + "%. What is the overall percentage change?", opts,
+      "**" + answer(opts) + ".** Faktoren multiplizieren: $" + G.tex(1 + a / 100, 2) + " \\cdot " + G.tex(1 - b / 100, 2) + " \\cdot " + G.tex(1 + c / 100, 2) + " = " + G.tex(f, 4) + "$, also $" + (ch > 0 ? "+" : "") + G.tex(ch, 2) + "\\,\\%$. Prozentpunkte addieren ($" + (a - b + c) + "\\,\\%$) ist falsch.");
+  };
+
+  TR.teiler = (level, G) => {
+    if (level <= 1) {
+      const a = G.int(1, 4), b = G.int(0, 3), c = G.int(0, 2), N = ipow(2, a) * ipow(3, b) * ipow(5, c);
+      const n = (a + 1) * (b + 1) * (c + 1);
+      const opts = nopts(n, [a * Math.max(1, b) * Math.max(1, c), a + b + c, a + b + c + 1, n + 2, n - 2].filter((v, i, arr) => v > 0 && arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("How many positive divisors does $" + N + "$ have?", opts,
+        "**" + answer(opts) + ".** $" + N + " = 2^{" + a + "}" + (b ? " \\cdot 3^{" + b + "}" : "") + (c ? " \\cdot 5^{" + c + "}" : "") + "$. Ein Teiler wählt jeden Exponenten von 0 bis zum Höchstwert: $(" + (a + 1) + ")" + (b ? "(" + (b + 1) + ")" : "") + (c ? "(" + (c + 1) + ")" : "") + " = " + n + "$.");
+    }
+    if (level === 2) {
+      const e = [G.int(1, 4), G.int(0, 3), G.int(0, 2)], f = [G.int(0, 4), G.int(1, 3), G.int(0, 2)];
+      const P = [2, 3, 5], lcm = G.chance(0.5);
+      const val = P.reduce((acc, p, i) => acc * ipow(p, lcm ? Math.max(e[i], f[i]) : Math.min(e[i], f[i])), 1);
+      const other = P.reduce((acc, p, i) => acc * ipow(p, lcm ? Math.min(e[i], f[i]) : Math.max(e[i], f[i])), 1);
+      const A = P.reduce((acc, p, i) => acc * ipow(p, e[i]), 1), B = P.reduce((acc, p, i) => acc * ipow(p, f[i]), 1);
+      const opts = nopts(val, [other, A * B, Math.abs(A - B) || 1, val * 2].filter((v, i, arr) => arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("What is the " + (lcm ? "lowest common multiple" : "highest common factor") + " of $" + A + "$ and $" + B + "$?", opts,
+        "**" + answer(opts) + ".** Primfaktoren: " + (lcm ? "kgV mit dem jeweils **größten** Exponenten" : "ggT mit dem jeweils **kleinsten** Exponenten") + ". Probe: ggT mal kgV ist $" + A + " \\cdot " + B + " = " + A * B + "$.");
+    }
+    const k = G.pick(level === 3 ? [84, 90, 108, 120, 150, 200, 72, 98] : [24, 36, 54, 72, 100, 48]);
+    const cube = level >= 4;
+    let rest = k, n = 1;
+    const parts = [];
+    for (const p of [2, 3, 5, 7]) {
+      let e = 0;
+      while (rest % p === 0) { rest /= p; e++; }
+      if (e) { parts.push(p + "^{" + e + "}"); const m = cube ? (3 - (e % 3)) % 3 : e % 2; n *= ipow(p, m); }
+    }
+    const opts = nopts(n, [k, n * 2, n * 3, Math.max(1, n / 2), cube ? n * n : n * 4].filter((v, i, arr) => Number.isInteger(v) && arr.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("What is the smallest positive integer $n$ such that $" + k + "n$ is a perfect " + (cube ? "cube" : "square") + "?", opts,
+      "**" + answer(opts) + ".** $" + k + " = " + parts.join(" \\cdot ") + "$. In einer " + (cube ? "Kubikzahl ist jeder Exponent durch 3 teilbar" : "Quadratzahl ist jeder Exponent gerade") + "; $n$ ergänzt genau die fehlenden Faktoren: $n = " + n + "$.");
+  };
+
+  TR.proportional = (level, G) => {
+    if (level <= 1) {
+      const n = G.pick([2, 3, -1, -2]), k = G.pick([2, 3]);
+      const right = n > 0 ? ipow(k, n) : [1, ipow(k, -n)];
+      const wrong = n > 0 ? [k, k * n, [1, ipow(k, n)], ipow(k, n + 1), n * n] : [[1, k * -n], ipow(k, -n), [1, ipow(k, -n + 1)], [k, 1], [1, k]];
+      const opts = nopts(right, wrong, fracOr);
+      const rel = n === -1 ? "inversely proportional to $x$" : n === -2 ? "inversely proportional to the square of $x$" : n === 2 ? "proportional to the square of $x$" : "proportional to the cube of $x$";
+      return step("$y$ is " + rel + ". When $x$ is multiplied by " + k + ", by what factor is $y$ multiplied?", opts,
+        "**" + answer(opts) + ".** $y = c\\,x^{" + n + "}$, also wird $y$ mit $" + k + "^{" + n + "} = " + (n > 0 ? ipow(k, n) : "\\tfrac{1}{" + ipow(k, -n) + "}") + "$ multipliziert. Die Konstante $c$ braucht man dafür nicht.");
+    }
+    if (level === 2) {
+      const [q1, q2] = G.pick([[16, 25], [9, 36], [4, 49], [25, 81], [36, 4]]), p1 = G.int(2, 6) * Math.sqrt(q1);
+      const c = p1 / Math.sqrt(q1), p2 = c * Math.sqrt(q2);
+      const opts = nopts(p2, [(p1 * q2) / q1, p1 + Math.sqrt(q2) - Math.sqrt(q1), (p1 * Math.sqrt(q1)) / Math.sqrt(q2), c * q2].map((v) => +v.toFixed(3)).filter((v, i, a) => v !== p2 && a.indexOf(v) === i), (v) => "$" + en(v, 3) + "$");
+      return step("$p$ is proportional to $\\sqrt q$, and $p = " + p1 + "$ when $q = " + q1 + "$. What is $p$ when $q = " + q2 + "$?", opts,
+        "**" + answer(opts) + ".** $p = c\\sqrt q$ mit $c = \\tfrac{" + p1 + "}{" + Math.sqrt(q1) + "} = " + G.tex(c, 3) + "$. Dann $p = " + G.tex(c, 3) + " \\cdot " + Math.sqrt(q2) + " = " + G.tex(p2, 3) + "$.");
+    }
+    if (level === 3) {
+      const x1 = G.int(2, 5), y1 = G.pick([4, 8, 12, 16, 36]), x2 = x1 * G.pick([2, 3]);
+      const c = y1 * x1 * x1, y2 = c / (x2 * x2);
+      const opts = nopts(fr(c, x2 * x2), [fr(y1 * x1, x2), fr(y1, 2), fr(y1 * x2 * x2, x1 * x1), fr(c, x2)], fracOr);
+      return step("$y$ is inversely proportional to the square of $x$, and $y = " + y1 + "$ when $x = " + x1 + "$. What is $y$ when $x = " + x2 + "$?", opts,
+        "**" + answer(opts) + ".** $y = \\tfrac{c}{x^2}$ mit $c = " + y1 + " \\cdot " + x1 * x1 + " = " + c + "$. Für $x = " + x2 + "$: $y = \\tfrac{" + c + "}{" + x2 * x2 + "} = " + G.tex(y2, 4) + "$.");
+    }
+    const n = G.pick([2, 3]), p = G.pick([10, 20, 50]);
+    const f = Math.pow(1 + p / 100, n), ch = +(100 * (f - 1)).toFixed(2);
+    const opts = nopts(ch, [n * p, p, +(100 * (Math.pow(1 + p / 100, n - 1) - 1)).toFixed(2), +(ch + p).toFixed(2)].filter((v, i, a) => v !== ch && a.indexOf(v) === i), (v) => en(v, 2) + "%");
+    return step("$V$ is proportional to $r^{" + n + "}$. If $r$ increases by " + p + "%, by what percentage does $V$ increase?", opts,
+      "**" + answer(opts) + ".** Faktor $" + G.tex(1 + p / 100, 2) + "^{" + n + "} = " + G.tex(f, 4) + "$, also $+" + G.tex(ch, 2) + "\\,\\%$. Nicht $" + n + " \\cdot " + p + "\\,\\%$: Prozente multiplizieren sich.");
+  };
+
+  TR.einheiten = (level, G) => {
+    if (level <= 1) {
+      const a = G.pick([1, 2, 3.5, 0.4, 0.07]), sq = G.chance(0.5);
+      const val = sq ? a * 1e4 : a * 1e6;
+      const opts = nopts(+val.toFixed(4), [a * 100, a * 1e3, sq ? a * 1e6 : a * 1e4, sq ? a * 1e5 : a * 1e9].map((v) => +v.toFixed(4)).filter((v, i, arr) => v !== +val.toFixed(4) && arr.indexOf(v) === i), (v) => "$" + en(v) + "$");
+      return step("How many " + (sq ? "cm²" : "cm³") + " are there in " + en(a, 3) + (sq ? " m²" : " m³") + "?", opts,
+        "**" + answer(opts) + ".** $1\\,\\mathrm{m} = 100\\,\\mathrm{cm}$, also $1\\,\\mathrm{m}^" + (sq ? "2" : "3") + " = 100^" + (sq ? "2" : "3") + "\\,\\mathrm{cm}^" + (sq ? "2" : "3") + " = " + (sq ? "10\\,000" : "1\\,000\\,000") + "\\,\\mathrm{cm}^" + (sq ? "2" : "3") + "$. Der Umrechnungsfaktor wird mit der Dimension potenziert.");
+    }
+    if (level === 2) {
+      const v = G.pick([18, 36, 54, 72, 90, 108, 144]), ms = v / 3.6;
+      const opts = nopts(ms, [v * 3.6, v / 60, v / 36, ms * 2].map((x) => +x.toFixed(3)).filter((x, i, a) => x !== ms && a.indexOf(x) === i), (x) => "$" + en(x, 3) + "$ m/s");
+      return step("What is " + v + " km/h in m/s?", opts,
+        "**" + answer(opts) + ".** $1\\,\\tfrac{\\mathrm{km}}{\\mathrm h} = \\tfrac{1000\\,\\mathrm m}{3600\\,\\mathrm s} = \\tfrac{1}{3{,}6}\\,\\tfrac{\\mathrm m}{\\mathrm s}$, also $" + v + " : 3{,}6 = " + G.tex(ms, 3) + "$.");
+    }
+    if (level === 3) {
+      const d = G.pick([0.8, 1.2, 2.7, 7.8, 13.6, 0.9]);
+      const opts = nopts(d * 1000, [d, d * 100, d * 1e6, d * 10].filter((x) => x !== d * 1000), (x) => "$" + en(x, 3) + "$ kg/m³");
+      return step("A material has density " + en(d, 2) + " g/cm³. What is its density in kg/m³?", opts,
+        "**" + answer(opts) + ".** $1\\,\\tfrac{\\mathrm g}{\\mathrm{cm}^3} = \\tfrac{10^{-3}\\,\\mathrm{kg}}{10^{-6}\\,\\mathrm m^3} = 1000\\,\\tfrac{\\mathrm{kg}}{\\mathrm m^3}$.");
+    }
+    const a = G.pick([2, 4.5, 6, 8]), lit = a * 1000;
+    const opts = nopts(lit, [a, a * 100, a * 1e6, a * 10].filter((x) => x !== lit), (x) => "$" + en(x, 3) + "$ litres");
+    return step("A tank holds " + en(a, 2) + " m³ of water. How many litres is that?", opts,
+      "**" + answer(opts) + ".** $1\\,\\mathrm{litre} = 1\\,\\mathrm{dm}^3$ und $1\\,\\mathrm m^3 = 10^3\\,\\mathrm{dm}^3$: $" + G.tex(a, 2) + " \\cdot 1000 = " + G.tex(lit, 0) + "$ Liter.");
+  };
+
+  TR.verhaeltnis = (level, G) => {
+    if (level <= 1) {
+      const a = G.int(1, 5), b0 = G.int(2, 7), b = b0 === a ? a + 1 : b0, N = (a + b) * G.int(2, 9);
+      const big = (Math.max(a, b) * N) / (a + b);
+      const opts = nopts(big, [(Math.min(a, b) * N) / (a + b), N / 2, (Math.max(a, b) * N) / Math.min(a, b), big + 1].filter((x, i, arr) => Number.isInteger(x) && x !== big && arr.indexOf(x) === i), (x) => "$" + x + "$");
+      return step("£" + N + " is shared in the ratio $" + a + " : " + b + "$. How much is the larger share?", opts,
+        "**" + answer(opts) + ".** $" + (a + b) + "$ Teile zu je $" + N / (a + b) + "$; der größere Anteil hat $" + Math.max(a, b) + "$ Teile.");
+    }
+    if (level === 2) {
+      const a = G.int(1, 5), b = G.int(2, 6), c = G.int(2, 6), d0 = G.int(1, 7), d = d0 === c ? c + 1 : d0;
+      const p = fr(a * c, b * d);
+      const right = "$" + p[0] + " : " + p[1] + "$";
+      const opts = topts(G, right, ["$" + a + " : " + d + "$", "$" + (a + c) + " : " + (b + d) + "$", "$" + p[1] + " : " + p[0] + "$", "$" + a * d + " : " + b * c + "$"]);
+      return step("$a : b = " + a + " : " + b + "$ and $b : c = " + c + " : " + d + "$. What is $a : c$?", opts,
+        "**" + answer(opts) + ".** Die gemeinsame Größe $b$ angleichen: $a : b = " + a * c + " : " + b * c + "$ und $b : c = " + b * c + " : " + b * d + "$. Also $a : c = " + a * c + " : " + b * d + " = " + p[0] + " : " + p[1] + "$.");
+    }
+    if (level === 3) {
+      const [p, q, r, s] = G.pick([[3, 5, 2, 3], [2, 3, 3, 4], [1, 2, 2, 3], [3, 4, 4, 5], [2, 5, 1, 2]]);
+      // (pk + t) : (qk + t) = r : s  ->  s(pk + t) = r(qk + t)  ->  k (sp - rq) = t (r - s)
+      const t = G.pick([4, 5, 6, 10]);
+      const k = (t * (r - s)) / (s * p - r * q);
+      if (!(k > 0) || !Number.isInteger(k)) return TR.verhaeltnis(2, G);
+      const x = p * k;
+      const opts = nopts(x, [q * k, x + t, k, (p + q) * k, x - t, q * k + t, 2 * x].filter((v, i, arr) => v > 0 && v !== x && arr.indexOf(v) === i), (v) => "$" + v + "$");
+      return step("Two numbers $x$ and $y$ are in the ratio $" + p + " : " + q + "$. When " + t + " is added to each, the ratio becomes $" + r + " : " + s + "$. What is $x$?", opts,
+        "**" + answer(opts) + ".** $x = " + p + "k$, $y = " + q + "k$. Dann $" + s + "(" + p + "k + " + t + ") = " + r + "(" + q + "k + " + t + ")$, also $k = " + k + "$ und $x = " + x + "$.");
+    }
+    const a = G.int(1, 4), b0 = G.int(2, 5), b = b0 === 2 * a ? b0 + 1 : b0, c = G.int(2, 5), d0 = G.int(1, 6), d = d0 === c ? c + 1 : d0;
+    const A = a * c, B = b * c, C = b * d, S = A + B + C, m = G.int(1, 4), total = S * m;
+    const opts = nopts(C * m, [A * m, B * m, (d * total) / (c + d) | 0, total / 3 | 0].filter((v, i, arr) => v > 0 && v !== C * m && arr.indexOf(v) === i), (v) => "$" + v + "$");
+    return step("$a : b = " + a + " : " + b + "$, $b : c = " + c + " : " + d + "$ and $a + b + c = " + total + "$. What is $c$?", opts,
+      "**" + answer(opts) + ".** $a : b : c = " + A + " : " + B + " : " + C + "$ (b angeglichen). Das sind $" + S + "$ Teile, ein Teil ist $" + m + "$, also $c = " + C * m + "$.");
+  };
+
+
+  // ---------------------------------------------------------------- Sommer 2: logarithms and graphs
+  const LOGB = [2, 3, 5, 10];
+  TR.logwert = (level, G) => {
+    if (level <= 1) {
+      const b = G.pick(LOGB), k = G.pick([-2, -1, 2, 3, 4, b === 2 ? 5 : 3]);
+      const arg = k >= 0 ? String(ipow(b, k)) : "\\tfrac{1}{" + ipow(b, -k) + "}";
+      const opts = nopts(k, [-k, ipow(b, Math.abs(k)), k + 1, k - 1], (v) => "$" + v + "$");
+      return step("What is $\\log_{" + b + "} " + arg + "$?", opts,
+        "**" + answer(opts) + ".** $" + arg + " = " + b + "^{" + k + "}$, also ist der Logarithmus $" + k + "$. Der Logarithmus ist der Exponent." );
+    }
+    if (level === 2) {
+      const [c, m, n] = G.pick([[2, 2, 3], [2, 3, 2], [3, 2, 3], [3, 3, 2], [2, 4, 3], [2, 3, 4], [5, 2, 3], [2, 4, 5]]);
+      const B = ipow(c, m), A = ipow(c, n), v = fr(n, m);
+      const opts = nopts(v, [fr(m, n), fr(A, B), [n - m, 1], fr(n, 1)], fracOr);
+      return step("What is $\\log_{" + B + "} " + A + "$?", opts,
+        "**" + answer(opts) + ".** Beides als Potenz von " + c + ": $" + A + " = " + c + "^{" + n + "} = (" + c + "^{" + m + "})^{\\frac{" + n + "}{" + m + "}} = " + B + "^{\\frac{" + n + "}{" + m + "}}$, also $" + ftex(v) + "$.");
+    }
+    if (level === 3) {
+      const b = G.pick([2, 3, 5]), k = G.int(1, b === 5 ? 2 : 4), B = G.pick([2, 3, 5, 6, 7].filter((x) => x % b !== 0 && x !== b));
+      const A = B * ipow(b, k);
+      if (G.chance(0.5)) {
+        const opts = nopts(k, [A - B, k + 1, Math.round(A / B), k - 1], (v) => "$" + v + "$");
+        return step("What is $\\log_{" + b + "} " + A + " - \\log_{" + b + "} " + B + "$?", opts,
+          "**" + answer(opts) + ".** Differenz der Logarithmen ist der Logarithmus des Quotienten: $\\log_{" + b + "} \\tfrac{" + A + "}{" + B + "} = \\log_{" + b + "} " + ipow(b, k) + " = " + k + "$.");
+      }
+      const t = G.pick([2, 3, 4]), u = ipow(b, 2) * ipow(t, 2);
+      // 2 log_b (b t) - log_b (t^2) = log_b (b^2 t^2 / t^2) = 2
+      const opts = nopts(2, [1, 3, 2 * t, b], (v) => "$" + v + "$");
+      return step("What is $2\\log_{" + b + "} " + b * t + " - \\log_{" + b + "} " + t * t + "$?", opts,
+        "**" + answer(opts) + ".** $2\\log_{" + b + "} " + b * t + " = \\log_{" + b + "} " + u + "$, und $\\log_{" + b + "} " + u + " - \\log_{" + b + "} " + t * t + " = \\log_{" + b + "} " + b * b + " = 2$.");
+    }
+    if (G.chance(0.5)) {
+      const p = G.pick([3, 5, 7]), k = G.int(2, 5);
+      const opts = nopts(k, [p, k * p, ipow(2, k), k + 1], (v) => "$" + v + "$");
+      return step("What is $\\log_2 " + p + " \\times \\log_{" + p + "} " + ipow(2, k) + "$?", opts,
+        "**" + answer(opts) + ".** Basiswechsel: $\\log_2 " + p + " \\cdot \\log_{" + p + "} " + ipow(2, k) + " = \\tfrac{\\lg " + p + "}{\\lg 2} \\cdot \\tfrac{\\lg " + ipow(2, k) + "}{\\lg " + p + "} = \\log_2 " + ipow(2, k) + " = " + k + "$. (Die Basiswechselformel ist im TMUA nicht verlangt, die Kettenidee hilft trotzdem.)");
+    }
+    const [N, a, b2] = G.pick([[36, 2, 2], [12, 2, 1], [18, 1, 2], [72, 3, 2], [48, 4, 1], [24, 3, 1]]);
+    const right = "$" + a + " + " + (b2 === 1 ? "" : b2) + "p$";
+    const opts = topts(G, right, ["$" + a + "p$", "$" + (a + b2) + "p$", "$" + a + " + p^{" + b2 + "}$", "$" + b2 + " + " + (a === 1 ? "" : a) + "p$", "$" + a * b2 + "p$"]);
+    return step("Given that $\\log_2 3 = p$, express $\\log_2 " + N + "$ in terms of $p$.", opts,
+      "**" + answer(opts) + ".** $" + N + " = 2^{" + a + "} \\cdot 3^{" + b2 + "}$, also $\\log_2 " + N + " = " + a + " + " + b2 + "\\log_2 3$.");
+  };
+
+  TR.loggleichung = (level, G) => {
+    if (level <= 1) {
+      const b = G.pick([2, 3, 5, 10]), k = G.pick([2, 3, -1]), c = G.int(-3, 3);
+      const x = ipow(b, Math.abs(k)), val = k < 0 ? [1 - c * b, b] : x - c;
+      const opts = nopts(Array.isArray(val) ? fr(val[0], val[1]) : val, [k - c, x + c, b * k - c].filter((v) => v !== val), fracOr);
+      return step("Solve $\\log_{" + b + "}(x " + pm(c) + ") = " + k + "$.", opts,
+        "**" + answer(opts) + ".** Exponentialform: $x " + pm(c) + " = " + b + "^{" + k + "}$, also $x = " + (k < 0 ? "\\tfrac{1}{" + b + "} " + pm(-c) : (x + " " + pm(-c))) + "$. Probe: Das Argument ist positiv.");
+    }
+    if (level === 2) {
+      const [b, k, r1] = G.pick([[2, 3, 4], [2, 4, 8], [2, 5, 8], [2, 5, 16], [3, 3, 9], [2, 6, 16], [3, 4, 27]]);
+      const N = ipow(b, k), d = r1 - N / r1;
+      const other = -(N / r1);
+      const right = "$x = " + r1 + "$ only";
+      const opts = topts(G, right, ["$x = " + r1 + "$ or $x = " + other + "$", "$x = " + other + "$ only", "no real solution", "$x = " + (N / 2) + "$ only", "$x = " + (r1 + other) + "$ only"]);
+      return step("Solve $\\log_{" + b + "} x + \\log_{" + b + "}(x - " + d + ") = " + k + "$.", opts,
+        "**" + answer(opts) + ".** Zusammenfassen: $\\log_{" + b + "}\\big(x(x - " + d + ")\\big) = " + k + "$, also $x^2 - " + d + "x - " + N + " = 0$ mit den Lösungen $" + r1 + "$ und $" + other + "$. Der Definitionsbereich verlangt $x > " + d + "$: Nur $x = " + r1 + "$ bleibt.");
+    }
+    if (level === 3) {
+      const [b, k, q, x] = G.pick([[2, 2, 1, 3], [2, 3, 1, 3], [3, 1, 2, 5], [2, 1, 3, 7], [3, 2, 1, 2], [5, 1, 1, 3]]);
+      const P = ipow(b, k) * (x - q) - x; // (x + P) = b^k (x - q)
+      if (P <= 0 || x - q <= 0) return TR.loggleichung(2, G);
+      const opts = nopts(x, [x + 1, P, q + 1, ipow(b, k)].filter((v) => v !== x), (v) => "$" + v + "$");
+      return step("Solve $\\log_{" + b + "}(x + " + P + ") - \\log_{" + b + "}(x - " + q + ") = " + k + "$.", opts,
+        "**" + answer(opts) + ".** $\\log_{" + b + "}\\tfrac{x + " + P + "}{x - " + q + "} = " + k + "$, also $x + " + P + " = " + ipow(b, k) + "(x - " + q + ")$ und $x = " + x + "$. Probe: beide Argumente positiv.");
+    }
+    const b = G.pick([2, 3, 5]), m = G.int(1, 2), n = m + G.int(1, 2);
+    const prodExp = m + n;
+    const opts = nopts(ipow(b, prodExp), [ipow(b, m) + ipow(b, n), m * n, ipow(b, m * n), ipow(b, n)], (v) => "$" + v + "$");
+    return step("What is the product of the solutions of $\\left(\\log_{" + b + "} x\\right)^2 - " + (m + n) + "\\log_{" + b + "} x + " + m * n + " = 0$?", opts,
+      "**" + answer(opts) + ".** Mit $u = \\log_{" + b + "} x$: $(u - " + m + ")(u - " + n + ") = 0$, also $x = " + b + "^{" + m + "}$ oder $x = " + b + "^{" + n + "}$. Produkt $" + b + "^{" + prodExp + "} = " + ipow(b, prodExp) + "$.");
+  };
+
+  TR.expsub = (level, G) => {
+    const base = G.pick([2, 3]);
+    if (level <= 1) {
+      const e = G.int(0, 3), p = ipow(base, e), q = G.pick([ipow(base, G.int(1, 3)), -G.int(1, 5)]);
+      if (q === p || p + q === 0) return TR.expsub(1, G);
+      const n = 1 + (q > 0 ? 1 : 0);
+      const opts = [0, 1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === n }));
+      return step("How many real solutions does $" + base * base + "^x " + pm(-(p + q)) + " \\cdot " + base + "^x " + pm(p * q) + " = 0$ have?", opts,
+        "**" + answer(opts) + ".** Mit $u = " + base + "^x$: $(u - " + p + ")(u " + pm(-q) + ") = 0$. $u = " + p + "$ gibt $x = " + e + "$" + (q > 0 ? ", und $u = " + q + "$ gibt eine zweite Lösung." : "; $u = " + q + "$ ist negativ, und $" + base + "^x$ ist immer positiv: keine weitere Lösung."));
+    }
+    if (level <= 3) {
+      const r = G.pick([1, 2, 4]), s = G.pick([2, 4, 8]);
+      if (r / 2 === s) return TR.expsub(level, G);
+      const x1 = Math.log2(r) - 1, x2 = Math.log2(s);
+      const opts = nopts(x1 + x2, [Math.log2(r) + x2, x1 * x2, r / 2 + s, x2], (v) => "$" + v + "$");
+      return step("What is the sum of the solutions of $2^{2x + 1} - " + (2 * s + r) + " \\cdot 2^x + " + r * s + " = 0$?", opts,
+        "**" + answer(opts) + ".** $2^{2x + 1} = 2 \\cdot (2^x)^2$. Mit $u = 2^x$: $2u^2 - " + (2 * s + r) + "u + " + r * s + " = (2u - " + r + ")(u - " + s + ") = 0$, also $u = " + ftex(fr(r, 2)) + "$ oder $u = " + s + "$, d. h. $x = " + x1 + "$ oder $x = " + x2 + "$.");
+    }
+    const [a, b] = G.pick([[2, 3], [1, 4], [2, 5], [3, 4]]);
+    const right = "$\\ln " + a * b + "$";
+    const opts = topts(G, right, ["$\\ln " + (a + b) + "$", "$" + a * b + "$", "$\\ln " + a + " \\cdot \\ln " + b + "$", "$" + (a + b) + "$", "$\\ln " + Math.abs(a - b || 2) + "$"]);
+    return step("What is the sum of the solutions of $e^{2x} - " + (a + b) + "e^x + " + a * b + " = 0$?", opts,
+      "**" + answer(opts) + ".** Mit $u = e^x$: $(u - " + a + ")(u - " + b + ") = 0$, also $x = \\ln " + a + "$ oder $x = \\ln " + b + "$. Summe: $\\ln " + a + " + \\ln " + b + " = \\ln " + a * b + "$." + (a === 1 ? " Dabei ist $\\ln 1 = 0$." : ""));
+  };
+
+  TR.transformation = (level, G) => {
+    if (level <= 1) {
+      const h = G.int(1, 5) * G.sign(), k = G.int(1, 5) * G.sign();
+      const sq = (hh) => (hh > 0 ? "(x - " + hh + ")^2" : "(x + " + -hh + ")^2");
+      const right = "$y = " + sq(h) + " " + pm(k) + "$";
+      const opts = topts(G, right, ["$y = " + sq(-h) + " " + pm(k) + "$", "$y = " + sq(h) + " " + pm(-k) + "$", "$y = " + sq(-h) + " " + pm(-k) + "$", "$y = x^2 " + pm(-2 * h) + "x " + pm(k) + "$"]);
+      return step("The graph of $y = x^2$ is translated " + Math.abs(h) + " units to the " + (h > 0 ? "right" : "left") + " and " + Math.abs(k) + " units " + (k > 0 ? "up" : "down") + ". What is the equation of the new graph?", opts,
+        "**" + answer(opts) + ".** Nach rechts heißt $x$ durch $x - " + Math.abs(h) + "$ ersetzen (bei links $x + " + Math.abs(h) + "$); nach oben wird außen addiert. Scheitel $(" + h + ", " + k + ")$.");
+    }
+    if (level === 2) {
+      const px = G.int(-3, 4), py = G.int(-3, 6), a = G.pick([2, 3, -1, -2]), h = G.int(1, 4) * G.sign(), k = G.int(1, 4) * G.sign();
+      const nx = px + h, ny = a * py + k;
+      const show = (x, y) => "$(" + x + ", " + y + ")$";
+      const right = show(nx, ny);
+      const opts = topts(G, right, [show(px - h, a * py + k), show(nx, a * (py + k)), show(a * px + h, py + k), show(nx, py + k), show(px - h, a * (py + k))]);
+      return step("The point $(" + px + ", " + py + ")$ lies on the curve $y = f(x)$. Which point must lie on $y = " + (a === -1 ? "-" : a) + "f(x " + pm(-h) + ") " + pm(k) + "$?", opts,
+        "**" + answer(opts) + ".** Innen $x " + pm(-h) + "$: Verschiebung um $" + h + "$ in x-Richtung, also $x$-Wert $" + nx + "$. Außen: erst mal $" + a + "$, dann $" + pm(k) + "$: $" + a + " \\cdot " + py + " " + pm(k) + " = " + ny + "$.");
+    }
+    if (level === 3) {
+      const px = 2 * G.int(1, 4), py = G.int(1, 6), b = 2;
+      const kind = G.pick(["stretch", "reflect"]);
+      if (kind === "stretch") {
+        const right = "$(" + px / b + ", " + py + ")$";
+        const opts = topts(G, right, ["$(" + px * b + ", " + py + ")$", "$(" + px + ", " + py * b + ")$", "$(" + px / b + ", " + py * b + ")$", "$(" + px + ", " + py / b + ")$"]);
+        return step("The point $(" + px + ", " + py + ")$ lies on $y = f(x)$. Which point must lie on $y = f(" + b + "x)$?", opts,
+          "**" + answer(opts) + ".** $f(" + b + "x) = " + py + "$ verlangt $" + b + "x = " + px + "$, also $x = " + px / b + "$. Ein Faktor innen staucht in x-Richtung mit dem Kehrwert.");
+      }
+      const right = "$(" + -px + ", " + py + ")$";
+      const opts = topts(G, right, ["$(" + px + ", " + -py + ")$", "$(" + -px + ", " + -py + ")$", "$(" + py + ", " + px + ")$", "$(" + px + ", " + py + ")$"]);
+      return step("The point $(" + px + ", " + py + ")$ lies on $y = f(x)$. Which point must lie on $y = f(-x)$?", opts,
+        "**" + answer(opts) + ".** $f(-x) = " + py + "$ für $-x = " + px + "$: Spiegelung an der y-Achse. ($-f(x)$ spiegelt dagegen an der x-Achse.)");
+    }
+    const b = G.pick([2, 3]), m = G.int(1, 3), c = b * m;
+    const right = "stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$, then translate by " + m + " to the left";
+    const opts = topts(G, right, [
+      "translate by " + m + " to the left, then stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$",
+      "stretch parallel to the $x$-axis by scale factor $" + b + "$, then translate by " + c + " to the left",
+      "translate by " + c + " to the right, then stretch parallel to the $x$-axis by scale factor $\\tfrac1{" + b + "}$",
+      "stretch parallel to the $y$-axis by scale factor $" + b + "$, then translate by " + m + " to the left"]);
+    return step("Which sequence of transformations maps the graph of $y = f(x)$ onto the graph of $y = f(" + b + "x + " + c + ")$?", opts,
+      "**" + answer(opts) + ".** $f(" + b + "x + " + c + ") = f\\big(" + b + "(x + " + m + ")\\big)$. Erst $f(" + b + "x)$ (Stauchung mit $\\tfrac1{" + b + "}$), dann $x$ durch $x + " + m + "$ ersetzen: Verschiebung um " + m + " nach links. Erst um " + m + " verschieben und dann stauchen ergäbe $f(" + b + "x + " + m + ")$.");
+  };
+
+  function countRoots(g, a, b, h) {
+    let n = 0, prev = g(a);
+    for (let x = a + h; x <= b; x += h) { const v = g(x); if (isFinite(v) && isFinite(prev) && (prev < 0) !== (v < 0)) n++; prev = v; }
+    return n;
+  }
+  TR.anzahl = (level, G) => {
+    let md, n, why;
+    if (level <= 1) {
+      const r = G.int(2, 4), a = r * r, b = G.pick([1, 2, 3, a + 1, a + 4].filter((v) => v !== a));
+      n = b > a ? 2 : 4;
+      md = "How many real solutions does $|x^2 - " + a + "| = " + b + "$ have?";
+      why = "Der Graph von $|x^2 - " + a + "|$ hat zwei Tiefpunkte auf der Achse bei $\\pm " + r + "$ und die Spitze $(0, " + a + ")$. Die Höhe " + b + " liegt " + (b > a ? "über der Spitze: zwei Schnittpunkte." : "unter der Spitze: vier Schnittpunkte.");
+    } else if (level === 2) {
+      const k = G.pick([-3, -1, 0, 1, 3, 2.5, -2.5, 1.5]);
+      n = Math.abs(k) < 2 ? 3 : 1;
+      md = "How many real solutions does $x^3 - 3x = " + en(k) + "$ have?";
+      why = "$f(x) = x^3 - 3x$ hat einen Hochpunkt $(-1, 2)$ und einen Tiefpunkt $(1, -2)$ (aus $f'(x) = 3x^2 - 3 = 0$). Eine waagerechte Gerade zwischen $-2$ und $2$ schneidet dreimal, außerhalb einmal.";
+    } else if (level === 3) {
+      const k = G.pick([0.5, 1, 2, 3, 4]);
+      n = countRoots((x) => Math.pow(2, x) - x - k, -8.0003, 8, 0.001);
+      md = "How many real solutions does $2^x = x + " + en(k) + "$ have?";
+      why = "Die Gerade $y = x + " + en(k) + "$ gegen die Exponentialkurve: Der Abstand $2^x - x$ ist bei $x \\approx 0{,}53$ am kleinsten, etwa $0{,}91$. Liegt " + en(k) + " darüber, gibt es zwei Schnittpunkte, darunter keinen.";
+    } else {
+      const k = G.pick([2, 5, 8, 10, 15]);
+      n = countRoots((x) => Math.sin(x) - x / k, -k - 1.0003, k + 1, 0.0005);
+      md = "How many real solutions does $\\sin x = \\dfrac{x}{" + k + "}$ have, where $x$ is in radians?";
+      why = "Schnittpunkte der Sinuskurve mit der Geraden $y = \\tfrac{x}{" + k + "}$: Nur für $|x| \\le " + k + "$ ist die Gerade zwischen $-1$ und $1$. Rechts von 0 zählt man die Bögen, die die Gerade noch übersteigen, und verdoppelt wegen der Punktsymmetrie; dazu kommt $x = 0$.";
+    }
+    const cand = Array.from(new Set([n, n + 1, n - 1, n + 2, n + 4, n - 2])).filter((v) => v >= 0).slice(0, 5).sort((x, y) => x - y);
+    const opts = cand.map((v) => ({ md: "$" + v + "$", correct: v === n }));
+    return step(md, opts, "**" + answer(opts) + ".** " + why);
+  };
+
+  const GRAPHS = [
+    { tex: "y = \\dfrac{1}{1 + x^2}", sym: "even", y0: 1, inf: "0", va: false },
+    { tex: "y = \\dfrac{x}{1 + x^2}", sym: "odd", y0: 0, inf: "0", va: false },
+    { tex: "y = \\dfrac{1}{x^2}", sym: "even", y0: null, inf: "0", va: true },
+    { tex: "y = x^2 + 1", sym: "even", y0: 1, inf: "inf", va: false },
+    { tex: "y = \\dfrac{1}{x}", sym: "odd", y0: null, inf: "0", va: true },
+    { tex: "y = 1 - x^2", sym: "even", y0: 1, inf: "-inf", va: false },
+    { tex: "y = 2^x", sym: "none", y0: 1, inf: "mixed", va: false },
+    { tex: "y = \\dfrac{x^2}{1 + x^2}", sym: "even", y0: 0, inf: "1", va: false },
+    { tex: "y = |x| + 1", sym: "even", y0: 1, inf: "inf", va: false },
+    { tex: "y = x^3 - x", sym: "odd", y0: 0, inf: "mixed", va: false },
+    { tex: "y = \\dfrac{1}{x - 1}", sym: "none", y0: -1, inf: "0", va: true },
+  ];
+  const PROPS = {
+    even: { test: (g) => g.sym === "even", en: "is symmetric about the $y$-axis", de: "achsensymmetrisch zur y-Achse" },
+    odd: { test: (g) => g.sym === "odd", en: "has rotational symmetry of order 2 about the origin", de: "punktsymmetrisch zum Ursprung" },
+    y1: { test: (g) => g.y0 === 1, en: "passes through $(0, 1)$", de: "geht durch $(0, 1)$" },
+    y0: { test: (g) => g.y0 === 0, en: "passes through the origin", de: "geht durch den Ursprung" },
+    zero: { test: (g) => g.inf === "0", en: "tends to 0 as $x \\to \\pm\\infty$", de: "nähert sich für große $|x|$ der Null" },
+    va: { test: (g) => g.va, en: "has a vertical asymptote", de: "hat eine senkrechte Asymptote" },
+    nova: { test: (g) => !g.va, en: "is defined for all real $x$", de: "ist überall definiert" },
+  };
+  TR.graphmerkmal = (level, G) => {
+    for (let attempt = 0; attempt < 40; attempt++) {
+      const target = G.pick(GRAPHS);
+      const own = Object.keys(PROPS).filter((k) => PROPS[k].test(target));
+      const want = G.shuffle(own).slice(0, level <= 1 ? 2 : 3);
+      const others = G.shuffle(GRAPHS.filter((g) => g !== target)).slice(0, 4);
+      if (others.some((g) => want.every((k) => PROPS[k].test(g)))) continue;
+      if (GRAPHS.filter((g) => want.every((k) => PROPS[k].test(g))).length > 1 && level >= 3) continue;
+      const opts = G.shuffle([target].concat(others)).map((g) => ({ md: "$" + g.tex + "$", correct: g === target }));
+      const md = "Which of the following graphs " + want.map((k) => PROPS[k].en).join(", and ") + "?";
+      return step(md, opts, "**" + answer(opts) + ".** Gesucht: " + want.map((k) => PROPS[k].de).join(", ") + ". Jedes Merkmal schließt Optionen aus; ein einziger Punkt oder eine Asymptote, die nicht passt, genügt dafür.");
+    }
+    return TR.transformation(level, G);
+  };
+
+
+  // ---------------------------------------------------------------- Sommer 3: calculus with powers
+  TR.ableitungwert = (level, G) => {
+    if (level <= 1) {
+      const c = G.int(2, 6), n = G.pick([2, 3, 4, -1, -2]), x0 = G.pick([1, 2, -1]);
+      const val = c * n * Math.pow(x0, n - 1);
+      const opts = nopts(val, [c * Math.pow(x0, n), c * n * Math.pow(x0, n), n * Math.pow(x0, n - 1), c * (n - 1) * Math.pow(x0, n - 2)].map((v) => +v.toFixed(4)), (v) => "$" + en(v) + "$");
+      const term = n > 0 ? c + "x^{" + n + "}" : "\\dfrac{" + c + "}{x" + (n === -1 ? "" : "^{" + -n + "}") + "}";
+      return step("If $f(x) = " + term + "$, what is $f'(" + x0 + ")$?", opts,
+        "**" + answer(opts) + ".** " + (n < 0 ? "Als Potenz: $" + c + "x^{" + n + "}$. " : "") + "$f'(x) = " + c * n + "x^{" + (n - 1) + "}$, also $f'(" + x0 + ") = " + en(val) + "$.");
+    }
+    if (level === 2) {
+      const a = G.int(1, 9), x0 = G.pick([1, 4, 9]);
+      // f(x) = (x^2 + a)/sqrt(x) = x^{3/2} + a x^{-1/2};  f'(x) = 1.5 x^{1/2} - 0.5 a x^{-3/2}
+      const r = Math.sqrt(x0), val = 1.5 * r - (0.5 * a) / (x0 * r);
+      const opts = nopts(+val.toFixed(4), [1.5 * r + (0.5 * a) / (x0 * r), (2 * x0) / (0.5 / r), 1.5 * r, 2 * x0 - 0.5 * a].map((v) => +v.toFixed(4)), (v) => "$" + en(v, 4) + "$");
+      return step("If $f(x) = \\dfrac{x^2 + " + a + "}{\\sqrt x}$, what is $f'(" + x0 + ")$?", opts,
+        "**" + answer(opts) + ".** Erst umschreiben: $f(x) = x^{\\frac32} + " + a + "x^{-\\frac12}$. Dann $f'(x) = \\tfrac32 x^{\\frac12} - \\tfrac{" + a + "}{2} x^{-\\frac32}$ und $f'(" + x0 + ") = \\tfrac32 \\cdot " + r + " - \\tfrac{" + a + "}{2 \\cdot " + x0 * r + "} = " + G.tex(val, 4) + "$. Eine Quotientenregel braucht man nicht.");
+    }
+    if (level === 3) {
+      const a = G.int(1, 5), x0 = G.pick([1, 2, -1]);
+      // f(x) = (x + a)^2 / x = x + 2a + a^2/x ; f'(x) = 1 - a^2/x^2
+      const val = 1 - (a * a) / (x0 * x0);
+      const opts = nopts(+val.toFixed(4), [1 + (a * a) / (x0 * x0), 2 * (x0 + a), (2 * (x0 + a)) / 1 - 1, 1 - a * a].map((v) => +v.toFixed(4)), (v) => "$" + en(v) + "$");
+      return step("If $f(x) = \\dfrac{(x + " + a + ")^2}{x}$, what is $f'(" + x0 + ")$?", opts,
+        "**" + answer(opts) + ".** Ausmultiplizieren und teilen: $f(x) = x + " + 2 * a + " + " + a * a + "x^{-1}$, also $f'(x) = 1 - \\tfrac{" + a * a + "}{x^2}$ und $f'(" + x0 + ") = " + en(val) + "$.");
+    }
+    const k = G.int(1, 4) * 2;
+    // f(x) = x^{3/2} - k sqrt(x): f'(x) = 1.5 sqrt(x) - k/(2 sqrt x) = 0  ->  x = k/3
+    const xz = fr(k, 3);
+    const opts = nopts(xz, [fr(2 * k, 3), [k, 1], fr(k * k, 9), fr(k, 2)], fracOr);
+    return step("For $x > 0$, at which value of $x$ is the gradient of $y = x^{\\frac32} - " + k + "\\sqrt x$ equal to zero?", opts,
+      "**" + answer(opts) + ".** $\\tfrac{dy}{dx} = \\tfrac32 x^{\\frac12} - \\tfrac{" + k + "}{2} x^{-\\frac12}$. Mit $2\\sqrt x$ multiplizieren: $3x - " + k + " = 0$, also $x = " + ftex(xz) + "$.");
+  };
+
+  TR.stationaer = (level, G) => {
+    if (level <= 2) {
+      const k = G.int(1, 4), c = G.int(1, 5) * G.sign();
+      // f = x^3 - 3k^2 x + c: f' = 3x^2 - 3k^2 -> x = -k (max), x = k (min)
+      const max = 2 * k * k * k + c, min = -2 * k * k * k + c;
+      const askMax = level <= 1 || G.chance(0.5);
+      const val = askMax ? max : min;
+      const opts = nopts(val, [askMax ? min : max, k, -k, 3 * k * k + c, c].filter((v) => v !== val), (v) => "$" + v + "$");
+      return step("$f(x) = x^3 - " + 3 * k * k + "x " + pm(c) + "$. What is the local " + (askMax ? "maximum" : "minimum") + " value of $f$?", opts,
+        "**" + answer(opts) + ".** $f'(x) = 3x^2 - " + 3 * k * k + " = 0$ bei $x = \\pm " + k + "$. $f''(x) = 6x$: bei $x = -" + k + "$ negativ (Maximum), bei $x = " + k + "$ positiv (Minimum). $f(-" + k + ") = " + max + "$, $f(" + k + ") = " + min + "$.");
+    }
+    if (level === 3) {
+      const a = G.int(1, 4);
+      // f = x^4 - 4a x^3: f' = 4x^3 - 12a x^2 = 4x^2(x - 3a): stationary at 0 (terrace) and 3a (min)
+      const opts = [1, 2, 3, 4].map((v) => ({ md: "$" + v + "$", correct: v === 2 }));
+      return step("How many stationary points does $f(x) = x^4 - " + 4 * a + "x^3$ have?", opts,
+        "**" + answer(opts) + ".** $f'(x) = 4x^3 - " + 12 * a + "x^2 = 4x^2(x - " + 3 * a + ")$: stationär bei $x = 0$ und $x = " + 3 * a + "$. Bei 0 wechselt $f'$ das Vorzeichen nicht (Terrassenpunkt), bei " + 3 * a + " liegt ein Minimum. Zwei stationäre Punkte, aber nur ein Extremum.");
+    }
+    const p = G.int(1, 3), q = p + G.int(1, 3);
+    // f'(x) = (x - p)(x - q) -> f increasing for x < p and x > q
+    const right = "$x < " + p + "$ or $x > " + q + "$";
+    const opts = topts(G, right, ["$" + p + " < x < " + q + "$", "$x > " + q + "$", "$x < " + p + "$", "$x \\le " + p + "$ or $x \\ge " + q + "$"]);
+    return step("$f'(x) = x^2 - " + (p + q) + "x + " + p * q + "$. For which values of $x$ is the gradient of $f$ positive?", opts,
+      "**" + answer(opts) + ".** $f'(x) = (x - " + p + ")(x - " + q + ")$ ist positiv außerhalb der Nullstellen. Dort steigt $f$; zwischen " + p + " und " + q + " fällt es.");
+  };
+
+  TR.tangentenormal = (level, G) => {
+    const b = G.int(-4, 4), c = G.int(-5, 5), x0 = G.pick([-2, -1, 1, 2, 3]);
+    const y0 = x0 * x0 + b * x0 + c, m = 2 * x0 + b;
+    const curve = "y = " + ptex([1, b, c]);
+    if (level <= 2 || m === 0) {
+      const icpt = y0 - m * x0;
+      const opts = nopts(icpt, [y0 + m * x0, y0, m, -icpt].filter((v) => v !== icpt), (v) => "$" + v + "$");
+      return step("The tangent to $" + curve + "$ at the point where $x = " + x0 + "$ meets the $y$-axis at $y =$", opts,
+        "**" + answer(opts) + ".** $\\tfrac{dy}{dx} = 2x " + pm(b) + "$, bei $x = " + x0 + "$ also $" + m + "$. Punkt $(" + x0 + ", " + y0 + ")$. Tangente $y - " + (y0 < 0 ? "(" + y0 + ")" : y0) + " = " + m + "(x - " + (x0 < 0 ? "(" + x0 + ")" : x0) + ")$, für $x = 0$: $y = " + icpt + "$.");
+    }
+    // normal: gradient -1/m
+    const icpt = fr(y0 * m + x0, m); // y = y0 - (1/m)(x - x0) -> at x = 0: y0 + x0/m
+    const opts = nopts(icpt, [fr(y0 * m - x0, m), [y0 - m * x0, 1], fr(y0, 1), fr(x0, m)], fracOr);
+    return step("The normal to $" + curve + "$ at the point where $x = " + x0 + "$ meets the $y$-axis at $y =$", opts,
+      "**" + answer(opts) + ".** Steigung der Tangente $" + m + "$, der Normale $-\\tfrac{1}{" + m + "}$. Normale durch $(" + x0 + ", " + y0 + ")$: $y = " + y0 + " - \\tfrac{1}{" + m + "}(x - " + (x0 < 0 ? "(" + x0 + ")" : x0) + ")$; bei $x = 0$: $y = " + ftex(icpt) + "$.");
+  };
+
+  TR.dgl = (level, G) => {
+    const a = G.pick([3, 6, 2, 4]), b = G.int(1, 4) * G.sign(), x0 = G.pick([0, 1, -1]), y0 = G.int(-3, 6), x1 = x0 + G.pick([1, 2]);
+    // dy/dx = a x^2 + b  ->  y = a/3 x^3 + b x + C
+    const F = (x) => (a / 3) * x * x * x + b * x;
+    const C = y0 - F(x0), val = F(x1) + C;
+    const opts = nopts(+val.toFixed(4), [F(x1), F(x1) - C, val + y0, F(x1) + y0].map((v) => +v.toFixed(4)).filter((v) => v !== +val.toFixed(4)), (v) => "$" + en(v) + "$");
+    return step("$\\dfrac{dy}{dx} = " + ptex([a, 0, b]) + "$ and $y = " + y0 + "$ when $x = " + x0 + "$. What is $y$ when $x = " + x1 + "$?", opts,
+      "**" + answer(opts) + ".** Integrieren: $y = " + (a % 3 === 0 ? (a / 3 === 1 ? "" : a / 3) : "\\tfrac{" + a + "}{3}") + "x^3 " + pm(b) + "x + C$. Bedingung: $" + y0 + " = " + G.tex(F(x0), 4) + " + C$, also $C = " + G.tex(C, 4) + "$. Dann $y(" + x1 + ") = " + G.tex(F(x1), 4) + " " + pm(+C.toFixed(4)) + " = " + G.tex(val, 4) + "$. Ohne $C$ fehlt die Information aus dem Punkt.");
+  };
+
+  TR.integralwert = (level, G) => {
+    if (level <= 1) {
+      const [a, b] = G.pick([[1, 4], [1, 9], [4, 9], [0, 4], [1, 16]]);
+      // int_a^b x^{-1/2} dx = 2(sqrt b - sqrt a)
+      const val = 2 * (Math.sqrt(b) - Math.sqrt(a));
+      const opts = nopts(val, [Math.sqrt(b) - Math.sqrt(a), val + 1, b - a, 4 * (Math.sqrt(b) - Math.sqrt(a))].filter((v) => v !== val), (v) => "$" + en(v) + "$");
+      return step("What is $\\displaystyle\\int_{" + a + "}^{" + b + "} \\frac{1}{\\sqrt x}\\,dx$?", opts,
+        "**" + answer(opts) + ".** $\\tfrac{1}{\\sqrt x} = x^{-\\frac12}$ hat die Stammfunktion $2x^{\\frac12}$. $2\\sqrt{" + b + "} - 2\\sqrt{" + a + "} = " + en(val) + "$.");
+    }
+    if (level === 2) {
+      const b = G.pick([4, 9]), c = G.int(1, 3);
+      // int_1^b (c sqrt x - 1) dx = c * 2/3 (b^{3/2} - 1) - (b - 1)
+      const val = c * (2 / 3) * (Math.pow(b, 1.5) - 1) - (b - 1);
+      const v = fr(Math.round(c * 2 * (Math.pow(b, 1.5) - 1) - 3 * (b - 1)), 3);
+      const opts = nopts(v, [fr(Math.round(c * 2 * (Math.pow(b, 1.5) - 1)), 3), fr(Math.round(3 * c * (Math.pow(b, 1.5) - 1) / 2 - 3 * (b - 1)), 3), [b - 1, 1], fr(Math.round(c * (Math.pow(b, 1.5) - 1) - 3 * (b - 1)), 3)], fracOr);
+      return step("What is $\\displaystyle\\int_{1}^{" + b + "} \\left(" + (c === 1 ? "" : c) + "\\sqrt x - 1\\right)dx$?", opts,
+        "**" + answer(opts) + ".** Stammfunktion $" + (c === 1 ? "" : c + " \\cdot ") + "\\tfrac23 x^{\\frac32} - x$. Einsetzen: $" + G.tex(val, 4) + "$.");
+    }
+    const r = G.int(1, 3);
+    // y = x^2 - r^2 on [0, 2r]: negative on (0, r), positive on (r, 2r); total area = |int_0^r| + int_r^{2r}
+    const neg = (2 * r * r * r) / 3, pos = (4 * r * r * r) / 3, tot = neg + pos, net = pos - neg;
+    const opts = nopts(fr(Math.round(3 * tot), 3), [fr(Math.round(3 * net), 3), fr(Math.round(3 * pos), 3), fr(Math.round(3 * neg), 3)], fracOr);
+    return step("What is the total area enclosed between the curve $y = x^2 - " + r * r + "$, the $x$-axis and the lines $x = 0$ and $x = " + 2 * r + "$?", opts,
+      "**" + answer(opts) + ".** Der Graph schneidet die Achse bei $x = " + r + "$. Auf $[0, " + r + "]$ liegt er darunter: $\\int_0^{" + r + "} = -" + G.tex(neg, 4) + "$, Fläche $" + G.tex(neg, 4) + "$. Auf $[" + r + ", " + 2 * r + "]$: $" + G.tex(pos, 4) + "$. Zusammen $" + G.tex(tot, 4) + "$; das Integral über das Ganze wäre nur $" + G.tex(net, 4) + "$.");
+  };
+
+  TR.integralparameter = (level, G) => {
+    if (level <= 2) {
+      // int_0^a (2x - b) dx = a^2 - b a = c with a > 0
+      const b = G.int(1, 4), a = b + G.int(1, 4), c = a * a - b * a; // roots of a^2 - b a - c = 0: a and b - a < 0
+      const neg = b - a;
+      const opts = nopts(a, [neg, a + b, c, Math.round(Math.sqrt(Math.abs(c)))].filter((v) => v !== a), (v) => "$" + v + "$");
+      return step("Given that $a > 0$ and $\\displaystyle\\int_0^a (2x - " + b + ")\\,dx = " + c + "$, what is $a$?", opts,
+        "**" + answer(opts) + ".** $\\left[x^2 - " + b + "x\\right]_0^a = a^2 - " + b + "a = " + c + "$, also $a^2 - " + b + "a - " + c + " = 0$ mit den Lösungen $" + a + "$ und $" + neg + "$. Wegen $a > 0$ bleibt $a = " + a + "$.");
+    }
+    const k = G.pick([3, 6]), t = G.pick([1, 2, 3]);
+    // int_0^t (k x^2 + p) dx = k t^3/3 + p t = T  with p chosen integer
+    const p = G.int(-3, 5), T = (k * t * t * t) / 3 + p * t;
+    const opts = nopts(p, [p + 1, p - 1, Math.round(T), -p].filter((v) => v !== p), (v) => "$" + v + "$");
+    return step("$\\displaystyle\\int_0^{" + t + "} \\left(" + (k === 1 ? "" : k) + "x^2 + p\\right)dx = " + en(T, 4) + "$. What is the value of $p$?", opts,
+      "**" + answer(opts) + ".** $\\left[\\tfrac{" + k + "}{3}x^3 + px\\right]_0^{" + t + "} = " + G.tex((k * t * t * t) / 3, 4) + " + " + t + "p = " + G.tex(T, 4) + "$, also $p = " + p + "$.");
+  };
+
+  TR.integralfunktion = (level, G) => {
+    if (level <= 2) {
+      const A = G.int(2, 9), B = A + G.int(2, 9), u = G.int(1, 4), w = u + G.int(1, 4);
+      const opts = nopts(B - A, [A + B, A, B, A - B], (v) => "$" + v + "$");
+      return step("$\\displaystyle\\int_0^{" + u + "} f(x)\\,dx = " + A + "$ and $\\displaystyle\\int_0^{" + w + "} f(x)\\,dx = " + B + "$. What is $\\displaystyle\\int_{" + u + "}^{" + w + "} f(x)\\,dx$?", opts,
+        "**" + answer(opts) + ".** Integrale über aneinandergrenzende Intervalle addieren sich: $\\int_0^{" + w + "} = \\int_0^{" + u + "} + \\int_{" + u + "}^{" + w + "}$, also $" + B + " - " + A + " = " + (B - A) + "$.");
+    }
+    if (level === 3) {
+      const I = G.int(2, 8), L = G.int(1, 4), a = G.int(2, 4), c = G.int(1, 5);
+      const val = a * I + c * L;
+      const opts = nopts(val, [a * I + c, I + c * L, a * (I + c * L), a * I], (v) => "$" + v + "$");
+      return step("Given that $\\displaystyle\\int_0^{" + L + "} f(x)\\,dx = " + I + "$, what is $\\displaystyle\\int_0^{" + L + "} \\big(" + a + "f(x) + " + c + "\\big)\\,dx$?", opts,
+        "**" + answer(opts) + ".** Linearität: $" + a + " \\cdot " + I + " + \\int_0^{" + L + "} " + c + "\\,dx = " + a * I + " + " + c * L + " = " + val + "$. Die Konstante wird über die Intervalllänge " + L + " integriert.");
+    }
+    const x0 = G.pick([1, 2, 3]), n = G.pick([1, 2]);
+    // d/dx int_1^{x^2} t^n dt = (x^2)^n * 2x = 2 x^{2n+1}
+    const val = 2 * Math.pow(x0, 2 * n + 1);
+    const opts = nopts(val, [Math.pow(x0, 2 * n), Math.pow(x0, 2 * n + 1), 2 * Math.pow(x0, 2 * n), val / 2 + 1].filter((v) => v !== val), (v) => "$" + v + "$");
+    return step("What is the value of $\\dfrac{d}{dx}\\displaystyle\\int_1^{x^2} t^{" + n + "}\\,dt$ at $x = " + x0 + "$?", opts,
+      "**" + answer(opts) + ".** Ohne Kettenregel: Das Integral ist $\\left[\\tfrac{t^{" + (n + 1) + "}}{" + (n + 1) + "}\\right]_1^{x^2} = \\tfrac{x^{" + 2 * (n + 1) + "}}{" + (n + 1) + "} - \\tfrac{1}{" + (n + 1) + "}$. Ableiten: $2x^{" + (2 * n + 1) + "}$, bei $x = " + x0 + "$ also $" + val + "$.");
+  };
+
+  TR.monotonieparam = (level, G) => {
+    const c = G.pick([3, 12, 27, 48]);
+    // f = x^3 + k x^2 + c x: f' = 3x^2 + 2kx + c >= 0 for all x  <=>  4k^2 - 12c <= 0  <=>  k^2 <= 3c
+    const bound = Math.sqrt(3 * c);
+    const right = "$-" + bound + " \\le k \\le " + bound + "$";
+    const opts = topts(G, right, ["$-" + bound + " < k < " + bound + "$", "$k \\ge " + bound + "$", "$k \\le -" + bound + "$ or $k \\ge " + bound + "$", "$-" + c + " \\le k \\le " + c + "$", "$0 \\le k \\le " + bound + "$"]);
+    return step("For which values of $k$ is $f(x) = x^3 + kx^2 + " + c + "x$ increasing for all real $x$?", opts,
+      "**" + answer(opts) + ".** $f'(x) = 3x^2 + 2kx + " + c + " \\ge 0$ für alle $x$ heißt: Die nach oben geöffnete Parabel hat keine zwei Nullstellen, $\\Delta = 4k^2 - " + 12 * c + " \\le 0$, also $k^2 \\le " + 3 * c + "$. Am Rand berührt $f'$ die Achse nur in einem Punkt; $f$ steigt trotzdem überall.");
+  };
+
+
+  // ---------------------------------------------------------------- Sommer 4: coordinates and trigonometry
+  TR.gerade = (level, G) => {
+    if (level <= 1) {
+      const x1 = G.int(-4, 4), y1 = G.int(-4, 4), dx = G.int(1, 4) * G.sign(), dy = G.int(1, 5) * G.sign();
+      const m = fr(dy, dx);
+      const opts = nopts(m, [fr(dx, dy), fr(-dy, dx), fr(-dx, dy), [dy, 1]], fracOr);
+      return step("What is the gradient of the line through $(" + x1 + ", " + y1 + ")$ and $(" + (x1 + dx) + ", " + (y1 + dy) + ")$?", opts,
+        "**" + answer(opts) + ".** $m = \\tfrac{y_2 - y_1}{x_2 - x_1} = \\tfrac{" + dy + "}{" + dx + "} = " + ftex(m) + "$.");
+    }
+    if (level === 2) {
+      // line a x + b y = c; perpendicular through (p, q): gradient b/a; y-intercept q - (b/a) p
+      const a = G.int(1, 4), b = G.int(1, 4) * G.sign(), c = G.int(1, 9), p = G.int(-3, 3), q = G.int(-3, 5);
+      const icpt = fr(q * a - b * p, a);
+      const opts = nopts(icpt, [fr(q * a + b * p, a), fr(q * b - a * p, b), [q, 1], fr(-(q * a - b * p), a)], fracOr);
+      return step("The line through $(" + p + ", " + q + ")$ perpendicular to $" + a + "x " + pm(b) + "y = " + c + "$ crosses the $y$-axis at $y =$", opts,
+        "**" + answer(opts) + ".** Gegebene Gerade: $y = " + ftex(fr(-a, b)) + "x + \\ldots$, Steigung $" + ftex(fr(-a, b)) + "$. Senkrecht: Steigung $" + ftex(fr(b, a)) + "$ (negativer Kehrwert). Durch $(" + p + ", " + q + ")$: $y = " + q + " + " + ftex(fr(b, a)) + "(x - " + (p < 0 ? "(" + p + ")" : p) + ")$, bei $x = 0$: $" + ftex(icpt) + "$.");
+    }
+    if (level === 3) {
+      const x1 = G.int(-3, 3), y1 = G.int(-3, 3), x2 = x1 + 2 * G.int(1, 3) * G.sign(), y2 = y1 + 2 * G.int(1, 3) * G.sign();
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, m = fr(-(x2 - x1), y2 - y1);
+      // perpendicular bisector: y - my = m (x - mx)  ->  y = m x + (my - m mx)
+      const cst = fr(my * m[1] - m[0] * mx, m[1]);
+      const lin = (mm, cc) => "y = " + (mm[0] === mm[1] ? "" : mm[0] === -mm[1] ? "-" : ftex(mm)) + "x" + (cc[0] === 0 ? "" : (cc[0] < 0 ? " - " : " + ") + ftex([Math.abs(cc[0]), cc[1]]));
+      const right = "$" + lin(m, cst) + "$";
+      const wrongM = fr(y2 - y1, x2 - x1);
+      const opts = topts(G, right, ["$" + lin(wrongM, fr(my * wrongM[1] - wrongM[0] * mx, wrongM[1])) + "$", "$" + lin(m, fr(-cst[0], cst[1])) + "$", "$" + lin([-m[0], m[1]], cst) + "$", "$" + lin(m, fr(cst[0] + cst[1], cst[1])) + "$", "$" + lin(m, fr(cst[0] - cst[1], cst[1])) + "$", "$" + lin(wrongM, cst) + "$"]);
+      return step("What is the equation of the perpendicular bisector of $A(" + x1 + ", " + y1 + ")$ and $B(" + x2 + ", " + y2 + ")$?", opts,
+        "**" + answer(opts) + ".** Mittelpunkt $(" + mx + ", " + my + ")$, Steigung von $AB$: $" + ftex(wrongM) + "$, also senkrecht $" + ftex(m) + "$. Gerade durch den Mittelpunkt: $" + lin(m, cst) + "$.");
+    }
+    const [dx, dy, d] = G.pick([[3, 4, 5], [5, 12, 13], [6, 8, 10], [8, 15, 17], [9, 12, 15]]);
+    const x1 = G.int(-4, 4), y1 = G.int(-4, 4), sx = G.sign(), sy = G.sign();
+    const opts = nopts(d, [dx + dy, d * d, Math.abs(dx - dy), d + 1], (v) => "$" + v + "$");
+    return step("What is the distance between $(" + x1 + ", " + y1 + ")$ and $(" + (x1 + sx * dx) + ", " + (y1 + sy * dy) + ")$?", opts,
+      "**" + answer(opts) + ".** Pythagoras: $\\sqrt{" + dx + "^2 + " + dy + "^2} = \\sqrt{" + d * d + "} = " + d + "$.");
+  };
+
+  TR.kreis = (level, G) => {
+    const a0 = G.int(-5, 5), b = G.int(-5, 5), a = a0 === 0 && b === 0 ? 2 : a0, r = G.int(2, 7);
+    const D = -2 * a, E = -2 * b, F = a * a + b * b - r * r;
+    const eq = "x^2 + y^2 " + (D ? pm(D) + "x " : "") + (E ? pm(E) + "y " : "") + (F ? pm(F) + " " : "") + "= 0";
+    if (level <= 2) {
+      const askR = level === 2;
+      if (askR) {
+        const opts = nopts(r, [r * r, Math.round(Math.sqrt(Math.abs(F))) || r + 2, a * a + b * b, r + 1], (v) => "$" + v + "$");
+        return step("What is the radius of the circle $" + eq + "$?", opts,
+          "**" + answer(opts) + ".** Quadratisch ergänzen: $(x " + pm(-a) + ")^2 + (y " + pm(-b) + ")^2 = " + (a * a) + " + " + (b * b) + " " + pm(-F) + " = " + r * r + "$, also $r = " + r + "$.");
+      }
+      const right = "$(" + a + ", " + b + ")$";
+      const opts = topts(G, right, ["$(" + -a + ", " + -b + ")$", "$(" + D + ", " + E + ")$", "$(" + b + ", " + a + ")$", "$(" + -D + ", " + -E + ")$"]);
+      return step("What is the centre of the circle $" + eq + "$?", opts,
+        "**" + answer(opts) + ".** $x^2 " + pm(D) + "x = (x " + pm(-a) + ")^2 - " + a * a + "$ und ebenso für $y$: Mittelpunkt $(" + a + ", " + b + ")$, also die halben Koeffizienten mit umgekehrtem Vorzeichen.");
+    }
+    if (level === 3) {
+      const R = G.int(2, 7), c = G.int(-4, 4), d2 = G.int(-4, 4);
+      const k = c * c + d2 * d2 - R * R;
+      const opts = nopts(k, [-k, c * c + d2 * d2 + R * R, R * R, k + 2 * R].filter((v) => v !== k), (v) => "$" + v + "$");
+      return step("$x^2 + y^2 " + pm(-2 * c) + "x " + pm(-2 * d2) + "y + k = 0$ is a circle of radius $" + R + "$. What is $k$?", opts,
+        "**" + answer(opts) + ".** Mittelpunkt $(" + c + ", " + d2 + ")$; ergänzt: $(x " + pm(-c) + ")^2 + (y " + pm(-d2) + ")^2 = " + (c * c + d2 * d2) + " - k$. Also $" + (c * c + d2 * d2) + " - k = " + R * R + "$ und $k = " + k + "$.");
+    }
+    // tangent at a point (a + r cos, b + r sin) with Pythagorean triple offsets
+    const [p, q, R] = G.pick([[3, 4, 5], [4, 3, 5], [5, 12, 13], [12, 5, 13], [6, 8, 10]]);
+    const sx = G.sign(), sy = G.sign(), cx = G.int(-3, 3), cy = G.int(-3, 3);
+    const px = cx + sx * p, py = cy + sy * q;
+    const m = fr(-(px - cx), py - cy);
+    const opts = nopts(m, [fr(py - cy, px - cx), fr(px - cx, py - cy), [m[0] === 0 ? 1 : -m[1], m[0] === 0 ? 1 : m[0]]], fracOr);
+    return step("The point $(" + px + ", " + py + ")$ lies on the circle with centre $(" + cx + ", " + cy + ")$. What is the gradient of the tangent to the circle at this point?", opts,
+      "**" + answer(opts) + ".** Der Radius hat die Steigung $" + ftex(fr(py - cy, px - cx)) + "$; die Tangente steht senkrecht auf ihm: negativer Kehrwert $" + ftex(m) + "$. (Radius " + R + ".)");
+  };
+
+  TR.dreieckflaeche = (level, G) => {
+    for (let t = 0; t < 20; t++) {
+      const P = [[G.int(-4, 4), G.int(-4, 4)], [G.int(-4, 6), G.int(-4, 6)], [G.int(-4, 6), G.int(-4, 6)]];
+      const twice = Math.abs(P[0][0] * (P[1][1] - P[2][1]) + P[1][0] * (P[2][1] - P[0][1]) + P[2][0] * (P[0][1] - P[1][1]));
+      if (twice < 4) continue;
+      const area = fr(twice, 2);
+      const opts = nopts(area, [[twice, 1], fr(twice, 4), [twice + 2, 2], [twice - 2, 2]].filter((v) => v[0] > 0), fracOr);
+      const pts = P.map((p) => "(" + p[0] + ", " + p[1] + ")").join(", ");
+      return step("What is the area of the triangle with vertices " + "$" + pts + "$?", opts,
+        "**" + answer(opts) + ".** Mit der Formel $\\tfrac12\\left|x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)\\right| = \\tfrac12 \\cdot " + twice + " = " + ftex(area) + "$. Alternativ: ein umschließendes Rechteck minus drei rechtwinklige Dreiecke.");
+    }
+    return TR.gerade(level, G);
+  };
+
+  const ANG = [[1, 6], [1, 4], [1, 3], [1, 2], [2, 3], [3, 4], [5, 6]]; // fractions of pi
+  const piTex = (p, q, k) => {
+    // k * p/q * pi, reduced
+    const f = fr(k * p, q);
+    if (f[0] === 0) return "0";
+    const num = f[0] === 1 ? "" : f[0] === -1 ? "-" : f[0];
+    return f[1] === 1 ? num + "\\pi" : "\\tfrac{" + (f[0] === 1 ? "" : f[0]) + "\\pi}{" + f[1] + "}";
+  };
+  TR.sektor = (level, G) => {
+    const r = G.pick([2, 3, 4, 6, 12]), [p, q] = G.pick(ANG);
+    if (level <= 1) {
+      // arc length r * theta
+      const right = "$" + piTex(p, q, r) + "$";
+      const opts = topts(G, right, ["$" + piTex(p, q, r * r) + "$", "$" + piTex(p, 2 * q, r * r) + "$", "$" + piTex(p, q, 2 * r) + "$", "$" + piTex(p, 2 * q, r) + "$", "$" + ftex(fr(r * p, q)) + "$", "$" + piTex(p, 4 * q, r) + "$"]);
+      return step("A sector of a circle of radius " + r + " has angle $" + piTex(p, q, 1) + "$. What is the length of its arc?", opts,
+        "**" + answer(opts) + ".** Bogenlänge $s = r\\theta = " + r + " \\cdot " + piTex(p, q, 1) + " = " + piTex(p, q, r) + "$. (Im Gradmaß wäre es der Anteil $\\tfrac{\\theta}{2\\pi}$ am Umfang.)");
+    }
+    if (level === 2) {
+      const right = "$" + piTex(p, 2 * q, r * r) + "$";
+      const opts = topts(G, right, ["$" + piTex(p, q, r * r) + "$", "$" + piTex(p, q, r) + "$", "$" + piTex(p, 2 * q, r) + "$", "$" + piTex(p, q, 2 * r * r) + "$", "$" + ftex(fr(r * r * p, 2 * q)) + "$", "$" + piTex(p, 4 * q, r * r) + "$"]);
+      return step("A sector of a circle of radius " + r + " has angle $" + piTex(p, q, 1) + "$. What is its area?", opts,
+        "**" + answer(opts) + ".** $A = \\tfrac12 r^2\\theta = \\tfrac12 \\cdot " + r * r + " \\cdot " + piTex(p, q, 1) + " = " + piTex(p, 2 * q, r * r) + "$.");
+    }
+    // segment: 1/2 r^2 (theta - sin theta) for theta in {pi/3, pi/2, 2pi/3, pi/6}
+    const [tp, tq, sinTex, sinVal2] = G.pick([[1, 2, "1", [2, 2]], [1, 3, "\\tfrac{\\sqrt3}{2}", null], [2, 3, "\\tfrac{\\sqrt3}{2}", null], [1, 6, "\\tfrac12", [1, 2]]]);
+    const R = G.pick([2, 4, 6]);
+    const sector = piTex(tp, 2 * tq, R * R);
+    const root3 = (c) => (c[0] === 1 && c[1] === 1 ? "\\sqrt3" : ftex(c) + "\\sqrt3");
+    const tri = sinVal2 ? ftex(fr(R * R * sinVal2[0], 2 * sinVal2[1])) : root3(fr(R * R, 4));
+    const right = "$" + sector + " - " + tri + "$";
+    const triWrong = sinVal2 ? ftex(fr(R * R * sinVal2[0], sinVal2[1])) : root3(fr(R * R, 2));
+    const opts = topts(G, right, ["$" + sector + " + " + tri + "$", "$" + sector + " - " + triWrong + "$", "$" + piTex(tp, tq, R * R) + " - " + tri + "$", "$" + sector + "$"]);
+    return step("A chord of a circle of radius " + R + " subtends an angle of $" + piTex(tp, tq, 1) + "$ at the centre. What is the area of the minor segment?", opts,
+      "**" + answer(opts) + ".** Segment = Sektor minus Dreieck: $\\tfrac12 r^2\\theta - \\tfrac12 r^2 \\sin\\theta$ mit $\\sin " + piTex(tp, tq, 1) + " = " + sinTex + "$: $" + sector + " - " + tri + "$.");
+  };
+
+  TR.trigperiode = (level, G) => {
+    const a = G.pick([1, 2, 3, 4]), b = G.pick([2, 3, 4, 6]), d = G.int(-3, 3), fn = G.pick(["\\sin", "\\cos"]);
+    if (level <= 2) {
+      const per = piTex(2, b, 1);
+      const right = "$" + per + "$";
+      const opts = topts(G, right, ["$" + piTex(2 * b, 1, 1) + "$", "$" + piTex(1, b, 1) + "$", "$2\\pi$", "$" + piTex(b, 2, 1) + "$"]);
+      return step("What is the period of $y = " + (a === 1 ? "" : a) + fn + "(" + b + "x) " + (d ? pm(d) : "") + "$?", opts,
+        "**" + answer(opts) + ".** $" + fn + "(bx)$ durchläuft eine Periode, wenn $bx$ um $2\\pi$ wächst, also $x$ um $\\tfrac{2\\pi}{" + b + "}$. Amplitude und Verschiebung ändern die Periode nicht.");
+    }
+    const right = "$" + (d - a) + " \\le y \\le " + (d + a) + "$";
+    const opts = topts(G, right, ["$" + -a + " \\le y \\le " + a + "$", "$" + (d - 1) + " \\le y \\le " + (d + 1) + "$", "$" + (d - a) + " < y < " + (d + a) + "$", "$" + Math.min(d, a) + " \\le y \\le " + (d + a) + "$", "$" + (d - 2 * a) + " \\le y \\le " + (d + 2 * a) + "$", "$" + (-a - d) + " \\le y \\le " + (a - d) + "$"]);
+    return step("What is the range of $y = " + (a === 1 ? "" : a) + fn + "(" + b + "x) " + (d ? pm(d) : "") + "$?", opts,
+      "**" + answer(opts) + ".** " + fn.slice(1) + " nimmt alle Werte von $-1$ bis $1$ an; mal " + a + " gibt $-" + a + "$ bis $" + a + "$, dann um " + d + " verschoben.");
+  };
+
+  TR.trigextrem = (level, G) => {
+    if (level <= 2) {
+      const c = G.int(2, 8), k = G.int(1, c - 1), fn = G.pick(["\\sin^2 x", "\\cos^2 x"]);
+      const max = c, min = c - k;
+      const askMax = level <= 1;
+      const val = askMax ? max : min;
+      const opts = nopts(val, [askMax ? min : max, c + k, c - 2 * k, k], (v) => "$" + v + "$");
+      return step("What is the " + (askMax ? "greatest" : "least") + " value of $" + c + " - " + k + fn + "$?", opts,
+        "**" + answer(opts) + ".** $0 \\le " + fn + " \\le 1$, also liegt der Ausdruck zwischen $" + (c - k) + "$ und $" + c + "$.");
+    }
+    const p = G.int(2, 5), q = G.int(1, p - 1);
+    // 1/(p + q cos x): max when denominator smallest p - q
+    const opts = nopts(fr(1, p - q), [fr(1, p + q), fr(1, p), [p - q, 1], fr(1, q)], fracOr);
+    return step("What is the maximum value of $\\dfrac{1}{" + p + " + " + (q === 1 ? "" : q) + "\\cos x}$?", opts,
+      "**" + answer(opts) + ".** Der Nenner liegt zwischen $" + (p - q) + "$ und $" + (p + q) + "$ und ist positiv; der Bruch ist am größten beim kleinsten Nenner $" + (p - q) + "$, also bei $\\cos x = -1$.");
+  };
+
+
+  // ---------------------------------------------------------------- Sommer 5: statistics, probability and geometry
+  TR.mittelwert = (level, G) => {
+    if (level <= 2) {
+      const n = G.int(6, 12), mean = G.int(8, 20), x = mean + G.int(4, 15) * G.sign();
+      const total = n * mean, nm = fr(total - x, n - 1);
+      const opts = nopts(nm, [[mean - (x - mean), 1], fr(total + x, n + 1), [mean, 1], fr(total - x, n)], fracOr);
+      return step("The mean of " + n + " numbers is " + mean + ". One of the numbers, " + x + ", is removed. What is the mean of the remaining numbers?", opts,
+        "**" + answer(opts) + ".** Über die Summe: $" + n + " \\cdot " + mean + " = " + total + "$; ohne " + x + " bleibt $" + (total - x) + "$ für $" + (n - 1) + "$ Zahlen, Mittelwert $" + ftex(nm) + "$. Den Mittelwert direkt zu verändern geht nicht.");
+    }
+    if (level === 3) {
+      const n1 = G.int(10, 20), m1 = G.int(50, 70), n2 = G.int(5, 15), m2 = m1 + G.int(5, 20);
+      const m = fr(n1 * m1 + n2 * m2, n1 + n2);
+      const opts = nopts(m, [fr(m1 + m2, 2), [m2, 1], [m1, 1], fr(n1 * m2 + n2 * m1, n1 + n2)], fracOr);
+      return step("In a test, " + n1 + " students have a mean score of " + m1 + " and " + n2 + " other students have a mean score of " + m2 + ". What is the mean score of all " + (n1 + n2) + " students?", opts,
+        "**" + answer(opts) + ".** Gewichtet: $\\tfrac{" + n1 + " \\cdot " + m1 + " + " + n2 + " \\cdot " + m2 + "}{" + (n1 + n2) + "} = " + ftex(m) + "$. Der einfache Durchschnitt der beiden Mittelwerte stimmt nur bei gleich großen Gruppen.");
+    }
+    const a = G.pick([2, 3, -2]), b = G.int(1, 9), mu = G.int(4, 20), s = G.int(2, 6);
+    const right = "mean $" + (a * mu + b) + "$, standard deviation $" + Math.abs(a) * s + "$";
+    const opts = topts(G, right, ["mean $" + (a * mu + b) + "$, standard deviation $" + (Math.abs(a) * s + b) + "$", "mean $" + (a * (mu + b)) + "$, standard deviation $" + Math.abs(a) * s + "$",
+      "mean $" + (a * mu + b) + "$, standard deviation $" + s + "$", "mean $" + (a * mu + b) + "$, standard deviation $" + a * a * s + "$"]);
+    return step("A data set has mean " + mu + " and standard deviation " + s + ". Each value is multiplied by " + a + " and then " + b + " is added. What are the new mean and standard deviation?", opts,
+      "**" + answer(opts) + ".** Der Mittelwert macht alles mit: $" + a + " \\cdot " + mu + " + " + b + "$. Die Standardabweichung misst Abstände: Die Verschiebung um " + b + " ändert sie nicht, der Faktor wirkt mit seinem Betrag $" + Math.abs(a) + "$.");
+  };
+
+  TR.bedingt = (level, G) => {
+    if (level <= 2) {
+      const total = G.pick([30, 40, 50, 60]), A = G.int(8, total / 2), B = G.int(8, total / 2), both = G.int(2, Math.min(A, B) - 2);
+      const askAgivenB = G.chance(0.5);
+      const v = askAgivenB ? fr(both, B) : fr(both, A);
+      const opts = nopts(v, [fr(both, total), askAgivenB ? fr(both, A) : fr(both, B), fr(A, total), fr(A + B - both, total)], fracOr);
+      return step("In a class of " + total + " students, " + A + " study French, " + B + " study German, and " + both + " study both. A student who studies " + (askAgivenB ? "German" : "French") + " is chosen at random. What is the probability that this student also studies " + (askAgivenB ? "French" : "German") + "?", opts,
+        "**" + answer(opts) + ".** Bedingte Wahrscheinlichkeit: Die Grundmenge schrumpft auf die " + (askAgivenB ? B + " Deutschlernenden" : A + " Französischlernenden") + "; davon lernen " + both + " beides: $" + ftex(v) + "$.");
+    }
+    const pa = G.pick([[1, 2], [2, 5], [3, 5], [1, 4], [3, 4]]), pb = G.pick([[2, 5], [1, 2], [1, 4], [1, 5]]);
+    // P(A u B) given -> P(A n B) = P(A) + P(B) - P(A u B)
+    const PA = pa[0] / pa[1], PB = pb[0] / pb[1];
+    const inter = G.pick([0.1, 0.2, 0.15]);
+    if (inter >= Math.min(PA, PB)) return TR.bedingt(2, G);
+    const union = PA + PB - inter;
+    const cond = inter / PB;
+    const show = (x) => "$" + en(x, 4) + "$";
+    const opts = nopts(+cond.toFixed(4), [+(inter / PA).toFixed(4), inter, +(PA * PB).toFixed(4), +(union / PB).toFixed(4)].filter((x) => x <= 1), show);
+    return step("$P(A) = " + en(PA) + "$, $P(B) = " + en(PB) + "$ and $P(A \\cup B) = " + en(union) + "$. What is $P(A \\mid B)$?", opts,
+      "**" + answer(opts) + ".** Erst $P(A \\cap B) = P(A) + P(B) - P(A \\cup B) = " + G.tex(inter, 4) + "$, dann $P(A \\mid B) = \\tfrac{P(A \\cap B)}{P(B)} = " + G.tex(cond, 4) + "$.");
+  };
+
+  TR.ohnezurueck = (level, G) => {
+    const r = G.int(3, 7), b = G.int(2, 5), n = r + b;
+    if (level <= 2) {
+      // at least one blue in two draws without replacement = 1 - P(both red)
+      const v = fr(n * (n - 1) - r * (r - 1), n * (n - 1));
+      const opts = nopts(v, [fr(b * (b - 1), n * (n - 1)), fr(2 * b, n), fr(n * n - r * r, n * n), fr(r * b, n * (n - 1))], fracOr);
+      return step("A bag contains " + r + " red and " + b + " blue balls. Two balls are taken at random without replacement. What is the probability that at least one is blue?", opts,
+        "**" + answer(opts) + ".** Gegenereignis: beide rot, $\\tfrac{" + r + "}{" + n + "} \\cdot \\tfrac{" + (r - 1) + "}{" + (n - 1) + "}$. Also $1 - \\tfrac{" + r * (r - 1) + "}{" + n * (n - 1) + "} = " + ftex(v) + "$.");
+    }
+    if (level === 3) {
+      const v = fr(r * (r - 1) + b * (b - 1), n * (n - 1));
+      const opts = nopts(v, [fr(r * r + b * b, n * n), fr(2 * r * b, n * (n - 1)), fr(r * (r - 1), n * (n - 1)), fr(1, 2)], fracOr);
+      return step("A bag contains " + r + " red and " + b + " blue balls. Two balls are taken at random without replacement. What is the probability that they are the same colour?", opts,
+        "**" + answer(opts) + ".** Beide rot oder beide blau: $\\tfrac{" + r + " \\cdot " + (r - 1) + " + " + b + " \\cdot " + (b - 1) + "}{" + n + " \\cdot " + (n - 1) + "} = " + ftex(v) + "$. Mit Zurücklegen wären es andere Nenner.");
+    }
+    // three draws: at least one blue
+    const v = fr(n * (n - 1) * (n - 2) - r * (r - 1) * (r - 2), n * (n - 1) * (n - 2));
+    const opts = nopts(v, [fr(3 * b, n), fr(n * n * n - r * r * r, n * n * n), fr(b * (b - 1) * (b - 2) || 1, n * (n - 1) * (n - 2))], fracOr);
+    return step("A bag contains " + r + " red and " + b + " blue balls. Three balls are taken at random without replacement. What is the probability that at least one is blue?", opts,
+      "**" + answer(opts) + ".** Gegenereignis: alle drei rot, $\\tfrac{" + r + " \\cdot " + (r - 1) + " \\cdot " + (r - 2) + "}{" + n + " \\cdot " + (n - 1) + " \\cdot " + (n - 2) + "}$; davon die Gegenwahrscheinlichkeit: $" + ftex(v) + "$.");
+  };
+
+  TR.raum = (level, G) => {
+    if (level <= 2) {
+      const [a, b, c, d] = G.pick([[2, 3, 6, 7], [1, 4, 8, 9], [2, 6, 9, 11], [3, 4, 12, 13], [4, 4, 7, 9], [2, 10, 11, 15]]);
+      const opts = nopts(d, [a + b + c, Math.round(Math.sqrt(a * a + b * b)) + c, d * d, d + 1], (v) => "$" + v + "$");
+      return step("A cuboid measures $" + a + " \\times " + b + " \\times " + c + "$. How long is its space diagonal?", opts,
+        "**" + answer(opts) + ".** Zweimal Pythagoras: Bodendiagonale $\\sqrt{" + a * a + " + " + b * b + "}$, dann mit der Höhe: $\\sqrt{" + a * a + " + " + b * b + " + " + c * c + "} = \\sqrt{" + d * d + "} = " + d + "$.");
+    }
+    if (level === 3) {
+      // square pyramid, base edge 2s, slant edge e: half-diagonal s*sqrt2, height sqrt(e^2 - 2 s^2)
+      const [s, e, h] = G.pick([[3, 5, Math.sqrt(7)], [2, 3, 1], [4, 6, 2], [1, 3, Math.sqrt(7)], [3, 9, Math.sqrt(63)]].filter((t) => Number.isInteger(t[2])));
+      const opts = nopts(h, [Math.round(Math.sqrt(e * e - s * s)), e - s, Math.round(Math.sqrt(e * e + 2 * s * s)), h + 1], (v) => "$" + v + "$");
+      return step("A square-based pyramid has base edge " + 2 * s + " and slant edges (from the apex to the corners) of length " + e + ". What is its height?", opts,
+        "**" + answer(opts) + ".** Der Fußpunkt der Höhe ist die Mitte des Bodens; die halbe Diagonale ist $" + s + "\\sqrt2$. Pythagoras: $h^2 = " + e * e + " - " + 2 * s * s + " = " + h * h + "$, also $h = " + h + "$.");
+    }
+    // sphere and cone with equal volume and radius: h = 4r
+    const r = G.int(1, 5);
+    const opts = nopts(4 * r, [r, 2 * r, 3 * r, Math.round((4 * r) / 3)], (v) => "$" + v + "$");
+    return step("A sphere and a cone have the same radius " + r + " and the same volume. What is the height of the cone?", opts,
+      "**" + answer(opts) + ".** $\\tfrac43\\pi r^3 = \\tfrac13\\pi r^2 h \\Rightarrow h = 4r = " + 4 * r + "$.");
+  };
+
+  TR.vieleck = (level, G) => {
+    const n = G.pick([5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36]);
+    const ext = 360 / n, int = 180 - ext;
+    if (level <= 2) {
+      const opts = nopts(n, [n + 1, n - 1, Math.round(360 / int), n * 2], (v) => "$" + v + "$");
+      return step("Each interior angle of a regular polygon is $" + en(int) + "^\\circ$. How many sides does it have?", opts,
+        "**" + answer(opts) + ".** Außenwinkel $180^\\circ - " + en(int) + "^\\circ = " + en(ext) + "^\\circ$; die Außenwinkel ergeben zusammen $360^\\circ$, also $n = \\tfrac{360}{" + en(ext) + "} = " + n + "$.");
+    }
+    if (level === 3) {
+      const k = G.pick([2, 3, 4, 5, 7, 8]); // interior = k * exterior -> 180 = (k + 1) ext -> n = 2(k + 1)
+      const m = 2 * (k + 1);
+      const opts = nopts(m, [k + 1, 2 * k, m + 2, m - 1], (v) => "$" + v + "$");
+      return step("In a regular polygon, each interior angle is " + k + " times each exterior angle. How many sides does it have?", opts,
+        "**" + answer(opts) + ".** Innen- und Außenwinkel ergeben $180^\\circ$: $(" + k + " + 1) \\cdot$ Außenwinkel $= 180^\\circ$, Außenwinkel $" + en(180 / (k + 1)) + "^\\circ$, also $n = " + m + "$.");
+    }
+    const s = (n - 2) * 180;
+    const opts = nopts(s, [n * 180, (n - 1) * 180, s - 180, 360], (v) => "$" + v + "^\\circ$");
+    return step("What is the sum of the interior angles of a polygon with " + n + " sides?", opts,
+      "**" + answer(opts) + ".** Von einer Ecke aus zerlegen die Diagonalen das $n$-Eck in $n - 2$ Dreiecke: $(" + n + " - 2) \\cdot 180^\\circ = " + s + "^\\circ$.");
+  };
+
+  TR.aehnlich = (level, G) => {
+    const k = G.pick([[3, 2], [2, 1], [4, 3], [5, 2], [3, 1]]);
+    if (level <= 2) {
+      const A1 = G.int(2, 9) * k[1] * k[1];
+      const A2 = (A1 * k[0] * k[0]) / (k[1] * k[1]);
+      const opts = nopts(A2, [(A1 * k[0]) / k[1], (A1 * k[0] * k[0] * k[0]) / (k[1] * k[1] * k[1]), A1 * k[0], A1 + k[0]].map((v) => +v.toFixed(3)).filter((v) => v !== A2), (v) => "$" + en(v, 3) + "$");
+      return step("Two similar triangles have corresponding sides in the ratio $" + k[1] + " : " + k[0] + "$. The smaller has area " + A1 + ". What is the area of the larger?", opts,
+        "**" + answer(opts) + ".** Längenfaktor $\\tfrac{" + k[0] + "}{" + k[1] + "}$, Flächenfaktor sein Quadrat $\\tfrac{" + k[0] * k[0] + "}{" + k[1] * k[1] + "}$: $" + A2 + "$.");
+    }
+    // areas given -> volume
+    const S1 = 4 * k[1] * k[1], S2 = 4 * k[0] * k[0], V1 = 8 * k[1] * k[1] * k[1];
+    const V2 = (V1 * k[0] * k[0] * k[0]) / (k[1] * k[1] * k[1]);
+    const opts = nopts(V2, [(V1 * S2) / S1, (V1 * k[0]) / k[1], V1 + S2 - S1].map((v) => +v.toFixed(3)).filter((v) => v !== V2), (v) => "$" + en(v, 3) + "$");
+    return step("Two similar solids have surface areas $" + S1 + "\\ \\text{cm}^2$ and $" + S2 + "\\ \\text{cm}^2$. The smaller has volume $" + V1 + "\\ \\text{cm}^3$. What is the volume of the larger, in $\\text{cm}^3$?", opts,
+      "**" + answer(opts) + ".** Flächenfaktor $\\tfrac{" + S2 + "}{" + S1 + "}$, Längenfaktor seine Wurzel $\\tfrac{" + k[0] + "}{" + k[1] + "}$, Volumenfaktor dessen Kubus: $" + V1 + " \\cdot \\tfrac{" + k[0] ** 3 + "}{" + k[1] ** 3 + "} = " + V2 + "$.");
+  };
+
+  TR.zusammengesetzt = (level, G) => {
+    const s = G.pick([2, 4, 6, 8]);
+    if (level <= 2) {
+      // square of side s with a semicircle on one side: area s^2 + pi s^2 / 8
+      const half = fr(s * s, 8);
+      const piPart = half[1] === 1 ? (half[0] === 1 ? "\\pi" : half[0] + "\\pi") : "\\tfrac{" + (half[0] === 1 ? "" : half[0]) + "\\pi}{" + half[1] + "}";
+      const right = "$" + s * s + " + " + piPart + "$";
+      const quarter = fr(s * s, 4);
+      const wrongPi = quarter[1] === 1 ? (quarter[0] === 1 ? "\\pi" : quarter[0] + "\\pi") : "\\tfrac{" + (quarter[0] === 1 ? "" : quarter[0]) + "\\pi}{" + quarter[1] + "}";
+      const opts = topts(G, right, ["$" + s * s + " + " + wrongPi + "$", "$" + s * s + " + " + (s * s / 2) + "\\pi$", "$" + 4 * s + " + " + piPart + "$", "$" + s * s + "\\pi$"]);
+      return step("A shape consists of a square of side " + s + " with a semicircle drawn outwards on one side (diameter " + s + "). What is the area of the shape?", opts,
+        "**" + answer(opts) + ".** Quadrat $" + s * s + "$, Halbkreis mit Radius $" + s / 2 + "$: $\\tfrac12\\pi \\cdot " + (s * s) / 4 + " = " + piPart + "$.");
+    }
+    // perimeter: three sides of the square + half circumference pi s / 2
+    const hp = fr(s, 2);
+    const piPart = hp[1] === 1 ? (hp[0] === 1 ? "\\pi" : hp[0] + "\\pi") : "\\tfrac{" + (hp[0] === 1 ? "" : hp[0]) + "\\pi}{" + hp[1] + "}";
+    const right = "$" + 3 * s + " + " + piPart + "$";
+    const opts = topts(G, right, ["$" + 4 * s + " + " + piPart + "$", "$" + 3 * s + " + " + s + "\\pi$", "$" + 4 * s + " + " + s + "\\pi$", "$" + 3 * s + " + " + (s * s / 8) + "\\pi$"]);
+    return step("A shape consists of a square of side " + s + " with a semicircle drawn outwards on one side. What is the perimeter of the shape?", opts,
+      "**" + answer(opts) + ".** Zum Umfang gehören nur die drei freien Quadratseiten ($" + 3 * s + "$) und der Halbkreisbogen $\\tfrac12 \\pi \\cdot " + s + " = " + piPart + "$; die gemeinsame Seite liegt innen.");
+  };
+
+  TR.vektor = (level, G) => {
+    const [m, n] = G.pick([[1, 1], [1, 2], [2, 1], [1, 3], [3, 1], [2, 3], [3, 2]]);
+    const t = m + n;
+    const coef = (c, d) => { const f = fr(c, d); return f[1] === 1 ? (f[0] === 1 ? "" : String(f[0])) : "\\tfrac{" + f[0] + "}{" + f[1] + "}"; };
+    const right = "$" + coef(n, t) + "\\mathbf a + " + coef(m, t) + "\\mathbf b$";
+    const opts = topts(G, right, ["$" + coef(m, t) + "\\mathbf a + " + coef(n, t) + "\\mathbf b$", "$" + coef(m, t) + "(\\mathbf b - \\mathbf a)$", "$\\mathbf a + " + coef(n, t) + "\\mathbf b$", "$\\tfrac{1}{2}(\\mathbf b - \\mathbf a)$", "$\\mathbf a + \\mathbf b$", "$\\mathbf b - \\mathbf a$"]);
+    return step("$\\overrightarrow{OA} = \\mathbf a$ and $\\overrightarrow{OB} = \\mathbf b$. The point $P$ lies on $AB$ with $AP : PB = " + m + " : " + n + "$. What is $\\overrightarrow{OP}$?", opts,
+      "**" + answer(opts) + ".** $\\overrightarrow{OP} = \\mathbf a + \\tfrac{" + m + "}{" + t + "}(\\mathbf b - \\mathbf a) = " + coef(n, t) + "\\mathbf a + " + coef(m, t) + "\\mathbf b$. Probe: Die Koeffizienten ergeben zusammen 1, und $P$ liegt näher an " + (m < n ? "$A$" : m > n ? "$B$" : "keinem von beiden") + ".");
+  };
+
+  LW.generator("tmua-rechnen", {
+    title: "TMUA calculations",
+    make(level, G, params) {
+      const list = [].concat((params && params.typ) || Object.keys(TR)).filter((k) => TR[k]);
+      return TR[G.pick(list.length ? list : Object.keys(TR))](level, G);
+    },
+  });
+
+  // groups of calculation types for training topics and papers (they name generators without params)
+  const trGroup = (title, list) => ({ title, make: (level, G) => TR[G.pick(list.filter((k) => TR[k]))](level, G) });
+  LW.generator("tmua-r-algebra", trGroup("Algebra", ["potenz", "surd", "diskriminante", "qungleichung", "ergaenzung", "restsatz", "umstellen", "betrag", "qform", "lgs"]));
+  LW.generator("tmua-r-zahlen", trGroup("Numbers and ratio", ["prozent", "teiler", "proportional", "einheiten", "verhaeltnis"]));
+  LW.generator("tmua-r-graphen", trGroup("Logarithms and graphs", ["logwert", "loggleichung", "expsub", "transformation", "anzahl", "graphmerkmal"]));
+  LW.generator("tmua-r-analysis", trGroup("Calculus", ["ableitungwert", "stationaer", "tangentenormal", "dgl", "integralwert", "integralparameter", "integralfunktion", "monotonieparam"]));
+  LW.generator("tmua-r-koordinaten", trGroup("Coordinates and trigonometry", ["gerade", "kreis", "dreieckflaeche", "sektor", "trigperiode", "trigextrem"]));
+  LW.generator("tmua-r-statistik", trGroup("Statistics and probability", ["mittelwert", "bedingt", "ohnezurueck"]));
+  LW.generator("tmua-r-geometrie", trGroup("Geometry and vectors", ["raum", "vieleck", "aehnlich", "zusammengesetzt", "vektor"]));
 })();

@@ -58,6 +58,25 @@ final class LessonController {
             completion(result as? String ?? "")
         }
     }
+
+    /// Puts a value into an answer field of the current step without opening the keyboard; true if a field took it.
+    func fillAnswer(_ text: String, completion: @escaping (Bool) -> Void) {
+        guard loaded, let webView, let data = try? JSONSerialization.data(withJSONObject: [text]), let json = String(data: data, encoding: .utf8) else {
+            completion(false)
+            return
+        }
+        webView.evaluateJavaScript("LW.fillAnswer ? LW.fillAnswer(\(json)[0]) : 0") { result, _ in
+            completion((result as? NSNumber)?.intValue == 1)
+        }
+    }
+
+    /// The current step as Markdown with its formulas, for a vault note (empty with an older runtime).
+    func questionMarkdown(_ completion: @escaping (String) -> Void) {
+        guard loaded, let webView else { completion(""); return }
+        webView.evaluateJavaScript("LW.questionMarkdown ? LW.questionMarkdown() : ''") { result, _ in
+            completion(result as? String ?? "")
+        }
+    }
 }
 
 /// Serves lw://app/<path> from the synced content, falling back to the copy inside the app.

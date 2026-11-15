@@ -16,6 +16,190 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Primfaktorzerlegung** jeder Zahl aufschreiben, mit Exponenten.\n> 2. **Exponenten vergleichen:** ggT mit dem kleineren, kgV mit dem größeren Exponenten jeder Primzahl; eine Primzahl, die nur in einer Zahl vorkommt, fehlt im ggT und steht im kgV.\n> 3. **Quadrat oder Kubus:** Alle Exponenten müssen gerade bzw. durch 3 teilbar werden; der fehlende Faktor ist die gesuchte kleinste Zahl.\n> 4. **Ergebnis zurückrechnen** und prüfen, etwa mit ggT · kgV = a · b.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** ggT und kgV von 360 und 84, und die kleinste Zahl $n$, für die $300n$ eine Quadratzahl ist.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "360 = 2^3 \\cdot 3^2 \\cdot 5,\\qquad 84 = 2^2 \\cdot 3 \\cdot 7",
+            "why": "Zerlegen."
+          },
+          {
+            "tex": "\\text{ggT} = 2^2 \\cdot 3 = 12,\\qquad \\text{kgV} = 2^3 \\cdot 3^2 \\cdot 5 \\cdot 7 = 2520",
+            "why": "Kleinere bzw. größere Exponenten; 5 und 7 fehlen im ggT."
+          },
+          {
+            "tex": "12 \\cdot 2520 = 30\\,240 = 360 \\cdot 84",
+            "why": "Probe."
+          },
+          {
+            "tex": "300 = 2^2 \\cdot 3 \\cdot 5^2 \\;\\Rightarrow\\; n = 3",
+            "why": "Nur der Exponent der 3 ist ungerade: 300 · 3 = 900 = 30²."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "ggT und kgV.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Kleinste und größte Exponenten vertauschen.\n- Eine Primzahl vergessen, die nur in einer der Zahlen steckt.\n- Bei Kubikzahlen nur auf gerade Exponenten achten.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "ggT und kgV über Primfaktorzerlegung",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Aufgabentypen/ggT und kgV über Primfaktorzerlegung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Aufgabe nennt zwei oder drei Zahlen und fragt nach ggT, kgV, der Anzahl der Teiler, dem kleinsten Faktor, der ein Produkt zur Quadratzahl macht -- oder verpackt dasselbe in eine Situation (Zahnräder, Rundenzeiten, gleich große Kacheln). Erkennungsmerkmal: Die Zahlen sind **nicht** zufällig, sondern haben kleine Primfaktoren.\n\n> [!tip] Die Sprache erkennen\n> *„the largest tile that fits both\"*, *„cut into equal pieces\"* $\\to$ **ggT**.\n> *„when do they meet again\"*, *„the smallest number divisible by both\"* $\\to$ **kgV**.\n> Merkhilfe: Beim ggT wird etwas **zerlegt**, beim kgV etwas **wiederholt**."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beide Zahlen in Primfaktoren zerlegen**, systematisch mit 2, 3, 5, 7, 11, …\n2. **Exponenten untereinanderschreiben**, auch die Nullen für fehlende Primzahlen.\n3. **ggT:** jeweils der kleinere Exponent. **kgV:** jeweils der größere.\n4. **Kontrolle mit der Produktregel:** $\\operatorname{ggT} \\cdot \\operatorname{kgV} = a \\cdot b$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> What is the lowest common multiple of 504 and 540?\n>\n> - **A** 36\n> - **B** 1080\n> - **C** 7560\n> - **D** 15 120\n> - **E** 272 160\n\n**Schritt 1:** $504 = 2^3 \\cdot 3^2 \\cdot 7$ und $540 = 2^2 \\cdot 3^3 \\cdot 5$.\n\n**Schritt 2:**\n\n| | $2$ | $3$ | $5$ | $7$ |\n|---|---|---|---|---|\n| 504 | 3 | 2 | 0 | 1 |\n| 540 | 2 | 3 | 1 | 0 |\n| ggT (min) | 2 | 2 | 0 | 0 |\n| kgV (max) | 3 | 3 | 1 | 1 |\n\n**Schritt 3:** $\\operatorname{ggT} = 2^2 \\cdot 3^2 = 36$, $\\operatorname{kgV} = 2^3 \\cdot 3^3 \\cdot 5 \\cdot 7 = 8 \\cdot 27 \\cdot 35 = 7560$.\n\n**Schritt 4:** $36 \\cdot 7560 = 272\\,160 = 504 \\cdot 540$. Passt. Antwort **C**.\n\nOption A ist der ggT, E das Produkt der beiden Zahlen -- beide Fallen sind Standard."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **ggT und kgV vertauschen.**\n- **Beim kgV das Produkt der Zahlen angeben.** Das ist nur dann richtig, wenn die Zahlen **teilerfremd** sind.\n- **Eine Primzahl übersehen**, die nur in einer der Zahlen vorkommt -- sie gehört ins kgV, nicht in den ggT.\n- **Bei der Teileranzahl die $+1$ vergessen.**\n- **Die Produktregel auf drei Zahlen anwenden.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Two positive integers have highest common factor 12 and lowest common multiple 180. One of the integers is 36. What is the other?\n>\n> - **A** 60\n> - **B** 15\n> - **C** 48\n> - **D** 5\n> - **E** 720\n\n> [!success]- Lösung\n> **A.** Produktregel: $a \\cdot b = 12 \\cdot 180 = 2160$, also $b = \\tfrac{2160}{36} = 60$.\n> Probe: $36 = 2^2 \\cdot 3^2$, $60 = 2^2 \\cdot 3 \\cdot 5$; ggT $= 2^2 \\cdot 3 = 12$, kgV $= 2^2 \\cdot 3^2 \\cdot 5 = 180$. Beides stimmt.\n\n> [!question] Aufgabe 2\n> What is the smallest positive integer $n$ such that $1176n$ is a perfect square?\n>\n> - **A** 6\n> - **B** 2\n> - **C** 3\n> - **D** 14\n> - **E** 21\n\n> [!success]- Lösung\n> **A.** $1176 = 2^3 \\cdot 3 \\cdot 7^2$. Eine Quadratzahl hat **nur gerade** Exponenten: Die 2 braucht einen weiteren Faktor, die 3 ebenso, die $7^2$ ist bereits gerade. Also $n = 2 \\cdot 3 = 6$.\n> Probe: $1176 \\cdot 6 = 7056 = 84^2$.\n> B und C sind die halben Antworten für alle, die nur eine der beiden ungeraden Potenzen bemerken.\n\n> [!question] Aufgabe 3\n> How many positive divisors does 360 have?\n>\n> - **A** 24\n> - **B** 12\n> - **C** 16\n> - **D** 20\n> - **E** 36\n\n> [!success]- Lösung\n> **A.** $360 = 2^3 \\cdot 3^2 \\cdot 5$, also $(3+1)(2+1)(1+1) = 4 \\cdot 3 \\cdot 2 = 24$.\n> Jeder Teiler entsteht, indem man für jede Primzahl einen Exponenten zwischen 0 und dem Maximum wählt -- daher das Produkt der um eins erhöhten Exponenten.\n> B entsteht, wenn man die $+1$ nur bei einer Primzahl setzt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Potenzausdrücke mit rationalen Exponenten vereinfachen** · **Vermutungen aus kleinen Fällen** · **Widerlegung durch Gegenbeispiel**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "kgV",
+      "md": "Bestimme das kgV von 12, 18 und 30.",
+      "answer": 180,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$2^2 \\cdot 3^2 \\cdot 5 = 180$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Kubik",
+      "md": "Welches ist die kleinste positive ganze Zahl $n$, für die $72n$ eine Kubikzahl ist?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$72 = 2^3 \\cdot 3^2$: Der Exponent der 3 muss auf 3 steigen, also $n = 3$ und $216 = 6^3$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "How many positive divisors does $2^4 \\times 3^3$ have?",
+      "options": [
+        {
+          "md": "7"
+        },
+        {
+          "md": "12"
+        },
+        {
+          "md": "16"
+        },
+        {
+          "md": "20",
+          "correct": true
+        },
+        {
+          "md": "24"
+        }
+      ],
+      "explain": "$(4 + 1)(3 + 1) = 20$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Teiler",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist der ggT zweier Zahlen 1, dann sind beide Primzahlen.",
+      "answer": false,
+      "explain": "8 und 9 sind teilerfremd, aber keine Primzahlen.",
+      "label": "Teilerfremd",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +255,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "ggT: kleinere Exponenten, kgV: größere; ggT · kgV = a · b.",
+        "Quadrat: alle Exponenten gerade; Kubus: alle durch 3 teilbar."
+      ]
     }
   ]
 }

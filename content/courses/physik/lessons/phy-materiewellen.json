@@ -47,7 +47,7 @@
           {
             "name": "l",
             "expr": "1226/sqrt(x*1000)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -60,6 +60,453 @@
         ],
         "readout": "Bei {U|1} kV ist λ = {1226/sqrt(U*1000)|1} pm."
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Materiewelle\n> Jedem Teilchen mit dem Impuls $p$ ist eine Welle mit der **De-Broglie-Wellenlänge** $\\lambda = \\tfrac{h}{p} = \\tfrac{h}{m v}$ zugeordnet.\n\n> [!satz] De-Broglie-Hypothese (1924)\n> Licht, das man für eine Welle hielt, zeigt Teilcheneigenschaften ($E = hf$, $p = \\tfrac{h}{\\lambda}$). De Broglie forderte die Umkehrung: Teilchen zeigen Welleneigenschaften, mit **derselben** Verknüpfung von Impuls und Wellenlänge. Das war zunächst eine Hypothese aus einem Symmetrieargument; 1927 bestätigte die Elektronenbeugung sie (Nobelpreis 1929).\n\n> [!definition] Wahrscheinlichkeitsdeutung (Born)\n> Die Materiewelle ist keine schwingende Substanz. Das Betragsquadrat $|\\psi|^2$ der Wellenfunktion gibt an, wie wahrscheinlich es ist, das Teilchen an einem Ort **nachzuweisen**.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Wellenlänge eines Elektrons**, das aus der Ruhe die Spannung $U$ durchläuft.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "e\\,U = \\tfrac12 m_e v^2",
+            "why": "Die Arbeit des Feldes wird zu Bewegungsenergie."
+          },
+          {
+            "tex": "v = \\sqrt{\\frac{2 e U}{m_e}}",
+            "why": "Nach v aufgelöst; bei 280 V sind das knapp 10⁷ m/s, 3 % der Lichtgeschwindigkeit."
+          },
+          {
+            "tex": "p = m_e v = \\sqrt{2 m_e e U}",
+            "why": "Der Impuls; die Masse wandert unter die Wurzel."
+          },
+          {
+            "tex": "\\lambda = \\frac{h}{p} = \\frac{h}{\\sqrt{2 m_e e U}}",
+            "why": "De Broglie eingesetzt."
+          },
+          {
+            "tex": "\\frac{h}{\\sqrt{2 m_e e}} = 1{,}226\\cdot 10^{-9}\\,\\mathrm{m}\\sqrt{\\mathrm{V}} \\;\\Rightarrow\\; \\lambda \\approx \\frac{1{,}226\\,\\mathrm{nm}}{\\sqrt{U/\\mathrm{V}}}",
+            "why": "Zahlenwertform zur Kontrolle: 100 V geben 123 pm; vierfache Spannung, halbe Wellenlänge."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energie.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Impuls.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wellenlänge.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlenwertform.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!warning] Photon und Elektron nicht verwechseln\n> **Photon:** $\\lambda = \\tfrac{h c}{E}$, umgekehrt proportional zur Energie. **Teilchen mit Masse:** $\\lambda = \\tfrac{h}{\\sqrt{2 m E_{kin}}}$, umgekehrt proportional zur **Wurzel** der Energie. Ein Photon und ein Elektron mit je $100\\,\\mathrm{eV}$: $12{,}4\\,\\mathrm{nm}$ gegen $0{,}123\\,\\mathrm{nm}$.\n\n**Relativistische Korrektur.** Für schnelle Elektronen gilt $p = \\tfrac{1}{c}\\sqrt{E_{kin}^2 + 2 E_{kin}\\,m_e c^2}$ mit $m_e c^2 = 511\\,\\mathrm{keV}$. Ab einigen $10\\,\\mathrm{kV}$ weicht die klassische Rechnung merklich ab: bei $50\\,\\mathrm{kV}$ $5{,}49\\,\\mathrm{pm}$ klassisch gegen $5{,}36\\,\\mathrm{pm}$ relativistisch.",
+      "label": "Vorsicht",
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Klassisch oder relativistisch?** Wellenlänge von Elektronen über der Beschleunigungsspannung: blau klassisch $\\lambda = \\tfrac{h}{\\sqrt{2 m_e e U}}$, orange relativistisch.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          20,
+          300
+        ],
+        "y": [
+          0,
+          9.5
+        ],
+        "xLabel": "U in kV",
+        "yLabel": "λ in pm",
+        "vars": [
+          {
+            "name": "A",
+            "min": 20,
+            "max": 300,
+            "value": 20,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "kl",
+            "expr": "1226.5/sqrt(1000*x)",
+            "color": "blue",
+            "label": "klassisch",
+            "labelAt": 60
+          },
+          {
+            "name": "rel",
+            "expr": "1239.84/sqrt(x*x + 1022*x)",
+            "color": "orange"
+          }
+        ],
+        "labels": [
+          {
+            "x": 235,
+            "y": 1.1,
+            "text": "relativistisch",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "A",
+            "on": "kl",
+            "color": "blue"
+          },
+          {
+            "x": "A",
+            "on": "rel",
+            "color": "orange"
+          }
+        ],
+        "readout": "Bei {A|0} kV: klassisch {1226.5/sqrt(1000*A)|2} pm, relativistisch {1239.84/sqrt(A*A + 1022*A)|2} pm, Abweichung **{100*(1226.5/sqrt(1000*A))/(1239.84/sqrt(A*A + 1022*A)) - 100|1} %**"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $20\\,\\mathrm{kV}$ liegen beide Kurven fast aufeinander, rund $1\\,\\%$ Unterschied.",
+          "set": {
+            "A": 20
+          }
+        },
+        {
+          "caption": "Jönsson arbeitete mit $50\\,\\mathrm{kV}$: klassisch $5{,}49\\,\\mathrm{pm}$, relativistisch $5{,}36\\,\\mathrm{pm}$, gut $2\\,\\%$.",
+          "to": {
+            "A": 50
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Ein Elektronenmikroskop mit $100\\,\\mathrm{kV}$: schon fast $5\\,\\%$.",
+          "to": {
+            "A": 100
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Bei $300\\,\\mathrm{kV}$ rund $14\\,\\%$. Faustregel: ab einigen Prozent von $m_e c^2 = 511\\,\\mathrm{keV}$, also einigen $10\\,\\mathrm{kV}$, relativistisch rechnen.",
+          "to": {
+            "A": 300
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Experimentelle Bestätigung.**\n\n| Versuch | Jahr | Prinzip |\n|---|---|---|\n| Davisson und Germer | 1927 | langsame Elektronen ($54\\,\\mathrm{eV}$) an einem Nickel-Einkristall gebeugt |\n| G. P. Thomson, Elektronenbeugungsröhre | 1927 | Durchgang durch eine dünne Folie, Beugungsringe |\n| Jönsson | 1961 | Interferenz am Doppelspalt |\n| Merli, Missiroli, Pozzi; Tonomura | 1974, 1989 | Muster aus einzelnen Elektronen |\n| Neutronen, Atome, $\\mathrm{C_{60}}$-Moleküle | ab 1999 | Interferenz auch bei großen Objekten |\n\n**Warum man es im Alltag nicht sieht.** Beugung wird erst sichtbar, wenn $\\lambda$ mit der Größe des Hindernisses vergleichbar ist. Ein Tennisball ($58\\,\\mathrm{g}$, $50\\,\\mathrm{m/s}$) hat $\\lambda \\approx 2\\cdot 10^{-34}\\,\\mathrm{m}$, rund zwanzig Größenordnungen unter einem Atomkern: vorhanden, aber unbeobachtbar. Die Aussage, für große Körper gelte die Quantenphysik nicht, ist falsch.\n\n**Anschluss an das Atommodell.** Ist die Materiewelle eines Elektrons auf einer Kreisbahn **stehend**, also $2\\pi r = n\\lambda$, folgt mit $\\lambda = \\tfrac{h}{m v}$ die Bohrsche Quantenbedingung $m v r = n\\,\\tfrac{h}{2\\pi}$.",
+      "label": "Bestätigung und Grenzen",
+      "id": "ve5"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Nachweis an Kristallen in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Elektronenbeugungsroehre.svg",
+        "aspect": 1.89,
+        "alt": "Elektronenbeugungsröhre mit Graphitfolie"
+      },
+      "timeline": [
+        {
+          "caption": "Die Elektronenbeugungsröhre: der Schulversuch zu den Materiewellen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Elektronen durchsetzen eine dünne Graphitfolie; die Atomlagen wirken wie ein Gitter mit Abständen um 100 pm.",
+          "to": {
+            "x": 0.36,
+            "y": 0.45,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Auf dem Schirm erscheinen Ringe wie bei Röntgenlicht. Ein Teilchenstrahl gäbe nur einen Fleck: Elektronen verhalten sich wie Wellen.",
+          "to": {
+            "x": 0.91,
+            "y": 0.5,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Materiewellen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Materiewellen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Materiewellen** sind die Wellen, die nach Louis de Broglie (Dissertation 1924) jedem Teilchen mit Impuls $p$ zugeordnet sind:\n$$\\boxed{\\lambda = \\frac{h}{p} = \\frac{h}{m\\,v}}$$\nDie Hypothese überträgt die Photonenbeziehung $p = h/\\lambda$ (**Photonenmasse und Photonenimpuls**) in umgekehrter Richtung auf Teilchen mit Ruhemasse. Sie wurde 1927 durch Elektronenbeugung bestätigt (Davisson und Germer; G. P. Thomson) und brachte de Broglie 1929 den Nobelpreis."
+            }
+          ]
+        },
+        {
+          "title": "Das Symmetrieargument",
+          "blocks": [
+            {
+              "md": "> [!important] Die Idee in einem Satz\n> Licht, das man für eine Welle hielt, zeigt Teilcheneigenschaften ($E = hf$, $p = h/\\lambda$). Wenn die Natur symmetrisch ist, sollten Teilchen, die man für Körper hielt, Welleneigenschaften zeigen -- mit **derselben** Verknüpfung von Impuls und Wellenlänge.\n>\n> Das ist kein Beweis, sondern eine Hypothese. Ihren Rang erhielt sie erst durch das Experiment: Elektronen erzeugen an Kristallen **Beugungsringe** und am Doppelspalt **Interferenzstreifen** -- Erscheinungen, die nur Wellen hervorbringen."
+            }
+          ]
+        },
+        {
+          "title": "Formeln für die Praxis",
+          "blocks": [
+            {
+              "md": "| Ausgangsgröße | Impuls | Wellenlänge |\n|---|---|---|\n| Geschwindigkeit $v$ | $p = m v$ | $\\lambda = \\dfrac{h}{m v}$ |\n| kinetische Energie $E_{kin}$ | $p = \\sqrt{2 m E_{kin}}$ | $\\lambda = \\dfrac{h}{\\sqrt{2 m E_{kin}}}$ |\n| Beschleunigungsspannung $U$ (Ladung $q$) | $p = \\sqrt{2 m q U}$ | $\\lambda = \\dfrac{h}{\\sqrt{2 m q U}}$ |\n| Elektron, Zahlenwertform | -- | $\\lambda \\approx \\dfrac{1{,}226\\,\\text{nm}}{\\sqrt{U/\\text{V}}}$ |\n| relativistisch ($E_{kin} \\gtrsim 0{,}05\\,m c^2$) | $p = \\dfrac{1}{c}\\sqrt{E_{kin}^2 + 2 E_{kin}\\, m c^2}$ | $\\lambda = \\dfrac{h}{p}$ |\n\nFür Elektronen ist $m_e c^2 = 511\\,\\text{keV}$; ab einigen zehn Kilovolt weicht die klassische Rechnung um mehr als 1 % ab (bei 50 kV: 5,48 pm klassisch gegen 5,36 pm relativistisch).\n\n> [!warning] Photon und Elektron unterscheiden\n> Für **Photonen** gilt $\\lambda = hc/E$ -- die Wellenlänge ist umgekehrt proportional zur Energie.\n> Für **Materieteilchen** gilt $\\lambda = h/\\sqrt{2mE_{kin}}$ -- umgekehrt proportional zur **Wurzel** der Energie.\n> Wer die Photonenformel auf Elektronen anwendet, liegt um Größenordnungen daneben: Ein Photon und ein Elektron von je $100\\,\\text{eV}$ haben $\\lambda_{Ph} = 12{,}4\\,\\text{nm}$ gegen $\\lambda_e = 0{,}12\\,\\text{nm}$."
+            }
+          ]
+        },
+        {
+          "title": "Experimentelle Bestätigung",
+          "blocks": [
+            {
+              "md": "| Versuch | Jahr | Prinzip | Notiz |\n|---|---|---|---|\n| Davisson-Germer | 1927 | Reflexionsbeugung langsamer Elektronen (54 eV) an einem Nickel-Einkristall | -- |\n| G. P. Thomson / Elektronenbeugungsröhre | 1927 | Transmission durch dünne polykristalline Folie, Debye-Scherrer-Ringe | **Elektronenbeugungsröhre** |\n| Jönsson | 1961 | Interferenz am künstlich hergestellten Doppel- und Mehrfachspalt | **Jönsson-Versuch** |\n| Einzelelektronen (Merli/Missiroli/Pozzi, Tonomura) | 1974 / 1989 | Aufbau des Musters aus Einzelereignissen | **Doppelspaltexperiment** |\n| Neutronen, Atome, $\\text{C}_{60}$-Moleküle (Zeilinger-Gruppe) | ab 1999 | Interferenz auch bei großen Objekten | -- |"
+            }
+          ]
+        },
+        {
+          "title": "Weshalb man die Wellennatur im Alltag nicht sieht",
+          "blocks": [
+            {
+              "md": "Beugung wird erst sichtbar, wenn $\\lambda$ mit der Größe von Spalt oder Hindernis vergleichbar ist. Ein Tennisball ($58\\,\\text{g}$, $50\\,\\text{m/s}$) hat $\\lambda \\approx 2\\cdot10^{-34}\\,\\text{m}$ -- rund zwanzig Größenordnungen kleiner als ein Atomkern. Die Welleneigenschaft ist also **vorhanden, aber unbeobachtbar**; die Aussage \"für große Körper gilt die Quantenphysik nicht\" ist falsch."
+            }
+          ]
+        },
+        {
+          "title": "Was die Welle bedeutet",
+          "blocks": [
+            {
+              "md": "Die Materiewelle ist **keine** schwingende Substanz. Nach der Bornschen Wahrscheinlichkeitsdeutung gibt das Betragsquadrat $|\\psi|^2$ der Wellenfunktion die **Nachweiswahrscheinlichkeit** an einem Ort an. Ausführlich: **Doppelspaltexperiment** und **Welle-Teilchen-Dualismus**."
+            }
+          ]
+        },
+        {
+          "title": "Anschluss an das Atommodell",
+          "blocks": [
+            {
+              "md": "Fordert man, dass die Materiewelle eines Elektrons auf einer Kreisbahn **stehend** ist ($2\\pi r = n\\lambda$), folgt die Bohrsche Quantenbedingung $m v r = n\\,\\tfrac{h}{2\\pi}$ -- siehe **Bohrsches Atommodell** und **Stehende Wellen**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Rechenpraxis: **De-Broglie-Wellenlänge berechnen**. Interaktiver Rechner: **Welle-Teilchen-Dualismus**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Formel oder Aussage zu.",
+      "pairs": [
+        [
+          "De-Broglie-Beziehung",
+          "$\\lambda = \\tfrac{h}{p}$"
+        ],
+        [
+          "Impuls nach Beschleunigung",
+          "$p = \\sqrt{2 m_e e U}$"
+        ],
+        [
+          "Zahlenwertform",
+          "$\\lambda \\approx \\tfrac{1{,}226\\,\\mathrm{nm}}{\\sqrt{U/\\mathrm{V}}}$"
+        ],
+        [
+          "Photon",
+          "$\\lambda = \\tfrac{h c}{E}$"
+        ],
+        [
+          "Bornsche Deutung",
+          "$|\\psi|^2$ ist die Nachweiswahrscheinlichkeit"
+        ]
+      ],
+      "explain": "Für Photonen und Teilchen mit Masse gelten verschiedene Energieabhängigkeiten.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Elektronenwellenlänge in die richtige Reihenfolge.",
+      "items": [
+        "$e U = \\tfrac12 m_e v^2$",
+        "$v = \\sqrt{\\tfrac{2eU}{m_e}}$",
+        "$p = m_e v = \\sqrt{2 m_e e U}$",
+        "$\\lambda = \\tfrac{h}{\\sqrt{2 m_e e U}}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $e U = \\tfrac12 m_e v^2$. 2. $v = \\sqrt{\\tfrac{2eU}{m_e}}$. 3. $p = m_e v = \\sqrt{2 m_e e U}$. 4. $\\lambda = \\tfrac{h}{\\sqrt{2 m_e e U}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche De-Broglie-Wellenlänge haben Elektronen nach $100\\,\\mathrm{V}$?",
+      "answer": 123,
+      "tolerance": 1.5,
+      "placeholder": "pm",
+      "explain": "$\\lambda = \\tfrac{1{,}226\\,\\mathrm{nm}}{\\sqrt{100}} \\approx 0{,}123\\,\\mathrm{nm} = 123\\,\\mathrm{pm}$: so groß wie Atomabstände.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Beschleunigungsspannung liefert Elektronen mit $\\lambda = 50\\,\\mathrm{pm}$?",
+      "answer": 602,
+      "tolerance": 8,
+      "placeholder": "V",
+      "explain": "$U = \\left(\\tfrac{1{,}226\\,\\mathrm{nm}}{\\lambda}\\right)^2\\,\\mathrm{V} = \\left(\\tfrac{1226}{50}\\right)^2\\,\\mathrm{V} \\approx 602\\,\\mathrm{V}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche De-Broglie-Wellenlänge hat ein Tennisball ($58\\,\\mathrm{g}$, $50\\,\\mathrm{m/s}$)? Gib sie in $10^{-34}\\,\\mathrm{m}$ an.",
+      "answer": 2.28,
+      "tolerance": 0.03,
+      "placeholder": "10⁻³⁴ m",
+      "explain": "$\\lambda = \\tfrac{h}{m v} = \\tfrac{6{,}626\\cdot 10^{-34}}{0{,}058\\cdot 50}\\,\\mathrm{m} \\approx 2{,}3\\cdot 10^{-34}\\,\\mathrm{m}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Wie muss man die Beschleunigungsspannung ändern, um die De-Broglie-Wellenlänge zu halbieren?",
+      "options": [
+        {
+          "md": "vervierfachen",
+          "correct": true
+        },
+        {
+          "md": "verdoppeln",
+          "why": "$\\lambda \\sim \\tfrac{1}{\\sqrt U}$: doppelte Spannung verkleinert $\\lambda$ nur um den Faktor $\\sqrt2$."
+        },
+        {
+          "md": "halbieren",
+          "why": "Kleinere Spannung, kleinerer Impuls, größere Wellenlänge."
+        },
+        {
+          "md": "versechzehnfachen",
+          "why": "Das brächte die Wellenlänge auf ein Viertel."
+        }
+      ],
+      "explain": "$\\lambda \\sim \\tfrac{1}{\\sqrt U}$, also $\\lambda$ halb bei $4U$.",
+      "label": "Proportionalität",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Photon und ein Elektron haben je $100\\,\\mathrm{eV}$. Welche Wellenlänge ist größer?",
+      "options": [
+        {
+          "md": "die des Photons, rund hundertmal größer",
+          "correct": true
+        },
+        {
+          "md": "die des Elektrons",
+          "why": "Das Elektron hat bei gleicher Energie den viel größeren Impuls."
+        },
+        {
+          "md": "beide gleich, die Energie ist ja gleich",
+          "why": "Photon $\\lambda = \\tfrac{hc}{E}$, Elektron $\\lambda = \\tfrac{h}{\\sqrt{2mE}}$: verschiedene Formeln."
+        },
+        {
+          "md": "Ein Photon hat keine Wellenlänge.",
+          "why": "Gerade Photonen haben unstrittig eine."
+        }
+      ],
+      "explain": "$12{,}4\\,\\mathrm{nm}$ gegen $0{,}123\\,\\mathrm{nm}$.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für makroskopische Körper gilt die Quantenphysik nicht.",
+      "answer": false,
+      "explain": "Ein Tennisball hat eine Materiewelle; sie ist mit rund $10^{-34}\\,\\mathrm{m}$ nur unbeobachtbar klein.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Ein Elektronenmikroskop beschleunigt mit $100\\,\\mathrm{kV}$. Berechne die Wellenlänge relativistisch mit $p c = \\sqrt{E_{kin}^2 + 2 E_{kin} m_e c^2}$, $m_e c^2 = 511\\,\\mathrm{keV}$ und $h c = 1240\\,\\mathrm{keV\\cdot pm}$.",
+      "answer": 3.7,
+      "tolerance": 0.03,
+      "placeholder": "pm",
+      "explain": "$p c = \\sqrt{100^2 + 2\\cdot 100\\cdot 511}\\,\\mathrm{keV} \\approx 335\\,\\mathrm{keV}$, $\\lambda = \\tfrac{hc}{pc} = \\tfrac{1240}{335}\\,\\mathrm{pm} \\approx 3{,}70\\,\\mathrm{pm}$. Klassisch wären es $3{,}88\\,\\mathrm{pm}$, fast $5\\,\\%$ zu viel.",
+      "id": "vq9"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Im Bohrschen Modell passt auf die erste Bahn ($r_1 = 52{,}9\\,\\mathrm{pm}$) genau eine Wellenlänge. Welche De-Broglie-Wellenlänge hat das Elektron dort?",
+      "answer": 332,
+      "tolerance": 2,
+      "placeholder": "pm",
+      "explain": "$2\\pi r_1 = 1\\cdot\\lambda$, also $\\lambda = 2\\pi\\cdot 52{,}9\\,\\mathrm{pm} \\approx 332\\,\\mathrm{pm}$.",
+      "id": "vq10"
     },
     {
       "id": "ball",
@@ -95,13 +542,42 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "debroglie-proton",
+          "debroglie-neutron"
+        ]
+      },
+      "label": "Protonen und Neutronen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "debroglie",
+          "debroglie-neutron"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$\\lambda = \\frac{h}{p}$ für jedes Teilchen.",
         "Elektronen: $\\lambda = \\frac{h}{\\sqrt{2meU}}$, im Bereich der Atomabstände.",
-        "Makroskopische Körper haben unmessbar kleine Wellenlängen."
+        "Makroskopische Körper haben unmessbar kleine Wellenlängen.",
+        "$\\lambda = \\tfrac{h}{p}$; beschleunigte Elektronen: $\\lambda = \\tfrac{h}{\\sqrt{2 m_e e U}} \\approx \\tfrac{1{,}226\\,\\mathrm{nm}}{\\sqrt{U/\\mathrm{V}}}$, hergeleitet aus $eU = \\tfrac12 m_e v^2$.",
+        "Photon $\\lambda = \\tfrac{hc}{E}$, Teilchen $\\lambda = \\tfrac{h}{\\sqrt{2mE}}$; ab einigen $10\\,\\mathrm{kV}$ relativistisch rechnen.",
+        "$|\\psi|^2$ ist die Nachweiswahrscheinlichkeit; stehende Welle auf der Bohrbahn: $2\\pi r = n\\lambda$."
       ]
     }
   ]

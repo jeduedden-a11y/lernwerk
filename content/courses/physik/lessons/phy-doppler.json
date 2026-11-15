@@ -18,6 +18,398 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Dopplereffekt in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Dopplereffekt.svg",
+        "aspect": 1.83,
+        "alt": "Kreiswellen einer bewegten Quelle"
+      },
+      "timeline": [
+        {
+          "caption": "Eine Schallquelle bewegt sich nach rechts und sendet Kreiswellen aus.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Jede Welle startet vom jeweiligen Ort der Quelle; die Quelle läuft mit $v_Q$ hinter den Wellen her.",
+          "to": {
+            "x": 0.6,
+            "y": 0.5,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Vorn liegen die Wellenfronten dichter: kürzere Wellenlänge, höhere Frequenz.",
+          "to": {
+            "x": 0.82,
+            "y": 0.6,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Hinten liegen sie weiter auseinander: tieferer Ton.",
+          "to": {
+            "x": 0.15,
+            "y": 0.6,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Bewegte Quelle: $f' = \\tfrac{f}{1 \\mp v_Q/c}$; bewegter Beobachter: $f' = f(1 \\pm \\tfrac{v_B}{c})$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.89,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung für die bewegte Quelle.** Quelle mit Frequenz $f$ nähert sich mit $v_Q$ einem ruhenden Beobachter; Schallgeschwindigkeit $c$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\lambda = c\\,T",
+            "why": "Ohne Bewegung: In einer Periode läuft die Welle eine Wellenlänge weit."
+          },
+          {
+            "tex": "\\lambda' = c\\,T - v_Q\\,T = (c - v_Q)\\,T",
+            "why": "Während einer Periode rückt die Quelle um $v_Q T$ nach; der Abstand der Wellenberge schrumpft."
+          },
+          {
+            "tex": "f' = \\frac{c}{\\lambda'} = \\frac{c}{(c - v_Q)\\,T} = \\frac{f}{1 - \\frac{v_Q}{c}}",
+            "why": "Der Beobachter empfängt die Wellen mit unveränderter Geschwindigkeit, aber dichter."
+          },
+          {
+            "tex": "\\text{bewegter Beobachter}: f' = \\frac{c + v_B}{\\lambda} = f\\left(1 + \\frac{v_B}{c}\\right)",
+            "why": "Läuft der Beobachter auf ruhende Wellen zu, trifft er sie mit der Relativgeschwindigkeit $c + v_B$. Die Formeln sind nicht gleich: Für Schall kommt es darauf an, wer sich gegenüber der Luft bewegt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ruhende Quelle.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gestauchte Wellenlänge.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bewegte Quelle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bewegter Beobachter.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Schwebung.** Zwei Töne gleicher Amplitude mit $f_1$ und $f_2$ überlagern sich.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y = \\hat y\\sin(2\\pi f_1 t) + \\hat y\\sin(2\\pi f_2 t)",
+            "why": "Superposition am Ohr."
+          },
+          {
+            "tex": "y = 2\\hat y\\cos\\left(2\\pi\\,\\frac{f_1 - f_2}{2}\\,t\\right)\\sin\\left(2\\pi\\,\\frac{f_1 + f_2}{2}\\,t\\right)",
+            "why": "Additionstheorem: ein Ton der mittleren Frequenz mit langsam veränderlicher Amplitude."
+          },
+          {
+            "tex": "f_S = |f_1 - f_2|",
+            "why": "Die Lautstärke hängt am Betrag des Kosinus, der zweimal pro Periode null wird: Man hört die Differenzfrequenz als An- und Abschwellen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Überlagerung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Additionstheorem.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schwebungsfrequenz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Schwebung.** Ein Ton mit $10\\,\\mathrm{Hz}$ (zur Anschauung) überlagert sich mit einem zweiten Ton der Frequenz $f_2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          -2.3,
+          2.3
+        ],
+        "xLabel": "t in s",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "f2",
+            "min": 10,
+            "max": 14,
+            "value": 10.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "sb",
+            "expr": "sin(2*pi*10*x) + sin(2*pi*f2*x)",
+            "color": "blue",
+            "samples": 1200
+          },
+          {
+            "name": "hu",
+            "expr": "2*abs(cos(pi*(f2 - 10)*x))",
+            "color": "orange",
+            "dashed": true,
+            "samples": 600
+          },
+          {
+            "name": "hd",
+            "expr": "-2*abs(cos(pi*(f2 - 10)*x))",
+            "color": "orange",
+            "dashed": true,
+            "samples": 600
+          }
+        ],
+        "readout": "f₂ = {f2|1} Hz: Schwebungsfrequenz **{abs(f2 - 10)|1} Hz**"
+      },
+      "timeline": [
+        {
+          "caption": "Fast gleiche Frequenzen ($10$ und $10{,}5\\,\\mathrm{Hz}$): Die Lautstärke schwillt langsam an und ab, einmal in zwei Sekunden.",
+          "set": {
+            "f2": 10.5
+          }
+        },
+        {
+          "caption": "Bei $12\\,\\mathrm{Hz}$: zwei Schwebungen pro Sekunde. Gestrichelt die Einhüllende $2\\hat y\\,|\\cos(\\pi(f_2 - f_1)t)|$.",
+          "to": {
+            "f2": 12
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Je größer der Unterschied, desto schneller die Schwebung; bei großen Unterschieden hört man zwei getrennte Töne. Beim Stimmen dreht man so lange, bis die Schwebung verschwindet.",
+          "to": {
+            "f2": 14
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Dopplereffekt und Schwebung",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Dopplereffekt und Schwebung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Dopplereffekt",
+          "blocks": [
+            {
+              "md": "Bewegen sich Quelle und Beobachter relativ zueinander, ändert sich die **wahrgenommene Frequenz**: bei Annäherung höher, bei Entfernung tiefer."
+            },
+            {
+              "image": "vault:Dopplereffekt.svg"
+            },
+            {
+              "md": "### Die beiden Fälle\n> [!note] Bewegter Beobachter (Quelle ruht)\n> Der Beobachter läuft den Wellenbergen entgegen und trifft pro Sekunde mehr davon:\n> $$f' = f \\cdot \\left(1 \\pm \\frac{v_B}{c}\\right)$$\n\n> [!note] Bewegte Quelle (Beobachter ruht)\n> Die Quelle \"läuft ihren eigenen Wellen hinterher\" -- die Wellenlänge selbst wird gestaucht:\n> $$f' = \\frac{f}{1 \\mp \\frac{v_Q}{c}}$$\n\n(oberes Vorzeichen bei Annäherung). Beide Fälle sind **physikalisch verschieden**: Beim bewegten Beobachter ändert sich nur die Begegnungsrate, bei bewegter Quelle tatsächlich die **Wellenlänge** $\\lambda' = \\tfrac{c - v_Q}{f}$.\n\n### Interaktiv: Dopplerrechner\n\n### Machscher Kegel\nErreicht die Quelle Schallgeschwindigkeit ($v_Q = c$), überlagern sich alle Wellenfronten zu einer Stoßfront; darüber ($v_Q > c$) entsteht der **Machsche Kegel** (Überschallknall).\n\n> [!tip] Anwendungen\n> Radarfalle, Ultraschall-Blutflussmessung (Sonografie), Wetterradar und die **Rotverschiebung** ferner Galaxien -- letztere allerdings relativistisch beschrieben (siehe **Spezielle Relativitätstheorie**)."
+            }
+          ]
+        },
+        {
+          "title": "Schwebung",
+          "blocks": [
+            {
+              "md": "Überlagern sich zwei Schwingungen mit **leicht unterschiedlichen** Frequenzen, entsteht eine periodische An- und Abschwellung der Amplitude:\n$$f_S = |f_1 - f_2|$$\nDie hörbare Tonhöhe entspricht dabei dem Mittelwert $\\tfrac{f_1+f_2}{2}$."
+            },
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0",
+                  "0.5",
+                  "1",
+                  "1.5",
+                  "2",
+                  "2.5",
+                  "3",
+                  "3.5",
+                  "4",
+                  "4.5",
+                  "5"
+                ],
+                "series": [
+                  {
+                    "title": "Schwebung (resultierende Auslenkung)",
+                    "data": [
+                      0,
+                      0.95,
+                      0.3,
+                      -0.9,
+                      -0.1,
+                      0.85,
+                      0.2,
+                      -0.8,
+                      -0.05,
+                      0.7,
+                      0
+                    ]
+                  },
+                  {
+                    "title": "Einhüllende",
+                    "data": [
+                      1.0,
+                      0.98,
+                      0.9,
+                      0.78,
+                      0.6,
+                      0.4,
+                      0.6,
+                      0.78,
+                      0.9,
+                      0.98,
+                      1.0
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "> [!tip] Anwendung\n> Musiker nutzen die Schwebung zum **Stimmen**: Verschwindet die Schwebung, sind beide Töne exakt gleich hoch. In der Musik wird die Schwebung eines Terz-Intervalls auf gleichstufig gestimmten Instrumenten als \"Reibung\" wahrgenommen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Auto mit Hupe ($600\\,\\mathrm{Hz}$) fährt mit $30\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ auf dich zu ($c = 343\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$). Welche Frequenz hörst du?",
+      "answer": 657.5,
+      "tolerance": 1,
+      "placeholder": "Hz",
+      "explain": "$f' = \\tfrac{600}{1 - 30/343}\\,\\mathrm{Hz} \\approx 657{,}5\\,\\mathrm{Hz}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und nachdem es vorbeigefahren ist?",
+      "answer": 551.7,
+      "tolerance": 1,
+      "placeholder": "Hz",
+      "explain": "$f' = \\tfrac{600}{1 + 30/343}\\,\\mathrm{Hz} \\approx 551{,}7\\,\\mathrm{Hz}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Beobachter",
+      "md": "Du fährst mit $20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ auf eine ruhende Sirene ($600\\,\\mathrm{Hz}$) zu. Welche Frequenz hörst du?",
+      "answer": 635.0,
+      "tolerance": 1,
+      "placeholder": "Hz",
+      "explain": "$f' = 600\\cdot(1 + \\tfrac{20}{343})\\,\\mathrm{Hz} \\approx 635\\,\\mathrm{Hz}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung für die bewegte Quelle in die richtige Reihenfolge.",
+      "items": [
+        "Ohne Bewegung: $\\lambda = cT$",
+        "Die Quelle rückt pro Periode um $v_Q T$ nach",
+        "Gestauchte Wellenlänge: $\\lambda' = (c - v_Q)T$",
+        "$f' = \\tfrac{c}{\\lambda'} = \\tfrac{f}{1 - v_Q/c}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Ohne Bewegung: $\\lambda = cT$. 2. Die Quelle rückt pro Periode um $v_Q T$ nach. 3. Gestauchte Wellenlänge: $\\lambda' = (c - v_Q)T$. 4. $f' = \\tfrac{c}{\\lambda'} = \\tfrac{f}{1 - v_Q/c}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Hört man beim Stimmen zweier Saiten drei Schwebungen pro Sekunde, unterscheiden sich ihre Frequenzen um 3 Hz.",
+      "answer": true,
+      "explain": "$f_S = |f_1 - f_2|$; welche höher ist, sagt die Schwebung allein nicht.",
+      "label": "Schwebung",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Ein Radargerät ($24\\,\\mathrm{GHz}$) misst an einem Auto mit $30\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ die Frequenzverschiebung. Wie groß ist sie (Näherung $\\Delta f \\approx \\tfrac{2v}{c}f$)?",
+      "answer": 4800,
+      "tolerance": 10,
+      "placeholder": "Hz",
+      "explain": "Doppelter Doppler (hin und zurück): $\\Delta f \\approx \\tfrac{2\\cdot 30}{3\\cdot 10^8}\\cdot 24\\cdot 10^9\\,\\mathrm{Hz} = 4800\\,\\mathrm{Hz}$.",
+      "id": "vq6"
+    },
+    {
       "id": "vorbei",
       "type": "choice",
       "md": "Ein Krankenwagen fährt mit Sirene an dir vorbei. Was hörst du?",
@@ -68,13 +460,41 @@
       "label": "Schwebung"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "doppler-beobachter",
+          "doppler"
+        ]
+      },
+      "label": "Doppler",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "doppler",
+          "doppler-beobachter"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Quelle nähert sich: $f_B = \\frac{f}{1 - v/c}$, höherer Ton.",
         "Schwebung mit $f_S = |f_1 - f_2|$.",
-        "Auch Licht zeigt den Dopplereffekt: Rotverschiebung."
+        "Auch Licht zeigt den Dopplereffekt: Rotverschiebung.",
+        "Bewegte Quelle: $f' = \\tfrac{f}{1 \\mp v_Q/c}$ (gestauchte Wellenlänge); bewegter Beobachter: $f' = f(1 \\pm \\tfrac{v_B}{c})$.",
+        "Schwebung aus dem Additionstheorem: $f_S = |f_1 - f_2|$."
       ]
     }
   ]

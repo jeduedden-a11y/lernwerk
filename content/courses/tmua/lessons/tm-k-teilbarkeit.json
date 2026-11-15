@@ -15,6 +15,307 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Teiler, Primzahl, teilerfremd\n> $a$ **teilt** $b$ ($a \\mid b$), wenn $b = a \\cdot m$ mit einer ganzen Zahl $m$. Eine **Primzahl** hat genau zwei positive Teiler, 1 und sich selbst (1 ist keine Primzahl). Zwei Zahlen sind **teilerfremd**, wenn ihr größter gemeinsamer Teiler 1 ist.\n\n> [!satz] Fundamentalsatz der Arithmetik\n> Jede natürliche Zahl größer als 1 ist ein Produkt von Primzahlen, und diese Zerlegung ist bis auf die Reihenfolge eindeutig.\n\n> [!definition] ggT und kgV\n> Der **größte gemeinsame Teiler** nimmt jede Primzahl mit dem **kleineren** Exponenten der beiden Zerlegungen, das **kleinste gemeinsame Vielfache** mit dem **größeren**.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: die Zahl der Teiler.** Beispiel $720 = 2^4 \\cdot 3^2 \\cdot 5$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "d \\mid 720 \\iff d = 2^i \\cdot 3^j \\cdot 5^k",
+            "why": "Ein Teiler enthält nur Primfaktoren von 720, keinen öfter als 720 selbst."
+          },
+          {
+            "tex": "0 \\le i \\le 4,\\quad 0 \\le j \\le 2,\\quad 0 \\le k \\le 1",
+            "why": "Jeder Exponent wird unabhängig gewählt."
+          },
+          {
+            "tex": "\\text{Anzahl} = 5 \\cdot 3 \\cdot 2 = 30",
+            "why": "Produktregel: je Exponent eine Möglichkeit mehr, als er groß ist."
+          },
+          {
+            "tex": "n = p^a q^b r^c \\;\\Rightarrow\\; (a + 1)(b + 1)(c + 1) \\text{ Teiler}",
+            "why": "Die allgemeine Formel."
+          },
+          {
+            "tex": "\\text{ungerade Anzahl} \\iff \\text{alle Exponenten gerade} \\iff n \\text{ ist Quadratzahl}",
+            "why": "Ein Produkt ist nur ungerade, wenn jeder Faktor a + 1 ungerade ist."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Form.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wahl.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zählen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadrate.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: ggT mal kgV ist das Produkt.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a = 2^4 \\cdot 3,\\quad b = 2 \\cdot 3^2 \\cdot 5",
+            "why": "Beispiel: a = 48, b = 90."
+          },
+          {
+            "tex": "\\text{ggT} = 2^1 \\cdot 3^1 = 6,\\quad \\text{kgV} = 2^4 \\cdot 3^2 \\cdot 5 = 720",
+            "why": "Kleinere und größere Exponenten."
+          },
+          {
+            "tex": "\\min(e, f) + \\max(e, f) = e + f",
+            "why": "Für jede Primzahl kommen beide Exponenten genau einmal vor."
+          },
+          {
+            "tex": "\\text{ggT} \\cdot \\text{kgV} = a \\cdot b = 4320",
+            "why": "Probe: 6 · 720 = 48 · 90."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "ggT und kgV.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Exponenten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Teilbarkeitsregeln und ihre Begründung:**\n\n| durch | Regel | warum |\n|---|---|---|\n| 2, 5, 10 | letzte Ziffer | $10$ ist durch 2 und 5 teilbar, nur die Einerstelle zählt |\n| 4 | letzte zwei Ziffern | $100$ ist durch 4 teilbar |\n| 8 | letzte drei Ziffern | $1000$ ist durch 8 teilbar |\n| 3, 9 | Quersumme | $10^k - 1 = 99\\ldots9$ ist durch 9 teilbar, also hat $10^k$ bei 3 und 9 den Rest 1 |\n| 11 | alternierende Quersumme | $10 \\equiv -1 \\pmod{11}$ |\n\n**Für Beweise:** gerade $2k$, ungerade $2k + 1$; von zwei aufeinanderfolgenden Zahlen ist eine gerade, von drei eine durch 3 teilbar.",
+      "label": "Teilbarkeitsregeln",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Teilbarkeit, Primzahlen, ggT und kgV",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Teilbarkeit, Primzahlen, ggT und kgV.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Warum dieses Thema im TMUA überproportional vorkommt",
+          "blocks": [
+            {
+              "md": "Zahlentheorie ist der Stoff, aus dem sich **Beweisaufgaben ohne Vorwissen** bauen lassen: gerade/ungerade, Teilbarkeit, Primfaktoren. In Paper 2 tauchen sie ständig auf -- als Aussage, die zu beweisen oder zu widerlegen ist. Im deutschen Unterricht endet das Thema in der Mittelstufe; für den Test muss es wieder abrufbar sein."
+            }
+          ]
+        },
+        {
+          "title": "Der Fundamentalsatz",
+          "blocks": [
+            {
+              "md": "Jede natürliche Zahl $n > 1$ lässt sich **eindeutig** als Produkt von Primzahlen schreiben:\n\n$$504 = 2^3 \\cdot 3^2 \\cdot 7, \\qquad 540 = 2^2 \\cdot 3^3 \\cdot 5.$$\n\nAus dieser Darstellung liest man fast alles ab, was der Test fragt.\n\n| Frage | Antwort aus der Primfaktorzerlegung |\n|---|---|\n| ggT (*highest common factor*, HCF) | jede gemeinsame Primzahl mit dem **kleineren** Exponenten |\n| kgV (*lowest common multiple*, LCM) | jede vorkommende Primzahl mit dem **größeren** Exponenten |\n| Anzahl der Teiler | Exponenten je um 1 erhöhen und multiplizieren |\n| Ist $n$ eine Quadratzahl? | genau dann, wenn **alle** Exponenten gerade sind |\n| Ist $n$ eine Kubikzahl? | genau dann, wenn alle Exponenten durch 3 teilbar sind |\n\n> [!example] Alles an einem Beispiel\n> $360 = 2^3 \\cdot 3^2 \\cdot 5$.\n> Teileranzahl: $(3+1)(2+1)(1+1) = 24$.\n> Keine Quadratzahl, denn die Exponenten 3 und 1 sind ungerade. Multipliziert man mit $2 \\cdot 5 = 10$, wird $3600 = 2^4 \\cdot 3^2 \\cdot 5^2$ zur Quadratzahl -- und 10 ist der kleinste solche Faktor."
+            }
+          ]
+        },
+        {
+          "title": "Die Produktregel",
+          "blocks": [
+            {
+              "md": "$$\\operatorname{ggT}(a, b) \\cdot \\operatorname{kgV}(a, b) = a \\cdot b.$$\n\nDas ist die schnellste Abkürzung des Themas: Sind drei der vier Größen bekannt, folgt die vierte durch eine Division. Für $504$ und $540$: $36 \\cdot 7560 = 272\\,160 = 504 \\cdot 540$.\n\n> [!warning] Die Regel gilt nur für zwei Zahlen\n> Bei drei Zahlen ist $\\operatorname{ggT} \\cdot \\operatorname{kgV} \\ne a\\,b\\,c$. Das ist ein beliebtes Gegenbeispiel in Paper 2: $a = b = c = 2$ liefert $2 \\cdot 2 = 4 \\ne 8$."
+            }
+          ]
+        },
+        {
+          "title": "Teilbarkeitsregeln",
+          "blocks": [
+            {
+              "md": "| Teiler | Regel |\n|---|---|\n| 2 | letzte Ziffer gerade |\n| 3 | Quersumme durch 3 teilbar |\n| 4 | letzte **zwei** Ziffern durch 4 teilbar |\n| 5 | endet auf 0 oder 5 |\n| 6 | durch 2 **und** 3 |\n| 8 | letzte **drei** Ziffern durch 8 teilbar |\n| 9 | Quersumme durch 9 teilbar |\n| 11 | alternierende Quersumme durch 11 teilbar |\n\n> [!tip] Warum die Quersummenregel funktioniert\n> $10 \\equiv 1$ bei Division durch 9, also auch $100 \\equiv 1$, $1000 \\equiv 1$ und so fort. Jede Ziffer trägt damit ihren eigenen Wert zum Rest bei -- die Zahl und ihre Quersumme lassen bei Division durch 9 denselben Rest. Diese Begründung ist selbst ein Beweisbaustein."
+            }
+          ]
+        },
+        {
+          "title": "Primzahlen",
+          "blocks": [
+            {
+              "md": "- **2 ist die einzige gerade Primzahl.** Das erledigt viele Aussagen in einem Schritt: „Alle Primzahlen sind ungerade\" ist falsch, „Alle Primzahlen größer als 2 sind ungerade\" ist wahr.\n- **1 ist keine Primzahl** -- sonst wäre die Zerlegung nicht eindeutig.\n- Um zu prüfen, ob $n$ prim ist, genügt es, alle Primzahlen $\\le \\sqrt n$ zu testen. Für $n < 400$ reichen 2, 3, 5, 7, 11, 13, 17, 19.\n- Die Primzahlen unter 50: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47.\n\n> [!important] Jede Primzahl größer als 3 hat die Form $6k \\pm 1$\n> Von $6k$, $6k+1$, $6k+2$, $6k+3$, $6k+4$, $6k+5$ sind drei durch 2 und eine weitere durch 3 teilbar. Übrig bleiben $6k+1$ und $6k+5 = 6(k+1) - 1$. Der Satz ist ein Standardbaustein für Beweisaufgaben -- und seine Umkehrung ist falsch: $25 = 6 \\cdot 4 + 1$ ist keine Primzahl."
+            }
+          ]
+        },
+        {
+          "title": "Darstellungen für Beweise",
+          "blocks": [
+            {
+              "md": "Diese Schreibweisen braucht man in Paper 2 ständig (siehe **Direkter deduktiver Beweis**):\n\n| Objekt | Darstellung |\n|---|---|\n| gerade Zahl | $2n$ |\n| ungerade Zahl | $2n + 1$ |\n| zwei aufeinanderfolgende Zahlen | $n$, $n+1$ |\n| Vielfaches von 3 | $3n$ |\n| Zahl mit Rest 2 bei Division durch 5 | $5n + 2$ |\n\n> [!example] Ein typischer Dreizeiler\n> *Die Differenz der Quadrate zweier aufeinanderfolgender ganzer Zahlen ist ungerade.*\n> $(n+1)^2 - n^2 = 2n + 1$ -- und das ist per Definition ungerade. Fertig."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **1 als Primzahl zählen** oder 2 als Gegenbeispiel übersehen.\n- **ggT und kgV vertauschen.** Merkhilfe: Der **g**rößte gemeinsame **T**eiler ist die **kleinere** Zahl.\n- **Bei der Teileranzahl die $+1$ vergessen** -- sie steht für den Exponenten 0.\n- **Aus „$n$ ist durch 2 und durch 4 teilbar\" auf Teilbarkeit durch 8 schließen.** Das Produkt zweier Teiler ist nur dann ein Teiler, wenn sie **teilerfremd** sind.\n- **Den Fundamentalsatz auf 0 oder 1 anwenden wollen.**\n\nVerwandt: **Potenzen, Wurzeln und Surds** · **Widerspruchsbeweis** · Aufgabentyp: **ggT und kgV über Primfaktorzerlegung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Teileranzahl",
+      "md": "Wie viele positive Teiler hat $180$?",
+      "answer": 18,
+      "tolerance": 0,
+      "placeholder": "Teiler",
+      "explain": "$180 = 2^2 \\cdot 3^2 \\cdot 5$: $(2 + 1)(2 + 1)(1 + 1) = 18$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "ggT",
+      "md": "Bestimme den ggT von 84 und 120.",
+      "answer": 12,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$84 = 2^2 \\cdot 3 \\cdot 7$, $120 = 2^3 \\cdot 3 \\cdot 5$: kleinere Exponenten $2^2 \\cdot 3 = 12$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine positive ganze Zahl hat genau dann eine ungerade Anzahl von Teilern, wenn sie eine Quadratzahl ist.",
+      "answer": true,
+      "explain": "$(a + 1)(b + 1)\\cdots$ ist genau dann ungerade, wenn alle Exponenten gerade sind; anschaulich: Teiler kommen in Paaren $d$, $\\tfrac nd$, nur bei $d = \\sqrt n$ fällt das Paar zusammen.",
+      "label": "Quadrate",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "What is the smallest positive integer $n$ such that $108n$ is a perfect cube?",
+      "options": [
+        {
+          "md": "2",
+          "correct": true
+        },
+        {
+          "md": "3"
+        },
+        {
+          "md": "4"
+        },
+        {
+          "md": "6"
+        },
+        {
+          "md": "12"
+        }
+      ],
+      "explain": "$108 = 2^2 \\cdot 3^3$. Für einen Würfel müssen alle Exponenten durch 3 teilbar sein: ein Faktor 2 fehlt. $108 \\cdot 2 = 216 = 6^3$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Kubikzahl",
+      "id": "vq4"
+    },
+    {
+      "type": "match",
+      "label": "Regeln",
+      "md": "Ordne jeder Teilbarkeit die passende Regel zu.",
+      "pairs": [
+        [
+          "durch 9",
+          "Quersumme durch 9 teilbar"
+        ],
+        [
+          "durch 8",
+          "letzte drei Ziffern durch 8 teilbar"
+        ],
+        [
+          "durch 11",
+          "alternierende Quersumme durch 11 teilbar"
+        ],
+        [
+          "durch 4",
+          "letzte zwei Ziffern durch 4 teilbar"
+        ]
+      ],
+      "explain": "Die Regeln folgen aus den Resten der Zehnerpotenzen.",
+      "id": "vq5"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Teileranzahlformel in die richtige Reihenfolge.",
+      "items": [
+        "die Zahl in Primfaktoren zerlegen",
+        "jeder Teiler ist ein Produkt derselben Primzahlen mit kleineren oder gleichen Exponenten",
+        "jeder Exponent hat eine Wahl mehr, als er groß ist",
+        "die Wahlmöglichkeiten multiplizieren"
+      ],
+      "explain": "Die Reihenfolge: 1. die Zahl in Primfaktoren zerlegen. 2. jeder Teiler ist ein Produkt derselben Primzahlen mit kleineren oder gleichen Exponenten. 3. jeder Exponent hat eine Wahl mehr, als er groß ist. 4. die Wahlmöglichkeiten multiplizieren.",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "How many positive divisors does 360 have?",
       "options": [
@@ -49,12 +350,50 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "teiler"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Primfaktorzerlegung ist eindeutig.",
         "ggT: kleinste, kgV: größte Exponenten.",
-        "Teileranzahl: Produkt der (Exponent + 1)."
+        "Teileranzahl: Produkt der (Exponent + 1).",
+        "Teileranzahl $(a+1)(b+1)(c+1)$; ungerade genau für Quadratzahlen.",
+        "ggT: kleinere Exponenten, kgV: größere; ggT · kgV = a · b."
       ],
       "id": "summary"
     }

@@ -60,7 +60,7 @@
           {
             "name": "y",
             "expr": "x*tan(a*pi/180) - 9.81*x^2/(2*v0^2*cos(a*pi/180)^2)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Wurfweite {v0^2*sin(2*a*pi/180)/9.81|1} m, größte Höhe {(v0*sin(a*pi/180))^2/(2*9.81)|1} m"
@@ -81,6 +81,411 @@
           "a": 45
         }
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der schiefe Wurf in deiner Skizze. Die Kamera zeigt Abwurf, Scheitel und Weite.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Schiefer Wurf.svg",
+        "aspect": 1.92,
+        "alt": "Schiefer Wurf mit Wurfweite und Steighöhe"
+      },
+      "timeline": [
+        {
+          "caption": "Abwurf unter dem Winkel α mit der Geschwindigkeit v₀: wieder zwei Bewegungen, die sich nicht stören.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Zerlegen:** $v_{0x} = v_0\\cos\\alpha$ bleibt, $v_{0y} = v_0\\sin\\alpha$ nimmt um $g$ pro Sekunde ab.",
+          "to": {
+            "x": 0.2,
+            "y": 0.68,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Scheitel:** Dort ist $v_y = 0$, aber $v_x$ ist noch da. Hier liegt die Steighöhe $h_{max}$.",
+          "to": {
+            "x": 0.49,
+            "y": 0.48,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Formeln:** Weite und Steighöhe hängen von $v_0^2$ ab.",
+          "to": {
+            "x": 0.63,
+            "y": 0.4,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Landung:** Bei gleicher Abwurf- und Landehöhe ist die Bahn symmetrisch; die Weite ist $s = \\tfrac{v_0^2\\sin 2\\alpha}{g}$.",
+          "to": {
+            "x": 0.48,
+            "y": 0.88,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Ohne Luftreibung ist die Bahn eine Parabel, mit Luftreibung fällt sie steiler ab.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung von Flugzeit, Wurfweite und Steighöhe.** Achsen: $x$ waagerecht, $y$ nach oben, Abwurf im Ursprung, Landung auf gleicher Höhe.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x(t) = v_0\\cos\\alpha\\cdot t,\\qquad y(t) = v_0\\sin\\alpha\\cdot t - \\tfrac12 g t^2",
+            "why": "Waagerecht gleichförmig, senkrecht ein Wurf nach oben."
+          },
+          {
+            "tex": "y(t_F) = 0\\quad\\Rightarrow\\quad t_F\\left(v_0\\sin\\alpha - \\tfrac12 g t_F\\right) = 0\\quad\\Rightarrow\\quad t_F = \\frac{2v_0\\sin\\alpha}{g}",
+            "why": "Die Lösung $t = 0$ ist der Abwurf, die andere die Landung."
+          },
+          {
+            "tex": "s = x(t_F) = v_0\\cos\\alpha\\cdot\\frac{2v_0\\sin\\alpha}{g} = \\frac{v_0^2\\cdot 2\\sin\\alpha\\cos\\alpha}{g}",
+            "why": "Die Weite ist die waagerechte Strecke während der Flugzeit."
+          },
+          {
+            "tex": "s = \\frac{v_0^2\\sin(2\\alpha)}{g}",
+            "why": "Mit $2\\sin\\alpha\\cos\\alpha = \\sin 2\\alpha$."
+          },
+          {
+            "tex": "v_y(t_h) = v_0\\sin\\alpha - g t_h = 0\\quad\\Rightarrow\\quad t_h = \\frac{v_0\\sin\\alpha}{g} = \\tfrac12 t_F",
+            "why": "Im Scheitel ist die senkrechte Geschwindigkeit null; das ist genau die halbe Flugzeit."
+          },
+          {
+            "tex": "h = y(t_h) = \\frac{v_0^2\\sin^2\\alpha}{g} - \\frac{v_0^2\\sin^2\\alpha}{2g} = \\frac{v_0^2\\sin^2\\alpha}{2g}",
+            "why": "Die Steighöhe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die Bewegungsgleichungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Flugzeit aus der Landebedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurfweite.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Steighöhe aus dem Scheitel.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!important] Der beste Winkel\n> $\\sin(2\\alpha)$ ist am größten für $2\\alpha = 90°$: Bei $\\alpha = 45°$ fliegt der Körper am weitesten, $s_{max} = \\tfrac{v_0^2}{g}$.\n> Wegen $\\sin(2\\alpha) = \\sin(180° - 2\\alpha)$ liefern Winkel, die sich zu $90°$ ergänzen (etwa $30°$ und $60°$), **dieselbe** Weite. Der flachere Wurf ist schneller am Ziel, der steilere fliegt höher.\n\n> [!warning] Modellgrenzen\n> Alle Formeln setzen voraus: kein Luftwiderstand, Abwurf und Landung auf gleicher Höhe. Mit Luftwiderstand wird die Bahn unsymmetrisch (steiler Abstieg), die Weite kleiner und der beste Winkel liegt **unter** $45°$. Bei Abwurf von einer Erhöhung rechnet man mit den Bewegungsgleichungen selbst.",
+      "label": "Folgerungen",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Bahnkurve des schiefen Wurfs.** Wie beim waagerechten Wurf eliminiert man die Zeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "t = \\frac{x}{v_0\\cos\\alpha}",
+            "why": "Aus der waagerechten Bewegung."
+          },
+          {
+            "tex": "y = v_0\\sin\\alpha\\cdot\\frac{x}{v_0\\cos\\alpha} - \\tfrac12 g\\left(\\frac{x}{v_0\\cos\\alpha}\\right)^2",
+            "why": "In die senkrechte Bewegung eingesetzt."
+          },
+          {
+            "tex": "y(x) = \\tan\\alpha\\cdot x - \\frac{g}{2v_0^2\\cos^2\\alpha}\\,x^2",
+            "why": "Eine nach unten geöffnete Parabel. Für $\\alpha = 0$ bleibt die Bahn des waagerechten Wurfs (mit $y$ nach oben)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zeit aus der waagerechten Bewegung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Parabel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Schiefer Wurf",
+      "path": "02 Wiki/Physik/01 E-Phase/Schiefer Wurf.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **schiefe Wurf** ist die Überlagerung einer gleichförmigen Bewegung längs der Abwurfrichtung und des **freien Falls**. Der **waagerechte Wurf** ist der Sonderfall $\\alpha = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "image": "vault:Schiefer Wurf.svg"
+            }
+          ]
+        },
+        {
+          "title": "Zerlegung der Anfangsgeschwindigkeit",
+          "blocks": [
+            {
+              "md": "$$v_{0x} = v_0 \\cos\\alpha \\qquad v_{0y} = v_0 \\sin\\alpha$$"
+            }
+          ]
+        },
+        {
+          "title": "Bewegungsgleichungen",
+          "blocks": [
+            {
+              "md": "$$x(t) = v_0\\cos\\alpha \\cdot t \\qquad y(t) = v_0\\sin\\alpha \\cdot t - \\tfrac{1}{2}g t^2$$"
+            }
+          ]
+        },
+        {
+          "title": "Kenngrößen",
+          "blocks": [
+            {
+              "md": "| Größe | Formel |\n|---|---|\n| Flugzeit | $t_{ges} = \\dfrac{2 v_0 \\sin\\alpha}{g}$ |\n| Wurfweite | $s = \\dfrac{v_0^2 \\sin(2\\alpha)}{g}$ |\n| Steighöhe | $h = \\dfrac{v_0^2 \\sin^2\\alpha}{2g}$ |\n\n> [!important] Maximale Wurfweite\n> Wegen $\\sin(2\\alpha)$ ist die Wurfweite bei $\\alpha = 45$ Grad **maximal**. Zwei Winkel, die sich zu 90 Grad ergänzen (z. B. 30 und 60 Grad), liefern die **gleiche** Wurfweite -- der flachere Wurf ist dabei schneller am Ziel."
+            },
+            {
+              "md": "> [!warning] Modellgrenze\n> Alle Formeln gelten **ohne Luftwiderstand**. Real wird die Bahn unsymmetrisch (steilerer Abstieg), die Weite kleiner und der optimale Winkel sinkt unter 45 Grad -- siehe **Reibung und Grenzgeschwindigkeit**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Wurfweite in die richtige Reihenfolge.",
+      "items": [
+        "Geschwindigkeit zerlegen: $v_{0x} = v_0\\cos\\alpha$, $v_{0y} = v_0\\sin\\alpha$",
+        "Flugzeit aus $y(t) = 0$: $t_F = \\tfrac{2v_0\\sin\\alpha}{g}$",
+        "Weite als waagerechte Strecke: $s = v_0\\cos\\alpha\\cdot t_F$",
+        "$2\\sin\\alpha\\cos\\alpha = \\sin 2\\alpha$ verwenden"
+      ],
+      "explain": "Die Reihenfolge: 1. Geschwindigkeit zerlegen: $v_{0x} = v_0\\cos\\alpha$, $v_{0y} = v_0\\sin\\alpha$. 2. Flugzeit aus $y(t) = 0$: $t_F = \\tfrac{2v_0\\sin\\alpha}{g}$. 3. Weite als waagerechte Strecke: $s = v_0\\cos\\alpha\\cdot t_F$. 4. $2\\sin\\alpha\\cos\\alpha = \\sin 2\\alpha$ verwenden.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Ball wird mit $20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ unter $30°$ abgeworfen. Wie weit fliegt er ohne Luftreibung?",
+      "answer": 35.3,
+      "tolerance": 0.1,
+      "placeholder": "m",
+      "explain": "$s = \\tfrac{v_0^2\\sin 60°}{g} = \\tfrac{400\\cdot 0{,}866}{9{,}81}\\,\\mathrm{m} \\approx 35{,}3\\,\\mathrm{m}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie hoch steigt derselbe Ball ($20\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $30°$)?",
+      "answer": 5.1,
+      "tolerance": 0.03,
+      "placeholder": "m",
+      "explain": "$h = \\tfrac{v_0^2\\sin^2 30°}{2g} = \\tfrac{400\\cdot 0{,}25}{19{,}62}\\,\\mathrm{m} \\approx 5{,}10\\,\\mathrm{m}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Zwei Bälle fliegen gleich weit, einer unter $30°$, einer unter $60°$. Welcher ist länger in der Luft?",
+      "options": [
+        {
+          "md": "der unter $60°$",
+          "correct": true
+        },
+        {
+          "md": "der unter $30°$",
+          "why": "$t_F = \\tfrac{2v_0\\sin\\alpha}{g}$ wächst mit dem Winkel."
+        },
+        {
+          "md": "beide gleich lang",
+          "why": "Gleiche Weite heißt nicht gleiche Zeit: Der steile Wurf fliegt langsamer waagerecht."
+        },
+        {
+          "md": "Das lässt sich ohne Zahlen nicht sagen.",
+          "why": "Das Verhältnis ist $\\tfrac{\\sin 60°}{\\sin 30°} = \\sqrt3$, unabhängig von $v_0$."
+        }
+      ],
+      "explain": "Der steilere fliegt höher und länger, kommt waagerecht aber langsamer voran: $\\sqrt3$-mal so lange in der Luft.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Im höchsten Punkt der Bahn ist die Geschwindigkeit des Balls null.",
+      "answer": false,
+      "explain": "Nur die senkrechte Komponente ist null. Die waagerechte $v_0\\cos\\alpha$ bleibt die ganze Zeit erhalten.",
+      "label": "Verständnis",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Abwurfgeschwindigkeit (gleicher Winkel), wird die Weite {{0}}-mal so groß, die Steighöhe {{1}}-mal so groß und die Flugzeit {{2}}-mal so lang.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "Weite und Höhe enthalten $v_0^2$, die Flugzeit nur $v_0$.",
+      "id": "vq6"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Lösungsweg. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$v_0 = 10\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, $\\alpha = 30°$, gesucht ist die Weite.",
+          "why": "Richtig."
+        },
+        {
+          "md": "$s = \\tfrac{v_0^2\\cdot 2\\sin\\alpha}{g} = \\tfrac{100\\cdot 1}{9{,}81}\\,\\mathrm{m} \\approx 10{,}2\\,\\mathrm{m}$",
+          "why": "Falsch: In der Formel steht $\\sin(2\\alpha) = \\sin 60° \\approx 0{,}866$, nicht $2\\sin\\alpha$. Richtig: $s \\approx 8{,}83\\,\\mathrm{m}$."
+        },
+        {
+          "md": "Bei 45° wäre die Weite größer.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "$\\sin(2\\alpha)$ ist der Sinus des doppelten Winkels, nicht das Doppelte des Sinus.",
+      "id": "vq7"
+    },
+    {
+      "type": "multi",
+      "md": "Was ändert sich mit Luftwiderstand gegenüber dem idealen Wurf?",
+      "options": [
+        {
+          "md": "Der beste Abwurfwinkel liegt unter $45°$.",
+          "correct": true
+        },
+        {
+          "md": "Die Bahn fällt am Ende steiler ab als sie gestiegen ist.",
+          "correct": true
+        },
+        {
+          "md": "Die Weite wird kleiner.",
+          "correct": true
+        },
+        {
+          "md": "Der Ball steigt höher.",
+          "why": "Die bremsende Luftkraft verringert auch die Steighöhe."
+        },
+        {
+          "md": "Die Bahn bleibt eine symmetrische Parabel.",
+          "why": "Die Bremsung macht sie unsymmetrisch."
+        }
+      ],
+      "explain": "Die Luft bremst vor allem die waagerechte Bewegung über die ganze Flugzeit; flachere Würfe verlieren weniger.",
+      "label": "Modellgrenzen",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie weit kann man einen Ball mit $15\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ höchstens werfen (gleiche Abwurf- und Landehöhe, ohne Luftreibung)?",
+      "answer": 22.9,
+      "tolerance": 0.1,
+      "placeholder": "m",
+      "explain": "Bei $45°$: $s_{max} = \\tfrac{v_0^2}{g} = \\tfrac{225}{9{,}81}\\,\\mathrm{m} \\approx 22{,}9\\,\\mathrm{m}$.",
+      "id": "vq9"
     },
     {
       "id": "paar",
@@ -122,7 +527,10 @@
       "points": [
         "Zerlegen: $v_x = v_0\\cos\\alpha$ konstant, $v_y = v_0\\sin\\alpha - g t$.",
         "Weite $w = v_0^2\\sin(2\\alpha)/g$, am größten bei 45°.",
-        "Mit Luftreibung liegt der beste Winkel unter 45°."
+        "Mit Luftreibung liegt der beste Winkel unter 45°.",
+        "Flugzeit $t_F = \\tfrac{2v_0\\sin\\alpha}{g}$, Weite $s = \\tfrac{v_0^2\\sin 2\\alpha}{g}$, Steighöhe $h = \\tfrac{v_0^2\\sin^2\\alpha}{2g}$, hergeleitet aus $y(t_F) = 0$ und $v_y(t_h) = 0$.",
+        "Größte Weite bei $45°$; Winkel, die sich zu $90°$ ergänzen, fliegen gleich weit.",
+        "Bahnkurve: $y = x\\tan\\alpha - \\tfrac{g}{2v_0^2\\cos^2\\alpha}x^2$. Mit Luftwiderstand: kleinere Weite, bester Winkel unter $45°$."
       ]
     }
   ]

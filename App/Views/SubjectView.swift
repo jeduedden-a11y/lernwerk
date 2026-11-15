@@ -1,82 +1,33 @@
 import SwiftUI
 import LernwerkCore
 
-/// A subject folder on the home screen: its courses as short rows, each opening the course directly.
-struct SubjectCard: View {
-    @Environment(AppModel.self) private var model
-    var subject: Subject
-
-    var body: some View {
-        let courses = model.courses(in: subject)
-        VStack(alignment: .leading, spacing: 10) {
-            NavigationLink(value: subject) {
-                HStack(spacing: 12) {
-                    SubjectBadge(subject: subject, size: 44)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(subject.title).font(.headline)
-                        Text(summary(courses))
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer(minLength: 0)
-                    Image(systemName: "chevron.right").foregroundStyle(.tertiary)
-                }
-                .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Fach \(subject.title), \(summary(courses))")
-
-            VStack(spacing: 0) {
-                ForEach(Array(courses.enumerated()), id: \.element.id) { offset, course in
-                    if offset > 0 { Divider().padding(.leading, 48) }
-                    NavigationLink(value: course) {
-                        CourseLine(course: course)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-        }
-        .foregroundStyle(.primary)
-        .card()
-    }
-
-    private func summary(_ courses: [Course]) -> String {
-        let ready = courses.reduce(0) { $0 + $1.readyLessons.count }
-        let done = courses.reduce(0) { $0 + model.state.completedCount(in: $1) }
-        let count = courses.count == 1 ? "1 Kurs" : "\(courses.count) Kurse"
-        return "\(count) · \(done) von \(ready) Lektionen"
-    }
-}
-
-/// One course inside a subject folder.
-struct CourseLine: View {
+/// A course inside a subject: badge, title, progress.
+struct CourseCard: View {
     @Environment(AppModel.self) private var model
     var course: Course
 
     var body: some View {
         let done = model.state.completedCount(in: course)
         let ready = course.readyLessons.count
-        HStack(spacing: 12) {
-            CourseBadge(course: course, size: 36)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(course.title)
-                    .font(.subheadline.weight(.semibold))
-                    .lineLimit(1)
-                ProgressLine(value: model.progress(of: course), tint: course.tint)
-                    .frame(maxWidth: 160)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top, spacing: 12) {
+                CourseBadge(course: course, size: 48)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(course.title).font(.headline)
+                    if let s = course.subtitle {
+                        Text(s).font(.footnote).foregroundStyle(.secondary).lineLimit(2).multilineTextAlignment(.leading)
+                    }
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right").foregroundStyle(.tertiary)
             }
-            Spacer(minLength: 8)
-            Text("\(done)/\(ready)")
-                .font(.footnote.monospacedDigit())
+            ProgressLine(value: model.progress(of: course), tint: course.tint)
+            Text("\(done) von \(ready) Lektionen · \(course.lessons.count - ready) in Arbeit")
+                .font(.caption)
                 .foregroundStyle(.secondary)
-            Image(systemName: "chevron.right")
-                .font(.footnote)
-                .foregroundStyle(.tertiary)
         }
-        .padding(.vertical, 8)
-        .contentShape(.rect)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(course.title), \(done) von \(ready) Lektionen")
+        .foregroundStyle(.primary)
+        .card()
     }
 }
 

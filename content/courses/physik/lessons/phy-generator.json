@@ -60,11 +60,337 @@
           {
             "name": "U",
             "expr": "N*0.1*0.01*2*pi*f*sin(2*pi*f*x)",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Scheitelspannung {N*0.1*0.01*2*pi*f|1} V, Periodendauer {1000/f|1} ms"
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Generator in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Generator.svg",
+        "aspect": 1.84,
+        "alt": "Generator mit drehender Leiterschleife"
+      },
+      "timeline": [
+        {
+          "caption": "Eine Leiterschleife dreht sich zwischen den Polen eines Magneten.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Zwischen Nord- und Südpol ist das Feld nahezu homogen.",
+          "to": {
+            "x": 0.33,
+            "y": 0.54,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Schleife dreht sich mit der Winkelgeschwindigkeit $\\omega$; der Winkel zwischen Feld und Flächennormale wächst gleichmäßig.",
+          "to": {
+            "x": 0.43,
+            "y": 0.42,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Dadurch ändert sich der Fluss periodisch, und es entsteht eine sinusförmige Wechselspannung $U(t) = \\hat U\\sin(\\omega t)$ mit $\\hat U = N B A\\omega$.",
+          "to": {
+            "x": 0.82,
+            "y": 0.82,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Generatorspannung.** Spule mit $N$ Windungen, Fläche $A$, Winkelgeschwindigkeit $\\omega$ im Feld $B$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\varphi(t) = \\omega t,\\qquad \\Phi(t) = B A\\cos(\\omega t)",
+            "why": "Der Winkel zwischen Feld und Flächennormale wächst gleichmäßig."
+          },
+          {
+            "tex": "U(t) = -N\\,\\dot\\Phi = -N B A\\cdot\\frac{d}{dt}\\cos(\\omega t) = N B A\\,\\omega\\,\\sin(\\omega t)",
+            "why": "Ableiten mit der Kettenregel."
+          },
+          {
+            "tex": "\\hat U = N B A\\,\\omega = N B A\\cdot 2\\pi f",
+            "why": "Der Scheitelwert wächst mit Windungszahl, Feld, Fläche und Drehfrequenz."
+          },
+          {
+            "tex": "\\Phi \\text{ maximal} \\Leftrightarrow U = 0,\\qquad \\Phi = 0 \\Leftrightarrow |U| \\text{ maximal}",
+            "why": "Nicht der Fluss, sondern seine Änderung zählt: Am stärksten ändert er sich beim Nulldurchgang."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fluss.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Scheitelwert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Phasenlage.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung des Effektivwerts.** Welche Gleichspannung gibt an einem Widerstand $R$ im Mittel dieselbe Leistung?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(t) = \\frac{U(t)^2}{R} = \\frac{\\hat U^2}{R}\\sin^2(\\omega t)",
+            "why": "Momentanleistung."
+          },
+          {
+            "tex": "\\overline{\\sin^2(\\omega t)} = \\tfrac12",
+            "why": "Mittelwert über eine Periode: $\\sin^2 + \\cos^2 = 1$, und beide haben denselben Mittelwert."
+          },
+          {
+            "tex": "\\bar P = \\frac{\\hat U^2}{2R} = \\frac{U_{eff}^2}{R}\\quad\\Rightarrow\\quad U_{eff} = \\frac{\\hat U}{\\sqrt2}",
+            "why": "Ebenso $I_{eff} = \\tfrac{\\hat I}{\\sqrt2}$. Die Netzspannung $230\\,\\mathrm{V}$ ist ein Effektivwert; ihr Scheitel liegt bei $325\\,\\mathrm{V}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Momentanleistung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Effektivwert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Generator",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Generator.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Generator** wandelt mechanische in elektrische Energie um. Eine im **Magnetfeld** rotierende Leiterschleife erfährt eine ständige Änderung des **magnetischen Flusses** und erzeugt so eine **Wechselspannung**."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau und Funktion",
+          "blocks": [
+            {
+              "image": "vault:Generator.svg"
+            }
+          ]
+        },
+        {
+          "title": "Induzierte Wechselspannung",
+          "blocks": [
+            {
+              "md": "Rotiert die Schleife mit der Winkelgeschwindigkeit $\\omega$, ist $\\Phi(t) = B A \\cos(\\omega t)$ und damit:\n$$U(t) = -N\\,\\dot{\\Phi} = N B A \\omega \\cdot \\sin(\\omega t) = \\hat{U}\\cdot \\sin(\\omega t)$$\nDie Scheitelspannung ist $\\hat{U} = N B A \\omega$. Der zeitliche Verlauf ist eine **Sinusfunktion** -- dieselbe Mathematik wie bei der **harmonischen Schwingung**."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb eine Sinusspannung entsteht",
+          "blocks": [
+            {
+              "md": "$$\\Phi(t) = B\\,A\\cos(\\omega t) \\;\\Longrightarrow\\; U(t) = -N\\dot\\Phi = N B A \\omega \\sin(\\omega t)$$\n\n> [!important] Die Ableitung des Kosinus ist der ganze Grund\n> Der Fluss durch die rotierende Schleife ändert sich kosinusförmig, weil nur die zum Feld senkrechte Projektion der Fläche zählt. Die induzierte Spannung ist die **Ableitung** davon -- also eine Sinusfunktion.\n>\n> Daraus folgt eine Beobachtung, die zunächst überrascht: Die Spannung ist **maximal**, wenn der Fluss **null** ist -- nämlich wenn die Schleifenebene parallel zum Feld steht. Dort ändert sich der Fluss am schnellsten.\n>\n> Und umgekehrt ist die Spannung null, wenn der Fluss maximal ist. Wer Fluss und Spannung gleichsetzt, kommt zum gegenteiligen Ergebnis.\n>\n> Es ist derselbe Zusammenhang wie zwischen Ort und Geschwindigkeit bei der **harmonischen Schwingung**: Die Geschwindigkeit ist im Nulldurchgang maximal, nicht in der Umkehrlage."
+            }
+          ]
+        },
+        {
+          "title": "Die Scheitelspannung",
+          "blocks": [
+            {
+              "md": "$$\\hat U = N\\,B\\,A\\,\\omega$$\n\n| Größe erhöhen | Wirkung |\n|---|---|\n| Windungszahl $N$ | linear mehr Spannung |\n| Flussdichte $B$ | linear mehr Spannung |\n| Fläche $A$ | linear mehr Spannung |\n| **Drehfrequenz** $\\omega$ | linear mehr Spannung **und** höhere Frequenz |\n\n> [!tip] Die Drehzahl wirkt doppelt\n> Sie erhöht nicht nur die Spannung, sondern legt zugleich die **Netzfrequenz** fest. Deshalb lässt sie sich nicht frei wählen: Generatoren in einem Verbundnetz müssen exakt synchron laufen, damit alle dieselbe Frequenz liefern.\n>\n> Das ist ein technisch anspruchsvolles Regelungsproblem -- und der Grund, weshalb die Netzfrequenz als Maß für das Gleichgewicht von Erzeugung und Verbrauch dient. Sinkt sie unter 50 Hz, wird mehr entnommen als eingespeist."
+            }
+          ]
+        },
+        {
+          "title": "Effektivwert",
+          "blocks": [
+            {
+              "md": "$$U_{\\text{eff}} = \\frac{\\hat U}{\\sqrt{2}}$$\n\n> [!important] Der Effektivwert ist über die Leistung definiert, nicht über den Mittelwert\n> Der zeitliche Mittelwert einer Sinusspannung ist **null** -- positive und negative Halbwellen heben sich auf. Als Kennzahl wäre er unbrauchbar.\n>\n> Der Effektivwert gibt stattdessen an, welche **Gleichspannung** dieselbe Leistung an einem Widerstand umsetzen würde. Weil die Leistung quadratisch von der Spannung abhängt und der Mittelwert des Quadrats einer Sinusfunktion $\\tfrac12$ beträgt, ergibt sich der Faktor $1/\\sqrt2$.\n>\n> Die im Haushalt angegebenen 230 V sind der Effektivwert; die Scheitelspannung beträgt rund 325 V. Für die Isolation eines Geräts ist der zweite Wert maßgeblich, für die Leistungsangabe der erste."
+            }
+          ]
+        },
+        {
+          "title": "Generator und Motor",
+          "blocks": [
+            {
+              "md": "> [!tip] Dieselbe Maschine, beide Richtungen\n> Ein Generator wandelt mechanische in elektrische Energie, ein Motor umgekehrt. Baulich sind beide weitgehend identisch -- ein Gleichstrommotor arbeitet beim Antreiben von außen als Generator.\n>\n> Genau das nutzt die **Rekuperation** im Elektrofahrzeug: Beim Bremsen läuft der Antrieb als Generator und lädt den Akkumulator.\n>\n> Die Umkehrbarkeit hat eine tiefere Ursache: Die Lorentzkraft, die im Motor die Bewegung erzeugt, ist dieselbe, die im Generator die Ladungen trennt."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der Generator ist die Anwendung der **Induktion**, mit der praktisch der gesamte Strom erzeugt wird -- unabhängig davon, ob die Turbine von Dampf, Wasser oder Wind angetrieben wird. Er liefert zugleich das erste physikalische Beispiel für eine Sinusfunktion aus einer Drehbewegung."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Spule mit $200$ Windungen und $100\\,\\mathrm{cm}^2$ dreht sich mit $3000$ Umdrehungen pro Minute in $0{,}1\\,\\mathrm{T}$. Wie groß ist der Scheitelwert der Spannung?",
+      "answer": 62.8,
+      "tolerance": 0.3,
+      "placeholder": "V",
+      "explain": "$\\omega = 2\\pi\\cdot 50\\,\\mathrm{s}^{-1}$, $\\hat U = N B A\\omega = 200\\cdot 0{,}1\\cdot 0{,}01\\cdot 314\\,\\mathrm{V} \\approx 62{,}8\\,\\mathrm{V}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist der Effektivwert dieser Spannung?",
+      "answer": 44.4,
+      "tolerance": 0.3,
+      "placeholder": "V",
+      "explain": "$U_{eff} = \\tfrac{\\hat U}{\\sqrt2} \\approx 44{,}4\\,\\mathrm{V}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Generatorspannung in die richtige Reihenfolge.",
+      "items": [
+        "Winkel wächst gleichmäßig: $\\varphi = \\omega t$",
+        "Fluss: $\\Phi = BA\\cos(\\omega t)$",
+        "Induktionsgesetz: $U = -N\\dot\\Phi$",
+        "Ableiten: $U = NBA\\omega\\sin(\\omega t)$"
+      ],
+      "explain": "Die Reihenfolge: 1. Winkel wächst gleichmäßig: $\\varphi = \\omega t$. 2. Fluss: $\\Phi = BA\\cos(\\omega t)$. 3. Induktionsgesetz: $U = -N\\dot\\Phi$. 4. Ableiten: $U = NBA\\omega\\sin(\\omega t)$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "In welcher Stellung der Spule ist die induzierte Spannung am größten?",
+      "options": [
+        {
+          "md": "wenn die Spulenfläche parallel zu den Feldlinien steht und der Fluss null ist",
+          "correct": true
+        },
+        {
+          "md": "wenn die Fläche senkrecht zu den Feldlinien steht und der Fluss am größten ist",
+          "why": "Dort ändert sich der Fluss gerade nicht."
+        },
+        {
+          "md": "in jeder Stellung gleich",
+          "why": "Die Spannung ist sinusförmig."
+        },
+        {
+          "md": "nur beim Anlaufen",
+          "why": "Bei gleichmäßiger Drehung wiederholt sie sich periodisch."
+        }
+      ],
+      "explain": "$U \\sim \\sin(\\omega t)$, $\\Phi \\sim \\cos(\\omega t)$: Spannung maximal beim Fluss-Nulldurchgang.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Effektivwert",
+      "md": "Wie groß ist der Scheitelwert der Netzspannung ($U_{eff} = 230\\,\\mathrm{V}$)?",
+      "answer": 325,
+      "tolerance": 1,
+      "placeholder": "V",
+      "explain": "$\\hat U = \\sqrt2\\cdot 230\\,\\mathrm{V} \\approx 325\\,\\mathrm{V}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Drehzahl, wird der Scheitelwert {{0}}-mal so groß und die Frequenz der Wechselspannung {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$\\hat U = NBA\\omega$ und $f = \\tfrac{\\omega}{2\\pi}$.",
+      "id": "vq6"
     },
     {
       "id": "doppelt",
@@ -101,13 +427,51 @@
       "label": "Induktion"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "generator"
+        ]
+      },
+      "label": "Generator",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "generator"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "generator"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$\\Phi(t) = BA\\cos(\\omega t)$.",
         "$U(t) = NBA\\omega\\sin(\\omega t)$.",
-        "Scheitelwert $\\sim$ Windungszahl, Feld, Fläche und Drehzahl."
+        "Scheitelwert $\\sim$ Windungszahl, Feld, Fläche und Drehzahl.",
+        "$\\Phi = BA\\cos(\\omega t)$, $U = NBA\\omega\\sin(\\omega t)$; Scheitelwert $\\hat U = NBA\\omega$.",
+        "Effektivwerte $U_{eff} = \\tfrac{\\hat U}{\\sqrt2}$, $I_{eff} = \\tfrac{\\hat I}{\\sqrt2}$, aus dem Mittelwert $\\overline{\\sin^2} = \\tfrac12$."
       ]
     }
   ]

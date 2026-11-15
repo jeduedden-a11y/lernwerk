@@ -4,6 +4,7 @@ import LernwerkCore
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.scenePhase) private var scenePhase
+    @AppStorage("appearance") private var appearance = Appearance.dark.rawValue
 
     var body: some View {
         @Bindable var model = model
@@ -37,6 +38,8 @@ struct RootView: View {
                 .environment(model)
         }
         .overlay(alignment: .top) { ToastView() }
+        // dark by default; light or the system setting in Einstellungen › Darstellung
+        .preferredColorScheme((Appearance(rawValue: appearance) ?? .dark).scheme)
         // lernwerk://weiter, lernwerk://wiederholen, lernwerk://tagesmix (for shortcuts on the home screen)
         .onOpenURL { model.open($0) }
         .task {
@@ -97,7 +100,7 @@ struct ContinueAccessory: View {
             .buttonStyle(.plain)
             .accessibilityHint("Startet die Lektion")
         } else {
-            Label("Alle verfügbaren Lektionen geschafft", systemImage: "checkmark.seal.fill")
+            Label("Alle Lektionen abgeschlossen", systemImage: "checkmark.seal.fill")
                 .font(.subheadline.weight(.semibold))
                 .padding(.horizontal, 14)
         }

@@ -16,6 +16,169 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Alles auf dieselbe Basis bringen:** $9^x = (3^x)^2$, $2^{2x + 1} = 2 \\cdot (2^x)^2$, $4^{x - 1} = \\tfrac14 (2^x)^2$.\n> 2. **$u = a^x$ setzen:** Es entsteht eine quadratische Gleichung in $u$.\n> 3. **Lösen**, möglichst durch Faktorisieren.\n> 4. **Zurückübersetzen:** $a^x = u$ hat genau dann eine Lösung $x = \\log_a u$, wenn $u > 0$; Werte $u \\le 0$ verwerfen.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Löse $4^{x} - 3 \\cdot 2^{x + 1} + 8 = 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(2^x)^2 - 6 \\cdot 2^x + 8 = 0",
+            "why": "4^x = (2^x)^2 und 3 · 2^{x+1} = 6 · 2^x."
+          },
+          {
+            "tex": "u^2 - 6u + 8 = (u - 2)(u - 4) = 0",
+            "why": "Mit u = 2^x."
+          },
+          {
+            "tex": "2^x = 2 \\Rightarrow x = 1,\\qquad 2^x = 4 \\Rightarrow x = 2",
+            "why": "Beide u positiv: zwei Lösungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Umschreiben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Substituieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zurück.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- $2^{x + 1}$ als $(2^x)^2$ lesen statt als $2 \\cdot 2^x$.\n- Negative $u$-Werte in einen Logarithmus stecken.\n- Die Summe der $u$-Werte statt der Summe der $x$-Werte angeben.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Exponentialgleichung durch Substitution lösen",
+      "path": "02 Wiki/TMUA/09 Exponentialfunktionen und Logarithmen/Aufgabentypen/Exponentialgleichung durch Substitution lösen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "In der Gleichung stehen **zwei Exponentialterme derselben Basis**, deren Exponenten sich um den Faktor 2 unterscheiden: $4^x$ neben $2^x$, $9^x$ neben $3^x$, $2^{2x+1}$ neben $2^x$. Dann liegt eine quadratische Gleichung in verkleideter Form vor.\n\nErkennungsmerkmal: $4^x = \\left(2^2\\right)^x = \\left(2^x\\right)^2$. Der größere Term ist das **Quadrat** des kleineren."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Alles auf eine Basis bringen.** $4^x = \\left(2^x\\right)^2$, $9^x = \\left(3^x\\right)^2$, $2^{2x+1} = 2 \\cdot \\left(2^x\\right)^2$.\n2. **Substituieren:** $u = 2^x$ bzw. $u = 3^x$.\n3. **Quadratische Gleichung lösen.**\n4. **Filtern: $u > 0$.** Jede negative oder verschwindende Lösung **entfällt**, denn $a^x$ ist stets positiv.\n5. **Rücksubstituieren:** $2^x = u$ führt auf $x = \\log_2 u$ -- meist eine glatte Zahl.\n\n> [!important] Schritt 4 ist die eigentliche Aufgabe\n> Fast jede Aufgabe dieses Typs baut genau eine negative $u$-Lösung ein. Wer sie mitzählt, kommt auf eine Lösung zu viel -- und genau diese Zahl steht in den Antwortoptionen.\n>\n> Der Grund ist der Wertebereich: $a^x > 0$ für alle reellen $x$, ohne Ausnahme."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Solve $4^x - 5 \\cdot 2^x + 4 = 0$.\n>\n> - **A** $x = 0$ and $x = 2$\n> - **B** $x = 1$ and $x = 4$\n> - **C** $x = 2$ only\n> - **D** $x = 0$ and $x = 1$\n> - **E** no real solutions\n\n**Schritt 1 und 2:** $4^x = \\left(2^x\\right)^2$, also mit $u = 2^x$:\n\n$$u^2 - 5u + 4 = 0.$$\n\n**Schritt 3:** $(u - 1)(u - 4) = 0$, also $u = 1$ oder $u = 4$.\n\n**Schritt 4:** Beide sind positiv, beide bleiben.\n\n**Schritt 5:** $2^x = 1$ liefert $x = 0$; $2^x = 4$ liefert $x = 2$. Antwort **A**.\n\nOption B ist die Falle für alle, die die $u$-Werte 1 und 4 direkt als $x$ ablesen -- der häufigste Fehler bei jeder Substitution."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Rücksubstitution vergessen** und $u$ als Antwort geben.\n- **Eine negative $u$-Lösung mitnehmen.**\n- **$4^x$ als $2 \\cdot 2^x$ lesen** statt als $\\left(2^x\\right)^2$.\n- **Den Vorfaktor bei $2^{2x+1}$ übersehen:** $2^{2x+1} = 2 \\cdot 2^{2x} = 2u^2$, nicht $u^2$.\n- **$u = 1$ übersehen**, weil $x = 0$ unauffällig aussieht."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Solve $9^x - 4 \\cdot 3^x + 3 = 0$.\n>\n> - **A** $x = 0$ and $x = 1$\n> - **B** $x = 1$ and $x = 3$\n> - **C** $x = 3$ only\n> - **D** $x = 0$ only\n> - **E** no real solutions\n\n> [!success]- Lösung\n> **A.** Mit $u = 3^x$: $u^2 - 4u + 3 = 0$, also $(u-1)(u-3) = 0$ und $u = 1$ oder $u = 3$.\n> Rücksubstitution: $3^x = 1$ gibt $x = 0$, $3^x = 3$ gibt $x = 1$.\n> B sind die $u$-Werte selbst.\n\n> [!question] Aufgabe 2\n> Solve $2^{2x+1} - 9 \\cdot 2^x + 4 = 0$.\n>\n> - **A** $x = -1$ and $x = 2$\n> - **B** $x = 2$ and $x = 4$\n> - **C** $x = \\tfrac12$ and $x = 4$\n> - **D** $x = 2$ only\n> - **E** $x = 0$ and $x = 2$\n\n> [!success]- Lösung\n> **A.** $2^{2x+1} = 2 \\cdot \\left(2^x\\right)^2$, also mit $u = 2^x$:\n> $$2u^2 - 9u + 4 = 0 \\;\\Longrightarrow\\; (2u - 1)(u - 4) = 0 \\;\\Longrightarrow\\; u = \\tfrac12 \\ \\text{oder} \\ u = 4.$$\n> Beide sind positiv. $2^x = \\tfrac12$ gibt $x = -1$, $2^x = 4$ gibt $x = 2$.\n> C sind wieder die $u$-Werte. Der Vorfaktor 2 ist die eigentliche Hürde -- wer ihn übersieht, erhält $u^2 - 9u + 4 = 0$ mit krummen Lösungen und merkt spätestens dann, dass etwas nicht stimmt.\n\n> [!question] Aufgabe 3\n> How many real solutions does $4^x + 2^x - 6 = 0$ have?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 0\n> - **D** 3\n> - **E** infinitely many\n\n> [!success]- Lösung\n> **A.** Mit $u = 2^x$: $u^2 + u - 6 = 0$, also $(u + 3)(u - 2) = 0$ und $u = -3$ oder $u = 2$.\n> $u = -3$ **entfällt**, denn $2^x > 0$ für alle $x$. Bleibt $2^x = 2$, also $x = 1$ -- genau eine Lösung.\n> B ist die Antwort für alle, die den Filter überspringen. Dass die quadratische Gleichung zwei Lösungen hat, heißt hier ausdrücklich **nicht**, dass die Ausgangsgleichung zwei hat."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Gleichungen in quadratischer Form** · **Logarithmusgleichung mit Definitionsbereich lösen** · **Anzahl reeller Lösungen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Wie viele reelle Lösungen hat $9^x - 2 \\cdot 3^x - 3 = 0$?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "$u^2 - 2u - 3 = (u - 3)(u + 1) = 0$: $u = 3$ gibt $x = 1$, $u = -1$ ist unmöglich.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is the sum of the solutions of $2^{2x + 1} - 9 \\cdot 2^x + 4 = 0$?",
+      "options": [
+        {
+          "md": "0"
+        },
+        {
+          "md": "1",
+          "correct": true
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "3"
+        },
+        {
+          "md": "$\\tfrac92$"
+        }
+      ],
+      "explain": "$2u^2 - 9u + 4 = (2u - 1)(u - 4) = 0$: $u = \\tfrac12$ gibt $x = -1$, $u = 4$ gibt $x = 2$; Summe 1.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Summe",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$2^{x + 1} = 2 \\cdot 2^x$.",
+      "answer": true,
+      "explain": "Potenzgesetz: $2^{x + 1} = 2^x \\cdot 2^1$.",
+      "label": "Umschreiben",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -78,6 +241,51 @@
       },
       "label": "Rechentraining",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "expsub"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "expsub"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "expsub"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Auf eine Basis bringen, $u = a^x$, quadratisch lösen, nur $u > 0$ zurückübersetzen.",
+        "$a^{2x + 1} = a \\cdot (a^x)^2$, nicht $(a^x)^2$."
+      ]
     }
   ]
 }

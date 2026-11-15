@@ -15,6 +15,383 @@
       "md": "Verschiebt man eine Ladung $q$ im Feld, verrichtet das Feld Arbeit. Die **Spannung** zwischen zwei Punkten ist diese Arbeit pro Ladung: $U = \\frac{W}{q}$. Ordnet man jedem Punkt die potenzielle Energie pro Ladung zu, erhält man das **Potenzial** $\\varphi$; Spannung ist eine Potenzialdifferenz.\n\nIm homogenen Feld des Plattenkondensators steigt das Potenzial gleichmäßig: $E = \\frac{U}{d}$. Flächen gleichen Potenzials stehen senkrecht auf den Feldlinien."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Spannung und Potenzial\n> Die **Spannung** zwischen zwei Punkten ist die Arbeit, die das Feld an einer Ladung auf dem Weg zwischen ihnen verrichtet, geteilt durch die Ladung: $U = \\tfrac{W}{q}$, Einheit $1\\,\\mathrm{V} = 1\\,\\tfrac{\\mathrm{J}}{\\mathrm{C}}$. Das **Potenzial** $\\varphi$ eines Punkts ist die potenzielle Energie einer Ladung dort, geteilt durch die Ladung, gemessen gegen einen frei gewählten Bezugspunkt. Spannung ist eine Potenzialdifferenz: $U_{AB} = \\varphi_A - \\varphi_B$.\n\n> [!definition] Äquipotenzialfläche und Elektronenvolt\n> Flächen gleichen Potenzials heißen **Äquipotenzialflächen**; sie stehen überall senkrecht auf den Feldlinien, und längs ihnen verrichtet das Feld keine Arbeit. Ein **Elektronenvolt** ist die Energie, die eine Elementarladung beim Durchlaufen von $1\\,\\mathrm{V}$ gewinnt: $1\\,\\mathrm{eV} = 1{,}602\\cdot 10^{-19}\\,\\mathrm{J}$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung des Potenzials einer Punktladung** $Q$, mit dem Nullpunkt im Unendlichen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "W = \\int_r^{\\infty} \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{Q\\,q}{x^2}\\,dx",
+            "why": "Die Arbeit des Feldes, wenn eine Probeladung $q$ vom Abstand $r$ bis ins Unendliche fliegt; die Kraft ändert sich mit dem Abstand."
+          },
+          {
+            "tex": "W = \\frac{Q\\,q}{4\\pi\\varepsilon_0}\\left[-\\frac1x\\right]_r^{\\infty} = \\frac{Q\\,q}{4\\pi\\varepsilon_0\\,r}",
+            "why": "Wie beim Gravitationsfeld: endliche Arbeit bis ins Unendliche."
+          },
+          {
+            "tex": "\\varphi(r) = \\frac{W}{q} = \\frac{1}{4\\pi\\varepsilon_0}\\,\\frac{Q}{r}",
+            "why": "Das Potenzial fällt mit $\\tfrac1r$, die Feldstärke mit $\\tfrac{1}{r^2}$."
+          },
+          {
+            "tex": "E = -\\frac{d\\varphi}{dr}",
+            "why": "Umgekehrt ist die Feldstärke die negative Steigung des Potenzials. Im homogenen Feld wird daraus $E = \\tfrac{U}{d}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Arbeit als Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integrieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Potenzial.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Feldstärke als Steigung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Potenzial und Feldstärke einer Punktladung** ($Q = 10\\,\\mathrm{nC}$). Die Steigung der Potenzialkurve ist die negative Feldstärke.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          1,
+          10
+        ],
+        "y": [
+          0,
+          9.5
+        ],
+        "xLabel": "r in cm",
+        "yLabel": "φ in kV",
+        "vars": [
+          {
+            "name": "R",
+            "min": 1,
+            "max": 10,
+            "value": 1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "phi",
+            "expr": "8.988/x",
+            "color": "blue",
+            "label": "Potenzial",
+            "labelAt": 7
+          }
+        ],
+        "tangents": [
+          {
+            "f": "phi",
+            "at": "R",
+            "length": 2.2,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "R",
+            "on": "phi",
+            "color": "orange"
+          }
+        ],
+        "readout": "r = {R|1} cm: Potenzial **{8.988/R|2} kV**, Feldstärke **{8.988/(R*R)|2} kV/cm** (minus Steigung der Tangente)"
+      },
+      "timeline": [
+        {
+          "caption": "Nahe der Ladung ist das Potenzial hoch und fällt steil ab: großes $E$.",
+          "set": {
+            "R": 1.5
+          }
+        },
+        {
+          "caption": "Bei $r = 3\\,\\mathrm{cm}$: Potenzial ein Drittel, Steigung nur noch ein Neuntel. Das Potenzial fällt mit $\\tfrac1r$, die Feldstärke mit $\\tfrac{1}{r^2}$.",
+          "to": {
+            "R": 3
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Weit draußen ist die Kurve fast flach: kaum noch Feld. Eine Ladung, die von hier nach außen fliegt, gewinnt nur wenig Energie.",
+          "to": {
+            "R": 8
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Zwischen zwei Abständen ist die Spannung die Differenz der Potenziale, $U = \\varphi(r_1) - \\varphi(r_2)$; das Feld verrichtet an $q$ die Arbeit $q U$."
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!important] Energieumwandlung im Feld\n> Durchläuft eine Ladung $q$ frei die Spannung $U$, wandelt das Feld die Energie $q U$ in Bewegungsenergie um: $q U = \\tfrac12 m v^2 - \\tfrac12 m v_0^2$. Ein Elektron, das $5\\,\\mathrm{kV}$ durchläuft, gewinnt $5\\,\\mathrm{keV} = 8{,}01\\cdot 10^{-16}\\,\\mathrm{J}$, unabhängig vom Weg; ein Proton gewinnt dieselbe Energie, wird aber wegen seiner größeren Masse viel langsamer.",
+      "label": "Energie",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Elektrisches Potenzial",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Elektrisches Potenzial.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Das **elektrische Potenzial** $\\varphi$ ist die potenzielle Energie pro Ladung an einem Ort im Feld. Die **Spannung** ist die Potenzialdifferenz zwischen zwei Punkten:\n$$U = \\varphi_1 - \\varphi_2 = \\frac{W_{pot}}{q}$$"
+            }
+          ]
+        },
+        {
+          "title": "Potenzielle Energie im homogenen Feld",
+          "blocks": [
+            {
+              "md": "Verschiebt man eine Ladung $q$ längs des Feldes um die Strecke $d$:\n$$W = q \\cdot E \\cdot d = q \\cdot U$$"
+            }
+          ]
+        },
+        {
+          "title": "Potenzialverläufe",
+          "blocks": [
+            {
+              "md": "- **Homogenes Feld**: das Potenzial fällt linear mit dem Abstand.\n- **Radialfeld**: $\\varphi = \\dfrac{1}{4\\pi\\varepsilon_0}\\cdot\\dfrac{Q}{r}$."
+            }
+          ]
+        },
+        {
+          "title": "Äquipotenziallinien",
+          "blocks": [
+            {
+              "md": "> [!note] Flächen gleichen Potenzials\n> **Äquipotenziallinien** verbinden Punkte gleichen Potenzials. Sie stehen **immer senkrecht** auf den **Feldlinien**; entlang einer Äquipotenziallinie wird keine Arbeit verrichtet."
+            }
+          ]
+        },
+        {
+          "title": "Bezug",
+          "blocks": [
+            {
+              "md": "Die Spannung als Potenzialdifferenz ist die Grundlage der Definition der **Kapazität** und der Beschleunigung von Ladungen (**Bewegung von Ladungen im elektrischen Feld**)."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb ein Potenzial eingeführt wird",
+          "blocks": [
+            {
+              "md": "> [!important] Es macht die Energiebetrachtung wegunabhängig\n> Die Feldstärke ist ein **Vektor** und an jedem Ort anders gerichtet. Will man die Arbeit auf einem beliebigen Weg berechnen, müsste man aufwendig integrieren.\n>\n> Das Potenzial ist dagegen ein **Skalar** -- eine einzige Zahl je Ort. Die verrichtete Arbeit folgt dann allein aus der Differenz zwischen Anfangs- und Endpunkt:\n> $$W = q\\cdot(\\varphi_1 - \\varphi_2) = q\\,U$$\n>\n> Damit ist der Weg gleichgültig. Genau dieselbe Vereinfachung leistet die potenzielle Energie im Schwerefeld, und in der Chemie der Satz von Hess. Siehe **Energieerhaltung** und **Energiekonzept**.\n>\n> Ein Feld, in dem das möglich ist, heißt **konservativ**. Das elektrostatische Feld ist es -- das durch Induktion erzeugte Wirbelfeld dagegen **nicht**, siehe **Elektromagnetische Induktion**. Dort lässt sich kein Potenzial definieren."
+            }
+          ]
+        },
+        {
+          "title": "Potenzial und Feldstärke",
+          "blocks": [
+            {
+              "md": "| | Feldstärke $E$ | Potenzial $\\varphi$ |\n|---|---|---|\n| Art | Vektor | Skalar |\n| Einheit | V/m oder N/C | V |\n| im homogenen Feld | konstant | fällt **linear** |\n| im Radialfeld | $\\sim 1/r^2$ | $\\sim 1/r$ |\n| Zusammenhang | $E = -\\dfrac{d\\varphi}{ds}$ | |\n\n> [!tip] Die Feldstärke ist die Steigung des Potenzialverlaufs\n> Trägt man $\\varphi$ über dem Ort auf, ergibt die Steigung die Feldstärke -- mit umgekehrtem Vorzeichen, weil das Feld vom hohen zum niedrigen Potenzial zeigt.\n>\n> Damit ist der Zusammenhang derselbe wie zwischen Ort und Geschwindigkeit in der **Kinematik**: Steigung bedeutet Ableitung, Fläche bedeutet Integration.\n>\n> Anschaulich hilft das Höhenlinienbild einer Landkarte: Die Höhe entspricht dem Potenzial, die Steilheit des Hangs der Feldstärke. Wo die Linien dicht liegen, ist es steil."
+            }
+          ]
+        },
+        {
+          "title": "Äquipotenzialflächen",
+          "blocks": [
+            {
+              "md": "Sie stehen **immer senkrecht** auf den Feldlinien. Entlang einer solchen Fläche wird keine Arbeit verrichtet, weil die Kraft senkrecht zur Bewegung steht.\n\n> [!important] Die Oberfläche eines Leiters ist stets eine Äquipotenzialfläche\n> Bestünde eine Potenzialdifferenz, flösse Strom -- bis sie ausgeglichen wäre. Im statischen Fall ist ein Leiter also überall auf gleichem Potenzial.\n>\n> Daraus folgt, dass Feldlinien stets **senkrecht** auf einer Leiteroberfläche stehen. Eine schräg auftreffende Feldlinie hätte eine Komponente längs der Oberfläche und würde Ladungen verschieben.\n>\n> Und daraus folgt der **Spitzeneffekt**: An Spitzen und Kanten drängen sich die Feldlinien, die Feldstärke wird sehr groß. Das ist die Grundlage des Blitzableiters -- und der Grund, weshalb man bei Gewitter keine Bäume aufsuchen sollte."
+            }
+          ]
+        },
+        {
+          "title": "Das Elektronvolt",
+          "blocks": [
+            {
+              "md": "$$1\\,\\text{eV} = e\\cdot 1\\,\\text{V} = 1{,}602\\cdot10^{-19}\\,\\text{J}$$\n\n> [!tip] Eine Einheit, die das Rechnen abkürzt\n> Durchläuft ein Elektron eine Spannung von $U$ Volt, gewinnt es genau $U$ Elektronvolt an Energie -- ohne jede Umrechnung.\n>\n> Deshalb ist das Elektronvolt die Standardeinheit überall dort, wo einzelne Teilchen betrachtet werden: bei der Beschleunigung im **Linearbeschleuniger**, beim **Photoeffekt**, bei den Energieniveaus des **Atoms** und bei der Bindungsenergie von Kernen.\n>\n> Der Zusammenhang $E\\,[\\text{eV}] \\approx 1240/\\lambda\\,[\\text{nm}]$ verbindet ihn direkt mit der Wellenlänge und trägt in der Chemie die **Farbigkeit**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Das Potenzial übersetzt die Feldbeschreibung in eine Energiebetrachtung und macht damit den Energieerhaltungssatz auf Felder anwendbar. Es trägt die Definition der **Kapazität** und die Beschleunigung von Ladungen in **Bewegung von Ladungen im elektrischen Feld**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "Spannung",
+          "Arbeit pro Ladung, $U = \\tfrac{W}{q}$"
+        ],
+        [
+          "Potenzial",
+          "potenzielle Energie pro Ladung gegen einen Bezugspunkt"
+        ],
+        [
+          "Äquipotenzialfläche",
+          "senkrecht zu den Feldlinien, keine Arbeit längs ihr"
+        ],
+        [
+          "Elektronenvolt",
+          "$1{,}602\\cdot 10^{-19}\\,\\mathrm{J}$"
+        ],
+        [
+          "Feldstärke",
+          "negative Steigung des Potenzials"
+        ]
+      ],
+      "explain": "Spannung ist eine Potenzialdifferenz; das Potenzial selbst hängt vom Bezugspunkt ab.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Arbeit verrichtet das Feld an einer Ladung von $5\\,\\mu\\mathrm{C}$, die $12\\,\\mathrm{V}$ durchläuft?",
+      "answer": 60,
+      "tolerance": 0.5,
+      "placeholder": "µJ",
+      "explain": "$W = q U = 5\\cdot 10^{-6}\\,\\mathrm{C}\\cdot 12\\,\\mathrm{V} = 6\\cdot 10^{-5}\\,\\mathrm{J} = 60\\,\\mu\\mathrm{J}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist das Potenzial $30\\,\\mathrm{cm}$ von einer Punktladung $Q = 2\\,\\mathrm{nC}$ (Nullpunkt im Unendlichen)?",
+      "answer": 59.9,
+      "tolerance": 0.3,
+      "placeholder": "V",
+      "explain": "$\\varphi = k\\tfrac{Q}{r} = 8{,}988\\cdot 10^9\\cdot\\tfrac{2\\cdot 10^{-9}}{0{,}3}\\,\\mathrm{V} \\approx 59{,}9\\,\\mathrm{V}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Welche Spannung liegt zwischen den Punkten $10\\,\\mathrm{cm}$ und $20\\,\\mathrm{cm}$ von einer Punktladung $Q = 5\\,\\mathrm{nC}$?",
+      "answer": 224.7,
+      "tolerance": 1,
+      "placeholder": "V",
+      "explain": "$U = kQ\\left(\\tfrac{1}{0{,}1} - \\tfrac{1}{0{,}2}\\right)\\tfrac{1}{\\mathrm{m}} = 44{,}94\\,\\mathrm{V\\,m}\\cdot 5\\,\\tfrac{1}{\\mathrm{m}} \\approx 225\\,\\mathrm{V}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des Potenzials einer Punktladung in die richtige Reihenfolge.",
+      "items": [
+        "Arbeit bis ins Unendliche als Integral über $k\\tfrac{Qq}{x^2}$",
+        "Stammfunktion $-\\tfrac1x$ auswerten: $W = k\\tfrac{Qq}{r}$",
+        "Durch $q$ teilen: $\\varphi = k\\tfrac{Q}{r}$",
+        "Ableiten: $E = -\\tfrac{d\\varphi}{dr} = k\\tfrac{Q}{r^2}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Arbeit bis ins Unendliche als Integral über $k\\tfrac{Qq}{x^2}$. 2. Stammfunktion $-\\tfrac1x$ auswerten: $W = k\\tfrac{Qq}{r}$. 3. Durch $q$ teilen: $\\varphi = k\\tfrac{Q}{r}$. 4. Ableiten: $E = -\\tfrac{d\\varphi}{dr} = k\\tfrac{Q}{r^2}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Wie verlaufen Äquipotenzialflächen relativ zu den Feldlinien?",
+      "options": [
+        {
+          "md": "überall senkrecht zu ihnen",
+          "correct": true
+        },
+        {
+          "md": "parallel zu ihnen",
+          "why": "Dann würde längs der Fläche Arbeit verrichtet, das Potenzial wäre nicht konstant."
+        },
+        {
+          "md": "unter $45°$",
+          "why": "Es gibt keinen Grund für diesen Winkel."
+        },
+        {
+          "md": "Das hängt von der Ladung ab.",
+          "why": "Die Senkrechtstellung gilt für jedes elektrostatische Feld."
+        }
+      ],
+      "explain": "Längs einer Äquipotenzialfläche ändert sich das Potenzial nicht, also darf die Kraft keine Komponente längs der Fläche haben.",
+      "label": "Definitionen",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Elektron durchläuft $5\\,\\mathrm{kV}$. Welche Energie gewinnt es? Gib sie in $10^{-16}\\,\\mathrm{J}$ an.",
+      "answer": 8.01,
+      "tolerance": 0.03,
+      "placeholder": "10⁻¹⁶ J",
+      "explain": "$E = e U = 1{,}602\\cdot 10^{-19}\\,\\mathrm{C}\\cdot 5000\\,\\mathrm{V} \\approx 8{,}01\\cdot 10^{-16}\\,\\mathrm{J} = 5\\,\\mathrm{keV}$.",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Potenzial eines Punkts ist eine eindeutig festgelegte Größe, unabhängig von jeder Wahl.",
+      "answer": false,
+      "explain": "Es hängt vom Bezugspunkt ab (bei Punktladungen meist das Unendliche, bei Schaltungen die Erde). Physikalisch messbar sind nur Potenzialdifferenzen, also Spannungen.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Im Feld einer Punktladung fällt das Potenzial mit $r^{-k}$ für $k = $ {{0}} und die Feldstärke mit $k = $ {{1}}.",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$\\varphi \\sim \\tfrac1r$, $E = -\\tfrac{d\\varphi}{dr} \\sim \\tfrac{1}{r^2}$.",
+      "id": "vq9"
+    },
+    {
       "id": "arbeit",
       "type": "choice",
       "md": "Ein Elektron durchläuft die Spannung 100 V. Welche Energie gewinnt es?",
@@ -56,13 +433,41 @@
       "label": "Feldstärke"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "punktfeld"
+        ]
+      },
+      "label": "Punktladung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "punktfeld",
+          "beschleunigung-u"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$U = W/q$, Spannung ist eine Potenzialdifferenz.",
         "Im Plattenkondensator $E = U/d$.",
-        "1 eV ist die Energie einer Elementarladung bei 1 V."
+        "1 eV ist die Energie einer Elementarladung bei 1 V.",
+        "$U = \\tfrac{W}{q}$, Potenzial gegen einen Bezugspunkt; Spannung = Potenzialdifferenz; $1\\,\\mathrm{eV} = 1{,}602\\cdot 10^{-19}\\,\\mathrm{J}$.",
+        "Punktladung: $\\varphi = \\tfrac{1}{4\\pi\\varepsilon_0}\\tfrac{Q}{r}$ aus dem Integral der Kraft; $E = -\\tfrac{d\\varphi}{dr}$.",
+        "Äquipotenzialflächen stehen senkrecht auf den Feldlinien."
       ]
     }
   ]

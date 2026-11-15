@@ -16,6 +16,371 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Relative Verschiebung\n> $z = \\tfrac{\\Delta\\lambda}{\\lambda_0} = \\tfrac{\\lambda_{beob} - \\lambda_0}{\\lambda_0}$, dimensionslos; für $z \\ll 1$ gilt $v \\approx z\\,c$. Positives $z$: Rotverschiebung (Entfernung); negatives: Blauverschiebung (Annäherung).\n\n> [!warning] Die Näherung gilt nur für kleine $z$\n> Ab etwa $z \\approx 0{,}1$ braucht man $1 + z = \\sqrt{\\tfrac{1 + \\beta}{1 - \\beta}}$. Die Näherung ergäbe bei $z = 1$ schon $v = c$.\n\n**Warum Linienmuster nötig sind.** Man erkennt ein ganzes Muster bekannter Linien wieder, etwa die Balmer-Serie, das als Ganzes um denselben Faktor gestreckt ist. Eine einzelne Linie könnte man verwechseln, ein Muster nicht.\n\n| | Dopplereffekt | kosmologische Rotverschiebung |\n|---|---|---|\n| Ursache | Bewegung **durch** den Raum | Dehnung **des Raums** während der Laufzeit |\n| gilt für | nahe Objekte, Eigenbewegungen | ferne Galaxien |\n| Grenze | $v < c$ | $z$ beliebig groß |",
+      "label": "Rotverschiebung",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Näherung $v \\approx zc$** aus der relativistischen Formel und ein Beispiel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(1 + z)^2 = \\frac{1 + \\beta}{1 - \\beta}",
+            "why": "Relativistische Dopplerformel, quadriert."
+          },
+          {
+            "tex": "\\beta \\ll 1:\\quad \\frac{1 + \\beta}{1 - \\beta} \\approx (1 + \\beta)^2 \\approx 1 + 2\\beta",
+            "why": "Für kleine β ist 1/(1 − β) ≈ 1 + β."
+          },
+          {
+            "tex": "1 + 2z \\approx 1 + 2\\beta \\;\\Rightarrow\\; z \\approx \\beta = \\frac{v}{c}",
+            "why": "Die einfache Formel ist der Grenzfall für kleine Geschwindigkeiten."
+          },
+          {
+            "tex": "\\lambda_{beob} = 672{,}0\\,\\mathrm{nm},\\ \\lambda_0 = 656{,}3\\,\\mathrm{nm}:\\quad z = \\frac{15{,}7}{656{,}3} \\approx 0{,}0239",
+            "why": "Beispiel mit der Hα-Linie."
+          },
+          {
+            "tex": "v \\approx 0{,}0239\\cdot 3\\cdot 10^{5}\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}} \\approx 7170\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}",
+            "why": "Relativistisch β = 0,0236: rund 1 % Unterschied, die Näherung ist hier zulässig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kleines β.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzfall.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Geschwindigkeit aus der Rotverschiebung:** orange die Näherung $\\beta = z$, blau die relativistische Formel.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          1.6
+        ],
+        "xLabel": "Rotverschiebung z",
+        "yLabel": "β = v/c",
+        "vars": [
+          {
+            "name": "Z",
+            "min": 0,
+            "max": 4,
+            "value": 0.05,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "n",
+            "expr": "x",
+            "color": "orange"
+          },
+          {
+            "name": "r",
+            "expr": "((1 + x)^2 - 1)/((1 + x)^2 + 1)",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 1
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.2,
+            "y": 1.08,
+            "text": "Lichtgeschwindigkeit",
+            "anchor": "start"
+          }
+        ],
+        "points": [
+          {
+            "x": "Z",
+            "on": "r",
+            "color": "blue",
+            "guides": true
+          },
+          {
+            "x": "Z",
+            "on": "n",
+            "color": "orange"
+          }
+        ],
+        "readout": "z = {Z|2}: Näherung β = {Z|2}, relativistisch β = **{((1 + Z)^2 - 1)/((1 + Z)^2 + 1)|3}**"
+      },
+      "timeline": [
+        {
+          "caption": "Für kleine $z$ liegen beide Kurven aufeinander: $v \\approx zc$ ist in Ordnung.",
+          "set": {
+            "Z": 0.05
+          }
+        },
+        {
+          "caption": "Bei $z = 0{,}5$ liefert die Näherung $0{,}5$, richtig sind $0{,}385$.",
+          "to": {
+            "Z": 0.5
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Bei $z = 1$ ergäbe die Näherung Lichtgeschwindigkeit, richtig sind $0{,}6\\,c$. Bei noch größeren $z$ nähert sich die blaue Kurve der 1 nur an.",
+          "to": {
+            "Z": 1
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Quasare mit $z > 3$ entfernen sich trotzdem nicht mit Überlichtgeschwindigkeit durch den Raum: Ihre Rotverschiebung stammt vor allem von der Dehnung des Raums.",
+          "to": {
+            "Z": 3.5
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Blauverschiebung.** Die Andromedagalaxie nähert sich der Milchstraße mit rund 110 km/s und wird in etwa vier Milliarden Jahren mit ihr verschmelzen. Innerhalb gravitativ gebundener Systeme überwiegt die Gravitation die Expansion.\n\n> [!warning] Typische Fallen\n> $\\Delta\\lambda$ statt $z$ angeben; durch $\\lambda_{beob}$ statt $\\lambda_0$ teilen; $v = zc$ bei großem $z$ verwenden; bei $z > 1$ auf Überlichtgeschwindigkeit schließen; kosmologische und Doppler-Rotverschiebung gleichsetzen; Nanometer und Ångström verwechseln ($1\\,\\text{Å} = 0{,}1\\,\\mathrm{nm}$).",
+      "label": "Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Rotverschiebung berechnen",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Rotverschiebung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Rotverschiebung der Galaxie\"*, *\"Bestimmen Sie die Fluchtgeschwindigkeit aus der Verschiebung der Spektrallinie\"*, *\"Um wie viel ist die $\\text{H}_\\alpha$-Linie verschoben?\"*, *\"Weshalb lässt sich aus der Verschiebung auf eine Bewegung schließen?\"*.\n\nErkennungsmerkmal: Eine **Spektrallinie** hat eine andere Wellenlänge als im Labor gemessen."
+            }
+          ]
+        },
+        {
+          "title": "Die Definition",
+          "blocks": [
+            {
+              "md": "> [!important] Relative Verschiebung\n> $$z = \\frac{\\Delta\\lambda}{\\lambda_0} = \\frac{\\lambda_{beob} - \\lambda_0}{\\lambda_0}$$\n> mit der **Ruhewellenlänge** $\\lambda_0$ (im Labor gemessen) und der beobachteten Wellenlänge. Für $z \\ll 1$ gilt näherungsweise\n> $$v \\approx z\\cdot c$$\n>\n> $z$ ist **dimensionslos** und gibt an, um welchen **Bruchteil** die Wellenlänge gedehnt ist. Ein positives $z$ bedeutet Rotverschiebung (Entfernung), ein negatives Blauverschiebung (Annäherung).\n\n> [!warning] Die Näherung $v = zc$ gilt nur für kleine $z$\n> Bei $z \\gtrsim 0{,}1$ wird die relativistische Formel nötig:\n> $$1 + z = \\sqrt{\\frac{1 + \\beta}{1 - \\beta}}$$\n> Die einfache Näherung liefert sonst zu große Geschwindigkeiten -- bei $z = 1$ ergäbe sie $v = c$, was falsch ist. Quasare mit $z > 6$ entfernen sich **nicht** mit mehrfacher Lichtgeschwindigkeit; ihre Rotverschiebung hat eine andere Ursache, siehe unten."
+            }
+          ]
+        },
+        {
+          "title": "Warum überhaupt Spektrallinien nötig sind",
+          "blocks": [
+            {
+              "md": "> [!tip] Ohne Linien wäre nichts messbar\n> Die Verschiebung ist nur feststellbar, weil bekannte Elemente **charakteristische** Wellenlängen aussenden, deren Ruhewerte im Labor exakt bestimmt sind, siehe **Spektrallinien aus Energieniveaus berechnen**. Man erkennt ein ganzes **Linienmuster** wieder -- etwa die Balmer-Serie des Wasserstoffs --, das als Ganzes verschoben ist.\n>\n> Genau diese Mustererkennung macht die Messung sicher: Eine einzelne verschobene Linie ließe sich mit einer anderen Linie verwechseln, ein vollständiges, um denselben Faktor gestrecktes Muster nicht. Die Rotverschiebung ist deshalb eine der zuverlässigsten Messgrößen der Astronomie überhaupt."
+            }
+          ]
+        },
+        {
+          "title": "Kosmologische Rotverschiebung ist kein Dopplereffekt",
+          "blocks": [
+            {
+              "md": "| | **Dopplereffekt** | **Kosmologische Rotverschiebung** |\n|---|---|---|\n| Ursache | Bewegung **durch** den Raum | Ausdehnung **des Raums selbst** |\n| Was sich ändert | Abstände der Wellenberge durch Relativbewegung | Wellenlänge wird während der Laufzeit mitgedehnt |\n| Gültigkeit | nahe Objekte, Eigenbewegungen | ferne Galaxien |\n| Grenze | $v < c$ | $z$ kann beliebig groß werden |\n\n> [!important] Der Unterschied ist physikalisch wesentlich\n> Bei fernen Galaxien wird das Licht nicht deshalb rotverschoben, weil sich die Galaxie durch den Raum bewegt, sondern weil der Raum **während der Laufzeit des Lichts** expandiert und die Wellenlänge mitdehnt. Die Galaxie ruht in ihrem lokalen Raum.\n>\n> Daraus folgt, dass $z > 1$ möglich ist, ohne die Relativitätstheorie zu verletzen: Es bewegt sich nichts schneller als Licht **durch** den Raum. Die Formulierung \"die Galaxie flieht mit Überlichtgeschwindigkeit\" ist deshalb irreführend und in Prüfungen zu vermeiden.\n>\n> Für nahe Objekte -- etwa die Andromedagalaxie, die sich uns tatsächlich nähert und **blau**verschoben ist -- überwiegt dagegen die Eigenbewegung, und die Doppler-Deutung ist zutreffend."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ruhewellenlänge** identifizieren; häufig die $\\text{H}_\\alpha$-Linie bei $656{,}3\\,\\text{nm}$.\n2. **Differenz bilden:** $\\Delta\\lambda = \\lambda_{beob} - \\lambda_0$.\n3. **$z$ berechnen:** $z = \\Delta\\lambda/\\lambda_0$.\n4. **Geschwindigkeit:** $v \\approx z\\,c$, sofern $z \\ll 1$; sonst relativistisch.\n5. **Bei Entfernungsfragen** mit dem Hubble-Gesetz weiterrechnen, siehe **Hubble-Gesetz anwenden**.\n6. **Einheitenkontrolle:** $z$ ist dimensionslos; $\\lambda_{beob}$ und $\\lambda_0$ müssen dieselbe Einheit tragen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*In einer fernen Galaxie wird die Wasserstofflinie $\\text{H}_\\alpha$ bei $\\lambda_{beob} = 672{,}0\\,\\text{nm}$ gemessen. Die Ruhewellenlänge beträgt $\\lambda_0 = 656{,}3\\,\\text{nm}$. Berechnen Sie die Rotverschiebung und die Fluchtgeschwindigkeit.*\n\n**Schritt 2:**\n$$\\Delta\\lambda = 672{,}0 - 656{,}3 = 15{,}7\\,\\text{nm}$$\n\n**Schritt 3:**\n$$z = \\frac{15{,}7}{656{,}3} \\approx 0{,}0239$$\n\n**Schritt 4:** Wegen $z \\ll 1$ ist die Näherung zulässig:\n$$v \\approx 0{,}0239\\cdot2{,}998\\cdot10^{5}\\,\\frac{\\text{km}}{\\text{s}} \\approx 7170\\,\\frac{\\text{km}}{\\text{s}}$$\n\n**Prüfung der Näherung:** $\\beta = 0{,}0239$, also rund $2{,}4\\,\\%$ der Lichtgeschwindigkeit. Die relativistische Formel liefert $\\beta = 0{,}0236$ -- eine Abweichung von etwa einem Prozent. Die Näherung ist hier klar vertretbar; die Rechnung mit ihr wäre zu begründen, nicht stillschweigend anzunehmen.\n\n**Größenordnungseinordnung:** 7170 km/s entsprechen rund 25 Millionen km/h. Zum Vergleich: Die Erde umkreist die Sonne mit 30 km/s. Solche Geschwindigkeiten sind ausschließlich im kosmologischen Kontext beobachtbar und waren vor Hubbles Messungen unvorstellbar."
+            }
+          ]
+        },
+        {
+          "title": "Blauverschiebung",
+          "blocks": [
+            {
+              "md": "Nähert sich ein Objekt, wird $\\Delta\\lambda$ negativ und damit auch $z$. Beobachtet wird das bei Objekten innerhalb der lokalen Gruppe, deren gegenseitige Gravitation die kosmische Expansion lokal überwiegt -- am bekanntesten bei der **Andromedagalaxie**, die sich der Milchstraße mit rund 110 km/s nähert und in etwa vier Milliarden Jahren mit ihr verschmelzen wird.\n\nDass es überhaupt blauverschobene Galaxien gibt, ist ein wichtiges Detail: Die Expansion wirkt nicht innerhalb gravitativ gebundener Systeme. Sie dehnt weder Galaxien noch Sonnensysteme noch Atome, sondern nur die Räume **zwischen** den Galaxienhaufen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\Delta\\lambda$ statt $z$ angeben.** $z$ ist die **relative** Verschiebung, also durch $\\lambda_0$ geteilt.\n- **Durch $\\lambda_{beob}$ statt durch $\\lambda_0$ teilen.** Im Nenner steht die Ruhewellenlänge.\n- **Die Näherung $v = zc$ bei großem $z$ verwenden.** Ab $z \\approx 0{,}1$ ist sie unzulässig.\n- **Bei $z > 1$ auf Überlichtgeschwindigkeit schließen.** Kosmologische Rotverschiebung ist keine Bewegung durch den Raum.\n- **Kosmologische und Doppler-Rotverschiebung gleichsetzen.** Siehe Tabelle oben.\n- **Behaupten, die Expansion dehne auch Atome und Planetenbahnen.** Gravitativ gebundene Systeme sind davon ausgenommen.\n- **Nanometer und Ångström verwechseln.** Ältere astronomische Quellen geben Wellenlängen in Ångström an: $1\\,\\text{Å} = 0{,}1\\,\\text{nm}$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Hubble-Gesetz anwenden** · **Dopplerverschiebung berechnen** · **Spektrallinien aus Energieniveaus berechnen** · **Astrophysik**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Formel oder Bedeutung zu.",
+      "pairs": [
+        [
+          "$z$",
+          "$\\tfrac{\\Delta\\lambda}{\\lambda_0}$"
+        ],
+        [
+          "kleines $z$",
+          "$v \\approx zc$"
+        ],
+        [
+          "großes $z$",
+          "$1 + z = \\sqrt{\\tfrac{1 + \\beta}{1 - \\beta}}$"
+        ],
+        [
+          "kosmologische Rotverschiebung",
+          "Dehnung des Raums während der Laufzeit"
+        ],
+        [
+          "Blauverschiebung",
+          "Annäherung, $z < 0$"
+        ]
+      ],
+      "explain": "Im Nenner steht immer die Laborwellenlänge.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Näherung in die richtige Reihenfolge.",
+      "items": [
+        "$(1 + z)^2 = \\tfrac{1 + \\beta}{1 - \\beta}$",
+        "Für kleine $\\beta$: $\\tfrac{1 + \\beta}{1 - \\beta} \\approx 1 + 2\\beta$",
+        "Links: $(1 + z)^2 \\approx 1 + 2z$",
+        "Also $z \\approx \\beta$, $v \\approx zc$"
+      ],
+      "explain": "Die Reihenfolge: 1. $(1 + z)^2 = \\tfrac{1 + \\beta}{1 - \\beta}$. 2. Für kleine $\\beta$: $\\tfrac{1 + \\beta}{1 - \\beta} \\approx 1 + 2\\beta$. 3. Links: $(1 + z)^2 \\approx 1 + 2z$. 4. Also $z \\approx \\beta$, $v \\approx zc$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die $\\mathrm{H}_\\alpha$-Linie ($656{,}3\\,\\mathrm{nm}$) erscheint bei $662{,}9\\,\\mathrm{nm}$. Wie schnell entfernt sich die Galaxie?",
+      "answer": 3015,
+      "tolerance": 40,
+      "placeholder": "km/s",
+      "explain": "$z = \\tfrac{6{,}6}{656{,}3} \\approx 0{,}0101$, $v \\approx zc \\approx 3000\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Geschwindigkeit gehört nach der relativistischen Dopplerformel zu $z = 1$ (in $c$)?",
+      "answer": 0.6,
+      "tolerance": 0.005,
+      "placeholder": "c",
+      "explain": "$(1 + z)^2 = 4$, $\\beta = \\tfrac{4 - 1}{4 + 1} = 0{,}6$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Welche Rotverschiebung hat Licht einer Quelle, die sich mit $0{,}5\\,c$ entfernt?",
+      "answer": 0.732,
+      "tolerance": 0.005,
+      "placeholder": "",
+      "explain": "$1 + z = \\sqrt{\\tfrac{1{,}5}{0{,}5}} = \\sqrt3 \\approx 1{,}732$, also $z \\approx 0{,}732$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Galaxie mit $z = 2$ entfernt sich mit doppelter Lichtgeschwindigkeit durch den Raum.",
+      "answer": false,
+      "explain": "Ihre Rotverschiebung stammt von der Dehnung des Raums; durch den Raum bewegt sich nichts schneller als Licht.",
+      "label": "Typischer Fehler",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Warum misst man die Rotverschiebung an einem ganzen Linienmuster?",
+      "options": [
+        {
+          "md": "Ein um denselben Faktor gestrecktes Muster ist eindeutig wiederzuerkennen, eine einzelne Linie könnte man verwechseln.",
+          "correct": true
+        },
+        {
+          "md": "Weil eine Linie allein zu schwach ist.",
+          "why": "Es geht um die Zuordnung, nicht um die Helligkeit."
+        },
+        {
+          "md": "Weil jede Linie eine andere Rotverschiebung hat.",
+          "why": "Alle Linien werden um denselben Faktor gestreckt."
+        },
+        {
+          "md": "Weil Galaxien nur Linienspektren haben.",
+          "why": "Das Muster wird oft vor einem Kontinuum gemessen."
+        }
+      ],
+      "explain": "Die Balmer-Serie des Wasserstoffs ist das typische Muster.",
+      "label": "Messung",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +457,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "galaxie-entfernung",
+          "rotverschiebung-rel"
+        ]
+      },
+      "label": "Entfernung und große z",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "rotverschiebung-rel"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$z = \\tfrac{\\Delta\\lambda}{\\lambda_0}$, für kleine $z$: $v \\approx zc$, sonst $1 + z = \\sqrt{\\tfrac{1+\\beta}{1-\\beta}}$.",
+        "Kosmologische Rotverschiebung ist Raumdehnung, kein Dopplereffekt; nahe Galaxien können blauverschoben sein."
+      ]
     }
   ]
 }

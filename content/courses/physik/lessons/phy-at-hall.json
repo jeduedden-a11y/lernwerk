@@ -16,6 +16,194 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Hallsonde kalibrieren.** Ein Halbleiterplättchen ($d = 0{,}5\\,\\mathrm{mm}$, $n = 2\\cdot 10^{21}\\,\\mathrm{m}^{-3}$) wird mit $I = 15\\,\\mathrm{mA}$ betrieben.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U_H = \\frac{B\\,I}{n\\,e\\,d} = B\\cdot\\frac{0{,}015}{2\\cdot 10^{21}\\cdot 1{,}602\\cdot 10^{-19}\\cdot 5\\cdot 10^{-4}}\\,\\tfrac{\\mathrm{V}}{\\mathrm{T}}",
+            "why": "Hallspannung als Funktion der Flussdichte."
+          },
+          {
+            "tex": "U_H \\approx 93{,}6\\,\\tfrac{\\mathrm{mV}}{\\mathrm{T}}\\cdot B",
+            "why": "Die Kalibrierkonstante der Sonde."
+          },
+          {
+            "tex": "U_H = 4{,}2\\,\\mathrm{mV}\\quad\\Rightarrow\\quad B = \\frac{4{,}2}{93{,}6}\\,\\mathrm{T} \\approx 45\\,\\mathrm{mT}",
+            "why": "Aus einer Messung die Flussdichte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kalibrierkonstante.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Messung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Hall-Spannung berechnen",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Aufgabentypen/Hall-Spannung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Hall-Spannung\"*, *\"Bestimmen Sie die Ladungsträgerdichte des Materials\"*, *\"Erklären Sie, weshalb die Hall-Sonde zur Messung magnetischer Flussdichten geeignet ist\"*, *\"Begründen Sie, warum Halbleiter deutlich größere Hall-Spannungen liefern als Metalle\"*.\n\nErkennungsmerkmal: Ein **flaches, stromdurchflossenes Plättchen** befindet sich in einem Magnetfeld, das **senkrecht** auf die Plättchenfläche steht, und es wird nach einer **Querspannung** gefragt -- also einer Spannung senkrecht zur Stromrichtung."
+            }
+          ]
+        },
+        {
+          "title": "Der Ansatz: Kräftegleichgewicht im Leiter",
+          "blocks": [
+            {
+              "md": "> [!important] Die Kette in drei Schritten\n> 1. Die Ladungsträger driften mit $v_d$ durch das Plättchen und erfahren die **Lorentzkraft** $F_L = q\\,v_d\\,B$, die sie zu einer Seitenfläche ablenkt.\n> 2. Dort sammelt sich Ladung an, auf der Gegenseite bleibt der Überschuss des anderen Vorzeichens zurück. Zwischen den Seitenflächen baut sich ein **elektrisches Querfeld** auf, das die weitere Ablenkung hemmt: $F_{el} = q\\,E = q\\,\\dfrac{U_H}{b}$.\n> 3. Im **stationären Gleichgewicht** heben sich beide Kräfte auf:\n> $$q\\,v_d\\,B = q\\,\\frac{U_H}{b} \\quad\\Longrightarrow\\quad U_H = v_d\\,B\\,b$$\n\nDie Driftgeschwindigkeit ist experimentell unzugänglich und wird über die Stromstärke ersetzt. Mit $I = n\\,q\\,A\\,v_d$ und dem Querschnitt $A = b\\cdot d$ (Breite mal Dicke) folgt $v_d = \\dfrac{I}{n\\,q\\,b\\,d}$. Einsetzen:\n\n$$\\boxed{\\;U_H = \\frac{I\\,B}{n\\,q\\,d} = R_H\\,\\frac{I\\,B}{d}\\;}\\qquad\\text{mit der Hall-Konstanten } R_H = \\frac{1}{n\\,q}$$\n\n> [!tip] Die Breite kürzt sich heraus\n> In $U_H = v_d B b$ steht die Breite $b$ noch im Zähler, in $v_d$ steht sie im Nenner. Beim Zusammensetzen kürzt sie sich vollständig weg. In der Endformel taucht nur noch die **Dicke** $d$ auf -- also die Ausdehnung **parallel zu $\\vec B$**. Wer beide Abmessungen verwechselt, rechnet mit der falschen Größe; die Kürzung nachzuvollziehen schützt davor."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Geometrie sortieren.** $d$ ist die Abmessung **in Feldrichtung** (die Dicke des Plättchens), $b$ die Breite quer dazu. Nur $d$ geht in die Formel ein.\n2. **Ladungsträgerdichte $n$ und Ladung $q$** notieren; in Metallen ist $q = e$ und $n$ von der Größenordnung $10^{28}\\,\\text{m}^{-3}$, in Halbleitern um viele Zehnerpotenzen kleiner.\n3. **Einheiten in SI:** Dicke in Meter (oft in µm oder mm gegeben), $B$ in Tesla.\n4. **Einsetzen:** $U_H = \\dfrac{I\\,B}{n\\,q\\,d}$.\n5. **Bei Umkehraufgaben** nach $n$ oder $B$ auflösen: $n = \\dfrac{I B}{U_H q d}$ bzw. $B = \\dfrac{U_H\\,n\\,q\\,d}{I}$.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{A}]\\cdot[\\text{T}]}{[\\text{m}^{-3}]\\cdot[\\text{C}]\\cdot[\\text{m}]} = \\dfrac{\\text{A}\\cdot\\text{V s}\\,\\text{m}^{-2}}{\\text{m}^{-3}\\cdot\\text{As}\\cdot\\text{m}} = \\text{V}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Kupferplättchen der Dicke $d = 35\\,\\mu\\text{m}$ wird von einem Strom $I = 8{,}0\\,\\text{A}$ durchflossen und befindet sich in einem Magnetfeld der Flussdichte $B = 0{,}25\\,\\text{T}$ senkrecht zur Plättchenfläche. Die Ladungsträgerdichte von Kupfer beträgt $n = 8{,}5\\cdot10^{28}\\,\\text{m}^{-3}$. Berechnen Sie die Hall-Spannung.*\n\n**Schritt 3, Umrechnung:** $d = 35\\cdot10^{-6}\\,\\text{m}$.\n\n**Schritt 4:**\n$$U_H = \\frac{8{,}0 \\cdot 0{,}25}{8{,}5\\cdot10^{28} \\cdot 1{,}602\\cdot10^{-19} \\cdot 35\\cdot10^{-6}}$$\n\nZähler: $2{,}0$. Nenner: $8{,}5\\cdot10^{28} \\cdot 1{,}602\\cdot10^{-19} = 1{,}362\\cdot10^{10}$; multipliziert mit $35\\cdot10^{-6}$ ergibt $4{,}766\\cdot10^{5}$.\n\n$$U_H = \\frac{2{,}0}{4{,}766\\cdot10^{5}} \\approx 4{,}2\\cdot10^{-6}\\,\\text{V} = 4{,}2\\,\\mu\\text{V}$$\n\n**Plausibilität:** Mikrovolt sind für ein Metall der erwartete Bereich. Der Grund liegt in der enormen Ladungsträgerdichte: Bei $10^{28}$ freien Elektronen pro Kubikmeter genügt eine winzige Driftgeschwindigkeit, um 8 Ampere zu tragen, und entsprechend klein ist die Lorentzkraft pro Träger. Genau deshalb sind reale Hall-Sonden aus **Halbleitern** gefertigt, deren $n$ um zehn bis fünfzehn Zehnerpotenzen niedriger liegt und die dadurch Spannungen im Millivoltbereich liefern."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung: die Hall-Sonde als Feldmessgerät",
+          "blocks": [
+            {
+              "md": "Bei festem Material ($n$, $q$, $d$ konstant) und konstant gehaltenem Strom gilt\n$$U_H \\propto B$$\nEin **linearer** Zusammenhang -- das macht die Hall-Sonde zum Standardinstrument für die Messung magnetischer Flussdichten. Kalibriert wird über eine bekannte Flussdichte, etwa im Inneren einer langen Spule."
+            }
+          ]
+        },
+        {
+          "title": "Was der Hall-Effekt zusätzlich verrät",
+          "blocks": [
+            {
+              "md": "> [!important] Das Vorzeichen ist die eigentliche Entdeckung\n> Aus dem Betrag von $U_H$ folgt die **Dichte** der Ladungsträger, aus ihrem **Vorzeichen** deren **Ladungsvorzeichen**. Positive und negative Träger werden von der Lorentzkraft zur **selben** Seite abgelenkt -- sie bewegen sich ja bei gleicher technischer Stromrichtung in entgegengesetzte Richtungen, was sich mit dem Ladungsvorzeichen zu derselben Kraftrichtung kombiniert. Dort sammelt sich dann aber Ladung **unterschiedlichen Vorzeichens** an, und die Hall-Spannung kehrt ihre Polarität um.\n>\n> Das ist der experimentelle Nachweis, dass in $p$-dotierten Halbleitern tatsächlich **positive Ladungsträger** (Löcher) den Strom tragen -- eine Aussage, die mit einer reinen Widerstandsmessung nicht zu treffen wäre.\n\n| | $n$-Leiter / Metall | $p$-Leiter |\n|---|---|---|\n| Ladungsträger | Elektronen, $q = -e$ | Löcher, $q = +e$ |\n| Vorzeichen von $U_H$ | negativ | positiv |\n| Größenordnung $n$ | $10^{28}\\,\\text{m}^{-3}$ | $10^{20}$ bis $10^{23}\\,\\text{m}^{-3}$ |\n| Typische $U_H$ | Mikrovolt | Millivolt |"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Breite statt Dicke einsetzen.** In die Formel geht ausschließlich die Ausdehnung **parallel zu $\\vec B$** ein. Die Breite kürzt sich in der Herleitung heraus.\n- **Mikrometer nicht umrechnen.** $35\\,\\mu\\text{m} = 35\\cdot10^{-6}\\,\\text{m}$, nicht $35\\cdot10^{-3}$.\n- **Hall-Spannung mit der Längsspannung verwechseln.** Die anliegende Spannung, die den Strom treibt, wirkt **längs**; die Hall-Spannung wird **quer** dazu abgegriffen und ist um Größenordnungen kleiner.\n- **Annehmen, das Gleichgewicht baue sich langsam auf.** Es stellt sich praktisch instantan ein; die Rechnung beschreibt stets den stationären Zustand.\n- **Aus der Ladungstrennung auf einen Querstrom schließen.** Im Gleichgewicht fließt quer **kein** Strom -- die Ladungsanhäufung ist statisch.\n- **Bei schräg stehendem Feld den vollen Betrag $B$ verwenden.** Nur die zur Plättchenfläche senkrechte Komponente $B_\\perp = B\\cos\\theta$ trägt bei."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Lorentzkraft berechnen** · **Wien-Filter - Geschwindigkeitsselektion berechnen** · **Feldstärke im Plattenkondensator berechnen** · **Hall-Effekt** · **Magnetisches Feld**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Plättchen ($d = 0{,}2\\,\\mathrm{mm}$, $n = 5\\cdot 10^{21}\\,\\mathrm{m}^{-3}$) führt $8\\,\\mathrm{mA}$ in $0{,}25\\,\\mathrm{T}$. Wie groß ist die Hallspannung?",
+      "answer": 12.5,
+      "tolerance": 0.1,
+      "placeholder": "mV",
+      "explain": "$U_H = \\tfrac{0{,}25\\cdot 0{,}008}{5\\cdot 10^{21}\\cdot 1{,}602\\cdot 10^{-19}\\cdot 2\\cdot 10^{-4}}\\,\\mathrm{V} \\approx 12{,}5\\,\\mathrm{mV}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Halbiert man die Dicke des Plättchens, wird die Hallspannung {{0}}-mal so groß; verdoppelt man die Ladungsträgerdichte, wird sie {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        }
+      ],
+      "explain": "$U_H = \\tfrac{BI}{nqd}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Abmessung des Plättchens kommt in der Hallspannung nicht vor?",
+      "options": [
+        {
+          "md": "die Breite, über die die Hallspannung gemessen wird",
+          "correct": true
+        },
+        {
+          "md": "die Dicke in Feldrichtung",
+          "why": "Sie steht im Nenner."
+        },
+        {
+          "md": "die Ladungsträgerdichte",
+          "why": "Sie ist keine Abmessung, steht aber im Nenner."
+        },
+        {
+          "md": "keine; alle Abmessungen kommen vor",
+          "why": "Die Breite kürzt sich."
+        }
+      ],
+      "explain": "Größere Breite: Die Driftgeschwindigkeit sinkt, das Querfeld wirkt über eine längere Strecke; beides gleicht sich aus.",
+      "label": "Herleitung",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Hallsonde liefert bei abgeschaltetem Strom keine Hallspannung, auch im starken Feld.",
+      "answer": true,
+      "explain": "Ohne Strom bewegen sich die Ladungsträger nicht gerichtet; es gibt keine Lorentzkraft in eine Vorzugsrichtung.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +280,26 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "hall"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$U_H = \\tfrac{BI}{nqd}$: Bei festem Strom proportional zu $B$; Kalibrierung $U_H = k\\,B$."
+      ]
     }
   ]
 }

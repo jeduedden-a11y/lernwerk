@@ -96,7 +96,7 @@
       for (const cid of index.courses || []) {
         try { courses.push(await fetchJSON(base + cid + "/course.json")); } catch (e) { /* a missing course does not stop the overview */ }
       }
-      const subjects = (index.subjects && index.subjects.length ? index.subjects : [{ id: "alle", title: "Kurse", color: "#5e5ce6", courses: courses.map((c) => c.id) }])
+      const subjects = (index.subjects && index.subjects.length ? index.subjects : [{ id: "alle", title: "Kurse", color: "#d2502c", courses: courses.map((c) => c.id) }])
         .map((s) => Object.assign({}, s, { list: courses.filter((c) => (s.courses || []).includes(c.id)) }))
         .filter((s) => s.list.length);
       const lessonIndex = new Map();
@@ -154,7 +154,7 @@
           const got = s.list.reduce((a, c) => a + c.lessonsFlat.filter((l) => settled(l.id)).length, 0);
           const nxt = nextLesson(s.list);
           const card = el("button", { class: "ov-subject" + (selected === s.id ? " on" : ""), type: "button" });
-          card.style.setProperty("--sc", s.color || "#5e5ce6");
+          card.style.setProperty("--sc", s.color || "#d2502c");
           const top = el("div", { class: "ov-subject-top" });
           const r = el("div", { class: "ov-subject-ring" });
           ring(r, 46, total ? got / total : 0, s.color);
@@ -186,7 +186,7 @@
         const list = selected === "alle" ? courses.filter((c) => subjects.some((s) => s.list.includes(c))) : (subjects.find((s) => s.id === selected) || { list: [] }).list;
         list.forEach((c) => {
           const sec = el("section", { class: "ov-course" });
-          sec.style.setProperty("--cc", c.color || "#5e5ce6");
+          sec.style.setProperty("--cc", c.color || "#d2502c");
           const got = c.lessonsFlat.filter((l) => settled(l.id)).length;
           sec.append(el("div", { class: "ov-course-head" }, [
             el("span", { class: "ov-course-dot" }),
@@ -267,7 +267,7 @@
         const c = l.course, st = stateOf(l);
         const topic = c.topics.find((t) => t.after === l.id);
         sheet.innerHTML = "";
-        sheet.style.setProperty("--cc", c.color || "#5e5ce6");
+        sheet.style.setProperty("--cc", c.color || "#d2502c");
         const close = el("button", { class: "ov-sheet-close", type: "button", "aria-label": "Schließen", text: "×" });
         close.addEventListener("click", () => { sheet.classList.remove("open"); focusId = null; paint(); });
         const status = { done: "Geschafft", skipped: "Übersprungen", started: "Begonnen", ready: "Bereit", later: "Baut auf anderen Lektionen auf" }[st];

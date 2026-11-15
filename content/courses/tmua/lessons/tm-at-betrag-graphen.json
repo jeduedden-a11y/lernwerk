@@ -16,6 +16,268 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **$|f(x)|$:** Die Teile des Graphen unter der x-Achse werden nach oben gespiegelt; was darüber liegt, bleibt.\n> 2. **$f(|x|)$:** Die rechte Hälfte ($x \\ge 0$) bleibt und wird an der y-Achse gespiegelt; die linke Hälfte des alten Graphen verschwindet.\n> 3. **Hilfsgerade einzeichnen**, wenn eine Gleichung wie $|f(x)| = c$ gelöst werden soll.\n> 4. **Schnittpunkte zählen**, die Knickstellen und die Höhe der hochgeklappten Teile beachten.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Wie viele Lösungen hat $|x^2 - 2x - 3| = 3$?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 - 2x - 3 = (x - 3)(x + 1)",
+            "why": "Nullstellen −1 und 3; dazwischen ist der Term negativ, Tiefpunkt bei x = 1 mit −4."
+          },
+          {
+            "tex": "|f| \\text{ hat dort die Spitze } (1, 4)",
+            "why": "Hochklappen macht aus dem Tiefpunkt eine Spitze der Höhe 4."
+          },
+          {
+            "tex": "0 < 3 < 4",
+            "why": "Die Höhe 3 liegt unter der Spitze."
+          },
+          {
+            "tex": "\\text{zwei Schnitte außen, zwei im hochgeklappten Teil: } 4",
+            "why": "Rechnerisch: x² − 2x − 3 = 3 und x² − 2x − 3 = −3 haben je zwei Lösungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Faktorisieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hochklappen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleichen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zählen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Betrag",
+      "md": "**Zwei Arten von Betrag:** grau $f(x) = x^2 - 2x - 3$, blau $|f(x)|$, orange $f(|x|)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          5
+        ],
+        "y": [
+          -5,
+          8
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "A",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "B",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2*x - 3",
+            "color": "gray",
+            "dashed": true,
+            "samples": 300
+          },
+          {
+            "name": "p",
+            "expr": "A > 0.5 ? abs(x^2 - 2*x - 3) : 0/0",
+            "color": "blue",
+            "samples": 400,
+            "width": 3
+          },
+          {
+            "name": "q",
+            "expr": "B > 0.5 ? x^2 - 2*abs(x) - 3 : 0/0",
+            "color": "orange",
+            "samples": 400,
+            "width": 3
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Ausgangsgraph f: Tiefpunkt (1, −4), Nullstellen −1 und 3.",
+          "set": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "caption": "|f(x)|: Der Teil zwischen −1 und 3 wird nach oben geklappt, aus dem Tiefpunkt wird die Spitze (1, 4).",
+          "to": {
+            "A": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "f(|x|): Die rechte Hälfte wird an der y-Achse gespiegelt; der Graph wird achsensymmetrisch mit Tiefpunkten bei ±1.",
+          "to": {
+            "A": 0,
+            "B": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- $|f(x)|$ und $f(|x|)$ verwechseln.\n- Die Höhe der hochgeklappten Spitze nicht berechnen und deshalb falsch zählen.\n- Bei $f(|x|)$ die linke Hälfte des alten Graphen stehen lassen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Graphen mit Betrag skizzieren",
+      "path": "02 Wiki/TMUA/12 Graphen von Funktionen/Aufgabentypen/Graphen mit Betrag skizzieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Im Funktionsterm steht ein Betrag, und gefragt ist der Kurvenverlauf, die Anzahl der Lösungen einer Betragsgleichung oder die Zahl der Schnittpunkte mit einer Geraden."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Bauarten",
+          "blocks": [
+            {
+              "md": "| Form | Konstruktion | Merkmal |\n|---|---|---|\n| $y = \\lvert f(x)\\rvert$ | alles **unterhalb** der $x$-Achse nach oben klappen | Graph liegt nie unter der Achse; Knicke an den Nullstellen von $f$ |\n| $y = f\\!\\left(\\lvert x\\rvert\\right)$ | den Teil mit $x \\ge 0$ behalten und an der $y$-Achse **spiegeln** | achsensymmetrisch zur $y$-Achse; der ursprüngliche linke Teil verschwindet |\n\n> [!warning] Die beiden Formen liefern verschiedene Graphen\n> Für $f(x) = 2x - 4$:\n> - $\\lvert f(x)\\rvert = \\lvert 2x - 4\\rvert$ ist ein **V mit der Spitze bei $(2, 0)$** -- der Teil links von $x = 2$ ist hochgeklappt.\n> - $f(\\lvert x\\rvert) = 2\\lvert x\\rvert - 4$ ist ein **V mit der Spitze bei $(0, -4)$** -- der rechte Ast ist an der $y$-Achse gespiegelt.\n>\n> Für $f(x) = x^2 - 4$ dagegen ist $f(\\lvert x\\rvert)$ **dieselbe** Parabel, weil sie ohnehin achsensymmetrisch ist, während $\\lvert f(x)\\rvert$ den Mittelteil hochklappt. Welche Form gemeint ist, entscheidet über die Anzahl der Lösungen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema für Betragsgleichungen",
+          "blocks": [
+            {
+              "md": "1. **Graph von $f$ skizzieren**, Nullstellen markieren.\n2. **Nach der Bauart umformen** (klappen oder spiegeln).\n3. **Die Gerade $y = k$ einzeichnen** und Schnittpunkte zählen.\n\n**Oder rechnerisch:** $\\lvert A\\rvert = k$ mit $k > 0$ bedeutet $A = k$ **oder** $A = -k$. Für $k < 0$ gibt es keine Lösung, für $k = 0$ genau die Nullstellen von $A$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> How many real solutions does $\\left\\lvert x^2 - 4\\right\\rvert = 3$ have?\n>\n> - **A** 4\n> - **B** 2\n> - **C** 3\n> - **D** 1\n> - **E** 0\n\n**Rechnerisch:** $x^2 - 4 = 3$ oder $x^2 - 4 = -3$, also $x^2 = 7$ oder $x^2 = 1$.\n\nBeide liefern je zwei Lösungen: $x = \\pm\\sqrt7$ und $x = \\pm 1$. Insgesamt **vier**. Antwort **A**.\n\n**Grafisch:** Die Parabel $y = x^2 - 4$ hat ihren Scheitel bei $(0, -4)$; nach dem Hochklappen entsteht ein „M\"-artiger Verlauf mit einem lokalen Maximum bei $(0, 4)$ und Knicken bei $x = \\pm 2$. Die Gerade $y = 3$ liegt unterhalb dieser Spitze und schneidet den Graphen deshalb **viermal**.\n\n> [!tip] Die Höhe der Spitze entscheidet\n> Bei $\\lvert f(x)\\rvert = k$ mit nach oben geklapptem Scheitel gilt: $k$ **unter** der Spitze gibt vier Lösungen, $k$ **auf** der Spitze drei, $k$ **über** der Spitze zwei. Diese Dreiteilung erklärt alle Aufgaben dieses Typs."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\lvert f(x)\\rvert$ und $f(\\lvert x\\rvert)$ verwechseln.**\n- **Nur den Fall $A = k$ betrachten** und die negative Variante vergessen.\n- **Bei $\\lvert A\\rvert = k$ mit $k < 0$ eine Lösung suchen** -- es gibt keine.\n- **Beim Quadrieren Scheinlösungen einschleppen** und nicht zurückprüfen.\n- **Den Knick als stationären Punkt behandeln:** Dort ist die Funktion **nicht** differenzierbar."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Solve $\\lvert 2x - 6\\rvert = 4$.\n>\n> - **A** $x = 1$ and $x = 5$\n> - **B** $x = 5$ only\n> - **C** $x = 1$ only\n> - **D** $x = -1$ and $x = 5$\n> - **E** $x = 2$ and $x = 5$\n\n> [!success]- Lösung\n> **A.** $2x - 6 = 4$ gibt $x = 5$; $2x - 6 = -4$ gibt $2x = 2$, also $x = 1$.\n> Probe: $\\lvert 10 - 6\\rvert = 4$ und $\\lvert 2 - 6\\rvert = 4$. Beides stimmt.\n> B ist die halbe Antwort -- die Falle für alle, die nur den positiven Fall betrachten.\n\n> [!question] Aufgabe 2\n> How many real solutions does $\\left\\lvert x^2 - 4\\right\\rvert = 5$ have?\n>\n> - **A** 2\n> - **B** 4\n> - **C** 3\n> - **D** 1\n> - **E** 0\n\n> [!success]- Lösung\n> **A.** $x^2 - 4 = 5$ gibt $x^2 = 9$, also $x = \\pm 3$. $x^2 - 4 = -5$ gibt $x^2 = -1$ -- **keine** reelle Lösung.\n> Bleiben zwei.\n> Grafisch: $5$ liegt **über** der Spitze bei $y = 4$, die Gerade schneidet nur die beiden äußeren Äste. Der Unterschied zum durchgerechneten Beispiel ist allein die Höhe der Geraden.\n\n> [!question] Aufgabe 3\n> How many real solutions does $\\lvert x\\rvert = x^2 - 2$ have?\n>\n> - **A** 2\n> - **B** 1\n> - **C** 3\n> - **D** 4\n> - **E** 0\n\n> [!success]- Lösung\n> **A.** Beide Seiten sind **gerade** Funktionen, es genügt also $x \\ge 0$ zu betrachten und am Ende zu spiegeln.\n> Für $x \\ge 0$: $x = x^2 - 2$, also $x^2 - x - 2 = (x-2)(x+1) = 0$ mit $x = 2$ oder $x = -1$; letzteres liegt außerhalb des betrachteten Bereichs.\n> Bleibt $x = 2$, gespiegelt also $x = \\pm 2$ -- zwei Lösungen.\n> Probe: $\\lvert \\pm 2\\rvert = 2$ und $4 - 2 = 2$. Stimmt.\n> C und D entstehen, wenn man $x = -1$ mitzählt oder zusätzlich spiegelt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Betragsgleichungen und Betragsungleichungen** · **Anzahl reeller Lösungen bestimmen** · **Transformationsfolge bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Zählen",
+      "md": "Wie viele Lösungen hat $|x^2 - 2x - 3| = 5$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Die Höhe 5 liegt über der Spitze (1, 4): nur die zwei äußeren Schnittpunkte.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Graph ist immer achsensymmetrisch zur y-Achse?",
+      "options": [
+        {
+          "md": "$y = f(|x|)$",
+          "correct": true
+        },
+        {
+          "md": "$y = |f(x)|$",
+          "why": "Nur, wenn f selbst achsensymmetrisch ist."
+        },
+        {
+          "md": "$y = -f(x)$",
+          "why": "Spiegelung an der x-Achse, keine Symmetrie."
+        },
+        {
+          "md": "$y = f(x) + |x|$",
+          "why": "Keine allgemeine Symmetrie."
+        }
+      ],
+      "explain": "$f(|-x|) = f(|x|)$ für alle $x$.",
+      "label": "Symmetrie",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Graph von $y = |f(x)|$ liegt nie unter der x-Achse.",
+      "answer": true,
+      "explain": "Ein Betrag ist nie negativ.",
+      "label": "Betrag",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +330,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "|f(x)|: Teile unter der Achse hochklappen; f(|x|): rechte Hälfte spiegeln.",
+        "Bei |f(x)| = c die Höhe der hochgeklappten Spitze mit c vergleichen."
+      ]
     }
   ]
 }

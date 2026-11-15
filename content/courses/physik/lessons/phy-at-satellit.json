@@ -16,6 +16,487 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung von Bahngeschwindigkeit und Umlaufdauer** eines Satelliten auf einer Kreisbahn mit dem Radius $r = R_E + h$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "G\\,\\frac{M m}{r^2} = m\\,\\frac{v^2}{r}",
+            "why": "Die Gravitation ist die einzige Kraft auf den Satelliten; sie liefert die Zentripetalkraft."
+          },
+          {
+            "tex": "v = \\sqrt{\\frac{G M}{r}}",
+            "why": "$m$ kürzt sich: Raumstation und Schraube auf derselben Bahn sind gleich schnell."
+          },
+          {
+            "tex": "T = \\frac{2\\pi r}{v} = 2\\pi\\sqrt{\\frac{r^3}{G M}}",
+            "why": "Umfang durch Geschwindigkeit. Das ist wieder das 3. Keplersche Gesetz."
+          },
+          {
+            "tex": "r = \\sqrt[3]{\\frac{G M T^2}{4\\pi^2}}",
+            "why": "Umgekehrt: der Bahnradius für eine gewünschte Umlaufdauer."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gravitation als Zentripetalkraft.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bahngeschwindigkeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umlaufdauer.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bahnradius aus der Umlaufdauer.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Satellitenbahnen.** Bahngeschwindigkeit über der Höhe, mit $G M_E = 398\\,600\\,\\tfrac{\\mathrm{km}^3}{\\mathrm{s}^2}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          8.5
+        ],
+        "xLabel": "Höhe in 1000 km",
+        "yLabel": "v in km/s",
+        "vars": [
+          {
+            "name": "H",
+            "min": 0,
+            "max": 40,
+            "value": 0.4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "vb",
+            "expr": "sqrt(398600/(6371 + 1000*x))",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": 0.4,
+            "on": "vb",
+            "label": "ISS"
+          },
+          {
+            "x": 20.2,
+            "on": "vb",
+            "label": "GPS"
+          },
+          {
+            "x": 35.786,
+            "on": "vb"
+          },
+          {
+            "x": "H",
+            "on": "vb",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "labels": [
+          {
+            "x": 35.5,
+            "y": 4.1,
+            "text": "geostationär",
+            "anchor": "end"
+          }
+        ],
+        "readout": "Höhe {1000*H|0} km: v = **{sqrt(398600/(6371 + 1000*H))|2} km/s**, Umlaufdauer **{2*pi*(6371 + 1000*H)/sqrt(398600/(6371 + 1000*H))/3600|2} h**"
+      },
+      "timeline": [
+        {
+          "caption": "Je höher die Bahn, desto langsamer der Satellit. Die ISS in $400\\,\\mathrm{km}$ Höhe fliegt $7{,}7\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$ und braucht rund 92 Minuten für einen Umlauf.",
+          "set": {
+            "H": 0.4
+          }
+        },
+        {
+          "caption": "GPS-Satelliten in $20\\,200\\,\\mathrm{km}$ Höhe: $3{,}9\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$, ein Umlauf in knapp 12 Stunden, einem halben Sterntag.",
+          "to": {
+            "H": 20.2
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "In $35\\,786\\,\\mathrm{km}$ Höhe dauert ein Umlauf genau einen Sterntag ($23\\,\\mathrm{h}\\,56\\,\\mathrm{min}$). Über dem Äquator steht der Satellit dann scheinbar still: geostationär.",
+          "to": {
+            "H": 35.786
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Langsamer heißt nicht energieärmer: Für eine höhere Bahn muss man Energie hineinstecken. Die Lageenergie nimmt dabei doppelt so stark zu, wie die Bewegungsenergie abnimmt."
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Der geostationäre Satellit.** Er muss die Erde in einem Sterntag $T = 86\\,164\\,\\mathrm{s}$ umrunden, also genau so schnell, wie sich die Erde unter ihm dreht.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "r = \\sqrt[3]{\\frac{G M_E T^2}{4\\pi^2}} = \\sqrt[3]{\\frac{3{,}986\\cdot 10^{14}\\cdot 86\\,164^2}{39{,}48}}\\,\\mathrm{m}",
+            "why": "Bahnradius aus der Umlaufdauer."
+          },
+          {
+            "tex": "r \\approx 4{,}216\\cdot 10^{7}\\,\\mathrm{m} = 42\\,160\\,\\mathrm{km}",
+            "why": "Ausgerechnet."
+          },
+          {
+            "tex": "h = r - R_E \\approx 35\\,790\\,\\mathrm{km},\\qquad v = \\frac{2\\pi r}{T} \\approx 3{,}07\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}",
+            "why": "Höhe über dem Äquator und Bahngeschwindigkeit. Es gibt genau eine solche Bahn; sie muss über dem Äquator liegen, weil die Bahnebene durch den Erdmittelpunkt geht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bahnradius.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höhe und Geschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Klausuraufgabe: die Energien eines Satelliten.** Warum braucht man Energie für eine höhere Bahn, obwohl der Satellit dort langsamer ist?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E_{kin} = \\tfrac12 m v^2 = \\frac{G M m}{2 r}",
+            "why": "Mit $v^2 = \\tfrac{GM}{r}$ aus dem Kraftansatz."
+          },
+          {
+            "tex": "E_{pot} = -\\frac{G M m}{r}",
+            "why": "Lageenergie mit Nullniveau im Unendlichen."
+          },
+          {
+            "tex": "E_{ges} = E_{kin} + E_{pot} = -\\frac{G M m}{2 r}",
+            "why": "Die Gesamtenergie ist negativ: Der Satellit ist gebunden."
+          },
+          {
+            "tex": "r \\uparrow:\\quad E_{kin} \\downarrow,\\quad E_{pot} \\uparrow,\\quad E_{ges} \\uparrow",
+            "why": "Bei größerem $r$ wird $E_{ges}$ weniger negativ, also größer. Man muss Energie zuführen, obwohl die Bewegungsenergie sinkt: Die Lageenergie wächst doppelt so stark."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bewegungsenergie.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lageenergie.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gesamtenergie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höhere Bahn.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bahngeschwindigkeit und Umlaufzeit von Satelliten berechnen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Bahngeschwindigkeit und Umlaufzeit von Satelliten berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Mit welcher Geschwindigkeit umkreist die ISS die Erde?\"*, *\"Berechnen Sie die Umlaufzeit eines Satelliten in $h$ Kilometern Höhe\"*, *\"In welcher Höhe muss ein geostationärer Satellit stehen?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Der zentrale Ansatz",
+          "blocks": [
+            {
+              "md": "> [!important] Gravitation liefert die Zentripetalkraft\n> Ein Satellit auf einer Kreisbahn braucht eine zum Erdmittelpunkt gerichtete Zentripetalkraft -- geliefert wird sie **ausschließlich von der Gravitation**. Beide werden gleichgesetzt:\n> $$G\\frac{Mm}{r^2} = \\frac{mv^2}{r}$$\n> Die Satellitenmasse $m$ kürzt sich vollständig heraus:\n> $$v = \\sqrt{\\frac{GM}{r}}$$\n> **Die Bahngeschwindigkeit hängt nicht von der Satellitenmasse ab** -- eine schwere Raumstation und eine leichte Sonde auf derselben Bahnhöhe fliegen gleich schnell."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Bahnradius bestimmen:** $r = R_{\\text{Erde}} + h$ (Mittelpunktsabstand, nicht Höhe).\n2. **Gravitations- und Zentripetalkraft gleichsetzen.**\n3. **Nach $v$ auflösen:** $v = \\sqrt{\\dfrac{GM}{r}}$.\n4. **Umlaufzeit** aus $T = \\dfrac{2\\pi r}{v}$ berechnen.\n5. **Einheitenkontrolle und Plausibilität:** erdnahe Satelliten haben Umlaufzeiten von etwa 90 Minuten, geostationäre von exakt 24 Stunden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Die ISS umkreist die Erde in etwa $h=400\\,\\text{km}$ Höhe. Berechnen Sie ihre Bahngeschwindigkeit und Umlaufzeit ($M=5{,}972\\cdot10^{24}\\,\\text{kg}$, $R=6371\\,\\text{km}$).*\n\n**Schritt 1:**\n$$r = 6371\\,\\text{km} + 400\\,\\text{km} = 6771\\,\\text{km} = 6{,}771\\cdot10^{6}\\,\\text{m}$$\n\n**Schritt 3:**\n$$v = \\sqrt{\\frac{6{,}674\\cdot10^{-11}\\cdot5{,}972\\cdot10^{24}}{6{,}771\\cdot10^{6}}} = \\sqrt{\\frac{3{,}986\\cdot10^{14}}{6{,}771\\cdot10^{6}}} = \\sqrt{5{,}887\\cdot10^{7}} \\approx 7672\\,\\text{m/s}$$\n\n*Rund $7{,}67\\,\\text{km/s}$ -- etwa $27\\,600\\,\\text{km/h}$.*\n\n**Schritt 4:**\n$$T = \\frac{2\\pi\\cdot6{,}771\\cdot10^{6}}{7672} \\approx \\frac{4{,}254\\cdot10^{7}}{7672} \\approx 5545\\,\\text{s} \\approx 92{,}4\\,\\text{min}$$\n\n**Schritt 5:** Rund 92 Minuten pro Umlauf -- deckt sich mit dem bekannten Wert für die ISS (etwa 16 Erdumrundungen pro Tag) ✓."
+            }
+          ]
+        },
+        {
+          "title": "Der geostationäre Satellit",
+          "blocks": [
+            {
+              "md": "Ein geostationärer Satellit steht scheinbar fest über einem Punkt des Äquators -- seine Umlaufzeit muss also **exakt einem Sterntag** ($T\\approx86\\,164\\,\\text{s}$) entsprechen. Aus dem Ansatz $G\\dfrac{Mm}{r^2}=m\\omega^2r$ mit $\\omega=\\dfrac{2\\pi}{T}$ folgt durch Auflösen nach $r$:\n$$r = \\sqrt[3]{\\frac{GMT^2}{4\\pi^2}}$$\nDas liefert $r\\approx42\\,160\\,\\text{km}$, also eine Bahnhöhe von rund $35\\,790\\,\\text{km}$ über der Erdoberfläche."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Höhe statt Bahnradius verwenden.** $r$ ist der Abstand zum Erd**mittelpunkt**, also Erdradius plus Flughöhe.\n- **Satellitenmasse in die Formel einsetzen wollen**, obwohl sie sich herauskürzt -- ist sie in der Aufgabe gar nicht gegeben, ist das kein Fehler der Aufgabenstellung.\n- **Die Wurzel vergessen** beim Auflösen nach $v$.\n- **Bei der Umlaufzeit den Umfang mit dem Radius verwechseln.** Es gilt $T=\\dfrac{2\\pi r}{v}$, nicht $\\dfrac{r}{v}$.\n- **Bei geostationären Bahnen mit 24 Stunden statt dem Sterntag (23 h 56 min) rechnen** -- in Schulaufgaben meist toleriert, aber der physikalisch korrekte Wert ist der Sterntag."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Gravitation** · **Gravitationskraft nach Newton berechnen** · **Zentripetalkraft berechnen** · **Drittes Keplersches Gesetz anwenden** · **Fluchtgeschwindigkeit berechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Umlaufdauer in die richtige Reihenfolge.",
+      "items": [
+        "Gravitation gleich Zentripetalkraft: $G\\tfrac{Mm}{r^2} = m\\tfrac{v^2}{r}$",
+        "$m$ kürzen: $v = \\sqrt{\\tfrac{GM}{r}}$",
+        "Umlaufdauer als Umfang durch Geschwindigkeit: $T = \\tfrac{2\\pi r}{v}$",
+        "Einsetzen: $T = 2\\pi\\sqrt{\\tfrac{r^3}{GM}}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Gravitation gleich Zentripetalkraft: $G\\tfrac{Mm}{r^2} = m\\tfrac{v^2}{r}$. 2. $m$ kürzen: $v = \\sqrt{\\tfrac{GM}{r}}$. 3. Umlaufdauer als Umfang durch Geschwindigkeit: $T = \\tfrac{2\\pi r}{v}$. 4. Einsetzen: $T = 2\\pi\\sqrt{\\tfrac{r^3}{GM}}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie schnell fliegt ein Satellit in $800\\,\\mathrm{km}$ Höhe ($G M_E = 3{,}986\\cdot 10^{14}\\,\\tfrac{\\mathrm{m}^3}{\\mathrm{s}^2}$, $R_E = 6371\\,\\mathrm{km}$)?",
+      "answer": 7.46,
+      "tolerance": 0.03,
+      "placeholder": "km/s",
+      "explain": "$v = \\sqrt{\\tfrac{3{,}986\\cdot 10^{14}}{7{,}171\\cdot 10^6}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 7456\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 7{,}46\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und wie lange braucht er für einen Umlauf?",
+      "answer": 100.7,
+      "tolerance": 0.5,
+      "placeholder": "min",
+      "explain": "$T = \\tfrac{2\\pi r}{v} = \\tfrac{2\\pi\\cdot 7{,}171\\cdot 10^6}{7456}\\,\\mathrm{s} \\approx 6043\\,\\mathrm{s} \\approx 100{,}7\\,\\mathrm{min}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "GPS-Satelliten umrunden die Erde in einem halben Sterntag ($43\\,082\\,\\mathrm{s}$). In welcher Höhe fliegen sie?",
+      "answer": 20190,
+      "tolerance": 60,
+      "placeholder": "km",
+      "explain": "$r = \\sqrt[3]{\\tfrac{G M_E T^2}{4\\pi^2}} = \\sqrt[3]{\\tfrac{3{,}986\\cdot 10^{14}\\cdot 43\\,082^2}{39{,}48}}\\,\\mathrm{m} \\approx 2{,}656\\cdot 10^7\\,\\mathrm{m}$, also $h \\approx 26\\,560\\,\\mathrm{km} - 6371\\,\\mathrm{km} \\approx 20\\,190\\,\\mathrm{km}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Vervierfacht man den Bahnradius, wird die Bahngeschwindigkeit {{0}}-mal so groß und die Umlaufdauer {{1}}-mal so lang.",
+      "blanks": [
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        },
+        {
+          "accept": [
+            "8"
+          ],
+          "numeric": true,
+          "tolerance": 0.08
+        }
+      ],
+      "explain": "$v \\sim r^{-1/2}$: $4^{-1/2} = \\tfrac12$. $T \\sim r^{3/2}$: $4^{3/2} = 8$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist die Bahngeschwindigkeit unabhängig von der Masse des Satelliten?",
+      "options": [
+        {
+          "md": "Seine Masse steht sowohl in der Gravitationskraft als auch in der Zentripetalkraft und kürzt sich.",
+          "correct": true
+        },
+        {
+          "md": "Weil im Weltall keine Masse wirkt.",
+          "why": "Die Masse bleibt erhalten; sie kürzt sich nur aus der Gleichung."
+        },
+        {
+          "md": "Weil Satelliten immer gleich schwer gebaut werden.",
+          "why": "Auch eine Schraube neben der ISS fliegt gleich schnell."
+        },
+        {
+          "md": "Weil die Erde viel schwerer ist.",
+          "why": "Das ist für die Kürzung unerheblich."
+        }
+      ],
+      "explain": "$G\\tfrac{Mm}{r^2} = m\\tfrac{v^2}{r}$: Es zählt nur die Zentralmasse $M$. Derselbe Grund wie beim freien Fall, die Gleichheit von träger und schwerer Masse.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Satellit auf einer höheren Bahn ist schneller als einer auf einer niedrigen.",
+      "answer": false,
+      "explain": "$v = \\sqrt{\\tfrac{GM}{r}}$ nimmt mit dem Radius ab. Der Mond ist nur rund $1\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$ schnell.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Satellit wird von einer niedrigen auf eine höhere Kreisbahn gebracht. Was gilt?",
+      "options": [
+        {
+          "md": "Seine Gesamtenergie steigt, seine Bewegungsenergie sinkt.",
+          "correct": true
+        },
+        {
+          "md": "Gesamt- und Bewegungsenergie steigen.",
+          "why": "Auf der höheren Bahn ist er langsamer."
+        },
+        {
+          "md": "Seine Gesamtenergie sinkt, weil er langsamer wird.",
+          "why": "$E_{ges} = -\\tfrac{GMm}{2r}$ wird mit wachsendem $r$ größer (weniger negativ)."
+        },
+        {
+          "md": "Es braucht keine Energie, weil die Bahn höher und der Satellit langsamer ist.",
+          "why": "Die Lageenergie wächst doppelt so stark, wie die Bewegungsenergie sinkt."
+        }
+      ],
+      "explain": "$E_{kin} = \\tfrac{GMm}{2r}$ sinkt, $E_{pot} = -\\tfrac{GMm}{r}$ steigt doppelt so stark, $E_{ges} = -\\tfrac{GMm}{2r}$ steigt.",
+      "label": "Klausur",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie schnell läuft der Mond um die Erde ($r = 384\\,400\\,\\mathrm{km}$, $G M_E = 3{,}986\\cdot 10^{14}\\,\\tfrac{\\mathrm{m}^3}{\\mathrm{s}^2}$)?",
+      "answer": 1.018,
+      "tolerance": 0.01,
+      "placeholder": "km/s",
+      "explain": "$v = \\sqrt{\\tfrac{3{,}986\\cdot 10^{14}}{3{,}844\\cdot 10^8}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 1018\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq9"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Lösungsweg für einen Satelliten in $600\\,\\mathrm{km}$ Höhe. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Ansatz: $v = \\sqrt{\\tfrac{G M_E}{r}}$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "$r = 600\\,\\mathrm{km} = 6\\cdot 10^5\\,\\mathrm{m}$.",
+          "why": "Falsch: $r$ ist der Abstand zum Erdmittelpunkt, $r = R_E + h = 6971\\,\\mathrm{km}$."
+        },
+        {
+          "md": "$v = \\sqrt{\\tfrac{3{,}986\\cdot 10^{14}}{6\\cdot 10^5}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 25{,}8\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+          "why": "Folgefehler; das Ergebnis liegt sogar über der Fluchtgeschwindigkeit. Richtig: $\\approx 7{,}56\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$."
+        }
+      ],
+      "answer": 1,
+      "explain": "Immer vom Erdmittelpunkt aus rechnen; eine Plausibilitätsprüfung (erdnahe Bahnen um 7 bis 8 km/s) deckt den Fehler auf.",
+      "id": "vq10"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +573,54 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "bahnhoehe"
+        ]
+      },
+      "label": "Bahnhöhe",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "bahnhoehe",
+          "satellit"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "satellit",
+          "bahnhoehe"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$v = \\sqrt{\\tfrac{GM}{r}}$, $T = 2\\pi\\sqrt{\\tfrac{r^3}{GM}}$ mit $r = R_E + h$; die Satellitenmasse kürzt sich.",
+        "Geostationär: $T$ = ein Sterntag, $r \\approx 42\\,160\\,\\mathrm{km}$, $h \\approx 35\\,790\\,\\mathrm{km}$, über dem Äquator.",
+        "Energien: $E_{kin} = \\tfrac{GMm}{2r}$, $E_{ges} = -\\tfrac{GMm}{2r}$. Höhere Bahn: langsamer, aber mehr Gesamtenergie."
+      ]
     }
   ]
 }

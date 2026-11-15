@@ -16,6 +16,431 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Bewegte Maßstäbe sind verkürzt\n> $L = \\tfrac{L_0}{\\gamma} = L_0\\sqrt{1 - \\tfrac{v^2}{c^2}}$ mit der **Eigenlänge** $L_0$ im Ruhesystem des Gegenstands. Wegen $\\gamma \\ge 1$ ist $L_0$ die **größte** messbare Länge.\n\n> [!warning] Umgekehrt zur Zeitdilatation\n> | | Zeitdilatation | Längenkontraktion |\n> |---|---|---|\n> | Formel | $\\Delta t = \\gamma\\,\\Delta t_0$ | $L = L_0/\\gamma$ |\n> | Ruhesystemgröße | die **kleinste** | die **größte** |\n>\n> Bei der Zeit wird mit $\\gamma$ multipliziert, bei der Länge dividiert. Merkhilfe: Eigenzeit ist kurz, Eigenlänge ist lang.\n\n**Nur in Bewegungsrichtung.** Quer zur Bewegung ändert sich nichts: Ein schnell fliegender Würfel wird zum Quader, sein Volumen sinkt um den Faktor $\\tfrac1\\gamma$, nicht $\\tfrac{1}{\\gamma^3}$.",
+      "label": "Längenkontraktion",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung aus der Myon-Überlegung.** Ein Myon durchquert die Atmosphäre der Dicke $L_0$ (im Erdsystem gemessen) mit der Geschwindigkeit $v$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Erdsystem: } L_0 = v\\,\\Delta t",
+            "why": "Strecke gleich Geschwindigkeit mal Zeit, beides im Erdsystem."
+          },
+          {
+            "tex": "\\Delta t = \\gamma\\,\\Delta t_0",
+            "why": "Die Uhr des Myons läuft im Erdsystem langsamer; das Myon selbst zählt nur Δt₀."
+          },
+          {
+            "tex": "\\text{Myonsystem: } L = v\\,\\Delta t_0",
+            "why": "Für das Myon zieht die Atmosphäre mit v vorbei, während seine Uhr Δt₀ zählt."
+          },
+          {
+            "tex": "L = v\\,\\frac{\\Delta t}{\\gamma} = \\frac{L_0}{\\gamma}",
+            "why": "Beide Beschreibungen müssen dieselbe Ankunft liefern: Die bewegte Strecke ist verkürzt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Erde.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeitdilatation.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Myon.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontraktion.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Ein Raumschiff mit verschiedenen Geschwindigkeiten**, gemessen von der Erde: gestrichelt die Eigenlänge, blau die gemessene Form.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.2,
+          4.6
+        ],
+        "y": [
+          -0.4,
+          1.6
+        ],
+        "xLabel": "Länge (relativ)",
+        "yLabel": "Höhe",
+        "grid": false,
+        "vars": [
+          {
+            "name": "b",
+            "min": 0,
+            "max": 0.99,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              4,
+              0
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.6
+          },
+          {
+            "from": [
+              4,
+              0
+            ],
+            "to": [
+              4,
+              1
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.6
+          },
+          {
+            "from": [
+              4,
+              1
+            ],
+            "to": [
+              0,
+              1
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.6
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "4*sqrt(1 - b^2)",
+              0
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              "4*sqrt(1 - b^2)",
+              0
+            ],
+            "to": [
+              "4*sqrt(1 - b^2)",
+              1
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              "4*sqrt(1 - b^2)",
+              1
+            ],
+            "to": [
+              0,
+              1
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              0,
+              1
+            ],
+            "to": [
+              0,
+              0
+            ],
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "readout": "v = {b|2} c: gemessene Länge **{100*sqrt(1 - b^2)|0} %** der Eigenlänge; die Höhe bleibt"
+      },
+      "timeline": [
+        {
+          "caption": "In Ruhe: Eigenlänge.",
+          "set": {
+            "b": 0
+          }
+        },
+        {
+          "caption": "Mit $0{,}6\\,c$: $80\\,\\%$ der Eigenlänge, nur in Flugrichtung.",
+          "to": {
+            "b": 0.6
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Mit $0{,}8\\,c$: $60\\,\\%$; ein $120\\,\\mathrm{m}$ langes Schiff misst von der Erde aus $72\\,\\mathrm{m}$.",
+          "to": {
+            "b": 0.8
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Mit $0{,}99\\,c$: nur noch $14\\,\\%$. Die Besatzung merkt davon nichts; für sie ist umgekehrt die Erde verkürzt.",
+          "to": {
+            "b": 0.99
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Die Symmetrie ist kein Widerspruch.** Jeder misst den jeweils anderen verkürzt. Eine Länge messen heißt, beide Enden **gleichzeitig** zu bestimmen; was im einen System gleichzeitig ist, ist es im anderen nicht. Die Relativität der Gleichzeitigkeit löst den scheinbaren Widerspruch auf.\n\n**Messen ist nicht Sehen.** Die Kontraktion ist das Ergebnis einer Messung. Was ein Auge sieht, setzt sich aus Licht zusammen, das zu verschiedenen Zeiten ausgesandt wurde; ein vorbeifliegender Würfel erscheint dadurch eher gedreht (Terrell-Rotation).\n\n> [!warning] Typische Fallen\n> Mit $\\gamma$ multiplizieren statt dividieren; Eigenlänge und gemessene Länge vertauschen; die Kontraktion auf alle Richtungen anwenden; von mechanischem Zusammendrücken sprechen (es wirken keine Kräfte); $\\sqrt{1 - v^2/c^2}$ und sein Kehrwert verwechseln.",
+      "label": "Deutung",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Längenkontraktion berechnen",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Längenkontraktion berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Welche Länge misst der ruhende Beobachter?\"*, *\"Wie lang erscheint die Strecke im Ruhesystem des Teilchens?\"*, *\"Berechnen Sie die kontrahierte Länge des Raumschiffs\"*, *\"Weshalb misst das Myon eine kürzere Atmosphäre?\"*.\n\nErkennungsmerkmal: Eine **Länge** wird aus zwei relativ zueinander bewegten Bezugssystemen betrachtet."
+            }
+          ]
+        },
+        {
+          "title": "Die Formel",
+          "blocks": [
+            {
+              "md": "> [!important] Bewegte Maßstäbe sind verkürzt\n> $$\\boxed{\\;l = \\frac{l_0}{\\gamma} = l_0\\sqrt{1 - \\frac{v^2}{c^2}}\\;}$$\n> mit der **Ruhelänge** $l_0$ -- gemessen in dem System, in dem der Gegenstand **ruht**.\n>\n> Da $\\gamma \\geq 1$ ist, gilt $l \\leq l_0$: Die Ruhelänge ist die **größte** messbare Länge. Jeder relativ dazu bewegte Beobachter misst weniger.\n\n> [!warning] Die Formel steht umgekehrt zur Zeitdilatation\n> | | Zeitdilatation | Längenkontraktion |\n> |---|---|---|\n> | Formel | $\\Delta t = \\gamma\\,\\Delta t_0$ | $l = l_0/\\gamma$ |\n> | Ruhesystemgröße | die **kleinste** | die **größte** |\n> | Effekt auf den bewegten Beobachter | Zeit **dehnt** sich | Länge **schrumpft** |\n>\n> Das ist der häufigste Fehler des gesamten Themas: Bei der Zeit wird mit $\\gamma$ **multipliziert**, bei der Länge **dividiert**. Merkhilfe: Ruhezeit ist kurz, Ruhelänge ist lang -- beides ist \"am ruhenden Objekt gemessen extremal\", aber in entgegengesetzter Richtung."
+            }
+          ]
+        },
+        {
+          "title": "Nur in Bewegungsrichtung",
+          "blocks": [
+            {
+              "md": "> [!important] Quer zur Bewegung ändert sich nichts\n> Die Kontraktion betrifft **ausschließlich** die Ausdehnung parallel zur Bewegungsrichtung. Senkrechte Abmessungen bleiben unverändert.\n>\n> Ein mit hoher Geschwindigkeit fliegender Würfel wird also nicht kleiner, sondern zu einem **Quader** verzerrt -- verkürzt in Flugrichtung, unverändert in Breite und Höhe. Aufgaben zu Volumen oder Dichte relativistischer Objekte zielen auf genau diese Anisotropie: Das Volumen sinkt um den Faktor $1/\\gamma$, nicht um $1/\\gamma^3$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ruhesystem des Gegenstands bestimmen.** Wo ruht das, dessen Länge gefragt ist?\n2. **Ruhelänge $l_0$ identifizieren** -- stets die größere Zahl.\n3. **$\\gamma$ berechnen** aus $\\beta = v/c$.\n4. **Einsetzen:** $l = l_0/\\gamma$.\n5. **Plausibilität prüfen:** Das Ergebnis muss **kleiner** als $l_0$ sein.\n6. **Bei Volumenfragen** nur eine Dimension kontrahieren.\n7. **Einheitenkontrolle:** $\\gamma$ ist dimensionslos."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Raumschiff hat im Ruhezustand die Länge $l_0 = 120\\,\\text{m}$ und fliegt mit $v = 0{,}80\\,c$ an der Erde vorbei. Welche Länge misst ein Beobachter auf der Erde? Wie lang erscheint umgekehrt eine 100 m lange Landebahn auf der Erde für die Besatzung?*\n\n**Schritt 3:**\n$$\\gamma = \\frac{1}{\\sqrt{1 - 0{,}80^2}} = \\frac{1}{\\sqrt{1-0{,}64}} = \\frac{1}{\\sqrt{0{,}36}} = \\frac{1}{0{,}60} \\approx 1{,}667$$\n\n**Schritt 4, Raumschiff aus Erdsicht:**\n$$l = \\frac{120}{1{,}667} \\approx 72{,}0\\,\\text{m}$$\n\n**Landebahn aus Sicht der Besatzung:** Nun ruht die Landebahn auf der Erde, ihre Ruhelänge beträgt 100 m. Für die bewegte Besatzung gilt derselbe Faktor:\n$$l = \\frac{100}{1{,}667} \\approx 60{,}0\\,\\text{m}$$\n\n> [!important] Die Symmetrie ist echt, nicht widersprüchlich\n> Jeder misst den **jeweils anderen** verkürzt. Das wirkt paradox, ist aber konsistent: Die beiden Messungen finden in verschiedenen Bezugssystemen statt, und die Gleichzeitigkeit der beiden Endpunktmessungen ist selbst relativ.\n>\n> Eine Länge zu messen bedeutet nämlich, die Positionen beider Enden **gleichzeitig** zu bestimmen. Was in einem System gleichzeitig ist, ist es im anderen nicht -- die **Relativität der Gleichzeitigkeit** löst den scheinbaren Widerspruch auf. Ein direkter Vergleich beider Messungen ist erst möglich, wenn die Systeme wieder zusammengeführt werden, und dazu muss eines beschleunigen, womit die Symmetrie bricht (vergleiche das Zwillingsparadoxon in **Zeitdilatation berechnen**)."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung: die Myonen aus dem Myonensystem",
+          "blocks": [
+            {
+              "md": "Aus der vorangehenden Notiz: Myonen mit $\\beta = 0{,}998$ und $\\gamma = 15{,}82$ durchqueren 10 km Atmosphäre.\n\n- **Aus Erdsicht:** Die Atmosphäre ist 10 km lang, die Myonenlebensdauer ist auf $34{,}8\\,\\mu\\text{s}$ gedehnt.\n- **Aus Myonensicht:** Die Lebensdauer beträgt normale $2{,}197\\,\\mu\\text{s}$, aber die Atmosphäre ist kontrahiert:\n$$l = \\frac{10\\,000\\,\\text{m}}{15{,}82} \\approx 632\\,\\text{m}$$\n\n**Kontrolle:** Bei $v = 0{,}998c$ braucht das Myon für 632 m die Zeit $\\dfrac{632}{2{,}993\\cdot10^{8}} \\approx 2{,}11\\,\\mu\\text{s}$ -- knapp weniger als seine Eigenlebensdauer von $2{,}197\\,\\mu\\text{s}$. Es kommt also an.\n\nBeide Rechnungen liefern dasselbe Ergebnis, obwohl sie **verschiedene Effekte** verwenden. Genau diese Übereinstimmung nachzuweisen ist eine häufige Prüfungsaufgabe und zeigt die innere Konsistenz der Theorie."
+            }
+          ]
+        },
+        {
+          "title": "Warum ein bewegter Körper nicht \"verkürzt aussieht\"",
+          "blocks": [
+            {
+              "md": "> [!tip] Messen und Sehen sind verschiedene Dinge\n> Die Längenkontraktion beschreibt das Ergebnis einer **Messung** mit gleichzeitiger Bestimmung beider Endpunkte. Was ein Auge oder eine Kamera **sieht**, ist etwas anderes: Licht von weiter entfernten Teilen des Objekts braucht länger, sodass das Bild aus Signalen verschiedener Emissionszeiten zusammengesetzt ist.\n>\n> Ein schnell vorbeifliegender Würfel erscheint dadurch nicht gestaucht, sondern **gedreht** -- ein Effekt, der als Terrell-Rotation bekannt ist. Die Unterscheidung zwischen dem gemessenen und dem gesehenen Bild ist ein anspruchsvoller, aber lohnender Zusatzpunkt in Deutungsaufgaben."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Mit $\\gamma$ multiplizieren statt zu dividieren.** Kontrolle: $l < l_0$.\n- **Ruhelänge und kontrahierte Länge vertauschen.** $l_0$ ist die größere.\n- **Die Kontraktion auf alle Raumrichtungen anwenden.** Nur längs der Bewegungsrichtung.\n- **Die Formel der Zeitdilatation verwenden.** Sie steht genau umgekehrt.\n- **Behaupten, der Körper werde tatsächlich zusammengedrückt.** Es wirken keine Kräfte; die Kontraktion ist eine Eigenschaft der Raumzeitmessung, kein mechanischer Vorgang.\n- **Die Symmetrie als Widerspruch werten.** Sie löst sich über die Relativität der Gleichzeitigkeit auf.\n- **$\\sqrt{1 - v^2/c^2}$ und $1/\\sqrt{1 - v^2/c^2}$ verwechseln.** Bei der Länge steht die Wurzel im **Zähler**."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zeitdilatation berechnen** · **Relativistische Energie und Masse-Energie-Äquivalenz berechnen** · **Spezielle Relativitätstheorie**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Ausdruck seine Bedeutung zu.",
+      "pairs": [
+        [
+          "$L = \\tfrac{L_0}{\\gamma}$",
+          "gemessene Länge des bewegten Körpers"
+        ],
+        [
+          "$L_0$",
+          "größte Länge, im Ruhesystem gemessen"
+        ],
+        [
+          "Abmessung quer zur Bewegung",
+          "bleibt unverändert"
+        ],
+        [
+          "Volumen eines bewegten Würfels",
+          "sinkt um den Faktor $\\tfrac1\\gamma$"
+        ],
+        [
+          "$\\Delta t = \\gamma\\,\\Delta t_0$",
+          "Zeitdilatation, umgekehrt zur Länge"
+        ]
+      ],
+      "explain": "Bei der Länge wird durch γ geteilt, bei der Zeit multipliziert.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung aus der Myon-Überlegung in die richtige Reihenfolge.",
+      "items": [
+        "Erdsystem: $L_0 = v\\,\\Delta t$",
+        "Zeitdilatation: $\\Delta t = \\gamma\\,\\Delta t_0$",
+        "Myonsystem: $L = v\\,\\Delta t_0$",
+        "Also $L = \\tfrac{L_0}{\\gamma}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Erdsystem: $L_0 = v\\,\\Delta t$. 2. Zeitdilatation: $\\Delta t = \\gamma\\,\\Delta t_0$. 3. Myonsystem: $L = v\\,\\Delta t_0$. 4. Also $L = \\tfrac{L_0}{\\gamma}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Raumschiff mit der Eigenlänge $120\\,\\mathrm{m}$ fliegt mit $0{,}80\\,c$ an der Erde vorbei. Welche Länge misst man auf der Erde?",
+      "answer": 72.0,
+      "tolerance": 0.5,
+      "placeholder": "m",
+      "explain": "$\\gamma = \\tfrac{1}{0{,}6}$, $L = 120\\,\\mathrm{m}\\cdot 0{,}6 = 72\\,\\mathrm{m}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie dick ist die $10\\,\\mathrm{km}$ dicke Atmosphäre für ein Myon mit $\\gamma = 15{,}82$?",
+      "answer": 632,
+      "tolerance": 5,
+      "placeholder": "m",
+      "explain": "$L = \\tfrac{10\\,000\\,\\mathrm{m}}{15{,}82} \\approx 632\\,\\mathrm{m}$; in seiner Eigenlebensdauer schafft es das.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bei welcher Geschwindigkeit erscheint ein Körper auf die Hälfte verkürzt?",
+      "answer": 0.866,
+      "tolerance": 0.005,
+      "placeholder": "c",
+      "explain": "$\\sqrt{1 - \\beta^2} = \\tfrac12 \\Rightarrow \\beta^2 = \\tfrac34$, $\\beta \\approx 0{,}866$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Falle",
+      "md": "Ein Würfel mit $1\\,\\mathrm{m^3}$ fliegt mit $0{,}6\\,c$. Welches Volumen misst man?",
+      "answer": 0.8,
+      "tolerance": 0.01,
+      "placeholder": "m³",
+      "explain": "Nur eine Kante wird kürzer: $V = 1\\,\\mathrm{m^3}\\cdot 0{,}8 = 0{,}8\\,\\mathrm{m^3}$, nicht $0{,}8^3$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein schnell fliegender Würfel wird in allen drei Richtungen kleiner.",
+      "answer": false,
+      "explain": "Nur in Flugrichtung; Breite und Höhe bleiben, er wird zum Quader.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Die Erde misst das Raumschiff verkürzt, die Besatzung die Erde. Wie passt das zusammen?",
+      "options": [
+        {
+          "md": "Längenmessung braucht gleichzeitige Ortsbestimmung beider Enden, und Gleichzeitigkeit ist relativ.",
+          "correct": true
+        },
+        {
+          "md": "Einer der beiden irrt sich.",
+          "why": "Beide Messungen sind korrekt, in ihrem System."
+        },
+        {
+          "md": "Nur das schnellere Objekt ist wirklich verkürzt.",
+          "why": "Es gibt kein absolut schnelleres Objekt; nur Relativbewegung zählt."
+        },
+        {
+          "md": "Das Licht braucht unterschiedlich lange.",
+          "why": "Laufzeiten erklären das Sehen, nicht das Messen."
+        }
+      ],
+      "explain": "Kein Inertialsystem ist ausgezeichnet.",
+      "label": "Deutung",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei der Längenkontraktion wird der Körper durch Kräfte zusammengedrückt.",
+      "answer": false,
+      "explain": "Es wirken keine Kräfte; die Kontraktion ist eine Eigenschaft von Raum- und Zeitmessung.",
+      "label": "Deutung",
+      "id": "vq9"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +517,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "myon"
+        ]
+      },
+      "label": "Myonen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "laengenkontraktion",
+          "zeitdilatation"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$L = \\tfrac{L_0}{\\gamma}$, nur in Bewegungsrichtung; die Eigenlänge ist die größte Länge.",
+        "Herleitung über das Myon: Erdsystem L₀ = vΔt, Myonsystem L = vΔt₀; die Symmetrie löst die Relativität der Gleichzeitigkeit."
+      ]
     }
   ]
 }

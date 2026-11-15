@@ -67,6 +67,11 @@ th { background: var(--code); }
 .figure[data-tone="dark-ink"] { background: #ffffff; box-shadow: inset 0 0 0 1px var(--line); }
 .figure[data-tone="own"], .figure[data-tone="missing"], .figure[data-kind="raster"][data-tone="unknown"] { padding: 0; }
 .figure[data-tone="own"] img, .figure[data-kind="raster"] img { border-radius: 10px; }
+/* graphics.js recolours figures for the app's light or dark mode; then they need no backdrop of their own. */
+.figure[data-fitted] { background: transparent !important; box-shadow: none !important; }
+.figure[data-fitted] img { transition: opacity 0.15s; }
+.figure[data-fitted] img[data-fit="pending"] { opacity: 0; }
+.figure[data-fitted] img[data-fit="unknown"] { background: #ffffff; border-radius: 10px; }
 /* The PDF export keeps panels and tints; without them white figure text would vanish on paper. */
 .figure, .callout, .tag, mark, code, pre, th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .missing { color: var(--muted); font-size: 0.9em; }

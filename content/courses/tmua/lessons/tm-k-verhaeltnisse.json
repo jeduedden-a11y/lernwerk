@@ -19,6 +19,408 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Proportionalität\n> $y$ ist **proportional** zu $x$, wenn $y = kx$ mit einer Konstanten $k$. **Umgekehrt proportional** heißt $y = \\tfrac kx$. Allgemein: $y \\propto x^n$ heißt $y = kx^n$ (für $n < 0$ umgekehrt proportional zu $x^{|n|}$).\n\n> [!definition] Verhältnis und zusammengesetzte Größen\n> Ein **Verhältnis** $a : b$ vergleicht Anteile; $a : b = 2 : 3$ heißt $a = 2t$, $b = 3t$. **Zusammengesetzte Größen** sind Quotienten: Geschwindigkeit $= \\tfrac{\\text{Weg}}{\\text{Zeit}}$, Dichte $= \\tfrac{\\text{Masse}}{\\text{Volumen}}$, Druck $= \\tfrac{\\text{Kraft}}{\\text{Fläche}}$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: der Skalierungsfaktor.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y = k\\,x^n",
+            "why": "Die Proportionalität als Gleichung."
+          },
+          {
+            "tex": "x \\to \\lambda x:\\quad y_{\\text{neu}} = k(\\lambda x)^n = \\lambda^n\\,k x^n",
+            "why": "x wird mit λ multipliziert."
+          },
+          {
+            "tex": "y_{\\text{neu}} = \\lambda^n\\,y",
+            "why": "y ändert sich um den Faktor λ^n, unabhängig von k."
+          },
+          {
+            "tex": "y = \\frac{k}{x^2},\\ x \\text{ verdoppelt}:\\ \\text{Faktor } 2^{-2} = \\tfrac14",
+            "why": "Beispiel: Bei umgekehrter Proportionalität zum Quadrat viertelt sich y."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gleichung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktor.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Skalierung",
+      "md": "**Was eine Verdopplung von $x$ bewirkt:** blau $y = x^n$, orange die Werte bei $x = 1$ und $x = 2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          2.6
+        ],
+        "y": [
+          0,
+          8.5
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "n",
+            "min": -2,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^n",
+            "domain": [
+              0.25,
+              2.6
+            ],
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": "f(1)",
+            "color": "orange"
+          },
+          {
+            "x": 2,
+            "y": "f(2)",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "n = {n|0}: y(2) : y(1) = 2 hoch n = {2^n|3}"
+      },
+      "timeline": [
+        {
+          "caption": "n = 1, proportional: doppeltes x, doppeltes y.",
+          "set": {
+            "n": 1
+          }
+        },
+        {
+          "caption": "n = 2: Faktor 4. Flächen ähnlicher Figuren wachsen so mit der Länge.",
+          "to": {
+            "n": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "n = 3: Faktor 8, wie Volumen.",
+          "to": {
+            "n": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "n = −1, umgekehrt proportional: y halbiert sich.",
+          "to": {
+            "n": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "n = −2: y viertelt sich, etwa bei einer Kraft, die mit dem Quadrat des Abstands abnimmt.",
+          "to": {
+            "n": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung: Einheiten zusammengesetzter Größen umrechnen.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "1\\,\\frac{\\text{km}}{\\text{h}} = \\frac{1000\\,\\text{m}}{3600\\,\\text{s}} = \\frac{1}{3{,}6}\\,\\frac{\\text{m}}{\\text{s}}",
+            "why": "Zähler und Nenner getrennt umrechnen."
+          },
+          {
+            "tex": "1\\,\\text{m}^2 = (100\\,\\text{cm})^2 = 10\\,000\\,\\text{cm}^2",
+            "why": "Bei Flächen wird der Längenfaktor quadriert."
+          },
+          {
+            "tex": "1\\,\\text{m}^3 = (100\\,\\text{cm})^3 = 10^6\\,\\text{cm}^3 = 1000\\,\\text{Liter}",
+            "why": "Bei Volumina hoch drei; ein Liter ist ein Kubikdezimeter."
+          },
+          {
+            "tex": "1\\,\\frac{\\text{g}}{\\text{cm}^3} = \\frac{10^{-3}\\,\\text{kg}}{10^{-6}\\,\\text{m}^3} = 1000\\,\\frac{\\text{kg}}{\\text{m}^3}",
+            "why": "Dichte: Masse und Volumen getrennt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Geschwindigkeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fläche.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Volumen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dichte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Verhältnisse und Proportionalität",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Verhältnisse und Proportionalität.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Verhältnisse",
+          "blocks": [
+            {
+              "md": "Ein Verhältnis $a : b$ ist eine Aussage über **Anteile**, nicht über absolute Größen. Drei Schreibweisen für dieselbe Information:\n\n$$a : b = 3 : 4 \\iff \\frac ab = \\frac34 \\iff a = \\tfrac34\\,b.$$\n\nDie Rechenform, die im Test fast immer zum Ziel führt: **Parameter einführen.** Aus $a : b = 3 : 4$ wird $a = 3k$, $b = 4k$. Damit ist jede Zusatzbedingung eine gewöhnliche Gleichung in $k$.\n\n| Aufgabe | Vorgehen |\n|---|---|\n| Betrag im Verhältnis aufteilen | Teile zählen, Betrag durch die Teilesumme, mit den Teilen multiplizieren |\n| zwei Verhältnisse verketten | gemeinsames Glied gleichmachen (siehe **Verhältnisse zusammenführen und aufteilen**) |\n| Verhältnis nach einer Änderung | $a = 3k$, $b = 4k$ ansetzen und die neue Bedingung als Gleichung schreiben |\n\n> [!example] Aufteilen\n> 720 im Verhältnis $2 : 3 : 4$: neun Teile, ein Teil ist 80, die Anteile sind $160$, $240$, $320$.\n\n> [!warning] Verhältnis ist nicht Anteil\n> $a : b = 2 : 3$ bedeutet, dass $a$ **zwei Fünftel** des Ganzen ausmacht, nicht zwei Drittel. Der Nenner des Anteils ist die **Summe** der Teile. Wer das verwechselt, wählt in etwa jeder zweiten Verhältnisaufgabe eine der vorbereiteten falschen Optionen."
+            }
+          ]
+        },
+        {
+          "title": "Proportionalität",
+          "blocks": [
+            {
+              "md": "| Beziehung | Gleichung | Erkennungsmerkmal |\n|---|---|---|\n| direkt proportional, $y \\propto x$ | $y = kx$ | Ursprungsgerade; $\\tfrac yx$ konstant |\n| $y \\propto x^2$ | $y = kx^2$ | $\\tfrac{y}{x^2}$ konstant |\n| $y \\propto \\sqrt x$ | $y = k\\sqrt x$ | |\n| umgekehrt proportional, $y \\propto \\tfrac1x$ | $y = \\tfrac kx$ | Produkt $xy$ konstant; Hyperbel |\n| $y \\propto \\tfrac{1}{x^2}$ | $y = \\tfrac{k}{x^2}$ | |\n\nDas Verfahren ist immer dasselbe (M3.9):\n\n1. Gleichung mit Konstante $k$ aufschreiben,\n2. das gegebene Wertepaar einsetzen und $k$ bestimmen,\n3. mit dem gefundenen $k$ die zweite Frage beantworten.\n\n> [!important] Der Kurzweg über den Faktor\n> Oft ist $k$ gar nicht nötig. Bei $y \\propto x^3$ gilt: Wird $x$ **verdoppelt**, so wird $y$ mit $2^3 = 8$ multipliziert. Bei $y \\propto \\tfrac{1}{x^2}$ und verdreifachtem $x$ wird $y$ zu $\\tfrac19$.\n>\n> Für prozentuale Änderungen ebenso: Wächst $x$ um $25\\,\\%$ und ist $y \\propto \\tfrac1x$, so wird $y$ mit $\\tfrac{1}{1{,}25} = 0{,}8$ multipliziert -- also $20\\,\\%$ kleiner, nicht $25\\,\\%$."
+            }
+          ]
+        },
+        {
+          "title": "Maßstab, Karten und Peilungen",
+          "blocks": [
+            {
+              "md": "Ein Maßstab $1 : 25\\,000$ bedeutet: 1 cm auf der Karte entspricht 25 000 cm $=$ 250 m in der Wirklichkeit. Zwei britische Eigenheiten, die im Test auftauchen:\n\n- **Peilungen** (*bearings*) werden **dreistellig**, im Uhrzeigersinn, von Nord aus gemessen: $045°$, $270°$. Die Rückpeilung unterscheidet sich um $180°$.\n- **Karten und Pläne** sind Ähnlichkeitsabbildungen: Längen mit $k$, Flächen mit $k^2$ (siehe **Ähnlichkeitsfaktor für Flächen und Volumina**)."
+            }
+          ]
+        },
+        {
+          "title": "Zusammengesetzte Aufgaben",
+          "blocks": [
+            {
+              "md": "Der Klassiker verbindet Verhältnis und Proportionalität mit einer Änderung:\n\n> [!example] Typische Struktur\n> *The ratio $x : y$ is $3 : 4$. When $x$ increases by 8 the ratio becomes $5 : 4$.*\n> Ansatz $x = 3k$, $y = 4k$, dann $\\dfrac{3k + 8}{4k} = \\dfrac54$, also $12k + 32 = 20k$ und $k = 4$. Damit $x = 12$, $y = 16$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Verhältnis und Anteil verwechseln.**\n- **Bei zwei Verhältnissen die Glieder ohne Angleich zusammensetzen:** Aus $a : b = 2 : 3$ und $b : c = 4 : 5$ folgt **nicht** $a : c = 2 : 5$.\n- **Umgekehrte Proportionalität als negative Steigung deuten.** $y = -kx$ ist nicht umgekehrt proportional.\n- **$k$ aus dem falschen Wertepaar bestimmen** oder nach dem Einsetzen vergessen.\n- **Bei $y \\propto x^2$ den Faktor linear übertragen** -- doppeltes $x$ heißt vierfaches $y$.\n\nVerwandt: **Einheiten und zusammengesetzte Größen** · **Kongruenz und Ähnlichkeit** · Aufgabentypen: **Verhältnisse zusammenführen und aufteilen** · **Proportionalitätsgleichung aufstellen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Einheiten und zusammengesetzte Größen",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Einheiten und zusammengesetzte Größen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was die Spezifikation verlangt",
+          "blocks": [
+            {
+              "md": "M1.1 und M1.2 fordern den sicheren Umgang mit SI-Einheiten und ihren Vorsätzen sowie mit **zusammengesetzten Größen**. Das klingt nach Physikunterricht, ist im Test aber ein reines Rechenthema: Die Einheit sagt, welche Rechnung gemeint ist."
+            }
+          ]
+        },
+        {
+          "title": "Die Vorsätze",
+          "blocks": [
+            {
+              "md": "| Vorsatz | Symbol | Faktor |\n|---|---|---|\n| Kilo | k | $10^3$ |\n| Zenti | c | $10^{-2}$ |\n| Milli | m | $10^{-3}$ |\n| Mikro | $\\mu$ | $10^{-6}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Flächen und Volumina -- der Kern des Themas",
+          "blocks": [
+            {
+              "md": "Der Umrechnungsfaktor der **Länge** geht bei Flächen quadriert, bei Volumina kubiert ein:\n\n$$1\\ \\text{m} = 10^2\\ \\text{cm} \\quad\\Longrightarrow\\quad 1\\ \\text{m}^2 = 10^4\\ \\text{cm}^2 \\quad\\Longrightarrow\\quad 1\\ \\text{m}^3 = 10^6\\ \\text{cm}^3.$$\n\n| Umrechnung | Faktor |\n|---|---|\n| m $\\to$ cm | $10^2$ |\n| m² $\\to$ cm² | $10^4$ |\n| m³ $\\to$ cm³ | $10^6$ |\n| km $\\to$ m | $10^3$ |\n| km² $\\to$ m² | $10^6$ |\n| cm³ $\\to$ mm³ | $10^3$ |\n| Liter $\\to$ cm³ | $10^3$ |\n\n> [!warning] Der teuerste Fehler dieses Blocks\n> $1\\ \\text{m}^2 = 100\\ \\text{cm}^2$ ist falsch -- es sind $10\\,000$. Der Fehler kostet einen Faktor 100 und ist in den Antwortoptionen zuverlässig vorbereitet.\n>\n> Kontrolle in zwei Sekunden: Ein Quadratmeter ist ein Quadrat mit 100 cm Kantenlänge, also $100 \\cdot 100$ Quadratzentimeter."
+            }
+          ]
+        },
+        {
+          "title": "Zusammengesetzte Größen",
+          "blocks": [
+            {
+              "md": "| Größe | Formel | übliche Einheit |\n|---|---|---|\n| Geschwindigkeit | $v = \\dfrac st$ | m/s, km/h |\n| Dichte | $\\rho = \\dfrac mV$ | g/cm³, kg/m³ |\n| Druck | $p = \\dfrac FA$ | N/m² (Pascal) |\n| Durchflussrate | $\\dfrac VT$ | l/min |\n\nDie drei Grundformeln liest man in jeder Richtung: $s = vt$, $t = \\tfrac sv$; $m = \\rho V$, $V = \\tfrac m\\rho$.\n\n> [!important] Einheiten umrechnen heißt: Zähler und Nenner einzeln behandeln\n> $$72\\ \\frac{\\text{km}}{\\text{h}} = 72 \\cdot \\frac{1000\\ \\text{m}}{3600\\ \\text{s}} = 20\\ \\frac{\\text{m}}{\\text{s}}.$$\n> Der Faktor ist $\\tfrac{1000}{3600} = \\tfrac{1}{3{,}6}$: km/h in m/s heißt **durch 3,6 teilen**, zurück **mal 3,6**.\n>\n> $$8\\ \\frac{\\text{g}}{\\text{cm}^3} = 8 \\cdot \\frac{10^{-3}\\ \\text{kg}}{10^{-6}\\ \\text{m}^3} = 8 \\cdot 10^{3}\\ \\frac{\\text{kg}}{\\text{m}^3}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Einheiten als Kontrollwerkzeug",
+          "blocks": [
+            {
+              "md": "Die Einheit einer zusammengesetzten Größe verrät, wie die Formel aussehen muss. Wenn eine Aufgabe eine Größe in $\\text{kg}\\,\\text{m}^{-1}\\text{s}^{-2}$ angibt, ist eine Masse mal Länge **im Nenner** und ein Quadrat einer Zeit im Nenner -- also ein Druck. Das hilft bei Aufgaben, in denen eine Formel umgestellt werden soll: Eine Umformung, die die Einheiten zerstört, ist falsch.\n\n> [!tip] Die Probe bei Durchschnittsgeschwindigkeiten\n> Legt jemand die Hinfahrt mit 60 km/h und die Rückfahrt mit 40 km/h zurück, ist die Durchschnittsgeschwindigkeit **nicht** 50 km/h. Richtig ist $\\dfrac{\\text{Gesamtstrecke}}{\\text{Gesamtzeit}}$: Bei je 120 km sind das $\\dfrac{240}{2 + 3} = 48$ km/h. Diese Aufgabe erscheint im Test in mehreren Verkleidungen -- die Antwortoption 50 ist immer dabei."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Flächen- und Volumenfaktoren linear anwenden.**\n- **km/h und m/s mit 1000 statt 3,6 umrechnen.**\n- **Durchschnittsgeschwindigkeiten mitteln** statt über Gesamtstrecke und Gesamtzeit zu gehen.\n- **Bei der Dichte Masse und Volumen vertauschen.**\n- **Einheiten erst am Ende umrechnen**, wenn die Formel gemischte Einheiten enthält -- besser vorher alles auf ein System bringen.\n\nVerwandt: **Flächen und Körper** · **Runden, Schranken und wissenschaftliche Schreibweise** · Aufgabentyp: **Flächen- und Volumeneinheiten umrechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Gleichungen",
+      "md": "Ordne jeder Beschreibung ihre Gleichung zu ($k$ konstant).",
+      "pairs": [
+        [
+          "$y$ ist proportional zu $x^2$",
+          "$y = kx^2$"
+        ],
+        [
+          "$y$ ist umgekehrt proportional zu $x$",
+          "$y = \\tfrac kx$"
+        ],
+        [
+          "$y$ ist proportional zur Wurzel aus $x$",
+          "$y = k\\sqrt x$"
+        ],
+        [
+          "$y$ ist umgekehrt proportional zu $x^3$",
+          "$y = \\tfrac{k}{x^3}$"
+        ]
+      ],
+      "explain": "»Proportional« heißt Multiplikation mit einer Konstanten, »umgekehrt« Division.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Einheiten",
+      "md": "Wie viele m/s sind 90 km/h?",
+      "answer": 25,
+      "tolerance": 0,
+      "placeholder": "m/s",
+      "explain": "$90 : 3{,}6 = 25$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "$y$ is inversely proportional to $\\sqrt x$. When $x$ is multiplied by 4, $y$ is multiplied by",
+      "options": [
+        {
+          "md": "$\\tfrac{1}{16}$"
+        },
+        {
+          "md": "$\\tfrac{1}{4}$"
+        },
+        {
+          "md": "$\\tfrac{1}{2}$",
+          "correct": true
+        },
+        {
+          "md": "$2$"
+        },
+        {
+          "md": "$4$"
+        }
+      ],
+      "explain": "$y = \\tfrac{k}{\\sqrt x}$: Faktor $\\tfrac{1}{\\sqrt4} = \\tfrac12$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Skalierung",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Maßstab",
+      "md": "Auf einer Karte im Maßstab $1 : 25\\,000$ sind zwei Orte 6 cm voneinander entfernt. Wie viele km sind das in Wirklichkeit?",
+      "answer": 1.5,
+      "tolerance": 0.001,
+      "placeholder": "km",
+      "explain": "$6\\,\\text{cm} \\cdot 25\\,000 = 150\\,000\\,\\text{cm} = 1{,}5\\,\\text{km}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $y = \\tfrac{k}{x^2}$ und halbiert man $x$, dann vervierfacht sich $y$.",
+      "answer": true,
+      "explain": "Faktor $\\left(\\tfrac12\\right)^{-2} = 4$.",
+      "label": "Skalierung",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "$y$ is inversely proportional to the square of $x$. When $x$ is doubled, $y$ is multiplied by",
       "options": [
@@ -70,12 +472,62 @@
       "id": "c2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "proportional"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "proportional"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "einheiten"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "verhaeltnis"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "y ∝ xⁿ: y = k xⁿ, Faktor 2ⁿ beim Verdoppeln.",
         "Einheiten mitrechnen.",
-        "m/s × 3,6 = km/h."
+        "m/s × 3,6 = km/h.",
+        "$y = kx^n$: Multipliziert man $x$ mit $\\lambda$, wird $y$ mit $\\lambda^n$ multipliziert.",
+        "Flächeneinheiten quadrieren, Volumeneinheiten hoch drei; km/h durch 3,6 ergibt m/s."
       ],
       "id": "summary"
     }

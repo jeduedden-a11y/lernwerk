@@ -15,6 +15,307 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Wahrscheinlichkeit und Gegenereignis\n> Bei gleich wahrscheinlichen Ergebnissen ist $P(A) = \\tfrac{\\text{günstige}}{\\text{mögliche}}$. Das **Gegenereignis** $A'$ hat $P(A') = 1 - P(A)$.\n\n> [!definition] Bedingte Wahrscheinlichkeit und Unabhängigkeit\n> $P(A \\mid B) = \\dfrac{P(A \\cap B)}{P(B)}$: die Wahrscheinlichkeit von $A$, wenn man weiß, dass $B$ eingetreten ist. $A$ und $B$ sind **unabhängig**, wenn $P(A \\cap B) = P(A)\\,P(B)$, gleichwertig $P(A \\mid B) = P(A)$.\n\n**Baumdiagramm:** längs eines Pfades multiplizieren, verschiedene Pfade zum selben Ereignis addieren.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung des Additionssatzes.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(A \\cup B) \\overset{?}{=} P(A) + P(B)",
+            "why": "Ansatz: beide Wahrscheinlichkeiten addieren."
+          },
+          {
+            "tex": "A \\cap B \\text{ ist in } P(A) \\text{ und in } P(B) \\text{ enthalten}",
+            "why": "Der Durchschnitt wird dabei doppelt gezählt."
+          },
+          {
+            "tex": "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)",
+            "why": "Einmal abziehen."
+          },
+          {
+            "tex": "A, B \\text{ unvereinbar: } P(A \\cup B) = P(A) + P(B)",
+            "why": "Ohne gemeinsamen Teil gilt die einfache Summe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Doppelt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Satz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sonderfall.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Additionssatz",
+      "md": "**Der Additionssatz im Mengenbild.**",
+      "widget": "venn",
+      "params": {
+        "sets": 2,
+        "labels": [
+          "A",
+          "B"
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "P(A): der ganze linke Kreis.",
+          "do": {
+            "show": [
+              "10",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "P(B): der ganze rechte Kreis. Der Durchschnitt gehört zu beiden.",
+          "do": {
+            "show": [
+              "01",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "Addiert man beide, zählt der Durchschnitt doppelt.",
+          "do": {
+            "show": [
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "Darum: P(A ∪ B) = P(A) + P(B) − P(A ∩ B).",
+          "do": {
+            "show": [
+              "10",
+              "01",
+              "11"
+            ]
+          }
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Baumdiagramm",
+      "md": "**Ziehen ohne Zurücklegen im Baum:** eine Urne mit 5 roten und 3 blauen Kugeln, zwei Züge.",
+      "widget": "tree",
+      "params": {
+        "mode": "urn",
+        "depth": 2,
+        "urn": {
+          "counts": {
+            "R": 5,
+            "B": 3
+          },
+          "replace": false,
+          "names": {
+            "R": "rot",
+            "B": "blau"
+          }
+        },
+        "reveal": 0
+      },
+      "timeline": [
+        {
+          "caption": "Der Start: noch nichts gezogen.",
+          "set": {
+            "level": 0
+          },
+          "do": {
+            "highlight": null
+          }
+        },
+        {
+          "caption": "Erster Zug: rot mit 5/8, blau mit 3/8.",
+          "set": {
+            "level": 1
+          },
+          "do": {
+            "highlight": null
+          }
+        },
+        {
+          "caption": "Zweiter Zug: Die Wahrscheinlichkeiten hängen vom ersten ab, weil eine Kugel fehlt.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": null
+          }
+        },
+        {
+          "caption": "Beide rot: 5/8 · 4/7 = 20/56. Längs des Pfades wird multipliziert.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": [
+              "RR"
+            ]
+          }
+        },
+        {
+          "caption": "Mindestens eine blau: alle übrigen Pfade, also 1 − 20/56 = 36/56 = 9/14.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": {
+              "atLeast": {
+                "B": 1
+              }
+            }
+          }
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wahrscheinlichkeit mit Venn- und Baumdiagrammen",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Wahrscheinlichkeit mit Venn- und Baumdiagrammen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Grundregeln",
+          "blocks": [
+            {
+              "md": "$$0 \\le P(A) \\le 1, \\qquad P(A') = 1 - P(A),$$\n\n$$P(A \\cup B) = P(A) + P(B) - P(A \\cap B), \\qquad P(A \\cap B) = P(A)\\cdot P(B \\mid A).$$\n\nDie dritte Zeile ist der **Additionssatz**: Der Schnitt wird abgezogen, weil er sonst doppelt gezählt würde. Nur bei **unvereinbaren** Ereignissen (*mutually exclusive*, $A \\cap B = \\emptyset$) entfällt der Abzug.\n\nDie vierte Zeile ist der **Multiplikationssatz**. Sind $A$ und $B$ **unabhängig** (*independent*), vereinfacht er sich zu $P(A \\cap B) = P(A)\\,P(B)$.\n\n> [!warning] Unvereinbar und unabhängig sind Gegensätze\n> Zwei Ereignisse mit positiver Wahrscheinlichkeit können nicht beides sein: Wenn $A$ eintritt, ist $B$ bei Unvereinbarkeit ausgeschlossen -- das ist maximale Abhängigkeit.\n>\n> Die beiden Begriffe zu verwechseln ist der häufigste Fehler des Themas und in Paper 2 regelmäßig als fehlerhafte Argumentation eingebaut."
+            }
+          ]
+        },
+        {
+          "title": "Bedingte Wahrscheinlichkeit",
+          "blocks": [
+            {
+              "md": "$$P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}.$$\n\nIn Worten: Man beschränkt sich auf die Fälle, in denen $B$ eingetreten ist, und fragt, welcher Anteil davon auch zu $A$ gehört. **Der Nenner ist die Bedingung.**\n\n$$A, B \\text{ unabhängig} \\iff P(A \\mid B) = P(A) \\iff P(A \\cap B) = P(A)P(B).$$\n\nDiese Äquivalenzkette ist der Test auf Unabhängigkeit -- man prüft, ob das Produkt der Einzelwahrscheinlichkeiten den Schnitt ergibt."
+            }
+          ]
+        },
+        {
+          "title": "Venn-Diagramm",
+          "blocks": [
+            {
+              "md": "Das Venn-Diagramm ist das Werkzeug der Wahl, sobald mehrere Ereignisse verknüpft sind.\n\n1. **Von innen nach außen ausfüllen:** zuerst $A \\cap B$, dann die Restbereiche, zuletzt das Außen.\n2. Mit **absoluten Anzahlen** arbeiten, nicht mit Wahrscheinlichkeiten -- das vermeidet Brüche.\n3. Jede gesuchte Wahrscheinlichkeit ist dann ein Quotient zweier Anzahlen.\n\n| Bereich | Bedeutung |\n|---|---|\n| nur $A$ | $A \\cap B'$ |\n| Überschneidung | $A \\cap B$ |\n| außerhalb beider | $(A \\cup B)'$ |\n\n> [!important] Die Sprache der Mengen ist die Sprache der Logik\n> $A \\cap B$ entspricht „$A$ **und** $B$\", $A \\cup B$ dem **einschließenden** „oder\", $A'$ der Negation. Die Regeln von De Morgan aus **Negation von Aussagen** gelten wörtlich weiter:\n> $$(A \\cap B)' = A' \\cup B', \\qquad (A \\cup B)' = A' \\cap B'.$$\n> Wer Block 03 beherrscht, hat dieses Thema zur Hälfte schon gelernt."
+            }
+          ]
+        },
+        {
+          "title": "Baumdiagramm",
+          "blocks": [
+            {
+              "md": "Ein **Baumdiagramm** (*tree diagram*) eignet sich für mehrstufige Zufallsversuche.\n\n- **Entlang eines Pfades multiplizieren**, über verschiedene Pfade **addieren**.\n- Die Wahrscheinlichkeiten an jeder Verzweigung addieren sich zu 1.\n- Beim **Ziehen ohne Zurücklegen** (*without replacement*) ändern sich die Wahrscheinlichkeiten in der zweiten Stufe: Der Nenner wird um 1 kleiner, der Zähler nur bei derselben Sorte.\n\n> [!tip] „Mindestens ein\" heißt: Gegenereignis\n> $$P(\\text{mindestens ein } X) = 1 - P(\\text{kein } X).$$\n> Statt drei oder vier Pfade zu addieren, rechnet man einen einzigen aus. Das ist die wichtigste Abkürzung dieses Blocks -- und der einzige Weg, solche Aufgaben in der zur Verfügung stehenden Zeit zu lösen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Unvereinbar und unabhängig verwechseln.**\n- **Beim Additionssatz den Schnitt nicht abziehen.**\n- **Bei $P(A \\mid B)$ den falschen Nenner wählen.**\n- **Beim Ziehen ohne Zurücklegen den Nenner der zweiten Stufe stehen lassen.**\n- **„Mindestens ein\" als „genau ein\" lesen.**\n\nVerwandt: **Systematisches Abzählen** · **Negation von Aussagen** · Aufgabentypen: **Bedingte Wahrscheinlichkeit aus Tabelle oder Venn-Diagramm** · **Ziehen ohne Zurücklegen mit Gegenereignis**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Additionssatz",
+      "md": "$P(A) = 0{,}5$, $P(B) = 0{,}4$, $P(A \\cup B) = 0{,}7$. Bestimme $P(A \\cap B)$.",
+      "answer": 0.2,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$0{,}5 + 0{,}4 - 0{,}7 = 0{,}2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$P(A) = 0.5$, $P(B) = 0.4$ and $P(A \\cup B) = 0.7$. What is $P(A \\mid B)$?",
+      "options": [
+        {
+          "md": "0.2"
+        },
+        {
+          "md": "0.35"
+        },
+        {
+          "md": "0.4"
+        },
+        {
+          "md": "0.5",
+          "correct": true
+        },
+        {
+          "md": "0.8"
+        }
+      ],
+      "explain": "$P(A \\cap B) = 0{,}2$, also $P(A \\mid B) = \\tfrac{0{,}2}{0{,}4} = 0{,}5$. Weil das gleich $P(A)$ ist, sind A und B unabhängig.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Bedingt",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zwei unvereinbare Ereignisse mit positiver Wahrscheinlichkeit sind unabhängig.",
+      "answer": false,
+      "explain": "Unvereinbar heißt $P(A \\cap B) = 0$, aber $P(A)P(B) > 0$: Sie sind abhängig. Weiß man, dass A eintrat, ist B ausgeschlossen.",
+      "label": "Unabhängigkeit",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Baum",
+      "md": "Bringe das Vorgehen am Baumdiagramm in die richtige Reihenfolge.",
+      "items": [
+        "Stufen und Ausgänge festlegen",
+        "Wahrscheinlichkeiten an die Äste schreiben, ohne Zurücklegen mit veränderten Nennern",
+        "längs jedes Pfades multiplizieren",
+        "die Pfade des Ereignisses addieren"
+      ],
+      "explain": "Die Reihenfolge: 1. Stufen und Ausgänge festlegen. 2. Wahrscheinlichkeiten an die Äste schreiben, ohne Zurücklegen mit veränderten Nennern. 3. längs jedes Pfades multiplizieren. 4. die Pfade des Ereignisses addieren.",
+      "id": "vq4"
+    },
+    {
       "type": "choice",
       "md": "$P(A) = 0.5$, $P(B) = 0.4$ and $P(A \\cup B) = 0.7$. What is $P(A \\mid B)$?",
       "options": [
@@ -49,12 +350,45 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "stoch-bayes",
+      "level": 2,
+      "label": "Bayes",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "bedingt"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ohnezurueck"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Additionssatz für »oder«.",
         "Pfadregel und Summenregel.",
-        "P(A | B) = P(A ∩ B) / P(B)."
+        "P(A | B) = P(A ∩ B) / P(B).",
+        "$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$; $P(A \\mid B) = \\tfrac{P(A \\cap B)}{P(B)}$.",
+        "Baum: längs multiplizieren, quer addieren; unabhängig heißt P(A ∩ B) = P(A)P(B)."
       ],
       "id": "summary"
     }

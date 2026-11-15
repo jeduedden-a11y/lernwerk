@@ -16,6 +16,433 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Halbwertszeit und Zerfallskonstante\n> $T_{1/2} = \\tfrac{\\ln 2}{\\lambda} \\approx \\tfrac{0{,}693}{\\lambda}$. Beide beschreiben dasselbe: $\\lambda$ ist die Zerfallswahrscheinlichkeit pro Zeit eines Kerns, $T_{1/2}$ die anschauliche Zeit bis zur Halbierung. Sie sind umgekehrt proportional.\n\n> [!definition] Mittlere Lebensdauer\n> $\\tau = \\tfrac{1}{\\lambda} = \\tfrac{T_{1/2}}{\\ln 2} \\approx 1{,}44\\,T_{1/2}$. Nach $\\tau$ ist noch $\\tfrac1e \\approx 36{,}8\\,\\%$ übrig.\n\n> [!warning] $\\tau$ ist größer als $T_{1/2}$\n> Früh zerfallende Kerne leben zwischen 0 und $T_{1/2}$, spät zerfallende können beliebig lange existieren. Diese wenigen Langlebigen ziehen den Mittelwert über die Halbwertszeit hinaus.\n\n**Aus zwei Messungen:** $\\lambda = \\tfrac{1}{t_2 - t_1}\\ln\\tfrac{N_1}{N_2}$; dasselbe gilt für Aktivitäten oder Zählraten, da sie zu $N$ proportional sind.",
+      "label": "Zusammenhang",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung von Halbwertszeit, Zweipunktformel und mittlerer Lebensdauer.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\tfrac12 = e^{-\\lambda T_{1/2}} \\;\\Rightarrow\\; \\ln\\tfrac12 = -\\lambda T_{1/2} \\;\\Rightarrow\\; T_{1/2} = \\frac{\\ln 2}{\\lambda}",
+            "why": "Die Halbierungsbedingung ins Zerfallsgesetz eingesetzt."
+          },
+          {
+            "tex": "\\frac{N_1}{N_2} = \\frac{N_0 e^{-\\lambda t_1}}{N_0 e^{-\\lambda t_2}} = e^{\\lambda(t_2 - t_1)}",
+            "why": "Zwei Messungen: N₀ kürzt sich heraus."
+          },
+          {
+            "tex": "\\lambda = \\frac{\\ln(N_1/N_2)}{t_2 - t_1}",
+            "why": "Logarithmieren."
+          },
+          {
+            "tex": "\\ln N(t) = \\ln N_0 - \\lambda t",
+            "why": "Halblogarithmische Auftragung: eine Gerade mit der Steigung minus λ."
+          },
+          {
+            "tex": "\\tau = \\frac{1}{N_0}\\int_0^\\infty t\\,\\lambda N_0 e^{-\\lambda t}\\,dt = \\frac{1}{\\lambda}",
+            "why": "Mittelwert der Lebensdauern, gewichtet mit der Zahl der Zerfälle; partielle Integration."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Halbwertszeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei Messungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweipunktformel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "ln-Gerade.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittlere Lebensdauer.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Halblogarithmische Auswertung** einer Messreihe: $\\ln A$ über $t$, die Punkte liegen auf einer Geraden.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          60
+        ],
+        "y": [
+          3.5,
+          8
+        ],
+        "xLabel": "t in min",
+        "yLabel": "ln(A in 1/s)",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 60,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "L",
+            "expr": "7.6009 - 0.057762*x",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 7.6009,
+            "color": "orange"
+          },
+          {
+            "x": 10,
+            "y": 7.0233,
+            "color": "orange"
+          },
+          {
+            "x": 20,
+            "y": 6.4457,
+            "color": "orange"
+          },
+          {
+            "x": 30,
+            "y": 5.8681,
+            "color": "orange"
+          },
+          {
+            "x": 40,
+            "y": 5.2904,
+            "color": "orange"
+          },
+          {
+            "x": 50,
+            "y": 4.7128,
+            "color": "orange"
+          },
+          {
+            "x": 60,
+            "y": 4.1352,
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "on": "L",
+            "color": "green",
+            "guides": true
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              10,
+              7.0233
+            ],
+            "to": [
+              50,
+              7.0233
+            ],
+            "color": "green",
+            "width": 2
+          },
+          {
+            "from": [
+              50,
+              7.0233
+            ],
+            "to": [
+              50,
+              4.7128
+            ],
+            "color": "green",
+            "width": 2
+          }
+        ],
+        "readout": "t = {X|0} min: ln A = {7.6009 - 0.057762*X|2}, also A = {2000*0.5^(X/12)|0} Zerfälle pro Sekunde"
+      },
+      "timeline": [
+        {
+          "caption": "Die Messpunkte (orange) liegen auf einer Geraden: Das Präparat enthält ein einziges Nuklid.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "Steigungsdreieck (grün): $\\Delta\\ln A = -2{,}31$ auf $\\Delta t = 40\\,\\mathrm{min}$, also $\\lambda = 0{,}0578\\,\\mathrm{min^{-1}}$.",
+          "to": {
+            "X": 60
+          },
+          "dur": 3000
+        },
+        {
+          "caption": "$T_{1/2} = \\tfrac{\\ln 2}{\\lambda} = 12{,}0\\,\\mathrm{min}$. Ein Knick in den Punkten würde ein zweites Nuklid oder einen nicht abgezogenen Nulleffekt verraten."
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Größenordnungen.** Polonium-214: $164\\,\\mu\\mathrm{s}$; Iod-131: $8{,}02\\,\\mathrm{d}$; Cäsium-137: $30{,}2\\,\\mathrm{a}$; Kohlenstoff-14: $5730\\,\\mathrm{a}$; Uran-238: $4{,}47$ Milliarden Jahre, vergleichbar dem Erdalter, deshalb kommt es überhaupt noch natürlich vor.\n\n> [!warning] Typische Fallen\n> - $\\ln 2 = 0{,}693$, nicht $\\lg 2 = 0{,}301$.\n> - $\\lambda$ und $T_{1/2}$ sind reziprok, mit dem Faktor $\\ln 2$.\n> - Zeiteinheiten mitführen; für Becquerel $\\lambda$ in $\\mathrm{s^{-1}}$.\n> - Die mittlere Lebensdauer ist größer als die Halbwertszeit.\n> - Bei der Zweipunktformel $N_1$ und $N_2$ nicht vertauschen.\n> - Die Steigung im ln-Diagramm ist $-\\lambda$; $\\lambda$ selbst ist positiv.\n> - Die Zerfallskonstante $\\lambda$ nicht mit einer Wellenlänge verwechseln.",
+      "label": "Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Halbwertszeit und Zerfallskonstante umrechnen",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Halbwertszeit und Zerfallskonstante umrechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Zerfallskonstante\"*, *\"Bestimmen Sie die Halbwertszeit aus den Messwerten\"*, *\"Ermitteln Sie die mittlere Lebensdauer\"*, *\"Werten Sie die halblogarithmische Auftragung aus\"*.\n\nErkennungsmerkmal: Umrechnung zwischen $T_{1/2}$ und $\\lambda$, oder Bestimmung einer der beiden Größen aus **zwei Messwerten**."
+            }
+          ]
+        },
+        {
+          "title": "Der Zusammenhang",
+          "blocks": [
+            {
+              "md": "> [!important] Aus dem Zerfallsgesetz durch Einsetzen\n> Setzt man in $N = N_0 e^{-\\lambda t}$ die Bedingung $N = \\tfrac12 N_0$ bei $t = T_{1/2}$ ein:\n> $$\\tfrac12 = e^{-\\lambda T_{1/2}} \\quad\\Longrightarrow\\quad \\ln\\tfrac12 = -\\lambda T_{1/2}$$\n> $$\\boxed{\\;T_{1/2} = \\frac{\\ln 2}{\\lambda} \\approx \\frac{0{,}693}{\\lambda} \\qquad\\Longleftrightarrow\\qquad \\lambda = \\frac{\\ln 2}{T_{1/2}}\\;}$$\n>\n> Beide Größen beschreiben dasselbe Verhalten aus verschiedenen Blickwinkeln: $\\lambda$ ist die **Zerfallswahrscheinlichkeit pro Zeiteinheit** eines einzelnen Kerns, $T_{1/2}$ die anschaulichere Zeit bis zur Halbierung der Probe. Sie sind zueinander **umgekehrt proportional** -- ein kurzlebiges Nuklid hat großes $\\lambda$ und kleines $T_{1/2}$."
+            }
+          ]
+        },
+        {
+          "title": "Die mittlere Lebensdauer",
+          "blocks": [
+            {
+              "md": "Eine dritte, seltener verwendete Größe ist die **mittlere Lebensdauer**\n$$\\tau = \\frac{1}{\\lambda} = \\frac{T_{1/2}}{\\ln 2} \\approx 1{,}44\\cdot T_{1/2}$$\n\n> [!warning] $\\tau$ ist größer als $T_{1/2}$, nicht kleiner\n> Das wirkt zunächst widersprüchlich: Nach einer Halbwertszeit ist doch schon die Hälfte zerfallen -- wie kann die *mittlere* Lebensdauer größer sein?\n>\n> Die Auflösung liegt in der Asymmetrie der Verteilung: Die früh zerfallenden Kerne haben Lebensdauern zwischen 0 und $T_{1/2}$, also begrenzt nach oben. Die spät zerfallenden dagegen können **beliebig lange** existieren -- der Exponentialschwanz reicht ins Unendliche. Diese wenigen sehr langlebigen Kerne ziehen den Mittelwert über die Halbwertszeit hinaus.\n>\n> Nach $\\tau$ ist der Anteil $1/e \\approx 36{,}8\\,\\%$ übrig, nicht 50 %.\n\n| Größe | Bedeutung | Zahlenverhältnis |\n|---|---|---|\n| $T_{1/2}$ | Zeit bis 50 % übrig | Bezugsgröße |\n| $\\tau = 1/\\lambda$ | mittlere Lebensdauer, 36,8 % übrig | $1{,}44\\,T_{1/2}$ |\n| $\\lambda$ | Zerfallswahrscheinlichkeit pro Zeit | $0{,}693/T_{1/2}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Bestimmung aus Messwerten",
+          "blocks": [
+            {
+              "md": "Aus zwei Messungen $N_1$ zur Zeit $t_1$ und $N_2$ zur Zeit $t_2$:\n$$\\lambda = \\frac{1}{t_2 - t_1}\\,\\ln\\!\\left(\\frac{N_1}{N_2}\\right)$$\n\nDieselbe Formel gilt für Aktivitäten, da $A \\propto N$.\n\n> [!tip] Die halblogarithmische Auftragung ist die genauere Methode\n> Logarithmieren des Zerfallsgesetzes ergibt\n> $$\\ln N(t) = \\ln N_0 - \\lambda\\,t$$\n> Trägt man $\\ln N$ über $t$ auf, entsteht eine **Gerade** mit der Steigung $-\\lambda$ und dem $y$-Achsenabschnitt $\\ln N_0$.\n>\n> Der Vorteil gegenüber der Zweipunktbestimmung: Alle Messwerte gehen ein, zufällige Schwankungen mitteln sich heraus, und eine systematische Abweichung von der Geraden fällt sofort auf -- etwa wenn ein zweites Nuklid im Präparat vorliegt oder der Untergrund nicht abgezogen wurde. Aufgaben, die eine Messreihe statt zweier Werte liefern, zielen auf diese Auswertung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Gegebene Größe identifizieren:** $T_{1/2}$, $\\lambda$, $\\tau$ oder eine Messreihe.\n2. **Einheit festlegen** und konsequent beibehalten. Für Aktivitäten in Becquerel wird $\\lambda$ in $\\text{s}^{-1}$ benötigt.\n3. **Umrechnen:** $\\lambda = \\ln 2/T_{1/2}$ beziehungsweise $T_{1/2} = \\ln 2/\\lambda$.\n4. **Aus zwei Messwerten:** $\\lambda = \\dfrac{\\ln(N_1/N_2)}{t_2 - t_1}$.\n5. **Aus einer Messreihe:** $\\ln N$ über $t$ auftragen, Steigung bestimmen, Betrag ist $\\lambda$.\n6. **Einheitenkontrolle:** $[\\lambda] = \\text{s}^{-1}$ (oder $\\text{d}^{-1}$, $\\text{a}^{-1}$); $\\ln 2$ ist dimensionslos."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Iod-131 hat die Halbwertszeit $T_{1/2} = 8{,}02\\,\\text{d}$. Berechnen Sie die Zerfallskonstante in $\\text{d}^{-1}$ und in $\\text{s}^{-1}$ sowie die mittlere Lebensdauer.*\n\n**Schritt 3, in Tagen:**\n$$\\lambda = \\frac{0{,}6931}{8{,}02} \\approx 8{,}64\\cdot10^{-2}\\,\\text{d}^{-1}$$\n\n**In Sekunden:** $T_{1/2} = 8{,}02\\cdot86400 = 6{,}929\\cdot10^{5}\\,\\text{s}$, damit\n$$\\lambda = \\frac{0{,}6931}{6{,}929\\cdot10^{5}} \\approx 1{,}000\\cdot10^{-6}\\,\\text{s}^{-1}$$\n\n**Probe der Umrechnung:** $8{,}64\\cdot10^{-2}\\,\\text{d}^{-1} \\div 86400\\,\\text{s/d} = 1{,}000\\cdot10^{-6}\\,\\text{s}^{-1}$. Bestätigt.\n\n**Deutung des Zahlenwerts:** Ein einzelner I-131-Kern zerfällt mit einer Wahrscheinlichkeit von etwa einem Millionstel pro Sekunde. Das klingt vernachlässigbar -- bei den rund $10^{15}$ Kernen einer Mikrogramm-Probe bedeutet es aber immer noch mehrere Milliarden Zerfälle pro Sekunde, siehe **Aktivität berechnen**.\n\n**Mittlere Lebensdauer:**\n$$\\tau = \\frac{1}{\\lambda} = \\frac{1}{8{,}64\\cdot10^{-2}} \\approx 11{,}6\\,\\text{d}$$\nKontrolle: $1{,}44\\cdot8{,}02 = 11{,}55\\,\\text{d}$. Bestätigt -- und deutlich **länger** als die Halbwertszeit, wie erwartet."
+            }
+          ]
+        },
+        {
+          "title": "Größenordnungen zur Orientierung",
+          "blocks": [
+            {
+              "md": "| Nuklid | $T_{1/2}$ | Bedeutung |\n|---|---|---|\n| Po-214 | 164 µs | extrem kurzlebiges Zwischenglied |\n| I-131 | 8,02 d | Nuklearmedizin, Schilddrüsentherapie |\n| Cs-137 | 30,2 a | Hauptbelastung nach Reaktorunfällen |\n| C-14 | 5730 a | Altersbestimmung organischer Funde |\n| U-238 | 4,47 Mrd. a | vergleichbar dem Erdalter |\n\nDie Spanne umfasst mehr als zwanzig Zehnerpotenzen. Dass Uran-238 eine Halbwertszeit in der Größenordnung des Erdalters hat, ist der Grund, weshalb es überhaupt noch natürlich vorkommt -- kurzlebigere Nuklide sind längst zerfallen, sofern sie nicht ständig nachgebildet werden."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\ln 2$ mit $\\lg 2$ verwechseln.** $\\ln 2 = 0{,}693$, $\\lg 2 = 0{,}301$.\n- **$\\lambda$ und $T_{1/2}$ als gleich groß behandeln.** Sie sind reziprok zueinander, mit dem Faktor $\\ln 2$.\n- **Zeiteinheiten nicht mitführen.** Ein $\\lambda$ in $\\text{a}^{-1}$ ist für eine Aktivität in Becquerel unbrauchbar.\n- **Die mittlere Lebensdauer kleiner als die Halbwertszeit annehmen.** Sie ist um den Faktor 1,44 größer.\n- **Bei der Zweipunktbestimmung die Zeitdifferenz falsch ansetzen** oder $N_1$ und $N_2$ vertauschen -- dann wird $\\lambda$ negativ.\n- **Bei halblogarithmischer Auftragung die Steigung positiv angeben.** Sie ist $-\\lambda$; die Zerfallskonstante ist ihr Betrag.\n- **Die Zerfallskonstante $\\lambda$ mit einer Wellenlänge verwechseln.** Gleiches Symbol, völlig verschiedene Größen -- in Aufgaben, die beides enthalten (etwa Gammastrahlung eines Zerfalls), ist auf saubere Bezeichnung zu achten."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zerfallsgesetz anwenden** · **Aktivität berechnen** · **Gedämpfte Schwingung auswerten** · **Radioaktiver Zerfall**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe ihre Bedeutung oder Formel zu.",
+      "pairs": [
+        [
+          "$T_{1/2}$",
+          "$\\tfrac{\\ln 2}{\\lambda}$, Zeit bis 50 % übrig"
+        ],
+        [
+          "$\\tau$",
+          "$\\tfrac{1}{\\lambda} \\approx 1{,}44\\,T_{1/2}$"
+        ],
+        [
+          "$\\lambda$",
+          "Zerfallswahrscheinlichkeit pro Zeit"
+        ],
+        [
+          "nach $\\tau$ übrig",
+          "$\\tfrac1e \\approx 36{,}8\\,\\%$"
+        ],
+        [
+          "Steigung im ln-Diagramm",
+          "$-\\lambda$"
+        ]
+      ],
+      "explain": "Halbwertszeit, mittlere Lebensdauer und Zerfallskonstante sind ineinander umrechenbar.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Zweipunktformel in die richtige Reihenfolge.",
+      "items": [
+        "$N_1 = N_0 e^{-\\lambda t_1}$ und $N_2 = N_0 e^{-\\lambda t_2}$",
+        "Teilen: $\\tfrac{N_1}{N_2} = e^{\\lambda(t_2 - t_1)}$",
+        "Logarithmieren: $\\ln\\tfrac{N_1}{N_2} = \\lambda(t_2 - t_1)$",
+        "$\\lambda = \\tfrac{\\ln(N_1/N_2)}{t_2 - t_1}$, dann $T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $N_1 = N_0 e^{-\\lambda t_1}$ und $N_2 = N_0 e^{-\\lambda t_2}$. 2. Teilen: $\\tfrac{N_1}{N_2} = e^{\\lambda(t_2 - t_1)}$. 3. Logarithmieren: $\\ln\\tfrac{N_1}{N_2} = \\lambda(t_2 - t_1)$. 4. $\\lambda = \\tfrac{\\ln(N_1/N_2)}{t_2 - t_1}$, dann $T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die Zerfallskonstante von Cäsium-137 ($T_{1/2} = 30{,}2\\,\\mathrm{a}$, $1\\,\\mathrm{a} = 3{,}156\\cdot 10^7\\,\\mathrm{s}$) in $10^{-10}\\,\\mathrm{s^{-1}}$?",
+      "answer": 7.27,
+      "tolerance": 0.08,
+      "placeholder": "10⁻¹⁰ s⁻¹",
+      "explain": "$\\lambda = \\tfrac{0{,}6931}{30{,}2\\cdot 3{,}156\\cdot 10^7\\,\\mathrm{s}} \\approx 7{,}27\\cdot 10^{-10}\\,\\mathrm{s^{-1}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Zählrate sinkt in $45\\,\\mathrm{min}$ von $800$ auf $200$ Impulse pro Sekunde. Wie groß ist die Halbwertszeit?",
+      "answer": 22.5,
+      "tolerance": 0.3,
+      "placeholder": "min",
+      "explain": "Ein Viertel heißt zwei Halbwertszeiten: $T_{1/2} = \\tfrac{45}{2}\\,\\mathrm{min} = 22{,}5\\,\\mathrm{min}$; allgemein $T_{1/2} = \\tfrac{t\\ln 2}{\\ln(A_1/A_2)}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Die Zählrate sinkt in $10\\,\\mathrm{min}$ von $1200$ auf $700$ pro Sekunde. Wie groß ist die Halbwertszeit?",
+      "answer": 12.86,
+      "tolerance": 0.15,
+      "placeholder": "min",
+      "explain": "$\\lambda = \\tfrac{\\ln(1200/700)}{10\\,\\mathrm{min}} \\approx 0{,}0539\\,\\mathrm{min^{-1}}$, $T_{1/2} = \\tfrac{\\ln 2}{\\lambda} \\approx 12{,}9\\,\\mathrm{min}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die mittlere Lebensdauer von Kohlenstoff-14 ($T_{1/2} = 5730\\,\\mathrm{a}$)?",
+      "answer": 8267,
+      "tolerance": 50,
+      "placeholder": "a",
+      "explain": "$\\tau = \\tfrac{T_{1/2}}{\\ln 2} \\approx 8270\\,\\mathrm{a}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die mittlere Lebensdauer ist kleiner als die Halbwertszeit.",
+      "answer": false,
+      "explain": "Sie ist um den Faktor $\\tfrac{1}{\\ln 2} \\approx 1{,}44$ größer: Die Langlebigen ziehen den Mittelwert nach oben.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Jemand rechnet $T_{1/2} = \\tfrac{\\lg 2}{\\lambda}$. Was kommt heraus?",
+      "options": [
+        {
+          "md": "eine um den Faktor 0,43 zu kleine Halbwertszeit",
+          "correct": true
+        },
+        {
+          "md": "der richtige Wert, Logarithmus ist Logarithmus",
+          "why": "$\\lg 2 = 0{,}301$, $\\ln 2 = 0{,}693$."
+        },
+        {
+          "md": "eine doppelt so große Halbwertszeit",
+          "why": "Der Fehler ist der Faktor lg 2 / ln 2."
+        },
+        {
+          "md": "eine negative Halbwertszeit",
+          "why": "Beide Logarithmen von 2 sind positiv."
+        }
+      ],
+      "explain": "$\\tfrac{\\lg 2}{\\ln 2} = \\lg e \\approx 0{,}434$.",
+      "label": "Typischer Fehler",
+      "id": "vq8"
+    },
+    {
+      "type": "choice",
+      "md": "Im ln-Diagramm liegen die Messpunkte nicht auf einer Geraden, sondern knicken ab. Was kann der Grund sein?",
+      "options": [
+        {
+          "md": "Das Präparat enthält zwei Nuklide, oder der Nulleffekt wurde nicht abgezogen.",
+          "correct": true
+        },
+        {
+          "md": "Die Halbwertszeit ändert sich mit der Zeit.",
+          "why": "Sie ist eine feste Eigenschaft des Nuklids."
+        },
+        {
+          "md": "Die Kerne altern.",
+          "why": "Kerne altern nicht."
+        },
+        {
+          "md": "Man hätte den Zehnerlogarithmus nehmen müssen.",
+          "why": "Auch dann bliebe es eine Gerade, nur mit anderer Steigung."
+        }
+      ],
+      "explain": "Eine Gerade gibt es nur für ein einziges Nuklid ohne Untergrund.",
+      "label": "Extrem",
+      "id": "vq9"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +519,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "zaehlrate",
+          "halbwertsdicke"
+        ]
+      },
+      "label": "Zählraten und Abschirmung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "zaehlrate"
+        ]
+      },
+      "label": "Halbwertszeit bestimmen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$T_{1/2} = \\tfrac{\\ln 2}{\\lambda}$, $\\tau = \\tfrac1\\lambda \\approx 1{,}44\\,T_{1/2}$; zwei Messungen: $\\lambda = \\tfrac{\\ln(N_1/N_2)}{t_2 - t_1}$.",
+        "$\\ln N$ über $t$ ist eine Gerade mit Steigung $-\\lambda$; ein Knick verrät ein Gemisch oder Untergrund."
+      ]
     }
   ]
 }

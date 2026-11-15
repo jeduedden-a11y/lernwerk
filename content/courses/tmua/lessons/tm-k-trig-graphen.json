@@ -15,6 +15,295 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Amplitude, Periode, Verschiebung\n> Bei $y = a\\sin\\big(b(x - c)\\big) + d$ ist $|a|$ die **Amplitude**, $\\tfrac{2\\pi}{|b|}$ die **Periode**, $c$ die **Verschiebung in x-Richtung** und $d$ die Verschiebung nach oben; der Wertebereich ist $d - |a| \\le y \\le d + |a|$. Für $\\cos$ ebenso; $\\tan$ hat die Periode $\\pi$ und Asymptoten bei $\\tfrac\\pi2 + k\\pi$.\n\n**Symmetrien:** $\\sin(-x) = -\\sin x$ (ungerade), $\\cos(-x) = \\cos x$ (gerade), $\\cos x = \\sin\\left(x + \\tfrac\\pi2\\right)$: Der Kosinus ist ein verschobener Sinus.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum $\\sin(bx)$ die Periode $\\tfrac{2\\pi}{b}$ hat.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sin(u + 2\\pi) = \\sin u",
+            "why": "Der Sinus wiederholt sich nach 2π."
+          },
+          {
+            "tex": "b(x + p) = bx + 2\\pi \\iff p = \\frac{2\\pi}{b}",
+            "why": "Für u = bx muss x um p wachsen, damit u um 2π wächst."
+          },
+          {
+            "tex": "y = \\sin(2x):\\ p = \\pi",
+            "why": "Beispiel: doppelt so schnell, halbe Periode."
+          },
+          {
+            "tex": "y = 3\\sin(2x) + 1:\\ -2 \\le y \\le 4",
+            "why": "Amplitude und Verschiebung ändern die Periode nicht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Periode.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wertebereich.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Sinus",
+      "md": "**Der Sinus verwandelt sich:** grau $y = \\sin x$, blau $y = a\\sin\\big(b(x - c)\\big) + d$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          7
+        ],
+        "y": [
+          -3.5,
+          4.5
+        ],
+        "xLabel": "x (rad)",
+        "grid": false,
+        "vars": [
+          {
+            "name": "a",
+            "min": -3,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "b",
+            "min": 0.5,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "c",
+            "min": -2,
+            "max": 2,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "dd",
+            "min": -2,
+            "max": 2,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "gray",
+            "dashed": true,
+            "samples": 400
+          },
+          {
+            "name": "g",
+            "expr": "a*sin(b*(x - c)) + dd",
+            "color": "blue",
+            "samples": 600
+          }
+        ],
+        "readout": "Amplitude {abs(a)|2} · Periode 2π/b = {2*pi/b|3} · Verschiebung {c|2} · Mittellinie y = {dd|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Ausgangslage: a = b = 1, keine Verschiebung.",
+          "set": {
+            "a": 1,
+            "b": 1,
+            "c": 0,
+            "dd": 0
+          }
+        },
+        {
+          "caption": "a = 2: doppelte Amplitude, die Nullstellen bleiben.",
+          "to": {
+            "a": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "b = 2: Periode π, doppelt so viele Schwingungen.",
+          "to": {
+            "b": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 0,5: um 0,5 nach rechts.",
+          "to": {
+            "c": 0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "d = 1: Mittellinie y = 1, Wertebereich von −1 bis 3.",
+          "to": {
+            "dd": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Graphen trigonometrischer Funktionen",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Graphen trigonometrischer Funktionen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die exakten Werte",
+          "blocks": [
+            {
+              "md": "| Winkel | 0° | 30° | 45° | 60° | 90° |\n|---|---|---|---|---|---|\n| Bogenmaß | 0 | $\\frac{\\pi}{6}$ | $\\frac{\\pi}{4}$ | $\\frac{\\pi}{3}$ | $\\frac{\\pi}{2}$ |\n| $\\sin$ | 0 | $\\frac12$ | $\\frac{\\sqrt2}{2}$ | $\\frac{\\sqrt3}{2}$ | 1 |\n| $\\cos$ | 1 | $\\frac{\\sqrt3}{2}$ | $\\frac{\\sqrt2}{2}$ | $\\frac12$ | 0 |\n| $\\tan$ | 0 | $\\frac{1}{\\sqrt3}$ | 1 | $\\sqrt3$ | nicht definiert |\n\n> [!tip] Die Werte aus zwei Dreiecken\n> Ein halbiertes gleichseitiges Dreieck (Seiten $1, \\sqrt3, 2$) liefert alle Werte für 30° und 60°; ein halbiertes Quadrat (Seiten $1, 1, \\sqrt2$) die für 45°. Wer die beiden Dreiecke skizziert, hat die Tabelle in zehn Sekunden rekonstruiert -- sicherer als Auswendiglernen."
+            }
+          ]
+        },
+        {
+          "title": "Die Graphen",
+          "blocks": [
+            {
+              "md": "| Funktion | Periode | Wertebereich | Besonderheiten |\n|---|---|---|---|\n| $\\sin x$ | $360°$ bzw. $2\\pi$ | $[-1, 1]$ | Nullstellen bei Vielfachen von $180°$; punktsymmetrisch zum Ursprung |\n| $\\cos x$ | $360°$ bzw. $2\\pi$ | $[-1, 1]$ | Nullstellen bei $90° + k \\cdot 180°$; achsensymmetrisch zur y-Achse |\n| $\\tan x$ | $180°$ bzw. $\\pi$ | alle reellen Zahlen | Polstellen bei $90° + k \\cdot 180°$ |\n\n$\\cos$ ist der um 90° verschobene $\\sin$: $\\cos x = \\sin(x + 90°)$."
+            }
+          ]
+        },
+        {
+          "title": "Symmetrien -- das Werkzeug für Gleichungen",
+          "blocks": [
+            {
+              "md": "| Beziehung | Bedeutung |\n|---|---|\n| $\\sin(180° - x) = \\sin x$ | zweite Lösung im zweiten Quadranten |\n| $\\sin(-x) = -\\sin x$ | ungerade Funktion |\n| $\\cos(360° - x) = \\cos x$ | zweite Lösung im vierten Quadranten |\n| $\\cos(-x) = \\cos x$ | gerade Funktion |\n| $\\tan(180° + x) = \\tan x$ | Periode 180° |\n| $\\sin(x + 360°) = \\sin x$ | Periodizität |\n\n> [!important] Der Quadrantenmerksatz\n> Im englischen Unterricht heißt er **CAST**, gegen den Uhrzeigersinn ab dem vierten Quadranten gelesen: im vierten ist **C**osinus positiv, im ersten **A**lle, im zweiten **S**inus, im dritten **T**angens.\n>\n> Damit ist jede Gleichung in zwei Schritten gelöst: Hauptwert bestimmen, dann im zweiten Quadranten mit positivem Vorzeichen den Partner suchen -- siehe **Trigonometrische Gleichungen**."
+            }
+          ]
+        },
+        {
+          "title": "Transformierte Graphen",
+          "blocks": [
+            {
+              "md": "Aus $y = a\\sin(bx) + c$ liest man ab:\n\n- $\\lvert a \\rvert$ ist die **Amplitude**, der Wertebereich ist $[c - \\lvert a \\rvert,\\ c + \\lvert a \\rvert]$,\n- $b$ staucht waagerecht: die **Periode** wird $\\tfrac{360°}{b}$,\n- $c$ verschiebt senkrecht.\n\nDaraus folgen Extremwertaufgaben ohne Ableitung: $7 - 4\\sin(2x + 30°)$ hat den größten Wert $7 + 4 = 11$, weil $\\sin$ den Wert $-1$ annimmt. Siehe **Extremwerte trigonometrischer Ausdrücke** und **Transformationen von Graphen**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **$\\sin$ und $\\cos$ bei 30° und 60° vertauschen.**\n- **Die Periode von $\\tan$ mit 360° ansetzen.**\n- **Beim gestauchten Graphen die Zahl der Lösungen unterschätzen:** $\\sin 2x$ durchläuft im Intervall $[0°, 360°]$ **zwei** volle Perioden.\n- **Bei $\\sin(bx + c)$ die Verschiebung als $c$ statt als $\\tfrac cb$ lesen.**\n\nVerwandt: **Trigonometrische Gleichungen** · **Standardgraphen skizzieren** · im Mathematikbestand: **Wichtige Werte des Einheitskreises** · **Trigonometrische Grundidentitäten**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Periode",
+      "md": "Ordne jeder Funktion ihre Periode zu.",
+      "pairs": [
+        [
+          "$y = \\sin(3x)$",
+          "$\\tfrac{2\\pi}{3}$"
+        ],
+        [
+          "$y = \\cos\\left(\\tfrac x2\\right)$",
+          "$4\\pi$"
+        ],
+        [
+          "$y = \\tan x$",
+          "$\\pi$"
+        ],
+        [
+          "$y = 5\\sin x - 2$",
+          "$2\\pi$"
+        ]
+      ],
+      "explain": "Periode $\\tfrac{2\\pi}{|b|}$; der Tangens hat $\\pi$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is the period of $y = 3\\sin(2x - \\pi)$?",
+      "options": [
+        {
+          "md": "$\\pi$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac{\\pi}{2}$"
+        },
+        {
+          "md": "$4\\pi$"
+        },
+        {
+          "md": "$3\\pi$"
+        },
+        {
+          "md": "$2\\pi$"
+        }
+      ],
+      "explain": "$3\\sin\\big(2(x - \\tfrac\\pi2)\\big)$: $b = 2$, Periode $\\pi$; die Verschiebung ändert sie nicht.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Periode",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Wertebereich",
+      "md": "Welchen größten Wert nimmt $y = 4\\cos(3x) - 1$ an?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Amplitude 4, Mittellinie −1: höchstens 3.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\cos(-x) = \\cos x$ für alle $x$.",
+      "answer": true,
+      "explain": "Der Kosinus ist gerade, sein Graph achsensymmetrisch zur y-Achse.",
+      "label": "Symmetrie",
+      "id": "vq4"
+    },
+    {
       "type": "choice",
       "md": "What is the period of $y = 3\\sin(2x - \\pi)$?",
       "options": [
@@ -38,12 +327,38 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "trigperiode"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "trigperiode"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Amplitude |a|, Periode 2π/|b|.",
         "tan: Periode π, Polstellen.",
-        "Verschiebungen wie bei allen Graphen."
+        "Verschiebungen wie bei allen Graphen.",
+        "$a\\sin(b(x - c)) + d$: Amplitude $|a|$, Periode $\\tfrac{2\\pi}{|b|}$, Wertebereich $d \\pm |a|$.",
+        "Die Periode folgt aus $b \\cdot p = 2\\pi$."
       ],
       "id": "summary"
     }

@@ -16,6 +16,266 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Ableiten:** Bei einer kubischen Funktion ist $f'$ eine quadratische Funktion.\n> 2. **Bedingung übersetzen:** »überall wachsend« heißt $f'(x) \\ge 0$ für alle $x$; eine nach oben geöffnete Parabel ist das genau dann, wenn sie die Achse höchstens berührt: $\\Delta \\le 0$.\n> 3. **Die Ungleichung im Parameter lösen.**\n> 4. **Ränder prüfen:** Bei $\\Delta = 0$ ist $f'$ nur in einem Punkt null; $f$ wächst trotzdem überall, der Rand gehört dazu.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Für welche $k$ wächst $f(x) = \\tfrac13 x^3 + kx^2 + 4x$ überall?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(x) = x^2 + 2kx + 4",
+            "why": "Ableiten."
+          },
+          {
+            "tex": "f'(x) \\ge 0 \\text{ für alle } x \\iff \\Delta = 4k^2 - 16 \\le 0",
+            "why": "Nach oben geöffnete Parabel ohne zwei Nullstellen."
+          },
+          {
+            "tex": "k^2 \\le 4 \\iff -2 \\le k \\le 2",
+            "why": "Lösen."
+          },
+          {
+            "tex": "k = 2:\\ f'(x) = (x + 2)^2 \\ge 0",
+            "why": "Rand: f' ist nur bei x = −2 null, f wächst überall."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rand.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ableitung",
+      "md": "**Die Ableitung im Bild:** blau $f'(x) = x^2 + 2kx + 4$ für verschiedene $k$. Die Funktion wächst überall, solange die Parabel nicht unter die Achse taucht.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -6,
+          4
+        ],
+        "y": [
+          -6,
+          10
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "k",
+            "min": -4,
+            "max": 4,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "d",
+            "expr": "x^2 + 2*k*x + 4",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "-k",
+            "y": "4 - k^2",
+            "color": "orange",
+            "label": "Scheitel"
+          }
+        ],
+        "readout": "k = {k|2} · tiefster Wert von f′: 4 − k² = {4 - k^2|2} · Δ = 4k² − 16 = {4*k^2 - 16|2}"
+      },
+      "timeline": [
+        {
+          "caption": "k = 3: Der Scheitel von f' liegt bei −5, unter der Achse: f fällt dort. Nicht überall wachsend.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "k = 2: Der Scheitel berührt die Achse: f' ≥ 0, f wächst überall.",
+          "to": {
+            "k": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 0: f' ist überall positiv.",
+          "to": {
+            "k": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = −2: wieder Berührung, der andere Rand.",
+          "to": {
+            "k": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- $\\Delta < 0$ statt $\\Delta \\le 0$ verlangen und so die Ränder verlieren.\n- Bei negativem Leitkoeffizienten von $f'$ die Bedingung nicht umdrehen (dann »überall fallend«).\n- $f$ selbst statt $f'$ untersuchen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Monotoniebedingung mit Parameter",
+      "path": "02 Wiki/TMUA/10 Differenzialrechnung/Aufgabentypen/Monotoniebedingung mit Parameter.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "In der Funktion steckt ein Parameter, und gefragt ist die Bedingung dafür, dass die Funktion **auf ganz $\\mathbb{R}$ steigt oder fällt** -- oder dafür, dass sie **keine (oder genau zwei) stationäre Punkte** hat.\n\nErkennungsmerkmale: *„increasing for all values of $x$\"*, *„has no stationary points\"*, *„has two distinct turning points\"*."
+            }
+          ]
+        },
+        {
+          "title": "Die Übersetzung",
+          "blocks": [
+            {
+              "md": "Alle diese Aufgaben sind dieselbe Aufgabe. Bei einer kubischen Funktion ist $f'$ quadratisch, und die Frage wird zu einer Aussage über die **Diskriminante**:\n\n| Formulierung | Bedingung an $f'(x) = ax^2 + bx + c$ |\n|---|---|\n| steigend für alle $x$ | $a > 0$ und $b^2 - 4ac \\le 0$ |\n| fallend für alle $x$ | $a < 0$ und $b^2 - 4ac \\le 0$ |\n| keine stationären Punkte | $b^2 - 4ac < 0$ |\n| genau ein stationärer Punkt | $b^2 - 4ac = 0$ |\n| zwei verschiedene Extrempunkte | $b^2 - 4ac > 0$ |\n\nDamit ist die Aufgabe auf **Parameterbedingung über die Diskriminante** zurückgeführt. Der Differenzialteil besteht aus einer einzigen Zeile."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ableiten.**\n2. **Die Bedingung übersetzen** (Tabelle oben).\n3. **Die Diskriminante als Ungleichung in den Parameter schreiben.**\n4. **Die quadratische Ungleichung lösen** -- Nullstellen bestimmen, Parabel skizzieren, Intervall ablesen (siehe **Quadratische Ungleichung lösen**).\n5. **Die Bedingung an $a$ nicht vergessen**, wenn der Parameter auch im führenden Koeffizienten steht."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> For which values of $k$ is $f(x) = x^3 + kx^2 + 3x$ increasing for all real $x$?\n>\n> - **A** $-3 \\le k \\le 3$\n> - **B** $k \\ge 3$\n> - **C** $k \\le -3$ or $k \\ge 3$\n> - **D** $-9 \\le k \\le 9$\n> - **E** all real $k$\n\n**Schritt 1:** $f'(x) = 3x^2 + 2kx + 3$.\n\n**Schritt 2:** Steigend für alle $x$ heißt $f'(x) \\ge 0$ für alle $x$. Der führende Koeffizient 3 ist positiv, also bleibt die Diskriminantenbedingung.\n\n**Schritt 3:** $(2k)^2 - 4 \\cdot 3 \\cdot 3 \\le 0$, also $4k^2 - 36 \\le 0$.\n\n**Schritt 4:** $k^2 \\le 9$, also $-3 \\le k \\le 3$. Antwort **A**.\n\nOption C ist die Lösung der **umgekehrten** Ungleichung $k^2 \\ge 9$ -- die Falle für alle, die beim Wurzelziehen das Intervall verkehrt herum lesen.\n\n> [!tip] Die Probe mit $k = 0$\n> Für $k = 0$ ist $f(x) = x^3 + 3x$ mit $f'(x) = 3x^2 + 3 > 0$ -- offensichtlich steigend. Jede Antwortoption, die $k = 0$ nicht enthält, ist damit falsch. Das erledigt hier B und C in fünf Sekunden.\n>\n> Ein Testwert in der Mitte des vermuteten Intervalls ist bei diesem Aufgabentyp immer verfügbar und fast immer entscheidend."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\le$ und $\\ge$ vertauschen.** *Steigend für alle $x$* bedeutet, dass die Ableitung **nicht negativ** wird -- also Diskriminante $\\le 0$.\n- **Beim Wurzelziehen aus $k^2 \\le 9$ nur $k \\le 3$ schreiben.** Richtig ist $-3 \\le k \\le 3$.\n- **Die Bedingung an den führenden Koeffizienten vergessen**, wenn dort ebenfalls der Parameter steht.\n- **Die Diskriminante der Funktion statt der Ableitung** bilden.\n- **$2k$ beim Quadrieren als $2k^2$ lesen.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> For which values of $a$ is $f(x) = x^3 + ax^2 + 3ax + 5$ increasing for all real $x$?\n>\n> - **A** $0 \\le a \\le 9$\n> - **B** $a \\ge 9$\n> - **C** $a \\le 0$ or $a \\ge 9$\n> - **D** $-9 \\le a \\le 0$\n> - **E** all real $a$\n\n> [!success]- Lösung\n> **A.** $f'(x) = 3x^2 + 2ax + 3a \\ge 0$ für alle $x$.\n> Diskriminante: $(2a)^2 - 4 \\cdot 3 \\cdot 3a = 4a^2 - 36a \\le 0$, also $4a(a - 9) \\le 0$ und damit $0 \\le a \\le 9$.\n> Probe mit $a = 1$: $f'(x) = 3x^2 + 2x + 3$ hat die Diskriminante $4 - 36 < 0$, ist also stets positiv -- passt.\n> C ist wieder die umgedrehte Ungleichung.\n\n> [!question] Aufgabe 2\n> For which values of $k$ does $f(x) = 2x^3 - 3x^2 + kx$ have no stationary points?\n>\n> - **A** $k > \\tfrac32$\n> - **B** $k < \\tfrac32$\n> - **C** $k > 3$\n> - **D** $k \\ge \\tfrac32$\n> - **E** $k < 0$\n\n> [!success]- Lösung\n> **A.** $f'(x) = 6x^2 - 6x + k$. Keine stationären Punkte heißt: $f'(x) = 0$ hat **keine** Lösung, also Diskriminante $< 0$.\n> $36 - 24k < 0$, also $k > \\tfrac{36}{24} = \\tfrac32$.\n> D ist der Grenzfall mitgezählt: Bei $k = \\tfrac32$ ist die Diskriminante null, es gibt **einen** stationären Punkt (einen Terrassenpunkt). Genau an dieser Stelle entscheidet sich die Aufgabe.\n\n> [!question] Aufgabe 3\n> For which values of $x$ is $f(x) = x^3 - 3x$ decreasing?\n>\n> - **A** $-1 < x < 1$\n> - **B** $x < -1$ or $x > 1$\n> - **C** $x < 0$\n> - **D** $-\\sqrt3 < x < \\sqrt3$\n> - **E** $x > 1$\n\n> [!success]- Lösung\n> **A.** $f'(x) = 3x^2 - 3 < 0$ heißt $x^2 < 1$, also $-1 < x < 1$.\n> Hier ist kein Parameter im Spiel, aber dieselbe Übersetzung: Die Frage nach Monotonie ist eine **quadratische Ungleichung**.\n> D verwechselt die Nullstellen von $f$ mit denen von $f'$: $f(x) = x(x^2 - 3)$ hat die Nullstellen $0$ und $\\pm\\sqrt3$ -- die haben mit der Monotonie nichts zu tun."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Quadratische Ungleichung lösen** · **Stationäre Punkte bestimmen und klassifizieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rand",
+      "md": "$f(x) = x^3 + kx^2 + 27x$ ist für alle $x$ wachsend. Wie groß ist $k$ höchstens?",
+      "answer": 9,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 3x^2 + 2kx + 27 \\ge 0 \\iff 4k^2 - 324 \\le 0 \\iff |k| \\le 9$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "For which values of $k$ is $f(x) = -x^3 + kx^2 - 3x$ decreasing for all real $x$?",
+      "options": [
+        {
+          "md": "$-3 \\le k \\le 3$",
+          "correct": true
+        },
+        {
+          "md": "$k \\le -3$ or $k \\ge 3$",
+          "why": "Umgekehrt."
+        },
+        {
+          "md": "$k \\ge 3$",
+          "why": "Symmetrisch in k."
+        },
+        {
+          "md": "$-3 < k < 3$",
+          "why": "Die Ränder gehören dazu."
+        },
+        {
+          "md": "$-9 \\le k \\le 9$",
+          "why": "Rechenfehler bei der Diskriminante."
+        }
+      ],
+      "explain": "$f'(x) = -3x^2 + 2kx - 3 \\le 0$ für alle $x$: nach unten geöffnet, $\\Delta = 4k^2 - 36 \\le 0$, also $|k| \\le 3$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Fallend",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f'(x) \\ge 0$ und $f'$ nur an einer einzigen Stelle null, dann ist $f$ streng monoton wachsend.",
+      "answer": true,
+      "explain": "Beispiel $x^3$: $f'(0) = 0$, und doch wächst $x^3$ überall streng.",
+      "label": "Rand",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -77,6 +337,51 @@
       },
       "label": "Rechentraining",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "monotonieparam"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "monotonieparam"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "monotonieparam"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Überall wachsend: $f' \\ge 0$ für alle $x$, bei quadratischem $f'$ also $\\Delta \\le 0$.",
+        "Ränder gehören dazu, weil f' dort nur in einem Punkt null ist."
+      ]
     }
   ]
 }

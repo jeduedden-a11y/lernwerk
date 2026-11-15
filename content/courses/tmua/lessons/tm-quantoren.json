@@ -23,6 +23,459 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Allquantor (*for all, for every, for each, for any*)\n> »Für alle $x$ gilt $P(x)$« ist wahr, wenn $P$ für **jedes** Objekt des Grundbereichs gilt. Widerlegt wird sie durch **ein** Gegenbeispiel.\n\n> [!definition] Existenzquantor (*there exists, there is, for some*)\n> »Es gibt ein $x$ mit $P(x)$« ist wahr, wenn $P$ für **mindestens ein** Objekt gilt. *Some* heißt in der Mathematik »mindestens eins«: *Some primes are even* ist wahr, obwohl es nur die 2 gibt, und *some positive integers are positive* ist wahr, obwohl es sogar alle sind.\n\n> [!definition] Grundbereich (*domain*)\n> Die Menge, über die ein Quantor läuft. Dieselbe Aussageform kann je nach Grundbereich wahr oder falsch sein: »für alle $x$: $x^2 \\ge x$« ist für ganze Zahlen wahr, für reelle falsch ($x = \\tfrac12$).\n\n**Die Beweislast ist ungleich verteilt:** Eine Allaussage ist schwer zu beweisen (alle Fälle) und leicht zu widerlegen (ein Fall); eine Existenzaussage ist leicht zu beweisen (ein Beispiel) und schwer zu widerlegen (alle Fälle).\n\n| Satz | versteckter Quantor |\n|---|---|\n| *If $n$ is prime, then $n$ is odd.* | **für alle** $n$ |\n| *A square is a rectangle.* | **jedes** Quadrat |\n| *The equation $x^2 = 2$ has a solution.* | **es gibt** ein $x$ |",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Die Reihenfolge zweier Quantoren als Spiel.** Beim Allquantor wählt der Gegner, beim Existenzquantor wählst du, und zwar in der Reihenfolge des Satzes. $x$ und $y$ sind reelle Zahlen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{für jedes } x \\text{ gibt es } y: \\; x + y = 0",
+            "why": "Der Gegner wählt x zuerst, du antwortest mit y = −x. Deine Wahl darf von x abhängen: wahr."
+          },
+          {
+            "tex": "\\text{es gibt } y \\text{, sodass für jedes } x: \\; x + y = 0",
+            "why": "Du musst y zuerst festlegen, etwa y = 5. Der Gegner antwortet mit x = 0, und 0 + 5 ist nicht 0. Jedes feste y scheitert: falsch."
+          },
+          {
+            "tex": "\\text{es gibt } x \\text{, sodass für jedes } y: \\; x\\,y = 0",
+            "why": "Du wählst x = 0; dann ist xy = 0, was der Gegner auch wählt: wahr. Die Form »es gibt, für alle« ist nicht automatisch falsch."
+          },
+          {
+            "tex": "(\\exists y\\ \\forall x:\\ P) \\;\\Rightarrow\\; (\\forall x\\ \\exists y:\\ P)",
+            "why": "Ein y, das gegen alle x besteht, ist insbesondere eine Antwort auf jedes einzelne x. Die Umkehrung gilt nicht, siehe die ersten beiden Zeilen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Für alle, es gibt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Es gibt, für alle.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wahres Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folgerungsrichtung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Quantoren",
+      "md": "**Feste Schranke oder passende Antwort?** Blau der Graph von $y = \\tfrac{x^2}{4}$, orange eine waagerechte Linie in der Höhe $y = c$, grün zu jedem $x$ die Antwort $\\tfrac{x^2}{4} + 1$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -6,
+          6
+        ],
+        "y": [
+          -2,
+          10
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "c",
+            "min": -2,
+            "max": 10,
+            "value": 3,
+            "hidden": true
+          },
+          {
+            "name": "X",
+            "min": -6,
+            "max": 6,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2/4",
+            "color": "blue",
+            "label": "y = x²/4",
+            "labelAt": 4.7
+          }
+        ],
+        "hlines": [
+          {
+            "y": "c",
+            "color": "orange",
+            "dashed": false,
+            "width": 2.2
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "X^2/4",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "X^2/4 + 1",
+            "color": "green"
+          }
+        ],
+        "readout": "Linie y = {c|1} · zu x = {X|1} passt y = {X^2/4 + 1|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Gibt es ein c, sodass für jedes x gilt: x²/4 ≤ c? Bei c = 3 überholt der Graph die Linie ab |x| > 3,5.",
+          "set": {
+            "c": 3,
+            "X": 1
+          }
+        },
+        {
+          "caption": "Eine höhere Linie hilft nicht: Auch c = 9 wird ab |x| > 6 überholt. Jedes feste c scheitert, die Aussage »es gibt c, für alle x« ist falsch.",
+          "to": {
+            "c": 9
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Umgekehrt »für jedes x gibt es ein y mit x²/4 < y«: Der Gegner wählt x, du antwortest mit y = x²/4 + 1 (grün). Wahr.",
+          "to": {
+            "X": -4.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Antwort hängt von x ab; das ist bei »für alle, es gibt« erlaubt.",
+          "to": {
+            "X": 3.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Und »es gibt c, sodass für jedes x: x²/4 ≥ c« ist wahr: Die Linie bei c = 0 liegt unter dem ganzen Graphen. Ein Beispiel genügt.",
+          "to": {
+            "c": 0
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Quantorenreihenfolge beurteilen\n> 1. Quantoren unterstreichen und ihre Reihenfolge notieren: »für alle, es gibt« oder »es gibt, für alle«.\n> 2. Als Spiel lesen: Beim Allquantor wählt der Gegner, beim Existenzquantor du, in der Reihenfolge des Satzes.\n> 3. Bei »für alle $x$ gibt es $y$«: eine **Formel** $y(x)$ suchen, etwa $y = -x$ oder $y = x + 1$.\n> 4. Bei »es gibt $y$, für alle $x$«: einen **festen** Wert suchen, Kandidaten sind oft 0 oder 1.\n> 5. Folgerungsrichtung nutzen: »es gibt, für alle« ist stärker und zieht »für alle, es gibt« nach sich.",
+      "label": "Verfahren",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Quantoren - für alle und es gibt",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Quantoren - für alle und es gibt.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die beiden Quantoren",
+          "blocks": [
+            {
+              "md": "| Quantor | englisch | wahr genau dann, wenn ... | widerlegt durch ... |\n|---|---|---|---|\n| **Allquantor** | *for all*, *for every*, *for each*, *for any* | die Aussage für **jedes** Objekt des Grundbereichs gilt | **ein** Gegenbeispiel |\n| **Existenzquantor** | *there exists*, *for some*, *there is at least one* | die Aussage für **mindestens ein** Objekt gilt | ein Argument, dass es **kein** solches Objekt gibt |\n\n> [!important] Die Beweislast ist asymmetrisch\n> Eine **Allaussage** ist schwer zu beweisen (alle Fälle) und leicht zu widerlegen (ein Fall). Eine **Existenzaussage** ist leicht zu beweisen (ein Beispiel) und schwer zu widerlegen (alle Fälle). Wer vor einer Aussage im TMUA sitzt, sollte zuerst ihren Quantor bestimmen -- er entscheidet, ob ein Beispiel genügt oder ein Argument nötig ist."
+            }
+          ]
+        },
+        {
+          "title": "\"Some\" heißt \"mindestens eins\"",
+          "blocks": [
+            {
+              "md": "In der Mathematik bedeutet *for some* ausdrücklich *for at least one* -- so steht es auch in der Spezifikation. Das weicht vom Alltag ab, wo \"einige\" oft \"einige, aber nicht alle\" meint.\n\n- *\"Some prime numbers are even\"* ist wahr, obwohl es nur eine gerade Primzahl gibt.\n- *\"Some positive integers are positive\"* ist wahr, obwohl sogar alle es sind. Eine Existenzaussage schließt die Allaussage nicht aus."
+            }
+          ]
+        },
+        {
+          "title": "Der Grundbereich entscheidet",
+          "blocks": [
+            {
+              "md": "Dieselbe Aussageform kann je nach Grundbereich wahr oder falsch sein:\n\n| Aussage | über ganze Zahlen | über reelle Zahlen |\n|---|---|---|\n| für alle $x$: $x^2 \\ge x$ | wahr | falsch, $x = \\tfrac12$ |\n| es gibt $x$ mit $2x = 1$ | falsch | wahr, $x = \\tfrac12$ |\n| für alle $x > 0$: $x \\ge 1$ | wahr (positive ganze Zahlen) | falsch |\n\n> [!warning] Den Grundbereich in der Aufgabe unterstreichen\n> *Let n be a positive integer*, *for all real x*, *for all x > 0* -- diese Angaben stehen oft im Vorspann der Frage und nicht in der Aussage selbst. Wer sie überliest, prüft eine andere Aussage."
+            }
+          ]
+        },
+        {
+          "title": "Versteckte Quantoren",
+          "blocks": [
+            {
+              "md": "Viele Sätze enthalten Quantoren, ohne sie auszusprechen:\n\n| Satz | gemeint |\n|---|---|\n| *If n is prime, then n is odd.* | **für alle** $n$: wenn prim, dann ungerade |\n| *A square is a rectangle.* | **jedes** Quadrat ist ein Rechteck |\n| *The equation x² = 2 has a solution.* | **es gibt** ein $x$ mit $x^2 = 2$ |\n| *x² − 5x + 6 = 0 when x = 2 or x = 3* | für diese beiden Werte gilt die Gleichung |"
+            }
+          ]
+        },
+        {
+          "title": "Die Reihenfolge zählt",
+          "blocks": [
+            {
+              "md": "Mit zwei Quantoren ändert die Reihenfolge den Sinn vollständig:\n\n| Aussage | Bedeutung | wahr? (reelle Zahlen) |\n|---|---|---|\n| für jedes $x$ gibt es ein $y$ mit $y > x$ | zu jeder Zahl gibt es eine größere | **wahr**, etwa $y = x + 1$ |\n| es gibt ein $y$, sodass für jedes $x$ gilt $y > x$ | es gibt eine größte Zahl, die alle übertrifft | **falsch** |\n\n> [!important] Bei \"für alle ... es gibt\" darf das zweite Objekt vom ersten abhängen\n> In *\"für jedes x gibt es ein y\"* wird $y$ **nach** $x$ gewählt und darf von $x$ abhängen, etwa $y = x + 1$. In *\"es gibt ein y, sodass für jedes x\"* wird $y$ **zuerst** und **ein für alle Mal** gewählt; es muss dann mit jedem $x$ funktionieren.\n>\n> Deshalb gilt stets: *es gibt ... für alle* ⇒ *für alle ... es gibt* (ein fester Wert funktioniert erst recht für jedes einzelne $x$). Die Umkehrung gilt im Allgemeinen nicht.\n>\n> Alltagsbild: *\"Jedes Schloss wird von irgendeinem Schlüssel geöffnet\"* ist schwächer als *\"Es gibt einen Schlüssel, der jedes Schloss öffnet\"* -- dem Generalschlüssel.\n\nMan liest verschachtelte Quantoren **von links nach rechts** als Spiel: Beim Allquantor wählt der Gegner, beim Existenzquantor wähle ich. Die Aussage ist wahr, wenn ich gegen jede Wahl des Gegners gewinne."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **\"Some\" als \"some but not all\" lesen.**\n- **Eine Allaussage mit Beispielen \"beweisen\".** Drei passende Werte zeigen nichts über den vierten.\n- **Die Reihenfolge zweier Quantoren vertauschen**, weil beide Sätze fast dieselben Wörter enthalten.\n- **Den Grundbereich ignorieren**, besonders den Unterschied zwischen ganzen und reellen Zahlen.\n- **\"Any\" falsch deuten:** *\"if any x satisfies ...\"* heißt meist *es gibt*, *\"for any x\"* heißt *für alle*. Im Zweifel an einem Beispiel prüfen, welcher Sinn gemeint ist.\n\nVerwandt: **Negation von Aussagen** · **Widerlegung durch Gegenbeispiel** · Aufgabentypen: **Quantorenreihenfolge beurteilen** · **Quantifizierte Aussagen negieren** · **Parameterwerte für wahre Aussagen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Quantorenreihenfolge beurteilen",
+      "path": "02 Wiki/TMUA/03 Logik der Argumente/Aufgabentypen/Quantorenreihenfolge beurteilen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Mehrere Aussagen enthalten **zwei Quantoren** in unterschiedlicher Reihenfolge, oft mit fast identischem Wortlaut: *For every x there exists y ...* gegen *There exists y such that for every x ...* Gefragt ist, welche wahr sind oder welche aus welcher folgt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Quantoren unterstreichen** und ihre Reihenfolge notieren: ∀∃ oder ∃∀.\n2. **Als Spiel lesen:** Beim Allquantor wählt der Gegner, beim Existenzquantor wählst du -- in der Reihenfolge des Satzes.\n3. **Bei ∀x ∃y:** Darf $y$ von $x$ abhängen? Dann eine **Formel** für $y$ in Abhängigkeit von $x$ suchen, etwa $y = -x$ oder $y = x + 1$. Findet sich eine, die für jedes $x$ funktioniert, ist die Aussage wahr. Scheitert jede Wahl an **einem** $x$, ist sie falsch.\n4. **Bei ∃y ∀x:** Einen **festen** Wert für $y$ suchen, der gegen alle $x$ besteht. Kandidaten sind oft 0 oder 1. Scheitert jeder feste Wert, ist die Aussage falsch.\n5. **Die Folgerungsrichtung nutzen:** Aus ∃y ∀x folgt ∀x ∃y -- nicht umgekehrt."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> In the following statements, $x$ and $y$ are real numbers. Which of the statements is/are true?\n>\n> I For every $x$ there exists $y$ such that $x + y = 0$.\n> II There exists $y$ such that for every $x$, $x + y = 0$.\n> III There exists $x$ such that for every $y$, $xy = 0$.\n> IV For every $y$ there exists $x$ such that $xy = 1$.\n\n**I (∀∃):** Der Gegner wählt $x$, ich antworte mit $y = -x$. Dann $x + y = 0$. **Wahr.**\n\n**II (∃∀):** Ich muss **ein** $y$ festlegen, das für jedes $x$ die Summe null liefert. Wähle ich $y = 5$, antwortet der Gegner mit $x = 0$: $0 + 5 \\ne 0$. Das scheitert für jedes feste $y$. **Falsch.**\n\n**III (∃∀):** Ich wähle $x = 0$. Dann ist $xy = 0$ für jedes $y$. **Wahr.**\n\n**IV (∀∃):** Der Gegner wählt $y = 0$. Dann ist $xy = 0 \\ne 1$ für jedes $x$. **Falsch.**\n\nWahr sind **I und III**.\n\n> [!tip] Bei ∀∃ zuerst den gefährlichsten Gegnerzug suchen\n> In IV ist die Antwortformel $x = \\tfrac1y$ naheliegend -- und scheitert genau an $y = 0$. Wer eine Formel findet, prüft sofort, ob sie für **jede** Wahl des Gegners definiert ist: Division durch null, Wurzel aus Negativem, Logarithmus von null."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Beide Reihenfolgen gleich behandeln**, weil die Wörter fast dieselben sind.\n- **Bei ∃∀ einen Wert wählen, der von $x$ abhängt.** Der Wert muss vorher feststehen.\n- **∃∀ reflexhaft für falsch halten.** Es gibt wahre Beispiele, etwa III oben.\n- **Den Grundbereich wechseln.** Über positive ganze Zahlen hat *es gibt ein kleinstes Element* eine andere Antwort als über reelle Zahlen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> In the following statements, $m$ and $n$ are positive integers. Which of the statements is/are true?\n>\n> I For every $n$ there exists $m$ such that $m > n$.\n> II There exists $m$ such that for every $n$, $m \\ge n$.\n> III There exists $m$ such that for every $n$, $m \\le n$.\n>\n> - **A** I only\n> - **B** II only\n> - **C** III only\n> - **D** I and II only\n> - **E** I and III only\n> - **F** I, II and III\n\n> [!success]- Lösung\n> **E.**\n> I: $m = n + 1$. Wahr.\n> II: Jedes feste $m$ wird von $n = m + 1$ übertroffen. Falsch -- es gibt keine größte positive ganze Zahl.\n> III: $m = 1$ ist kleiner oder gleich jeder positiven ganzen Zahl. Wahr.\n\n> [!question] Aufgabe 2\n> Consider the following two statements about real numbers.\n> P: For every real $y \\ge 0$ there exists a real $x$ such that $x^2 = y$.\n> Q: There exists a real $x$ such that for every real $y \\ge 0$, $x^2 \\le y$.\n> Which one of the following is correct?\n>\n> - **A** P and Q are both true.\n> - **B** P is true and Q is false.\n> - **C** P is false and Q is true.\n> - **D** P and Q are both false.\n\n> [!success]- Lösung\n> **A.**\n> P: Zu $y \\ge 0$ antworte ich mit $x = \\sqrt y$. Wahr.\n> Q: Ich wähle $x = 0$. Dann ist $x^2 = 0 \\le y$ für jedes $y \\ge 0$. Wahr.\n> Die Falle ist, Q wegen der Form ∃∀ für falsch zu halten.\n\n> [!question] Aufgabe 3\n> Consider the statements\n> (1) There is a key that opens every lock in the building.\n> (2) Every lock in the building is opened by some key.\n> Which one of the following is correct?\n>\n> - **A** (1) and (2) are equivalent.\n> - **B** (1) implies (2), but (2) does not imply (1).\n> - **C** (2) implies (1), but (1) does not imply (2).\n> - **D** Neither statement implies the other.\n\n> [!success]- Lösung\n> **B.** (1) hat die Form ∃∀, (2) die Form ∀∃. Aus (1) folgt (2): Der eine Generalschlüssel öffnet jedes einzelne Schloss. Umgekehrt nicht: Jedes Schloss kann seinen eigenen Schlüssel haben, ohne dass einer alle öffnet."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Quantifizierte Aussagen negieren** · **Parameterwerte für wahre Aussagen bestimmen** · **Wahrheitswert einer Implikation prüfen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sort",
+      "label": "Quantoren",
+      "md": "Welcher Quantor steckt in der Formulierung?",
+      "categories": [
+        "für alle",
+        "es gibt"
+      ],
+      "items": [
+        {
+          "md": "*for each*",
+          "cat": "für alle"
+        },
+        {
+          "md": "*for any $x$, …*",
+          "cat": "für alle"
+        },
+        {
+          "md": "*A square is a rectangle.*",
+          "cat": "für alle"
+        },
+        {
+          "md": "*for some*",
+          "cat": "es gibt"
+        },
+        {
+          "md": "*there is at least one*",
+          "cat": "es gibt"
+        },
+        {
+          "md": "*The equation $x^2 = 2$ has a solution.*",
+          "cat": "es gibt"
+        }
+      ],
+      "explain": "Versteckte Quantoren erkennt man an der Frage: Wird etwas über jedes Objekt behauptet oder über mindestens eines?",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "label": "Aussagen I, II, III",
+      "lang": "en",
+      "shuffle": false,
+      "md": "In the following statements, $x$ and $y$ are real numbers. Which of the statements is/are true?\n\n**I**  For every $x$ there exists $y$ such that $xy = 1$.\n\n**II**  There exists $y$ such that for every $x$, $x + y > x$.\n\n**III**  For every $y$ there exists $x$ such that $x^2 = y$.",
+      "options": [
+        {
+          "md": "none of them"
+        },
+        {
+          "md": "I only"
+        },
+        {
+          "md": "II only",
+          "correct": true
+        },
+        {
+          "md": "III only"
+        },
+        {
+          "md": "I and II only"
+        },
+        {
+          "md": "I and III only"
+        },
+        {
+          "md": "II and III only"
+        },
+        {
+          "md": "I, II and III"
+        }
+      ],
+      "explain": "**C.** I scheitert an $x = 0$: Für kein $y$ ist $0 \\cdot y = 1$. II: Die feste Wahl $y = 1$ erfüllt $x + 1 > x$ für jedes $x$. III scheitert an $y = -1$: Kein Quadrat ist negativ.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Which of the following statements is true when $x$ ranges over the positive integers but false when $x$ ranges over the positive real numbers?",
+      "options": [
+        {
+          "md": "for all $x$, $x + 1 > x$",
+          "why": "Für beide wahr."
+        },
+        {
+          "md": "there exists $x$ with $x^2 = 4$",
+          "why": "Für beide wahr, $x = 2$."
+        },
+        {
+          "md": "for all $x$, $x \\ge 1$",
+          "correct": true
+        },
+        {
+          "md": "there exists $x$ with $2x = 1$",
+          "why": "Umgekehrt: für ganze Zahlen falsch, für reelle wahr."
+        },
+        {
+          "md": "for all $x$, $x^2 \\ge 0$",
+          "why": "Für beide Grundbereiche wahr."
+        }
+      ],
+      "explain": "Jede positive ganze Zahl ist mindestens 1; unter den positiven reellen Zahlen widerlegt $x = \\tfrac12$ die Aussage.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Grundbereich",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "*Some prime numbers are even* ist eine wahre Aussage.",
+      "answer": true,
+      "explain": "»Some« heißt »mindestens eins«, und die 2 ist eine gerade Primzahl.",
+      "label": "Some",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Reihenfolge",
+      "md": "Aus »es gibt $y$, sodass für jedes $x$ gilt $P(x, y)$« folgt »für jedes $x$ gibt es $y$ mit $P(x, y)$«. Die umgekehrte Folgerung gilt {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "nicht",
+            "im Allgemeinen nicht"
+          ]
+        }
+      ],
+      "explain": "Gegenbeispiel: Für jedes $x$ gibt es $y$ mit $x + y = 0$, aber kein festes $y$ leistet das für alle $x$.",
+      "id": "vq5"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Lösungsschema für zwei Quantoren in die richtige Reihenfolge.",
+      "items": [
+        "Quantoren unterstreichen und ihre Reihenfolge notieren",
+        "den Satz als Spiel lesen: Gegner wählt beim Allquantor, du beim Existenzquantor",
+        "je nach Form eine Formel y(x) oder einen festen Wert suchen",
+        "die Folgerungsrichtung zwischen beiden Formen ausnutzen"
+      ],
+      "explain": "Die Reihenfolge: 1. Quantoren unterstreichen und ihre Reihenfolge notieren. 2. den Satz als Spiel lesen: Gegner wählt beim Allquantor, du beim Existenzquantor. 3. je nach Form eine Formel y(x) oder einen festen Wert suchen. 4. die Folgerungsrichtung zwischen beiden Formen ausnutzen.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Wie widerlegt man eine Existenzaussage »es gibt ein $x$ mit $P(x)$«?",
+      "options": [
+        {
+          "md": "Man zeigt, dass kein einziges $x$ die Eigenschaft hat.",
+          "correct": true
+        },
+        {
+          "md": "Man gibt ein $x$ an, das $P$ nicht erfüllt.",
+          "why": "Ein Gegenbeispiel widerlegt nur Allaussagen."
+        },
+        {
+          "md": "Man prüft drei Werte, die $P$ nicht erfüllen.",
+          "why": "Beispiele sagen nichts über die übrigen Werte."
+        },
+        {
+          "md": "Man findet ein $x$, das $P$ erfüllt.",
+          "why": "Das beweist die Aussage, statt sie zu widerlegen."
+        }
+      ],
+      "explain": "Eine Existenzaussage ist leicht zu beweisen, aber schwer zu widerlegen: Man braucht eine Begründung für alle Objekte.",
+      "label": "Beweislast",
+      "id": "vq7"
+    },
+    {
       "type": "choice",
       "md": "Which one of the following statements is true? Here $x$ and $y$ are real numbers.",
       "options": [
@@ -93,6 +546,13 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-quantoren",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "lang": "en",
       "label": "Abschlussaufgabe",
@@ -141,7 +601,10 @@
       "points": [
         "∀: ein Gegenbeispiel widerlegt; ∃: ein Beispiel belegt.",
         "∀x ∃y: y darf von x abhängen; ∃y ∀x: ein y für alle.",
-        "Quantoren zu tauschen ändert oft den Wahrheitswert."
+        "Quantoren zu tauschen ändert oft den Wahrheitswert.",
+        "Allaussage: ein Gegenbeispiel widerlegt sie; Existenzaussage: ein Beispiel beweist sie.",
+        "»für alle x gibt es y«: y darf von x abhängen; »es gibt y für alle x«: ein fester Wert für alle.",
+        "Den Grundbereich immer mitlesen: ganze und reelle Zahlen geben oft verschiedene Antworten."
       ],
       "id": "summary"
     }

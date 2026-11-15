@@ -232,7 +232,10 @@ final class CoreTests: XCTestCase {
         let retry = FinishedLesson(lessonId: nil, mode: "review", results: [StepResult(stepId: m.id, lessonId: nil, type: "choice", correct: true, firstTry: true, attempts: 1, revealed: false)], score: 1)
         state.resolveMistakes(retry)
         XCTAssertTrue(state.mistakes.isEmpty)
-        XCTAssertEqual(TMUAScale.score(correct: 20, total: 40), 4.6)
+        // the vault's anchors: about 26 of 40 gave 7.0, about 34 of 40 gave 8.0
+        XCTAssertEqual(TMUAScale.score(correct: 26, total: 40), 7)
+        XCTAssertEqual(TMUAScale.score(correct: 34, total: 40), 8)
+        XCTAssertEqual(TMUAScale.score(correct: 20, total: 40), 5.6)
         XCTAssertEqual(TMUAScale.score(correct: 20, total: 20), 9)
     }
 
@@ -416,5 +419,61 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(ContentSync.isIgnored("runtime/dev-frame.html"))
         XCTAssertFalse(ContentSync.isIgnored("runtime/lw.js"))
         XCTAssertFalse(ContentSync.isIgnored("courses/analysis-1/course.json"))
+    }
+
+    func testCalculatorEvaluates() throws {
+        var c = CalcEngine(angle: .deg)
+        XCTAssertEqual(try c.evaluate("1+2×3"), 7, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("2^3^2"), 512, accuracy: 1e-9)
+        XCTAssertEqual(try c.evaluate("−2^2"), -4, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("2^−1"), 0.5, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("1,5+2.5"), 4, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("5−−3"), 8, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("sin(30)"), 0.5, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("sin(180)"), 0)
+        XCTAssertEqual(try c.evaluate("cos(90)"), 0)
+        XCTAssertThrowsError(try c.evaluate("tan(90)"))
+        XCTAssertEqual(try c.evaluate("sin⁻¹(1)"), 90, accuracy: 1e-9)
+        XCTAssertEqual(try c.evaluate("2sin(30)"), 1, accuracy: 1e-12)
+        c.angle = .rad
+        XCTAssertEqual(try c.evaluate("sin(π)"), 0)
+        XCTAssertEqual(try c.evaluate("cos(π)"), -1, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("2π"), 2 * Double.pi, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("3(4+5)"), 27, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("(1+2)(3+4"), 21, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("√16+9"), 13, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("3ʸ√8"), 2, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("∛(−27)"), -3, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("5!"), 120)
+        XCTAssertEqual(try c.evaluate("5 nCr 2"), 10)
+        XCTAssertEqual(try c.evaluate("5 nPr 2"), 20)
+        XCTAssertEqual(try c.evaluate("200×5%"), 10, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("4²"), 16)
+        XCTAssertEqual(try c.evaluate("4⁻¹"), 0.25)
+        XCTAssertEqual(try c.evaluate("ln(e)"), 1, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("log(1000)"), 3, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("log₂(8)"), 3, accuracy: 1e-12)
+        XCTAssertEqual(try c.evaluate("1,5ᴇ3"), 1500)
+        XCTAssertEqual(try c.evaluate("2ᴇ−3"), 0.002, accuracy: 1e-15)
+        XCTAssertEqual(try c.evaluate("13,6eV"), 13.6 * 1.602_176_634e-19, accuracy: 1e-30)
+        XCTAssertEqual(try c.evaluate("h×c"), 6.626_070_15e-34 * 299_792_458, accuracy: 1e-35)
+        c.ans = 7
+        XCTAssertEqual(try c.evaluate("Ans×2"), 14)
+        for bad in ["1÷0", "√(−1)", "ln(0)", "2+", "2)", "2 3", "x", "sin⁻¹(2)", "(−8)^0,5", "2,5!"] {
+            XCTAssertThrowsError(try c.evaluate(bad), bad)
+        }
+    }
+
+    func testCalculatorFormatsGerman() {
+        XCTAssertEqual(CalcEngine.format(0.5), "0,5")
+        XCTAssertEqual(CalcEngine.format(1234.5), "1234,5")
+        XCTAssertEqual(CalcEngine.format(0.1 + 0.2), "0,3")
+        XCTAssertEqual(CalcEngine.format(6.022_140_76e23), "6,02214076·10²³")
+        XCTAssertEqual(CalcEngine.format(-1.602_176_634e-19), "−1,602176634·10⁻¹⁹")
+        XCTAssertEqual(CalcEngine.format(-2.5), "−2,5")
+        XCTAssertEqual(CalcEngine.answerText(6.022_140_76e23), "6,02214076*10^23")
+        XCTAssertEqual(CalcEngine.answerText(-2.5), "-2,5")
+        XCTAssertEqual(CalcEngine.inputText(3e-9), "3ᴇ−9")
+        XCTAssertEqual(try CalcEngine().evaluate(CalcEngine.inputText(1.234_5e-12)), 1.234_5e-12, accuracy: 1e-24)
     }
 }

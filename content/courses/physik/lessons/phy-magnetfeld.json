@@ -15,6 +15,447 @@
       "md": "Magnetfelder entstehen um Dauermagnete und um jeden Strom. Ihre Stärke beschreibt die **Flussdichte** $B$ in Tesla; im Inneren einer langen Spule ist das Feld homogen: $B = \\mu_0 \\frac{N I}{l}$.\n\nAuf eine Ladung, die sich senkrecht zu den Feldlinien bewegt, wirkt die **Lorentzkraft** $F_L = q v B$, senkrecht zu Geschwindigkeit und Feld (Drei-Finger-Regel). Sie ändert nur die Richtung, nie den Betrag der Geschwindigkeit."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Magnetisches Feld und Flussdichte\n> Ein **Magnetfeld** umgibt Dauermagnete und jeden elektrischen Strom; es übt Kräfte auf andere Magnete und auf **bewegte** Ladungen aus. Magnetische Feldlinien sind **geschlossen**: außerhalb eines Magneten vom Nord- zum Südpol, innen zurück. Die Stärke des Feldes beschreibt die **Flussdichte** $B$, Einheit $1\\,\\mathrm{T} = 1\\,\\tfrac{\\mathrm{N}}{\\mathrm{A\\,m}} = 1\\,\\tfrac{\\mathrm{V\\,s}}{\\mathrm{m}^2}$ (Tesla); das Erdfeld hat etwa $50\\,\\mu\\mathrm{T}$.\n\n> [!definition] Feld einer langen Spule\n> Im Inneren einer langen Spule (Windungszahl $N$, Länge $l$, Strom $I$) ist das Feld homogen: $B = \\mu_0\\mu_r\\tfrac{N I}{l}$ mit der **magnetischen Feldkonstante** $\\mu_0 = 4\\pi\\cdot 10^{-7}\\,\\tfrac{\\mathrm{V\\,s}}{\\mathrm{A\\,m}}$ und der Permeabilitätszahl $\\mu_r$ des Kerns (Luft $1$, Eisen bis zu einigen Tausend).",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Von der Kraft auf einen Leiter zur Lorentzkraft.** Ein gerader Leiter der Länge $l$ liegt senkrecht zu einem Feld $B$; gemessen wird $F = I\\,l\\,B$, so ist $B$ definiert.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "B = \\frac{F}{I\\,l}",
+            "why": "Definition der Flussdichte über die Kraft auf einen stromdurchflossenen Leiter senkrecht zum Feld."
+          },
+          {
+            "tex": "I = \\frac{N q}{t},\\qquad t = \\frac{l}{v}\\quad\\Rightarrow\\quad I = \\frac{N q\\,v}{l}",
+            "why": "Im Leiterstück bewegen sich $N$ Ladungsträger der Ladung $q$ mit der Driftgeschwindigkeit $v$; in der Zeit $t = \\tfrac lv$ fließen sie alle durch das Ende."
+          },
+          {
+            "tex": "F = I\\,l\\,B = N\\,q\\,v\\,B",
+            "why": "Eingesetzt: Die Kraft auf den Leiter ist die Summe der Kräfte auf alle Ladungsträger."
+          },
+          {
+            "tex": "F_L = q\\,v\\,B",
+            "why": "Kraft auf **eine** bewegte Ladung, senkrecht zum Feld: die **Lorentzkraft**. Bei schrägem Einflug zählt nur die Komponente senkrecht zum Feld: $F_L = q v B\\sin\\alpha$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Definition von B.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Strom aus bewegten Ladungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kraft auf alle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kraft auf eine.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "> [!satz] Lorentzkraft\n> Auf eine Ladung $q$, die sich mit $v$ unter dem Winkel $\\alpha$ zu den Feldlinien bewegt, wirkt $F_L = q\\,v\\,B\\sin\\alpha$. Die Kraft steht **senkrecht** auf $\\vec v$ und auf $\\vec B$.\n> \n> **Richtung (Drei-Finger-Regel der rechten Hand, positive Ladung):** Daumen in Bewegungsrichtung, Zeigefinger in Feldrichtung, Mittelfinger zeigt die Kraft. Für Elektronen kehrt sich die Kraft um (oder man nimmt die linke Hand).\n> \n> Weil die Lorentzkraft stets senkrecht zur Bewegung steht, verrichtet sie keine Arbeit: Sie ändert die Richtung, nie den Betrag der Geschwindigkeit.",
+      "label": "Gesetz",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung von Bahnradius und Umlaufdauer.** Eine Ladung fliegt senkrecht ins homogene Feld.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "q\\,v\\,B = m\\,\\frac{v^2}{r}",
+            "why": "Die Lorentzkraft liefert die Zentripetalkraft, denn sie steht immer senkrecht zur Bewegung: Kreisbahn."
+          },
+          {
+            "tex": "r = \\frac{m\\,v}{q\\,B}",
+            "why": "Schnell und schwer: großer Kreis; starkes Feld: kleiner Kreis."
+          },
+          {
+            "tex": "T = \\frac{2\\pi r}{v} = \\frac{2\\pi m}{q\\,B}",
+            "why": "Die Umlaufdauer hängt **nicht** von der Geschwindigkeit ab: Schnellere Teilchen laufen auf größeren Kreisen, brauchen aber genau gleich lange. Darauf beruht das Zyklotron."
+          },
+          {
+            "tex": "v \\text{ schräg zu } \\vec B:\\; r = \\frac{m\\,v\\sin\\alpha}{q B},\\quad h = v\\cos\\alpha\\cdot T",
+            "why": "Die Komponente längs des Feldes bleibt unverändert: Die Bahn wird zur Schraube mit der Ganghöhe $h$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kraftansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Radius.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umlaufdauer.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schraubenbahn.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Elektronen im Magnetfeld.** Mit $2\\,\\mathrm{kV}$ beschleunigte Elektronen ($v = 2{,}65\\cdot 10^7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$) treten im Ursprung nach oben in ein Feld ein, das in die Bildebene zeigt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          42
+        ],
+        "y": [
+          -16,
+          16
+        ],
+        "xLabel": "x in cm",
+        "yLabel": "y in cm",
+        "vars": [
+          {
+            "name": "B",
+            "min": 0.9,
+            "max": 4,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ob",
+            "expr": "sqrt(max(0, (15.08/B)^2 - (x - 15.08/B)^2))",
+            "color": "blue",
+            "domain": [
+              0,
+              "30.16/B"
+            ],
+            "samples": 900
+          },
+          {
+            "name": "un",
+            "expr": "-sqrt(max(0, (15.08/B)^2 - (x - 15.08/B)^2))",
+            "color": "blue",
+            "domain": [
+              0,
+              "30.16/B"
+            ],
+            "samples": 900
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              0,
+              6
+            ],
+            "color": "green",
+            "width": 3,
+            "label": "v"
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              6,
+              0
+            ],
+            "color": "orange",
+            "width": 3,
+            "label": "F"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 0,
+            "color": "orange"
+          }
+        ],
+        "readout": "B = {B|1} mT: Radius **{15.08/B|1} cm**, Umlaufdauer **{35.73/B|1} ns**"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $B = 1\\,\\mathrm{mT}$: Die Lorentzkraft (orange) steht senkrecht auf der Geschwindigkeit (grün) und zwingt das Elektron auf einen Kreis mit $r = \\tfrac{m v}{e B} \\approx 15\\,\\mathrm{cm}$.",
+          "set": {
+            "B": 1
+          }
+        },
+        {
+          "caption": "Doppeltes Feld, halber Radius: $r \\sim \\tfrac1B$.",
+          "to": {
+            "B": 2
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $4\\,\\mathrm{mT}$ nur noch $3{,}8\\,\\mathrm{cm}$. Die Umlaufdauer sinkt ebenfalls mit $\\tfrac1B$, hängt aber nicht vom Tempo ab.",
+          "to": {
+            "B": 4
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Die Geschwindigkeit bleibt dem Betrag nach gleich; die Lorentzkraft verrichtet keine Arbeit. Ein Teilchen im Magnetfeld lässt sich ablenken, aber nicht beschleunigen."
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Magnetisches Feld",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Magnetisches Feld.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Das **magnetische Feld** wird von **bewegten Ladungen** (Strömen) erzeugt und übt auf bewegte Ladungen und stromdurchflossene Leiter Kräfte aus. Seine Stärke beschreibt die **magnetische Flussdichte** $\\vec{B}$ (Einheit Tesla, T)."
+            }
+          ]
+        },
+        {
+          "title": "Feldlinienbilder",
+          "blocks": [
+            {
+              "md": "Magnetische Feldlinien sind stets **geschlossen** (keine magnetischen Ladungen). Wichtige Fälle: gerader stromdurchflossener Leiter (konzentrische Kreise) und lange Spule (im Inneren homogen)."
+            }
+          ]
+        },
+        {
+          "title": "Flussdichte einer langen Spule",
+          "blocks": [
+            {
+              "md": "$$B = \\mu_0 \\, \\mu_r \\, \\frac{N}{l}\\, I, \\qquad \\mu_0 = 4\\pi \\cdot 10^{-7}\\ \\tfrac{\\text{Vs}}{\\text{Am}}$$\nDefinition über die Kraft auf einen Leiter: $B = \\dfrac{F}{I \\, l}$."
+            }
+          ]
+        },
+        {
+          "title": "Lorentzkraft",
+          "blocks": [
+            {
+              "md": "Auf eine mit $\\vec{v}$ bewegte Ladung wirkt eine Kraft **senkrecht** zu Geschwindigkeit und Feld:\n$$\\vec{F}_L = q\\, \\vec{v} \\times \\vec{B}, \\qquad F_L = q\\,v\\,B \\ \\ (v \\perp B)$$\nRichtung: Drei-Finger-Regel der rechten Hand. Sie ist eine \"neue Qualität\" von Kraft, da sie nie Arbeit verrichtet (Betrag von $v$ bleibt)."
+            }
+          ]
+        },
+        {
+          "title": "Kreisbahn im Magnetfeld",
+          "blocks": [
+            {
+              "md": "Da $\\vec{F}_L \\perp \\vec{v}$, wirkt die Lorentzkraft als **Zentripetalkraft**:\n$$q v B = \\frac{m v^2}{r} \\quad\\Rightarrow\\quad r = \\frac{m v}{q B}$$"
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen und Vertiefung (LK)",
+          "blocks": [
+            {
+              "md": "- **Bestimmung der spezifischen Ladung** (e/m) im Fadenstrahlrohr\n- **Hall-Effekt** -- Querspannung im stromdurchflossenen Leiter\n- **Wien-Filter** -- Geschwindigkeitsfilter aus gekreuztem E- und B-Feld\n- relativistische Massenzunahme als Phänomen bei sehr schnellen Teilchen"
+            },
+            {
+              "md": "> [!note] Abgrenzung E-Feld / B-Feld\n> Das **elektrische** Feld ändert den **Betrag** der Geschwindigkeit (verrichtet Arbeit); das **magnetische** Feld ändert nur die **Richtung** (verrichtet keine Arbeit)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Formel zu.",
+      "pairs": [
+        [
+          "Flussdichte",
+          "$B = \\tfrac{F}{I l}$"
+        ],
+        [
+          "Kraft auf einen Leiter",
+          "$F = I l B$"
+        ],
+        [
+          "Lorentzkraft",
+          "$F_L = q v B\\sin\\alpha$"
+        ],
+        [
+          "Bahnradius",
+          "$r = \\tfrac{m v}{q B}$"
+        ],
+        [
+          "Feld einer langen Spule",
+          "$B = \\mu_0\\tfrac{N I}{l}$"
+        ]
+      ],
+      "explain": "Alles folgt aus der Kraft auf bewegte Ladungen.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Lorentzkraft in die richtige Reihenfolge.",
+      "items": [
+        "Kraft auf den Leiter: $F = I l B$",
+        "Strom aus den Ladungsträgern im Leiterstück: $I = \\tfrac{N q v}{l}$",
+        "Einsetzen: $F = N q v B$",
+        "Durch $N$ teilen: $F_L = q v B$"
+      ],
+      "explain": "Die Reihenfolge: 1. Kraft auf den Leiter: $F = I l B$. 2. Strom aus den Ladungsträgern im Leiterstück: $I = \\tfrac{N q v}{l}$. 3. Einsetzen: $F = N q v B$. 4. Durch $N$ teilen: $F_L = q v B$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Leiter von $20\\,\\mathrm{cm}$ Länge führt $5\\,\\mathrm{A}$ senkrecht durch ein Feld von $0{,}3\\,\\mathrm{T}$. Welche Kraft wirkt auf ihn?",
+      "answer": 0.3,
+      "tolerance": 0.003,
+      "placeholder": "N",
+      "explain": "$F = I l B = 5\\cdot 0{,}2\\cdot 0{,}3\\,\\mathrm{N} = 0{,}3\\,\\mathrm{N}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Elektron fliegt mit $2\\cdot 10^7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ senkrecht durch ein Feld von $5\\,\\mathrm{mT}$. Auf welchem Radius kreist es?",
+      "answer": 2.27,
+      "tolerance": 0.02,
+      "placeholder": "cm",
+      "explain": "$r = \\tfrac{m v}{e B} = \\tfrac{9{,}109\\cdot 10^{-31}\\cdot 2\\cdot 10^7}{1{,}602\\cdot 10^{-19}\\cdot 5\\cdot 10^{-3}}\\,\\mathrm{m} \\approx 2{,}27\\,\\mathrm{cm}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Spule mit $500$ Windungen auf $25\\,\\mathrm{cm}$ Länge führt $2\\,\\mathrm{A}$. Wie groß ist die Flussdichte innen?",
+      "answer": 5.03,
+      "tolerance": 0.03,
+      "placeholder": "mT",
+      "explain": "$B = \\mu_0\\tfrac{N I}{l} = 4\\pi\\cdot 10^{-7}\\cdot\\tfrac{500\\cdot 2}{0{,}25}\\,\\mathrm{T} \\approx 5{,}03\\,\\mathrm{mT}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Geschwindigkeit eines Teilchens im Magnetfeld, wird der Bahnradius {{0}}-mal so groß und die Umlaufdauer {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        },
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        }
+      ],
+      "explain": "$r = \\tfrac{mv}{qB} \\sim v$, aber $T = \\tfrac{2\\pi m}{qB}$ hängt nicht von $v$ ab.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Fliegt ein Elektron schräg zu den Feldlinien, läuft es auf einer Schraubenbahn.",
+      "answer": true,
+      "explain": "Die Komponente senkrecht zum Feld erzeugt eine Kreisbewegung, die Komponente längs des Feldes bleibt; zusammen eine Schraube. So fangen Polarlichter-Elektronen sich an den Feldlinien der Erde entlang.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Proton und ein Elektron fliegen gleich schnell senkrecht durch dasselbe Feld. Was gilt für die Bahnen?",
+      "options": [
+        {
+          "md": "Gleich große, entgegengesetzte Kräfte; das Elektron läuft auf einem viel kleineren Kreis in die andere Richtung.",
+          "correct": true
+        },
+        {
+          "md": "Gleich große Kreise in entgegengesetzte Richtungen",
+          "why": "$r = \\tfrac{mv}{qB}$ hängt von der Masse ab."
+        },
+        {
+          "md": "Das Proton erfährt die größere Kraft.",
+          "why": "Beide haben denselben Ladungsbetrag."
+        },
+        {
+          "md": "Beide werden gleich abgelenkt.",
+          "why": "Die Vorzeichen der Ladungen sind verschieden."
+        }
+      ],
+      "explain": "$\\tfrac{r_p}{r_e} = \\tfrac{m_p}{m_e} \\approx 1836$.",
+      "label": "Richtung",
+      "id": "vq8"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Mit welcher Frequenz kreisen Protonen in einem Feld von $1{,}5\\,\\mathrm{T}$ ($m_p = 1{,}673\\cdot 10^{-27}\\,\\mathrm{kg}$)?",
+      "answer": 22.9,
+      "tolerance": 0.1,
+      "placeholder": "MHz",
+      "explain": "$f = \\tfrac{1}{T} = \\tfrac{e B}{2\\pi m} = \\tfrac{1{,}602\\cdot 10^{-19}\\cdot 1{,}5}{2\\pi\\cdot 1{,}673\\cdot 10^{-27}}\\,\\mathrm{Hz} \\approx 22{,}9\\,\\mathrm{MHz}$, unabhängig von ihrer Energie: die Zyklotronfrequenz.",
+      "id": "vq9"
+    },
+    {
       "id": "arbeit",
       "type": "choice",
       "md": "Warum verrichtet die Lorentzkraft keine Arbeit an einem Elektron?",
@@ -65,13 +506,55 @@
       "label": "Bahnradius"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "spule",
+          "leiterkraft"
+        ]
+      },
+      "label": "Spule und Leiter",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "zyklotron",
+          "bahnradius"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schraube",
+          "zyklotron"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$F_L = qvB$, senkrecht zu $v$ und $B$.",
         "Die Lorentzkraft ändert nur die Richtung: Kreisbahn mit $r = \\frac{mv}{qB}$.",
-        "Spule: $B = \\mu_0\\frac{NI}{l}$."
+        "Spule: $B = \\mu_0\\frac{NI}{l}$.",
+        "$B = \\tfrac{F}{Il}$ in Tesla; lange Spule $B = \\mu_0\\mu_r\\tfrac{NI}{l}$.",
+        "Lorentzkraft $F_L = qvB\\sin\\alpha$ aus $F = IlB$ hergeleitet; senkrecht zu $\\vec v$ und $\\vec B$, keine Arbeit.",
+        "Kreisbahn $r = \\tfrac{mv}{qB}$, Umlaufdauer $T = \\tfrac{2\\pi m}{qB}$ unabhängig von $v$; schräg: Schraube."
       ]
     }
   ]

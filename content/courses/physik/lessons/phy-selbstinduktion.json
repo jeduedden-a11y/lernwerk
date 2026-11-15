@@ -50,11 +50,375 @@
           {
             "name": "I",
             "expr": "0.5*(1 - exp(-12*x/L))",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Zeitkonstante L/R = {L/12*1000|0} ms; nach dieser Zeit fließen 63 Prozent des Endstroms 0,5 A."
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Selbstinduktion in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Selbstinduktion.svg",
+        "aspect": 1.83,
+        "alt": "Stromkreis mit Spule und Schalter"
+      },
+      "timeline": [
+        {
+          "caption": "Eine Spule in einem Stromkreis mit Schalter.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Schließt man den Schalter, beginnt Strom zu fließen; das Magnetfeld der Spule baut sich auf.",
+          "to": {
+            "x": 0.38,
+            "y": 0.3,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das wachsende Feld durchsetzt die Spule selbst und induziert in ihr eine Gegenspannung: $U_{ind} = -L\\tfrac{dI}{dt}$.",
+          "to": {
+            "x": 0.6,
+            "y": 0.5,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Induktivität einer langen Spule ist $L = \\mu_0\\mu_r\\tfrac{N^2 A}{l}$; im Feld steckt die Energie $\\tfrac12 L I^2$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.7,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Deshalb steigt der Strom beim Einschalten nicht sprunghaft, sondern nach einer e-Funktion an.",
+          "to": {
+            "x": 0.5,
+            "y": 0.88,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Selbstinduktion und Induktivität\n> Ändert sich der Strom durch eine Spule, ändert sich ihr eigener Fluss und induziert in ihr eine Spannung: **Selbstinduktion**. Sie ist proportional zur Stromänderungsrate, $U_{ind} = -L\\,\\dot I$. Der Faktor $L$ heißt **Induktivität**, Einheit $1\\,\\mathrm{H} = 1\\,\\tfrac{\\mathrm{V\\,s}}{\\mathrm{A}}$ (Henry). Nach Lenz wirkt die Selbstinduktionsspannung jeder Stromänderung entgegen.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Induktivität einer langen Spule.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "B = \\mu_0\\mu_r\\,\\frac{N I}{l}",
+            "why": "Das Feld im Inneren hängt vom Strom ab."
+          },
+          {
+            "tex": "\\Phi = B A = \\mu_0\\mu_r\\,\\frac{N A}{l}\\,I",
+            "why": "Der Fluss durch eine Windung."
+          },
+          {
+            "tex": "U_{ind} = -N\\dot\\Phi = -\\mu_0\\mu_r\\,\\frac{N^2 A}{l}\\,\\dot I",
+            "why": "Induktionsgesetz für alle $N$ Windungen: $N$ steht jetzt im Quadrat."
+          },
+          {
+            "tex": "L = \\mu_0\\mu_r\\,\\frac{N^2 A}{l}",
+            "why": "Doppelte Windungszahl, vierfache Induktivität; ein Eisenkern vervielfacht sie."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Feld.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fluss.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Induktionsgesetz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Induktivität.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Einschaltvorgang und Energie.** Spule $L$ in Reihe mit $R$ an $U_0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U_0 = R\\,I + L\\,\\dot I",
+            "why": "Maschenregel: Die Quellenspannung teilt sich auf Widerstand und Gegenspannung der Spule auf."
+          },
+          {
+            "tex": "I(t) = \\frac{U_0}{R}\\left(1 - e^{-t/\\tau}\\right),\\qquad \\tau = \\frac{L}{R}",
+            "why": "Diese Funktion erfüllt die Gleichung (Einsetzen prüft es) und startet bei null. Nach $\\tau$ sind $63\\,\\%$ des Endstroms erreicht."
+          },
+          {
+            "tex": "W = \\int_0^I L\\,i\\,di = \\tfrac12 L I^2",
+            "why": "Gegen die Selbstinduktion muss die Quelle die Arbeit $L\\,i\\,di$ für jeden Stromzuwachs aufbringen; sie steckt danach im Magnetfeld, wie $\\tfrac12 C U^2$ im Kondensator."
+          },
+          {
+            "tex": "\\text{Abschalten}: \\dot I \\text{ sehr groß} \\Rightarrow |U_{ind}| \\text{ sehr groß}",
+            "why": "Unterbricht man den Strom schlagartig, entsteht eine hohe Spannungsspitze; der Funke am Schalter setzt die Feldenergie frei."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Maschenregel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abschalten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Selbstinduktion und Induktivität",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Selbstinduktion und Induktivität.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ändert sich der Strom durch eine **Spule**, so ändert sich ihr eigenes Magnetfeld und induziert eine Spannung, die der Stromänderung entgegenwirkt -- die **Selbstinduktion**. Das Maß dafür ist die **Induktivität** $L$ (Einheit Henry, H)."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "image": "vault:Selbstinduktion.svg"
+            }
+          ]
+        },
+        {
+          "title": "Selbstinduktionsspannung",
+          "blocks": [
+            {
+              "md": "$$U_{ind} = -L \\cdot \\frac{\\Delta I}{\\Delta t} = -L\\, \\dot{I}$$\nDie Induktivität einer langen Spule:\n$$L = \\mu_0 \\, \\mu_r \\, \\frac{N^2 \\, A}{l}$$"
+            }
+          ]
+        },
+        {
+          "title": "Ein- und Ausschaltvorgang",
+          "blocks": [
+            {
+              "md": "Beim Einschalten steigt der Strom wegen der Gegenspannung **verzögert** (exponentiell) an; beim Ausschalten fließt er verzögert ab. Analog zur **Kondensator-Aufladung**."
+            }
+          ]
+        },
+        {
+          "title": "Energie des Magnetfeldes",
+          "blocks": [
+            {
+              "md": "Im Magnetfeld der stromdurchflossenen Spule ist die Energie gespeichert:\n$$E_{mag} = \\tfrac{1}{2}\\, L\\, I^2$$\n\n> [!tip] Bezug\n> Kondensator ($E_{el} = \\tfrac12 C U^2$) und Spule ($E_{mag} = \\tfrac12 L I^2$) tauschen im **Elektromagnetischer Schwingkreis** fortlaufend Energie aus."
+            }
+          ]
+        },
+        {
+          "title": "Die Lenzsche Regel als Ursache",
+          "blocks": [
+            {
+              "md": "> [!important] Die induzierte Spannung wirkt der Ursache entgegen\n> Das Minuszeichen in $U_{ind} = -L\\,\\dot I$ ist keine Rechenkonvention, sondern die Aussage der Lenzschen Regel: Die Selbstinduktionsspannung ist stets so gerichtet, dass sie die **Stromänderung** hemmt.\n>\n> Beim Einschalten bremst sie den Anstieg, beim Ausschalten hält sie den Strom aufrecht. Eine Spule wirkt damit als **Trägheit für den Strom** -- das elektrische Gegenstück zur Masse in der Mechanik.\n>\n> Die Analogie trägt weit:\n>\n> | Mechanik | Elektrik |\n> |---|---|\n> | Masse $m$ | Induktivität $L$ |\n> | Geschwindigkeit $v$ | Strom $I$ |\n> | Kraft $F = m\\dot v$ | Spannung $U = L\\dot I$ |\n> | $E_{kin} = \\tfrac12 m v^2$ | $E_{mag} = \\tfrac12 L I^2$ |\n>\n> Wer die eine Seite beherrscht, kann die andere übersetzen. Genau diese Entsprechung macht den **Schwingkreis** zum exakten Gegenstück des **Federpendels**."
+            }
+          ]
+        },
+        {
+          "title": "Der Ausschaltvorgang",
+          "blocks": [
+            {
+              "md": "> [!warning] Beim Abschalten können sehr hohe Spannungen auftreten\n> Wird der Stromkreis rasch unterbrochen, ist $\\dot I$ betragsmäßig sehr groß -- und damit auch die Selbstinduktionsspannung. Sie kann die Betriebsspannung um ein Vielfaches übersteigen.\n>\n> Sichtbar wird das als **Abrissfunke** am Schalter. Technisch ist es ein Problem, weil es Kontakte zerstört und empfindliche Bauteile gefährdet; deshalb schaltet man Freilaufdioden parallel zu Spulen.\n>\n> Genutzt wird derselbe Effekt in der **Zündspule**: Aus 12 V Bordspannung entstehen durch schnelles Unterbrechen mehrere zehntausend Volt für den Zündfunken.\n>\n> Ein Effekt, der in einem Zusammenhang Schaden anrichtet und im anderen die Grundlage der Technik ist."
+            }
+          ]
+        },
+        {
+          "title": "Die quadratische Windungszahl",
+          "blocks": [
+            {
+              "md": "$$L = \\mu_0\\mu_r\\,\\frac{N^2 A}{\\ell}$$\n\n> [!tip] Die Windungszahl geht doppelt ein\n> Einmal, weil $N$ Windungen ein $N$-fach stärkeres Feld erzeugen; und ein zweites Mal, weil dieses Feld $N$ Windungen durchsetzt und in jeder eine Spannung induziert.\n>\n> Deshalb steht $N^2$ und nicht $N$. Verdoppelt man die Windungszahl, vervierfacht sich die Induktivität.\n>\n> Der Faktor $\\mu_r$ erklärt, weshalb Spulen einen Eisenkern erhalten: Er erhöht die Induktivität um bis zu vier Größenordnungen bei gleicher Baugröße."
+            }
+          ]
+        },
+        {
+          "title": "Energie im Magnetfeld",
+          "blocks": [
+            {
+              "md": "$$E_{mag} = \\tfrac12 L I^2$$\n\nDiese Energie steckt im **Feld**, nicht in der Spule. Sie wird beim Ausschalten wieder frei -- und muss irgendwohin, was den Abrissfunken erklärt.\n\n> [!important] Das Feld als Energieträger\n> Dass ein Feld Energie speichert, ist ein wesentlicher Punkt: Es ist damit mehr als eine Rechenhilfe zur Beschreibung von Kräften.\n>\n> Beim Kondensator gilt entsprechend $E_{el} = \\tfrac12 C U^2$. Im **Schwingkreis** pendelt die Energie zwischen beiden Feldern hin und her -- genau wie beim Pendel zwischen kinetischer und potenzieller Energie.\n>\n> In der elektromagnetischen Welle löst sich das Feld schließlich ganz von seiner Quelle und trägt die Energie fort. Siehe **Elektromagnetische Induktion**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Selbstinduktion ist der Sonderfall der **Induktion**, bei dem Ursache und Wirkung in derselben Spule liegen. Sie liefert das elektrische Gegenstück zur Trägheit und trägt zusammen mit dem **Kondensator** den **Elektromagnetischer Schwingkreis** in Q2."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine luftgefüllte Spule hat $1000$ Windungen, $10\\,\\mathrm{cm}^2$ Querschnitt und $20\\,\\mathrm{cm}$ Länge. Wie groß ist ihre Induktivität?",
+      "answer": 6.28,
+      "tolerance": 0.04,
+      "placeholder": "mH",
+      "explain": "$L = \\mu_0\\tfrac{N^2 A}{l} = 4\\pi\\cdot 10^{-7}\\cdot\\tfrac{10^6\\cdot 10^{-3}}{0{,}2}\\,\\mathrm{H} \\approx 6{,}28\\,\\mathrm{mH}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Durch eine Spule mit $0{,}5\\,\\mathrm{H}$ fließen $2\\,\\mathrm{A}$; der Strom wird in $1\\,\\mathrm{ms}$ abgeschaltet. Wie groß ist die induzierte Spannung (Betrag)?",
+      "answer": 1000,
+      "tolerance": 5,
+      "placeholder": "V",
+      "explain": "$|U| = L\\tfrac{\\Delta I}{\\Delta t} = 0{,}5\\cdot\\tfrac{2}{0{,}001}\\,\\mathrm{V} = 1000\\,\\mathrm{V}$: weit mehr als die Quellenspannung.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viel Energie war im Magnetfeld dieser Spule gespeichert?",
+      "answer": 1,
+      "tolerance": 0.01,
+      "placeholder": "J",
+      "explain": "$W = \\tfrac12 L I^2 = \\tfrac12\\cdot 0{,}5\\cdot 4\\,\\mathrm{J} = 1\\,\\mathrm{J}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Spule ($0{,}6\\,\\mathrm{H}$) wird mit $R = 12\\,\\Omega$ an $6\\,\\mathrm{V}$ eingeschaltet. Wie groß ist die Zeitkonstante?",
+      "answer": 50,
+      "tolerance": 0.5,
+      "placeholder": "ms",
+      "explain": "$\\tau = \\tfrac LR = \\tfrac{0{,}6}{12}\\,\\mathrm{s} = 50\\,\\mathrm{ms}$; der Endstrom ist $0{,}5\\,\\mathrm{A}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Induktivität in die richtige Reihenfolge.",
+      "items": [
+        "Feld der Spule: $B = \\mu_0\\tfrac{NI}{l}$",
+        "Fluss durch eine Windung: $\\Phi = BA$",
+        "Induktionsgesetz für $N$ Windungen: $U = -N\\dot\\Phi$",
+        "Vergleich mit $U = -L\\dot I$: $L = \\mu_0\\tfrac{N^2A}{l}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Feld der Spule: $B = \\mu_0\\tfrac{NI}{l}$. 2. Fluss durch eine Windung: $\\Phi = BA$. 3. Induktionsgesetz für $N$ Windungen: $U = -N\\dot\\Phi$. 4. Vergleich mit $U = -L\\dot I$: $L = \\mu_0\\tfrac{N^2A}{l}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man die Windungszahl, wird die Induktivität {{0}}-mal so groß; nach der Zeit $\\tau$ hat der Einschaltstrom etwa {{1}} Prozent seines Endwerts erreicht.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "63",
+            "63,2",
+            "63.2"
+          ],
+          "numeric": true,
+          "tolerance": 0.6
+        }
+      ],
+      "explain": "$L \\sim N^2$; $1 - e^{-1} \\approx 0{,}632$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Beim Abschalten einer Spule kann eine Spannung entstehen, die viel größer ist als die Spannung der Quelle.",
+      "answer": true,
+      "explain": "$|U| = L\\tfrac{\\Delta I}{\\Delta t}$ wird bei sehr kurzer Abschaltzeit sehr groß. Darauf beruhen Zündspulen.",
+      "label": "Verständnis",
+      "id": "vq7"
     },
     {
       "id": "ausschalten",
@@ -101,13 +465,41 @@
       "label": "Selbstinduktion"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "spulenenergie",
+          "einschalten"
+        ]
+      },
+      "label": "Energie und Einschalten",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "einschalten",
+          "induktivitaet"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$U_{ind} = -L\\dot I$.",
         "$L = \\mu_0\\mu_r\\frac{N^2A}{l}$.",
-        "Einschalten: Anstieg mit $\\tau = L/R$; Ausschalten: Spannungsspitze."
+        "Einschalten: Anstieg mit $\\tau = L/R$; Ausschalten: Spannungsspitze.",
+        "$U_{ind} = -L\\dot I$; lange Spule $L = \\mu_0\\mu_r\\tfrac{N^2A}{l}$, hergeleitet aus Feld, Fluss und Induktionsgesetz.",
+        "Einschalten: $I(t) = \\tfrac{U_0}{R}(1 - e^{-t/\\tau})$ mit $\\tau = \\tfrac LR$; Energie $\\tfrac12 L I^2$; Abschalten gibt Spannungsspitzen."
       ]
     }
   ]

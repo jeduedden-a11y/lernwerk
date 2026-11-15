@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light dark">
   <style>
     body { margin: 0; font-family: -apple-system, system-ui, "Segoe UI", sans-serif; background: #e9e9ef; color: #111; }
-    @media (prefers-color-scheme: dark) { body:not(.light) { background: #0b0b0f; color: #eee; } body:not(.light) .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -60%, transparent 60%), #000; } }
+    @media (prefers-color-scheme: dark) { body:not(.light) { background: #0b0b0f; color: #eee; } body:not(.light) .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #d2502c) -60%, transparent 60%), #000; } }
     body.dark { background: #0b0b0f; color: #eee; }
     header { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 10px 14px; }
     select, button { font: inherit; font-size: 14px; padding: 6px 10px; border-radius: 10px; border: 1px solid #c8c8d0; background: white; }
@@ -16,10 +16,10 @@
     .stage { display: flex; gap: 18px; padding: 6px 14px 20px; align-items: flex-start; flex-wrap: wrap; }
     .phone {
       position: relative; width: 393px; height: 780px; border-radius: 48px; overflow: hidden; flex: none;
-      background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -40%, transparent 60%), #f2f2f7;
+      background: radial-gradient(120% 70% at 20% 0%, var(--tint, #d2502c) -40%, transparent 60%), #f2f2f7;
       box-shadow: 0 0 0 10px #1c1c1e, 0 20px 50px rgba(0,0,0,0.3);
     }
-    body.dark .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #5e5ce6) -60%, transparent 60%), #000; }
+    body.dark .phone { background: radial-gradient(120% 70% at 20% 0%, var(--tint, #d2502c) -60%, transparent 60%), #000; }
     iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
     .glass {
       position: absolute; left: 12px; right: 12px; display: flex; align-items: center; gap: 10px;
@@ -31,11 +31,11 @@
     .close { width: 32px; height: 32px; border-radius: 16px; display: grid; place-items: center; font-weight: 700; }
     .bars { flex: 1; display: flex; gap: 4px; }
     .bars i { flex: 1; height: 5px; border-radius: 3px; background: rgba(120,120,128,0.3); }
-    .bars i.on { background: var(--tint, #5e5ce6); }
+    .bars i.on { background: var(--tint, #d2502c); }
     .bottom { bottom: 30px; padding: 6px; }
     .primary {
       flex: 1; height: 52px; border-radius: 999px; border: 0; font-size: 17px; font-weight: 600; color: white;
-      background: var(--tint, #5e5ce6); transition: transform 0.15s, opacity 0.2s, background 0.2s;
+      background: var(--tint, #d2502c); transition: transform 0.15s, opacity 0.2s, background 0.2s;
     }
     .primary:disabled { opacity: 0.4; }
     .primary.ok { background: #34c759; }
@@ -174,7 +174,7 @@
   };
 
   // ---------------------------------------------------------------- validation of every lesson
-  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade"];
+  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note"];
   function mdFields(step) {
     const out = [];
     ["md", "explain", "hint", "wrong", "solution", "after"].forEach((k) => { if (step[k]) out.push([k, step[k]]); });
@@ -191,6 +191,10 @@
       else if (t) { if (t.md) out.push([key + " " + i, t.md]); if (t.why) out.push([key + " " + i + " why", t.why]); }
     }));
     (step.x || []).concat(step.y || []).forEach((t, i) => out.push(["Achse " + i, t]));
+    (step.sections || []).forEach((sec, i) => {
+      if (sec.title) out.push(["Abschnitt " + (i + 1) + " Titel", sec.title]);
+      (sec.blocks || []).forEach((b, k) => { if (b.md) out.push(["Abschnitt " + (i + 1) + " Block " + (k + 1), b.md]); if (b.caption) out.push(["Abschnitt " + (i + 1) + " Bild " + (k + 1), b.caption]); });
+    });
     return out;
   }
   function checkLesson(L, LW) {
@@ -234,6 +238,8 @@
       if (s.type === "order" && (s.items || []).length < 2) errs.push(at + ": zu wenige items");
       if (s.type === "match" && (s.pairs || []).length < 2) errs.push(at + ": zu wenige pairs");
       if (s.type === "reveal" && !s.solution) errs.push(at + ": solution fehlt");
+      if (s.type === "note" && !(s.sections || []).length) errs.push(at + ": sections fehlen");
+      if (s.type === "note") (s.sections || []).forEach((sec, i) => { if (!(sec.blocks || []).length) errs.push(at + ": Abschnitt " + (i + 1) + " ohne blocks"); });
       if (s.type === "rubric" && (!s.solution || !(s.points || (s.criteria || []).length))) errs.push(at + ": rubric braucht solution und points oder criteria");
       if (s.type === "rubric" && s.points && (s.criteria || []).length && s.criteria.reduce((n, c) => n + (c.points || 1), 0) !== s.points) errs.push(at + ": Summe der criteria passt nicht zu points");
       (s.criteria || []).forEach((c, i) => { if (/katex-error|lw-error/.test(LW.md(c.md || ""))) errs.push(at + " criterion " + i + ": Formelfehler"); });

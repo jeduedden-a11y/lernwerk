@@ -35,7 +35,7 @@ struct PathView: View {
             "mode": "overview",
             "subject": subject ?? "",
             "progress": model.overviewProgress(),
-            "theme": ["accent": model.courses.first?.color ?? "#5E5CE6", "fontScale": UIFontMetrics.default.scaledValue(for: 17) / 17],
+            "theme": ["accent": model.courses.first?.color ?? "#D2502C", "fontScale": UIFontMetrics.default.scaledValue(for: 17) / 17],
             "insets": ["top": 6, "bottom": 6],
         ]
     }

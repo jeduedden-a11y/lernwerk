@@ -52,11 +52,487 @@
           {
             "name": "v",
             "expr": "vg*(1 - exp(-2*9.81*x/vg))/(1 + exp(-2*9.81*x/vg))",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Grau: freier Fall ohne Luft. Nach 5 s mit Luft: v = {vg*(1 - exp(-2*9.81*5/vg))/(1 + exp(-2*9.81*5/vg))|1} m/s"
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Reibungsarten\n> - **Haftreibung:** verhindert das Losrutschen; sie stellt sich so groß ein wie nötig, höchstens $F_H \\le \\mu_H F_N$.\n> - **Gleitreibung:** $F_G = \\mu_G F_N$ entgegen der Gleitrichtung, unabhängig vom Tempo; $\\mu_G < \\mu_H$.\n> - **Rollreibung:** $F_R = \\mu_R F_N$ mit sehr kleinem $\\mu_R$ (Eisenbahnrad etwa $0{,}002$).\n> - **Stokes-Reibung** für kleine, langsame Körper in zähen Medien: $F = 6\\pi\\eta r v$, proportional zu $v$.\n> - **Newton-Reibung** (Luftwiderstand bei hohem Tempo): $F_L = \\tfrac12 c_w\\rho A v^2$ mit dem Widerstandsbeiwert $c_w$ (Form), der Dichte $\\rho$ des Mediums und der Stirnfläche $A$.\n\n> [!definition] Grenzgeschwindigkeit\n> Die **Grenzgeschwindigkeit** $v_G$ ist die Geschwindigkeit, bei der die geschwindigkeitsabhängige Reibung die antreibende Kraft gerade ausgleicht. Dann ist die resultierende Kraft null, und der Körper bewegt sich gleichförmig weiter.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Grenzgeschwindigkeit** beim Fall mit Luftwiderstand, $k = \\tfrac12 c_w\\rho A$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m\\,\\frac{dv}{dt} = m g - k\\,v^2",
+            "why": "2. Axiom: Gewichtskraft nach unten, Luftwiderstand nach oben, er wächst mit dem Quadrat der Geschwindigkeit."
+          },
+          {
+            "tex": "a = g\\left(1 - \\frac{v^2}{v_G^2}\\right)\\quad\\text{mit}\\quad v_G^2 = \\frac{m g}{k}",
+            "why": "Umgeformt: Beim Start ist $a = g$; je näher $v$ an $v_G$ kommt, desto kleiner wird die Beschleunigung."
+          },
+          {
+            "tex": "a = 0:\\quad m g = k\\,v_G^2\\quad\\Rightarrow\\quad v_G = \\sqrt{\\frac{2 m g}{c_w\\,\\rho\\,A}}",
+            "why": "Die Grenzgeschwindigkeit, erreicht nur asymptotisch."
+          },
+          {
+            "tex": "v(t) = v_G\\tanh\\left(\\frac{g\\,t}{v_G}\\right)",
+            "why": "Die Lösung der Differenzialgleichung (über den Schulstoff hinaus); sie liefert die Kurve im Ausprobieren-Diagramm."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bewegungsgleichung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beschleunigung nimmt ab.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzgeschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die exakte Lösung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Kräfte am Fallschirmspringer** ($80\\,\\mathrm{kg}$, gestreckt): Gewichtskraft und Luftwiderstand über der Geschwindigkeit.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          60
+        ],
+        "y": [
+          0,
+          1150
+        ],
+        "xLabel": "v in m/s",
+        "yLabel": "F in N",
+        "vars": [
+          {
+            "name": "V",
+            "min": 0,
+            "max": 60,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "FG",
+            "expr": "784.8",
+            "color": "orange",
+            "label": "Gewichtskraft",
+            "labelAt": 2
+          },
+          {
+            "name": "FL",
+            "expr": "0.31392*x*x",
+            "color": "blue",
+            "label": "Luftwiderstand",
+            "labelAt": 30
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "V",
+              "0.31392*V*V"
+            ],
+            "to": [
+              "V",
+              784.8
+            ],
+            "color": "green",
+            "width": 4
+          }
+        ],
+        "points": [
+          {
+            "x": "V",
+            "on": "FL",
+            "color": "blue"
+          }
+        ],
+        "readout": "v = {V|1} m/s: Luftwiderstand **{0.31392*V*V|0} N**, Beschleunigung **{9.81 - 0.003924*V*V|2} m/s²**"
+      },
+      "timeline": [
+        {
+          "caption": "Beim Absprung ist $v = 0$: kein Luftwiderstand, die ganze Gewichtskraft beschleunigt, $a = g$. Grün ist die resultierende Kraft.",
+          "set": {
+            "V": 0
+          }
+        },
+        {
+          "caption": "Bei halber Grenzgeschwindigkeit ist der Luftwiderstand schon ein Viertel der Gewichtskraft, weil er mit $v^2$ wächst: $a = 0{,}75\\,g$.",
+          "to": {
+            "V": 25
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $50\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ sind beide gleich: resultierende Kraft null, $a = 0$. Das ist die Grenzgeschwindigkeit, rund $180\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$.",
+          "to": {
+            "V": 50
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Wäre der Springer schneller, etwa nach einem Sturzflug mit angelegten Armen, überwöge der Luftwiderstand und bremste ihn. Die Grenzgeschwindigkeit ist ein stabiles Gleichgewicht.",
+          "to": {
+            "V": 58
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Leistung gegen den Luftwiderstand.** Ein Auto fährt mit konstantem Tempo $v$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P = F_L\\cdot v = \\tfrac12 c_w\\rho A v^2\\cdot v = \\tfrac12 c_w\\rho A\\,v^3",
+            "why": "Leistung ist Kraft mal Geschwindigkeit: $P = \\tfrac{W}{t} = \\tfrac{F s}{t} = F v$."
+          },
+          {
+            "tex": "c_w = 0{,}3,\\; A = 2{,}2\\,\\mathrm{m}^2,\\; v = 100\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}:\\quad P \\approx 8{,}5\\,\\mathrm{kW}",
+            "why": "Mit $\\rho = 1{,}2\\,\\tfrac{\\mathrm{kg}}{\\mathrm{m}^3}$ und $v = 27{,}8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$."
+          },
+          {
+            "tex": "v = 200\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}:\\quad P \\approx 68\\,\\mathrm{kW}",
+            "why": "Doppeltes Tempo, achtfache Leistung. Deshalb steigt der Verbrauch bei hohem Tempo so stark."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Leistung als Kraft mal Geschwindigkeit.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "100 km/h.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "200 km/h.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Reibung und Grenzgeschwindigkeit",
+      "path": "02 Wiki/Physik/01 E-Phase/Reibung und Grenzgeschwindigkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Reibungskräfte** wirken der Bewegung entgegen. Anders als bei den idealisierten Modellen der **Kinematik** hängen sie von der Geschwindigkeit ab, wodurch die Bewegungsgleichungen nicht mehr elementar lösbar sind."
+            }
+          ]
+        },
+        {
+          "title": "Reibungsarten",
+          "blocks": [
+            {
+              "md": "| Art | Gesetz | Beispiel |\n|---|---|---|\n| **Haftreibung** | $F_H \\le \\mu_H \\cdot F_N$ | Kurvenfahrt (**Zentripetalkraft**) |\n| **Gleitreibung** | $F_G = \\mu_G \\cdot F_N$ | rutschender Körper |\n| **Stokes-Reibung** | $F_R \\sim v$ | langsame Bewegung in Flüssigkeit (**Millikan-Versuch**) |\n| **Newton-Reibung** | $F_R \\sim v^2$ | Luftwiderstand bei hoher Geschwindigkeit |"
+            }
+          ]
+        },
+        {
+          "title": "Freier Fall mit Luftwiderstand",
+          "blocks": [
+            {
+              "md": "Für den Luftwiderstand $F_R = \\tfrac{1}{2}c_w \\rho A v^2$ lautet die Bewegungsgleichung:\n$$m\\,\\dot{v} = m g - \\tfrac{1}{2}c_w \\rho A v^2$$\n\n> [!important] Grenzgeschwindigkeit\n> Die Beschleunigung wird null, sobald Luftwiderstand und Gewichtskraft sich ausgleichen. Aus $m g = \\tfrac{1}{2}c_w\\rho A v^2$ folgt:\n> $$v_{gr} = \\sqrt{\\frac{2 m g}{c_w \\rho A}}$$\n> Der Körper fällt danach **gleichförmig** weiter. Beim Fallschirmspringer sinkt $v_{gr}$ durch den geöffneten Schirm (großes $A$) drastisch."
+            },
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "8",
+                  "10",
+                  "12"
+                ],
+                "series": [
+                  {
+                    "title": "v mit Luftwiderstand / (m/s)",
+                    "data": [
+                      0,
+                      9.2,
+                      16.6,
+                      22.3,
+                      26.5,
+                      29.5,
+                      31.6,
+                      34.0,
+                      35.0,
+                      35.4
+                    ]
+                  },
+                  {
+                    "title": "v im freien Fall (ohne Reibung)",
+                    "data": [
+                      0,
+                      9.8,
+                      19.6,
+                      29.4,
+                      39.2,
+                      49.1,
+                      58.9,
+                      78.5,
+                      98.1,
+                      117.7
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "*Ohne Reibung wächst $v$ unbegrenzt linear; mit Reibung nähert es sich asymptotisch der Grenzgeschwindigkeit.*"
+            }
+          ]
+        },
+        {
+          "title": "Weshalb Reibung die Rechnung ändert",
+          "blocks": [
+            {
+              "md": "> [!important] Eine geschwindigkeitsabhängige Kraft erzeugt eine Rückkopplung\n> Bei konstanter Kraft ist die Bewegung elementar berechenbar. Hängt die Kraft dagegen von $v$ ab, entsteht eine Rückkopplung: Die Bewegung ändert die Kraft, und die Kraft ändert die Bewegung.\n>\n> Mathematisch führt das auf eine **Differenzialgleichung**, deren geschlossene Lösung über den Schulstoff hinausgeht. Deshalb wird hier numerisch gerechnet, siehe **Numerische Simulation von Bewegungen**.\n>\n> Die Rückkopplung hat aber eine anschauliche Folge: Sie ist **selbstbegrenzend**. Je schneller der Körper wird, desto stärker bremst der Widerstand -- bis sich ein Gleichgewicht einstellt."
+            }
+          ]
+        },
+        {
+          "title": "Haftreibung und Gleitreibung",
+          "blocks": [
+            {
+              "md": "> [!warning] Die Haftreibung ist keine feste Größe, sondern eine Obergrenze\n> $$F_H \\le \\mu_H \\cdot F_N$$\n>\n> Sie stellt sich stets **genau so groß ein**, wie zum Verhindern des Gleitens nötig ist -- bis zu ihrem Maximalwert. Ein ruhender Klotz auf der schiefen Ebene erfährt genau die Hangabtriebskraft als Haftreibung, nicht mehr.\n>\n> Deshalb steht dort ein Ungleichheitszeichen, bei der Gleitreibung dagegen ein Gleichheitszeichen.\n>\n> Da $\\mu_H > \\mu_G$ gilt, sinkt die Reibungskraft im Moment des Losbrechens sprunghaft -- der Grund für das Ruckgleiten und für das Quietschen von Kreide und Bremsen.\n>\n> Praktisch bedeutsam: Beim **blockierten Rad** wirkt Gleitreibung, beim rollenden Haftreibung. Deshalb ist der Bremsweg mit ABS kürzer."
+            }
+          ]
+        },
+        {
+          "title": "Die Grenzgeschwindigkeit",
+          "blocks": [
+            {
+              "md": "$$m g = \\tfrac12 c_w \\rho A v^2 \\;\\Longrightarrow\\; v_{gr} = \\sqrt{\\frac{2mg}{c_w \\rho A}}$$\n\n| Fallender Körper | Grenzgeschwindigkeit |\n|---|---|\n| Fallschirmspringer, gestreckt | rund 200 km/h |\n| Fallschirmspringer, Schirm offen | rund 20 km/h |\n| Regentropfen (2 mm) | rund 6 m/s |\n| Nebeltröpfchen | wenige cm/s |\n\n*Richtwerte.*\n\n> [!tip] Die Fläche steht im Nenner, die Masse im Zähler\n> Deshalb sinkt die Grenzgeschwindigkeit beim Öffnen des Schirms drastisch -- die Fläche wächst um mehr als das Hundertfache.\n>\n> Und deshalb überleben kleine Tiere Stürze aus großer Höhe: Bei ihnen ist das Verhältnis von Oberfläche zu Masse günstig, die Grenzgeschwindigkeit entsprechend niedrig. Eine Maus erreicht kaum gefährliche Werte, ein Pferd sehr wohl.\n>\n> Dass ein Regentropfen nicht mit 100 m/s aufschlägt, hat denselben Grund. Ohne Luftwiderstand wäre Regen tödlich."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Reibungsgesetze",
+          "blocks": [
+            {
+              "md": "| | Stokes | Newton |\n|---|---|---|\n| Gesetz | $F_R \\sim v$ | $F_R \\sim v^2$ |\n| Bereich | langsam, zäh | schnell, turbulent |\n| Beispiel | **Öltröpfchen** | Fallschirmspringer, Auto |\n\n> [!important] Der quadratische Bereich erklärt den Kraftstoffverbrauch\n> Weil der Luftwiderstand quadratisch mit der Geschwindigkeit wächst, steigt die zu ihrer Überwindung nötige **Leistung** sogar mit der dritten Potenz.\n>\n> Doppelte Geschwindigkeit erfordert also die achtfache Leistung. Das ist der physikalische Grund, weshalb der Verbrauch bei hohen Geschwindigkeiten überproportional steigt -- und weshalb Tempolimits eine erhebliche Wirkung auf den Verbrauch haben."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Reibung führt den Übergang vom idealisierten zum realen Modell vor und motiviert die **numerische Simulation**. Die Haftreibung liefert die Zentripetalkraft bei der **Kurvenfahrt**, die Stokes-Reibung trägt den **Millikan-Versuch** in Q1."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Reibungsart ihr Gesetz zu.",
+      "pairs": [
+        [
+          "Haftreibung",
+          "$F \\le \\mu_H F_N$"
+        ],
+        [
+          "Gleitreibung",
+          "$F = \\mu_G F_N$"
+        ],
+        [
+          "Stokes-Reibung",
+          "$F = 6\\pi\\eta r v$"
+        ],
+        [
+          "Newton-Reibung",
+          "$F = \\tfrac12 c_w\\rho A v^2$"
+        ],
+        [
+          "Leistung gegen den Luftwiderstand",
+          "$P = \\tfrac12 c_w\\rho A v^3$"
+        ]
+      ],
+      "explain": "Haft- und Gleitreibung hängen von der Anpresskraft ab, Stokes- und Newton-Reibung von der Geschwindigkeit.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Grenzgeschwindigkeit in die richtige Reihenfolge.",
+      "items": [
+        "Bewegungsgleichung: $m a = m g - \\tfrac12 c_w\\rho A v^2$",
+        "Bei der Grenzgeschwindigkeit ist $a = 0$",
+        "Also $m g = \\tfrac12 c_w\\rho A v_G^2$",
+        "Auflösen: $v_G = \\sqrt{\\tfrac{2 m g}{c_w\\rho A}}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Bewegungsgleichung: $m a = m g - \\tfrac12 c_w\\rho A v^2$. 2. Bei der Grenzgeschwindigkeit ist $a = 0$. 3. Also $m g = \\tfrac12 c_w\\rho A v_G^2$. 4. Auflösen: $v_G = \\sqrt{\\tfrac{2 m g}{c_w\\rho A}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Fallschirmspringer ($90\\,\\mathrm{kg}$) hat mit offenem Schirm $c_w = 1{,}2$ und $A = 25\\,\\mathrm{m}^2$ ($\\rho = 1{,}2\\,\\tfrac{\\mathrm{kg}}{\\mathrm{m}^3}$). Mit welcher Geschwindigkeit sinkt er?",
+      "answer": 7.0,
+      "tolerance": 0.05,
+      "placeholder": "m/s",
+      "explain": "$v_G = \\sqrt{\\tfrac{2\\cdot 90\\cdot 9{,}81}{1{,}2\\cdot 1{,}2\\cdot 25}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} = \\sqrt{49{,}05}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 7{,}0\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, etwa $25\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Herleitung",
+      "md": "Ein Regentropfen hat die Grenzgeschwindigkeit $6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ (Newton-Reibung). Wie groß ist seine Beschleunigung, wenn er gerade $3\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ schnell ist?",
+      "answer": 7.36,
+      "tolerance": 0.03,
+      "placeholder": "m/s²",
+      "explain": "$a = g\\left(1 - \\tfrac{v^2}{v_G^2}\\right) = 9{,}81\\cdot\\left(1 - \\tfrac14\\right)\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 7{,}36\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Vervierfacht man die Stirnfläche, wird die Grenzgeschwindigkeit {{0}}-mal so groß. Fährt ein Auto anderthalbmal so schnell, braucht es gegen den Luftwiderstand etwa die {{1}}-fache Leistung.",
+      "blanks": [
+        {
+          "accept": [
+            "0,5"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        },
+        {
+          "accept": [
+            "3,375",
+            "3.375",
+            "3,38",
+            "3.38",
+            "3,4",
+            "3.4"
+          ],
+          "numeric": true,
+          "tolerance": 0.03
+        }
+      ],
+      "explain": "$v_G \\sim \\tfrac{1}{\\sqrt A}$; $P \\sim v^3$ und $1{,}5^3 = 3{,}375$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein schwerer und ein leichter Ball gleicher Größe und Form erreichen in Luft dieselbe Grenzgeschwindigkeit.",
+      "answer": false,
+      "explain": "$v_G = \\sqrt{\\tfrac{2 m g}{c_w\\rho A}}$ wächst mit der Masse. Nur ohne Luft fallen beide gleich.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Warum überlebt eine Maus einen Sturz aus großer Höhe eher als ein Pferd?",
+      "options": [
+        {
+          "md": "Bei kleinen Tieren ist die Fläche im Verhältnis zur Masse groß, die Grenzgeschwindigkeit also klein.",
+          "correct": true
+        },
+        {
+          "md": "Weil kleine Körper langsamer fallen, auch ohne Luft.",
+          "why": "Ohne Luft fallen alle gleich schnell."
+        },
+        {
+          "md": "Weil die Maus weniger Gewichtskraft hat und deshalb nicht beschleunigt.",
+          "why": "Sie beschleunigt anfangs wie jeder Körper mit g."
+        },
+        {
+          "md": "Weil Mäuse weicher sind.",
+          "why": "Entscheidend ist das Aufpralltempo."
+        }
+      ],
+      "explain": "Masse $\\sim L^3$, Fläche $\\sim L^2$, also $v_G \\sim \\sqrt{L}$: Ein zehnmal kleineres Tier fällt etwa dreimal langsamer.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Leistung braucht ein Auto ($c_w = 0{,}3$, $A = 2{,}2\\,\\mathrm{m}^2$) bei $100\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ allein gegen den Luftwiderstand ($\\rho = 1{,}2\\,\\tfrac{\\mathrm{kg}}{\\mathrm{m}^3}$)?",
+      "answer": 8.49,
+      "tolerance": 0.05,
+      "placeholder": "kW",
+      "explain": "$P = \\tfrac12\\cdot 0{,}3\\cdot 1{,}2\\cdot 2{,}2\\cdot 27{,}78^3\\,\\mathrm{W} \\approx 8{,}49\\,\\mathrm{kW}$.",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Klotz ruht auf einer schiefen Ebene. Dann ist die Haftreibungskraft immer gleich $\\mu_H F_N$.",
+      "answer": false,
+      "explain": "Die Haftreibung ist nur so groß wie nötig, hier gleich dem Hangabtrieb. $\\mu_H F_N$ ist ihr Höchstwert, erreicht erst kurz vor dem Losrutschen.",
+      "label": "Definitionen",
+      "id": "vq9"
     },
     {
       "id": "gleich",
@@ -92,13 +568,56 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "grenzgeschwindigkeit",
+          "luftleistung"
+        ]
+      },
+      "label": "Rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "luftleistung",
+          "stokes",
+          "grenzgeschwindigkeit"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "luftleistung",
+          "grenzgeschwindigkeit"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Gleit- und Haftreibung: $F_R = \\mu F_N$.",
         "Luftreibung wächst mit $v^2$.",
-        "Grenzgeschwindigkeit, wenn Luftreibung und Gewichtskraft gleich sind."
+        "Grenzgeschwindigkeit, wenn Luftreibung und Gewichtskraft gleich sind.",
+        "Haftreibung $\\le \\mu_H F_N$ (so groß wie nötig), Gleitreibung $= \\mu_G F_N$; Luftwiderstand $\\tfrac12 c_w\\rho A v^2$.",
+        "Aus $m a = m g - k v^2$: $a = g(1 - \\tfrac{v^2}{v_G^2})$ und $v_G = \\sqrt{\\tfrac{2mg}{c_w\\rho A}}$, ein stabiles Gleichgewicht.",
+        "Leistung gegen den Luftwiderstand $P = \\tfrac12 c_w\\rho A v^3$: doppeltes Tempo, achtfache Leistung."
       ]
     }
   ]

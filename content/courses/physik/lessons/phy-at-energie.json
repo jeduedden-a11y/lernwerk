@@ -16,6 +16,496 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!satz] Energiesatz für Aufgaben\n> Zwischen einem Anfangszustand 1 und einem Endzustand 2 gilt $m g h_1 + \\tfrac12 m v_1^2 + \\tfrac12 D s_1^2 = m g h_2 + \\tfrac12 m v_2^2 + \\tfrac12 D s_2^2 + W_R$, mit der Reibungsarbeit $W_R = F_R\\cdot s = \\mu\\,F_N\\cdot s$ (ohne Reibung null).\n> \n> Das Nullniveau der Höhe ist frei wählbar, muss aber für **beide** Zustände dasselbe sein. Der Energiesatz liefert Geschwindigkeiten, Höhen und Dehnungen, aber **keine Zeiten**.",
+      "label": "Gesetz",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Achterbahn ohne Reibung.** Der Wagen startet in $20\\,\\mathrm{m}$ Höhe aus der Ruhe. Die gestrichelte Linie ist die Gesamtenergie geteilt durch $m g$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          24
+        ],
+        "xLabel": "Weg in m",
+        "yLabel": "Höhe in m",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 40,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "bahn",
+            "expr": "11 + 9*cos(pi*x/10)*(1 - x/80)",
+            "color": "blue",
+            "label": "Bahn",
+            "labelAt": 31
+          },
+          {
+            "name": "ges",
+            "expr": "20",
+            "color": "orange",
+            "dashed": true,
+            "label": "E/(m g)",
+            "labelAt": 25
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X",
+              "bahn(X)"
+            ],
+            "to": [
+              "X",
+              20
+            ],
+            "color": "green",
+            "width": 4
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "bahn",
+            "color": "orange"
+          }
+        ],
+        "readout": "Ort {X|1} m: Höhe **{bahn(X)|1} m**, Geschwindigkeit **{sqrt(2*9.81*(20 - bahn(X)))|1} m/s**"
+      },
+      "timeline": [
+        {
+          "caption": "Ganz oben steckt die gesamte Energie in der Lage. Wo der Wagen auch ist: $m g h + \\tfrac12 m v^2 = m g\\cdot 20\\,\\mathrm{m}$.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "Der grüne Abstand zwischen Wagen und Linie ist $\\tfrac{v^2}{2g}$, der Anteil der Bewegung. Im ersten Tal ist er am größten.",
+          "to": {
+            "X": 10
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Auf dem zweiten Hügel ist der Wagen langsamer, aber nicht in Ruhe: Die Bahn liegt dort unter der Linie.",
+          "to": {
+            "X": 20
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Weiter durch das zweite Tal bis ans Ende. Die Geschwindigkeit an jedem Ort hängt nur von der Höhe dort ab: $v = \\sqrt{2g\\,(20\\,\\mathrm{m} - h)}$.",
+          "to": {
+            "X": 40
+          },
+          "dur": 3000
+        },
+        {
+          "caption": "Einen Hügel über $20\\,\\mathrm{m}$ könnte der Wagen nie erreichen; dort wäre $E_{kin} < 0$. Masse und Form der Bahn kommen in der Rechnung nicht vor."
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Geschwindigkeit eines Fadenpendels im tiefsten Punkt.** Länge $l$, Auslenkung $\\varphi$, Start aus der Ruhe.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "h = l - l\\cos\\varphi = l\\,(1 - \\cos\\varphi)",
+            "why": "Geometrie: Ausgelenkt hängt der Körper um $l\\cos\\varphi$ unter dem Aufhängepunkt, im tiefsten Punkt um $l$."
+          },
+          {
+            "tex": "m g h = \\tfrac12 m v^2",
+            "why": "Energiesatz: Lageenergie oben gleich Bewegungsenergie unten. Die Fadenkraft verrichtet keine Arbeit, denn sie steht immer senkrecht zur Bahn."
+          },
+          {
+            "tex": "v = \\sqrt{2 g l\\,(1 - \\cos\\varphi)}",
+            "why": "Masse kürzen, Wurzel ziehen."
+          },
+          {
+            "tex": "l = 1{,}5\\,\\mathrm{m},\\; \\varphi = 40^\\circ:\\quad h \\approx 0{,}351\\,\\mathrm{m},\\quad v \\approx 2{,}62\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}",
+            "why": "Ein Zahlenbeispiel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Die Höhe aus der Geometrie.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energiesatz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlenbeispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Energie geht an die Reibung.** Ein Schlitten ($20\\,\\mathrm{kg}$) fährt aus der Ruhe einen $5\\,\\mathrm{m}$ hohen, $12\\,\\mathrm{m}$ langen Hang hinab und ist unten $8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ schnell.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E_{pot} = m g h = 20\\cdot 9{,}81\\cdot 5\\,\\mathrm{J} = 981\\,\\mathrm{J}",
+            "why": "Energie oben, Nullniveau am Fuß des Hangs."
+          },
+          {
+            "tex": "E_{kin} = \\tfrac12 m v^2 = \\tfrac12\\cdot 20\\cdot 8^2\\,\\mathrm{J} = 640\\,\\mathrm{J}",
+            "why": "Energie unten."
+          },
+          {
+            "tex": "W_R = E_{pot} - E_{kin} = 341\\,\\mathrm{J}",
+            "why": "Die Differenz wurde zu Wärme in Kufen und Schnee."
+          },
+          {
+            "tex": "F_R = \\frac{W_R}{s} = \\frac{341\\,\\mathrm{J}}{12\\,\\mathrm{m}} \\approx 28{,}4\\,\\mathrm{N}",
+            "why": "Die mittlere Reibungskraft längs des Weges, aus $W_R = F_R\\cdot s$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energie oben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energie unten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Differenz ist die Reibungsarbeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Reibungskraft.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Mindesthöhe für einen Looping** mit dem Radius $r$, reibungsfrei.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m\\,\\frac{v_o^2}{r} \\ge m g\\quad\\Rightarrow\\quad v_o^2 \\ge g\\,r",
+            "why": "Im obersten Punkt muss die nötige Zentripetalkraft mindestens so groß sein wie die Gewichtskraft, sonst löst sich der Wagen von der Bahn. Zur Zentripetalkraft: Kapitel Kreisbewegung."
+          },
+          {
+            "tex": "m g h = m g\\cdot 2r + \\tfrac12 m v_o^2",
+            "why": "Energiesatz zwischen Start (Ruhe, Höhe $h$) und oberstem Punkt des Loopings (Höhe $2r$)."
+          },
+          {
+            "tex": "h = 2r + \\frac{v_o^2}{2g} \\ge 2r + \\frac{g\\,r}{2g}",
+            "why": "Durch $m g$ geteilt und die Bedingung eingesetzt."
+          },
+          {
+            "tex": "h_{min} = \\tfrac52\\,r",
+            "why": "Für $r = 4\\,\\mathrm{m}$ also $10\\,\\mathrm{m}$: Der Start muss höher liegen als der Looping selbst ($8\\,\\mathrm{m}$)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bedingung im obersten Punkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energiesatz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Energieerhaltungssatz anwenden",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Energieerhaltungssatz anwenden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Mit welcher Geschwindigkeit kommt der Körper unten an?\"*, *\"Wie hoch steigt der Körper maximal?\"*, *\"Berechnen Sie die Geschwindigkeit mithilfe des Energieerhaltungssatzes\"* -- immer dann geeignet, wenn nach **Geschwindigkeiten oder Höhen** gefragt ist, aber weder Zeit noch Beschleunigung explizit gebraucht werden."
+            }
+          ]
+        },
+        {
+          "title": "Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Energie wechselt die Form, die Summe bleibt gleich\n> In einem **reibungsfreien** System bleibt die Summe aus kinetischer und potenzieller Energie konstant:\n> $$E_{\\text{kin}} + E_{\\text{pot}} = \\text{const.} \\qquad\\Longleftrightarrow\\qquad \\frac{1}{2}mv_1^2 + mgh_1 = \\frac{1}{2}mv_2^2 + mgh_2$$\n> Der Vorteil gegenüber dem Kräfteansatz: **Zeit und Weg entlang einer möglicherweise gekrümmten Bahn müssen nicht bekannt sein** -- nur Anfangs- und Endzustand zählen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Anfangs- und Endzustand festlegen** (Höhe und Geschwindigkeit an beiden Punkten).\n2. **Energiebilanz aufstellen:** $E_{\\text{kin,1}}+E_{\\text{pot,1}} = E_{\\text{kin,2}}+E_{\\text{pot,2}}$.\n3. **Bekannte Werte einsetzen**, meist $v_1=0$ (Start aus der Ruhe) oder $h_2=0$ (Referenzhöhe am Boden).\n4. **Nach der gesuchten Größe auflösen.**\n5. **Prüfen, ob Reibung explizit in der Aufgabe erwähnt wird** -- falls ja, muss die durch Reibung dissipierte Energie als zusätzlicher Term berücksichtigt werden (Energiebilanz nicht mehr rein mechanisch)."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Ball rollt reibungsfrei eine Rampe der Höhe $h=2\\,\\text{m}$ hinab, startet aus der Ruhe. Mit welcher Geschwindigkeit erreicht er den Boden?*\n\n**Schritt 2:** Start: $v_1=0$, $h_1=h=2\\,\\text{m}$. Ende: $h_2=0$, $v_2=$ gesucht.\n$$\\frac{1}{2}m\\cdot0^2 + mgh = \\frac{1}{2}mv_2^2 + mg\\cdot0$$\n\n**Schritt 3/4:** Die Masse $m$ kürzt sich auf beiden Seiten heraus:\n$$gh = \\frac{1}{2}v_2^2 \\;\\Longrightarrow\\; v_2 = \\sqrt{2gh} = \\sqrt{2\\cdot9{,}81\\cdot2} = \\sqrt{39{,}24} \\approx 6{,}264\\,\\text{m/s}$$\n\n**Bemerkenswert:** Das Ergebnis hängt nicht von der Masse und **nicht von der Form der Rampe** ab -- ob gerade, gekrümmt oder eine Spirale, solange sie reibungsfrei ist, kommt am Boden dieselbe Geschwindigkeit heraus. Genau das ist der Vorteil des Energieansatzes gegenüber der Kräftebetrachtung, die für eine gekrümmte Bahn deutlich aufwendiger wäre.\n\n**Einheitenkontrolle:** $\\sqrt{[\\text{m/s}^2]\\cdot[\\text{m}]} = \\sqrt{[\\text{m}^2/\\text{s}^2]} = [\\text{m/s}]$ ✓."
+            }
+          ]
+        },
+        {
+          "title": "Erweiterung: mit Reibung",
+          "blocks": [
+            {
+              "md": "Ist ein Anteil der Bewegung reibungsbehaftet, wird die Energiebilanz um den Reibungsverlust $W_R$ erweitert:\n$$mgh = \\frac{1}{2}mv_2^2 + W_R$$\nDer fehlende Term $W_R = F_R \\cdot s$ (Reibungskraft mal zurückgelegter Weg) macht deutlich, dass ein Teil der potenziellen Energie in Wärme statt in kinetische Energie umgewandelt wird -- die Endgeschwindigkeit ist entsprechend **kleiner** als im reibungsfreien Fall."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bezugshöhe für $E_{\\text{pot}}$ nicht konsistent wählen.** Nur die **Höhendifferenz** zwischen Anfang und Ende geht ein, der absolute Nullpunkt ist frei wählbar, muss aber für beide Zustände gleich sein.\n- **Reibung stillschweigend vernachlässigen**, obwohl die Aufgabe sie explizit erwähnt (z. B. \"raue Unterlage\", \"Reibungskoeffizient $\\mu$\").\n- **Energieerhaltung anwenden, wo eigentlich eine Kraft gesucht ist.** Der Energiesatz liefert Geschwindigkeiten und Höhen, keine Kräfte oder Zeiten direkt.\n- **Die Masse fälschlich einsetzen, obwohl sie sich herauskürzt** -- ein unnötiger, aber nicht falscher Zwischenschritt, der bei fehlender Masse in der Aufgabenstellung zur Verwirrung führt.\n- **Bei mehreren Umwandlungsschritten (z. B. potenzielle → kinetische → wieder potenzielle Energie) einen Zwischenschritt vergessen.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Energieerhaltung** · **Kräfteansatz nach dem 2. Newtonschen Axiom** · **Gravitation** · **Impulserhaltung bei Stößen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Ein Fadenpendel der Länge $l$ ist um den Winkel $\\varphi$ ausgelenkt. Wie hoch liegt der Körper über dem tiefsten Punkt?",
+      "options": [
+        {
+          "md": "$h = l\\,(1 - \\cos\\varphi)$",
+          "correct": true
+        },
+        {
+          "md": "$h = l\\sin\\varphi$",
+          "why": "$l\\sin\\varphi$ ist der waagerechte Abstand von der Ruhelage."
+        },
+        {
+          "md": "$h = l\\cos\\varphi$",
+          "why": "Das ist der Abstand unter dem Aufhängepunkt, nicht die Höhe über dem tiefsten Punkt."
+        },
+        {
+          "md": "$h = l\\,(1 - \\sin\\varphi)$",
+          "why": "Für $\\varphi = 0$ müsste $h = 0$ herauskommen; hier käme $l$ heraus."
+        }
+      ],
+      "explain": "Ausgelenkt hängt der Körper $l\\cos\\varphi$ unter dem Aufhängepunkt, in Ruhelage $l$. Die Differenz ist $h$. Probe: $\\varphi = 0$ ergibt $h = 0$, $\\varphi = 90°$ ergibt $h = l$.",
+      "label": "Herleitung",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Pendel ($l = 2\\,\\mathrm{m}$) wird um $60°$ ausgelenkt und losgelassen. Wie schnell ist es im tiefsten Punkt?",
+      "answer": 4.43,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$h = 2\\,\\mathrm{m}\\cdot(1 - \\cos 60°) = 1\\,\\mathrm{m}$, $v = \\sqrt{2\\cdot 9{,}81\\cdot 1}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 4{,}43\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Wie hoch muss ein Wagen mindestens starten, damit er einen Looping mit $r = 3\\,\\mathrm{m}$ reibungsfrei durchfährt?",
+      "answer": 7.5,
+      "tolerance": 0.05,
+      "placeholder": "m",
+      "explain": "$h_{min} = \\tfrac52 r = 7{,}5\\,\\mathrm{m}$, hergeleitet aus $v_o^2 = g r$ im obersten Punkt und dem Energiesatz.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Ball wird aus $1{,}5\\,\\mathrm{m}$ Höhe mit $12\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ senkrecht nach oben geworfen. Welche größte Höhe über dem Boden erreicht er?",
+      "answer": 8.84,
+      "tolerance": 0.03,
+      "placeholder": "m",
+      "explain": "$h_{max} = h_0 + \\tfrac{v_0^2}{2g} = 1{,}5\\,\\mathrm{m} + \\tfrac{144}{19{,}62}\\,\\mathrm{m} \\approx 8{,}84\\,\\mathrm{m}$. Im höchsten Punkt ist die Geschwindigkeit null.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Schlitten ($30\\,\\mathrm{kg}$) fährt aus der Ruhe einen $4\\,\\mathrm{m}$ hohen Hang hinab und ist unten $6\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ schnell. Wie viel Energie wurde zu Wärme?",
+      "answer": 637,
+      "tolerance": 2,
+      "placeholder": "J",
+      "explain": "$W_R = m g h - \\tfrac12 m v^2 = 1177{,}2\\,\\mathrm{J} - 540\\,\\mathrm{J} \\approx 637\\,\\mathrm{J}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Eine Feder ($D = 500\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$) soll eine Kugel ($100\\,\\mathrm{g}$) $2\\,\\mathrm{m}$ hoch schießen. Um wie viel muss man sie stauchen?",
+      "answer": 8.86,
+      "tolerance": 0.05,
+      "placeholder": "cm",
+      "explain": "$\\tfrac12 D s^2 = m g h$, also $s = \\sqrt{\\tfrac{2 m g h}{D}} = \\sqrt{\\tfrac{2\\cdot 0{,}1\\cdot 9{,}81\\cdot 2}{500}}\\,\\mathrm{m} \\approx 0{,}0886\\,\\mathrm{m} = 8{,}86\\,\\mathrm{cm}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Frage beantwortet der Energiesatz allein nicht?",
+      "options": [
+        {
+          "md": "Wie lange dauert die Fahrt bis ins Tal?",
+          "correct": true
+        },
+        {
+          "md": "Wie schnell ist der Wagen im Tal?",
+          "why": "Genau das liefert er, aus der Höhendifferenz."
+        },
+        {
+          "md": "Wie hoch kommt der Wagen auf dem nächsten Hügel höchstens?",
+          "why": "Auch das folgt aus der Energiebilanz."
+        },
+        {
+          "md": "Wie viel Energie ging an die Reibung?",
+          "why": "Das ist die Differenz der mechanischen Energien."
+        }
+      ],
+      "explain": "Im Energiesatz kommen nur Zustände vor, keine Zeiten. Für Zeiten braucht man die Kinematik oder den Kräfteansatz.",
+      "label": "Verständnis",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zwei reibungsfreie Rutschen gleicher Höhe, eine gerade und eine gewundene: Unten ist man auf beiden gleich schnell.",
+      "answer": true,
+      "explain": "Die Geschwindigkeit hängt nur von der Höhendifferenz ab. Die Rutschzeit ist allerdings verschieden.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Ball rollt reibungsfrei aus der Ruhe von einer $5\\,\\mathrm{m}$ hohen Stelle auf ein $2\\,\\mathrm{m}$ hohes Podest. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Zustand 1: $h_1 = 5\\,\\mathrm{m}$ über dem Boden, $v_1 = 0$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Zustand 2 auf dem Podest: Dort setze ich $E_{pot,2} = 0$.",
+          "why": "Falsch: Das Nullniveau muss für beide Zustände dasselbe sein. Mit dem Boden als Nullniveau ist $E_{pot,2} = m g\\cdot 2\\,\\mathrm{m}$."
+        },
+        {
+          "md": "Also $v_2 = \\sqrt{2 g\\cdot 5\\,\\mathrm{m}} \\approx 9{,}9\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+          "why": "Folgefehler. Richtig: $v_2 = \\sqrt{2 g\\cdot 3\\,\\mathrm{m}} \\approx 7{,}67\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$."
+        }
+      ],
+      "answer": 1,
+      "explain": "Nur die Höhendifferenz zählt, und sie stimmt nur, wenn beide Höhen vom selben Nullniveau aus gemessen werden.",
+      "id": "vq9"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Ein Auto fährt mit $72\\,\\tfrac{\\mathrm{km}}{\\mathrm{h}}$ und bremst mit blockierenden Rädern ($\\mu = 0{,}8$). Wie lang ist der Bremsweg?",
+      "answer": 25.5,
+      "tolerance": 0.2,
+      "placeholder": "m",
+      "explain": "Energie: $\\tfrac12 m v^2 = \\mu\\,m g\\cdot s$, also $s = \\tfrac{v^2}{2\\mu g} = \\tfrac{20^2}{2\\cdot 0{,}8\\cdot 9{,}81}\\,\\mathrm{m} \\approx 25{,}5\\,\\mathrm{m}$. Die Masse kürzt sich; doppeltes Tempo heißt vierfacher Bremsweg.",
+      "id": "vq10"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -104,6 +594,65 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "pendel-energie",
+          "looping",
+          "energie-wurf"
+        ]
+      },
+      "label": "Pendel, Looping, Wurf",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "energie-reibung",
+          "pendel-energie",
+          "energie-wurf"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "energie-reibung",
+          "pendel-energie",
+          "looping"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-energie",
+      "level": 4,
+      "label": "Feder und Achterbahn",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Energiesatz: $E_{pot,1} + E_{kin,1} + E_{sp,1} = E_{pot,2} + E_{kin,2} + E_{sp,2} + W_R$, ein Nullniveau für beide Zustände.",
+        "Pendel: $h = l\\,(1 - \\cos\\varphi)$. Looping: $h_{min} = \\tfrac52 r$. Bremsweg: $s = \\tfrac{v^2}{2\\mu g}$.",
+        "Der Energiesatz liefert Geschwindigkeiten, Höhen und Reibungsverluste, keine Zeiten; die Form der Bahn spielt keine Rolle."
+      ]
     }
   ]
 }

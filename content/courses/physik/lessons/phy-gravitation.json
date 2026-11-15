@@ -47,7 +47,7 @@
           {
             "name": "g",
             "expr": "9.81/x^2",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -60,6 +60,507 @@
         ],
         "readout": "In {r|1} Erdradien Abstand ist g = {9.81/r^2|2} m/s²."
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Newtonsches Gravitationsgesetz\n> Zwei Massen $m_1$ und $m_2$ ziehen einander mit $F = G\\,\\tfrac{m_1 m_2}{r^2}$ an, längs ihrer Verbindungslinie. $r$ ist der Abstand der **Schwerpunkte**; kugelsymmetrische Körper wirken nach außen so, als säße ihre ganze Masse im Mittelpunkt. Die **Gravitationskonstante** $G = 6{,}674\\cdot 10^{-11}\\,\\tfrac{\\mathrm{N\\,m^2}}{\\mathrm{kg^2}}$ hat Cavendish 1798 mit einer Drehwaage gemessen.\n\n> [!definition] Gravitationsfeld und Feldstärke\n> Eine Masse verändert den Raum um sich: Sie erzeugt ein **Gravitationsfeld**. Seine **Feldstärke** ist die Kraft pro Probemasse, $\\vec g = \\tfrac{\\vec F}{m}$, Einheit $\\tfrac{\\mathrm{N}}{\\mathrm{kg}} = \\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Im Abstand $r$ von einer Kugel der Masse $M$ gilt $g(r) = G\\,\\tfrac{M}{r^2}$; an der Erdoberfläche heißt sie **Ortsfaktor**, $g \\approx 9{,}81\\,\\tfrac{\\mathrm{N}}{\\mathrm{kg}}$.\n\nDie Gewichtskraft $F_G = m g$ ist kein eigenes Gesetz, sondern das Gravitationsgesetz an der Erdoberfläche.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung des Ortsfaktors und die Masse der Erde.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m g = G\\,\\frac{M_E\\,m}{R_E^2}",
+            "why": "Die Gewichtskraft an der Oberfläche ist die Gravitationskraft der Erde."
+          },
+          {
+            "tex": "g = G\\,\\frac{M_E}{R_E^2}",
+            "why": "Die Masse $m$ des Körpers kürzt sich: Der Ortsfaktor hängt nur von der Erde ab."
+          },
+          {
+            "tex": "M_E = \\frac{g\\,R_E^2}{G} = \\frac{9{,}81\\cdot(6{,}371\\cdot 10^6)^2}{6{,}674\\cdot 10^{-11}}\\,\\mathrm{kg} \\approx 5{,}97\\cdot 10^{24}\\,\\mathrm{kg}",
+            "why": "Umgestellt: Mit gemessenem $G$ lässt sich die Erde wiegen. Deshalb nannte man Cavendishs Versuch das Wiegen der Erde."
+          },
+          {
+            "tex": "g(h) = G\\,\\frac{M_E}{(R_E + h)^2} = g\\cdot\\frac{R_E^2}{(R_E + h)^2}",
+            "why": "In der Höhe $h$ ist der Abstand zum Mittelpunkt $R_E + h$. In $400\\,\\mathrm{km}$ Höhe: $g \\approx 8{,}7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gewichtskraft gleich Gravitationskraft.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Ortsfaktor.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Erde wiegen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ortsfaktor in der Höhe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die Feldstärke der Erde innen und außen**, im Modell einer homogenen Kugel.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          11
+        ],
+        "xLabel": "r in Erdradien",
+        "yLabel": "g in m/s²",
+        "vars": [
+          {
+            "name": "R",
+            "min": 0,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "gr",
+            "expr": "x<1 ? 9.81*x : 9.81/(x*x)",
+            "color": "blue",
+            "samples": 900
+          }
+        ],
+        "vlines": [
+          {
+            "x": 1
+          }
+        ],
+        "points": [
+          {
+            "x": "R",
+            "on": "gr",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "labels": [
+          {
+            "x": 1.06,
+            "y": 10.4,
+            "text": "Erdoberfläche",
+            "anchor": "start"
+          }
+        ],
+        "readout": "Abstand vom Mittelpunkt {R|2} Erdradien: g = **{R<1 ? 9.81*R : 9.81/(R*R)|2} m/s²**"
+      },
+      "timeline": [
+        {
+          "caption": "Im Erdmittelpunkt ziehen die Massen von allen Seiten gleich stark: $g = 0$.",
+          "set": {
+            "R": 0
+          }
+        },
+        {
+          "caption": "Im Inneren zieht nur die Masse innerhalb der Kugel mit dem Radius $r$; die äußere Schale hebt ihre Wirkung auf. Bei überall gleicher Dichte wächst $g$ deshalb linear mit $r$.",
+          "to": {
+            "R": 0.6
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "An der Oberfläche ist $g$ am größten: $9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+          "to": {
+            "R": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Draußen wirkt die ganze Erdmasse wie im Mittelpunkt vereint: $g = 9{,}81\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}\\cdot\\tfrac{R_E^2}{r^2}$. Doppelter Abstand vom Mittelpunkt, ein Viertel der Feldstärke.",
+          "to": {
+            "R": 2
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "In vier Erdradien Abstand bleibt ein Sechzehntel, etwa $0{,}61\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$; null wird $g$ erst im Unendlichen. Die echte Erde hat einen dichten Kern; deshalb steigt $g$ nach innen zunächst sogar leicht an.",
+          "to": {
+            "R": 4
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "> [!important] Warum das Abstandsquadrat?\n> Die Wirkung einer Masse verteilt sich gleichmäßig auf Kugelflächen um sie herum, und deren Inhalt $4\\pi r^2$ wächst mit dem Quadrat des Radius. Doppelter Abstand, vierfache Fläche, ein Viertel der Wirkung. Dasselbe $\\tfrac{1}{r^2}$ gilt deshalb für das elektrische Feld einer Punktladung, für Licht und für Schall einer Punktquelle.\n\n> [!definition] Schwerelosigkeit\n> In der Raumstation ist $g$ noch knapp $90\\,\\%$ des Werts am Boden. Schwerelos sind die Astronauten, weil Station und Insassen **gemeinsam frei fallen**: Nichts drückt gegen sie, so wie in einem frei fallenden Aufzug. Sie fallen dabei ständig um die Erde herum, weil sie zugleich seitwärts fliegen.",
+      "label": "Verständnis",
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Arbeit im Gravitationsfeld und warum $m g h$ nur nahe der Oberfläche gilt.** Ein Körper wird vom Abstand $r_1$ auf $r_2$ gehoben.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "W = \\int_{r_1}^{r_2} G\\,\\frac{M m}{r^2}\\,dr",
+            "why": "Die Kraft ändert sich mit dem Abstand, also Integral statt Kraft mal Weg."
+          },
+          {
+            "tex": "W = G M m\\left[-\\frac1r\\right]_{r_1}^{r_2} = G M m\\left(\\frac{1}{r_1} - \\frac{1}{r_2}\\right)",
+            "why": "Stammfunktion von $\\tfrac{1}{r^2}$ ist $-\\tfrac1r$."
+          },
+          {
+            "tex": "r_1 = R,\\; r_2 = R + h:\\quad W = G M m\\,\\frac{h}{R\\,(R + h)}",
+            "why": "Auf einen Nenner gebracht."
+          },
+          {
+            "tex": "h \\ll R:\\quad W \\approx G\\,\\frac{M m}{R^2}\\,h = m g h",
+            "why": "Für kleine Höhen ist $R + h \\approx R$: die bekannte Hubarbeit. Für große Höhen ist $m g h$ zu groß, weil $g$ nach oben abnimmt."
+          },
+          {
+            "tex": "E_{pot}(r) = -G\\,\\frac{M m}{r}",
+            "why": "Legt man das Nullniveau ins Unendliche, wird die Lageenergie überall negativ: Man muss Arbeit hineinstecken, um den Körper ganz aus dem Feld zu holen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Arbeit als Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integrieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Von der Oberfläche aus.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzfall kleiner Höhe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lageenergie mit Nullniveau im Unendlichen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gravitation",
+      "path": "02 Wiki/Physik/01 E-Phase/Gravitation.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Gravitation** ist die anziehende Wechselwirkung zwischen Massen. Sie ist das erste **Feld**, das im Unterricht als Basiskonzept eingeführt wird -- ein Modell dafür, wie Kräfte berührungslos über den Raum vermittelt werden."
+            }
+          ]
+        },
+        {
+          "title": "Newton'sches Gravitationsgesetz",
+          "blocks": [
+            {
+              "md": "Zwischen zwei Massen $m_1, m_2$ im Abstand $r$ wirkt:\n$$F = G \\, \\frac{m_1 \\, m_2}{r^2}, \\qquad G = 6{,}674 \\cdot 10^{-11}\\ \\tfrac{N\\,m^2}{kg^2}$$"
+            }
+          ]
+        },
+        {
+          "title": "Gravitationsfeld und Ortsfaktor",
+          "blocks": [
+            {
+              "md": "Die **Feldstärke** (Kraft pro Masse) an der Erdoberfläche ist der **Ortsfaktor**:\n$$g = \\frac{F}{m} = G \\frac{M_{Erde}}{r_{Erde}^2} \\approx 9{,}81\\ \\tfrac{N}{kg} = 9{,}81\\ \\tfrac{m}{s^2}$$\nDamit ist das Gravitationsfeld die Ursache des **freien Falls** und der Gewichtskraft $F_G = m g$."
+            }
+          ]
+        },
+        {
+          "title": "Analogie zum elektrischen Feld",
+          "blocks": [
+            {
+              "md": "Das $\\tfrac{1}{r^2}$-Gesetz kehrt beim **Coulomb-Gesetz** (Q1) wieder -- die formale Analogie zwischen Gravitations- und elektrischem Feld ist ein Leitmotiv der Oberstufenphysik. Die **Zentripetalkraft** für Satelliten- und Planetenbahnen liefert ebenfalls die Gravitation."
+            }
+          ]
+        },
+        {
+          "title": "Das Feld als Modell",
+          "blocks": [
+            {
+              "md": "> [!important] Weshalb überhaupt ein Feldbegriff eingeführt wird\n> Newtons Gravitationsgesetz beschreibt eine **Fernwirkung**: Zwei Massen ziehen einander über beliebige Entfernung an, ohne dass etwas dazwischen liegt. Das war schon Newton unbehaglich.\n>\n> Der Feldbegriff verlagert die Ursache in den **Raum**: Eine Masse verändert den Raum um sich, und eine zweite Masse reagiert auf diese lokale Veränderung. Nicht Körper wirken aufeinander, sondern jeder Körper wirkt auf das Feld an seinem Ort.\n>\n> Das ist zunächst nur eine andere Sprechweise. Ihre Berechtigung zeigt sich erst im **elektromagnetischen Fall**, wo sich Feldänderungen mit endlicher Geschwindigkeit ausbreiten -- dann trägt das Feld nachweislich Energie und ist mehr als eine Rechenhilfe.\n>\n> Die Gravitation ist damit das **erste Feld** der Oberstufe und das Muster für alle weiteren."
+            }
+          ]
+        },
+        {
+          "title": "Die Analogie zum elektrischen Feld",
+          "blocks": [
+            {
+              "md": "| | Gravitationsfeld | **Elektrisches Feld** |\n|---|---|---|\n| Quelle | Masse $m$ | Ladung $Q$ |\n| Kraftgesetz | $F = G\\,\\dfrac{m_1 m_2}{r^2}$ | $F = \\dfrac{1}{4\\pi\\varepsilon_0}\\dfrac{Q_1 Q_2}{r^2}$ |\n| Feldstärke | $g = F/m$ | $E = F/Q$ |\n| Richtung | **immer anziehend** | anziehend oder abstoßend |\n| Abschirmbar | **nein** | ja, durch einen leitenden Käfig |\n\n> [!tip] Die formale Gleichheit ist ein Leitmotiv der Oberstufe\n> Beide Gesetze haben dieselbe Bauform: Produkt der Quellstärken geteilt durch das Abstandsquadrat. Deshalb lassen sich Feldlinienbilder, Potenzialbegriff und Energiebetrachtungen unmittelbar übertragen.\n>\n> Die beiden Unterschiede sind aber wesentlich: Gravitation kennt nur **eine** Sorte Quelle und ist deshalb nie abstoßend und nicht abschirmbar. Genau daraus folgt, dass sie im Großen dominiert, obwohl sie um Größenordnungen schwächer ist -- elektrische Ladungen gleichen sich aus, Massen nicht.\n>\n> Ein Zahlenvergleich macht das drastisch: Zwischen zwei Elektronen ist die elektrische Abstoßung rund $10^{42}$-mal stärker als ihre Gravitationsanziehung."
+            }
+          ]
+        },
+        {
+          "title": "Das Abstandsquadrat",
+          "blocks": [
+            {
+              "md": "$$F \\sim \\frac{1}{r^2}$$\n\n> [!tip] Der Exponent 2 folgt aus der Geometrie des Raums\n> Die Feldwirkung verteilt sich auf eine Kugeloberfläche, und diese wächst mit $r^2$. Bei doppeltem Abstand verteilt sich dieselbe Wirkung auf die vierfache Fläche.\n>\n> Deshalb tritt derselbe Exponent bei allen von einem Punkt ausgehenden Größen auf -- auch bei der Lichtintensität und der Schallintensität. Er ist keine Eigenheit der Gravitation, sondern eine Aussage über den dreidimensionalen Raum."
+            }
+          ]
+        },
+        {
+          "title": "Ortsfaktor und Höhe",
+          "blocks": [
+            {
+              "md": "$$g(h) = G\\frac{M}{(r_E + h)^2}$$\n\n| Ort | $g$ in m/s² |\n|---|---|\n| Erdoberfläche | 9,81 |\n| 10 km Höhe (Flugzeug) | 9,78 |\n| 400 km (Raumstation) | **8,7** |\n| Mondbahn | 0,0027 |\n\n*Literaturwerte.*\n\n> [!warning] In der Raumstation herrscht keine Schwerelosigkeit\n> Bei 400 km Höhe beträgt der Ortsfaktor noch rund 89 Prozent des Werts an der Erdoberfläche. Die Astronauten sind also keineswegs kräftefrei.\n>\n> Sie befinden sich im **freien Fall** -- Station und Insassen fallen gemeinsam auf die Erde zu und verfehlen sie dabei ständig, weil sie sich zugleich seitwärts bewegen. Genau das ist eine Umlaufbahn.\n>\n> Der Zustand heißt korrekt **Schwerelosigkeit im freien Fall**, nicht Abwesenheit von Schwerkraft. Dieselbe Empfindung stellt sich in einem fallenden Aufzug ein.\n>\n> Das ist zugleich die anschaulichste Form des Äquivalenzprinzips: Freier Fall und Kräftefreiheit sind von innen nicht unterscheidbar."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Gravitation führt den Feldbegriff ein, liefert über die **Zentripetalkraft** die Planetenbahnen der **Keplerschen Gesetze** und ist die Ursache des **freien Falls**. Die Analogie zum **elektrischen Feld** trägt das gesamte Halbjahr Q1."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff die passende Aussage zu.",
+      "pairs": [
+        [
+          "Gravitationsgesetz",
+          "$F = G\\,\\tfrac{m_1 m_2}{r^2}$"
+        ],
+        [
+          "Feldstärke",
+          "$\\vec g = \\tfrac{\\vec F}{m}$"
+        ],
+        [
+          "Ortsfaktor",
+          "$g = G\\,\\tfrac{M_E}{R_E^2} \\approx 9{,}81\\,\\tfrac{\\mathrm{N}}{\\mathrm{kg}}$"
+        ],
+        [
+          "Gravitationskonstante",
+          "$6{,}674\\cdot 10^{-11}\\,\\tfrac{\\mathrm{N\\,m^2}}{\\mathrm{kg^2}}$"
+        ],
+        [
+          "Lageenergie mit Nullniveau im Unendlichen",
+          "$-G\\,\\tfrac{M m}{r}$"
+        ]
+      ],
+      "explain": "Das Gesetz beschreibt die Kraft, die Feldstärke die Kraft pro Masse; der Ortsfaktor ist die Feldstärke an der Erdoberfläche.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die Gravitationskraft zwischen zwei Körpern von je $1\\,\\mathrm{t}$, deren Schwerpunkte $1\\,\\mathrm{m}$ voneinander entfernt sind?",
+      "answer": 66.7,
+      "tolerance": 0.3,
+      "placeholder": "µN",
+      "explain": "$F = 6{,}674\\cdot 10^{-11}\\cdot\\tfrac{10^3\\cdot 10^3}{1^2}\\,\\mathrm{N} \\approx 6{,}67\\cdot 10^{-5}\\,\\mathrm{N} = 66{,}7\\,\\mathrm{\\mu N}$, etwa die Gewichtskraft von $7\\,\\mathrm{mg}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist der Ortsfaktor in $400\\,\\mathrm{km}$ Höhe ($M_E = 5{,}97\\cdot 10^{24}\\,\\mathrm{kg}$, $R_E = 6371\\,\\mathrm{km}$)?",
+      "answer": 8.69,
+      "tolerance": 0.03,
+      "placeholder": "m/s²",
+      "explain": "$g = G\\,\\tfrac{M_E}{(R_E + h)^2} = \\tfrac{3{,}986\\cdot 10^{14}}{(6{,}771\\cdot 10^6)^2}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 8{,}69\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Bestimmung der Erdmasse in die richtige Reihenfolge.",
+      "items": [
+        "Gewichtskraft gleich Gravitationskraft: $m g = G\\tfrac{M_E m}{R_E^2}$",
+        "Die Masse $m$ kürzen",
+        "Nach $M_E$ umstellen: $M_E = \\tfrac{g R_E^2}{G}$",
+        "Messwerte einsetzen: $M_E \\approx 5{,}97\\cdot 10^{24}\\,\\mathrm{kg}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Gewichtskraft gleich Gravitationskraft: $m g = G\\tfrac{M_E m}{R_E^2}$. 2. Die Masse $m$ kürzen. 3. Nach $M_E$ umstellen: $M_E = \\tfrac{g R_E^2}{G}$. 4. Messwerte einsetzen: $M_E \\approx 5{,}97\\cdot 10^{24}\\,\\mathrm{kg}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdoppelt man den Abstand zweier Körper, wird die Gravitationskraft {{0}}-mal so groß. Verdreifacht man ihn, wird sie {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "0,25"
+          ],
+          "numeric": true,
+          "tolerance": 0.0025
+        },
+        {
+          "accept": [
+            "1/9",
+            "0,111",
+            "0.111",
+            "0,11"
+          ],
+          "numeric": true,
+          "tolerance": 0.002
+        }
+      ],
+      "explain": "$F \\sim \\tfrac{1}{r^2}$: Faktor $\\tfrac14$ beziehungsweise $\\tfrac19$.",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Warum fällt die Gravitationskraft mit dem Quadrat des Abstands?",
+      "options": [
+        {
+          "md": "Ihre Wirkung verteilt sich auf Kugelflächen, deren Inhalt mit $r^2$ wächst.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Luft die Wirkung mit der Entfernung abschwächt.",
+          "why": "Im Vakuum gilt dasselbe Gesetz."
+        },
+        {
+          "md": "Weil Newton den Exponenten so gewählt hat, dass die Rechnung einfach wird.",
+          "why": "Der Exponent folgt aus Messungen (Mondbahn) und aus der Geometrie des Raums."
+        },
+        {
+          "md": "Weil die Masse mit der Entfernung abnimmt.",
+          "why": "Die Massen bleiben gleich."
+        }
+      ],
+      "explain": "Kugeloberfläche $4\\pi r^2$: doppelter Radius, vierfache Fläche. Dasselbe gilt für Licht und Schall einer Punktquelle.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne den Ortsfaktor auf dem Mond ($M = 7{,}35\\cdot 10^{22}\\,\\mathrm{kg}$, $R = 1737\\,\\mathrm{km}$).",
+      "answer": 1.63,
+      "tolerance": 0.02,
+      "placeholder": "m/s²",
+      "explain": "$g = G\\,\\tfrac{M}{R^2} = \\tfrac{6{,}674\\cdot 10^{-11}\\cdot 7{,}35\\cdot 10^{22}}{(1{,}737\\cdot 10^6)^2}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2} \\approx 1{,}63\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$, etwa ein Sechstel des Werts auf der Erde.",
+      "id": "vq7"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Begründung, warum $m g h$ nur nahe der Oberfläche gilt, in die richtige Reihenfolge.",
+      "items": [
+        "Arbeit als Integral: $W = \\int G\\tfrac{Mm}{r^2}\\,dr$",
+        "Integriert von $R$ bis $R + h$: $W = GMm\\left(\\tfrac1R - \\tfrac{1}{R + h}\\right)$",
+        "Auf einen Nenner: $W = GMm\\,\\tfrac{h}{R(R + h)}$",
+        "Für $h \\ll R$: $W \\approx G\\tfrac{Mm}{R^2}h = m g h$"
+      ],
+      "explain": "Die Reihenfolge: 1. Arbeit als Integral: $W = \\int G\\tfrac{Mm}{r^2}\\,dr$. 2. Integriert von $R$ bis $R + h$: $W = GMm\\left(\\tfrac1R - \\tfrac{1}{R + h}\\right)$. 3. Auf einen Nenner: $W = GMm\\,\\tfrac{h}{R(R + h)}$. 4. Für $h \\ll R$: $W \\approx G\\tfrac{Mm}{R^2}h = m g h$.",
+      "id": "vq8"
+    },
+    {
+      "type": "truefalse",
+      "md": "In der Raumstation in 400 km Höhe gibt es praktisch keine Gravitation mehr; deshalb schweben die Astronauten.",
+      "answer": false,
+      "explain": "$g$ ist dort noch etwa $8{,}7\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}$. Die Astronauten fallen mit der Station gemeinsam frei um die Erde herum; nichts drückt gegen sie.",
+      "label": "Verständnis",
+      "id": "vq9"
+    },
+    {
+      "type": "multi",
+      "md": "Worin unterscheidet sich das Gravitationsfeld vom elektrischen Feld?",
+      "options": [
+        {
+          "md": "Die Gravitation wirkt nur anziehend.",
+          "correct": true
+        },
+        {
+          "md": "Gravitation lässt sich nicht abschirmen.",
+          "correct": true
+        },
+        {
+          "md": "Es gibt nur eine Sorte Quelle: Masse.",
+          "correct": true
+        },
+        {
+          "md": "Das Gravitationsfeld nimmt mit $\\tfrac1r$ statt mit $\\tfrac{1}{r^2}$ ab.",
+          "why": "Beide Kraftgesetze haben das Abstandsquadrat im Nenner."
+        },
+        {
+          "md": "Die Gravitation ist stärker als die elektrische Kraft.",
+          "why": "Zwischen zwei Elektronen ist die elektrische Kraft rund $10^{42}$-mal stärker."
+        }
+      ],
+      "explain": "Gleiche Bauform, aber nur eine Quellsorte: Massen gleichen sich nie aus. Deshalb dominiert die Gravitation im Großen.",
+      "label": "Vergleich",
+      "id": "vq10"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "In welcher Höhe über der Erdoberfläche ist der Ortsfaktor nur noch halb so groß wie am Boden ($R_E = 6371\\,\\mathrm{km}$)?",
+      "answer": 2639,
+      "tolerance": 10,
+      "placeholder": "km",
+      "explain": "$\\tfrac{R_E^2}{(R_E + h)^2} = \\tfrac12$, also $R_E + h = \\sqrt2\\,R_E$ und $h = (\\sqrt2 - 1)\\,R_E \\approx 2639\\,\\mathrm{km}$.",
+      "id": "vq11"
     },
     {
       "id": "iss",
@@ -104,13 +605,55 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ortsfaktor",
+          "gravitation"
+        ]
+      },
+      "label": "Feldstärke",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ortsfaktor",
+          "satellit"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gravitation",
+          "ortsfaktor"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$F_G = G\\frac{m_1 m_2}{r^2}$, Abstand der Schwerpunkte.",
         "Die Fallbeschleunigung nimmt außerhalb der Erde mit $1/r^2$ ab.",
-        "Schwerelosigkeit im Orbit ist freier Fall, keine fehlende Gravitation."
+        "Schwerelosigkeit im Orbit ist freier Fall, keine fehlende Gravitation.",
+        "$F = G\\,\\tfrac{m_1 m_2}{r^2}$ mit dem Schwerpunktabstand; Feldstärke $g = \\tfrac{F}{m} = G\\,\\tfrac{M}{r^2}$.",
+        "Aus $m g = G\\tfrac{M_E m}{R_E^2}$ folgt der Ortsfaktor und die Erdmasse $M_E = \\tfrac{g R_E^2}{G}$.",
+        "Arbeit im Feld: $W = GMm\\left(\\tfrac{1}{r_1} - \\tfrac{1}{r_2}\\right)$, für kleine Höhen $\\approx m g h$; $E_{pot} = -G\\tfrac{Mm}{r}$ mit Nullniveau im Unendlichen."
       ]
     }
   ]

@@ -27,6 +27,671 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Signifikante Stellen und Nachkommastellen\n> *Significant figures* (s.f.) zählen ab der **ersten von null verschiedenen Ziffer**: $0{,}00420$ hat 3, $1{,}004$ hat 4, $4200$ ohne weitere Angabe 2. *Decimal places* (d.p.) zählen nur die Stellen nach dem Komma.\n\n> [!definition] Standardform (*standard form*)\n> $a \\times 10^n$ mit $1 \\le a < 10$ und ganzem $n$. Beim Rechnen Mantissen und Zehnerpotenzen getrennt behandeln und am Ende nachjustieren: $(3 \\times 10^5)(4 \\times 10^{-2}) = 12 \\times 10^3 = 1{,}2 \\times 10^4$.\n\n> [!definition] Fehlerschranken (*lower bound, upper bound*)\n> Ein gerundeter Wert liegt in einem Intervall der Breite **einer Rundungseinheit**, symmetrisch um die Angabe: $4{,}6$ auf 1 d.p. heißt $4{,}55 \\le x < 4{,}65$; $250$ auf die nächsten 10 heißt $245 \\le x < 255$; $3{,}0$ auf 2 s.f. heißt $2{,}95 \\le x < 3{,}05$. Als obere Schranke gibt man den Randwert an, obwohl er selbst nicht mehr dazugehört.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Welche Enden in eine Formel gehören** (für positive Größen).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_{\\min} \\le a < a_{\\max},\\qquad b_{\\min} \\le b < b_{\\max}",
+            "why": "Jede gerundete Größe hat eine untere und eine obere Schranke."
+          },
+          {
+            "tex": "(a + b)_{\\max} = a_{\\max} + b_{\\max},\\qquad (a\\,b)_{\\max} = a_{\\max}\\,b_{\\max}",
+            "why": "Bei Summe und Produkt laufen beide Größen gleichsinnig."
+          },
+          {
+            "tex": "(a - b)_{\\max} = a_{\\max} - b_{\\min}",
+            "why": "Bei der Differenz läuft die zweite Größe gegenläufig: Wenig abziehen macht das Ergebnis groß."
+          },
+          {
+            "tex": "\\left(\\frac ab\\right)_{\\max} = \\frac{a_{\\max}}{b_{\\min}}",
+            "why": "Beim Quotienten ebenso: Ein kleinerer Nenner macht den Bruch größer."
+          },
+          {
+            "tex": "\\left(\\frac ab\\right)_{\\min} = \\frac{a_{\\min}}{b_{\\max}}",
+            "why": "Für die untere Schranke alle Enden umdrehen. Schranken werden am Ende nicht gerundet."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Intervalle.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichsinnig.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quotient.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Untere Schranke.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung: Periodische Dezimalzahl als Bruch.** Beispiel $x = 0{,}2\\overline{7} = 0{,}2777\\ldots$",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x = 0{,}2777\\ldots",
+            "why": "Eine Stelle vor der Periode (a = 1), Periodenlänge p = 1."
+          },
+          {
+            "tex": "10x = 2{,}777\\ldots",
+            "why": "Mit $10^a$ multiplizieren: Jetzt beginnt die Periode direkt hinter dem Komma."
+          },
+          {
+            "tex": "100x = 27{,}777\\ldots",
+            "why": "Mit $10^{a+p}$ multiplizieren: eine ganze Periode weiter."
+          },
+          {
+            "tex": "100x - 10x = 27 - 2 = 25",
+            "why": "Subtrahieren: Die unendlichen Nachkommateile sind gleich und heben sich auf."
+          },
+          {
+            "tex": "90x = 25 \\;\\Rightarrow\\; x = \\frac{25}{90} = \\frac{5}{18}",
+            "why": "Auflösen und kürzen. Probe: 5 : 18 = 0,2777…"
+          },
+          {
+            "tex": "x = 0{,}\\overline{9}:\\ 10x - x = 9 \\;\\Rightarrow\\; x = 1",
+            "why": "Dasselbe Verfahren zeigt 0,999… = 1. Jede periodische Dezimalzahl ist rational."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zahl.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorperiode.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eine Periode.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Subtrahieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kürzen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sonderfall.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Abzählregeln.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n_1 \\cdot n_2 \\cdots n_k",
+            "why": "Produktregel: Unabhängige Schritte multiplizieren, etwa 3 Vorspeisen, 4 Hauptgerichte, 2 Nachspeisen: 24 Menüs."
+          },
+          {
+            "tex": "n^k",
+            "why": "Reihenfolge zählt, Wiederholung erlaubt: Jeder der k Plätze hat n Möglichkeiten."
+          },
+          {
+            "tex": "n(n-1)\\cdots(n-k+1) = \\frac{n!}{(n-k)!}",
+            "why": "Reihenfolge zählt, ohne Wiederholung: Jeder Platz hat eine Möglichkeit weniger."
+          },
+          {
+            "tex": "\\binom nk = \\frac{n!}{k!\\,(n-k)!}",
+            "why": "Reihenfolge zählt nicht: Jede Auswahl wurde in allen k! Anordnungen gezählt, also durch k! teilen."
+          },
+          {
+            "tex": "|A \\cup B| = |A| + |B| - |A \\cap B|",
+            "why": "Ein- und Ausschluss: Was in beiden Mengen liegt, wurde doppelt gezählt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Produktregel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mit Wiederholung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ohne Wiederholung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ohne Reihenfolge.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ein- und Ausschluss.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ein- und Ausschluss",
+      "md": "**Ein- und Ausschluss für die Zahlen von 1 bis 100:** $A$ die durch 3 teilbaren, $B$ die durch 5 teilbaren.",
+      "widget": "venn",
+      "params": {
+        "sets": 2,
+        "labels": [
+          "3 | n",
+          "5 | n"
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "A: durch 3 teilbar. Das sind 33 Zahlen (3, 6, …, 99).",
+          "do": {
+            "show": [
+              "10",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "B: durch 5 teilbar, 20 Zahlen (5, 10, …, 100).",
+          "do": {
+            "show": [
+              "01",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "In beiden liegen die Vielfachen von 15: 6 Zahlen. Sie wurden doppelt gezählt.",
+          "do": {
+            "show": [
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "A oder B: 33 + 20 − 6 = 47 Zahlen.",
+          "do": {
+            "show": [
+              "10",
+              "01",
+              "11"
+            ]
+          }
+        },
+        {
+          "caption": "Durch 3 oder durch 5, aber nicht durch 15: 47 − 6 = 41 Zahlen.",
+          "do": {
+            "show": [
+              "10",
+              "01"
+            ]
+          }
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema: Schranken in Formeln kombinieren\n> 1. Für jede Größe das Intervall aufschreiben: eine halbe Rundungseinheit nach unten und nach oben.\n> 2. Prüfen, ob die Größe ganzzahlig ist (Personen, Stückzahlen); dann gilt die diskrete Variante mit ganzzahligen Rändern.\n> 3. Für jede Größe entscheiden, welches Ende gebraucht wird: gleichsinnig bei Summe und Produkt, gegenläufig beim Abgezogenen und beim Nenner.\n> 4. Einsetzen und rechnen, das Ergebnis **nicht** runden.",
+      "label": "Verfahren",
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Runden, Schranken und wissenschaftliche Schreibweise",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Runden, Schranken und wissenschaftliche Schreibweise.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Signifikante Stellen -- die britische Zählweise",
+          "blocks": [
+            {
+              "md": "*Significant figures* (s.f.) zählen ab der **ersten von null verschiedenen Ziffer**. Führende Nullen zählen nie, eingeschlossene und abschließende Nullen nach dem Komma zählen mit.\n\n| Zahl | signifikante Stellen |\n|---|---|\n| $0{,}00420$ | 3 |\n| $4200$ | 2 (ohne weitere Angabe) |\n| $4200{,}0$ | 5 |\n| $1{,}004$ | 4 |\n\n*Decimal places* (d.p.) zählen dagegen nur die Stellen nach dem Komma. Aufgaben im Test nennen fast immer eines von beidem -- und die Antwortoptionen unterscheiden sich oft genau darin."
+            }
+          ]
+        },
+        {
+          "title": "Wissenschaftliche Schreibweise",
+          "blocks": [
+            {
+              "md": "$$a \\times 10^n \\quad \\text{mit} \\quad 1 \\le a < 10 \\quad \\text{und} \\quad n \\in \\mathbb{Z}.$$\n\nIm Englischen heißt sie *standard form*. Beim Rechnen werden Mantissen und Zehnerpotenzen **getrennt** behandelt:\n\n$$(3 \\times 10^5) \\cdot (4 \\times 10^{-2}) = 12 \\times 10^3 = 1{,}2 \\times 10^4.$$\n\n> [!warning] Das Nachjustieren nicht vergessen\n> $12 \\times 10^3$ ist **keine** gültige Standardform. Genau dieser Zwischenschritt ist als falsche Antwortoption fast immer vertreten."
+            }
+          ]
+        },
+        {
+          "title": "Abschätzen",
+          "blocks": [
+            {
+              "md": "Runden auf **eine** signifikante Stelle und dann rechnen -- das ist die Technik, mit der sich im Test mehrere Antwortoptionen in Sekunden ausschließen lassen:\n\n$$\\frac{4{,}87 \\cdot 19{,}6}{0{,}0491} \\approx \\frac{5 \\cdot 20}{0{,}05} = \\frac{100}{0{,}05} = 2000.$$\n\nBei Wurzeln schätzt man über benachbarte Quadratzahlen: $\\sqrt{40}$ liegt zwischen 6 und 7, näher an 6,3, denn $6{,}3^2 = 39{,}69$."
+            }
+          ]
+        },
+        {
+          "title": "Fehlerschranken",
+          "blocks": [
+            {
+              "md": "Ist ein Wert $x$ auf eine bestimmte Genauigkeit gerundet, so liegt er in einem Intervall der Breite einer Rundungseinheit, symmetrisch um den angegebenen Wert:\n\n| Angabe | Intervall |\n|---|---|\n| $4{,}6$ auf 1 d.p. | $4{,}55 \\le x < 4{,}65$ |\n| $250$ auf die nächsten 10 | $245 \\le x < 255$ |\n| $3{,}0$ auf 2 s.f. | $2{,}95 \\le x < 3{,}05$ |\n\nDie **untere Schranke** heißt *lower bound*, die obere *upper bound*. Beide werden als der jeweilige Randwert angegeben, obwohl die obere Schranke selbst nicht mehr zum Intervall gehört -- diese Konvention ist im britischen Lehrplan Standard.\n\n> [!important] Bei ganzen Zahlen anders\n> Ist $n$ **ganzzahlig** und auf die nächsten 10 gerundet gleich 40, so gilt $35 \\le n \\le 44$: Der größtmögliche Wert ist 44, nicht 44,999 und nicht 45. Sobald in einer Aufgabe von *integers*, Personen oder Stückzahlen die Rede ist, gilt die diskrete Variante."
+            }
+          ]
+        },
+        {
+          "title": "Schranken in Rechnungen",
+          "blocks": [
+            {
+              "md": "Für die Extremwerte einer Formel wählt man je nach Rechenart die passenden Enden:\n\n| Rechnung | größter Wert | kleinster Wert |\n|---|---|---|\n| $a + b$ | $a_\\text{max} + b_\\text{max}$ | $a_\\text{min} + b_\\text{min}$ |\n| $a - b$ | $a_\\text{max} - b_\\text{min}$ | $a_\\text{min} - b_\\text{max}$ |\n| $a \\cdot b$ | $a_\\text{max} \\cdot b_\\text{max}$ | $a_\\text{min} \\cdot b_\\text{min}$ |\n| $\\dfrac ab$ | $\\dfrac{a_\\text{max}}{b_\\text{min}}$ | $\\dfrac{a_\\text{min}}{b_\\text{max}}$ |\n\nDie beiden unteren Zeilen gelten so nur für **positive** Größen. Bei Subtraktion und Division wird die zweite Größe **gegenläufig** eingesetzt -- das ist der ganze Trick, und es ist die einzige Stelle, an der dieser Aufgabentyp Fehler produziert.\n\n> [!example] Geschwindigkeit als Standardfall\n> $d = 150$ km auf die nächsten 10 km, $t = 2{,}5$ h auf die nächste Zehntelstunde.\n> Größte Geschwindigkeit: $\\dfrac{155}{2{,}45}$ -- größte Strecke geteilt durch kürzeste Zeit.\n> Kleinste Geschwindigkeit: $\\dfrac{145}{2{,}55}$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Bei $a - b$ beide Maxima einsetzen.**\n- **Signifikante Stellen und Nachkommastellen verwechseln.**\n- **Die diskrete Variante übersehen**, wenn es um ganze Zahlen geht.\n- **Nach dem Rechnen mit Schranken auf die Ausgangsgenauigkeit runden** -- Schranken werden **nicht** gerundet.\n- **Bei der Standardform die Mantisse außerhalb von $[1, 10)$ lassen.**\n\nVerwandt: **Kopfrechnen und Abschätzen ohne Taschenrechner** · **Einheiten und zusammengesetzte Größen** · Aufgabentyp: **Schranken in Formeln kombinieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Schranken in Formeln kombinieren",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Aufgabentypen/Schranken in Formeln kombinieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Mehrere Größen sind **gerundet** angegeben (*correct to 1 d.p.*, *to the nearest 10*, *to 2 s.f.*), und gefragt ist die obere oder untere Schranke eines daraus berechneten Werts -- Fläche, Geschwindigkeit, Dichte, Differenz."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Für jede Größe das Intervall aufschreiben:** halbe Rundungseinheit nach oben und unten.\n2. **Prüfen, ob die Größe ganzzahlig ist.** Dann gilt die diskrete Variante mit ganzzahligen Rändern.\n3. **Für jede Größe entscheiden, welches Ende gebraucht wird:**\n\n| gesucht | $a + b$ | $a - b$ | $a \\cdot b$ | $a / b$ |\n|---|---|---|---|---|\n| obere Schranke | $a_\\text{max} + b_\\text{max}$ | $a_\\text{max} - b_\\text{min}$ | $a_\\text{max} \\cdot b_\\text{max}$ | $a_\\text{max} / b_\\text{min}$ |\n| untere Schranke | $a_\\text{min} + b_\\text{min}$ | $a_\\text{min} - b_\\text{max}$ | $a_\\text{min} \\cdot b_\\text{min}$ | $a_\\text{min} / b_\\text{max}$ |\n\n4. **Nicht runden.** Die Schranke ist der exakte Randwert.\n\n> [!important] Die Leitfrage statt der Tabelle\n> Die Tabelle muss man nicht auswendig lernen. Es genügt zu fragen: **Macht ein größeres $b$ das Ergebnis größer oder kleiner?**\n> Bei $a - b$ und bei $\\tfrac ab$ macht ein größeres $b$ das Ergebnis **kleiner** -- also nimmt man für die obere Schranke das kleinste $b$. Überall sonst laufen beide Größen gleichsinnig mit.\n>\n> Die Tabelle gilt nur für **positive** Größen. Sind negative Werte möglich, prüft man alle vier Kombinationen der Ränder."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A rectangle has length $12{,}5$ cm and width $8{,}4$ cm, each measured correct to 1 decimal place. Which of the following is the upper bound for its area, in cm²?\n>\n> - **A** $106{,}0475$\n> - **B** $105$\n> - **C** $103{,}9575$\n> - **D** $106{,}05$\n> - **E** $105{,}84$\n\n**Schritt 1:** $12{,}45 \\le \\ell < 12{,}55$ und $8{,}35 \\le w < 8{,}45$.\n\n**Schritt 3:** Beim Produkt laufen beide Größen gleichsinnig: obere Schranke $= 12{,}55 \\cdot 8{,}45$.\n\n**Rechnung ohne Taschenrechner:** $12{,}55 \\cdot 8{,}45 = 12{,}55 \\cdot 8 + 12{,}55 \\cdot 0{,}45 = 100{,}4 + 5{,}6475 = 106{,}0475$.\n\nAntwort **A**.\n\nOption C ist die **untere** Schranke $12{,}45 \\cdot 8{,}35$, E das Produkt der gerundeten Werte selbst, D eine gerundete Fassung der richtigen Schranke -- und damit falsch, denn Schranken werden nicht gerundet."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bei $a - b$ oder $\\tfrac ab$ beide Maxima nehmen.** Der häufigste Fehler überhaupt.\n- **Die Rundungseinheit falsch halbieren.** Bei *to the nearest 10* ist die halbe Einheit 5, bei *1 d.p.* ist sie $0{,}05$, bei *2 s.f.* hängt sie von der Größenordnung ab: $3{,}0$ auf 2 s.f. hat die Einheit $0{,}1$, also die Schranken $2{,}95$ und $3{,}05$.\n- **Die diskrete Variante übersehen.**\n- **Die Schranke runden.**\n- **Bei drei Größen eine vergessen** -- jede Größe bekommt ihre eigene Entscheidung."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> $x = 4{,}5$ and $y = 2{,}5$, each correct to 1 decimal place. What is the upper bound for $x - y$?\n>\n> - **A** $2{,}1$\n> - **B** $2$\n> - **C** $1{,}9$\n> - **D** $7$\n> - **E** $2{,}05$\n\n> [!success]- Lösung\n> **A.** $x_\\text{max} - y_\\text{min} = 4{,}55 - 2{,}45 = 2{,}1$.\n> C ist die untere Schranke $4{,}45 - 2{,}55 = 1{,}9$, B die Differenz der gerundeten Werte, D die Summe der beiden Maxima.\n> Kontrolle: Die Spanne ist symmetrisch um 2 und insgesamt $0{,}2$ breit -- die Unsicherheiten **addieren** sich, auch bei einer Differenz.\n\n> [!question] Aufgabe 2\n> A car travels 150 km, measured to the nearest 10 km, in $2{,}5$ hours, measured to the nearest $0{,}1$ hour. Which expression gives the upper bound of the average speed in km/h?\n>\n> - **A** $\\dfrac{155}{2{,}45}$\n> - **B** $\\dfrac{155}{2{,}55}$\n> - **C** $\\dfrac{145}{2{,}45}$\n> - **D** $\\dfrac{145}{2{,}55}$\n> - **E** $\\dfrac{150}{2{,}5}$\n\n> [!success]- Lösung\n> **A.** Größte Strecke, kürzeste Zeit: $145 \\le d < 155$ und $2{,}45 \\le t < 2{,}55$, also $\\tfrac{155}{2{,}45}$.\n> D ist die **untere** Schranke. Die Aufgabe verlangt keine Rechnung, sondern nur die richtige Kombination der Ränder -- so sind Schrankenaufgaben im Test oft gebaut.\n\n> [!question] Aufgabe 3\n> $n$ is an integer and, rounded to the nearest 10, $n = 40$. What is the greatest possible value of $n$?\n>\n> - **A** 44\n> - **B** 45\n> - **C** 49\n> - **D** $44{,}9$\n> - **E** 40\n\n> [!success]- Lösung\n> **A.** Für reelle Werte wäre die obere Schranke 45, aber 45 selbst rundet auf 50 auf, und $n$ ist **ganzzahlig**. Der größte zulässige Wert ist 44.\n> B ist die kontinuierliche Schranke, C setzt eine Rundung auf Zehner als Abschneiden voraus.\n> **Merksatz:** Sobald im Aufgabentext *integer*, *number of people* oder *number of items* steht, ist der Rand selbst kein zulässiger Wert."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Flächen- und Volumeneinheiten umrechnen** · **Lineare und quadratische Ungleichungen** · **Proportionalitätsgleichung aufstellen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Periodische Dezimalzahl in einen Bruch umwandeln",
+      "path": "02 Wiki/TMUA/04 Zahlen und Verhältnisse/Aufgabentypen/Periodische Dezimalzahl in einen Bruch umwandeln.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Zahl ist mit Periodenstrich oder als *recurring decimal* angegeben und soll als **vollständig gekürzter Bruch** geschrieben werden. Oder die Aufgabe fragt allgemeiner, ob eine gegebene Zahl rational ist -- dann ist dasselbe Verfahren der Beweis (M2.10)."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **$x$ gleich der Zahl setzen.**\n2. **Mit $10^a$ multiplizieren**, wobei $a$ die Anzahl der Stellen **vor** dem Periodenbeginn ist.\n3. **Mit $10^{a+p}$ multiplizieren**, wobei $p$ die Periodenlänge ist.\n4. **Die beiden Gleichungen subtrahieren** -- die unendlichen Nachkommateile heben sich auf.\n5. **Nach $x$ auflösen und kürzen.**\n\n> [!tip] Die Kurzform für reinperiodische Zahlen\n> Beginnt die Periode direkt hinter dem Komma, steht die Periode über ebenso vielen Neunen:\n> $$0{,}\\overline{7} = \\tfrac79, \\qquad 0{,}\\overline{36} = \\tfrac{36}{99} = \\tfrac{4}{11}, \\qquad 0{,}\\overline{123} = \\tfrac{123}{999} = \\tfrac{41}{333}.$$\n> Bei einer **Vorperiode** kommen für jede Vorperiodenstelle eine Null an den Nenner und die passende Korrektur in den Zähler -- dann ist das Subtraktionsverfahren sicherer als die Merkregel."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Express $0{,}1\\dot 6$ as a fraction in its simplest form.\n>\n> - **A** $\\dfrac16$\n> - **B** $\\dfrac{16}{99}$\n> - **C** $\\dfrac{15}{99}$\n> - **D** $\\dfrac{1}{60}$\n> - **E** $\\dfrac{8}{45}$\n\nDie Zahl ist $0{,}1666\\ldots$ -- eine Vorperiodenstelle, Periodenlänge 1.\n\n**Schritt 2:** $10x = 1{,}666\\ldots$\n\n**Schritt 3:** $100x = 16{,}666\\ldots$\n\n**Schritt 4:** $100x - 10x = 16{,}666\\ldots - 1{,}666\\ldots = 15$, also $90x = 15$.\n\n**Schritt 5:** $x = \\tfrac{15}{90} = \\tfrac16$. Antwort **A**.\n\n**Probe:** $1 : 6 = 0{,}1666\\ldots$ -- passt.\n\n> [!important] Warum sich die Nachkommastellen aufheben\n> Beide Gleichungen haben **denselben** unendlichen Schwanz $0{,}666\\ldots$, weil beide Multiplikationen die Zahl um ein Vielfaches der Periode verschieben. Die Differenz ist deshalb exakt eine ganze Zahl -- und genau das macht die Zahl rational. Das Argument ist zugleich der Beweis dafür, dass **jede** periodische Dezimalzahl rational ist."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Vorperiode übersehen** und $0{,}1\\dot 6$ als $\\tfrac{16}{99}$ schreiben (Option B).\n- **Die falsche Zehnerpotenz wählen.** Die Differenz der beiden Exponenten muss der **Periodenlänge** entsprechen.\n- **Nicht kürzen.** Option C ist $\\tfrac{15}{99}$ -- richtig gerechnet, aber mit der falschen Zehnerpotenz.\n- **$0{,}\\overline{9}$ für kleiner als 1 halten.** Das Verfahren liefert $9x = 9$, also $x = 1$.\n- **Bei der Antwortauswahl den Dezimalwert nicht prüfen.** Eine Division im Kopf entscheidet oft schneller als das ganze Verfahren -- siehe **Antwortoptionen strategisch nutzen**."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Express $0{,}\\dot 3\\dot 6$ as a fraction in its simplest form.\n>\n> - **A** $\\dfrac{4}{11}$\n> - **B** $\\dfrac{36}{100}$\n> - **C** $\\dfrac{9}{25}$\n> - **D** $\\dfrac{2}{5}$\n> - **E** $\\dfrac{36}{90}$\n\n> [!success]- Lösung\n> **A.** Reinperiodisch mit Periodenlänge 2: $\\tfrac{36}{99} = \\tfrac{4}{11}$.\n> B und C sind dieselbe Zahl $0{,}36$ -- die **abbrechende** Variante, also die Falle für alle, die den Periodenstrich übersehen.\n\n> [!question] Aufgabe 2\n> Express $0{,}\\dot12\\dot3$ as a fraction in its simplest form.\n>\n> - **A** $\\dfrac{41}{333}$\n> - **B** $\\dfrac{123}{999}$\n> - **C** $\\dfrac{41}{330}$\n> - **D** $\\dfrac{123}{1000}$\n> - **E** $\\dfrac{1}{8}$\n\n> [!success]- Lösung\n> **A.** $\\tfrac{123}{999}$, und $999 = 3^3 \\cdot 37$, $123 = 3 \\cdot 41$, also gekürzt $\\tfrac{41}{333}$.\n> B ist dieselbe Zahl, aber **nicht gekürzt** -- die Aufgabe verlangt die einfachste Form. Genau hier lohnt es sich, die Aufgabenstellung zu Ende zu lesen.\n\n> [!question] Aufgabe 3\n> Express $0{,}58\\dot3$ as a fraction in its simplest form.\n>\n> - **A** $\\dfrac{7}{12}$\n> - **B** $\\dfrac{583}{999}$\n> - **C** $\\dfrac{29}{50}$\n> - **D** $\\dfrac{7}{120}$\n> - **E** $\\dfrac{53}{90}$\n\n> [!success]- Lösung\n> **A.** Zwei Vorperiodenstellen, Periodenlänge 1: $100x = 58{,}333\\ldots$ und $1000x = 583{,}333\\ldots$, also $900x = 525$ und $x = \\tfrac{525}{900} = \\tfrac{7}{12}$.\n> Probe: $7 : 12 = 0{,}58333\\ldots$\n> C ist $0{,}58$, also die abbrechende Zahl ohne Periode; B ignoriert die beiden Vorperiodenstellen und behandelt 583 als Periode."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Unendliche geometrische Reihe und Konvergenzbedingung** · **Widerspruchsbeweis** · **Aufeinanderfolgende prozentuale Änderungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz4",
+      "type": "note",
+      "title": "Systematisches Abzählen",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Systematisches Abzählen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Warum Abzählen im TMUA vorkommt",
+          "blocks": [
+            {
+              "md": "Viele Wahrscheinlichkeiten sind Quotienten zweier Anzahlen:\n\n$$P(\\text{Ereignis}) = \\frac{\\text{Anzahl der günstigen Fälle}}{\\text{Anzahl aller Fälle}} \\qquad (\\text{bei Gleichwahrscheinlichkeit}).$$\n\nDamit wird die Wahrscheinlichkeitsaufgabe zu einer Abzählaufgabe. Und Abzählen ist zugleich eine Technik für Paper 2: Wer eine Aussage über alle Fälle prüfen will, muss die Fälle **systematisch** erzeugen -- siehe **Vermutungen aus kleinen Fällen**."
+            }
+          ]
+        },
+        {
+          "title": "Die Produktregel",
+          "blocks": [
+            {
+              "md": "Besteht eine Auswahl aus mehreren unabhängigen Schritten, so ist die Gesamtzahl der Möglichkeiten das **Produkt** der Einzelzahlen.\n\n$$\\text{3 Vorspeisen} \\times \\text{4 Hauptgerichte} \\times \\text{2 Nachspeisen} = 24 \\text{ Menüs}.$$\n\nBei Auswahl **ohne** Wiederholung sinkt die Zahl der Möglichkeiten in jedem Schritt um 1: aus 5 Gegenständen 3 in einer Reihenfolge auszuwählen ergibt $5 \\cdot 4 \\cdot 3 = 60$ Möglichkeiten."
+            }
+          ]
+        },
+        {
+          "title": "Reihenfolge -- die entscheidende Frage",
+          "blocks": [
+            {
+              "md": "| Frage | Rechnung | Beispiel |\n|---|---|---|\n| Reihenfolge zählt, mit Wiederholung | $n^k$ | 3-stelliger Code aus 10 Ziffern: $10^3$ |\n| Reihenfolge zählt, ohne Wiederholung | $n(n-1)\\cdots(n-k+1)$ | Podestplätze aus 8 Startern: $8 \\cdot 7 \\cdot 6$ |\n| Reihenfolge zählt **nicht** | $\\dbinom nk$ | 3 aus 5 auswählen: $\\dbinom53 = 10$ |\n\nDer Binomialkoeffizient ist derselbe wie in **Binomischer Lehrsatz**:\n\n$$\\binom nk = \\frac{n!}{k!\\,(n-k)!}, \\qquad \\binom nk = \\binom{n}{n-k}.$$\n\n> [!important] Die Leitfrage\n> **Ist (A, B) dasselbe wie (B, A)?** Wenn ja, zählt die Reihenfolge nicht und man teilt durch $k!$. Wenn nein, bleibt das Produkt stehen.\n>\n> Bei zwei Auswahlen aus derselben Menge heißt das konkret: $\\tfrac{n(n-1)}{2}$ statt $n(n-1)$."
+            }
+          ]
+        },
+        {
+          "title": "Systematisch auflisten",
+          "blocks": [
+            {
+              "md": "Wenn die Zahlen klein sind, ist Auflisten schneller und sicherer als jede Formel -- **wenn** man ein festes System einhält:\n\n- **lexikografisch**, also wie im Wörterbuch,\n- **nach einer Summe geordnet**, etwa alle Paare mit Summe 2, dann 3, dann 4,\n- **mit einer festgehaltenen Größe**, dann die nächste variieren.\n\n> [!example] Zwei Würfel\n> 36 gleichwahrscheinliche Paare. Für „Summe gleich 7\" listet man geordnet: $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$ -- sechs Fälle, also $\\tfrac{6}{36} = \\tfrac16$.\n> Ein **Ergebnisraum-Diagramm** (*sample space diagram*), also ein $6 \\times 6$-Gitter, macht dasselbe sichtbar und verhindert Doppelzählungen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Reihenfolge mitzählen, obwohl sie irrelevant ist** (oder umgekehrt) -- der Fehler um den Faktor $k!$.\n- **Bei Auswahl ohne Wiederholung dieselbe Anzahl zweimal verwenden.**\n- **Unsystematisch auflisten** und dabei Fälle doppelt oder gar nicht erfassen.\n- **Die Gesamtzahl falsch bestimmen** und dadurch einen richtigen Zähler durch den falschen Nenner teilen.\n- **Gleichwahrscheinlichkeit unterstellen, wo sie nicht gilt:** Die Summen zweier Würfel sind **nicht** gleichwahrscheinlich, die 36 Paare schon.\n\nVerwandt: **Wahrscheinlichkeit mit Venn- und Baumdiagrammen** · **Binomischer Lehrsatz** · Aufgabentyp: **Ziehen ohne Zurücklegen mit Gegenereignis**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Schranken",
+      "md": "Ordne jeder Angabe das Intervall der wahren Größe zu.",
+      "pairs": [
+        [
+          "$4{,}6$ auf 1 d.p.",
+          "$4{,}55 \\le x < 4{,}65$"
+        ],
+        [
+          "$250$ auf die nächsten 10",
+          "$245 \\le x < 255$"
+        ],
+        [
+          "$3{,}0$ auf 2 s.f.",
+          "$2{,}95 \\le x < 3{,}05$"
+        ],
+        [
+          "$7$ auf die nächste ganze Zahl",
+          "$6{,}5 \\le x < 7{,}5$"
+        ]
+      ],
+      "explain": "Eine halbe Rundungseinheit nach unten und nach oben.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Produkt",
+      "md": "Ein Rechteck ist $6{,}3$ cm lang und $4{,}8$ cm breit, beides auf 1 d.p. gerundet. Welche obere Schranke hat sein Flächeninhalt in cm²?",
+      "answer": 30.7975,
+      "tolerance": 0.0005,
+      "placeholder": "cm²",
+      "explain": "Beim Produkt gleichsinnig: $6{,}35 \\cdot 4{,}85 = 30{,}7975$. Die Schranke wird nicht gerundet.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Differenz",
+      "md": "$a = 40$ auf die nächsten 10 und $b = 12$ auf die nächste ganze Zahl. Welche untere Schranke hat $a - b$?",
+      "answer": 22.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "Untere Schranke der Differenz: $a_{\\min} - b_{\\max} = 35 - 12{,}5 = 22{,}5$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Write $0.4\\overline{5}$ (that is, $0.4555\\ldots$) as a fraction in its lowest terms.",
+      "options": [
+        {
+          "md": "$\\tfrac{41}{99}$",
+          "why": "Das ist $0{,}\\overline{41}$."
+        },
+        {
+          "md": "$\\tfrac{9}{20}$",
+          "why": "Das ist $0{,}45$, abbrechend."
+        },
+        {
+          "md": "$\\tfrac{5}{11}$",
+          "why": "Das ist $0{,}\\overline{45}$."
+        },
+        {
+          "md": "$\\tfrac{41}{90}$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac{46}{99}$",
+          "why": "Das ist $0{,}\\overline{46}$."
+        }
+      ],
+      "explain": "$10x = 4{,}555\\ldots$ und $100x = 45{,}555\\ldots$, also $90x = 41$ und $x = \\tfrac{41}{90}$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Periode",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Periode",
+      "md": "Reinperiodisch: $0{,}\\overline{36} = \\tfrac{36}{99} = \\tfrac{\\square}{11}$. In das Kästchen gehört {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        }
+      ],
+      "explain": "$\\tfrac{36}{99}$ mit 9 gekürzt ergibt $\\tfrac{4}{11}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "sort",
+      "label": "Abzählen",
+      "md": "Welche Abzählformel passt?",
+      "categories": [
+        "$n^k$",
+        "$\\tfrac{n!}{(n-k)!}$",
+        "$\\binom nk$"
+      ],
+      "items": [
+        {
+          "md": "vierstellige PIN aus den Ziffern 0 bis 9",
+          "cat": "$n^k$"
+        },
+        {
+          "md": "Gold, Silber und Bronze unter 8 Läufern",
+          "cat": "$\\tfrac{n!}{(n-k)!}$"
+        },
+        {
+          "md": "3 von 10 Büchern in die Tasche packen",
+          "cat": "$\\binom nk$"
+        },
+        {
+          "md": "Wörter aus 3 Buchstaben, Wiederholung erlaubt",
+          "cat": "$n^k$"
+        },
+        {
+          "md": "Vorsitz und Kasse aus 12 Mitgliedern besetzen",
+          "cat": "$\\tfrac{n!}{(n-k)!}$"
+        },
+        {
+          "md": "ein Team aus 4 von 9 Spielern",
+          "cat": "$\\binom nk$"
+        }
+      ],
+      "explain": "Leitfrage: Ist (A, B) dasselbe wie (B, A)? Wenn ja, zählt die Reihenfolge nicht, und man teilt durch $k!$.",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Produktregel",
+      "md": "Wie viele dreistellige Zahlen haben lauter verschiedene Ziffern?",
+      "answer": 648,
+      "tolerance": 0,
+      "placeholder": "Zahlen",
+      "explain": "Erste Ziffer 1 bis 9 (9 Möglichkeiten), zweite jede außer der ersten (9), dritte jede außer den beiden (8): $9 \\cdot 9 \\cdot 8 = 648$.",
+      "id": "vq7"
+    },
+    {
+      "type": "truefalse",
+      "md": "Nach dem Rechnen mit Schranken rundet man das Ergebnis auf die Genauigkeit der Ausgangswerte.",
+      "answer": false,
+      "explain": "Schranken werden nicht gerundet; sonst kann das Ergebnis über die echte Schranke hinausgehen oder sie verfehlen.",
+      "label": "Schranken",
+      "id": "vq8"
+    },
+    {
       "type": "choice",
       "md": "$a = 7.2$ and $b = 2.4$, both correct to 1 decimal place. Which is the upper bound of $\\frac{a}{b}$, to 2 decimal places?",
       "options": [
@@ -145,6 +810,20 @@
       "id": "g4"
     },
     {
+      "type": "gen",
+      "gen": "tmua-schranken",
+      "level": 3,
+      "label": "Bounds",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-dezimal",
+      "level": 3,
+      "label": "Recurring decimals",
+      "id": "vx2"
+    },
+    {
       "type": "choice",
       "md": "How many positive integers less than 1000 are divisible by 3 or by 5 but not by 15?",
       "options": [
@@ -177,7 +856,10 @@
       "points": [
         "Schranken: für das Maximum Zähler maximal, Nenner minimal.",
         "Periode: mit 10ᵏ multiplizieren und subtrahieren.",
-        "Abzählen: Fälle ordnen, Ein- und Ausschluss."
+        "Abzählen: Fälle ordnen, Ein- und Ausschluss.",
+        "Schranken: gleichsinnig bei $a + b$ und $ab$, gegenläufig bei $a - b$ und $\\tfrac ab$; nicht runden.",
+        "Periodische Dezimalzahl: mit $10^a$ und $10^{a+p}$ multiplizieren, subtrahieren, kürzen.",
+        "$n^k$, $\\tfrac{n!}{(n-k)!}$, $\\binom nk$ je nach Reihenfolge und Wiederholung; $|A \\cup B| = |A| + |B| - |A \\cap B|$."
       ],
       "id": "summary"
     }

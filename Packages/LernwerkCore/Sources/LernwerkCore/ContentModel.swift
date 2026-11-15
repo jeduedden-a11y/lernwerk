@@ -125,11 +125,13 @@ public struct Paper: Codable, Hashable, Identifiable, Sendable {
 }
 
 /// TMUA scores run from 1.0 to 9.0; this estimate scales the share of correct answers to 40 questions.
+/// Anchors from the vault (Prüfungsstruktur TMUA): about 26 of 40 gave 7.0, about 34 of 40 gave 8.0.
+/// Mirrors tmuaScore in lw.js.
 public enum TMUAScale {
     public static func score(correct: Int, total: Int) -> Double {
         guard total > 0 else { return 1 }
         let raw = Double(correct) / Double(total) * 40
-        let points: [(Double, Double)] = [(0, 1), (10, 2.5), (15, 3.6), (20, 4.6), (25, 5.6), (30, 6.6), (34, 7.6), (37, 8.5), (40, 9)]
+        let points: [(Double, Double)] = [(0, 1), (5, 2), (10, 3.2), (15, 4.4), (20, 5.6), (26, 7), (34, 8), (37, 8.5), (40, 9)]
         for i in 1..<points.count where raw <= points[i].0 {
             let f = (raw - points[i - 1].0) / (points[i].0 - points[i - 1].0)
             return ((points[i - 1].1 + f * (points[i].1 - points[i - 1].1)) * 10).rounded() / 10

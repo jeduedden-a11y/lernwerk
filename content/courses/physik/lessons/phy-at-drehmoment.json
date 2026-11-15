@@ -16,6 +16,294 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!satz] Gleichgewicht eines starren Körpers\n> Ein ausgedehnter Körper ruht nur, wenn **zwei** Bedingungen erfüllt sind: $\\sum\\vec F = \\vec 0$ (keine Verschiebung) und $\\sum M = 0$ um jeden beliebigen Punkt (keine Drehung). Drehmomente gegen den Uhrzeigersinn zählen positiv, im Uhrzeigersinn negativ.\n> \n> Für den zweiarmigen Hebel folgt das **Hebelgesetz** $F_1 r_1 = F_2 r_2$: Kraft mal Kraftarm ist auf beiden Seiten gleich.",
+      "label": "Gesetz",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Drehmoment und Winkel.** An einem Schraubenschlüssel ($r = 0{,}3\\,\\mathrm{m}$) wird mit $50\\,\\mathrm{N}$ gezogen, unter wechselndem Winkel zum Schlüssel.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          180
+        ],
+        "y": [
+          0,
+          17
+        ],
+        "xLabel": "α in °",
+        "yLabel": "M in N m",
+        "vars": [
+          {
+            "name": "W",
+            "min": 0,
+            "max": 180,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "Md",
+            "expr": "15*sin(pi*x/180)",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "W",
+            "on": "Md",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Winkel {W|0}°: M = **{15*sin(pi*W/180)|2} N m**, wirksame Kraft **{50*sin(pi*W/180)|1} N**"
+      },
+      "timeline": [
+        {
+          "caption": "Zieht man fast längs des Schlüssels ($10°$), dreht nur die kleine Komponente $F\\sin\\alpha$: $M \\approx 2{,}6\\,\\mathrm{N\\,m}$.",
+          "set": {
+            "W": 10
+          }
+        },
+        {
+          "caption": "Bei $60°$ wirken $\\sin 60° \\approx 87\\,\\%$ der Kraft: $M \\approx 13\\,\\mathrm{N\\,m}$.",
+          "to": {
+            "W": 60
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Senkrecht ($90°$) ist das Drehmoment am größten: $M = r F = 15\\,\\mathrm{N\\,m}$.",
+          "to": {
+            "W": 90
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Darüber hinaus nimmt es symmetrisch wieder ab; bei $180°$ (Drücken längs des Schlüssels zur Achse hin) dreht nichts.",
+          "to": {
+            "W": 175
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Auflagerkräfte eines Balkens.** Ein Balken ($4\\,\\mathrm{m}$, $20\\,\\mathrm{kg}$) liegt an beiden Enden auf; $1\\,\\mathrm{m}$ vom linken Ende steht eine Last von $60\\,\\mathrm{kg}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sum M_{links} = 0:\\quad F_R\\cdot 4\\,\\mathrm{m} - 20 g\\cdot 2\\,\\mathrm{m} - 60 g\\cdot 1\\,\\mathrm{m} = 0",
+            "why": "Drehpunkt ins linke Auflager gelegt: Dann fällt $F_L$ heraus, weil ihr Hebelarm null ist. Das Balkengewicht greift im Schwerpunkt, der Mitte, an."
+          },
+          {
+            "tex": "F_R = \\frac{392{,}4 + 588{,}6}{4}\\,\\mathrm{N} \\approx 245\\,\\mathrm{N}",
+            "why": "Das rechte Auflager."
+          },
+          {
+            "tex": "\\sum F = 0:\\quad F_L = 80 g - F_R \\approx 785\\,\\mathrm{N} - 245\\,\\mathrm{N} = 540\\,\\mathrm{N}",
+            "why": "Das Kräftegleichgewicht liefert das linke Auflager. Die Last steht näher am linken Ende, das deshalb mehr trägt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Momente um das linke Auflager.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rechtes Auflager.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Linkes Auflager.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Drehmoment berechnen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Drehmoment berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie das Drehmoment\"*, *\"Mit welcher Kraft muss am Hebelarm gezogen werden?\"*, *\"Ist das System im Gleichgewicht?\"*, *\"Warum wirkt ein längerer Schraubenschlüssel besser?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundformel",
+          "blocks": [
+            {
+              "md": "> [!important] Nur die senkrechte Kraftkomponente zählt\n> $$M = r\\cdot F_\\perp = r\\cdot F\\cdot\\sin\\alpha$$\n> $r$ ist der Abstand vom Drehpunkt zum Angriffspunkt der Kraft, $\\alpha$ der Winkel zwischen Hebelarm und Kraftrichtung. Wirkt die Kraft **senkrecht** zum Hebelarm ($\\alpha=90^\\circ$, $\\sin\\alpha=1$), ist das Drehmoment maximal. Wirkt sie **parallel** zum Hebelarm ($\\alpha=0$), ist es null -- Ziehen entlang des Hebels dreht nichts.\n>\n> Einheit: $[\\text{N}\\,\\text{m}]$ -- dieselbe Zahlenwert-Einheit wie Energie, aber physikalisch etwas völlig anderes (Drehmoment ist ein Vektor senkrecht zur Drehebene, Energie ein Skalar)."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Drehpunkt festlegen.**\n2. **Für jede Kraft den Hebelarm $r$ und den Winkel $\\alpha$ bestimmen.**\n3. **Drehmoment berechnen:** $M = rF\\sin\\alpha$.\n4. **Drehsinn beachten:** Drehmomente im Uhrzeigersinn und gegen den Uhrzeigersinn erhalten entgegengesetzte Vorzeichen.\n5. **Bei Gleichgewichtsaufgaben:** Summe aller Drehmomente gleich null setzen ($\\sum M = 0$) und nach der gesuchten Größe auflösen.\n6. **Einheitenkontrolle:** $[\\text{m}]\\cdot[\\text{N}] = [\\text{N}\\,\\text{m}]$ ✓."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*An einem Schraubenschlüssel der Länge $r=0{,}3\\,\\text{m}$ wird mit $F=50\\,\\text{N}$ gezogen. Berechnen Sie das Drehmoment (a) bei senkrechtem Zug und (b) bei einem Winkel von $60^\\circ$ zum Schlüssel.*\n\n**(a) Senkrecht ($\\alpha=90^\\circ$):**\n$$M = 0{,}3\\cdot50\\cdot\\sin(90^\\circ) = 0{,}3\\cdot50\\cdot1 = 15\\,\\text{N}\\,\\text{m}$$\n\n**(b) Bei $\\alpha=60^\\circ$:**\n$$M = 0{,}3\\cdot50\\cdot\\sin(60^\\circ) = 0{,}3\\cdot50\\cdot0{,}866 \\approx 12{,}99\\,\\text{N}\\,\\text{m}$$\n\n*Bei schrägem Zug geht rund 13 Prozent der Wirkung verloren -- deshalb wird an Werkzeugen möglichst senkrecht zum Hebel gezogen.*"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: Hebelgleichgewicht",
+          "blocks": [
+            {
+              "md": "*Auf einer Wippe sitzt links im Abstand $2\\,\\text{m}$ vom Drehpunkt ein Kind mit $30\\,\\text{kg}$. In welchem Abstand muss rechts ein Kind mit $40\\,\\text{kg}$ sitzen, damit Gleichgewicht herrscht?*\n\n$$\\sum M = 0: \\qquad r_1 m_1 g = r_2 m_2 g$$\n\nDie Erdbeschleunigung $g$ kürzt sich heraus:\n$$2\\cdot30 = r_2\\cdot40 \\;\\Longrightarrow\\; r_2 = \\frac{60}{40} = 1{,}5\\,\\text{m}$$\n\n*Das schwerere Kind muss näher am Drehpunkt sitzen -- das Produkt aus Masse und Abstand ist die maßgebliche Größe, nicht die Masse allein.*"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den Winkel ignorieren** und stets $M=rF$ rechnen, auch wenn die Kraft schräg angreift.\n- **Sinus und Kosinus vertauschen.** Es gilt $\\sin\\alpha$ mit $\\alpha$ als Winkel zwischen Hebelarm und Kraft -- bei senkrechtem Angriff muss das Ergebnis maximal sein, das ist die Kontrolle.\n- **Drehsinn nicht berücksichtigen** bei Gleichgewichtsaufgaben, wodurch sich Drehmomente fälschlich addieren statt aufzuheben.\n- **Hebelarm vom falschen Punkt aus messen.** Maßgeblich ist der Abstand vom **Drehpunkt**, nicht vom Ende des Objekts oder vom Schwerpunkt.\n- **Drehmoment und Arbeit verwechseln**, weil beide die Einheit $\\text{N}\\,\\text{m}$ tragen -- Arbeit wird meist in Joule angegeben, um die Verwechslung zu vermeiden."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Drehimpuls und Drehmoment** · **Drehimpulserhaltung anwenden** · **Kräfteansatz nach dem 2. Newtonschen Axiom**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Auf einer Wippe sitzt links ein Kind ($25\\,\\mathrm{kg}$) $1{,}8\\,\\mathrm{m}$ vom Drehpunkt. Wie weit rechts muss ein Kind mit $45\\,\\mathrm{kg}$ sitzen?",
+      "answer": 1.0,
+      "tolerance": 0.01,
+      "placeholder": "m",
+      "explain": "$25\\cdot 1{,}8 = 45\\cdot r_2$, also $r_2 = 1{,}0\\,\\mathrm{m}$; $g$ kürzt sich.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Tür wird $0{,}8\\,\\mathrm{m}$ von den Angeln mit $20\\,\\mathrm{N}$ senkrecht aufgedrückt. Welche Kraft braucht man für dasselbe Drehmoment $0{,}2\\,\\mathrm{m}$ von den Angeln?",
+      "answer": 80,
+      "tolerance": 0.5,
+      "placeholder": "N",
+      "explain": "$M = 16\\,\\mathrm{N\\,m}$; $F = \\tfrac{16}{0{,}2}\\,\\mathrm{N} = 80\\,\\mathrm{N}$: viermal näher, viermal mehr Kraft.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Ein Balken ($4\\,\\mathrm{m}$, $20\\,\\mathrm{kg}$) liegt an beiden Enden auf; $1\\,\\mathrm{m}$ vom rechten Ende steht eine Last von $40\\,\\mathrm{kg}$. Welche Kraft trägt das rechte Auflager?",
+      "answer": 392.4,
+      "tolerance": 1,
+      "placeholder": "N",
+      "explain": "Momente um das linke Auflager: $F_R\\cdot 4 = 20 g\\cdot 2 + 40 g\\cdot 3$, also $F_R = \\tfrac{(40 + 120)\\cdot 9{,}81}{4}\\,\\mathrm{N} \\approx 392\\,\\mathrm{N}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Mit $50\\,\\mathrm{N}$ unter $60°$ am $0{,}3\\,\\mathrm{m}$ langen Schlüssel: Wie groß ist das Drehmoment?",
+      "answer": 12.99,
+      "tolerance": 0.05,
+      "placeholder": "N m",
+      "explain": "$M = r F\\sin\\alpha = 0{,}3\\cdot 50\\cdot 0{,}866\\,\\mathrm{N\\,m} \\approx 13{,}0\\,\\mathrm{N\\,m}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Drehmoment und Arbeit haben beide die Einheit $\\mathrm{N\\,m}$. Worin unterscheiden sie sich?",
+      "options": [
+        {
+          "md": "Beim Drehmoment stehen Kraft und Hebelarm senkrecht, bei der Arbeit liegen Kraft und Weg parallel.",
+          "correct": true
+        },
+        {
+          "md": "Sie sind dieselbe Größe.",
+          "why": "Das Drehmoment ist keine Energie; es ändert Drehbewegungen."
+        },
+        {
+          "md": "Nur das Vorzeichen ist anders.",
+          "why": "Es sind verschiedene Größen, nicht nur verschiedene Vorzeichen."
+        },
+        {
+          "md": "Das Drehmoment wird in Joule angegeben.",
+          "why": "Joule benutzt man gerade, um Arbeit vom Drehmoment zu unterscheiden."
+        }
+      ],
+      "explain": "$W = F s\\cos\\varphi$ (Komponente längs des Wegs), $M = r F\\sin\\alpha$ (Komponente senkrecht zum Hebelarm).",
+      "label": "Definitionen",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Mit einem doppelt so langen Schraubenschlüssel erreicht man bei gleicher Kraft das doppelte Drehmoment.",
+      "answer": true,
+      "explain": "$M = r F$ bei senkrechtem Zug: proportional zum Hebelarm.",
+      "label": "Proportionalität",
+      "id": "vq6"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Kraft $40\\,\\mathrm{N}$ unter $30°$ zum Hebelarm $0{,}5\\,\\mathrm{m}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Nur die Komponente senkrecht zum Hebelarm dreht.",
+          "why": "Richtig."
+        },
+        {
+          "md": "$M = 0{,}5\\cdot 40\\cdot\\cos 30°\\,\\mathrm{N\\,m} \\approx 17{,}3\\,\\mathrm{N\\,m}$",
+          "why": "Falsch: Die senkrechte Komponente ist $F\\sin 30°$, also $M = 10\\,\\mathrm{N\\,m}$. Probe: Bei $0°$ (längs des Hebels) muss null herauskommen."
+        },
+        {
+          "md": "Bei senkrechtem Zug wäre das Drehmoment am größten.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Probe an den Grenzfällen: $\\alpha = 0$ ergibt $M = 0$, $\\alpha = 90°$ ergibt $M = r F$.",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +380,66 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "hebel"
+        ]
+      },
+      "label": "Hebel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "hebel"
+        ]
+      },
+      "label": "Einheiten umrechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "hebel",
+          "anlaufen"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "hebel",
+          "anlaufen"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$M = r F\\sin\\alpha$ = Kraft mal Kraftarm; maximal bei senkrechtem Angriff.",
+        "Gleichgewicht eines starren Körpers: $\\sum F = 0$ und $\\sum M = 0$; Drehpunkt geschickt in eine unbekannte Kraft legen.",
+        "Hebelgesetz $F_1 r_1 = F_2 r_2$."
+      ]
     }
   ]
 }

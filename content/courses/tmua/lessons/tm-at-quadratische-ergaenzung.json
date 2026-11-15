@@ -16,6 +16,270 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Den Leitkoeffizienten ausklammern** (nur aus den Gliedern mit $x$).\n> 2. **Quadratisch ergänzen:** $x^2 + px = \\left(x + \\tfrac p2\\right)^2 - \\left(\\tfrac p2\\right)^2$.\n> 3. **Ablesen:** In $a(x - h)^2 + k$ ist $k$ der kleinste Wert für $a > 0$ (der größte für $a < 0$), angenommen bei $x = h$.\n> 4. **Bei Brüchen** $\\tfrac{c}{\\text{quadratischer Term}}$: Ist der Nenner stets positiv, gehört zum kleinsten Nenner der größte Bruch.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Kleinster Wert von $3x^2 + 12x + 7$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "3x^2 + 12x + 7 = 3(x^2 + 4x) + 7",
+            "why": "Ausklammern."
+          },
+          {
+            "tex": "= 3\\left[(x + 2)^2 - 4\\right] + 7",
+            "why": "Ergänzen: Die halbe Vorzahl 2, ihr Quadrat 4 wird wieder abgezogen."
+          },
+          {
+            "tex": "= 3(x + 2)^2 - 12 + 7 = 3(x + 2)^2 - 5",
+            "why": "Die abgezogene 4 wird mit 3 multipliziert."
+          },
+          {
+            "tex": "\\text{Minimum } -5 \\text{ bei } x = -2",
+            "why": "Das Quadrat ist mindestens 0."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zusammenfassen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ablesen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Bruch",
+      "md": "**Größter Bruch beim kleinsten Nenner:** blau $y = \\dfrac{1}{x^2 + 2x + 5}$, der Nenner ist $(x + 1)^2 + 4$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -5,
+          3
+        ],
+        "y": [
+          0,
+          0.32
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -5,
+            "max": 3,
+            "value": -4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "1/(x^2 + 2*x + 5)",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "f(X)",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "x = {X|2} · Nenner {X^2 + 2*X + 5|2} · Bruch {f(X)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Weit links ist der Nenner groß, der Bruch klein.",
+          "set": {
+            "X": -4
+          }
+        },
+        {
+          "caption": "Bei x = −1 ist der Nenner am kleinsten, nämlich 4: Der Bruch erreicht sein Maximum 1/4.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechts davon wächst der Nenner wieder, der Bruch fällt.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Die abgezogene Zahl nicht mit dem Leitkoeffizienten multiplizieren.\n- Das Vorzeichen von $h$ falsch ablesen: In $(x + 2)^2$ ist $h = -2$.\n- Beim Bruch den kleinsten Nenner nehmen, obwohl der Nenner null oder negativ werden kann.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Quadratische Ergänzung zur Extremwertbestimmung",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Quadratische Ergänzung zur Extremwertbestimmung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gesucht ist der **kleinste oder größte Wert** eines quadratischen Ausdrucks, sein **Wertebereich** oder der **Scheitel** der Parabel -- oder der Extremwert eines Ausdrucks, in dem ein quadratischer Term steckt, etwa im Nenner. Signalformeln: *minimum value*, *maximum value*, *greatest value*, *range of f*, *vertex*, *turning point*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Leitkoeffizient $a$ ausklammern** (nur aus den Summanden mit $x$).\n2. **Ergänzen:** $x^2 + px = \\left(x + \\frac p2\\right)^2 - \\frac{p^2}{4}$.\n3. **Ausmultiplizieren, zusammenfassen:** Form $a(x - h)^2 + k$.\n4. **Ablesen:** Für $a > 0$ ist $k$ der **kleinste** Wert (bei $x = h$), für $a < 0$ der **größte**.\n5. **Bei zusammengesetzten Ausdrücken** das Monotonieverhalten der äußeren Operation nutzen: $\\frac{1}{u}$ ist für positive $u$ fallend, also wird der Kehrwert am größten, wenn $u$ am kleinsten ist."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the minimum value of $2x^2 - 12x + 23$ for real $x$.\n>\n> - **A** 3\n> - **B** 5\n> - **C** 14\n> - **D** 41\n> - **E** 23\n\n**Schritt 1:** $2(x^2 - 6x) + 23$.\n\n**Schritt 2 und 3:** $x^2 - 6x = (x - 3)^2 - 9$, also $2\\left[(x-3)^2 - 9\\right] + 23 = 2(x - 3)^2 + 5$.\n\n**Schritt 4:** $a = 2 > 0$, kleinster Wert **5** bei $x = 3$.\n\nAntwort **B**.\n\n> [!warning] Jede falsche Option hat ihren Fehler\n> C (14): Die $-9$ wurde nach dem Ausklammern nicht mit 2 multipliziert, also $23 - 9$. D (41): Vorzeichenfehler bei der Ergänzung, $23 + 18$. E (23): der y-Achsenabschnitt. A (3): die **Stelle** des Minimums, nicht sein Wert."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Stelle und Wert verwechseln:** Gefragt ist meist der Wert $k$, nicht $h$.\n- **Beim Ausklammern von $a$ die Ergänzung nicht mitmultiplizieren.**\n- **Vorzeichen des Scheitels:** $(x + 3)^2$ hat den Scheitel bei $x = -3$.\n- **Beim Kehrwert Minimum und Maximum vertauschen:** Der kleinste Nenner liefert den größten Bruch.\n- **Randbedingungen übersehen:** Ist $x$ auf ein Intervall beschränkt, das den Scheitel nicht enthält, liegt der Extremwert am Rand."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> What is the maximum value of $5 + 4x - x^2$ for real $x$?\n>\n> - **A** 5\n> - **B** 9\n> - **C** 4\n> - **D** 1\n> - **E** 21\n\n> [!success]- Lösung\n> **B.** $5 + 4x - x^2 = -(x^2 - 4x) + 5 = -\\left[(x - 2)^2 - 4\\right] + 5 = 9 - (x - 2)^2$. Größter Wert 9 bei $x = 2$.\n\n> [!question] Aufgabe 2\n> Which one of the following is the range of $f(x) = x^2 + 6x + 10$, where $x$ is any real number?\n>\n> - **A** $f(x) \\ge 1$\n> - **B** $f(x) \\ge 10$\n> - **C** $f(x) \\ge -3$\n> - **D** $f(x) > 1$\n> - **E** all real numbers\n\n> [!success]- Lösung\n> **A.** $f(x) = (x + 3)^2 + 1 \\ge 1$, und der Wert 1 wird bei $x = -3$ angenommen -- deshalb $\\ge$ und nicht $>$.\n> B ist der y-Achsenabschnitt, C die Stelle des Scheitels.\n\n> [!question] Aufgabe 3\n> What is the greatest value of $\\dfrac{1}{x^2 - 2x + 5}$ for real $x$?\n>\n> - **A** $\\frac14$\n> - **B** $\\frac15$\n> - **C** $\\frac12$\n> - **D** 4\n> - **E** There is no greatest value.\n\n> [!success]- Lösung\n> **A.** Nenner: $(x - 1)^2 + 4 \\ge 4$, stets positiv. Der Bruch ist am größten, wenn der Nenner am kleinsten ist: $\\tfrac14$ bei $x = 1$.\n> D verwechselt Nenner und Bruch. B setzt $x = 0$ ein. E wäre richtig, wenn der Nenner null werden könnte -- das verhindert die positive Konstante 4."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Parameterbedingung über die Diskriminante** · **Stationäre Punkte bestimmen und klassifizieren** · **Extremwerte trigonometrischer Ausdrücke**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Minimum",
+      "md": "Welchen kleinsten Wert nimmt $x^2 - 10x + 31$ an?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$(x - 5)^2 + 6$: Minimum 6 bei $x = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is the maximum value of $\\dfrac{1}{2x^2 - 8x + 11}$ for real $x$?",
+      "options": [
+        {
+          "md": "$\\tfrac{1}{11}$"
+        },
+        {
+          "md": "$\\tfrac{1}{5}$"
+        },
+        {
+          "md": "$\\tfrac{1}{3}$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac{1}{2}$"
+        },
+        {
+          "md": "$3$"
+        }
+      ],
+      "explain": "$2x^2 - 8x + 11 = 2(x - 2)^2 + 3 \\ge 3$, also ist der Bruch höchstens $\\tfrac13$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Bruch",
+      "id": "vq2"
+    },
+    {
+      "type": "cloze",
+      "label": "Ergänzen",
+      "md": "Ergänze: $x^2 + 6x + 2 = (x + a)^2 - b$ mit $a =$ {{0}} und $b =$ {{1}}.",
+      "blanks": [
+        {
+          "accept": [
+            "3"
+          ],
+          "numeric": true,
+          "tolerance": 0.03
+        },
+        {
+          "accept": [
+            "7"
+          ],
+          "numeric": true,
+          "tolerance": 0.07
+        }
+      ],
+      "explain": "$(x + 3)^2 = x^2 + 6x + 9$, also $x^2 + 6x + 2 = (x + 3)^2 - 7$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$x^2 - 4x + 7$ nimmt den Wert 2 an.",
+      "answer": false,
+      "explain": "$x^2 - 4x + 7 = (x - 2)^2 + 3 \\ge 3$.",
+      "label": "Wertebereich",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -72,6 +336,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ergaenzung"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ergaenzung"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ergaenzung"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ausklammern, ergänzen, $a(x - h)^2 + k$ ablesen; die abgezogene Zahl mit $a$ multiplizieren.",
+        "Positiver Nenner: kleinster Nenner gibt größten Bruch."
+      ]
     }
   ]
 }

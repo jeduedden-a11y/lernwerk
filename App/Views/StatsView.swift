@@ -143,7 +143,7 @@ struct SummaryGrid: View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
             StatTile(value: "\(xp)", label: "Punkte insgesamt", symbol: "bolt.fill", tint: .accentColor)
             StatTile(value: "\(model.streak)", label: model.streak == 1 ? "Tag in Folge" : "Tage in Folge", symbol: "flame.fill", tint: .orange)
-            StatTile(value: "\(done) / \(ready)", label: "Lektionen geschafft", symbol: "checkmark.seal.fill", tint: .green)
+            StatTile(value: "\(done) / \(ready)", label: "Lektionen abgeschlossen", symbol: "checkmark.seal.fill", tint: .green)
             StatTile(value: Self.duration(seconds), label: "Lernzeit", symbol: "clock.fill", tint: .teal)
         }
     }
@@ -314,7 +314,7 @@ struct TrafficLightCard: View {
                     }
                     .buttonStyle(.plain)
                 }
-                Text("Grün: alle Lektionen geschafft und mindestens 80 Prozent sicher. Gelb: auf dem Weg. Rot: unter 60 Prozent in Wiederholung oder Training. Grau: noch nicht begonnen.")
+                Text("Grün: alle Lektionen abgeschlossen und mindestens 80 Prozent sicher. Gelb: auf dem Weg. Rot: unter 60 Prozent in Wiederholung oder Training. Grau: noch nicht begonnen.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

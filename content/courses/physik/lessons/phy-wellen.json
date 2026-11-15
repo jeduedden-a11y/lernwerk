@@ -50,7 +50,7 @@
           {
             "name": "y",
             "expr": "1.5*sin(2*pi*(t/1 - x/2))",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "points": [
@@ -63,6 +63,416 @@
         ],
         "readout": "λ = 2 m, T = 1 s, also c = 2 m/s. Der markierte Punkt bei x = 1 m hat die Auslenkung {1.5*sin(2*pi*(t - 0.5))|2} cm."
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Transversal- und Longitudinalwelle in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Wellenarten.svg",
+        "aspect": 1.69,
+        "alt": "Transversal- und Longitudinalwelle"
+      },
+      "timeline": [
+        {
+          "caption": "Zwei Grundformen mechanischer Wellen.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Transversalwelle:** Die Teilchen schwingen senkrecht zur Ausbreitungsrichtung, etwa auf einem Seil.",
+          "to": {
+            "x": 0.5,
+            "y": 0.3,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Longitudinalwelle:** Die Teilchen schwingen in Ausbreitungsrichtung hin und her, wie Schall in Luft.",
+          "to": {
+            "x": 0.5,
+            "y": 0.7,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Es entstehen Verdichtungen und Verdünnungen, die weiterwandern; die Teilchen selbst bleiben in der Nähe ihrer Ruhelage.",
+          "to": {
+            "x": 0.33,
+            "y": 0.8,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Für beide gilt $c = \\lambda\\,f$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.94,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Mechanische Welle\n> Eine **Welle** ist die Ausbreitung einer Schwingung in einem Träger aus gekoppelten Oszillatoren: Jeder Oszillator beginnt etwas später zu schwingen als sein Nachbar. Transportiert wird **Energie**, keine Materie.\n\n> - **Wellenlänge** $\\lambda$: Abstand zweier benachbarter Punkte gleicher Phase, etwa zweier Wellenberge.\n> - **Ausbreitungsgeschwindigkeit** $c$: Geschwindigkeit, mit der sich ein Zustand (etwa ein Wellenberg) fortbewegt; sie hängt vom Träger ab, nicht von der Frequenz (in einfachen Medien).\n> - **Transversal**: Schwingung quer zur Ausbreitung (nur sie kann polarisiert werden); **longitudinal**: in Ausbreitungsrichtung.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung von $c = \\lambda f$ und der Wellenfunktion.** Der Erreger bei $x = 0$ schwingt mit $y(0,t) = \\hat y\\sin(\\omega t)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "c = \\frac{\\lambda}{T} = \\lambda\\,f",
+            "why": "In einer Periode $T$ läuft die Welle genau eine Wellenlänge weiter."
+          },
+          {
+            "tex": "t_{Verz} = \\frac{x}{c}",
+            "why": "Ein Oszillator im Abstand $x$ beginnt um die Laufzeit $\\tfrac xc$ später."
+          },
+          {
+            "tex": "y(x,t) = \\hat y\\sin\\left(\\omega\\left(t - \\frac xc\\right)\\right)",
+            "why": "Er macht dasselbe wie der Erreger, nur verspätet."
+          },
+          {
+            "tex": "y(x,t) = \\hat y\\sin\\left(2\\pi\\left(\\frac tT - \\frac{x}{\\lambda}\\right)\\right)",
+            "why": "Mit $\\omega = \\tfrac{2\\pi}{T}$ und $c\\,T = \\lambda$: die Wellenfunktion für eine nach rechts laufende Welle."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Grundgleichung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Laufzeit.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verspätete Schwingung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wellenfunktion.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Eine Welle läuft nach rechts** ($\\lambda = 2\\,\\mathrm{m}$). Orange: ein Teilchen bei $x = 1{,}5\\,\\mathrm{m}$; grün: ein Wellenberg.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          -1.3,
+          1.3
+        ],
+        "xLabel": "x in m",
+        "yLabel": "y",
+        "vars": [
+          {
+            "name": "t",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "wv",
+            "expr": "sin(2*pi*(t - x/2))",
+            "color": "blue",
+            "samples": 600
+          }
+        ],
+        "points": [
+          {
+            "x": 1.5,
+            "on": "wv",
+            "color": "orange"
+          },
+          {
+            "x": "2*(t - 0.25) + 2",
+            "on": "wv",
+            "color": "green"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              1.5,
+              -1.25
+            ],
+            "to": [
+              1.5,
+              1.25
+            ],
+            "color": "orange",
+            "dashed": true,
+            "width": 1
+          }
+        ],
+        "readout": "t = {t|2} T: Teilchen bei 1,5 m: y = **{sin(2*pi*(t - 0.75))|2}**; Wellenberg bei x = **{2*(t - 0.25) + 2|2} m**"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Schnappschuss der Welle. Das orange Teilchen und der grüne Wellenberg werden gleich verfolgt.",
+          "set": {
+            "t": 0
+          }
+        },
+        {
+          "caption": "Der Wellenberg wandert nach rechts, eine halbe Wellenlänge in einer halben Periode.",
+          "to": {
+            "t": 0.5
+          },
+          "dur": 3000
+        },
+        {
+          "caption": "Das orange Teilchen bewegt sich nur auf und ab, auf seiner senkrechten Linie. Nach einer ganzen Periode ist der Berg genau $\\lambda = 2\\,\\mathrm{m}$ weiter: $c = \\tfrac{\\lambda}{T}$.",
+          "to": {
+            "t": 1
+          },
+          "dur": 3000
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Mechanische Wellen",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Mechanische Wellen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Welle** ist die räumliche Ausbreitung einer **Schwingung**. Dabei wird **Energie**, aber **kein Material** transportiert -- die einzelnen Teilchen schwingen nur um ihre Ruhelage."
+            }
+          ]
+        },
+        {
+          "title": "Grundgleichung",
+          "blocks": [
+            {
+              "md": "$$c = \\lambda \\cdot f$$\nmit Ausbreitungsgeschwindigkeit $c$, Wellenlänge $\\lambda$ und Frequenz $f$."
+            }
+          ]
+        },
+        {
+          "title": "Wellenarten",
+          "blocks": [
+            {
+              "image": "vault:Wellenarten.svg"
+            },
+            {
+              "md": "- **Transversalwelle**: Schwingung **senkrecht** zur Ausbreitung (z. B. Licht, Seilwelle). Nur diese lässt sich **polarisieren**.\n- **Longitudinalwelle**: Schwingung **längs** der Ausbreitung, als Verdichtungen und Verdünnungen (z. B. Schall)."
+            }
+          ]
+        },
+        {
+          "title": "Wellengleichung",
+          "blocks": [
+            {
+              "md": "Eine harmonische Welle, die sich in $x$-Richtung ausbreitet:\n$$y(x, t) = \\hat{y}\\,\\sin\\!\\left[2\\pi\\left(\\frac{t}{T} - \\frac{x}{\\lambda}\\right)\\right]$$\nDer Term $\\tfrac{x}{\\lambda}$ beschreibt die **Phasenverschiebung** eines Punktes gegenüber dem Erreger."
+            }
+          ]
+        },
+        {
+          "title": "Polarisation",
+          "blocks": [
+            {
+              "md": "Bei einer Transversalwelle lässt sich die Schwingungsrichtung durch einen **Polarisationsfilter** auf eine Ebene festlegen -- ein Beweis, dass Licht eine Transversalwelle ist.\n\n> [!tip] Weiter\n> An Grenzflächen zeigen Wellen **Reflexion und Brechung**, **Beugung und Interferenz** und bilden **Stehende Wellen**."
+            }
+          ]
+        },
+        {
+          "title": "Was transportiert wird und was nicht",
+          "blocks": [
+            {
+              "md": "> [!important] Energie wandert, Materie nicht\n> Die einzelnen Teilchen schwingen nur um ihre Ruhelage -- sie wandern **nicht** mit der Welle mit.\n>\n> Anschaulich am Korken auf einer Wasserwelle: Er hebt und senkt sich, treibt aber nicht in Wellenrichtung davon. Ebenso bei der La-Ola-Welle im Stadion: Die Welle läuft rund, die Zuschauer bleiben auf ihren Plätzen.\n>\n> Wer eine Welle als bewegte Materie deutet, kann weder die Überlagerung noch die Interferenz erklären -- zwei Wassermengen können sich nicht durchdringen, zwei Wellen sehr wohl."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundgleichung",
+          "blocks": [
+            {
+              "md": "$$c = \\lambda\\,f$$\n\n> [!important] Beim Übergang in ein anderes Medium ändert sich die Wellenlänge, nicht die Frequenz\n> Die Frequenz wird vom **Erreger** vorgegeben und bleibt erhalten -- pro Sekunde treffen so viele Wellenberge ein, wie erzeugt wurden.\n>\n> Die Ausbreitungsgeschwindigkeit hängt dagegen vom **Medium** ab. Folglich muss sich die Wellenlänge anpassen:\n> $$\\lambda = \\frac{c}{f}$$\n>\n> Genau daraus folgt die **Brechung**: Der Wellenzug knickt an der Grenzfläche ab, weil sich sein Abstand ändert. Siehe **Reflexion und Brechung**.\n>\n> Prüfungsrelevant ist die Folgerung: Licht behält beim Eintritt in Glas seine Farbe, weil die Frequenz gleich bleibt -- die Wellenlänge im Glas ist aber kürzer."
+            }
+          ]
+        },
+        {
+          "title": "Transversal und longitudinal",
+          "blocks": [
+            {
+              "md": "| | Transversalwelle | Longitudinalwelle |\n|---|---|---|\n| Schwingungsrichtung | **senkrecht** zur Ausbreitung | **längs** der Ausbreitung |\n| Erscheinung | Berge und Täler | Verdichtungen und Verdünnungen |\n| Beispiele | Licht, Seilwelle, Wasserwelle | Schall, Erdbeben-P-Wellen |\n| **polarisierbar** | **ja** | **nein** |\n| in Flüssigkeiten und Gasen | nein (nur an Oberflächen) | ja |\n\n> [!tip] Die Polarisierbarkeit ist ein Beweismittel\n> Nur Transversalwellen lassen sich polarisieren, weil es nur bei ihnen eine ausgezeichnete Richtung senkrecht zur Ausbreitung gibt. Bei Longitudinalwellen sind alle Richtungen gleichwertig.\n>\n> Dass **Licht polarisierbar** ist, war deshalb der Beweis, dass es sich um eine Transversalwelle handelt -- eine Aussage, die man dem Licht sonst nicht ansieht. Genutzt wird das in Polarisationsfiltern, LCD-Bildschirmen und 3D-Kinobrillen.\n>\n> Und weil Scherkräfte in Flüssigkeiten fehlen, breiten sich Transversalwellen dort nicht aus. Daraus schloss man auf den **flüssigen äußeren Erdkern**: Erdbeben-S-Wellen erreichen die gegenüberliegende Erdseite nicht, P-Wellen schon."
+            }
+          ]
+        },
+        {
+          "title": "Die Wellengleichung",
+          "blocks": [
+            {
+              "md": "$$y(x,t) = \\hat y\\,\\sin\\!\\left[2\\pi\\left(\\frac{t}{T} - \\frac{x}{\\lambda}\\right)\\right]$$\n\n> [!important] Der Ortsterm beschreibt die Zeitverzögerung\n> Ein Punkt im Abstand $x$ vollzieht dieselbe Schwingung wie der Erreger -- nur **später**, weil die Welle Zeit zur Ausbreitung braucht.\n>\n> Das Minuszeichen bedeutet Ausbreitung in positive $x$-Richtung; ein Pluszeichen bedeutet die Gegenrichtung. Diese Vorzeichenregel wird regelmäßig geprüft.\n>\n> Zwei Momentaufnahmen sind zu unterscheiden:\n>\n> | festgehalten | Diagramm zeigt | Ablesbar |\n> |---|---|---|\n> | Zeit $t$ | **Momentbild** der Welle im Raum | Wellenlänge $\\lambda$ |\n> | Ort $x$ | Schwingung eines Punktes über die Zeit | Periodendauer $T$ |\n>\n> Beide sehen wie Sinuskurven aus und werden verwechselt. Ohne Achsenbeschriftung ist ein solches Diagramm nicht deutbar."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Wellenlehre überträgt die **Harmonische Schwingung** auf die räumliche Ausbreitung und liefert die Grundlage für **Reflexion und Brechung**, **Beugung und Interferenz**, **Stehende Wellen** und den **Dopplereffekt**. In Q3 wird sie über den **Welle-Teilchen-Dualismus** auf Materie ausgedehnt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Bedeutung zu.",
+      "pairs": [
+        [
+          "Wellenlänge",
+          "Abstand zweier benachbarter Punkte gleicher Phase"
+        ],
+        [
+          "Ausbreitungsgeschwindigkeit",
+          "Tempo, mit dem ein Wellenberg wandert"
+        ],
+        [
+          "Transversalwelle",
+          "Schwingung quer zur Ausbreitung"
+        ],
+        [
+          "Longitudinalwelle",
+          "Schwingung längs der Ausbreitung"
+        ],
+        [
+          "Energietransport",
+          "was eine Welle befördert"
+        ]
+      ],
+      "explain": "Die Welle befördert Energie und Information; die Teilchen bleiben in der Nähe ihrer Ruhelage.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Wellenfunktion in die richtige Reihenfolge.",
+      "items": [
+        "Erreger: $y(0,t) = \\hat y\\sin(\\omega t)$",
+        "Ein Punkt bei $x$ startet um $\\tfrac xc$ später",
+        "$y(x,t) = \\hat y\\sin(\\omega(t - \\tfrac xc))$",
+        "Mit $cT = \\lambda$: $y = \\hat y\\sin(2\\pi(\\tfrac tT - \\tfrac x\\lambda))$"
+      ],
+      "explain": "Die Reihenfolge: 1. Erreger: $y(0,t) = \\hat y\\sin(\\omega t)$. 2. Ein Punkt bei $x$ startet um $\\tfrac xc$ später. 3. $y(x,t) = \\hat y\\sin(\\omega(t - \\tfrac xc))$. 4. Mit $cT = \\lambda$: $y = \\hat y\\sin(2\\pi(\\tfrac tT - \\tfrac x\\lambda))$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie lang ist die Schallwelle des Kammertons $440\\,\\mathrm{Hz}$ in Luft ($c = 343\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$)?",
+      "answer": 0.78,
+      "tolerance": 0.004,
+      "placeholder": "m",
+      "explain": "$\\lambda = \\tfrac cf = \\tfrac{343}{440}\\,\\mathrm{m} \\approx 0{,}78\\,\\mathrm{m}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Wellenfunktion",
+      "md": "$\\hat y = 2\\,\\mathrm{cm}$, $T = 0{,}5\\,\\mathrm{s}$, $\\lambda = 1{,}2\\,\\mathrm{m}$, Welle nach rechts. Wie groß ist die Auslenkung bei $x = 0{,}3\\,\\mathrm{m}$ zur Zeit $t = 0{,}25\\,\\mathrm{s}$?",
+      "answer": 2,
+      "tolerance": 0.02,
+      "placeholder": "cm",
+      "explain": "Die Welle ist mit $c = \\tfrac{\\lambda}{T} = 2{,}4\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ nach $0{,}125\\,\\mathrm{s}$ dort angekommen. $y = 2\\,\\mathrm{cm}\\cdot\\sin\\left(2\\pi\\left(\\tfrac{0{,}25}{0{,}5} - \\tfrac{0{,}3}{1{,}2}\\right)\\right) = 2\\,\\mathrm{cm}\\cdot\\sin\\left(2\\pi\\cdot 0{,}25\\right) = 2\\,\\mathrm{cm}$: Der Ort ist gerade im Wellenberg.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Wasserwelle transportiert Wasser von einem Ufer zum anderen.",
+      "answer": false,
+      "explain": "Die Wasserteilchen bewegen sich auf kleinen Kreisbahnen und bleiben an ihrem Ort; transportiert wird Energie.",
+      "label": "Verständnis",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Schall geht von Luft in Wasser über. Was bleibt gleich?",
+      "options": [
+        {
+          "md": "die Frequenz",
+          "correct": true
+        },
+        {
+          "md": "die Wellenlänge",
+          "why": "$\\lambda = \\tfrac cf$ wächst mit der höheren Geschwindigkeit."
+        },
+        {
+          "md": "die Ausbreitungsgeschwindigkeit",
+          "why": "Sie hängt vom Medium ab."
+        },
+        {
+          "md": "alle drei",
+          "why": "Geschwindigkeit und Wellenlänge ändern sich."
+        }
+      ],
+      "explain": "Die Frequenz gibt der Erreger vor; an der Grenzfläche schwingt beides im selben Takt.",
+      "label": "Medienwechsel",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Nur Transversalwellen können polarisiert werden.",
+      "answer": true,
+      "explain": "Polarisation heißt: Die Schwingung erfolgt in einer festen Richtung quer zur Ausbreitung. Bei Longitudinalwellen gibt es keine solche Richtung; deshalb zeigt der Polarisationsnachweis, dass Licht transversal ist.",
+      "label": "Klausur",
+      "id": "vq7"
     },
     {
       "id": "energie",
@@ -108,13 +518,41 @@
       "label": "Wellengleichung"
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "welle-c",
+          "welle-y"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "welle-y",
+          "welle-c"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Transversal oder longitudinal.",
         "$c = \\lambda f$.",
-        "Wellen transportieren Energie, keine Materie."
+        "Wellen transportieren Energie, keine Materie.",
+        "Welle: verspätete Schwingung gekoppelter Oszillatoren; Energie, keine Materie. $c = \\lambda f$.",
+        "Wellenfunktion $y(x,t) = \\hat y\\sin(2\\pi(\\tfrac tT - \\tfrac x\\lambda))$, aus der Laufzeit $\\tfrac xc$ hergeleitet."
       ]
     }
   ]

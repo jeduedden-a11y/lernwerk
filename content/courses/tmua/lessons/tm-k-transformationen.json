@@ -19,6 +19,370 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Transformationen eines Graphen $y = f(x)$\n>\n> | neue Gleichung | Wirkung |\n> |---|---|\n> | $y = f(x) + d$ | um $d$ nach oben |\n> | $y = f(x - c)$ | um $c$ nach **rechts** |\n> | $y = a\\,f(x)$ | Streckung parallel zur y-Achse mit Faktor $a$ |\n> | $y = f(bx)$ | Streckung parallel zur x-Achse mit Faktor $\\tfrac1b$ |\n> | $y = -f(x)$ | Spiegelung an der x-Achse |\n> | $y = f(-x)$ | Spiegelung an der y-Achse |\n\n**Grafisch lösen:** Die Lösungen von $f(x) = g(x)$ sind die x-Werte der Schnittpunkte der beiden Graphen. Wer die Graphen skizzieren kann, zählt Lösungen ohne Rechnung.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum $f(x - 3)$ nach rechts und nicht nach links schiebt.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "g(x) = f(x - 3)",
+            "why": "Der neue Graph."
+          },
+          {
+            "tex": "g(x_0 + 3) = f(x_0)",
+            "why": "Der Wert, den f bei x_0 hat, erscheint bei g erst an der Stelle x_0 + 3."
+          },
+          {
+            "tex": "(x_0, y_0) \\in G_f \\;\\Rightarrow\\; (x_0 + 3, y_0) \\in G_g",
+            "why": "Jeder Punkt wandert um 3 nach rechts."
+          },
+          {
+            "tex": "g(x) = f(2x):\\ g\\!\\left(\\tfrac{x_0}{2}\\right) = f(x_0)",
+            "why": "Ebenso innen mal 2: Die Punkte rücken zur y-Achse, Faktor 1/2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Werte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Streckung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Transformationen",
+      "md": "**Transformationen im Bild:** grau $y = x^2$, blau $y = a(x - c)^2 + d$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -5,
+          5
+        ],
+        "y": [
+          -4,
+          8
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "a",
+            "min": -2,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "c",
+            "min": -4,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "dd",
+            "min": -4,
+            "max": 6,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "g",
+            "expr": "a*(x - c)^2 + dd",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "points": [
+          {
+            "x": "c",
+            "y": "dd",
+            "color": "orange",
+            "label": "Scheitel"
+          }
+        ],
+        "readout": "a = {a|1} · c = {c|1} · d = {dd|1} · Scheitel ({c|1}, {dd|1})"
+      },
+      "timeline": [
+        {
+          "caption": "Ausgangslage: a = 1, c = 0, d = 0.",
+          "set": {
+            "a": 1,
+            "c": 0,
+            "dd": 0
+          }
+        },
+        {
+          "caption": "c = 2: (x − 2)² schiebt um 2 nach rechts.",
+          "to": {
+            "c": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "d = 3: um 3 nach oben.",
+          "to": {
+            "dd": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = 2: doppelt so steil, der Scheitel bleibt.",
+          "to": {
+            "a": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = −1: an der Waagerechten durch den Scheitel gespiegelt, also nach unten geöffnet.",
+          "to": {
+            "a": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformationen von Graphen",
+      "path": "02 Wiki/TMUA/12 Graphen von Funktionen/Transformationen von Graphen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die vier Grundtransformationen",
+          "blocks": [
+            {
+              "md": "| Gleichung | Wirkung | Richtung |\n|---|---|---|\n| $y = f(x) + a$ | Verschiebung um $a$ **nach oben** | senkrecht, wie erwartet |\n| $y = f(x + a)$ | Verschiebung um $a$ **nach links** | waagerecht, **gegenläufig** |\n| $y = a\\,f(x)$ | Streckung mit Faktor $a$ in $y$-Richtung | senkrecht, wie erwartet |\n| $y = f(ax)$ | Streckung mit Faktor $\\tfrac1a$ in $x$-Richtung | waagerecht, **gegenläufig** |\n\n> [!important] Die Regel hinter der Regel\n> Alles, was **innerhalb** der Klammer passiert, wirkt waagerecht und **umgekehrt** zur Erwartung. Alles **außerhalb** wirkt senkrecht und genau so, wie es dasteht.\n>\n> Der Grund: $f(x + 3)$ nimmt an der Stelle $x$ den Wert an, den $f$ erst bei $x + 3$ hatte -- der Graph erreicht diesen Wert also **früher**, er rückt nach links.\n\nSpiegelungen sind Sonderfälle mit $a = -1$:\n\n$$y = -f(x) \\ \\text{spiegelt an der } x\\text{-Achse}, \\qquad y = f(-x) \\ \\text{spiegelt an der } y\\text{-Achse}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Mehrere Transformationen hintereinander",
+          "blocks": [
+            {
+              "md": "Bei $y = a\\,f(bx + c) + d$ ist die Reihenfolge entscheidend, und zwar getrennt nach Richtung:\n\n- **Waagerecht:** erst die Verschiebung um $-c$, dann die Streckung mit $\\tfrac1b$ -- oder, wenn man ausklammert, $f\\!\\left(b\\left(x + \\tfrac cb\\right)\\right)$: Streckung mit $\\tfrac1b$, dann Verschiebung um $-\\tfrac cb$.\n- **Senkrecht:** erst die Streckung mit $a$, dann die Verschiebung um $d$.\n\n> [!warning] Die Verschiebung ist $\\tfrac cb$, nicht $c$\n> $y = f(2x + 6) = f\\!\\left(2(x + 3)\\right)$ entsteht aus $f$ durch Stauchung auf die Hälfte **und** Verschiebung um 3 nach links -- nicht um 6. Wer die Klammer nicht ausklammert, liest die Verschiebung falsch ab."
+            }
+          ]
+        },
+        {
+          "title": "Punkte mitführen -- die Kontrolltechnik",
+          "blocks": [
+            {
+              "md": "Statt über Transformationen nachzudenken, verfolgt man einen **konkreten Punkt**. Liegt $(4, 6)$ auf $y = f(x)$, dann liegt\n\n| auf der Kurve | der Punkt |\n|---|---|\n| $y = f(x) + 3$ | $(4, 9)$ |\n| $y = f(x + 3)$ | $(1, 6)$ |\n| $y = 2f(x)$ | $(4, 12)$ |\n| $y = f(2x)$ | $(2, 6)$ |\n\nDiese Tabelle ist in wenigen Sekunden rekonstruiert und entscheidet jede Zuordnungsaufgabe -- sicherer als jede Merkregel."
+            }
+          ]
+        },
+        {
+          "title": "Die quadratische Ergänzung als Transformation",
+          "blocks": [
+            {
+              "md": "$$y = a(x - p)^2 + q$$\n\nist die Parabel $y = x^2$, gestreckt mit $a$, verschoben um $p$ nach rechts und $q$ nach oben. Der **Scheitel** liegt bei $(p, q)$ -- das ist der ganze Inhalt von MM8.4 und zugleich die schnellste Methode für Extremwertaufgaben ohne Ableitung (siehe **Quadratische Ergänzung zur Extremwertbestimmung**).\n\n$$y = x^2 - 6x + 11 = (x - 3)^2 + 2 \\quad\\Longrightarrow\\quad \\text{Scheitel } (3, 2), \\ \\text{kleinster Wert } 2.$$"
+            }
+          ]
+        },
+        {
+          "title": "Was Transformationen erhalten -- und was nicht",
+          "blocks": [
+            {
+              "md": "| Eigenschaft | bleibt erhalten bei |\n|---|---|\n| Anzahl der Nullstellen | Verschiebung waagerecht, Streckung (Faktor $\\ne 0$) |\n| Anzahl der Extrempunkte | **allen** vier Transformationen |\n| Lage der Asymptoten | wird mitverschoben und mitgestreckt |\n| Symmetrie zur $y$-Achse | senkrechter Verschiebung und Streckung, **nicht** waagerechter Verschiebung |\n\nDie zweite Zeile ist im Test besonders nützlich: Wie viele Extrempunkte eine transformierte Kurve hat, kann man **ohne jede Rechnung** beantworten."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Die waagerechte Verschiebung in die falsche Richtung** ausführen.\n- **Bei $f(bx + c)$ um $c$ statt um $\\tfrac cb$ verschieben.**\n- **Streckung und Verschiebung in der falschen Reihenfolge** anwenden.\n- **$-f(x)$ und $f(-x)$ verwechseln.**\n- **Beim Scheitel $(p, q)$ das Vorzeichen von $p$ übersehen:** In $(x + 4)^2$ liegt der Scheitel bei $x = -4$.\n\nVerwandt: **Standardgraphen skizzieren** · **Quadratische Funktionen und Diskriminante** · Aufgabentypen: **Transformationsfolge bestimmen** · **Graphen mit Betrag skizzieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lösungen grafisch deuten",
+      "path": "02 Wiki/TMUA/12 Graphen von Funktionen/Lösungen grafisch deuten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Grundidee",
+          "blocks": [
+            {
+              "md": "$$f(x) = g(x) \\quad\\Longleftrightarrow\\quad \\text{die Graphen von } f \\text{ und } g \\text{ schneiden sich.}$$\n\nJede Frage nach der **Anzahl** der Lösungen wird damit zu einer Frage nach Schnittpunkten -- und die lässt sich an einer Skizze in Sekunden beantworten, auch wenn die Gleichung selbst nicht lösbar ist.\n\nDas ist der wichtigste Perspektivwechsel dieses Blocks. Im deutschen Unterricht wird meist **gelöst**; der Test fragt oft nur, **wie viele** Lösungen es gibt."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Standardsituationen",
+          "blocks": [
+            {
+              "md": "**1. Gerade und Parabel.** Einsetzen liefert eine quadratische Gleichung; die **Diskriminante** entscheidet:\n\n| Diskriminante | geometrisch |\n|---|---|\n| $> 0$ | zwei Schnittpunkte |\n| $= 0$ | Berührung -- die Gerade ist **Tangente** |\n| $< 0$ | kein Schnittpunkt |\n\n**2. Waagerechte Gerade und Kurve:** $f(x) = k$. Man zeichnet $y = f(x)$ und verschiebt die Höhe $k$ gedanklich von unten nach oben. Die **Extremwerte** von $f$ sind die Stellen, an denen sich die Anzahl der Schnittpunkte ändert.\n\n**3. Zwei Kurven, von denen eine unbekannt bleibt.** Dann hilft nur Umstellen: $f(x) = g(x)$ wird zu $f(x) - g(x) = 0$, also zur Nullstellenfrage einer einzigen Funktion.\n\n> [!important] Die Extremwerte sind die Umschaltpunkte\n> Bei $y = x^3 - 3x$ liegt ein Maximum bei $(-1, 2)$ und ein Minimum bei $(1, -2)$. Die waagerechte Gerade $y = k$ schneidet die Kurve\n> - **dreimal** für $-2 < k < 2$,\n> - **zweimal** für $k = \\pm 2$ (dort ist einer der Schnittpunkte eine Berührung),\n> - **einmal** für $\\lvert k \\rvert > 2$.\n>\n> Dieses Schema -- Extremwerte bestimmen, dann die Fälle abzählen -- löst praktisch jede Aufgabe vom Typ *„for how many values of $k$ …\"*."
+            }
+          ]
+        },
+        {
+          "title": "Ungleichungen grafisch",
+          "blocks": [
+            {
+              "md": "$f(x) > g(x)$ gilt dort, wo der Graph von $f$ **oberhalb** des Graphen von $g$ liegt. Die Grenzen des Lösungsintervalls sind die Schnittstellen.\n\nFür quadratische Ungleichungen ist das die schnellste Methode: Nullstellen bestimmen, Parabel skizzieren, Bereich ablesen -- siehe **Quadratische Ungleichung lösen**. Eine nach oben geöffnete Parabel ist **zwischen** ihren Nullstellen negativ und **außerhalb** positiv."
+            }
+          ]
+        },
+        {
+          "title": "Was eine Skizze nicht leistet",
+          "blocks": [
+            {
+              "md": "Sie beweist nichts. In Paper 2 ist *„man sieht es am Graphen\"* **kein** Argument -- dort muss die Diskriminante, ein Vorzeichenwechsel oder eine Ungleichung stehen. Die Skizze ist ein Werkzeug zum schnellen **Finden** der richtigen Antwort, nicht zum Begründen.\n\n> [!warning] Der Maßstab täuscht\n> Zwei Kurven, die in einer groben Skizze zusammenzufallen scheinen, können sich schneiden oder auch nicht. Wenn eine Aufgabe auf einen solchen Grenzfall hinausläuft, entscheidet die Rechnung -- typischerweise eine Diskriminante."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Berührung als zwei Schnittpunkte zählen** -- oder umgekehrt.\n- **Die Randfälle $k = \\pm 2$ übersehen**, wenn nach der Anzahl der $k$-Werte gefragt ist.\n- **Bei einer Ungleichung das Intervall verkehrt herum ablesen.**\n- **Eine Skizze als Beweis verwenden.**\n- **Den Definitionsbereich vergessen:** $\\tfrac1x = x - 2$ hat bei $x = 0$ keine Lösung, auch wenn die umgestellte Gleichung dort etwas liefern würde.\n\nVerwandt: **Gleichungssysteme und Schnittpunkte** · **Quadratische Funktionen und Diskriminante** · Aufgabentyp: **Anzahl reeller Lösungen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Wirkung",
+      "md": "Ordne jeder Gleichung ihre Wirkung auf den Graphen von $f$ zu.",
+      "pairs": [
+        [
+          "$y = f(x + 4)$",
+          "um 4 nach links"
+        ],
+        [
+          "$y = f(x) - 4$",
+          "um 4 nach unten"
+        ],
+        [
+          "$y = 4f(x)$",
+          "Streckung parallel zur y-Achse mit Faktor 4"
+        ],
+        [
+          "$y = f(4x)$",
+          "Streckung parallel zur x-Achse mit Faktor $\\tfrac14$"
+        ],
+        [
+          "$y = f(-x)$",
+          "Spiegelung an der y-Achse"
+        ]
+      ],
+      "explain": "Was innen steht, wirkt auf x und umgekehrt; was außen steht, wirkt auf y wie gelesen.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "How many real solutions does $x^2 = 2^x$ have?",
+      "options": [
+        {
+          "md": "0"
+        },
+        {
+          "md": "1"
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "3",
+          "correct": true
+        },
+        {
+          "md": "4"
+        }
+      ],
+      "explain": "Rechts schneiden sich die Graphen bei $x = 2$ und $x = 4$; links, wo $2^x$ klein und $x^2$ groß wird, gibt es einen dritten Schnittpunkt zwischen $-1$ und $0$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Grafisch",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Graph von $y = f(x - 2)$ liegt um 2 links vom Graphen von $f$.",
+      "answer": false,
+      "explain": "Er liegt um 2 rechts: Der Wert f(x_0) erscheint bei x_0 + 2.",
+      "label": "Richtung",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Der Punkt $(3, 4)$ liegt auf $y = f(x)$. Welcher Punkt liegt sicher auf $y = f(x) + 2$?",
+      "options": [
+        {
+          "md": "$(3, 6)$",
+          "correct": true
+        },
+        {
+          "md": "$(5, 4)$",
+          "why": "Außen addiert schiebt nach oben, nicht nach rechts."
+        },
+        {
+          "md": "$(1, 4)$",
+          "why": "Keine Verschiebung in x-Richtung."
+        },
+        {
+          "md": "$(3, 8)$",
+          "why": "Addiert, nicht multipliziert."
+        }
+      ],
+      "explain": "Außen addieren verschiebt in y-Richtung.",
+      "label": "Punkt",
+      "id": "vq4"
+    },
+    {
       "type": "choice",
       "md": "How many real solutions does $x^2 = 2^x$ have?",
       "options": [
@@ -43,12 +407,50 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "anzahl"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Innen: x-Richtung, verkehrt; außen: y-Richtung.",
         "Lösungen = Schnittstellen der Graphen.",
-        "Skizze statt Rechnung zum Zählen."
+        "Skizze statt Rechnung zum Zählen.",
+        "Innen wirkt auf $x$ umgekehrt ($f(x - c)$ nach rechts, $f(bx)$ Faktor $\\tfrac1b$), außen auf $y$ wie gelesen.",
+        "Lösungen einer Gleichung als Schnittpunkte zweier Graphen zählen."
       ],
       "id": "summary"
     }

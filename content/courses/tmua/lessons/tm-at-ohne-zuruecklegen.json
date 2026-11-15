@@ -16,6 +16,217 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **»Mindestens einer« über das Gegenereignis:** $P(\\text{mindestens ein blauer}) = 1 - P(\\text{kein blauer})$; das Gegenereignis ist ein einziger Pfad.\n> 2. **Ohne Zurücklegen:** Bei jedem Zug sinken Gesamtzahl und die Zahl der gezogenen Farbe um 1.\n> 3. **Längs des Pfades multiplizieren.**\n> 4. **Vom Ganzen abziehen** und kürzen.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** 5 rote und 3 blaue Kugeln, zwei Züge ohne Zurücklegen. Wie wahrscheinlich ist mindestens eine blaue?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(\\text{beide rot}) = \\frac58 \\cdot \\frac47 = \\frac{20}{56}",
+            "why": "Gegenereignis: ein Pfad."
+          },
+          {
+            "tex": "P(\\text{mindestens eine blau}) = 1 - \\frac{20}{56} = \\frac{36}{56} = \\frac{9}{14}",
+            "why": "Abziehen und kürzen."
+          },
+          {
+            "tex": "\\text{direkt: } \\frac58 \\cdot \\frac37 + \\frac38 \\cdot \\frac57 + \\frac38 \\cdot \\frac27 = \\frac{15 + 15 + 6}{56}",
+            "why": "Probe über drei Pfade: dasselbe Ergebnis, mehr Arbeit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gegenereignis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Baumdiagramm",
+      "md": "**Mindestens eine blaue im Baum:** 4 rote, 2 blaue Kugeln, zwei Züge ohne Zurücklegen.",
+      "widget": "tree",
+      "params": {
+        "mode": "urn",
+        "depth": 2,
+        "urn": {
+          "counts": {
+            "R": 4,
+            "B": 2
+          },
+          "replace": false,
+          "names": {
+            "R": "rot",
+            "B": "blau"
+          }
+        },
+        "reveal": 2
+      },
+      "timeline": [
+        {
+          "caption": "Alle vier Pfade mit ihren Wahrscheinlichkeiten.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": null
+          }
+        },
+        {
+          "caption": "Das Gegenereignis: beide rot, 4/6 · 3/5 = 2/5.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": [
+              "RR"
+            ]
+          }
+        },
+        {
+          "caption": "Mindestens eine blau: die drei übrigen Pfade, zusammen 1 − 2/5 = 3/5.",
+          "set": {
+            "level": 2
+          },
+          "do": {
+            "highlight": {
+              "atLeast": {
+                "B": 1
+              }
+            }
+          }
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Mit Zurücklegen rechnen, obwohl ohne verlangt ist (Nenner bleibt fälschlich gleich).\n- Bei »mindestens einer« nur den Pfad »genau einer« zählen.\n- Beim direkten Weg einen der Pfade vergessen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Ziehen ohne Zurücklegen mit Gegenereignis",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Aufgabentypen/Ziehen ohne Zurücklegen mit Gegenereignis.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Aus einer Menge werden mehrere Objekte **ohne Zurücklegen** gezogen, und gefragt ist eine Wahrscheinlichkeit für die Kombination -- typischerweise *„at least one\"*, *„the same colour\"* oder *„different colours\"*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Prüfen, ob zurückgelegt wird.** Ohne Zurücklegen sinkt der Nenner in jeder Stufe um 1.\n2. **Bei „mindestens ein\": Gegenereignis bilden.**\n   $$P(\\text{mindestens ein } X) = 1 - P(\\text{kein } X).$$\n3. **Bei „gleiche Farbe\": Pfade addieren** -- je einen pro Farbe.\n4. **Bei „verschiedene Farben\":** entweder $1 -$ P(gleiche Farbe), oder beide Reihenfolgen addieren.\n5. **Entlang eines Pfades multiplizieren, über Pfade addieren.**\n\n> [!important] Das Gegenereignis spart die meiste Zeit\n> Bei drei Ziehungen aus zwei Farben hat „mindestens ein Weiß\" **sieben** günstige Pfade, „kein Weiß\" genau einen. Die Rechnung über das Gegenereignis ist also siebenmal kürzer -- und sie ist die einzige, die in der verfügbaren Zeit sicher gelingt.\n>\n> Die Negation von „mindestens ein\" ist „kein einziger\" -- dieselbe Quantorenregel wie in **Negation von Aussagen**: Die Negation von „es gibt ein\" ist „für alle nicht\"."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A bag contains 5 red and 3 blue counters. Two counters are drawn at random without replacement. What is the probability that at least one is blue?\n>\n> - **A** $\\tfrac{9}{14}$\n> - **B** $\\tfrac{5}{14}$\n> - **C** $\\tfrac{3}{8}$\n> - **D** $\\tfrac{15}{28}$\n> - **E** $\\tfrac{3}{4}$\n\n**Schritt 2:** Das Gegenereignis ist *„beide rot\"*.\n\n$$P(\\text{beide rot}) = \\frac58 \\cdot \\frac47 = \\frac{20}{56} = \\frac{5}{14}.$$\n\n**Ergebnis:** $1 - \\tfrac{5}{14} = \\tfrac{9}{14}$. Antwort **A**.\n\nOption B ist das Gegenereignis selbst -- die Falle für alle, die den letzten Schritt vergessen.\n\n> [!tip] Vor dem Rechnen kürzen\n> $\\dfrac58 \\cdot \\dfrac47 = \\dfrac{5 \\cdot 4}{8 \\cdot 7}$: Die 4 kürzt sich gegen die 8, übrig bleibt $\\dfrac{5}{2 \\cdot 7} = \\dfrac{5}{14}$. Wer erst ausmultipliziert, rechnet unnötig mit 56 und muss anschließend doch kürzen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den Nenner der zweiten Ziehung nicht verkleinern.**\n- **Das Gegenereignis berechnen und die Subtraktion vergessen.**\n- **„Mindestens ein\" als „genau ein\" lesen.**\n- **Bei „verschiedene Farben\" nur eine Reihenfolge zählen** -- Rot-dann-Blau und Blau-dann-Rot sind zwei Pfade.\n- **Den Zähler ebenfalls um 1 verkleinern**, obwohl eine andere Farbe gezogen wurde."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> A bag contains 4 red and 6 blue counters. Two are drawn without replacement. What is the probability that both are the same colour?\n>\n> - **A** $\\tfrac{7}{15}$\n> - **B** $\\tfrac{8}{15}$\n> - **C** $\\tfrac{13}{25}$\n> - **D** $\\tfrac{2}{5}$\n> - **E** $\\tfrac{1}{3}$\n\n> [!success]- Lösung\n> **A.** Zwei Pfade:\n> $$P(\\text{rot, rot}) = \\frac{4}{10} \\cdot \\frac39 = \\frac{12}{90}, \\qquad P(\\text{blau, blau}) = \\frac{6}{10} \\cdot \\frac59 = \\frac{30}{90}.$$\n> Summe: $\\tfrac{42}{90} = \\tfrac{7}{15}$.\n> B ist die Gegenwahrscheinlichkeit, also „verschiedene Farben\". C entsteht, wenn man **mit** Zurücklegen rechnet: $0{,}4^2 + 0{,}6^2 = 0{,}52 = \\tfrac{13}{25}$.\n\n> [!question] Aufgabe 2\n> A bag contains 3 white and 5 black counters. Three are drawn without replacement. What is the probability that at least one is white?\n>\n> - **A** $\\tfrac{23}{28}$\n> - **B** $\\tfrac{5}{28}$\n> - **C** $\\tfrac38$\n> - **D** $\\tfrac{15}{56}$\n> - **E** $\\tfrac{3}{28}$\n\n> [!success]- Lösung\n> **A.** Gegenereignis *„alle schwarz\"*:\n> $$\\frac58 \\cdot \\frac47 \\cdot \\frac36 = \\frac{60}{336} = \\frac{5}{28}.$$\n> Also $1 - \\tfrac{5}{28} = \\tfrac{23}{28}$.\n> B ist wieder das Gegenereignis. Der direkte Weg bräuchte sieben Pfade -- ein Beleg dafür, wie viel der Umweg spart.\n\n> [!question] Aufgabe 3\n> A bag contains 2 green and 5 yellow counters. Two are drawn without replacement. What is the probability that both are the same colour?\n>\n> - **A** $\\tfrac{11}{21}$\n> - **B** $\\tfrac{10}{21}$\n> - **C** $\\tfrac{29}{49}$\n> - **D** $\\tfrac{20}{42}$\n> - **E** $\\tfrac{1}{21}$\n\n> [!success]- Lösung\n> **A.** $$P(\\text{grün, grün}) = \\frac27 \\cdot \\frac16 = \\frac{2}{42}, \\qquad P(\\text{gelb, gelb}) = \\frac57 \\cdot \\frac46 = \\frac{20}{42}.$$\n> Summe: $\\tfrac{22}{42} = \\tfrac{11}{21}$.\n> B ist die Gegenwahrscheinlichkeit, D nur der zweite Pfad, C die Rechnung mit Zurücklegen.\n> Die Probe: Beide Ergebnisse müssen sich zu 1 ergänzen -- $\\tfrac{11}{21} + \\tfrac{10}{21} = 1$. Diese Kontrolle kostet Sekunden und findet die meisten Rechenfehler dieses Aufgabentyps."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bedingte Wahrscheinlichkeit aus Tabelle oder Venn-Diagramm** · **Quantifizierte Aussagen negieren** · **Koeffizient in einer Binomialentwicklung bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Warum rechnet man »mindestens ein blauer« meistens über das Gegenereignis?",
+      "options": [
+        {
+          "md": "Das Gegenereignis »kein blauer« ist ein einziger Pfad, das Ereignis selbst viele.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Gegenereignis immer wahrscheinlicher ist.",
+          "why": "Das kann so oder so sein."
+        },
+        {
+          "md": "Weil ohne Zurücklegen nur das Gegenereignis berechenbar ist.",
+          "why": "Beide sind berechenbar."
+        },
+        {
+          "md": "Weil die Wahrscheinlichkeiten dann größer werden.",
+          "why": "Es geht um Rechenaufwand."
+        }
+      ],
+      "explain": "Ein Pfad statt vieler: weniger Rechnung, weniger Fehler.",
+      "label": "Gegenereignis",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Pfad",
+      "md": "Aus 4 roten und 2 blauen Kugeln werden zwei ohne Zurücklegen gezogen. Wie wahrscheinlich sind beide blau? Als Bruch $\\tfrac{1}{n}$: Gib $n$ an.",
+      "answer": 15,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac26 \\cdot \\tfrac15 = \\tfrac{2}{30} = \\tfrac{1}{15}$.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +282,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ohnezurueck"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ohnezurueck"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ohnezurueck"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Mindestens einer: 1 minus P(keiner).",
+        "Ohne Zurücklegen sinken Nenner und Zähler bei jedem Zug."
+      ]
     }
   ]
 }

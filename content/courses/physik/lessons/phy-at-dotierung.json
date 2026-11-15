@@ -16,6 +16,349 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Ein Elektron zu viel oder zu wenig\n> Silicium ist vierwertig: Jedes Atom bindet über vier Elektronen an vier Nachbarn.\n>\n> | | n-Dotierung | p-Dotierung |\n> |---|---|---|\n> | Fremdatom | fünfwertig: Phosphor, Arsen | dreiwertig: Bor, Gallium |\n> | Name | Donator | Akzeptor |\n> | Folge | ein Elektron bleibt ungebunden | eine Bindung bleibt offen: ein Loch |\n> | Majoritätsträger | Elektronen | Löcher |\n> | Niveau | knapp unter dem Leitungsband | knapp über dem Valenzband |\n\n**Warum winzige Mengen wirken.** Das Donatorniveau liegt nur etwa $0{,}04\\,\\mathrm{eV}$ unter dem Leitungsband, kaum mehr als $k_BT \\approx 0{,}026\\,\\mathrm{eV}$: Bei Raumtemperatur sind praktisch alle Donatoren ionisiert, während die volle Lücke ($1{,}12\\,\\mathrm{eV}$) kaum überwunden wird.\n\n> [!warning] Der Kristall bleibt neutral\n> Mit jedem zusätzlichen Elektron kommt ein zusätzliches Proton im Kern. Es ändert sich nur, welche Ladung **beweglich** ist.",
+      "label": "Dotierung",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Der p-n-Übergang in vier Schritten** und die Wirkung einer äußeren Spannung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Diffusion: } e^-\\ \\text{vom n- ins p-Gebiet, Löcher umgekehrt}",
+            "why": "Beide Trägersorten wandern über die Grenze und rekombinieren."
+          },
+          {
+            "tex": "\\text{Verarmung: Sperrschicht ohne freie Träger}",
+            "why": "In der Grenzzone sind die beweglichen Ladungen aufgebraucht."
+          },
+          {
+            "tex": "\\text{Raumladung: } + \\text{ im n-Gebiet},\\ - \\text{ im p-Gebiet}",
+            "why": "Die ortsfesten ionisierten Atomrümpfe bleiben zurück; es entsteht ein inneres Feld."
+          },
+          {
+            "tex": "U_D \\approx 0{,}7\\,\\mathrm{V}\\ (\\mathrm{Si})",
+            "why": "Gleichgewicht: Das Feld stoppt die weitere Diffusion (Diffusionsspannung)."
+          },
+          {
+            "tex": "\\text{Pluspol an p: Sperrschicht schmal; Pluspol an n: breit}",
+            "why": "Das äußere Feld schwächt oder verstärkt das innere: Durchlass- und Sperrrichtung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Diffusion.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verarmung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Raumladung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichgewicht.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Polung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Kennlinie einer Siliciumdiode:** Strom über der Spannung (positiv heißt Pluspol am p-Gebiet).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          0.85
+        ],
+        "y": [
+          -1,
+          22
+        ],
+        "xLabel": "U in V",
+        "yLabel": "I in mA",
+        "vars": [
+          {
+            "name": "U",
+            "min": -1,
+            "max": 0.85,
+            "value": -0.8,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "I",
+            "expr": "0.00000225*(exp(x/0.05) - 1)",
+            "color": "blue",
+            "samples": 400
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "I",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "U = {U|2} V: I = **{0.00000225*(exp(U/0.05) - 1)|2} mA**"
+      },
+      "timeline": [
+        {
+          "caption": "Sperrrichtung: Die Sperrschicht wird breiter, es fließt praktisch kein Strom (nur ein winziger Sperrstrom der Minoritätsträger).",
+          "set": {
+            "U": -0.8
+          }
+        },
+        {
+          "caption": "Kleine Durchlassspannung: Das innere Feld ist noch kaum geschwächt, der Strom bleibt winzig.",
+          "to": {
+            "U": 0.4
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Ab etwa 0,6 bis 0,7 V ist die Sperrschicht abgebaut: Der Strom steigt steil an. Eine Diode lässt Strom nur in eine Richtung durch.",
+          "to": {
+            "U": 0.8
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**LED-Farben aus der Bandlücke.** Eine grüne LED bei $555\\,\\mathrm{nm}$ braucht $E_g = \\tfrac{1240}{555}\\,\\mathrm{eV} \\approx 2{,}23\\,\\mathrm{eV}$ (Galliumphosphid). Eine Silicium-LED leuchtete bei $1107\\,\\mathrm{nm}$, also unsichtbar. Blaue LEDs brauchen rund $2{,}7\\,\\mathrm{eV}$; erst Galliumnitrid machte sie möglich (Nobelpreis 2014) und damit weißes LED-Licht.\n\n**Hall-Effekt als Beweis.** Das Vorzeichen der Hall-Spannung kehrt sich zwischen n- und p-Material um: Im p-Halbleiter fließen wirklich positive Ladungsträger, Löcher sind mehr als eine Rechenhilfe.\n\n> [!warning] Typische Fallen\n> Den dotierten Kristall geladen nennen; n und p vertauschen; Löcher als fehlende Atome beschreiben; im p-Halbleiter Protonen wandern lassen; die Sperrschicht für eine eigene Materialschicht halten; die Diffusionsspannung für eine abgreifbare Batteriespannung halten.",
+      "label": "Anwendungen und Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Dotierung - n- und p-Halbleiter charakterisieren",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Dotierung - n- und p-Halbleiter charakterisieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Erklären Sie die Wirkung der Dotierung mit Phosphor\"*, *\"Unterscheiden Sie n- und p-Halbleiter\"*, *\"Weshalb erhöht schon eine geringe Dotierung die Leitfähigkeit erheblich?\"*, *\"Erklären Sie die Sperrschicht am p-n-Übergang\"*, *\"Begründen Sie, weshalb eine Diode nur in einer Richtung leitet\"*.\n\nErkennungsmerkmal: Ein Halbleiter wird mit **Fremdatomen** versetzt, oder es geht um **Dioden** und **p-n-Übergänge**."
+            }
+          ]
+        },
+        {
+          "title": "Das Prinzip",
+          "blocks": [
+            {
+              "md": "> [!important] Ein Elektron zu viel oder zu wenig\n> Silicium ist **vierwertig**: Jedes Atom bindet über vier Elektronen an seine vier Nachbarn. Ersetzt man einzelne Siliciumatome durch Fremdatome anderer Wertigkeit, entsteht ein Überschuss oder ein Mangel.\n>\n> | | **n-Dotierung** | **p-Dotierung** |\n> |---|---|---|\n> | Fremdatom | **fünfwertig**: Phosphor, Arsen, Antimon | **dreiwertig**: Bor, Aluminium, Gallium |\n> | Name | **Donator** (gibt ab) | **Akzeptor** (nimmt auf) |\n> | Folge | ein Elektron bleibt ungebunden übrig | eine Bindung bleibt unbesetzt, ein Loch entsteht |\n> | Majoritätsträger | **Elektronen** (negativ) | **Löcher** (positiv) |\n> | Minoritätsträger | Löcher | Elektronen |\n> | Niveau im Bändermodell | Donatorniveau **knapp unter** dem Leitungsband | Akzeptorniveau **knapp über** dem Valenzband |\n> | Abstand zum Band | rund 0,01 bis 0,05 eV | rund 0,01 bis 0,05 eV |\n>\n> Merkhilfe: **n** wie **negativ** (Elektronen), **p** wie **positiv** (Löcher).\n\n> [!tip] Warum winzige Mengen so große Wirkung haben\n> Der Abstand des Donatorniveaus zum Leitungsband beträgt nur etwa 0,04 eV -- verglichen mit der vollen Bandlücke von 1,12 eV in Silicium also rund ein Dreißigstel. Die thermische Energie bei Raumtemperatur ($k_BT \\approx 0{,}026\\,\\text{eV}$) reicht daher aus, um praktisch **alle** Donatoren zu ionisieren, während die Anregung über die volle Lücke extrem selten bleibt.\n>\n> Konsequenz: Bereits eine Dotierung von einem Fremdatom auf $10^{6}$ Siliciumatome erhöht die Leitfähigkeit um mehrere Zehnerpotenzen. Genau diese enorme Hebelwirkung -- Materialeigenschaften über Spurenverunreinigungen gezielt einzustellen -- ist die Grundlage der gesamten Halbleitertechnik. Sie erklärt zugleich, weshalb die Herstellung Reinstsilicium mit Verunreinigungen unterhalb $10^{-9}$ voraussetzt: Ungewollte Fremdatome wirken genauso stark wie gewollte.\n\n> [!warning] Der dotierte Kristall bleibt elektrisch neutral\n> Ein n-Halbleiter ist **nicht negativ geladen**. Jedes Phosphoratom bringt ein zusätzliches Elektron mit, aber auch ein zusätzliches Proton im Kern. Was sich ändert, ist allein die **Beweglichkeit** der Ladung, nicht die Gesamtladung.\n>\n> Diese Feststellung wird in Prüfungen regelmäßig verlangt und ist der häufigste konzeptionelle Fehler des Themas."
+            }
+          ]
+        },
+        {
+          "title": "Der p-n-Übergang",
+          "blocks": [
+            {
+              "md": "Bringt man beide Bereiche in Kontakt, geschieht Folgendes:\n\n1. **Diffusion:** Elektronen wandern aus dem n-Gebiet ins p-Gebiet und rekombinieren dort mit Löchern; Löcher wandern umgekehrt.\n2. **Verarmung:** In der Grenzzone werden beide Trägersorten aufgebraucht -- es entsteht eine an freien Ladungsträgern arme **Sperrschicht**.\n3. **Raumladung:** Zurück bleiben die ortsfesten ionisierten Rümpfe -- positiv im n-Gebiet, negativ im p-Gebiet. Es baut sich ein **inneres elektrisches Feld** auf.\n4. **Gleichgewicht:** Dieses Feld wirkt der weiteren Diffusion entgegen; die zugehörige **Diffusionsspannung** beträgt bei Silicium rund 0,7 V.\n\n| Polung | Wirkung auf die Sperrschicht | Strom |\n|---|---|---|\n| **Durchlassrichtung** (Pluspol an p) | äußeres Feld schwächt das innere, Sperrschicht wird **schmaler** | fließt ab etwa 0,7 V |\n| **Sperrrichtung** (Pluspol an n) | äußeres Feld verstärkt das innere, Sperrschicht wird **breiter** | praktisch null (nur Sperrstrom der Minoritätsträger) |\n\n> [!important] Die Gleichrichterwirkung ist eine Folge der Geometrie, nicht des Materials\n> Weder p- noch n-Silicium leitet für sich genommen richtungsabhängig. Erst der **Übergang** zwischen beiden erzeugt die Asymmetrie, weil das innere Feld eine feste Richtung hat und die äußere Spannung es je nach Polung schwächt oder verstärkt.\n>\n> Daraus folgen unmittelbar die wichtigsten Bauelemente: die **Diode** als Gleichrichter, die **Leuchtdiode** (Rekombination setzt Photonen der Energie $E_g$ frei -- die Farbe folgt also direkt aus der Bandlücke), die **Solarzelle** (umgekehrter Prozess: Photonen erzeugen Paare, das innere Feld trennt sie) und der **Transistor** als Kombination zweier Übergänge."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Wertigkeit des Fremdatoms** bestimmen: fünfwertig ergibt n, dreiwertig ergibt p.\n2. **Majoritätsträger benennen** und dabei ausdrücklich die Neutralität des Kristalls erwähnen.\n3. **Im Bändermodell einordnen:** Donatorniveau unter dem Leitungsband, Akzeptorniveau über dem Valenzband.\n4. **Bei p-n-Aufgaben** die vier Schritte Diffusion, Verarmung, Raumladung, Gleichgewicht abarbeiten.\n5. **Bei Polungsfragen** prüfen, ob das äußere Feld das innere schwächt oder verstärkt.\n6. **Bei LED-Aufgaben** die Wellenlänge über $\\lambda[\\text{nm}] = 1240/E_g[\\text{eV}]$ berechnen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Leuchtdiode aus Galliumphosphid soll grünes Licht der Wellenlänge $\\lambda = 555\\,\\text{nm}$ emittieren. Welche Bandlücke muss das Material haben? Vergleichen Sie mit Silicium.*\n\n**Schritt 6, Bandlücke:**\n$$E_g = \\frac{1240\\,\\text{eV}\\,\\text{nm}}{555\\,\\text{nm}} \\approx 2{,}23\\,\\text{eV}$$\n\n**Vergleich mit Silicium ($E_g = 1{,}12\\,\\text{eV}$):** Eine Silicium-LED emittierte bei\n$$\\lambda = \\frac{1240}{1{,}12} \\approx 1107\\,\\text{nm}$$\nalso im **Infraroten** -- unsichtbar. Genau deshalb werden sichtbare LEDs nicht aus Silicium gefertigt, sondern aus Verbindungshalbleitern mit größerer Bandlücke.\n\n**Einordnung:** Blaue LEDs benötigen rund $2{,}7\\,\\text{eV}$ und waren jahrzehntelang das fehlende Glied -- erst Galliumnitrid löste das Problem, was 2014 mit dem Nobelpreis ausgezeichnet wurde. Ohne blaue LED gäbe es kein weißes LED-Licht, da dieses aus blauem Licht plus Leuchtstoffkonversion erzeugt wird."
+            }
+          ]
+        },
+        {
+          "title": "Verbindung zum Hall-Effekt",
+          "blocks": [
+            {
+              "md": "Welche Trägersorte tatsächlich den Strom trägt, lässt sich **messen**: Das Vorzeichen der Hall-Spannung kehrt sich zwischen n- und p-Material um, siehe **Hall-Spannung berechnen**. Das ist der experimentelle Beweis, dass in p-Halbleitern wirklich positive Ladungsträger fließen und Löcher keine bloße Rechenhilfe sind. Halbleiter-Hallsonden nutzen zugleich die geringe Ladungsträgerdichte, die dort millivoltgroße statt mikrovoltgroße Spannungen erzeugt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den dotierten Halbleiter als geladen bezeichnen.** Er ist neutral.\n- **n- und p-Dotierung vertauschen.** Fünfwertig ergibt n, dreiwertig ergibt p.\n- **Löcher als \"fehlende Atome\" beschreiben.** Es sind unbesetzte Bindungsplätze, die sich durch Nachrücken von Elektronen bewegen.\n- **Behaupten, im p-Halbleiter bewegten sich Protonen.** Die Kerne sind ortsfest; beweglich sind ausschließlich Elektronen, deren Fehlstellen sich effektiv wie positive Träger verhalten.\n- **Die Sperrschicht als isolierende Materialschicht ansehen.** Sie ist eine an freien Trägern verarmte Zone desselben Kristalls und ändert ihre Breite mit der angelegten Spannung.\n- **Die Diffusionsspannung als äußere Spannung deuten.** Sie ist intern und an den Anschlüssen nicht abgreifbar -- eine Diode ist keine Batterie.\n- **Minoritätsträger vergessen.** Sie erklären den kleinen Sperrstrom und dessen starke Temperaturabhängigkeit."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bändermodell - Leiter, Halbleiter und Isolator unterscheiden** · **Hall-Spannung berechnen** · **Photoeffekt auswerten** · **Festkörperphysik und Halbleiter**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Bedeutung zu.",
+      "pairs": [
+        [
+          "Phosphor in Silicium",
+          "Donator, n-Typ"
+        ],
+        [
+          "Bor in Silicium",
+          "Akzeptor, p-Typ"
+        ],
+        [
+          "Majoritätsträger im n-Typ",
+          "Elektronen"
+        ],
+        [
+          "Majoritätsträger im p-Typ",
+          "Löcher"
+        ],
+        [
+          "Sperrschicht",
+          "an freien Trägern verarmte Zone"
+        ]
+      ],
+      "explain": "n wie negativ (Elektronen), p wie positiv (Löcher).",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Vorgänge am p-n-Übergang in die richtige Reihenfolge.",
+      "items": [
+        "Diffusion: Elektronen und Löcher wandern über die Grenze",
+        "Rekombination: In der Grenzzone verschwinden die freien Träger",
+        "Raumladung der ortsfesten Rümpfe baut ein inneres Feld auf",
+        "Gleichgewicht: Das Feld stoppt die Diffusion"
+      ],
+      "explain": "Die Reihenfolge: 1. Diffusion: Elektronen und Löcher wandern über die Grenze. 2. Rekombination: In der Grenzzone verschwinden die freien Träger. 3. Raumladung der ortsfesten Rümpfe baut ein inneres Feld auf. 4. Gleichgewicht: Das Feld stoppt die Diffusion.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Wellenlänge sendet eine LED mit der Bandlücke $2{,}7\\,\\mathrm{eV}$ aus?",
+      "answer": 459,
+      "tolerance": 4,
+      "placeholder": "nm",
+      "explain": "$\\lambda = \\tfrac{1240}{2{,}7}\\,\\mathrm{nm} \\approx 459\\,\\mathrm{nm}$: blau.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Größenordnung",
+      "md": "Silicium hat rund $5\\cdot 10^{22}$ Atome pro $\\mathrm{cm^3}$. Wie viele freie Elektronen pro $\\mathrm{cm^3}$ liefert eine Dotierung mit einem Phosphoratom pro Million Siliciumatome? Gib das Ergebnis in $10^{16}$ an.",
+      "answer": 5,
+      "tolerance": 0.1,
+      "placeholder": "10¹⁶ /cm³",
+      "explain": "$5\\cdot 10^{22}\\cdot 10^{-6} = 5\\cdot 10^{16}$; reines Silicium hat nur etwa $10^{10}$ freie Elektronen pro $\\mathrm{cm^3}$, also millionenfach weniger.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Im p-Halbleiter wandern Protonen durch den Kristall.",
+      "answer": false,
+      "explain": "Kerne sind ortsfest. Es wandern Elektronen, deren Fehlstellen sich wie positive Träger bewegen.",
+      "label": "Typischer Fehler",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Warum lässt eine Diode Strom nur in eine Richtung durch?",
+      "options": [
+        {
+          "md": "Das innere Feld des Übergangs hat eine feste Richtung; die äußere Spannung schwächt oder verstärkt es je nach Polung.",
+          "correct": true
+        },
+        {
+          "md": "Weil n- und p-Silicium einzeln nur in eine Richtung leiten.",
+          "why": "Einzeln leiten beide in beide Richtungen."
+        },
+        {
+          "md": "Weil die Elektronen nur in eine Richtung fließen können.",
+          "why": "Erst die Sperrschicht macht den Unterschied."
+        },
+        {
+          "md": "Weil an der Grenze eine Isolierschicht eingebaut ist.",
+          "why": "Die Sperrschicht ist eine verarmte Zone desselben Kristalls."
+        }
+      ],
+      "explain": "Die Gleichrichtung ist eine Folge des Übergangs, nicht des Materials.",
+      "label": "Diode",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Warum werden sichtbare LEDs nicht aus Silicium gebaut?",
+      "options": [
+        {
+          "md": "Seine Bandlücke von 1,12 eV ergibt Photonen bei 1107 nm, im unsichtbaren Infrarot.",
+          "correct": true
+        },
+        {
+          "md": "Weil Silicium kein Halbleiter ist.",
+          "why": "Es ist der wichtigste Halbleiter überhaupt."
+        },
+        {
+          "md": "Weil Silicium zu teuer ist.",
+          "why": "Es ist billig; der Grund ist die Wellenlänge."
+        },
+        {
+          "md": "Weil Silicium nicht dotiert werden kann.",
+          "why": "Es lässt sich hervorragend dotieren."
+        }
+      ],
+      "explain": "Sichtbares Licht braucht $E_g$ zwischen etwa $1{,}6$ und $3{,}3\\,\\mathrm{eV}$.",
+      "label": "LED",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -76,6 +419,40 @@
         }
       ],
       "explain": "Pluspol am p-Bereich drückt Löcher und Elektronen in die Sperrschicht: sie wird abgebaut."
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "bandluecke"
+        ]
+      },
+      "label": "LED-Farben",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "bandluecke",
+          "led"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Fünfwertig: Donator, n-Typ, Elektronen; dreiwertig: Akzeptor, p-Typ, Löcher; der Kristall bleibt neutral.",
+        "p-n-Übergang: Diffusion, Verarmung, Raumladung, Gleichgewicht; Durchlass ab etwa 0,7 V, LED-Farbe aus der Bandlücke."
+      ]
     }
   ]
 }

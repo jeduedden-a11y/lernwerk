@@ -6,7 +6,7 @@
   --fs: 1;
   --inset-top: 16px;
   --inset-bottom: 120px;
-  --accent: #5e5ce6;
+  --accent: #d2502c;
   --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
   --label: #000000;
   --label-2: rgba(60, 60, 67, 0.62);
@@ -195,6 +195,8 @@ body {
   -webkit-user-select: text; user-select: text; outline: none;
 }
 .lw-input:focus { border-color: var(--accent); }
+/* a value the calculator of the app put in */
+.lw-input.lw-filled { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); transition: box-shadow 0.2s; }
 .lw-input.correct { border-color: var(--green); }
 .lw-input.wrong { border-color: var(--red); }
 .lw-input.blank { flex: none; width: 6.5em; display: inline-block; vertical-align: middle; font-size: 1em; padding: 5px 9px; border-radius: 10px; margin: 2px 0; }
@@ -247,6 +249,34 @@ body {
 }
 .lw-self button.good.on { border-color: var(--green); background: color-mix(in srgb, var(--green) 15%, var(--card-solid)); }
 .lw-self button.bad.on { border-color: var(--orange); background: color-mix(in srgb, var(--orange) 15%, var(--card-solid)); }
+
+/* a vault note as a learning task: section by section, display formulas covered until recalled */
+.lw-note-head { margin: 2px 0 10px; }
+.lw-note-kicker { font-size: calc(12px * var(--fs)); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
+.lw-note-title { font-size: calc(21px * var(--fs)); font-weight: 750; line-height: 1.2; margin-top: 2px; }
+.lw-note-sec { display: none; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--separator); }
+.lw-note-sec:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+.lw-note-sec.open { display: block; animation: lw-note-in 0.35s ease both; }
+.lw-note-sec-title { font-size: calc(17px * var(--fs)); font-weight: 700; margin-bottom: 6px; }
+.lw-note-sec table { width: 100%; }
+.lw-note-count { margin-top: 12px; font-size: calc(13px * var(--fs)); color: var(--label-2); }
+.lw-recall { position: relative; border-radius: 12px; }
+.lw-recall-cover {
+  position: absolute; inset: 0; width: 100%; border: 1.5px dashed var(--separator); border-radius: 12px;
+  background: color-mix(in srgb, var(--card-solid) 82%, transparent); -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+  color: var(--label-2); font: inherit; font-size: calc(14px * var(--fs)); font-weight: 600; cursor: pointer; padding: 6px 12px;
+}
+.lw-recall.open { animation: lw-note-in 0.3s ease both; }
+@keyframes lw-note-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.lw-chart-box { margin: 10px 0 4px; }
+.lw-chart { display: block; width: 100%; height: auto; }
+.lw-chart .grid { stroke: var(--separator); stroke-width: 1; }
+.lw-chart .axis { stroke: var(--label-3); stroke-width: 1.2; }
+.lw-chart .tick { fill: var(--label-2); font-size: 9px; font-family: inherit; }
+.lw-chart-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 4px; font-size: calc(13px * var(--fs)); color: var(--label-2); }
+.lw-chart-legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.lw-chart-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+@media (prefers-reduced-motion: reduce) { .lw-note-sec.open, .lw-recall.open { animation: none; } }
 
 /* ---------- Feedback inside the step ---------- */
 .lw-feedback {
@@ -777,7 +807,10 @@ body {
 .lw-badge.merken { background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--orange); }
 
 /* step images; graphics from the vault */
-.lw-step-img { width: 100%; margin-top: 10px; border-radius: 14px; background: white; }
+/* graphics.js recolours diagrams for light and dark mode, so they sit on the card without a white box */
+.lw-step-img { display: block; width: 100%; margin-top: 10px; border-radius: 14px; transition: opacity 0.18s; }
+.lw-step-img[data-fit="pending"] { opacity: 0; }
+.lw-step-img[data-fit="unknown"] { background: white; }
 .lw-step-caption { margin-top: 6px; font-size: calc(13px * var(--fs)); color: var(--label-2); }
 .lw-vault-missing { margin-top: 10px; padding: 14px; border-radius: 14px; border: 1.5px dashed var(--separator); color: var(--label-2); font-size: calc(14px * var(--fs)); }
 
@@ -816,3 +849,17 @@ body {
 .lw-rubric-pts .w-btn { min-width: 38px; border: 0; border-radius: 10px; padding: 8px 10px; background: var(--fill); color: var(--label); font: inherit; font-weight: 650; }
 .lw-rubric-pts .w-btn.on { background: var(--accent); color: white; }
 .lw-np-key { margin-top: 10px; font-size: 0.85em; color: var(--label-2); }
+
+/* bildtour: a vault graphic as a guided tour, the camera glides to the part the caption explains */
+.w-tour { position: relative; width: 100%; overflow: hidden; border-radius: 14px; }
+.w-tour-img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: 0 0; will-change: transform; }
+.w-tour-spot {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s;
+  background: radial-gradient(circle at var(--cx, 50%) var(--cy, 50%), transparent var(--r, 30%), color-mix(in srgb, var(--card-solid) 72%, transparent) calc(var(--r, 30%) + 9%));
+}
+
+/* exams from files: skipped and unreached tasks, the hint while marking */
+.lw-step.exam-skipped .lw-step-label::after { content: "übersprungen"; margin-left: auto; font-size: 0.85em; color: var(--label-2); font-weight: 600; }
+.lw-step.exam-late .lw-step-label::after { content: "nicht erreicht"; margin-left: auto; font-size: 0.85em; color: var(--label-2); font-weight: 600; }
+.lw-exam-hint { margin: 8px 0 4px; padding: 10px 12px; border-radius: 14px; background: var(--accent-soft); }
+.lw-exam-tasks { font-size: 0.92em; }

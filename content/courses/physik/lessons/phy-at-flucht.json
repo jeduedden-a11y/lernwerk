@@ -16,6 +16,402 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung der Fluchtgeschwindigkeit.** Ein Körper soll von der Oberfläche (Abstand $R$) aus ins Unendliche gelangen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "W = \\int_R^{\\infty} G\\,\\frac{M m}{r^2}\\,dr = G M m\\left[-\\frac1r\\right]_R^{\\infty} = G\\,\\frac{M m}{R}",
+            "why": "Hubarbeit bis ins Unendliche: endlich, obwohl der Weg unendlich lang ist, weil die Kraft schnell genug abnimmt."
+          },
+          {
+            "tex": "\\tfrac12 m v_F^2 = G\\,\\frac{M m}{R}",
+            "why": "Energiesatz: Die Bewegungsenergie beim Start muss diese Arbeit gerade decken (im Unendlichen bleibt die Geschwindigkeit null)."
+          },
+          {
+            "tex": "v_F = \\sqrt{\\frac{2 G M}{R}}",
+            "why": "$m$ kürzt sich. Erde: $v_F \\approx 11{,}2\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$."
+          },
+          {
+            "tex": "v_K = \\sqrt{\\frac{G M}{R}}\\quad\\Rightarrow\\quad v_F = \\sqrt2\\,v_K",
+            "why": "Verglichen mit der Kreisbahngeschwindigkeit im selben Abstand: genau der Faktor $\\sqrt2$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Arbeit bis ins Unendliche.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Energiesatz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fluchtgeschwindigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich mit der Kreisbahn.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Gebunden oder frei?** Lageenergie und Gesamtenergie in Einheiten von $G\\tfrac{Mm}{R}$, Abstand in Planetenradien.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          8
+        ],
+        "y": [
+          -1.1,
+          0.3
+        ],
+        "xLabel": "r in Radien",
+        "yLabel": "E in GMm/R",
+        "vars": [
+          {
+            "name": "q",
+            "min": 0.3,
+            "max": 1,
+            "value": 0.6,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "Ep",
+            "expr": "-1/x",
+            "color": "blue",
+            "domain": [
+              1,
+              8
+            ],
+            "label": "Lageenergie",
+            "labelAt": 5.5
+          },
+          {
+            "name": "Eg",
+            "expr": "q*q - 1",
+            "color": "orange",
+            "dashed": true,
+            "label": "Gesamtenergie",
+            "labelAt": 5.5
+          }
+        ],
+        "vlines": [
+          {
+            "x": 1
+          }
+        ],
+        "points": [
+          {
+            "x": "1/(1 - q*q)",
+            "y": "q*q - 1",
+            "color": "orange"
+          }
+        ],
+        "readout": "Start mit {q|2} · v_F: Gesamtenergie **{q*q - 1|2}**, Umkehr bei **{1/(1 - q*q)|2} Radien**"
+      },
+      "timeline": [
+        {
+          "caption": "Blau: die Lageenergie $E_{pot} = -G\\tfrac{Mm}{r}$, null im Unendlichen. Orange: die Gesamtenergie eines Körpers, der von der Oberfläche ($r = R$) mit $v_0 = 0{,}6\\,v_F$ startet.",
+          "set": {
+            "q": 0.6
+          }
+        },
+        {
+          "caption": "Wo die orange Linie die blaue Kurve trifft, ist die ganze Bewegungsenergie aufgebraucht: Der Körper kehrt um. Bei $v_0 = 0{,}8\\,v_F$ liegt der Umkehrpunkt bei $r \\approx 2{,}8\\,R$.",
+          "to": {
+            "q": 0.8
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Je schneller der Start, desto weiter draußen der Umkehrpunkt: bei $0{,}9\\,v_F$ schon über $5\\,R$.",
+          "to": {
+            "q": 0.9
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $v_0 = v_F$ ist die Gesamtenergie null. Die Linie trifft die Kurve nie: Der Körper entkommt und kommt erst im Unendlichen zur Ruhe. Für $v_0 > v_F$ bleibt ihm dort sogar Bewegungsenergie.",
+          "to": {
+            "q": 1
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Flucht aus einer Umlaufbahn.** Eine Sonde kreist in der Höhe $h$ und soll das Erdfeld verlassen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "v_K = \\sqrt{\\frac{G M_E}{R_E + h}},\\qquad v_F = \\sqrt2\\,v_K",
+            "why": "Kreisbahn- und Fluchtgeschwindigkeit im selben Abstand."
+          },
+          {
+            "tex": "\\Delta v = v_F - v_K = (\\sqrt2 - 1)\\,v_K \\approx 0{,}414\\,v_K",
+            "why": "Die Sonde fliegt schon mit der Kreisbahngeschwindigkeit; nötig ist nur der Unterschied."
+          },
+          {
+            "tex": "h = 400\\,\\mathrm{km}:\\quad \\Delta v \\approx 0{,}414\\cdot 7{,}67\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}} \\approx 3{,}18\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}",
+            "why": "Deshalb starten Raumsonden erst in eine Umlaufbahn und zünden dort erneut."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Geschwindigkeiten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Der Unterschied.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlenbeispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Fluchtgeschwindigkeit berechnen",
+      "path": "02 Wiki/Physik/01 E-Phase/Aufgabentypen/Fluchtgeschwindigkeit berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Welche Geschwindigkeit muss eine Rakete mindestens haben, um das Gravitationsfeld der Erde zu verlassen?\"*, *\"Berechnen Sie die zweite kosmische Geschwindigkeit\"*, *\"Ab welcher Startgeschwindigkeit kehrt der Körper nicht mehr zurück?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Der Energieansatz",
+          "blocks": [
+            {
+              "md": "> [!important] Kinetische Energie muss die Bindungsenergie überwinden\n> Ein Körper entkommt dem Gravitationsfeld genau dann, wenn seine kinetische Energie mindestens so groß ist wie der Betrag seiner potenziellen Energie im Feld:\n> $$\\frac{1}{2}mv^2 = G\\frac{Mm}{R}$$\n> Die Körpermasse $m$ kürzt sich heraus:\n> $$v_{\\text{Flucht}} = \\sqrt{\\frac{2GM}{R}}$$\n> Der Grenzfall bedeutet: Der Körper erreicht \"unendlich weit entfernt\" gerade noch die Geschwindigkeit null."
+            }
+          ]
+        },
+        {
+          "title": "Verhältnis zur Bahngeschwindigkeit",
+          "blocks": [
+            {
+              "md": "Vergleicht man die Fluchtgeschwindigkeit $v_{\\text{Flucht}}=\\sqrt{\\dfrac{2GM}{R}}$ mit der Kreisbahngeschwindigkeit $v_{\\text{Bahn}}=\\sqrt{\\dfrac{GM}{R}}$ auf derselben Höhe, gilt:\n$$v_{\\text{Flucht}} = \\sqrt{2}\\cdot v_{\\text{Bahn}} \\approx 1{,}414\\cdot v_{\\text{Bahn}}$$\nWer also aus einer Kreisbahn entkommen will, braucht nur das $\\sqrt2$-fache der Bahngeschwindigkeit -- eine oft geprüfte Beziehung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zentralmasse $M$ und Startabstand $R$ identifizieren** (bei Start von der Oberfläche: der Planetenradius).\n2. **Formel anwenden:** $v_{\\text{Flucht}}=\\sqrt{\\dfrac{2GM}{R}}$.\n3. **In SI-Einheiten einsetzen.**\n4. **Einheitenkontrolle:** $\\sqrt{\\dfrac{[\\text{N}\\,\\text{m}^2/\\text{kg}^2]\\cdot[\\text{kg}]}{[\\text{m}]}} = \\sqrt{[\\text{m}^2/\\text{s}^2]} = [\\text{m/s}]$ ✓.\n5. **Plausibilität:** Für die Erde liegt der Wert bei rund $11{,}2\\,\\text{km/s}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Berechnen Sie die Fluchtgeschwindigkeit von der Erdoberfläche ($M=5{,}972\\cdot10^{24}\\,\\text{kg}$, $R=6371\\,\\text{km}$).*\n\n**Schritt 2/3:**\n$$v_{\\text{Flucht}} = \\sqrt{\\frac{2\\cdot6{,}674\\cdot10^{-11}\\cdot5{,}972\\cdot10^{24}}{6{,}371\\cdot10^{6}}} = \\sqrt{\\frac{7{,}972\\cdot10^{14}}{6{,}371\\cdot10^{6}}} = \\sqrt{1{,}251\\cdot10^{8}}$$\n\n$$v_{\\text{Flucht}} \\approx 11\\,186\\,\\text{m/s} \\approx 11{,}19\\,\\text{km/s}$$\n\n*Rund $11{,}2\\,\\text{km/s}$ oder etwa $40\\,300\\,\\text{km/h}$ -- der bekannte Wert der zweiten kosmischen Geschwindigkeit.*\n\n**Kontrolle über die $\\sqrt2$-Beziehung:** Die Kreisbahngeschwindigkeit direkt an der Erdoberfläche wäre $\\sqrt{\\dfrac{GM}{R}} \\approx 7910\\,\\text{m/s}$; multipliziert mit $\\sqrt2\\approx1{,}414$ ergibt das $11\\,186\\,\\text{m/s}$ ✓ -- konsistent."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den Faktor 2 im Zähler vergessen** und dadurch die Bahngeschwindigkeit statt der Fluchtgeschwindigkeit berechnen -- ein Unterschied von Faktor $\\sqrt2$.\n- **Die Masse des startenden Körpers einsetzen wollen.** Sie kürzt sich heraus -- die Fluchtgeschwindigkeit ist für eine Rakete und einen geworfenen Stein identisch (unter Vernachlässigung des Luftwiderstands).\n- **Annehmen, die Fluchtgeschwindigkeit müsse dauerhaft gehalten werden.** Sie ist eine **Startgeschwindigkeit** -- danach wird der Körper zwar ständig langsamer, kehrt aber nicht mehr um.\n- **Luftwiderstand ignorieren, wo er erwähnt wird.** Real startet keine Rakete mit dieser Geschwindigkeit von der Oberfläche, sondern beschleunigt kontinuierlich in dünner werdender Atmosphäre -- die Formel gilt für den idealisierten Fall.\n- **Startabstand mit Bahnhöhe verwechseln**, wenn der Start nicht von der Oberfläche, sondern aus einer Umlaufbahn erfolgt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Gravitation** · **Bahngeschwindigkeit und Umlaufzeit von Satelliten berechnen** · **Energieerhaltungssatz anwenden** · **Gravitationskraft nach Newton berechnen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Fluchtgeschwindigkeit in die richtige Reihenfolge.",
+      "items": [
+        "Arbeit bis ins Unendliche: $W = \\int_R^\\infty G\\tfrac{Mm}{r^2}\\,dr = G\\tfrac{Mm}{R}$",
+        "Energiesatz: $\\tfrac12 m v_F^2 = G\\tfrac{Mm}{R}$",
+        "$m$ kürzen und nach $v_F$ auflösen",
+        "Ergebnis: $v_F = \\sqrt{\\tfrac{2GM}{R}} = \\sqrt2\\,v_K$"
+      ],
+      "explain": "Die Reihenfolge: 1. Arbeit bis ins Unendliche: $W = \\int_R^\\infty G\\tfrac{Mm}{r^2}\\,dr = G\\tfrac{Mm}{R}$. 2. Energiesatz: $\\tfrac12 m v_F^2 = G\\tfrac{Mm}{R}$. 3. $m$ kürzen und nach $v_F$ auflösen. 4. Ergebnis: $v_F = \\sqrt{\\tfrac{2GM}{R}} = \\sqrt2\\,v_K$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne die Fluchtgeschwindigkeit des Mondes ($M = 7{,}35\\cdot 10^{22}\\,\\mathrm{kg}$, $R = 1737\\,\\mathrm{km}$).",
+      "answer": 2.38,
+      "tolerance": 0.02,
+      "placeholder": "km/s",
+      "explain": "$v_F = \\sqrt{\\tfrac{2\\cdot 6{,}674\\cdot 10^{-11}\\cdot 7{,}35\\cdot 10^{22}}{1{,}737\\cdot 10^6}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 2376\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Deshalb konnte die Mondfähre mit einer kleinen Stufe zurückstarten.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Und die des Mars ($M = 6{,}42\\cdot 10^{23}\\,\\mathrm{kg}$, $R = 3390\\,\\mathrm{km}$)?",
+      "answer": 5.03,
+      "tolerance": 0.03,
+      "placeholder": "km/s",
+      "explain": "$v_F = \\sqrt{\\tfrac{2\\cdot 6{,}674\\cdot 10^{-11}\\cdot 6{,}42\\cdot 10^{23}}{3{,}39\\cdot 10^6}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 5{,}03\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "cloze",
+      "label": "Definitionen",
+      "md": "Die Fluchtgeschwindigkeit ist das {{0}}-fache der Kreisbahngeschwindigkeit im selben Abstand.",
+      "blanks": [
+        {
+          "accept": [
+            "1,414",
+            "1.414",
+            "1,41",
+            "1.41",
+            "sqrt(2)",
+            "√2",
+            "Wurzel 2",
+            "Wurzel aus 2"
+          ],
+          "numeric": true,
+          "tolerance": 0.005
+        }
+      ],
+      "explain": "$v_F = \\sqrt{\\tfrac{2GM}{R}} = \\sqrt2\\cdot\\sqrt{\\tfrac{GM}{R}}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein schwerer Körper braucht eine größere Fluchtgeschwindigkeit als ein leichter.",
+      "answer": false,
+      "explain": "Seine Masse kürzt sich: $v_F = \\sqrt{\\tfrac{2GM}{R}}$ enthält nur die Masse des Himmelskörpers. Er braucht allerdings mehr **Energie**.",
+      "label": "Verständnis",
+      "id": "vq5"
+    },
+    {
+      "type": "choice",
+      "md": "Warum darf man für die Fluchtgeschwindigkeit nicht $m g h$ ansetzen?",
+      "options": [
+        {
+          "md": "Weil $g$ mit der Entfernung abnimmt; $m g h$ gilt nur für kleine Höhen.",
+          "correct": true
+        },
+        {
+          "md": "Weil $h$ unendlich ist und das Ergebnis dann null wäre.",
+          "why": "Mit konstantem $g$ wäre die Arbeit sogar unendlich; das Feld wird aber schwächer."
+        },
+        {
+          "md": "Weil die Masse des Körpers unbekannt ist.",
+          "why": "Sie kürzt sich in beiden Ansätzen."
+        },
+        {
+          "md": "Man darf; das Ergebnis ist dasselbe.",
+          "why": "Nur nahe der Oberfläche stimmen beide überein."
+        }
+      ],
+      "explain": "Die Arbeit bis ins Unendliche ist $G\\tfrac{Mm}{R}$, endlich, weil die Kraft mit $\\tfrac{1}{r^2}$ abnimmt.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Klausur",
+      "md": "Eine Sonde kreist in $400\\,\\mathrm{km}$ Höhe mit $7{,}67\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$. Um wie viel muss sie schneller werden, um die Erde zu verlassen?",
+      "answer": 3.18,
+      "tolerance": 0.03,
+      "placeholder": "km/s",
+      "explain": "$\\Delta v = (\\sqrt2 - 1)\\,v_K \\approx 0{,}414\\cdot 7{,}67\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}} \\approx 3{,}18\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+      "id": "vq7"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Wie klein müsste die Sonne ($M = 1{,}989\\cdot 10^{30}\\,\\mathrm{kg}$) werden, damit ihre Fluchtgeschwindigkeit die Lichtgeschwindigkeit erreicht?",
+      "answer": 2.95,
+      "tolerance": 0.03,
+      "placeholder": "km",
+      "explain": "$v_F = c$: $R = \\tfrac{2GM}{c^2} = \\tfrac{2\\cdot 6{,}674\\cdot 10^{-11}\\cdot 1{,}989\\cdot 10^{30}}{(3\\cdot 10^8)^2}\\,\\mathrm{m} \\approx 2{,}95\\,\\mathrm{km}$. Das ist der Schwarzschild-Radius; die Allgemeine Relativitätstheorie liefert zufällig dieselbe Formel.",
+      "id": "vq8"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Ein Lösungsweg für die Fluchtgeschwindigkeit der Erde. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Energiesatz: $\\tfrac12 m v_F^2 = G\\tfrac{M m}{R}$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Also $v_F = \\sqrt{\\tfrac{G M}{R}} \\approx 7{,}9\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$.",
+          "why": "Falsch: Beim Auflösen fehlt der Faktor 2. Richtig ist $v_F = \\sqrt{\\tfrac{2GM}{R}} \\approx 11{,}2\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$; $7{,}9\\,\\tfrac{\\mathrm{km}}{\\mathrm{s}}$ ist die Kreisbahngeschwindigkeit."
+        },
+        {
+          "md": "Die Fluchtgeschwindigkeit ist eine Startgeschwindigkeit; danach wird der Körper langsamer.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Der Faktor 2 stammt aus dem $\\tfrac12$ der Bewegungsenergie.",
+      "id": "vq9"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +488,53 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "flucht-orbit"
+        ]
+      },
+      "label": "Aus der Umlaufbahn",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "flucht-orbit"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "flucht",
+          "flucht-orbit"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Arbeit bis ins Unendliche $G\\tfrac{Mm}{R}$; aus $\\tfrac12 m v_F^2 = G\\tfrac{Mm}{R}$ folgt $v_F = \\sqrt{\\tfrac{2GM}{R}} = \\sqrt2\\,v_K$.",
+        "Gesamtenergie negativ: gebunden, mit Umkehrpunkt. Gesamtenergie null oder positiv: frei.",
+        "Aus der Umlaufbahn genügt $\\Delta v = (\\sqrt2 - 1)\\,v_K$. Für $v_F = c$ ergibt sich der Schwarzschild-Radius $\\tfrac{2GM}{c^2}$."
+      ]
     }
   ]
 }

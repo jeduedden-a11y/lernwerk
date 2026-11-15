@@ -23,6 +23,518 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Sinus, Kosinus, Tangens am Einheitskreis\n> Ein Punkt des Einheitskreises zum Winkel $x$ (gegen den Uhrzeigersinn ab der positiven x-Achse) hat die Koordinaten $(\\cos x, \\sin x)$. Der Tangens ist $\\tan x = \\dfrac{\\sin x}{\\cos x}$, wo $\\cos x \\ne 0$.\n\n| $x$ | $0^\\circ$ | $30^\\circ$ | $45^\\circ$ | $60^\\circ$ | $90^\\circ$ |\n|---|---|---|---|---|---|\n| $\\sin x$ | 0 | $\\tfrac12$ | $\\tfrac{\\sqrt2}{2}$ | $\\tfrac{\\sqrt3}{2}$ | 1 |\n| $\\cos x$ | 1 | $\\tfrac{\\sqrt3}{2}$ | $\\tfrac{\\sqrt2}{2}$ | $\\tfrac12$ | 0 |\n| $\\tan x$ | 0 | $\\tfrac{\\sqrt3}{3}$ | 1 | $\\sqrt3$ | – |\n\nDie Spezifikation verlangt zwei Identitäten: $\\sin^2 x + \\cos^2 x = 1$ und $\\tan x = \\dfrac{\\sin x}{\\cos x}$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Identität und der Symmetrien.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\cos^2 x + \\sin^2 x = 1",
+            "why": "Pythagoras im Dreieck aus Radius 1, der x-Koordinate und der y-Koordinate."
+          },
+          {
+            "tex": "\\sin(180^\\circ - x) = \\sin x",
+            "why": "Spiegelung an der y-Achse: Die y-Koordinate bleibt."
+          },
+          {
+            "tex": "\\cos(360^\\circ - x) = \\cos x",
+            "why": "Spiegelung an der x-Achse: Die x-Koordinate bleibt."
+          },
+          {
+            "tex": "\\tan(x + 180^\\circ) = \\tan x",
+            "why": "Gegenüberliegender Punkt: Beide Koordinaten wechseln das Vorzeichen, ihr Quotient bleibt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Pythagoras.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sinus.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kosinus.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangens.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Alle Lösungen in $0^\\circ \\le x < 360^\\circ$:** Mit $x_1$ aus der Tabelle oder dem Rechner-freien Wert:\n- $\\sin x = k$: $x_1$ und $180^\\circ - x_1$ (für negatives $k$ noch $360^\\circ$ addieren),\n- $\\cos x = k$: $x_1$ und $360^\\circ - x_1$,\n- $\\tan x = k$: $x_1$ und $x_1 + 180^\\circ$.\n\nBei $\\sin(2x) = k$ durchläuft $2x$ das Intervall $[0^\\circ, 720^\\circ)$: doppelt so viele Lösungen, am Ende durch 2 teilen.\n\n> [!warning] Nie durch $\\sin x$ oder $\\cos x$ teilen\n> Aus $\\sin x \\cos x = \\sin x$ wird durch Teilen nur $\\cos x = 1$; die Lösungen mit $\\sin x = 0$ gehen verloren. Richtig: $\\sin x\\,(\\cos x - 1) = 0$.",
+      "label": "Lösungen",
+      "id": "ve3"
+    },
+    {
+      "type": "anim",
+      "label": "Sinusgleichung",
+      "md": "**Die zwei Lösungen von $\\sin x = k$:** blau $y = \\sin x$, orange die Höhe $k$, grün die Schnittpunkte.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          360
+        ],
+        "y": [
+          -1.3,
+          1.3
+        ],
+        "xLabel": "x in Grad",
+        "grid": false,
+        "vars": [
+          {
+            "name": "k",
+            "min": -1,
+            "max": 1,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x*pi/180)",
+            "color": "blue",
+            "samples": 400
+          },
+          {
+            "name": "as",
+            "expr": "atan(x/sqrt(1 - x^2))*180/pi",
+            "hidden": true
+          }
+        ],
+        "hlines": [
+          {
+            "y": "k",
+            "color": "orange",
+            "dashed": false,
+            "width": 2
+          }
+        ],
+        "points": [
+          {
+            "x": "k >= 0 ? as(k) : 360 + as(k)",
+            "y": "k",
+            "color": "green"
+          },
+          {
+            "x": "180 - as(k)",
+            "y": "k",
+            "color": "green"
+          }
+        ],
+        "readout": "k = {k|2}: Lösungen {k >= 0 ? as(k) : 360 + as(k)|1}° und {180 - as(k)|1}°"
+      },
+      "timeline": [
+        {
+          "caption": "k = 0,5: x₁ = 30° und die gespiegelte Lösung 180° − 30° = 150°.",
+          "set": {
+            "k": 0.5
+          }
+        },
+        {
+          "caption": "k = 0,87, ungefähr √3/2: 60° und 120°. Die beiden Lösungen liegen symmetrisch zu 90°.",
+          "to": {
+            "k": 0.866
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 1: Beide fallen bei 90° zusammen, nur eine Lösung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = −0,5: x₁ = −30° liegt außerhalb; mit 360° addiert 330°, dazu 180° − (−30°) = 210°.",
+          "to": {
+            "k": -0.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve4"
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Herleitung: Eine gemischte Gleichung wird quadratisch.** Löse $2\\sin^2 x = 3\\cos x$ für $0^\\circ \\le x < 360^\\circ$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "2(1 - \\cos^2 x) = 3\\cos x",
+            "why": "Mit $\\sin^2 x = 1 - \\cos^2 x$ steht nur noch eine Funktion da."
+          },
+          {
+            "tex": "2c^2 + 3c - 2 = 0 \\quad (c = \\cos x)",
+            "why": "Ordnen: eine quadratische Gleichung in c."
+          },
+          {
+            "tex": "(2c - 1)(c + 2) = 0 \\;\\Rightarrow\\; c = \\tfrac12 \\text{ oder } c = -2",
+            "why": "Faktorisieren."
+          },
+          {
+            "tex": "\\cos x = -2 \\text{ ist unmöglich}",
+            "why": "Der Kosinus liegt zwischen −1 und 1."
+          },
+          {
+            "tex": "\\cos x = \\tfrac12 \\;\\Rightarrow\\; x = 60^\\circ \\text{ oder } x = 300^\\circ",
+            "why": "Beide Lösungen im Intervall: $x_1$ und $360^\\circ - x_1$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Identität.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quadratisch.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktorisieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aussortieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Winkel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Trigonometrische Gleichungen",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Trigonometrische Gleichungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die beiden Identitäten der Spezifikation",
+          "blocks": [
+            {
+              "md": "MM4.5 nennt genau zwei:\n\n$$\\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}, \\qquad \\sin^2\\theta + \\cos^2\\theta = 1.$$\n\nMehr ist nicht verlangt -- keine Additionstheoreme, keine Doppelwinkelformeln. Aus der zweiten folgen die beiden Umformungen, die fast jede Aufgabe braucht:\n\n$$\\sin^2\\theta = 1 - \\cos^2\\theta, \\qquad \\cos^2\\theta = 1 - \\sin^2\\theta.$$"
+            }
+          ]
+        },
+        {
+          "title": "Gleichungen in einem Intervall lösen",
+          "blocks": [
+            {
+              "md": "Das Verfahren (MM4.6) hat immer dieselben Schritte:\n\n1. **Die Gleichung auf eine Grundform bringen:** $\\sin(\\text{Ausdruck}) = k$ oder analog für $\\cos$, $\\tan$.\n2. **Das Intervall für den Ausdruck umrechnen.** Steht $2x$ in der Gleichung und gilt $0° \\le x \\le 360°$, so läuft $2x$ von $0°$ bis $720°$ -- doppelt so weit.\n3. **Hauptwert** bestimmen (der Taschenrechnerwert, hier aus der Wertetabelle).\n4. **Alle Partner im erweiterten Intervall** über die Symmetrien finden:\n\n| Gleichung | Lösungen in einer Periode |\n|---|---|\n| $\\sin u = k$ | $u_0$ und $180° - u_0$ |\n| $\\cos u = k$ | $u_0$ und $360° - u_0$ (also $\\pm u_0$) |\n| $\\tan u = k$ | $u_0$, danach alle $u_0 + 180°$ |\n\n5. **Periodisch fortsetzen**, solange man im erweiterten Intervall bleibt.\n6. **Zurückrechnen** auf $x$ -- und erst am Ende prüfen, welche Werte im ursprünglichen Intervall liegen.\n\n> [!important] Schritt 2 entscheidet über die Anzahl der Lösungen\n> $\\sin 2x = \\tfrac12$ hat auf $[0°, 360°]$ **vier** Lösungen, nicht zwei: Für $2x \\in [0°, 720°]$ gibt es die Werte $30°$, $150°$, $390°$, $510°$ und damit $x = 15°$, $75°$, $195°$, $255°$.\n>\n> Wer den Intervallwechsel überspringt, verliert genau die Hälfte der Lösungen -- der häufigste Fehler dieses Themenfelds."
+            }
+          ]
+        },
+        {
+          "title": "Gleichungen, die quadratisch werden",
+          "blocks": [
+            {
+              "md": "Enthält eine Gleichung $\\sin^2$ und $\\cos$ (oder umgekehrt), führt die Identität auf eine quadratische Gleichung in **einer** Funktion:\n\n> [!example] $2\\sin^2 x = 3\\cos x + 3$ für $0° \\le x \\le 360°$\n> $2(1 - \\cos^2 x) = 3\\cos x + 3$, also $2\\cos^2 x + 3\\cos x + 1 = 0$.\n> Mit $u = \\cos x$: $(2u + 1)(u + 1) = 0$, also $u = -\\tfrac12$ oder $u = -1$.\n> $\\cos x = -\\tfrac12$ liefert $x = 120°$ und $240°$; $\\cos x = -1$ liefert $x = 180°$.\n> Drei Lösungen.\n\nDer Rückweg ist derselbe wie bei **Gleichungen in quadratischer Form**: Werte außerhalb von $[-1, 1]$ liefern **keine** Lösung, und jeder zulässige Wert kann mehrere $x$ ergeben."
+            }
+          ]
+        },
+        {
+          "title": "Was nicht erlaubt ist",
+          "blocks": [
+            {
+              "md": "> [!warning] Nicht durch eine trigonometrische Funktion teilen\n> Aus $\\sin x \\cos x = \\sin x$ folgt **nicht** $\\cos x = 1$. Richtig ist $\\sin x(\\cos x - 1) = 0$, also zusätzlich $\\sin x = 0$. Dividieren durch $\\sin x$ verliert alle Lösungen mit $\\sin x = 0$ -- dieselbe Falle wie bei **Ungleichungen** und in Beweisen (siehe **Typische Fehler in Beweisen**).\n>\n> Ebenso wenig folgt aus $\\sin A = \\sin B$, dass $A = B$ ist: Auch $A = 180° - B$ passt. Das ist eines der beiden Fehlerbeispiele, die die Spezifikation ausdrücklich nennt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Das Intervall nicht mitskalieren.**\n- **Nur den Hauptwert angeben.**\n- **Bei $\\tan$ die Periode 360° statt 180° verwenden.**\n- **Durch $\\sin x$ oder $\\cos x$ teilen.**\n- **Lösungen außerhalb des Intervalls mitzählen** -- oder Randwerte übersehen, wenn das Intervall geschlossen ist.\n\nVerwandt: **Graphen trigonometrischer Funktionen** · Aufgabentypen: **Trigonometrische Gleichung im Intervall lösen** · **Trigonometrische Gleichung mit Pythagoras-Identität**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Trigonometrische Gleichung im Intervall lösen",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Aufgabentypen/Trigonometrische Gleichung im Intervall lösen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Gleichung mit $\\sin$, $\\cos$ oder $\\tan$ soll in einem **vorgegebenen Intervall** gelöst werden, oder es ist nur die **Anzahl** der Lösungen gefragt. Erkennungsmerkmal: ein Vielfaches oder eine Verschiebung im Argument -- $\\sin 2x$, $\\cos(x - 30°)$, $\\tan 3x$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Substituieren:** $u = $ das ganze Argument, also etwa $u = 2x$.\n2. **Intervall für $u$ umrechnen.** Aus $0° \\le x \\le 360°$ wird $0° \\le u \\le 720°$.\n3. **Hauptwert** aus der Wertetabelle bestimmen.\n4. **Alle Lösungen für $u$** im neuen Intervall auflisten: bei $\\sin$ die Partner $180° - u_0$, bei $\\cos$ die Partner $360° - u_0$, dann jeweils $+360°$ fortsetzen; bei $\\tan$ jeweils $+180°$.\n5. **Zurücksubstituieren** und prüfen, ob alle Werte im ursprünglichen Intervall liegen.\n\n> [!tip] Die Anzahl vorab abschätzen\n> Ist $\\lvert k \\rvert < 1$, hat $\\sin u = k$ **zwei Lösungen pro voller Periode**. Läuft $u$ über $n$ Perioden, sind es also rund $2n$ Lösungen. Bei $\\sin 2x$ auf $[0°, 360°]$ sind das zwei Perioden, also vier. Wer so schätzt, merkt sofort, wenn er zwei Lösungen übersehen hat."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> How many solutions does the equation $\\sin 2x = \\tfrac12$ have for $0° \\le x \\le 360°$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 6\n\n**Schritt 1 und 2:** $u = 2x$ mit $0° \\le u \\le 720°$.\n\n**Schritt 3 und 4:** $\\sin u = \\tfrac12$ hat den Hauptwert $u = 30°$; Partner $150°$; dazu $+360°$: $390°$ und $510°$. Alle vier liegen im Intervall.\n\n**Schritt 5:** $x = 15°,\\ 75°,\\ 195°,\\ 255°$.\n\nAntwort **D**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Das Intervall nicht mitskalieren** -- dann fehlen die Lösungen der zweiten Periode.\n- **Bei $\\cos$ den Partner als $180° - u_0$ bilden** (das gilt für $\\sin$).\n- **Bei $\\tan$ mit Periode 360° arbeiten.**\n- **Randwerte:** Bei $0° \\le x \\le 360°$ gehören $0°$ und $360°$ dazu, bei $0° \\le x < 360°$ nicht.\n- **Zurücksubstituieren vergessen:** Gefragt ist $x$, nicht $u$."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find all solutions of $\\cos x = -\\tfrac12$ for $0° \\le x \\le 360°$.\n>\n> - **A** $120°$ and $240°$\n> - **B** $60°$ and $300°$\n> - **C** $120°$ only\n> - **D** $30°$ and $150°$\n> - **E** $210°$ and $330°$\n\n> [!success]- Lösung\n> **A.** Der Kosinus ist im zweiten und dritten Quadranten negativ. Hauptwert zu $\\tfrac12$ ist $60°$, also $x = 180° - 60° = 120°$ und $x = 180° + 60° = 240°$.\n> B sind die Lösungen von $\\cos x = +\\tfrac12$.\n\n> [!question] Aufgabe 2\n> How many solutions does $\\tan 3x = 1$ have for $0° \\le x < 180°$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 6\n\n> [!success]- Lösung\n> **C.** $u = 3x$ läuft über $0° \\le u < 540°$. $\\tan u = 1$ hat dort die Lösungen $45°$, $225°$, $405°$ -- Periode 180°.\n> Zurück: $x = 15°$, $75°$, $135°$.\n\n> [!question] Aufgabe 3\n> How many solutions does $\\sin\\left(x + 30°\\right) = \\tfrac{\\sqrt3}{2}$ have for $0° \\le x \\le 360°$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 0\n\n> [!success]- Lösung\n> **B.** $u = x + 30°$ läuft über $30° \\le u \\le 390°$. $\\sin u = \\tfrac{\\sqrt3}{2}$ hat die Lösungen $60°$, $120°$ und -- eine Periode weiter -- $420°$, das außerhalb liegt.\n> Zurück: $x = 30°$ und $x = 90°$.\n> Die Verschiebung ändert die **Lage** des Intervalls, nicht seine Länge: Eine volle Periode bleibt eine volle Periode."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Trigonometrische Gleichung mit Pythagoras-Identität** · **Anzahl reeller Lösungen bestimmen** · **Extremwerte trigonometrischer Ausdrücke**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Trigonometrische Gleichung mit Pythagoras-Identität",
+      "path": "02 Wiki/TMUA/08 Trigonometrie/Aufgabentypen/Trigonometrische Gleichung mit Pythagoras-Identität.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "In der Gleichung stehen **zwei verschiedene** trigonometrische Funktionen -- typischerweise $\\sin^2$ neben $\\cos$, $\\cos^2$ neben $\\sin$, oder $\\tan$ neben $\\sin$ und $\\cos$. Solange beide vorkommen, lässt sich nichts auflösen; erst die Identität macht daraus eine Gleichung in **einer** Funktion.\n\nDie Spezifikation stellt genau zwei Identitäten bereit (MM4.5):\n\n$$\\sin^2\\theta + \\cos^2\\theta = 1, \\qquad \\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zielfunktion wählen.** Die Funktion, die **linear** auftritt, bleibt stehen; die quadratische wird ersetzt. Steht $\\sin^2$ neben $\\cos$, ersetzt man $\\sin^2 x = 1 - \\cos^2 x$ -- dann steht überall nur noch $\\cos$.\n2. **Einsetzen und auf null bringen.** Es entsteht eine quadratische Gleichung in $u = \\cos x$ bzw. $u = \\sin x$.\n3. **Faktorisieren oder $p$-$q$-Formel.**\n4. **Werte prüfen:** Jede Lösung mit $\\lvert u \\rvert > 1$ **entfällt** -- das ist der Filter, den fast jede Aufgabe einbaut.\n5. **Rücksubstituieren** und alle $x$ im Intervall bestimmen, wie in **Trigonometrische Gleichung im Intervall lösen**.\n\n> [!important] Bei $\\tan$ mit dem Nenner multiplizieren, nicht kürzen\n> Steht $\\tan x$ neben $\\sin x$ oder $\\cos x$, schreibt man $\\tan x = \\tfrac{\\sin x}{\\cos x}$ und **multipliziert die ganze Gleichung mit $\\cos x$**. Danach gilt die Nebenbedingung $\\cos x \\ne 0$, also $x \\ne 90°,\\ 270°$ -- erst ganz am Ende prüfen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> How many solutions does $3\\cos^2 x - \\sin x - 1 = 0$ have for $0° \\le x \\le 360°$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 0\n\n**Schritt 1:** $\\sin$ steht linear, $\\cos$ quadratisch -- also $\\cos^2 x = 1 - \\sin^2 x$ einsetzen.\n\n**Schritt 2:** $3(1 - \\sin^2 x) - \\sin x - 1 = 0$, also $-3\\sin^2 x - \\sin x + 2 = 0$ und nach Multiplikation mit $-1$:\n\n$$3\\sin^2 x + \\sin x - 2 = 0.$$\n\n**Schritt 3:** Mit $u = \\sin x$: $(3u - 2)(u + 1) = 0$, also $u = \\tfrac23$ oder $u = -1$.\n\n**Schritt 4:** Beide Werte liegen in $[-1, 1]$, keiner entfällt.\n\n**Schritt 5:**\n\n- $\\sin x = \\tfrac23$: Der Hauptwert liegt zwischen $30°$ und $45°$ (denn $\\tfrac12 < \\tfrac23 < \\tfrac{\\sqrt2}{2}$), dazu der Partner $180° - x_0$ -- **zwei** Lösungen.\n- $\\sin x = -1$: genau $x = 270°$ -- **eine** Lösung, weil $-1$ der Randwert ist.\n\nInsgesamt drei. Antwort **C**.\n\n> [!tip] Den Hauptwert nicht ausrechnen\n> Gefragt war die **Anzahl**, nicht die Werte. $\\sin x = \\tfrac23$ ist ein krummer Winkel -- wer ihn zu bestimmen versucht, verliert Zeit. Entscheidend ist allein: $0 < \\tfrac23 < 1$, also zwei Lösungen pro Periode; $-1$ ist der Randwert, also nur eine."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die falsche Funktion ersetzen.** Wer in $3\\cos^2 x - \\sin x - 1 = 0$ stattdessen $\\sin x = \\pm\\sqrt{1 - \\cos^2 x}$ einsetzt, erzeugt eine Wurzelgleichung und muss anschließend Scheinlösungen aussortieren.\n- **Den Randwert $\\pm 1$ doppelt zählen.** $\\sin x = 1$ und $\\sin x = -1$ haben in einer Periode nur **eine** Lösung, nicht zwei.\n- **Eine Lösung mit $\\lvert u \\rvert > 1$ mitschleppen.**\n- **Durch $\\sin x$ oder $\\cos x$ teilen** statt auszuklammern -- dabei gehen genau die Lösungen verloren, bei denen der Faktor null wird (dieselbe Fehlerklasse wie in **Typische Fehler in Beweisen**).\n- **Die Nebenbedingung $\\cos x \\ne 0$ vergessen**, nachdem man mit $\\cos x$ multipliziert hat."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Solve $2\\cos^2 x + \\sin x = 1$ for $0° \\le x \\le 360°$.\n>\n> - **A** $90°$, $210°$, $330°$\n> - **B** $210°$ and $330°$\n> - **C** $90°$ only\n> - **D** $30°$, $150°$, $270°$\n> - **E** $270°$ only\n\n> [!success]- Lösung\n> **A.** $2(1 - \\sin^2 x) + \\sin x - 1 = 0$ ergibt $2\\sin^2 x - \\sin x - 1 = 0$, also $(2\\sin x + 1)(\\sin x - 1) = 0$.\n> $\\sin x = -\\tfrac12$ liefert $210°$ und $330°$ (dritter und vierter Quadrant), $\\sin x = 1$ liefert $90°$.\n> B und C sind die typischen Teilantworten: Wer einen der beiden Faktoren übersieht, landet genau dort.\n\n> [!question] Aufgabe 2\n> How many solutions does $2\\sin^2 x + 3\\cos x = 0$ have for $0° \\le x \\le 360°$?\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 3\n> - **E** 4\n\n> [!success]- Lösung\n> **C.** $2(1 - \\cos^2 x) + 3\\cos x = 0$ ergibt $2\\cos^2 x - 3\\cos x - 2 = 0$, also $(2\\cos x + 1)(\\cos x - 2) = 0$.\n> $\\cos x = 2$ **entfällt** -- der Kosinus wird nie größer als 1.\n> Bleibt $\\cos x = -\\tfrac12$ mit $x = 120°$ und $x = 240°$.\n> Wer $\\cos x = 2$ mitzählt und ihm zwei Lösungen zuschreibt, kommt auf E.\n\n> [!question] Aufgabe 3\n> How many solutions does $2\\sin x = 3\\tan x$ have for $0° \\le x \\le 360°$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** 4\n> - **E** 0\n\n> [!success]- Lösung\n> **C.** Mit $\\tan x = \\tfrac{\\sin x}{\\cos x}$ und Multiplikation mit $\\cos x$: $2\\sin x\\cos x = 3\\sin x$, also\n> $$\\sin x\\,(2\\cos x - 3) = 0.$$\n> $\\cos x = \\tfrac32$ entfällt. Bleibt $\\sin x = 0$ mit $x = 0°$, $180°$, $360°$ -- alle drei erfüllen $\\cos x \\ne 0$ und liegen im **geschlossenen** Intervall.\n> Wer durch $\\sin x$ teilt, erhält $2\\cos x = 3$ und damit Antwort E -- der klassische Divisionsfehler."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Trigonometrische Gleichung im Intervall lösen** · **Gleichungen in quadratischer Form** · **Extremwerte trigonometrischer Ausdrücke**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Werte",
+      "md": "Ordne die exakten Werte zu.",
+      "pairs": [
+        [
+          "$\\sin 30^\\circ$",
+          "$\\tfrac12$"
+        ],
+        [
+          "$\\cos 30^\\circ$",
+          "$\\tfrac{\\sqrt3}{2}$"
+        ],
+        [
+          "$\\tan 45^\\circ$",
+          "$1$"
+        ],
+        [
+          "$\\tan 60^\\circ$",
+          "$\\sqrt3$"
+        ],
+        [
+          "$\\cos 45^\\circ$",
+          "$\\tfrac{\\sqrt2}{2}$"
+        ]
+      ],
+      "explain": "Am Einheitskreis: Das 30-60-90-Dreieck hat die Seiten $1$, $\\tfrac12$, $\\tfrac{\\sqrt3}{2}$, das 45-Grad-Dreieck zweimal $\\tfrac{\\sqrt2}{2}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Wie viele Lösungen hat $\\cos x = -0{,}3$ für $0^\\circ \\le x < 720^\\circ$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "Zwei Lösungen je Umlauf von $360^\\circ$, zwei Umläufe.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "How many solutions does $2\\sin x \\cos x = \\sin x$ have for $0^\\circ \\le x < 360^\\circ$?",
+      "options": [
+        {
+          "md": "2"
+        },
+        {
+          "md": "3"
+        },
+        {
+          "md": "4",
+          "correct": true
+        },
+        {
+          "md": "5"
+        },
+        {
+          "md": "6"
+        }
+      ],
+      "explain": "$\\sin x\\,(2\\cos x - 1) = 0$: $\\sin x = 0$ gibt $0^\\circ$ und $180^\\circ$, $\\cos x = \\tfrac12$ gibt $60^\\circ$ und $300^\\circ$. Wer durch $\\sin x$ teilt, findet nur zwei.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Faktorisieren",
+      "id": "vq3"
+    },
+    {
+      "type": "cloze",
+      "label": "Symmetrie",
+      "md": "Ergänze die Symmetrie: $\\sin(180^\\circ - x) =$ {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "sin x",
+            "sin(x)",
+            "sinx",
+            "sin x°"
+          ]
+        }
+      ],
+      "explain": "Spiegelung an der y-Achse lässt die y-Koordinate unverändert.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für jede reelle Zahl $k$ hat $\\tan x = k$ genau zwei Lösungen mit $0^\\circ \\le x < 360^\\circ$.",
+      "answer": true,
+      "explain": "Der Tangens nimmt jeden Wert genau einmal je $180^\\circ$ an: $x_1$ und $x_1 + 180^\\circ$.",
+      "label": "Tangens",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Summe",
+      "md": "Wie groß ist die Summe aller Lösungen von $\\sin x = 0{,}6$ mit $0^\\circ \\le x < 360^\\circ$?",
+      "answer": 180,
+      "tolerance": 0,
+      "placeholder": "°",
+      "explain": "$x_1 + (180^\\circ - x_1) = 180^\\circ$, ohne $x_1$ zu kennen.",
+      "id": "vq6"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Lösungsschema für eine gemischte trigonometrische Gleichung in die richtige Reihenfolge.",
+      "items": [
+        "mit $\\sin^2 x + \\cos^2 x = 1$ auf eine einzige Funktion umschreiben",
+        "als quadratische Gleichung in dieser Funktion ordnen",
+        "faktorisieren oder die Lösungsformel anwenden",
+        "unmögliche Werte (Betrag größer als 1) streichen",
+        "alle Winkel im Intervall angeben"
+      ],
+      "explain": "Die Reihenfolge: 1. mit $\\sin^2 x + \\cos^2 x = 1$ auf eine einzige Funktion umschreiben. 2. als quadratische Gleichung in dieser Funktion ordnen. 3. faktorisieren oder die Lösungsformel anwenden. 4. unmögliche Werte (Betrag größer als 1) streichen. 5. alle Winkel im Intervall angeben.",
+      "id": "vq7"
+    },
+    {
       "type": "choice",
       "md": "How many solutions does $\\sin(2x) = \\frac12$ have for $0° \\leq x < 360°$?",
       "options": [
@@ -101,6 +613,13 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-trig",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "md": "How many solutions does $\\tan x = 2\\sin x$ have for $0° \\leq x \\leq 360°$?",
       "options": [
@@ -133,7 +652,9 @@
       "points": [
         "sin: x₁ und 180° − x₁; cos: x₁ und 360° − x₁; tan: Periode 180°.",
         "sin(2x): doppelt so viele Lösungen.",
-        "Nie durch sin x oder cos x teilen: ausklammern."
+        "Nie durch sin x oder cos x teilen: ausklammern.",
+        "$\\sin x = k$: $x_1$, $180^\\circ - x_1$; $\\cos x = k$: $x_1$, $360^\\circ - x_1$; $\\tan x = k$: $x_1$, $x_1 + 180^\\circ$.",
+        "Mit $\\sin^2 x + \\cos^2 x = 1$ auf eine Funktion bringen; nie durch $\\sin x$ oder $\\cos x$ teilen."
       ],
       "id": "summary"
     }

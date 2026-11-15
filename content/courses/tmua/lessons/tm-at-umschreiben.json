@@ -16,6 +16,173 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Wurzeln als Potenzen:** $\\sqrt x = x^{\\frac12}$, $\\sqrt[3]{x^2} = x^{\\frac23}$, $\\tfrac{1}{\\sqrt x} = x^{-\\frac12}$.\n> 2. **Brüche mit einem einzigen Glied im Nenner aufteilen:** $\\tfrac{x^2 + 3}{x} = x + 3x^{-1}$.\n> 3. **Produkte ausmultiplizieren:** $(x + 1)(x - 3) = x^2 - 2x - 3$; $x\\sqrt x = x^{\\frac32}$.\n> 4. **Konstante Faktoren stehen lassen** und erst dann gliedweise ableiten.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** $f(x) = \\dfrac{(x + 1)(x - 3)}{x}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(x + 1)(x - 3) = x^2 - 2x - 3",
+            "why": "Ausmultiplizieren."
+          },
+          {
+            "tex": "f(x) = x - 2 - 3x^{-1}",
+            "why": "Durch x teilen, gliedweise."
+          },
+          {
+            "tex": "f'(x) = 1 + 3x^{-2} = 1 + \\frac{3}{x^2}",
+            "why": "Ableiten: −3x^{−1} wird +3x^{−2}."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausmultiplizieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aufteilen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Einen Bruch mit Summe im Nenner aufteilen: $\\tfrac{1}{x + 1}$ ist nicht $\\tfrac1x + 1$.\n- $\\tfrac{1}{2\\sqrt x}$ als $2x^{-\\frac12}$ schreiben statt $\\tfrac12 x^{-\\frac12}$.\n- Beim Ableiten negativer Exponenten das Vorzeichen verlieren.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Terme vor dem Ableiten umschreiben",
+      "path": "02 Wiki/TMUA/10 Differenzialrechnung/Aufgabentypen/Terme vor dem Ableiten umschreiben.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Der abzuleitende Term ist **kein** fertiges Polynom, sondern ein Bruch, ein Produkt, eine Wurzel oder eine Klammerpotenz. Da die Spezifikation weder Produkt- noch Quotienten- noch Kettenregel nennt, ist das Umschreiben der vorgesehene Weg -- und die eigentliche Arbeit."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ausmultiplizieren**, wenn Klammern da sind.\n2. **Gliedweise durch den Nenner teilen**, wenn ein Bruch da ist -- jedes Glied einzeln.\n3. **Wurzeln als Potenzen schreiben:** $\\sqrt x = x^{1/2}$, $\\sqrt[3]{x^2} = x^{2/3}$, $\\tfrac{1}{\\sqrt x} = x^{-1/2}$.\n4. **Erst jetzt ableiten**, Glied für Glied.\n5. **Auf Wunsch zurückverwandeln**, falls die Antwortoptionen Brüche und Wurzeln zeigen.\n\n> [!important] Gliedweise teilen, nicht kürzen wollen\n> $$\\frac{x^3 + 2x}{x} = \\frac{x^3}{x} + \\frac{2x}{x} = x^2 + 2.$$\n> Nur wenn der **ganze** Zähler durch den Nenner geteilt wird, ist die Umformung richtig. $\\tfrac{x^3 + 2x}{x} \\ne x^2 + 2x$ -- der zweite Summand wird ebenfalls geteilt."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Given $y = \\dfrac{(x + 2)^2}{x}$, find $\\dfrac{\\mathrm dy}{\\mathrm dx}$ at $x = 2$.\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 4\n> - **E** $-1$\n\n**Schritt 1:** $(x+2)^2 = x^2 + 4x + 4$.\n\n**Schritt 2:** $\\dfrac{x^2 + 4x + 4}{x} = x + 4 + 4x^{-1}$.\n\n**Schritt 4:** $\\dfrac{\\mathrm dy}{\\mathrm dx} = 1 - 4x^{-2} = 1 - \\dfrac{4}{x^2}$.\n\n**Einsetzen:** $1 - \\tfrac44 = 0$. Antwort **A**.\n\n> [!tip] Die Deutung des Ergebnisses\n> Die Ableitung ist null -- der Punkt $x = 2$ ist also ein **stationärer Punkt**. Das ist kein Zufall: Aufgaben dieses Typs werden oft so gebaut, dass das Ergebnis eine runde Zahl oder null ist. Ein krummes Ergebnis ist deshalb ein Warnsignal, die Umformung noch einmal anzusehen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Zähler und Nenner getrennt ableiten.** $\\tfrac{\\mathrm d}{\\mathrm dx}\\tfrac fg \\ne \\tfrac{f'}{g'}$ -- das ist der schwerste Fehler dieses Typs und in den Optionen zuverlässig vertreten.\n- **Nur das erste Glied durch den Nenner teilen.**\n- **Die Klammer gliedweise quadrieren:** $(x+2)^2 \\ne x^2 + 4$.\n- **Bei negativen Exponenten das Vorzeichen der Ableitung verlieren.**\n- **Den Definitionsbereich ignorieren:** Nach dem Kürzen ist $x = 0$ weiterhin ausgeschlossen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Given $y = \\sqrt x\\,(x - 3)$, find $\\dfrac{\\mathrm dy}{\\mathrm dx}$ at $x = 9$.\n>\n> - **A** 4\n> - **B** 5\n> - **C** 3\n> - **D** $\\tfrac{9}{2}$\n> - **E** 6\n\n> [!success]- Lösung\n> **A.** Ausmultiplizieren: $y = x^{3/2} - 3x^{1/2}$.\n> Ableiten: $\\dfrac{\\mathrm dy}{\\mathrm dx} = \\tfrac32 x^{1/2} - \\tfrac32 x^{-1/2}$.\n> Einsetzen: $\\tfrac32 \\cdot 3 - \\tfrac32 \\cdot \\tfrac13 = \\tfrac92 - \\tfrac12 = 4$.\n> D ist das Ergebnis, wenn man den zweiten Summanden vergisst.\n\n> [!question] Aufgabe 2\n> Given $f(x) = \\dfrac{x^3 + 2x}{x}$, find $f'(3)$.\n>\n> - **A** 6\n> - **B** 9\n> - **C** 11\n> - **D** $\\tfrac{29}{3}$\n> - **E** 29\n\n> [!success]- Lösung\n> **A.** Gliedweise teilen: $f(x) = x^2 + 2$ für $x \\ne 0$, also $f'(x) = 2x$ und $f'(3) = 6$.\n> C entsteht, wenn man nur das erste Glied teilt und $x^2 + 2x$ ableitet.\n> Der Bruch täuscht Schwierigkeit vor, wo keine ist -- ein Muster, das im Test häufig vorkommt.\n\n> [!question] Aufgabe 3\n> Given $y = \\dfrac{3}{x^2} + 4\\sqrt x$, find $\\dfrac{\\mathrm dy}{\\mathrm dx}$ at $x = 1$.\n>\n> - **A** $-4$\n> - **B** $-8$\n> - **C** 8\n> - **D** 4\n> - **E** $-2$\n\n> [!success]- Lösung\n> **A.** Umschreiben: $y = 3x^{-2} + 4x^{1/2}$.\n> Ableiten: $\\dfrac{\\mathrm dy}{\\mathrm dx} = -6x^{-3} + 2x^{-1/2}$.\n> Einsetzen: $-6 + 2 = -4$.\n> C ist das Ergebnis mit verlorenem Vorzeichen im ersten Glied; D entsteht, wenn man $4\\sqrt x$ als $4x$ behandelt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Potenzausdrücke mit rationalen Exponenten vereinfachen** · **Tangente und Normale ohne Hilfsmittel** · **Stationäre Punkte bestimmen und klassifizieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Wurzel",
+      "md": "$f(x) = 6\\sqrt[3]{x}$. Berechne $f'(8)$.",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$f(x) = 6x^{\\frac13}$, $f'(x) = 2x^{-\\frac23}$; $8^{-\\frac23} = \\tfrac14$, also $f'(8) = \\tfrac12$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Differentiate $\\dfrac{1}{2\\sqrt x}$ with respect to $x$.",
+      "options": [
+        {
+          "md": "$\\dfrac{1}{4x\\sqrt x}$",
+          "why": "Das Minus aus dem Exponenten fehlt."
+        },
+        {
+          "md": "$\\sqrt x$",
+          "why": "Keine Ableitung."
+        },
+        {
+          "md": "$-\\dfrac{1}{4\\sqrt x}$",
+          "why": "Der Exponent sinkt um 1."
+        },
+        {
+          "md": "$-\\dfrac{1}{4x\\sqrt x}$",
+          "correct": true
+        },
+        {
+          "md": "$-\\dfrac{1}{2x\\sqrt x}$",
+          "why": "Der Faktor $\\tfrac12$ bleibt erhalten."
+        }
+      ],
+      "explain": "$\\tfrac12 x^{-\\frac12}$ ableiten: $\\tfrac12 \\cdot \\left(-\\tfrac12\\right)x^{-\\frac32} = -\\tfrac14 x^{-\\frac32}$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Umschreiben",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\dfrac{x^2 + 1}{\\sqrt x}$ darf man vor dem Ableiten als $x^{\\frac32} + x^{-\\frac12}$ schreiben.",
+      "answer": true,
+      "explain": "Ein Bruch mit einem einzelnen Glied im Nenner wird gliedweise geteilt.",
+      "label": "Aufteilen",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +238,51 @@
       "lang": "en",
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Wurzeln als Potenzen, Brüche mit einem Glied im Nenner aufteilen, Produkte ausmultiplizieren, dann ableiten.",
+        "$\\tfrac{1}{x + 1}$ lässt sich nicht aufteilen."
+      ]
     }
   ]
 }

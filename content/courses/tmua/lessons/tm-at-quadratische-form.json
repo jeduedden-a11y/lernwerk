@@ -16,6 +16,218 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Den wiederkehrenden Baustein erkennen:** $x^2$ in $x^4$, $2^x$ in $4^x = (2^x)^2$, $\\sqrt x$ in $x = (\\sqrt x)^2$.\n> 2. **Substituieren:** Mit $u$ für den Baustein entsteht eine quadratische Gleichung.\n> 3. **Lösen** wie gewohnt.\n> 4. **Zurückübersetzen und aussortieren:** $u = x^2$ und $u = \\sqrt x$ müssen nicht negativ sein, $u = a^x$ sogar positiv. Jedes positive $u = x^2$ liefert **zwei** Lösungen.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Löse $3^{2x} - 12 \\cdot 3^x + 27 = 0$ und zähle die Lösungen von $x^4 - 3x^2 - 4 = 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "u = 3^x:\\quad u^2 - 12u + 27 = 0",
+            "why": "Weil 3^{2x} = (3^x)^2."
+          },
+          {
+            "tex": "(u - 3)(u - 9) = 0 \\;\\Rightarrow\\; u = 3 \\text{ oder } u = 9",
+            "why": "Faktorisieren."
+          },
+          {
+            "tex": "3^x = 3 \\Rightarrow x = 1,\\quad 3^x = 9 \\Rightarrow x = 2",
+            "why": "Beide u sind positiv, beide liefern eine Lösung."
+          },
+          {
+            "tex": "u = x^2:\\quad u^2 - 3u - 4 = (u - 4)(u + 1) = 0",
+            "why": "Zweite Gleichung."
+          },
+          {
+            "tex": "x^2 = 4 \\Rightarrow x = \\pm 2;\\quad x^2 = -1 \\text{ unmöglich}",
+            "why": "Zwei reelle Lösungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Substitution.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zurück.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweite Gleichung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Aussortieren.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Das $\\pm$ bei $u = x^2$ vergessen und so die Hälfte der Lösungen verlieren.\n- Negative oder null $u$-Werte bei $u = a^x$ behalten.\n- Nach der Summe der $x$ gefragt, aber die Summe der $u$ angeben.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gleichungen in quadratischer Form",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Gleichungen in quadratischer Form.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Die Gleichung ist nicht quadratisch in $x$, aber **quadratisch in einem Teilausdruck** $u$: in $x^2$, in $\\sqrt x$, in $2^x$, in $\\sin x$, in $x^2 - 2x$. Erkennungsmerkmal: Ein Ausdruck taucht einmal einfach und einmal **quadriert** auf -- $x^4$ und $x^2$, $x$ und $\\sqrt x$, $4^x = (2^x)^2$ und $2^x$.\n\nGefragt ist oft nicht nach den Lösungen selbst, sondern nach ihrer **Anzahl** oder **Summe**. Dann entscheidet der Rückweg von $u$ zu $x$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Teilausdruck $u$ festlegen** und die Gleichung als $au^2 + bu + c = 0$ schreiben.\n2. **Nach $u$ lösen.**\n3. **Den Wertebereich von $u$ prüfen:** $u = x^2 \\ge 0$, $u = \\sqrt x \\ge 0$, $u = 2^x > 0$, $u = \\sin x \\in [-1, 1]$. Unzulässige $u$-Werte streichen.\n4. **Für jedes zulässige $u$ zurückrechnen:** Wie viele $x$ gehören dazu? $x^2 = 4$ liefert zwei, $x^2 = 0$ eines, $2^x = 3$ genau eines.\n5. **Zählen oder summieren**, was gefragt ist.\n\n> [!important] Schritt 3 ist der eigentliche Aufgabeninhalt\n> Die quadratische Gleichung in $u$ ist Routine. Die Punkte stecken im Rückweg: Ein negativer Wert für $u = x^2$ liefert **keine** Lösung, ein positiver **zwei**. Genau diese Zählung prüft der TMUA, wenn er nach der Anzahl der reellen Lösungen fragt."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> How many real solutions does the equation $x^4 - 5x^2 + 4 = 0$ have?\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 3\n> - **E** 4\n\n**Schritt 1:** $u = x^2$: $u^2 - 5u + 4 = 0$.\n\n**Schritt 2:** $(u - 1)(u - 4) = 0$, also $u = 1$ oder $u = 4$.\n\n**Schritt 3:** Beide Werte sind positiv, also zulässig.\n\n**Schritt 4:** $x^2 = 1$ liefert $x = \\pm1$, $x^2 = 4$ liefert $x = \\pm 2$.\n\nAntwort **E**, vier Lösungen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Beim Rückweg nur die positive Wurzel nehmen:** $x^2 = 4$ hat zwei Lösungen.\n- **Unzulässige $u$-Werte behalten:** $\\sqrt x = -3$ oder $2^x = -1$ haben keine Lösung.\n- **Die Anzahl der $u$-Lösungen für die Anzahl der $x$-Lösungen halten.**\n- **Den Teilausdruck nicht erkennen**, weil er in anderer Schreibweise dasteht: $9^x = (3^x)^2$, $x = (\\sqrt x)^2$."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> How many real solutions does the equation $x - 5\\sqrt{x} + 6 = 0$ have?\n>\n> - **A** 0\n> - **B** 1\n> - **C** 2\n> - **D** 3\n> - **E** 4\n\n> [!success]- Lösung\n> **C.** $u = \\sqrt x \\ge 0$: $u^2 - 5u + 6 = 0$, also $u = 2$ oder $u = 3$. Beide zulässig, jeweils genau ein $x$: $x = 4$ und $x = 9$.\n> Anders als bei $u = x^2$ liefert $u = \\sqrt x$ zu jedem zulässigen $u$ nur **ein** $x$.\n\n> [!question] Aufgabe 2\n> What is the sum of the real solutions of $9^x - 4 \\cdot 3^x + 3 = 0$?\n>\n> - **A** 0\n> - **B** 1\n> - **C** 3\n> - **D** 4\n> - **E** $\\log_3 4$\n\n> [!success]- Lösung\n> **B.** $u = 3^x > 0$: $u^2 - 4u + 3 = 0$, also $u = 1$ oder $u = 3$. Dann $x = 0$ oder $x = 1$, Summe 1.\n> D ist die Summe der $u$-Werte, nicht der $x$-Werte. E entsteht aus einer ähnlichen Verwechslung.\n\n> [!question] Aufgabe 3\n> What is the sum of all real solutions of $(x^2 - 2x)^2 - 11(x^2 - 2x) + 24 = 0$?\n>\n> - **A** 2\n> - **B** 4\n> - **C** 11\n> - **D** $-4$\n> - **E** 6\n\n> [!success]- Lösung\n> **B.** $u = x^2 - 2x$: $u^2 - 11u + 24 = 0$, also $u = 3$ oder $u = 8$.\n> $x^2 - 2x - 3 = 0$ liefert $x = 3, -1$; $x^2 - 2x - 8 = 0$ liefert $x = 4, -2$. Summe $3 - 1 + 4 - 2 = 4$.\n> Schneller: Jede der beiden quadratischen Gleichungen in $x$ hat die Lösungssumme 2 (Summe der Nullstellen $= -\\tfrac ba$), zusammen 4 -- vorausgesetzt, beide haben reelle Lösungen, was die Diskriminanten $4 + 12$ und $4 + 32$ bestätigen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Exponentialgleichung durch Substitution lösen** · **Trigonometrische Gleichung mit Pythagoras-Identität** · **Anzahl reeller Lösungen bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Wie viele reelle Lösungen hat $x^4 - 10x^2 + 9 = 0$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "Lösungen",
+      "explain": "$u = x^2$: $(u - 1)(u - 9) = 0$, also $x = \\pm1$ und $x = \\pm3$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What is the sum of the solutions of $4^x - 6 \\cdot 2^x + 8 = 0$?",
+      "options": [
+        {
+          "md": "2"
+        },
+        {
+          "md": "3",
+          "correct": true
+        },
+        {
+          "md": "4"
+        },
+        {
+          "md": "6"
+        },
+        {
+          "md": "8"
+        }
+      ],
+      "explain": "$u = 2^x$: $u = 2$ oder $u = 4$, also $x = 1$ oder $x = 2$, Summe 3. Die Summe der $u$-Werte (6) ist nicht gefragt.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Exponentiell",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Bei $u = 2^x$ ergibt sich unter anderem $u = -3$. Was folgt daraus?",
+      "options": [
+        {
+          "md": "Aus diesem Wert entsteht keine Lösung, weil $2^x$ immer positiv ist.",
+          "correct": true
+        },
+        {
+          "md": "$x = \\log_2 3$ und das Vorzeichen wird übernommen",
+          "why": "Ein Logarithmus einer negativen Zahl existiert nicht."
+        },
+        {
+          "md": "Die ganze Gleichung hat keine Lösung.",
+          "why": "Andere $u$-Werte können Lösungen liefern."
+        },
+        {
+          "md": "$x = -3$",
+          "why": "Verwechselt $u$ mit $x$."
+        }
+      ],
+      "explain": "Nur positive u-Werte lassen sich in 2^x = u zurückübersetzen.",
+      "label": "Aussortieren",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Wurzel",
+      "md": "Bestimme die Summe der Lösungen von $x - 6\\sqrt x + 8 = 0$.",
+      "answer": 20,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$u = \\sqrt x$: $u = 2$ oder $u = 4$, also $x = 4$ oder $x = 16$, Summe 20.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -78,6 +290,51 @@
       },
       "label": "Rechentraining",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "qform"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "qform"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "qform"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Baustein erkennen ($x^2$, $a^x$, $\\sqrt x$), substituieren, lösen, zurückübersetzen.",
+        "$u = x^2 > 0$ gibt zwei Lösungen; $u \\le 0$ bei $a^x$ keine."
+      ]
     }
   ]
 }

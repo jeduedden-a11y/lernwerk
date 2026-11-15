@@ -15,6 +15,602 @@
       "md": "Chaotische Systeme folgen festen Gesetzen, und trotzdem lässt sich ihr Verhalten langfristig nicht vorhersagen: winzige Unterschiede in den Anfangsbedingungen wachsen exponentiell (**Schmetterlingseffekt**). Ein Lehrbeispiel ist die logistische Gleichung $x_{n+1} = r\\,x_n(1 - x_n)$: Für kleine $r$ stellt sich ein fester Wert ein, mit wachsendem $r$ verdoppelt sich die Periode immer wieder (**Bifurkation**), ab etwa $r \\approx 3{,}57$ wird das Verhalten chaotisch."
     },
     {
+      "type": "text",
+      "md": "> [!definition] Determinismus\n> Die Gesetze liegen exakt fest: Gleiche Anfangsbedingungen führen zu gleichem Ablauf.\n\n> [!definition] Deterministisches Chaos\n> Ein deterministisches System, in dem **minimal** verschiedene Anfangsbedingungen nach kurzer Zeit zu **völlig** verschiedenen Abläufen führen. Weil jede Messung eine endliche Genauigkeit hat, ist eine Langzeitvorhersage unmöglich, obwohl nichts zufällig ist.\n\n> [!definition] Schmetterlingseffekt\n> Die empfindliche Abhängigkeit von den Anfangsbedingungen (Edward Lorenz, Wettermodell 1963): Abweichungen wachsen exponentiell, $\\Delta(t) \\approx \\Delta_0\\,e^{\\lambda t}$.\n\n> [!definition] Fixpunkt und Periodenverdopplung\n> Ein **Fixpunkt** ist ein Wert, der sich bei jedem Schritt reproduziert. Auf dem Weg ins Chaos verdoppelt sich oft die **Periode** des Langzeitverhaltens: 1, 2, 4, 8, ...\n\n**Beispiele:** Doppelpendel, Wetter (Vorhersagegrenze etwa zwei Wochen), Magnetpendel. Die logistische Gleichung $x_{n+1} = r\\,x_n(1 - x_n)$ zeigt alles mit einer einzigen Formel.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Vorhersagegrenze.** Eine anfängliche Unsicherheit $\\Delta_0$ wächst in jedem Schritt um den Faktor $e^{\\lambda}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta_n = \\Delta_0\\,e^{\\lambda n}",
+            "why": "Exponentielles Anwachsen der Abweichung."
+          },
+          {
+            "tex": "\\Delta_n = \\Delta_{max} \\;\\Rightarrow\\; n = \\frac{1}{\\lambda}\\ln\\frac{\\Delta_{max}}{\\Delta_0}",
+            "why": "Nach so vielen Schritten ist die Vorhersage wertlos."
+          },
+          {
+            "tex": "\\Delta_0 \\to \\tfrac{\\Delta_0}{10}:\\quad n \\to n + \\frac{\\ln 10}{\\lambda}",
+            "why": "Zehnmal genauer messen verlängert die Vorhersage nur um einen festen Betrag."
+          },
+          {
+            "tex": "\\lambda = \\ln 2:\\quad \\frac{\\ln 10}{\\ln 2} \\approx 3{,}3\\ \\text{Schritte}",
+            "why": "Verdoppelt sich der Fehler pro Schritt, bringt jede Zehnerpotenz Genauigkeit nur gut drei Schritte."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wachstum.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenze.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Genauer messen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Zwei fast gleiche Startwerte** in der logistischen Gleichung: blau $x_0 = 0{,}3$, orange $x_0 = 0{,}3001$; aufgetragen ist $x_n$ über dem Schritt $n$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          24.5
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "xLabel": "Schritt n",
+        "yLabel": "x_n",
+        "vars": [
+          {
+            "name": "R",
+            "min": 2.5,
+            "max": 4,
+            "value": 2.8,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "R*x*(1 - x)",
+            "hidden": true
+          },
+          {
+            "name": "f2",
+            "expr": "f(f(x))",
+            "hidden": true
+          },
+          {
+            "name": "f4",
+            "expr": "f2(f2(x))",
+            "hidden": true
+          },
+          {
+            "name": "f8",
+            "expr": "f4(f4(x))",
+            "hidden": true
+          },
+          {
+            "name": "f16",
+            "expr": "f8(f8(x))",
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": "0.3",
+            "color": "blue"
+          },
+          {
+            "x": 1,
+            "y": "f(0.3)",
+            "color": "blue"
+          },
+          {
+            "x": 2,
+            "y": "f2(0.3)",
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": "f2(f(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": "f4(0.3)",
+            "color": "blue"
+          },
+          {
+            "x": 5,
+            "y": "f4(f(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 6,
+            "y": "f4(f2(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 7,
+            "y": "f4(f2(f(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 8,
+            "y": "f8(0.3)",
+            "color": "blue"
+          },
+          {
+            "x": 9,
+            "y": "f8(f(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 10,
+            "y": "f8(f2(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 11,
+            "y": "f8(f2(f(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 12,
+            "y": "f8(f4(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 13,
+            "y": "f8(f4(f(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 14,
+            "y": "f8(f4(f2(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 15,
+            "y": "f8(f4(f2(f(0.3))))",
+            "color": "blue"
+          },
+          {
+            "x": 16,
+            "y": "f16(0.3)",
+            "color": "blue"
+          },
+          {
+            "x": 17,
+            "y": "f16(f(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 18,
+            "y": "f16(f2(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 19,
+            "y": "f16(f2(f(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 20,
+            "y": "f16(f4(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 21,
+            "y": "f16(f4(f(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 22,
+            "y": "f16(f4(f2(0.3)))",
+            "color": "blue"
+          },
+          {
+            "x": 23,
+            "y": "f16(f4(f2(f(0.3))))",
+            "color": "blue"
+          },
+          {
+            "x": 24,
+            "y": "f16(f8(0.3))",
+            "color": "blue"
+          },
+          {
+            "x": 0,
+            "y": "0.3001",
+            "color": "orange"
+          },
+          {
+            "x": 1,
+            "y": "f(0.3001)",
+            "color": "orange"
+          },
+          {
+            "x": 2,
+            "y": "f2(0.3001)",
+            "color": "orange"
+          },
+          {
+            "x": 3,
+            "y": "f2(f(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 4,
+            "y": "f4(0.3001)",
+            "color": "orange"
+          },
+          {
+            "x": 5,
+            "y": "f4(f(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 6,
+            "y": "f4(f2(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 7,
+            "y": "f4(f2(f(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 8,
+            "y": "f8(0.3001)",
+            "color": "orange"
+          },
+          {
+            "x": 9,
+            "y": "f8(f(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 10,
+            "y": "f8(f2(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 11,
+            "y": "f8(f2(f(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 12,
+            "y": "f8(f4(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 13,
+            "y": "f8(f4(f(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 14,
+            "y": "f8(f4(f2(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 15,
+            "y": "f8(f4(f2(f(0.3001))))",
+            "color": "orange"
+          },
+          {
+            "x": 16,
+            "y": "f16(0.3001)",
+            "color": "orange"
+          },
+          {
+            "x": 17,
+            "y": "f16(f(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 18,
+            "y": "f16(f2(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 19,
+            "y": "f16(f2(f(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 20,
+            "y": "f16(f4(0.3001))",
+            "color": "orange"
+          },
+          {
+            "x": 21,
+            "y": "f16(f4(f(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 22,
+            "y": "f16(f4(f2(0.3001)))",
+            "color": "orange"
+          },
+          {
+            "x": 23,
+            "y": "f16(f4(f2(f(0.3001))))",
+            "color": "orange"
+          },
+          {
+            "x": 24,
+            "y": "f16(f8(0.3001))",
+            "color": "orange"
+          }
+        ],
+        "readout": "r = {R|2}: nach 24 Schritten {f16(f8(0.3))|3} gegen {f16(f8(0.3001))|3}"
+      },
+      "timeline": [
+        {
+          "caption": "$r = 2{,}8$: Beide Folgen laufen auf denselben Fixpunkt $1 - \\tfrac1r \\approx 0{,}643$. Kleine Unterschiede verschwinden.",
+          "set": {
+            "R": 2.8
+          }
+        },
+        {
+          "caption": "$r = 3{,}2$: Beide pendeln zwischen $0{,}513$ und $0{,}799$ (Periode 2) und bleiben gleich.",
+          "to": {
+            "R": 3.2
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "$r = 3{,}9$: Chaos. Bis etwa zum zwölften Schritt sind die Punkte nicht zu unterscheiden, dann trennen sich die Folgen völlig. Gleiche Formel, kein Zufall, und trotzdem keine Vorhersage.",
+          "to": {
+            "R": 3.9
+          },
+          "dur": 3000
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "| | chaotisches System | echter Zufall |\n|---|---|---|\n| Gesetze | exakt bestimmt | keine |\n| gleiche Anfangswerte | gleicher Ablauf | verschiedene Abläufe |\n| kurzfristige Vorhersage | möglich | unmöglich |\n| langfristige Vorhersage | unmöglich | unmöglich |\n| Beispiel | Wetter, Doppelpendel | radioaktiver Zerfall |\n\nChaos ist ein Problem der **Kenntnis**, Quantenzufall eines der **Natur**.\n\n**Ordnung im Weg zur Unordnung.** Die Abstände der Periodenverdopplungen schrumpfen um einen festen Faktor, die **Feigenbaum-Konstante** $\\delta \\approx 4{,}669$, und zwar bei tropfenden Wasserhähnen, Populationsmodellen und Schwingkreisen gleichermaßen.\n\n**Der Laplacesche Dämon** sollte aus Gesetzen und Anfangszustand die ganze Zukunft berechnen. Die Chaostheorie zeigt, dass schon in der klassischen Physik Determinismus und Vorhersagbarkeit auseinanderfallen.",
+      "label": "Chaos und Zufall",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Chaostheorie",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Chaostheorie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Chaostheorie** untersucht Systeme, die zwar **deterministisch** sind (die Bewegungsgesetze liegen exakt fest), deren Verhalten aber **praktisch unvorhersagbar** ist, weil winzige Unterschiede in den Anfangsbedingungen exponentiell anwachsen."
+            }
+          ]
+        },
+        {
+          "title": "Deterministisches Chaos",
+          "blocks": [
+            {
+              "md": "> [!important] Kein Widerspruch\n> Determinismus bedeutet: Gleiche Anfangsbedingungen führen zu gleichem Verlauf. Chaos bedeutet: **Minimal** verschiedene Anfangsbedingungen führen nach kurzer Zeit zu **völlig** verschiedenem Verlauf. Da Messwerte immer endliche Genauigkeit haben, ist Langzeitvorhersage unmöglich.\n\nDies relativiert den Laplace'schen Anspruch, aus den **newtonschen Gesetzen** die Zukunft beliebig weit berechnen zu können."
+            }
+          ]
+        },
+        {
+          "title": "Schmetterlingseffekt",
+          "blocks": [
+            {
+              "md": "Der Begriff (Edward Lorenz, Wettermodell) beschreibt die **sensitive Abhängigkeit von den Anfangsbedingungen** -- die zentrale Eigenschaft chaotischer Systeme."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "- **Doppelpendel**: Zwei nahezu identische Starts laufen nach wenigen Schwingungen völlig auseinander.\n- **Wetter**: Prinzipielle Vorhersagegrenze bei etwa zwei Wochen.\n- **Magnetpendel**: Über welchem Magneten das Pendel stehen bleibt, ist praktisch nicht vorhersagbar."
+            }
+          ]
+        },
+        {
+          "title": "Untersuchungsmethoden",
+          "blocks": [
+            {
+              "md": "Chaotische Systeme sind analytisch meist nicht lösbar; man untersucht sie durch **numerische Simulation** und mit Werkzeugen wie Phasenraumdiagramm, Feigenbaum-Diagramm und Attraktoren. Charakteristisch ist die **Periodenverdopplung** auf dem Weg ins Chaos."
+            }
+          ]
+        },
+        {
+          "title": "Deterministisch und trotzdem unvorhersagbar",
+          "blocks": [
+            {
+              "md": "> [!important] Chaos ist kein Zufall\n> Ein chaotisches System gehorcht exakten Gesetzen -- gleicher Anfangszustand führt zu gleichem Ablauf. Es ist vollständig **deterministisch**.\n>\n> Unvorhersagbar wird es durch die **empfindliche Abhängigkeit von den Anfangsbedingungen**: Zwei Zustände, die sich beliebig wenig unterscheiden, entfernen sich exponentiell voneinander.\n>\n> $$\\Delta(t) \\approx \\Delta_0\\,e^{\\lambda t}$$\n>\n> Da jede Messung eine endliche Genauigkeit hat, wächst die Unsicherheit unvermeidlich an, bis die Vorhersage wertlos ist. Das ist keine Frage besserer Messgeräte: Zehnfach genauere Anfangswerte verlängern den brauchbaren Vorhersagezeitraum nur um einen festen Betrag, nicht um das Zehnfache.\n>\n> Deshalb ist die Wettervorhersage grundsätzlich auf etwa zwei Wochen begrenzt -- unabhängig von Rechenleistung."
+            }
+          ]
+        },
+        {
+          "title": "Der Unterschied zum Zufall",
+          "blocks": [
+            {
+              "md": "| | chaotisches System | echter Zufall |\n|---|---|---|\n| Gesetze | exakt bestimmt | keine |\n| gleiche Anfangswerte | gleicher Ablauf | verschiedene Abläufe |\n| kurzfristige Vorhersage | **möglich** | unmöglich |\n| langfristige Vorhersage | unmöglich | unmöglich |\n| Beispiel | Wetter, Doppelpendel | **radioaktiver Zerfall** |\n\n> [!tip] Der radioaktive Zerfall ist echter Zufall, das Wetter nicht\n> Beim Zerfall gibt es prinzipiell keine verborgene Größe, die den Zeitpunkt festlegt. Beim Wetter gibt es sie -- man kennt sie nur nicht genau genug.\n>\n> Diese Unterscheidung ist begrifflich wichtig und wird häufig vermengt. Chaos ist ein Problem der **Kenntnis**, Quantenzufall eines der **Natur**."
+            }
+          ]
+        },
+        {
+          "title": "Der Weg ins Chaos",
+          "blocks": [
+            {
+              "md": "Viele Systeme gehen nicht plötzlich, sondern über **Periodenverdopplungen** ins Chaos über: Zuerst wiederholt sich das Verhalten nach einem Zyklus, dann nach zweien, vieren, achten -- und die Abstände zwischen diesen Verzweigungen schrumpfen mit einem festen Faktor.\n\n$$\\delta \\approx 4{,}669$$\n\n> [!important] Die Feigenbaum-Konstante ist universell\n> Sie ergibt sich für sehr verschiedene Systeme -- tropfende Wasserhähne, Populationsmodelle, elektrische Schwingkreise -- **denselben** Wert.\n>\n> Das ist bemerkenswert: Der Übergang ins Chaos folgt einem quantitativen Gesetz, obwohl das Chaos selbst unvorhersagbar ist. Es gibt also Ordnung **im Weg** zur Unordnung.\n>\n> Damit steht die Chaostheorie nicht am Ende der Berechenbarkeit, sondern eröffnet eine eigene Systematik."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen der klassischen Physik",
+          "blocks": [
+            {
+              "md": "> [!tip] Der eigentliche Ertrag ist erkenntnistheoretisch\n> Bis ins 20. Jahrhundert galt: Kennt man die Gesetze und den Anfangszustand, ist die Zukunft berechenbar -- die Vorstellung des Laplaceschen Dämons.\n>\n> Die Chaostheorie zeigt, dass diese Berechenbarkeit auch in der **klassischen** Physik scheitert, ohne dass Quanteneffekte nötig wären. Determinismus und Vorhersagbarkeit fallen auseinander.\n>\n> Das ist ein Befund über die Reichweite physikalischer Theorien und passt zu Kuhns These, dass Paradigmen ihre eigenen blinden Flecken haben. Siehe **Postmoderne**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Chaostheorie zeigt die Grenzen der **numerischen Simulation**, weil dort Rundungsfehler exponentiell anwachsen. Sie ergänzt die Quantenphysik um eine zweite, ganz andere Art von Unbestimmtheit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Bedeutung zu.",
+      "pairs": [
+        [
+          "Determinismus",
+          "gleiche Anfangswerte, gleicher Ablauf"
+        ],
+        [
+          "Schmetterlingseffekt",
+          "empfindliche Abhängigkeit vom Anfang"
+        ],
+        [
+          "Fixpunkt der logistischen Gleichung",
+          "$x^* = 1 - \\tfrac1r$"
+        ],
+        [
+          "Periodenverdopplung",
+          "die Zahl der Endwerte verdoppelt sich"
+        ],
+        [
+          "echter Zufall",
+          "radioaktiver Zerfall"
+        ]
+      ],
+      "explain": "Chaos ist deterministisch; Zufall nicht.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Vorhersagegrenze in die richtige Reihenfolge.",
+      "items": [
+        "Abweichung wächst: $\\Delta_n = \\Delta_0 e^{\\lambda n}$",
+        "Grenze bei $\\Delta_n = \\Delta_{max}$: $n = \\tfrac1\\lambda\\ln\\tfrac{\\Delta_{max}}{\\Delta_0}$",
+        "Zehnmal genauer: $n$ wächst nur um $\\tfrac{\\ln 10}{\\lambda}$",
+        "Bessere Messung verschiebt die Grenze nur wenig"
+      ],
+      "explain": "Die Reihenfolge: 1. Abweichung wächst: $\\Delta_n = \\Delta_0 e^{\\lambda n}$. 2. Grenze bei $\\Delta_n = \\Delta_{max}$: $n = \\tfrac1\\lambda\\ln\\tfrac{\\Delta_{max}}{\\Delta_0}$. 3. Zehnmal genauer: $n$ wächst nur um $\\tfrac{\\ln 10}{\\lambda}$. 4. Bessere Messung verschiebt die Grenze nur wenig.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne den Fixpunkt der logistischen Gleichung für $r = 2{,}5$.",
+      "answer": 0.6,
+      "tolerance": 0.005,
+      "placeholder": "",
+      "explain": "$x^* = 1 - \\tfrac{1}{2{,}5} = 0{,}6$; Probe: $2{,}5\\cdot 0{,}6\\cdot 0{,}4 = 0{,}6$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $x_3$ für $r = 3{,}9$ und $x_0 = 0{,}5$ (Zwischenwerte auf vier Stellen).",
+      "answer": 0.3355,
+      "tolerance": 0.005,
+      "placeholder": "",
+      "explain": "$x_1 = 3{,}9\\cdot 0{,}5\\cdot 0{,}5 = 0{,}975$, $x_2 = 3{,}9\\cdot 0{,}975\\cdot 0{,}025 \\approx 0{,}0951$, $x_3 = 3{,}9\\cdot 0{,}0951\\cdot 0{,}9049 \\approx 0{,}3356$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Der Fehler einer Vorhersage verdoppelt sich in jedem Schritt. Um wie viele Schritte verlängert eine zehnmal genauere Messung die Vorhersage?",
+      "answer": 3.32,
+      "tolerance": 0.05,
+      "placeholder": "Schritte",
+      "explain": "$\\tfrac{\\ln 10}{\\ln 2} \\approx 3{,}32$: kaum mehr als drei Schritte.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Mit unendlich schnellen Computern ließe sich das Wetter beliebig weit vorhersagen.",
+      "answer": false,
+      "explain": "Man bräuchte unendlich genaue Anfangswerte; die Rechenleistung ist nicht die Grenze.",
+      "label": "Verständnis",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Welches Beispiel zeigt echten Zufall statt Chaos?",
+      "options": [
+        {
+          "md": "der Zeitpunkt, an dem ein bestimmter Kern zerfällt",
+          "correct": true
+        },
+        {
+          "md": "das Wetter in drei Wochen",
+          "why": "Es folgt Gesetzen; nur die Anfangswerte sind ungenau."
+        },
+        {
+          "md": "die Bewegung eines Doppelpendels",
+          "why": "Es ist deterministisch und chaotisch."
+        },
+        {
+          "md": "die Folge der logistischen Gleichung bei r = 3,9",
+          "why": "Sie ist exakt berechenbar, aber empfindlich."
+        }
+      ],
+      "explain": "Beim Zerfall gibt es keine verborgene Größe, die den Zeitpunkt festlegt.",
+      "label": "Abgrenzung",
+      "id": "vq7"
+    },
+    {
       "id": "wetter",
       "type": "choice",
       "md": "Warum gibt es keine verlässliche Wettervorhersage für drei Wochen?",
@@ -46,13 +642,39 @@
       "explain": "Es ist deterministisch; nur die Empfindlichkeit für Anfangswerte macht es unvorhersagbar."
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "logistik"
+        ]
+      },
+      "label": "Logistische Gleichung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "logistik"
+        ]
+      },
+      "label": "Iterieren im Chaos",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Deterministisch, aber empfindlich gegenüber Anfangswerten.",
         "Logistische Gleichung: Periodenverdopplung, dann Chaos ab $r \\approx 3{,}57$.",
-        "Langfristige Vorhersagen sind grundsätzlich begrenzt."
+        "Langfristige Vorhersagen sind grundsätzlich begrenzt.",
+        "Deterministisches Chaos: exakte Gesetze, aber exponentiell wachsende Abweichungen; Langzeitvorhersage unmöglich.",
+        "Zehnmal genauere Anfangswerte verlängern die Vorhersage nur um $\\tfrac{\\ln 10}{\\lambda}$; Chaos ist kein Zufall."
       ]
     }
   ]

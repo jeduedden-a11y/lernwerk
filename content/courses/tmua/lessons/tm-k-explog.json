@@ -19,6 +19,401 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Logarithmus\n> Für $a > 0$, $a \\ne 1$ und $x > 0$ ist $\\log_a x$ die Zahl $y$ mit $a^y = x$: **Der Logarithmus ist der Exponent.** $\\log_{10}$ schreibt man $\\lg$, den natürlichen Logarithmus zur Basis $e \\approx 2{,}718$ schreibt man $\\ln$.\n\n> [!definition] Exponentialfunktion\n> $f(x) = a^x$ mit $a > 0$ ist für alle reellen $x$ definiert, immer positiv, geht durch $(0, 1)$, wächst für $a > 1$ und fällt für $0 < a < 1$; die x-Achse ist Asymptote. $\\log_a x$ ist ihre Umkehrfunktion: nur für $x > 0$ definiert, durch $(1, 0)$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Logarithmengesetze aus den Potenzgesetzen.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x = a^m,\\ y = a^n \\;\\Rightarrow\\; \\log_a x = m,\\ \\log_a y = n",
+            "why": "Jede positive Zahl als Potenz der Basis schreiben."
+          },
+          {
+            "tex": "xy = a^{m+n} \\;\\Rightarrow\\; \\log_a(xy) = m + n = \\log_a x + \\log_a y",
+            "why": "Aus a^m a^n = a^{m+n}."
+          },
+          {
+            "tex": "\\frac xy = a^{m-n} \\;\\Rightarrow\\; \\log_a \\frac xy = \\log_a x - \\log_a y",
+            "why": "Aus der Quotientenregel."
+          },
+          {
+            "tex": "x^k = a^{mk} \\;\\Rightarrow\\; \\log_a x^k = k \\log_a x",
+            "why": "Aus (a^m)^k = a^{mk}."
+          },
+          {
+            "tex": "\\log_a 1 = 0,\\quad \\log_a a = 1",
+            "why": "Weil a^0 = 1 und a^1 = a."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quotient.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Potenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sonderwerte.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Umkehrfunktion",
+      "md": "**Spiegelbilder:** blau $y = 2^x$, orange $y = \\log_2 x$, grau die Gerade $y = x$. Ein Punkt und sein Spiegelpunkt wandern mit.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          6
+        ],
+        "y": [
+          -3,
+          6
+        ],
+        "height": 330,
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2.5,
+            "max": 2.5,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "e",
+            "expr": "2^x",
+            "color": "blue",
+            "label": "2^x",
+            "labelAt": 2.1
+          },
+          {
+            "name": "l",
+            "expr": "ln(x)/ln(2)",
+            "domain": [
+              0.02,
+              6
+            ],
+            "color": "orange",
+            "label": "log₂ x",
+            "labelAt": 4.8,
+            "samples": 400
+          },
+          {
+            "name": "d",
+            "expr": "x",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "2^X",
+            "color": "blue"
+          },
+          {
+            "x": "2^X",
+            "y": "X",
+            "color": "orange"
+          }
+        ],
+        "readout": "2 hoch {X|2} = {2^X|3}, also log₂ {2^X|3} = {X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 0 ist 2^0 = 1; gespiegelt heißt das log₂ 1 = 0.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "2^2 = 4, also log₂ 4 = 2: Vertauscht man die Koordinaten, wird aus der Exponentialfunktion der Logarithmus.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Für negative Exponenten wird 2^x klein, aber nie null; log₂ ist deshalb nur für positive Zahlen definiert und fällt nahe 0 steil ab.",
+          "to": {
+            "X": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung: Exponentialgleichungen lösen.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "3^x = 20 \\;\\Rightarrow\\; x = \\log_3 20",
+            "why": "Ohne gemeinsame Basis: den Logarithmus nehmen."
+          },
+          {
+            "tex": "x = \\frac{\\lg 20}{\\lg 3}",
+            "why": "Mit einer beliebigen Basis ausgedrückt, falls nötig."
+          },
+          {
+            "tex": "2^{x+1} = 3^{x} \\;\\Rightarrow\\; (x + 1)\\lg 2 = x \\lg 3",
+            "why": "Bei verschiedenen Basen beide Seiten logarithmieren."
+          },
+          {
+            "tex": "x = \\frac{\\lg 2}{\\lg 3 - \\lg 2} = \\frac{\\lg 2}{\\lg 1{,}5}",
+            "why": "Nach x auflösen; der Nenner ist positiv, x also positiv."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Basis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Basiswechsel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zwei Basen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Exponential- und Logarithmusrechnung",
+      "path": "02 Wiki/TMUA/09 Exponentialfunktionen und Logarithmen/Exponential- und Logarithmusrechnung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Was die Spezifikation abgrenzt",
+          "blocks": [
+            {
+              "md": "MM5 ist der **kleinste** Block der AS-Level-Inhalte -- und derjenige, bei dem der deutsche Unterricht am meisten Ballast mitbringt. Die Spezifikation verlangt genau drei Dinge:\n\n| Code | Inhalt |\n|---|---|\n| MM5.1 | den Graphen von $y = a^x$ und seine Eigenschaften |\n| MM5.2 | die Logarithmengesetze |\n| MM5.3 | Gleichungen der Form $a^x = b$ lösen |\n\n> [!warning] Was ausdrücklich **nicht** verlangt ist\n> - **$e$ und $\\ln$** kommen in der Spezifikation nicht vor. Die Eulersche Zahl ist kein Prüfungsstoff -- was im deutschen Leistungskurs die Hauptrolle spielt, ist hier gar nicht Thema.\n> - Die **Basiswechselformel** $\\log_a b = \\tfrac{\\log_c b}{\\log_c a}$ wird nicht vorausgesetzt. Aufgaben, die einen Basiswechsel brauchen, lassen sich stets durch Umschreiben auf eine gemeinsame Potenz lösen.\n> - Es gibt **keinen Taschenrechner**, also auch keine numerischen Logarithmen. Jeder Logarithmus, der in einer Aufgabe auftaucht, ist entweder exakt bestimmbar oder hebt sich weg.\n>\n> Diese Abgrenzung spart Lernzeit -- und sie schützt davor, in der Prüfung eine Formel zu suchen, die gar nicht gebraucht wird."
+            }
+          ]
+        },
+        {
+          "title": "Die Definition",
+          "blocks": [
+            {
+              "md": "$$\\log_a b = c \\quad\\Longleftrightarrow\\quad a^c = b, \\qquad a > 0,\\ a \\ne 1,\\ b > 0.$$\n\nDer Logarithmus **ist** der Exponent. Jede Logarithmengleichung lässt sich in eine Potenzgleichung zurückverwandeln -- und das ist bei Unsicherheit immer der sichere Weg.\n\n| Grundwert | Begründung |\n|---|---|\n| $\\log_a 1 = 0$ | $a^0 = 1$ |\n| $\\log_a a = 1$ | $a^1 = a$ |\n| $\\log_a a^k = k$ | direkt aus der Definition |\n| $a^{\\log_a b} = b$ | ebenso |"
+            }
+          ]
+        },
+        {
+          "title": "Der Graph von $y = a^x$",
+          "blocks": [
+            {
+              "md": "| Eigenschaft | $a > 1$ | $0 < a < 1$ |\n|---|---|---|\n| Verlauf | streng steigend | streng fallend |\n| Schnittpunkt mit der $y$-Achse | $(0, 1)$ | $(0, 1)$ |\n| Asymptote | $y = 0$ für $x \\to -\\infty$ | $y = 0$ für $x \\to +\\infty$ |\n| Wertebereich | $y > 0$ | $y > 0$ |\n| Nullstellen | keine | keine |\n\n**Jeder** Exponentialgraph geht durch $(0, 1)$ und bleibt **stets positiv**. Der Graph von $y = \\log_a x$ entsteht durch Spiegelung an der Geraden $y = x$: Definitionsbereich $x > 0$, Nullstelle bei $x = 1$, senkrechte Asymptote an der $y$-Achse.\n\n> [!important] Der Wertebereich ist ein Argument\n> $a^x > 0$ für **alle** $x$ -- das ist die am häufigsten gebrauchte Tatsache dieses Blocks. Sie erledigt Aufgaben wie „Wie viele Lösungen hat $2^x = -3$?\" (keine) und liefert in jeder Substitutionsaufgabe den Filter, der negative Zwischenlösungen aussortiert."
+            }
+          ]
+        },
+        {
+          "title": "Die Logarithmengesetze",
+          "blocks": [
+            {
+              "md": "$$\\log_a(xy) = \\log_a x + \\log_a y, \\qquad \\log_a\\!\\left(\\frac xy\\right) = \\log_a x - \\log_a y, \\qquad \\log_a\\!\\left(x^k\\right) = k\\log_a x.$$\n\nSie sind nichts anderes als die Potenzgesetze, von der Exponentenseite gelesen: Aus $a^m \\cdot a^n = a^{m+n}$ wird die erste Zeile.\n\n> [!warning] Die drei Nicht-Gesetze\n> $$\\log_a(x + y) \\ne \\log_a x + \\log_a y, \\qquad \\frac{\\log_a x}{\\log_a y} \\ne \\log_a\\!\\left(\\frac xy\\right), \\qquad (\\log_a x)^2 \\ne 2\\log_a x.$$\n> Alle drei tauchen in Paper 2 als **fehlerhafte Beweiszeile** auf. Zum Widerlegen genügt ein Zahlenbeispiel: $\\log_2(4 + 4) = \\log_2 8 = 3$, aber $\\log_2 4 + \\log_2 4 = 2 + 2 = 4$."
+            }
+          ]
+        },
+        {
+          "title": "Gleichungen lösen",
+          "blocks": [
+            {
+              "md": "| Form | Vorgehen |\n|---|---|\n| $a^x = b$ mit passenden Potenzen | beide Seiten auf **dieselbe Basis** bringen, Exponenten gleichsetzen |\n| $a^x = b$ allgemein | $x = \\log_a b$ -- als exakte Antwort stehen lassen |\n| $a^{2x} + p\\,a^x + q = 0$ | substituieren $u = a^x$ (siehe **Exponentialgleichung durch Substitution lösen**) |\n| $\\log_a f(x) + \\log_a g(x) = c$ | zusammenfassen, in Potenzform bringen, **Definitionsbereich prüfen** |\n\n> [!example] Gleiche Basis finden\n> $8^{x} = 32$: Beide Seiten sind Potenzen von 2, also $2^{3x} = 2^5$ und damit $x = \\tfrac53$.\n> $9^{x+1} = 27^{x}$: $3^{2x+2} = 3^{3x}$, also $2x + 2 = 3x$ und $x = 2$.\n>\n> Diese Technik ersetzt im Test fast immer den Logarithmus. Lohnt sich die Suche nach der gemeinsamen Basis nicht, ist die Antwortoption ohnehin in Logarithmenform angegeben."
+            }
+          ]
+        },
+        {
+          "title": "Der Definitionsbereich als Lösungsfilter",
+          "blocks": [
+            {
+              "md": "Beim Zusammenfassen von Logarithmen kann sich der Definitionsbereich **vergrößern**: $\\log_a x + \\log_a(x-2)$ ist nur für $x > 2$ definiert, $\\log_a\\!\\left(x(x-2)\\right)$ dagegen auch für $x < 0$. Jede Lösung der zusammengefassten Gleichung muss deshalb **zurück in die ursprüngliche Gleichung** eingesetzt und geprüft werden.\n\nDas ist derselbe Mechanismus wie beim Quadrieren von Wurzelgleichungen -- und einer der wenigen Punkte, an denen dieser Block überhaupt Fehler produziert."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **$\\log_a(x + y)$ auseinanderziehen.**\n- **Den Definitionsbereich nicht prüfen** und eine negative Scheinlösung mitnehmen.\n- **Mit $e$ und $\\ln$ arbeiten**, die gar nicht verlangt sind -- und dabei Zeit verlieren.\n- **Bei $a^x = b$ mit negativem $b$ eine Lösung suchen.**\n- **Den Logarithmus als Faktor behandeln:** $\\log_a(2x) \\ne 2\\log_a x$, sondern $\\log_a 2 + \\log_a x$.\n\nVerwandt: **Potenzen, Wurzeln und Surds** · **Wachstum, Zinseszins und iterative Prozesse** · Aufgabentypen: **Logarithmen ohne Taschenrechner auswerten** · **Exponentialgleichung durch Substitution lösen** · **Logarithmusgleichung mit Definitionsbereich lösen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Werte",
+      "md": "Ordne jedem Ausdruck seinen Wert zu.",
+      "pairs": [
+        [
+          "$\\log_2 32$",
+          "$5$"
+        ],
+        [
+          "$\\log_3 \\tfrac19$",
+          "$-2$"
+        ],
+        [
+          "$\\log_{10} 1$",
+          "$0$"
+        ],
+        [
+          "$\\log_4 2$",
+          "$\\tfrac12$"
+        ],
+        [
+          "$\\log_5 5^7$",
+          "$7$"
+        ]
+      ],
+      "explain": "Immer fragen: Mit welchem Exponenten wird aus der Basis das Argument?",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung von $\\log_a(xy) = \\log_a x + \\log_a y$ in die richtige Reihenfolge.",
+      "items": [
+        "$x = a^m$ und $y = a^n$ schreiben",
+        "$xy = a^m a^n = a^{m+n}$",
+        "also $\\log_a(xy) = m + n$",
+        "$m + n = \\log_a x + \\log_a y$ einsetzen"
+      ],
+      "explain": "Die Reihenfolge: 1. $x = a^m$ und $y = a^n$ schreiben. 2. $xy = a^m a^n = a^{m+n}$. 3. also $\\log_a(xy) = m + n$. 4. $m + n = \\log_a x + \\log_a y$ einsetzen.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "What is $\\log_2 48 - \\log_2 6$?",
+      "options": [
+        {
+          "md": "2"
+        },
+        {
+          "md": "3",
+          "correct": true
+        },
+        {
+          "md": "4"
+        },
+        {
+          "md": "8"
+        },
+        {
+          "md": "42"
+        }
+      ],
+      "explain": "$\\log_2 \\tfrac{48}{6} = \\log_2 8 = 3$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Gesetze",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\log_a(x + y) = \\log_a x + \\log_a y$ für positive $x$, $y$.",
+      "answer": false,
+      "explain": "Das gilt für das Produkt: $\\log_a(xy) = \\log_a x + \\log_a y$. Beispiel: $\\log_2 4 = 2$, aber $\\log_2 2 + \\log_2 2 = 2$ gehört zu $2 \\cdot 2$.",
+      "label": "Falle",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Für welche $x$ ist $\\log_3(x - 2)$ definiert?",
+      "options": [
+        {
+          "md": "für $x > 2$",
+          "correct": true
+        },
+        {
+          "md": "für $x \\ge 2$",
+          "why": "$\\log_3 0$ existiert nicht."
+        },
+        {
+          "md": "für alle $x$",
+          "why": "Logarithmen gibt es nur von positiven Zahlen."
+        },
+        {
+          "md": "für $x > 0$",
+          "why": "Das Argument ist $x - 2$, nicht $x$."
+        }
+      ],
+      "explain": "Das Argument muss positiv sein: x − 2 > 0.",
+      "label": "Definitionsbereich",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "What is $\\log_2 48 - \\log_2 3$?",
       "options": [
@@ -72,12 +467,50 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "logwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "logwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "loggleichung"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "log_a x = y ⇔ aʸ = x.",
         "Produkt, Quotient, Potenz, Basiswechsel.",
-        "Nur positive Argumente."
+        "Nur positive Argumente.",
+        "Der Logarithmus ist der Exponent; die Gesetze folgen aus $a^m a^n = a^{m+n}$, $\\tfrac{a^m}{a^n} = a^{m-n}$, $(a^m)^k = a^{mk}$.",
+        "$a^x$ und $\\log_a x$ sind Spiegelbilder an $y = x$; Logarithmen nur von positiven Zahlen."
       ],
       "id": "summary"
     }

@@ -18,6 +18,613 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Kreisel in deiner Skizze. Die Kamera geht Drehung, Drehimpuls und Präzession durch.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Drehimpuls Kreisel.svg",
+        "aspect": 1.83,
+        "alt": "Kreisel mit Drehimpulsvektor und Präzession"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Kreisel und die Größen, die seine Drehung beschreiben.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Die Scheibe dreht sich mit der Winkelgeschwindigkeit $\\omega$ (grüner Pfeil) um ihre Achse.",
+          "to": {
+            "x": 0.27,
+            "y": 0.46,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Der **Drehimpuls** $\\vec L$ (rot) zeigt längs der Drehachse. Seine Richtung gibt die Rechte-Hand-Regel: Die Finger zeigen den Drehsinn, der Daumen zeigt $\\vec L$.",
+          "to": {
+            "x": 0.27,
+            "y": 0.27,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Präzession** (orange): Steht die Achse schräg, übt die Gewichtskraft ein Drehmoment aus. Der Kreisel fällt nicht um; seine Achse wandert seitlich im Kreis, weil $\\vec M = \\tfrac{\\Delta\\vec L}{\\Delta t}$ die Richtung von $\\vec L$ ändert.",
+          "to": {
+            "x": 0.3,
+            "y": 0.2,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Die Formeln: $L = I\\,\\omega$ ist das Gegenstück zu $p = m v$, und $M = \\tfrac{\\Delta L}{\\Delta t}$ das Gegenstück zu $F = \\tfrac{\\Delta p}{\\Delta t}$.",
+          "to": {
+            "x": 0.76,
+            "y": 0.42,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Ohne äußeres Drehmoment bleibt $L$ erhalten: Wird $I$ kleiner, wird $\\omega$ größer, wie bei der Pirouette.",
+          "to": {
+            "x": 0.76,
+            "y": 0.6,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Drehmoment\n> Eine Kraft $F$, die im Abstand $r$ von der Drehachse unter dem Winkel $\\alpha$ zum Hebelarm angreift, hat das **Drehmoment** $M = r\\,F\\sin\\alpha = r\\cdot F_{\\perp}$, Einheit $\\mathrm{N\\,m}$. Nur die Komponente senkrecht zum Hebelarm dreht. Gleichwertig: Kraft mal **Kraftarm**, dem senkrechten Abstand der Wirkungslinie von der Achse.\n\n> [!definition] Trägheitsmoment\n> Das **Trägheitsmoment** $I = \\sum m_i r_i^2$ misst, wie schwer sich ein Körper um eine bestimmte Achse in Drehung versetzen lässt. Es hängt von der Massenverteilung und der Achse ab: Punktmasse $m r^2$, Vollzylinder $\\tfrac12 m r^2$, dünner Hohlzylinder $m r^2$, Vollkugel $\\tfrac25 m r^2$.\n\n> [!definition] Drehimpuls und Winkelbeschleunigung\n> Der **Drehimpuls** ist $L = I\\,\\omega$, Einheit $\\mathrm{kg\\,\\tfrac{m^2}{s}} = \\mathrm{N\\,m\\,s}$; für eine Punktmasse auf einer Kreisbahn $L = m\\,v\\,r$. Die **Winkelbeschleunigung** ist $\\alpha = \\tfrac{\\Delta\\omega}{\\Delta t}$ in $\\mathrm{s}^{-2}$.",
+      "label": "Definitionen",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Grundgleichung der Drehbewegung.** Eine Punktmasse $m$ sitzt im Abstand $r$ an einer masselosen Stange; eine Kraft $F$ greift senkrecht an ihr an.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "F = m\\,a_t,\\qquad a_t = r\\,\\alpha",
+            "why": "2. Axiom längs der Bahn; die Bahnbeschleunigung ist Radius mal Winkelbeschleunigung (aus $v = \\omega r$)."
+          },
+          {
+            "tex": "M = r\\,F = r\\,m\\,r\\,\\alpha = m r^2\\,\\alpha",
+            "why": "Mit dem Hebelarm multipliziert: das Drehmoment."
+          },
+          {
+            "tex": "M = I\\,\\alpha\\quad\\text{mit}\\quad I = \\sum m_i r_i^2",
+            "why": "Für einen ausgedehnten Körper addieren sich die Beiträge aller Massenteile: die Grundgleichung, Gegenstück zu $F = m a$."
+          },
+          {
+            "tex": "M = \\frac{\\Delta L}{\\Delta t}",
+            "why": "Mit $\\alpha = \\tfrac{\\Delta\\omega}{\\Delta t}$ und $L = I\\omega$, bei festem $I$. Ohne äußeres Drehmoment ist $\\Delta L = 0$: **Drehimpulserhaltung**."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Punktmasse.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Drehmoment.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grundgleichung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Drehimpulsform und Erhaltung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Rotationsenergie.** Jedes Massenteil $m_i$ bewegt sich mit $v_i = \\omega\\,r_i$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "E_{rot} = \\sum \\tfrac12 m_i v_i^2 = \\sum \\tfrac12 m_i\\,(\\omega r_i)^2",
+            "why": "Die Bewegungsenergie aller Teile zusammen."
+          },
+          {
+            "tex": "E_{rot} = \\tfrac12\\left(\\sum m_i r_i^2\\right)\\omega^2 = \\tfrac12 I\\,\\omega^2",
+            "why": "$\\omega$ ist für alle Teile gleich und lässt sich ausklammern."
+          },
+          {
+            "tex": "E_{rot} = \\frac{L^2}{2 I}",
+            "why": "Mit $L = I\\omega$, wie $E_{kin} = \\tfrac{p^2}{2m}$. Bei festem $L$ steigt die Energie, wenn $I$ sinkt: Die Läuferin muss beim Anziehen der Arme Arbeit verrichten."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Summe der Bewegungsenergien.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mit dem Drehimpuls.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve5",
+      "type": "anim",
+      "md": "**Klausuraufgabe: Wer rollt am schnellsten hinunter?** Ein Körper mit $I = k\\,m r^2$ rollt ohne zu gleiten aus der Höhe $h$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "m g h = \\tfrac12 m v^2 + \\tfrac12 I\\,\\omega^2",
+            "why": "Energiesatz: Die Lageenergie verteilt sich auf Translation und Rotation."
+          },
+          {
+            "tex": "\\omega = \\frac{v}{r}\\quad\\Rightarrow\\quad \\tfrac12 I\\omega^2 = \\tfrac12 k\\,m r^2\\,\\frac{v^2}{r^2} = \\tfrac12 k\\,m v^2",
+            "why": "Rollen ohne Gleiten: Der Auflagepunkt ruht, also $v = \\omega r$."
+          },
+          {
+            "tex": "m g h = \\tfrac12 m v^2\\,(1 + k)\\quad\\Rightarrow\\quad v = \\sqrt{\\frac{2 g h}{1 + k}}",
+            "why": "Masse und Radius kürzen sich; nur der Formfaktor $k$ zählt."
+          },
+          {
+            "tex": "k_{Kugel} = 0{,}4 < k_{Vollzylinder} = 0{,}5 < k_{Hohlzylinder} = 1",
+            "why": "Die Vollkugel gewinnt, der Hohlzylinder verliert, unabhängig von Masse und Größe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Energiesatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rollbedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Die Reihenfolge.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Rollen statt Gleiten.** Geschwindigkeit nach $1\\,\\mathrm{m}$ Höhenunterschied über dem Formfaktor $k = \\tfrac{I}{m r^2}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1.1
+        ],
+        "y": [
+          0,
+          5
+        ],
+        "xLabel": "Formfaktor k",
+        "yLabel": "v in m/s",
+        "vars": [
+          {
+            "name": "Kf",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "vr",
+            "expr": "sqrt(2*9.81/(1 + x))",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "on": "vr",
+            "label": "gleitender Klotz"
+          },
+          {
+            "x": 0.4,
+            "on": "vr",
+            "label": "Vollkugel"
+          },
+          {
+            "x": 1,
+            "on": "vr"
+          },
+          {
+            "x": "Kf",
+            "on": "vr",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "labels": [
+          {
+            "x": 1.0,
+            "y": 2.75,
+            "text": "Hohlzylinder",
+            "anchor": "end"
+          }
+        ],
+        "readout": "k = {Kf|2}: v = **{sqrt(2*9.81/(1 + Kf))|2} m/s**, in der Drehung stecken **{100*Kf/(1 + Kf)|0} %** der Energie"
+      },
+      "timeline": [
+        {
+          "caption": "Ein reibungsfrei gleitender Klotz ($k = 0$) setzt die ganze Lageenergie in Translation um: $v = \\sqrt{2gh} \\approx 4{,}43\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+          "set": {
+            "Kf": 0
+          }
+        },
+        {
+          "caption": "Die Vollkugel steckt $\\tfrac{0{,}4}{1{,}4} \\approx 29\\,\\%$ ihrer Energie in die Drehung und kommt mit $3{,}74\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ an.",
+          "to": {
+            "Kf": 0.4
+          },
+          "dur": 2200
+        },
+        {
+          "caption": "Der Vollzylinder ($k = 0{,}5$): ein Drittel in der Drehung, $3{,}62\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$.",
+          "to": {
+            "Kf": 0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Der Hohlzylinder ($k = 1$) hat seine ganze Masse außen: Die Hälfte der Energie steckt in der Drehung, nur $3{,}13\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$. Masse und Radius spielen keine Rolle.",
+          "to": {
+            "Kf": 1
+          },
+          "dur": 2400
+        }
+      ],
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Drehimpuls und Drehmoment",
+      "path": "02 Wiki/Physik/01 E-Phase/Drehimpuls und Drehmoment.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Für **Drehbewegungen** treten an die Stelle von Kraft, Masse und Impuls die Größen **Drehmoment**, **Trägheitsmoment** und **Drehimpuls**."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "image": "vault:Drehimpuls Kreisel.svg"
+            }
+          ]
+        },
+        {
+          "title": "Die Größen",
+          "blocks": [
+            {
+              "md": "| translatorisch | rotatorisch | Zusammenhang |\n|---|---|---|\n| Kraft $F$ | **Drehmoment** $M = r \\cdot F_\\perp$ | $M = I\\cdot\\alpha$ |\n| Masse $m$ | **Trägheitsmoment** $I = \\sum m_i r_i^2$ | Maß für Trägheit bei Drehung |\n| Impuls $p = mv$ | **Drehimpuls** $L = I\\cdot\\omega$ | $M = \\dfrac{\\Delta L}{\\Delta t}$ |\n| $E_{kin} = \\tfrac12 mv^2$ | $E_{rot} = \\tfrac12 I\\omega^2$ | |"
+            }
+          ]
+        },
+        {
+          "title": "Drehimpulserhaltung",
+          "blocks": [
+            {
+              "md": "> [!important] Erhaltungsgröße\n> Wirkt kein äußeres Drehmoment, bleibt der Drehimpuls **konstant**:\n> $$L = I \\cdot \\omega = \\text{const}$$\n> Verkleinert eine Eiskunstläuferin ihr Trägheitsmoment (Arme anlegen), muss $\\omega$ **zunehmen** -- die **Pirouette** wird schneller. Dieselbe Erhaltungsgröße steckt hinter Keplers **Flächensatz**."
+            }
+          ]
+        },
+        {
+          "title": "Trägheitsmomente einfacher Körper",
+          "blocks": [
+            {
+              "md": "| Körper (Achse durch Schwerpunkt) | $I$ |\n|---|---|\n| Punktmasse im Abstand $r$ | $m r^2$ |\n| Vollzylinder / Scheibe | $\\tfrac{1}{2} m r^2$ |\n| Hohlzylinder (dünnwandig) | $m r^2$ |\n| Vollkugel | $\\tfrac{2}{5} m r^2$ |"
+            }
+          ]
+        },
+        {
+          "title": "Präzession",
+          "blocks": [
+            {
+              "md": "Wirkt auf einen rotierenden Kreisel ein Drehmoment (z. B. die Schwerkraft), weicht die Drehachse **senkrecht** zur Kraftrichtung aus: Der Kreisel **präzediert**, statt umzufallen. Anwendungen: Kreiselkompass, Fahrradstabilität, Erdpräzession."
+            }
+          ]
+        },
+        {
+          "title": "Die Analogie als Lernhilfe",
+          "blocks": [
+            {
+              "md": "> [!important] Jede Größe der Translation hat ein Gegenstück in der Rotation\n> Wer die Entsprechungstabelle beherrscht, kann Rotationsaufgaben lösen, ohne neue Gesetze zu lernen -- die Struktur ist identisch:\n>\n> | Translation | Rotation |\n> |---|---|\n> | Weg $s$ | Winkel $\\varphi$ |\n> | Geschwindigkeit $v$ | Winkelgeschwindigkeit $\\omega$ |\n> | Beschleunigung $a$ | Winkelbeschleunigung $\\alpha$ |\n> | Masse $m$ | Trägheitsmoment $I$ |\n> | Kraft $F = m a$ | Drehmoment $M = I\\alpha$ |\n> | Impuls $p = mv$ | Drehimpuls $L = I\\omega$ |\n> | $E_{kin} = \\tfrac12 mv^2$ | $E_{rot} = \\tfrac12 I\\omega^2$ |\n>\n> Auch die Erhaltungssätze entsprechen einander: Ohne äußere Kraft bleibt der Impuls erhalten, ohne äußeres Drehmoment der Drehimpuls."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb das Trägheitsmoment von der Achse abhängt",
+          "blocks": [
+            {
+              "md": "$$I = \\sum m_i r_i^2$$\n\n> [!important] Es zählt nicht die Masse, sondern ihre Verteilung\n> Weil der Abstand **quadratisch** eingeht, tragen weit außen liegende Massenanteile überproportional bei. Ein Hohlzylinder hat deshalb das doppelte Trägheitsmoment eines Vollzylinders gleicher Masse.\n>\n> Anders als die Masse ist das Trägheitsmoment daher **keine Stoffeigenschaft**, sondern hängt von der gewählten Drehachse ab. Derselbe Körper hat je nach Achse verschiedene Werte.\n>\n> Praktische Folge beim Rollversuch: Auf einer schiefen Ebene rollt eine **Vollkugel** schneller hinunter als ein Hohlzylinder -- unabhängig von Masse und Radius. Ihre Masse sitzt näher an der Achse, es geht weniger Energie in die Rotation und mehr in die Translation.\n>\n> Das ist ein guter Prüfstein: Die naheliegende Vermutung \"das Schwerere rollt schneller\" ist falsch; entscheidend ist allein die **Massenverteilung**."
+            }
+          ]
+        },
+        {
+          "title": "Drehimpulserhaltung",
+          "blocks": [
+            {
+              "md": "$$L = I\\,\\omega = \\text{const}$$\n\n> [!tip] Die Pirouette ist die anschaulichste Anwendung\n> Zieht eine Eiskunstläuferin die Arme an, sinkt ihr Trägheitsmoment -- und weil das Produkt konstant bleiben muss, steigt die Winkelgeschwindigkeit.\n>\n> Die Rotationsenergie $\\tfrac12 I\\omega^2$ **steigt** dabei allerdings, obwohl der Drehimpuls gleich bleibt. Das ist kein Widerspruch: Die Läuferin verrichtet beim Anziehen der Arme Arbeit gegen die Zentrifugalwirkung. Energie wird zugeführt, Drehimpuls nicht.\n>\n> Weitere Fälle desselben Satzes:\n>\n> - **Keplers Flächensatz** -- ein Planet ist in Sonnennähe schneller, siehe **Keplersche Gesetze**.\n> - **Kreiselstabilität** -- ein Fahrrad bleibt stehen, solange die Räder drehen.\n> - **Sternentstehung** -- eine kollabierende Gaswolke rotiert immer schneller und flacht zur Scheibe ab.\n> - **Neutronensterne** rotieren mit bis zu 700 Umdrehungen je Sekunde, weil der Vorgängerstern beim Kollaps sein Trägheitsmoment drastisch verringert hat."
+            }
+          ]
+        },
+        {
+          "title": "Das Drehmoment",
+          "blocks": [
+            {
+              "md": "$$M = r\\cdot F_\\perp$$\n\nNur die zur Verbindungslinie **senkrechte** Kraftkomponente erzeugt ein Drehmoment. Eine Kraft, die genau auf die Achse zeigt, dreht nichts.\n\nDaraus folgt das Hebelgesetz und die Alltagserfahrung, dass ein langer Schraubenschlüssel weniger Kraft erfordert -- der Hebelarm $r$ ersetzt die Kraft."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die Rotationsgrößen ergänzen die **Newtonsche Mechanik** um die Drehbewegung und liefern mit der Drehimpulserhaltung die dritte große Erhaltungsgröße neben **Energieerhaltung** und **Impulserhaltung**. Sie begründen den Flächensatz der **Keplerschen Gesetze**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jeder Größe der Translation ihr Gegenstück der Rotation zu.",
+      "pairs": [
+        [
+          "Masse $m$",
+          "Trägheitsmoment $I$"
+        ],
+        [
+          "Kraft $F$",
+          "Drehmoment $M$"
+        ],
+        [
+          "Impuls $p = m v$",
+          "Drehimpuls $L = I\\omega$"
+        ],
+        [
+          "$F = m a$",
+          "$M = I\\alpha$"
+        ],
+        [
+          "$E_{kin} = \\tfrac12 m v^2$",
+          "$E_{rot} = \\tfrac12 I\\omega^2$"
+        ]
+      ],
+      "explain": "Die Struktur ist dieselbe; auch die Erhaltungssätze entsprechen einander: ohne äußere Kraft Impulserhaltung, ohne äußeres Drehmoment Drehimpulserhaltung.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Rotationsenergie in die richtige Reihenfolge.",
+      "items": [
+        "Bewegungsenergie aller Teile: $\\sum \\tfrac12 m_i v_i^2$",
+        "Jedes Teil hat $v_i = \\omega r_i$",
+        "$\\omega$ ausklammern: $\\tfrac12\\left(\\sum m_i r_i^2\\right)\\omega^2$",
+        "Mit $I = \\sum m_i r_i^2$: $E_{rot} = \\tfrac12 I\\omega^2$"
+      ],
+      "explain": "Die Reihenfolge: 1. Bewegungsenergie aller Teile: $\\sum \\tfrac12 m_i v_i^2$. 2. Jedes Teil hat $v_i = \\omega r_i$. 3. $\\omega$ ausklammern: $\\tfrac12\\left(\\sum m_i r_i^2\\right)\\omega^2$. 4. Mit $I = \\sum m_i r_i^2$: $E_{rot} = \\tfrac12 I\\omega^2$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Vollkugel rollt ohne zu gleiten $1\\,\\mathrm{m}$ Höhenunterschied hinab. Wie schnell ist sie unten?",
+      "answer": 3.74,
+      "tolerance": 0.03,
+      "placeholder": "m/s",
+      "explain": "$v = \\sqrt{\\tfrac{2gh}{1 + k}} = \\sqrt{\\tfrac{19{,}62}{1{,}4}}\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}} \\approx 3{,}74\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$, weniger als die $4{,}43\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}}$ eines gleitenden Körpers.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Vollkugel, Vollzylinder und Hohlzylinder gleicher Masse und gleichen Radius rollen gleichzeitig los. Welche Reihenfolge kommt unten an?",
+      "options": [
+        {
+          "md": "Vollkugel, Vollzylinder, Hohlzylinder",
+          "correct": true
+        },
+        {
+          "md": "alle gleichzeitig",
+          "why": "Die Massenverteilung entscheidet, wie viel Energie in die Drehung geht."
+        },
+        {
+          "md": "Hohlzylinder, Vollzylinder, Vollkugel",
+          "why": "Umgekehrt: Wer viel Masse außen hat, ist langsam."
+        },
+        {
+          "md": "der schwerste zuerst",
+          "why": "Masse und Radius kürzen sich."
+        }
+      ],
+      "explain": "$v = \\sqrt{\\tfrac{2gh}{1 + k}}$ mit $k = 0{,}4$, $0{,}5$ und $1$.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Schwungrad (Vollzylinder, $20\\,\\mathrm{kg}$, $r = 30\\,\\mathrm{cm}$) dreht sich mit $3000$ Umdrehungen pro Minute. Wie viel Energie speichert es?",
+      "answer": 44.4,
+      "tolerance": 0.3,
+      "placeholder": "kJ",
+      "explain": "$I = \\tfrac12 m r^2 = 0{,}9\\,\\mathrm{kg\\,m^2}$, $\\omega = 2\\pi\\cdot 50\\,\\mathrm{s}^{-1} \\approx 314\\,\\mathrm{s}^{-1}$, $E = \\tfrac12 I\\omega^2 \\approx 44{,}4\\,\\mathrm{kJ}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Grundgleichung",
+      "md": "Ein Motor treibt dieses Schwungrad ($I = 0{,}9\\,\\mathrm{kg\\,m^2}$) mit $9\\,\\mathrm{N\\,m}$ aus der Ruhe an. Nach welcher Zeit erreicht es $\\omega = 314\\,\\mathrm{s}^{-1}$?",
+      "answer": 31.4,
+      "tolerance": 0.2,
+      "placeholder": "s",
+      "explain": "$\\alpha = \\tfrac{M}{I} = 10\\,\\mathrm{s}^{-2}$, $t = \\tfrac{\\omega}{\\alpha} = 31{,}4\\,\\mathrm{s}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Trägheitsmoment eines Körpers ist wie seine Masse eine feste Eigenschaft, unabhängig von der Drehachse.",
+      "answer": false,
+      "explain": "$I = \\sum m_i r_i^2$ hängt von den Abständen zur gewählten Achse ab. Ein Stab dreht sich um seine Längsachse viel leichter als um eine Querachse.",
+      "label": "Definitionen",
+      "id": "vq7"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Rückt eine Punktmasse doppelt so weit von der Achse weg, wird ihr Trägheitsmoment {{0}}-mal so groß. Halbiert man bei festem Drehimpuls das Trägheitsmoment, verdoppelt sich $\\omega$ und die Rotationsenergie wird {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "4"
+          ],
+          "numeric": true,
+          "tolerance": 0.04
+        },
+        {
+          "accept": [
+            "2"
+          ],
+          "numeric": true,
+          "tolerance": 0.02
+        }
+      ],
+      "explain": "$I = m r^2$ wächst quadratisch; $E = \\tfrac{L^2}{2I}$ verdoppelt sich, wenn $I$ sich halbiert.",
+      "id": "vq8"
+    },
+    {
+      "type": "multi",
+      "md": "In welchen Fällen bleibt der Drehimpuls erhalten?",
+      "options": [
+        {
+          "md": "Eine Eiskunstläuferin zieht die Arme an.",
+          "correct": true
+        },
+        {
+          "md": "Ein Planet läuft auf seiner Ellipsenbahn um die Sonne.",
+          "correct": true
+        },
+        {
+          "md": "Eine rotierende Gaswolke zieht sich zu einem Stern zusammen.",
+          "correct": true
+        },
+        {
+          "md": "Ein Fahrrad bremst mit der Felgenbremse.",
+          "why": "Die Bremse übt ein äußeres Drehmoment auf das Rad aus."
+        },
+        {
+          "md": "Ein Motor treibt ein Schwungrad an.",
+          "why": "Das Motordrehmoment ändert den Drehimpuls."
+        }
+      ],
+      "explain": "Erhalten bleibt der Drehimpuls nur ohne äußeres Drehmoment.",
+      "label": "Erhaltung",
+      "id": "vq9"
+    },
+    {
+      "type": "numeric",
+      "label": "Extrem",
+      "md": "Ein Stern (Radius $700\\,000\\,\\mathrm{km}$, eine Umdrehung in 30 Tagen) kollabiert zu einem Neutronenstern mit $14\\,\\mathrm{km}$ Radius. Wie lange dauert eine Umdrehung danach (Modell: homogene Kugel, Masse bleibt)?",
+      "answer": 1.04,
+      "tolerance": 0.02,
+      "placeholder": "ms",
+      "explain": "$I \\sim r^2$, also $\\tfrac{T_2}{T_1} = \\tfrac{I_2}{I_1} = \\left(\\tfrac{14}{700\\,000}\\right)^2 = 4\\cdot 10^{-10}$. $T_2 = 2{,}592\\cdot 10^6\\,\\mathrm{s}\\cdot 4\\cdot 10^{-10} \\approx 1{,}04\\,\\mathrm{ms}$: fast tausend Umdrehungen pro Sekunde. So entstehen Pulsare.",
+      "id": "vq10"
+    },
+    {
       "id": "tuer",
       "type": "choice",
       "md": "Wo muss man eine Tür anfassen, um sie mit möglichst wenig Kraft zu öffnen?",
@@ -67,13 +674,57 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "rollen",
+          "rotationsenergie"
+        ]
+      },
+      "label": "Rollen und Schwungrad",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "anlaufen",
+          "rotationsenergie",
+          "drehimpuls"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "rollen",
+          "drehimpuls-scheibe",
+          "rotationsenergie"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx3"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$M = r F\\sin\\alpha$.",
         "$L = J\\omega$ bleibt ohne äußeres Drehmoment erhalten.",
-        "Kleineres Trägheitsmoment heißt schnellere Drehung."
+        "Kleineres Trägheitsmoment heißt schnellere Drehung.",
+        "$M = r F\\sin\\alpha$, $I = \\sum m_i r_i^2$, $L = I\\omega$; Grundgleichung $M = I\\alpha = \\tfrac{\\Delta L}{\\Delta t}$, hergeleitet aus $F = m a$.",
+        "$E_{rot} = \\tfrac12 I\\omega^2 = \\tfrac{L^2}{2I}$; ohne äußeres Drehmoment bleibt $L$ erhalten, die Rotationsenergie nicht unbedingt.",
+        "Rollen: $v = \\sqrt{\\tfrac{2gh}{1 + k}}$ mit $k = \\tfrac{I}{m r^2}$; Kugel vor Vollzylinder vor Hohlzylinder."
       ]
     }
   ]

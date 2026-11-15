@@ -16,6 +16,393 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Die logistische Abbildung\n> $x_{n+1} = r\\,x_n(1 - x_n)$ mit $0 \\le x_n \\le 1$: ursprünglich ein Populationsmodell ($x_n$ relativer Bestand, $r$ Wachstumsrate). Der Faktor $x_n$ lässt wachsen, $(1 - x_n)$ bremst nahe der Kapazitätsgrenze. Nichts daran ist zufällig.\n\n| $r$ | Langzeitverhalten |\n|---|---|\n| $r < 1$ | gegen 0, Aussterben |\n| $1 < r < 3$ | fester Wert $x^* = 1 - \\tfrac1r$ |\n| $3 < r < 3{,}449$ | Periode 2 |\n| $3{,}449 < r < 3{,}544$ | Periode 4 |\n| $3{,}544 < r < 3{,}564$ | Periode 8 |\n| $r > 3{,}5699$ | Chaos, mit periodischen Fenstern (Periode 3 bei $r \\approx 3{,}83$) |\n\n**Das Bifurkationsdiagramm** trägt die langfristig angenommenen Werte über $r$ auf; die Zahl der Äste ist die Periode. **Feigenbaum:** $\\delta = \\lim\\tfrac{r_n - r_{n-1}}{r_{n+1} - r_n} \\approx 4{,}669$, universell für viele Systeme.",
+      "label": "Logistische Abbildung",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum der Fixpunkt bei $r = 3$ instabil wird.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^* = r\\,x^*(1 - x^*) \\;\\Rightarrow\\; x^* = 1 - \\frac{1}{r}",
+            "why": "Fixpunkt (neben x* = 0): durch x* teilen und auflösen."
+          },
+          {
+            "tex": "x_{n+1} - x^* \\approx f'(x^*)\\,(x_n - x^*),\\qquad f'(x) = r\\,(1 - 2x)",
+            "why": "Eine kleine Abweichung wird bei jedem Schritt mit der Ableitung multipliziert."
+          },
+          {
+            "tex": "f'(x^*) = r\\left(1 - 2 + \\frac{2}{r}\\right) = 2 - r",
+            "why": "Ableitung am Fixpunkt."
+          },
+          {
+            "tex": "|2 - r| < 1 \\;\\Leftrightarrow\\; 1 < r < 3",
+            "why": "Nur dann schrumpfen Abweichungen: Der Fixpunkt ist stabil."
+          },
+          {
+            "tex": "r > 3:\\quad |f'(x^*)| > 1",
+            "why": "Der Fixpunkt existiert weiter, stößt die Folge aber ab; sie pendelt zwischen zwei Werten: die erste Periodenverdopplung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fixpunkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Linearisieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stabil.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Instabil.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Die ersten Äste des Bifurkationsdiagramms.** Blau die stabilen Langzeitwerte, gestrichelt der instabil gewordene Fixpunkt, orange der chaotische Bereich.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0.8,
+          4
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "xLabel": "r",
+        "yLabel": "Langzeitwerte von x",
+        "vars": [
+          {
+            "name": "R",
+            "min": 0.8,
+            "max": 4,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "fp",
+            "expr": "1 - 1/x",
+            "color": "blue",
+            "domain": [
+              1,
+              3
+            ]
+          },
+          {
+            "name": "fu",
+            "expr": "1 - 1/x",
+            "color": "gray",
+            "dashed": true,
+            "width": 1.6,
+            "domain": [
+              3,
+              4
+            ]
+          },
+          {
+            "name": "pa",
+            "expr": "((x + 1) + sqrt((x + 1)*(x - 3)))/(2*x)",
+            "color": "blue",
+            "domain": [
+              3,
+              3.449
+            ]
+          },
+          {
+            "name": "pb",
+            "expr": "((x + 1) - sqrt((x + 1)*(x - 3)))/(2*x)",
+            "color": "blue",
+            "domain": [
+              3,
+              3.449
+            ]
+          }
+        ],
+        "vbands": [
+          {
+            "x": 3.785,
+            "d": 0.215,
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "R",
+            "color": "green"
+          }
+        ],
+        "readout": "r = {R|2}: Fixpunkt 1 − 1/r = {1 - 1/R|3}"
+      },
+      "timeline": [
+        {
+          "caption": "$r = 2$: ein einziger stabiler Langzeitwert, $x^* = 0{,}5$.",
+          "set": {
+            "R": 2
+          }
+        },
+        {
+          "caption": "Bis $r = 3$ wandert der Fixpunkt nach oben ($x^* = 0{,}667$).",
+          "to": {
+            "R": 2.95
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "$r = 3{,}2$: Der Fixpunkt ist instabil (gestrichelt), die Folge pendelt zwischen den zwei blauen Ästen, $0{,}513$ und $0{,}799$.",
+          "to": {
+            "R": 3.2
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Ab $3{,}449$ verdoppelt sich die Periode erneut, dann immer schneller (hier nicht mehr gezeichnet).",
+          "to": {
+            "R": 3.5
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Ab etwa $3{,}57$ Chaos (orange): Die Werte füllen ganze Bereiche; dazwischen liegen periodische Fenster.",
+          "to": {
+            "R": 3.85
+          },
+          "dur": 2000
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Durchgerechnetes Beispiel.** $r = 2{,}5$: Fixpunkt $x^* = 0{,}6$, die Iteration von $0{,}5$ aus landet nach wenigen Schritten dort. $r = 3{,}2$: Die Folge pendelt zwischen $0{,}7995$ und $0{,}5130$; der Fixpunkt $0{,}6875$ existiert, wird aber nicht angenommen. $r = 3{,}9$: Werte wie $0{,}8909$, $0{,}3791$, $0{,}9180$, $0{,}2937$, ohne Muster.\n\n**Was Chaos nicht ist:** kein Zufall (streng deterministisch), keine strukturlose Unordnung (selbstähnliche Muster, periodische Fenster), kein Rechenfehler (eine Eigenschaft des Systems), nicht auf komplizierte Systeme beschränkt (eine Gleichung mit einem Parameter genügt; die Nichtlinearität $x_n(1 - x_n)$ ist die ganze Ursache).\n\n> [!warning] Typische Fallen\n> Chaos mit Zufall gleichsetzen; den instabilen Fixpunkt als Langzeitwert angeben; zu wenige Iterationen (erst den Einschwingvorgang abwarten); zu wenige Nachkommastellen; die Zahl der Äste falsch ablesen; jenseits von 3,57 alles für chaotisch halten.",
+      "label": "Beispiel und Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bifurkationsdiagramm interpretieren",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Bifurkationsdiagramm interpretieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Interpretieren Sie das abgebildete Bifurkationsdiagramm\"*, *\"Berechnen Sie die ersten Iterationen der logistischen Abbildung\"*, *\"Begründen Sie die Sensitivität gegenüber den Anfangsbedingungen\"*, *\"Erklären Sie, weshalb ein deterministisches System dennoch unvorhersagbar sein kann\"*, *\"Was bedeutet Periodenverdopplung?\"*.\n\nErkennungsmerkmal: Eine **Iterationsvorschrift** mit einem **Kontrollparameter**, meist die logistische Abbildung."
+            }
+          ]
+        },
+        {
+          "title": "Die logistische Abbildung",
+          "blocks": [
+            {
+              "md": "> [!important] Eine denkbar einfache Vorschrift\n> $$x_{n+1} = r\\,x_n\\,(1 - x_n), \\qquad 0 \\leq x_n \\leq 1$$\n> Ursprünglich ein Modell für Populationsdynamik: $x_n$ ist der Bestand relativ zur Kapazitätsgrenze, $r$ die Wachstumsrate. Der Faktor $x_n$ erzeugt Wachstum, der Faktor $(1-x_n)$ bremst bei Annäherung an die Grenze.\n>\n> Die Gleichung enthält nichts Zufälliges: Bei gegebenem $r$ und $x_0$ liegt jede Folge eindeutig fest. Dennoch erzeugt sie ab einem bestimmten $r$ Verhalten, das von Zufall nicht zu unterscheiden ist. Genau diese Kombination -- **deterministisch und trotzdem unvorhersagbar** -- ist der Gegenstand der Chaostheorie."
+            }
+          ]
+        },
+        {
+          "title": "Der Weg ins Chaos",
+          "blocks": [
+            {
+              "md": "| $r$ | Verhalten | Attraktor |\n|---|---|---|\n| $r < 1$ | Folge geht gegen 0 | Aussterben |\n| $1 < r < 3$ | Folge nähert sich einem festen Wert | **Fixpunkt** $x^* = 1 - 1/r$ |\n| $3 < r < 3{,}449$ | Folge pendelt zwischen **zwei** Werten | Periode 2 |\n| $3{,}449 < r < 3{,}544$ | vier Werte | Periode 4 |\n| $3{,}544 < r < 3{,}564$ | acht Werte | Periode 8 |\n| ... | Verdopplungen häufen sich | ... |\n| $r > 3{,}5699$ | keine Periodizität mehr | **Chaos** |\n\nTrägt man die langfristig angenommenen Werte über $r$ auf, entsteht das **Bifurkationsdiagramm** -- der charakteristische, sich immer feiner verzweigende Baum.\n\n> [!tip] Die Feigenbaum-Konstante\n> Die Abstände aufeinanderfolgender Verdopplungspunkte schrumpfen mit einem festen Faktor:\n> $$\\delta = \\lim_{n\\to\\infty}\\frac{r_n - r_{n-1}}{r_{n+1} - r_n} \\approx 4{,}669$$\n> Mit den Werten $r_1 = 3{,}000$, $r_2 = 3{,}449$, $r_3 = 3{,}544$, $r_4 = 3{,}5644$ ergibt sich\n> $$\\frac{3{,}449-3{,}000}{3{,}544-3{,}449} \\approx 4{,}75, \\qquad \\frac{3{,}544-3{,}449}{3{,}5644-3{,}544} \\approx 4{,}66$$\n> also eine erkennbare Konvergenz gegen 4,669.\n>\n> Das Bemerkenswerte: Dieselbe Zahl tritt bei völlig **anderen** Systemen auf -- beim tropfenden Wasserhahn, bei bestimmten elektronischen Oszillatoren, bei chemischen Reaktionen. Sie ist eine Naturkonstante des Übergangs ins Chaos, unabhängig von der konkreten Gleichung. Genau das macht die Chaostheorie zu einer allgemeinen Theorie und nicht zur Sammlung von Einzelfällen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Iterationsvorschrift und Startwert** notieren.\n2. **Mehrere Schritte rechnen**, meist vier bis sechs, jeweils auf vier Nachkommastellen.\n3. **Verhalten klassifizieren:** konvergiert die Folge, pendelt sie, oder zeigt sie kein Muster?\n4. **Im Diagramm zuordnen:** Zahl der Äste bei gegebenem $r$ entspricht der Periode.\n5. **Fixpunkt bestimmen**, falls gefragt: $x^* = r\\,x^*(1-x^*)$ liefert $x^* = 1 - 1/r$.\n6. **Bei Sensitivitätsaufgaben** zwei minimal verschiedene Startwerte parallel iterieren und die Differenz verfolgen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Berechnen Sie den Langzeitzustand der logistischen Abbildung für $r = 2{,}5$ und beschreiben Sie das Verhalten für $r = 3{,}2$ und $r = 3{,}9$.*\n\n**Schritt 5, Fixpunkt für $r = 2{,}5$:**\n$$x^* = 1 - \\frac{1}{2{,}5} = 1 - 0{,}4 = 0{,}6$$\n\n**Kontrolle durch Einsetzen:** $2{,}5\\cdot0{,}6\\cdot(1-0{,}6) = 2{,}5\\cdot0{,}6\\cdot0{,}4 = 0{,}6$ ✓. Der Wert reproduziert sich, ist also tatsächlich Fixpunkt. Numerische Iteration von $x_0 = 0{,}5$ aus konvergiert nach wenigen Schritten auf 0,6000.\n\n**$r = 3{,}2$:** Die Folge pendelt dauerhaft zwischen $0{,}7995$ und $0{,}5130$ -- **Periode 2**. Der Fixpunkt $1 - 1/3{,}2 = 0{,}6875$ existiert zwar weiterhin als Lösung, ist aber **instabil** geworden: Jede noch so kleine Abweichung wächst an, statt abzuklingen.\n\n**$r = 3{,}9$:** Die Folge durchläuft Werte wie $0{,}8909$, $0{,}3791$, $0{,}9180$, $0{,}2937$, $0{,}8090$, $0{,}6027$, ohne je zu einem Muster zurückzukehren -- **Chaos**.\n\n> [!important] Sensitivität: der Schmetterlingseffekt konkret\n> Startet man bei $r = 3{,}9$ zwei Rechnungen mit $x_0 = 0{,}5000$ und $x_0 = 0{,}5001$, bleiben die Folgen zunächst dicht beieinander. Die Differenz wächst jedoch **exponentiell** -- nach etwa dreißig Schritten haben beide Folgen keinerlei erkennbare Ähnlichkeit mehr.\n>\n> Die Konsequenz ist grundsätzlich: Da jede Messung endliche Genauigkeit hat, ist der Anfangszustand nie exakt bekannt. In einem chaotischen System vergrößert sich diese Unsicherheit exponentiell, sodass die Vorhersagbarkeit nach endlicher Zeit vollständig verlorengeht.\n>\n> **Entscheidende Präzisierung:** Das System bleibt dabei vollständig **deterministisch**. Chaos bedeutet nicht Zufall, sondern **praktische Unvorhersagbarkeit trotz eindeutiger Gesetzmäßigkeit**. Diese Unterscheidung ist der wichtigste Prüfungsinhalt des Themenfelds -- und der Grund, weshalb Wettervorhersagen jenseits von etwa zwei Wochen prinzipiell scheitern, obwohl die zugrunde liegenden Gleichungen bekannt sind."
+            }
+          ]
+        },
+        {
+          "title": "Was Chaos nicht ist",
+          "blocks": [
+            {
+              "md": "| Chaos ist **nicht** | Sondern |\n|---|---|\n| Zufall | streng deterministisch, nur sensitiv |\n| Unordnung ohne Struktur | im Bifurkationsdiagramm sind selbstähnliche Muster erkennbar; im chaotischen Bereich liegen **periodische Fenster** |\n| ein Rechen- oder Messfehler | eine Eigenschaft des Systems selbst |\n| auf komplizierte Systeme beschränkt | tritt bereits bei einer Gleichung mit einem Parameter auf |\n\nDer letzte Punkt ist die eigentliche Überraschung: Man erwartet komplexes Verhalten von komplexen Systemen. Die logistische Abbildung zeigt, dass **Nichtlinearität** allein genügt -- der Term $x_n(1-x_n)$ ist die gesamte Ursache."
+            }
+          ]
+        },
+        {
+          "title": "Bezug zur übrigen Physik",
+          "blocks": [
+            {
+              "md": "Chaotisches Verhalten tritt auf, sobald die Rückkopplung nichtlinear wird:\n\n- **Getriebenes Pendel** bei großer Auslenkung -- die Kleinwinkelnäherung $\\sin\\varphi \\approx \\varphi$ bricht zusammen, siehe **Federpendel - Periodendauer berechnen**. Solange sie gilt, ist das System linear und niemals chaotisch.\n- **Doppelpendel** -- das mechanische Standardbeispiel.\n- **Wettermodelle** -- Lorenz entdeckte den Effekt 1963 an einem stark vereinfachten Konvektionsmodell.\n- **Numerische Simulationen** -- die Iterationstechnik entspricht der des **Euler-Verfahrens**, nur wird hier die Langzeitstruktur untersucht statt eine einzelne Bahn."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Chaos mit Zufall gleichsetzen.** Der wichtigste Fehler des Themas.\n- **Behaupten, chaotische Systeme seien unberechenbar.** Sie sind exakt berechenbar -- nur eben nur für den einen exakt bekannten Startwert, den es in der Praxis nicht gibt.\n- **Den Fixpunkt für instabil erklärte $r$ weiterhin als Langzeitwert angeben.** Er existiert, wird aber nicht mehr angenommen.\n- **Zu wenige Iterationen rechnen.** Der Einschwingvorgang muss abgewartet werden, bevor das Langzeitverhalten erkennbar wird -- typischerweise einige hundert Schritte.\n- **Mit zu wenigen Nachkommastellen rechnen.** Bei sensitiven Systemen entwickeln sich Rundungsfehler exponentiell; vier Stellen sind das Minimum.\n- **Die Zahl der Äste im Diagramm falsch ablesen.** Sie gibt die Periode an, nicht den Wert von $r$.\n- **Annehmen, jenseits des Chaosbeginns sei alles chaotisch.** Es gibt periodische Fenster, besonders auffällig das Fenster mit Periode 3 bei $r \\approx 3{,}83$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Euler-Verfahren anwenden** · **Federpendel - Periodendauer berechnen** · **Gedämpfte Schwingung auswerten** · **Chaostheorie**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Bereiche",
+      "md": "Ordne jedem Bereich von r sein Langzeitverhalten zu.",
+      "pairs": [
+        [
+          "$r < 1$",
+          "Aussterben"
+        ],
+        [
+          "$1 < r < 3$",
+          "ein fester Wert"
+        ],
+        [
+          "$3 < r < 3{,}449$",
+          "Periode 2"
+        ],
+        [
+          "$3{,}449 < r < 3{,}544$",
+          "Periode 4"
+        ],
+        [
+          "$r > 3{,}57$",
+          "Chaos mit periodischen Fenstern"
+        ]
+      ],
+      "explain": "Die Zahl der Äste im Diagramm ist die Periode.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Stabilitätsüberlegung in die richtige Reihenfolge.",
+      "items": [
+        "Fixpunkt $x^* = 1 - \\tfrac1r$",
+        "Abweichung wird mit $f'(x^*)$ multipliziert",
+        "$f'(x^*) = 2 - r$",
+        "Stabil nur für $|2 - r| < 1$, also $1 < r < 3$"
+      ],
+      "explain": "Die Reihenfolge: 1. Fixpunkt $x^* = 1 - \\tfrac1r$. 2. Abweichung wird mit $f'(x^*)$ multipliziert. 3. $f'(x^*) = 2 - r$. 4. Stabil nur für $|2 - r| < 1$, also $1 < r < 3$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wo liegt der (instabile) Fixpunkt für $r = 3{,}2$?",
+      "answer": 0.6875,
+      "tolerance": 0.003,
+      "placeholder": "",
+      "explain": "$x^* = 1 - \\tfrac{1}{3{,}2} = 0{,}6875$; wegen $|2 - 3{,}2| = 1{,}2 > 1$ wird er nicht angenommen.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Vertiefung",
+      "md": "Für $r = 3{,}2$ pendelt die Folge zwischen zwei Werten $x_\\pm = \\tfrac{(r + 1) \\pm \\sqrt{(r + 1)(r - 3)}}{2r}$. Berechne den oberen.",
+      "answer": 0.7995,
+      "tolerance": 0.003,
+      "placeholder": "",
+      "explain": "$\\tfrac{4{,}2 + \\sqrt{4{,}2\\cdot 0{,}2}}{6{,}4} = \\tfrac{4{,}2 + 0{,}9165}{6{,}4} \\approx 0{,}7995$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne mit $r_1 = 3{,}000$, $r_2 = 3{,}449$, $r_3 = 3{,}544$ das Verhältnis $\\tfrac{r_2 - r_1}{r_3 - r_2}$.",
+      "answer": 4.73,
+      "tolerance": 0.05,
+      "placeholder": "",
+      "explain": "$\\tfrac{0{,}449}{0{,}095} \\approx 4{,}73$; die Folge dieser Verhältnisse strebt gegen $\\delta \\approx 4{,}669$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jenseits von $r \\approx 3{,}57$ ist das Verhalten für jedes $r$ chaotisch.",
+      "answer": false,
+      "explain": "Es gibt periodische Fenster, am auffälligsten Periode 3 bei $r \\approx 3{,}83$.",
+      "label": "Typischer Fehler",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Im Diagramm liegen bei einem Wert von r genau acht Punkte übereinander. Was bedeutet das?",
+      "options": [
+        {
+          "md": "Die Folge durchläuft dauerhaft acht Werte: Periode 8.",
+          "correct": true
+        },
+        {
+          "md": "Es gibt acht Anfangswerte.",
+          "why": "Gezeigt ist das Langzeitverhalten eines Anfangswerts."
+        },
+        {
+          "md": "Die Folge ist dort chaotisch.",
+          "why": "Chaos füllt ganze Bereiche aus."
+        },
+        {
+          "md": "Die Werte wachsen über alle Grenzen.",
+          "why": "Sie bleiben zwischen 0 und 1."
+        }
+      ],
+      "explain": "Die Zahl der Äste ist die Periode.",
+      "label": "Ablesen",
+      "id": "vq7"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -82,6 +469,39 @@
         }
       ],
       "explain": "Bis $r = 3$ ein Fixpunkt, dann Periode 2, ab etwa 3,45 Periode 4 und so weiter, ab etwa 3,57 Chaos."
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "logistik"
+        ]
+      },
+      "label": "Iterieren",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "logistik"
+        ]
+      },
+      "label": "Feigenbaum und Chaos",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Fixpunkt $x^* = 1 - \\tfrac1r$ ist stabil, solange $|f'(x^*)| = |2 - r| < 1$; bei $r = 3$ beginnt die Periodenverdopplung.",
+        "Verdopplungen häufen sich mit dem Faktor $\\delta \\approx 4{,}669$; ab $r \\approx 3{,}57$ Chaos mit periodischen Fenstern."
+      ]
     }
   ]
 }

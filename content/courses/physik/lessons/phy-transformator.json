@@ -18,6 +18,363 @@
       "caption": "Skizze aus deinem Vault."
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Der Transformator in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Transformator.svg",
+        "aspect": 1.83,
+        "alt": "Transformator mit Primär- und Sekundärspule"
+      },
+      "timeline": [
+        {
+          "caption": "Zwei Spulen auf einem gemeinsamen Eisenkern.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Die Wechselspannung $U_1$ an der Primärspule ($N_1$ Windungen) erzeugt einen wechselnden Fluss.",
+          "to": {
+            "x": 0.25,
+            "y": 0.7,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Der Eisenkern führt den Fluss fast verlustfrei zur zweiten Spule.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "In der Sekundärspule ($N_2$ Windungen) induziert der wechselnde Fluss die Spannung $U_2$.",
+          "to": {
+            "x": 0.75,
+            "y": 0.7,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Beim idealen Transformator gilt $\\tfrac{U_1}{U_2} = \\tfrac{N_1}{N_2}$ und $P_1 = P_2$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.92,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Übersetzungen** beim idealen (verlustfreien, unbelasteten oder ideal gekoppelten) Transformator.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "U_1 = N_1\\,\\dot\\Phi,\\qquad U_2 = N_2\\,\\dot\\Phi",
+            "why": "Durch beide Spulen geht derselbe Fluss; in jeder Windung wird dieselbe Spannung induziert. (Beträge; im Primärkreis hält die Selbstinduktion der angelegten Spannung das Gleichgewicht.)"
+          },
+          {
+            "tex": "\\frac{U_2}{U_1} = \\frac{N_2}{N_1}",
+            "why": "Geteilt: Die Spannungen verhalten sich wie die Windungszahlen."
+          },
+          {
+            "tex": "U_1 I_1 = U_2 I_2\\quad\\Rightarrow\\quad \\frac{I_2}{I_1} = \\frac{N_1}{N_2}",
+            "why": "Ohne Verluste ist die Leistung auf beiden Seiten gleich: Die Ströme verhalten sich umgekehrt."
+          },
+          {
+            "tex": "N_1 = 500,\\; N_2 = 5:\\quad U_2 = \\tfrac{230}{100}\\,\\mathrm{V} = 2{,}3\\,\\mathrm{V},\\; I_2 = 100\\,I_1",
+            "why": "Ein Schweißtransformator: kleine Spannung, sehr großer Strom."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gleicher Fluss.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spannungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ströme.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Warum Fernleitungen Hochspannung nutzen.** Ein Kraftwerk überträgt $100\\,\\mathrm{MW}$ über eine Leitung mit $10\\,\\Omega$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          50,
+          400
+        ],
+        "y": [
+          0,
+          42
+        ],
+        "xLabel": "U in kV",
+        "yLabel": "Verlust in MW",
+        "vars": [
+          {
+            "name": "U",
+            "min": 50,
+            "max": 400,
+            "value": 60,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "PV",
+            "expr": "100000/(x*x)",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "PV",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "U = {U|0} kV: Strom **{100000/U|0} A**, Leitungsverlust **{100000/(U*U)|2} MW** = **{100000/(U*U)|1} %** der Leistung"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $60\\,\\mathrm{kV}$ fließen $1667\\,\\mathrm{A}$; in der Leitung gehen $P_V = I^2 R \\approx 28\\,\\mathrm{MW}$ verloren, über ein Viertel.",
+          "set": {
+            "U": 60
+          }
+        },
+        {
+          "caption": "Bei $110\\,\\mathrm{kV}$ nur noch $8{,}3\\,\\mathrm{MW}$: Bei gleicher Leistung sinkt der Strom, und der Verlust hängt am Quadrat des Stroms.",
+          "to": {
+            "U": 110
+          },
+          "dur": 2400
+        },
+        {
+          "caption": "Bei $380\\,\\mathrm{kV}$ unter $0{,}7\\,\\mathrm{MW}$: $P_V = \\tfrac{P^2 R}{U^2}$, zehnfache Spannung, ein Hundertstel des Verlusts.",
+          "to": {
+            "U": 380
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Transformatoren machen das möglich: hochtransformieren am Kraftwerk, heruntertransformieren beim Verbraucher. Mit Gleichspannung ging das früher nicht."
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformator",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Transformator.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Transformator** wandelt Wechselspannungen um. Zwei Spulen (Primär, Sekundär) sind über einen gemeinsamen **Eisenkern** magnetisch gekoppelt; die Flussänderung der Primärspule induziert in der Sekundärspule eine Spannung."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "image": "vault:Transformator.svg"
+            }
+          ]
+        },
+        {
+          "title": "Übersetzungsverhältnis",
+          "blocks": [
+            {
+              "md": "Beim idealen (unbelasteten) Transformator verhalten sich die Spannungen wie die Windungszahlen:\n$$\\frac{U_1}{U_2} = \\frac{N_1}{N_2}$$\nBei Belastung gilt (verlustfrei, $P_1 = P_2$) für die Ströme umgekehrt: $\\dfrac{I_1}{I_2} = \\dfrac{N_2}{N_1}$.\n\n> [!tip] Bedeutung\n> Transformatoren ermöglichen die verlustarme **Hochspannungsübertragung** im Stromnetz: hohe Spannung → kleiner Strom → geringe Wärmeverluste in den Leitungen."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb nur Wechselspannung funktioniert",
+          "blocks": [
+            {
+              "md": "> [!important] Ohne Flussänderung keine Induktion\n> Ein Transformator überträgt Energie ausschließlich über die **Änderung** des magnetischen Flusses, siehe **Elektromagnetische Induktion**.\n>\n> Legt man Gleichspannung an die Primärspule, entsteht ein konstantes Feld -- $\\dot\\Phi = 0$, und in der Sekundärspule wird nichts induziert. Nur im **Einschaltmoment** zeigt der Sekundärkreis kurz einen Ausschlag.\n>\n> Das ist der Grund, weshalb das Stromnetz mit Wechselspannung arbeitet. Historisch war genau das der Streitpunkt zwischen Edison (Gleichstrom) und Tesla beziehungsweise Westinghouse (Wechselstrom) -- und die Transformierbarkeit entschied ihn."
+            }
+          ]
+        },
+        {
+          "title": "Die verlustarme Übertragung",
+          "blocks": [
+            {
+              "md": "$$P_{\\text{Verlust}} = I^2 R$$\n\n> [!important] Der Verlust hängt vom Strom ab, nicht von der Spannung\n> Bei gegebener Leistung $P = U\\,I$ lässt sich der Strom verkleinern, indem man die Spannung erhöht. Weil der Verlust **quadratisch** vom Strom abhängt, ist der Gewinn erheblich:\n>\n> | Übertragungsspannung | Strom bei 1 MW | relativer Verlust |\n> |---|---|---|\n> | 1 kV | 1000 A | 1 |\n> | 10 kV | 100 A | 0,01 |\n> | 380 kV | 2,6 A | rund $7\\cdot10^{-6}$ |\n>\n> Zehnfache Spannung bedeutet also den **hundertfach** kleineren Verlust. Deshalb arbeiten Höchstspannungsleitungen mit 380 kV, obwohl der Isolationsaufwand steigt.\n>\n> Die quadratische Abhängigkeit ist der eigentliche Grund für die gesamte Netzarchitektur -- vom Kraftwerkstransformator über die Umspannwerke bis zum Ortsnetztrafo."
+            }
+          ]
+        },
+        {
+          "title": "Der ideale und der reale Transformator",
+          "blocks": [
+            {
+              "md": "| | ideal | real |\n|---|---|---|\n| Spannungsverhältnis | $U_1/U_2 = N_1/N_2$ | näherungsweise |\n| Leistung | $P_1 = P_2$ | $P_2 < P_1$ |\n| Verluste | keine | Wicklungs-, Wirbelstrom- und Ummagnetisierungsverluste |\n\n> [!tip] Weshalb der Eisenkern geblättert ist\n> Ein massiver Eisenkern würde selbst als Leiterschleife wirken: Die Flussänderung induziert in ihm **Wirbelströme**, die ihn erwärmen und Energie entziehen.\n>\n> Deshalb besteht der Kern aus dünnen, gegeneinander isolierten Blechen. Die Wirbelströme werden dadurch auf kleine Bereiche eingeschränkt und stark vermindert.\n>\n> Dasselbe Prinzip in umgekehrter Absicht nutzt das **Induktionskochfeld**: Dort sind die Wirbelströme im Topfboden gerade erwünscht."
+            }
+          ]
+        },
+        {
+          "title": "Der belastete Transformator",
+          "blocks": [
+            {
+              "md": "Erst bei Belastung fließt im Sekundärkreis ein Strom, und erst dann wird dem Primärkreis überhaupt Leistung entnommen. Im Leerlauf nimmt ein idealer Transformator keine Wirkleistung auf.\n\n$$\\frac{I_1}{I_2} = \\frac{N_2}{N_1}$$\n\n> [!warning] Spannung und Strom übersetzen sich gegenläufig\n> Ein Transformator, der die Spannung zehnfach erhöht, verkleinert den Strom auf ein Zehntel. Er erzeugt keine Energie -- er tauscht Spannung gegen Strom.\n>\n> Das ist dieselbe Logik wie beim Hebel, der Kraft gegen Weg tauscht. Ein Schweißtransformator mit wenigen Sekundärwindungen liefert deshalb sehr niedrige Spannung bei sehr hohem Strom."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der Transformator ist die technisch bedeutsamste Anwendung der **Induktion** und die Grundlage der gesamten Energieversorgung. Er verbindet **Magnetisches Feld**, **Selbstinduktion und Induktivität** und die Wechselstromtechnik."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Transformator hat $N_1 = 1000$ und $N_2 = 50$. Welche Spannung liefert er an $230\\,\\mathrm{V}$?",
+      "answer": 11.5,
+      "tolerance": 0.05,
+      "placeholder": "V",
+      "explain": "$U_2 = \\tfrac{N_2}{N_1}U_1 = \\tfrac{50}{1000}\\cdot 230\\,\\mathrm{V} = 11{,}5\\,\\mathrm{V}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Sekundär fließen $4\\,\\mathrm{A}$. Welcher Strom fließt primär (ideal)?",
+      "answer": 0.2,
+      "tolerance": 0.002,
+      "placeholder": "A",
+      "explain": "$I_1 = \\tfrac{N_2}{N_1}I_2 = \\tfrac{50}{1000}\\cdot 4\\,\\mathrm{A} = 0{,}2\\,\\mathrm{A}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Fernleitung",
+      "md": "Wie groß ist der Leitungsverlust, wenn $100\\,\\mathrm{MW}$ bei $220\\,\\mathrm{kV}$ über $10\\,\\Omega$ übertragen werden?",
+      "answer": 2.07,
+      "tolerance": 0.02,
+      "placeholder": "MW",
+      "explain": "$I = \\tfrac{P}{U} \\approx 455\\,\\mathrm{A}$, $P_V = I^2 R \\approx 2{,}07\\,\\mathrm{MW}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Warum arbeitet ein Transformator nicht mit Gleichspannung?",
+      "options": [
+        {
+          "md": "Ein konstanter Strom erzeugt einen konstanten Fluss, und der induziert in der Sekundärspule nichts.",
+          "correct": true
+        },
+        {
+          "md": "Weil Gleichspannung den Eisenkern zerstört.",
+          "why": "Das ist nicht der Grund."
+        },
+        {
+          "md": "Weil Gleichstrom keine Magnetfelder erzeugt.",
+          "why": "Er erzeugt ein konstantes Feld."
+        },
+        {
+          "md": "Er funktioniert, nur schlechter.",
+          "why": "Nach dem Einschalten wird sekundär gar nichts mehr induziert."
+        }
+      ],
+      "explain": "Induktion braucht $\\dot\\Phi \\ne 0$.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Proportionalität",
+      "md": "Verdreifacht man die Übertragungsspannung bei gleicher Leistung, wird der Strom {{0}}-mal so groß und der Leitungsverlust {{1}}-mal so groß.",
+      "blanks": [
+        {
+          "accept": [
+            "1/3",
+            "0,333",
+            "0.333",
+            "0,33"
+          ],
+          "numeric": true,
+          "tolerance": 0.004
+        },
+        {
+          "accept": [
+            "1/9",
+            "0,111",
+            "0.111",
+            "0,11"
+          ],
+          "numeric": true,
+          "tolerance": 0.002
+        }
+      ],
+      "explain": "$I = \\tfrac PU$, $P_V = I^2 R \\sim \\tfrac{1}{U^2}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Transformator kann Energie vermehren, wenn er hochtransformiert.",
+      "answer": false,
+      "explain": "Er erhöht die Spannung, senkt aber im selben Verhältnis den Strom; die Leistung bleibt (beim realen Transformator wird sie durch Verluste sogar etwas kleiner).",
+      "label": "Energie",
+      "id": "vq6"
+    },
+    {
       "id": "gleich",
       "type": "choice",
       "md": "Warum funktioniert ein Transformator nicht mit Gleichspannung?",
@@ -51,13 +408,40 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "fernleitung",
+          "trafo"
+        ]
+      },
+      "label": "Trafo und Leitung",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "fernleitung"
+        ]
+      },
+      "label": "Proportionalität",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$U_2/U_1 = N_2/N_1$.",
         "Ideal: $U_1 I_1 = U_2 I_2$.",
-        "Fernleitungen mit Hochspannung sparen Verluste."
+        "Fernleitungen mit Hochspannung sparen Verluste.",
+        "Gleicher Fluss in beiden Spulen: $\\tfrac{U_2}{U_1} = \\tfrac{N_2}{N_1}$; ideal $P_1 = P_2$, also $\\tfrac{I_2}{I_1} = \\tfrac{N_1}{N_2}$.",
+        "Fernleitung: $P_V = \\tfrac{P^2R}{U^2}$, deshalb Hochspannung; Transformatoren brauchen Wechselstrom."
       ]
     }
   ]

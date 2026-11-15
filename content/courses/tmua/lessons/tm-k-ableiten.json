@@ -19,6 +19,351 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Ableitung\n> Die **Ableitung** $f'(x)$ (oder $\\tfrac{dy}{dx}$) ist die Steigung der Tangente an den Graphen an der Stelle $x$: der Grenzwert der Sekantensteigungen $\\tfrac{f(x + h) - f(x)}{h}$ für $h \\to 0$. Die **zweite Ableitung** $f''(x)$ ist die Ableitung von $f'$; sie beschreibt die Krümmung.\n\n> [!satz] Regeln, die der TMUA verlangt\n> $\\dfrac{d}{dx}x^n = n x^{n-1}$ für jede rationale Zahl $n$; Konstanten fallen weg; Summen und konstante Faktoren werden gliedweise abgeleitet.\n\n**Nicht verlangt** sind Produkt-, Quotienten- und Kettenregel und das Ableiten mit der h-Methode. Deshalb wird vor dem Ableiten **umgeschrieben**, bis eine Summe von Potenzen dasteht.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Sekante",
+      "md": "**Von der Sekante zur Tangente:** blau $y = x^2$, orange die Sekante durch $P(1, 1)$ und einen zweiten Punkt im Abstand $h$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          3.5
+        ],
+        "y": [
+          -1,
+          9
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "H",
+            "min": 0.001,
+            "max": 2,
+            "value": 1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "secants": [
+          {
+            "f": "f",
+            "from": 1,
+            "to": "1 + H",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 1,
+            "color": "blue",
+            "label": "P"
+          },
+          {
+            "x": "1 + H",
+            "y": "(1 + H)^2",
+            "color": "orange",
+            "label": "Q"
+          }
+        ],
+        "readout": "h = {H|3} · Sekantensteigung (f(1 + h) − f(1)) / h = 2 + h = {2 + H|3}"
+      },
+      "timeline": [
+        {
+          "caption": "h = 1,5: Die Sekante durch P und Q hat die Steigung 3,5.",
+          "set": {
+            "H": 1.5
+          }
+        },
+        {
+          "caption": "h = 0,5: Q rückt an P heran, Steigung 2,5.",
+          "to": {
+            "H": 0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "h nahe 0: Die Sekante wird zur Tangente, ihre Steigung zu 2 = f'(1).",
+          "to": {
+            "H": 0.001
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Potenzregel** für kleine Exponenten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{(x + h)^2 - x^2}{h} = \\frac{2xh + h^2}{h} = 2x + h \\;\\to\\; 2x",
+            "why": "n = 2: Das h kürzt sich, dann h gegen 0."
+          },
+          {
+            "tex": "\\frac{(x + h)^3 - x^3}{h} = 3x^2 + 3xh + h^2 \\;\\to\\; 3x^2",
+            "why": "n = 3: alle Glieder mit h verschwinden."
+          },
+          {
+            "tex": "\\frac{d}{dx}x^n = n x^{n-1}",
+            "why": "Das Muster: Der Exponent kommt nach vorn und sinkt um 1; es gilt für alle rationalen n."
+          },
+          {
+            "tex": "\\frac{d}{dx}\\sqrt x = \\frac{d}{dx}x^{\\frac12} = \\tfrac12 x^{-\\frac12} = \\frac{1}{2\\sqrt x}",
+            "why": "Dieselbe Regel für eine Wurzel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kubik.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Regel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurzel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung: erst umschreiben, dann ableiten.** $f(x) = \\dfrac{x^2 + 1}{\\sqrt x}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = \\frac{x^2}{x^{\\frac12}} + \\frac{1}{x^{\\frac12}} = x^{\\frac32} + x^{-\\frac12}",
+            "why": "Den Bruch auf die Summanden verteilen, Wurzel als Potenz."
+          },
+          {
+            "tex": "f'(x) = \\tfrac32 x^{\\frac12} - \\tfrac12 x^{-\\frac32}",
+            "why": "Gliedweise ableiten."
+          },
+          {
+            "tex": "= \\frac{3\\sqrt x}{2} - \\frac{1}{2x\\sqrt x}",
+            "why": "Zurückschreiben, wenn die Optionen so aussehen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Umschreiben.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zurückschreiben.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Ableiten von Potenzsummen",
+      "path": "02 Wiki/TMUA/10 Differenzialrechnung/Ableiten von Potenzsummen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die eine Regel",
+          "blocks": [
+            {
+              "md": "$$\\frac{\\mathrm d}{\\mathrm dx}\\,x^n = n\\,x^{n-1} \\qquad \\text{für jedes rationale } n.$$\n\nDazu die beiden Linearitätsregeln: Konstante Faktoren bleiben stehen, Summen werden gliedweise abgeleitet.\n\n$$\\frac{\\mathrm d}{\\mathrm dx}\\left(a\\,f(x) + b\\,g(x)\\right) = a\\,f'(x) + b\\,g'(x).$$\n\nDas ist der vollständige Werkzeugkasten dieses Blocks.\n\n> [!warning] Was die Spezifikation **nicht** nennt\n> - **Produkt-, Quotienten- und Kettenregel** kommen in MM6 nicht vor.\n> - Die Ableitung **aus der Definition** (*differentiation from first principles*) wird ausdrücklich nicht geprüft.\n> - $e^x$, $\\ln x$, $\\sin x$ und $\\cos x$ werden nicht abgeleitet.\n> - **Wendepunkte** (*points of inflexion*) sind kein Prüfungsstoff.\n>\n> Daraus folgt die Arbeitsweise dieses Blocks: Jeder Term, der wie ein Produkt oder ein Quotient aussieht, muss **vor** dem Ableiten in eine Summe von Potenzen umgeschrieben werden. Das ist kein Umweg, sondern der vorgesehene Weg -- siehe **Terme vor dem Ableiten umschreiben**."
+            }
+          ]
+        },
+        {
+          "title": "Die Schreibweisen",
+          "blocks": [
+            {
+              "md": "| Schreibweise | Sprechweise |\n|---|---|\n| $\\dfrac{\\mathrm dy}{\\mathrm dx}$ | Leibniz -- im britischen Material die Standardform |\n| $f'(x)$ | Lagrange |\n| $\\dfrac{\\mathrm d^2y}{\\mathrm dx^2}$ bzw. $f''(x)$ | zweite Ableitung |\n\nDer englische Begriff für die Ableitung an einer Stelle ist *gradient* -- dasselbe Wort wie für die Steigung einer Geraden. *„Find the gradient of the curve at $x = 2$\"* heißt: $f'(2)$ berechnen."
+            }
+          ]
+        },
+        {
+          "title": "Umschreiben vor dem Ableiten",
+          "blocks": [
+            {
+              "md": "| Ausgangsform | umgeschrieben | Ableitung |\n|---|---|---|\n| $\\dfrac{1}{x}$ | $x^{-1}$ | $-x^{-2} = -\\dfrac{1}{x^2}$ |\n| $\\dfrac{3}{x^2}$ | $3x^{-2}$ | $-6x^{-3}$ |\n| $\\sqrt x$ | $x^{1/2}$ | $\\tfrac12 x^{-1/2} = \\dfrac{1}{2\\sqrt x}$ |\n| $\\dfrac{1}{\\sqrt x}$ | $x^{-1/2}$ | $-\\tfrac12 x^{-3/2}$ |\n| $x\\sqrt x$ | $x^{3/2}$ | $\\tfrac32 x^{1/2}$ |\n| $(2x+1)^2$ | $4x^2 + 4x + 1$ | $8x + 4$ |\n| $\\dfrac{x^3 + 2x}{x}$ | $x^2 + 2$ | $2x$ |\n\nAlle Umformungen stammen aus **Potenzen, Wurzeln und Surds** -- der Ableitungsteil ist danach trivial.\n\n> [!important] Die Reihenfolge ist entscheidend\n> **Erst umschreiben, dann ableiten.** Wer den Bruch $\\tfrac{x^3+2x}{x}$ stehen lässt, sucht nach einer Quotientenregel, die gar nicht verlangt ist; wer zuerst kürzt, hat in zwei Sekunden $2x$.\n>\n> Beim Kürzen von $\\tfrac{x^3+2x}{x}$ fällt $x = 0$ aus dem Definitionsbereich -- im Test spielt das keine Rolle, in einer Paper-2-Begründung dagegen schon."
+            }
+          ]
+        },
+        {
+          "title": "Die zweite Ableitung",
+          "blocks": [
+            {
+              "md": "Nochmals dieselbe Regel anwenden. Ihre Bedeutung:\n\n| $f''(x)$ | Krümmung |\n|---|---|\n| $> 0$ | **Linkskrümmung**, im Englischen *convex* -- der Graph öffnet sich nach oben |\n| $< 0$ | **Rechtskrümmung**, *concave* -- der Graph öffnet sich nach unten |\n\nGebraucht wird sie fast nur zum Klassifizieren stationärer Punkte (siehe **Stationäre Punkte und Monotonie**)."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Die Konstante ableiten statt sie wegfallen zu lassen** -- oder umgekehrt den konstanten Faktor streichen.\n- **Bei negativen Exponenten das Vorzeichen verlieren:** Aus $x^{-2}$ wird $-2x^{-3}$, nicht $2x^{-3}$.\n- **Bei Brüchen im Exponenten falsch subtrahieren:** $\\tfrac12 - 1 = -\\tfrac12$.\n- **Eine Produkt- oder Quotientenregel anwenden**, die im Test gar nicht gebraucht wird -- und dabei Fehler einbauen.\n- **$\\sqrt x$ als $\\tfrac12\\sqrt x$ ableiten.**\n\nVerwandt: **Potenzen, Wurzeln und Surds** · **Stationäre Punkte und Monotonie** · Aufgabentyp: **Terme vor dem Ableiten umschreiben**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Ableitungen",
+      "md": "Ordne jeder Funktion ihre Ableitung zu.",
+      "pairs": [
+        [
+          "$x^5$",
+          "$5x^4$"
+        ],
+        [
+          "$\\tfrac{1}{x}$",
+          "$-\\tfrac{1}{x^2}$"
+        ],
+        [
+          "$\\sqrt x$",
+          "$\\tfrac{1}{2\\sqrt x}$"
+        ],
+        [
+          "$7$",
+          "$0$"
+        ],
+        [
+          "$x^{\\frac23}$",
+          "$\\tfrac23 x^{-\\frac13}$"
+        ]
+      ],
+      "explain": "Immer $nx^{n-1}$, auch für negative und gebrochene $n$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Wurzel",
+      "md": "$f(x) = 4\\sqrt x$. Berechne $f'(4)$.",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 2x^{-\\frac12} = \\tfrac{2}{\\sqrt x}$, also $f'(4) = 1$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Ableiten von $\\dfrac{x^3 - 2}{x}$ in die richtige Reihenfolge.",
+      "items": [
+        "aufteilen: $x^2 - 2x^{-1}$",
+        "gliedweise ableiten: $2x + 2x^{-2}$",
+        "zurückschreiben: $2x + \\tfrac{2}{x^2}$"
+      ],
+      "explain": "Die Reihenfolge: 1. aufteilen: $x^2 - 2x^{-1}$. 2. gliedweise ableiten: $2x + 2x^{-2}$. 3. zurückschreiben: $2x + \\tfrac{2}{x^2}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Ableitung von $x^2 \\cdot x^3$ ist $2x \\cdot 3x^2$.",
+      "answer": false,
+      "explain": "Erst zusammenfassen: $x^5$, Ableitung $5x^4$. Produkte leitet man nicht faktorweise ab.",
+      "label": "Falle",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "What is the gradient of $y = x^3 - 6x$ at $x = 2$?",
+      "options": [
+        {
+          "md": "-6"
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "6",
+          "correct": true
+        },
+        {
+          "md": "8"
+        },
+        {
+          "md": "12"
+        }
+      ],
+      "explain": "$3x^2 - 6$ bei $x = 2$: $12 - 6 = 6$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Steigung",
+      "id": "vq5"
+    },
+    {
+      "type": "cloze",
+      "label": "Regel",
+      "md": "Für jede rationale Zahl $n$ gilt: Die Ableitung von $x^n$ ist $c \\cdot x^{n-1}$ mit $c =$ {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "n"
+          ]
+        }
+      ],
+      "explain": "$\\tfrac{d}{dx}x^n = nx^{n-1}$.",
+      "id": "vq6"
+    },
+    {
       "type": "choice",
       "md": "Differentiate $\\frac{x^2 + 1}{\\sqrt x}$.",
       "options": [
@@ -52,12 +397,50 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ableitungwert"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "xⁿ → n xⁿ⁻¹ für rationale n.",
         "Erst umschreiben, dann ableiten.",
-        "Nie Zähler und Nenner getrennt ableiten."
+        "Nie Zähler und Nenner getrennt ableiten.",
+        "Ableitung = Grenzwert der Sekantensteigungen; $\\tfrac{d}{dx}x^n = nx^{n-1}$ für rationale $n$.",
+        "Vor dem Ableiten umschreiben: Wurzeln als Potenzen, Brüche aufteilen, Produkte ausmultiplizieren."
       ],
       "id": "summary"
     }

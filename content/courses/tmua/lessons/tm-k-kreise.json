@@ -15,6 +15,332 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Kreisgleichung\n> Der Kreis mit Mittelpunkt $(a, b)$ und Radius $r$ besteht aus allen Punkten im Abstand $r$ von $(a, b)$: $(x - a)^2 + (y - b)^2 = r^2$. Ausmultipliziert hat er die Form $x^2 + y^2 + Dx + Ey + F = 0$.\n\n> [!satz] Tangente und Radius\n> Die Tangente in einem Kreispunkt steht senkrecht auf dem Radius zu diesem Punkt. Ihre Steigung ist der negative Kehrwert der Radiussteigung.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Kreisgleichung aus dem Abstand, und zurück aus der ausmultiplizierten Form.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\sqrt{(x - a)^2 + (y - b)^2} = r",
+            "why": "Abstand eines Punktes (x, y) vom Mittelpunkt, nach Pythagoras."
+          },
+          {
+            "tex": "(x - a)^2 + (y - b)^2 = r^2",
+            "why": "Quadrieren (beide Seiten nicht negativ)."
+          },
+          {
+            "tex": "x^2 + y^2 - 6x + 4y - 12 = 0",
+            "why": "Beispiel in ausmultiplizierter Form."
+          },
+          {
+            "tex": "(x - 3)^2 - 9 + (y + 2)^2 - 4 - 12 = 0",
+            "why": "Für x und y getrennt quadratisch ergänzen."
+          },
+          {
+            "tex": "(x - 3)^2 + (y + 2)^2 = 25",
+            "why": "Mittelpunkt (3, −2), Radius 5. Ist die rechte Seite null oder negativ, ist es kein Kreis."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ablesen.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Kreis",
+      "md": "**Jeder Punkt hat denselben Abstand:** der Kreis $(x - 1)^2 + (y - 0{,}5)^2 = 4$, ein Punkt $P$ wandert, grau der Radius, orange die Tangente.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.6,
+          4.6
+        ],
+        "y": [
+          -2.4,
+          3.4
+        ],
+        "height": 300,
+        "grid": false,
+        "vars": [
+          {
+            "name": "T",
+            "min": -180,
+            "max": 360,
+            "value": 30,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ko",
+            "expr": "0.5 + sqrt(4 - (x - 1)^2)",
+            "domain": [
+              -1,
+              3
+            ],
+            "color": "blue",
+            "samples": 400
+          },
+          {
+            "name": "ku",
+            "expr": "0.5 - sqrt(4 - (x - 1)^2)",
+            "domain": [
+              -1,
+              3
+            ],
+            "color": "blue",
+            "samples": 400
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              1,
+              0.5
+            ],
+            "to": [
+              "1 + 2*cos(T*pi/180)",
+              "0.5 + 2*sin(T*pi/180)"
+            ],
+            "color": "gray"
+          },
+          {
+            "from": [
+              "1 + 2*cos(T*pi/180) - 1.5*sin(T*pi/180)",
+              "0.5 + 2*sin(T*pi/180) + 1.5*cos(T*pi/180)"
+            ],
+            "to": [
+              "1 + 2*cos(T*pi/180) + 1.5*sin(T*pi/180)",
+              "0.5 + 2*sin(T*pi/180) - 1.5*cos(T*pi/180)"
+            ],
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 0.5,
+            "label": "M"
+          },
+          {
+            "x": "1 + 2*cos(T*pi/180)",
+            "y": "0.5 + 2*sin(T*pi/180)",
+            "color": "orange",
+            "label": "P"
+          }
+        ],
+        "readout": "(x − 1)² + (y − 0,5)² = {(2*cos(T*pi/180))^2 + (2*sin(T*pi/180))^2|2} für jeden Punkt P"
+      },
+      "timeline": [
+        {
+          "caption": "P liegt auf dem Kreis: Der Abstand zu M ist 2, also die Summe der Quadrate 4.",
+          "set": {
+            "T": 30
+          }
+        },
+        {
+          "caption": "P wandert weiter; die Summe bleibt 4. Die Tangente steht immer senkrecht auf dem Radius.",
+          "to": {
+            "T": 150
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Auch unten gilt dasselbe.",
+          "to": {
+            "T": 290
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kreise in der Koordinatenebene",
+      "path": "02 Wiki/TMUA/06 Koordinatengeometrie/Kreise in der Koordinatenebene.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Kreisgleichung",
+          "blocks": [
+            {
+              "md": "Ein Kreis mit Mittelpunkt $(a, b)$ und Radius $r$ ist die Menge aller Punkte im Abstand $r$ vom Mittelpunkt. Mit der Abstandsformel:\n\n$$(x - a)^2 + (y - b)^2 = r^2.$$\n\nAusmultipliziert entsteht die **allgemeine Form**, die die Spezifikation ebenfalls nennt (MM3.2):\n\n$$x^2 + y^2 + cx + dy + e = 0.$$"
+            }
+          ]
+        },
+        {
+          "title": "Von der allgemeinen Form zu Mittelpunkt und Radius",
+          "blocks": [
+            {
+              "md": "**Quadratische Ergänzung** in $x$ und $y$ getrennt:\n\n$$x^2 + y^2 - 6x + 4y - 12 = 0 \\iff (x - 3)^2 - 9 + (y + 2)^2 - 4 - 12 = 0 \\iff (x - 3)^2 + (y + 2)^2 = 25.$$\n\nMittelpunkt $(3, -2)$, Radius 5.\n\n> [!tip] Die Abkürzung\n> In $x^2 + y^2 + cx + dy + e = 0$ ist der Mittelpunkt $\\left(-\\tfrac c2, -\\tfrac d2\\right)$ und $r^2 = \\tfrac{c^2}{4} + \\tfrac{d^2}{4} - e$. Die Gleichung beschreibt nur dann einen Kreis, wenn dieser Ausdruck **positiv** ist -- bei null ist es ein einzelner Punkt, bei negativem Wert die leere Menge.\n\n> [!warning] Die Koeffizienten von x² und y² müssen gleich sein\n> Nur Gleichungen, in denen $x^2$ und $y^2$ denselben Koeffizienten haben (und kein $xy$-Term vorkommt), beschreiben Kreise. Ist der gemeinsame Koeffizient nicht 1, wird zuerst durch ihn geteilt: $2x^2 + 2y^2 - 8x = 0$ wird zu $x^2 + y^2 - 4x = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Tangenten",
+          "blocks": [
+            {
+              "md": "Die Tangente in einem Kreispunkt $P$ steht **senkrecht auf dem Radius** zu $P$ -- einer der Kreissätze (siehe **Kreissätze**).\n\n> [!example] Tangente an x² + y² = 25 im Punkt (3, 4)\n> Radius vom Ursprung zu $(3, 4)$: Steigung $\\tfrac43$. Tangente: Steigung $-\\tfrac34$.\n> $y - 4 = -\\tfrac34(x - 3) \\iff 4y - 16 = -3x + 9 \\iff 3x + 4y = 25$.\n> Allgemein gilt für den Kreis $x^2 + y^2 = r^2$: Die Tangente im Punkt $(x_0, y_0)$ ist $x_0 x + y_0 y = r^2$."
+            }
+          ]
+        },
+        {
+          "title": "Gerade und Kreis",
+          "blocks": [
+            {
+              "md": "Wie viele gemeinsame Punkte eine Gerade mit einem Kreis hat, lässt sich auf zwei Arten entscheiden:\n\n| Verfahren | Vorgehen | Stärke |\n|---|---|---|\n| **Einsetzen** | Geradengleichung in die Kreisgleichung, Diskriminante der quadratischen Gleichung | immer anwendbar, liefert auch die Punkte |\n| **Abstand** | Abstand des Mittelpunkts von der Geraden mit $r$ vergleichen | schnell, wenn der Abstand leicht zu sehen ist |\n\n$d < r$: zwei Schnittpunkte · $d = r$: Tangente · $d > r$: kein gemeinsamer Punkt."
+            }
+          ]
+        },
+        {
+          "title": "Kreis durch gegebene Punkte",
+          "blocks": [
+            {
+              "md": "- Ist $AB$ ein **Durchmesser**, liegt der Mittelpunkt in der Mitte von $AB$, und jeder Punkt $C$ des Kreises bildet mit $A$ und $B$ einen rechten Winkel (**Satz des Thales**).\n- Durch **drei** Punkte geht genau ein Kreis (wenn sie nicht auf einer Geraden liegen); sein Mittelpunkt ist der Schnittpunkt der Mittelsenkrechten -- siehe **Senkrechte und Mittelsenkrechte aufstellen**."
+            }
+          ]
+        },
+        {
+          "title": "Lage eines Punktes",
+          "blocks": [
+            {
+              "md": "Ein Punkt liegt **innerhalb**, **auf** oder **außerhalb** des Kreises, je nachdem ob sein Abstand zum Mittelpunkt kleiner, gleich oder größer als $r$ ist. Der kürzeste Abstand eines äußeren Punktes zum Kreis ist sein Abstand zum Mittelpunkt minus $r$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen des Mittelpunkts:** $(x - 3)^2 + (y + 2)^2$ hat den Mittelpunkt $(3, -2)$.\n- **$r^2$ für $r$ halten:** Rechts steht der **quadrierte** Radius.\n- **Bei der quadratischen Ergänzung die abgezogenen Quadrate vergessen.**\n- **Tangentensteigung als Radiussteigung** statt als deren negativer Kehrwert.\n\nVerwandt: **Geraden in der Ebene** · **Kreissätze** · Aufgabentypen: **Mittelpunkt und Radius aus der allgemeinen Kreisgleichung** · **Lage von Gerade und Kreis bestimmen** · im Mathematikbestand: **Kreis und Kugel (Analytische Geometrie)**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Ablesen",
+      "md": "Ordne jeder Gleichung Mittelpunkt und Radius zu.",
+      "pairs": [
+        [
+          "$(x - 2)^2 + (y + 1)^2 = 9$",
+          "$(2, -1)$, $r = 3$"
+        ],
+        [
+          "$x^2 + y^2 = 16$",
+          "$(0, 0)$, $r = 4$"
+        ],
+        [
+          "$x^2 + y^2 - 4x = 0$",
+          "$(2, 0)$, $r = 2$"
+        ],
+        [
+          "$x^2 + (y - 3)^2 = 2$",
+          "$(0, 3)$, $r = \\sqrt2$"
+        ]
+      ],
+      "explain": "Vorzeichen im Mittelpunkt umkehren, Radius ist die Wurzel der rechten Seite.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "What are the centre and radius of $x^2 + y^2 - 6x + 4y - 12 = 0$?",
+      "options": [
+        {
+          "md": "centre $(6, -4)$, radius 5",
+          "why": "Die Koeffizienten werden halbiert."
+        },
+        {
+          "md": "centre $(-3, 2)$, radius 5",
+          "why": "Vorzeichen falsch."
+        },
+        {
+          "md": "centre $(3, -2)$, radius 5",
+          "correct": true
+        },
+        {
+          "md": "centre $(3, -2)$, radius 12",
+          "why": "Der Radius ist die Wurzel nach dem Ergänzen."
+        },
+        {
+          "md": "centre $(3, -2)$, radius $\\sqrt{12}$",
+          "why": "Die Ergänzungszahlen 9 und 4 fehlen."
+        }
+      ],
+      "explain": "$(x - 3)^2 + (y + 2)^2 = 12 + 9 + 4 = 25$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Ergänzen",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$x^2 + y^2 + 2x + 2y + 5 = 0$ beschreibt einen Kreis.",
+      "answer": false,
+      "explain": "Ergänzt: $(x + 1)^2 + (y + 1)^2 = -3$; eine Summe von Quadraten ist nie negativ.",
+      "label": "Kein Kreis",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Tangente",
+      "md": "Der Punkt $(4, 5)$ liegt auf einem Kreis mit Mittelpunkt $(1, 1)$. Welche Steigung hat die Tangente dort? Gib sie als Dezimalzahl an.",
+      "answer": -0.75,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "Radiussteigung $\\tfrac{5 - 1}{4 - 1} = \\tfrac43$, Tangente $-\\tfrac34$.",
+      "id": "vq4"
+    },
+    {
       "type": "choice",
       "md": "What are the centre and radius of $x^2 + y^2 - 6x + 4y - 12 = 0$?",
       "options": [
@@ -38,12 +364,50 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "kreis"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "kreis"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "kreis"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "(x − a)² + (y − b)² = r².",
         "Quadratische Ergänzung liefert M und r.",
-        "Tangente ⟂ Radius."
+        "Tangente ⟂ Radius.",
+        "$(x - a)^2 + (y - b)^2 = r^2$ aus Pythagoras; ausmultiplizierte Form durch Ergänzen zurückverwandeln.",
+        "Tangente senkrecht zum Radius: negativer Kehrwert der Radiussteigung."
       ],
       "id": "summary"
     }

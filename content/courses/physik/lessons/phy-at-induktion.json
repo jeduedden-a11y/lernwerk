@@ -16,6 +16,189 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel mit drei Phasen.** Eine Spule ($N = 400$, $A = 25\\,\\mathrm{cm}^2$) steht senkrecht im Feld. $B$ steigt in $0{,}1\\,\\mathrm{s}$ von $0$ auf $0{,}2\\,\\mathrm{T}$, bleibt $0{,}3\\,\\mathrm{s}$ konstant und fällt in $0{,}05\\,\\mathrm{s}$ auf null.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta\\Phi = \\Delta B\\cdot A = 0{,}2\\cdot 2{,}5\\cdot 10^{-3}\\,\\mathrm{Wb} = 5\\cdot 10^{-4}\\,\\mathrm{Wb}",
+            "why": "Fläche in $\\mathrm{m}^2$."
+          },
+          {
+            "tex": "\\text{Anstieg}: |U| = 400\\cdot\\frac{5\\cdot 10^{-4}}{0{,}1}\\,\\mathrm{V} = 2\\,\\mathrm{V}",
+            "why": "Erste Phase."
+          },
+          {
+            "tex": "\\text{konstant}: U = 0",
+            "why": "Zweite Phase: keine Änderung, keine Spannung."
+          },
+          {
+            "tex": "\\text{Abfall}: |U| = 400\\cdot\\frac{5\\cdot 10^{-4}}{0{,}05}\\,\\mathrm{V} = 4\\,\\mathrm{V}\\;\\text{(umgekehrte Polung)}",
+            "why": "Dritte Phase: halbe Zeit, doppelte Spannung, anderes Vorzeichen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Flussänderung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Anstieg.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konstant.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abfall.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Induktionsspannung berechnen",
+      "path": "02 Wiki/Physik/02 Q1 Elektrisches und magnetisches Feld/Aufgabentypen/Induktionsspannung berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die in der Spule induzierte Spannung\"*, *\"Der magnetische Fluss ändert sich gemäß dem abgebildeten Diagramm -- skizzieren Sie den Verlauf der Induktionsspannung\"*, *\"Bestimmen Sie die Scheitelspannung des Generators\"*, *\"Erklären Sie, weshalb bei konstantem Feld keine Spannung induziert wird\"*.\n\nErkennungsmerkmal: Eine **Spule oder Leiterschleife** umschließt einen magnetischen Fluss, und **irgendetwas ändert sich zeitlich** -- die Flussdichte, die Fläche oder der Winkel."
+            }
+          ]
+        },
+        {
+          "title": "Das Induktionsgesetz",
+          "blocks": [
+            {
+              "md": "> [!important] Die zentrale Aussage\n> $$U_{ind} = -N\\,\\frac{\\Delta\\Phi}{\\Delta t} \\qquad\\text{bzw. allgemein}\\qquad U_{ind} = -N\\,\\dot\\Phi$$\n> mit dem **magnetischen Fluss** $\\Phi = B\\,A\\,\\cos\\varphi$ ($\\varphi$ = Winkel zwischen Flächennormale und $\\vec B$).\n>\n> Induziert wird nicht durch das Feld selbst, sondern durch seine **Änderung**. Ein noch so starkes, aber konstantes Feld induziert exakt nichts. Das Minuszeichen ist die **Lenz'sche Regel** und betrifft ausschließlich die Richtung; für den Betrag wird es weggelassen."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Wege, den Fluss zu ändern",
+          "blocks": [
+            {
+              "md": "| Was sich ändert | Formel | Typischer Aufbau |\n|---|---|---|\n| **Flussdichte** $B$ | $U_{ind} = -N A \\dfrac{\\Delta B}{\\Delta t}$ | Feldspule mit veränderlichem Strom, Magnet wird genähert |\n| **Fläche** $A$ | $U_{ind} = -N B \\dfrac{\\Delta A}{\\Delta t}$ | Leiterschaukel, aus dem Feld gezogene Schleife, siehe **Bewegungsinduktion berechnen** |\n| **Winkel** $\\varphi$ | $U_{ind} = N B A \\omega \\sin(\\omega t)$ | rotierende Spule, **Generator** |\n\n> [!tip] Warum der rotierende Fall auf einen Sinus führt\n> Bei gleichförmiger Rotation ist $\\varphi = \\omega t$, also $\\Phi(t) = B A \\cos(\\omega t)$. Die Ableitung liefert $\\dot\\Phi = -BA\\omega\\sin(\\omega t)$, damit\n> $$u_{ind}(t) = N B A \\omega \\sin(\\omega t), \\qquad \\hat u = N B A \\omega = N B A \\cdot 2\\pi f$$\n> Die Scheitelspannung wächst also **linear mit der Drehfrequenz** -- ein schneller drehender Generator liefert nicht nur häufiger, sondern auch stärker. Zugleich ist die Induktionsspannung genau dann maximal, wenn der Fluss null ist (Spulenebene parallel zum Feld), denn dort ändert er sich am schnellsten. Diese Phasenverschiebung von einer Viertelperiode ist ein häufiger Begründungsauftrag."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Identifizieren, welche Größe sich ändert** -- $B$, $A$ oder $\\varphi$. Danach richtet sich die Formel.\n2. **Windungszahl $N$ notieren.** Sie multipliziert die Spannung; das Vergessen ist der häufigste Fehler.\n3. **Einheiten in SI:** Flächen von $\\text{cm}^2$ in $\\text{m}^2$ ($1\\,\\text{cm}^2 = 10^{-4}\\,\\text{m}^2$), $\\text{mT} \\to \\text{T}$.\n4. **Änderungsrate bilden:** $\\dfrac{\\Delta B}{\\Delta t}$ ist bei linearem Verlauf schlicht die **Steigung** im $B$-$t$-Diagramm.\n5. **Einsetzen, Betrag angeben**, Richtung getrennt über die Lenz'sche Regel begründen.\n6. **Einheitenkontrolle:** $\\dfrac{[\\text{T}]\\cdot[\\text{m}^2]}{[\\text{s}]} = \\dfrac{\\text{V s}\\,\\text{m}^{-2}\\cdot\\text{m}^2}{\\text{s}} = \\text{V}$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Eine Spule mit $N = 250$ Windungen und der Querschnittsfläche $A = 40\\,\\text{cm}^2$ befindet sich in einem Magnetfeld, dessen Flussdichte innerhalb von $\\Delta t = 0{,}25\\,\\text{s}$ gleichmäßig von $0$ auf $0{,}80\\,\\text{T}$ ansteigt. Berechnen Sie die induzierte Spannung.*\n\n**Schritt 1:** Es ändert sich $B$; Fläche und Winkel bleiben konstant.\n\n**Schritt 3, Umrechnung:** $A = 40\\,\\text{cm}^2 = 40\\cdot10^{-4}\\,\\text{m}^2 = 4{,}0\\cdot10^{-3}\\,\\text{m}^2$.\n\n**Schritt 4:** $\\dfrac{\\Delta B}{\\Delta t} = \\dfrac{0{,}80}{0{,}25} = 3{,}2\\,\\dfrac{\\text{T}}{\\text{s}}$.\n\n**Schritt 5:**\n$$|U_{ind}| = N\\,A\\,\\frac{\\Delta B}{\\Delta t} = 250 \\cdot 4{,}0\\cdot10^{-3} \\cdot 3{,}2 = 3{,}2\\,\\text{V}$$\n\n**Probe über den Fluss:** $\\Delta\\Phi = A\\,\\Delta B = 4{,}0\\cdot10^{-3}\\cdot0{,}80 = 3{,}2\\cdot10^{-3}\\,\\text{Wb}$. Damit $U_{ind} = 250\\cdot\\dfrac{3{,}2\\cdot10^{-3}}{0{,}25} = 3{,}2\\,\\text{V}$. Bestätigt.\n\n**Interpretation:** Solange der Anstieg linear ist, ist die Induktionsspannung **konstant**. Endet der Anstieg bei $t = 0{,}25\\,\\text{s}$ und bleibt $B$ danach unverändert, fällt die Spannung schlagartig auf null -- ein Rechteckpuls von 3,2 V Höhe und 0,25 s Dauer."
+            }
+          ]
+        },
+        {
+          "title": "Diagrammaufgaben: von $\\Phi(t)$ zu $u(t)$",
+          "blocks": [
+            {
+              "md": "> [!important] Die Induktionsspannung ist die Steigung der Flusskurve\n> Ableitungsaufgaben dieses Typs sind rein grafisch lösbar, ohne eine Zahl zu rechnen:\n>\n> | Verlauf von $\\Phi(t)$ | Verlauf von $u_{ind}(t)$ |\n> |---|---|\n> | konstant (waagerecht) | null |\n> | linear steigend | konstanter negativer Wert |\n> | linear fallend | konstanter positiver Wert |\n> | Knick (Steigungssprung) | Sprung, Rechteckstufe |\n> | Sinus | Kosinus, um eine Viertelperiode verschoben |\n> | Parabel | Gerade |\n>\n> Es ist derselbe Zusammenhang wie zwischen $s(t)$ und $v(t)$ in der Kinematik -- die Notiz **v-t-Diagramm auswerten** behandelt die grafische Technik ausführlich."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Windungszahl $N$ vergessen.** Bei $N = 250$ liegt das Ergebnis sonst um mehr als zwei Zehnerpotenzen daneben.\n- **$\\text{cm}^2$ nicht umrechnen.** $1\\,\\text{cm}^2 = 10^{-4}\\,\\text{m}^2$, nicht $10^{-2}$. Flächen gehen quadratisch ein.\n- **Bei konstantem Feld eine Spannung berechnen.** Kein $\\Delta\\Phi$, keine Induktion -- unabhängig davon, wie stark das Feld ist.\n- **$\\Phi$ und $\\dot\\Phi$ verwechseln.** Im Moment des maximalen Flusses ist die Induktionsspannung **null**, nicht maximal.\n- **Den Kosinus im Fluss vergessen**, wenn die Spulenebene schräg im Feld steht: $\\Phi = BA\\cos\\varphi$.\n- **Das Minuszeichen in die Betragsrechnung ziehen.** Es kodiert nur die Richtung; eine negative Spannung als Zahlenwert anzugeben ist bei einer Betragsfrage falsch."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Bewegungsinduktion berechnen** · **Lenzsche Regel anwenden** · **Induktivität und Selbstinduktionsspannung berechnen** · **Transformator - Übersetzungsverhältnis und Leistungsbilanz** · **Elektromagnetische Induktion** · **v-t-Diagramm auswerten**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Spule ($N = 250$, $A = 40\\,\\mathrm{cm}^2$) steht senkrecht in einem Feld, das in $0{,}2\\,\\mathrm{s}$ gleichmäßig von $0{,}1\\,\\mathrm{T}$ auf $0{,}5\\,\\mathrm{T}$ steigt. Wie groß ist die Spannung?",
+      "answer": 2,
+      "tolerance": 0.01,
+      "placeholder": "V",
+      "explain": "$U = N\\tfrac{\\Delta B\\,A}{\\Delta t} = 250\\cdot\\tfrac{0{,}4\\cdot 0{,}004}{0{,}2}\\,\\mathrm{V} = 2\\,\\mathrm{V}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Winkel",
+      "md": "Eine Spule ($N = 100$, $A = 50\\,\\mathrm{cm}^2$) steht schräg unter $60°$ zwischen Feld und Flächennormale in $0{,}3\\,\\mathrm{T}$; das Feld verschwindet in $15\\,\\mathrm{ms}$. Wie groß ist die mittlere Spannung?",
+      "answer": 5,
+      "tolerance": 0.03,
+      "placeholder": "V",
+      "explain": "$\\Phi = BA\\cos 60° = 0{,}3\\cdot 0{,}005\\cdot 0{,}5\\,\\mathrm{Wb} = 7{,}5\\cdot 10^{-4}\\,\\mathrm{Wb}$; $U = 100\\cdot\\tfrac{7{,}5\\cdot 10^{-4}}{0{,}015}\\,\\mathrm{V} = 5\\,\\mathrm{V}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Spule $N = 500$, $A = 20\\,\\mathrm{cm}^2$, $\\Delta B = 0{,}2\\,\\mathrm{T}$ in $0{,}1\\,\\mathrm{s}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$\\Delta\\Phi = 0{,}2\\,\\mathrm{T}\\cdot 20\\,\\mathrm{m}^2 = 4\\,\\mathrm{Wb}$",
+          "why": "Falsch: $20\\,\\mathrm{cm}^2 = 2\\cdot 10^{-3}\\,\\mathrm{m}^2$, also $\\Delta\\Phi = 4\\cdot 10^{-4}\\,\\mathrm{Wb}$."
+        },
+        {
+          "md": "$U = N\\tfrac{\\Delta\\Phi}{\\Delta t}$",
+          "why": "Richtig."
+        },
+        {
+          "md": "Das Vorzeichen folgt aus der Lenzschen Regel.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 0,
+      "explain": "Mit dem richtigen Fluss: $U = 500\\cdot\\tfrac{4\\cdot 10^{-4}}{0{,}1}\\,\\mathrm{V} = 2\\,\\mathrm{V}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die induzierte Spannung hängt davon ab, wie groß das Magnetfeld ist, nicht davon, wie schnell es sich ändert.",
+      "answer": false,
+      "explain": "Umgekehrt: $U = -N\\dot\\Phi$ hängt von der Änderungsrate ab; ein starkes, konstantes Feld induziert nichts.",
+      "label": "Verständnis",
+      "id": "vq4"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +275,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "induktion",
+          "leiterschleife"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$U = N\\tfrac{\\Delta\\Phi}{\\Delta t}$ mit $\\Phi = BA\\cos\\varphi$, Fläche in $\\mathrm{m}^2$; jede Phase einzeln, konstante Phasen geben null."
+      ]
     }
   ]
 }

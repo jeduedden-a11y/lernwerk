@@ -16,6 +16,363 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Die Bragg-Bedingung\n> $2 d\\sin\\theta = n\\lambda$. Zwei an benachbarten Netzebenen reflektierte Strahlen verstärken sich, wenn ihr Gangunterschied ein Vielfaches der Wellenlänge ist.\n\n> [!warning] Der Winkel wird anders gemessen als sonst\n> Der **Glanzwinkel** $\\theta$ liegt zwischen Strahl und **Netzebene**, nicht zum Lot wie bei Brechung, Reflexion oder Spaltbeugung. Ein- und ausfallender Strahl schließen $2\\theta$ ein; Detektoren zeigen oft diesen Ablenkwinkel an.\n\n**Warum ein Kristall das passende Gitter ist.** Beugung wird nur sichtbar, wenn die Gitterkonstante mit der Wellenlänge vergleichbar ist.\n\n| Aufbau | Gitterkonstante | passende Wellenlänge |\n|---|---|---|\n| optisches Strichgitter | $\\approx 2\\,\\mu\\mathrm{m}$ | Licht, $400$ bis $700\\,\\mathrm{nm}$ |\n| Kristallgitter | $\\approx 300\\,\\mathrm{pm}$ | Röntgenstrahlung, $10$ bis $100\\,\\mathrm{pm}$ |\n| Kristallgitter | $\\approx 300\\,\\mathrm{pm}$ | Elektronen nach $100\\,\\mathrm{V}$, $123\\,\\mathrm{pm}$ |\n\nMax von Laue erkannte 1912, dass ein Versuch zwei offene Fragen zugleich beantwortet: die Wellennatur der Röntgenstrahlung und die Gitterstruktur der Kristalle.",
+      "label": "Bragg",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der Bragg-Bedingung.** Zwei parallele Netzebenen im Abstand $d$, Strahl unter dem Glanzwinkel $\\theta$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\overline{AB} = \\overline{BC} = d\\sin\\theta",
+            "why": "Der an der tieferen Ebene reflektierte Strahl läuft hin und zurück je eine Strecke d sin θ mehr."
+          },
+          {
+            "tex": "\\Delta s = 2\\,d\\sin\\theta",
+            "why": "Gangunterschied der beiden reflektierten Strahlen; der Faktor 2 unterscheidet Bragg von der Gitterformel d sin α = nλ."
+          },
+          {
+            "tex": "\\Delta s = n\\lambda:\\qquad 2 d\\sin\\theta_n = n\\lambda",
+            "why": "Konstruktive Interferenz."
+          },
+          {
+            "tex": "\\sin\\theta_n \\le 1 \\;\\Rightarrow\\; n_{max} = \\left\\lfloor\\frac{2d}{\\lambda}\\right\\rfloor",
+            "why": "Höchste Ordnung: abrunden."
+          },
+          {
+            "tex": "\\lambda > 2d:\\quad \\text{keine Reflexion}",
+            "why": "Darum beugen Kristalle sichtbares Licht nicht: 500 nm sind tausendmal mehr als 2d."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Umweg.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gangunterschied.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Höchste Ordnung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sichtbares Licht.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Drehkristall:** $\\mathrm{Mo}\\text{-}K_\\alpha$ ($71\\,\\mathrm{pm}$) an Natriumchlorid ($d = 282\\,\\mathrm{pm}$); die Intensität über dem Glanzwinkel.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          42
+        ],
+        "y": [
+          0,
+          1.15
+        ],
+        "xLabel": "Glanzwinkel in °",
+        "yLabel": "Intensität (relativ)",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 42,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "th",
+            "expr": "atan((x*71/564)/sqrt(1 - (x*71/564)^2))*180/pi",
+            "hidden": true
+          },
+          {
+            "name": "I",
+            "expr": "exp(-((x - th(1))/0.35)^2) + 0.65*exp(-((x - th(2))/0.35)^2) + 0.4*exp(-((x - th(3))/0.35)^2) + 0.25*exp(-((x - th(4))/0.35)^2) + 0.15*exp(-((x - th(5))/0.35)^2)",
+            "color": "blue",
+            "samples": 900
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "I",
+            "color": "orange",
+            "guides": true
+          }
+        ],
+        "readout": "Glanzwinkel {T|2}°: Gangunterschied 2d·sinθ = **{564*sin(pi*T/180)/71|2} λ**"
+      },
+      "timeline": [
+        {
+          "caption": "Kleiner Winkel ($3°$): Der Gangunterschied beträgt nur $0{,}58\\,\\lambda$; die Teilwellen löschen sich gegenseitig weitgehend aus.",
+          "set": {
+            "T": 3
+          }
+        },
+        {
+          "caption": "Bei $7{,}23°$ ist der Gangunterschied genau $\\lambda$: erste Ordnung.",
+          "to": {
+            "T": 7.23
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "$14{,}58°$: genau $2\\lambda$, zweite Ordnung.",
+          "to": {
+            "T": 14.58
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "$22{,}19°$: dritte Ordnung. Die Abstände wachsen ($7{,}23°$, $7{,}35°$, $7{,}61°$), denn linear in $n$ wächst $\\sin\\theta$, nicht $\\theta$.",
+          "to": {
+            "T": 22.19
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "$39{,}0°$: fünfte Ordnung. Bis zur siebten geht es weiter, denn $\\tfrac{2d}{\\lambda} = 7{,}94$.",
+          "to": {
+            "T": 39.0
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Lösungsschema.**\n1. Gegebene Größen sortieren: $\\lambda$, $d$, $\\theta$, $n$; drei sind gegeben.\n2. Alles in derselben Einheit, meist Pikometer.\n3. Auflösen: $\\sin\\theta = \\tfrac{n\\lambda}{2d}$, $d = \\tfrac{n\\lambda}{2\\sin\\theta}$, $\\lambda = \\tfrac{2d\\sin\\theta}{n}$.\n4. Höchste Ordnung: $n_{max} = \\left\\lfloor\\tfrac{2d}{\\lambda}\\right\\rfloor$.\n5. Winkelkonvention prüfen: Ist der Ablenkwinkel $2\\theta$ angegeben?\n\n**Strukturaufklärung.** In der Praxis ist $\\lambda$ bekannt (eine charakteristische Linie) und $d$ gesucht. Aus vielen Reflexen bei verschiedenen Kristallstellungen rekonstruiert man die räumliche Anordnung der Atome; so wurden die Strukturen fast aller wichtigen Biomoleküle gefunden.\n\n> [!warning] Typische Fallen\n> Winkel zum Lot statt zur Ebene; den Faktor 2 vergessen; $2\\theta$ und $\\theta$ verwechseln; pm und nm verwechseln; bei $\\sin\\theta > 1$ ein Ergebnis erzwingen; die Winkel der Ordnungen für gleichabständig halten.",
+      "label": "Lösungsschema",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bragg-Bedingung anwenden",
+      "path": "02 Wiki/Physik/04 Q3 Quanten- und Atomphysik/Aufgabentypen/Bragg-Bedingung anwenden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie den Netzebenenabstand des Kristalls\"*, *\"Unter welchem Glanzwinkel tritt das Maximum erster Ordnung auf?\"*, *\"Bestimmen Sie die Wellenlänge der charakteristischen Strahlung\"*, *\"Wie viele Ordnungen sind beobachtbar?\"*, *\"Erklären Sie, weshalb ein Kristall als Gitter für Röntgenstrahlung wirkt\"*.\n\nErkennungsmerkmal: **Röntgenstrahlung trifft auf einen Kristall**, gemessen wird ein Winkel."
+            }
+          ]
+        },
+        {
+          "title": "Die Bragg-Bedingung",
+          "blocks": [
+            {
+              "md": "> [!important] Gangunterschied zwischen zwei Netzebenen\n> $$\\boxed{\\;2\\,d\\,\\sin\\theta = n\\,\\lambda\\;}$$\n> Zwei an benachbarten Netzebenen reflektierte Strahlen haben den Gangunterschied $2d\\sin\\theta$ -- der Faktor 2, weil der untere Strahl **hin und zurück** den zusätzlichen Weg $d\\sin\\theta$ zurücklegt. Konstruktive Interferenz tritt auf, wenn dieser Gangunterschied ein ganzzahliges Vielfaches der Wellenlänge ist.\n>\n> Der Winkel $\\theta$ heißt **Glanzwinkel** und wird zur **Netzebene** gemessen -- nicht zum Lot. Das ist die entscheidende Abweichung von allen anderen Winkelkonventionen der Optik.\n\n> [!warning] Der Winkel wird anders gemessen als überall sonst\n> Bei Brechung, Reflexion und Spaltbeugung wird zum **Lot** gemessen. Bei Bragg zur **Fläche**. Die Differenz beträgt $90^\\circ$; wer die Konvention verwechselt, rechnet mit dem Kosinus statt dem Sinus und erhält systematisch falsche Netzebenenabstände.\n>\n> Merkhilfe: Der Name \"Glanzwinkel\" (englisch *glancing angle*) beschreibt den streifenden Einfall -- kleine Winkel bedeuten flaches Auftreffen auf die Fläche."
+            }
+          ]
+        },
+        {
+          "title": "Warum ein Kristall das passende Gitter ist",
+          "blocks": [
+            {
+              "md": "Beugung wird nur sichtbar, wenn die Gitterkonstante mit der Wellenlänge vergleichbar ist. Ein optisches Strichgitter hat Abstände im Mikrometerbereich -- viel zu grob für Röntgenstrahlung mit Wellenlängen um 50 bis 100 pm.\n\nEin **Kristall** dagegen besitzt eine natürlich gewachsene, exakt periodische Struktur mit Netzebenenabständen von etwa 100 bis 500 pm -- genau der richtige Bereich. Max von Laue erkannte 1912, dass sich damit zwei Fragen zugleich beantworten lassen: die Wellennatur der Röntgenstrahlung **und** die Gitterstruktur der Kristalle. Keine der beiden war zuvor gesichert; der Versuch bestätigte beide gleichzeitig.\n\n| Aufbau | Gitterkonstante | Passende Wellenlänge |\n|---|---|---|\n| optisches Strichgitter | $\\approx 2\\,\\mu\\text{m}$ | sichtbares Licht, 400--700 nm |\n| Kristallgitter | $\\approx 300\\,\\text{pm}$ | Röntgenstrahlung, 10--100 pm |\n| Kristallgitter | $\\approx 300\\,\\text{pm}$ | Elektronen bei 100 V, 123 pm |\n\nDie dritte Zeile ist der Grund, weshalb derselbe Graphitkristall sowohl für Röntgen- als auch für **Elektronenbeugung** verwendet wird."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Gegebene Größen sortieren:** $\\lambda$, $d$, $\\theta$, $n$ -- drei sind gegeben, eine gesucht.\n2. **Einheiten in SI**, Abstände meist in Pikometer ($10^{-12}\\,\\text{m}$).\n3. **Nach der gesuchten Größe auflösen:**\n$$\\sin\\theta = \\frac{n\\lambda}{2d}, \\qquad d = \\frac{n\\lambda}{2\\sin\\theta}, \\qquad \\lambda = \\frac{2d\\sin\\theta}{n}$$\n4. **Maximale Ordnung** aus $\\sin\\theta \\leq 1$: $n_{max} = \\left\\lfloor\\dfrac{2d}{\\lambda}\\right\\rfloor$.\n5. **Winkelkonvention prüfen:** Manche Aufgaben geben den Winkel zwischen ein- und ausfallendem Strahl an -- das ist $2\\theta$, nicht $\\theta$.\n6. **Einheitenkontrolle:** $\\sin\\theta$ ist dimensionslos; $\\lambda$ und $d$ müssen dieselbe Einheit tragen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Röntgenstrahlung der Wellenlänge $\\lambda = 71\\,\\text{pm}$ (charakteristische $K_\\alpha$-Linie von Molybdän) trifft auf einen Natriumchloridkristall mit dem Netzebenenabstand $d = 282\\,\\text{pm}$. Berechnen Sie die Glanzwinkel der ersten drei Ordnungen und die höchste beobachtbare Ordnung.*\n\n**Schritt 3, erste Ordnung:**\n$$\\sin\\theta_1 = \\frac{1\\cdot71}{2\\cdot282} = \\frac{71}{564} \\approx 0{,}1259 \\quad\\Longrightarrow\\quad \\theta_1 \\approx 7{,}23^\\circ$$\n\n**Zweite und dritte Ordnung:**\n$$\\sin\\theta_2 = 0{,}2518 \\Rightarrow \\theta_2 \\approx 14{,}58^\\circ, \\qquad \\sin\\theta_3 = 0{,}3777 \\Rightarrow \\theta_3 \\approx 22{,}19^\\circ$$\n\n**Schritt 4, maximale Ordnung:**\n$$\\frac{2d}{\\lambda} = \\frac{564}{71} \\approx 7{,}94 \\quad\\Longrightarrow\\quad n_{max} = 7$$\n\n> [!tip] Dieselbe Nichtlinearität wie beim optischen Gitter\n> Die Winkelabstände wachsen: $7{,}23^\\circ$, dann $7{,}35^\\circ$, dann $7{,}61^\\circ$. Der Grund ist derselbe wie beim **Beugungsgitter** -- $\\sin\\theta$ wächst linear mit der Ordnung, $\\theta$ selbst wegen des Arkussinus nicht. Bei kleinen Winkeln ist der Effekt noch schwach; gegen $90^\\circ$ hin wird er dramatisch. Eine lineare Extrapolation der Ordnungen ist deshalb unzulässig.\n\n**Umkehrprobe:** Aus $\\theta_1 = 7{,}23^\\circ$ zurückgerechnet: $d = \\dfrac{1\\cdot71}{2\\cdot\\sin(7{,}23^\\circ)} = \\dfrac{71}{2\\cdot0{,}1259} \\approx 282\\,\\text{pm}$. Der Ausgangswert wird reproduziert."
+            }
+          ]
+        },
+        {
+          "title": "Die eigentliche Anwendung: Strukturaufklärung",
+          "blocks": [
+            {
+              "md": "> [!important] Vom Beugungsmuster zur Molekülstruktur\n> In der Praxis ist $\\lambda$ bekannt (charakteristische Linie eines gewählten Anodenmaterials) und $d$ gesucht. Aus vielen gemessenen Reflexen unter verschiedenen Kristallorientierungen lässt sich die **dreidimensionale Anordnung der Atome** rekonstruieren.\n>\n> Auf diesem Weg wurden die Strukturen praktisch aller wichtigen Biomoleküle aufgeklärt -- darunter 1953 die Doppelhelix der DNA, deren charakteristisches Kreuzmuster im Beugungsbild unmittelbar auf eine helikale Struktur schließen ließ. Die Röntgenstrukturanalyse ist damit das Verfahren, das die moderne Molekularbiologie überhaupt erst ermöglicht hat."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Den Winkel zum Lot statt zur Netzebene messen.** Siehe Warnung oben.\n- **Den Faktor 2 vergessen.** Er stammt aus dem doppelten Weg zur tieferen Ebene und ist das Kennzeichen der Bragg-Formel gegenüber der Gitterformel $d\\sin\\alpha = n\\lambda$.\n- **$2\\theta$ und $\\theta$ verwechseln.** Detektoren geben oft den Ablenkwinkel $2\\theta$ zwischen ein- und ausfallendem Strahl aus.\n- **Pikometer nicht umrechnen** oder mit Nanometer verwechseln. $282\\,\\text{pm} = 0{,}282\\,\\text{nm}$.\n- **Bei $\\sin\\theta > 1$ ein Ergebnis erzwingen.** Diese Ordnung existiert nicht.\n- **Die Bragg-Bedingung auf sichtbares Licht am Kristall anwenden.** Wegen $\\lambda \\gg 2d$ ergäbe sich $\\sin\\theta > 1$ -- es gibt keine Lösung. Das ist zugleich die Begründung, weshalb Kristalle für Licht durchsichtig, für Röntgenstrahlung aber beugend wirken.\n- **Die Winkel als äquidistant annehmen.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Grenzwellenlänge der Bremsstrahlung berechnen** · **Beugung am Spalt und Gitter berechnen** · **De-Broglie-Wellenlänge berechnen** · **Doppelspalt mit Quantenobjekten interpretieren** · **Roentgenstrahlung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "Glanzwinkel",
+          "Winkel zwischen Strahl und Netzebene"
+        ],
+        [
+          "Ablenkwinkel",
+          "$2\\theta$"
+        ],
+        [
+          "Bragg-Bedingung",
+          "$2d\\sin\\theta = n\\lambda$"
+        ],
+        [
+          "höchste Ordnung",
+          "$\\left\\lfloor\\tfrac{2d}{\\lambda}\\right\\rfloor$"
+        ],
+        [
+          "Gitterformel zum Vergleich",
+          "$d\\sin\\alpha = n\\lambda$, Winkel zum Lot"
+        ]
+      ],
+      "explain": "Bragg misst zur Ebene und hat den Faktor 2 vom doppelten Umweg.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Bragg-Bedingung in die richtige Reihenfolge.",
+      "items": [
+        "Umweg an der tieferen Ebene: zweimal $d\\sin\\theta$",
+        "Gangunterschied $\\Delta s = 2d\\sin\\theta$",
+        "Verstärkung bei $\\Delta s = n\\lambda$",
+        "Höchste Ordnung aus $\\sin\\theta \\le 1$"
+      ],
+      "explain": "Die Reihenfolge: 1. Umweg an der tieferen Ebene: zweimal $d\\sin\\theta$. 2. Gangunterschied $\\Delta s = 2d\\sin\\theta$. 3. Verstärkung bei $\\Delta s = n\\lambda$. 4. Höchste Ordnung aus $\\sin\\theta \\le 1$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$\\mathrm{Mo}\\text{-}K_\\alpha$-Strahlung ($71\\,\\mathrm{pm}$) fällt auf Natriumchlorid ($d = 282\\,\\mathrm{pm}$). Unter welchem Glanzwinkel liegt das Maximum erster Ordnung?",
+      "answer": 7.23,
+      "tolerance": 0.05,
+      "placeholder": "°",
+      "explain": "$\\sin\\theta_1 = \\tfrac{71}{564} \\approx 0{,}1259$, $\\theta_1 \\approx 7{,}23°$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Ordnungen sind in derselben Anordnung höchstens beobachtbar?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "Ordnungen",
+      "explain": "$\\tfrac{2d}{\\lambda} = \\tfrac{564}{71} \\approx 7{,}94$, abgerundet $7$.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "An Lithiumfluorid ($d = 201\\,\\mathrm{pm}$) misst man das Maximum erster Ordnung bei $\\theta = 10{,}2°$. Welche Wellenlänge hat die Strahlung?",
+      "answer": 71.2,
+      "tolerance": 0.6,
+      "placeholder": "pm",
+      "explain": "$\\lambda = 2d\\sin\\theta = 402\\,\\mathrm{pm}\\cdot\\sin 10{,}2° \\approx 71{,}2\\,\\mathrm{pm}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Falle",
+      "md": "Ein Detektor zeigt für die erste Ordnung an Natriumchlorid ($d = 282\\,\\mathrm{pm}$) den Ablenkwinkel $30{,}0°$ zwischen ein- und ausfallendem Strahl. Welche Wellenlänge hat die Strahlung?",
+      "answer": 146,
+      "tolerance": 1.5,
+      "placeholder": "pm",
+      "explain": "Der Ablenkwinkel ist $2\\theta$, also $\\theta = 15{,}0°$ und $\\lambda = 564\\,\\mathrm{pm}\\cdot\\sin 15° \\approx 146\\,\\mathrm{pm}$. Wer $30°$ einsetzt, erhält $282\\,\\mathrm{pm}$.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Glanzwinkel aufeinanderfolgender Ordnungen liegen gleich weit auseinander.",
+      "answer": false,
+      "explain": "Linear in $n$ wächst $\\sin\\theta$, nicht $\\theta$; die Abstände werden größer.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum lässt sich die Bragg-Bedingung nicht auf sichtbares Licht an einem Kristall anwenden?",
+      "options": [
+        {
+          "md": "Weil $\\lambda > 2d$ ist und $\\sin\\theta = \\tfrac{n\\lambda}{2d} > 1$ keine Lösung hat.",
+          "correct": true
+        },
+        {
+          "md": "Weil Licht keine Welle ist.",
+          "why": "Licht ist durchaus eine Welle; es ist nur viel zu langwellig."
+        },
+        {
+          "md": "Weil Kristalle Licht vollständig absorbieren.",
+          "why": "Viele Kristalle sind durchsichtig, gerade weil es keine Bragg-Reflexion gibt."
+        },
+        {
+          "md": "Weil der Glanzwinkel dann negativ wird.",
+          "why": "Es gibt schlicht keinen Winkel."
+        }
+      ],
+      "explain": "Für Röntgenstrahlung sind Kristalle Gitter, für Licht nicht.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +449,40 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "bragg-grenze"
+        ]
+      },
+      "label": "Kleinster Glanzwinkel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "bragg",
+          "bragg-grenze"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$2d\\sin\\theta = n\\lambda$ mit dem Glanzwinkel zur Netzebene; der Umweg zweimal $d\\sin\\theta$ erklärt den Faktor 2.",
+        "$n_{max} = \\lfloor \\tfrac{2d}{\\lambda}\\rfloor$; Detektoren zeigen oft $2\\theta$; die Winkel der Ordnungen wachsen immer schneller."
+      ]
     }
   ]
 }

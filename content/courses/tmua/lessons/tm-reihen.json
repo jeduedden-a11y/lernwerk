@@ -23,6 +23,516 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Reihe und Partialsumme\n> Die **Partialsumme** $S_n = a_1 + a_2 + \\dots + a_n = \\sum_{k=1}^{n} a_k$ addiert die ersten $n$ Glieder einer Folge. Eine **unendliche Reihe** hat den Wert $S$, wenn die Partialsummen gegen $S$ konvergieren (*sum to infinity*).\n\n> [!definition] Arithmetische und geometrische Reihe\n> Arithmetisch: Glieder mit fester Differenz $d$, erstes Glied $a$, letztes $l$. Geometrisch: Glieder mit festem Quotienten $r$, erstes Glied $a$.\n\nUmgekehrt gewinnt man ein Glied aus den Summen zurück: $a_n = S_n - S_{n-1}$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung der arithmetischen Summenformel** (der Trick, den man dem jungen Gauß zuschreibt).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "S = a + (a + d) + \\dots + (l - d) + l",
+            "why": "Die Summe vorwärts."
+          },
+          {
+            "tex": "S = l + (l - d) + \\dots + (a + d) + a",
+            "why": "Dieselbe Summe rückwärts."
+          },
+          {
+            "tex": "2S = (a + l) + (a + l) + \\dots + (a + l) = n\\,(a + l)",
+            "why": "Untereinander addieren: Jedes Paar ergibt a + l, und es gibt n Paare."
+          },
+          {
+            "tex": "S_n = \\frac n2\\,(a + l) = \\frac n2\\,\\big(2a + (n - 1)d\\big)",
+            "why": "Mit dem letzten Glied l = a + (n − 1)d."
+          },
+          {
+            "tex": "1 + 3 + 5 + \\dots + (2n - 1) = \\frac n2\\,(1 + 2n - 1) = n^2",
+            "why": "Beispiel: Die ersten n ungeraden Zahlen ergeben n²."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Vorwärts.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rückwärts.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Addieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der geometrischen Summenformel.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "S_n = a + ar + ar^2 + \\dots + ar^{n-1}",
+            "why": "Die Summe der ersten n Glieder."
+          },
+          {
+            "tex": "r\\,S_n = ar + ar^2 + \\dots + ar^{n-1} + ar^n",
+            "why": "Mit r malnehmen: Alles rückt um eine Stelle."
+          },
+          {
+            "tex": "S_n - r\\,S_n = a - ar^n",
+            "why": "Subtrahieren: Bis auf das erste und das letzte Glied hebt sich alles weg."
+          },
+          {
+            "tex": "S_n = a\\,\\frac{1 - r^n}{1 - r} \\quad (r \\ne 1)",
+            "why": "Ausklammern und durch 1 − r teilen."
+          },
+          {
+            "tex": "|r| < 1 \\;\\Rightarrow\\; r^n \\to 0 \\;\\Rightarrow\\; S_\\infty = \\frac{a}{1 - r}",
+            "why": "Für |r| < 1 verschwindet r^n; für |r| ≥ 1 gibt es keinen Grenzwert."
+          },
+          {
+            "tex": "0{,}\\overline{9} = \\frac{9}{10} + \\frac{9}{100} + \\dots = \\frac{9/10}{1 - 1/10} = 1",
+            "why": "Beispiel: Auch so sieht man 0,999… = 1."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mal r.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Subtrahieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Reihe",
+      "md": "**Partialsummen einer geometrischen Reihe:** blau die Glieder $a\\,r^{n-1}$, orange die Partialsummen, grün gestrichelt $\\tfrac{a}{1 - r}$, solange $|r| < 1$.",
+      "widget": "sequence",
+      "params": {
+        "term": "A*R^(n-1)",
+        "mode": "both",
+        "nMax": 20,
+        "n": 1,
+        "yRange": [
+          -3,
+          20
+        ],
+        "vars": [
+          {
+            "name": "A",
+            "label": "erstes Glied a",
+            "min": 1,
+            "max": 6,
+            "step": 0.5,
+            "value": 4,
+            "digits": 1
+          },
+          {
+            "name": "R",
+            "label": "Quotient r",
+            "min": -0.9,
+            "max": 1.2,
+            "step": 0.05,
+            "value": 0.5,
+            "digits": 2
+          }
+        ],
+        "limit": "abs(R) < 1 ? A/(1 - R) : 1/0",
+        "limitLabel": "a/(1 − r)",
+        "readout": "r = {R|2} · Partialsumme nach {N|0} Gliedern: {s|4} · a/(1 − r) = {L|4}"
+      },
+      "timeline": [
+        {
+          "caption": "a = 4 und r = 0,5: Die Partialsummen steigen und kommen 8 immer näher.",
+          "set": {
+            "N": 1,
+            "R": 0.5
+          }
+        },
+        {
+          "caption": "Nach 20 Gliedern fehlt weniger als ein Zehntausendstel.",
+          "to": {
+            "N": 20
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "r = 0,75: Grenzwert 16, die Annäherung dauert länger.",
+          "to": {
+            "R": 0.75
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "r = −0,5: Die Glieder wechseln das Vorzeichen, die Summen pendeln und nähern sich 8/3.",
+          "to": {
+            "R": -0.5
+          },
+          "dur": 1500
+        },
+        {
+          "caption": "r = 1,1: Die Glieder wachsen, die Summen über alle Grenzen. Kein Grenzwert.",
+          "to": {
+            "R": 1.1
+          },
+          "dur": 1500
+        }
+      ],
+      "int": [
+        "N"
+      ],
+      "id": "ve4"
+    },
+    {
+      "type": "text",
+      "md": "**Nützliche Summen mit dem Summenzeichen:**\n- $\\sum_{k=1}^{n} k = \\dfrac{n(n+1)}{2}$ (arithmetisch mit $a = 1$, $l = n$),\n- $\\sum_{k=1}^{n} (2k - 1) = n^2$,\n- $\\sum_{k=0}^{n-1} r^k = \\dfrac{1 - r^n}{1 - r}$.\n\n**Konvergenzbedingung mit Parameter:** Die Reihe $1 + (2x - 1) + (2x - 1)^2 + \\dots$ hat den Quotienten $r = 2x - 1$; sie konvergiert genau für $|2x - 1| < 1$, also $0 < x < 1$.",
+      "label": "Summen",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Arithmetische und geometrische Reihen",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Arithmetische und geometrische Reihen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Zwei Grundmuster",
+          "blocks": [
+            {
+              "md": "| | arithmetisch | geometrisch |\n|---|---|---|\n| englisch | *arithmetic progression (AP)* | *geometric progression (GP)* |\n| Bildung | jedes Glied **plus** $d$ | jedes Glied **mal** $r$ |\n| Kenngröße | Differenz $d$ (*common difference*) | Quotient $r$ (*common ratio*) |\n| n-tes Glied | $u_n = a + (n-1)d$ | $u_n = a r^{n-1}$ |\n| Summe der ersten $n$ Glieder | $S_n = \\dfrac n2\\bigl(2a + (n-1)d\\bigr) = \\dfrac n2(a + l)$ | $S_n = \\dfrac{a(1 - r^n)}{1 - r}$ für $r \\ne 1$ |\n\nDabei ist $a$ das erste und $l$ das letzte Glied. Die Spezifikation verlangt ausdrücklich auch die **Summe der ersten $n$ natürlichen Zahlen** (MM2.2):\n\n$$1 + 2 + \\dots + n = \\frac{n(n+1)}{2}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Warum die Summenformeln gelten",
+          "blocks": [
+            {
+              "md": "> [!important] Arithmetisch: der Gaußsche Paartrick\n> Die Summe wird einmal vorwärts und einmal rückwärts geschrieben. Übereinanderstehende Glieder ergeben jeweils $a + l$, und es gibt $n$ solcher Paare. Also $2S_n = n(a + l)$. Wer den Trick versteht, braucht die Formel nicht auswendig -- und kann sie auf Teilsummen anwenden, etwa auf die Vielfachen von 3 unter 100: $3 + 6 + \\dots + 99 = 3(1 + 2 + \\dots + 33) = 3 \\cdot \\tfrac{33 \\cdot 34}{2} = 1683$.\n\n> [!important] Geometrisch: mit r multiplizieren und abziehen\n> $S_n = a + ar + \\dots + ar^{n-1}$ und $rS_n = ar + \\dots + ar^{n}$. Die Differenz lässt fast alles verschwinden: $S_n - rS_n = a - ar^n$, also $S_n = \\dfrac{a(1 - r^n)}{1 - r}$."
+            }
+          ]
+        },
+        {
+          "title": "Die unendliche geometrische Reihe",
+          "blocks": [
+            {
+              "md": "Für $\\lvert r \\rvert < 1$ strebt $r^n$ gegen 0, und die Summe nähert sich einem festen Wert (*sum to infinity*):\n\n$$S_\\infty = \\frac{a}{1 - r}, \\qquad \\text{nur für } -1 < r < 1.$$\n\nFür $\\lvert r \\rvert \\ge 1$ gibt es keine endliche Summe: Die Glieder werden nicht klein genug. Die Spezifikation verlangt ausdrücklich die Bedingung $\\lvert r \\rvert < 1$ (MM2.3).\n\n> [!example] Zwei Anwendungen\n> $12 - 6 + 3 - 1{,}5 + \\dots$: $a = 12$, $r = -\\tfrac12$, also $S_\\infty = \\dfrac{12}{1 + \\frac12} = 8$.\n>\n> Periodische Dezimalzahlen sind geometrische Reihen: $0{,}\\overline{27} = \\tfrac{27}{100} + \\tfrac{27}{100^2} + \\dots = \\dfrac{27/100}{1 - 1/100} = \\tfrac{27}{99} = \\tfrac{3}{11}$. Siehe **Periodische Dezimalzahl in einen Bruch umwandeln**."
+            }
+          ]
+        },
+        {
+          "title": "Summenzeichen",
+          "blocks": [
+            {
+              "md": "Reihen werden oft mit dem **Summenzeichen** (*sigma notation*) geschrieben:\n\n$$\\sum_{k=1}^{n} (2k - 1) = 1 + 3 + 5 + \\dots + (2n - 1) = n^2.$$\n\nBeim Auswerten zuerst die Anzahl der Glieder bestimmen: Von $k = 5$ bis $k = 20$ sind es $20 - 5 + 1 = 16$ Glieder, nicht 15."
+            }
+          ]
+        },
+        {
+          "title": "Glied aus Summe",
+          "blocks": [
+            {
+              "md": "Ist die Summenfolge $S_n$ bekannt, ergibt sich jedes Glied als Differenz:\n\n$$u_n = S_n - S_{n-1}.$$\n\nBei $S_n = 3n^2 + 2n$ ist $u_{10} = S_{10} - S_9 = 320 - 261 = 59$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **$n$ falsch zählen:** Die Glieder $3, 6, \\dots, 99$ sind 33 Stück, nicht 32 und nicht 99.\n- **$r^{n-1}$ und $r^n$ verwechseln** beim n-ten Glied.\n- **Die unendliche Summe für $\\lvert r \\rvert \\ge 1$ anwenden.**\n- **Bei negativem $r$ das Vorzeichen im Nenner falsch setzen:** $1 - (-\\tfrac12) = \\tfrac32$.\n\nVerwandt: **Explizite und rekursive Folgen** · Aufgabentypen: **Summe einer arithmetischen Reihe bestimmen** · **Unendliche geometrische Reihe und Konvergenzbedingung** · im Mathematikbestand: **Reihen und Partialsummen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Summe einer arithmetischen Reihe bestimmen",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Aufgabentypen/Summe einer arithmetischen Reihe bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gesucht ist die Summe einer Folge mit konstanter Differenz -- direkt (*the sum of the first 20 terms*), versteckt (*the sum of all multiples of 7 between 100 and 200*) oder umgekehrt (*how many terms are needed for the sum to exceed 1000*). Auch Aufgaben mit gegebener Summenformel $S_n$ gehören dazu."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Erstes Glied $a$, Differenz $d$ und Anzahl $n$ bestimmen.** Die Anzahl ist fast immer der fehleranfälligste Schritt: $n = \\frac{l - a}{d} + 1$.\n2. **Summe mit $S_n = \\frac n2 (a + l)$** -- wenn das letzte Glied $l$ bekannt ist -- oder mit $S_n = \\frac n2 (2a + (n-1)d)$.\n3. **Bei Bedingungen wie \"Vielfache von 3, aber nicht von 5\":** Gesamtsumme minus Summe der ausgeschlossenen Glieder (Vielfache von 15).\n4. **Bei gegebener Summenformel:** $u_n = S_n - S_{n-1}$.\n5. **Bei \"wie viele Glieder\":** Ungleichung $S_n > \\dots$ aufstellen, $n$ als kleinste passende ganze Zahl bestimmen, beide Nachbarwerte prüfen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> What is the sum of all the integers from 1 to 100 inclusive that are multiples of 3 but not multiples of 5?\n>\n> - **A** 1683\n> - **B** 1368\n> - **C** 1050\n> - **D** 1383\n> - **E** 315\n\n**Schritt 1:** Vielfache von 3: $3, 6, \\dots, 99$, also $n = \\frac{99 - 3}{3} + 1 = 33$ Glieder.\n\n**Schritt 2:** $S = \\frac{33}{2}(3 + 99) = 33 \\cdot 51 = 1683$.\n\n**Schritt 3:** Auszuschließen sind die Vielfachen von 3 **und** 5, also von 15: $15, 30, \\dots, 90$, sechs Glieder, Summe $15 \\cdot (1 + \\dots + 6) = 15 \\cdot 21 = 315$.\n\nErgebnis: $1683 - 315 = 1368$.\n\nAntwort **B**.\n\n> [!warning] Nicht die Vielfachen von 5 abziehen\n> Abzuziehen sind nur die Zahlen, die **in der ersten Summe stehen** und die Zusatzbedingung verletzen -- die Vielfachen von 3, die auch Vielfache von 5 sind. Die Vielfachen von 5 insgesamt (5, 10, 20, ...) waren nie in der Summe."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Anzahl um eins verschätzen:** Von 3 bis 99 in Dreierschritten sind es 33 Glieder, nicht 32.\n- **Die falschen Zahlen abziehen** (siehe oben).\n- **$S_n$ mit $u_n$ verwechseln**, wenn eine Summenformel gegeben ist.\n- **Bei \"exceed\" die Grenze falsch runden:** Gesucht ist das kleinste $n$ mit $S_n > 1000$; $S_{22} = 990$ reicht nicht."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> An arithmetic progression has first term 5 and tenth term 32. What is the sum of the first ten terms?\n>\n> - **A** 185\n> - **B** 370\n> - **C** 160\n> - **D** 175\n> - **E** 195\n\n> [!success]- Lösung\n> **A.** Erstes und letztes Glied sind bekannt: $S_{10} = \\frac{10}{2}(5 + 32) = 185$. Die Differenz ($d = 3$) wird gar nicht gebraucht.\n> B vergisst die Halbierung.\n\n> [!question] Aufgabe 2\n> The sum of the first $n$ terms of a sequence is $S_n = 3n^2 + 2n$. What is the 10th term?\n>\n> - **A** 59\n> - **B** 62\n> - **C** 320\n> - **D** 32\n> - **E** 56\n\n> [!success]- Lösung\n> **A.** $u_{10} = S_{10} - S_9 = 320 - 261 = 59$. Allgemein $u_n = 6n - 1$ -- eine arithmetische Folge mit $d = 6$.\n> C ist $S_{10}$ selbst.\n\n> [!question] Aufgabe 3\n> What is the smallest number of terms of the series $3 + 7 + 11 + 15 + \\dots$ that must be added for the sum to exceed 1000?\n>\n> - **A** 21\n> - **B** 22\n> - **C** 23\n> - **D** 24\n> - **E** 25\n\n> [!success]- Lösung\n> **C.** $a = 3$, $d = 4$: $S_n = \\frac n2(6 + 4(n - 1)) = n(2n + 1)$.\n> $S_{22} = 22 \\cdot 45 = 990 < 1000$, $S_{23} = 23 \\cdot 47 = 1081 > 1000$.\n> Tipp: $2n^2 \\approx 1000$ liefert $n \\approx 22$ als Startpunkt; dann beide Nachbarn prüfen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Unendliche geometrische Reihe und Konvergenzbedingung** · **n-tes Glied einer quadratischen Folge bestimmen** · **ggT und kgV über Primfaktorzerlegung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Unendliche geometrische Reihe und Konvergenzbedingung",
+      "path": "02 Wiki/TMUA/05 Folgen und Reihen/Aufgabentypen/Unendliche geometrische Reihe und Konvergenzbedingung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine geometrische Reihe soll bis ins Unendliche summiert werden, oder aus Angaben über die unendliche Summe sollen $a$ oder $r$ bestimmt werden. Häufige Variante: Der Quotient enthält eine Variable, und gefragt ist, **für welche Werte die Reihe konvergiert**. Signalformeln: *sum to infinity*, *converges*, *for which values of x does the series have a finite sum*."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Erstes Glied $a$ und Quotient $r$** bestimmen: $r$ = zweites Glied durch erstes.\n2. **Konvergenzbedingung** $-1 < r < 1$ aufschreiben -- bei variablem $r$ als Ungleichung lösen.\n3. **Summe** $S_\\infty = \\frac{a}{1 - r}$.\n4. **Bei gesuchten Parametern:** Die Angaben in Gleichungen übersetzen ($ar = \\dots$, $\\frac{a}{1-r} = \\dots$), lösen, und **jede Lösung gegen $\\lvert r \\rvert < 1$ prüfen**."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> A geometric series has second term 6 and sum to infinity 27. What are the possible values of the first term?\n>\n> - **A** 9 only\n> - **B** 18 only\n> - **C** 9 or 18\n> - **D** 3 or 6\n> - **E** 6 or 12\n\n**Schritt 4:** $ar = 6$ und $\\frac{a}{1 - r} = 27$, also $a = 27(1 - r)$.\n\nEinsetzen: $27(1 - r)r = 6 \\iff 27r^2 - 27r + 6 = 0 \\iff 9r^2 - 9r + 2 = 0 \\iff (3r - 1)(3r - 2) = 0$.\n\nAlso $r = \\tfrac13$ oder $r = \\tfrac23$. Beide erfüllen $\\lvert r \\rvert < 1$.\n\n$r = \\tfrac13$: $a = 18$. $r = \\tfrac23$: $a = 9$.\n\nAntwort **C**.\n\n> [!important] Die Prüfung von |r| < 1 ist kein Formalismus\n> Hätte die quadratische Gleichung $r = 2$ geliefert, wäre diese Lösung zu verwerfen: Für $r = 2$ gibt es keine unendliche Summe, auch wenn die Formel $\\frac{a}{1-r}$ formal einen Wert ausgibt. Genau solche Scheinlösungen stehen dann als falsche Option zur Wahl."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Konvergenzbedingung vergessen**, besonders bei variablem $r$.\n- **Bei negativem $r$ falsch einsetzen:** $1 - (-\\tfrac12) = \\tfrac32$.\n- **$r$ aus erstem durch zweites Glied bilden** statt umgekehrt.\n- **Randwerte einschließen:** Für $r = \\pm1$ konvergiert die Reihe nicht."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the sum to infinity of the geometric series $12 - 6 + 3 - 1.5 + \\dots$\n>\n> - **A** 8\n> - **B** 24\n> - **C** 6\n> - **D** 18\n> - **E** The series does not have a sum to infinity.\n\n> [!success]- Lösung\n> **A.** $a = 12$, $r = -\\tfrac12$, $S_\\infty = \\frac{12}{1 + \\frac12} = 8$.\n> B entsteht mit $r = +\\tfrac12$.\n\n> [!question] Aufgabe 2\n> Find the complete set of values of $x$ for which the series $1 + (x - 1) + (x - 1)^2 + (x - 1)^3 + \\dots$ has a sum to infinity.\n>\n> - **A** $0 < x < 2$\n> - **B** $-1 < x < 1$\n> - **C** $x < 2$\n> - **D** $0 \\le x \\le 2$\n> - **E** $x > 0$\n\n> [!success]- Lösung\n> **A.** $r = x - 1$, Bedingung $-1 < x - 1 < 1 \\iff 0 < x < 2$. Die Summe ist dann $\\frac{1}{2 - x}$.\n> D schließt die Randwerte ein, bei denen $\\lvert r \\rvert = 1$ ist; B verwechselt $x$ mit $r$.\n\n> [!question] Aufgabe 3\n> A geometric series has first term $a$ and sum to infinity $3a$, where $a \\ne 0$. What is the common ratio?\n>\n> - **A** $\\frac23$\n> - **B** $\\frac13$\n> - **C** 3\n> - **D** $-\\frac23$\n> - **E** $\\frac32$\n\n> [!success]- Lösung\n> **A.** $\\frac{a}{1 - r} = 3a \\iff 1 - r = \\tfrac13 \\iff r = \\tfrac23$. Zulässig, weil $\\lvert r \\rvert < 1$.\n> B verwechselt $1 - r$ mit $r$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Periodische Dezimalzahl in einen Bruch umwandeln** · **Summe einer arithmetischen Reihe bestimmen** · **Quadratische Ungleichung lösen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Arithmetisch",
+      "md": "Wie groß ist die Summe aller Vielfachen von 7 von 7 bis 700?",
+      "answer": 35350,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "100 Glieder, $S = \\tfrac{100}{2}(7 + 700) = 50 \\cdot 707 = 35350$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Unendlich",
+      "md": "Welchen Wert hat die unendliche Reihe $6 - 2 + \\tfrac23 - \\tfrac29 + \\dots$?",
+      "answer": 4.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$a = 6$, $r = -\\tfrac13$: $S_\\infty = \\tfrac{6}{1 + 1/3} = \\tfrac{6}{4/3} = 4{,}5$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der geometrischen Summenformel in die richtige Reihenfolge.",
+      "items": [
+        "$S_n = a + ar + \\dots + ar^{n-1}$ aufschreiben",
+        "mit $r$ multiplizieren: $rS_n = ar + \\dots + ar^n$",
+        "subtrahieren: $S_n - rS_n = a - ar^n$",
+        "durch $1 - r$ teilen: $S_n = a\\,\\tfrac{1 - r^n}{1 - r}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $S_n = a + ar + \\dots + ar^{n-1}$ aufschreiben. 2. mit $r$ multiplizieren: $rS_n = ar + \\dots + ar^n$. 3. subtrahieren: $S_n - rS_n = a - ar^n$. 4. durch $1 - r$ teilen: $S_n = a\\,\\tfrac{1 - r^n}{1 - r}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "cloze",
+      "label": "Konvergenz",
+      "md": "Eine geometrische Reihe hat genau dann einen Grenzwert, wenn der Betrag des Quotienten kleiner als {{0}} ist.",
+      "blanks": [
+        {
+          "accept": [
+            "1"
+          ],
+          "numeric": true,
+          "tolerance": 0.01
+        }
+      ],
+      "explain": "Nur dann geht $r^n$ gegen 0, und $S_\\infty = \\tfrac{a}{1 - r}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "The sum of the first $n$ terms of a sequence is $S_n = n^2 + 3n$. What is the 10th term?",
+      "options": [
+        {
+          "md": "20"
+        },
+        {
+          "md": "22",
+          "correct": true
+        },
+        {
+          "md": "23"
+        },
+        {
+          "md": "24"
+        },
+        {
+          "md": "130"
+        }
+      ],
+      "explain": "$a_{10} = S_{10} - S_9 = 130 - 108 = 22$. Die 130 ist die Summe, nicht das Glied.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Glied aus Summe",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Reihe $1 + 2 + 4 + 8 + \\dots$ hat den Wert $\\tfrac{1}{1 - 2} = -1$.",
+      "answer": false,
+      "explain": "Die Formel $\\tfrac{a}{1-r}$ gilt nur für $|r| < 1$. Hier ist $r = 2$, die Summen wachsen über alle Grenzen.",
+      "label": "Konvergenz",
+      "id": "vq6"
+    },
+    {
+      "type": "numeric",
+      "label": "Summenzeichen",
+      "md": "Berechne $\\sum_{k=1}^{20} (2k - 1)$.",
+      "answer": 400,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Die ersten 20 ungeraden Zahlen: $20^2 = 400$.",
+      "id": "vq7"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Wie groß ist die Summe aller ungeraden Zahlen von 1 bis 99?",
@@ -107,6 +617,13 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "tmua-reihen",
+      "level": 4,
+      "label": "Test level",
+      "id": "vx1"
+    },
+    {
       "type": "choice",
       "md": "An arithmetic sequence has first term 5 and common difference 3. The sum of its first $n$ terms is 440. What is $n$?",
       "options": [
@@ -139,7 +656,9 @@
       "points": [
         "Arithmetisch: S = n/2 · (erstes + letztes).",
         "Geometrisch: S_n = a(1 − rⁿ)/(1 − r); S_∞ = a/(1 − r) für |r| < 1.",
-        "Konvergenz: Ränder |r| = 1 ausschließen."
+        "Konvergenz: Ränder |r| = 1 ausschließen.",
+        "$S_n = \\tfrac n2(a + l)$ durch Vorwärts- und Rückwärtsaddieren; $S_n = a\\tfrac{1 - r^n}{1 - r}$ durch Abziehen von $rS_n$.",
+        "$S_\\infty = \\tfrac{a}{1 - r}$ nur für $|r| < 1$; $a_n = S_n - S_{n-1}$."
       ],
       "id": "summary"
     }

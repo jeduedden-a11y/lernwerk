@@ -19,6 +19,345 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Stammfunktion und bestimmtes Integral\n> $F$ ist eine **Stammfunktion** von $f$, wenn $F' = f$; alle Stammfunktionen unterscheiden sich nur um eine Konstante: $\\int f(x)\\,dx = F(x) + C$. Das **bestimmte Integral** ist $\\displaystyle\\int_a^b f(x)\\,dx = F(b) - F(a)$.\n\n> [!satz] Integrieren von Potenzen\n> $\\displaystyle\\int x^n\\,dx = \\frac{x^{n+1}}{n + 1} + C$ für jede rationale Zahl $n \\ne -1$; Summen und konstante Faktoren gliedweise.\n\n> [!definition] Orientierte Fläche\n> Das bestimmte Integral zählt Flächen **über** der x-Achse positiv und **unter** ihr negativ. Die geometrische Fläche erhält man, indem man an den Nullstellen teilt und Beträge addiert.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Warum $F(b) - F(a)$ die Fläche ist.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A(x) = \\text{Fläche unter } f \\text{ von } a \\text{ bis } x",
+            "why": "Die Flächenfunktion."
+          },
+          {
+            "tex": "A(x + h) - A(x) \\approx f(x) \\cdot h",
+            "why": "Ein schmaler Streifen ist fast ein Rechteck der Höhe f(x)."
+          },
+          {
+            "tex": "\\frac{A(x + h) - A(x)}{h} \\to f(x) \\;\\Rightarrow\\; A' = f",
+            "why": "Die Flächenfunktion ist eine Stammfunktion."
+          },
+          {
+            "tex": "A = F + c,\\ A(a) = 0 \\;\\Rightarrow\\; A(b) = F(b) - F(a)",
+            "why": "Jede Stammfunktion F unterscheidet sich von A nur um eine Konstante, und die fällt in der Differenz weg."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Flächenfunktion.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Streifen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Rechtecke",
+      "md": "**Rechtecke nähern die Fläche:** blau $y = x^2$, orange $N$ Rechtecke unter dem Graphen von 0 bis 2. Genau ist die Fläche $\\tfrac83 \\approx 2{,}667$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          2.3
+        ],
+        "y": [
+          0,
+          4.5
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "N",
+            "min": 1,
+            "max": 40,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "riemann": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": 2,
+            "n": "N",
+            "kind": "left",
+            "color": "orange",
+            "name": "S"
+          }
+        ],
+        "readout": "{N|0} Rechtecke: Summe {S|4} · genau {8/3|4}"
+      },
+      "timeline": [
+        {
+          "caption": "Zwei Rechtecke mit linker Höhe: Die Summe 1 ist viel zu klein.",
+          "set": {
+            "N": 2
+          }
+        },
+        {
+          "caption": "Acht Rechtecke: 2,1875.",
+          "to": {
+            "N": 8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Vierzig Rechtecke: 2,57. Der Grenzwert der Summen ist das Integral 8/3.",
+          "to": {
+            "N": 40
+          },
+          "dur": 1600
+        }
+      ],
+      "int": [
+        "N"
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Integral und Fläche von $f(x) = x - 1$ auf $[0, 3]$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\int_0^3 (x - 1)\\,dx = \\left[\\tfrac12 x^2 - x\\right]_0^3 = \\tfrac92 - 3 = \\tfrac32",
+            "why": "Das orientierte Integral."
+          },
+          {
+            "tex": "\\int_0^1 (x - 1)\\,dx = -\\tfrac12",
+            "why": "Unter der Achse: negativ."
+          },
+          {
+            "tex": "\\int_1^3 (x - 1)\\,dx = 2",
+            "why": "Über der Achse."
+          },
+          {
+            "tex": "\\text{Fläche} = \\tfrac12 + 2 = \\tfrac52",
+            "why": "Die geometrische Fläche addiert die Beträge."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Unten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Oben.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fläche.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bestimmtes Integral und Flächeninhalt",
+      "path": "02 Wiki/TMUA/11 Integralrechnung/Bestimmtes Integral und Flächeninhalt.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Integrieren ist Ableiten rückwärts",
+          "blocks": [
+            {
+              "md": "$$\\int x^n\\,\\mathrm dx = \\frac{x^{n+1}}{n+1} + C \\qquad \\text{für } n \\ne -1.$$\n\nDie Ausnahme $n = -1$ führt auf den natürlichen Logarithmus -- und der steht **nicht** in der Spezifikation. Ein Integral von $\\tfrac1x$ kommt im Test deshalb nicht als zu berechnende Größe vor; höchstens als Funktion, deren Fläche **geschätzt** werden soll (siehe **Trapezregel**).\n\nDie Integrationskonstante $C$ gehört zu jedem **unbestimmten** Integral. Sie fällt beim bestimmten Integral heraus -- und genau deshalb darf sie dort weggelassen werden."
+            }
+          ]
+        },
+        {
+          "title": "Das bestimmte Integral",
+          "blocks": [
+            {
+              "md": "$$\\int_a^b f(x)\\,\\mathrm dx = \\Big[F(x)\\Big]_a^b = F(b) - F(a), \\qquad F' = f.$$\n\nDie Rechenregeln, die im Test am häufigsten gebraucht werden:\n\n| Regel | |\n|---|---|\n| $\\displaystyle\\int_a^b f + \\int_b^c f = \\int_a^c f$ | Intervalle zusammenfügen |\n| $\\displaystyle\\int_a^b f = -\\int_b^a f$ | Grenzen tauschen kehrt das Vorzeichen um |\n| $\\displaystyle\\int_a^a f = 0$ | |\n| $\\displaystyle\\int_a^b k\\,f = k\\int_a^b f$ | konstante Faktoren heraus |\n| $\\displaystyle\\int_a^b (f + g) = \\int_a^b f + \\int_a^b g$ | gliedweise |\n\n> [!tip] Symmetrie spart Rechenarbeit\n> Ist $f$ **ungerade** ($f(-x) = -f(x)$, etwa $x$, $x^3$, $x^5$), so gilt $\\int_{-a}^{a} f = 0$.\n> Ist $f$ **gerade** ($f(-x) = f(x)$, etwa $1$, $x^2$, $x^4$), so gilt $\\int_{-a}^{a} f = 2\\int_0^a f$.\n>\n> $\\int_{-2}^{2}(x^3 + 3x^2)\\,\\mathrm dx$ ist damit $0 + 2\\int_0^2 3x^2\\,\\mathrm dx = 2 \\cdot 8 = 16$ -- ohne die untere Grenze einzusetzen."
+            }
+          ]
+        },
+        {
+          "title": "Integral und Fläche sind nicht dasselbe",
+          "blocks": [
+            {
+              "md": "Das bestimmte Integral zählt Flächen **unterhalb** der $x$-Achse **negativ**. Für den Flächeninhalt gilt deshalb:\n\n1. **Nullstellen im Intervall bestimmen.**\n2. **Über jedes Teilintervall einzeln integrieren.**\n3. **Beträge nehmen und addieren.**\n\n> [!warning] Die Standardfalle des ganzen Blocks\n> Bei $y = x^3 - x$ auf $[-1, 1]$ ist $\\int_{-1}^{1} = 0$ -- die Funktion ist ungerade. Der **eingeschlossene Flächeninhalt** ist aber $\\tfrac12$: zweimal $\\tfrac14$, einmal ober-, einmal unterhalb der Achse.\n>\n> Die Aufgabenstellung entscheidet: *„Evaluate the integral\"* fragt nach dem Integral, *„Find the area enclosed\"* nach der Fläche. Beide Zahlen stehen in den Antwortoptionen."
+            }
+          ]
+        },
+        {
+          "title": "Fläche zwischen zwei Kurven",
+          "blocks": [
+            {
+              "md": "$$A = \\int_a^b \\Big(\\text{obere Funktion} - \\text{untere Funktion}\\Big)\\,\\mathrm dx,$$\n\nwobei $a$ und $b$ die **Schnittstellen** sind, also die Lösungen von $f(x) = g(x)$. Weil die Differenz auf dem ganzen Intervall dasselbe Vorzeichen hat, ist hier kein Zerlegen nötig -- man muss nur wissen, welche Kurve oben liegt. Eine Skizze oder ein einzelner Testwert in der Mitte klärt das."
+            }
+          ]
+        },
+        {
+          "title": "Differenzialgleichungen der Form $\\frac{\\mathrm dy}{\\mathrm dx} = f(x)$",
+          "blocks": [
+            {
+              "md": "MM7.6 verlangt genau diesen Typ: Ist die **Ableitung** gegeben, erhält man die Funktion durch Integrieren.\n\n$$\\frac{\\mathrm dy}{\\mathrm dx} = f(x) \\quad\\Longrightarrow\\quad y = \\int f(x)\\,\\mathrm dx + C.$$\n\nDie Konstante $C$ wird aus einem gegebenen Punkt bestimmt. Aufgaben nennen ihn als *„the curve passes through $(2, 1)$\"* -- oder verstecken ihn: *„the curve has a stationary point at $x = 3$\"* ist eine Bedingung an $\\tfrac{\\mathrm dy}{\\mathrm dx}$, nicht an $y$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Fläche und Integral gleichsetzen.**\n- **Die Integrationskonstante beim unbestimmten Integral vergessen.**\n- **Bei $\\int x^n$ durch $n$ statt durch $n+1$ teilen** -- oder den Exponenten nicht erhöhen.\n- **Die Grenzen vertauschen** und das Vorzeichen nicht anpassen.\n- **Bei der Fläche zwischen zwei Kurven die Reihenfolge verwechseln** und ein negatives Ergebnis erhalten.\n\nVerwandt: **Ableiten von Potenzsummen** · **Trapezregel** · Aufgabentypen: **Fläche bei Vorzeichenwechsel berechnen** · **Integralbedingung mit Parameter lösen** · **Differenzialgleichung durch Integrieren lösen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Integral",
+      "md": "Berechne $\\displaystyle\\int_1^2 (3x^2 + 2)\\,dx$.",
+      "answer": 9,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\left[x^3 + 2x\\right]_1^2 = (8 + 4) - (1 + 2) = 9$.",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Stammfunktionen",
+      "md": "Ordne jeder Funktion eine Stammfunktion zu.",
+      "pairs": [
+        [
+          "$x^3$",
+          "$\\tfrac14 x^4$"
+        ],
+        [
+          "$x^{-2}$",
+          "$-x^{-1}$"
+        ],
+        [
+          "$\\sqrt x$",
+          "$\\tfrac23 x^{\\frac32}$"
+        ],
+        [
+          "$\\tfrac{1}{\\sqrt x}$",
+          "$2\\sqrt x$"
+        ]
+      ],
+      "explain": "Exponent um 1 erhöhen und durch den neuen Exponenten teilen.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\displaystyle\\int_a^b f(x)\\,dx$ ist immer der Flächeninhalt zwischen Graph und x-Achse.",
+      "answer": false,
+      "explain": "Teile unter der Achse zählen negativ; das Integral kann sogar null sein, obwohl Flächen eingeschlossen sind.",
+      "label": "Orientierung",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Verfahren",
+      "md": "Bringe das Berechnen eines bestimmten Integrals in die richtige Reihenfolge.",
+      "items": [
+        "den Integranden als Summe von Potenzen schreiben",
+        "eine Stammfunktion bilden",
+        "obere Grenze einsetzen",
+        "untere Grenze einsetzen und abziehen"
+      ],
+      "explain": "Die Reihenfolge: 1. den Integranden als Summe von Potenzen schreiben. 2. eine Stammfunktion bilden. 3. obere Grenze einsetzen. 4. untere Grenze einsetzen und abziehen.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "What is $\\displaystyle\\int_0^1 \\left(x + \\sqrt x\\right)dx$?",
+      "options": [
+        {
+          "md": "$\\tfrac12$"
+        },
+        {
+          "md": "$\\tfrac23$"
+        },
+        {
+          "md": "$1$"
+        },
+        {
+          "md": "$\\tfrac{7}{6}$",
+          "correct": true
+        },
+        {
+          "md": "$\\tfrac32$"
+        }
+      ],
+      "explain": "$\\left[\\tfrac12 x^2 + \\tfrac23 x^{\\frac32}\\right]_0^1 = \\tfrac12 + \\tfrac23 = \\tfrac76$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Integral",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "What is $\\int_1^4 \\frac{1}{\\sqrt x}\\,dx$?",
       "options": [
@@ -66,12 +405,50 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "integralwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "integralwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Hauptsatz: F(b) − F(a).",
         "Unter der Achse negativ.",
-        "Intervalle zusammensetzen."
+        "Intervalle zusammensetzen.",
+        "$\\int x^n dx = \\tfrac{x^{n+1}}{n+1} + C$ ($n \\ne -1$); $\\int_a^b f = F(b) - F(a)$, weil die Flächenfunktion eine Stammfunktion ist.",
+        "Integral zählt orientiert; Fläche: an Nullstellen teilen und Beträge addieren."
       ],
       "id": "summary"
     }

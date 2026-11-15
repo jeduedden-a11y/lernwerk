@@ -15,6 +15,369 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Stationärer Punkt\n> Eine Stelle mit $f'(x) = 0$: Die Tangente ist waagerecht. Es gibt drei Arten: **lokales Maximum**, **lokales Minimum** und **Terrassenpunkt** (*stationary point of inflection*), an dem $f'$ das Vorzeichen nicht wechselt.\n\n> [!definition] Monotonie\n> $f$ ist **wachsend**, wo $f'(x) > 0$, und **fallend**, wo $f'(x) < 0$.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Wie man die Art eines stationären Punktes erkennt.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(a) = 0,\\ f' \\text{ wechselt von } + \\text{ nach } -",
+            "why": "Erst steigend, dann fallend: lokales Maximum."
+          },
+          {
+            "tex": "f'(a) = 0,\\ f' \\text{ wechselt von } - \\text{ nach } +",
+            "why": "Erst fallend, dann steigend: lokales Minimum."
+          },
+          {
+            "tex": "f''(a) < 0 \\Rightarrow \\text{Maximum},\\quad f''(a) > 0 \\Rightarrow \\text{Minimum}",
+            "why": "Kurzform: f'' > 0 heißt, f' steigt durch null, also von − nach +."
+          },
+          {
+            "tex": "f''(a) = 0:\\ \\text{Vorzeichenwechsel von } f' \\text{ prüfen}",
+            "why": "Dann sagt f'' nichts: x^4 hat bei 0 ein Minimum, x^3 einen Terrassenpunkt, beide mit f''(0) = 0."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Maximum.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Minimum.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zweite Ableitung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Sonderfall.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Tangente",
+      "md": "**Die Tangente wandert:** blau $f(x) = x^3 - 3x$, orange die Tangente im Punkt $x = X$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          2.5
+        ],
+        "y": [
+          -4,
+          4
+        ],
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2.2,
+            "max": 2.2,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "length": 1.2,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "f(X)",
+            "color": "orange"
+          }
+        ],
+        "readout": "x = {X|2} · Steigung f'(x) = 3x² − 3 = {3*X^2 - 3|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Links steigt der Graph: positive Steigung.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "Bei x = −1 ist die Tangente waagerecht: lokales Maximum, die Steigung wechselt von + nach −.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Dazwischen fällt der Graph.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = 1 wieder waagerecht: lokales Minimum, Wechsel von − nach +.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechts steigt er wieder.",
+          "to": {
+            "X": 1.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Durchgerechnet:** stationäre Punkte von $f(x) = x^4 - 4x^3$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)",
+            "why": "Ableiten und faktorisieren."
+          },
+          {
+            "tex": "f'(x) = 0 \\iff x = 0 \\text{ oder } x = 3",
+            "why": "Zwei stationäre Stellen."
+          },
+          {
+            "tex": "x = 0:\\ 4x^2 \\ge 0,\\ x - 3 < 0 \\;\\Rightarrow\\; f' \\le 0 \\text{ links und rechts}",
+            "why": "Kein Vorzeichenwechsel: Terrassenpunkt (0, 0)."
+          },
+          {
+            "tex": "x = 3:\\ f' \\text{ wechselt von } - \\text{ nach } + ,\\ f(3) = -27",
+            "why": "Minimum (3, −27)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableiten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stellen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Terrasse.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Minimum.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Stationäre Punkte und Monotonie",
+      "path": "02 Wiki/TMUA/10 Differenzialrechnung/Stationäre Punkte und Monotonie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Ableitung als Steigung",
+          "blocks": [
+            {
+              "md": "$f'(a)$ ist die Steigung der Tangente an den Graphen im Punkt $\\left(a, f(a)\\right)$. Daraus folgt alles Weitere:\n\n| Bedingung | Bedeutung |\n|---|---|\n| $f'(x) > 0$ auf einem Intervall | $f$ ist dort **streng steigend** (*increasing*) |\n| $f'(x) < 0$ | **streng fallend** (*decreasing*) |\n| $f'(a) = 0$ | $\\left(a, f(a)\\right)$ ist ein **stationärer Punkt** |"
+            }
+          ]
+        },
+        {
+          "title": "Tangente und Normale",
+          "blocks": [
+            {
+              "md": "Beide sind Geraden durch den Punkt $\\left(a, f(a)\\right)$:\n\n$$\\text{Tangente: } y - f(a) = f'(a)\\,(x - a), \\qquad \\text{Normale: } y - f(a) = -\\frac{1}{f'(a)}\\,(x - a).$$\n\nDie **Normale** (*normal*) steht senkrecht auf der Tangente; ihre Steigung ist der **negative Kehrwert**. Das ist dieselbe Beziehung wie bei **Geraden in der Ebene** -- Differenzialrechnung liefert hier nur die Steigung, der Rest ist Koordinatengeometrie.\n\n> [!warning] Sonderfälle der Normalen\n> Ist $f'(a) = 0$, so ist die Tangente waagerecht und die Normale **senkrecht**: $x = a$. Die Formel mit dem Kehrwert versagt hier -- ein beliebter Prüfstein."
+            }
+          ]
+        },
+        {
+          "title": "Stationäre Punkte klassifizieren",
+          "blocks": [
+            {
+              "md": "**Verfahren 1 -- zweite Ableitung:**\n\n| $f''(a)$ | Art |\n|---|---|\n| $> 0$ | **Minimum** (Linkskrümmung) |\n| $< 0$ | **Maximum** (Rechtskrümmung) |\n| $= 0$ | **keine Aussage** -- Verfahren 2 nötig |\n\n**Verfahren 2 -- Vorzeichenwechsel von $f'$:** Man prüft $f'$ links und rechts der Stelle.\n\n| Vorzeichen von $f'$ | Art |\n|---|---|\n| $+ \\to -$ | Maximum |\n| $- \\to +$ | Minimum |\n| kein Wechsel | **Terrassenpunkt** -- stationär, aber kein Extremum |\n\n> [!important] Verfahren 2 ist das zuverlässigere\n> $f''(a) = 0$ beweist **nichts**. Bei $y = x^4 - 4x^3$ ist $y' = 4x^2(x-3)$, also sind $x = 0$ und $x = 3$ stationär; aber $y'' = 12x^2 - 24x$ ist bei $x = 0$ gleich null. Der Vorzeichentest zeigt: $y'$ ist links **und** rechts von 0 negativ -- kein Extremum, der Graph flacht nur kurz ab.\n>\n> Die Spezifikation prüft **Wendepunkte nicht**, wohl aber die Frage, wie viele **Extrempunkte** (*turning points*) eine Kurve hat. Genau dort entscheidet der Vorzeichentest."
+            }
+          ]
+        },
+        {
+          "title": "Monotonie auf ganz $\\mathbb{R}$",
+          "blocks": [
+            {
+              "md": "Die häufigste Parameteraufgabe des Blocks: *„Find the values of $k$ for which $f$ is increasing for all $x$.\"*\n\nBei einer kubischen Funktion ist $f'$ **quadratisch**. Die Bedingung $f'(x) \\ge 0$ für alle $x$ heißt dann:\n\n$$a > 0 \\quad \\text{und} \\quad \\text{Diskriminante} \\le 0.$$\n\nDamit ist die Aufgabe auf **Quadratische Funktionen und Diskriminante** zurückgeführt -- kein neues Werkzeug nötig.\n\n> [!tip] Warum $\\le$ und nicht $<$\n> Bei Diskriminante null berührt die Parabel $f'$ die $x$-Achse in **einem** Punkt. Dort ist $f'$ null, sonst positiv -- die Funktion hat also einen Terrassenpunkt, ist aber immer noch (schwach) steigend. Ob die Aufgabe *increasing* streng meint, geht aus dem britischen Sprachgebrauch meist als „nicht fallend\" hervor; die Antwortoptionen zeigen fast immer, welche Randbedingung gemeint ist."
+            }
+          ]
+        },
+        {
+          "title": "Was im Test gefragt wird",
+          "blocks": [
+            {
+              "md": "1. **Wie viele stationäre Punkte hat die Kurve?** -- $f'(x) = 0$ als Gleichung betrachten und ihre Lösungen zählen; bei quadratischem $f'$ entscheidet die Diskriminante.\n2. **Größter oder kleinster Wert.** Bei einer Kurve ohne Randvorgabe ist ein lokales Extremum gemeint; steht ein Intervall dabei, müssen auch die **Ränder** geprüft werden.\n3. **Tangente oder Normale** in einem Punkt oder durch einen vorgegebenen Punkt.\n4. **Parameterbedingung** für Monotonie oder für die Anzahl stationärer Punkte."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **$f(a)$ mit $f'(a)$ verwechseln.** Der Funktionswert liefert den Punkt, die Ableitung die Steigung.\n- **Die Normale mit der Tangentensteigung aufstellen** oder das Vorzeichen des Kehrwerts vergessen.\n- **Aus $f''(a) = 0$ auf einen Wendepunkt schließen** -- ohne Vorzeichenwechsel ist gar nichts gezeigt.\n- **Nur den $x$-Wert angeben**, wenn nach dem stationären **Punkt** gefragt ist.\n- **Bei einem abgeschlossenen Intervall die Randwerte übersehen.**\n\nVerwandt: **Ableiten von Potenzsummen** · **Geraden in der Ebene** · Aufgabentypen: **Tangente und Normale ohne Hilfsmittel** · **Monotoniebedingung mit Parameter** · **Stationäre Punkte bestimmen und klassifizieren**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Arten",
+      "md": "Wie wechselt $f'$ an einer stationären Stelle das Vorzeichen? Ordne die Art zu.",
+      "pairs": [
+        [
+          "von + nach −",
+          "lokales Maximum"
+        ],
+        [
+          "von − nach +",
+          "lokales Minimum"
+        ],
+        [
+          "bleibt +",
+          "steigender Terrassenpunkt"
+        ],
+        [
+          "bleibt −",
+          "fallender Terrassenpunkt"
+        ]
+      ],
+      "explain": "Das Vorzeichen von f' ist die Richtung, in die der Graph läuft.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Minimum",
+      "md": "Bei welchem $x$ hat $f(x) = x^3 - 6x^2 + 9x$ ein lokales Minimum?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 3x^2 - 12x + 9 = 3(x - 1)(x - 3)$; $f'' = 6x - 12$ ist bei 3 positiv.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f''(a) = 0$, dann hat $f$ bei $a$ einen Wendepunkt.",
+      "answer": false,
+      "explain": "$f(x) = x^4$ hat $f''(0) = 0$, aber bei 0 ein Minimum.",
+      "label": "Sonderfall",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "How many stationary points does $f(x) = x^3 + 3x$ have?",
+      "options": [
+        {
+          "md": "0",
+          "correct": true
+        },
+        {
+          "md": "1"
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "3"
+        }
+      ],
+      "explain": "$f'(x) = 3x^2 + 3 > 0$ für alle $x$: nie waagerecht.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Anzahl",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "$f'(a) = 0$ und $f''(a) > 0$. Was liegt bei $a$ vor?",
+      "options": [
+        {
+          "md": "ein lokales Minimum",
+          "correct": true
+        },
+        {
+          "md": "ein lokales Maximum",
+          "why": "f'' > 0 heißt linksgekrümmt, also ein Tal."
+        },
+        {
+          "md": "ein Terrassenpunkt",
+          "why": "Dann wäre f'' meist 0."
+        },
+        {
+          "md": "keine Aussage möglich",
+          "why": "Mit f'' ungleich 0 ist die Art festgelegt."
+        }
+      ],
+      "explain": "f' steigt durch null von − nach +.",
+      "label": "Klassifizieren",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "$f(x) = x^3 - 12x$. What is the local maximum value of $f$?",
       "options": [
@@ -62,12 +425,50 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "stationaer"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "stationaer"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "stationaer"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "f'(x) = 0 notwendig.",
         "f'' oder Vorzeichenwechsel entscheidet.",
-        "Monotonie aus dem Vorzeichen von f'."
+        "Monotonie aus dem Vorzeichen von f'.",
+        "Stationär: f' = 0; Maximum bei Wechsel + nach −, Minimum bei − nach +, Terrassenpunkt ohne Wechsel.",
+        "f'' entscheidet nur, wenn es nicht null ist."
       ],
       "id": "summary"
     }

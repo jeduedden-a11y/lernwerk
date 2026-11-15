@@ -60,11 +60,523 @@
           {
             "name": "I",
             "expr": "cos(pi*d*x*1000/(lam*2))^2 * (sin(pi*d*x*250/(lam*2) + 0.000001)/(pi*d*x*250/(lam*2) + 0.000001))^2",
-            "color": "accent"
+            "color": "blue"
           }
         ],
         "readout": "Abstand benachbarter Maxima {lam*2/(d*1000)|2} mm"
       }
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Das Huygenssche Prinzip in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Huygens-Beugung.svg",
+        "aspect": 1.68,
+        "alt": "Huygenssches Prinzip am Spalt"
+      },
+      "timeline": [
+        {
+          "caption": "Eine ebene Welle trifft auf einen Spalt.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Jeder Punkt einer Wellenfront ist Ausgangspunkt einer kreisförmigen Elementarwelle; ihre Einhüllende ist die neue Wellenfront.",
+          "to": {
+            "x": 0.2,
+            "y": 0.55,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Im Spalt bleiben nur wenige Elementarwellen übrig.",
+          "to": {
+            "x": 0.38,
+            "y": 0.55,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Hinter dem Spalt breiten sie sich kreisförmig aus: Die Welle läuft in den geometrischen Schattenraum. Das ist **Beugung**.",
+          "to": {
+            "x": 0.7,
+            "y": 0.55,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die Geometrie am Doppelspalt in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Doppelspalt Geometrie.svg",
+        "aspect": 1.77,
+        "alt": "Doppelspalt mit Gangunterschied"
+      },
+      "timeline": [
+        {
+          "caption": "Kohärentes Licht fällt auf zwei schmale Spalte im Abstand d.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Von beiden Spalten laufen Wellen zum Punkt $P$ auf dem Schirm.",
+          "to": {
+            "x": 0.2,
+            "y": 0.5,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Weil der Schirm weit entfernt ist ($L \\gg d$), laufen beide Strahlen fast parallel. Der untere hat den Umweg $\\Delta s = d\\sin\\alpha$, den **Gangunterschied**.",
+          "to": {
+            "x": 0.3,
+            "y": 0.52,
+            "z": 2.4,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Der Punkt $P$ liegt im Abstand $x$ von der Mitte; exakt ist $\\tan\\alpha = \\tfrac{x}{L}$.",
+          "to": {
+            "x": 0.86,
+            "y": 0.3,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Maximum bei $\\Delta s = k\\lambda$, Minimum bei $\\Delta s = (k + \\tfrac12)\\lambda$; für kleine Winkel $x_k \\approx \\tfrac{k\\lambda L}{d}$.",
+          "to": {
+            "x": 0.45,
+            "y": 0.68,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Beugung, Interferenz, Kohärenz\n> **Beugung:** Ausbreitung einer Welle in den geometrischen Schattenraum hinter Hindernissen und Öffnungen; deutlich, wenn die Öffnung nicht viel größer als die Wellenlänge ist. **Interferenz:** Überlagerung von Wellen mit ortsfesten Verstärkungen und Auslöschungen. **Kohärenz:** Die Wellen haben eine feste Phasenbeziehung; nur dann bleibt das Muster stehen (Laser, oder ein Spalt vor der Lampe).",
+      "label": "Definitionen",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Maxima am Doppelspalt.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta s = d\\sin\\alpha",
+            "why": "Gangunterschied der parallelen Strahlen."
+          },
+          {
+            "tex": "\\Delta s = k\\,\\lambda:\\quad d\\sin\\alpha_k = k\\,\\lambda",
+            "why": "Konstruktive Interferenz: Wellenberg trifft Wellenberg."
+          },
+          {
+            "tex": "x_k = L\\tan\\alpha_k",
+            "why": "Lage auf dem Schirm."
+          },
+          {
+            "tex": "\\alpha \\text{ klein}: \\sin\\alpha \\approx \\tan\\alpha\\quad\\Rightarrow\\quad x_k \\approx \\frac{k\\,\\lambda\\,L}{d}",
+            "why": "Gleich weit auseinander liegende Streifen mit dem Abstand $\\tfrac{\\lambda L}{d}$: rotes Licht gibt breitere Streifen als blaues."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gangunterschied.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schirm.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kleine Winkel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Die Minima am Einzelspalt in deiner Skizze.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Einzelspalt Minima.svg",
+        "aspect": 1.74,
+        "alt": "Einzelspalt in zwei Hälften zerlegt"
+      },
+      "timeline": [
+        {
+          "caption": "Ein einzelner Spalt der Breite b.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Man teilt den Spalt gedanklich in eine obere und eine untere Hälfte.",
+          "to": {
+            "x": 0.24,
+            "y": 0.56,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Zu jedem Strahl der oberen Hälfte gibt es einen in der unteren, der genau $\\tfrac{b}{2}$ tiefer startet. Ist ihr Gangunterschied $\\tfrac{b}{2}\\sin\\alpha = \\tfrac{\\lambda}{2}$, löschen sich die Paare aus.",
+          "to": {
+            "x": 0.6,
+            "y": 0.7,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Also Minimum bei $b\\sin\\alpha = \\lambda$, allgemein bei $b\\sin\\alpha = k\\lambda$; dazwischen liegt das breite Hauptmaximum.",
+          "to": {
+            "x": 0.56,
+            "y": 0.81,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve5"
+    },
+    {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "Intensitätsverläufe im Vergleich (deine Skizze).",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Intensitaetsverlaeufe Spalt Doppelspalt Gitter.svg",
+        "aspect": 1.07,
+        "alt": "Intensitätsverteilungen von Einzelspalt, Doppelspalt und Gitter"
+      },
+      "timeline": [
+        {
+          "caption": "Einzelspalt, Doppelspalt und Gitter im Vergleich.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "**Einzelspalt:** ein breites Hauptmaximum, Minima bei $b\\sin\\alpha = k\\lambda$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.2,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Doppelspalt** mit sehr schmalen Spalten: gleich hohe Maxima, $I \\sim \\cos^2\\left(\\tfrac{\\pi d\\sin\\alpha}{\\lambda}\\right)$.",
+          "to": {
+            "x": 0.5,
+            "y": 0.43,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Doppelspalt mit endlicher Spaltbreite:** Die Einzelspalt-Kurve bestimmt die Höhe; wo ihr Minimum liegt, fehlt ein Maximum.",
+          "to": {
+            "x": 0.5,
+            "y": 0.64,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "**Gitter** mit vielen Spalten: an denselben Stellen sehr scharfe, helle Hauptmaxima, dazwischen nur schwache Nebenmaxima.",
+          "to": {
+            "x": 0.5,
+            "y": 0.87,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve6"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Beugung und Interferenz",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Beugung und Interferenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Beugung** ist die Ausbreitung einer Welle in den geometrischen Schattenraum hinter einem Hindernis oder Spalt. **Interferenz** ist die Überlagerung kohärenter Wellen zu einem ortsfesten Muster aus Verstärkung und Auslöschung."
+            }
+          ]
+        },
+        {
+          "title": "Huygens'sches Prinzip",
+          "blocks": [
+            {
+              "image": "vault:Huygens-Beugung.svg"
+            },
+            {
+              "md": "Jeder Punkt einer Wellenfront ist Ausgangspunkt einer **Elementarwelle**; die Einhüllende aller Elementarwellen bildet die neue Wellenfront. Damit erklären sich Beugung, **Reflexion und Brechung** gleichermaßen. Die Beugung ist umso stärker, je **kleiner die Öffnung im Vergleich zur Wellenlänge** ist."
+            }
+          ]
+        },
+        {
+          "title": "Kohärenz",
+          "blocks": [
+            {
+              "md": "Ein stabiles Interferenzmuster erfordert **kohärente** Wellen: gleiche Frequenz und **feste Phasenbeziehung**. Deshalb nutzt man Laser oder teilt eine einzige Welle auf (Doppelspalt)."
+            }
+          ]
+        },
+        {
+          "title": "Interferenzbedingungen",
+          "blocks": [
+            {
+              "md": "- **Konstruktiv** (Maximum): Gangunterschied $\\Delta s = k\\,\\lambda$\n- **Destruktiv** (Minimum): $\\Delta s = \\left(k + \\tfrac{1}{2}\\right)\\lambda$\n\nGangunterschied und Phasendifferenz hängen über $\\Delta\\varphi = 2\\pi\\,\\dfrac{\\Delta s}{\\lambda}$ zusammen."
+            },
+            {
+              "image": "vault:Doppelspalt Geometrie.svg"
+            },
+            {
+              "md": "Für $L \\gg d$ verlaufen beide Strahlen fast parallel, daher $\\Delta s = d\\sin\\alpha$; der Schirmort folgt aus $\\tan\\alpha = x/L$."
+            }
+          ]
+        },
+        {
+          "title": "Doppelspalt und Gitter",
+          "blocks": [
+            {
+              "image": "vault:Beugungsgitter.svg"
+            },
+            {
+              "md": "Für die **Maxima** gilt bei Spaltabstand bzw. Gitterkonstante $d$:\n$$d \\cdot \\sin\\alpha_k = k\\,\\lambda, \\qquad x_k \\approx \\frac{k\\,\\lambda\\,L}{d}\\ \\text{(Kleinwinkel)}$$\nViele Spalte (Gitter) erzeugen dieselben Maxima-Orte, aber **schärfer und heller** -- Grundlage der **Spektralanalyse**.\n\n- **Höchste Ordnung:** wegen $\\sin\\alpha \\le 1$ gilt $k_{max} = \\lfloor d/\\lambda \\rfloor$.\n- **Gitterkonstante** aus der Strichzahl: $d = 1/N$ (z. B. 600 Striche/mm $\\Rightarrow d = 1{,}67\\,\\mu\\text{m}$).\n- **Auflösungsvermögen:** $\\dfrac{\\lambda}{\\Delta\\lambda} = k\\cdot N_{beleuchtet}$.\n- Rot wird am Gitter **stärker** abgelenkt als Violett -- umgekehrt wie beim Prisma.\n\n> [!warning] Kleinwinkelnäherung beim Gitter\n> Beim Gitter sind die Winkel groß (oft über 15 Grad). Dann $\\alpha$ über $\\sin\\alpha = k\\lambda/d$ bestimmen und $x = L\\tan\\alpha$ berechnen -- **nicht** $x = k\\lambda L/d$."
+            }
+          ]
+        },
+        {
+          "title": "Einzelspalt",
+          "blocks": [
+            {
+              "md": "Beim Einzelspalt der Breite $b$ liefert dieselbe Formel dagegen die **Minima**:\n$$b \\cdot \\sin\\alpha_k = k\\,\\lambda$$\n\n> [!warning] Häufige Verwechslung\n> Gleiche Formel, **entgegengesetzte Bedeutung**: Beim Doppelspalt/Gitter sind es die **Maxima**, beim Einzelspalt die **Minima**."
+            },
+            {
+              "image": "vault:Einzelspalt Minima.svg"
+            },
+            {
+              "md": "Das zentrale Maximum ist doppelt so breit wie die Nebenmaxima: $\\Delta x_0 \\approx \\dfrac{2\\lambda L}{b}$."
+            }
+          ]
+        },
+        {
+          "title": "Intensitätsverläufe im Vergleich",
+          "blocks": [
+            {
+              "image": "vault:Intensitaetsverlaeufe Spalt Doppelspalt Gitter.svg"
+            },
+            {
+              "md": "Das reale Doppelspaltbild ist das Produkt aus Zweistrahl-Interferenz ($\\cos^2$) und Einzelspalt-Beugung (Hüllkurve). Fällt ein Interferenzmaximum auf ein Einzelspalt-Minimum, **fehlt** diese Ordnung."
+            }
+          ]
+        },
+        {
+          "title": "Weitere Interferenzphänomene",
+          "blocks": [
+            {
+              "md": "- **Dünne Schichten** (Ölfilm, Seifenblase): Interferenz an Ober- und Unterseite erzeugt Farben -- **Interferenz an dünnen Schichten**.\n- **Michelson-Interferometer**: Amplitudenteilung, $2\\Delta d = N\\lambda$ -- **Michelson-Interferometer**.\n- **Polarisation** belegt die Transversalität des Lichts -- **Polarisation**.\n- **Bragg-Reflexion** an Kristallen: $2d\\sin\\theta = k\\lambda$ (Röntgenstrukturanalyse, Q3).\n- **Aktive Geräuschunterdrückung**: gezielte destruktive Interferenz.\n\n> [!tip] Bedeutung\n> Interferenz ist der **entscheidende Nachweis des Wellencharakters**. Dass sie auch bei einzelnen Elektronen und Photonen auftritt (**Doppelspaltexperiment**, Q3), begründet den Welle-Teilchen-Dualismus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Begriff seine Aussage zu.",
+      "pairs": [
+        [
+          "Beugung",
+          "Ausbreitung in den Schattenraum"
+        ],
+        [
+          "Interferenz",
+          "ortsfeste Verstärkung und Auslöschung"
+        ],
+        [
+          "Kohärenz",
+          "feste Phasenbeziehung"
+        ],
+        [
+          "Maximum am Doppelspalt",
+          "$d\\sin\\alpha = k\\lambda$"
+        ],
+        [
+          "Minimum am Einzelspalt",
+          "$b\\sin\\alpha = k\\lambda$"
+        ]
+      ],
+      "explain": "Beim Doppelspalt sind ganzzahlige Gangunterschiede hell, beim Einzelspalt sind es die Minima.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Doppelspaltmaxima in die richtige Reihenfolge.",
+      "items": [
+        "Gangunterschied der parallelen Strahlen: $\\Delta s = d\\sin\\alpha$",
+        "Verstärkung bei $\\Delta s = k\\lambda$",
+        "Lage auf dem Schirm: $x_k = L\\tan\\alpha_k$",
+        "Kleine Winkel: $x_k \\approx \\tfrac{k\\lambda L}{d}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Gangunterschied der parallelen Strahlen: $\\Delta s = d\\sin\\alpha$. 2. Verstärkung bei $\\Delta s = k\\lambda$. 3. Lage auf dem Schirm: $x_k = L\\tan\\alpha_k$. 4. Kleine Winkel: $x_k \\approx \\tfrac{k\\lambda L}{d}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Laserlicht ($633\\,\\mathrm{nm}$) fällt auf einen Doppelspalt ($d = 0{,}25\\,\\mathrm{mm}$); der Schirm steht $3\\,\\mathrm{m}$ entfernt. Wie weit liegt das erste Maximum von der Mitte?",
+      "answer": 7.6,
+      "tolerance": 0.05,
+      "placeholder": "mm",
+      "explain": "$x_1 \\approx \\tfrac{\\lambda L}{d} = \\tfrac{633\\cdot 10^{-9}\\cdot 3}{2{,}5\\cdot 10^{-4}}\\,\\mathrm{m} \\approx 7{,}6\\,\\mathrm{mm}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie breit ist das zentrale Maximum hinter einem Einzelspalt ($b = 0{,}1\\,\\mathrm{mm}$, $\\lambda = 633\\,\\mathrm{nm}$, $L = 2\\,\\mathrm{m}$)?",
+      "answer": 25.3,
+      "tolerance": 0.2,
+      "placeholder": "mm",
+      "explain": "Erste Minima bei $\\sin\\alpha = \\tfrac{\\lambda}{b} = 6{,}33\\cdot 10^{-3}$, also $x = \\pm 12{,}7\\,\\mathrm{mm}$; Breite $\\approx 25{,}3\\,\\mathrm{mm}$.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Wie ändert sich das Muster am Doppelspalt, wenn man den Spaltabstand verkleinert?",
+      "options": [
+        {
+          "md": "Die Streifen rücken auseinander.",
+          "correct": true
+        },
+        {
+          "md": "Die Streifen rücken zusammen.",
+          "why": "$x_k \\approx \\tfrac{k\\lambda L}{d}$: kleineres $d$, größere Abstände."
+        },
+        {
+          "md": "Das Muster verschwindet.",
+          "why": "Es bleibt, nur breiter."
+        },
+        {
+          "md": "Die Streifen werden heller, aber bleiben an derselben Stelle.",
+          "why": "Die Lage hängt von $d$ ab."
+        }
+      ],
+      "explain": "Kleine Strukturen erzeugen große Beugungswinkel.",
+      "label": "Proportionalität",
+      "id": "vq5"
+    },
+    {
+      "type": "truefalse",
+      "md": "Zwei gewöhnliche Glühlampen erzeugen auf einer Wand ein stehendes Interferenzmuster.",
+      "answer": false,
+      "explain": "Ihr Licht ist nicht kohärent: Die Phasenbeziehung ändert sich ständig, das Muster verwischt sofort.",
+      "label": "Kohärenz",
+      "id": "vq6"
+    },
+    {
+      "type": "choice",
+      "md": "Warum fehlt beim Doppelspalt mit breiten Spalten manchmal ein Maximum?",
+      "options": [
+        {
+          "md": "Weil an dieser Stelle ein Minimum des Einzelspalts liegt.",
+          "correct": true
+        },
+        {
+          "md": "Weil das Licht dort absorbiert wird.",
+          "why": "Es wird nichts absorbiert; die Wellen löschen sich aus."
+        },
+        {
+          "md": "Weil die Wellenlänge sich ändert.",
+          "why": "Sie bleibt gleich."
+        },
+        {
+          "md": "Weil der Schirm uneben ist.",
+          "why": "Das ist kein physikalischer Grund."
+        }
+      ],
+      "explain": "Fällt $d\\sin\\alpha = k\\lambda$ mit $b\\sin\\alpha = m\\lambda$ zusammen, ist schon jeder einzelne Spalt dunkel.",
+      "label": "Extrem",
+      "id": "vq7"
     },
     {
       "id": "rot",
@@ -100,13 +612,41 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "doppelspalt",
+          "einzelspalt"
+        ]
+      },
+      "label": "Doppel- und Einzelspalt",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "doppelspalt",
+          "einzelspalt"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Beugung: Welle läuft in den Schatten.",
         "Maxima bei $d\\sin\\alpha_k = k\\lambda$, Minima bei halbzahligen Vielfachen.",
-        "Gitter: dieselbe Lage, schärfere Maxima."
+        "Gitter: dieselbe Lage, schärfere Maxima.",
+        "Doppelspalt: $\\Delta s = d\\sin\\alpha$; Maxima bei $k\\lambda$, $x_k \\approx \\tfrac{k\\lambda L}{d}$.",
+        "Einzelspalt: Minima bei $b\\sin\\alpha = k\\lambda$ (Paarbildung der Spalthälften); Gitter: scharfe Hauptmaxima wie beim Doppelspalt."
       ]
     }
   ]

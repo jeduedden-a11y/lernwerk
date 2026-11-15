@@ -16,12 +16,67 @@ extension Color {
     }
 }
 
+extension Color {
+    /// The bright variant of a pigment for dark surfaces: same hue, a little less saturation, and as bright as every
+    /// other pigment (relative luminance about 0.4), so no colour shouts and none sinks into the black.
+    static func glow(_ hex: String) -> Color {
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        guard UIColor(Color(hex: hex)).getHue(&h, saturation: &s, brightness: &b, alpha: &a) else { return Color(hex: hex) }
+        let sat = s * 0.78
+        var lo = b, hi: CGFloat = 1
+        for _ in 0..<14 {
+            let mid = (lo + hi) / 2
+            if luminance(hue: h, saturation: sat, brightness: mid) < 0.4 { lo = mid } else { hi = mid }
+        }
+        return Color(hue: Double(h), saturation: Double(sat), brightness: Double((lo + hi) / 2))
+    }
+
+    /// Relative luminance (WCAG) of a colour given in hue, saturation and brightness.
+    private static func luminance(hue: CGFloat, saturation: CGFloat, brightness: CGFloat) -> CGFloat {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).getRed(&r, green: &g, blue: &b, alpha: &a)
+        func linear(_ c: CGFloat) -> CGFloat { c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4) }
+        return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b)
+    }
+
+    /// Page colour in light mode: a warm off-white instead of the grey-lilac system background.
+    static let warmPaper = Color(red: 0.969, green: 0.957, blue: 0.945)
+}
+
 extension Course {
     var tint: Color { Color(hex: color) }
+    var glow: Color { Color.glow(color) }
+    /// Strong pigment on light surfaces, bright pigment on dark ones (bars, lines, rings).
+    func pigment(_ scheme: ColorScheme) -> Color { scheme == .dark ? glow : tint }
 }
 
 extension Subject {
     var tint: Color { Color(hex: color) }
+    var glow: Color { Color.glow(color) }
+    func pigment(_ scheme: ColorScheme) -> Color { scheme == .dark ? glow : tint }
+}
+
+/// Lernwerk is dark unless the learner picks light or the system setting.
+enum Appearance: String, CaseIterable, Identifiable {
+    case dark, light, system
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .dark: return "Dunkel"
+        case .light: return "Hell"
+        case .system: return "Wie das System"
+        }
+    }
+
+    var scheme: ColorScheme? {
+        switch self {
+        case .dark: return .dark
+        case .light: return .light
+        case .system: return nil
+        }
+    }
 }
 
 /// A subject folder: the subject's symbol on a plate with two sheets behind it, like a stack of courses.
@@ -54,21 +109,16 @@ struct SubjectBadge: View {
     }
 }
 
-/// Content-layer surface: standard material, never Liquid Glass (HIG: glass is for controls and navigation).
+/// Surface of every card: Liquid Glass over the plain page.
 struct CardSurface: ViewModifier {
     var padding: CGFloat = 16
     var radius: CGFloat = 26
-    @Environment(\.colorScheme) private var scheme
 
     func body(content: Content) -> some View {
         content
             .padding(padding)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.regularMaterial, in: .rect(cornerRadius: radius, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: radius, style: .continuous)
-                    .strokeBorder(Color.primary.opacity(scheme == .dark ? 0.10 : 0.05), lineWidth: 0.5)
-            }
+            .glassEffect(.regular, in: .rect(cornerRadius: radius, style: .continuous))
     }
 }
 
@@ -108,33 +158,19 @@ struct CourseBadge: View {
     }
 }
 
-/// Quiet colour wash behind a page, built from one or more tints.
+/// Page background: black in dark mode, warm off-white in light mode, with a faint glow of the page's colour at
+/// the top. Kept quiet so the glass on top stays legible (HIG: Liquid Glass color).
 struct TintBackground: View {
     var tints: [Color]
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        // Kept light so the monochrome glass bars stay legible over it (HIG: Liquid Glass color).
-        let strong = scheme == .dark ? 0.32 : 0.18
-        let soft = scheme == .dark ? 0.16 : 0.09
-        let a = tints.first ?? .accentColor
-        let b = tints.count > 1 ? tints[1] : a
-        let c = tints.count > 2 ? tints[2] : b
+        let tint = tints.first ?? .accentColor
         ZStack {
-            Color(uiColor: .systemGroupedBackground)
-            MeshGradient(
-                width: 3, height: 3,
-                points: [
-                    [0, 0], [0.5, 0], [1, 0],
-                    [0, 0.38], [0.6, 0.32], [1, 0.44],
-                    [0, 1], [0.5, 1], [1, 1],
-                ],
-                colors: [
-                    a.opacity(strong), b.opacity(soft), c.opacity(strong * 0.8),
-                    a.opacity(soft * 0.6), .clear, c.opacity(soft * 0.6),
-                    .clear, .clear, .clear,
-                ]
-            )
+            scheme == .dark ? Color.black : Color.warmPaper
+            RadialGradient(colors: [tint.opacity(scheme == .dark ? 0.24 : 0.12), .clear],
+                           center: .top, startRadius: 0, endRadius: 420)
+                .scaleEffect(x: 1.8, y: 1, anchor: .top)
         }
         .ignoresSafeArea()
     }
@@ -160,15 +196,16 @@ struct SectionTitle: View {
 struct ProgressLine: View {
     var value: Double
     var tint: Color
+    var height: CGFloat = 6
 
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
                 Capsule().fill(Color.primary.opacity(0.08))
-                Capsule().fill(tint).frame(width: max(6, geo.size.width * min(1, max(0, value))))
+                Capsule().fill(tint).frame(width: max(height, geo.size.width * min(1, max(0, value))))
             }
         }
-        .frame(height: 6)
+        .frame(height: height)
         .accessibilityElement()
         .accessibilityValue(Text("\(Int((value * 100).rounded())) Prozent"))
     }

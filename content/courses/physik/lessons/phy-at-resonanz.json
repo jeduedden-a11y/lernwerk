@@ -16,6 +16,179 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Waschmaschine.** Die Trommel (samt Wäsche $40\\,\\mathrm{kg}$) ist mit Federn von insgesamt $D = 1{,}6\\cdot 10^5\\,\\tfrac{\\mathrm{N}}{\\mathrm{m}}$ aufgehängt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_0 = \\frac{1}{2\\pi}\\sqrt{\\frac{D}{m}} = \\frac{1}{2\\pi}\\sqrt{4000}\\,\\mathrm{Hz} \\approx 10{,}1\\,\\mathrm{Hz}",
+            "why": "Eigenfrequenz."
+          },
+          {
+            "tex": "n_0 = 60\\,\\mathrm{s}\\cdot f_0 \\approx 600\\,\\tfrac{1}{\\mathrm{min}}",
+            "why": "Drehzahl, bei der eine Unwucht die Maschine in Resonanz anregt."
+          },
+          {
+            "tex": "n = 1400\\,\\tfrac{1}{\\mathrm{min}} \\gg n_0",
+            "why": "Beim Schleudern läuft sie weit über der Resonanz und schwingt kaum. Beim Hochfahren muss sie die Resonanz durchlaufen; deshalb rumpelt sie kurz und hat Dämpfer."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eigenfrequenz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kritische Drehzahl.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schleudern.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Resonanzfrequenz und Amplitudenüberhöhung bestimmen",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Resonanzfrequenz und Amplitudenüberhöhung bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bei welcher Erregerfrequenz tritt Resonanz auf?\"*, *\"Berechnen Sie die Amplitude im Resonanzfall\"*, *\"Deuten Sie die abgebildete Resonanzkurve\"*, *\"Erklären Sie, weshalb die Brücke bei einer bestimmten Schrittfrequenz zu schwingen beginnt\"*, *\"Begründen Sie, weshalb starke Dämpfung erwünscht sein kann\"*.\n\nErkennungsmerkmal: Ein Schwinger wird **von außen periodisch angeregt** -- es gibt eine Erregerfrequenz $f_E$ zusätzlich zur Eigenfrequenz $f_0$. Häufig liegt eine **Resonanzkurve** (Amplitude über Erregerfrequenz) zur Auswertung vor."
+            }
+          ]
+        },
+        {
+          "title": "Der Grundgedanke",
+          "blocks": [
+            {
+              "md": "> [!important] Zwei Frequenzen, nicht eine\n> Bei der erzwungenen Schwingung schwingt das System nach dem Einschwingvorgang **mit der Erregerfrequenz** $f_E$ -- nicht mit seiner Eigenfrequenz. Die Eigenfrequenz $f_0$ bestimmt lediglich, **wie groß die Amplitude** dabei ausfällt.\n>\n> Maximal wird sie, wenn Erreger- und Eigenfrequenz übereinstimmen:\n> $$f_E \\approx f_0 = \\frac{1}{2\\pi}\\sqrt{\\frac{D}{m}}$$\n> Anschaulich: Der Erreger schiebt dann stets im richtigen Moment nach, so wie beim Anschubsen einer Schaukel im Takt. Jeder Stoß erfolgt phasenrichtig, die zugeführte Energie summiert sich über viele Perioden.\n>\n> Exakt liegt das Maximum bei $\\omega_{res} = \\sqrt{\\omega_0^2 - 2\\delta^2}$, also geringfügig **unterhalb** der Eigenfrequenz. Bei schwacher Dämpfung ist der Unterschied vernachlässigbar; er wird erst bei starker Dämpfung sichtbar und verschwindet ganz, wenn $\\delta \\geq \\omega_0/\\sqrt2$ ist -- dann existiert kein Maximum mehr."
+            }
+          ]
+        },
+        {
+          "title": "Die Rolle der Dämpfung",
+          "blocks": [
+            {
+              "md": "| Dämpfung | Resonanzkurve | Amplitude im Maximum |\n|---|---|---|\n| sehr schwach | hoch und **schmal** | sehr groß, theoretisch unbegrenzt (Resonanzkatastrophe) |\n| mittel | mäßig hoch, breiter | endlich |\n| stark | **flach und breit** | kaum überhöht |\n| $\\delta \\geq \\omega_0/\\sqrt2$ | kein Maximum mehr | Amplitude fällt monoton |\n\nDie **Güte** quantifiziert die Schärfe der Resonanz:\n$$Q = \\frac{\\omega_0}{2\\delta}$$\nSie gibt zugleich näherungsweise an, um welchen Faktor die Resonanzamplitude die statische Auslenkung übersteigt:\n$$\\hat x_{res} \\approx Q\\cdot x_{stat} = Q\\cdot\\frac{F_0}{D}$$"
+            }
+          ]
+        },
+        {
+          "title": "Das Phasenverhalten",
+          "blocks": [
+            {
+              "md": "| Erregerfrequenz | Phasenverschiebung | Deutung |\n|---|---|---|\n| $f_E \\ll f_0$ | $\\approx 0^\\circ$ | Schwinger folgt dem Erreger unmittelbar |\n| $f_E = f_0$ | $90^\\circ$ | Erregerkraft in Phase mit der **Geschwindigkeit** -- maximale Energiezufuhr |\n| $f_E \\gg f_0$ | $\\approx 180^\\circ$ | Schwinger läuft gegenphasig, Amplitude geht gegen null |\n\n> [!tip] Warum ausgerechnet 90 Grad das Optimum sind\n> Die pro Periode zugeführte Arbeit ist am größten, wenn die Erregerkraft stets in Bewegungsrichtung wirkt -- also wenn sie mit der **Geschwindigkeit** in Phase ist. Da die Geschwindigkeit der Auslenkung um $90^\\circ$ vorauseilt, muss die Kraft der Auslenkung ebenfalls um $90^\\circ$ vorauseilen. Genau das ist im Resonanzfall gegeben. Diese Erklärung leistet mehr als der bloße Verweis auf die Resonanzkurve und wird in Begründungsaufgaben erwartet."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Eigenfrequenz berechnen:** $f_0 = \\dfrac{1}{2\\pi}\\sqrt{D/m}$ beim Federpendel, $f_0 = \\dfrac{1}{2\\pi\\sqrt{LC}}$ beim Schwingkreis.\n2. **Resonanzbedingung feststellen:** $f_E \\approx f_0$.\n3. **Statische Auslenkung** unter der Erregerkraftamplitude: $x_{stat} = F_0/D$.\n4. **Güte bestimmen:** $Q = \\omega_0/(2\\delta)$, wobei $\\delta$ meist aus einer vorangehenden Dämpfungsauswertung stammt.\n5. **Resonanzamplitude abschätzen:** $\\hat x_{res} \\approx Q\\cdot x_{stat}$.\n6. **Bei Diagrammauswertung** die Halbwertsbreite $\\Delta f$ ablesen; es gilt näherungsweise $Q \\approx f_0/\\Delta f$.\n7. **Einheitenkontrolle:** $Q$ ist dimensionslos, $x_{stat}$ in Metern."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Federpendel mit $D = 25\\,\\text{N/m}$ und $m = 0{,}40\\,\\text{kg}$ hat die Abklingkonstante $\\delta = 0{,}132\\,\\text{s}^{-1}$. Es wird durch eine periodische Kraft der Amplitude $F_0 = 0{,}10\\,\\text{N}$ angeregt. Berechnen Sie die Resonanzfrequenz, die Güte und die Amplitude im Resonanzfall.*\n\n**Schritt 1, Eigenkreisfrequenz und Eigenfrequenz:**\n$$\\omega_0 = \\sqrt{\\frac{25}{0{,}40}} = \\sqrt{62{,}5} \\approx 7{,}906\\,\\text{s}^{-1}, \\qquad f_0 = \\frac{7{,}906}{2\\pi} \\approx 1{,}26\\,\\text{Hz}$$\n\n**Schritt 2, exakte Lage des Maximums:**\n$$\\omega_{res} = \\sqrt{7{,}906^2 - 2\\cdot0{,}132^2} = \\sqrt{62{,}5 - 0{,}0349} \\approx 7{,}904\\,\\text{s}^{-1}$$\nDie Verschiebung gegenüber $\\omega_0$ beträgt weniger als $0{,}03\\,\\%$ -- vernachlässigbar. Resonanz tritt praktisch bei $f_E = 1{,}26\\,\\text{Hz}$ auf.\n\n**Schritt 3, statische Auslenkung:**\n$$x_{stat} = \\frac{F_0}{D} = \\frac{0{,}10}{25} = 4{,}0\\cdot10^{-3}\\,\\text{m} = 0{,}40\\,\\text{cm}$$\n\n**Schritt 4, Güte:**\n$$Q = \\frac{\\omega_0}{2\\delta} = \\frac{7{,}906}{2\\cdot0{,}132} = \\frac{7{,}906}{0{,}264} \\approx 29{,}9$$\n\n**Schritt 5, Resonanzamplitude:**\n$$\\hat x_{res} \\approx 29{,}9 \\cdot 0{,}40\\,\\text{cm} \\approx 12\\,\\text{cm}$$\n\n**Interpretation:** Eine Kraft, die statisch nur 4 Millimeter Auslenkung bewirken würde, erzeugt in Resonanz eine Amplitude von 12 Zentimetern -- eine Überhöhung um den Faktor 30. Genau darin besteht die Gefahr wie auch der Nutzen der Resonanz: Eine kleine, aber phasenrichtig wiederholte Anregung akkumuliert sich über rund $Q$ Perioden zu einer großen Amplitude.\n\n**Kontrolle über die Halbwertsbreite:** $\\Delta f \\approx f_0/Q = 1{,}26/29{,}9 \\approx 0{,}042\\,\\text{Hz}$. Die Resonanzkurve ist also außerordentlich schmal -- schon eine Verstimmung um wenige Hundertstel Hertz lässt die Amplitude deutlich einbrechen. Das erklärt, weshalb Resonanzeffekte in der Praxis oft erst bei sehr genauer Frequenzabstimmung auftreten."
+            }
+          ]
+        },
+        {
+          "title": "Erwünschte und unerwünschte Resonanz",
+          "blocks": [
+            {
+              "md": "| Erwünscht | Unerwünscht |\n|---|---|\n| Radioempfänger: Schwingkreis selektiert genau eine Senderfrequenz | Brückenschwingungen durch Gleichschritt oder Wind |\n| Musikinstrumente: Resonanzkörper verstärkt bestimmte Frequenzen | Maschinenvibrationen bei bestimmten Drehzahlen |\n| Mikrowelle, Kernspintomographie: gezielte Anregung | Gebäudeschwingungen bei Erdbeben |\n\nTechnische Gegenmaßnahmen zielen auf zwei Stellschrauben: **Dämpfung erhöhen** (Schwingungstilger, Stoßdämpfer) oder die **Eigenfrequenz verschieben**, sodass sie außerhalb des Anregungsspektrums liegt. Dass ein Reisebus im Gleichschritt marschierender Personen über eine Brücke fahren darf, das Marschieren selbst aber untersagt ist, folgt genau aus dieser Überlegung: Schrittfrequenzen liegen typischerweise bei etwa 2 Hz, in der Nähe vieler Brückeneigenfrequenzen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Annehmen, das System schwinge mit seiner Eigenfrequenz.** Es schwingt mit der **Erreger**frequenz; die Eigenfrequenz bestimmt nur die Amplitude.\n- **Die Resonanzamplitude als unendlich angeben.** Nur bei völlig fehlender Dämpfung. Reale Systeme haben stets $\\delta > 0$, die Amplitude bleibt endlich.\n- **Resonanz und Schwebung verwechseln.** Bei der Schwebung überlagern sich zwei **ähnliche** Frequenzen zu einer periodischen Amplitudenschwankung; bei der Resonanz treibt eine äußere Kraft ein System nahe seiner Eigenfrequenz an.\n- **Stärkere Dämpfung pauschal als schlecht bewerten.** Sie ist der Standardweg zur Vermeidung der Resonanzkatastrophe.\n- **Die Phasenverschiebung im Resonanzfall mit $0^\\circ$ angeben.** Sie beträgt $90^\\circ$ -- genau das ist die Bedingung maximaler Energiezufuhr.\n- **$\\omega$ und $f$ verwechseln.** Die Güteformel enthält $\\omega_0$, nicht $f_0$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Gedämpfte Schwingung auswerten** · **Federpendel - Periodendauer berechnen** · **Elektromagnetischer Schwingkreis - Thomsonsche Gleichung anwenden** · **Schwingungsgleichung aufstellen und auswerten** · **Erzwungene Schwingung und Resonanz**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Fadenpendel ($L = 0{,}5\\,\\mathrm{m}$) wird periodisch angestoßen. Bei welcher Frequenz tritt Resonanz auf?",
+      "answer": 0.705,
+      "tolerance": 0.005,
+      "placeholder": "Hz",
+      "explain": "$f_0 = \\tfrac{1}{2\\pi}\\sqrt{\\tfrac gL} = \\tfrac{1}{2\\pi}\\sqrt{19{,}62}\\,\\mathrm{Hz} \\approx 0{,}705\\,\\mathrm{Hz}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Ein Federpendel wird sehr langsam angeregt, weit unter seiner Eigenfrequenz. Wie schwingt es?",
+      "options": [
+        {
+          "md": "mit kleiner Amplitude, nahezu im Gleichtakt mit dem Erreger",
+          "correct": true
+        },
+        {
+          "md": "mit großer Amplitude",
+          "why": "Groß wird sie nur nahe der Resonanz."
+        },
+        {
+          "md": "gegenphasig zum Erreger",
+          "why": "Gegenphasig ist es weit oberhalb der Resonanz."
+        },
+        {
+          "md": "mit seiner Eigenfrequenz",
+          "why": "Nach dem Einschwingen gibt der Erreger den Takt vor."
+        }
+      ],
+      "explain": "Unterhalb der Resonanz folgt der Schwinger dem Erreger fast statisch.",
+      "label": "Verständnis",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Je schwächer die Dämpfung, desto höher und schmaler ist die Resonanzkurve.",
+      "answer": true,
+      "explain": "Die Überhöhung ist etwa $\\tfrac{1}{2D}$; die Breite des Gipfels schrumpft mit der Dämpfung.",
+      "label": "Dämpfung",
+      "id": "vq3"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +265,27 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "resonanz",
+          "fadenpendel"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$f_0 = \\tfrac{1}{2\\pi}\\sqrt{\\tfrac Dm}$ (Feder), $\\tfrac{1}{2\\pi}\\sqrt{\\tfrac gL}$ (Faden); Maschinen sollten weit ab von $f_0$ laufen."
+      ]
     }
   ]
 }

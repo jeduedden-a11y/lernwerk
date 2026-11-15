@@ -16,6 +16,401 @@
       "label": "Aufgabentyp"
     },
     {
+      "type": "text",
+      "md": "> [!important] Gesamtenergie, Ruheenergie, kinetische Energie\n> $E = \\gamma\\,m_0 c^2$ (Gesamtenergie), $E_0 = m_0 c^2$ (Ruheenergie), $E_{kin} = E - E_0 = (\\gamma - 1)\\,m_0 c^2$. Ein ruhender Körper besitzt schon Energie, allein durch seine Masse. Die kinetische Energie ist die **Differenz**, nicht $\\tfrac12\\gamma m_0 v^2$.\n\n**Ruheenergien:** Elektron $0{,}511\\,\\mathrm{MeV}$, Proton $938{,}3\\,\\mathrm{MeV}$ (rund 1836-mal mehr).\n\n**Warum c unerreichbar ist.** Für $v \\to c$ geht $\\gamma \\to \\infty$ und damit $E \\to \\infty$. Beschleuniger bringen Protonen bis $\\beta = 0{,}999999991$ (LHC); zusätzliche Energie erhöht dann fast nur noch Energie und Impuls, kaum die Geschwindigkeit. Photonen sind masselos und fliegen immer mit $c$: $E = pc$.\n\n> [!satz] Energie-Impuls-Beziehung\n> $E^2 = (pc)^2 + (m_0 c^2)^2$, wie ein Pythagoras: Ruheenergie und Impulsterm als Katheten, die Gesamtenergie als Hypotenuse.",
+      "label": "Energieformen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: die klassische Formel als Grenzfall.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\gamma = \\left(1 - \\beta^2\\right)^{-1/2},\\qquad \\beta = \\frac{v}{c}",
+            "why": "Lorentzfaktor als Potenz geschrieben."
+          },
+          {
+            "tex": "(1 - x)^{-1/2} \\approx 1 + \\tfrac12 x \\quad (x \\ll 1)",
+            "why": "Näherung für kleine x, wie die Tangente an die Kurve bei x = 0."
+          },
+          {
+            "tex": "\\gamma \\approx 1 + \\frac12\\frac{v^2}{c^2}",
+            "why": "Mit x = β²."
+          },
+          {
+            "tex": "E_{kin} = (\\gamma - 1)\\,m_0 c^2 \\approx \\frac12\\frac{v^2}{c^2}\\,m_0 c^2 = \\frac12 m_0 v^2",
+            "why": "Für kleine Geschwindigkeiten ergibt sich genau die klassische Formel."
+          },
+          {
+            "tex": "\\beta = \\sqrt{1 - \\frac{1}{\\gamma^2}}",
+            "why": "Umgekehrt: aus der Energie die Geschwindigkeit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Potenz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Näherung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kleines β.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Klassisch.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umkehrung.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Bewegungsenergie relativistisch (blau) und klassisch (orange)**, in Einheiten der Ruheenergie $m_0c^2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          0,
+          3
+        ],
+        "xLabel": "v / c",
+        "yLabel": "Ekin / (m₀c²)",
+        "vars": [
+          {
+            "name": "b",
+            "min": 0,
+            "max": 0.98,
+            "value": 0.1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "r",
+            "expr": "1/sqrt(1 - x^2) - 1",
+            "color": "blue",
+            "domain": [
+              0,
+              0.97
+            ]
+          },
+          {
+            "name": "k",
+            "expr": "0.5*x^2",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 1
+          }
+        ],
+        "labels": [
+          {
+            "x": 0.05,
+            "y": 2.7,
+            "text": "relativistisch",
+            "anchor": "start",
+            "color": "blue"
+          },
+          {
+            "x": 0.05,
+            "y": 2.4,
+            "text": "klassisch ½mv²",
+            "anchor": "start",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "b",
+            "on": "r",
+            "color": "blue",
+            "guides": true
+          },
+          {
+            "x": "b",
+            "on": "k",
+            "color": "orange"
+          }
+        ],
+        "readout": "v = {b|2} c: relativistisch **{1/sqrt(1 - b^2) - 1|3}** m₀c², klassisch {0.5*b^2|3} m₀c², klassisch {100 - 100*0.5*b^2/(1/sqrt(1 - b^2) - 1)|0} % zu wenig"
+      },
+      "timeline": [
+        {
+          "caption": "Bei $0{,}1\\,c$ liegen beide Kurven aufeinander: unter $1\\,\\%$ Unterschied.",
+          "set": {
+            "b": 0.1
+          }
+        },
+        {
+          "caption": "Bei $0{,}5\\,c$ ist die klassische Formel schon $19\\,\\%$ zu klein.",
+          "to": {
+            "b": 0.5
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Bei $0{,}9\\,c$ fehlen ihr $69\\,\\%$; die Bewegungsenergie ist größer als die Ruheenergie.",
+          "to": {
+            "b": 0.9
+          },
+          "dur": 2000
+        },
+        {
+          "caption": "Gegen $c$ wächst die relativistische Energie über alle Grenzen: Ein Körper mit Masse erreicht $c$ nie.",
+          "to": {
+            "b": 0.98
+          },
+          "dur": 2000
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Ein Gramm Materie.** $E = 0{,}001\\,\\mathrm{kg}\\cdot(3\\cdot 10^8\\,\\tfrac{\\mathrm{m}}{\\mathrm{s}})^2 \\approx 9\\cdot 10^{13}\\,\\mathrm{J} \\approx 25$ Millionen kWh, der Jahresverbrauch von rund 7000 Haushalten.\n\n> [!warning] Diese Energie ist nicht abrufbar\n> Vollständig in Energie umgewandelt wird Masse nur bei der Paarvernichtung von Materie und Antimaterie. Kernspaltung setzt etwa ein Promille der Masse um, Fusion knapp ein Prozent, chemische Reaktionen rund $10^{-9}$.\n\n**Faustregel.** Bis etwa $0{,}1\\,c$ ist die klassische Rechnung auf ein Prozent genau, ab etwa $0{,}3\\,c$ unbrauchbar. Ein Elektron erreicht nach $2\\,\\mathrm{kV}$ rund $0{,}09\\,c$, nach $100\\,\\mathrm{kV}$ schon $0{,}55\\,c$.",
+      "label": "Masse und Energie",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Relativistische Energie und Masse-Energie-Äquivalenz berechnen",
+      "path": "02 Wiki/Physik/05 Q4 Physik der Moderne/Aufgabentypen/Relativistische Energie und Masse-Energie-Äquivalenz berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die relativistische Gesamtenergie\"*, *\"Wie groß ist die kinetische Energie bei $0{,}9\\,c$?\"*, *\"Welche Energie steckt in einem Gramm Materie?\"*, *\"Ab welcher Geschwindigkeit ist die klassische Formel unbrauchbar?\"*, *\"Begründen Sie, weshalb kein Körper Lichtgeschwindigkeit erreichen kann\"*.\n\nErkennungsmerkmal: **Energie oder Impuls** bei Geschwindigkeiten, die einen merklichen Bruchteil von $c$ ausmachen -- oder eine Umwandlung zwischen Masse und Energie."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Energieformen",
+          "blocks": [
+            {
+              "md": "> [!important] Gesamtenergie, Ruheenergie, kinetische Energie\n> $$E = \\gamma\\,m_0\\,c^2 \\qquad\\text{(Gesamtenergie)}$$\n> $$E_0 = m_0\\,c^2 \\qquad\\text{(Ruheenergie)}$$\n> $$E_{kin} = E - E_0 = (\\gamma - 1)\\,m_0\\,c^2 \\qquad\\text{(kinetische Energie)}$$\n>\n> Die **Ruheenergie** ist die eigentliche Neuerung: Ein ruhender Körper besitzt bereits Energie, allein aufgrund seiner Masse. Masse und Energie sind nicht zwei getrennte Erhaltungsgrößen, sondern zwei Erscheinungsformen derselben Sache.\n>\n> Die kinetische Energie ist die **Differenz** aus Gesamt- und Ruheenergie -- nicht etwa $\\tfrac12 \\gamma m_0 v^2$ oder eine ähnliche Mischform. Das ist die häufigste Fehlkonstruktion des Themas."
+            }
+          ]
+        },
+        {
+          "title": "Der Übergang zur klassischen Formel",
+          "blocks": [
+            {
+              "md": "Für $v \\ll c$ liefert eine Reihenentwicklung\n$$\\gamma \\approx 1 + \\frac{1}{2}\\frac{v^2}{c^2} \\quad\\Longrightarrow\\quad E_{kin} \\approx \\left(\\frac{1}{2}\\frac{v^2}{c^2}\\right)m_0c^2 = \\frac{1}{2}m_0v^2$$\n\nDie klassische Formel ist also kein Widerspruch zur Relativitätstheorie, sondern ihr **Grenzfall**. Jede korrekte relativistische Formel muss sich so verhalten -- das ist ein nützliches Prüfkriterium.\n\n| $\\beta$ | $\\gamma$ | $E_{kin}$ relativistisch | klassisch | Fehler der klassischen Formel |\n|---|---|---|---|---|\n| 0,1 | 1,005 | $0{,}005\\,m_0c^2$ | $0{,}005\\,m_0c^2$ | unter 1 % |\n| 0,5 | 1,155 | $0{,}155\\,m_0c^2$ | $0{,}125\\,m_0c^2$ | 19 % zu klein |\n| 0,9 | 2,294 | $1{,}294\\,m_0c^2$ | $0{,}405\\,m_0c^2$ | 69 % zu klein |\n| 0,99 | 7,089 | $6{,}089\\,m_0c^2$ | $0{,}490\\,m_0c^2$ | 92 % zu klein |\n\n> [!tip] Die praktische Faustregel\n> Bis etwa $\\beta = 0{,}1$ (also 10 % der Lichtgeschwindigkeit) liegt der Fehler der klassischen Rechnung unter einem Prozent -- deshalb ist sie in der Schulphysik fast überall zulässig. Ab $\\beta = 0{,}3$ wird sie unbrauchbar.\n>\n> Konkret bedeutet das für die Elektronenphysik: Bei einer Beschleunigungsspannung von 2000 V erreicht ein Elektron $\\beta \\approx 0{,}088$ -- klassisch noch vertretbar. Bei 100 kV liegt es bereits bei $\\beta \\approx 0{,}55$, und die klassische Rechnung versagt deutlich. Genau deshalb steht bei den Aufgabentypen zu **Beschleunigungsspannungen** und zur Braunschen Röhre jeweils ein Hinweis auf den erreichten Bruchteil von $c$."
+            }
+          ]
+        },
+        {
+          "title": "Warum $c$ unerreichbar ist",
+          "blocks": [
+            {
+              "md": "> [!important] Der Nenner geht gegen null\n> Für $v \\to c$ geht $\\gamma \\to \\infty$, damit auch $E \\to \\infty$. Um einen massebehafteten Körper auf Lichtgeschwindigkeit zu bringen, wäre **unendlich viel Energie** nötig.\n>\n> Es handelt sich also nicht um eine technische, sondern um eine **prinzipielle** Grenze. Beschleuniger können Teilchen beliebig nahe an $c$ heranbringen -- am LHC erreichen Protonen $\\beta = 0{,}999999991$ --, aber nie darüber hinaus. Zugeführte Energie steigert dann kaum noch die Geschwindigkeit, sondern fast ausschließlich Impuls und Energie.\n>\n> Photonen umgehen das, weil sie **masselos** sind ($m_0 = 0$): Für sie gilt $E = p\\,c$, und sie bewegen sich ausschließlich mit $c$."
+            }
+          ]
+        },
+        {
+          "title": "Die Energie-Impuls-Beziehung",
+          "blocks": [
+            {
+              "md": "$$E^2 = (p\\,c)^2 + (m_0c^2)^2$$\n\nDiese Form ist besonders nützlich, weil sie ohne $\\gamma$ auskommt und auch für Photonen gilt (dort mit $m_0 = 0$, also $E = pc$). Sie hat die Struktur des Satzes von Pythagoras: Ruheenergie und Impulsterm bilden die Katheten, die Gesamtenergie die Hypotenuse."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **$\\beta = v/c$ bilden** und $\\gamma$ berechnen.\n2. **Ruheenergie bestimmen:** $E_0 = m_0c^2$; für Elektron $0{,}511\\,\\text{MeV}$, für Proton $938{,}3\\,\\text{MeV}$.\n3. **Gesuchte Größe wählen:** Gesamtenergie $\\gamma E_0$, kinetische Energie $(\\gamma-1)E_0$.\n4. **Bei Umkehraufgaben** nach $\\gamma$ auflösen und daraus $v$: $\\beta = \\sqrt{1 - 1/\\gamma^2}$.\n5. **Bei Massenumwandlung:** $E = \\Delta m\\,c^2$, siehe **Massendefekt und Bindungsenergie berechnen**.\n6. **Klassische Vergleichsrechnung** durchführen und die Abweichung angeben, wenn nach der Zulässigkeit gefragt ist.\n7. **Einheitenkontrolle:** $[\\text{kg}]\\cdot[\\text{m}^2/\\text{s}^2] = \\text{J}$; in MeV rechnen ist meist bequemer."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Ein Elektron ($m_0c^2 = 0{,}511\\,\\text{MeV}$) bewegt sich mit $v = 0{,}90\\,c$. Berechnen Sie Gesamtenergie und kinetische Energie und vergleichen Sie mit der klassischen Rechnung.*\n\n**Schritt 1:**\n$$\\gamma = \\frac{1}{\\sqrt{1-0{,}81}} = \\frac{1}{\\sqrt{0{,}19}} = \\frac{1}{0{,}4359} \\approx 2{,}294$$\n\n**Schritt 3, Gesamtenergie:**\n$$E = 2{,}294\\cdot0{,}511 \\approx 1{,}172\\,\\text{MeV}$$\n\n**Kinetische Energie:**\n$$E_{kin} = (2{,}294 - 1)\\cdot0{,}511 = 1{,}294\\cdot0{,}511 \\approx 0{,}661\\,\\text{MeV}$$\n\n**Schritt 6, klassischer Vergleich:**\n$$E_{kin,klass} = \\tfrac12 m_0 v^2 = \\tfrac12\\cdot0{,}81\\,m_0c^2 = 0{,}405\\cdot0{,}511 \\approx 0{,}207\\,\\text{MeV}$$\n\nDie klassische Rechnung liefert nur rund **31 %** des richtigen Werts -- sie ist hier klar unbrauchbar. Bemerkenswert ist zudem, dass die kinetische Energie mit 0,661 MeV bereits **größer** ist als die gesamte Ruheenergie von 0,511 MeV."
+            }
+          ]
+        },
+        {
+          "title": "Ein Gramm Materie",
+          "blocks": [
+            {
+              "md": "*Welche Energie entspricht einem Gramm Masse?*\n$$E = 0{,}001\\,\\text{kg}\\cdot(2{,}998\\cdot10^{8})^2 \\approx 9{,}0\\cdot10^{13}\\,\\text{J} \\approx 2{,}5\\cdot10^{7}\\,\\text{kWh}$$\n\n25 Millionen Kilowattstunden -- der Jahresverbrauch von etwa 7000 Haushalten, aus einem einzigen Gramm.\n\n> [!warning] Diese Energie ist nicht abrufbar\n> Vollständige Umwandlung von Masse in Energie geschieht nur bei **Annihilation** von Materie und Antimaterie. In Kernreaktionen wird lediglich der **Massendefekt** umgesetzt: bei der Kernspaltung etwa ein Promille der Ausgangsmasse, bei der Fusion knapp ein Prozent, bei chemischen Reaktionen rund $10^{-9}$.\n>\n> Die Zahl beschreibt also ein theoretisches Maximum, keine technische Option. Sie erklärt aber, weshalb schon der geringe Massendefekt einer Kernreaktion enorme Energien liefert."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$E_{kin} = \\tfrac12 m v^2$ mit relativistischer Masse mischen.** Korrekt ist $(\\gamma-1)m_0c^2$.\n- **Gesamtenergie und kinetische Energie verwechseln.** $E$ enthält die Ruheenergie, $E_{kin}$ nicht.\n- **$\\gamma$ mit $\\gamma - 1$ verwechseln.** Bei kleinen Geschwindigkeiten ist $\\gamma \\approx 1$, aber $\\gamma - 1 \\approx 0$ -- der Unterschied ist die gesamte kinetische Energie.\n- **Klassisch rechnen, ohne die Zulässigkeit zu prüfen.** Ab $\\beta = 0{,}3$ ist der Fehler nicht mehr vertretbar; die Aufgabe verlangt dann eine Begründung.\n- **Von \"relativistischer Massenzunahme\" als physikalischem Anwachsen sprechen.** Die moderne Darstellung behandelt $m_0$ als invariante Größe und schreibt den Faktor $\\gamma$ der Energie zu. Beide Sprechweisen liefern dieselben Zahlen, die zweite ist konsistenter.\n- **Photonen eine Ruhemasse zuschreiben.** Sie ist null; für sie gilt $E = pc$.\n- **Die Ruheenergie eines Protons mit der eines Elektrons verwechseln.** Der Faktor beträgt rund 1836."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Zeitdilatation berechnen** · **Längenkontraktion berechnen** · **Massendefekt und Bindungsenergie berechnen** · **Energiefreisetzung bei Kernspaltung und Kernfusion berechnen** · **Beschleunigungsspannung und kinetische Energie berechnen** · **Spezielle Relativitätstheorie**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Definitionen",
+      "md": "Ordne jedem Ausdruck seinen Namen zu.",
+      "pairs": [
+        [
+          "$\\gamma m_0 c^2$",
+          "Gesamtenergie"
+        ],
+        [
+          "$m_0 c^2$",
+          "Ruheenergie"
+        ],
+        [
+          "$(\\gamma - 1)m_0 c^2$",
+          "Bewegungsenergie"
+        ],
+        [
+          "$E^2 = (pc)^2 + (m_0c^2)^2$",
+          "Energie-Impuls-Beziehung"
+        ],
+        [
+          "$E = pc$",
+          "Photon"
+        ]
+      ],
+      "explain": "Die Bewegungsenergie ist die Differenz aus Gesamt- und Ruheenergie.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung des klassischen Grenzfalls in die richtige Reihenfolge.",
+      "items": [
+        "$\\gamma = (1 - \\beta^2)^{-1/2}$",
+        "Für kleine $\\beta$: $\\gamma \\approx 1 + \\tfrac12\\beta^2$",
+        "$E_{kin} = (\\gamma - 1)m_0c^2 \\approx \\tfrac12\\beta^2 m_0c^2$",
+        "$E_{kin} \\approx \\tfrac12 m_0 v^2$"
+      ],
+      "explain": "Die Reihenfolge: 1. $\\gamma = (1 - \\beta^2)^{-1/2}$. 2. Für kleine $\\beta$: $\\gamma \\approx 1 + \\tfrac12\\beta^2$. 3. $E_{kin} = (\\gamma - 1)m_0c^2 \\approx \\tfrac12\\beta^2 m_0c^2$. 4. $E_{kin} \\approx \\tfrac12 m_0 v^2$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Bewegungsenergie hat ein Elektron ($m_0c^2 = 0{,}511\\,\\mathrm{MeV}$) bei $0{,}90\\,c$?",
+      "answer": 0.661,
+      "tolerance": 0.01,
+      "placeholder": "MeV",
+      "explain": "$\\gamma = \\tfrac{1}{\\sqrt{0{,}19}} \\approx 2{,}294$, $E_{kin} = 1{,}294\\cdot 0{,}511\\,\\mathrm{MeV} \\approx 0{,}661\\,\\mathrm{MeV}$. Klassisch wären es nur $0{,}207\\,\\mathrm{MeV}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Elektron wird mit $1{,}00\\,\\mathrm{MV}$ beschleunigt. Welche Geschwindigkeit erreicht es (in $c$)?",
+      "answer": 0.941,
+      "tolerance": 0.004,
+      "placeholder": "c",
+      "explain": "$\\gamma = 1 + \\tfrac{1000}{511} \\approx 2{,}957$, $\\beta = \\sqrt{1 - \\tfrac{1}{\\gamma^2}} \\approx 0{,}941$. Klassisch käme fast $2c$ heraus: unmöglich.",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Welche Energie entspricht $1\\,\\mathrm{g}$ Masse? Gib sie in Millionen kWh an.",
+      "answer": 25.0,
+      "tolerance": 0.3,
+      "placeholder": "10⁶ kWh",
+      "explain": "$E = 10^{-3}\\cdot(3\\cdot 10^8)^2\\,\\mathrm{J} = 9\\cdot 10^{13}\\,\\mathrm{J} = \\tfrac{9\\cdot 10^{13}}{3{,}6\\cdot 10^6}\\,\\mathrm{kWh} = 2{,}5\\cdot 10^7\\,\\mathrm{kWh}$.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Proton ($m_0c^2 = 938{,}3\\,\\mathrm{MeV}$) hat $\\gamma = 2$. Wie groß ist seine Bewegungsenergie?",
+      "answer": 938,
+      "tolerance": 3,
+      "placeholder": "MeV",
+      "explain": "$E_{kin} = (\\gamma - 1)\\,m_0c^2 = 938\\,\\mathrm{MeV}$: genau eine Ruheenergie.",
+      "id": "vq6"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die relativistische Bewegungsenergie ist $\\tfrac12\\gamma m_0 v^2$.",
+      "answer": false,
+      "explain": "Richtig ist $(\\gamma - 1)m_0c^2$; die Mischform ist der häufigste Fehler.",
+      "label": "Typischer Fehler",
+      "id": "vq7"
+    },
+    {
+      "type": "choice",
+      "md": "Warum kann ein Körper mit Masse die Lichtgeschwindigkeit nicht erreichen?",
+      "options": [
+        {
+          "md": "Für $v \\to c$ geht $\\gamma$ und damit die nötige Energie gegen unendlich.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Luftreibung zu groß wird.",
+          "why": "Auch im Vakuum gilt die Grenze."
+        },
+        {
+          "md": "Weil es keine stark genugen Beschleuniger gibt.",
+          "why": "Die Grenze ist prinzipiell, nicht technisch."
+        },
+        {
+          "md": "Weil seine Masse dann null würde.",
+          "why": "Die Ruhemasse bleibt; die Energie wächst."
+        }
+      ],
+      "explain": "Photonen fliegen nur deshalb mit c, weil sie masselos sind.",
+      "label": "Verständnis",
+      "id": "vq8"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +487,41 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "rel-geschwindigkeit",
+          "masse-energie"
+        ]
+      },
+      "label": "Spannung und Masse",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "rel-geschwindigkeit",
+          "rel-energie"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$E = \\gamma m_0c^2$, $E_0 = m_0c^2$, $E_{kin} = (\\gamma - 1)m_0c^2$; für kleine $v$ folgt $\\tfrac12 m_0v^2$.",
+        "$\\beta = \\sqrt{1 - 1/\\gamma^2}$; c bleibt unerreichbar; volle Umwandlung von Masse nur bei Paarvernichtung."
+      ]
     }
   ]
 }

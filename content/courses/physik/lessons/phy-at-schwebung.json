@@ -16,6 +16,156 @@
       "label": "Aufgabentyp"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Durchgerechnetes Beispiel: Stimmen.** Eine Stimmgabel ($440\\,\\mathrm{Hz}$) und eine Saite geben $3$ Schwebungen pro Sekunde. Spannt man die Saite etwas stärker, werden es $5$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_{Saite} = 440 \\pm 3\\,\\mathrm{Hz} \\in \\{437;\\,443\\}\\,\\mathrm{Hz}",
+            "why": "Die Schwebung allein lässt beide Möglichkeiten zu."
+          },
+          {
+            "tex": "\\text{stärker gespannt} \\Rightarrow f \\uparrow",
+            "why": "Mehr Spannkraft, höhere Wellengeschwindigkeit, höherer Ton."
+          },
+          {
+            "tex": "f_S \\uparrow \\Rightarrow f_{Saite} = 443\\,\\mathrm{Hz}",
+            "why": "Wäre die Saite bei 437 Hz gewesen, hätte die Schwebung beim Höherstimmen abgenommen. Also war sie zu hoch und muss entspannt werden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zwei Möglichkeiten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe durch Spannen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Entscheidung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Schwebungsfrequenz berechnen",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Aufgabentypen/Schwebungsfrequenz berechnen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Berechnen Sie die Schwebungsfrequenz\"*, *\"Wie oft pro Sekunde schwillt der Ton an?\"*, *\"Bestimmen Sie die Frequenz der zweiten Stimmgabel\"*, *\"Erklären Sie, wie ein Instrument mithilfe einer Schwebung gestimmt wird\"*.\n\nErkennungsmerkmal: **Zwei Wellen mit leicht unterschiedlicher Frequenz** überlagern sich am selben Ort. Typisch: zwei Stimmgabeln, zwei Lautsprecher, ein Instrument gegen einen Referenzton."
+            }
+          ]
+        },
+        {
+          "title": "Das Phänomen",
+          "blocks": [
+            {
+              "md": "> [!important] Periodisches An- und Abschwellen\n> Überlagern sich zwei Töne ähnlicher Frequenz, so sind sie abwechselnd gleichphasig (Verstärkung) und gegenphasig (Auslöschung). Das Ergebnis ist ein Ton, dessen **Lautstärke periodisch schwankt**:\n> $$\\sin(2\\pi f_1 t) + \\sin(2\\pi f_2 t) = 2\\,\\cos\\!\\left(2\\pi\\,\\frac{f_1 - f_2}{2}\\,t\\right)\\cdot\\sin\\!\\left(2\\pi\\,\\frac{f_1 + f_2}{2}\\,t\\right)$$\n>\n> Der zweite Faktor ist der hörbare **Ton** mit der **mittleren** Frequenz, der erste die langsam veränderliche **Einhüllende**.\n>\n> $$\\boxed{\\;f_S = |f_1 - f_2|\\;} \\qquad \\text{Tonhöhe: } \\bar f = \\frac{f_1 + f_2}{2}$$\n\n> [!warning] Der Faktor 2, der leicht verlorengeht\n> Die Einhüllende schwingt mathematisch mit $\\dfrac{f_1 - f_2}{2}$. Das Ohr nimmt jedoch **Lautstärke** wahr, und die ist proportional zum **Betrag** der Amplitude -- ein Kosinus durchläuft pro eigener Periode **zwei** Betragsmaxima. Die hörbare Schwebungsfrequenz ist deshalb doppelt so groß wie die der Einhüllenden:\n> $$f_S = 2\\cdot\\frac{|f_1 - f_2|}{2} = |f_1 - f_2|$$\n> Wer diese Verdopplung übersieht, erhält systematisch die Hälfte des richtigen Werts."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung zur Resonanz",
+          "blocks": [
+            {
+              "md": "| | **Schwebung** | **Resonanz** |\n|---|---|---|\n| Beteiligte | zwei Wellen ähnlicher Frequenz | ein Schwinger plus äußerer Erreger |\n| Bedingung | $f_1 \\approx f_2$, aber **nicht gleich** | $f_E \\approx f_0$ |\n| Ergebnis | periodisches An- und Abschwellen | dauerhaft große Amplitude |\n| Bei exakter Gleichheit | Schwebung **verschwindet** | Effekt **maximal** |\n\nDer letzte Punkt ist die schärfste Unterscheidung: Was bei der Resonanz das Optimum ist, lässt die Schwebung gerade verschwinden. Die beiden Phänomene zu verwechseln ist der häufigste konzeptionelle Fehler dieses Themenfelds, siehe **Resonanzfrequenz und Amplitudenüberhöhung bestimmen**."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beide Frequenzen notieren.**\n2. **Differenz bilden und Betrag nehmen:** $f_S = |f_1 - f_2|$.\n3. **Schwebungsdauer** als Kehrwert: $T_S = 1/f_S$ -- die Zeit zwischen zwei Lautstärkemaxima.\n4. **Wahrgenommene Tonhöhe** als arithmetisches Mittel angeben, falls gefragt.\n5. **Bei Umkehraufgaben** beachten: Aus $f_S$ allein folgt nicht, ob die unbekannte Frequenz **über** oder **unter** der Referenz liegt. Beide Lösungen $f_2 = f_1 \\pm f_S$ sind zunächst möglich.\n6. **Einheitenkontrolle:** $[\\text{Hz}] - [\\text{Hz}] = [\\text{Hz}]$, $T_S$ in Sekunden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Zwei Stimmgabeln mit $f_1 = 440\\,\\text{Hz}$ und $f_2 = 444\\,\\text{Hz}$ werden gleichzeitig angeschlagen. Berechnen Sie Schwebungsfrequenz, Schwebungsdauer und die wahrgenommene Tonhöhe.*\n\n**Schritt 2:**\n$$f_S = |440 - 444| = 4\\,\\text{Hz}$$\nDer Ton schwillt viermal pro Sekunde an und ab.\n\n**Schritt 3:**\n$$T_S = \\frac{1}{4} = 0{,}25\\,\\text{s}$$\n\n**Schritt 4:**\n$$\\bar f = \\frac{440 + 444}{2} = 442\\,\\text{Hz}$$\nGehört wird also ein Ton von 442 Hz, dessen Lautstärke im Vierteltakt pulsiert -- **nicht** zwei getrennte Töne. Das menschliche Ohr kann Frequenzen, die so dicht beieinanderliegen, nicht auflösen."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung: ein Instrument stimmen",
+          "blocks": [
+            {
+              "md": "> [!tip] Warum das Verfahren so genau ist\n> Beim Stimmen wird nicht auf gleiche Tonhöhe gehört, sondern auf das **Verschwinden der Schwebung**. Der Vorteil liegt in der Empfindlichkeit: Ein Tonhöhenunterschied von 1 Hz bei 440 Hz beträgt nur 0,23 % und ist als Tonhöhe kaum wahrnehmbar -- als Schwebung erzeugt er aber ein deutlich hörbares Pulsieren im Sekundentakt.\n>\n> Das Verfahren verwandelt also eine schwer wahrnehmbare **Frequenzdifferenz** in eine leicht zählbare **Zeitdauer**. Je langsamer die Schwebung, desto besser die Stimmung; ihr völliges Verschwinden zeigt exakte Übereinstimmung an.\n\n**Typische Aufgabenstellung:** *Eine Saite erzeugt gegen eine 440-Hz-Stimmgabel eine Schwebung von 3 Hz. Nach dem Spannen der Saite steigt die Schwebungsfrequenz auf 5 Hz. Welche Frequenz hatte die Saite ursprünglich?*\n\nZunächst sind $437\\,\\text{Hz}$ und $443\\,\\text{Hz}$ beide möglich. Die zweite Messung entscheidet: **Spannen erhöht** die Saitenfrequenz. Lag sie bei 443 Hz, wächst der Abstand -- die Schwebung wird schneller, was beobachtet wurde. Lag sie bei 437 Hz, hätte sich die Saite der Gabel angenähert und die Schwebung wäre langsamer geworden. Die ursprüngliche Frequenz betrug also **443 Hz**, nach dem Spannen 445 Hz.\n\nDiese Zweideutigkeit durch eine gezielte Zweitmessung aufzulösen ist der eigentliche Kern anspruchsvollerer Aufgaben zu diesem Typ."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Durch zwei teilen.** $f_S = |f_1 - f_2|$, nicht die Hälfte davon. Siehe die Warnung oben zur Betragsbildung.\n- **Den Betrag vergessen.** Eine negative Schwebungsfrequenz gibt es nicht.\n- **Die Schwebungsfrequenz als hörbare Tonhöhe angeben.** Gehört wird der Mittelwert; die Schwebung ist eine Lautstärkeschwankung, kein Ton. Bei 4 Hz läge sie ohnehin unterhalb der Hörgrenze von etwa 20 Hz.\n- **Aus einer einzigen Messung auf die unbekannte Frequenz schließen.** Es gibt stets zwei Lösungen; eine zweite Messung ist nötig.\n- **Schwebung und Resonanz gleichsetzen.** Bei exakter Frequenzgleichheit verschwindet die Schwebung, während die Resonanz maximal wird.\n- **Schwebung mit Interferenz am Doppelspalt verwechseln.** Dort entsteht ein **räumliches** Muster aus zwei Wellen gleicher Frequenz mit Wegunterschied; hier ein **zeitliches** Muster aus zwei Wellen verschiedener Frequenz am selben Ort."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Dopplerverschiebung berechnen** · **Resonanzfrequenz und Amplitudenüberhöhung bestimmen** · **Beugung am Spalt und Gitter berechnen** · **Stehende Wellen - Eigenfrequenzen bestimmen** · **Dopplereffekt und Schwebung**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Zwei Stimmgabeln mit $256\\,\\mathrm{Hz}$ und $260\\,\\mathrm{Hz}$ klingen gleichzeitig. Wie viele Schwebungen hört man pro Sekunde?",
+      "answer": 4,
+      "tolerance": 0.01,
+      "placeholder": "Hz",
+      "explain": "$f_S = 260 - 256\\,\\mathrm{Hz} = 4\\,\\mathrm{Hz}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Mit welcher Frequenz schwingt der wahrgenommene Ton selbst?",
+      "answer": 258,
+      "tolerance": 0.1,
+      "placeholder": "Hz",
+      "explain": "Mittlere Frequenz $\\tfrac{256 + 260}{2}\\,\\mathrm{Hz} = 258\\,\\mathrm{Hz}$, mit schwankender Lautstärke.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Aus der Schwebungsfrequenz allein kann man ablesen, welcher der beiden Töne höher ist.",
+      "answer": false,
+      "explain": "$f_S = |f_1 - f_2|$ enthält kein Vorzeichen; man braucht eine zusätzliche Probe.",
+      "label": "Verständnis",
+      "id": "vq3"
+    },
+    {
       "id": "weg",
       "type": "order",
       "label": "Lösungsweg",
@@ -92,6 +242,26 @@
       },
       "level": 4,
       "label": "Proportionalität"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schwebung"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$f_S = |f_1 - f_2|$, gehörter Ton mit $\\tfrac{f_1 + f_2}{2}$; die Richtung klärt eine Probe (etwas verstimmen)."
+      ]
     }
   ]
 }

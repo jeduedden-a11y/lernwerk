@@ -16,6 +16,208 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Bedingung als Gleichung:** Faktor $(x - a)$ heißt $f(a) = 0$, Rest $r$ bei Division durch $(x - a)$ heißt $f(a) = r$. Für $(x + 2)$ setzt man $-2$ ein.\n> 2. **Nach dem Parameter auflösen**; bei zwei Bedingungen entsteht ein lineares Gleichungssystem.\n> 3. **Faktor abspalten**, mit dem Horner-Schema oder einem Koeffizientenvergleich.\n> 4. **Restliche Nullstellen** aus dem quadratischen Rest, mit der Diskriminante, ob es sie gibt.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** $(x - 2)$ ist ein Faktor von $f(x) = x^3 + kx^2 - x - 6$. Bestimme $k$ und alle reellen Nullstellen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(2) = 8 + 4k - 2 - 6 = 4k = 0 \\;\\Rightarrow\\; k = 0",
+            "why": "Faktorsatz."
+          },
+          {
+            "tex": "\\begin{array}{r|rrrr} & 1 & 0 & -1 & -6 \\\\ 2 & & 2 & 4 & 6 \\\\ \\hline & 1 & 2 & 3 & 0 \\end{array}",
+            "why": "Horner: herunterholen, mal 2, addieren; die fehlende Potenz x² bekommt die Null. Der letzte Wert ist der Rest."
+          },
+          {
+            "tex": "f(x) = (x - 2)(x^2 + 2x + 3)",
+            "why": "Die unteren Zahlen sind die Koeffizienten des Quotienten."
+          },
+          {
+            "tex": "x^2 + 2x + 3:\\ \\Delta = 4 - 12 < 0",
+            "why": "Der quadratische Rest hat keine reelle Nullstelle."
+          },
+          {
+            "tex": "\\text{einzige reelle Nullstelle: } x = 2",
+            "why": "Ein kubisches Polynom hat mindestens eine, hier genau eine."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Horner.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktoren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diskriminante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Bei $(x + 2)$ den Wert $+2$ statt $-2$ einsetzen.\n- Im Horner-Schema eine fehlende Potenz überspringen statt eine Null einzutragen.\n- Rest und Faktor verwechseln: Ein Faktor lässt den Rest 0.\n- Bei $(2x - 1)$ den Wert 1 statt $\\tfrac12$ einsetzen.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Faktorsatz und Restsatz anwenden",
+      "path": "02 Wiki/TMUA/02 Algebra und Funktionen/Aufgabentypen/Faktorsatz und Restsatz anwenden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein Polynom mit einem oder zwei unbekannten Koeffizienten wird durch Aussagen über **Faktoren** oder **Reste** festgelegt: *(x − 2) is a factor of ...*, *leaves a remainder of 5 when divided by (x + 1)*. Gefragt sind die Koeffizienten, ein Rest oder die vollständige Faktorisierung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Jede Aussage in eine Gleichung übersetzen:**\n   - *(x − a) ist Faktor* ⇒ $p(a) = 0$\n   - *Rest r bei Division durch (x − a)* ⇒ $p(a) = r$\n   - *Teiler (bx + c)* ⇒ die Nullstelle $x = -\\tfrac cb$ einsetzen\n2. **Das Gleichungssystem in den Koeffizienten lösen.**\n3. **Bei Division durch einen quadratischen Term** $(x - a)(x - b)$: Rest als $r(x) = cx + d$ ansetzen; $r(a) = p(a)$ und $r(b) = p(b)$ liefern $c$ und $d$.\n4. **Zur vollständigen Faktorisierung:** einen Faktor über Probieren der Teiler des konstanten Gliedes finden, dann dividieren oder den Rest durch Koeffizientenvergleich bestimmen.\n5. **Probe** mit einem der Werte."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> The polynomial $p(x) = x^3 + ax^2 + bx - 6$ has $(x - 1)$ as a factor, and leaves a remainder of $-8$ when divided by $(x + 1)$. What is the value of $a$?\n>\n> - **A** 1\n> - **B** 2\n> - **C** 3\n> - **D** $-1$\n> - **E** 5\n\n**Schritt 1:** $p(1) = 1 + a + b - 6 = 0 \\Rightarrow a + b = 5$. $p(-1) = -1 + a - b - 6 = -8 \\Rightarrow a - b = -1$.\n\n**Schritt 2:** Addieren: $2a = 4$, $a = 2$ (und $b = 3$).\n\n**Schritt 5:** $p(x) = x^3 + 2x^2 + 3x - 6$: $p(1) = 0$, $p(-1) = -1 + 2 - 3 - 6 = -8$.\n\nAntwort **B**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen beim Einsetzen:** Teiler $(x + 1)$ heißt $p(-1)$.\n- **Bei $(2x - 1)$ den Wert 1 einsetzen** statt $\\tfrac12$.\n- **Potenzen negativer Zahlen:** $(-1)^3 = -1$, $(-2)^4 = 16$.\n- **Den Rest bei quadratischem Teiler als Konstante ansetzen.**"
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> What is the remainder when $x^4 - 3x^2 + 5$ is divided by $(x + 2)$?\n>\n> - **A** 9\n> - **B** 1\n> - **C** 33\n> - **D** $-9$\n> - **E** 5\n\n> [!success]- Lösung\n> **A.** $p(-2) = 16 - 12 + 5 = 9$.\n> Wer $p(2)$ einsetzt, erhält hier zufällig ebenfalls 9, weil nur gerade Potenzen vorkommen -- ein Glücksfall, kein Verfahren.\n\n> [!question] Aufgabe 2\n> Given that $(2x - 1)$ is a factor of $2x^3 + kx^2 - 7x + 3$, find the value of $k$.\n>\n> - **A** 1\n> - **B** $-1$\n> - **C** 5\n> - **D** 3\n> - **E** $-5$\n\n> [!success]- Lösung\n> **A.** Nullstelle des Teilers: $x = \\tfrac12$. $2 \\cdot \\tfrac18 + k \\cdot \\tfrac14 - \\tfrac72 + 3 = \\tfrac14 + \\tfrac k4 - \\tfrac12 = 0$, also $k = 1$.\n> Wer $x = 1$ einsetzt, erhält $2 + k - 7 + 3 = 0$, also $k = 2$ -- steht nicht zur Wahl, ein Warnsignal.\n\n> [!question] Aufgabe 3\n> A polynomial $p(x)$ leaves a remainder of 5 when divided by $(x - 1)$ and a remainder of $-1$ when divided by $(x + 2)$. What is the remainder when $p(x)$ is divided by $(x - 1)(x + 2)$?\n>\n> - **A** $2x + 3$\n> - **B** $3x + 2$\n> - **C** $-6$\n> - **D** $2x - 3$\n> - **E** $x + 4$\n\n> [!success]- Lösung\n> **A.** $p(x) = q(x)(x - 1)(x + 2) + cx + d$. Einsetzen: $p(1) = c + d = 5$ und $p(-2) = -2c + d = -1$. Subtrahieren: $3c = 6$, $c = 2$, $d = 3$.\n> C ist das Produkt der beiden Reste -- ohne Grundlage."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Anzahl reeller Lösungen bestimmen** · **Algebraische Brüche vereinfachen und Formeln umstellen** · **Gleichungen in quadratischer Form**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Restsatz",
+      "md": "Welchen Rest lässt $2x^3 - 3x + 4$ bei Division durch $(x + 1)$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f(-1) = -2 + 3 + 4 = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$(x - 1)$ and $(x + 2)$ are both factors of $x^3 + ax^2 + bx - 6$. What is the value of $a$?",
+      "options": [
+        {
+          "md": "-1"
+        },
+        {
+          "md": "1"
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "4",
+          "correct": true
+        },
+        {
+          "md": "5"
+        },
+        {
+          "md": "7"
+        }
+      ],
+      "explain": "$f(1) = 0$: $a + b = 5$. $f(-2) = 0$: $-8 + 4a - 2b - 6 = 0$, also $2a - b = 7$. Addieren: $3a = 12$, $a = 4$ (und $b = 1$).",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Zwei Bedingungen",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Horner",
+      "md": "Bringe das Horner-Schema für die Division durch $(x - a)$ in die richtige Reihenfolge.",
+      "items": [
+        "alle Koeffizienten der Reihe nach notieren, fehlende Potenzen als 0",
+        "den ersten Koeffizienten herunterholen",
+        "mit $a$ multiplizieren und unter den nächsten Koeffizienten schreiben",
+        "addieren und das Ergebnis herunterschreiben, dann wiederholen",
+        "die letzte Zahl ist der Rest, die übrigen sind die Koeffizienten des Quotienten"
+      ],
+      "explain": "Die Reihenfolge: 1. alle Koeffizienten der Reihe nach notieren, fehlende Potenzen als 0. 2. den ersten Koeffizienten herunterholen. 3. mit $a$ multiplizieren und unter den nächsten Koeffizienten schreiben. 4. addieren und das Ergebnis herunterschreiben, dann wiederholen. 5. die letzte Zahl ist der Rest, die übrigen sind die Koeffizienten des Quotienten.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $(2x - 1)$ ein Faktor von $f$, dann ist $f\\left(\\tfrac12\\right) = 0$.",
+      "answer": true,
+      "explain": "$(2x - 1) = 2\\left(x - \\tfrac12\\right)$; Faktorsatz mit $a = \\tfrac12$.",
+      "label": "Faktorsatz",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -71,6 +273,51 @@
       "shuffle": false,
       "label": "Test question",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Faktor $(x - a)$: $f(a) = 0$; Rest bei $(x - a)$: $f(a)$; bei $(bx - c)$: $f(\\tfrac cb)$.",
+        "Horner-Schema mit Nullen für fehlende Potenzen; der quadratische Rest entscheidet über weitere Nullstellen."
+      ]
     }
   ]
 }

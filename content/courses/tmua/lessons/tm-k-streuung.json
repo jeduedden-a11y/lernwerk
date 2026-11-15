@@ -19,6 +19,340 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!definition] Lagemaße\n> **Mittelwert** (*mean*) $\\bar x = \\tfrac{\\text{Summe}}{\\text{Anzahl}}$; **Median** der mittlere Wert der geordneten Liste (bei gerader Anzahl das Mittel der beiden mittleren); **Modus** der häufigste Wert.\n\n> [!definition] Streumaße\n> **Spannweite** (*range*) größter minus kleinster Wert; **Quartilsabstand** $Q_3 - Q_1$; **Standardabweichung** $\\sigma = \\sqrt{\\tfrac1n \\sum (x_i - \\bar x)^2}$, die typische Entfernung vom Mittelwert. Ihr Quadrat heißt **Varianz**.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung: Was mit Mittelwert und Standardabweichung passiert, wenn man jeden Wert verändert.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y_i = a x_i + b \\;\\Rightarrow\\; \\bar y = \\frac1n\\sum (a x_i + b) = a\\bar x + b",
+            "why": "Der Mittelwert macht jede lineare Änderung mit."
+          },
+          {
+            "tex": "y_i - \\bar y = a(x_i - \\bar x)",
+            "why": "Die Abweichungen vom Mittelwert werden nur mit a multipliziert; b fällt heraus."
+          },
+          {
+            "tex": "\\sigma_y = \\sqrt{\\frac1n \\sum a^2 (x_i - \\bar x)^2} = |a|\\,\\sigma_x",
+            "why": "Die Standardabweichung wird mit |a| multipliziert, eine Verschiebung ändert sie nicht."
+          },
+          {
+            "tex": "\\text{Median, Quartile: wie der Mittelwert; Spannweite, IQR: wie } \\sigma",
+            "why": "Lagemaße verschieben sich mit, Streumaße nur mit dem Faktor."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abweichungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Streuung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Übersicht.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ausreißer",
+      "md": "**Ein Ausreißer:** die Daten 2, 3, 3, 4, 5, 6, 7 und ein achter Wert $X$. Orange der Mittelwert, grün der Median.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          32
+        ],
+        "y": [
+          0,
+          2
+        ],
+        "xLabel": "Wert",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 32,
+            "value": 8,
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 2,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": 1.18,
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 5,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 6,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": 7,
+            "y": 1.0,
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": 1,
+            "color": "red",
+            "label": "X"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "(30 + X)/8",
+            "color": "orange",
+            "dashed": false,
+            "width": 2
+          },
+          {
+            "x": 4.5,
+            "color": "green",
+            "dashed": false,
+            "width": 2
+          }
+        ],
+        "readout": "X = {X|0} · Mittelwert {(30 + X)/8|3} · Median 4,5 · Spannweite {X - 2|0}"
+      },
+      "timeline": [
+        {
+          "caption": "X = 8: Mittelwert 4,75, Median 4,5. Beide liegen in der Mitte der Daten.",
+          "set": {
+            "X": 8
+          }
+        },
+        {
+          "caption": "X = 16: Der Mittelwert wandert zu 5,75, der Median bleibt.",
+          "to": {
+            "X": 16
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "X = 30: Mittelwert 7,5, größer als sieben der acht Werte. Der Median ist robust gegen Ausreißer, der Mittelwert nicht.",
+          "to": {
+            "X": 30
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lage- und Streumaße",
+      "path": "02 Wiki/TMUA/14 Statistik und Wahrscheinlichkeit/Lage- und Streumaße.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die drei Mittelwerte",
+          "blocks": [
+            {
+              "md": "| deutsch | englisch | Definition |\n|---|---|---|\n| arithmetisches Mittel | *mean* | Summe geteilt durch Anzahl |\n| Median, Zentralwert | *median* | mittlerer Wert der **geordneten** Liste |\n| Modus, häufigster Wert | *mode* | der am häufigsten auftretende Wert |\n\nBei **gerader** Anzahl ist der Median das Mittel der beiden mittleren Werte. Der Modus kann fehlen oder mehrfach vorkommen; *mean* und *median* sind stets eindeutig.\n\n> [!important] Die Summe ist der eigentliche Rechenweg\n> $$\\text{Summe} = \\text{Mittelwert} \\times \\text{Anzahl}.$$\n> Fast jede Mittelwertaufgabe des Tests löst sich, indem man vom Mittelwert auf die **Summe** umschaltet, dort die Änderung ausführt und anschließend wieder teilt. Wer mit Mittelwerten direkt zu rechnen versucht, verrechnet sich."
+            }
+          ]
+        },
+        {
+          "title": "Streumaße",
+          "blocks": [
+            {
+              "md": "| Maß | englisch | Definition |\n|---|---|---|\n| Spannweite | *range* | größter minus kleinster Wert |\n| Quartilsabstand | *interquartile range* (IQR) | $Q_3 - Q_1$ |\n| unteres, oberes Quartil | *lower/upper quartile* | Median der unteren bzw. oberen Hälfte |\n\nDer **IQR** ist robuster als die Spannweite, weil er von einzelnen Ausreißern nicht beeinflusst wird. Genau das wird im Test gefragt: welches Maß sich ändert, wenn ein Ausreißer hinzukommt."
+            }
+          ]
+        },
+        {
+          "title": "Wie Änderungen wirken",
+          "blocks": [
+            {
+              "md": "Diese Tabelle beantwortet die meisten Aufgaben dieses Themas ohne Rechnung:\n\n| Änderung an allen Werten | Mittelwert | Median | Spannweite, IQR, Standardabweichung |\n|---|---|---|---|\n| $+ c$ zu jedem Wert | $+ c$ | $+ c$ | **unverändert** |\n| $\\times k$ bei jedem Wert | $\\times k$ | $\\times k$ | $\\times \\lvert k\\rvert$ |\n\n> [!tip] Verschiebungen ändern keine Streuung\n> Addiert man zu allen Werten dieselbe Zahl, rücken sie gemeinsam weiter -- ihre **Abstände** zueinander bleiben gleich. Deshalb ändert sich kein Streumaß. Bei einer Multiplikation dagegen skalieren auch die Abstände mit."
+            }
+          ]
+        },
+        {
+          "title": "Mittelwert aus einer Häufigkeitstabelle",
+          "blocks": [
+            {
+              "md": "$$\\bar x = \\frac{\\sum f x}{\\sum f}.$$\n\nBei **gruppierten** Daten nimmt man die Klassenmitte als Wert; das Ergebnis ist dann eine **Schätzung** (*estimated mean*) -- das Wort *estimate* in der Aufgabenstellung ist ein sicheres Erkennungszeichen für gruppierte Daten."
+            }
+          ]
+        },
+        {
+          "title": "Ausreißer und Vergleiche",
+          "blocks": [
+            {
+              "md": "- Ein einzelner extremer Wert verschiebt den **Mittelwert** stark, den **Median** kaum.\n- Sind die Daten rechtsschief (ein langer Ausläufer nach oben), liegt der Mittelwert **über** dem Median.\n- Vergleicht man zwei Datensätze, nennt man immer **ein Lagemaß und ein Streumaß** -- das ist die im britischen Unterricht erwartete Form einer Antwort."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fehler",
+          "blocks": [
+            {
+              "md": "- **Den Median ohne Sortieren ablesen.**\n- **Bei gerader Anzahl den unteren der beiden mittleren Werte** als Median angeben.\n- **Modus und Häufigkeit verwechseln:** Der Modus ist der **Wert**, nicht seine Anzahl.\n- **Bei gruppierten Daten den exakten Mittelwert behaupten.**\n- **Annehmen, dass eine Verschiebung die Streuung ändert.**\n\nVerwandt: **Histogramme, Summenhäufigkeit und Streudiagramme** · Aufgabentyp: **Mittelwert nach Änderung der Daten**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "match",
+      "label": "Maße",
+      "md": "Ordne jedem Maß seine Beschreibung zu.",
+      "pairs": [
+        [
+          "Median",
+          "mittlerer Wert der geordneten Liste"
+        ],
+        [
+          "Modus",
+          "häufigster Wert"
+        ],
+        [
+          "Spannweite",
+          "größter minus kleinster Wert"
+        ],
+        [
+          "Quartilsabstand",
+          "Breite der mittleren Hälfte"
+        ],
+        [
+          "Standardabweichung",
+          "typische Entfernung vom Mittelwert"
+        ]
+      ],
+      "explain": "Lagemaße sagen, wo die Daten liegen, Streumaße, wie weit sie auseinanderliegen.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Each value in a data set is increased by 5 and then doubled. The original mean is $\\mu$ and the original standard deviation is $\\sigma$. What are the new mean and standard deviation?",
+      "options": [
+        {
+          "md": "$\\mu + 5$ and $\\sigma$",
+          "why": "Die Verdopplung fehlt."
+        },
+        {
+          "md": "$2\\mu + 5$ and $2\\sigma$",
+          "why": "Erst +5, dann verdoppelt: 2(μ + 5)."
+        },
+        {
+          "md": "$2\\mu + 10$ and $2\\sigma + 10$",
+          "why": "Die Verschiebung ändert die Streuung nicht."
+        },
+        {
+          "md": "$2\\mu + 10$ and $4\\sigma$",
+          "why": "Das wäre die Varianz."
+        },
+        {
+          "md": "$2\\mu + 10$ and $2\\sigma$",
+          "correct": true
+        }
+      ],
+      "explain": "Neuer Wert $2(x + 5) = 2x + 10$: Mittelwert $2\\mu + 10$, Standardabweichung $2\\sigma$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Transformation",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Addiert man zu jedem Wert dieselbe Zahl, bleibt die Standardabweichung gleich.",
+      "answer": true,
+      "explain": "Alle Abstände zum Mittelwert bleiben gleich.",
+      "label": "Verschiebung",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Median",
+      "md": "Die Werte 4, 7, 7, 9, 13 bekommen einen sechsten Wert 2. Wie groß ist der neue Median?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Geordnet 2, 4, 7, 7, 9, 13: Mittel der beiden mittleren Werte 7 und 7.",
+      "id": "vq4"
+    },
+    {
+      "type": "choice",
+      "md": "Ein einzelner sehr großer Wert kommt zu einer Datenreihe hinzu. Welches Maß ändert sich am wenigsten?",
+      "options": [
+        {
+          "md": "der Median",
+          "correct": true
+        },
+        {
+          "md": "der Mittelwert",
+          "why": "Er wird vom großen Wert mitgezogen."
+        },
+        {
+          "md": "die Spannweite",
+          "why": "Sie wächst bis zum neuen Maximum."
+        },
+        {
+          "md": "die Standardabweichung",
+          "why": "Sie wächst deutlich."
+        }
+      ],
+      "explain": "Der Median hängt nur von der Reihenfolge ab, nicht von der Größe der äußersten Werte.",
+      "label": "Robustheit",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "Each value in a data set is increased by 5 and then doubled. The original mean is $\\mu$ and standard deviation $\\sigma$. What are the new mean and standard deviation?",
       "options": [
@@ -42,12 +376,38 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Verschieben: Lage ändert sich, Streuung nicht.",
         "Strecken mit k: alles mal |k|, Varianz mal k².",
-        "Median robust gegen Ausreißer."
+        "Median robust gegen Ausreißer.",
+        "$x \\to ax + b$: Mittelwert $a\\bar x + b$, Standardabweichung $|a|\\sigma$.",
+        "Der Median ist robust gegen Ausreißer, der Mittelwert nicht."
       ],
       "id": "summary"
     }

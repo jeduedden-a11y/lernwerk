@@ -51,7 +51,7 @@
           {
             "name": "y",
             "expr": "4*exp(-d*x)*cos(2*pi*x)",
-            "color": "accent"
+            "color": "blue"
           },
           {
             "name": "h",
@@ -61,6 +61,331 @@
         ],
         "readout": "Nach 5 s ist die Amplitude auf {4*exp(-d*5)|2} cm gesunken; Halbwertszeit der Amplitude {ln(2)/max(d,0.0001)|1} s"
       }
+    },
+    {
+      "type": "text",
+      "md": "> [!definition] Gedämpfte Schwingung\n> Durch Reibung verliert ein Schwinger Energie, seine Amplitude nimmt ab. Bei Reibung proportional zur Geschwindigkeit nimmt sie **exponentiell** ab: $\\hat y(t) = \\hat y_0\\,e^{-\\delta t}$ mit der **Abklingkonstante** $\\delta$ in $\\mathrm{s}^{-1}$. Die Amplitude halbiert sich jeweils nach $t_{1/2} = \\tfrac{\\ln 2}{\\delta}$; die Energie $\\sim\\hat y^2$ halbiert sich doppelt so schnell.\n\n> [!definition] Logarithmisches Dekrement\n> Aufeinanderfolgende Amplituden (Abstand $T$) haben immer dasselbe Verhältnis $\\tfrac{\\hat y_n}{\\hat y_{n+1}} = e^{\\delta T}$. Sein Logarithmus $\\Lambda = \\ln\\tfrac{\\hat y_n}{\\hat y_{n+1}} = \\delta\\,T$ heißt logarithmisches Dekrement; daran erkennt man exponentielle Dämpfung in Messdaten.",
+      "label": "Definitionen",
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Schaubild",
+      "md": "**Ausklingen bei verschiedener Dämpfung.** Eigenperiode $1\\,\\mathrm{s}$; gestrichelt die Einhüllende $\\pm e^{-\\delta t}$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          6
+        ],
+        "y": [
+          -1.1,
+          1.1
+        ],
+        "xLabel": "t in s",
+        "yLabel": "y / ŷ₀",
+        "vars": [
+          {
+            "name": "d",
+            "min": 0.05,
+            "max": 1.5,
+            "value": 0.1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "yd",
+            "expr": "exp(-d*x)*cos(2*pi*x)",
+            "color": "blue",
+            "samples": 900
+          },
+          {
+            "name": "env",
+            "expr": "exp(-d*x)",
+            "color": "orange",
+            "dashed": true
+          },
+          {
+            "name": "env2",
+            "expr": "-exp(-d*x)",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "readout": "Abklingkonstante {d|2} 1/s: Amplitude halbiert sich nach **{ln(2)/d|2} s**; nach 6 s bleiben **{100*exp(-6*d)|1} %**"
+      },
+      "timeline": [
+        {
+          "caption": "Schwache Dämpfung ($\\delta = 0{,}1\\,\\mathrm{s}^{-1}$): Die Amplitude halbiert sich nach rund $7\\,\\mathrm{s}$; die Periodendauer bleibt praktisch gleich.",
+          "set": {
+            "d": 0.1
+          }
+        },
+        {
+          "caption": "Stärkere Dämpfung ($0{,}4\\,\\mathrm{s}^{-1}$): Halbierung nach $1{,}7\\,\\mathrm{s}$. In gleichen Zeitabständen schrumpft die Amplitude immer um denselben Faktor.",
+          "to": {
+            "d": 0.4
+          },
+          "dur": 2600
+        },
+        {
+          "caption": "Sehr starke Dämpfung ($1{,}5\\,\\mathrm{s}^{-1}$): Nach einer Schwingung ist kaum noch etwas übrig. Bei noch stärkerer Dämpfung schwingt der Körper gar nicht mehr über die Ruhelage hinaus (aperiodischer Fall); Stoßdämpfer am Auto sind so ausgelegt.",
+          "to": {
+            "d": 1.5
+          },
+          "dur": 2600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Abklingkonstante aus zwei Amplituden.** Gemessen: $\\hat y_1$ zur Zeit $t_1$ und $\\hat y_2$ zur Zeit $t_2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{\\hat y_2}{\\hat y_1} = \\frac{\\hat y_0 e^{-\\delta t_2}}{\\hat y_0 e^{-\\delta t_1}} = e^{-\\delta (t_2 - t_1)}",
+            "why": "Der Anfangswert kürzt sich."
+          },
+          {
+            "tex": "\\delta = \\frac{\\ln(\\hat y_1/\\hat y_2)}{t_2 - t_1}",
+            "why": "Logarithmieren und auflösen."
+          },
+          {
+            "tex": "8\\,\\mathrm{cm} \\to 4\\,\\mathrm{cm} \\text{ in } 2\\,\\mathrm{s}:\\quad \\delta = \\frac{\\ln 2}{2\\,\\mathrm{s}} \\approx 0{,}347\\,\\mathrm{s}^{-1}",
+            "why": "Zahlenbeispiel."
+          },
+          {
+            "tex": "\\hat y(5\\,\\mathrm{s}) = 8\\,\\mathrm{cm}\\cdot e^{-0{,}347\\cdot 5} \\approx 1{,}41\\,\\mathrm{cm}",
+            "why": "Vorhersage für eine spätere Zeit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Verhältnis.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abklingkonstante.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorhersage.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gedämpfte Schwingung",
+      "path": "02 Wiki/Physik/03 Q2 Schwingungen und Wellen/Gedämpfte Schwingung.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Bei einer **gedämpften Schwingung** verliert das System durch Reibung fortlaufend Energie; die **Amplitude nimmt ab** (meist exponentiell), während die Frequenz nahezu gleich bleibt."
+            }
+          ]
+        },
+        {
+          "title": "Amplitudenverlauf",
+          "blocks": [
+            {
+              "chart": {
+                "type": "line",
+                "labels": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10"
+                ],
+                "series": [
+                  {
+                    "title": "Auslenkung y (gedämpft)",
+                    "data": [
+                      1.0,
+                      0.5,
+                      -0.66,
+                      0.44,
+                      0.44,
+                      -0.29,
+                      -0.29,
+                      0.19,
+                      0.19,
+                      -0.13,
+                      0.08
+                    ]
+                  },
+                  {
+                    "title": "Amplituden-Einhüllende",
+                    "data": [
+                      1.0,
+                      0.82,
+                      0.67,
+                      0.55,
+                      0.45,
+                      0.37,
+                      0.3,
+                      0.25,
+                      0.2,
+                      0.17,
+                      0.14
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "md": "*Die Einhüllende der Amplitude fällt exponentiell -- die mechanische Energie wird in **innere Energie** umgewandelt.*"
+            }
+          ]
+        },
+        {
+          "title": "Dämpfungsfälle",
+          "blocks": [
+            {
+              "md": "- **Schwingfall** (schwache Dämpfung): das System schwingt mit abnehmender Amplitude aus.\n- **aperiodischer Grenzfall**: schnellste Rückkehr in die Ruhelage ohne Überschwingen.\n- **Kriechfall** (starke Dämpfung): langsame Rückkehr ohne Schwingung.\n\n> [!tip] Bezug\n> Wird die Energie periodisch von außen nachgeliefert, entsteht eine **erzwungene Schwingung**."
+            }
+          ]
+        },
+        {
+          "title": "Was gedämpft wird und was nicht",
+          "blocks": [
+            {
+              "md": "> [!important] Die Amplitude nimmt ab, die Frequenz bleibt nahezu gleich\n> Das ist zunächst überraschend: Die Schwingung wird schwächer, aber nicht langsamer.\n>\n> Der Grund liegt in der Formel $T = 2\\pi\\sqrt{m/D}$ -- die Periodendauer hängt nur von Trägheit und Rückstellgröße ab, nicht von der Amplitude. Solange die Dämpfung schwach ist, ändert sie daran wenig.\n>\n> Erst bei starker Dämpfung wird die Schwingung merklich langsamer, bis sie im aperiodischen Grenzfall ganz aufhört.\n>\n> Praktische Folge: Eine Pendeluhr geht auch dann richtig, wenn die Amplitude durch Reibung nachlässt. Genau darauf beruht ihre Brauchbarkeit als Zeitmesser -- ein amplitudenabhängiges Pendel wäre unbrauchbar."
+            }
+          ]
+        },
+        {
+          "title": "Der exponentielle Abfall",
+          "blocks": [
+            {
+              "md": "$$\\hat y(t) = \\hat y_0\\,e^{-\\delta t}$$\n\n> [!tip] Weshalb gerade exponentiell\n> Die Reibungskraft ist der Geschwindigkeit proportional. Je schneller das System schwingt, desto mehr Energie verliert es -- der Verlust ist also dem Vorhandenen proportional.\n>\n> Genau das ist die Bedingung für exponentiellen Abfall. Dieselbe Struktur trägt den **radioaktiven Zerfall**, die Entladung eines **Kondensators** und in der Chemie die Reaktion erster Ordnung.\n>\n> Daraus folgt auch, dass es keine feste \"Auslaufzeit\" gibt, sondern nur eine **Halbwertszeit** -- die Zeit, in der die Amplitude auf die Hälfte fällt, ist unabhängig vom Ausgangswert.\n>\n> Die Energie fällt dabei doppelt so schnell wie die Amplitude, weil sie quadratisch von ihr abhängt."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Dämpfungsfälle",
+          "blocks": [
+            {
+              "md": "| Fall | Verhalten | Anwendung |\n|---|---|---|\n| **Schwingfall** | schwingt mit abnehmender Amplitude aus | Pendel, Musikinstrument |\n| **aperiodischer Grenzfall** | schnellste Rückkehr **ohne** Überschwingen | Messgerät, Türschließer |\n| **Kriechfall** | langsame Rückkehr ohne Schwingung | überdämpftes System |\n\n> [!important] Der Grenzfall ist der technisch angestrebte\n> Ein Stoßdämpfer soll das Auto weder nachschwingen lassen (Schwingfall) noch träge zurückkehren (Kriechfall), sondern die Ruhelage möglichst rasch und ohne Überschwingen erreichen.\n>\n> Deshalb prüft man Stoßdämpfer, indem man das Auto einfedert und loslässt: Schwingt es mehrfach nach, sind sie verschlissen.\n>\n> Dasselbe gilt für Zeigermessgeräte -- ein überschwingender Zeiger wäre schwer abzulesen -- und für Türschließer.\n>\n> Bemerkenswert: Mehr Dämpfung ist also nicht immer besser. Es gibt ein Optimum, und es liegt genau an der Grenze zur Schwingungsfähigkeit."
+            }
+          ]
+        },
+        {
+          "title": "Bezug zur Resonanz",
+          "blocks": [
+            {
+              "md": "Bei der **erzwungenen Schwingung** bestimmt die Dämpfung, wie hoch die Resonanzüberhöhung ausfällt. Ohne Dämpfung würde die Amplitude theoretisch unbegrenzt wachsen -- die **Resonanzkatastrophe**.\n\nDeshalb werden Brücken und Hochhäuser gezielt gedämpft, etwa durch Schwingungstilger. Dämpfung ist hier nicht Verlust, sondern Sicherheitsmerkmal."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Die gedämpfte Schwingung ist der Übergang vom idealisierten zum realen Modell -- wie die **Reibung** in der Mechanik. Sie motiviert die **numerische Simulation** und ist Voraussetzung für das Verständnis der **Resonanz**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Die Amplitude sinkt in $3\\,\\mathrm{s}$ von $10\\,\\mathrm{cm}$ auf $6\\,\\mathrm{cm}$. Wie groß ist die Abklingkonstante?",
+      "answer": 0.17,
+      "tolerance": 0.002,
+      "placeholder": "1/s",
+      "explain": "$\\delta = \\tfrac{\\ln(10/6)}{3\\,\\mathrm{s}} \\approx \\tfrac{0{,}511}{3}\\,\\mathrm{s}^{-1} \\approx 0{,}170\\,\\mathrm{s}^{-1}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie groß ist die Amplitude dann nach insgesamt $9\\,\\mathrm{s}$?",
+      "answer": 2.16,
+      "tolerance": 0.02,
+      "placeholder": "cm",
+      "explain": "Dreimal derselbe Faktor $0{,}6$: $10\\cdot 0{,}6^3\\,\\mathrm{cm} = 2{,}16\\,\\mathrm{cm}$.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Energie",
+      "md": "Bei einer Dämpfung halbiert sich die Amplitude alle $4\\,\\mathrm{s}$. Nach welcher Zeit hat sich die Schwingungsenergie halbiert?",
+      "answer": 2,
+      "tolerance": 0.01,
+      "placeholder": "s",
+      "explain": "$E \\sim \\hat y^2 \\sim e^{-2\\delta t}$: Die Energie halbiert sich in der halben Zeit, nach $2\\,\\mathrm{s}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Woran erkennt man in einer Messreihe, dass die Dämpfung exponentiell ist?",
+      "options": [
+        {
+          "md": "Aufeinanderfolgende Amplituden haben immer dasselbe Verhältnis.",
+          "correct": true
+        },
+        {
+          "md": "Die Amplituden nehmen immer um denselben Betrag ab.",
+          "why": "Das wäre lineare Abnahme, typisch für Gleitreibung."
+        },
+        {
+          "md": "Die Periodendauer nimmt zu.",
+          "why": "Bei schwacher Dämpfung bleibt sie fast gleich."
+        },
+        {
+          "md": "Die Amplitude wird nach endlicher Zeit null.",
+          "why": "Exponentiell erreicht sie null nie ganz."
+        }
+      ],
+      "explain": "$\\tfrac{\\hat y_n}{\\hat y_{n+1}} = e^{\\delta T}$ ist konstant.",
+      "label": "Auswerten",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei Gleitreibung (konstante Reibungskraft) nimmt die Amplitude linear statt exponentiell ab.",
+      "answer": true,
+      "explain": "Eine konstante Reibungskraft nimmt pro Halbschwingung immer gleich viel Amplitude weg; nur geschwindigkeitsproportionale Reibung gibt die e-Funktion.",
+      "label": "Extrem",
+      "id": "vq5"
     },
     {
       "id": "faktor",
@@ -96,13 +421,39 @@
       "level": 1
     },
     {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "daempfung"
+        ]
+      },
+      "label": "Rückwärts rechnen",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phy-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "daempfung"
+        ]
+      },
+      "label": "Vertiefung",
+      "id": "vx2"
+    },
+    {
       "id": "summary",
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "$\\hat{y}(t) = \\hat{y}_0 e^{-\\delta t}$.",
         "Gleiche Zeitabstände, gleicher Faktor.",
-        "Die Periodendauer bleibt bei schwacher Dämpfung fast gleich."
+        "Die Periodendauer bleibt bei schwacher Dämpfung fast gleich.",
+        "$\\hat y(t) = \\hat y_0 e^{-\\delta t}$; $t_{1/2} = \\tfrac{\\ln2}{\\delta}$; Energie halbiert sich doppelt so schnell.",
+        "$\\delta = \\tfrac{\\ln(\\hat y_1/\\hat y_2)}{t_2 - t_1}$; konstantes Amplitudenverhältnis zeigt exponentielle Dämpfung."
       ]
     }
   ]

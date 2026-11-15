@@ -18,7 +18,7 @@ struct ReviewView: View {
                         ContentUnavailableView {
                             Label("Noch nichts zu wiederholen", systemImage: "arrow.clockwise")
                         } description: {
-                            Text("Nach jeder Lektion kommen ihre Aufgaben hierher zurück: erst nach Stunden, dann nach Tagen, dann nach Wochen. Was sitzt, kommt seltener. Die Werte sind dabei jedes Mal neu.")
+                            Text("Nach jeder Lektion kommen ihre Aufgaben hierher zurück: erst nach Stunden, dann nach Tagen, dann nach Wochen. Was du sicher kannst, kommt seltener. Die Werte sind dabei jedes Mal neu.")
                         }
                         .padding(.top, 24)
                     } else {
@@ -53,7 +53,7 @@ struct ReviewView: View {
 /// The daily mix: due repetitions and new tasks from every subject in one round, weak topics first.
 struct MixCard: View {
     @Environment(AppModel.self) private var model
-    static let colors = [Color(hex: "#EC4899"), Color(hex: "#8B5CF6")]
+    static let colors = [Color(hex: "#D2502C"), Color(hex: "#C22B42")]
 
     var body: some View {
         let plan = model.mixPlan()
@@ -213,7 +213,7 @@ struct StageCard: View {
         let total = max(1, cards.count)
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Wie fest es sitzt").font(.headline)
+                Text("Sicherheit").font(.headline)
                 Spacer()
                 Text("\(cards.count) Aufgaben").font(.subheadline).foregroundStyle(.secondary)
             }

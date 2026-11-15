@@ -16,6 +16,268 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "> [!tip] Lösungsschema mit Begründung\n> 1. **Ableiten** und die Steigung $m = f'(x_0)$ berechnen.\n> 2. **Den Punkt** $(x_0, f(x_0))$ bestimmen.\n> 3. **Gerade aufstellen:** $y - y_0 = m(x - x_0)$.\n> 4. **Normale:** Sie steht senkrecht auf der Tangente, Steigung $-\\tfrac1m$ (für $m \\ne 0$); bei waagerechter Tangente ist die Normale die senkrechte Gerade $x = x_0$. Schnittpunkte mit den Achsen durch $x = 0$ bzw. $y = 0$.",
+      "label": "Verfahren",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Durchgerechnet:** Tangente und Normale an $y = x^3 - 2x$ bei $x = 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y' = 3x^2 - 2 \\;\\Rightarrow\\; m = 1",
+            "why": "Steigung."
+          },
+          {
+            "tex": "y_0 = 1 - 2 = -1",
+            "why": "Punkt (1, −1)."
+          },
+          {
+            "tex": "\\text{Tangente: } y + 1 = 1 \\cdot (x - 1) \\iff y = x - 2",
+            "why": "Punkt-Steigungs-Form."
+          },
+          {
+            "tex": "\\text{Normale: } y + 1 = -(x - 1) \\iff y = -x",
+            "why": "Steigung −1/m = −1; sie geht durch den Ursprung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Steigung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangente.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normale.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Normale",
+      "md": "**Tangente und Normale wandern mit:** blau $y = \\tfrac12 x^2$, orange die Tangente, grün die Normale im Punkt bei $x = X$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          4
+        ],
+        "y": [
+          -1,
+          7
+        ],
+        "height": 300,
+        "xLabel": "x",
+        "grid": false,
+        "vars": [
+          {
+            "name": "X",
+            "min": -3,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2/2",
+            "color": "blue",
+            "samples": 300
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "length": 2,
+            "color": "orange"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X - 1.6*X/sqrt(1 + X^2)",
+              "X^2/2 + 1.6/sqrt(1 + X^2)"
+            ],
+            "to": [
+              "X + 1.6*X/sqrt(1 + X^2)",
+              "X^2/2 - 1.6/sqrt(1 + X^2)"
+            ],
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "X^2/2",
+            "color": "orange"
+          }
+        ],
+        "readout": "x = {X|2} · Tangentensteigung {X|2} · Normalensteigung −1/x = {-1/X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 1: Tangente mit Steigung 1, Normale mit Steigung −1.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Bei x = 2: Tangente 2, Normale −1/2. Das Produkt ist immer −1.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = −1,5: Die Tangente fällt, die Normale steigt.",
+          "to": {
+            "X": -1.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Typische Fallen**\n- Die Steigung der Normale als $-m$ statt $-\\tfrac1m$ nehmen.\n- Mit $f'(x_0)$ als y-Wert rechnen statt mit $f(x_0)$.\n- Bei waagerechter Tangente eine »Steigung $-\\tfrac10$« ansetzen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Tangente und Normale ohne Hilfsmittel",
+      "path": "02 Wiki/TMUA/10 Differenzialrechnung/Aufgabentypen/Tangente und Normale ohne Hilfsmittel.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist die Gleichung einer **Tangente** oder **Normalen** an eine Kurve, oder eine Folgegröße daraus: Achsenabschnitt, Schnittpunkt mit einer anderen Geraden, Fläche des entstehenden Dreiecks.\n\nManchmal ist nicht die Stelle, sondern die **Steigung** gegeben: *„the tangent to $y = x^2$ with gradient 6\"*. Dann beginnt man mit $f'(x) = 6$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Stelle bestimmen**, falls sie nicht gegeben ist (aus $f'(x) = m$).\n2. **Punkt berechnen:** $y_0 = f(a)$.\n3. **Steigung berechnen:** $m = f'(a)$.\n4. **Für die Normale** den negativen Kehrwert nehmen: $m_N = -\\tfrac1m$.\n5. **Punkt-Steigungs-Form** anschreiben: $y - y_0 = m\\,(x - a)$.\n6. **Auf die Form der Antwortoptionen bringen** -- häufig $ax + by = c$.\n\n> [!important] Punkt und Steigung kommen aus verschiedenen Funktionen\n> Der Punkt kommt aus $f$, die Steigung aus $f'$. Beides zu verwechseln ist der mit Abstand häufigste Fehler dieses Aufgabentyps -- und beide falschen Kombinationen stehen in den Optionen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "> [!example] Aufgabe\n> Find the equation of the normal to the curve $y = x^2 - 4x + 5$ at the point where $x = 3$.\n>\n> - **A** $x + 2y = 7$\n> - **B** $y = 2x - 4$\n> - **C** $x + 2y = 3$\n> - **D** $y = -2x + 8$\n> - **E** $2x + y = 8$\n\n**Schritt 2:** $f(3) = 9 - 12 + 5 = 2$, der Punkt ist $(3, 2)$.\n\n**Schritt 3:** $f'(x) = 2x - 4$, also $f'(3) = 2$.\n\n**Schritt 4:** Normalensteigung $-\\tfrac12$.\n\n**Schritt 5:** $y - 2 = -\\tfrac12(x - 3)$.\n\n**Schritt 6:** Mit 2 multiplizieren: $2y - 4 = -x + 3$, also $x + 2y = 7$. Antwort **A**.\n\n**Probe:** Der Punkt $(3, 2)$ erfüllt $3 + 4 = 7$. Stimmt.\n\nOption B ist die **Tangente** -- die Falle für alle, die Schritt 4 überspringen.\n\n> [!tip] Die Zwei-Sekunden-Probe\n> Die richtige Gerade muss durch den berechneten Punkt gehen. Punkt einsetzen und prüfen -- das schließt in der Regel drei der fünf Optionen aus, ohne dass man die eigene Rechnung nachvollziehen muss."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Die Tangente statt der Normalen angeben** (oder umgekehrt).\n- **Beim Kehrwert das Vorzeichen vergessen:** aus $m = 2$ wird $-\\tfrac12$, nicht $\\tfrac12$.\n- **$f(a)$ und $f'(a)$ vertauschen.**\n- **Bei waagerechter Tangente** ($f'(a) = 0$) die Normale über den Kehrwert suchen -- sie lautet $x = a$.\n- **Die Gerade nicht in die verlangte Form bringen** und deshalb die richtige Option nicht wiedererkennen."
+            }
+          ]
+        },
+        {
+          "title": "Übungsaufgaben",
+          "blocks": [
+            {
+              "md": "> [!question] Aufgabe 1\n> Find the equation of the tangent to $y = x^3 - 2x$ at the point where $x = 1$.\n>\n> - **A** $y = x - 2$\n> - **B** $y = x + 2$\n> - **C** $y = -x$\n> - **D** $y = 3x - 4$\n> - **E** $y = x - 1$\n\n> [!success]- Lösung\n> **A.** $f(1) = 1 - 2 = -1$, also der Punkt $(1, -1)$.\n> $f'(x) = 3x^2 - 2$, also $f'(1) = 1$.\n> $y + 1 = 1\\,(x - 1)$, damit $y = x - 2$.\n> Probe: $x = 1$ gibt $y = -1$. Stimmt.\n> D entsteht, wenn man $-2$ beim Ableiten mitschleppt.\n\n> [!question] Aufgabe 2\n> The normal to the curve $y = \\sqrt x$ at the point where $x = 4$ crosses the $y$-axis at\n>\n> - **A** 18\n> - **B** 3\n> - **C** 1\n> - **D** 2\n> - **E** $-14$\n\n> [!success]- Lösung\n> **A.** $f(4) = 2$, der Punkt ist $(4, 2)$.\n> $f'(x) = \\tfrac{1}{2\\sqrt x}$, also $f'(4) = \\tfrac14$; die Normalensteigung ist der negative Kehrwert $-4$.\n> $y - 2 = -4(x - 4)$, also $y = -4x + 18$; bei $x = 0$ ist $y = 18$.\n> B entsteht mit der Steigung $-\\tfrac14$ statt $-4$ (Kehrwert vergessen), C ist der Achsenabschnitt der **Tangente** $y = \\tfrac14 x + 1$, D der $y$-Wert des Berührpunkts.\n\n> [!question] Aufgabe 3\n> The tangent to $y = x^2$ with gradient 6 crosses the $x$-axis at\n>\n> - **A** $x = \\tfrac32$\n> - **B** $x = 3$\n> - **C** $x = -\\tfrac32$\n> - **D** $x = 9$\n> - **E** $x = 0$\n\n> [!success]- Lösung\n> **A.** $f'(x) = 2x = 6$ liefert $x = 3$, also den Punkt $(3, 9)$.\n> Tangente: $y - 9 = 6(x - 3)$, also $y = 6x - 9$. Nullstelle bei $x = \\tfrac96 = \\tfrac32$.\n> B ist die Berührstelle, D der Funktionswert dort -- beide Zwischenergebnisse stehen als Optionen bereit. Die Aufgabe fragt nach der **Nullstelle der Tangente**.\n>\n> **Allgemein:** Die Tangente an $y = x^2$ im Punkt $(a, a^2)$ schneidet die $x$-Achse stets bei $\\tfrac a2$ -- eine Eigenschaft, die im Test gelegentlich direkt abgefragt wird."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Senkrechte und Mittelsenkrechte aufstellen** · **Stationäre Punkte bestimmen und klassifizieren** · **Terme vor dem Ableiten umschreiben**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Tangente",
+      "md": "Die Tangente an $y = x^2 + 3x$ bei $x = 1$ schneidet die x-Achse bei welchem $x$? Gib das Ergebnis als Dezimalzahl an.",
+      "answer": 0.2,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$m = 5$, Punkt $(1, 4)$: $y = 4 + 5(x - 1)$; $y = 0$ bei $x = 1 - \\tfrac45 = 0{,}2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "The tangent to a curve at a point has gradient $\\tfrac23$. What is the gradient of the normal at that point?",
+      "options": [
+        {
+          "md": "$-\\tfrac32$",
+          "correct": true
+        },
+        {
+          "md": "$-1$"
+        },
+        {
+          "md": "$-\\tfrac23$"
+        },
+        {
+          "md": "$\\tfrac23$"
+        },
+        {
+          "md": "$\\tfrac32$"
+        }
+      ],
+      "explain": "Senkrecht: Produkt der Steigungen $-1$, also $-\\tfrac32$.",
+      "lang": "en",
+      "shuffle": false,
+      "label": "Normale",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist die Tangente in einem Punkt waagerecht, dann ist die Normale dort eine senkrechte Gerade.",
+      "answer": true,
+      "explain": "Senkrecht auf einer Waagerechten steht eine Senkrechte x = x₀.",
+      "label": "Sonderfall",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -87,6 +349,51 @@
       },
       "label": "Rechentraining",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "tangentenormal"
+        ]
+      },
+      "label": "Practice",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "tangentenormal"
+        ]
+      },
+      "label": "Test level",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "tmua-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "tangentenormal"
+        ]
+      },
+      "label": "Hard",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Tangente $y - y_0 = f'(x_0)(x - x_0)$; Normale mit Steigung $-\\tfrac{1}{f'(x_0)}$.",
+        "Waagerechte Tangente: Normale ist die Senkrechte x = x₀."
+      ]
     }
   ]
 }
