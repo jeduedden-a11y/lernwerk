@@ -16,6 +16,145 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Jede Eigenschaft wird zu einer **Gleichung** für die Koeffizienten: Punkt $f(a) = b$, Extremstelle $f'(a) = 0$, Wendestelle $f''(a) = 0$. Für $n + 1$ Unbekannte braucht man $n + 1$ Gleichungen.",
+      "label": "Verfahren",
+      "more": "| Text | Bedingung |\n|---|---|\n| geht durch $P(a \\mid b)$ | $f(a) = b$ |\n| Extremstelle bei $a$ | $f'(a) = 0$ |\n| Wendestelle bei $a$ | $f''(a) = 0$ |\n| Steigung $m$ bei $a$ | $f'(a) = m$ |\n| berührt die x-Achse bei $a$ | $f(a) = 0$ und $f'(a) = 0$ |\n| Wendetangente $y = mx + c$ bei $a$ | $f''(a) = 0$, $f'(a) = m$, $f(a) = ma + c$ |\n\n**Schema:** allgemeinen Ansatz mit dem richtigen Grad aufschreiben, ableiten, Bedingungen übersetzen, das Gleichungssystem lösen, am Ende prüfen, ob die Eigenschaften wirklich erfüllt sind (Hochpunkt statt Tiefpunkt?). **Symmetrie** spart Arbeit: Achsensymmetrie heißt nur gerade Exponenten.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Grad 3, Hochpunkt $H(0 \\mid 4)$, Wendepunkt $W(1 \\mid 2)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = ax^3 + bx^2 + cx + d",
+            "why": "Vier Unbekannte, vier Bedingungen nötig."
+          },
+          {
+            "tex": "f(0) = 4 \\Rightarrow d = 4, \\quad f'(0) = 0 \\Rightarrow c = 0",
+            "why": "Der Hochpunkt liefert zwei Bedingungen."
+          },
+          {
+            "tex": "f''(1) = 6a + 2b = 0 \\Rightarrow b = -3a",
+            "why": "Wendestelle."
+          },
+          {
+            "tex": "f(1) = a + b + 4 = 2 \\Rightarrow -2a = -2 \\Rightarrow a = 1",
+            "why": "Wendepunkt liegt bei y = 2."
+          },
+          {
+            "tex": "f(x) = x^3 - 3x^2 + 4",
+            "why": "Probe: f″(0) = −6 < 0, also wirklich ein Hochpunkt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hochpunkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendestelle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Probe",
+      "md": "**Probe im Bild:** $f(x) = x^3 - 3x^2 + 4$ hat den Hochpunkt $H(0 \\mid 4)$ und den Wendepunkt $W(1 \\mid 2)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.5,
+          3.5
+        ],
+        "y": [
+          -1,
+          6
+        ],
+        "grid": true,
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x^2 + 4",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": 1,
+            "color": "orange",
+            "length": 1.2
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 4,
+            "color": "accent",
+            "label": "H"
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "color": "green",
+            "label": "W"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 0 waagerechte Tangente und Rechtskrümmung: Hochpunkt."
+        },
+        {
+          "caption": "Bei x = 1 wechselt die Krümmung; orange die Wendetangente."
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Ein Extrempunkt liefert **zwei** Bedingungen ($f(a) = b$ und $f'(a) = 0$), ein Wendepunkt ebenso. Am Ende prüfen, ob es wirklich ein Hoch- oder Tiefpunkt ist.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Steckbriefaufgaben",
@@ -89,6 +228,47 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "»Der Graph berührt die x-Achse bei $x = 3$.« Welche Bedingungen liefert das?",
+      "options": [
+        {
+          "md": "$f(3) = 0$ und $f'(3) = 0$",
+          "correct": true
+        },
+        {
+          "md": "nur $f(3) = 0$",
+          "why": "Berühren heißt zusätzlich: waagerechte Tangente."
+        },
+        {
+          "md": "$f'(3) = 0$ und $f''(3) = 0$"
+        },
+        {
+          "md": "$f(0) = 3$"
+        }
+      ],
+      "explain": "Berührpunkt auf der Achse: Funktionswert 0 und Steigung 0.",
+      "label": "Übersetzen",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Scheitelform",
+      "md": "Eine Parabel hat den Scheitel $S(2 \\mid 1)$ und geht durch $P(0 \\mid 5)$. Bestimme $a$ in $f(x) = a(x - 2)^2 + 1$.",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f(0) = 4a + 1 = 5$, also $a = 1$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für eine ganzrationale Funktion vom Grad 4 braucht man im Allgemeinen fünf Bedingungen.",
+      "answer": true,
+      "explain": "Fünf Koeffizienten a bis e.",
+      "label": "Abzählen",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -151,6 +331,26 @@
       },
       "label": "Kubische Funktion",
       "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "steckbrief"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Jede Eigenschaft eine Gleichung; n + 1 Unbekannte brauchen n + 1 Bedingungen."
+      ]
     }
   ]
 }

@@ -66,6 +66,151 @@
       "id": "w1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung der Newton-Formel:** Die Tangente in $x_n$ ersetzt die Kurve; ihre Nullstelle ist die neue Näherung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "t(x) = f'(x_n)(x - x_n) + f(x_n)",
+            "why": "Tangente an der Stelle xₙ."
+          },
+          {
+            "tex": "0 = f'(x_n)(x - x_n) + f(x_n)",
+            "why": "Nullstelle der Tangente."
+          },
+          {
+            "tex": "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+            "why": "Nach x auflösen; das geht nur, wenn f′(xₙ) ≠ 0."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Tangente.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstelle.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Iteration",
+      "md": "**Drei Schritte zu $\\sqrt2$:** $f(x) = x^2 - 2$ mit dem Startwert $x_0 = 3$. Jede Tangente (orange) zeigt auf die nächste Näherung.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0.5,
+          3.5
+        ],
+        "y": [
+          -2.5,
+          8
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 1.3,
+            "max": 3.2,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          },
+          {
+            "x": "X - (X^2 - 2)/(2*X)",
+            "y": 0,
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "xₙ = {X|5} · xₙ₊₁ = {X - (X^2 - 2)/(2*X)|5}"
+      },
+      "timeline": [
+        {
+          "caption": "x₀ = 3: Die Tangente trifft die Achse bei 1,83333.",
+          "set": {
+            "X": 3
+          }
+        },
+        {
+          "caption": "x₁ = 1,83333: nächste Näherung 1,46212.",
+          "to": {
+            "X": 1.83333
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x₂ = 1,46212: dann 1,41500.",
+          "to": {
+            "X": 1.46212
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x₃ = 1,41500: schon 1,41421, auf fünf Stellen genau √2.",
+          "to": {
+            "X": 1.415
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "Newton-Schritt: $x_{n+1} = x_n - \\dfrac{f(x_n)}{f'(x_n)}$, die Nullstelle der Tangente als neue Näherung. Nahe der Nullstelle verdoppelt sich die Zahl der richtigen Stellen mit jedem Schritt.",
+      "label": "Verfahren",
+      "more": "**Vorgehen:** Startwert in der Nähe der gesuchten Nullstelle wählen (Skizze, Vorzeichenwechsel), iterieren, aufhören, wenn sich die gewünschten Nachkommastellen nicht mehr ändern.\n\n**Grenzen:** Bei $f'(x_n) = 0$ ist die Tangente waagerecht und hat keine Nullstelle. Ein Startwert weit weg kann zu einer anderen Nullstelle führen oder davonlaufen. Es gibt Zyklen: Bei $f(x) = x^3 - 2x + 2$ springt das Verfahren mit dem Startwert 0 zwischen 0 und 1 hin und her.\n\n**Geschwindigkeit:** Ist die Nullstelle einfach und der Startwert nah genug, konvergiert das Verfahren quadratisch: Der Fehler wird ungefähr quadriert.",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Newton-Verfahren",
@@ -171,6 +316,60 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Schritt",
+      "md": "$f(x) = x^2 - 5$, Startwert $x_0 = 2$. Berechne $x_1$.",
+      "answer": 2.25,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$x_1 = 2 - \\tfrac{-1}{4} = 2{,}25$.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Newton-Formel in die richtige Reihenfolge.",
+      "items": [
+        "Tangente in $x_n$: $t(x) = f'(x_n)(x - x_n) + f(x_n)$",
+        "Nullstelle der Tangente: $t(x) = 0$",
+        "Nach $x$ auflösen: $x = x_n - \\frac{f(x_n)}{f'(x_n)}$",
+        "Diese Stelle als $x_{n+1}$ nehmen und wiederholen"
+      ],
+      "explain": "Die Reihenfolge: 1. Tangente in $x_n$: $t(x) = f'(x_n)(x - x_n) + f(x_n)$. 2. Nullstelle der Tangente: $t(x) = 0$. 3. Nach $x$ auflösen: $x = x_n - \\frac{f(x_n)}{f'(x_n)}$. 4. Diese Stelle als $x_{n+1}$ nehmen und wiederholen.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Was passiert bei $f(x) = x^3 - 2x + 2$ mit dem Startwert $x_0 = 0$?",
+      "options": [
+        {
+          "md": "Die Näherungen springen zwischen 0 und 1 hin und her.",
+          "correct": true
+        },
+        {
+          "md": "Sie konvergieren gegen 1."
+        },
+        {
+          "md": "Sie konvergieren gegen 0."
+        },
+        {
+          "md": "Das Verfahren bricht ab, weil f′(0) = 0 ist.",
+          "why": "f′(0) = −2."
+        }
+      ],
+      "explain": "$x_1 = 0 - \\tfrac{2}{-2} = 1$, $x_2 = 1 - \\tfrac{1}{1} = 0$: ein Zyklus.",
+      "label": "Zyklus",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Newton-Verfahren findet immer die Nullstelle, die dem Startwert am nächsten liegt.",
+      "answer": false,
+      "explain": "Die Tangente kann weit springen; welche Nullstelle erreicht wird, hängt vom Verlauf ab.",
+      "label": "Grenzen",
+      "id": "vq4"
+    },
+    {
       "type": "truefalse",
       "md": "Das Newton-Verfahren versagt, wenn man an einer Stelle mit waagerechter Tangente startet.",
       "answer": true,
@@ -198,12 +397,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "newton"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "newton"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "x_{n+1} = x_n − f(x_n)/f'(x_n).",
         "Konvergiert meist sehr schnell.",
-        "Versagt bei f'(x_n) = 0 oder ungünstigem Start."
+        "Versagt bei f'(x_n) = 0 oder ungünstigem Start.",
+        "$x_{n+1} = x_n - \\tfrac{f(x_n)}{f'(x_n)}$; versagt bei waagerechter Tangente."
       ],
       "id": "summary"
     }

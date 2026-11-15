@@ -16,6 +16,169 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Gewinn** = Erlös − Kosten: $G(x) = E(x) - K(x)$. Gewinnmaximum bei $G'(x) = 0$, Gewinnzone zwischen den Nullstellen von $G$, **Grenzkosten** $K'(x)$ als Kosten der nächsten Einheit.",
+      "label": "Verfahren",
+      "more": "| Begriff | Bedeutung |\n|---|---|\n| Fixkosten | $K(0)$, fallen auch ohne Produktion an |\n| Stückkosten | $k(x) = \\tfrac{K(x)}{x}$ |\n| variable Stückkosten | $k_v(x) = \\tfrac{K(x) - K(0)}{x}$ |\n| Grenzkosten | $K'(x)$ |\n| Gewinnschwelle, Gewinngrenze | Nullstellen von $G$ |\n| Betriebsminimum | Minimum von $k_v$: kurzfristige Preisuntergrenze |\n| Betriebsoptimum | Minimum von $k$: langfristige Preisuntergrenze |\n\n**Schema:** $G$ aufstellen, ableiten, Nullstellen von $G'$ und $G$ bestimmen, mit Einheiten (GE, ME) deuten. Im Gewinnmaximum gilt Grenzerlös gleich Grenzkosten: $E'(x) = K'(x)$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Preis 30 GE pro ME, $K(x) = x^3 - 6x^2 + 15x + 32$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "G(x) = 30x - K(x) = -x^3 + 6x^2 + 15x - 32",
+            "why": "Gewinnfunktion."
+          },
+          {
+            "tex": "G'(x) = -3x^2 + 12x + 15 = -3(x - 5)(x + 1)",
+            "why": "Ableiten und faktorisieren."
+          },
+          {
+            "tex": "x = 5, \\; G''(5) = -18 < 0: \\; G(5) = 68",
+            "why": "Gewinnmaximum: 68 GE bei 5 ME."
+          },
+          {
+            "tex": "k_v(x) = x^2 - 6x + 15 \\;\\Rightarrow\\; k_v(3) = 6",
+            "why": "Betriebsminimum bei 3 ME: kurzfristige Preisuntergrenze 6 GE."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gewinn.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Maximum.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Preisuntergrenze.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Gewinnzone",
+      "md": "**Erlös, Kosten, Gewinn:** grün $E(x) = 30x$, orange $K(x)$, blau $G(x) = E(x) - K(x)$. Rot hinterlegt die Gewinnzone.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          9
+        ],
+        "y": [
+          -60,
+          300
+        ],
+        "grid": true,
+        "xLabel": "Menge in ME",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 9,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "e",
+            "expr": "30*x",
+            "color": "green"
+          },
+          {
+            "name": "k",
+            "expr": "x^3 - 6*x^2 + 15*x + 32",
+            "color": "orange"
+          },
+          {
+            "name": "g",
+            "expr": "-x^3 + 6*x^2 + 15*x - 32",
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "vbands": [
+          {
+            "x": 4.46,
+            "d": 2.98,
+            "color": "red"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "g",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|1} · E = {30*X|0} · K = {X^3 - 6*X^2 + 15*X + 32|0} · G = {-X^3 + 6*X^2 + 15*X - 32|0}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 1: Die Kosten übersteigen den Erlös, Verlust.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "x ≈ 1,5: Gewinnschwelle.",
+          "to": {
+            "X": 1.48
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 5: Gewinnmaximum, 68 GE.",
+          "to": {
+            "X": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x ≈ 7,4: Gewinngrenze; danach wieder Verlust.",
+          "to": {
+            "X": 7.44
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Grenzkosten sind $K'(x)$, nicht $\\tfrac{K(x)}{x}$ (das sind die Stückkosten). Das Gewinnmaximum liegt nicht beim Erlösmaximum.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Ökonomische Anwendungen",
@@ -89,6 +252,46 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Preisuntergrenze",
+      "md": "$K(x) = x^3 - 12x^2 + 60x + 100$. Bestimme die kurzfristige Preisuntergrenze.",
+      "answer": 24,
+      "tolerance": 0,
+      "placeholder": "GE",
+      "explain": "$k_v(x) = x^2 - 12x + 60$ ist minimal bei $x = 6$: $36 - 72 + 60 = 24$ GE pro ME.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Wie hoch sind die Fixkosten bei $K(x) = 2x^2 + 5x + 80$?",
+      "options": [
+        {
+          "md": "80 GE",
+          "correct": true
+        },
+        {
+          "md": "5 GE"
+        },
+        {
+          "md": "87 GE"
+        },
+        {
+          "md": "2 GE"
+        }
+      ],
+      "explain": "Fixkosten $K(0) = 80$.",
+      "label": "Fixkosten",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Im Gewinnmaximum ist der Grenzerlös gleich den Grenzkosten.",
+      "answer": true,
+      "explain": "$G'(x) = E'(x) - K'(x) = 0$.",
+      "label": "Grenzbetrachtung",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +334,62 @@
       "placeholder": "ME",
       "explain": "$G(x) = -x^2 + 16x - 28$, $G'(x) = -2x + 16 = 0$ bei $x = 8$; $G(8) = 36$ GE.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "oekonomie"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "oekonomie"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "oekonomie"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "oekonomie"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "G = E − K; Grenzkosten K′; Preisuntergrenzen aus den Minima der Stückkosten."
+      ]
     }
   ]
 }

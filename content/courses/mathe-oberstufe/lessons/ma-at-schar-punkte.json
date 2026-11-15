@@ -16,6 +16,150 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Ein gemeinsamer Punkt liegt auf **allen** Graphen: Dort darf $f_k(x)$ nicht von $k$ abhängen. Den Term nach $k$ sortieren und den Faktor vor $k$ null setzen.",
+      "label": "Verfahren",
+      "more": "**Weg 1, nach $k$ sortieren:** $f_k(x) = A(x) + k \\cdot B(x)$. Gemeinsame Punkte gibt es genau dort, wo $B(x) = 0$ ist; ihr y-Wert ist $A(x)$.\n\n**Weg 2, zwei Mitglieder gleichsetzen:** $f_{k_1}(x) = f_{k_2}(x)$ mit $k_1 \\neq k_2$ lösen; danach mit allgemeinem $k$ prüfen, ob der Punkt wirklich auf allen Graphen liegt.\n\n**Schema für Weg 1:** ausmultiplizieren, alle Glieder mit $k$ zusammenfassen, $k$ ausklammern, den Faktor null setzen, y-Werte berechnen.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f_k(x) = x^3 - kx^2 + 2kx - 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_k(x) = x^3 - 1 + k(-x^2 + 2x)",
+            "why": "Nach k sortieren."
+          },
+          {
+            "tex": "-x^2 + 2x = -x(x - 2) = 0 \\;\\Rightarrow\\; x = 0 \\;\\lor\\; x = 2",
+            "why": "Der Faktor vor k muss null sein."
+          },
+          {
+            "tex": "f_k(0) = -1, \\quad f_k(2) = 8 - 1 = 7",
+            "why": "y-Werte ohne k."
+          },
+          {
+            "tex": "P(0 \\mid -1), \\quad Q(2 \\mid 7)",
+            "why": "Diese Punkte liegen auf jedem Graphen der Schar."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Sortiert.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktor null.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Werte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Gemeinsame Punkte",
+      "md": "**Fixpunkte der Schar:** $f_k(x) = x^3 - kx^2 + 2kx - 1$. Was auch immer $k$ ist, der Graph geht durch die beiden orangen Punkte.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.5,
+          3.5
+        ],
+        "y": [
+          -6,
+          12
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "KK",
+            "min": -3,
+            "max": 5,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - KK*x^2 + 2*KK*x - 1",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": -1,
+            "color": "orange",
+            "label": "P"
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "color": "orange",
+            "label": "Q"
+          }
+        ],
+        "readout": "k = {KK|1}"
+      },
+      "timeline": [
+        {
+          "caption": "k = −2.",
+          "set": {
+            "KK": -2
+          }
+        },
+        {
+          "caption": "k = 1: andere Form, dieselben Punkte.",
+          "to": {
+            "KK": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 4: wieder durch P und Q.",
+          "to": {
+            "KK": 4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Dass sich **zwei** Scharkurven in einem Punkt schneiden, reicht nicht. Der Punkt muss für **jedes** $k$ auf dem Graphen liegen: Probe mit allgemeinem $k$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Gemeinsame Punkte einer Schar",
@@ -97,6 +241,38 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Gemeinsamer Punkt",
+      "md": "Alle Graphen von $f_k(x) = k(x - 3) + x^2$ haben einen gemeinsamen Punkt. Welche y-Koordinate hat er?",
+      "answer": 9,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Der Faktor vor $k$ ist $x - 3$, also $x = 3$ und $y = 9$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche gemeinsamen Punkte haben alle Graphen von $f_k(x) = kx^2 + 2$?",
+      "options": [
+        {
+          "md": "genau einen, $(0 \\mid 2)$",
+          "correct": true
+        },
+        {
+          "md": "keinen"
+        },
+        {
+          "md": "zwei"
+        },
+        {
+          "md": "unendlich viele"
+        }
+      ],
+      "explain": "$kx^2$ verschwindet nur bei $x = 0$.",
+      "label": "Anzahl",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -136,6 +312,26 @@
       "answer": false,
       "explain": "Man muss zeigen, dass das Ergebnis nicht von den gewählten Parametern abhängt; sonst ist es nur der Schnittpunkt dieser beiden.",
       "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gemeinsame Punkte: nach k sortieren, Faktor vor k null setzen."
+      ]
     }
   ]
 }

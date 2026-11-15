@@ -73,6 +73,156 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Schar",
+      "md": "**Eine Schar in Bewegung:** $f_k(x) = x^3 - kx$. Die Extrempunkte (orange) gibt es nur für $k > 0$; sie wandern auf der grau gestrichelten Ortskurve $y = -2x^3$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          2.5
+        ],
+        "y": [
+          -4,
+          4
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "KK",
+            "min": -1.5,
+            "max": 4,
+            "value": -1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - KK*x",
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "name": "o",
+            "expr": "-2*x^3",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "sqrt(KK/3)",
+            "on": "f",
+            "color": "orange"
+          },
+          {
+            "x": "-sqrt(KK/3)",
+            "on": "f",
+            "color": "orange"
+          }
+        ],
+        "readout": "k = {KK|1} · Extremstellen ±{sqrt(KK/3)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "k = −1: f′ = 3x² + 1 > 0, keine Extrempunkte.",
+          "set": {
+            "KK": -1
+          }
+        },
+        {
+          "caption": "k = 0: x³ mit Sattelpunkt im Ursprung.",
+          "to": {
+            "KK": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 1: Hoch- und Tiefpunkt bei ±0,58.",
+          "to": {
+            "KK": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 3: Extremstellen ±1; beide Punkte liegen auf y = −2x³.",
+          "to": {
+            "KK": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Eine **Schar** $f_k$ ist eine Familie von Funktionen mit einem Parameter $k$. Man rechnet wie gewohnt, behandelt $k$ wie eine feste Zahl, und das Ergebnis hängt von $k$ ab.",
+      "label": "Scharen",
+      "more": "**Typische Fragen:** Extrem- und Wendepunkte in Abhängigkeit von $k$, gemeinsame Punkte aller Graphen, die Ortskurve der Extrempunkte, und das Scharmitglied mit einer bestimmten Eigenschaft (geht durch einen Punkt, hat den Tiefpunkt auf der x-Achse).\n\n**Fallunterscheidungen:** Oft hängt die Existenz eines Ergebnisses vom Vorzeichen von $k$ ab, etwa wenn eine Wurzel aus $k$ entsteht. Dann für $k > 0$, $k = 0$ und $k < 0$ getrennt antworten.\n\n**Ableiten:** Abgeleitet wird nach $x$; $k$ verhält sich wie eine Konstante.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Beispiel:** Extrempunkte von $f_k(x) = x^3 - kx$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_k'(x) = 3x^2 - k = 0 \\;\\Rightarrow\\; x^2 = \\tfrac{k}{3}",
+            "why": "Ableiten nach x; k ist eine Konstante."
+          },
+          {
+            "tex": "k > 0: \\; x = \\pm\\sqrt{\\tfrac{k}{3}}",
+            "why": "Zwei Kandidaten."
+          },
+          {
+            "tex": "k = 0: \\text{ Sattelpunkt in } (0 \\mid 0); \\quad k < 0: \\text{ keine}",
+            "why": "Fallunterscheidung nach dem Vorzeichen von k."
+          },
+          {
+            "tex": "f_k''(x) = 6x: \\; \\text{Tiefpunkt bei } {+}\\sqrt{\\tfrac{k}{3}},\\; \\text{Hochpunkt bei } {-}\\sqrt{\\tfrac{k}{3}}",
+            "why": "Hinreichende Bedingung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "k positiv.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Andere Fälle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Art.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Funktionenscharen",
@@ -179,6 +329,47 @@
     },
     {
       "type": "choice",
+      "md": "Für welche $k$ hat $f_k(x) = x^3 - kx$ zwei Extrempunkte?",
+      "options": [
+        {
+          "md": "für $k > 0$",
+          "correct": true
+        },
+        {
+          "md": "für alle k",
+          "why": "Für k ≤ 0 ist f′ nie mit Vorzeichenwechsel null."
+        },
+        {
+          "md": "für $k < 0$"
+        },
+        {
+          "md": "nur für $k = 3$"
+        }
+      ],
+      "explain": "$x^2 = \\tfrac{k}{3}$ hat nur für $k > 0$ zwei Lösungen.",
+      "label": "Fälle",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Mitglied",
+      "md": "Für welches $k$ geht der Graph von $f_k(x) = kx^2 + 3$ durch $P(2 \\mid 11)$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$4k + 3 = 11$, also $k = 2$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Beim Ableiten von $f_k(x) = kx^2$ nach $x$ bleibt $k$ als Faktor stehen: $f_k'(x) = 2kx$.",
+      "answer": true,
+      "explain": "k ist beim Ableiten nach x eine Konstante.",
+      "label": "Ableiten",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
       "md": "Die Scheitel von $f_k(x) = x^2 - 2kx$ liegen bei $S(k \\mid -k^2)$. Wie lautet die Ortskurve?",
       "options": [
         {
@@ -205,12 +396,61 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Rechnen mit Parameter: Ergebnisse hängen von k ab.",
         "Ortskurve: Parameter eliminieren (k durch x ausdrücken).",
-        "Gemeinsame Punkte: unabhängig von k."
+        "Gemeinsame Punkte: unabhängig von k.",
+        "In Scharen wie gewohnt rechnen, k wie eine Zahl behandeln; Fallunterscheidung nach k."
       ],
       "id": "summary"
     }

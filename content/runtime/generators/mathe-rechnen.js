@@ -862,11 +862,80 @@
       "Übersetzung zwischen den Ebenen: Nullstellen der Ableitung sind Kandidaten für Extrempunkte, Extrempunkte der Ableitung sind Wendepunkte, das Vorzeichen der Ableitung ist die Steigung. Hier: " + right);
   });
 
+  // ---------------------------------------------------------------- applications of the derivative (Mathematik wave)
+  spec("extremwertproblem", (level, G) => {
+    if (level <= 1) {
+      const U = 4 * G.int(3, 15);
+      return num("Ein Rechteck hat den Umfang $" + U + "$ cm. Wie groß ist sein Flächeninhalt höchstens (in cm²)?", (U / 4) * (U / 4),
+        "Nebenbedingung $2x + 2y = " + U + "$, also $y = " + U / 2 + " - x$. Zielfunktion $A(x) = x(" + U / 2 + " - x)$, $A'(x) = " + U / 2 + " - 2x = 0$ bei $x = " + U / 4 + "$. Das Quadrat mit der Seite " + U / 4 + " cm hat $A = " + (U / 4) * (U / 4) + "$ cm².", 0.01, "cm²");
+    }
+    if (level === 2) {
+      const L = 4 * G.int(5, 25);
+      return num("Mit $" + L + "$ m Zaun soll an einer Mauer ein rechteckiges Gehege abgegrenzt werden; die Mauer ersetzt eine Seite. Wie groß ist die Fläche höchstens (in m²)?", (L * L) / 8,
+        "Zwei Seiten $x$ stehen senkrecht zur Mauer, die dritte ist $y = " + L + " - 2x$. $A(x) = x(" + L + " - 2x)$, $A'(x) = " + L + " - 4x = 0$ bei $x = " + L / 4 + "$, also $y = " + L / 2 + "$ und $A = " + (L * L) / 8 + "$ m².", 0.01, "m²");
+    }
+    if (level === 3) {
+      if (G.chance(0.5)) {
+        const a = G.pick([6, 9, 12, 15, 18, 24, 30]), x = a / 6, V = x * (a - 2 * x) * (a - 2 * x);
+        return num("Aus einem quadratischen Blech mit der Seite $" + a + "$ cm wird eine offene Schachtel gefaltet: An den Ecken schneidet man Quadrate der Seite $x$ aus. Wie groß ist das Volumen höchstens (in cm³)?", V,
+          "$V(x) = x(" + a + " - 2x)^2$ mit $0 < x < " + tnum(a / 2) + "$. $V'(x) = (" + a + " - 2x)(" + a + " - 6x) = 0$ gibt $x = " + tnum(x) + "$; die andere Lösung $x = " + tnum(a / 2) + "$ ergibt $V = 0$. $V = " + tnum(x) + " \\cdot " + tnum(a - 2 * x) + "^2 = " + tnum(V) + "$ cm³.", Math.max(0.5, V * 0.002), "cm³");
+      }
+      const c = G.pick([3, 12, 27, 48, 75]), r = Math.sqrt(c / 3), A = 2 * r * (c - r * r);
+      return num("Ein Rechteck liegt mit einer Seite auf der x-Achse, seine oberen Ecken liegen auf der Parabel $y = " + c + " - x^2$ (symmetrisch zur y-Achse). Wie groß ist sein Flächeninhalt höchstens?", A,
+        "Mit der rechten Ecke bei $x$: $A(x) = 2x(" + c + " - x^2) = " + 2 * c + "x - 2x^3$. $A'(x) = " + 2 * c + " - 6x^2 = 0$ gibt $x = " + tnum(r) + "$ und $A = " + tnum(A) + "$.", Math.max(0.01, A * 0.002));
+    }
+    const V = G.pick([250, 330, 500, 750, 1000]), r = Math.cbrt(V / (2 * Math.PI));
+    return num("Eine zylindrische Dose soll $" + V + "$ cm³ fassen. Bei welchem Radius ist ihre Oberfläche am kleinsten? (in cm, zwei Nachkommastellen)", r,
+      "Nebenbedingung $\\pi r^2 h = " + V + "$, also $h = \\tfrac{" + V + "}{\\pi r^2}$. Zielfunktion $O(r) = 2\\pi r^2 + \\tfrac{" + 2 * V + "}{r}$, $O'(r) = 4\\pi r - \\tfrac{" + 2 * V + "}{r^2} = 0$ gibt $r^3 = \\tfrac{" + V + "}{2\\pi}$, also $r \\approx " + G.tex(r, 2) + "$ cm. Dann ist $h = 2r$: Die sparsamste Dose ist so hoch wie breit.", 0.01, "cm");
+  });
+  spec("schar", (level, G) => {
+    if (level <= 1) {
+      const k = nz(G, -4, 4);
+      return num("Die Schar $f_k(x) = x^2 - 2kx$ hat ihren Tiefpunkt bei $x = k$. Bestimme seine y-Koordinate für $k = " + k + "$.", -k * k,
+        "$f_{" + k + "}(" + k + ") = " + par(k) + "^2 - 2 \\cdot " + par(k) + " \\cdot " + par(k) + " = " + (-k * k) + "$. Allgemein liegt der Tiefpunkt bei $T(k \\mid -k^2)$.", 0);
+    }
+    if (level === 2) {
+      const a = nz(G, -4, 5), b = G.int(-3, 3), c = G.int(-5, 5);
+      const ka = (Math.abs(a) === 1 ? "" : Math.abs(a)) + "kx";
+      const rest = (b ? " " + G.term(b, 0) + "x" : "") + (c ? " " + G.term(c, 0) : "");
+      return num("Alle Graphen der Schar $f_k(x) = kx^2 " + (a > 0 ? "- " : "+ ") + ka + rest + "$ gehen durch zwei gemeinsame Punkte; einer liegt bei $x = 0$. Bestimme die **y-Koordinate** des anderen.", a * b + c,
+        "Nach $k$ sortieren: $f_k(x) = k \\cdot x(" + poly([1, -a]) + ")" + rest + "$. Der Wert hängt nicht von $k$ ab, wo $x(" + poly([1, -a]) + ") = 0$ ist: bei $x = 0$ und $x = " + a + "$. Dort ist $f_k(" + a + ") = " + (a * b + c) + "$ für jedes $k$.", 0);
+    }
+    if (level === 3) {
+      const m = nz(G, -4, 5);
+      return num("Die Tiefpunkte der Schar $f_k(x) = x^2 - 2kx " + G.term(m, 0) + "k$ liegen auf der Ortskurve $y = -x^2 + cx$. Bestimme $c$.", m,
+        "$f_k'(x) = 2x - 2k = 0$ bei $x = k$; $y = k^2 - 2k^2 " + G.term(m, 0) + "k = -k^2 " + G.term(m, 0) + "k$. Mit $k = x$ folgt $y = -x^2 " + G.term(m, 0) + "x$, also $c = " + m + "$.", 0);
+    }
+    const s = G.int(1, 6), q = s * s;
+    return num("Für welches $k > 0$ liegt der Tiefpunkt von $f_k(x) = x^2 - 2kx + " + q + "$ auf der x-Achse?", s,
+      "Tiefpunkt bei $x = k$ mit $y = k^2 - 2k^2 + " + q + " = " + q + " - k^2$. Aus $" + q + " - k^2 = 0$ folgt $k = " + s + "$.", 0);
+  });
+  spec("oekonomie", (level, G) => {
+    if (level <= 1) {
+      const a = G.pick([1, 2]), b = G.int(2, 10), F = G.int(10, 60), x0 = G.int(2, 10);
+      return num("Die Kosten sind $K(x) = " + poly([a, b, F]) + "$ (in GE, $x$ in ME). Berechne die Grenzkosten bei $x = " + x0 + "$.", 2 * a * x0 + b,
+        "Grenzkosten sind die Ableitung: $K'(x) = " + poly([2 * a, b]) + "$, also $K'(" + x0 + ") = " + (2 * a * x0 + b) + "$ GE pro ME. So viel kostet ungefähr die nächste Mengeneinheit.", 0);
+    }
+    if (level === 2) {
+      const a = G.pick([1, 2]), b = G.int(2, 8), xs = G.int(3, 10), p = 2 * a * xs + b, F = G.int(5, 40);
+      return num("Ein Betrieb verkauft zum Preis von $" + p + "$ GE pro ME; die Kosten sind $K(x) = " + poly([a, b, F]) + "$. Bei welcher Menge ist der Gewinn am größten?", xs,
+        "$G(x) = " + p + "x - (" + poly([a, b, F]) + ") = " + poly([-a, p - b, -F]) + "$. $G'(x) = " + poly([-2 * a, p - b]) + " = 0$ bei $x = " + xs + "$; $G'' = " + (-2 * a) + " < 0$: Maximum.", 0);
+    }
+    if (level === 3) {
+      const r1 = G.int(1, 5), r2 = r1 + G.int(3, 9), p = G.int(r1 + r2 + 2, r1 + r2 + 12), b = p - r1 - r2, F = r1 * r2;
+      return num("Erlös $E(x) = " + p + "x$, Kosten $K(x) = " + poly([1, b, F]) + "$. Ab welcher Menge macht der Betrieb Gewinn (Gewinnschwelle)?", r1,
+        "$G(x) = E(x) - K(x) = " + poly([-1, r1 + r2, -F]) + " = -(x - " + r1 + ")(x - " + r2 + ")$. Gewinn gibt es zwischen den Nullstellen: Gewinnschwelle bei $" + r1 + "$ ME, Gewinngrenze bei $" + r2 + "$ ME.", 0);
+    }
+    const m = G.int(2, 6), n = m * m + G.int(1, 12), F = G.int(10, 80);
+    return num("Die Kosten sind $K(x) = x^3 - " + 2 * m + "x^2 + " + n + "x + " + F + "$. Bestimme die kurzfristige Preisuntergrenze, das Minimum der variablen Stückkosten.", n - m * m,
+      "Variable Stückkosten: $k_v(x) = \\tfrac{K(x) - " + F + "}{x} = x^2 - " + 2 * m + "x + " + n + "$. $k_v'(x) = 2x - " + 2 * m + " = 0$ bei $x = " + m + "$ (Betriebsminimum), $k_v(" + m + ") = " + (n - m * m) + "$ GE pro ME.", 0);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
   LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung", "definitionsbereich", "transformation", "wurzelgleichung", "verkettung", "stetigkeit", "trigwert", "additionstheorem", "restsatz", "potenz", "gebrochen"]));
-  LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch"]));
+  LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch", "extremwertproblem", "schar", "oekonomie"]));
   LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum"]));
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat"]));
   LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang"]));

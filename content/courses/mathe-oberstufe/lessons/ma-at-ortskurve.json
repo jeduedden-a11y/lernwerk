@@ -16,6 +16,150 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Ortskurve der Punkte $P\\big(x(k) \\mid y(k)\\big)$: die Gleichung $x = x(k)$ nach $k$ auflösen und in $y(k)$ einsetzen. Übrig bleibt eine Gleichung in $x$ und $y$ ohne $k$.",
+      "label": "Verfahren",
+      "more": "1. **Punkte in Abhängigkeit von $k$** bestimmen, etwa Extrem- oder Wendepunkte.\n2. **$x = x(k)$ nach $k$ auflösen.**\n3. **In $y(k)$ einsetzen**: Das Ergebnis ist die Ortskurve $y = g(x)$.\n4. **Bereich beachten:** Durchläuft $k$ nur positive Werte, ist auch nur ein Teil der Kurve gemeint.\n\nLässt sich $x(k)$ nicht direkt auflösen, hilft oft, $k$ aus beiden Koordinaten zu eliminieren, etwa über $k^2$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Tiefpunkte von $f_k(x) = x^2 - 2kx + 3k$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f_k'(x) = 2x - 2k = 0 \\;\\Rightarrow\\; x = k",
+            "why": "Extremstelle; f_k″ = 2 > 0: Tiefpunkt."
+          },
+          {
+            "tex": "y = k^2 - 2k^2 + 3k = -k^2 + 3k",
+            "why": "y-Koordinate."
+          },
+          {
+            "tex": "T(k \\mid -k^2 + 3k)",
+            "why": "Punkt in Abhängigkeit von k."
+          },
+          {
+            "tex": "k = x \\;\\Rightarrow\\; y = -x^2 + 3x",
+            "why": "Ortskurve: k eliminiert."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Stelle.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ortskurve.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ortskurve",
+      "md": "**Der Tiefpunkt auf seiner Bahn:** blau $f_k(x) = x^2 - 2kx + 3k$, orange gestrichelt die Ortskurve $y = -x^2 + 3x$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          4.5
+        ],
+        "y": [
+          -5,
+          4
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "KK",
+            "min": -1.5,
+            "max": 4,
+            "value": -1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2*KK*x + 3*KK",
+            "color": "blue"
+          },
+          {
+            "name": "o",
+            "expr": "-x^2 + 3*x",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "KK",
+            "y": "-KK^2 + 3*KK",
+            "color": "accent",
+            "label": "T"
+          }
+        ],
+        "readout": "k = {KK|1} · T({KK|1} | {-KK^2 + 3*KK|2})"
+      },
+      "timeline": [
+        {
+          "caption": "k = −1: T(−1 | −4).",
+          "set": {
+            "KK": -1
+          }
+        },
+        {
+          "caption": "k = 1,5: T(1,5 | 2,25), der höchste Punkt der Ortskurve.",
+          "to": {
+            "KK": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 3,5: T(3,5 | −1,75).",
+          "to": {
+            "KK": 3.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$k$ muss am Ende **verschwunden** sein: Die Ortskurve enthält nur $x$ und $y$. Und den Bereich beachten, den $x(k)$ tatsächlich durchläuft.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Ortskurve bestimmen",
@@ -81,6 +225,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Eliminieren",
+      "md": "Die Wendepunkte einer Schar liegen bei $W(3k \\mid 9k^2 + 1)$. Die Ortskurve ist $y = ax^2 + 1$. Bestimme $a$.",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$k = \\tfrac{x}{3}$, also $y = 9 \\cdot \\tfrac{x^2}{9} + 1 = x^2 + 1$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Die Hochpunkte einer Schar sind $H\\left(\\tfrac{k}{2} \\mid k^2\\right)$. Wie lautet die Ortskurve?",
+      "options": [
+        {
+          "md": "$y = 4x^2$",
+          "correct": true
+        },
+        {
+          "md": "$y = x^2$",
+          "why": "Aus $x = \\tfrac{k}{2}$ folgt $k = 2x$, nicht $k = x$."
+        },
+        {
+          "md": "$y = \\tfrac{x^2}{4}$"
+        },
+        {
+          "md": "$y = 2x^2$"
+        }
+      ],
+      "explain": "$k = 2x$ in $y = k^2$: $y = 4x^2$.",
+      "label": "Ortskurve",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Gleichung einer Ortskurve darf den Parameter $k$ enthalten.",
+      "answer": false,
+      "explain": "Sie beschreibt alle Punkte zugleich; k ist eliminiert.",
+      "label": "Form",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -129,6 +314,26 @@
       ],
       "explain": "$k = x$, also $y = 2x^3$.",
       "id": "cl1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "schar"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ortskurve: x(k) nach k auflösen, in y(k) einsetzen."
+      ]
     }
   ]
 }

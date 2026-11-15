@@ -66,6 +66,157 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Schachtel",
+      "md": "**Die beste Schachtel:** Aus einem Blech $12 \\times 12$ cm werden an den Ecken Quadrate der Seite $x$ ausgeschnitten. Das Volumen ist $V(x) = x(12 - 2x)^2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          6
+        ],
+        "y": [
+          0,
+          140
+        ],
+        "grid": true,
+        "xLabel": "x in cm",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 6,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "x*(12 - 2*x)^2",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "v",
+            "color": "accent",
+            "guides": true
+          }
+        ],
+        "readout": "x = {X|2} cm · Boden {12 - 2*X|1} cm · V = {X*(12 - 2*X)^2|1} cm³"
+      },
+      "timeline": [
+        {
+          "caption": "x = 0,5: flache Schachtel, 60,5 cm³.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "x = 2: größtes Volumen, 128 cm³.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 4: Der Boden ist nur noch 4 cm breit, 64 cm³.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 6: Vom Boden bleibt nichts; das Volumen ist 0.",
+          "to": {
+            "X": 5.95
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Die **Zielfunktion** hängt erst von zwei Größen ab, die **Nebenbedingung** verknüpft sie. Eine Größe eliminieren, dann wie beim Extrempunkt vorgehen und die **Ränder** vergleichen.",
+      "label": "Verfahren",
+      "more": "1. **Skizze** und Variablen benennen.\n2. **Zielfunktion:** Welche Größe soll maximal oder minimal werden?\n3. **Nebenbedingung:** Welche Größen hängen wie zusammen (Umfang, Volumen, Lage auf einer Kurve)?\n4. **Einsetzen:** Zielfunktion in einer Variablen.\n5. **Definitionsbereich:** nur sinnvolle Werte, etwa positive Längen.\n6. **Extremum:** ableiten, null setzen, mit $f''$ prüfen.\n7. **Ränder** des Definitionsbereichs vergleichen.\n8. **Antwortsatz** mit allen gefragten Größen und Einheiten.\n\n**Typische Zusammenhänge:** Verpackungen mit kleinster Oberfläche, Zäune an einer Mauer, Rechtecke unter einer Kurve, kürzester Abstand eines Punkts von einer Kurve (dort das Quadrat des Abstands minimieren, um die Wurzel zu sparen).",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Rechnung zur Schachtel:** $V(x) = x(12 - 2x)^2$ mit $0 < x < 6$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "V(x) = 4x^3 - 48x^2 + 144x",
+            "why": "Ausmultiplizieren."
+          },
+          {
+            "tex": "V'(x) = 12x^2 - 96x + 144 = 12(x - 2)(x - 6)",
+            "why": "Ableiten und faktorisieren."
+          },
+          {
+            "tex": "x = 2 \\quad (x = 6 \\text{ ist Rand, } V(6) = 0)",
+            "why": "Kandidat im Inneren."
+          },
+          {
+            "tex": "V''(2) = 24 \\cdot 2 - 96 = -48 < 0",
+            "why": "Maximum."
+          },
+          {
+            "tex": "V(2) = 2 \\cdot 8^2 = 128 \\text{ cm}^3",
+            "why": "Antwort: Quadrate mit 2 cm Seite ausschneiden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zielfunktion.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kandidat.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prüfung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Antwort.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Extremwertprobleme",
@@ -155,6 +306,57 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Eine Dose soll bei festem Volumen $V$ möglichst wenig Blech verbrauchen. Was ist die **Nebenbedingung**?",
+      "options": [
+        {
+          "md": "$\\pi r^2 h = V$",
+          "correct": true
+        },
+        {
+          "md": "$2\\pi r^2 + 2\\pi r h$ soll minimal werden",
+          "why": "Das ist die Zielfunktion."
+        },
+        {
+          "md": "$h = 2r$"
+        },
+        {
+          "md": "$r + h = V$"
+        }
+      ],
+      "explain": "Die Nebenbedingung verknüpft die Variablen r und h über das feste Volumen.",
+      "label": "Nebenbedingung",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Unter einer Kurve",
+      "md": "Ein Rechteck liegt mit einer Seite auf der x-Achse, seine oberen Ecken auf $y = 12 - x^2$ (symmetrisch). Wie groß ist der Flächeninhalt höchstens?",
+      "answer": 32,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$A(x) = 2x(12 - x^2) = 24x - 2x^3$, $A'(x) = 24 - 6x^2 = 0$ bei $x = 2$; $A(2) = 4 \\cdot 8 = 32$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Das Maximum einer Zielfunktion auf einem abgeschlossenen Intervall kann am Rand liegen.",
+      "answer": true,
+      "explain": "Deshalb vergleicht man am Ende die Randwerte mit dem inneren Extremwert.",
+      "label": "Ränder",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Zaun",
+      "md": "Mit 40 m Zaun wird an einer Mauer ein Rechteck abgegrenzt; die Mauer ersetzt eine Seite. Welche Fläche ist höchstens möglich (in m²)?",
+      "answer": 200,
+      "tolerance": 0.01,
+      "placeholder": "m²",
+      "explain": "$A(x) = x(40 - 2x)$, $A'(x) = 40 - 4x = 0$ bei $x = 10$; $A = 10 \\cdot 20 = 200$ m².",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Ordne den Lösungsweg.",
@@ -179,12 +381,61 @@
       "id": "n1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "extremwertproblem"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "extremwertproblem"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "extremwertproblem"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "extremwertproblem"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Zielfunktion + Nebenbedingung → Funktion einer Variablen.",
         "Definitionsbereich beachten, Randwerte prüfen.",
-        "f' = 0, f'' < 0 für Maximum."
+        "f' = 0, f'' < 0 für Maximum.",
+        "Zielfunktion, Nebenbedingung, eliminieren, ableiten, Ränder vergleichen."
       ],
       "id": "summary"
     }

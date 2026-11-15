@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Eine vorgegebene Rechnung lesen wie einen Text: **Was** wird berechnet (den Ansatz erkennen), **warum** steht jeder Schritt da, und **was bedeutet** das Ergebnis im Sachzusammenhang, mit Einheit.",
+      "label": "Verfahren",
+      "more": "| Ansatz | Bedeutung im Sachzusammenhang |\n|---|---|\n| $f'(x) = 0$, $f''(x) < 0$ | Zeitpunkt des größten Werts |\n| $f''(x) = 0$ mit Vorzeichenwechsel | Zeitpunkt der stärksten Zu- oder Abnahme |\n| $\\int_a^b f'(t)\\,dt$ | Änderung des Bestands zwischen $a$ und $b$ |\n| $\\tfrac{1}{b - a}\\int_a^b f(t)\\,dt$ | Mittelwert von $f$ |\n| $f(x) = g(x)$ | Zeitpunkt, an dem beide gleich sind |\n| $\\lim_{t \\to \\infty} f(t)$ | langfristiges Verhalten |\n\n**Schema:** den Ansatz einordnen, jeden Schritt in einem Satz begründen, das Ergebnis mit Einheit in den Sachzusammenhang übersetzen.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(t)$ ist die Zahl der Besucher pro Stunde, $t$ in Stunden nach Öffnung. Vorgegeben ist die Rechnung:",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(t) = 0 \\;\\Rightarrow\\; t = 4",
+            "why": "Ansatz für eine Extremstelle: Wann kommen am meisten Besucher pro Stunde?"
+          },
+          {
+            "tex": "f''(4) < 0",
+            "why": "Es ist ein Maximum."
+          },
+          {
+            "tex": "f(4) = 320",
+            "why": "Nach 4 Stunden kommen die meisten Besucher: 320 pro Stunde."
+          },
+          {
+            "tex": "f''(t) = 0 \\;\\Rightarrow\\; t = 2",
+            "why": "Wendestelle: Nach 2 Stunden nimmt die Besucherrate am stärksten zu."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Art.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendestelle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Den Ansatz nicht nur nachrechnen, sondern **deuten**: Ein Integral über eine Rate ist eine Menge, ein Maximum ein Zeitpunkt mit einem Wert.",
+      "label": "Typische Fallen",
+      "id": "ve3"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Vorgegebene Lösungswege erläutern und deuten",
@@ -81,6 +154,60 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "$r(t)$ ist die Zuflussrate in m³/h. Vorgegeben ist $\\int_0^6 r(t)\\,dt = 42$. Was wurde berechnet?",
+      "options": [
+        {
+          "md": "das Wasser, das in den ersten 6 Stunden zufließt: 42 m³",
+          "correct": true
+        },
+        {
+          "md": "die Zuflussrate nach 6 Stunden",
+          "why": "Das wäre r(6) in m³/h."
+        },
+        {
+          "md": "die mittlere Zuflussrate"
+        },
+        {
+          "md": "der Zeitpunkt des stärksten Zuflusses"
+        }
+      ],
+      "explain": "Das Integral einer Rate ist die Gesamtänderung: Rate mal Zeit gibt m³.",
+      "label": "Integral",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Vorgegeben ist $\\tfrac14 \\int_0^4 T(t)\\,dt$ mit der Temperatur $T$ in °C. Was wird berechnet?",
+      "options": [
+        {
+          "md": "die mittlere Temperatur in den ersten 4 Stunden",
+          "correct": true
+        },
+        {
+          "md": "die Temperaturänderung in 4 Stunden",
+          "why": "Das wäre T(4) − T(0)."
+        },
+        {
+          "md": "die höchste Temperatur"
+        },
+        {
+          "md": "die Temperatur nach 4 Stunden"
+        }
+      ],
+      "explain": "Integral geteilt durch die Intervalllänge: Mittelwert der Funktion.",
+      "label": "Mittelwert",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Im Sachzusammenhang liefert $f''(t) = 0$ (mit Vorzeichenwechsel) den Zeitpunkt der stärksten Änderung von $f$.",
+      "answer": true,
+      "explain": "Dort hat f′ einen Extremwert.",
+      "label": "Wendestelle",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -135,6 +262,14 @@
       "answer": 2,
       "explain": "Liegt der Graph unterhalb der x-Achse, ist das Integral negativ. Die Fläche ist der Betrag.",
       "id": "sp1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Ansatz erkennen, Schritte begründen, Ergebnis mit Einheit deuten."
+      ]
     }
   ]
 }
