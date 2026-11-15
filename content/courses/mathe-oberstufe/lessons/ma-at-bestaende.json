@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Bestände und Änderungsraten",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Bestände und Änderungsraten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Ein Sachkontext beschreibt einen **Zufluss, eine Rate oder eine Geschwindigkeit**, und gefragt ist nach dem **Bestand** -- oder umgekehrt. Signalformulierungen: *\"Die Zuflussrate beträgt ...\"*, *\"Wie viel Wasser befindet sich nach 5 Stunden im Becken?\"*, *\"Die Funktion beschreibt die Geschwindigkeit ...\"*, *\"Wann ist der Bestand maximal?\"*\n\nEiner der häufigsten Anwendungsaufgabentypen im Abitur -- und der, bei dem die meisten Punkte durch Fehlzuordnung verloren gehen."
+            }
+          ]
+        },
+        {
+          "title": "Die zentrale Unterscheidung",
+          "blocks": [
+            {
+              "md": "> [!important] Bestand und Rate liegen eine Ableitungsstufe auseinander\n> $$\\text{Rate} = \\text{Ableitung des Bestands} \\qquad\\qquad \\text{Bestand} = \\text{Integral der Rate}$$\n>\n> Die erste Frage bei jeder Aufgabe dieses Typs lautet: **Beschreibt die gegebene Funktion einen Bestand oder eine Rate?**\n>\n> **Erkennungsmerkmal ist die Einheit.** Steht dort eine reine Größe (Liter, Meter, Stück), ist es ein Bestand. Steht dort eine Größe **pro Zeiteinheit** (Liter pro Minute, Meter pro Sekunde), ist es eine Rate.\n\n| Gegeben | Gesucht | Operation |\n|---|---|---|\n| Rate $f$ | Bestandsänderung im Intervall | $\\int_a^b f(t)\\,dt$ |\n| Rate $f$ | Bestand zum Zeitpunkt $b$ | Anfangsbestand $+ \\int_0^b f(t)\\,dt$ |\n| Rate $f$ | Zeitpunkt maximalen Bestands | $f(t) = 0$ mit Vorzeichenwechsel $+ \\to -$ |\n| Rate $f$ | Zeitpunkt stärksten Zuflusses | $f'(t) = 0$, also **Extrempunkt der Rate** |\n| Bestand $F$ | momentane Rate | $F'(t)$ |\n| Bestand $F$ | Zeitpunkt stärksten Wachstums | $F''(t) = 0$, also **Wendepunkt des Bestands** |"
+            }
+          ]
+        },
+        {
+          "title": "Die Übersetzungstabelle für Fragestellungen",
+          "blocks": [
+            {
+              "md": "| Frage im Text | Mathematische Bedingung |\n|---|---|\n| \"Wann ist der Bestand am größten?\" | Rate wird null mit Vorzeichenwechsel $+ \\to -$ |\n| \"Wann fließt am meisten zu?\" | Rate ist maximal, also $f'(t) = 0$ |\n| \"Wann nimmt der Bestand ab?\" | Rate ist negativ, $f(t) < 0$ |\n| \"Wie viel fließt insgesamt zu?\" | $\\int$ über die Bereiche mit $f > 0$ |\n| \"Wann ist das Becken leer?\" | Bestandsfunktion gleich null setzen |\n| \"Wann wächst der Bestand am schnellsten?\" | Wendepunkt des Bestands, also Maximum der Rate |\n\n> [!warning] Die häufigste Verwechslung\n> *\"Wann ist der Bestand maximal?\"* und *\"Wann ist der Zufluss maximal?\"* sind **verschiedene** Fragen mit verschiedenen Antworten.\n>\n> Der Bestand ist maximal, wenn die **Rate null wird** (Zufluss kippt in Abfluss). Der Zufluss ist maximal, wenn die **Ableitung der Rate null wird**. Beide Zeitpunkte fallen fast nie zusammen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Einheit prüfen:** Bestand oder Rate?\n2. **Frage übersetzen** nach der Tabelle oben.\n3. **Anfangsbestand identifizieren**, falls der absolute Bestand gefragt ist.\n4. **Rechnen:** ableiten oder integrieren.\n5. **Vorzeichen beachten:** Negative Ratenwerte bedeuten Abfluss und werden beim Integrieren **subtrahiert** -- das ist meist gewollt und darf nicht durch Betragsbildung verfälscht werden.\n6. **Ergebnis mit Einheit angeben** und im Sachkontext deuten."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*In ein Becken fließt Wasser mit der Rate $f(t) = 6t - t^2$ (in Litern pro Minute), $0 \\le t \\le 8$. Zu Beginn enthält das Becken 20 Liter.*\n\n**a) Wann fließt am meisten Wasser zu?**\n\nGefragt ist das Maximum der **Rate**:\n$$f'(t) = 6 - 2t = 0 \\;\\Longrightarrow\\; t = 3$$\n$$f''(t) = -2 < 0 \\;\\Rightarrow\\; \\text{Maximum}$$\n\n*Nach 3 Minuten ist der Zufluss mit $f(3) = 18 - 9 = 9$ Litern pro Minute am größten.*\n\n**b) Wann ist der Wasserstand am höchsten?**\n\nGefragt ist das Maximum des **Bestands** -- die Rate muss null werden:\n$$6t - t^2 = 0 \\;\\Longleftrightarrow\\; t(6-t) = 0 \\;\\Longrightarrow\\; t = 0 \\ \\text{oder}\\ t = 6$$\n\nVorzeichenprüfung: Für $0 < t < 6$ ist $f(t) > 0$ (Zufluss), für $t > 6$ ist $f(t) < 0$ (Abfluss). Also Vorzeichenwechsel $+ \\to -$ bei $t = 6$.\n\n*Nach 6 Minuten ist der Wasserstand am höchsten.*\n\n**c) Wie viel Wasser enthält das Becken nach 6 Minuten?**\n\n$$\\int_0^6 (6t - t^2)\\,dt = \\left[3t^2 - \\tfrac{1}{3}t^3\\right]_0^6 = (108 - 72) - 0 = 36$$\n\n$$\\text{Bestand} = 20 + 36 = 56 \\ \\text{Liter}$$\n\n**d) Wie viel Wasser ist nach 8 Minuten im Becken?**\n\n$$\\int_0^8 (6t - t^2)\\,dt = \\left[3t^2 - \\tfrac{1}{3}t^3\\right]_0^8 = 192 - \\tfrac{512}{3} \\approx 192 - 170{,}67 = 21{,}33$$\n\n$$\\text{Bestand} = 20 + 21{,}33 \\approx 41{,}3 \\ \\text{Liter}$$\n\n*Zwischen Minute 6 und 8 fließt Wasser ab, der Bestand sinkt von 56 auf etwa 41,3 Liter.*\n\n> [!tip] Die Vorzeichenlogik ist hier entscheidend\n> Von $t=6$ bis $t=8$ ist $f$ negativ, das Integral über diesen Bereich ist also negativ und **verringert** den Bestand. Genau das soll es -- wer hier den Betrag bildet, addiert den Abfluss fälschlich hinzu."
+            }
+          ]
+        },
+        {
+          "title": "Abgrenzung: Gesamtzufluss gegen Nettoänderung",
+          "blocks": [
+            {
+              "md": "| Frage | Rechnung |\n|---|---|\n| **Nettoänderung** (\"Wie viel ist am Ende mehr da?\") | $\\int_a^b f(t)\\,dt$ -- mit Vorzeichen |\n| **Gesamtzufluss** (\"Wie viel ist insgesamt zugeflossen?\") | $\\int$ nur über die Bereiche mit $f > 0$ |\n| **Gesamtumsatz** (\"Wie viel Wasser hat sich bewegt?\") | $\\int_a^b \\lvert f(t)\\rvert\\,dt$ |\n\nDiese drei Formulierungen liefern verschiedene Ergebnisse. Im Beispiel: Nettoänderung nach 8 Minuten 21,33 Liter, Gesamtzufluss 36 Liter, Gesamtumsatz $36 + 14{,}67 = 50{,}67$ Liter."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Rate und Bestand verwechseln.** Die Einheit klärt es -- \"pro Minute\" bedeutet Rate.\n- **\"Bestand maximal\" mit \"Zufluss maximal\" gleichsetzen.** Erstes verlangt $f = 0$, zweites $f' = 0$.\n- **Anfangsbestand vergessen.** Das Integral liefert nur die **Änderung**, nicht den absoluten Bestand.\n- **Beim Abfluss den Betrag bilden.** Negative Raten sollen den Bestand verringern.\n- **Einheit weglassen.** Bei Sachaufgaben eigenständig bepunktet.\n- **Bei \"Gesamtzufluss\" über den ganzen Bereich integrieren,** obwohl zwischendurch Abfluss herrscht.\n- **Randwerte des Zeitintervalls nicht prüfen.** Das Maximum kann auch am Rand liegen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Integralbegriff und Hauptsatz** · **Mittlere und momentane Steigung** · **Extrempunkte bestimmen** · **Wendepunkte bestimmen** · **Fläche zwischen Kurven**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

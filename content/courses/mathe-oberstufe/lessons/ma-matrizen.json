@@ -47,6 +47,208 @@
       "id": "w1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Matrizen Grundlagen",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Matrizen Grundlagen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Matrix** $A$ vom Typ $(m \\times n)$ ist ein rechteckiges Zahlenschema mit $m$ Zeilen und $n$ Spalten:\n$$A = \\begin{pmatrix} a_{11} & \\dots & a_{1n} \\\\ \\vdots & \\ddots & \\vdots \\\\ a_{m1} & \\dots & a_{mn} \\end{pmatrix}$$\n$a_{ij}$ bezeichnet den Eintrag in Zeile $i$, Spalte $j$."
+            }
+          ]
+        },
+        {
+          "title": "Grundrechenarten",
+          "blocks": [
+            {
+              "md": "- **Addition/Subtraktion:** nur bei **gleichem Typ**, elementweise: $(A+B)_{ij} = a_{ij}+b_{ij}$.\n- **Skalarmultiplikation:** $(\\lambda A)_{ij} = \\lambda \\cdot a_{ij}$.\n- **Matrizenmultiplikation:** $A\\ (m\\times n)$ mal $B\\ (n \\times p)$ ergibt $C\\ (m\\times p)$, wobei\n$$c_{ij} = \\sum_{k=1}^n a_{ik}\\,b_{kj}$$\nVoraussetzung: Spaltenzahl von $A$ = Zeilenzahl von $B$. **Nicht kommutativ:** i. Allg. $AB \\neq BA$."
+            }
+          ]
+        },
+        {
+          "title": "Spezielle Matrizen",
+          "blocks": [
+            {
+              "md": "- **Einheitsmatrix** $E$: Diagonale mit Einsen, sonst Nullen — neutrales Element der Multiplikation ($AE=EA=A$).\n- **Quadratische Matrix:** $m=n$.\n- **Inverse Matrix** $A^{-1}$ (falls existent, nur quadratisch): $A\\cdot A^{-1} = E$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel Matrizenmultiplikation",
+          "blocks": [
+            {
+              "md": "$$\\begin{pmatrix}1 & 2\\\\3 & 4\\end{pmatrix}\\begin{pmatrix}5\\\\6\\end{pmatrix} = \\begin{pmatrix}1\\cdot5+2\\cdot6\\\\3\\cdot5+4\\cdot6\\end{pmatrix} = \\begin{pmatrix}17\\\\39\\end{pmatrix}$$"
+            }
+          ]
+        },
+        {
+          "title": "Matrix-Vektor-Schreibweise für LGS",
+          "blocks": [
+            {
+              "md": "Ein **LGS** lässt sich kompakt schreiben als $A\\mathbf{x}=\\mathbf{b}$, wobei $A$ die Koeffizientenmatrix, $\\mathbf{x}$ der Vektor der Unbekannten und $\\mathbf{b}$ der Ergebnisvektor ist — Lösen mit dem **Gauß-Algorithmus**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei zentrale Anwendungen in der Oberstufe",
+          "blocks": [
+            {
+              "md": "1. **Übergangsmatrizen und Populationsmodelle** — Beschreibung von Zustandsänderungen über die Zeit.\n2. **Matrizen als lineare Abbildungen** — geometrische Transformationen (Drehung, Spiegelung, Skalierung)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Matrizen unterschiedlichen Typs addieren wollen.\n- Reihenfolge bei der Multiplikation vertauschen ($AB \\neq BA$).\n- \"Zeile mal Spalte\" bei der Multiplikation verwechseln (falsche Indizes kombinieren)."
+            }
+          ]
+        },
+        {
+          "title": "Die Multiplikation und ihre Regel",
+          "blocks": [
+            {
+              "md": "$$(A\\cdot B)_{ij} = \\sum_k a_{ik}\\,b_{kj} \\qquad \\text{Zeile mal Spalte}$$\n\n> [!important] Die Spaltenzahl von A muss der Zeilenzahl von B entsprechen\n> Eine $m\\times n$-Matrix lässt sich nur mit einer $n\\times p$-Matrix multiplizieren; das Ergebnis ist $m\\times p$. Die inneren Zahlen müssen übereinstimmen und verschwinden, die äußeren bilden das Format.\n>\n> Diese Formatregel ist keine Formalie, sondern folgt aus der Deutung: Matrizen beschreiben lineare Abbildungen, und Hintereinanderausführung setzt voraus, dass der Bildraum der ersten der Urbildraum der zweiten ist.\n>\n> Der Eintrag an der Stelle $(i,j)$ entsteht als Skalarprodukt der $i$-ten Zeile von $A$ mit der $j$-ten Spalte von $B$. Wer diesen Zusammenhang zum **Skalarprodukt** sieht, muss das Schema nicht auswendig lernen."
+            }
+          ]
+        },
+        {
+          "title": "Die fehlende Kommutativität",
+          "blocks": [
+            {
+              "md": "> [!warning] Im Allgemeinen ist AB ungleich BA\n> Das ist der wesentliche Unterschied zur Zahlenrechnung. Häufig ist eines der beiden Produkte nicht einmal definiert, weil die Formate nicht passen.\n>\n> Anschaulich ist das unmittelbar einleuchtend: Erst drehen und dann spiegeln führt zu einem anderen Ergebnis als erst spiegeln und dann drehen. Matrizenmultiplikation ist Hintereinanderausführung, und bei dieser kommt es auf die Reihenfolge an.\n>\n> Daraus folgt eine weitere Warnung: Die binomischen Formeln gelten **nicht**. $(A+B)^2 = A^2 + AB + BA + B^2$, und die beiden mittleren Terme lassen sich nicht zusammenfassen.\n>\n> Assoziativität und Distributivität gelten dagegen: $A(BC) = (AB)C$ und $A(B+C) = AB+AC$."
+            }
+          ]
+        },
+        {
+          "title": "Einheitsmatrix und Inverse",
+          "blocks": [
+            {
+              "md": "$$A\\cdot E = E\\cdot A = A \\qquad A\\cdot A^{-1} = E$$\n\n> [!info] Nicht jede Matrix ist invertierbar\n> Die Einheitsmatrix mit Einsen auf der Hauptdiagonale spielt die Rolle der Zahl 1. Die Inverse ist das Gegenstück zum Kehrwert -- mit dem Unterschied, dass sie oft gar nicht existiert.\n>\n> Eine quadratische Matrix ist genau dann invertierbar, wenn ihre **Determinante** nicht null ist -- gleichbedeutend damit, dass ihre Spalten linear unabhängig sind und dass das zugehörige homogene Gleichungssystem nur die triviale Lösung hat. Diese Aussagen sind austauschbar; welche man prüft, ist eine Frage der Bequemlichkeit.\n>\n> Für $2\\times 2$-Matrizen gilt die geschlossene Formel\n> $$A^{-1} = \\frac{1}{ad-bc}\\begin{pmatrix} d & -b \\\\ -c & a\\end{pmatrix}$$\n> Bei größeren Matrizen wird die Inverse über den **Gauß-Algorithmus** bestimmt: Man schreibt $A$ und $E$ nebeneinander und formt $A$ in die Einheitsmatrix um -- was rechts entsteht, ist $A^{-1}$.\n>\n> Zu beachten: $(AB)^{-1} = B^{-1}A^{-1}$. Die Reihenfolge kehrt sich um, wie beim Ausziehen von Socken und Schuhen."
+            }
+          ]
+        },
+        {
+          "title": "Besondere Matrizen",
+          "blocks": [
+            {
+              "md": "| Typ | Kennzeichen | Bedeutung |\n|---|---|---|\n| Diagonalmatrix | nur Diagonale besetzt | Streckung in Achsenrichtung |\n| Einheitsmatrix | Diagonale mit Einsen | identische Abbildung |\n| symmetrisch | $A^T = A$ | Spiegelung an der Diagonale ändert nichts |\n| **stochastisch** | Spaltensummen sind 1 | **Übergangsmatrix** |\n\n> [!tip] Die Transponierte vertauscht Zeilen und Spalten\n> $(A^T)_{ij} = a_{ji}$. Für Produkte gilt $(AB)^T = B^T A^T$ -- wieder mit vertauschter Reihenfolge."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Matrizen fassen **Lineare Gleichungssysteme** kompakt zusammen und beschreiben als **lineare Abbildungen** geometrische Vorgänge. Ihre wichtigste Anwendung im Abitur sind **Übergangsmatrizen und Populationsmodelle**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Matrizen als lineare Abbildungen",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Matrizen als lineare Abbildungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **lineare Abbildung** $f: \\mathbb{R}^n \\to \\mathbb{R}^n$ lässt sich durch eine Matrix $A$ darstellen: $f(\\mathbf{x}) = A\\mathbf{x}$. Jeder Punkt/Vektor der Ebene (oder des Raums) wird dabei auf einen neuen Punkt abgebildet — geometrisch entspricht das **Drehungen, Spiegelungen, Skalierungen** und Kombinationen davon."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Abbildungsmatrizen (2D)",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix |\n|-----------|--------|\n| **Skalierung** (Streckung/Stauchung um Faktoren $s_x, s_y$) | $\\begin{pmatrix}s_x & 0\\\\0 & s_y\\end{pmatrix}$ |\n| **Spiegelung an der $x$-Achse** | $\\begin{pmatrix}1 & 0\\\\0 & -1\\end{pmatrix}$ |\n| **Spiegelung an der $y$-Achse** | $\\begin{pmatrix}-1 & 0\\\\0 & 1\\end{pmatrix}$ |\n| **Drehung um Winkel $\\varphi$** (Ursprung, Gegenuhrzeigersinn) | $\\begin{pmatrix}\\cos\\varphi & -\\sin\\varphi\\\\\\sin\\varphi & \\cos\\varphi\\end{pmatrix}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel — Drehung um 90°",
+          "blocks": [
+            {
+              "md": "$\\varphi = 90°$: $\\begin{pmatrix}0 & -1\\\\1 & 0\\end{pmatrix}$. Angewendet auf $\\mathbf{x}=\\begin{pmatrix}1\\\\0\\end{pmatrix}$: $\\begin{pmatrix}0\\\\1\\end{pmatrix}$ — der Punkt $(1,0)$ landet nach einer Vierteldrehung bei $(0,1)$, wie erwartet."
+            }
+          ]
+        },
+        {
+          "title": "Verkettung von Abbildungen",
+          "blocks": [
+            {
+              "md": "Werden zwei Abbildungen nacheinander ausgeführt (erst $A$, dann $B$), entspricht das der **Matrizenmultiplikation** $B \\cdot A$ (die zuerst angewendete Matrix steht rechts!) — angewendet als eine einzige Matrix auf den Ausgangsvektor."
+            }
+          ]
+        },
+        {
+          "title": "Fixpunkte und invariante Eigenschaften",
+          "blocks": [
+            {
+              "md": "- Der **Ursprung** ist bei allen linearen Abbildungen ein Fixpunkt: $A\\mathbf{0}=\\mathbf{0}$.\n- Die **Determinante** von $A$ gibt an, wie sich Flächeninhalte unter der Abbildung verändern (Flächenskalierungsfaktor); ihr Vorzeichen zeigt an, ob die Orientierung erhalten bleibt ($\\det A>0$) oder gespiegelt wird ($\\det A<0$)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Reihenfolge bei Verkettung vertauschen — Matrizenmultiplikation ist **nicht kommutativ**.\n- Bei Drehmatrizen Vorzeichen von $\\sin\\varphi$ vertauschen (führt zur entgegengesetzten Drehrichtung).\n- Abbildungsmatrix mit einer Übergangsmatrix (siehe **Übergangsmatrizen und Populationsmodelle**) verwechseln — konzeptionell unterschiedliche Anwendung derselben Matrix-Vektor-Multiplikation.\n\nErgänzt die geometrischen Werkzeuge aus **Vektoralgebra** und **Kreuzprodukt** um eine algebraische Beschreibung von Bewegungen im Raum."
+            }
+          ]
+        },
+        {
+          "title": "Der Grundgedanke",
+          "blocks": [
+            {
+              "md": "$$\\vec{x} \\longmapsto A\\cdot\\vec{x}$$\n\n> [!important] Die Spalten der Matrix sind die Bilder der Einheitsvektoren\n> Das ist die nützlichste Einzelbeobachtung des Themas. Setzt man $\\vec{e}_1 = \\binom{1}{0}$ ein, so liefert die Multiplikation genau die erste Spalte von $A$.\n>\n> Daraus folgt ein Bauverfahren: Um die Matrix einer geometrischen Abbildung aufzustellen, überlegt man sich, wohin die Einheitsvektoren gehen, und schreibt diese Bilder als Spalten. Für die Drehung um $90°$ etwa geht $\\vec{e}_1$ nach $\\binom{0}{1}$ und $\\vec{e}_2$ nach $\\binom{-1}{0}$.\n>\n> Umgekehrt lässt sich aus einer gegebenen Matrix ablesen, was sie tut -- indem man die Spalten als Bildvektoren deutet."
+            }
+          ]
+        },
+        {
+          "title": "Linearität",
+          "blocks": [
+            {
+              "md": "$$A(\\vec{x}+\\vec{y}) = A\\vec{x}+A\\vec{y} \\qquad A(r\\vec{x}) = r\\,A\\vec{x}$$\n\n> [!info] Diese beiden Regeln definieren, was linear heißt\n> Anschaulich bedeuten sie: Geraden bleiben Geraden, der Ursprung bleibt fest, und Parallelität bleibt erhalten. Ein Gitter wird zu einem anderen Gitter -- verzerrt, gedreht, gestaucht, aber nie verbogen.\n>\n> Verschiebungen sind deshalb **keine** linearen Abbildungen: Sie bewegen den Ursprung. Um sie mit einzubeziehen, braucht es affine Abbildungen der Form $\\vec{x}\\mapsto A\\vec{x}+\\vec{b}$ -- in der Computergrafik löst man das über homogene Koordinaten mit einer zusätzlichen Dimension."
+            }
+          ]
+        },
+        {
+          "title": "Geometrische Grundtypen",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix (2D) | Determinante |\n|---|---|---|\n| Drehung um $\\alpha$ | $\\begin{pmatrix}\\cos\\alpha & -\\sin\\alpha\\\\ \\sin\\alpha & \\cos\\alpha\\end{pmatrix}$ | $1$ |\n| Spiegelung an der x-Achse | $\\begin{pmatrix}1 & 0\\\\ 0 & -1\\end{pmatrix}$ | $-1$ |\n| zentrische Streckung mit $k$ | $\\begin{pmatrix}k & 0\\\\ 0 & k\\end{pmatrix}$ | $k^2$ |\n| Projektion auf die x-Achse | $\\begin{pmatrix}1 & 0\\\\ 0 & 0\\end{pmatrix}$ | $0$ |\n\n> [!tip] Die Determinante ist der Flächenverzerrungsfaktor\n> Ein Einheitsquadrat wird auf ein Parallelogramm der Fläche $|\\det A|$ abgebildet. Das erklärt die Werte in der Tabelle: Drehungen erhalten die Fläche, Streckungen mit $k$ vergrößern sie um $k^2$.\n>\n> Das **Vorzeichen** gibt die Orientierung an. Negative Determinante bedeutet Umkehrung -- die Spiegelung macht aus einem im Uhrzeigersinn durchlaufenen Dreieck eines gegen den Uhrzeigersinn.\n>\n> Determinante null bedeutet **Entartung**: Die Abbildung drückt den Raum auf eine Gerade oder einen Punkt zusammen. Information geht verloren, die Abbildung ist nicht umkehrbar. Das ist die geometrische Erklärung dafür, weshalb genau die Matrizen mit Determinante null keine Inverse besitzen. Im Raum ist die Determinante entsprechend der Volumenfaktor -- siehe **Spatprodukt**."
+            }
+          ]
+        },
+        {
+          "title": "Hintereinanderausführung",
+          "blocks": [
+            {
+              "md": "> [!warning] Die zuerst ausgeführte Abbildung steht rechts\n> $B\\cdot A$ bedeutet: erst $A$, dann $B$. Die Schreibweise folgt der Funktionsschreibweise $B(A(\\vec{x}))$ und läuft der Leserichtung entgegen.\n>\n> Damit erklärt sich auch die fehlende Kommutativität geometrisch: Drehung nach Spiegelung ergibt eine andere Abbildung als Spiegelung nach Drehung.\n>\n> Für Determinanten gilt dagegen die einfache Regel $\\det(AB) = \\det A \\cdot \\det B$ -- Verzerrungsfaktoren multiplizieren sich, unabhängig von der Reihenfolge."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Lineare Abbildungen geben den **Matrizen** ihre geometrische Bedeutung. Der Determinantenbegriff verbindet sie mit dem **Spatprodukt** der Vektorrechnung."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "choice",
       "md": "Was bewirkt $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$?",
       "options": [

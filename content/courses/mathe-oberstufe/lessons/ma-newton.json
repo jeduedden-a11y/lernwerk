@@ -66,6 +66,111 @@
       "id": "w1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Newton-Verfahren",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Newton-Verfahren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Das **Newton-Verfahren** approximiert Nullstellen einer differenzierbaren Funktion $f$ iterativ, indem an jeder Näherung die **Tangente** gebildet und deren Nullstelle als nächste Näherung verwendet wird."
+            }
+          ]
+        },
+        {
+          "title": "Iterationsformel",
+          "blocks": [
+            {
+              "md": "$$x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Herleitung",
+          "blocks": [
+            {
+              "md": "Die Tangente an $f$ im Punkt $(x_n, f(x_n))$ lautet $t(x) = f(x_n) + f'(x_n)(x-x_n)$. Ihre Nullstelle ($t(x)=0$) nach $x$ aufgelöst ergibt genau die Iterationsformel."
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen",
+          "blocks": [
+            {
+              "md": "1. Startwert $x_0$ nahe der vermuteten Nullstelle wählen (z. B. aus Wertetabelle oder Graph ablesen).\n2. Iterationsformel wiederholt anwenden, bis $|x_{n+1}-x_n|$ hinreichend klein ist (Abbruchkriterium).\n3. $x_{n+1}$ als Näherung für die Nullstelle angeben."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Nullstelle von $f(x) = x^2 - 2$ (also $\\sqrt{2}$), Startwert $x_0=1$, $f'(x)=2x$:\n$$x_1 = 1 - \\frac{1-2}{2} = 1{,}5 \\qquad x_2 = 1{,}5 - \\frac{1{,}5^2-2}{3} = 1{,}41\\overline{6} \\qquad x_3 = 1{,}41\\overline{6} - \\frac{1{,}41\\overline{6}^2-2}{2\\cdot1{,}41\\overline{6}} \\approx 1{,}41421569$$\nBereits nach drei Schritten stimmen 5 Nachkommastellen mit $\\sqrt{2} = 1{,}41421356\\ldots$ überein — sehr schnelle (quadratische) Konvergenz."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen des Verfahrens",
+          "blocks": [
+            {
+              "md": "- Bei $f'(x_n) = 0$ (waagerechte Tangente) ist der nächste Schritt nicht definiert.\n- Ungünstiger Startwert kann zu **Divergenz** oder Konvergenz gegen eine **andere** Nullstelle führen.\n- Liefert nur eine **Näherung**, keine exakte Lösung."
+            }
+          ]
+        },
+        {
+          "title": "Anwendung",
+          "blocks": [
+            {
+              "md": "Unverzichtbar, wenn Nullstellen nicht algebraisch exakt bestimmbar sind — z. B. bei gemischten Funktionstypen ($x - \\cos x = 0$) oder in **Extremwertproblemen**, deren Ableitung keine elementare Nullstelle besitzt. Auch Teil des Themenfelds \"Approximation\" (Q1.5), zusammen mit **Taylor- und Maclaurin-Reihen**."
+            }
+          ]
+        },
+        {
+          "title": "Der geometrische Gedanke",
+          "blocks": [
+            {
+              "md": "> [!important] Man ersetzt die Funktion lokal durch ihre Tangente\n> Eine Gleichung wie $x^2 = 2$ oder $\\cos x = x$ lässt sich nicht exakt nach $x$ auflösen. Das Newton-Verfahren umgeht das, indem es die Funktion in der Nähe des Startwerts durch eine **Gerade** ersetzt -- und die Nullstelle einer Geraden ist trivial.\n>\n> Die so gefundene Stelle liegt näher an der wahren Nullstelle. Wiederholt man den Schritt, nähert man sich rasch an.\n>\n> Das ist dieselbe Grundidee wie bei der **numerischen Simulation** in der Physik: Ein schwieriges Problem wird durch viele einfache lineare Schritte ersetzt."
+            }
+          ]
+        },
+        {
+          "title": "Die Konvergenzgeschwindigkeit",
+          "blocks": [
+            {
+              "md": "> [!tip] Die Zahl der gültigen Stellen verdoppelt sich je Schritt\n> Das Verfahren konvergiert **quadratisch**. Beim Beispiel $\\sqrt2$ mit Startwert 1:\n>\n> | Schritt | Näherung | gültige Stellen |\n> |---|---|---|\n> | $x_0$ | 1 | 0 |\n> | $x_1$ | 1,5 | 1 |\n> | $x_2$ | 1,4166... | 2 |\n> | $x_3$ | 1,4142157 | 5 |\n> | $x_4$ | 1,41421356237 | 11 |\n>\n> Nach vier Schritten ist die Genauigkeit eines Taschenrechners erreicht. Genau deshalb rechnen Taschenrechner Wurzeln intern mit diesem Verfahren.\n>\n> Zum Vergleich: Ein Intervallhalbierungsverfahren gewinnt je Schritt nur etwa **eine** Binärstelle. Der Unterschied ist gewaltig."
+            }
+          ]
+        },
+        {
+          "title": "Wann das Verfahren scheitert",
+          "blocks": [
+            {
+              "md": "> [!warning] Ein schlechter Startwert kann alles verderben\n> | Fall | Folge |\n> |---|---|\n> | $f'(x_n) = 0$ | Division durch null, Abbruch |\n> | Startwert nahe einem Extremum | Tangente fast waagerecht, Sprung weit weg |\n> | mehrere Nullstellen | Konvergenz gegen die **falsche** |\n> | ungünstiger Verlauf | Oszillation zwischen zwei Werten |\n>\n> Deshalb gehört zum Verfahren immer ein **begründeter Startwert** -- aus einer Wertetabelle, einer Skizze oder einem Vorzeichenwechsel.\n>\n> Und deshalb ist die Kontrolle des Ergebnisses Pflicht: Einsetzen in $f$ und prüfen, ob der Wert nahe null liegt. Ein Verfahren, das schnell konvergiert, konvergiert auch schnell gegen das Falsche."
+            }
+          ]
+        },
+        {
+          "title": "Das Abbruchkriterium",
+          "blocks": [
+            {
+              "md": "$$\\lvert x_{n+1} - x_n\\rvert < \\varepsilon$$\n\n> [!important] Zwei Kriterien sind zu unterscheiden\n> Die Änderung zwischen zwei Schritten klein zu machen bedeutet **nicht** zwingend, dass der Funktionswert klein ist. Bei sehr flachen Funktionen kann $x$ fast stehen, während $f(x)$ noch merklich von null abweicht.\n>\n> Sicherer ist es, **beides** zu prüfen: die Änderung der Näherung **und** den Funktionswert.\n>\n> In Prüfungsaufgaben wird meist eine feste Zahl von Schritten oder eine geforderte Stellenzahl vorgegeben -- dann ist anzugeben, welches Kriterium verwendet wurde."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Newton-Verfahren nutzt die Tangente aus dem **Ableitungsbegriff** als Rechenwerkzeug. Es ergänzt die exakten Lösungsverfahren um einen numerischen Zugang und ist das mathematische Gegenstück zur **Simulation** in der Physik."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "truefalse",
       "md": "Das Newton-Verfahren versagt, wenn man an einer Stelle mit waagerechter Tangente startet.",
       "answer": true,

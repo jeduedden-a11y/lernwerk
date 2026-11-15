@@ -518,10 +518,260 @@
       "p-Reihe: konvergent genau für $p > 1$ (Integralkriterium). Dass die Glieder gegen 0 gehen, ist nur notwendig, nicht hinreichend: Die harmonische Reihe ($p = 1$) divergiert.");
   });
 
+  // ---------------------------------------------------------------- functions and equations (Mathematik wave)
+  const linx = (G, c) => "x " + G.term(-c, 0);
+  const pt = (x, y) => "$(" + tnum(x) + " \\mid " + tnum(y) + ")$";
+  const fac = (a) => (a === 1 ? "" : a === -1 ? "-" : tnum(a));
+  spec("definitionsbereich", (level, G) => {
+    const a = nz(G, -5, 5), b = a + G.int(2, 6), m = G.int(1, 6), form = G.int(0, 2);
+    const ask = (f) => "Bestimme den Definitionsbereich von $f(x) = " + f + "$.";
+    const all = "alle reellen Zahlen";
+    if (level <= 1) {
+      if (form === 0) return choice(G, ask("\\sqrt{" + linx(G, a) + "}"), "$x \\geq " + a + "$", [{ md: "$x > " + a + "$", why: "Die Wurzel aus 0 ist erlaubt." }, { md: "$x \\leq " + a + "$" }, { md: "$x \\neq " + a + "$", why: "Bei Wurzeln ist ein ganzer Bereich verboten, nicht nur eine Stelle." }],
+        "Der Radikand darf nicht negativ sein: $" + linx(G, a) + " \\geq 0$, also $x \\geq " + a + "$.");
+      if (form === 1) return choice(G, ask("\\ln(" + linx(G, a) + ")"), "$x > " + a + "$", [{ md: "$x \\geq " + a + "$", why: "$\\ln 0$ ist nicht definiert." }, { md: "$x \\neq " + a + "$", why: "Auch negative Argumente sind verboten." }, { md: all }],
+        "Das Argument des Logarithmus muss echt positiv sein: $" + linx(G, a) + " > 0$.");
+      return choice(G, ask("\\frac{1}{" + linx(G, a) + "}"), "$x \\neq " + a + "$", [{ md: "$x > " + a + "$", why: "Verboten ist nur die Nullstelle des Nenners." }, { md: "$x \\geq " + a + "$" }, { md: all, why: "Durch 0 darf man nicht teilen." }],
+        "Der Nenner darf nicht 0 werden: $" + linx(G, a) + " \\neq 0$, also $x \\neq " + a + "$.");
+    }
+    if (level === 2) {
+      if (form === 0) return choice(G, ask("\\sqrt{" + a + " - x}"), "$x \\leq " + a + "$", [{ md: "$x \\geq " + a + "$", why: "Im Radikanden steht $-x$: Große x machen ihn negativ." }, { md: "$x < " + a + "$", why: "Der Radikand 0 ist erlaubt." }, { md: "$x \\neq " + a + "$" }],
+        "$" + a + " - x \\geq 0$ heißt $x \\leq " + a + "$.");
+      if (form === 1) return choice(G, ask("\\frac{1}{x^2 - " + m * m + "}"), "$x \\neq \\pm " + m + "$", [{ md: "$x \\neq " + m + "$", why: "Auch $x = -" + m + "$ macht den Nenner 0." }, { md: "$x > " + m + "$" }, { md: all }],
+        "$x^2 - " + m * m + " = 0$ für $x = \\pm " + m + "$; beide Stellen sind verboten.");
+      const k = G.pick([2, 3, -2, -3]), n = nz(G, -6, 6), r = G.frac(-n, k);
+      const right = (k > 0 ? "$x > " : "$x < ") + r + "$", flip = (k > 0 ? "$x < " : "$x > ") + r + "$";
+      return choice(G, ask("\\ln(" + poly([k, n]) + ")"), right, [{ md: flip, why: "Beim Teilen durch eine negative Zahl kehrt sich das Ungleichheitszeichen um." }, { md: (k > 0 ? "$x \\geq " : "$x \\leq ") + r + "$", why: "$\\ln 0$ ist nicht definiert." }, { md: "$x \\neq " + r + "$" }],
+        "$" + poly([k, n]) + " > 0$ nach $x$ auflösen" + (k < 0 ? "; das Teilen durch $" + k + "$ kehrt das Zeichen um" : "") + ".");
+    }
+    if (level === 3) {
+      if (form === 0) return choice(G, ask("\\sqrt{x^2 - " + m * m + "}"), "$x \\leq -" + m + "$ oder $x \\geq " + m + "$", [{ md: "$x \\geq " + m + "$", why: "Auch negative Zahlen mit großem Betrag machen den Radikanden positiv." }, { md: "$-" + m + " \\leq x \\leq " + m + "$", why: "Dort ist der Radikand gerade negativ." }, { md: "$x \\neq \\pm " + m + "$" }],
+        "$x^2 \\geq " + m * m + "$ heißt $|x| \\geq " + m + "$: links von $-" + m + "$ oder rechts von $" + m + "$.");
+      if (form === 1) return choice(G, ask("\\frac{\\sqrt{" + linx(G, a) + "}}{" + linx(G, b) + "}"), "$x \\geq " + a + "$ und $x \\neq " + b + "$", [{ md: "$x \\geq " + a + "$", why: "Der Nenner wird bei $x = " + b + "$ null." }, { md: "$x > " + a + "$ und $x \\neq " + b + "$", why: "Im Zähler ist die Wurzel aus 0 erlaubt." }, { md: "$x \\neq " + b + "$" }],
+        "Zwei Problemstellen: Der Radikand $\\geq 0$ gibt $x \\geq " + a + "$, der Nenner $\\neq 0$ gibt $x \\neq " + b + "$. Beide Bedingungen gelten zugleich.");
+      return choice(G, ask("\\ln(x^2 + " + m + ")"), all, [{ md: "$x > 0$", why: "$x^2 + " + m + "$ ist für jedes x positiv." }, { md: "$x > -" + m + "$" }, { md: "$x \\neq 0$" }],
+        "$x^2 + " + m + " \\geq " + m + " > 0$ für alle $x$: keine Einschränkung.");
+    }
+    if (form !== 1) return choice(G, ask("\\ln\\left(\\frac{" + linx(G, a) + "}{" + linx(G, b) + "}\\right)"), "$x < " + a + "$ oder $x > " + b + "$", [{ md: "$x > " + b + "$", why: "Für $x < " + a + "$ sind Zähler und Nenner beide negativ, der Bruch also positiv." }, { md: "$" + a + " < x < " + b + "$", why: "Dort haben Zähler und Nenner verschiedene Vorzeichen." }, { md: "$x \\neq " + b + "$" }],
+      "Der Bruch ist positiv, wenn Zähler und Nenner dasselbe Vorzeichen haben: beide positiv ($x > " + b + "$) oder beide negativ ($x < " + a + "$). Bei $x = " + a + "$ wäre das Argument 0.");
+    return choice(G, ask("\\sqrt{(" + linx(G, a) + ")(" + b + " - x)}"), "$" + a + " \\leq x \\leq " + b + "$", [{ md: "$x \\leq " + a + "$ oder $x \\geq " + b + "$", why: "Dort haben die Faktoren verschiedene Vorzeichen." }, { md: "$x \\geq " + a + "$" }, { md: "$" + a + " < x < " + b + "$", why: "An den Rändern ist der Radikand 0, das ist erlaubt." }],
+      "Das Produkt ist $\\geq 0$, wenn beide Faktoren dasselbe Vorzeichen haben. Beide $\\geq 0$ gilt für $" + a + " \\leq x \\leq " + b + "$; beide $\\leq 0$ ist unmöglich.");
+  });
+  spec("transformation", (level, G) => {
+    const u = G.int(-3, 4), v = nz(G, -3, 4);
+    const lead = "Der Punkt " + pt(u, v) + " liegt auf dem Graphen von $f$. Welcher Punkt liegt auf dem Graphen von ";
+    const dir = (c) => Math.abs(c) + " nach " + (c > 0 ? "rechts" : "links"), up = (d) => Math.abs(d) + " nach " + (d > 0 ? "oben" : "unten");
+    if (level <= 1) {
+      const c = nz(G, -4, 4), d = nz(G, -4, 4);
+      return choice(G, lead + "$g(x) = f(" + linx(G, c) + ") " + G.term(d, 0) + "$?", pt(u + c, v + d),
+        [{ md: pt(u - c, v + d), why: "Im Argument wirkt die Verschiebung umgekehrt." }, { md: pt(u + c, v - d) }, { md: pt(u + d, v + c) }],
+        "Der Graph wandert um " + dir(c) + " und um " + up(d) + ": $g(" + tnum(u + c) + ") = f(" + tnum(u) + ") " + G.term(d, 0) + " = " + tnum(v + d) + "$.");
+    }
+    if (level === 2) {
+      const a = G.pick([2, 3, -1, -2]), c = nz(G, -3, 3), d = nz(G, -4, 4);
+      return choice(G, lead + "$g(x) = " + fac(a) + "f(" + linx(G, c) + ") " + G.term(d, 0) + "$?", pt(u + c, a * v + d),
+        [{ md: pt(u + c, a * (v + d)), why: "Erst strecken, dann verschieben: der y-Wert wird mit " + a + " multipliziert, danach kommt " + d + " dazu." }, { md: pt(u - c, a * v + d), why: "Im Argument wirkt die Verschiebung umgekehrt." }, { md: pt(u + c, v + d), why: "Der Faktor " + a + " streckt die y-Werte." }],
+        "x-Richtung: um " + dir(c) + ". y-Richtung: erst mal " + a + ", dann " + up(d) + ": $" + a + " \\cdot " + par(v) + " " + G.term(d, 0) + " = " + tnum(a * v + d) + "$.");
+    }
+    if (level === 3) {
+      const b = G.pick([2, 3, 0.5]), d = nz(G, -3, 3);
+      const uu = b === 0.5 ? nz(G, -3, 4) : b * nz(G, -2, 2);
+      const bt = b === 0.5 ? "\\tfrac12 x" : b + "x";
+      return choice(G, "Der Punkt " + pt(uu, v) + " liegt auf dem Graphen von $f$. Welcher Punkt liegt auf dem Graphen von $g(x) = f(" + bt + ") " + G.term(d, 0) + "$?", pt(uu / b, v + d),
+        [{ md: pt(uu * b, v + d), why: "Innen wirkt alles umgekehrt: Der Faktor im Argument teilt die x-Werte." }, { md: pt(uu / b, b * v + d), why: "Der Faktor steht im Argument, er ändert die y-Werte nicht." }, { md: pt(uu, v + d) }],
+        "Gesucht ist das $x$ mit $" + bt.replace(" x", "x") + " = " + tnum(uu) + "$, also $x = " + tnum(uu / b) + "$. Dort ist $g(x) = f(" + tnum(uu) + ") " + G.term(d, 0) + " = " + tnum(v + d) + "$.");
+    }
+    const a = G.pick([2, -1, 3]), b = G.pick([2, 3]), e = nz(G, -6, 6), d = nz(G, -4, 4), x0 = G.int(-3, 3);
+    const uu = b * x0 - e;
+    return choice(G, "Der Punkt " + pt(uu, v) + " liegt auf dem Graphen von $f$. Welcher Punkt liegt auf dem Graphen von $g(x) = " + fac(a) + "f(" + b + "x " + G.term(-e, 0) + ") " + G.term(d, 0) + "$?", pt(x0, a * v + d),
+      [{ md: pt(uu / b + e, a * v + d), why: "Erst den Faktor ausklammern: $" + b + "\\left(x " + G.term(-e / b, 3) + "\\right)$. Verschoben wird um $" + tnum(e / b) + "$, nicht um $" + e + "$." }, { md: pt(x0, a * (v + d)), why: "Erst strecken, dann verschieben." }, { md: pt(uu, a * v + d), why: "Das Argument ändert die x-Koordinate." }],
+      "Gesucht ist das $x$ mit $" + b + "x " + G.term(-e, 0) + " = " + tnum(uu) + "$, also $x = " + tnum(x0) + "$. y-Wert: $" + a + " \\cdot " + par(v) + " " + G.term(d, 0) + " = " + tnum(a * v + d) + "$.");
+  });
+  spec("wurzelgleichung", (level, G) => {
+    if (level <= 1) {
+      const c = G.int(1, 7), b = G.int(-9, 9);
+      return num("Löse $\\sqrt{" + poly([1, b]) + "} = " + c + "$.", c * c - b, "Quadrieren: $" + poly([1, b]) + " = " + c * c + "$, also $x = " + (c * c - b) + "$. Probe: $\\sqrt{" + c * c + "} = " + c + "$ stimmt.", 0);
+    }
+    for (let tries = 0; tries < 80; tries++) {
+      const c = level === 2 ? G.int(0, 3) : G.int(-3, 4);
+      const s = G.int(Math.max(-c, -3), 8);
+      const t = level === 4 ? G.int(-c, 8) : G.int(-9, -c - 1);
+      const a = 2 * c + s + t, b = c * c - s * t;
+      if (t === s || a === 0) continue;
+      const eq = "\\sqrt{" + poly([a, b]) + "} = " + poly([1, c]);
+      const quad = poly([1, -(s + t), s * t]) + " = 0";
+      if (level === 4) return num("Löse $" + eq + "$ und gib die **Summe aller Lösungen** an.", s + t,
+        "Quadrieren: $" + poly([a, b]) + " = (" + poly([1, c]) + ")^2$, also $" + quad + "$ mit $x = " + Math.min(s, t) + "$ und $x = " + Math.max(s, t) + "$. Probe: Für beide ist $x " + G.term(c, 0) + " \\geq 0$, beide sind Lösungen. Summe $" + (s + t) + "$.", 0);
+      return num("Löse $" + eq + "$.", s,
+        "Quadrieren: $" + poly([a, b]) + " = (" + poly([1, c]) + ")^2$, also $" + quad + "$ mit $x = " + s + "$ oder $x = " + t + "$. Probe: Bei $x = " + t + "$ ist die rechte Seite $" + (t + c) + " < 0$, die Wurzel aber nie negativ: Scheinlösung. Lösung $x = " + s + "$.", 0);
+    }
+    return num("Löse $\\sqrt{x + 7} = x + 1$.", 2, "Quadrieren: $x + 7 = x^2 + 2x + 1$, also $x^2 + x - 6 = 0$ mit $x = 2$ oder $x = -3$. Probe: $x = -3$ gibt rechts $-2$: Scheinlösung.", 0);
+  });
+  spec("verkettung", (level, G) => {
+    const p = nz(G, -3, 3), q = G.int(-4, 4), m = nz(G, -3, 3), n = G.int(-5, 5), a = G.int(-3, 3);
+    const f = (x) => x * x + p * x + q, g = (x) => m * x + n;
+    const ft = poly([1, p, q]), gt = poly([m, n]);
+    if (level <= 1) return num("$f(x) = " + ft + "$ und $g(x) = " + gt + "$. Berechne $f(g(" + a + "))$.", f(g(a)),
+      "Innen zuerst: $g(" + a + ") = " + g(a) + "$, dann $f(" + g(a) + ") = " + f(g(a)) + "$.", 0);
+    if (level === 2) return num("$f(x) = " + ft + "$ und $g(x) = " + gt + "$. Berechne $g(f(" + a + "))$.", g(f(a)),
+      "Jetzt ist $f$ innen: $f(" + a + ") = " + f(a) + "$, dann $g(" + f(a) + ") = " + g(f(a)) + "$. Die Reihenfolge zählt: $f(g(" + a + ")) = " + f(g(a)) + "$.", 0);
+    if (level === 3) {
+      const k = G.pick([3, 4, 5]), w = poly([m, n]);
+      return choice(G, "$h(x) = (" + w + ")^{" + k + "}$ soll als Verkettung $h(x) = u(v(x))$ geschrieben werden. Welche Zerlegung stimmt?", "$u(z) = z^{" + k + "}$, $v(x) = " + w + "$",
+        [{ md: "$u(z) = " + poly([m, n], "z") + "$, $v(x) = x^{" + k + "}$", why: "So würde erst potenziert und danach die lineare Funktion angewendet." }, { md: "$u(z) = " + k + "z$, $v(x) = " + w + "$" }, { md: "$u(z) = z^{" + k + "}$, $v(x) = x$" }],
+        "Was zuletzt gerechnet wird, ist die äußere Funktion: Erst wird $" + w + "$ berechnet (innen), dann hoch " + k + " genommen (außen). Ableitung: $h'(x) = " + k + "(" + w + ")^{" + (k - 1) + "} \\cdot " + par(m) + "$.");
+    }
+    const x1 = G.int(-2, 3), gx = G.int(-2, 4), gd = nz(G, -3, 3), fd = nz(G, -4, 4), fv = G.int(-5, 5);
+    return num("Von zwei differenzierbaren Funktionen ist bekannt: $g(" + x1 + ") = " + gx + "$, $g'(" + x1 + ") = " + gd + "$, $f(" + gx + ") = " + fv + "$ und $f'(" + gx + ") = " + fd + "$. Berechne die Ableitung von $h(x) = f(g(x))$ an der Stelle $" + x1 + "$.", fd * gd,
+      "Kettenregel: $h'(" + x1 + ") = f'(g(" + x1 + ")) \\cdot g'(" + x1 + ") = f'(" + gx + ") \\cdot " + par(gd) + " = " + fd + " \\cdot " + par(gd) + " = " + fd * gd + "$. Der Wert $f(" + gx + ")$ wird nicht gebraucht.", 0);
+  });
+  spec("stetigkeit", (level, G) => {
+    const x0 = nz(G, -3, 3), p = G.int(-4, 4);
+    const left = poly([1, 0, p]), L = x0 * x0 + p;
+    const cases = (r) => "$f(x) = \\begin{cases} " + left + " & x \\leq " + x0 + " \\\\ " + r + " & x > " + x0 + " \\end{cases}$";
+    if (level <= 2) {
+      const a = nz(G, -4, 4), b = L - a * x0;
+      if (level <= 1) return num(cases(fac(a) + "x + b") + ". Für welches $b$ ist $f$ an der Stelle $" + x0 + "$ stetig?", b,
+        "Links: $f(" + x0 + ") = " + L + "$. Rechts strebt $" + fac(a) + "x + b$ gegen $" + a * x0 + " + b$. Gleichsetzen: $b = " + L + " " + G.term(-a * x0, 0) + " = " + b + "$.", 0);
+      return num(cases("ax " + G.term(b, 0)) + ". Für welches $a$ ist $f$ an der Stelle $" + x0 + "$ stetig?", a,
+        "Links: $f(" + x0 + ") = " + L + "$. Rechts: $" + par(x0) + "a " + G.term(b, 0) + "$. Gleichsetzen: $" + par(x0) + "a = " + (L - b) + "$, also $a = " + a + "$.", 0);
+    }
+    if (level === 3) {
+      const a = 2 * x0, b = L - a * x0;
+      return num(cases("ax + b") + ". Für welche $a$ und $b$ ist $f$ an der Stelle $" + x0 + "$ differenzierbar? Gib $b$ an.", b,
+        "Gleiche Steigung: $2 \\cdot " + par(x0) + " = a$, also $a = " + a + "$. Gleicher Wert: $" + L + " = " + a + " \\cdot " + par(x0) + " + b$, also $b = " + b + "$. Erst beides zusammen macht die Nahtstelle glatt.", 0);
+    }
+    const x1 = G.pick([1, 2]), k = nz(G, -2, 2), c = -2 * k * x1 * x1 * x1, b = -3 * k * x1 * x1;
+    return num("$f(x) = \\begin{cases} ax^2 + b & x \\leq " + x1 + " \\\\ \\frac{" + c + "}{x} & x > " + x1 + " \\end{cases}$. Für welche $a$ und $b$ ist $f$ an der Stelle $" + x1 + "$ differenzierbar? Gib $b$ an.", b,
+      "Gleiche Steigung: $2a \\cdot " + x1 + " = -\\frac{" + c + "}{" + x1 * x1 + "}$, also $a = " + k + "$. Gleicher Wert: $" + k * x1 * x1 + " + b = \\frac{" + c + "}{" + x1 + "} = " + c / x1 + "$, also $b = " + b + "$.", 0);
+  });
+  const EXACT = [[0, "0"], [0.5, "\\tfrac12"], [Math.SQRT2 / 2, "\\tfrac{\\sqrt2}{2}"], [Math.sqrt(3) / 2, "\\tfrac{\\sqrt3}{2}"], [1, "1"]];
+  const exact = (v) => { const e = EXACT.find(([w]) => Math.abs(Math.abs(v) - w) < 1e-9); return (v < -1e-9 ? "-" : "") + e[1]; };
+  const radTex = (deg) => {
+    if (deg === 0) return "0";
+    const g = G0(deg, 180), z = deg / g, nn = 180 / g;
+    const top = (z === 1 ? "" : z) + "\\pi";
+    return nn === 1 ? top : "\\tfrac{" + top + "}{" + nn + "}";
+  };
+  function G0(a, b) { while (b) [a, b] = [b, a % b]; return a; }
+  const trigv = (fn, deg) => (fn === "sin" ? Math.sin((deg * Math.PI) / 180) : Math.cos((deg * Math.PI) / 180));
+  spec("trigwert", (level, G) => {
+    if (level <= 3) {
+      const fn = G.pick(["sin", "cos"]), other = fn === "sin" ? "cos" : "sin";
+      const deg = level <= 1 ? G.pick([0, 30, 45, 60, 90]) : G.pick([120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330]);
+      const v = trigv(fn, deg), right = exact(v);
+      const arg = level === 3 ? radTex(deg) : deg + "^\\circ";
+      const ref = deg % 180 === 0 || deg % 90 === 0 ? null : Math.min(deg % 180, 180 - (deg % 180));
+      const wrong = [exact(trigv(other, deg)), exact(-v), exact(trigv(fn, ref || 30))].filter((w) => w !== right).map((w) => ({ md: "$" + w + "$" }));
+      ["\\tfrac12", "-\\tfrac{\\sqrt3}{2}", "1", "0"].forEach((w) => { if (w !== right) wrong.push({ md: "$" + w + "$" }); });
+      return choice(G, "Bestimme den exakten Wert von $\\" + fn + "\\left(" + arg + "\\right)$.", "$" + right + "$", wrong,
+        "Am Einheitskreis ist $\\cos$ die x- und $\\sin$ die y-Koordinate." + (ref ? " Der Bezugswinkel ist $" + ref + "^\\circ$; das Vorzeichen folgt aus dem Quadranten, in dem $" + deg + "^\\circ$ liegt." : "") + " Ergebnis: $" + right + "$.");
+    }
+    const fn = G.pick(["sin", "cos"]), val = G.pick([0.5, -0.5, Math.SQRT2 / 2, -Math.SQRT2 / 2, Math.sqrt(3) / 2, -Math.sqrt(3) / 2]);
+    const sols = (f, w) => { const out = []; for (let d = 0; d < 360; d += 15) if (Math.abs(trigv(f, d) - w) < 1e-9) out.push(d); return out; };
+    const show = (ds) => ds.length ? ds.map((d) => "$" + radTex(d) + "$").join(" und ") : "keine";
+    const right = show(sols(fn, val));
+    const wrong = [show(sols(fn, -val)), show(sols(fn === "sin" ? "cos" : "sin", val)), show(sols(fn, val).map((d) => d % 180 === 0 ? d : d < 180 ? d : 360 - d).filter((d, i, arr) => arr.indexOf(d) === i))]
+      .filter((w) => w !== right).map((w) => ({ md: w }));
+    return choice(G, "Bestimme alle Lösungen von $\\" + fn + " x = " + exact(val) + "$ im Intervall $[0; 2\\pi)$.", right, wrong.concat([{ md: "$\\tfrac{\\pi}{6}$ und $\\tfrac{5\\pi}{6}$" }]),
+      "Erst den Bezugswinkel im ersten Quadranten bestimmen, dann am Einheitskreis die zweite Stelle mit demselben " + (fn === "sin" ? "y-Wert (Spiegelung an der y-Achse)" : "x-Wert (Spiegelung an der x-Achse)") + " suchen; das Vorzeichen legt die Quadranten fest. Lösungen: " + right + ".");
+  });
+  const TRIPLES = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]];
+  spec("additionstheorem", (level, G) => {
+    if (level <= 1) {
+      const P = "\\tfrac{\\sqrt6 + \\sqrt2}{4}", M = "\\tfrac{\\sqrt6 - \\sqrt2}{4}", N = "\\tfrac{\\sqrt2 - \\sqrt6}{4}";
+      const pick = G.pick([["sin", 75, "45^\\circ + 30^\\circ", P], ["sin", 15, "45^\\circ - 30^\\circ", M], ["cos", 75, "45^\\circ + 30^\\circ", M], ["cos", 15, "45^\\circ - 30^\\circ", P], ["cos", 105, "60^\\circ + 45^\\circ", N]]);
+      const wrong = [P, M, N, "\\tfrac{\\sqrt3 + 1}{2}"].filter((w) => w !== pick[3]).map((w) => ({ md: "$" + w + "$" }));
+      return choice(G, "Berechne $\\" + pick[0] + " " + pick[1] + "^\\circ$ exakt über $" + pick[1] + "^\\circ = " + pick[2] + "$.", "$" + pick[3] + "$", wrong,
+        "Additionstheorem anwenden und die exakten Werte von $30^\\circ$, $45^\\circ$, $60^\\circ$ einsetzen; $\\tfrac{\\sqrt2}{2} \\cdot \\tfrac{\\sqrt3}{2} = \\tfrac{\\sqrt6}{4}$. Ergebnis $" + pick[3] + "$.");
+    }
+    const [A, B] = G.pickN(TRIPLES, 2);
+    const sa = A[0] / A[2], ca = A[1] / A[2], sb = B[0] / B[2], cb = B[1] / B[2];
+    const given = "$\\sin\\alpha = " + G.frac(A[0], A[2]) + "$ und $\\cos\\beta = " + G.frac(B[1], B[2]) + "$, beide Winkel spitz";
+    if (level === 2) return num("Es gilt " + given + ". Berechne $\\sin(\\alpha + \\beta)$ (drei Nachkommastellen).", sa * cb + ca * sb,
+      "Mit dem Pythagoras am Einheitskreis: $\\cos\\alpha = " + G.frac(A[1], A[2]) + "$, $\\sin\\beta = " + G.frac(B[0], B[2]) + "$. Dann $\\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta = " + G.frac(A[0] * B[1] + A[1] * B[0], A[2] * B[2]) + " \\approx " + G.tex(sa * cb + ca * sb, 3) + "$.", 0.002);
+    if (level === 3) return num("Es gilt $\\sin\\alpha = " + G.frac(A[0], A[2]) + "$. Berechne $\\cos(2\\alpha)$ (drei Nachkommastellen).", 1 - 2 * sa * sa,
+      "$\\cos(2\\alpha) = 1 - 2\\sin^2\\alpha = 1 - 2 \\cdot " + G.frac(A[0] * A[0], A[2] * A[2]) + " = " + G.frac(A[2] * A[2] - 2 * A[0] * A[0], A[2] * A[2]) + " \\approx " + G.tex(1 - 2 * sa * sa, 3) + "$. Die Form mit $\\sin^2$ spart das Berechnen von $\\cos\\alpha$.", 0.002);
+    return num("$\\alpha$ liegt im zweiten Quadranten mit $\\sin\\alpha = " + G.frac(A[0], A[2]) + "$; $\\beta$ ist spitz mit $\\cos\\beta = " + G.frac(B[1], B[2]) + "$. Berechne $\\cos(\\alpha - \\beta)$ (drei Nachkommastellen).", -ca * cb + sa * sb,
+      "Im zweiten Quadranten ist der Kosinus negativ: $\\cos\\alpha = -" + G.frac(A[1], A[2]) + "$; $\\sin\\beta = " + G.frac(B[0], B[2]) + "$. $\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta = " + G.frac(-A[1] * B[1] + A[0] * B[0], A[2] * B[2]) + " \\approx " + G.tex(-ca * cb + sa * sb, 3) + "$.", 0.002);
+  });
+  spec("restsatz", (level, G) => {
+    if (level <= 1) {
+      const cs = [1, G.int(-4, 4), G.int(-6, 6), G.int(-8, 8)], a = nz(G, -3, 3);
+      return num("Welchen Rest lässt $f(x) = " + poly(cs) + "$ bei der Division durch $(" + linx(G, a) + ")$?", ev(cs, a),
+        "Restsatz: Der Rest ist $f(" + a + ") = " + ev(cs, a) + "$. Eine Polynomdivision ist nicht nötig.", 0);
+    }
+    if (level === 2) {
+      const a = nz(G, -3, 3), k = G.int(-4, 4), c = G.int(-6, 6), d = -(a * a * a + k * a * a + c * a);
+      return num("Für welches $d$ ist $(" + linx(G, a) + ")$ ein Faktor von $f(x) = " + poly([1, k, c, 0]) + " + d$?", d,
+        "Faktorsatz: $(" + linx(G, a) + ")$ ist Faktor genau dann, wenn $f(" + a + ") = 0$: $" + (a * a * a + k * a * a + c * a) + " + d = 0$, also $d = " + d + "$.", 0);
+    }
+    if (level === 3) {
+      const r = G.pickN([-4, -3, -2, -1, 1, 2, 3, 4, 5], 3), cs = [1, -(r[0] + r[1] + r[2]), r[0] * r[1] + r[0] * r[2] + r[1] * r[2], -r[0] * r[1] * r[2]];
+      const rest = poly([1, -(r[1] + r[2]), r[1] * r[2]]);
+      return num("$x = " + r[0] + "$ ist eine Nullstelle von $f(x) = " + poly(cs) + "$. Bestimme die **größte** Nullstelle.", Math.max(...r),
+        "Polynomdivision durch $(" + linx(G, r[0]) + ")$ ergibt $" + rest + "$, dessen Nullstellen $" + Math.min(r[1], r[2]) + "$ und $" + Math.max(r[1], r[2]) + "$ sind. Alle Nullstellen: $" + r.slice().sort((x, y) => x - y).join("$, $") + "$.", 0);
+    }
+    for (let t = 0; t < 60; t++) {
+      const r = nz(G, -3, 3), p = G.int(-5, 5), q = G.int(-6, 4), D = p * p - 4 * q;
+      const sq = Math.round(Math.sqrt(D));
+      if (D <= 0 || sq * sq === D) continue;
+      const cs = [1, p - r, q - r * p, -r * q], big = Math.max(r, (-p + Math.sqrt(D)) / 2);
+      return num("$x = " + r + "$ ist eine Nullstelle von $f(x) = " + poly(cs) + "$. Bestimme die **größte** Nullstelle (zwei Nachkommastellen).", big,
+        "Polynomdivision durch $(" + linx(G, r) + ")$ ergibt $" + poly([1, p, q]) + "$. pq-Formel: $x = " + tnum(-p / 2) + " \\pm \\sqrt{" + tnum(D / 4) + "}$. Größte Nullstelle $\\approx " + G.tex(big, 2) + "$.", 0.01);
+    }
+    return num("$x = 1$ ist eine Nullstelle von $f(x) = x^3 - 3x + 2$. Bestimme die größte Nullstelle.", 1, "$x^3 - 3x + 2 = (x - 1)^2(x + 2)$.", 0);
+  });
+  spec("potenz", (level, G) => {
+    if (level <= 1) {
+      const m = G.int(2, 7), n = G.int(-3, 6), k = G.int(1, 6);
+      return num("Schreibe $\\dfrac{a^{" + m + "} \\cdot a^{" + n + "}}{a^{" + k + "}}$ als eine Potenz von $a$ ($a > 0$). Gib den Exponenten an.", m + n - k,
+        "Gleiche Basis: Exponenten addieren beim Multiplizieren, subtrahieren beim Teilen: $" + m + " " + G.term(n, 0) + " - " + k + " = " + (m + n - k) + "$.", 0);
+    }
+    if (level === 2) {
+      const m = G.int(2, 5), n = G.pick([2, 3, -2]), k = G.int(1, 7);
+      return num("Schreibe $\\left(a^{" + m + "}\\right)^{" + n + "} \\cdot a^{-" + k + "}$ als eine Potenz von $a$. Gib den Exponenten an.", m * n - k,
+        "Potenz einer Potenz: Exponenten multiplizieren ($" + m * n + "$), dann $a^{-" + k + "}$ dazu: $" + m * n + " - " + k + " = " + (m * n - k) + "$.", 0);
+    }
+    if (level === 3) {
+      const [b, p, q, val] = G.pick([[8, 2, 3, 4], [27, -1, 3, 1 / 3], [16, 3, 4, 8], [32, 2, 5, 4], [9, -3, 2, 1 / 27], [64, 5, 6, 32], [125, 2, 3, 25], [4, -3, 2, 1 / 8]]);
+      return num("Berechne $" + b + "^{" + G.frac(p, q) + "}$ ohne Taschenrechner (als Dezimalzahl, falls nötig).", val,
+        "$a^{\\frac{p}{q}} = \\left(\\sqrt[q]{a}\\right)^p$: Erst die " + q + "-te Wurzel ziehen ($" + Math.round(Math.pow(b, 1 / q)) + "$), dann hoch $" + p + "$" + (p < 0 ? " (negativ: Kehrwert)" : "") + ". Ergebnis $" + G.tex(val, 4) + "$.", 0.0005);
+    }
+    const base = G.pick([2, 3]), k = G.pick([2, 3]), p = G.int(-4, 5);
+    let q = G.int(-3, 4);
+    if ((p + k * q) % (k - 1) !== 0) q += 1;
+    const x = (p + k * q) / (k - 1), big = Math.pow(base, k);
+    return num("Löse $" + base + "^{" + poly([1, p]) + "} = " + big + "^{" + poly([1, -q]) + "}$.", x,
+      "Gleiche Basis herstellen: $" + big + " = " + base + "^{" + k + "}$, also $" + base + "^{" + poly([1, p]) + "} = " + base + "^{" + k + "(" + poly([1, -q]) + ")}$. Exponenten gleichsetzen: $" + poly([1, p]) + " = " + poly([k, -k * q]) + "$, also $x = " + tnum(x) + "$.", 0);
+  });
+  spec("gebrochen", (level, G) => {
+    const a = nz(G, -4, 4);
+    if (level <= 1) {
+      let m = nz(G, -3, 3), n = G.int(-5, 5);
+      if (m * a + n === 0) n += 1;
+      return num("$f(x) = \\dfrac{" + poly([m, n]) + "}{" + linx(G, a) + "}$. An welcher Stelle hat $f$ eine Polstelle?", a,
+        "Der Nenner wird bei $x = " + a + "$ null, der Zähler dort nicht ($" + (m * a + n) + " \\neq 0$): Polstelle.", 0);
+    }
+    if (level === 2) {
+      const b = G.int(-5, 5);
+      return num("$f(x) = \\dfrac{" + poly([1, b - a, -a * b]) + "}{" + linx(G, a) + "}$ hat bei $x = " + a + "$ eine Definitionslücke. Welchen Wert hat dort die stetige Fortsetzung?", a + b,
+        "Der Zähler hat ebenfalls die Nullstelle $" + a + "$: $" + poly([1, b - a, -a * b]) + " = (" + linx(G, a) + ")(" + poly([1, b]) + ")$. Kürzen ergibt $" + poly([1, b]) + "$, an der Stelle $" + a + "$ also $" + (a + b) + "$: eine hebbare Lücke, keine Polstelle.", 0);
+    }
+    if (level === 3) {
+      const p = nz(G, -6, 6), r = G.pick([1, 2, 3, 4, -2]), q = G.int(-5, 5), s = G.int(1, 6);
+      return num("Bestimme die waagerechte Asymptote $y = c$ von $f(x) = \\dfrac{" + poly([p, 0, q]) + "}{" + poly([r, 0, s]) + "}$. Gib $c$ an.", p / r,
+        "Zähler- und Nennergrad sind gleich (2): Die Asymptote ist der Quotient der Leitkoeffizienten, $y = " + G.frac(p, r) + "$.", 0.001);
+    }
+    const p = G.int(-5, 5), q = G.int(-6, 6);
+    return num("$f(x) = \\dfrac{" + poly([1, p, q]) + "}{" + linx(G, a) + "}$ hat eine schiefe Asymptote $y = x + c$. Bestimme $c$.", p + a,
+      "Polynomdivision: $(" + poly([1, p, q]) + ") : (" + linx(G, a) + ") = " + poly([1, p + a]) + " + \\frac{" + (q + a * (p + a)) + "}{" + linx(G, a) + "}$. Der Bruch geht für $x \\to \\pm\\infty$ gegen 0, die Asymptote ist $y = " + poly([1, p + a]) + "$.", 0);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
-  LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung"]));
+  LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung", "definitionsbereich", "transformation", "wurzelgleichung", "verkettung", "stetigkeit", "trigwert", "additionstheorem", "restsatz", "potenz", "gebrochen"]));
   LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton"]));
   LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum"]));
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat"]));

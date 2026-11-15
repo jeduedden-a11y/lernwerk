@@ -16,6 +16,310 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Nullstellen des **Nenners** sind Definitionslücken. Ist der Zähler dort nicht null, liegt eine **Polstelle** vor; ist er auch null, wird gekürzt, oft bleibt eine **hebbare Lücke**.",
+      "label": "Verfahren",
+      "more": "1. **Nenner faktorisieren:** Seine Nullstellen sind die Definitionslücken.\n2. **Zähler faktorisieren** und gemeinsame Faktoren kürzen. Verschwindet ein Nennerfaktor ganz, ist die Stelle eine hebbare Lücke: ein Loch im Graphen bei $\\left(a \\mid g(a)\\right)$ mit dem gekürzten Term $g$.\n3. **Verbleibende Nennernullstellen** sind Polstellen. Ungerade Vielfachheit: Vorzeichenwechsel; gerade: kein Wechsel.\n4. **Asymptote für $x \\to \\pm\\infty$:** Zählergrad kleiner, $y = 0$; gleich, $y = \\tfrac{a_n}{b_n}$ (Leitkoeffizienten); um eins größer, eine schiefe Asymptote aus der Polynomdivision.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = \\dfrac{x^2 - 4}{x^2 - x - 2}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 - x - 2 = (x - 2)(x + 1)",
+            "why": "Nenner faktorisieren: Lücken bei 2 und −1."
+          },
+          {
+            "tex": "x^2 - 4 = (x - 2)(x + 2)",
+            "why": "Zähler faktorisieren."
+          },
+          {
+            "tex": "f(x) = \\frac{x + 2}{x + 1} \\quad (x \\neq 2)",
+            "why": "Den gemeinsamen Faktor kürzen."
+          },
+          {
+            "tex": "x = 2: \\text{ hebbare Lücke bei } \\left(2 \\mid \\tfrac43\\right)",
+            "why": "Der gekürzte Term ist dort definiert."
+          },
+          {
+            "tex": "x = -1: \\text{ Polstelle mit Vorzeichenwechsel}",
+            "why": "Der Nenner bleibt dort null, der Zähler nicht."
+          },
+          {
+            "tex": "y = 1 \\text{ ist waagerechte Asymptote}",
+            "why": "Gleicher Grad: Quotient der Leitkoeffizienten."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Nenner.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zähler.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gekürzt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lücke.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Pol.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Asymptote.",
+          "to": {
+            "k": 6
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Polstelle",
+      "md": "**Polstelle und Asymptote:** $f(x) = \\dfrac{x + 1}{x - 2}$. Nahe $x = 2$ wachsen die Werte über alle Grenzen, weit draußen nähern sie sich der 1.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          8
+        ],
+        "y": [
+          -8,
+          10
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -4,
+            "max": 8,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "(x + 1)/(x - 2)",
+            "color": "blue",
+            "samples": 600
+          }
+        ],
+        "hlines": [
+          {
+            "y": 1,
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 2,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|2} · f(x) = {(X + 1)/(X - 2)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 0: f(0) = −0,5.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "x = 1,9: schon −29.",
+          "to": {
+            "X": 1.9
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechts von 2 beginnt der Graph oben: Vorzeichenwechsel.",
+          "to": {
+            "X": 2.1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Weit rechts nähert sich f der Asymptote y = 1.",
+          "to": {
+            "X": 7.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Erst kürzen, dann entscheiden: Ein Nennerfaktor, der sich wegkürzt, ist keine Polstelle. Die Stelle bleibt trotzdem aus dem Definitionsbereich ausgeschlossen.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Die waagerechte Asymptote darf der Graph schneiden, die senkrechte nie. Bei der schiefen Asymptote gehört der Restbruch nicht in die Gleichung: Aus $x + 2 - \\tfrac{1}{x + 1}$ wird $y = x + 2$.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gebrochenrationale Funktionen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Gebrochenrationale Funktionen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie $f(x) = \\dfrac{z(x)}{n(x)}$ auf Definitionslücken\"*, *\"Handelt es sich um eine hebbare Lücke oder eine Polstelle?\"*, *\"Bestimmen Sie Art und Lage aller Definitionslücken\"*.\n\nEine gebrochenrationale Funktion ist ein Quotient zweier Polynome $f(x) = \\dfrac{z(x)}{n(x)}$. Definitionsbereich und Verhalten im Unendlichen sind bereits in **Definitionsbereich bestimmen** und **Verhalten im Unendlichen** behandelt -- diese Notiz konzentriert sich auf die **Klassifikation der Definitionslücken**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Arten von Definitionslücken",
+          "blocks": [
+            {
+              "md": "> [!important] Kürzt sich der gemeinsame Faktor weg?\n> An jeder Nennernullstelle $x_0$ gibt es zwei Möglichkeiten:\n>\n> **Hebbare Lücke:** $x_0$ ist auch Nullstelle des Zählers, und nach Kürzen des gemeinsamen Faktors bleibt an dieser Stelle ein regulärer Funktionswert übrig. Der Graph hat dort eine \"Lochstelle\", aber keinen Sprung ins Unendliche.\n>\n> **Polstelle:** $x_0$ ist Nullstelle des Nenners, aber **nicht** (oder mit geringerer Vielfachheit) Nullstelle des Zählers. Der Funktionswert strebt gegen $\\pm\\infty$.\n\n| Lückenart | Erkennungsmerkmal | Am Graphen |\n|---|---|---|\n| hebbare Lücke | Faktor kürzt sich vollständig weg | offener Punkt |\n| Polstelle ohne Vorzeichenwechsel | verbleibende Nennernullstelle mit gerader Vielfachheit | Graph auf beiden Seiten in dieselbe Richtung |\n| Polstelle mit Vorzeichenwechsel | verbleibende Nennernullstelle mit ungerader Vielfachheit | Graph springt von $+\\infty$ zu $-\\infty$ oder umgekehrt |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Zähler und Nenner faktorisieren** (Nullstellen bestimmen, siehe **Ganzrationale Funktionen**).\n2. **Gemeinsame Faktoren identifizieren.**\n3. **Kürzen** -- die gekürzte Funktion beschreibt den Graphen überall außer an den gekürzten Stellen.\n4. **Für jede verbliebene Nennernullstelle:** Vielfachheit im (gekürzten) Nenner bestimmen -- gerade oder ungerade?\n5. **Für jede gekürzte Stelle:** Funktionswert der gekürzten Funktion an dieser Stelle einsetzen -- das ist die $y$-Koordinate der Lücke.\n6. **Ergebnis klassifizieren** nach obiger Tabelle."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie $f(x) = \\dfrac{x^2 - 4}{x^2 - x - 6}$ auf Definitionslücken.*\n\n**Schritt 1:** Zähler: $x^2 - 4 = (x-2)(x+2)$. Nenner: $x^2 - x - 6 = (x-3)(x+2)$ (Probe: $(x-3)(x+2) = x^2 -x -6$, stimmt).\n\n$$f(x) = \\frac{(x-2)(x+2)}{(x-3)(x+2)}$$\n\n**Schritt 2:** Gemeinsamer Faktor: $(x+2)$.\n\n**Schritt 3:** Gekürzt: $g(x) = \\dfrac{x-2}{x-3}$, gültig für $x \\neq -2$.\n\n**Schritt 4:** Verbliebene Nennernullstelle: $x = 3$, einfache (ungerade) Vielfachheit -- **Polstelle mit Vorzeichenwechsel**.\n\n**Schritt 5:** An der gekürzten Stelle $x = -2$:\n$$g(-2) = \\frac{-2-2}{-2-3} = \\frac{-4}{-5} = 0{,}8$$\n\n**Schritt 6:** \n- Bei $x = -2$: **hebbare Lücke** an der Stelle $(-2 \\mid 0{,}8)$.\n- Bei $x = 3$: **Polstelle mit Vorzeichenwechsel**, da die Vielfachheit $1$ (ungerade) ist.\n\n**Kontrolle über Grenzwerte an der Polstelle:** Für $x \\to 3^-$ (z. B. $x=2{,}9$): Zähler $g(2{,}9) \\approx \\dfrac{0{,}9}{-0{,}1} = -9$. Für $x \\to 3^+$ (z. B. $x=3{,}1$): $g(3{,}1) \\approx \\dfrac{1{,}1}{0{,}1} = 11$. Unterschiedliches Vorzeichen links und rechts -- bestätigt den Vorzeichenwechsel."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Kürzen vergessen und die gemeinsame Nullstelle als Polstelle behandeln.** Eine gemeinsame Nullstelle ist fast nie eine Polstelle.\n- **Bei der hebbaren Lücke den falschen Funktionswert angeben.** Nicht $0$ (das wäre die Zähler-Nullstelle vor dem Kürzen), sondern der Wert der **gekürzten** Funktion an dieser Stelle.\n- **Vielfachheit nicht bestimmen.** Bei $f(x) = \\dfrac{1}{(x-1)^2}$ liegt bei $x=1$ eine Polstelle **ohne** Vorzeichenwechsel vor (gerade Vielfachheit) -- der Graph geht auf beiden Seiten nach $+\\infty$.\n- **Zähler nicht mitfaktorisieren.** Ohne die Zerlegung des Zählers lässt sich nicht erkennen, ob eine Nennernullstelle hebbar ist.\n- **Verhalten im Unendlichen mit dem Verhalten an der Polstelle verwechseln.** Das eine betrifft $x \\to \\pm\\infty$, das andere $x \\to x_0$ -- beide Fragen erfordern unterschiedliche Methoden (**Verhalten im Unendlichen** für Ersteres)."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Definitionsbereich bestimmen** · **Verhalten im Unendlichen** · **Ganzrationale Funktionen** · **Polynomdivision** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$f(x) = \\dfrac{x^2 - 9}{x + 3}$. Was liegt bei $x = -3$ vor?",
+      "options": [
+        {
+          "md": "eine hebbare Lücke bei $(-3 \\mid -6)$",
+          "correct": true
+        },
+        {
+          "md": "eine Polstelle",
+          "why": "Der Zähler ist bei −3 ebenfalls null; man kann kürzen."
+        },
+        {
+          "md": "eine Nullstelle"
+        },
+        {
+          "md": "eine hebbare Lücke bei $(-3 \\mid 0)$"
+        }
+      ],
+      "explain": "$\\tfrac{(x - 3)(x + 3)}{x + 3} = x - 3$ für $x \\neq -3$; an der Stelle $-3$ wäre das $-6$.",
+      "label": "Lücke",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Asymptote",
+      "md": "Bestimme die waagerechte Asymptote $y = c$ von $f(x) = \\dfrac{6x^2 - 1}{3x^2 + x}$. Gib $c$ an.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Gleicher Grad: $c = \\tfrac63 = 2$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "An einer Polstelle mit gerader Vielfachheit wechselt das Vorzeichen.",
+      "answer": false,
+      "explain": "Bei gerader Vielfachheit, etwa $\\tfrac{1}{(x - 2)^2}$, ist der Nenner auf beiden Seiten positiv: kein Vorzeichenwechsel.",
+      "label": "Pol",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Asymptote von $f(x) = \\dfrac{x^2 + 3x + 1}{x + 1}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Der Zählergrad ist um eins größer als der Nennergrad.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Polynomdivision: $f(x) = x + 2 - \\dfrac{1}{x + 1}$.",
+          "why": "Richtig: $(x + 1)(x + 2) = x^2 + 3x + 2$, Rest $-1$."
+        },
+        {
+          "md": "Der Restbruch geht für $x \\to \\pm\\infty$ gegen 0.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Die Asymptote ist $y = x + 2 - \\dfrac{1}{x + 1}$.",
+          "why": "Falsch: Der Restbruch verschwindet, die Asymptote ist $y = x + 2$."
+        }
+      ],
+      "answer": 3,
+      "explain": "Die Asymptote ist der ganzrationale Teil der Division.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -58,6 +362,62 @@
       },
       "label": "Asymptote",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "gebrochen"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "gebrochen"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "gebrochen"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gebrochen"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Erst kürzen: Was sich wegkürzt, ist eine hebbare Lücke, der Rest Polstellen."
+      ]
     }
   ]
 }

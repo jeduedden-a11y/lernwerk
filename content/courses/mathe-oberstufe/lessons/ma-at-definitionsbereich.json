@@ -16,6 +16,213 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Drei **Verbotszonen**: Nenner $\\neq 0$, Radikand $\\geq 0$, Argument des Logarithmus $> 0$. Der Definitionsbereich erfüllt alle Bedingungen zugleich.",
+      "label": "Verfahren",
+      "more": "1. **Problemstellen suchen:** Brüche, Wurzeln mit geradem Wurzelexponenten, Logarithmen, auch ineinander verschachtelt. Polynome, $e^x$, $\\sin$ und $\\cos$ schränken nichts ein.\n2. **Jede Bedingung aufschreiben** und lösen: $\\text{Nenner} \\neq 0$, $\\text{Radikand} \\geq 0$, $\\text{Argument} > 0$.\n3. **Schneiden:** Ein $x$ gehört nur dazu, wenn es **alle** Bedingungen erfüllt.\n4. **Angeben** als Ungleichung, Intervall oder Menge, zum Beispiel $-2 \\leq x < 4$, $x \\neq 1$.\n\nDanach lohnt der Blick auf die Art der Lücke: Bei Brüchen entscheidet das Kürzen, ob eine Polstelle oder eine hebbare Lücke vorliegt.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = \\dfrac{\\sqrt{x + 2}}{x - 1} + \\ln(4 - x)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x + 2 \\geq 0 \\;\\Rightarrow\\; x \\geq -2",
+            "why": "Der Radikand darf nicht negativ sein."
+          },
+          {
+            "tex": "x - 1 \\neq 0 \\;\\Rightarrow\\; x \\neq 1",
+            "why": "Der Nenner darf nicht null werden."
+          },
+          {
+            "tex": "4 - x > 0 \\;\\Rightarrow\\; x < 4",
+            "why": "Der Logarithmus braucht ein positives Argument."
+          },
+          {
+            "tex": "-2 \\leq x < 4,\\; x \\neq 1",
+            "why": "Alle drei Bedingungen zugleich."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wurzel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nenner.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Logarithmus.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Geschnitten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Die Bedingungen gelten **zugleich** (und, nicht oder). $\\ln 0$ und $\\tfrac10$ sind verboten, $\\sqrt0 = 0$ ist erlaubt.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Beim Teilen durch eine negative Zahl kehrt sich das Ungleichheitszeichen um ($4 - x > 0$ heißt $x < 4$). Umformungen ändern den Definitionsbereich nicht: $\\ln(x^2)$ ist für alle $x \\neq 0$ definiert, $2\\ln x$ nur für $x > 0$, obwohl beide für positive $x$ gleich sind. Auch das Kürzen eines Bruchs macht eine verbotene Stelle nicht erlaubt.",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Definitionsbereich bestimmen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Definitionsbereich bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Erster Schritt fast jeder Kurvendiskussion, oft als eigene Teilaufgabe. Signalformulierungen: *\"Geben Sie den maximalen Definitionsbereich an\"*, *\"Für welche $x$ ist die Funktion definiert?\"*, *\"Bestimmen Sie $D_f$\"*.\n\nWird gerne unterschätzt -- wer den Definitionsbereich übersieht, produziert im weiteren Verlauf Nullstellen und Extrema, die gar nicht existieren."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Verbotszonen",
+          "blocks": [
+            {
+              "md": "Nur drei Konstruktionen schränken den Definitionsbereich ein:\n\n| Konstruktion | Bedingung | Beispiel |\n|---|---|---|\n| **Nenner** | darf nicht null werden | $\\dfrac{1}{x-2}$: $x \\neq 2$ |\n| **Wurzel** (gerader Index) | Radikand nicht negativ | $\\sqrt{x-3}$: $x \\ge 3$ |\n| **Logarithmus** | Argument echt positiv | $\\ln(x+1)$: $x > -1$ |\n\n> [!important] Alles andere ist unbeschränkt\n> Ganzrationale Funktionen (Polynome), Exponentialfunktionen und trigonometrische Funktionen sind auf ganz $\\mathbb{R}$ definiert. Bei $f(x) = x^3 - 2x$ oder $f(x) = e^x \\cdot \\sin x$ lautet die Antwort schlicht $D_f = \\mathbb{R}$ -- und das sollte man auch hinschreiben, statt die Teilaufgabe zu überspringen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Funktionsterm scannen:** Kommt ein Nenner, eine Wurzel oder ein Logarithmus vor?\n2. **Falls nein:** $D_f = \\mathbb{R}$, fertig.\n3. **Falls ja: für jede Stelle eine Bedingung aufstellen.**\n4. **Bedingungen lösen** (Nennernullstellen berechnen, Ungleichungen auflösen).\n5. **Bedingungen kombinieren.** Mehrere Einschränkungen gelten **gleichzeitig** -- Schnittmenge bilden, nicht Vereinigung.\n6. **In Mengenschreibweise angeben.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie den maximalen Definitionsbereich von*\n$$f(x) = \\frac{\\sqrt{x-1}}{x^2 - 9}$$\n\n**Schritt 1:** Wurzel **und** Nenner vorhanden -- zwei Bedingungen.\n\n**Schritt 3/4:**\n\nWurzel: $x - 1 \\ge 0 \\;\\Longrightarrow\\; x \\ge 1$\n\nNenner: $x^2 - 9 \\neq 0 \\;\\Longrightarrow\\; x \\neq 3$ und $x \\neq -3$\n\n**Schritt 5:** Beide gleichzeitig. Da ohnehin $x \\ge 1$ gilt, ist $x \\neq -3$ automatisch erfüllt und entfällt.\n\n**Schritt 6:**\n$$D_f = [1; \\infty) \\setminus \\{3\\}$$\n\noder gleichwertig: $D_f = \\{x \\in \\mathbb{R} \\mid x \\ge 1 \\text{ und } x \\neq 3\\}$"
+            }
+          ]
+        },
+        {
+          "title": "Definitionslücken einordnen",
+          "blocks": [
+            {
+              "md": "Bei gebrochenrationalen Funktionen ist nach der Art der Lücke gefragt:\n\n| Art | Bedingung | Verhalten |\n|---|---|---|\n| **Polstelle** | Nenner null, Zähler nicht null | senkrechte Asymptote, Funktionswerte gehen gegen $\\pm\\infty$ |\n| **Hebbare Lücke** | Zähler **und** Nenner null | Graph hat ein \"Loch\", lässt sich stetig ergänzen |\n\n**Prüfung:** Zähler an der Lücke einsetzen. Ergibt sich null, ist die Lücke hebbar -- dann kürzen und den Grenzwert bestimmen.\n\n*Beispiel:* $f(x) = \\dfrac{x^2 - 4}{x - 2}$ hat bei $x = 2$ eine Lücke. Zähler dort: $4 - 4 = 0$, also hebbar. Kürzen: $f(x) = \\dfrac{(x-2)(x+2)}{x-2} = x + 2$ für $x \\neq 2$. Der Graph ist die Gerade $y = x+2$ mit einem Loch bei $(2 \\mid 4)$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Definitionsbereich gar nicht prüfen.** Bei ganzrationalen Funktionen fällt das nicht auf, bei gebrochenrationalen kippt die ganze Aufgabe.\n- **Bei der Wurzel $> 0$ statt $\\ge 0$ fordern.** Die Null ist erlaubt, $\\sqrt{0} = 0$.\n- **Beim Logarithmus $\\ge 0$ statt $> 0$.** Hier ist die Null **nicht** erlaubt.\n- **Bedingungen vereinigen statt schneiden.** Mehrere Einschränkungen müssen **alle** gelten.\n- **Nur eine Nennernullstelle finden.** $x^2 - 9 = 0$ hat zwei Lösungen.\n- **Hebbare Lücke als Polstelle behandeln** -- dann sucht man vergeblich eine Asymptote.\n- **Nach dem Kürzen die Lücke vergessen.** Auch die gekürzte Funktion ist an der ursprünglichen Stelle nicht definiert."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Funktionsbegriff und Darstellungsformen** · **Verhalten im Unendlichen** · **Symmetrie untersuchen** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Definitionsbereich gehört zu $f(x) = \\dfrac{\\ln x}{x - 2}$?",
+      "options": [
+        {
+          "md": "$x > 0$ und $x \\neq 2$",
+          "correct": true
+        },
+        {
+          "md": "$x > 0$",
+          "why": "Bei x = 2 wird der Nenner null."
+        },
+        {
+          "md": "$x \\neq 2$"
+        },
+        {
+          "md": "$x \\geq 0$ und $x \\neq 2$",
+          "why": "$\\ln 0$ ist nicht definiert."
+        }
+      ],
+      "explain": "Logarithmus: $x > 0$. Nenner: $x \\neq 2$. Beides zugleich.",
+      "label": "Zwei Bedingungen",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = \\ln(x^2)$ und $g(x) = 2\\ln x$ haben denselben Definitionsbereich.",
+      "answer": false,
+      "explain": "$x^2 > 0$ gilt für alle $x \\neq 0$, also auch für negative Zahlen; $2\\ln x$ verlangt $x > 0$.",
+      "label": "Falle",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Grenze",
+      "md": "$f(x) = \\sqrt{6 - 2x}$. Welches ist die größte Zahl im Definitionsbereich?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$6 - 2x \\geq 0$ heißt $x \\leq 3$; die Grenze 3 gehört dazu, weil $\\sqrt0 = 0$ erlaubt ist.",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Definitionsbereich von $f(x) = \\dfrac{\\sqrt{x - 1}}{x - 3}$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Radikand: $x - 1 \\geq 0$, also $x \\geq 1$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Nenner: $x - 3 \\neq 0$, also $x \\neq 3$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Zusammen: $x \\geq 1$ oder $x \\neq 3$.",
+          "why": "Falsch: Beide Bedingungen müssen zugleich gelten, es heißt »und«."
+        },
+        {
+          "md": "Also ist $f$ für alle reellen Zahlen definiert.",
+          "why": "Folgefehler."
+        }
+      ],
+      "answer": 2,
+      "explain": "Richtig ist $x \\geq 1$ und $x \\neq 3$.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -77,6 +284,62 @@
       ],
       "explain": "Mehrere Problemstellen: jede einzeln prüfen und alle Bedingungen zugleich erfüllen. $x^2 + 1$ ist immer positiv.",
       "id": "ma1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Verbotszonen: Nenner null, Radikand negativ, Logarithmus-Argument nicht positiv; alle Bedingungen zugleich."
+      ]
     }
   ]
 }

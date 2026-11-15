@@ -23,6 +23,323 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung** über den Abstand zweier Punkte $P(\\cos\\alpha \\mid \\sin\\alpha)$ und $Q(\\cos\\beta \\mid \\sin\\beta)$ auf dem Einheitskreis.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "|PQ|^2 = (\\cos\\alpha - \\cos\\beta)^2 + (\\sin\\alpha - \\sin\\beta)^2",
+            "why": "Abstand zweier Punkte mit Pythagoras."
+          },
+          {
+            "tex": "= 2 - 2(\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta)",
+            "why": "Ausmultiplizieren und zweimal sin² + cos² = 1 nutzen."
+          },
+          {
+            "tex": "|PQ|^2 = 2 - 2\\cos(\\alpha - \\beta)",
+            "why": "Nach einer Drehung liegt Q bei 0 und P beim Winkel α − β; die Sehne ist gleich lang."
+          },
+          {
+            "tex": "\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta",
+            "why": "Beide Ausdrücke gleichsetzen."
+          },
+          {
+            "tex": "\\cos(\\alpha + \\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta",
+            "why": "β durch −β ersetzen: cos ist gerade, sin ungerade."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausmultipliziert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gedreht.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichgesetzt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Doppelwinkel",
+      "md": "**Doppelwinkel im Bild:** blau $\\sin 2x$, grün gestrichelt $2\\sin x\\cos x$, orange $2\\sin x$. Blau und grün fallen zusammen, orange nicht.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          6.3
+        ],
+        "y": [
+          -2.2,
+          2.2
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 6.3,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "sin(2*x)",
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "name": "b",
+            "expr": "2*sin(x)*cos(x)",
+            "color": "green",
+            "dashed": true
+          },
+          {
+            "name": "c",
+            "expr": "2*sin(x)",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "x = {X|2} · sin 2x = {sin(2*X)|3} · 2 sin x cos x = {2*sin(X)*cos(X)|3} · 2 sin x = {2*sin(X)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 0,5: Die ersten beiden Werte stimmen überein.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "x = 1,5: wieder gleich, 2 sin x ist fast doppelt so groß.",
+          "to": {
+            "X": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 4: Die Formel gilt überall; sin 2x = 2 sin x gilt nur an einzelnen Stellen.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "$\\sin(\\alpha \\pm \\beta) = \\sin\\alpha\\cos\\beta \\pm \\cos\\alpha\\sin\\beta$ und $\\cos(\\alpha \\pm \\beta) = \\cos\\alpha\\cos\\beta \\mp \\sin\\alpha\\sin\\beta$. Mit $\\alpha = \\beta$ folgen die Doppelwinkelformeln.",
+      "label": "Formeln",
+      "more": "**Doppelwinkel:** $\\sin 2\\alpha = 2\\sin\\alpha\\cos\\alpha$ und $\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha = 1 - 2\\sin^2\\alpha = 2\\cos^2\\alpha - 1$.\n\n**Halbwinkel (Potenzreduktion):** $\\sin^2\\alpha = \\tfrac{1 - \\cos 2\\alpha}{2}$ und $\\cos^2\\alpha = \\tfrac{1 + \\cos 2\\alpha}{2}$. Sie machen aus Quadraten einfache Kosinusterme; damit lässt sich $\\int \\sin^2 x\\,dx$ berechnen.\n\n**Produkt in Summe:** $\\sin\\alpha\\cos\\beta = \\tfrac12\\left[\\sin(\\alpha + \\beta) + \\sin(\\alpha - \\beta)\\right]$ entsteht durch Addieren der beiden Sinus-Theoreme.\n\n**Wozu:** exakte Werte wie $\\sin 75^\\circ = \\sin(45^\\circ + 30^\\circ)$, Umformen vor dem Integrieren, Überlagerung von Schwingungen.",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Additionstheoreme",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Additionstheoreme.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Summen- und Differenzformeln",
+          "blocks": [
+            {
+              "md": "$$\\sin(a \\pm b) = \\sin a\\cos b \\pm \\cos a\\sin b$$\n$$\\cos(a \\pm b) = \\cos a\\cos b \\mp \\sin a\\sin b$$\n$$\\tan(a \\pm b) = \\frac{\\tan a \\pm \\tan b}{1 \\mp \\tan a\\tan b}$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Aus den Additionstheoremen lassen sich mit $a=b$ die **Doppel- und Halbwinkelformeln** herleiten, und ihre Umkehrung liefert die **Produkt-Summe-Identitäten**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Doppel- und Halbwinkelformeln",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Doppel- und Halbwinkelformeln.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Doppelwinkelformeln",
+          "blocks": [
+            {
+              "md": "$$\\sin(2x) = 2\\sin x\\cos x$$\n$$\\cos(2x) = \\cos^2 x - \\sin^2 x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$$\n$$\\tan(2x) = \\frac{2\\tan x}{1-\\tan^2 x}$$"
+            }
+          ]
+        },
+        {
+          "title": "Halbwinkelformeln",
+          "blocks": [
+            {
+              "md": "$$\\sin^2 x = \\frac{1-\\cos(2x)}{2} \\qquad \\cos^2 x = \\frac{1+\\cos(2x)}{2}$$\n$$\\tan\\!\\left(\\frac{x}{2}\\right) = \\frac{\\sin x}{1+\\cos x} = \\frac{1-\\cos x}{\\sin x}$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Aus den **Additionstheoremen** mit $a=b=x$ hergeleitet. Die Halbwinkelformeln sind **essentiell** für **trigonometrische Integrale** mit geraden Potenzen (z. B. $\\int \\sin^2 x\\,dx$)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Produkt-Summe-Identitäten",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Produkt-Summe-Identitäten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Produkt-zu-Summe",
+          "blocks": [
+            {
+              "md": "$$\\sin a\\sin b = \\tfrac{1}{2}[\\cos(a-b)-\\cos(a+b)]$$\n$$\\cos a\\cos b = \\tfrac{1}{2}[\\cos(a-b)+\\cos(a+b)]$$\n$$\\sin a\\cos b = \\tfrac{1}{2}[\\sin(a+b)+\\sin(a-b)]$$"
+            }
+          ]
+        },
+        {
+          "title": "Summe-zu-Produkt",
+          "blocks": [
+            {
+              "md": "$$\\sin a+\\sin b = 2\\sin\\!\\left(\\frac{a+b}{2}\\right)\\cos\\!\\left(\\frac{a-b}{2}\\right)$$\n$$\\sin a-\\sin b = 2\\cos\\!\\left(\\frac{a+b}{2}\\right)\\sin\\!\\left(\\frac{a-b}{2}\\right)$$\n$$\\cos a+\\cos b = 2\\cos\\!\\left(\\frac{a+b}{2}\\right)\\cos\\!\\left(\\frac{a-b}{2}\\right)$$\n$$\\cos a-\\cos b = -2\\sin\\!\\left(\\frac{a+b}{2}\\right)\\sin\\!\\left(\\frac{a-b}{2}\\right)$$\n\nDiese Identitäten sind die Umkehrung der **Additionstheoreme** und nützlich in der Fourier-Analysis."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung von $\\cos(\\alpha - \\beta)$ in die richtige Reihenfolge.",
+      "items": [
+        "$|PQ|^2 = (\\cos\\alpha - \\cos\\beta)^2 + (\\sin\\alpha - \\sin\\beta)^2$",
+        "$|PQ|^2 = 2 - 2(\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta)$",
+        "Gedreht: $|PQ|^2 = 2 - 2\\cos(\\alpha - \\beta)$",
+        "$\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$"
+      ],
+      "explain": "Die Reihenfolge: 1. $|PQ|^2 = (\\cos\\alpha - \\cos\\beta)^2 + (\\sin\\alpha - \\sin\\beta)^2$. 2. $|PQ|^2 = 2 - 2(\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta)$. 3. Gedreht: $|PQ|^2 = 2 - 2\\cos(\\alpha - \\beta)$. 4. $\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Doppelwinkel",
+      "md": "$\\alpha$ ist spitz mit $\\sin\\alpha = 0{,}6$. Berechne $\\sin 2\\alpha$.",
+      "answer": 0.96,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\cos\\alpha = 0{,}8$, also $\\sin 2\\alpha = 2 \\cdot 0{,}6 \\cdot 0{,}8 = 0{,}96$.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Formel gilt für alle $\\alpha$ und $\\beta$?",
+      "options": [
+        {
+          "md": "$\\cos 2\\alpha = 1 - 2\\sin^2\\alpha$",
+          "correct": true
+        },
+        {
+          "md": "$\\cos 2\\alpha = 2\\cos\\alpha$",
+          "why": "Probe mit $\\alpha = 0$: links 1, rechts 2."
+        },
+        {
+          "md": "$\\sin 2\\alpha = \\sin^2\\alpha + \\cos^2\\alpha$"
+        },
+        {
+          "md": "$\\cos(\\alpha + \\beta) = \\cos\\alpha + \\cos\\beta$",
+          "why": "Der Kosinus ist nicht linear."
+        }
+      ],
+      "explain": "Aus $\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha$ und $\\cos^2\\alpha = 1 - \\sin^2\\alpha$.",
+      "label": "Formeln",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Berechnung von $\\cos 75^\\circ$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$75^\\circ = 45^\\circ + 30^\\circ$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$\\cos 75^\\circ = \\cos 45^\\circ\\cos 30^\\circ + \\sin 45^\\circ\\sin 30^\\circ$",
+          "why": "Falsch: Beim Kosinus der Summe steht ein Minus: $\\cos(\\alpha + \\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$."
+        },
+        {
+          "md": "$= \\tfrac{\\sqrt2}{2} \\cdot \\tfrac{\\sqrt3}{2} + \\tfrac{\\sqrt2}{2} \\cdot \\tfrac12$",
+          "why": "Folgefehler."
+        },
+        {
+          "md": "$= \\tfrac{\\sqrt6 + \\sqrt2}{4}$",
+          "why": "Folgefehler: Richtig ist $\\tfrac{\\sqrt6 - \\sqrt2}{4}$."
+        }
+      ],
+      "answer": 1,
+      "explain": "Merkhilfe: Beim Kosinus kehrt sich das Zeichen um ($\\mp$), beim Sinus nicht.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\sin^2 x = \\tfrac{1 - \\cos 2x}{2}$ gilt für alle $x$.",
+      "answer": true,
+      "explain": "Aus $\\cos 2x = 1 - 2\\sin^2 x$ nach $\\sin^2 x$ aufgelöst.",
+      "label": "Halbwinkel",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "Was ist $\\sin 75^\\circ$ exakt?",
       "options": [
@@ -67,12 +384,62 @@
       "id": "cl1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "additionstheorem"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "additionstheorem"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "additionstheorem"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "additionstheorem"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "sin(α ± β) und cos(α ± β) auswendig.",
         "sin 2α = 2 sin α cos α; cos 2α = 1 − 2 sin² α.",
-        "sin² α = (1 − cos 2α)/2 hilft beim Integrieren."
+        "sin² α = (1 − cos 2α)/2 hilft beim Integrieren.",
+        "Herleitung über den Abstand zweier Punkte auf dem Einheitskreis.",
+        "Halbwinkelformeln machen aus $\\sin^2$ und $\\cos^2$ Kosinusterme mit doppeltem Winkel."
       ],
       "id": "summary"
     }

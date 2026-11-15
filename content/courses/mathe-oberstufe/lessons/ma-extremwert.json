@@ -66,6 +66,95 @@
       "id": "w1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Extremwertprobleme",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Extremwertprobleme.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Bei **Extremwertproblemen** (Optimierungsproblemen) wird eine Größe unter einer **Nebenbedingung** maximiert oder minimiert — z. B. maximales Volumen bei vorgegebener Oberfläche, minimaler Materialverbrauch bei vorgegebenem Volumen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Skizze** anfertigen, Variablen benennen.\n2. **Zielfunktion** aufstellen: die zu optimierende Größe in Abhängigkeit einer Variablen.\n3. **Nebenbedingung** aufstellen und nach einer Variablen auflösen.\n4. Nebenbedingung in die Zielfunktion einsetzen → Funktion mit **nur einer** Variablen.\n5. **Definitionsbereich** festlegen (was ist sinnvoll/möglich? z. B. Längen $> 0$).\n6. Ableitung bilden, Nullstellen bestimmen (**Kurvendiskussion**).\n7. Mit 2. Ableitung oder Randverhalten prüfen: Maximum oder Minimum?\n8. Ergebnis **im Sachkontext** deuten und alle gesuchten Größen angeben."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel — Verpackungsproblem",
+          "blocks": [
+            {
+              "md": "Aus einem quadratischen Karton der Seitenlänge $a=12$ cm werden an den Ecken Quadrate der Seitenlänge $x$ ausgeschnitten und die Seiten hochgeklappt (offene Schachtel). Gesucht: $x$ für maximales Volumen.\n\nZielfunktion: $V(x) = x(12-2x)^2$, Definitionsbereich $0 < x < 6$.\n$$V'(x) = (12-2x)^2 + x\\cdot 2(12-2x)(-2) = (12-2x)(12-6x)$$\nNullstellen: $x=6$ (Rand, ausgeschlossen) und $x=2$. $V''(2) < 0$ → Maximum. $V(2) = 2\\cdot 8^2 = 128\\ \\text{cm}^3$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Sachkontexte",
+          "blocks": [
+            {
+              "md": "- **Verpackungsprobleme** (maximales Volumen bei fester Oberfläche/Kantenlänge).\n- **Gewinnoptimierung**: Gewinnfunktion $G(x) = E(x) - K(x)$ (Erlös minus Kosten) maximieren.\n- **Materialminimierung**: Oberfläche bei festem Volumen minimieren (z. B. Dose mit minimalem Blechverbrauch)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Definitionsbereich der Zielfunktion vergessen — Randwerte können das eigentliche Maximum \"verstecken\" oder unsinnige Lösungen liefern.\n- Nur die Nullstelle von $f'$ angeben, aber nicht den zugehörigen Zielfunktionswert (die eigentlich gesuchte Größe).\n- Hinreichendes Kriterium vergessen — nicht geprüft, ob wirklich ein Maximum (nicht Minimum/Sattelpunkt) vorliegt.\n\nWenn die Nullstelle von $f'$ nicht exakt lösbar ist, hilft das **Newton-Verfahren** zur numerischen Approximation."
+            }
+          ]
+        },
+        {
+          "title": "Weshalb die Nebenbedingung der Kern ist",
+          "blocks": [
+            {
+              "md": "> [!important] Ohne Nebenbedingung gäbe es kein Problem\n> Ein Volumen lässt sich unbegrenzt vergrößern, wenn man beliebig viel Material verwenden darf. Erst die **Einschränkung** macht die Frage sinnvoll -- und mathematisch lösbar.\n>\n> Die Nebenbedingung leistet dabei genau eines: Sie verknüpft die Variablen, sodass sich eine durch die andere ausdrücken lässt. Damit wird aus einer Funktion mehrerer Variablen eine Funktion **einer** Variablen -- und nur solche kann man mit Schulmitteln ableiten.\n>\n> Wer bei einer Extremwertaufgabe nicht weiterkommt, hat meist die Nebenbedingung nicht gefunden oder nicht eingesetzt. Der Rest ist gewöhnliche **Kurvendiskussion**."
+            }
+          ]
+        },
+        {
+          "title": "Der Definitionsbereich",
+          "blocks": [
+            {
+              "md": "> [!warning] Er wird am häufigsten vergessen -- und ist am häufigsten entscheidend\n> Bei der Schachtel aus dem quadratischen Karton der Seitenlänge 12 gilt $0 < x < 6$. Rein rechnerisch hat $V'(x)=0$ zwei Lösungen, nämlich $x=2$ und $x=6$ -- aber $x=6$ liegt am Rand und liefert das Volumen null.\n>\n> Aus dem Sachzusammenhang folgen typischerweise:\n>\n> - Längen und Flächen sind **positiv**\n> - eine ausgeschnittene Länge kann höchstens die halbe Seitenlänge betragen\n> - Anteile liegen zwischen 0 und 1\n>\n> Und bei einem **abgeschlossenen** Bereich sind zusätzlich die **Randwerte** zu prüfen: Das globale Maximum kann am Rand liegen, wo $f'$ nicht null ist. Siehe **Kurvendiskussion**."
+            }
+          ]
+        },
+        {
+          "title": "Vereinfachungen, die Rechenarbeit sparen",
+          "blocks": [
+            {
+              "md": "> [!tip] Man darf die Zielfunktion durch monotone Umformungen ersetzen\n> Da nur die **Stelle** des Extremums gesucht ist, nicht der Wert, sind Umformungen erlaubt, die die Lage des Extremums nicht verändern:\n>\n> | Umformung | erlaubt, weil |\n> |---|---|\n> | konstanten Faktor weglassen | verschiebt das Extremum nicht |\n> | Wurzel weglassen und mit dem Radikanden rechnen | Wurzel ist streng monoton |\n> | Logarithmieren bei Produkten | Logarithmus ist streng monoton |\n>\n> Besonders nützlich ist die zweite Regel bei **Abstandsproblemen**: Statt $d = \\sqrt{(\\dots)^2 + (\\dots)^2}$ minimiert man einfach $d^2$. Das erspart die Ableitung einer Wurzel und ist ein Standardkniff.\n>\n> Wichtig ist nur, am Ende den **tatsächlich gesuchten Wert** anzugeben -- also gegebenenfalls die Wurzel wieder zu ziehen."
+            }
+          ]
+        },
+        {
+          "title": "Die Antwort im Sachkontext",
+          "blocks": [
+            {
+              "md": "> [!important] Die Rechnung endet nicht mit einer x-Koordinate\n> Gefragt sind meist alle Maße des optimalen Objekts, oft auch der erreichte Extremwert selbst -- und stets in der richtigen Einheit.\n>\n> Zur vollständigen Lösung gehören:\n>\n> 1. die Extremstelle,\n> 2. der Nachweis, dass es sich um das gesuchte Extremum handelt,\n> 3. alle gefragten Maße,\n> 4. eine Antwort in Worten mit Einheit.\n>\n> Punkt 2 wird regelmäßig übergangen. Der Nachweis über $f''$ oder den Vorzeichenwechsel ist Teil der Lösung, nicht Beiwerk."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Extremwertprobleme sind die wichtigste Anwendung der **Kurvendiskussion** und verbinden Modellbildung mit Analysis. Dieselbe Denkfigur -- eine Größe unter Nebenbedingung optimieren -- kehrt in der Chemie bei der Ausbeuteoptimierung wieder, siehe **Prinzip von Le Chatelier**."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Ordne den Lösungsweg.",

@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lagebeziehung Gerade-Gerade",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Lagebeziehung Gerade-Gerade.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie die gegenseitige Lage der Geraden\"*, *\"Zeigen Sie, dass sich die Geraden schneiden, und berechnen Sie den Schnittpunkt\"*, *\"Begegnen sich die beiden Flugzeuge?\"*\n\nStandardaufgabe der analytischen Geometrie, fast immer als Einstieg in eine mehrteilige Aufgabe."
+            }
+          ]
+        },
+        {
+          "title": "Die vier Möglichkeiten",
+          "blocks": [
+            {
+              "md": "| Lage | Richtungsvektoren | Punktprobe / LGS |\n|---|---|---|\n| **identisch** | parallel | Stützpunkt von $g_1$ liegt auf $g_2$ |\n| **echt parallel** | parallel | Stützpunkt liegt nicht auf $g_2$ |\n| **schneidend** | nicht parallel | LGS hat genau eine Lösung |\n| **windschief** | nicht parallel | LGS hat keine Lösung |\n\n> [!important] Der Entscheidungsbaum hat genau zwei Stufen\n> **Erste Frage: Sind die Richtungsvektoren Vielfache voneinander?**\n> - Ja → Punktprobe entscheidet zwischen identisch und parallel\n> - Nein → Gleichungssystem entscheidet zwischen schneidend und windschief\n>\n> Diese Reihenfolge ist wichtig: Wer sofort das LGS aufstellt, verschenkt bei parallelen Geraden Zeit und riskiert Fehlinterpretationen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Richtungsvektoren vergleichen:** Gibt es ein $k$ mit $\\vec{u_2} = k \\cdot \\vec{u_1}$? Alle drei Komponenten prüfen.\n2. **Falls parallel:** Stützpunkt von $g_1$ in $g_2$ einsetzen. Existiert ein passender Parameter, sind die Geraden identisch, sonst echt parallel.\n3. **Falls nicht parallel:** Gleichsetzen $\\vec{a_1} + s\\vec{u_1} = \\vec{a_2} + t\\vec{u_2}$ und das Gleichungssystem lösen.\n4. **Wichtig:** Aus **zwei** Gleichungen $s$ und $t$ bestimmen, dann in die **dritte** einsetzen.\n   - Dritte Gleichung erfüllt → Schnittpunkt\n   - Widerspruch → windschief\n5. **Schnittpunkt berechnen:** $s$ in $g_1$ einsetzen (oder $t$ in $g_2$ -- beides muss dasselbe ergeben).\n\n> [!warning] Die dritte Gleichung ist die eigentliche Prüfung\n> Das Gleichungssystem hat drei Gleichungen, aber nur zwei Unbekannte -- es ist **überbestimmt**. Zwei Gleichungen liefern immer Werte für $s$ und $t$; erst die dritte entscheidet, ob diese Werte auch dort passen.\n>\n> Wer nach zwei Gleichungen aufhört und den Schnittpunkt berechnet, erklärt windschiefe Geraden zu schneidenden. Das ist der Standardfehler dieses Aufgabentyps."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie die Lage von*\n$$g_1: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + s\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}, \\qquad g_2: \\vec{x} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix} + t\\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix}$$\n\n**Schritt 1:** $\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}$ und $\\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix}$ sind keine Vielfachen (erste Komponente 1 gegen 0). Also nicht parallel.\n\n**Schritt 3:** Gleichsetzen liefert das System\n\n$$\\begin{aligned} 1 + s &= 2 \\\\ 2 &= 1 + t \\\\ 3 + s &= 2t \\end{aligned}$$\n\n**Schritt 4:** Aus Gleichung I: $s = 1$. Aus Gleichung II: $t = 1$.\n\nEinsetzen in Gleichung III:\n$$3 + 1 = 2 \\cdot 1 \\quad\\Longleftrightarrow\\quad 4 = 2$$\n\n**Widerspruch.** Die Geraden sind **windschief**.\n\n**Anschluss:** Bei windschiefen Geraden fragt die Folgeaufgabe fast immer nach dem Abstand -- siehe **Abstand windschiefer Geraden**."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit Schnittpunkt",
+          "blocks": [
+            {
+              "md": "*Ändere $g_2$ auf den Stützpunkt $(2 \\mid 1 \\mid 4)$:*\n\n$$\\begin{aligned} 1 + s &= 2 \\\\ 2 &= 1 + t \\\\ 3 + s &= 4 + 2t \\end{aligned}$$\n\nAus I: $s = 1$, aus II: $t = 1$. Probe in III: $3 + 1 = 4 + 2$, also $4 = 6$ -- immer noch Widerspruch.\n\n*Nächster Versuch mit Stützpunkt $(2 \\mid 1 \\mid 2)$:* Probe in III: $4 = 2 + 2 = 4$ (stimmt)\n\nSchnittpunkt durch Einsetzen von $s = 1$ in $g_1$:\n$$\\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + 1 \\cdot \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 4 \\end{pmatrix}$$\n\n**Gegenprobe** über $g_2$ mit $t = 1$: $\\begin{pmatrix} 2 \\\\ 1 \\\\ 2 \\end{pmatrix} + \\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 4 \\end{pmatrix}$ (stimmt)"
+            }
+          ]
+        },
+        {
+          "title": "Sachkontext: Begegnung oder Kollision?",
+          "blocks": [
+            {
+              "md": "Bei Bewegungsaufgaben (*\"Zwei Flugzeuge fliegen entlang $g_1$ und $g_2$\"*) ist eine zusätzliche Unterscheidung gefragt:\n\n| Frage | Bedingung |\n|---|---|\n| Kreuzen sich die **Bahnen**? | Schnittpunkt existiert (rein geometrisch) |\n| Kommt es zur **Kollision**? | Schnittpunkt existiert **und** $s = t$ (gleicher Zeitpunkt) |\n\n> [!tip] Der Parameter ist hier die Zeit\n> Zwei Bahnen können sich kreuzen, ohne dass sich die Objekte begegnen -- sie passieren den Kreuzungspunkt nur zu verschiedenen Zeiten. Die Aufgabe fragt oft genau danach, und die Antwort lautet dann: *\"Die Bahnen schneiden sich, eine Kollision findet aber nicht statt, da die Parameterwerte verschieden sind.\"*"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nach zwei Gleichungen aufhören.** Die dritte ist die Entscheidungsprobe.\n- **Beim Parallelitätstest nur eine Komponente prüfen.** Alle drei müssen denselben Faktor $k$ liefern.\n- **Identisch und parallel nicht unterscheiden.** Ohne Punktprobe fehlt diese Fallunterscheidung.\n- **Beide Geraden denselben Parameternamen geben.** $s$ und $t$ müssen verschieden heißen, sonst erzwingt man fälschlich Gleichzeitigkeit.\n- **Bei Bewegungsaufgaben Schnittpunkt mit Kollision gleichsetzen.**\n- **Schnittpunkt nur über eine Gerade berechnen.** Die Gegenprobe über die andere kostet eine Zeile und findet Rechenfehler."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Geraden im Raum** · **Abstand windschiefer Geraden** · **Lagebeziehung Gerade-Ebene** · **Schnittwinkel im Raum** · **Lineare Gleichungssysteme**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

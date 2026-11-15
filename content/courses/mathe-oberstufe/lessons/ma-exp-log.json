@@ -76,6 +76,404 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Die Zahl e",
+      "md": "**Warum gerade $e$?** Blau $y = a^x$, orange die Tangente bei $x = 0$. Ihre Steigung hängt von $a$ ab; genau bei $a = e \\approx 2{,}718$ ist sie 1.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          2
+        ],
+        "y": [
+          -0.5,
+          4
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "A",
+            "min": 1.5,
+            "max": 3.5,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "A^x",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": 0,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 0,
+            "y": 1,
+            "color": "accent"
+          }
+        ],
+        "readout": "a = {A|3} · Steigung bei 0: {ln(A)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "a = 2: Die Tangente bei 0 hat die Steigung 0,693.",
+          "set": {
+            "A": 2
+          }
+        },
+        {
+          "caption": "a = 3: Steigung 1,099, also mehr als 1.",
+          "to": {
+            "A": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = e: Steigung genau 1. Dann gilt überall: Die Steigung ist gleich dem Funktionswert.",
+          "to": {
+            "A": 2.71828
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "$e^x$ ist ihre eigene Ableitung, $\\ln x$ ihre Umkehrung: $e^{\\ln x} = x$ und $\\ln(e^x) = x$. Jede Exponentialfunktion lässt sich als $a^x = e^{x \\ln a}$ schreiben.",
+      "label": "Exponentialfunktion",
+      "more": "**Die Zahl $e$** ist die Basis, bei der die Tangente an $y = a^x$ im Punkt $(0 \\mid 1)$ genau die Steigung 1 hat. Dann gilt an jeder Stelle $(e^x)' = e^x$. Als Grenzwert: $e = \\lim_{n \\to \\infty}\\left(1 + \\tfrac1n\\right)^n \\approx 2{,}71828$.\n\n**Eigenschaften:** $e^x$ ist überall positiv, streng wachsend und geht durch $(0 \\mid 1)$; für $x \\to -\\infty$ nähert sie sich der x-Achse. $\\ln x$ ist nur für $x > 0$ definiert, geht durch $(1 \\mid 0)$ und wächst sehr langsam. Beide Graphen sind Spiegelbilder an der Winkelhalbierenden $y = x$.\n\n**Andere Basen:** Aus $a = e^{\\ln a}$ folgt $a^x = e^{x\\ln a}$ und damit $(a^x)' = \\ln a \\cdot a^x$. Für Logarithmen zu anderen Basen gilt $\\log_b x = \\tfrac{\\ln x}{\\ln b}$.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Die Logarithmusgesetze** folgen aus den Potenzgesetzen, weil der Logarithmus der Exponent ist.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a = e^u,\\; b = e^v \\quad (u = \\ln a,\\; v = \\ln b)",
+            "why": "Beide Zahlen als Potenzen von e schreiben."
+          },
+          {
+            "tex": "ab = e^u \\cdot e^v = e^{u + v} \\;\\Rightarrow\\; \\ln(ab) = \\ln a + \\ln b",
+            "why": "Produkt: Exponenten addieren sich."
+          },
+          {
+            "tex": "\\frac{a}{b} = e^{u - v} \\;\\Rightarrow\\; \\ln\\frac{a}{b} = \\ln a - \\ln b",
+            "why": "Quotient: Exponenten subtrahieren sich."
+          },
+          {
+            "tex": "a^r = e^{r u} \\;\\Rightarrow\\; \\ln(a^r) = r \\ln a",
+            "why": "Potenz: Exponent mal r."
+          },
+          {
+            "tex": "\\log_b x = \\frac{\\ln x}{\\ln b}",
+            "why": "Basiswechsel: aus x = b^y folgt ln x = y ln b."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quotient.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Potenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Basiswechsel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Eine Exponentialgleichung lösen:** $4e^{3x} + 1 = 9$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "4e^{3x} = 8 \\;\\Rightarrow\\; e^{3x} = 2",
+            "why": "Erst die Potenz isolieren."
+          },
+          {
+            "tex": "3x = \\ln 2",
+            "why": "Auf beiden Seiten ln anwenden."
+          },
+          {
+            "tex": "x = \\frac{\\ln 2}{3} \\approx 0{,}231",
+            "why": "Durch 3 teilen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Isolieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Logarithmieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Exponentialgleichung lösen: die Potenz **isolieren**, dann auf beiden Seiten $\\ln$ anwenden. Bei $e^{2x}$ und $e^x$ zusammen hilft $z = e^x$.",
+      "label": "Gleichungen",
+      "more": "**Typische Fallen:** $\\ln(a + b)$ ist nicht $\\ln a + \\ln b$; deshalb erst isolieren, dann logarithmieren. Eine Gleichung wie $e^x = -3$ hat keine Lösung, weil $e^x$ immer positiv ist. Bei Logarithmusgleichungen am Ende prüfen, ob das Argument positiv ist.\n\n**Substitution:** $e^{2x} - 3e^x + 2 = 0$ wird mit $z = e^x$ zu $z^2 - 3z + 2 = 0$, also $z = 1$ oder $z = 2$ und damit $x = 0$ oder $x = \\ln 2$. Negative $z$-Werte fallen weg.",
+      "id": "ve5"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Exponentialfunktionen (Grundlagen)",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Exponentialfunktionen (Grundlagen).md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Natürliche und allgemeine Exponentialfunktion",
+          "blocks": [
+            {
+              "md": "$$e^x \\qquad a^x, \\quad a > 0,\\ a \\neq 1$$"
+            }
+          ]
+        },
+        {
+          "title": "Schlüsselidentität",
+          "blocks": [
+            {
+              "md": "Jede Exponentialfunktion lässt sich auf die Basis $e$ zurückführen:\n\n$$a^x = e^{x\\ln a}$$\n\nDiese Umformung ist die Grundlage vieler Ableitungs- und Integralregeln für allgemeine Exponentialfunktionen (siehe **Ableitungen von Exponential- und Logarithmusfunktionen**, **Integrale von Exponentialfunktionen**).\n\nAnwendung: **Exponentielles Wachstum und Zerfall**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Logarithmusgesetze",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Logarithmusgesetze.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Die Grundgesetze",
+          "blocks": [
+            {
+              "md": "| Regel | Formel |\n|-------|--------|\n| Produktregel | $\\log_b(xy) = \\log_b x + \\log_b y$ |\n| Quotientenregel | $\\log_b\\!\\left(\\dfrac{x}{y}\\right) = \\log_b x - \\log_b y$ |\n| Potenzregel | $\\log_b(x^n) = n\\log_b x$ |"
+            }
+          ]
+        },
+        {
+          "title": "Umkehrbeziehung zur Exponentialfunktion",
+          "blocks": [
+            {
+              "md": "$$\\log_b(x) = y \\iff b^y = x$$\n\n$$\\log_b(b^x) = x \\qquad b^{\\log_b x} = x$$"
+            }
+          ]
+        },
+        {
+          "title": "Spezielle Werte",
+          "blocks": [
+            {
+              "md": "$$\\log_b 1 = 0 \\qquad \\log_b b = 1 \\qquad \\ln e = 1$$"
+            }
+          ]
+        },
+        {
+          "title": "Natürlicher Logarithmus (Spezialfall $b=e$)",
+          "blocks": [
+            {
+              "md": "$$\\ln(xy) = \\ln x + \\ln y \\qquad \\ln\\!\\left(\\frac{x}{y}\\right) = \\ln x - \\ln y \\qquad \\ln(x^n) = n\\ln x$$\n\nDirekte Umkehrung der **Potenzgesetze**. Für andere Basen: **Basiswechsel bei Logarithmen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Basiswechsel bei Logarithmen",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Basiswechsel bei Logarithmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Formel",
+          "blocks": [
+            {
+              "md": "$$\\log_b x = \\frac{\\log_a x}{\\log_a b}$$\n\nGebräuchlichste Form (Basis $e$):\n\n$$\\log_b x = \\frac{\\ln x}{\\ln b}$$"
+            }
+          ]
+        },
+        {
+          "title": "Nutzen",
+          "blocks": [
+            {
+              "md": "Ermöglicht, jeden Logarithmus mit dem Taschenrechner (der meist nur $\\ln$ oder $\\log_{10}$ bietet) zu berechnen. Zentral beim **Lösen von Exponentialgleichungen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz4",
+      "type": "note",
+      "title": "Exponentialgleichungen lösen",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Exponentialgleichungen lösen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Strategie",
+          "blocks": [
+            {
+              "md": "Für $a^x = b$: beide Seiten logarithmieren.\n\n$$a^x = b \\;\\Longrightarrow\\; x = \\frac{\\log b}{\\log a} = \\frac{\\ln b}{\\ln a}$$"
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen allgemein",
+          "blocks": [
+            {
+              "md": "1. Exponentialausdrücke mit $a^x = e^{x\\ln a}$ auf eine gemeinsame Basis bringen.\n2. Logarithmusgesetze nutzen, um zu vereinfachen (siehe **Logarithmusgesetze**).\n3. Exponenten mittels Potenzregel herausziehen.\n4. Log-/Exponentialausdruck zuerst isolieren, bevor logarithmiert wird.\n\nNutzt den **Basiswechsel bei Logarithmen** zur numerischen Auswertung."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung von $\\ln(ab) = \\ln a + \\ln b$ in die richtige Reihenfolge.",
+      "items": [
+        "$a = e^u$ und $b = e^v$ mit $u = \\ln a$, $v = \\ln b$",
+        "$ab = e^u \\cdot e^v = e^{u + v}$",
+        "Logarithmieren: $\\ln(ab) = u + v$",
+        "Also $\\ln(ab) = \\ln a + \\ln b$"
+      ],
+      "explain": "Die Reihenfolge: 1. $a = e^u$ und $b = e^v$ mit $u = \\ln a$, $v = \\ln b$. 2. $ab = e^u \\cdot e^v = e^{u + v}$. 3. Logarithmieren: $\\ln(ab) = u + v$. 4. Also $\\ln(ab) = \\ln a + \\ln b$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Umformung ist **falsch**? (Alle Zahlen positiv.)",
+      "options": [
+        {
+          "md": "$\\ln(a + b) = \\ln a + \\ln b$",
+          "correct": true
+        },
+        {
+          "md": "$\\ln(a^3) = 3\\ln a$"
+        },
+        {
+          "md": "$\\ln\\tfrac{a}{b} = \\ln a - \\ln b$"
+        },
+        {
+          "md": "$e^{\\ln a} = a$"
+        }
+      ],
+      "explain": "Der Logarithmus macht aus **Produkten** Summen, nicht aus Summen Summen. Probe: $\\ln 2 \\neq \\ln 1 + \\ln 1 = 0$.",
+      "label": "Gesetze",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Gleichung",
+      "md": "Löse $5e^{2x} = 20$ (drei Nachkommastellen).",
+      "answer": 0.693,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$e^{2x} = 4$, also $2x = \\ln 4$ und $x = \\tfrac{\\ln 4}{2} = \\ln 2 \\approx 0{,}693$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Gleichung $e^x = -3$ hat genau eine Lösung.",
+      "answer": false,
+      "explain": "$e^x$ ist für jedes $x$ positiv; die Gleichung hat keine Lösung.",
+      "label": "Falle",
+      "id": "vq4"
+    },
+    {
+      "type": "cloze",
+      "label": "Basiswechsel",
+      "md": "Basiswechsel: $\\log_2 10 = \\dfrac{\\ln 10}{\\ln b}$ mit $b =$ {{0}}.",
+      "blanks": [
+        {
+          "accept": [
+            "2"
+          ]
+        }
+      ],
+      "explain": "$\\log_b x = \\tfrac{\\ln x}{\\ln b}$; hier ist die Basis 2.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Logarithmus",
+      "md": "Berechne $\\log_3 81$.",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$3^4 = 81$, der Logarithmus ist der Exponent: 4.",
+      "id": "vq6"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Löse $3 \\cdot e^{2x} - 5 = 7$.",
@@ -129,12 +527,38 @@
       "id": "g4"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "expgleichung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "expgleichung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "e^x ist seine eigene Ableitung; ln ist die Umkehrung.",
         "ln(ab) = ln a + ln b, ln(a^r) = r ln a, log_b x = ln x / ln b.",
-        "Exponentialgleichung: Potenz isolieren, logarithmieren."
+        "Exponentialgleichung: Potenz isolieren, logarithmieren.",
+        "Bei $a = e$ hat die Tangente an $a^x$ in $(0 \\mid 1)$ die Steigung 1; daraus folgt $(e^x)' = e^x$.",
+        "Erst die Potenz isolieren, dann logarithmieren."
       ],
       "id": "summary"
     }

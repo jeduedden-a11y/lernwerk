@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Hessesche Normalform",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Hessesche Normalform.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Geben Sie die Hessesche Normalform an\"*, *\"Bestimmen Sie den Abstand des Punktes von der Ebene\"*, *\"Zeigen Sie, dass die Punkte auf verschiedenen Seiten der Ebene liegen\"*.\n\nDie Hessesche Normalform (HNF) ist kein Selbstzweck, sondern das **Werkzeug für alle Abstandsberechnungen zu Ebenen**. Wer sie sicher aufstellt, löst **Abstand Punkt-Ebene** und die Abstände paralleler Objekte in wenigen Zeilen."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundidee",
+          "blocks": [
+            {
+              "md": "Die Normalenform einer Ebene lautet\n$$\\vec{n} \\circ \\left(\\vec{x} - \\vec{a}\\right) = 0$$\n\nSetzt man einen Punkt ein, der **nicht** auf der Ebene liegt, ergibt sich nicht null, sondern ein Wert, der proportional zum Abstand ist. Der Proportionalitätsfaktor ist $\\lvert \\vec{n} \\rvert$.\n\n> [!important] Normieren macht den Wert zum Abstand\n> Teilt man den Normalenvektor durch seine Länge, entsteht der **Einheitsnormalenvektor**\n> $$\\vec{n}^{\\,0} = \\frac{\\vec{n}}{\\lvert \\vec{n} \\rvert}$$\n>\n> Damit liefert das Einsetzen eines Punktes direkt den Abstand -- das ist der ganze Trick der HNF."
+            }
+          ]
+        },
+        {
+          "title": "Die zwei Schreibweisen",
+          "blocks": [
+            {
+              "md": "**Vektorielle Form:**\n$$\\vec{n}^{\\,0} \\circ \\left(\\vec{x} - \\vec{a}\\right) = 0$$\n\n**Koordinatenform:** Aus $E: a x_1 + b x_2 + c x_3 = d$ wird\n$$\\frac{a x_1 + b x_2 + c x_3 - d}{\\sqrt{a^2 + b^2 + c^2}} = 0$$\n\nDer Nenner $\\sqrt{a^2+b^2+c^2}$ ist die Länge des Normalenvektors $\\vec{n} = \\begin{pmatrix} a \\\\ b \\\\ c \\end{pmatrix}$, den man in der Koordinatenform direkt an den Koeffizienten abliest."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Ebene in Koordinatenform bringen**, falls sie in Parameterform vorliegt (siehe **Ebenen im Raum**).\n2. **Normalenvektor ablesen:** die Koeffizienten von $x_1, x_2, x_3$.\n3. **Länge berechnen:** $\\lvert \\vec{n} \\rvert = \\sqrt{a^2+b^2+c^2}$.\n4. **Gesamte Gleichung durch diese Länge teilen**, wobei alles auf eine Seite gebracht wird.\n5. **Vorzeichenkonvention beachten** (siehe unten), falls Seitenlagen unterschieden werden sollen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Gegeben ist die Ebene $E: 2x_1 - x_2 + 2x_3 = 6$. Geben Sie die Hessesche Normalform an und berechnen Sie den Abstand des Punktes $P(4 \\mid 1 \\mid 3)$.*\n\n**Schritt 2:** $\\vec{n} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}$\n\n**Schritt 3:**\n$$\\lvert \\vec{n} \\rvert = \\sqrt{4 + 1 + 4} = \\sqrt{9} = 3$$\n\n**Schritt 4:**\n$$\\text{HNF: } \\quad \\frac{2x_1 - x_2 + 2x_3 - 6}{3} = 0$$\n\n**Abstand von $P$:** Punktkoordinaten einsetzen und Betrag nehmen:\n$$d(P; E) = \\left\\lvert \\frac{2 \\cdot 4 - 1 + 2 \\cdot 3 - 6}{3} \\right\\rvert = \\left\\lvert \\frac{8 - 1 + 6 - 6}{3} \\right\\rvert = \\frac{7}{3} \\approx 2{,}33$$\n\n*Der Punkt $P$ hat vom Ebene $E$ den Abstand $\\tfrac{7}{3}$ Längeneinheiten.*\n\n> [!tip] Warum sich hier so schön kürzt\n> Normalenvektoren mit Länge 3, 5, 7 oder anderen ganzen Zahlen kommen in Prüfungsaufgaben auffällig oft vor -- die Aufgabensteller wählen sie bewusst so. Ergibt sich eine krumme Wurzel, lohnt eine Kontrolle der Rechnung."
+            }
+          ]
+        },
+        {
+          "title": "Die Vorzeichenkonvention",
+          "blocks": [
+            {
+              "md": "Ohne Betragsstriche liefert die HNF ein **vorzeichenbehaftetes** Ergebnis. Dieses Vorzeichen enthält Information:\n\n| Vorzeichen | Bedeutung |\n|---|---|\n| positiv | Punkt liegt auf der Seite, in die $\\vec{n}$ zeigt |\n| negativ | Punkt liegt auf der Gegenseite |\n| null | Punkt liegt in der Ebene |\n\n**Anwendung:** Bei der Frage *\"Liegen $P$ und $Q$ auf derselben Seite der Ebene?\"* setzt man beide Punkte ohne Betrag ein und vergleicht die Vorzeichen. Gleiche Vorzeichen bedeuten dieselbe Seite.\n\n*Beispiel:* Für $Q(0 \\mid 0 \\mid 0)$ ergibt sich $\\tfrac{0 - 0 + 0 - 6}{3} = -2$. Da $P$ den Wert $+\\tfrac{7}{3}$ liefert und $Q$ den Wert $-2$, liegen die beiden Punkte auf **verschiedenen** Seiten von $E$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nicht normieren.** Ohne Division durch $\\lvert \\vec{n} \\rvert$ ist das Ergebnis um genau diesen Faktor zu groß -- der häufigste Fehler.\n- **Das $-d$ vergessen.** Die Konstante muss auf dieselbe Seite gebracht werden: $ax_1+bx_2+cx_3 - d$, nicht $+d$.\n- **Betrag setzen, obwohl die Seitenlage gefragt ist.** Bei Seitenvergleichen muss das Vorzeichen erhalten bleiben.\n- **Betrag weglassen, obwohl der Abstand gefragt ist.** Abstände sind niemals negativ.\n- **Normalenvektor aus der Parameterform ablesen wollen.** Dort stehen Spannvektoren; der Normalenvektor entsteht erst über das **Kreuzprodukt**.\n- **Beim Quadrieren Vorzeichen mitnehmen.** In $\\sqrt{a^2+b^2+c^2}$ werden alle Komponenten quadriert, negative Vorzeichen verschwinden."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Abstand Punkt-Ebene** · **Abstände paralleler Objekte** · **Ebenen im Raum** · **Skalarprodukt** · **Kreuzprodukt**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

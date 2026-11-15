@@ -15,6 +15,261 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Exponentiell und linear",
+      "md": "**Gleicher Start, gleicher erster Zuwachs:** blau $N(t) = 100 \\cdot 1{,}15^t$ (15 % pro Jahr), orange $100 + 15t$ (15 pro Jahr).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          16
+        ],
+        "y": [
+          0,
+          1000
+        ],
+        "grid": true,
+        "xLabel": "t in Jahren",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 16,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "n",
+            "expr": "100*1.15^x",
+            "color": "blue"
+          },
+          {
+            "name": "l",
+            "expr": "100 + 15*x",
+            "color": "orange"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 200
+          },
+          {
+            "y": 400
+          },
+          {
+            "y": 800
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "n",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "l",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "t = {X|1} · exponentiell {100*1.15^X|0} · linear {100 + 15*X|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Am Anfang liegen beide fast gleich auf.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Nach rund 5 Jahren hat sich der blaue Bestand verdoppelt.",
+          "to": {
+            "X": 4.96
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach weiteren 5 Jahren wieder: 400. Linear wären es erst 249.",
+          "to": {
+            "X": 9.92
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 15 Jahren: 814 gegen 325.",
+          "to": {
+            "X": 15
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Exponentiell** heißt: in gleichen Zeitschritten derselbe **Faktor**, $N(t) = N_0 \\cdot a^t = N_0 \\cdot e^{kt}$ mit $k = \\ln a$. **Linear** heißt: derselbe Summand.",
+      "label": "Modell",
+      "more": "**Faktor aus Prozent:** $p\\,\\%$ Zunahme heißt $a = 1 + \\tfrac{p}{100}$, $p\\,\\%$ Abnahme $a = 1 - \\tfrac{p}{100}$. Bei Zerfall ist $a < 1$ und $k < 0$.\n\n**Verdopplungs- und Halbwertszeit:** $T_D = \\tfrac{\\ln 2}{k}$ bei Wachstum, $T_H = \\tfrac{\\ln 2}{|k|}$ bei Zerfall. Beide hängen nicht vom Anfangsbestand ab: Jede Verdopplung dauert gleich lang.\n\n**Änderungsrate:** $N'(t) = k \\cdot N(t)$. Die Zunahme ist proportional zum Bestand; das ist die Differenzialgleichung des exponentiellen Wachstums.\n\n**In Tabellen erkennen:** Bei gleichen Zeitschritten sind die **Quotienten** aufeinanderfolgender Werte konstant (exponentiell) oder die **Differenzen** (linear).",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Verdopplungszeit** für $N(t) = N_0 e^{kt}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "N_0 e^{kT} = 2N_0",
+            "why": "Gesucht ist die Zeit, nach der der Bestand doppelt so groß ist."
+          },
+          {
+            "tex": "e^{kT} = 2",
+            "why": "Durch N₀ teilen: Der Anfangsbestand fällt heraus."
+          },
+          {
+            "tex": "kT = \\ln 2 \\;\\Rightarrow\\; T = \\frac{\\ln 2}{k}",
+            "why": "Logarithmieren und durch k teilen."
+          },
+          {
+            "tex": "k = \\ln 1{,}15 \\approx 0{,}1398 \\;\\Rightarrow\\; T \\approx 4{,}96",
+            "why": "Für 15 % pro Jahr: knapp 5 Jahre."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kürzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Exponentielles Wachstum und Zerfall",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Exponentielles Wachstum und Zerfall.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wachstum",
+          "blocks": [
+            {
+              "md": "$$y = ae^{kt}, \\quad k > 0$$"
+            }
+          ]
+        },
+        {
+          "title": "Zerfall",
+          "blocks": [
+            {
+              "md": "$$y = ae^{-kt}$$\n\nHierbei ist $a$ der Anfangswert (bei $t=0$) und $k$ die Wachstums-/Zerfallsrate. Modelliert u. a. radioaktiven Zerfall, Bevölkerungswachstum, Zinseszins. Baut auf **Exponentialfunktionen (Grundlagen)** auf."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Eine Messreihe in gleichen Zeitschritten: 50, 60, 72, 86,4. Welches Modell passt?",
+      "options": [
+        {
+          "md": "exponentiell mit dem Faktor 1,2",
+          "correct": true
+        },
+        {
+          "md": "linear mit dem Zuwachs 10",
+          "why": "Die Zuwächse wachsen: 10, 12, 14,4."
+        },
+        {
+          "md": "exponentiell mit dem Faktor 0,2"
+        },
+        {
+          "md": "quadratisch"
+        }
+      ],
+      "explain": "Die Quotienten sind konstant: $\\tfrac{60}{50} = \\tfrac{72}{60} = \\tfrac{86{,}4}{72} = 1{,}2$.",
+      "label": "Modell erkennen",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Zerfall",
+      "md": "Ein Bestand halbiert sich alle 8 Stunden. Bestimme $k$ in $N(t) = N_0 e^{kt}$ ($t$ in Stunden, drei Nachkommastellen).",
+      "answer": -0.087,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$e^{8k} = \\tfrac12$, also $k = \\tfrac{\\ln 0{,}5}{8} = -\\tfrac{\\ln 2}{8} \\approx -0{,}087$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Verdopplungszeit in die richtige Reihenfolge.",
+      "items": [
+        "$N_0 e^{kT} = 2N_0$",
+        "$e^{kT} = 2$",
+        "$kT = \\ln 2$",
+        "$T = \\frac{\\ln 2}{k}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $N_0 e^{kT} = 2N_0$. 2. $e^{kT} = 2$. 3. $kT = \\ln 2$. 4. $T = \\frac{\\ln 2}{k}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Je größer der Anfangsbestand, desto länger dauert die Verdopplung.",
+      "answer": false,
+      "explain": "$T_D = \\tfrac{\\ln 2}{k}$ enthält $N_0$ nicht. Jede Verdopplung dauert gleich lang.",
+      "label": "Verdopplungszeit",
+      "id": "vq4"
+    },
+    {
+      "type": "numeric",
+      "label": "Verdopplung",
+      "md": "Ein Kapital wächst mit 4 % pro Jahr. Nach wie vielen Jahren hat es sich verdoppelt? (eine Nachkommastelle)",
+      "answer": 17.7,
+      "tolerance": 0.1,
+      "placeholder": "Jahre",
+      "explain": "$1{,}04^T = 2$, also $T = \\tfrac{\\ln 2}{\\ln 1{,}04} \\approx 17{,}7$ Jahre.",
+      "id": "vq5"
+    },
+    {
       "type": "choice",
       "md": "Ein Bestand wächst jedes Jahr um 5 %. Welcher Term beschreibt ihn?",
       "options": [
@@ -69,12 +324,26 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "wachstum"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "N(t) = N₀ · aᵗ = N₀ · e^{kt}, k = ln a.",
         "Verdopplungszeit ln 2 / k, Halbwertszeit ln 2 / |k|.",
-        "Prozentual: Faktor 1 + p."
+        "Prozentual: Faktor 1 + p.",
+        "Exponentiell: konstante Quotienten; linear: konstante Differenzen.",
+        "$N'(t) = k \\cdot N(t)$: Die Zunahme ist proportional zum Bestand."
       ],
       "id": "summary"
     }

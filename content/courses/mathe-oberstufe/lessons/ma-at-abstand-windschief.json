@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Abstand windschiefer Geraden",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Abstand windschiefer Geraden.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Zwei Geraden sind **windschief** -- sie schneiden sich nicht und sind nicht parallel. Signalformulierungen: *\"Bestimmen Sie den Abstand der beiden Geraden\"*, *\"Zeigen Sie, dass die Geraden windschief sind, und berechnen Sie ihren Abstand\"*, *\"Wie nah kommen sich die beiden Flugbahnen?\"*\n\nDer anspruchsvollste Abstandstyp, typisch für den Leistungskurs.\n\n> [!important] Erst Lagebeziehung klären\n> Der Aufgabentyp setzt voraus, dass die Geraden tatsächlich windschief sind. Vorher prüfen:\n>\n> | Fall | Kriterium | Abstand |\n> |---|---|---|\n> | identisch | Richtungsvektoren parallel **und** Punkt von $g_1$ liegt auf $g_2$ | 0 |\n> | parallel | Richtungsvektoren parallel, Punkt liegt nicht darauf | siehe **Abstände paralleler Objekte** |\n> | schneidend | Richtungsvektoren nicht parallel, Schnittpunkt existiert | 0 |\n> | **windschief** | Richtungsvektoren nicht parallel, kein Schnittpunkt | Formel unten |\n>\n> Wer die Formel auf parallele Geraden anwendet, teilt durch null -- das Kreuzprodukt paralleler Vektoren ist der Nullvektor."
+            }
+          ]
+        },
+        {
+          "title": "Die Formel",
+          "blocks": [
+            {
+              "md": "$$d(g_1; g_2) = \\frac{\\left\\lvert \\left(\\vec{a_2} - \\vec{a_1}\\right) \\circ \\left(\\vec{u_1} \\times \\vec{u_2}\\right) \\right\\rvert}{\\left\\lvert \\vec{u_1} \\times \\vec{u_2} \\right\\rvert}$$\n\n**Warum das funktioniert:** Das Kreuzprodukt $\\vec{u_1} \\times \\vec{u_2}$ steht senkrecht auf **beiden** Geraden -- es ist die Richtung des gemeinsamen Lots. Das Skalarprodukt mit dem Verbindungsvektor projiziert diesen auf die Lotrichtung; die Division normiert auf Einheitslänge.\n\nDer Zähler ist zugleich das **Spatprodukt** der drei Vektoren."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Lagebeziehung prüfen:** Richtungsvektoren nicht parallel, kein Schnittpunkt.\n2. **Kreuzprodukt** $\\vec{n} = \\vec{u_1} \\times \\vec{u_2}$ berechnen.\n3. **Verbindungsvektor** $\\vec{a_2} - \\vec{a_1}$ aus den beiden Stützpunkten bilden.\n4. **Skalarprodukt** von Verbindungsvektor und $\\vec{n}$ berechnen.\n5. **Betrag nehmen und durch $\\lvert \\vec{n} \\rvert$ teilen.**"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Gegeben sind*\n$$g_1: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}, \\qquad g_2: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}$$\n\n**Schritt 1:** Die Richtungsvektoren $(1;0;0)$ und $(0;1;0)$ sind nicht parallel. Ein Schnittpunkt müsste in der dritten Komponente $0 = 3$ erfüllen -- Widerspruch. Also **windschief**.\n\n**Schritt 2:**\n$$\\vec{n} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\cdot 0 - 0 \\cdot 1 \\\\ 0 \\cdot 0 - 1 \\cdot 0 \\\\ 1 \\cdot 1 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}$$\n\n**Schritt 3:**\n$$\\vec{a_2} - \\vec{a_1} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 3 \\end{pmatrix} - \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 3 \\end{pmatrix}$$\n\n**Schritt 4:**\n$$\\begin{pmatrix} -1 \\\\ 0 \\\\ 3 \\end{pmatrix} \\circ \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} = 3$$\n\n**Schritt 5:**\n$$d = \\frac{\\lvert 3 \\rvert}{\\lvert (0;0;1) \\rvert} = \\frac{3}{1} = 3$$\n\n*Die beiden Geraden haben den Abstand 3 Längeneinheiten.*\n\n**Anschauliche Kontrolle:** $g_1$ verläuft in der $x_1$-Achsenrichtung auf Höhe $x_3 = 0$, $g_2$ in $x_2$-Richtung auf Höhe $x_3 = 3$. Der Abstand ist der Höhenunterschied, also 3. Passt."
+            }
+          ]
+        },
+        {
+          "title": "Alternativer Weg: Hilfsebene",
+          "blocks": [
+            {
+              "md": "Manche Aufgaben verlangen ausdrücklich diesen Weg:\n\n1. **Hilfsebene $E$** aufstellen, die $g_1$ **enthält** und zu $g_2$ **parallel** ist. Stützvektor $\\vec{a_1}$, Spannvektoren $\\vec{u_1}$ und $\\vec{u_2}$.\n2. **In Koordinatenform** umwandeln (Normalenvektor über das Kreuzprodukt).\n3. **Abstand eines beliebigen Punktes von $g_2$** zu dieser Ebene berechnen (siehe **Abstand Punkt-Ebene**).\n\nDas Ergebnis ist identisch. Der Weg ist länger, dafür anschaulicher -- und er liefert nebenbei die Hilfsebene, falls sie in einer Folgeaufgabe gebraucht wird."
+            }
+          ]
+        },
+        {
+          "title": "Die Lotfußpunkte",
+          "blocks": [
+            {
+              "md": "Fragt die Aufgabe nach den beiden Punkten, an denen der minimale Abstand auftritt, reicht die Formel nicht. Vorgehen:\n\n1. Allgemeine Punkte $\\vec{f_1} = \\vec{a_1} + s\\vec{u_1}$ und $\\vec{f_2} = \\vec{a_2} + t\\vec{u_2}$.\n2. Verbindungsvektor $\\vec{f_2} - \\vec{f_1}$ bilden.\n3. **Zwei** Orthogonalitätsbedingungen: senkrecht zu $\\vec{u_1}$ **und** zu $\\vec{u_2}$.\n4. Das entstehende $2 \\times 2$-Gleichungssystem nach $s$ und $t$ lösen.\n5. Beide Punkte berechnen.\n\nIm Beispiel: $F_1(1 \\mid 0 \\mid 0)$ und $F_2(0 \\mid 0 \\mid 3)$ -- Abstand 3, bestätigt."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Lagebeziehung nicht prüfen.** Bei parallelen Geraden ist $\\vec{u_1} \\times \\vec{u_2} = \\vec{0}$ und die Formel undefiniert.\n- **Kreuzprodukt und Skalarprodukt vertauschen.** Erst Kreuzprodukt der Richtungsvektoren, dann Skalarprodukt mit dem Verbindungsvektor.\n- **Verbindungsvektor aus den falschen Punkten bilden.** Es sind die **Stützpunkte** der beiden Geraden.\n- **Nicht durch $\\lvert \\vec{n} \\rvert$ teilen.**\n- **Betrag im Zähler vergessen.** Das Spatprodukt kann negativ sein.\n- **Bei Lotfußpunkten nur eine Bedingung ansetzen.** Es braucht **zwei**, weil zwei Parameter unbekannt sind.\n- **Mittlere Komponente des Kreuzprodukts falsch.** Sie hat die umgekehrte Reihenfolge der Faktoren."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Abstand Punkt-Gerade** · **Abstand Punkt-Ebene** · **Abstände paralleler Objekte** · **Kreuzprodukt** · **Spatprodukt** · **Lagebeziehungen von Geraden und Ebenen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

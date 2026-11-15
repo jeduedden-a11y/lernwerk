@@ -16,6 +16,325 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Umkehrbar ist $f$ nur, wenn jeder Funktionswert **höchstens einmal** vorkommt, etwa bei strenger Monotonie. Dann $y = f(x)$ nach $x$ auflösen und $x$ und $y$ tauschen.",
+      "label": "Verfahren",
+      "more": "1. **Umkehrbarkeit prüfen:** streng monoton auf dem Definitionsbereich, sonst den Bereich einschränken (bei $x^2$ auf $x \\geq 0$).\n2. **Nach $x$ auflösen:** aus $y = f(x)$ die Gleichung $x = \\ldots$ machen.\n3. **Variablen tauschen:** $f^{-1}(x) = \\ldots$\n4. **Bereiche tauschen:** Der Wertebereich von $f$ ist der Definitionsbereich von $f^{-1}$ und umgekehrt.\n5. **Probe:** $f\\left(f^{-1}(x)\\right) = x$.\n\n**Geometrisch** ist der Graph von $f^{-1}$ das Spiegelbild an der Winkelhalbierenden $y = x$. **Wichtige Paare:** $e^x$ und $\\ln x$; $x^2$ ($x \\geq 0$) und $\\sqrt x$; $x^3$ und $\\sqrt[3]{x}$; $ax + b$ und $\\tfrac{x - b}{a}$. **Ableitung:** $(f^{-1})'(y) = \\tfrac{1}{f'(x)}$ mit $y = f(x)$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = 2e^{x - 1} + 3$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y = 2e^{x - 1} + 3",
+            "why": "f ist streng wachsend, also umkehrbar; Wertebereich y > 3."
+          },
+          {
+            "tex": "\\frac{y - 3}{2} = e^{x - 1}",
+            "why": "Den Exponentialteil isolieren."
+          },
+          {
+            "tex": "x = 1 + \\ln\\frac{y - 3}{2}",
+            "why": "Logarithmieren und nach x auflösen."
+          },
+          {
+            "tex": "f^{-1}(x) = 1 + \\ln\\frac{x - 3}{2}, \\quad x > 3",
+            "why": "Variablen tauschen; der Wertebereich von f wird zum Definitionsbereich."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Isolieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tauschen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Spiegelung",
+      "md": "**Spiegelbild an $y = x$:** Liegt $P(a \\mid b)$ auf dem Graphen von $f(x) = e^x$ (blau), dann liegt $P'(b \\mid a)$ auf dem Graphen der Umkehrfunktion $\\ln x$ (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          4
+        ],
+        "y": [
+          -2,
+          3
+        ],
+        "grid": true,
+        "height": 303,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 1.1,
+            "value": -1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "exp(x)",
+            "color": "blue"
+          },
+          {
+            "name": "g",
+            "expr": "ln(x)",
+            "color": "orange",
+            "samples": 500
+          },
+          {
+            "name": "w",
+            "expr": "x",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X",
+              "exp(X)"
+            ],
+            "to": [
+              "exp(X)",
+              "X"
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.2
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "exp(X)",
+            "color": "blue",
+            "label": "P"
+          },
+          {
+            "x": "exp(X)",
+            "y": "X",
+            "color": "orange",
+            "label": "P′"
+          }
+        ],
+        "readout": "P({X|2} | {exp(X)|2}) · P′({exp(X)|2} | {X|2})"
+      },
+      "timeline": [
+        {
+          "caption": "P liegt links, P′ unten: x- und y-Wert sind vertauscht.",
+          "set": {
+            "X": -1.5
+          }
+        },
+        {
+          "caption": "P(0 | 1) wird zu P′(1 | 0): Die Nullstelle von ln entsteht aus dem y-Achsenabschnitt von e^x.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Verbindungsstrecke steht immer senkrecht auf y = x.",
+          "to": {
+            "X": 0.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$f^{-1}(x)$ ist **nicht** $\\tfrac{1}{f(x)}$. Und $x^2$ ist erst nach der Einschränkung auf $x \\geq 0$ oder $x \\leq 0$ umkehrbar.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Den Definitionsbereich der Umkehrfunktion vergessen: Die Umkehrung von $\\sqrt{x - 2}$ ist $x^2 + 2$ nur für $x \\geq 0$. Beim Tauschen der Variablen am Ende nicht vergessen, wirklich $x$ und $y$ zu vertauschen.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Umkehrfunktion bestimmen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Umkehrfunktion bestimmen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Umkehrfunktion\"*, *\"Zeigen Sie, dass $f$ umkehrbar ist\"*, *\"Geben Sie $f^{-1}$ an\"*, *\"Auf welchem Intervall ist $f$ umkehrbar?\"*\n\nTritt regelmäßig im Zusammenhang mit Exponential- und Logarithmusfunktionen auf, deren Beziehung zueinander genau diese ist."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzung",
+          "blocks": [
+            {
+              "md": "> [!important] Umkehrbar heißt streng monoton\n> Eine Funktion ist genau dann umkehrbar, wenn sie **eineindeutig** ist -- jeder $y$-Wert wird höchstens einmal angenommen. Für differenzierbare Funktionen bedeutet das: $f$ muss auf dem betrachteten Intervall **streng monoton** sein.\n>\n> Praktischer Nachweis: $f'(x) > 0$ für alle $x$ (oder durchgängig $f'(x) < 0$). Siehe **Monotonie untersuchen**.\n>\n> Ist $f$ nicht auf ganz $D_f$ monoton, muss der Definitionsbereich **eingeschränkt** werden. $f(x) = x^2$ ist auf $\\mathbb{R}$ nicht umkehrbar, auf $[0;\\infty)$ dagegen schon."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Umkehrbarkeit prüfen:** $f'(x)$ bilden und Vorzeichen untersuchen. Gegebenenfalls Definitionsbereich einschränken.\n2. **Gleichung ansetzen:** $y = f(x)$.\n3. **Nach $x$ auflösen.**\n4. **Variablen tauschen:** überall $x$ und $y$ vertauschen. Ergebnis ist $y = f^{-1}(x)$.\n5. **Definitions- und Wertebereich vertauschen:**\n   $$D_{f^{-1}} = W_f \\qquad W_{f^{-1}} = D_f$$\n6. **Probe:** $f\\big(f^{-1}(x)\\big) = x$ nachrechnen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Umkehrfunktion von $f(x) = 2x^3 + 1$.*\n\n**Schritt 1:** $f'(x) = 6x^2 \\ge 0$, und null nur an der einzelnen Stelle $x = 0$. Also ist $f$ auf ganz $\\mathbb{R}$ streng monoton steigend und umkehrbar.\n\n**Schritt 2/3:**\n$$y = 2x^3 + 1$$\n$$y - 1 = 2x^3$$\n$$\\frac{y-1}{2} = x^3$$\n$$x = \\sqrt[3]{\\frac{y-1}{2}}$$\n\n**Schritt 4:**\n$$f^{-1}(x) = \\sqrt[3]{\\frac{x-1}{2}}$$\n\n**Schritt 5:** $D_f = W_f = \\mathbb{R}$, also auch $D_{f^{-1}} = W_{f^{-1}} = \\mathbb{R}$.\n\n**Schritt 6:**\n$$f\\big(f^{-1}(x)\\big) = 2\\left(\\sqrt[3]{\\tfrac{x-1}{2}}\\right)^3 + 1 = 2 \\cdot \\frac{x-1}{2} + 1 = x - 1 + 1 = x$$\nBestätigt."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit Einschränkung",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Umkehrfunktion von $f(x) = x^2$.*\n\n**Schritt 1:** $f'(x) = 2x$ wechselt bei $x = 0$ das Vorzeichen -- $f$ ist auf $\\mathbb{R}$ **nicht** umkehrbar. Einschränkung auf $D_f = [0; \\infty)$, dort ist $f'(x) \\ge 0$.\n\n**Schritt 2 bis 4:** $y = x^2 \\Rightarrow x = \\sqrt{y}$ (positive Wurzel wegen $x \\ge 0$), also\n$$f^{-1}(x) = \\sqrt{x}$$\n\n**Schritt 5:** $W_f = [0;\\infty)$, also $D_{f^{-1}} = [0;\\infty)$.\n\n> [!warning] Die Wurzel ist nur die halbe Wahrheit\n> $x^2 = y$ hat die Lösungen $x = \\pm\\sqrt{y}$. Welche gilt, entscheidet der eingeschränkte Definitionsbereich. Bei $D_f = (-\\infty; 0]$ wäre die Umkehrfunktion $f^{-1}(x) = -\\sqrt{x}$."
+            }
+          ]
+        },
+        {
+          "title": "Die geometrische Eigenschaft",
+          "blocks": [
+            {
+              "md": "Der Graph von $f^{-1}$ entsteht durch **Spiegelung an der Winkelhalbierenden $y = x$**.\n\nDaraus folgt eine oft geprüfte Konsequenz für die Ableitungen: An zueinander gehörenden Punkten sind die Steigungen **reziprok**:\n$$\\left(f^{-1}\\right)'(y_0) = \\frac{1}{f'(x_0)} \\qquad\\text{mit } y_0 = f(x_0)$$\n\nAnschaulich: Beim Spiegeln werden $x$- und $y$-Richtung vertauscht, also auch Zähler und Nenner des Steigungsdreiecks."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Paare",
+          "blocks": [
+            {
+              "md": "| Funktion | Umkehrfunktion | Definitionsbereich der Umkehrung |\n|---|---|---|\n| $e^x$ | $\\ln x$ | $(0; \\infty)$ |\n| $a^x$ | $\\log_a x$ | $(0; \\infty)$ |\n| $x^2$ auf $[0;\\infty)$ | $\\sqrt{x}$ | $[0; \\infty)$ |\n| $x^3$ | $\\sqrt[3]{x}$ | $\\mathbb{R}$ |\n| $\\sin x$ auf $[-\\tfrac{\\pi}{2}; \\tfrac{\\pi}{2}]$ | $\\arcsin x$ | $[-1; 1]$ |"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Variablentausch vergessen.** Nach dem Auflösen steht $x = \\dots y \\dots$ -- daraus muss noch $y = f^{-1}(x)$ werden.\n- **Umkehrbarkeit nicht prüfen.** Bei nicht monotonen Funktionen ist die Einschränkung Teil der Aufgabe.\n- **$f^{-1}$ mit $\\tfrac{1}{f}$ verwechseln.** Die Schreibweise $f^{-1}$ bedeutet Umkehrfunktion, **nicht** Kehrwert.\n- **Definitionsbereich nicht mitvertauschen.** $D_{f^{-1}} = W_f$ gehört zur vollständigen Antwort.\n- **Bei Wurzeln das Vorzeichen nicht festlegen.** Der eingeschränkte Definitionsbereich entscheidet.\n- **Probe auslassen.** $f(f^{-1}(x)) = x$ deckt jeden Umformungsfehler auf."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Monotonie untersuchen** · **Definitionsbereich bestimmen** · **Graphen transformieren** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Wert",
+      "md": "$f(x) = 3x - 6$. Berechne $f^{-1}(9)$.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Gesucht ist das $x$ mit $3x - 6 = 9$, also $x = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Der Punkt $(2 \\mid 7)$ liegt auf dem Graphen von $f$. Welcher Punkt liegt sicher auf dem Graphen von $f^{-1}$?",
+      "options": [
+        {
+          "md": "$(7 \\mid 2)$",
+          "correct": true
+        },
+        {
+          "md": "$\\left(2 \\mid \\tfrac17\\right)$",
+          "why": "Die Umkehrfunktion ist nicht der Kehrwert."
+        },
+        {
+          "md": "$(-2 \\mid -7)$"
+        },
+        {
+          "md": "$(-7 \\mid 2)$"
+        }
+      ],
+      "explain": "Die Umkehrfunktion vertauscht Eingabe und Ausgabe.",
+      "label": "Punkt",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Definitionsbereich von $f^{-1}$ ist der Wertebereich von $f$.",
+      "answer": true,
+      "explain": "Die Umkehrfunktion nimmt genau die Werte entgegen, die f ausgibt.",
+      "label": "Bereiche",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Umkehrfunktion hat $f(x) = \\sqrt{x - 2}$ mit $x \\geq 2$?",
+      "options": [
+        {
+          "md": "$f^{-1}(x) = x^2 + 2$ für $x \\geq 0$",
+          "correct": true
+        },
+        {
+          "md": "$f^{-1}(x) = x^2 + 2$ für alle $x$",
+          "why": "$f$ liefert nur Werte $\\geq 0$; nur sie gehören in den Definitionsbereich."
+        },
+        {
+          "md": "$f^{-1}(x) = x^2 - 2$ für $x \\geq 0$"
+        },
+        {
+          "md": "$f^{-1}(x) = \\dfrac{1}{\\sqrt{x - 2}}$",
+          "why": "Das ist der Kehrwert."
+        }
+      ],
+      "explain": "$y = \\sqrt{x - 2}$ gibt $x = y^2 + 2$; der Wertebereich $y \\geq 0$ wird zum Definitionsbereich.",
+      "label": "Umkehrfunktion",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +387,38 @@
       },
       "label": "Exponentiell",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "umkehr"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "umkehr"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Umkehrfunktion: nach x auflösen, x und y tauschen, Bereiche tauschen; Graph an y = x gespiegelt."
+      ]
     }
   ]
 }

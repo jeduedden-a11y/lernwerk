@@ -16,6 +16,297 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Achsensymmetrisch** zur y-Achse: $f(-x) = f(x)$. **Punktsymmetrisch** zum Ursprung: $f(-x) = -f(x)$. Bei Polynomen genügt der Blick auf die Exponenten.",
+      "label": "Verfahren",
+      "more": "1. **$f(-x)$ berechnen:** überall $-x$ einsetzen, mit Klammern.\n2. **Vergleichen** mit $f(x)$ und mit $-f(x)$.\n3. **Polynome:** nur gerade Exponenten (das absolute Glied zählt als $x^0$, also gerade): achsensymmetrisch; nur ungerade: punktsymmetrisch; gemischt: keins von beiden.\n4. **Produkte:** gerade mal gerade und ungerade mal ungerade ergeben gerade Funktionen, gerade mal ungerade eine ungerade. So ist $x \\cos x$ punktsymmetrisch.\n\n**Andere Achsen und Punkte:** Symmetrisch zur Geraden $x = a$ heißt $f(a - h) = f(a + h)$; punktsymmetrisch zu $(a \\mid b)$ heißt $f(a - h) + f(a + h) = 2b$ für alle $h$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - 3x$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(-x) = (-x)^3 - 3(-x)",
+            "why": "Überall −x einsetzen, mit Klammern."
+          },
+          {
+            "tex": "= -x^3 + 3x",
+            "why": "(−x)³ = −x³."
+          },
+          {
+            "tex": "= -(x^3 - 3x) = -f(x)",
+            "why": "Das Minus ausklammern."
+          },
+          {
+            "tex": "\\Rightarrow \\text{ punktsymmetrisch zum Ursprung}",
+            "why": "Nur ungerade Exponenten, wie erwartet."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vereinfachen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleichen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Symmetrie",
+      "md": "**Punktsymmetrie im Bild:** $f(x) = x^3 - 3x$. Zu jedem Punkt $P$ gehört der Punkt $P'$, der am Ursprung gespiegelt ist.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          2.5
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 2.2,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "color": "blue"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X",
+              "X^3 - 3*X"
+            ],
+            "to": [
+              "-X",
+              "-X^3 + 3*X"
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1.2
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent",
+            "label": "P"
+          },
+          {
+            "x": "-X",
+            "on": "f",
+            "color": "orange",
+            "label": "P′"
+          }
+        ],
+        "readout": "f({X|1}) = {X^3 - 3*X|2} · f(−{X|1}) = {-X^3 + 3*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 0,5: Die Funktionswerte haben entgegengesetzte Vorzeichen.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "x = 1,2: Die Verbindungsstrecke geht immer durch den Ursprung.",
+          "to": {
+            "X": 1.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 2: f(2) = 2 und f(−2) = −2.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Ein absolutes Glied zählt als **gerader** Exponent: $x^3 + 1$ ist weder achsen- noch punktsymmetrisch. Und $(-x)^2 = x^2$, aber $-x^2 \\neq x^2$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Symmetrie untersuchen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Symmetrie untersuchen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Standardteil der Kurvendiskussion. Signalformulierungen: *\"Untersuchen Sie den Graphen auf Symmetrie\"*, *\"Zeigen Sie, dass der Graph achsensymmetrisch ist\"*, *\"Weisen Sie nach, dass $f$ ungerade ist\"*.\n\nLohnt sich auch ungefragt: Wer Symmetrie erkennt, halbiert den Aufwand bei Nullstellen, Extrema und Skizze."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Grundfälle",
+          "blocks": [
+            {
+              "md": "**Achsensymmetrie zur y-Achse** (gerade Funktion):\n$$f(-x) = f(x) \\quad\\text{für alle } x \\in D_f$$\n\n**Punktsymmetrie zum Ursprung** (ungerade Funktion):\n$$f(-x) = -f(x) \\quad\\text{für alle } x \\in D_f$$\n\n> [!important] Die Schnellprüfung bei Polynomen\n> Bei ganzrationalen Funktionen genügt ein Blick auf die **Exponenten**:\n>\n> - **nur gerade** Exponenten (einschließlich des konstanten Glieds, das $x^0$ entspricht) → achsensymmetrisch\n> - **nur ungerade** Exponenten (kein konstantes Glied) → punktsymmetrisch\n> - **gemischt** → keine dieser beiden Symmetrien\n>\n> $f(x) = x^4 - 3x^2 + 5$ ist achsensymmetrisch. $f(x) = x^3 - 2x$ ist punktsymmetrisch. $f(x) = x^3 + x^2$ ist keines von beidem.\n>\n> Diese Regel gilt **nur** für Polynome. Bei Wurzeln, Brüchen, $e$- oder Winkelfunktionen muss gerechnet werden."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Definitionsbereich prüfen.** Symmetrie setzt voraus, dass mit $x$ auch $-x$ definiert ist. Bei $D_f = [1;\\infty)$ ist keine der beiden Symmetrien möglich.\n2. **Bei Polynomen: Exponenten prüfen** (Schnellregel oben), Ergebnis begründen.\n3. **Sonst rechnen:** $f(-x)$ bilden, indem überall $x$ durch $-x$ ersetzt wird.\n4. **Vereinfachen** und mit $f(x)$ sowie $-f(x)$ vergleichen.\n5. **Ergebnis formulieren:**\n   - $f(-x) = f(x)$ → achsensymmetrisch zur y-Achse\n   - $f(-x) = -f(x)$ → punktsymmetrisch zum Ursprung\n   - keines von beidem → *\"Der Graph ist weder achsen- noch punktsymmetrisch zum Ursprung.\"*"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie $f(x) = \\dfrac{x^3}{x^2+1}$ auf Symmetrie.*\n\n**Schritt 1:** Nenner $x^2 + 1 > 0$ für alle $x$, also $D_f = \\mathbb{R}$ -- symmetrisch zum Ursprung, Voraussetzung erfüllt.\n\n**Schritt 3:** Kein reines Polynom, also rechnen:\n$$f(-x) = \\frac{(-x)^3}{(-x)^2 + 1} = \\frac{-x^3}{x^2+1}$$\n\n**Schritt 4:**\n$$f(-x) = -\\frac{x^3}{x^2+1} = -f(x)$$\n\n**Schritt 5:** *Der Graph ist punktsymmetrisch zum Ursprung.*\n\n**Warum das funktioniert:** Der Zähler $x^3$ ist ungerade, der Nenner $x^2+1$ gerade. Ungerade geteilt durch gerade ergibt ungerade.\n\n> [!tip] Kombinationsregeln\n> | Verknüpfung | Ergebnis |\n> |---|---|\n> | gerade $\\cdot$ gerade | gerade |\n> | ungerade $\\cdot$ ungerade | gerade |\n> | gerade $\\cdot$ ungerade | ungerade |\n> | gerade $+$ gerade | gerade |\n> | ungerade $+$ ungerade | ungerade |\n> | gerade $+$ ungerade | keines von beidem |\n>\n> Für Division gelten dieselben Regeln wie für Multiplikation."
+            }
+          ]
+        },
+        {
+          "title": "Symmetrie zu anderen Achsen und Punkten",
+          "blocks": [
+            {
+              "md": "Manche Aufgaben fragen nach Symmetrie zu einer **verschobenen** Achse oder einem **anderen** Punkt:\n\n**Achsensymmetrie zur Geraden $x = a$:**\n$$f(a + h) = f(a - h) \\quad\\text{für alle } h$$\n\n**Punktsymmetrie zum Punkt $P(a \\mid b)$:**\n$$f(a+h) + f(a-h) = 2b \\quad\\text{für alle } h$$\n\nDie zweite Bedingung ist der Standardnachweis dafür, dass ein **Wendepunkt** einer Funktion dritten Grades zugleich Symmetriezentrum ist -- eine beliebte Transferaufgabe."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nur einen Wert einsetzen.** $f(-2) = f(2)$ zeigt **nichts** -- die Bedingung muss für **alle** $x$ gelten. Ein einzelner Wert kann höchstens Symmetrie **widerlegen**, nie beweisen.\n- **Vorzeichenfehler bei Potenzen.** $(-x)^2 = x^2$, aber $(-x)^3 = -x^3$. Gerade Exponenten schlucken das Minus, ungerade behalten es.\n- **Konstantes Glied übersehen.** $f(x) = x^3 + 5$ ist **nicht** punktsymmetrisch zum Ursprung -- die 5 entspricht $5x^0$, also einem geraden Exponenten.\n- **Definitionsbereich nicht prüfen.** Ist er unsymmetrisch, erübrigt sich die Rechnung.\n- **\"Punktsymmetrisch\" ohne Bezugspunkt angeben.** Gemeint ist standardmäßig der Ursprung -- das gehört in die Antwort.\n- **Bei fehlender Symmetrie nichts hinschreiben.** Auch das negative Ergebnis ist eine vollständige Antwort und wird bepunktet."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Definitionsbereich bestimmen** · **Verhalten im Unendlichen** · **Wendepunkte bestimmen** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$f(x) = x^4 - 3x^2 + 2$. Welche Symmetrie hat der Graph?",
+      "options": [
+        {
+          "md": "achsensymmetrisch zur y-Achse",
+          "correct": true
+        },
+        {
+          "md": "punktsymmetrisch zum Ursprung"
+        },
+        {
+          "md": "keine"
+        },
+        {
+          "md": "beides",
+          "why": "Nur die Nullfunktion ist beides."
+        }
+      ],
+      "explain": "Nur gerade Exponenten, das absolute Glied zählt als $x^0$.",
+      "label": "Polynom",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = x \\cdot \\cos x$ ist punktsymmetrisch zum Ursprung.",
+      "answer": true,
+      "explain": "$f(-x) = -x\\cos(-x) = -x\\cos x = -f(x)$: ungerade mal gerade.",
+      "label": "Produkt",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Folgerung",
+      "md": "Der Graph von $f$ ist achsensymmetrisch zur y-Achse, und $f(3) = 7$. Welchen Wert hat $f(-3)$?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f(-x) = f(x)$.",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Symmetrie von $f(x) = x^3 + x^2$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$f(-x) = (-x)^3 + (-x)^2$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$= -x^3 + x^2$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$= -(x^3 + x^2) = -f(x)$",
+          "why": "Falsch: $-(x^3 + x^2) = -x^3 - x^2$, das ist nicht $-x^3 + x^2$."
+        },
+        {
+          "md": "Also punktsymmetrisch zum Ursprung.",
+          "why": "Folgefehler: gemischte Exponenten, keine der beiden Symmetrien."
+        }
+      ],
+      "answer": 2,
+      "explain": "$f(-x)$ ist weder $f(x)$ noch $-f(x)$.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +359,38 @@
       },
       "label": "Symmetrie, gemischt",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "symmetrie"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "symmetrie"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Absolutes Glied zählt als gerader Exponent; gemischte Exponenten: keine Standardsymmetrie."
+      ]
     }
   ]
 }

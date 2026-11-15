@@ -94,6 +94,444 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Senkrechtentest",
+      "md": "**Senkrechtentest:** Eine senkrechte Gerade wandert über das Bild. Den blauen Graphen trifft sie immer genau einmal, die orange Kreislinie an manchen Stellen zweimal.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          3
+        ],
+        "y": [
+          -2.5,
+          4
+        ],
+        "grid": false,
+        "height": 382,
+        "vars": [
+          {
+            "name": "X",
+            "min": -3,
+            "max": 3,
+            "value": -2.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2 - 2",
+            "color": "blue"
+          },
+          {
+            "name": "o",
+            "expr": "2 + sqrt(2.25 - x^2)",
+            "domain": [
+              -1.5,
+              1.5
+            ],
+            "color": "orange",
+            "samples": 200
+          },
+          {
+            "name": "u",
+            "expr": "2 - sqrt(2.25 - x^2)",
+            "domain": [
+              -1.5,
+              1.5
+            ],
+            "color": "orange",
+            "samples": 200
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "y": "0.5*X^2 - 2",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "y": "2 + sqrt(2.25 - X^2)",
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "y": "2 - sqrt(2.25 - X^2)",
+            "color": "orange"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Links vom Kreis: ein Schnittpunkt, mit dem blauen Graphen.",
+          "set": {
+            "X": -2.5
+          }
+        },
+        {
+          "caption": "Über dem Kreis: zwei orange Punkte zu demselben x. Ein Kreis ist kein Funktionsgraph.",
+          "to": {
+            "X": -0.6
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Der blaue Graph hat zu jedem x genau einen Punkt: Er gehört zu einer Funktion.",
+          "to": {
+            "X": 1.1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechts vom Kreis bleibt nur der blaue Punkt.",
+          "to": {
+            "X": 2.4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Eine **Funktion** ordnet jedem $x$ der Definitionsmenge **genau ein** $y$ zu. Ein $y$ darf mehrfach vorkommen, ein $x$ nicht.",
+      "label": "Definition",
+      "more": "**Senkrechtentest:** Schneidet eine senkrechte Gerade den Graphen mehr als einmal, liegt keine Funktion vor. Eine Parabel besteht den Test, ein Kreis nicht.\n\n**Umkehrbar** ist eine Funktion nur, wenn auch jedes $y$ genau einmal vorkommt, also wenn sie streng monoton ist. Deshalb schränkt man $x^2$ auf $x \\geq 0$ ein, um die Wurzelfunktion als Umkehrung zu bekommen.\n\n**Darstellungen:** Die Wertetabelle zeigt einzelne Werte exakt, aber nichts dazwischen. Der Graph zeigt Verlauf, Symmetrie und Extrema, aber keine exakten Werte. Die Gleichung erlaubt exaktes Rechnen, Ableiten und Integrieren. Durch endlich viele Tabellenpunkte passen unendlich viele Funktionen: Eine Gleichung aus Messdaten ist immer eine begründete Modellannahme, die außerhalb des Messbereichs versagen kann.",
+      "id": "ve2"
+    },
+    {
+      "type": "anim",
+      "label": "Transformationen",
+      "md": "**Verschieben, strecken, spiegeln:** grau gestrichelt die Normalparabel $f(x) = x^2$, blau $g(x) = a \\cdot f(x - d) + e$ mit dem Scheitel $S$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          5
+        ],
+        "y": [
+          -4,
+          6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "SA",
+            "min": -2,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "SD",
+            "min": -3,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "SE",
+            "min": -4,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "g",
+            "expr": "SA*(x - SD)^2 + SE",
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "points": [
+          {
+            "x": "SD",
+            "y": "SE",
+            "color": "accent",
+            "label": "S"
+          }
+        ],
+        "readout": "a = {SA|1} · d = {SD|1} · e = {SE|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Start: g ist die Normalparabel.",
+          "set": {
+            "SA": 1,
+            "SD": 0,
+            "SE": 0
+          }
+        },
+        {
+          "caption": "d = 2: Im Argument steht x − 2, der Graph rückt um 2 nach rechts.",
+          "to": {
+            "SD": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "e = −1: Außen steht −1, der Graph sinkt um 1.",
+          "to": {
+            "SE": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = 2: Alle y-Abstände zum Scheitel verdoppeln sich, die Parabel wird schmaler.",
+          "to": {
+            "SA": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "a = −1: Spiegelung an der Waagerechten durch den Scheitel; die Parabel öffnet nach unten.",
+          "to": {
+            "SA": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "**Außen** wirkt in y-Richtung und wie gelesen, **innen** in x-Richtung und umgekehrt: $f(x - 2)$ liegt 2 nach rechts, $f(2x)$ ist in x-Richtung gestaucht.",
+      "label": "Transformationen",
+      "more": "| Term | Wirkung auf den Graphen von $f$ |\n|---|---|\n| $f(x) + e$ | um $e$ nach oben |\n| $f(x - d)$ | um $d$ nach rechts |\n| $a \\cdot f(x)$ | in y-Richtung mit dem Faktor $a$ gestreckt |\n| $f(b \\cdot x)$ | in x-Richtung mit dem Faktor $\\tfrac1b$ gestreckt |\n| $-f(x)$ | an der x-Achse gespiegelt |\n| $f(-x)$ | an der y-Achse gespiegelt |\n\n**Reihenfolge:** Bei $a \\cdot f(x - d) + e$ erst strecken, dann nach oben verschieben; die Verschiebung im Argument ist davon unabhängig. **Kontrolle** an einem markanten Punkt: Der Scheitel $(0 \\mid 0)$ der Normalparabel landet bei $(d \\mid e)$.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Funktionsbegriff und Darstellungsformen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Funktionsbegriff und Darstellungsformen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Funktion** $f: D \\to W$ ordnet jedem Element $x$ der Definitionsmenge $D$ genau **ein** Element $y = f(x)$ der Wertemenge $W$ zu (eindeutige Zuordnung)."
+            }
+          ]
+        },
+        {
+          "title": "Darstellungsformen",
+          "blocks": [
+            {
+              "md": "| Form | Beschreibung | Vorteil |\n|------|--------------|---------|\n| **Wertetabelle** | diskrete $x$-$y$-Paare | schnelle Auswertung einzelner Stellen |\n| **Graph** | Punktmenge $\\{(x, f(x))\\}$ in der Ebene | Verlauf/Symmetrie/Extrema auf einen Blick |\n| **Funktionsgleichung** | $y = f(x)$ | exakte Berechnung, Ableiten/Integrieren möglich |"
+            }
+          ]
+        },
+        {
+          "title": "Funktionsklassen (Übersicht E-Phase)",
+          "blocks": [
+            {
+              "md": "- **Ganzrationale Funktionen** (Polynome): $f(x) = a_n x^n + \\dots + a_1x + a_0$ — siehe **Polynomdivision**, **Rest- und Faktorsatz**.\n- **Exponentialfunktionen**: $f(x) = a\\cdot b^x$ — siehe **Exponentialfunktionen (Grundlagen)**.\n- **Trigonometrische Funktionen**: $f(x) = a\\sin(bx+c)+d$ — siehe **Wichtige Werte des Einheitskreises**.\n- **Funktionenscharen**: Funktionen mit einem Parameter, siehe **Funktionenscharen**."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften zur Charakterisierung",
+          "blocks": [
+            {
+              "md": "- **Definitionsmenge/Wertemenge**, Nullstellen, Symmetrie (achsen-/punktsymmetrisch), Monotonie, Grenzverhalten für $x \\to \\pm\\infty$.\n- Diese Eigenschaften werden systematisch in der **Kurvendiskussion** untersucht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Definitionslücken (z. B. bei Brüchen, Wurzeln) übersehen.\n- Wertetabelle mit zu wenigen/ungünstig gewählten Stützstellen → falscher Eindruck vom Verlauf.\n\nGrundlage für alle weiterführenden Analysis-Themen: **Ableitungsbegriff**, **Integralbegriff und Hauptsatz**."
+            }
+          ]
+        },
+        {
+          "title": "Die Eindeutigkeit als Kern der Definition",
+          "blocks": [
+            {
+              "md": "> [!important] Jedem x genau ein y -- aber nicht umgekehrt\n> Das ist die entscheidende Asymmetrie. Ein $y$-Wert darf mehrfach auftreten, ein $x$-Wert nicht.\n>\n> Praktisch prüfbar über den **Senkrechtentest**: Schneidet eine senkrechte Gerade den Graphen mehr als einmal, liegt keine Funktion vor. Ein Kreis ist deshalb keine Funktion, eine Parabel schon.\n>\n> Daraus folgt zugleich, wann sich eine Funktion **umkehren** lässt: nur wenn auch jeder $y$-Wert genau einmal auftritt, also bei **streng monotonen** Funktionen. Deshalb muss man bei $f(x)=x^2$ den Definitionsbereich einschränken, um die Wurzelfunktion zu erhalten.\n>\n> Und deshalb sind die **Arkusfunktionen** nur auf eingeschränkten Bereichen definiert."
+            }
+          ]
+        },
+        {
+          "title": "Die Darstellungsformen und ihre Grenzen",
+          "blocks": [
+            {
+              "md": "| Form | zeigt gut | verbirgt |\n|---|---|---|\n| **Wertetabelle** | einzelne Werte exakt | Verhalten dazwischen |\n| **Graph** | Verlauf, Symmetrie, Extrema | exakte Werte |\n| **Gleichung** | exakte Berechnung, Ableitbarkeit | Anschauung |\n\n> [!warning] Eine Wertetabelle legt eine Funktion nicht fest\n> Durch endlich viele Punkte lassen sich unendlich viele verschiedene Funktionen legen. Aus einer Tabelle allein auf eine Funktionsgleichung zu schließen, ist deshalb stets eine **Modellannahme**, keine Ableitung.\n>\n> Genau das geschieht bei Sachaufgaben: Man **wählt** einen Funktionstyp, der zu den Daten passt und zum Sachzusammenhang -- exponentiell bei prozentualem Wachstum, quadratisch bei Wurfbewegungen.\n>\n> Die Wahl muss deshalb begründet werden. Und sie ist zu prüfen: Ein Modell, das die Datenpunkte trifft, kann außerhalb des Messbereichs völlig unbrauchbar sein."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften und was sie verraten",
+          "blocks": [
+            {
+              "md": "| Eigenschaft | Bedingung | Nutzen |\n|---|---|---|\n| **Achsensymmetrie** | $f(-x) = f(x)$ | halbiert den Untersuchungsaufwand |\n| **Punktsymmetrie** | $f(-x) = -f(x)$ | ebenso |\n| **Monotonie** | $f'$ hat festes Vorzeichen | Umkehrbarkeit |\n| **Periodizität** | $f(x+p) = f(x)$ | ein Intervall genügt |\n| **Beschränktheit** | Werte in einem Intervall | Grenzwertaussagen |\n\n> [!tip] Symmetrie zuerst prüfen\n> Bei ganzrationalen Funktionen genügt ein Blick auf die Exponenten: Nur gerade Exponenten bedeuten Achsensymmetrie, nur ungerade Punktsymmetrie zum Ursprung. Gemischte Exponenten bedeuten keine dieser Symmetrien.\n>\n> Der Aufwand ist minimal, der Gewinn erheblich -- man muss nur die halbe Kurve untersuchen. Deshalb steht die Symmetrieprüfung in der **Kurvendiskussion** weit vorn."
+            }
+          ]
+        },
+        {
+          "title": "Verkettung und Umkehrung",
+          "blocks": [
+            {
+              "md": "| Verknüpfung | Schreibweise | Ableitungsregel |\n|---|---|---|\n| Summe | $f+g$ | Summenregel |\n| Produkt | $f\\cdot g$ | **Produktregel** |\n| **Verkettung** | $f(g(x))$ | **Kettenregel** |\n| Umkehrung | $f^{-1}$ | Ableitung der Umkehrfunktion |\n\n> [!important] Die Verkettung zu erkennen ist der Schlüssel zur Kettenregel\n> Fast alle Ableitungsfehler in der Oberstufe entstehen daran, dass eine Verkettung übersehen wird. Bei $\\sin(3x)$ ist die innere Funktion $3x$, bei $e^{-x^2}$ ist sie $-x^2$.\n>\n> Prüffrage: **Steht im Argument mehr als nur $x$?** Dann liegt eine Verkettung vor, und die innere Ableitung darf nicht fehlen."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Funktionsbegriff ist die Grundlage der gesamten Analysis. Die einzelnen Funktionsklassen stehen in der **Formelsammlung**, die Untersuchungsverfahren in der **Kurvendiskussion**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Funktionslabor",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Funktionslabor.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "Eingebetteter Desmos-Rechner zum freien Erkunden und Plotten von Funktionen.\n\n<iframe \n  src=\"https://www.desmos.com/calculator\"\n  width=\"100%\" \n  height=\"600\" \n  style=\"border:1px solid #ccc;\">\n\nNützlich beim Visualisieren von Funktionen aus der **Formelsammlung** oder den **Integrationstechniken**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "cloze",
+      "label": "Definition",
+      "md": "Eine Funktion ordnet jedem $x$ der Definitionsmenge {{0}} $y$ zu.",
+      "blanks": [
+        {
+          "accept": [
+            "genau ein",
+            "genau einen",
+            "genau 1",
+            "exakt ein"
+          ]
+        }
+      ],
+      "explain": "Die Eindeutigkeit ist der Kern der Definition: zu jedem $x$ genau ein Funktionswert.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Bei einer Funktion darf derselbe $y$-Wert zu mehreren $x$-Werten gehören.",
+      "answer": true,
+      "explain": "Erlaubt: Bei $f(x) = x^2$ gehört $y = 4$ zu $x = 2$ und zu $x = -2$. Verboten ist nur ein $x$ mit zwei $y$-Werten.",
+      "label": "Definition",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Wertetabelle kann **nicht** zu einer Funktion gehören?",
+      "options": [
+        {
+          "md": "$x$: 1, 2, 2 und $y$: 5, 7, 9",
+          "correct": true
+        },
+        {
+          "md": "$x$: 1, 2, 3 und $y$: 4, 4, 4",
+          "why": "Ein konstanter Wert ist erlaubt."
+        },
+        {
+          "md": "$x$: 0, 1, 2 und $y$: 1, 0, 1",
+          "why": "Gleiche y-Werte sind erlaubt."
+        },
+        {
+          "md": "$x$: −1, 0, 1 und $y$: −3, 0, 3"
+        }
+      ],
+      "explain": "Zu $x = 2$ gehören zwei verschiedene Werte, 7 und 9. Das widerspricht der Eindeutigkeit.",
+      "label": "Tabelle",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Der Graph von $f$ wird um 3 nach links verschoben und danach an der x-Achse gespiegelt. Welcher Term gehört zum neuen Graphen?",
+      "options": [
+        {
+          "md": "$-f(x + 3)$",
+          "correct": true
+        },
+        {
+          "md": "$-f(x - 3)$",
+          "why": "Minus im Argument verschiebt nach rechts."
+        },
+        {
+          "md": "$f(-x + 3)$",
+          "why": "Ein Minus vor dem x spiegelt an der y-Achse."
+        },
+        {
+          "md": "$-f(x) + 3$",
+          "why": "Das verschiebt nach oben."
+        }
+      ],
+      "explain": "Nach links heißt $x + 3$ im Argument; die Spiegelung an der x-Achse kehrt das Vorzeichen außen um.",
+      "label": "Transformation",
+      "id": "vq4"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Beschreibung von $g(x) = 2f(x - 1) + 3$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Grundfunktion ist $f$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Der Graph wird um 1 nach links verschoben.",
+          "why": "Falsch: $x - 1$ im Argument verschiebt um 1 nach **rechts**."
+        },
+        {
+          "md": "Er wird in y-Richtung mit dem Faktor 2 gestreckt.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Danach wird er um 3 nach oben verschoben.",
+          "why": "Richtig."
+        }
+      ],
+      "answer": 1,
+      "explain": "Innen wirkt umgekehrt: $f(x - 1)$ liegt 1 nach rechts.",
+      "id": "vq5"
+    },
+    {
+      "type": "numeric",
+      "label": "Scheitel",
+      "md": "Die Normalparabel wird zu $g(x) = -2(x - 1)^2 + 4$. Welchen y-Wert hat der Scheitel von $g$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Der Scheitel $(0 \\mid 0)$ wandert um 1 nach rechts und um 4 nach oben: $(1 \\mid 4)$. Der Faktor $-2$ spiegelt und streckt, verschiebt aber nicht.",
+      "id": "vq6"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Veränderung der Wirkung zu.",
@@ -130,12 +568,50 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Funktion: jedem x genau ein y.",
         "Term, Graph, Tabelle, Text.",
-        "a · f(x − d) + e: strecken, nach rechts, nach oben."
+        "a · f(x − d) + e: strecken, nach rechts, nach oben.",
+        "Senkrechtentest: Eine senkrechte Gerade trifft einen Funktionsgraphen höchstens einmal.",
+        "Innen wirkt in x-Richtung und umgekehrt: $f(x - 2)$ liegt 2 nach rechts."
       ],
       "id": "summary"
     }

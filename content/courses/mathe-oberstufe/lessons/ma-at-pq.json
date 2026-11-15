@@ -16,6 +16,263 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Für $x^2 + px + q = 0$ gilt $x_{1,2} = -\\tfrac{p}{2} \\pm \\sqrt{\\left(\\tfrac{p}{2}\\right)^2 - q}$. Vorher muss vor $x^2$ eine 1 stehen.",
+      "label": "Verfahren",
+      "more": "1. **Normalform:** auf null bringen und durch den Faktor vor $x^2$ teilen.\n2. **$p$ und $q$ mit Vorzeichen** ablesen.\n3. **Radikand** $\\left(\\tfrac{p}{2}\\right)^2 - q$ berechnen: positiv, zwei Lösungen; null, eine; negativ, keine.\n4. **Einsetzen.**\n5. **Probe mit Vieta:** $x_1 + x_2 = -p$ und $x_1 \\cdot x_2 = q$.\n\n**Bild dazu:** $-\\tfrac{p}{2}$ ist die Scheitelstelle der Parabel; die Wurzel ist der Abstand der Nullstellen von dieser Stelle.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung** durch quadratische Ergänzung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^2 + px + q = 0",
+            "why": "Normalform."
+          },
+          {
+            "tex": "\\left(x + \\tfrac{p}{2}\\right)^2 - \\left(\\tfrac{p}{2}\\right)^2 + q = 0",
+            "why": "Quadratisch ergänzen."
+          },
+          {
+            "tex": "\\left(x + \\tfrac{p}{2}\\right)^2 = \\left(\\tfrac{p}{2}\\right)^2 - q",
+            "why": "Umstellen."
+          },
+          {
+            "tex": "x = -\\tfrac{p}{2} \\pm \\sqrt{\\left(\\tfrac{p}{2}\\right)^2 - q}",
+            "why": "Wurzel ziehen, wenn der Radikand nicht negativ ist."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Normalform.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umgestellt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Bedeutung",
+      "md": "**Was die Formel bedeutet:** $y = x^2 - 2x - 3$. Die Nullstellen liegen symmetrisch zur Scheitelstelle $-\\tfrac{p}{2} = 1$, im Abstand $\\sqrt{1 + 3} = 2$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          4.5
+        ],
+        "y": [
+          -4.5,
+          5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "R",
+            "min": 0,
+            "max": 2,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2 - 2*x - 3",
+            "color": "blue"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 1,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "1 - R",
+            "y": 0,
+            "color": "accent"
+          },
+          {
+            "x": "1 + R",
+            "y": 0,
+            "color": "accent"
+          },
+          {
+            "x": 1,
+            "y": -4,
+            "color": "orange",
+            "label": "S"
+          }
+        ],
+        "readout": "x = 1 ± {R|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Start an der Scheitelstelle x = 1.",
+          "set": {
+            "R": 0
+          }
+        },
+        {
+          "caption": "Die Punkte wandern um die Wurzel nach links und rechts.",
+          "to": {
+            "R": 1.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Abstand 2: Nullstellen bei −1 und 3.",
+          "to": {
+            "R": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Steht vor $x^2$ eine Zahl, zuerst durch sie teilen. $p$ mit Vorzeichen: Bei $x^2 - 6x + 8$ ist $p = -6$, also $-\\tfrac{p}{2} = 3$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "pq-Formel",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/pq-Formel.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Nullstellen von...\"*, *\"Lösen Sie die Gleichung\"* bei einer quadratischen Gleichung, deren $x^2$-Koeffizient bereits $1$ ist (oder leicht dazu gemacht werden kann): $x^2 + px + q = 0$.\n\nDie pq-Formel ist der Standardweg bei Nullstellenbestimmung im Rahmen einer **Kurvendiskussion**, sobald nach dem Ableiten oder Faktorisieren eine quadratische Restgleichung übrig bleibt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Normalform herstellen:** Gleichung so umstellen, dass rechts $0$ steht und der Koeffizient vor $x^2$ genau $1$ ist. Steht dort eine andere Zahl $a \\neq 1$, die ganze Gleichung durch $a$ teilen.\n2. **$p$ und $q$ ablesen** -- mit Vorzeichen, direkt aus $x^2 + px + q = 0$.\n3. **Diskriminante berechnen:** $D = \\left(\\dfrac{p}{2}\\right)^2 - q$.\n4. **Fallunterscheidung:**\n   - $D > 0$ -- zwei Lösungen\n   - $D = 0$ -- eine (doppelte) Lösung\n   - $D < 0$ -- keine reelle Lösung\n5. **Formel anwenden:** $x_{1,2} = -\\dfrac{p}{2} \\pm \\sqrt{D}$\n6. **Probe:** Beide Lösungen in die Ausgangsgleichung einsetzen.\n\n> [!important] Die Formel im Kopf\n> $$x_{1,2} = -\\frac{p}{2} \\pm \\sqrt{\\left(\\frac{p}{2}\\right)^2 - q}$$\n> Der erste Teil $-\\tfrac{p}{2}$ ist zugleich die $x$-Koordinate des Scheitelpunkts der zugehörigen Parabel -- die beiden Lösungen liegen symmetrisch um diesen Wert."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Nullstellen von $f(x) = x^2 - 5x + 6$.*\n\n**Schritt 1:** Koeffizient vor $x^2$ ist bereits $1$, Normalform liegt vor: $x^2 - 5x + 6 = 0$.\n\n**Schritt 2:** $p = -5$, $q = 6$.\n\n**Schritt 3:**\n$$D = \\left(\\frac{-5}{2}\\right)^2 - 6 = \\frac{25}{4} - \\frac{24}{4} = \\frac{1}{4}$$\n\n**Schritt 4:** $D = \\tfrac{1}{4} > 0$ -- zwei Lösungen.\n\n**Schritt 5:**\n$$x_{1,2} = \\frac{5}{2} \\pm \\sqrt{\\frac{1}{4}} = \\frac{5}{2} \\pm \\frac{1}{2}$$\n$$x_1 = 3, \\qquad x_2 = 2$$\n\n**Schritt 6 (Probe):**\n$$x_1 = 3: \\quad 3^2 - 5\\cdot 3 + 6 = 9 - 15 + 6 = 0 \\checkmark$$\n$$x_2 = 2: \\quad 2^2 - 5\\cdot 2 + 6 = 4 - 10 + 6 = 0 \\checkmark$$"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen von $p$ falsch übernehmen.** Bei $x^2 - 5x + 6$ ist $p = -5$, nicht $5$. Das Minuszeichen gehört zum Koeffizienten.\n- **Normalform vergessen.** Bei $2x^2 - 10x + 12 = 0$ muss zuerst durch $2$ geteilt werden -- sonst liefert die pq-Formel falsche Werte, weil sie für den Koeffizienten $1$ vor $x^2$ hergeleitet ist.\n- **Vorzeichenfehler beim Wurzelziehen.** $\\sqrt{D}$ ist immer positiv; das $\\pm$ davor erzeugt die zwei Lösungen, nicht die Wurzel selbst.\n- **$D < 0$ als Rechenfehler deuten.** Es bedeutet schlicht: keine reelle Nullstelle, die Parabel schneidet die $x$-Achse nicht.\n- **Rechenfehler beim Bruch $\\left(\\frac{p}{2}\\right)^2$.** Vorzeichen geht beim Quadrieren verloren -- das ist beabsichtigt, $(-5/2)^2 = (5/2)^2$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**abc-Formel** · **Satz vom Nullprodukt** · **Substitution zum Lösen von Gleichungen** · **Kurvendiskussion** · **Extrempunkte bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Löse $x^2 - 2x - 15 = 0$ und gib die kleinere Lösung an.",
+      "answer": -3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x = 1 \\pm \\sqrt{1 + 15} = 1 \\pm 4$: $-3$ und $5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ist der erste Schritt bei $2x^2 + 8x - 10 = 0$?",
+      "options": [
+        {
+          "md": "durch 2 teilen: $x^2 + 4x - 5 = 0$",
+          "correct": true
+        },
+        {
+          "md": "$p = 8$ und $q = -10$ einsetzen",
+          "why": "Die pq-Formel verlangt eine 1 vor x²."
+        },
+        {
+          "md": "$x$ ausklammern"
+        },
+        {
+          "md": "beide Seiten quadrieren"
+        }
+      ],
+      "explain": "Erst die Normalform; dann $p = 4$, $q = -5$ und $x = -2 \\pm 3$.",
+      "label": "Normalform",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der pq-Formel in die richtige Reihenfolge.",
+      "items": [
+        "$x^2 + px + q = 0$",
+        "$\\left(x + \\tfrac{p}{2}\\right)^2 - \\left(\\tfrac{p}{2}\\right)^2 + q = 0$",
+        "$\\left(x + \\tfrac{p}{2}\\right)^2 = \\left(\\tfrac{p}{2}\\right)^2 - q$",
+        "$x = -\\tfrac{p}{2} \\pm \\sqrt{\\left(\\tfrac{p}{2}\\right)^2 - q}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $x^2 + px + q = 0$. 2. $\\left(x + \\tfrac{p}{2}\\right)^2 - \\left(\\tfrac{p}{2}\\right)^2 + q = 0$. 3. $\\left(x + \\tfrac{p}{2}\\right)^2 = \\left(\\tfrac{p}{2}\\right)^2 - q$. 4. $x = -\\tfrac{p}{2} \\pm \\sqrt{\\left(\\tfrac{p}{2}\\right)^2 - q}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für die Lösungen von $x^2 + px + q = 0$ gilt $x_1 \\cdot x_2 = q$.",
+      "answer": true,
+      "explain": "Satz von Vieta: $(x - x_1)(x - x_2) = x^2 - (x_1 + x_2)x + x_1x_2$.",
+      "label": "Vieta",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +325,26 @@
       },
       "label": "pq-Formel",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "wurzelgleichung"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Vor der pq-Formel muss vor x² eine 1 stehen; Probe mit Vieta."
+      ]
     }
   ]
 }

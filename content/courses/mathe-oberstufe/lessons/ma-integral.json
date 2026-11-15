@@ -72,6 +72,139 @@
       "id": "w1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Integralbegriff und Hauptsatz der Differenzial- und Integralrechnung",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Integralbegriff und Hauptsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Motivation",
+          "blocks": [
+            {
+              "md": "Wie beim Ableitungsbegriff (lokale Änderungsrate) stellt sich hier die umgekehrte Frage: Wie berechnet man den **Flächeninhalt** unter einem Funktionsgraphen — insbesondere, wenn dieser gekrümmt ist?"
+            }
+          ]
+        },
+        {
+          "title": "Bestimmtes Integral als Grenzwert von Summen",
+          "blocks": [
+            {
+              "md": "Man approximiert die Fläche unter $f$ über $[a,b]$ durch $n$ Rechtecke der Breite $\\Delta x = \\frac{b-a}{n}$ und lässt $n \\to \\infty$ gehen (Ober-/Untersummen):\n$$\\int_a^b f(x)\\,dx = \\lim_{n\\to\\infty} \\sum_{i=1}^{n} f(x_i)\\,\\Delta x$$"
+            }
+          ]
+        },
+        {
+          "title": "Stammfunktion",
+          "blocks": [
+            {
+              "md": "$F$ heißt **Stammfunktion** von $f$, wenn $F'(x) = f(x)$ gilt. Stammfunktionen sind nicht eindeutig — sie unterscheiden sich nur um eine additive Konstante $C$ (unbestimmtes Integral $\\int f(x)\\,dx = F(x)+C$)."
+            }
+          ]
+        },
+        {
+          "title": "Hauptsatz der Differenzial- und Integralrechnung",
+          "blocks": [
+            {
+              "md": "Der Hauptsatz verbindet Differenzieren und Integrieren als **Umkehroperationen**:\n$$\\int_a^b f(x)\\,dx = F(b) - F(a) =: \\big[F(x)\\big]_a^b$$\nwobei $F$ **irgendeine** Stammfunktion von $f$ ist. Damit lässt sich ein bestimmtes Integral berechnen, ohne die (umständliche) Grenzwertbildung von Summen jedes Mal durchzuführen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int_0^2 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{8}{3} - 0 = \\frac{8}{3}$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung des Integrals",
+          "blocks": [
+            {
+              "md": "- **Geometrisch:** (vorzeichenbehafteter) Flächeninhalt zwischen Graph und $x$-Achse.\n- **Im Sachkontext:** Integriert man eine Änderungsrate, erhält man den **Gesamtbestand**. Beispiel: Integriert man eine Geschwindigkeit $v(t)$, erhält man die zurückgelegte Strecke $s(t)$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Integrationskonstante $C$ beim unbestimmten Integral vergessen.\n- Bei Flächen **unterhalb** der $x$-Achse liefert das Integral einen **negativen** Wert — für den tatsächlichen Flächeninhalt muss der Betrag genommen werden (siehe **Fläche zwischen Kurven**).\n- Stammfunktion falsch abgeleitet, um sie zu überprüfen — Kontrolle: $F'(x) \\overset{!}{=} f(x)$.\n\nGrundformeln: **Grundintegrale**. Weiterführende Techniken: **Integration durch Substitution**, **Partielle Integration**, **Partialbruchzerlegung**. Anwendungen: **Fläche zwischen Kurven** und die gesamte **Anwendungen-der-Integration-Sammlung**."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage des Hauptsatzes",
+          "blocks": [
+            {
+              "image": "vault:Hauptsatz Integralrechnung.svg"
+            },
+            {
+              "md": "> [!important] Weshalb er ein Satz und keine Definition ist\n> Dass sich eine Fläche durch Einsetzen zweier Werte berechnen lässt, ist alles andere als selbstverständlich. Fläche und Steigung sind zunächst völlig verschiedene Fragen.\n>\n> Der Beweisgedanke: Man betrachtet die **Integralfunktion**\n> $$I(x) = \\int_a^x f(t)\\,dt$$\n> also die Fläche vom festen Rand $a$ bis zur variablen Stelle $x$.\n>\n> Vergrößert man $x$ um ein kleines Stück $h$, wächst die Fläche um näherungsweise $f(x)\\cdot h$ -- einen schmalen Streifen. Also gilt\n> $$\\frac{I(x+h)-I(x)}{h} \\approx f(x) \\;\\xrightarrow{\\;h\\to0\\;}\\; I'(x) = f(x)$$\n>\n> Die Integralfunktion ist damit eine **Stammfunktion** von $f$. Und weil sich Stammfunktionen nur um eine Konstante unterscheiden, die sich bei der Differenzbildung heraushebt, gilt $\\int_a^b f = F(b) - F(a)$ für **jede** Stammfunktion.\n>\n> Das ist der Kern: Differenzieren und Integrieren sind Umkehroperationen -- und deshalb ersetzt eine Subtraktion die Grenzwertbildung."
+            }
+          ]
+        },
+        {
+          "title": "Bestimmtes und unbestimmtes Integral",
+          "blocks": [
+            {
+              "md": "| | bestimmtes Integral | unbestimmtes Integral |\n|---|---|---|\n| Schreibweise | $\\int_a^b f(x)\\,dx$ | $\\int f(x)\\,dx$ |\n| Ergebnis | eine **Zahl** | eine **Funktionenschar** |\n| Konstante | fällt weg | $+\\,C$ bleibt |\n| Bedeutung | orientierter Flächeninhalt | Menge aller Stammfunktionen |\n\n> [!warning] Das Integral ist nicht die Fläche, sondern der orientierte Flächeninhalt\n> Wo der Graph unterhalb der x-Achse verläuft, liefert das Integral **negative** Beiträge. Bei $\\int_0^{2\\pi}\\sin x\\,dx = 0$ heben sie sich vollständig auf, obwohl die eingeschlossene Fläche keineswegs null ist.\n>\n> Ist die **geometrische Fläche** gefragt, müssen die Nullstellen bestimmt und die Teilintegrale **einzeln betragsmäßig** addiert werden.\n>\n> Die Aufgabenstellung entscheidet also, welcher Weg richtig ist -- \"Berechnen Sie das Integral\" und \"Berechnen Sie den Flächeninhalt\" verlangen Verschiedenes. Das ist die häufigste Falle des Themas."
+            }
+          ]
+        },
+        {
+          "title": "Die Konstante $C$",
+          "blocks": [
+            {
+              "md": "> [!tip] Sie fällt nur beim bestimmten Integral weg\n> Bei $F(b)+C - (F(a)+C)$ hebt sie sich auf. Deshalb ist es gleichgültig, welche Stammfunktion man wählt.\n>\n> Beim **Anfangswertproblem** ist sie dagegen entscheidend: Kennt man einen Funktionswert, lässt sich $C$ bestimmen. Genau so rekonstruiert man aus einer Änderungsrate den Bestand -- in der Physik aus der Geschwindigkeit den Ort, in der Biologie aus der Wachstumsrate die Population.\n>\n> Die Änderungsrate allein legt den Verlauf **nicht** fest; es fehlt der Anfangswert. Das ist eine inhaltliche Aussage, keine Rechenformalie."
+            }
+          ]
+        },
+        {
+          "title": "Was das Integral sonst noch bedeutet",
+          "blocks": [
+            {
+              "md": "| Anwendung | Integriert wird | Ergebnis |\n|---|---|---|\n| Fläche | $f(x)$ | Flächeninhalt |\n| **Volumen** | $\\pi f(x)^2$ | Rotationsvolumen |\n| Mittelwert | $\\frac{1}{b-a}f(x)$ | mittlerer Funktionswert |\n| Physik: Arbeit | Kraft über Weg | verrichtete Arbeit |\n| Physik: Weg | Geschwindigkeit über Zeit | zurückgelegte Strecke |\n| Stochastik | Dichtefunktion | Wahrscheinlichkeit |\n\n> [!important] Das Integral summiert stets Produkte auf\n> In jeder Zeile wird ein Produkt aus zwei Größen über einen Bereich aufsummiert -- Kraft mal Weg, Geschwindigkeit mal Zeit, Dichte mal Intervall.\n>\n> Wer bei einer Sachaufgabe erkennt, **welches Produkt** aufsummiert werden soll, hat den Ansatz. Die Einheit des Ergebnisses ist stets das Produkt der beiden Achseneinheiten -- eine schnelle Kontrolle.\n>\n> Diese Deutung als aufsummiertes Produkt trägt auch die Stochastik: Bei der **Normalverteilung** ist die Fläche unter der Dichtefunktion die Wahrscheinlichkeit."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Hauptsatz verbindet **Ableitungsbegriff** und Integralrechnung. Die Rechentechniken stehen in den **Integrationstechniken**, die Anwendungen in **Anwendungen der Integration**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Grundintegrale",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Grundintegrale.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Grundregeln",
+          "blocks": [
+            {
+              "md": "| Regel | Formel |\n|-------|--------|\n| Konstantenregel | $\\int c\\,dx = cx + C$ |\n| Potenzregel | $\\int x^n\\,dx = \\dfrac{x^{n+1}}{n+1}+C,\\quad n\\neq -1$ |\n| Kehrwertfunktion | $\\int \\dfrac{1}{x}\\,dx = \\ln\\lvert x\\rvert+C$ |\n| Konstanter Faktor | $\\int kf(x)\\,dx = k\\int f(x)\\,dx$ |\n| Summenregel | $\\int [f(x)+g(x)]\\,dx = \\int f(x)\\,dx+\\int g(x)\\,dx$ |\n| Differenzregel | $\\int [f(x)-g(x)]\\,dx = \\int f(x)\\,dx-\\int g(x)\\,dx$ |"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Umkehrung der **Grundableitungen**. Basis für alle weiterführenden **Integrationstechniken**."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Stammfunktion zu.",

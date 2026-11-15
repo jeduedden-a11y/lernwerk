@@ -16,6 +16,247 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Kommt ein Baustein in zwei Potenzen vor ($x^4$ und $x^2$, $e^{2x}$ und $e^x$), ersetzt man ihn durch $z$, löst die quadratische Gleichung und **substituiert zurück**.",
+      "label": "Verfahren",
+      "more": "1. **Baustein erkennen:** $z = x^2$ bei $x^4$ und $x^2$; $z = e^x$ bei $e^{2x} = (e^x)^2$ und $e^x$; ebenso $z = \\sin x$ oder $z = \\tfrac1x$.\n2. **Gleichung in $z$** aufschreiben, meist quadratisch.\n3. **$z$-Lösungen** mit pq-Formel oder Vieta.\n4. **Rücksubstitution:** $x^2 = z$ hat für $z > 0$ zwei Lösungen $\\pm\\sqrt z$, für $z = 0$ eine, für $z < 0$ keine. $e^x = z$ hat nur für $z > 0$ die Lösung $x = \\ln z$.\n5. **Lösungsmenge** aufschreiben: Eine biquadratische Gleichung hat bis zu vier Lösungen.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $e^{2x} - 5e^x + 6 = 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "z = e^x: \\quad z^2 - 5z + 6 = 0",
+            "why": "e^{2x} = (e^x)²: der Baustein kommt zweimal vor."
+          },
+          {
+            "tex": "z = 2 \\;\\lor\\; z = 3",
+            "why": "Vieta: Produkt 6, Summe 5."
+          },
+          {
+            "tex": "e^x = 2 \\Rightarrow x = \\ln 2, \\qquad e^x = 3 \\Rightarrow x = \\ln 3",
+            "why": "Rücksubstitution mit ln."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ersetzen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zurück.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Anzahl",
+      "md": "**Wie viele Nullstellen?** $f(x) = x^4 - 5x^2 + c$. In $z = x^2$ heißt das $z^2 - 5z + c = 0$; jede positive $z$-Lösung gibt zwei Nullstellen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          3
+        ],
+        "y": [
+          -4,
+          10
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "CC",
+            "min": -3,
+            "max": 8,
+            "value": 4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^4 - 5*x^2 + CC",
+            "color": "blue"
+          }
+        ],
+        "readout": "c = {CC|2} · Diskriminante in z: {25 - 4*CC|2}"
+      },
+      "timeline": [
+        {
+          "caption": "c = 4: z = 1 oder z = 4, also vier Nullstellen ±1 und ±2.",
+          "set": {
+            "CC": 4
+          }
+        },
+        {
+          "caption": "c = 6,25: z = 2,5 doppelt, zwei Berührstellen bei ±1,58.",
+          "to": {
+            "CC": 6.25
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 7: keine reelle z-Lösung, keine Nullstelle.",
+          "to": {
+            "CC": 7
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = −2: eine z-Lösung ist negativ und fällt weg; zwei Nullstellen.",
+          "to": {
+            "CC": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Negative $z$-Werte fallen bei $z = x^2$ und $z = e^x$ weg. Und $x^2 = 4$ hat **zwei** Lösungen.",
+      "label": "Typische Fallen",
+      "more": "**Beispiel für das Verwerfen:** $x^4 - 3x^2 - 4 = 0$ wird zu $z^2 - 3z - 4 = 0$ mit $z = 4$ oder $z = -1$. Aus $x^2 = 4$ folgt $x = \\pm 2$; $x^2 = -1$ hat keine reelle Lösung. Ergebnis: genau zwei Lösungen.\n\n**Wann es nicht geht:** Die Substitution braucht genau zwei Potenzen desselben Bausteins mit doppeltem Exponenten; bei $x^4 + x^3 - 2 = 0$ hilft sie nicht.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Substitution zum Lösen von Gleichungen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Substitution zum Lösen von Gleichungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Nullstellen von $f(x) = x^4 - 5x^2 + 4$\"* -- eine Gleichung, die keine reine quadratische Gleichung ist, aber durch Umbenennen eines Teilausdrucks zu einer wird. Häufigster Fall: **biquadratische Gleichungen** der Form $ax^4 + bx^2 + c = 0$. Auch bei manchen Exponentialgleichungen mit $u = e^x$ oder $u = a^x$."
+            }
+          ]
+        },
+        {
+          "title": "Die Grundidee",
+          "blocks": [
+            {
+              "md": "> [!important] Eine unbekannte Gleichung in eine bekannte verwandeln\n> Ein wiederkehrender Teilausdruck (etwa $x^2$) wird durch eine neue Variable $z$ ersetzt. Die neue Gleichung in $z$ ist eine gewöhnliche quadratische Gleichung, lösbar mit pq- oder abc-Formel. Am Ende wird **zurücksubstituiert**, um die eigentlich gesuchte Variable $x$ zu erhalten."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Wiederkehrenden Ausdruck identifizieren** und benennen, z. B. $z := x^2$.\n2. **Gleichung vollständig in $z$ umschreiben** -- keine $x$-Terme dürfen übrig bleiben.\n3. **Quadratische Gleichung in $z$ lösen** (pq- oder abc-Formel).\n4. **Jede $z$-Lösung prüfen:** Ist $z < 0$, liefert $x = \\pm\\sqrt{z}$ keine reelle Lösung -- dieser Zweig entfällt.\n5. **Rücksubstitution:** Für jede zulässige $z$-Lösung $x = \\pm\\sqrt{z}$ berechnen (**beide Vorzeichen**).\n6. **Probe** aller gefundenen $x$-Werte in der Ausgangsgleichung."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: biquadratische Gleichung",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Nullstellen von $f(x) = x^4 - 5x^2 + 4$.*\n\n**Schritt 1:** Substitution $z := x^2$.\n\n**Schritt 2:** Aus $x^4 = (x^2)^2 = z^2$ folgt:\n$$z^2 - 5z + 4 = 0$$\n\n**Schritt 3:** pq-Formel mit $p = -5$, $q = 4$:\n$$D = \\left(\\frac{-5}{2}\\right)^2 - 4 = \\frac{25}{4} - \\frac{16}{4} = \\frac{9}{4}$$\n$$z_{1,2} = \\frac{5}{2} \\pm \\frac{3}{2} \\;\\Longrightarrow\\; z_1 = 4, \\quad z_2 = 1$$\n\n**Schritt 4:** Beide Werte sind positiv -- beide liefern reelle $x$-Lösungen.\n\n**Schritt 5:** Rücksubstitution:\n$$z_1 = 4: \\quad x = \\pm\\sqrt{4} = \\pm 2$$\n$$z_2 = 1: \\quad x = \\pm\\sqrt{1} = \\pm 1$$\n\nVier Nullstellen: $x \\in \\{-2;\\, -1;\\, 1;\\, 2\\}$.\n\n**Schritt 6 (Probe):**\n$$f(1) = 1 - 5 + 4 = 0 \\checkmark$$\n$$f(2) = 16 - 5\\cdot 4 + 4 = 16 - 20 + 4 = 0 \\checkmark$$\nWegen $x^4$ und $x^2$ sind nur gerade Potenzen beteiligt, $f$ ist achsensymmetrisch -- die Probe für $x = -1$ und $x = -2$ liefert automatisch dieselben Werte wie für $x=1$ und $x=2$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: negative z-Lösung verwerfen",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Nullstellen von $g(x) = x^4 - x^2 - 6$.*\n\nSubstitution $z = x^2$: $z^2 - z - 6 = 0$, $p=-1$, $q=-6$:\n$$D = \\left(\\frac{-1}{2}\\right)^2 + 6 = \\frac{1}{4} + \\frac{24}{4} = \\frac{25}{4}$$\n$$z_{1,2} = \\frac{1}{2} \\pm \\frac{5}{2} \\;\\Longrightarrow\\; z_1 = 3, \\quad z_2 = -2$$\n\n$z_2 = -2 < 0$ -- kein reelles $x$ mit $x^2 = -2$. Dieser Zweig **entfällt**, ohne dass ein Fehler vorliegt.\n\nNur $z_1 = 3$ bleibt: $x = \\pm\\sqrt{3}$.\n\nProbe: $g(\\sqrt3) = 9 - 3 - 6 = 0$ (wegen $(\\sqrt3)^4 = 9$) $\\checkmark$"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Anwendung: Substitution bei Exponentialgleichungen",
+          "blocks": [
+            {
+              "md": "Bei Gleichungen wie $e^{2x} - 3e^x + 2 = 0$ funktioniert dasselbe Prinzip mit $u := e^x$: Aus $e^{2x} = (e^x)^2 = u^2$ wird $u^2 - 3u + 2 = 0$, gelöst über den **Satz vom Nullprodukt** als $(u-1)(u-2)=0$, also $u=1$ oder $u=2$. Rücksubstitution: $e^x = 1 \\Rightarrow x = 0$, $e^x = 2 \\Rightarrow x = \\ln 2$. Hier gilt zusätzlich die Bedingung $u > 0$, da $e^x$ niemals negativ oder null wird -- Details in **Exponentialgleichungen lösen**."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Rücksubstitution vergessen.** Die Aufgabe fragt nach $x$, nicht nach $z$ -- wer bei $z_1=4,\\, z_2=1$ aufhört, hat die Aufgabe nicht beendet.\n- **Beim Wurzelziehen nur das positive Vorzeichen nehmen.** $x^2 = 4$ hat **zwei** Lösungen, $x=2$ und $x=-2$.\n- **Negative $z$-Lösung trotzdem zurücksubstituieren wollen.** $x^2 = -2$ hat keine reelle Lösung -- der Zweig entfällt, wird aber nicht als \"kein Ergebnis\" der ganzen Aufgabe missverstanden, wenn der andere Zweig noch Lösungen liefert.\n- **Bei Substitution mit $u = e^x$ die Bedingung $u > 0$ übersehen** und eine negative $u$-Lösung fälschlich zurücksubstituieren.\n- **Falsch substituieren, wenn ungerade Potenzen vorkommen.** Bei $x^4 - 5x^3 + 4$ ist $x^3$ **kein** Vielfaches von $(x^2)$ im richtigen Sinn -- die Substitution $z=x^2$ funktioniert nur, wenn ausschließlich gerade Potenzen der ursprünglichen Variable auftreten."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**pq-Formel** · **abc-Formel** · **Satz vom Nullprodukt** · **Exponentialgleichungen lösen** · **Integration durch Substitution**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Wie viele reelle Lösungen hat $x^4 - 3x^2 - 4 = 0$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$z = 4$ oder $z = -1$; nur $z = 4$ liefert Lösungen, $x = \\pm 2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Exponential",
+      "md": "Löse $e^{2x} - 4e^x + 3 = 0$ und gib die größere Lösung an (drei Nachkommastellen).",
+      "answer": 1.099,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$z^2 - 4z + 3 = 0$ mit $z = 1$ oder $z = 3$, also $x = 0$ oder $x = \\ln 3 \\approx 1{,}099$.",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Schritte",
+      "md": "Bringe die Lösung von $x^4 - 10x^2 + 9 = 0$ in die richtige Reihenfolge.",
+      "items": [
+        "$z = x^2$ setzen: $z^2 - 10z + 9 = 0$",
+        "$z = 1$ oder $z = 9$",
+        "Rücksubstitution: $x^2 = 1$ oder $x^2 = 9$",
+        "$x \\in \\{-3, -1, 1, 3\\}$"
+      ],
+      "explain": "Die Reihenfolge: 1. $z = x^2$ setzen: $z^2 - 10z + 9 = 0$. 2. $z = 1$ oder $z = 9$. 3. Rücksubstitution: $x^2 = 1$ oder $x^2 = 9$. 4. $x \\in \\{-3, -1, 1, 3\\}$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Substitution $z = x^2$ hilft auch bei $x^4 + x^3 - 2 = 0$.",
+      "answer": false,
+      "explain": "$x^3$ lässt sich nicht durch $z = x^2$ ausdrücken.",
+      "label": "Grenzen",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -58,6 +299,38 @@
       },
       "label": "Biquadratisch",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "gleichung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "expgleichung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Rücksubstitution nicht vergessen; negative z-Werte bei z = x² oder z = eˣ verwerfen."
+      ]
     }
   ]
 }

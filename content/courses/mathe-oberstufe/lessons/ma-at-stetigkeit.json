@@ -16,6 +16,267 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Stetig an einer Nahtstelle $x_0$ heißt: linker Grenzwert, rechter Grenzwert und Funktionswert **stimmen überein**. Differenzierbar heißt zusätzlich: gleiche Steigung von links und rechts.",
+      "label": "Verfahren",
+      "more": "**Definition:** $f$ ist an der Stelle $x_0$ stetig, wenn $\\lim_{x \\to x_0} f(x) = f(x_0)$. Anschaulich: Der Graph lässt sich dort ohne Absetzen zeichnen. Polynome, $e^x$, $\\sin$ und $\\cos$ sind überall stetig.\n\n**Parameter an einer Nahtstelle bestimmen:**\n1. Funktionswerte beider Teile an der Nahtstelle gleichsetzen (Stetigkeit).\n2. Für Differenzierbarkeit zusätzlich die Ableitungen beider Teile gleichsetzen.\n3. Das entstehende Gleichungssystem lösen.\n\n**Der Klassiker:** $|x|$ ist bei 0 stetig, aber nicht differenzierbar: Links ist die Steigung $-1$, rechts $+1$, der Graph hat einen Knick.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^2 + 1$ für $x \\leq 2$ und $f(x) = ax + b$ für $x > 2$; gesucht sind $a$ und $b$ für Differenzierbarkeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "2a + b = 5",
+            "why": "Stetig: Werte an x = 2 gleichsetzen; links 2² + 1 = 5."
+          },
+          {
+            "tex": "a = 4",
+            "why": "Differenzierbar: Steigungen gleichsetzen; links ist f'(2) = 2 · 2."
+          },
+          {
+            "tex": "b = 5 - 8 = -3",
+            "why": "Einsetzen."
+          },
+          {
+            "tex": "f(x) = 4x - 3 \\text{ für } x > 2",
+            "why": "Die Gerade ist die Tangente an die Parabel in x = 2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Stetig.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Glatt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eingesetzt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Deutung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Nahtstelle",
+      "md": "**Den Sprung schließen:** links $x^2$, rechts $2x + b$. Für $b = -1$ passen Wert und Steigung bei $x = 1$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.5,
+          3
+        ],
+        "y": [
+          -1,
+          5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "B",
+            "min": -2,
+            "max": 2,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "l",
+            "expr": "x^2",
+            "domain": [
+              -1.5,
+              1
+            ],
+            "color": "blue"
+          },
+          {
+            "name": "r",
+            "expr": "2*x + B",
+            "domain": [
+              1,
+              3
+            ],
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 1,
+            "color": "blue"
+          },
+          {
+            "x": 1,
+            "y": "2 + B",
+            "color": "orange"
+          }
+        ],
+        "readout": "links: 1 · rechts: {2 + B|1}"
+      },
+      "timeline": [
+        {
+          "caption": "b = 1: Sprung von 1 auf 3, nicht stetig.",
+          "set": {
+            "B": 1
+          }
+        },
+        {
+          "caption": "b = 0: Der Sprung wird kleiner.",
+          "to": {
+            "B": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "b = −1: stetig, und weil links und rechts die Steigung 2 haben, sogar differenzierbar.",
+          "to": {
+            "B": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Stetig heißt nicht differenzierbar: $|x|$ hat bei 0 einen **Knick**. Umgekehrt ist jede differenzierbare Funktion stetig.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Stetigkeit",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Stetigkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie $f$ auf Stetigkeit an der Stelle $x_0$\"*, *\"Bestimmen Sie $a$ so, dass $f$ an der Nahtstelle stetig ist\"*, *\"Ist $f$ an dieser Stelle auch differenzierbar?\"* -- häufig bei **abschnittsweise definierten Funktionen** mit einem unbekannten Parameter."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "> [!important] Drei Werte müssen übereinstimmen\n> $f$ heißt stetig an der Stelle $x_0$, wenn\n> $$\\lim_{x \\to x_0^-} f(x) \\;=\\; \\lim_{x \\to x_0^+} f(x) \\;=\\; f(x_0)$$\n> Linksseitiger Grenzwert, rechtsseitiger Grenzwert und der tatsächliche Funktionswert müssen alle **denselben** Wert ergeben. Fehlt eine dieser drei Übereinstimmungen, ist $f$ an dieser Stelle unstetig.\n\nBei ganzrationalen, Exponential- und den meisten zusammengesetzten Funktionen ist Stetigkeit auf dem gesamten Definitionsbereich automatisch gegeben -- die Fragestellung wird vor allem bei **Nahtstellen abschnittsweise definierter Funktionen** relevant."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema (Parameterbestimmung an einer Nahtstelle)",
+          "blocks": [
+            {
+              "md": "1. **Linksseitigen Grenzwert** berechnen: den Term einsetzen, der für $x \\le x_0$ gilt, an der Stelle $x_0$ ausgewertet.\n2. **Rechtsseitigen Grenzwert** berechnen: den Term für $x > x_0$, ebenfalls bei $x_0$ ausgewertet.\n3. **Gleichsetzen** und nach dem gesuchten Parameter auflösen.\n4. **Ergebnis in beide Teilfunktionen einsetzen** und den gemeinsamen Funktionswert angeben.\n5. **Bei Bedarf zusätzlich Differenzierbarkeit prüfen:** links- und rechtsseitige Ableitung an $x_0$ vergleichen -- das ist eine **stärkere, eigenständige** Bedingung."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Gegeben ist*\n$$f(x) = \\begin{cases} x^2 & x \\leq 2 \\\\ a \\cdot x - 2 & x > 2 \\end{cases}$$\n*Bestimmen Sie $a$ so, dass $f$ an der Stelle $x=2$ stetig ist. Ist $f$ dort auch differenzierbar?*\n\n**Schritt 1:** Linksseitiger Grenzwert (und zugleich Funktionswert, da die Bedingung $x \\le 2$ zum ersten Ast gehört):\n$$\\lim_{x \\to 2^-} f(x) = 2^2 = 4$$\n\n**Schritt 2:** Rechtsseitiger Grenzwert:\n$$\\lim_{x \\to 2^+} f(x) = a \\cdot 2 - 2 = 2a - 2$$\n\n**Schritt 3:** Gleichsetzen:\n$$2a - 2 = 4 \\;\\Longrightarrow\\; a = 3$$\n\n**Schritt 4:** Funktionswert an der Nahtstelle: $f(2) = 2^2 = 4$. Probe mit dem rechten Ast bei $a=3$: $3\\cdot 2 - 2 = 4$ -- übereinstimmend, $f$ ist **stetig** bei $x=2$.\n\n**Schritt 5 (Differenzierbarkeit):** Ableitungen beider Äste:\n$$f'(x) = 2x \\ \\text{ für } x < 2, \\qquad f'(x) = a = 3 \\ \\text{ für } x > 2$$\n\nLinksseitige Ableitung bei $x=2$: $2 \\cdot 2 = 4$. Rechtsseitige Ableitung: $3$.\n\n$$4 \\neq 3$$\n\nDie Ableitungen stimmen **nicht** überein -- $f$ ist bei $x=2$ zwar stetig, aber **nicht differenzierbar**. Der Graph hat dort einen Knick."
+            }
+          ]
+        },
+        {
+          "title": "Stetig, aber nicht differenzierbar: der Klassiker",
+          "blocks": [
+            {
+              "md": "Die Betragsfunktion $f(x) = |x|$ ist an der Stelle $x=0$ stetig (alle drei Werte sind $0$), aber nicht differenzierbar: die linksseitige Ableitung ist $-1$, die rechtsseitige $+1$. **Stetigkeit ist notwendig, aber nicht hinreichend für Differenzierbarkeit** -- jede differenzierbare Funktion ist stetig, aber nicht jede stetige Funktion ist differenzierbar."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Stetigkeit und Differenzierbarkeit gleichsetzen.** Beides sind unterschiedliche Bedingungen; Differenzierbarkeit ist die stärkere und muss **zusätzlich** geprüft werden, wenn danach gefragt ist.\n- **Nur einen Grenzwert berechnen** und annehmen, das genüge.\n- **Bei der Nahtstelle den falschen Ast für den Funktionswert $f(x_0)$ verwenden.** Maßgeblich ist der Ast, dessen Bedingung ($\\leq$ oder $<$) die Stelle $x_0$ selbst einschließt.\n- **Nach der Bestimmung von $a$ die Probe auslassen.** Beide Teilfunktionen sollten bei $x_0$ tatsächlich denselben Wert liefern.\n- **Bei zwei unbekannten Parametern nur eine Gleichung aufstellen.** Zwei Nahtstellen oder zusätzliche Bedingungen (etwa Differenzierbarkeit) liefern jeweils eine weitere Gleichung -- Anzahl der Bedingungen muss zur Anzahl der Unbekannten passen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Ableitungsbegriff** · **Definitionsbereich bestimmen** · **Gebrochenrationale Funktionen** · **Monotonie untersuchen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Parameter",
+      "md": "$f(x) = 3x - 1$ für $x \\leq 2$ und $f(x) = x^2 + c$ für $x > 2$. Für welches $c$ ist $f$ stetig?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Links $3 \\cdot 2 - 1 = 5$, rechts $4 + c$; also $c = 1$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = |x - 2|$ ist an der Stelle 2 stetig, aber nicht differenzierbar.",
+      "answer": true,
+      "explain": "Kein Sprung, aber ein Knick: Steigung −1 links, +1 rechts.",
+      "label": "Knick",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Was braucht man **zusätzlich** zur Stetigkeit, damit eine abschnittsweise definierte Funktion an der Nahtstelle differenzierbar ist?",
+      "options": [
+        {
+          "md": "gleiche Steigung von links und rechts",
+          "correct": true
+        },
+        {
+          "md": "gleiche Funktionswerte",
+          "why": "Das ist schon die Stetigkeit."
+        },
+        {
+          "md": "beide Teile sind Polynome"
+        },
+        {
+          "md": "die Nahtstelle ist eine Nullstelle"
+        }
+      ],
+      "explain": "Wert und Steigung müssen übereinstimmen, dann geht der Graph ohne Knick über.",
+      "label": "Bedingung",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -55,6 +316,62 @@
       "answer": true,
       "explain": "Beispiel: $|x|$ ist bei 0 stetig, hat dort aber einen Knick und keine Ableitung.",
       "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "stetigkeit"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "stetigkeit"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "stetigkeit"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "stetigkeit"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stetig: Werte stimmen überein; differenzierbar: zusätzlich die Steigungen."
+      ]
     }
   ]
 }

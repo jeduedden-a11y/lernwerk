@@ -16,6 +16,220 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Ein Produkt ist **genau dann** null, wenn mindestens ein Faktor null ist. Also: alles auf eine Seite, faktorisieren, jeden Faktor einzeln null setzen.",
+      "label": "Verfahren",
+      "more": "1. **Auf null bringen:** $x^3 = 4x$ wird zu $x^3 - 4x = 0$.\n2. **Faktorisieren:** gemeinsame Faktoren ausklammern ($x$, $x^2$, $e^x$), binomische Formeln, bekannte Nullstellen abspalten.\n3. **Jeden Faktor null setzen** und lösen. Ein Faktor $e^x$ oder $x^2 + 1$ wird nie null und liefert keine Lösung.\n4. **Lösungen sammeln.** Mehrfache Faktoren wie $x^2$ geben dieselbe Lösung, sie heißt dann mehrfache Nullstelle.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Zwei Beispiele:** $2x^4 = 18x^2$ und $(x^2 - 2x)e^x = 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "2x^4 - 18x^2 = 0 \\;\\Rightarrow\\; 2x^2(x^2 - 9) = 0",
+            "why": "Auf null bringen, 2x² ausklammern."
+          },
+          {
+            "tex": "x = 0 \\;\\lor\\; x = 3 \\;\\lor\\; x = -3",
+            "why": "Jeden Faktor null setzen; 0 ist eine doppelte Nullstelle."
+          },
+          {
+            "tex": "(x^2 - 2x)\\,e^x = 0 \\;\\Rightarrow\\; x^2 - 2x = 0",
+            "why": "e^x ist nie null, nur der erste Faktor zählt."
+          },
+          {
+            "tex": "x(x - 2) = 0 \\;\\Rightarrow\\; x = 0 \\;\\lor\\; x = 2",
+            "why": "Noch einmal ausklammern."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Exponentialfaktor.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösungen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "md": "Nie durch die Variable teilen: Aus $x^3 = 4x$ würde $x^2 = 4$, und $x = 0$ ginge verloren. $e^x$ ist nie null.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Der Satz gilt nur für **null** auf der rechten Seite: Aus $(x - 1)(x - 2) = 6$ folgt nicht $x - 1 = 6$. Erst ausmultiplizieren, alles auf eine Seite, neu faktorisieren.",
+      "id": "ve3"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Satz vom Nullprodukt",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Satz vom Nullprodukt.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Bestimmen Sie die Nullstellen von $f$\"* bei einer Funktion, die bereits als **Produkt von Faktoren** vorliegt oder sich durch Ausklammern in ein solches Produkt überführen lässt -- typischerweise ganzrationale Funktionen ohne konstantes Glied, etwa $f(x) = x^3 - 4x$."
+            }
+          ]
+        },
+        {
+          "title": "Das Prinzip",
+          "blocks": [
+            {
+              "md": "> [!important] Ein Produkt ist genau dann null, wenn mindestens ein Faktor null ist\n> $$a \\cdot b = 0 \\quad \\Longleftrightarrow \\quad a = 0 \\ \\lor \\ b = 0$$\n> Das gilt für beliebig viele Faktoren. Bei drei Faktoren $a \\cdot b \\cdot c = 0$ genügt es, dass einer der drei null wird -- die anderen können jeden beliebigen Wert annehmen.\n\nDiese Aussage funktioniert **nur bei einem Produkt, das gleich null ist**. Bei $a \\cdot b = 6$ lässt sich nicht schließen, dass $a = 6$ oder $b = 6$ -- es gibt unendlich viele Zahlenpaare mit diesem Produkt."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Gleichung in Produktform** bringen: entweder liegt sie schon als Produkt vor, oder ein gemeinsamer Faktor wird ausgeklammert.\n2. **Jeden Faktor einzeln null setzen** und die entstehenden (meist einfacheren) Gleichungen lösen.\n3. **Alle Lösungen sammeln** -- die Vereinigung der Lösungsmengen aller Faktoren.\n4. **Probe** durch Einsetzen in die Ausgangsgleichung."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Ausklammern",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Nullstellen von $f(x) = x^3 - 4x$.*\n\n**Schritt 1:** Gemeinsamen Faktor $x$ ausklammern:\n$$f(x) = x(x^2 - 4)$$\n\nDer zweite Faktor ist eine Differenz von Quadraten und lässt sich weiter faktorisieren:\n$$x^2 - 4 = (x-2)(x+2)$$\n\nDamit:\n$$f(x) = x \\cdot (x-2) \\cdot (x+2)$$\n\n**Schritt 2:** Drei Faktoren, jeden null setzen:\n$$x = 0, \\qquad x - 2 = 0 \\Rightarrow x = 2, \\qquad x + 2 = 0 \\Rightarrow x = -2$$\n\n**Schritt 3:** Nullstellen: $x_1 = 0$, $x_2 = 2$, $x_3 = -2$.\n\n**Schritt 4 (Probe):**\n$$f(0) = 0 - 0 = 0 \\checkmark$$\n$$f(2) = 8 - 8 = 0 \\checkmark$$\n$$f(-2) = -8 + 8 = 0 \\checkmark$$"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: bereits faktorisiert",
+          "blocks": [
+            {
+              "md": "*Lösen Sie $(x-3)(2x+5)(x^2+1) = 0$.*\n\nFaktor $x^2 + 1 = 0$ hat keine reelle Lösung (Quadrat plus Eins ist stets positiv) -- dieser Faktor liefert also keinen Beitrag zur Lösungsmenge. Die übrigen beiden:\n$$x - 3 = 0 \\Rightarrow x = 3, \\qquad 2x + 5 = 0 \\Rightarrow x = -2{,}5$$\n\nLösungsmenge: $\\{3;\\, -2{,}5\\}$ -- nicht drei, sondern zwei Lösungen, weil ein Faktor keine reelle Nullstelle beisteuert."
+            }
+          ]
+        },
+        {
+          "title": "Zusammenspiel mit Polynomdivision",
+          "blocks": [
+            {
+              "md": "Bei Funktionen dritten oder höheren Grades ohne offensichtlichen gemeinsamen Faktor wird zunächst **eine** Nullstelle durch Raten oder Einsetzen kleiner Zahlen gefunden, dann per **Polynomdivision** abgespalten. Das übrig bleibende Polynom niedrigeren Grades lässt sich anschließend über den Satz vom Nullprodukt oder die pq-/abc-Formel weiter zerlegen."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Durch die Variable dividieren statt auszuklammern.** Bei $x^3 - 4x = 0$ verführt es, durch $x$ zu teilen: $x^2 - 4 = 0$. Das liefert nur $x = \\pm 2$ -- die Lösung $x = 0$ geht verloren, weil Division durch eine Variable, die auch null sein kann, unzulässig ist. **Immer ausklammern, nie durch die Variable teilen.**\n- **Nicht alle Faktoren null setzen.** Bei drei Faktoren müssen alle drei Gleichungen einzeln gelöst werden.\n- **Faktoren ohne reelle Lösung trotzdem mitzählen.** $x^2 + 1 = 0$ liefert keine reelle Nullstelle -- sie fehlt in der Lösungsmenge, ist aber kein Fehler in der Rechnung.\n- **Vorzeichen beim Ausklammern verlieren.** Bei $-x^3 + 4x = -x(x^2-4)$ das Minuszeichen vor der Klammer nicht vergessen.\n- **Differenz von Quadraten nicht erkennen.** $x^2 - 4$ ist $(x-2)(x+2)$, keine weitere pq-Formel nötig."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**pq-Formel** · **abc-Formel** · **Polynomdivision** · **Substitution zum Lösen von Gleichungen** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Wie viele verschiedene Lösungen hat $x^4 - 9x^2 = 0$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x^2(x^2 - 9) = 0$: $x = 0$ (doppelt), $x = 3$, $x = -3$; drei verschiedene.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Lösungen hat $(x - 1)(e^x - 1) = 0$?",
+      "options": [
+        {
+          "md": "$x = 1$ und $x = 0$",
+          "correct": true
+        },
+        {
+          "md": "nur $x = 1$",
+          "why": "Auch $e^x - 1 = 0$ ist möglich, bei $x = 0$."
+        },
+        {
+          "md": "$x = 1$ und $x = e$"
+        },
+        {
+          "md": "keine"
+        }
+      ],
+      "explain": "Erster Faktor: $x = 1$. Zweiter: $e^x = 1$, also $x = 0$.",
+      "label": "Faktoren",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$(x^2 + 1)\\,e^{-x} = 0$ hat keine Lösung.",
+      "answer": true,
+      "explain": "$x^2 + 1 \\geq 1$ und $e^{-x} > 0$: Kein Faktor wird null.",
+      "label": "Keine Lösung",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Lösen von $x e^x = 3x$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$x e^x - 3x = 0$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$x(e^x - 3) = 0$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$x = 0$ oder $e^x = 3$",
+          "why": "Richtig."
+        },
+        {
+          "md": "Lösungen: $x = 0$ und $x = 3$",
+          "why": "Falsch: Aus $e^x = 3$ folgt $x = \\ln 3 \\approx 1{,}10$."
+        }
+      ],
+      "answer": 3,
+      "explain": "Lösungen $x = 0$ und $x = \\ln 3$.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -88,6 +302,26 @@
       },
       "label": "Vertiefen",
       "id": "g4"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Auf null bringen, faktorisieren, jeden Faktor null setzen; nie durch die Variable teilen."
+      ]
     }
   ]
 }

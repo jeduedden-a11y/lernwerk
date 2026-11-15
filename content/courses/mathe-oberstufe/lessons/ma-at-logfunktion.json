@@ -16,6 +16,286 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$\\ln x$ lebt nur für $x > 0$, geht durch $(1 \\mid 0)$, hat die y-Achse als senkrechte Asymptote und wächst sehr langsam. Bei $\\ln(u(x))$: Definitionsbereich aus $u > 0$, Nullstelle aus $u = 1$.",
+      "label": "Verfahren",
+      "more": "Für $f(x) = a\\ln(bx + c) + d$:\n1. **Definitionsbereich:** $bx + c > 0$; am Rand liegt die senkrechte Asymptote.\n2. **Nullstelle:** $\\ln(bx + c) = -\\tfrac{d}{a}$, also $bx + c = e^{-d/a}$.\n3. **Ableitung** mit der Kettenregel: $f'(x) = \\dfrac{ab}{bx + c}$. Sie hat auf dem ganzen Definitionsbereich dasselbe Vorzeichen, deshalb ist $f$ streng monoton.\n4. **Randverhalten:** an der Asymptote gegen $\\pm\\infty$ (Vorzeichen von $a$ und $b$ beachten), weit draußen ebenfalls gegen $\\pm\\infty$, aber langsamer als jede Potenz: $\\tfrac{\\ln x}{x^k} \\to 0$ für $k > 0$.\n\nDie Umkehrfunktion von $\\ln x$ ist $e^x$; beide Graphen sind Spiegelbilder an $y = x$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = 2\\ln(x - 3) - 4$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x - 3 > 0 \\;\\Rightarrow\\; x > 3",
+            "why": "Definitionsbereich: Argument positiv."
+          },
+          {
+            "tex": "2\\ln(x - 3) = 4 \\;\\Rightarrow\\; \\ln(x - 3) = 2",
+            "why": "Nullstelle: f(x) = 0."
+          },
+          {
+            "tex": "x - 3 = e^2 \\;\\Rightarrow\\; x = 3 + e^2 \\approx 10{,}39",
+            "why": "Auf beiden Seiten e hoch."
+          },
+          {
+            "tex": "f'(x) = \\frac{2}{x - 3} > 0",
+            "why": "Kettenregel; positiv für alle x > 3: streng wachsend."
+          },
+          {
+            "tex": "x \\to 3^+: \\; f(x) \\to -\\infty",
+            "why": "Senkrechte Asymptote x = 3."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Definitionsbereich.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstelle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rand.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Logarithmus",
+      "md": "**Verschobener Logarithmus:** $f(x) = \\ln(x - t)$. Mit $t$ wandern die senkrechte Asymptote $x = t$ und die Nullstelle $x = t + 1$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          7
+        ],
+        "y": [
+          -4,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "T",
+            "min": -2,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "ln(x - T)",
+            "color": "blue",
+            "samples": 500
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "T + 1",
+            "y": 0,
+            "color": "accent",
+            "label": "N"
+          }
+        ],
+        "readout": "Asymptote x = {T|1} · Nullstelle x = {T + 1|1}"
+      },
+      "timeline": [
+        {
+          "caption": "t = 0: ln x mit der y-Achse als Asymptote, Nullstelle bei 1.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "t = 2: alles um 2 nach rechts.",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = −1,5: nach links; jetzt ist f(0) = ln 1,5 > 0.",
+          "to": {
+            "T": -1.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$\\ln(2x - 4) = 0$ heißt $2x - 4 = 1$, nicht $2x - 4 = 0$. Einen Logarithmus von 0 oder von negativen Zahlen gibt es nicht.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Die innere Ableitung nicht vergessen, aber auch nicht doppelt zählen: $(\\ln 5x)' = \\tfrac{5}{5x} = \\tfrac1x$. $\\ln(x^2) = 2\\ln x$ gilt nur für $x > 0$. Und $\\ln x$ wächst zwar unbeschränkt, aber sehr langsam: $\\ln(10^6) \\approx 13{,}8$.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Logarithmusfunktion",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Logarithmusfunktion.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie $f(x) = \\ln(\\dots)$\"*, *\"Geben Sie den Definitionsbereich und das Verhalten am Rand an\"*, *\"Bestimmen Sie die Nullstelle der Logarithmusfunktion\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundeigenschaften von $f(x) = \\ln(x)$",
+          "blocks": [
+            {
+              "md": "| Eigenschaft | Wert |\n|---|---|\n| Definitionsbereich | $D_f = (0; \\infty)$ |\n| Wertebereich | $W_f = \\mathbb{R}$ |\n| Monotonie | streng monoton wachsend auf ganz $D_f$ |\n| Nullstelle | $x = 1$ (da $\\ln 1 = 0$) |\n| Symmetrie | keine (weder gerade noch ungerade) |\n| Verhalten bei $x \\to 0^+$ | $\\ln(x) \\to -\\infty$ -- senkrechte Asymptote $x=0$ |\n| Verhalten bei $x \\to \\infty$ | $\\ln(x) \\to \\infty$, aber **langsamer** als jede Potenzfunktion |\n\n> [!important] Umkehrfunktion der Exponentialfunktion\n> $\\ln(x)$ und $e^x$ sind zueinander Umkehrfunktionen -- ihre Graphen sind spiegelsymmetrisch zur Winkelhalbierenden $y=x$. Aus dieser Beziehung folgt direkt das langsame Wachstum: Da $e^x$ jede Potenzfunktion überholt, muss die Umkehrfunktion $\\ln(x)$ jede Potenzfunktion unterbieten:\n> $$\\lim_{x\\to\\infty} \\frac{\\ln x}{x^n} = 0 \\qquad \\text{für jedes } n > 0$$"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema für verschobene Logarithmusfunktionen",
+          "blocks": [
+            {
+              "md": "Bei $f(x) = \\ln(a \\cdot x + b) + c$:\n\n1. **Definitionsbereich:** Argument echt positiv, $a\\cdot x + b > 0$ auflösen (siehe **Definitionsbereich bestimmen**).\n2. **Senkrechte Asymptote:** an der Stelle, wo das Argument gegen $0$ geht -- das ist die Grenze des Definitionsbereichs.\n3. **Nullstelle:** $\\ln(\\dots) = -c$ setzen, dann $e^{-c}$ auf beiden Seiten anwenden, um den Logarithmus aufzulösen.\n4. **Verhalten für $x \\to \\infty$:** geht weiterhin (langsam) gegen $+\\infty$, sofern $a>0$."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie $f(x) = \\ln(2x - 4) + 1$ auf Definitionsbereich, senkrechte Asymptote und Nullstelle.*\n\n**Schritt 1:**\n$$2x - 4 > 0 \\;\\Longrightarrow\\; x > 2 \\;\\Longrightarrow\\; D_f = (2;\\infty)$$\n\n**Schritt 2:** Für $x \\to 2^+$ geht das Argument $2x-4 \\to 0^+$, also $\\ln(2x-4) \\to -\\infty$. Senkrechte Asymptote: $x = 2$.\n\n**Schritt 3:** Nullstelle:\n$$\\ln(2x-4) + 1 = 0$$\n$$\\ln(2x-4) = -1$$\n\nBeide Seiten als Exponent von $e$:\n$$2x - 4 = e^{-1}$$\n$$x = \\frac{4 + e^{-1}}{2} \\approx \\frac{4 + 0{,}3679}{2} \\approx 2{,}184$$\n\n**Probe:**\n$$f(2{,}184) = \\ln(2\\cdot 2{,}184 - 4) + 1 = \\ln(0{,}368) + 1 \\approx -1{,}0 + 1 = 0 \\checkmark$$\n\n(da $2 \\cdot 2{,}184 - 4 = 0{,}368 \\approx e^{-1}$ und $\\ln(e^{-1}) = -1$)"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$\\ln(x) = 0$ mit $x = 0$ verwechseln.** Die Nullstelle von $\\ln$ liegt bei $x=1$, nicht bei $x=0$ -- dort ist die Funktion gar nicht definiert.\n- **Argument des Logarithmus nicht auf Positivität prüfen**, sondern nur auf \"ungleich null\" wie bei einem Nenner.\n- **Beim Auflösen von $\\ln(\\dots) = k$ vergessen, $e^k$ zu bilden.** Der Logarithmus verschwindet nur durch Anwenden der Exponentialfunktion auf beide Seiten.\n- **Wachstumsgeschwindigkeit falsch einschätzen.** $\\ln(x)$ geht zwar gegen $\\infty$, aber langsamer als jede Potenzfunktion, auch langsamer als $\\sqrt{x}$.\n- **Senkrechte Asymptote an der falschen Stelle vermuten.** Sie liegt exakt an der Grenze des Definitionsbereichs, nicht bei $x=0$, sobald verschoben wurde."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Definitionsbereich bestimmen** · **Logarithmusgesetze** · **Exponentialfunktionen (Grundlagen)** · **Verhalten im Unendlichen** · **Umkehrfunktion bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Nullstelle",
+      "md": "Bestimme die Nullstelle von $f(x) = 3\\ln(x + 2) - 3$ (zwei Nachkommastellen).",
+      "answer": 0.72,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\ln(x + 2) = 1$, also $x + 2 = e$ und $x = e - 2 \\approx 0{,}72$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Ableitung hat $f(x) = \\ln(5x)$?",
+      "options": [
+        {
+          "md": "$\\dfrac{1}{x}$",
+          "correct": true
+        },
+        {
+          "md": "$\\dfrac{5}{x}$",
+          "why": "Die innere Ableitung 5 kürzt sich mit dem Nenner 5x."
+        },
+        {
+          "md": "$\\dfrac{1}{5x}$"
+        },
+        {
+          "md": "$5\\ln x$"
+        }
+      ],
+      "explain": "$(\\ln 5x)' = \\tfrac{1}{5x} \\cdot 5 = \\tfrac1x$; ebenso aus $\\ln 5x = \\ln 5 + \\ln x$.",
+      "label": "Ableitung",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für große $x$ wächst $\\ln x$ schneller als $\\sqrt x$.",
+      "answer": false,
+      "explain": "Jede positive Potenz gewinnt: $\\tfrac{\\ln x}{\\sqrt x} \\to 0$. Bei $x = 10^6$: $\\ln x \\approx 13{,}8$, $\\sqrt x = 1000$.",
+      "label": "Wachstum",
+      "id": "vq3"
+    },
+    {
+      "type": "match",
+      "label": "Werte",
+      "md": "Ordne den Wert zu.",
+      "pairs": [
+        [
+          "$\\ln 1$",
+          "$0$"
+        ],
+        [
+          "$\\ln e$",
+          "$1$"
+        ],
+        [
+          "$\\ln e^3$",
+          "$3$"
+        ],
+        [
+          "$\\ln\\tfrac1e$",
+          "$-1$"
+        ]
+      ],
+      "explain": "$\\ln$ fragt nach dem Exponenten zur Basis $e$.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -74,6 +354,38 @@
       },
       "label": "Logarithmen",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "logarithmus"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Bei $\\ln(u(x))$: $u > 0$ für den Definitionsbereich, $u = 1$ für die Nullstelle."
+      ]
     }
   ]
 }

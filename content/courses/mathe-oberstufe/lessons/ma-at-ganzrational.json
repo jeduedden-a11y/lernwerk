@@ -16,6 +16,300 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Der **Grad** $n$ legt fest: höchstens $n$ Nullstellen, $n - 1$ Extrempunkte und $n - 2$ Wendepunkte. Das Verhalten im Unendlichen bestimmt allein der Summand $a_n x^n$.",
+      "label": "Verfahren",
+      "more": "1. **Grad und Leitkoeffizient** ablesen. Gerader Grad: beide Enden gleich (bei $a_n > 0$ beide nach oben). Ungerader Grad: Enden entgegengesetzt (bei $a_n > 0$ von links unten nach rechts oben).\n2. **Symmetrie** an den Exponenten: nur gerade, achsensymmetrisch; nur ungerade, punktsymmetrisch zum Ursprung.\n3. **Nullstellen nach Grad:** linear direkt; quadratisch mit pq- oder abc-Formel; ohne absolutes Glied $x$ ausklammern; nur $x^4$ und $x^2$: Substitution; sonst eine Nullstelle raten (Teiler des absoluten Glieds) und mit Polynomdivision abspalten.\n4. **Vielfachheit deuten:** einfache Nullstelle, der Graph schneidet; doppelte, er berührt; dreifache, er schneidet mit waagerechter Tangente.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - x^2 - 2x$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x) = x(x^2 - x - 2)",
+            "why": "Kein absolutes Glied: x ausklammern."
+          },
+          {
+            "tex": "x = 0 \\;\\lor\\; x^2 - x - 2 = 0",
+            "why": "Satz vom Nullprodukt."
+          },
+          {
+            "tex": "x = \\tfrac12 \\pm \\sqrt{\\tfrac14 + 2} = \\tfrac12 \\pm \\tfrac32",
+            "why": "pq-Formel."
+          },
+          {
+            "tex": "x_1 = -1,\\; x_2 = 0,\\; x_3 = 2",
+            "why": "Drei einfache Nullstellen: Der Graph schneidet dreimal."
+          },
+          {
+            "tex": "x \\to -\\infty: f(x) \\to -\\infty, \\quad x \\to \\infty: f(x) \\to \\infty",
+            "why": "Grad 3, positiver Leitkoeffizient."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullprodukt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "pq-Formel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstellen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Enden.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Vielfachheit",
+      "md": "**Vielfachheit im Bild:** $f(x) = (x + 2)(x - 1)(x - t)$. Wandert die dritte Nullstelle $t$ auf die 1 zu, verschmelzen zwei Schnittstellen zu einem Berührpunkt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          4
+        ],
+        "y": [
+          -6,
+          8
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "T",
+            "min": -2.5,
+            "max": 3.5,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "(x + 2)*(x - 1)*(x - T)",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": -2,
+            "y": 0,
+            "color": "accent"
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "color": "accent"
+          },
+          {
+            "x": "T",
+            "y": 0,
+            "color": "orange",
+            "label": "t"
+          }
+        ],
+        "readout": "Nullstellen: −2, 1 und t = {T|2}"
+      },
+      "timeline": [
+        {
+          "caption": "t = 3: drei einfache Nullstellen, dreimal schneiden.",
+          "set": {
+            "T": 3
+          }
+        },
+        {
+          "caption": "t = 2: Die dritte Nullstelle rückt näher.",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = 1: doppelte Nullstelle bei 1, der Graph berührt die Achse.",
+          "to": {
+            "T": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = −2: jetzt ist −2 doppelt.",
+          "to": {
+            "T": -2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Eine **doppelte** Nullstelle berührt die Achse nur. Der Grad $n$ erlaubt höchstens $n$ Nullstellen; es können weniger sein.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** Beim Lösen nie durch $x$ teilen, sonst geht $x = 0$ verloren. Das Vorzeichen des Leitkoeffizienten entscheidet über die Enden: $-x^4$ geht an beiden Enden nach unten. Ein Polynom ungeraden Grades hat immer mindestens eine Nullstelle, eines geraden Grades vielleicht keine ($x^2 + 1$).",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Ganzrationale Funktionen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Ganzrationale Funktionen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Gegeben ist die ganzrationale Funktion $f(x) = \\dots$\"*, *\"Bestimmen Sie alle Nullstellen\"* bei einem Polynom, *\"Wie viele Extrempunkte kann $f$ höchstens haben?\"*.\n\nEine ganzrationale Funktion (Polynomfunktion) hat die Form\n$$f(x) = a_n x^n + a_{n-1}x^{n-1} + \\dots + a_1 x + a_0, \\qquad a_n \\neq 0$$\nmit Grad $n \\in \\mathbb{N}_0$."
+            }
+          ]
+        },
+        {
+          "title": "Was der Grad festlegt",
+          "blocks": [
+            {
+              "md": "> [!important] Höchstzahlen aus dem Grad ablesen\n> | Größe | Höchstanzahl |\n> |---|---|\n> | Nullstellen | $n$ |\n> | lokale Extrempunkte | $n-1$ |\n> | Wendepunkte | $n-2$ |\n>\n> \"Höchstens\", nicht \"genau\" -- ein Polynom vom Grad 4 kann auch nur zwei Nullstellen haben oder gar keine, aber niemals mehr als vier. Begründung: $f'$ hat Grad $n-1$, also höchstens $n-1$ Nullstellen -- das sind die Kandidaten für Extrema. Ebenso hat $f''$ Grad $n-2$.\n\n$D_f = \\mathbb{R}$ immer -- Polynome sind nie eingeschränkt (kein Nenner, keine Wurzel, kein Logarithmus)."
+            }
+          ]
+        },
+        {
+          "title": "Strategie zur Nullstellenbestimmung nach Grad",
+          "blocks": [
+            {
+              "md": "| Grad | Vorgehen |\n|---|---|\n| 1 | direkt auflösen |\n| 2 | **pq-Formel** oder **abc-Formel** |\n| $\\geq 3$, kein konstantes Glied | $x$ ausklammern, dann **Satz vom Nullprodukt** |\n| $\\geq 3$, mit konstantem Glied | eine Nullstelle raten (ganzzahlige Teiler von $a_0$ probieren), per **Polynomdivision** abspalten, Rest niedrigeren Grades weiter zerlegen |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Grad und Leitkoeffizient ablesen** -- legt laut Tabelle die Höchstzahlen fest und das Verhalten im Unendlichen (siehe **Verhalten im Unendlichen**).\n2. **Konstantes Glied $a_0$ prüfen:** null oder ungleich null? Bestimmt die Strategie aus obiger Tabelle.\n3. **Nullstellen bestimmen** nach passender Methode.\n4. **Anzahl der gefundenen Nullstellen mit der Höchstzahl abgleichen** -- Plausibilitätskontrolle.\n5. **Probe** durch Einsetzen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie alle Nullstellen von $f(x) = x^3 - 2x^2 - 5x + 6$.*\n\n**Schritt 1:** Grad 3, Leitkoeffizient $1$ -- höchstens 3 Nullstellen, höchstens 2 Extrema, höchstens 1 Wendepunkt.\n\n**Schritt 2:** $a_0 = 6 \\neq 0$ -- eine Nullstelle muss geraten werden. Teiler von $6$: $\\pm1, \\pm2, \\pm3, \\pm6$.\n\nTest $x=1$: $1 - 2 - 5 + 6 = 0$ (stimmt) -- Nullstelle gefunden.\n\n**Schritt 3:** Polynomdivision:\n$$(x^3 - 2x^2 - 5x + 6) : (x - 1) = x^2 - x - 6$$\n\nRestpolynom mit pq-Formel, $p=-1$, $q=-6$:\n$$D = \\left(\\frac{-1}{2}\\right)^2 + 6 = \\frac{1}{4} + \\frac{24}{4} = \\frac{25}{4}$$\n$$x_{2,3} = \\frac{1}{2} \\pm \\frac{5}{2} \\;\\Longrightarrow\\; x_2 = 3, \\quad x_3 = -2$$\n\n**Schritt 4:** Drei Nullstellen $\\{1;\\, 3;\\, -2\\}$ -- passt zur Höchstzahl 3 bei Grad 3.\n\n**Schritt 5 (Probe):**\n$$f(3) = 27 - 18 - 15 + 6 = 0 \\checkmark$$\n$$f(-2) = -8 - 8 + 10 + 6 = 0 \\checkmark$$"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Bei $\\geq3$ ohne konstantes Glied trotzdem raten wollen.** Ist $a_0 = 0$, ist $x=0$ automatisch Nullstelle -- direkt ausklammern statt zu raten.\n- **Beim Raten irrationale oder große Zahlen probieren.** Nur **Teiler von $a_0$** kommen infrage (Satz über rationale Nullstellen bei Leitkoeffizient 1).\n- **Nach der ersten gefundenen Nullstelle aufhören.** Das Restpolynom aus der Polynomdivision muss weiter untersucht werden.\n- **Höchstzahlen als tatsächliche Anzahl missverstehen.** Ein Grad-4-Polynom kann genau 0, 2 oder 4 reelle Nullstellen haben (nie eine ungerade Anzahl, wenn beide Enden ins Gleiche zeigen).\n- **Grad falsch ablesen**, wenn der Term nicht in absteigender Potenzordnung notiert ist."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Potenzfunktionen** · **Satz vom Nullprodukt** · **Polynomdivision** · **pq-Formel** · **abc-Formel** · **Verhalten im Unendlichen** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$f(x) = -2x^4 + x^3 + 5$. Wie verhält sich $f$ für $x \\to \\pm\\infty$?",
+      "options": [
+        {
+          "md": "an beiden Enden gegen $-\\infty$",
+          "correct": true
+        },
+        {
+          "md": "an beiden Enden gegen $+\\infty$",
+          "why": "Der Leitkoeffizient −2 ist negativ."
+        },
+        {
+          "md": "für $x \\to \\infty$ gegen $\\infty$, für $x \\to -\\infty$ gegen $-\\infty$"
+        },
+        {
+          "md": "gegen 5"
+        }
+      ],
+      "explain": "Es zählt nur $-2x^4$: gerader Grad, negativer Leitkoeffizient.",
+      "label": "Enden",
+      "id": "vq1"
+    },
+    {
+      "type": "match",
+      "label": "Vielfachheit",
+      "md": "Ordne der Vielfachheit einer Nullstelle das Bild zu.",
+      "pairs": [
+        [
+          "einfache Nullstelle",
+          "der Graph schneidet die Achse"
+        ],
+        [
+          "doppelte Nullstelle",
+          "der Graph berührt die Achse"
+        ],
+        [
+          "dreifache Nullstelle",
+          "der Graph schneidet mit waagerechter Tangente"
+        ]
+      ],
+      "explain": "Gerade Vielfachheit: kein Vorzeichenwechsel; ungerade: Vorzeichenwechsel.",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Grad",
+      "md": "Wie viele Extrempunkte kann ein Polynom vom Grad 4 höchstens haben?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Extrempunkte sind Nullstellen von $f'$, und $f'$ hat den Grad 3.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jedes Polynom vom Grad 3 hat mindestens eine Nullstelle.",
+      "answer": true,
+      "explain": "Die Enden gehen in entgegengesetzte Richtungen; dazwischen muss der stetige Graph die Achse kreuzen.",
+      "label": "Grad",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -74,6 +368,50 @@
       },
       "label": "Nullstellen",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "restsatz"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "unendlich"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "nullprodukt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Grad n: höchstens n Nullstellen, n − 1 Extrempunkte, n − 2 Wendepunkte."
+      ]
     }
   ]
 }

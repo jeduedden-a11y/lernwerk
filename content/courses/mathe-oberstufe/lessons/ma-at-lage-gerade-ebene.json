@@ -16,6 +16,79 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lagebeziehung Gerade-Ebene",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Lagebeziehung Gerade-Ebene.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie die Lage der Geraden zur Ebene\"*, *\"Berechnen Sie den Durchstoßpunkt\"*, *\"Wo durchstößt die Flugbahn die Dachfläche?\"*, *\"Zeigen Sie, dass $g$ in $E$ liegt\"*.\n\nDer am häufigsten benötigte Schnitt in der analytischen Geometrie -- Grundlage für Durchstoßpunkte, **Schattenpunkte** und **Spiegelungen**."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Möglichkeiten",
+          "blocks": [
+            {
+              "md": "| Lage | Kriterium | Ergebnis |\n|---|---|---|\n| **schneidend** | $\\vec{u} \\circ \\vec{n} \\neq 0$ | genau ein Durchstoßpunkt |\n| **echt parallel** | $\\vec{u} \\circ \\vec{n} = 0$, Stützpunkt nicht in $E$ | kein gemeinsamer Punkt |\n| **$g$ liegt in $E$** | $\\vec{u} \\circ \\vec{n} = 0$, Stützpunkt in $E$ | unendlich viele gemeinsame Punkte |\n\n> [!important] Skalarprodukt null bedeutet parallel\n> $\\vec{u} \\circ \\vec{n} = 0$ heißt: Der Richtungsvektor steht **senkrecht auf dem Normalenvektor** -- also verläuft die Gerade **parallel zur Ebene**.\n>\n> Das wirkt zunächst gegenintuitiv: Senkrecht zum Normalenvektor bedeutet parallel zur Ebene, weil der Normalenvektor selbst senkrecht auf der Ebene steht."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema (rechnerisch)",
+          "blocks": [
+            {
+              "md": "1. **Ebene in Koordinatenform** bringen, falls nötig (siehe **Ebenengleichung umwandeln**).\n2. **Geradengleichung komponentenweise** in die Ebenengleichung einsetzen.\n3. **Nach dem Parameter auflösen.**\n4. **Ergebnis interpretieren:**\n   - **Eindeutige Lösung** für $t$ → Schnittpunkt, $t$ einsetzen\n   - **Widerspruch** (etwa $0 = 5$) → echt parallel\n   - **Allgemeingültige Aussage** (etwa $0 = 0$) → Gerade liegt in der Ebene\n\n> [!tip] Das Einsetzverfahren erledigt die Fallunterscheidung von selbst\n> Man muss $\\vec{u} \\circ \\vec{n}$ gar nicht vorab berechnen -- die Art der entstehenden Gleichung verrät die Lage. Verschwindet $t$ und bleibt ein Widerspruch, ist die Gerade parallel; bleibt $0 = 0$, liegt sie in der Ebene.\n>\n> Das spart einen Rechenschritt. Verlangt die Aufgabe ausdrücklich eine **Begründung**, sollte das Skalarprodukt trotzdem genannt werden."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Schnittpunkt",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie den Durchstoßpunkt von*\n$$g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 4 \\end{pmatrix} + t\\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix} \\quad\\text{mit}\\quad E: x_1 + 2x_2 + 3x_3 = 10$$\n\n**Schritt 2:** Komponenten einsetzen:\n$$(1 + 2t) + 2(0 + t) + 3(4 - t) = 10$$\n\n**Schritt 3:**\n$$1 + 2t + 2t + 12 - 3t = 10$$\n$$t + 13 = 10 \\;\\Longrightarrow\\; t = -3$$\n\n**Schritt 4:** Eindeutige Lösung, also Schnittpunkt:\n$$\\vec{s} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 4 \\end{pmatrix} - 3\\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix} = \\begin{pmatrix} -5 \\\\ -3 \\\\ 7 \\end{pmatrix}$$\n\n**Probe:** $-5 + 2(-3) + 3 \\cdot 7 = -5 - 6 + 21 = 10$ (stimmt)\n\n*Der Durchstoßpunkt ist $S(-5 \\mid -3 \\mid 7)$.*"
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: parallel",
+          "blocks": [
+            {
+              "md": "*Dieselbe Ebene, aber*\n$$g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix} + t\\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\end{pmatrix}$$\n\nEinsetzen:\n$$(1+t) + 2(1+t) + 3(1-t) = 10$$\n$$1 + t + 2 + 2t + 3 - 3t = 10$$\n$$6 = 10$$\n\n**Widerspruch** -- die Gerade ist **echt parallel** zur Ebene.\n\n**Kontrolle über das Skalarprodukt:**\n$$\\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\end{pmatrix} \\circ \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} = 1 + 2 - 3 = 0 \\quad\\checkmark$$\n\nBei paralleler Lage schließt sich meist die Frage nach dem Abstand an -- siehe **Abstände paralleler Objekte**."
+            }
+          ]
+        },
+        {
+          "title": "Sonderfall: Gerade senkrecht zur Ebene",
+          "blocks": [
+            {
+              "md": "Ist $\\vec{u}$ ein **Vielfaches** von $\\vec{n}$, steht die Gerade **senkrecht** auf der Ebene. Das ist der Fall bei Lotgeraden -- Grundlage für **Abstand Punkt-Ebene** und **Spiegelung an Ebene und Gerade**.\n\nPrüfung: $\\vec{u} = k \\cdot \\vec{n}$ für ein $k$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Nur zwei Komponenten einsetzen.** Alle drei müssen in die Ebenengleichung.\n- **Widerspruch als Rechenfehler deuten.** $6 = 10$ ist ein **Ergebnis**: die Gerade ist parallel. Nicht nachrechnen, sondern interpretieren.\n- **$0 = 0$ als \"keine Lösung\" lesen.** Diese Aussage ist allgemeingültig und bedeutet: unendlich viele Schnittpunkte, die Gerade liegt in der Ebene.\n- **Parameter nicht einsetzen.** $t$ ist Zwischenergebnis, gefragt ist der Punkt.\n- **Bei Parameterform der Ebene direkt einsetzen wollen.** Dann entsteht ein Gleichungssystem mit drei Unbekannten -- deutlich aufwendiger. Vorher in Koordinatenform umwandeln.\n- **Probe auslassen.** Ein Punkt, der die Ebenengleichung nicht erfüllt, ist kein Schnittpunkt."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Lagebeziehung Gerade-Gerade** · **Lagebeziehung Ebene-Ebene** · **Ebenengleichung umwandeln** · **Abstände paralleler Objekte** · **Schattenpunkte** · **Schnittwinkel im Raum**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

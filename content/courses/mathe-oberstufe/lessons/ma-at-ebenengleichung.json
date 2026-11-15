@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Ebenengleichung umwandeln",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Ebenengleichung umwandeln.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Ebene liegt in der einen Form vor, die Aufgabe braucht aber eine andere. Signalformulierungen: *\"Geben Sie eine Koordinatengleichung der Ebene an\"*, *\"Bestimmen Sie eine Parameterdarstellung\"*, *\"Wandeln Sie um\"*.\n\nHäufiger als eigenständige Aufgabe ist die Umwandlung ein **notwendiger Zwischenschritt**: Abstandsberechnungen brauchen die Koordinatenform, Schnittmengen oft die Parameterform."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Formen im Überblick",
+          "blocks": [
+            {
+              "md": "| Form | Gestalt | Wofür gut |\n|---|---|---|\n| **Parameterform** | $\\vec{x} = \\vec{a} + r\\vec{u} + s\\vec{v}$ | Punkte erzeugen, Schnitt mit Geraden |\n| **Normalenform** | $\\vec{n} \\circ (\\vec{x} - \\vec{a}) = 0$ | Zwischenschritt, Orthogonalität |\n| **Koordinatenform** | $ax_1 + bx_2 + cx_3 = d$ | Punktprobe, Abstände, **Hessesche Normalform** |\n\n> [!important] Der Normalenvektor ist der Dreh- und Angelpunkt\n> Alle Umwandlungen laufen über ihn. In der **Koordinatenform** steht er direkt in den Koeffizienten: $\\vec{n} = \\begin{pmatrix} a \\\\ b \\\\ c \\end{pmatrix}$. In der **Parameterform** muss er erst über das **Kreuzprodukt** der Spannvektoren gewonnen werden."
+            }
+          ]
+        },
+        {
+          "title": "Parameterform in Koordinatenform",
+          "blocks": [
+            {
+              "md": "### Lösungsschema\n1. **Normalenvektor berechnen:** $\\vec{n} = \\vec{u} \\times \\vec{v}$.\n2. **Normalenform aufstellen:** $\\vec{n} \\circ (\\vec{x} - \\vec{a}) = 0$.\n3. **Ausmultiplizieren** und nach der Konstanten sortieren.\n4. **Probe:** Stützpunkt einsetzen, muss die Gleichung erfüllen.\n\n### Durchgerechnetes Beispiel\n*Wandeln Sie um:*\n$$E: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + r\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}$$\n\n**Schritt 1:**\n$$\\vec{n} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\cdot 1 - 0 \\cdot 1 \\\\ 0 \\cdot 0 - 1 \\cdot 1 \\\\ 1 \\cdot 1 - 1 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 1 \\end{pmatrix}$$\n\n**Schritt 2/3:** Die linke Seite lautet $1 \\cdot x_1 - 1 \\cdot x_2 + 1 \\cdot x_3$. Die rechte Seite ergibt sich durch Einsetzen des Stützpunkts:\n$$d = 1 \\cdot 1 - 1 \\cdot 0 + 1 \\cdot 2 = 3$$\n\n$$E: x_1 - x_2 + x_3 = 3$$\n\n**Schritt 4 (Probe):** Ein weiterer Ebenenpunkt, etwa mit $r = 1, s = 0$: $(2 \\mid 1 \\mid 2)$. Einsetzen: $2 - 1 + 2 = 3$ (stimmt)\n\n> [!tip] Die rechte Seite fällt nebenbei ab\n> Statt umständlich auszumultiplizieren, setzt man einfach den **Stützpunkt** in die linke Seite ein -- das Ergebnis ist $d$. Diese Abkürzung spart in der Prüfung eine halbe Seite."
+            }
+          ]
+        },
+        {
+          "title": "Koordinatenform in Parameterform",
+          "blocks": [
+            {
+              "md": "### Weg 1: Drei Punkte suchen\n1. **Drei Punkte** finden, die die Gleichung erfüllen -- am einfachsten die **Spurpunkte** (jeweils zwei Koordinaten null setzen).\n2. **Stützvektor** = einer der Punkte.\n3. **Spannvektoren** = Verbindungsvektoren zu den beiden anderen.\n4. **Prüfen**, dass die Spannvektoren nicht parallel sind.\n\n### Weg 2: Zwei Variablen als Parameter setzen\n1. **Nach einer Variablen auflösen**, etwa nach $x_1$.\n2. **Die beiden anderen** als Parameter setzen: $x_2 = r$, $x_3 = s$.\n3. **Als Vektorgleichung** schreiben.\n\n### Durchgerechnetes Beispiel (Weg 1)\n*Wandeln Sie $E: x_1 - x_2 + x_3 = 3$ in Parameterform um.*\n\n**Spurpunkte:**\n- $x_2 = x_3 = 0$: $x_1 = 3$, also $A(3 \\mid 0 \\mid 0)$\n- $x_1 = x_3 = 0$: $-x_2 = 3$, also $B(0 \\mid -3 \\mid 0)$\n- $x_1 = x_2 = 0$: $x_3 = 3$, also $C(0 \\mid 0 \\mid 3)$\n\n**Spannvektoren:**\n$$\\overrightarrow{AB} = \\begin{pmatrix} -3 \\\\ -3 \\\\ 0 \\end{pmatrix}, \\qquad \\overrightarrow{AC} = \\begin{pmatrix} -3 \\\\ 0 \\\\ 3 \\end{pmatrix}$$\n\n**Ergebnis:**\n$$E: \\vec{x} = \\begin{pmatrix} 3 \\\\ 0 \\\\ 0 \\end{pmatrix} + r\\begin{pmatrix} -3 \\\\ -3 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} -3 \\\\ 0 \\\\ 3 \\end{pmatrix}$$\n\nDie Spannvektoren dürfen gekürzt werden: $\\begin{pmatrix} -1 \\\\ -1 \\\\ 0 \\end{pmatrix}$ und $\\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}$.\n\n**Probe:** Kreuzprodukt der gekürzten Spannvektoren:\n$$\\begin{pmatrix} -1 \\\\ -1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 1 \\\\ -1 \\end{pmatrix}$$\nDas ist $-\\vec{n}$ -- ein Vielfaches des ursprünglichen Normalenvektors. Passt.\n\n> [!note] Die Parameterform ist nicht eindeutig\n> Jede Ebene hat unendlich viele Parameterdarstellungen -- andere Stützpunkte, andere oder skalierte Spannvektoren. Weicht dein Ergebnis von der Musterlösung ab, ist es nicht automatisch falsch. Die **Koordinatenform** dagegen ist bis auf einen gemeinsamen Faktor eindeutig."
+            }
+          ]
+        },
+        {
+          "title": "Normalenform als Zwischenschritt",
+          "blocks": [
+            {
+              "md": "$$\\vec{n} \\circ \\left(\\vec{x} - \\vec{a}\\right) = 0$$\n\nSie entsteht direkt aus Schritt 2 oben und wird selten als Endergebnis verlangt. Ihre Bedeutung liegt darin, dass sie den Übergang zur **Hesseschen Normalform** vorbereitet -- dort wird nur noch normiert."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Spannvektoren statt Normalenvektor in die Koordinatenform schreiben.** Die Koeffizienten sind die Komponenten von $\\vec{n}$.\n- **Mittlere Komponente des Kreuzprodukts falsch.** Sie hat die umgekehrte Reihenfolge: $u_3v_1 - u_1v_3$.\n- **Konstante $d$ vergessen** oder mit falschem Vorzeichen. Sie ergibt sich durch Einsetzen des Stützpunkts.\n- **Bei Weg 1 nur zwei Punkte suchen.** Es braucht drei, die nicht auf einer Geraden liegen.\n- **Spurpunkte existieren nicht immer.** Fehlt eine Variable in der Gleichung (etwa $x_1 + x_2 = 4$), verläuft die Ebene parallel zu einer Achse -- dann anderen Punkt wählen.\n- **Parallele Spannvektoren wählen.** Dann spannen sie keine Ebene auf, sondern nur eine Gerade.\n- **Erwarten, dass die Parameterform eindeutig ist.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Ebenen im Raum** · **Hessesche Normalform** · **Kreuzprodukt** · **Lagebeziehung Ebene-Ebene** · **Abstand Punkt-Ebene**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

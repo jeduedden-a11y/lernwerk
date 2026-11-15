@@ -33,7 +33,8 @@
         let v;
         try { v = LW.expr(e)(scope); } catch (err) { return m; }
         if (!isFinite(v)) return "–";
-        const s = K.fmt(v, d != null ? +d : 2);
+        const dd = d != null ? +d : 2, rv = Math.round(v * Math.pow(10, dd)) / Math.pow(10, dd);
+        const s = K.fmt(rv === 0 ? 0 : v, dd);
         return inMath ? s.replace(/−/g, "-").replace(/,/g, "{,}").replace(/\./g, "{.}") : s;
       });
     }).join("");

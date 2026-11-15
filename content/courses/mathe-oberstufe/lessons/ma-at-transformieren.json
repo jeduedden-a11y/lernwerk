@@ -16,6 +16,319 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "In die Form $a \\cdot f\\big(b(x - d)\\big) + e$ bringen. Innen ($b$, $d$) wirkt in x-Richtung und umgekehrt, außen ($a$, $e$) in y-Richtung wie gelesen. Mit einem Punkt kontrollieren.",
+      "label": "Verfahren",
+      "more": "**Aus der Beschreibung die Gleichung:** Eine Verschiebung nach rechts um $d$ wird zu $x - d$ im Argument, nach oben um $e$ zu $+e$ außen; eine Streckung in y-Richtung zum Faktor $a$ außen, in x-Richtung mit dem Faktor $k$ zu $f\\left(\\tfrac{x}{k}\\right)$.\n\n**Aus der Gleichung die Beschreibung:** Den Faktor im Argument erst ausklammern: $f(2x - 6) = f\\big(2(x - 3)\\big)$ heißt mit $\\tfrac12$ in x-Richtung stauchen, dann um 3 nach rechts.\n\n**Folgen:** Der Wertebereich wird mit $a$ gestreckt und um $e$ verschoben: Aus $[-1; 1]$ wird bei $2\\sin x + 1$ das Intervall $[-1; 3]$. Bei Sinus und Kosinus wird die Periode zu $\\tfrac{2\\pi}{|b|}$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Wie entsteht $g(x) = 3\\sqrt{2x - 4} + 1$ aus $f(x) = \\sqrt x$?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "g(x) = 3\\sqrt{2(x - 2)} + 1",
+            "why": "Den Faktor im Argument ausklammern."
+          },
+          {
+            "tex": "\\text{x-Richtung: mit } \\tfrac12 \\text{ stauchen, dann um 2 nach rechts}",
+            "why": "Innen wirkt umgekehrt."
+          },
+          {
+            "tex": "\\text{y-Richtung: mit 3 strecken, dann um 1 nach oben}",
+            "why": "Außen wie gelesen, erst strecken."
+          },
+          {
+            "tex": "(0 \\mid 0) \\;\\mapsto\\; (2 \\mid 1)",
+            "why": "Kontrolle: Der Startpunkt der Wurzel landet bei (2 | 1)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausklammern.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Innen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Außen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schritte",
+      "md": "**Schritt für Schritt zu $g(x) = 2\\sin\\big(2(x - \\tfrac{\\pi}{4})\\big) + 1$:** grau gestrichelt $\\sin x$, blau der Zwischenstand.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          6.8
+        ],
+        "y": [
+          -2.5,
+          3.5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "A",
+            "min": 0,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "B",
+            "min": 0.5,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          },
+          {
+            "name": "C",
+            "min": -1,
+            "max": 2,
+            "value": 0,
+            "hidden": true
+          },
+          {
+            "name": "E",
+            "min": -2,
+            "max": 2,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "g",
+            "expr": "A*sin(B*(x - C)) + E",
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "readout": "a = {A|1} · b = {B|1} · d = {C|2} · e = {E|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Start: sin x.",
+          "set": {
+            "A": 1,
+            "B": 1,
+            "C": 0,
+            "E": 0
+          }
+        },
+        {
+          "caption": "a = 2: Amplitude 2.",
+          "to": {
+            "A": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "b = 2: Die Periode halbiert sich auf π.",
+          "to": {
+            "B": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "d = π/4: um π/4 nach rechts.",
+          "to": {
+            "C": 0.7854
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "e = 1: um 1 nach oben; Wertebereich von −1 bis 3.",
+          "to": {
+            "E": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$f(2x - 4)$ ist um **2** nach rechts verschoben, nicht um 4: erst den Faktor ausklammern. Außen gilt: erst strecken, dann verschieben.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Fallen:** $f(-x)$ spiegelt an der **y-Achse**, $-f(x)$ an der **x-Achse**. Ein Faktor $b > 1$ im Argument **staucht** in x-Richtung. Beim Sinus ändert die Verschiebung um $d$ die Periode nicht, der Faktor $b$ schon.",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Graphen transformieren",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Graphen transformieren.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Eine Funktion entsteht aus einer bekannten durch Verschieben, Strecken oder Spiegeln. Signalformulierungen: *\"Beschreiben Sie, wie der Graph aus dem Graphen von $f$ hervorgeht\"*, *\"Der Graph wird um 2 nach rechts verschoben\"*, *\"Geben Sie die Funktionsgleichung des verschobenen Graphen an\"*.\n\nTypischer Aufgabentyp im hilfsmittelfreien Teil und bei trigonometrischen Funktionen."
+            }
+          ]
+        },
+        {
+          "title": "Die vollständige Übersicht",
+          "blocks": [
+            {
+              "md": "Ausgehend von $f(x)$ und der allgemeinen Form\n$$g(x) = a \\cdot f\\big(b(x - c)\\big) + d$$\n\n| Parameter | Wirkung | Richtung |\n|---|---|---|\n| $d$ | Verschiebung in **y**-Richtung | $d > 0$ nach oben |\n| $c$ | Verschiebung in **x**-Richtung | $c > 0$ nach **rechts** |\n| $a$ | Streckung in **y**-Richtung mit Faktor $\\lvert a\\rvert$ | $a < 0$ zusätzlich Spiegelung an der **x**-Achse |\n| $b$ | Streckung in **x**-Richtung mit Faktor $\\tfrac{1}{\\lvert b\\rvert}$ | $b < 0$ zusätzlich Spiegelung an der **y**-Achse |\n\n> [!important] Die beiden Umkehrungen, die fast jeder verwechselt\n> **Innen wirkt gegenläufig.** $f(x - 2)$ verschiebt nach **rechts**, nicht nach links. Grund: Um denselben Funktionswert zu erhalten, muss man einen um 2 größeren $x$-Wert einsetzen.\n>\n> **Innen streckt reziprok.** $f(2x)$ **staucht** um den Faktor $\\tfrac{1}{2}$, es streckt nicht. Der Graph wird schmaler, nicht breiter.\n>\n> Außen dagegen wirkt alles wie erwartet: $2f(x)$ streckt in y-Richtung um Faktor 2, $f(x) + 3$ verschiebt um 3 nach oben."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "### Richtung: aus Beschreibung die Gleichung\n1. **Reihenfolge beachten:** erst innen (x-Änderungen), dann außen (y-Änderungen).\n2. **Verschiebung in x-Richtung:** $x$ durch $(x - c)$ ersetzen, mit $c$ als Verschiebung nach rechts.\n3. **Streckung in x-Richtung** mit Faktor $k$: $x$ durch $\\tfrac{x}{k}$ ersetzen.\n4. **Streckung in y-Richtung** mit Faktor $a$: gesamten Term mit $a$ multiplizieren.\n5. **Verschiebung in y-Richtung:** $d$ addieren.\n6. **Probe** an einem markanten Punkt.\n\n### Richtung: aus der Gleichung die Beschreibung\n1. **In die Standardform bringen** $a \\cdot f(b(x-c)) + d$ -- gegebenenfalls $b$ ausklammern.\n2. **Parameter ablesen** und einzeln beschreiben.\n3. **Reihenfolge angeben:** erst Streckungen, dann Verschiebungen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Der Graph von $f(x) = x^2$ wird um 3 nach rechts verschoben, mit dem Faktor 2 in y-Richtung gestreckt und anschließend um 1 nach unten verschoben. Geben Sie die Gleichung an.*\n\n**Schritt 2:** Verschiebung nach rechts um 3:\n$$x^2 \\;\\longrightarrow\\; (x-3)^2$$\n\n**Schritt 4:** Streckung in y-Richtung mit Faktor 2:\n$$2(x-3)^2$$\n\n**Schritt 5:** Verschiebung um 1 nach unten:\n$$g(x) = 2(x-3)^2 - 1$$\n\n**Schritt 6:** Der Scheitel von $f$ liegt bei $(0 \\mid 0)$. Nach der Transformation sollte er bei $(3 \\mid -1)$ liegen. Probe: $g(3) = 2 \\cdot 0 - 1 = -1$. Stimmt."
+            }
+          ]
+        },
+        {
+          "title": "Umgekehrtes Beispiel",
+          "blocks": [
+            {
+              "md": "*Beschreiben Sie, wie der Graph von $g(x) = -\\tfrac{1}{2}(2x + 4)^2 + 3$ aus dem Graphen von $f(x) = x^2$ hervorgeht.*\n\n**Schritt 1:** Innen 2 ausklammern:\n$$2x + 4 = 2(x+2)$$\n$$g(x) = -\\tfrac{1}{2}\\big(2(x+2)\\big)^2 + 3$$\n\n**Schritt 2:** Ablesen: $a = -\\tfrac{1}{2}$, $b = 2$, $c = -2$, $d = 3$\n\n**Schritt 3:** *Der Graph von $f$ wird in x-Richtung mit dem Faktor $\\tfrac{1}{2}$ gestaucht, in y-Richtung mit dem Faktor $\\tfrac{1}{2}$ gestaucht und an der x-Achse gespiegelt, anschließend um 2 nach links und um 3 nach oben verschoben.*\n\n> [!warning] Das Ausklammern ist der entscheidende Schritt\n> Ohne Ausklammern liest man aus $(2x+4)^2$ fälschlich eine Verschiebung um 4 ab. Richtig sind 2 -- weil innen zuerst gestreckt wird und die Verschiebung dadurch mitskaliert."
+            }
+          ]
+        },
+        {
+          "title": "Bei trigonometrischen Funktionen",
+          "blocks": [
+            {
+              "md": "Für $g(x) = a \\cdot \\sin\\big(b(x-c)\\big) + d$ haben die Parameter eigene Namen:\n\n| Parameter | Name | Bedeutung |\n|---|---|---|\n| $\\lvert a \\rvert$ | Amplitude | halbe Höhe zwischen Maximum und Minimum |\n| $\\tfrac{2\\pi}{\\lvert b\\rvert}$ | Periode | Länge einer vollständigen Schwingung |\n| $c$ | Phasenverschiebung | horizontale Verschiebung |\n| $d$ | Mittellinie | vertikale Verschiebung |"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Vorzeichen bei der x-Verschiebung.** $f(x-2)$ verschiebt nach **rechts**. Der häufigste Fehler dieses Aufgabentyps.\n- **Bei innerer Streckung nicht ausklammern.** Aus $f(2x+4)$ folgt Verschiebung um $-2$, nicht um $-4$.\n- **Streckungsfaktor innen nicht umkehren.** $f(3x)$ staucht auf ein Drittel.\n- **Reihenfolge vertauschen.** Erst strecken, dann verschieben -- bei umgekehrter Reihenfolge ergibt sich eine andere Funktion.\n- **Spiegelung übersehen.** Ein negatives $a$ bedeutet zusätzlich Spiegelung an der x-Achse.\n- **Bei Sinusfunktionen Periode und $b$ verwechseln.** Die Periode ist $\\tfrac{2\\pi}{b}$, nicht $b$."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Funktionsbegriff und Darstellungsformen** · **Symmetrie untersuchen** · **Umkehrfunktion bestimmen** · **Kurvendiskussion**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wie entsteht der Graph von $g(x) = f(3x + 6)$ aus dem von $f$?",
+      "options": [
+        {
+          "md": "mit $\\tfrac13$ in x-Richtung stauchen, dann um 2 nach links",
+          "correct": true
+        },
+        {
+          "md": "um 6 nach links, dann mit 3 strecken",
+          "why": "Erst den Faktor ausklammern: 3(x + 2)."
+        },
+        {
+          "md": "mit 3 in x-Richtung strecken, dann um 2 nach rechts"
+        },
+        {
+          "md": "um 2 nach links, dann mit 3 in y-Richtung strecken"
+        }
+      ],
+      "explain": "$f(3x + 6) = f\\big(3(x + 2)\\big)$: Der Faktor 3 staucht in x-Richtung, $x + 2$ verschiebt um 2 nach links.",
+      "label": "Beschreiben",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Wertebereich",
+      "md": "$g(x) = -3\\sin x + 2$. Welches ist der größte Funktionswert?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\sin x$ liegt zwischen $-1$ und $1$; $-3\\sin x$ zwischen $-3$ und $3$; plus 2: zwischen $-1$ und $5$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Graph von $f(-x)$ entsteht aus dem von $f$ durch Spiegelung an der x-Achse.",
+      "answer": false,
+      "explain": "Das Minus steht im Argument: Spiegelung an der **y-Achse**. An der x-Achse spiegelt $-f(x)$.",
+      "label": "Spiegeln",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Periode hat $g(x) = \\sin(4x)$?",
+      "options": [
+        {
+          "md": "$\\tfrac{\\pi}{2}$",
+          "correct": true
+        },
+        {
+          "md": "$8\\pi$",
+          "why": "Der Faktor 4 staucht, die Periode wird kleiner."
+        },
+        {
+          "md": "$4\\pi$"
+        },
+        {
+          "md": "$\\tfrac{\\pi}{4}$"
+        }
+      ],
+      "explain": "Periode $\\tfrac{2\\pi}{4} = \\tfrac{\\pi}{2}$.",
+      "label": "Periode",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -69,6 +382,50 @@
       ],
       "explain": "$\\sin x$ liegt zwischen −1 und 1, verdoppelt zwischen −2 und 2, um 1 nach oben: zwischen −1 und 3.",
       "id": "c2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "transformation"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Faktor im Argument ausklammern, bevor man die Verschiebung abliest."
+      ]
     }
   ]
 }

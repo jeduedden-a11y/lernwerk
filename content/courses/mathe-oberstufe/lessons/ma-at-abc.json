@@ -16,6 +16,257 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$ax^2 + bx + c = 0$ hat die Lösungen $x_{1,2} = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$. Die **Diskriminante** $D = b^2 - 4ac$ entscheidet: zwei, eine oder keine Lösung.",
+      "label": "Verfahren",
+      "more": "1. **Auf null bringen** und $a$, $b$, $c$ **mit Vorzeichen** ablesen.\n2. **Diskriminante** $D = b^2 - 4ac$ berechnen.\n3. **Fälle:** $D > 0$ zwei Lösungen, $D = 0$ eine (doppelte), $D < 0$ keine reelle.\n4. **Einsetzen** in die Formel.\n5. **Kontrolle mit Vieta:** $x_1 + x_2 = -\\tfrac{b}{a}$, $x_1 \\cdot x_2 = \\tfrac{c}{a}$.\n\n**Verhältnis zur pq-Formel:** Teilt man durch $a$, entsteht die Normalform mit $p = \\tfrac{b}{a}$ und $q = \\tfrac{c}{a}$; beide Formeln liefern dasselbe. Die abc-Formel spart das Rechnen mit Brüchen.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Herleitung** durch quadratische Ergänzung.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "ax^2 + bx + c = 0 \\quad \\big| \\cdot 4a",
+            "why": "Mit 4a multiplizieren, damit die Ergänzung ohne Brüche geht."
+          },
+          {
+            "tex": "4a^2x^2 + 4abx + 4ac = 0",
+            "why": "Ausmultipliziert."
+          },
+          {
+            "tex": "(2ax + b)^2 - b^2 + 4ac = 0",
+            "why": "Ergänzen: (2ax + b)² = 4a²x² + 4abx + b²."
+          },
+          {
+            "tex": "(2ax + b)^2 = b^2 - 4ac",
+            "why": "Rechts steht die Diskriminante."
+          },
+          {
+            "tex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+            "why": "Wurzel ziehen (nur für D ≥ 0) und auflösen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausmultipliziert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergänzt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umgestellt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Diskriminante",
+      "md": "**Die Diskriminante im Bild:** $y = 2x^2 - 4x + c$ mit $D = 16 - 8c$. Mit wachsendem $c$ steigt die Parabel.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.5,
+          3.5
+        ],
+        "y": [
+          -4,
+          6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "CC",
+            "min": -2,
+            "max": 4,
+            "value": -1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "2*x^2 - 4*x + CC",
+            "color": "blue"
+          }
+        ],
+        "readout": "c = {CC|1} · D = {16 - 8*CC|1}"
+      },
+      "timeline": [
+        {
+          "caption": "c = −1: D = 24 > 0, zwei Nullstellen.",
+          "set": {
+            "CC": -1
+          }
+        },
+        {
+          "caption": "c = 2: D = 0, der Scheitel berührt die Achse.",
+          "to": {
+            "CC": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "c = 3: D = −8 < 0, keine Nullstelle.",
+          "to": {
+            "CC": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Vorzeichen mitnehmen: Bei $2x^2 - 3x - 5$ ist $b = -3$ und $c = -5$, also $D = 9 + 40 = 49$. Der Nenner ist $2a$, nicht 2.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "abc-Formel",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/abc-Formel.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen wie bei der pq-Formel, aber der Koeffizient vor $x^2$ ist **nicht** $1$ und lässt sich nicht sauber (ohne Brüche) herausteilen: $ax^2 + bx + c = 0$ mit $a \\neq 1$."
+            }
+          ]
+        },
+        {
+          "title": "Verhältnis zur pq-Formel",
+          "blocks": [
+            {
+              "md": "> [!important] Zwei Formeln für dieselbe Aufgabe\n> Beide Formeln lösen quadratische Gleichungen; die abc-Formel ist die allgemeinere, weil sie ohne vorheriges Teilen durch $a$ auskommt. Wo das Teilen glatte Zahlen liefert, ist die pq-Formel schneller. Erzeugt das Teilen Brüche, ist die abc-Formel meist übersichtlicher.\n\n| | pq-Formel | abc-Formel |\n|---|---|---|\n| Voraussetzung | Koeffizient vor $x^2$ ist $1$ | beliebiger Koeffizient $a$ |\n| Formel | $x_{1,2} = -\\dfrac{p}{2} \\pm \\sqrt{\\left(\\dfrac{p}{2}\\right)^2 - q}$ | $x_{1,2} = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ |\n| Diskriminante | $D = \\left(\\dfrac{p}{2}\\right)^2 - q$ | $D = b^2 - 4ac$ |\n\nBeide Formeln liefern für dieselbe Gleichung dasselbe Ergebnis -- die abc-Formel angewendet auf die durch $a$ geteilte Gleichung liefert exakt die pq-Formel."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Gleichung in die Form $ax^2 + bx + c = 0$** bringen (rechts steht $0$).\n2. **$a$, $b$, $c$ ablesen** -- mit Vorzeichen.\n3. **Diskriminante berechnen:** $D = b^2 - 4ac$.\n4. **Fallunterscheidung:** $D>0$ zwei Lösungen, $D=0$ eine Lösung, $D<0$ keine reelle Lösung.\n5. **Formel anwenden:** $x_{1,2} = \\dfrac{-b \\pm \\sqrt{D}}{2a}$.\n6. **Probe** in der Ausgangsgleichung."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Lösen Sie $2x^2 + 3x - 2 = 0$.*\n\n**Schritt 2:** $a = 2$, $b = 3$, $c = -2$.\n\n**Schritt 3:**\n$$D = 3^2 - 4 \\cdot 2 \\cdot (-2) = 9 + 16 = 25$$\n\n**Schritt 4:** $D = 25 > 0$ -- zwei Lösungen.\n\n**Schritt 5:**\n$$x_{1,2} = \\frac{-3 \\pm \\sqrt{25}}{2 \\cdot 2} = \\frac{-3 \\pm 5}{4}$$\n$$x_1 = \\frac{2}{4} = 0{,}5, \\qquad x_2 = \\frac{-8}{4} = -2$$\n\n**Schritt 6 (Probe):**\n$$x_1 = 0{,}5: \\quad 2 \\cdot 0{,}25 + 3 \\cdot 0{,}5 - 2 = 0{,}5 + 1{,}5 - 2 = 0 \\checkmark$$\n$$x_2 = -2: \\quad 2 \\cdot 4 + 3 \\cdot (-2) - 2 = 8 - 6 - 2 = 0 \\checkmark$$\n\n**Gegenprobe über die pq-Formel:** Division der Ausgangsgleichung durch $2$ ergibt $x^2 + 1{,}5x - 1 = 0$, also $p = 1{,}5$, $q = -1$. Dann $D = (0{,}75)^2 + 1 = 1{,}5625$, $\\sqrt{D} = 1{,}25$, $x_{1,2} = -0{,}75 \\pm 1{,}25$ -- dieselben Werte $0{,}5$ und $-2$."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **$-b$ statt $b$ ins Vorzeichen einsetzen.** Bei $b = 3$ steht im Zähler $-3$, nicht $3$.\n- **Den Nenner $2a$ vergessen** und nur durch $2$ teilen.\n- **Vorzeichen von $c$ verlieren.** Bei $-4ac$ mit negativem $c$ wird daraus ein Pluszeichen -- Vorzeichenkette sorgfältig führen.\n- **$D$ negativ und trotzdem weiterrechnen wollen.** Ohne komplexe Zahlen (nicht Abiturstoff Hessen) endet die Aufgabe hier mit \"keine reelle Lösung\".\n- **Bei glatten Zahlen unnötig die abc-Formel statt der einfacheren pq-Formel verwenden** -- kein Fehler, aber unnötiger Rechenaufwand unter Zeitdruck."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**pq-Formel** · **Satz vom Nullprodukt** · **Substitution zum Lösen von Gleichungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Löse $3x^2 - 7x + 2 = 0$ und gib die größere Lösung an.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$D = 49 - 24 = 25$, $x = \\tfrac{7 \\pm 5}{6}$: $2$ und $\\tfrac13$.",
+      "id": "vq1"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der abc-Formel in die richtige Reihenfolge.",
+      "items": [
+        "Mit $4a$ multiplizieren: $4a^2x^2 + 4abx + 4ac = 0$",
+        "Ergänzen: $(2ax + b)^2 - b^2 + 4ac = 0$",
+        "Umstellen: $(2ax + b)^2 = b^2 - 4ac$",
+        "Wurzel ziehen und nach $x$ auflösen"
+      ],
+      "explain": "Die Reihenfolge: 1. Mit $4a$ multiplizieren: $4a^2x^2 + 4abx + 4ac = 0$. 2. Ergänzen: $(2ax + b)^2 - b^2 + 4ac = 0$. 3. Umstellen: $(2ax + b)^2 = b^2 - 4ac$. 4. Wurzel ziehen und nach $x$ auflösen.",
+      "id": "vq2"
+    },
+    {
+      "type": "choice",
+      "md": "Wie viele Lösungen hat $4x^2 - 12x + 9 = 0$?",
+      "options": [
+        {
+          "md": "genau eine",
+          "correct": true
+        },
+        {
+          "md": "zwei"
+        },
+        {
+          "md": "keine"
+        },
+        {
+          "md": "unendlich viele"
+        }
+      ],
+      "explain": "$D = 144 - 144 = 0$: eine doppelte Lösung, $x = 1{,}5$; es ist $(2x - 3)^2 = 0$.",
+      "label": "Diskriminante",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Haben $a$ und $c$ verschiedene Vorzeichen, hat $ax^2 + bx + c = 0$ immer zwei Lösungen.",
+      "answer": true,
+      "explain": "Dann ist $-4ac > 0$ und damit $D = b^2 - 4ac > 0$.",
+      "label": "Vorzeichen",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -58,6 +309,26 @@
       },
       "label": "abc-Formel",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "gleichung"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Die Diskriminante b² − 4ac entscheidet über die Zahl der Lösungen."
+      ]
     }
   ]
 }

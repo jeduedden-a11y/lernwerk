@@ -16,6 +16,87 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gemeinsame Punkte einer Schar",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Gemeinsame Punkte einer Schar.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Gefragt ist nach Punkten, durch die **jede** Funktion der Schar verläuft -- unabhängig vom Parameter. Signalformulierungen: *\"Zeigen Sie, dass alle Graphen der Schar durch einen gemeinsamen Punkt verlaufen\"*, *\"Bestimmen Sie die gemeinsamen Punkte\"*, *\"Gibt es Punkte, die alle Kurven gemeinsam haben?\"*\n\n> [!important] Abgrenzung zur Ortskurve\n> **Gemeinsamer Punkt:** ein und derselbe Punkt liegt auf **allen** Scharkurven.\n> **Ortskurve:** jede Scharkurve steuert **einen eigenen** Punkt bei; alle diese Punkte bilden zusammen eine Kurve.\n>\n> Die beiden Aufgabentypen werden häufig verwechselt, obwohl sie fast gegensätzlich sind."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Lösungswege",
+          "blocks": [
+            {
+              "md": "### Weg 1: Gleichsetzen zweier Scharfunktionen\nMan setzt $f_{t_1}(x) = f_{t_2}(x)$ für zwei **verschiedene** Parameterwerte und löst nach $x$. Da der gemeinsame Punkt für **alle** Parameter gelten muss, liefert dieser Ansatz die Kandidaten.\n\n### Weg 2: Nach dem Parameter sortieren\nMan schreibt $f_t(x)$ so um, dass der Parameter isoliert steht:\n$$f_t(x) = \\underbrace{A(x)}_{\\text{ohne } t} + t \\cdot \\underbrace{B(x)}_{\\text{Faktor bei } t}$$\n\nDamit der Funktionswert **unabhängig von $t$** ist, muss der Faktor bei $t$ verschwinden:\n$$B(x) = 0$$\n\nDiese Bedingung liefert die $x$-Koordinate direkt.\n\n> [!tip] Weg 2 ist meist schneller\n> Besonders wenn der Parameter linear vorkommt. Bei $t^2$ oder $\\tfrac{1}{t}$ ist Weg 1 oft übersichtlicher."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema (Weg 2)",
+          "blocks": [
+            {
+              "md": "1. **Funktionsterm nach Potenzen von $t$ sortieren.**\n2. **Den Faktor bei $t$ isolieren** (bei $t^2$ zusätzlich den Faktor bei $t^2$).\n3. **Alle Faktoren null setzen** und nach $x$ auflösen.\n4. **$y$-Koordinate berechnen** durch Einsetzen in den verbleibenden Term $A(x)$.\n5. **Als Punkt angeben.**\n6. **Probe:** zwei verschiedene $t$-Werte einsetzen -- beide müssen denselben Punkt liefern."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Gegeben ist die Schar $f_t(x) = x^2 + t \\cdot (x - 2)$. Zeigen Sie, dass alle Graphen durch einen gemeinsamen Punkt verlaufen.*\n\n**Schritt 1/2:** Der Term ist bereits sortiert:\n$$f_t(x) = \\underbrace{x^2}_{A(x)} + t \\cdot \\underbrace{(x-2)}_{B(x)}$$\n\n**Schritt 3:**\n$$B(x) = x - 2 = 0 \\;\\Longrightarrow\\; x = 2$$\n\n**Schritt 4:**\n$$y = A(2) = 2^2 = 4$$\n\n**Schritt 5:** Gemeinsamer Punkt: $P(2 \\mid 4)$\n\n**Schritt 6:** Probe:\n- $t = 0$: $f_0(x) = x^2$, also $f_0(2) = 4$ (stimmt)\n- $t = 5$: $f_5(x) = x^2 + 5(x-2)$, also $f_5(2) = 4 + 0 = 4$ (stimmt)\n- $t = -3$: $f_{-3}(2) = 4 - 3 \\cdot 0 = 4$ (stimmt)\n\n*Alle Graphen der Schar verlaufen durch den Punkt $P(2 \\mid 4)$.*"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit zwei gemeinsamen Punkten",
+          "blocks": [
+            {
+              "md": "*Schar: $f_t(x) = x^3 - t \\cdot (x^2 - 1)$*\n\nSortiert: $f_t(x) = x^3 - t(x^2 - 1)$\n\nFaktor bei $t$: $-(x^2 - 1) = 0 \\;\\Longrightarrow\\; x^2 = 1 \\;\\Longrightarrow\\; x_1 = 1,\\ x_2 = -1$\n\n$y$-Koordinaten: $A(1) = 1$ und $A(-1) = -1$\n\n**Zwei gemeinsame Punkte:** $P_1(1 \\mid 1)$ und $P_2(-1 \\mid -1)$."
+            }
+          ]
+        },
+        {
+          "title": "Wenn es keinen gemeinsamen Punkt gibt",
+          "blocks": [
+            {
+              "md": "Führt $B(x) = 0$ auf einen Widerspruch (etwa $1 = 0$), existiert **kein** gemeinsamer Punkt. Das ist ein gültiges Ergebnis und gehört so in die Antwort:\n\n*\"Die Gleichung $B(x) = 0$ hat keine Lösung, also besitzen die Graphen der Schar keinen gemeinsamen Punkt.\"*"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Fragestellung: gemeinsame Tangente",
+          "blocks": [
+            {
+              "md": "Manche Aufgaben fragen zusätzlich, ob sich die Scharkurven im gemeinsamen Punkt **berühren** oder nur schneiden. Prüfung über $f_t'(x_0)$:\n\n- Hängt $f_t'(x_0)$ **nicht** von $t$ ab, haben alle Kurven dort dieselbe Tangente -- sie berühren sich.\n- Hängt sie von $t$ ab, schneiden sie sich unter verschiedenen Winkeln.\n\nIm ersten Beispiel: $f_t'(x) = 2x + t$, also $f_t'(2) = 4 + t$ -- abhängig von $t$. Die Kurven schneiden sich im gemeinsamen Punkt, sie berühren sich nicht."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Mit der Ortskurve verwechseln.** Hier ist **ein** Punkt für alle Kurven gesucht, nicht eine Kurve aus vielen Punkten.\n- **Den ganzen Term null setzen** statt nur den Faktor bei $t$. Der parameterfreie Anteil $A(x)$ bleibt stehen.\n- **Bei $t^2$ nur den linearen Faktor betrachten.** Kommen $t$ **und** $t^2$ vor, müssen **beide** Faktoren verschwinden -- das ergibt ein System.\n- **$y$-Koordinate mit Parameter berechnen.** Nach dem Einsetzen von $x_0$ muss $t$ herausfallen; tut es das nicht, war $x_0$ falsch.\n- **Nur einen $t$-Wert zur Probe nutzen.** Erst zwei verschiedene Werte belegen die Unabhängigkeit vom Parameter.\n- **Bei fehlender Lösung nichts schreiben.** Auch \"kein gemeinsamer Punkt\" ist eine vollständige Antwort."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Funktionenscharen** · **Ortskurve bestimmen** · **Extrempunkte bestimmen** · **Tangente aufstellen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

@@ -16,6 +16,71 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Integralfunktion",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Integralfunktion.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Gegeben ist $F(x) = \\displaystyle\\int_a^x f(t)\\,dt$\"*, *\"Untersuchen Sie die Integralfunktion $F$ auf Monotonie und Extrema\"*, *\"Skizzieren Sie den Graphen von $F$ anhand des gegebenen Graphen von $f$, ohne $f$ zu integrieren\"*.\n\nEine Integralfunktion hat die **variable obere Grenze** $x$ -- sie ordnet jedem $x$ die (orientierte) Fläche zwischen $f$ und der x-Achse von $a$ bis $x$ zu. Das Ergebnis ist selbst wieder eine Funktion von $x$, nicht eine Zahl."
+            }
+          ]
+        },
+        {
+          "title": "Die zentrale Beziehung",
+          "blocks": [
+            {
+              "md": "> [!important] $F' = f$ -- der Hauptsatz in Aktion\n> $$F(x) = \\int_a^x f(t)\\,dt \\quad\\Longrightarrow\\quad F'(x) = f(x)$$\n> Das bedeutet: Alle Eigenschaften von $F$ (Monotonie, Extrema, Krümmung) lassen sich **direkt aus $f$ selbst** ablesen, ohne die Integration überhaupt auszuführen -- vorausgesetzt, nur das *qualitative* Verhalten ist gefragt.\n\n| Eigenschaft von $F$ | abzulesen an $f$ |\n|---|---|\n| $F$ steigt | $f(x) > 0$ |\n| $F$ fällt | $f(x) < 0$ |\n| $F$ hat Extremum | $f(x) = 0$ mit Vorzeichenwechsel |\n| $F$ hat Wendepunkt | $f$ hat Extremum |\n| $F(a) = 0$ | immer, da die Fläche von $a$ bis $a$ null ist |\n\n> [!warning] Extrema von $F$ sind Nullstellen von $f$ -- nicht Extrema von $f$\n> Der häufigste Verwechslungspunkt: Gesucht sind die **Nullstellen mit Vorzeichenwechsel von $f$**, nicht die Extremstellen von $f$. Das ist dieselbe Logik wie bei $f$ und $f'$, nur eine Stufe höher: $F$ verhält sich zu $f$ wie $f$ zu $f'$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Stammfunktion bilden**, falls der konkrete Funktionsterm von $F$ gefragt ist: $F(x) = \\left[\\text{Stammfunktion von } f\\right]_a^x$.\n2. **$F(a) = 0$ als Kontrolle** nutzen -- muss sich automatisch ergeben.\n3. **Für qualitative Untersuchungen (Monotonie, Extrema, Wendepunkte):** ausschließlich am Graphen oder Term von $f$ arbeiten, siehe Tabelle oben.\n4. **Ableitungsprobe:** $F'(x)$ bilden und mit $f(x)$ vergleichen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Gegeben ist $f(t) = t^2 - 4$ und $F(x) = \\displaystyle\\int_0^x (t^2-4)\\,dt$. Bestimmen Sie den Funktionsterm von $F$, prüfen Sie den Hauptsatz und untersuchen Sie $F$ auf Extrema.*\n\n**Schritt 1:** Stammfunktion von $t^2-4$ ist $\\dfrac{t^3}{3}-4t$:\n$$F(x) = \\left[\\frac{t^3}{3} - 4t\\right]_0^x = \\frac{x^3}{3} - 4x$$\n\n**Schritt 2:** $F(0) = 0 - 0 = 0$ (stimmt) -- passt zur Kontrolle $F(a)=0$.\n\n**Schritt 4 (Probe des Hauptsatzes):**\n$$F'(x) = x^2 - 4 = f(x) \\checkmark$$\n\n**Schritt 3: Extrema von $F$** -- gesucht sind die Nullstellen von $f$ mit Vorzeichenwechsel:\n$$f(t) = t^2 - 4 = 0 \\;\\Longrightarrow\\; t = \\pm 2$$\n\nVorzeichen von $f$: für $t<-2$ positiv, für $-2<t<2$ negativ, für $t>2$ positiv (Parabel mit Nullstellen bei $\\pm2$, nach oben geöffnet).\n\nBei $x=-2$: $f$ wechselt von $+$ zu $-$ $\\Rightarrow$ $F$ hat dort ein **Maximum**.\nBei $x=2$: $f$ wechselt von $-$ zu $+$ $\\Rightarrow$ $F$ hat dort ein **Minimum**.\n\n**Funktionswerte:**\n$$F(-2) = \\frac{-8}{3} - 4\\cdot(-2) = -\\frac{8}{3}+8 = \\frac{16}{3} \\approx 5{,}33$$\n$$F(2) = \\frac{8}{3} - 4\\cdot 2 = \\frac{8}{3}-8 = -\\frac{16}{3} \\approx -5{,}33$$\n\n**Konsistenzprobe:** Da $f$ eine gerade Funktion ist, ist $F$ als ihre Integralfunktion mit $a=0$ eine **ungerade** Funktion -- also muss $F(-2) = -F(2)$ gelten: $\\tfrac{16}{3} = -\\left(-\\tfrac{16}{3}\\right)$ (stimmt)."
+            }
+          ]
+        },
+        {
+          "title": "Sachkontext-Übersetzung",
+          "blocks": [
+            {
+              "md": "*\"Zu welchem Zeitpunkt ist der Bestand maximal?\"* bei einer Integralfunktion des Zuflusses bedeutet: Nullstelle der **Rate** $f$ mit Vorzeichenwechsel von Plus nach Minus suchen -- nicht das Maximum von $f$ selbst."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Extrema von $F$ mit Extrema von $f$ verwechseln.** Gesucht sind Nullstellen von $f$, nicht Extremstellen von $f$.\n- **$F(a)=0$ vergessen als Kontrollwert.**\n- **Bei qualitativen Aufgaben trotzdem die Stammfunktion integrieren wollen**, obwohl nur Monotonie oder Anzahl der Extrema gefragt ist -- unnötiger Aufwand, wenn der Graph von $f$ direkt abgelesen werden kann.\n- **Bei einer Integralfunktion mit variabler unterer Grenze das Vorzeichen des Hauptsatzes vergessen:** $\\dfrac{d}{dx}\\int_x^b f(t)\\,dt = -f(x)$.\n- **Wendepunkte von $F$ mit Wendepunkten von $f$ verwechseln.** Wendepunkte von $F$ liegen dort, wo $f$ selbst ein Extremum hat."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Integralbegriff und Hauptsatz** · **Monotonie untersuchen** · **Extrempunkte bestimmen** · **Wendepunkte bestimmen** · **Symmetrie untersuchen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

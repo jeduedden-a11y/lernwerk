@@ -16,6 +16,280 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Bei $f(g(x))$ wird erst $g$ (innen), dann $f$ (außen) angewendet. Jede Eigenschaft wird Baustein für Baustein ermittelt: Definitionsbereich, Grenzverhalten, Ableitung.",
+      "label": "Verfahren",
+      "more": "**Definitionsbereich:** Bei Summen und Produkten müssen **alle** Bausteine definiert sein: Schnittmenge. Bei $f(g(x))$ muss $x$ in $g$ passen und $g(x)$ in $f$.\n\n**Grenzverhalten nach Stärke:** $e^x$ schlägt jede Potenz, jede Potenz schlägt $\\ln x$. Daher $x^{10}e^{-x} \\to 0$ und $\\tfrac{\\ln x}{x} \\to 0$ für $x \\to \\infty$.\n\n**Ableitung:** Summenregel für Summen, Produktregel für Produkte, Kettenregel für Verkettungen: äußere Ableitung an der inneren Stelle mal innere Ableitung, $\\big(f(g(x))\\big)' = f'(g(x)) \\cdot g'(x)$.\n\n**Erkennen:** Steht im Argument mehr als nur $x$, liegt eine Verkettung vor.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $h(x) = \\ln(x^2 - 4) + \\sqrt{5 - x}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\ln(x^2 - 4): \\; x^2 > 4 \\;\\Rightarrow\\; x < -2 \\;\\lor\\; x > 2",
+            "why": "Argument des Logarithmus positiv."
+          },
+          {
+            "tex": "\\sqrt{5 - x}: \\; x \\leq 5",
+            "why": "Radikand nicht negativ."
+          },
+          {
+            "tex": "x < -2 \\;\\lor\\; 2 < x \\leq 5",
+            "why": "Beide Bausteine zugleich: Schnittmenge."
+          },
+          {
+            "tex": "h'(x) = \\frac{2x}{x^2 - 4} - \\frac{1}{2\\sqrt{5 - x}}",
+            "why": "Summenregel, zweimal Kettenregel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Logarithmus.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wurzel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schnitt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Dominanz",
+      "md": "**Wer gewinnt?** $h(x) = x^3 e^{-x}$: Die Potenz zieht nach oben, $e^{-x}$ nach unten. Auf Dauer gewinnt die Exponentialfunktion.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          16
+        ],
+        "y": [
+          -0.3,
+          1.6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 16,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "h",
+            "expr": "x^3*exp(-x)",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "h",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|1} · h(x) = {X^3*exp(-X)|4}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 1: h = 0,37.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "x = 3: Maximum, 27 · e⁻³ ≈ 1,34.",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 8: nur noch 0,17.",
+          "to": {
+            "X": 8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 15: praktisch 0. Die Exponentialfunktion dominiert.",
+          "to": {
+            "X": 15
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Beim Definitionsbereich einer Summe zählt die **Schnittmenge**, nicht die Vereinigung. Und $f(g(x)) \\neq g(f(x))$: Die Reihenfolge zählt.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zusammengesetzte Funktionen",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Zusammengesetzte Funktionen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: Aufgaben zu Funktionen wie $f(x) = x^2 \\cdot e^{-x}$, $f(x) = \\ln(\\sin x)$ oder $f(x) = x \\cdot \\sqrt{4-x^2}$ -- Funktionsterme, die **mehrere Funktionstypen verketten oder multiplizieren** (Potenz, Exponential-, Logarithmus-, Wurzel- oder trigonometrische Funktion gemeinsam).\n\nDieser Aufgabentyp bündelt keine neue Rechentechnik, sondern das **systematische Vorgehen**, wenn mehrere Funktionsklassen gleichzeitig auftreten."
+            }
+          ]
+        },
+        {
+          "title": "Das Prinzip: jede Eigenschaft komponentenweise ermitteln",
+          "blocks": [
+            {
+              "md": "> [!important] Schnittmenge statt Vereinigung\n> Beim Definitionsbereich gilt für jede beteiligte Komponente ihre eigene Bedingung -- alle müssen **gleichzeitig** erfüllt sein. Der Definitionsbereich der zusammengesetzten Funktion ist der **Schnitt** aller Teilbereiche, nicht deren Vereinigung."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Funktion in ihre Bestandteile zerlegen:** Welche Grundfunktionstypen sind beteiligt (Potenz, $e$-Funktion, $\\ln$, Wurzel, trigonometrisch)?\n2. **Definitionsbereich:** für jede Komponente einzeln bestimmen (siehe **Definitionsbereich bestimmen**), dann Schnittmenge bilden.\n3. **Ableitung:** Produktregel, Quotientenregel oder **Kettenregel** passend zur Verknüpfungsart anwenden.\n4. **Nullstellen der Ableitung:** Ist die Ableitung selbst ein Produkt, mit **Satz vom Nullprodukt** arbeiten -- dabei prüfen, welche Faktoren (etwa $e$-Terme) **niemals** null werden.\n5. **Verhalten im Unendlichen:** Dominanzregeln anwenden -- welche Komponente \"gewinnt\" (siehe **Verhalten im Unendlichen**: die Exponentialfunktion dominiert jede Potenzfunktion)."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie $f(x) = x^2 \\cdot e^{-x}$ auf Definitionsbereich, Extrempunkte und Verhalten im Unendlichen.*\n\n**Schritt 1:** Produkt aus einer ganzrationalen Funktion ($x^2$) und einer Exponentialfunktion ($e^{-x}$).\n\n**Schritt 2:** Beide Komponenten sind auf ganz $\\mathbb{R}$ definiert -- $D_f = \\mathbb{R}$.\n\n**Schritt 3:** Produktregel mit $u=x^2$, $u'=2x$, $v=e^{-x}$, $v'=-e^{-x}$:\n$$f'(x) = 2x \\cdot e^{-x} + x^2 \\cdot (-e^{-x}) = e^{-x}(2x - x^2)$$\n\n**Schritt 4:** $f'(x) = 0$: Da $e^{-x}$ für **kein** $x$ jemals null wird, genügt es, den zweiten Faktor null zu setzen:\n$$2x - x^2 = 0 \\;\\Longrightarrow\\; x(2-x) = 0 \\;\\Longrightarrow\\; x = 0 \\ \\lor \\ x = 2$$\n\nFunktionswerte: $f(0) = 0$, $f(2) = 4 \\cdot e^{-2} \\approx 4 \\cdot 0{,}1353 \\approx 0{,}541$.\n\nVorzeichenwechsel von $f'$ (Test mit $x=-1$: $f'(-1)=e^{1}(-2-1)<0$; $x=1$: $f'(1)=e^{-1}(2-1)>0$; $x=3$: $f'(3)=e^{-3}(6-9)<0$): bei $x=0$ Wechsel von $-$ nach $+$ -- **Minimum**; bei $x=2$ Wechsel von $+$ nach $-$ -- **Maximum**.\n\n**Schritt 5:** Für $x \\to +\\infty$: die $e$-Funktion dominiert die Potenzfunktion, $f(x) \\to 0$ (von oben, da $f(x)>0$ für alle $x\\neq0$). Für $x \\to -\\infty$: beide Faktoren wachsen unbeschränkt ($x^2 \\to \\infty$, $e^{-x}\\to\\infty$), also $f(x) \\to +\\infty$."
+            }
+          ]
+        },
+        {
+          "title": "Zweites Beispiel: Definitionsbereich als Schnittmenge",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie den Definitionsbereich von $f(x) = \\ln(x) \\cdot \\sqrt{4-x}$.*\n\nKomponente $\\ln(x)$: $x > 0$.\nKomponente $\\sqrt{4-x}$: $4 - x \\geq 0 \\Rightarrow x \\leq 4$.\n\nSchnittmenge:\n$$D_f = (0; 4]$$\n\nBeide Bedingungen müssen gleichzeitig gelten -- bei $x=5$ wäre die Wurzel undefiniert, bei $x=-1$ der Logarithmus, selbst wenn die jeweils andere Komponente dort noch definiert wäre."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Definitionsbereich als Vereinigung statt Schnittmenge bilden.** Führt zu einem zu großen, falschen Bereich.\n- **Bei der Nullstellensuche der Ableitung den $e$-Faktor mit null setzen.** $e^{\\text{irgendwas}}$ wird nie null -- dieser Faktor liefert nie einen Beitrag zur Lösungsmenge, darf aber auch nicht ignoriert werden: seine Existenz rechtfertigt gerade, dass der Satz vom Nullprodukt nur auf den Rest angewendet werden muss.\n- **Bei mehrfacher Verkettung nur eine Kettenregel-Stufe anwenden.** Bei $\\ln(\\sin x)$ zunächst nach $\\sin x$ ableiten (äußere Funktion $\\ln$), dann mit der Ableitung von $\\sin x$ multiplizieren (innere Funktion).\n- **Dominanzregeln raten statt begründen.** Die Aussage \"$e$-Funktion schlägt Potenzfunktion\" gilt für **jeden** Exponenten $n$, aber nicht automatisch für andere Kombinationen wie $\\ln(x)$ gegen $\\sqrt{x}$ (dort gewinnt $\\sqrt{x}$, da $\\ln$ noch langsamer wächst).\n- **Produktregel vergessen und nur eine Komponente ableiten.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Definitionsbereich bestimmen** · **Verhalten im Unendlichen** · **Satz vom Nullprodukt** · **Kettenregel** · **Produkt- und Quotientenregel** · **Extrempunkte bestimmen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Verketten",
+      "md": "$f(x) = x^2 - 1$ und $g(x) = 2x + 3$. Berechne $f(g(-1))$.",
+      "answer": 0,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$g(-1) = 1$, dann $f(1) = 0$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Für welche $x$ ist $h(x) = \\sqrt{x} \\cdot \\ln(3 - x)$ definiert?",
+      "options": [
+        {
+          "md": "$0 \\leq x < 3$",
+          "correct": true
+        },
+        {
+          "md": "$x \\geq 0$ oder $x < 3$",
+          "why": "Beide Faktoren müssen definiert sein: und, nicht oder."
+        },
+        {
+          "md": "$x < 3$"
+        },
+        {
+          "md": "$0 < x \\leq 3$",
+          "why": "$\\sqrt0$ ist erlaubt, $\\ln 0$ nicht."
+        }
+      ],
+      "explain": "Wurzel: $x \\geq 0$; Logarithmus: $3 - x > 0$. Beides zugleich.",
+      "label": "Definitionsbereich",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für $x \\to \\infty$ geht $x^{10}e^{-x}$ gegen 0.",
+      "answer": true,
+      "explain": "Die Exponentialfunktion schlägt jede Potenz.",
+      "label": "Dominanz",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Ableitung hat $h(x) = e^{3x^2}$?",
+      "options": [
+        {
+          "md": "$6x\\,e^{3x^2}$",
+          "correct": true
+        },
+        {
+          "md": "$e^{3x^2}$",
+          "why": "Die innere Ableitung 6x fehlt."
+        },
+        {
+          "md": "$3x^2 e^{3x^2 - 1}$"
+        },
+        {
+          "md": "$6x\\,e^{6x}$"
+        }
+      ],
+      "explain": "Kettenregel: äußere Ableitung $e^{3x^2}$ mal innere $6x$.",
+      "label": "Kettenregel",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -68,6 +342,62 @@
       },
       "label": "Quotientenregel",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "verkettung"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "verkettung"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "verkettung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "verkettung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Summen und Produkte: Schnittmenge der Definitionsbereiche; Verkettung: innen zuerst."
+      ]
     }
   ]
 }

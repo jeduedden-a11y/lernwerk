@@ -16,6 +16,87 @@
       "id": "t1"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lagebeziehung Ebene-Ebene",
+      "path": "02 Wiki/Mathematik/07 Vektoranalysis/Aufgabentypen/Lagebeziehung Ebene-Ebene.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie die Lage der beiden Ebenen\"*, *\"Bestimmen Sie die Schnittgerade\"*, *\"Wo treffen die beiden Dachflächen aufeinander?\"* (Firstlinie)."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Möglichkeiten",
+          "blocks": [
+            {
+              "md": "| Lage | Kriterium | Ergebnis |\n|---|---|---|\n| **identisch** | $\\vec{n_2} = k\\vec{n_1}$ **und** $d_2 = k \\cdot d_1$ | alle Punkte gemeinsam |\n| **echt parallel** | $\\vec{n_2} = k\\vec{n_1}$, aber $d_2 \\neq k \\cdot d_1$ | kein gemeinsamer Punkt |\n| **schneidend** | $\\vec{n_2}$ kein Vielfaches von $\\vec{n_1}$ | **Schnittgerade** |\n\n> [!important] Zwei Ebenen schneiden sich nie in einem Punkt\n> Der Schnitt ist entweder leer, eine **Gerade** oder eine ganze Ebene. Wer einen Schnittpunkt berechnet, hat den Aufgabentyp verwechselt -- ein einzelner Punkt entsteht erst beim Schnitt **dreier** Ebenen."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema",
+          "blocks": [
+            {
+              "md": "1. **Beide Ebenen in Koordinatenform** bringen.\n2. **Normalenvektoren vergleichen:** Vielfache voneinander?\n3. **Falls parallel:** Gleichungen gleichnamig machen (auf denselben Normalenvektor skalieren) und die Konstanten vergleichen. Gleich → identisch, verschieden → echt parallel.\n4. **Falls nicht parallel:** Gleichungssystem aus beiden Koordinatengleichungen aufstellen -- zwei Gleichungen, drei Unbekannte.\n5. **Eine Variable als Parameter setzen**, etwa $x_3 = t$.\n6. **Nach den anderen beiden auflösen.**\n7. **Als Geradengleichung** in Parameterform schreiben.\n8. **Probe:** Zwei Punkte der Schnittgeraden in **beide** Ebenengleichungen einsetzen."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: Schnittgerade",
+          "blocks": [
+            {
+              "md": "*Bestimmen Sie die Schnittgerade von*\n$$E_1: x_1 + x_2 + x_3 = 6, \\qquad E_2: 2x_1 - x_2 + x_3 = 3$$\n\n**Schritt 2:** $\\vec{n_1} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}$, $\\vec{n_2} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}$ -- keine Vielfachen. Die Ebenen schneiden sich.\n\n**Schritt 4/5:** Setze $x_3 = t$:\n$$\\begin{aligned} x_1 + x_2 &= 6 - t \\\\ 2x_1 - x_2 &= 3 - t \\end{aligned}$$\n\n**Schritt 6:** Addition beider Gleichungen:\n$$3x_1 = 9 - 2t \\;\\Longrightarrow\\; x_1 = 3 - \\tfrac{2}{3}t$$\n\nEinsetzen in die erste:\n$$x_2 = 6 - t - \\left(3 - \\tfrac{2}{3}t\\right) = 3 - \\tfrac{1}{3}t$$\n\n**Schritt 7:**\n$$\\vec{x} = \\begin{pmatrix} 3 - \\tfrac{2}{3}t \\\\ 3 - \\tfrac{1}{3}t \\\\ t \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 3 \\\\ 0 \\end{pmatrix} + t\\begin{pmatrix} -\\tfrac{2}{3} \\\\ -\\tfrac{1}{3} \\\\ 1 \\end{pmatrix}$$\n\nRichtungsvektor mit 3 multiplizieren (erlaubt, Richtung bleibt):\n$$s: \\vec{x} = \\begin{pmatrix} 3 \\\\ 3 \\\\ 0 \\end{pmatrix} + r\\begin{pmatrix} -2 \\\\ -1 \\\\ 3 \\end{pmatrix}$$\n\n**Schritt 8 (Probe):**\n\nStützpunkt $(3 \\mid 3 \\mid 0)$:\n- in $E_1$: $3 + 3 + 0 = 6$ (stimmt)\n- in $E_2$: $6 - 3 + 0 = 3$ (stimmt)\n\nZweiter Punkt mit $r = 1$: $(1 \\mid 2 \\mid 3)$\n- in $E_1$: $1 + 2 + 3 = 6$ (stimmt)\n- in $E_2$: $2 - 2 + 3 = 3$ (stimmt)\n\n> [!tip] Der Richtungsvektor lässt sich vorab kontrollieren\n> Die Schnittgerade liegt in **beiden** Ebenen, ihr Richtungsvektor steht also senkrecht auf **beiden** Normalenvektoren. Damit gilt:\n> $$\\vec{u} = \\vec{n_1} \\times \\vec{n_2}$$\n>\n> Im Beispiel:\n> $$\\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\cdot 1 - 1 \\cdot (-1) \\\\ 1 \\cdot 2 - 1 \\cdot 1 \\\\ 1 \\cdot (-1) - 1 \\cdot 2 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 1 \\\\ -3 \\end{pmatrix}$$\n>\n> Das ist $-1$ mal der oben berechnete Richtungsvektor -- also dieselbe Richtung. Diese Kontrolle kostet eine Zeile und bestätigt die ganze Rechnung."
+            }
+          ]
+        },
+        {
+          "title": "Alternative: Richtungsvektor über Kreuzprodukt, Punkt über Probieren",
+          "blocks": [
+            {
+              "md": "Ein schnellerer Weg, wenn nur die Schnittgerade gesucht ist:\n\n1. **Richtungsvektor:** $\\vec{u} = \\vec{n_1} \\times \\vec{n_2}$\n2. **Einen gemeinsamen Punkt finden:** Eine Koordinate frei wählen (etwa $x_3 = 0$) und das entstehende $2 \\times 2$-System lösen.\n3. **Geradengleichung** zusammensetzen.\n\nIm Beispiel mit $x_3 = 0$: $x_1 + x_2 = 6$ und $2x_1 - x_2 = 3$ liefern $x_1 = 3$, $x_2 = 3$ -- derselbe Stützpunkt wie oben.\n\n> [!warning] Die freie Wahl kann scheitern\n> Verläuft die Schnittgerade parallel zur Ebene $x_3 = 0$, führt die Wahl $x_3 = 0$ auf einen Widerspruch. Dann eine andere Koordinate frei setzen. Erkennbar vorab daran, dass die dritte Komponente von $\\vec{u}$ null ist."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel: parallel",
+          "blocks": [
+            {
+              "md": "*$E_1: x_1 + x_2 + x_3 = 6$ und $E_2: 2x_1 + 2x_2 + 2x_3 = 5$*\n\n$\\vec{n_2} = 2\\vec{n_1}$ -- parallel. Gleichnamig machen: $E_2$ durch 2 teilen ergibt $x_1+x_2+x_3 = 2{,}5$.\n\nKonstanten 6 und 2,5 verschieden → **echt parallel**. Abstand über **Abstände paralleler Objekte**."
+            }
+          ]
+        },
+        {
+          "title": "Drei Ebenen",
+          "blocks": [
+            {
+              "md": "Fragt die Aufgabe nach dem gemeinsamen Punkt **dreier** Ebenen, entsteht ein $3 \\times 3$-System, gelöst über den **Gauß-Algorithmus**. Mögliche Ergebnisse:\n\n| Lösungsmenge | geometrische Deutung |\n|---|---|\n| genau ein Punkt | die drei Ebenen schneiden sich in einem Punkt |\n| eine Gerade | alle drei enthalten dieselbe Gerade (Büschel) |\n| leer | keine gemeinsamen Punkte |"
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Einen Schnittpunkt statt einer Schnittgeraden suchen.**\n- **Konstanten vergleichen, ohne gleichnamig zu machen.** Bei $x_1+x_2+x_3=6$ und $2x_1+2x_2+2x_3=12$ sehen die Konstanten verschieden aus, die Ebenen sind aber **identisch**.\n- **Beim Parametrisieren die Ersetzung vergessen.** Nach $x_3 = t$ muss $t$ konsequent in allen Zeilen stehen.\n- **Richtungsvektor nicht kürzen.** Brüche sind zulässig, aber unübersichtlich.\n- **Nur einen Punkt zur Probe nehmen.** Zwei Punkte belegen, dass wirklich die ganze Gerade in beiden Ebenen liegt.\n- **Bei parallelem Richtungsvektor zur gewählten Koordinatenebene nicht umschalten.**"
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Lagebeziehung Gerade-Ebene** · **Lagebeziehung Gerade-Gerade** · **Ebenengleichung umwandeln** · **Abstände paralleler Objekte** · **Schnittwinkel im Raum** · **Gauß-Algorithmus**"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",

@@ -73,6 +73,409 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Einheitskreis",
+      "md": "**Vom Einheitskreis zur Sinuskurve:** $P$ läuft um den Kreis. Seine Höhe (orange) ist $\\sin\\varphi$, sein x-Wert (blau) $\\cos\\varphi$; rechts wird die Höhe über dem Winkel aufgetragen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1.25,
+          7.75
+        ],
+        "y": [
+          -1.3,
+          1.3
+        ],
+        "grid": false,
+        "height": 131,
+        "vars": [
+          {
+            "name": "PHI",
+            "min": 0,
+            "max": 6.2832,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "ko",
+            "expr": "sqrt(1 - x^2)",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "gray",
+            "width": 1.6,
+            "samples": 200
+          },
+          {
+            "name": "ku",
+            "expr": "-sqrt(1 - x^2)",
+            "domain": [
+              -1,
+              1
+            ],
+            "color": "gray",
+            "width": 1.6,
+            "samples": 200
+          },
+          {
+            "name": "s",
+            "expr": "sin(x - 1.5)",
+            "domain": [
+              1.5,
+              7.7832
+            ],
+            "color": "accent",
+            "width": 2.4
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "cos(PHI)",
+              "sin(PHI)"
+            ],
+            "color": "gray",
+            "width": 1.4
+          },
+          {
+            "from": [
+              0,
+              0
+            ],
+            "to": [
+              "cos(PHI)",
+              0
+            ],
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "from": [
+              "cos(PHI)",
+              0
+            ],
+            "to": [
+              "cos(PHI)",
+              "sin(PHI)"
+            ],
+            "color": "orange",
+            "width": 3
+          },
+          {
+            "from": [
+              "cos(PHI)",
+              "sin(PHI)"
+            ],
+            "to": [
+              "1.5 + PHI",
+              "sin(PHI)"
+            ],
+            "color": "gray",
+            "dashed": true,
+            "width": 1
+          }
+        ],
+        "points": [
+          {
+            "x": "cos(PHI)",
+            "y": "sin(PHI)",
+            "color": "accent",
+            "label": "P"
+          },
+          {
+            "x": "1.5 + PHI",
+            "y": "sin(PHI)",
+            "color": "accent"
+          }
+        ],
+        "readout": "φ = {PHI*180/pi|0}° · cos φ = {cos(PHI)|3} · sin φ = {sin(PHI)|3}"
+      },
+      "timeline": [
+        {
+          "caption": "φ = 0°: P liegt rechts auf der Achse; sin 0 = 0 und cos 0 = 1.",
+          "set": {
+            "PHI": 0
+          }
+        },
+        {
+          "caption": "φ = 30°: Die Höhe ist genau 1/2.",
+          "to": {
+            "PHI": 0.5236
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "φ = 90°: ganz oben, sin = 1 und cos = 0.",
+          "to": {
+            "PHI": 1.5708
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "φ = 180°: links, sin = 0 und cos = −1.",
+          "to": {
+            "PHI": 3.1416
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "φ = 270°: unten, sin = −1.",
+          "to": {
+            "PHI": 4.7124
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "φ = 360°: Eine volle Runde ist eine volle Periode der Sinuskurve.",
+          "to": {
+            "PHI": 6.2832
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Am **Einheitskreis** ist $\\cos\\varphi$ die x- und $\\sin\\varphi$ die y-Koordinate. Daraus folgen $\\sin^2\\varphi + \\cos^2\\varphi = 1$ und $\\tan\\varphi = \\tfrac{\\sin\\varphi}{\\cos\\varphi}$.",
+      "label": "Einheitskreis",
+      "more": "**Bogenmaß:** Der Winkel wird als Länge des Bogens auf dem Einheitskreis gemessen: $360^\\circ = 2\\pi$, $180^\\circ = \\pi$, $90^\\circ = \\tfrac{\\pi}{2}$. In der Analysis rechnet man im Bogenmaß, weil nur dort $(\\sin x)' = \\cos x$ gilt.\n\n**Exakte Werte** im ersten Quadranten:\n\n| $\\varphi$ | $0$ | $\\tfrac{\\pi}{6}$ | $\\tfrac{\\pi}{4}$ | $\\tfrac{\\pi}{3}$ | $\\tfrac{\\pi}{2}$ |\n|---|---|---|---|---|---|\n| $\\sin\\varphi$ | $0$ | $\\tfrac12$ | $\\tfrac{\\sqrt2}{2}$ | $\\tfrac{\\sqrt3}{2}$ | $1$ |\n| $\\cos\\varphi$ | $1$ | $\\tfrac{\\sqrt3}{2}$ | $\\tfrac{\\sqrt2}{2}$ | $\\tfrac12$ | $0$ |\n\n**Andere Quadranten** über den Bezugswinkel und das Vorzeichen: $\\sin(\\pi - \\varphi) = \\sin\\varphi$, $\\cos(\\pi - \\varphi) = -\\cos\\varphi$, $\\sin(-\\varphi) = -\\sin\\varphi$, $\\cos(-\\varphi) = \\cos\\varphi$.\n\n**Kofunktionen:** $\\sin\\left(\\tfrac{\\pi}{2} - \\varphi\\right) = \\cos\\varphi$. Deshalb ist die Kosinuskurve die um $\\tfrac{\\pi}{2}$ nach links verschobene Sinuskurve.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Woher die exakten Werte kommen:** aus dem gleichseitigen Dreieck und dem halben Quadrat.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{gleichseitiges Dreieck, Seite } 1",
+            "why": "Die Höhe teilt es in zwei rechtwinklige Dreiecke mit 30° und 60°."
+          },
+          {
+            "tex": "\\sin 30^\\circ = \\frac{\\tfrac12}{1} = \\frac12",
+            "why": "Dem 30°-Winkel liegt die halbe Grundseite gegenüber."
+          },
+          {
+            "tex": "h = \\sqrt{1 - \\tfrac14} = \\frac{\\sqrt3}{2} = \\sin 60^\\circ",
+            "why": "Pythagoras liefert die Höhe."
+          },
+          {
+            "tex": "\\sin 45^\\circ = \\cos 45^\\circ,\\; 2\\sin^2 45^\\circ = 1 \\;\\Rightarrow\\; \\sin 45^\\circ = \\frac{\\sqrt2}{2}",
+            "why": "Im halben Quadrat sind beide Katheten gleich lang."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Dreieck.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "30 Grad.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "60 Grad.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "45 Grad.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wichtige Werte des Einheitskreises",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Wichtige Werte des Einheitskreises.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "| Winkel | $\\sin$ | $\\cos$ |\n|--------|--------|--------|\n| $0$ | $0$ | $1$ |\n| $\\dfrac{\\pi}{2}$ | $1$ | $0$ |\n| $\\pi$ | $0$ | $-1$ |\n| $\\dfrac{3\\pi}{2}$ | $-1$ | $0$ |\n| $2\\pi$ | $0$ | $1$ |\n\nFundamentale Referenzwerte für alle trigonometrischen Rechnungen — Basis der **Grundidentitäten**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Trigonometrische Grundidentitäten",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Trigonometrische Grundidentitäten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Reziproke Identitäten",
+          "blocks": [
+            {
+              "md": "$$\\sin x = \\frac{1}{\\csc x} \\qquad \\cos x = \\frac{1}{\\sec x} \\qquad \\tan x = \\frac{1}{\\cot x}$$\n$$\\csc x = \\frac{1}{\\sin x} \\qquad \\sec x = \\frac{1}{\\cos x} \\qquad \\cot x = \\frac{1}{\\tan x}$$"
+            }
+          ]
+        },
+        {
+          "title": "Quotientenidentitäten",
+          "blocks": [
+            {
+              "md": "$$\\tan x = \\frac{\\sin x}{\\cos x} \\qquad \\cot x = \\frac{\\cos x}{\\sin x}$$"
+            }
+          ]
+        },
+        {
+          "title": "Pythagoreische Identitäten",
+          "blocks": [
+            {
+              "md": "$$\\sin^2 x + \\cos^2 x = 1$$\n$$1 + \\tan^2 x = \\sec^2 x$$\n$$1 + \\cot^2 x = \\csc^2 x$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung",
+          "blocks": [
+            {
+              "md": "Diese drei Gruppen sind das Fundament aller weiteren trigonometrischen Umformungen — insbesondere bei **trigonometrischen Integralen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Symmetrie- und Kofunktionsidentitäten",
+      "path": "02 Wiki/Mathematik/01 Formelsammlung/Symmetrie- und Kofunktionsidentitäten.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Symmetrie (gerade/ungerade Funktionen)",
+          "blocks": [
+            {
+              "md": "$$\\sin(-x) = -\\sin x \\qquad \\cos(-x) = \\cos x \\qquad \\tan(-x) = -\\tan x$$\n$$\\csc(-x) = -\\csc x \\qquad \\sec(-x) = \\sec x \\qquad \\cot(-x) = -\\cot x$$\n\n$\\sin$, $\\tan$, $\\csc$, $\\cot$ sind **ungerade**; $\\cos$ und $\\sec$ sind **gerade**."
+            }
+          ]
+        },
+        {
+          "title": "Kofunktionsidentitäten",
+          "blocks": [
+            {
+              "md": "$$\\sin\\!\\left(\\frac{\\pi}{2}-x\\right) = \\cos x \\qquad \\cos\\!\\left(\\frac{\\pi}{2}-x\\right) = \\sin x$$\n$$\\tan\\!\\left(\\frac{\\pi}{2}-x\\right) = \\cot x \\qquad \\cot\\!\\left(\\frac{\\pi}{2}-x\\right) = \\tan x$$\n$$\\sec\\!\\left(\\frac{\\pi}{2}-x\\right) = \\csc x \\qquad \\csc\\!\\left(\\frac{\\pi}{2}-x\\right) = \\sec x$$\n\nErweitert die **Grundidentitäten**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "In welchem Quadranten sind $\\sin\\varphi$ **und** $\\cos\\varphi$ beide negativ?",
+      "options": [
+        {
+          "md": "im dritten",
+          "correct": true
+        },
+        {
+          "md": "im zweiten",
+          "why": "Dort ist der Sinus positiv."
+        },
+        {
+          "md": "im vierten",
+          "why": "Dort ist der Kosinus positiv."
+        },
+        {
+          "md": "im ersten"
+        }
+      ],
+      "explain": "Im dritten Quadranten ($180^\\circ$ bis $270^\\circ$) liegt $P$ links unten: beide Koordinaten negativ.",
+      "label": "Vorzeichen",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Pythagoras",
+      "md": "$\\cos\\varphi = -0{,}8$ und $\\varphi$ liegt im zweiten Quadranten. Berechne $\\sin\\varphi$.",
+      "answer": 0.6,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\sin^2\\varphi = 1 - 0{,}64 = 0{,}36$; im zweiten Quadranten ist der Sinus positiv: $\\sin\\varphi = 0{,}6$.",
+      "id": "vq2"
+    },
+    {
+      "type": "match",
+      "label": "Bogenmaß",
+      "md": "Ordne Gradmaß und Bogenmaß zu.",
+      "pairs": [
+        [
+          "$30^\\circ$",
+          "$\\tfrac{\\pi}{6}$"
+        ],
+        [
+          "$45^\\circ$",
+          "$\\tfrac{\\pi}{4}$"
+        ],
+        [
+          "$120^\\circ$",
+          "$\\tfrac{2\\pi}{3}$"
+        ],
+        [
+          "$270^\\circ$",
+          "$\\tfrac{3\\pi}{2}$"
+        ],
+        [
+          "$360^\\circ$",
+          "$2\\pi$"
+        ]
+      ],
+      "explain": "$180^\\circ = \\pi$; man rechnet mit $\\varphi_{\\text{Bogen}} = \\tfrac{\\pi}{180^\\circ} \\cdot \\varphi$.",
+      "id": "vq3"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung von $\\sin 30^\\circ = \\tfrac12$ in die richtige Reihenfolge.",
+      "items": [
+        "Gleichseitiges Dreieck mit der Seitenlänge 1 zeichnen",
+        "Die Höhe halbiert die Grundseite und den Winkel an der Spitze",
+        "Im Teildreieck liegt dem $30^\\circ$-Winkel die Strecke $\\tfrac12$ gegenüber",
+        "$\\sin 30^\\circ = \\tfrac{1/2}{1} = \\tfrac12$"
+      ],
+      "explain": "Die Reihenfolge: 1. Gleichseitiges Dreieck mit der Seitenlänge 1 zeichnen. 2. Die Höhe halbiert die Grundseite und den Winkel an der Spitze. 3. Im Teildreieck liegt dem $30^\\circ$-Winkel die Strecke $\\tfrac12$ gegenüber. 4. $\\sin 30^\\circ = \\tfrac{1/2}{1} = \\tfrac12$.",
+      "id": "vq4"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\sin(-x) = \\sin x$ gilt für alle $x$.",
+      "answer": false,
+      "explain": "Der Sinus ist ungerade: $\\sin(-x) = -\\sin x$. Gerade ist der Kosinus: $\\cos(-x) = \\cos x$.",
+      "label": "Symmetrie",
+      "id": "vq5"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die exakten Werte zu.",
@@ -112,12 +515,62 @@
       "id": "n1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "trigwert"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "trigwert"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "trigwert"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "trigwert"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Einheitskreis: cos = x, sin = y.",
         "sin² + cos² = 1; sin ungerade, cos gerade; sin(x + π/2) = cos x.",
-        "Exakte Werte über √0/2 bis √4/2."
+        "Exakte Werte über √0/2 bis √4/2.",
+        "Exakte Werte aus dem gleichseitigen Dreieck ($30^\\circ$, $60^\\circ$) und dem halben Quadrat ($45^\\circ$).",
+        "Andere Quadranten: Bezugswinkel plus Vorzeichen."
       ],
       "id": "summary"
     }

@@ -16,6 +16,269 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$\\sqrt x$ startet in $(0 \\mid 0)$ mit **senkrechter Tangente**, wächst immer langsamer und ist nur für $x \\geq 0$ definiert. Bei $a\\sqrt{bx + c} + d$ liegt der Startpunkt dort, wo der Radikand null wird.",
+      "label": "Verfahren",
+      "more": "1. **Definitionsbereich:** $bx + c \\geq 0$; am Rand liegt der Startpunkt $\\left(-\\tfrac{c}{b} \\mid d\\right)$.\n2. **Ableitung** mit der Kettenregel: $f'(x) = \\dfrac{ab}{2\\sqrt{bx + c}}$. Am Startpunkt ist sie nicht definiert, die Tangente steht dort senkrecht.\n3. **Monotonie:** Das Vorzeichen von $a \\cdot b$ entscheidet, ob der Graph steigt oder fällt.\n4. **Nullstellen und Schnittpunkte** führen auf Wurzelgleichungen: isolieren, quadrieren, Probe.\n\nDie Wurzelfunktion ist die Umkehrfunktion von $x^2$ auf $x \\geq 0$: Ihr Graph ist die an $y = x$ gespiegelte halbe Parabel.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = 2\\sqrt{x + 3} - 4$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x + 3 \\geq 0 \\;\\Rightarrow\\; x \\geq -3",
+            "why": "Der Graph beginnt bei x = −3."
+          },
+          {
+            "tex": "f(-3) = -4: \\quad S(-3 \\mid -4)",
+            "why": "Startpunkt."
+          },
+          {
+            "tex": "f'(x) = \\frac{2}{2\\sqrt{x + 3}} = \\frac{1}{\\sqrt{x + 3}} > 0",
+            "why": "Wachsend; bei x = −3 unendlich steil."
+          },
+          {
+            "tex": "2\\sqrt{x + 3} = 4 \\;\\Rightarrow\\; \\sqrt{x + 3} = 2 \\;\\Rightarrow\\; x = 1",
+            "why": "Nullstelle; Probe: 2 · 2 − 4 = 0."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Definitionsbereich.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Startpunkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstelle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Tangente",
+      "md": "**Die senkrechte Tangente:** Je näher der Berührpunkt an 0 rückt, desto steiler wird die Tangente an $\\sqrt x$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          6
+        ],
+        "y": [
+          -0.5,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0.005,
+            "max": 6,
+            "value": 4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "sqrt(x)",
+            "domain": [
+              0,
+              6
+            ],
+            "color": "blue",
+            "samples": 400
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|3} · Steigung {1/(2*sqrt(X))|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 4: Steigung 0,25.",
+          "set": {
+            "X": 4
+          }
+        },
+        {
+          "caption": "x = 1: Steigung 0,5.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 0,1: schon 1,58.",
+          "to": {
+            "X": 0.1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 0,01: Steigung 5; im Grenzfall senkrecht.",
+          "to": {
+            "X": 0.01
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Die innere Ableitung nicht vergessen: $\\left(\\sqrt{4x + 1}\\right)' = \\dfrac{4}{2\\sqrt{4x + 1}}$. Am Startpunkt gibt es keine Ableitung.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wurzelfunktion",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Aufgabentypen/Wurzelfunktion.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Wann dieser Aufgabentyp vorliegt",
+          "blocks": [
+            {
+              "md": "Signalformulierungen: *\"Untersuchen Sie $f(x) = \\sqrt{\\dots}$\"*, *\"Geben Sie Definitions- und Wertebereich von $f$ an\"*, *\"Warum hat der Graph an seinem Startpunkt eine senkrechte Tangente?\"*."
+            }
+          ]
+        },
+        {
+          "title": "Grundeigenschaften von $f(x) = \\sqrt{x}$",
+          "blocks": [
+            {
+              "md": "| Eigenschaft | Wert |\n|---|---|\n| Definitionsbereich | $D_f = [0; \\infty)$ |\n| Wertebereich | $W_f = [0; \\infty)$ |\n| Monotonie | streng monoton wachsend |\n| Symmetrie | keine |\n| Startpunkt | $(0 \\mid 0)$, dort **senkrechte Tangente** |\n\n> [!important] Umkehrfunktion von $x^2$ -- aber eingeschränkt\n> $\\sqrt{x}$ ist die Umkehrfunktion von $g(x) = x^2$, allerdings nur für $x \\geq 0$: $g$ selbst ist auf ganz $\\mathbb{R}$ nicht umkehrbar, weil sie dort nicht streng monoton ist (siehe **Umkehrfunktion bestimmen**). Erst die Einschränkung auf $x\\geq0$ macht $g$ umkehrbar, und die Umkehrung ist $\\sqrt{x}$."
+            }
+          ]
+        },
+        {
+          "title": "Die senkrechte Tangente am Startpunkt",
+          "blocks": [
+            {
+              "md": "Die Ableitung von $f(x) = \\sqrt{x} = x^{1/2}$ lautet über die Potenzregel:\n$$f'(x) = \\frac{1}{2}x^{-1/2} = \\frac{1}{2\\sqrt{x}}$$\n\nFür $x \\to 0^+$ geht der Nenner gegen $0$, also $f'(x) \\to \\infty$. Die Steigung wird am Startpunkt beliebig groß -- der Graph beginnt **senkrecht** und flacht danach zunehmend ab."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsschema für verschobene Wurzelfunktionen",
+          "blocks": [
+            {
+              "md": "Bei $f(x) = \\sqrt{a\\cdot x + b} + c$:\n\n1. **Definitionsbereich:** Radikand $\\geq 0$ auflösen, $a \\cdot x + b \\geq 0$ (siehe **Definitionsbereich bestimmen**).\n2. **Startpunkt** des Graphen: an der Stelle, wo der Radikand gleich $0$ wird; dort $y$-Wert $= c$ einsetzen.\n3. **Wertebereich:** je nach Vorzeichen von $a$ und Wert von $c$, beginnend beim Funktionswert des Startpunkts.\n4. **Nullstellen und weitere Punkte** durch Einsetzen bzw. Auflösen der zugehörigen **Wurzelgleichungen**."
+            }
+          ]
+        },
+        {
+          "title": "Durchgerechnetes Beispiel",
+          "blocks": [
+            {
+              "md": "*Untersuchen Sie $f(x) = \\sqrt{2x + 4} - 1$ auf Definitionsbereich, Startpunkt und Nullstelle.*\n\n**Schritt 1:**\n$$2x + 4 \\geq 0 \\;\\Longrightarrow\\; x \\geq -2 \\;\\Longrightarrow\\; D_f = [-2; \\infty)$$\n\n**Schritt 2:** Startpunkt bei $x=-2$: $f(-2) = \\sqrt{0} - 1 = -1$, also $(-2 \\mid -1)$.\n\n**Schritt 3:** Da die Wurzel für $x \\geq -2$ nur nicht-negative Werte liefert und $-1$ addiert wird: $W_f = [-1; \\infty)$.\n\n**Schritt 4:** Nullstelle -- Wurzelgleichung lösen:\n$$\\sqrt{2x+4} - 1 = 0 \\;\\Longrightarrow\\; \\sqrt{2x+4} = 1 \\;\\Longrightarrow\\; 2x+4 = 1 \\;\\Longrightarrow\\; x = -1{,}5$$\n\n**Probe:**\n$$f(-1{,}5) = \\sqrt{2\\cdot(-1{,}5)+4} - 1 = \\sqrt{1} - 1 = 1 - 1 = 0 \\checkmark$$\n\n**Steigung am Startpunkt:** $f'(x) = \\dfrac{1}{\\sqrt{2x+4}}$; für $x \\to -2^+$ geht der Nenner gegen $0$, die Steigung wird unbeschränkt groß -- auch hier eine senkrechte Tangente am linken Rand des Definitionsbereichs."
+            }
+          ]
+        },
+        {
+          "title": "Typische Fallen",
+          "blocks": [
+            {
+              "md": "- **Definitionsbereich mit Wertebereich verwechseln.** Der Radikand muss $\\geq 0$ sein (Bedingung an $x$), der Funktionswert selbst ist ebenfalls $\\geq 0$ (Aussage über $y$) -- zwei verschiedene Aussagen.\n- **Nach dem Verschieben den Startpunkt am alten Ort $x=0$ suchen.** Er liegt dort, wo der Radikand null wird, nicht bei $x=0$.\n- **Die senkrechte Tangente als Fehler in der Rechnung deuten.** Sie ist ein charakteristisches, korrektes Merkmal jeder Wurzelfunktion am Rand ihres Definitionsbereichs.\n- **Bei der Wurzelgleichung zur Nullstellenbestimmung die Probe auslassen.** Wie bei jeder **Wurzelgleichung** können Scheinlösungen entstehen.\n- **Wurzelfunktion und Potenzfunktion mit gebrochenem Exponenten als unterschiedliche Objekte behandeln.** $\\sqrt{x} = x^{1/2}$ ist derselbe Funktionstyp, siehe **Potenzfunktionen**."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Aufgabentypen",
+          "blocks": [
+            {
+              "md": "**Potenzfunktionen** · **Definitionsbereich bestimmen** · **Umkehrfunktion bestimmen** · **Wurzelgleichungen**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wo beginnt der Graph von $f(x) = -\\sqrt{2x - 6} + 1$?",
+      "options": [
+        {
+          "md": "$(3 \\mid 1)$",
+          "correct": true
+        },
+        {
+          "md": "$(-3 \\mid 1)$",
+          "why": "$2x - 6 = 0$ gibt $x = 3$."
+        },
+        {
+          "md": "$(6 \\mid 1)$"
+        },
+        {
+          "md": "$(3 \\mid -1)$",
+          "why": "Am Startpunkt ist die Wurzel 0; es bleibt +1."
+        }
+      ],
+      "explain": "Radikand null: $x = 3$; dort ist $f(3) = 1$. Das Minus spiegelt den Graphen nach unten.",
+      "label": "Startpunkt",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Steigung",
+      "md": "An welcher Stelle hat die Tangente an $f(x) = \\sqrt x$ die Steigung $\\tfrac14$?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac{1}{2\\sqrt x} = \\tfrac14$ gibt $\\sqrt x = 2$, also $x = 4$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Graph von $\\sqrt x$ hat im Ursprung eine waagerechte Tangente.",
+      "answer": false,
+      "explain": "Die Steigung $\\tfrac{1}{2\\sqrt x}$ wächst für $x \\to 0$ über alle Grenzen: Die Tangente steht senkrecht.",
+      "label": "Tangente",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -58,6 +321,50 @@
       },
       "label": "Kettenregel",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "definitionsbereich"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "wurzelgleichung"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ableitung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Wurzelfunktion: Startpunkt dort, wo der Radikand null ist; dort senkrechte Tangente."
+      ]
     }
   ]
 }
