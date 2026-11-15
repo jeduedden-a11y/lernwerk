@@ -931,12 +931,88 @@
       "Variable Stückkosten: $k_v(x) = \\tfrac{K(x) - " + F + "}{x} = x^2 - " + 2 * m + "x + " + n + "$. $k_v'(x) = 2x - " + 2 * m + " = 0$ bei $x = " + m + "$ (Betriebsminimum), $k_v(" + m + ") = " + (n - m * m) + "$ GE pro ME.", 0);
   });
 
+  // ---------------------------------------------------------------- integral calculus (Mathematik wave)
+  spec("stammfunktion", (level, G) => {
+    const ask = (f) => "Welche Funktion ist eine Stammfunktion von $f(x) = " + f + "$?";
+    if (level <= 1) {
+      const n = G.int(1, 4), c = G.pick([1, 2, 3, -1, -2]), a = c * (n + 1), b = G.int(-5, 5);
+      const fc = new Array(n + 1).fill(0), Fc = new Array(n + 2).fill(0), noDiv = new Array(n + 2).fill(0), noX = new Array(n + 2).fill(0);
+      fc[0] = a; fc[n] = b; Fc[0] = c; Fc[n] = b; noDiv[0] = a; noDiv[n] = b; noX[0] = c; noX[n + 1] = b;
+      return choice(G, ask(poly(fc)), "$F(x) = " + poly(Fc) + " + C$",
+        [{ md: "$F(x) = " + poly(der(fc)) + " + C$", why: "Das ist die Ableitung, nicht die Stammfunktion." },
+          { md: "$F(x) = " + poly(noDiv) + " + C$", why: "Nach dem Erhöhen des Exponenten muss man durch den neuen Exponenten teilen." },
+          { md: "$F(x) = " + poly(noX) + " + C$", why: "Auch die Konstante wird integriert: $\\int " + b + "\\,dx = " + b + "x$." }],
+        "Potenzregel rückwärts: $\\int x^n\\,dx = \\tfrac{x^{n+1}}{n+1}$. Probe durch Ableiten: $F'(x) = " + poly(fc) + "$.");
+    }
+    if (level === 2) {
+      const k = G.pick([2, 3, 4, -2, -3]), form = G.int(0, 2), inv = G.frac(1, k), ninv = G.frac(-1, k);
+      if (form === 0) return choice(G, ask("e^{" + k + "x}"), "$F(x) = " + inv + "e^{" + k + "x} + C$",
+        [{ md: "$F(x) = " + k + "e^{" + k + "x} + C$", why: "Mit k multiplizieren gehört zum Ableiten; beim Integrieren teilt man durch k." }, { md: "$F(x) = e^{" + k + "x} + C$" }, { md: "$F(x) = " + inv + "e^{x} + C$" }],
+        "Probe: $\\left(" + inv + "e^{" + k + "x}\\right)' = " + inv + " \\cdot " + par(k) + " e^{" + k + "x} = e^{" + k + "x}$.");
+      if (form === 1) return choice(G, ask("\\sin(" + k + "x)"), "$F(x) = " + ninv + "\\cos(" + k + "x) + C$",
+        [{ md: "$F(x) = " + inv + "\\cos(" + k + "x) + C$", why: "Vorzeichen: Die Ableitung von cos ist −sin." }, { md: "$F(x) = " + (-k) + "\\cos(" + k + "x) + C$" }, { md: "$F(x) = -\\cos(" + k + "x) + C$", why: "Die innere Ableitung " + k + " muss durch Teilen ausgeglichen werden." }],
+        "Probe: $\\left(" + ninv + "\\cos(" + k + "x)\\right)' = " + ninv + " \\cdot (-\\sin(" + k + "x)) \\cdot " + par(k) + " = \\sin(" + k + "x)$.");
+      return choice(G, ask("\\cos(" + k + "x)"), "$F(x) = " + inv + "\\sin(" + k + "x) + C$",
+        [{ md: "$F(x) = " + ninv + "\\sin(" + k + "x) + C$", why: "Die Ableitung von sin ist +cos, kein Minus." }, { md: "$F(x) = " + k + "\\sin(" + k + "x) + C$" }, { md: "$F(x) = \\sin(" + k + "x) + C$", why: "Die innere Ableitung fehlt im Ausgleich." }],
+        "Probe: $\\left(" + inv + "\\sin(" + k + "x)\\right)' = " + inv + " \\cdot \\cos(" + k + "x) \\cdot " + par(k) + " = \\cos(" + k + "x)$.");
+    }
+    if (level === 3) {
+      const a = G.pick([2, 3, -1, 4]), b = nz(G, -5, 5), lin = poly([a, b]);
+      if (G.chance(0.5)) {
+        const n = G.int(2, 4);
+        return choice(G, ask("(" + lin + ")^{" + n + "}"), "$F(x) = " + G.frac(1, a * (n + 1)) + "(" + lin + ")^{" + (n + 1) + "} + C$",
+          [{ md: "$F(x) = " + G.frac(1, n + 1) + "(" + lin + ")^{" + (n + 1) + "} + C$", why: "Beim Ableiten käme der innere Faktor " + a + " dazu; er muss durch Teilen ausgeglichen werden." },
+            { md: "$F(x) = " + n * a + "(" + lin + ")^{" + (n - 1) + "} + C$", why: "Das ist die Ableitung." }, { md: "$F(x) = " + G.frac(a, n + 1) + "(" + lin + ")^{" + (n + 1) + "} + C$" }],
+          "Lineare Substitution: $\\int f(ax + b)\\,dx = \\tfrac1a F(ax + b)$. Hier $\\tfrac{1}{" + a + "} \\cdot \\tfrac{(" + lin + ")^{" + (n + 1) + "}}{" + (n + 1) + "}$.");
+      }
+      return choice(G, ask("\\dfrac{1}{" + lin + "}"), "$F(x) = " + G.frac(1, a) + "\\ln|" + lin + "| + C$",
+        [{ md: "$F(x) = \\ln|" + lin + "| + C$", why: "Ableiten ergäbe den Faktor " + a + "; er muss ausgeglichen werden." }, { md: "$F(x) = " + a + "\\ln|" + lin + "| + C$" },
+          { md: "$F(x) = -\\dfrac{1}{(" + lin + ")^2} + C$", why: "Das ist eine Ableitung, keine Stammfunktion." }],
+        "$\\int \\tfrac{1}{ax + b}\\,dx = \\tfrac1a\\ln|ax + b| + C$; Probe durch Ableiten mit der Kettenregel.");
+    }
+    const form = G.int(0, 2);
+    if (form === 0) {
+      const k = G.pick([1, 2, -1]), b = G.pick([1, 2]), v = (Math.exp(k * b) - 1) / k;
+      return num("Berechne $\\displaystyle\\int_0^{" + b + "} e^{" + (k === 1 ? "" : k === -1 ? "-" : k) + "x}\\,dx$ (drei Nachkommastellen).", v,
+        "Stammfunktion $" + G.frac(1, k) + "e^{" + (k === 1 ? "" : k === -1 ? "-" : k) + "x}$: $" + G.frac(1, k) + "\\left(e^{" + k * b + "} - 1\\right) \\approx " + G.tex(v, 3) + "$.", 0.002);
+    }
+    if (form === 1) {
+      const c = G.pick([2, 3, 5]), m = G.pick([1, 2, 3]);
+      return num("Berechne $\\displaystyle\\int_1^{e^{" + m + "}} \\frac{" + c + "}{x}\\,dx$.", c * m,
+        "$\\left[" + c + "\\ln x\\right]_1^{e^{" + m + "}} = " + c + " \\cdot " + m + " - " + c + " \\cdot 0 = " + c * m + "$.", 0.001);
+    }
+    const k = G.pick([1, 2, 3]);
+    return num("Berechne $\\displaystyle\\int_0^{" + (k === 1 ? "\\pi" : "\\pi/" + k) + "} \\sin(" + (k === 1 ? "" : k) + "x)\\,dx$ (drei Nachkommastellen).", 2 / k,
+      "$\\left[-" + (k === 1 ? "" : "\\tfrac{1}{" + k + "}") + "\\cos(" + (k === 1 ? "" : k) + "x)\\right]_0^{" + (k === 1 ? "\\pi" : "\\pi/" + k) + "} = " + (k === 1 ? "" : "\\tfrac{1}{" + k + "}") + "(1 - (-1)) = " + G.tex(2 / k, 3) + "$: ein Bogen der Sinuskurve.", 0.002);
+  });
+  spec("bestand", (level, G) => {
+    if (level <= 1) {
+      const a = 2 * G.int(1, 4), b = G.int(0, 8), B0 = G.int(5, 60), T = G.int(2, 8);
+      const v = B0 + (a * T * T) / 2 + b * T;
+      return num("Wasser fließt mit der Rate $r(t) = " + poly([a, b], "t") + "$ (Liter pro Minute) in ein Becken, in dem anfangs $" + B0 + "$ Liter sind. Wie viele Liter sind nach $" + T + "$ Minuten im Becken?", v,
+        "$B(" + T + ") = " + B0 + " + \\int_0^{" + T + "} (" + poly([a, b], "t") + ")\\,dt = " + B0 + " + \\left[" + poly([a / 2, b, 0], "t") + "\\right]_0^{" + T + "} = " + v + "$ Liter.", 0.01, "L");
+    }
+    if (level === 2) {
+      const p = G.pick([3, 6]), B0 = G.int(5, 40), v = B0 + (p * p * p) / 6;
+      return num("Die Zuflussrate ist $r(t) = " + poly([-1, p, 0], "t") + "$ (m³ pro Stunde), anfangs sind $" + B0 + "$ m³ im Speicher. Wie viel ist nach $" + p + "$ Stunden im Speicher?", v,
+        "$B(" + p + ") = " + B0 + " + \\left[-\\tfrac{t^3}{3} + " + G.frac(p, 2) + "t^2\\right]_0^{" + p + "} = " + B0 + " + " + G.tex((p * p * p) / 6, 2) + " = " + G.tex(v, 2) + "$ m³.", 0.01, "m³");
+    }
+    if (level === 3) {
+      const r1 = G.int(1, 4), r2 = r1 + G.int(2, 6);
+      return num("Die Änderungsrate eines Bestands ist $r(t) = " + poly([-1, r1 + r2, -r1 * r2], "t") + "$. Zu welchem Zeitpunkt hat der Bestand ein lokales Maximum?", r2,
+        "$r(t) = -(t - " + r1 + ")(t - " + r2 + ")$ ist zwischen " + r1 + " und " + r2 + " positiv und danach negativ. Bei $t = " + r2 + "$ wechselt $r$ von $+$ nach $-$: Der Bestand hört auf zu wachsen, ein lokales Maximum.", 0);
+    }
+    const p = G.pick([2, 4, 6]);
+    return num("Ein Bestand ändert sich mit der Rate $r(t) = " + poly([-1, p, 0], "t") + "$. Zu welchem Zeitpunkt $T > 0$ ist er wieder genauso groß wie bei $t = 0$?", (3 * p) / 2,
+      "Gesucht ist $\\int_0^T r(t)\\,dt = 0$: $-\\tfrac{T^3}{3} + " + G.frac(p, 2) + "T^2 = T^2\\left(" + G.frac(p, 2) + " - \\tfrac{T}{3}\\right) = 0$, also $T = " + G.tex((3 * p) / 2, 1) + "$. Erst wächst der Bestand, dann schrumpft er um genau so viel.", 0);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
   LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung", "definitionsbereich", "transformation", "wurzelgleichung", "verkettung", "stetigkeit", "trigwert", "additionstheorem", "restsatz", "potenz", "gebrochen"]));
   LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch", "extremwertproblem", "schar", "oekonomie"]));
-  LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum"]));
+  LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum", "stammfunktion", "bestand"]));
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat"]));
   LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang"]));
   LW.generator("ma-r-stochastik", chapter("Abitur-Stochastik", ["poisson", "mindestens", "hypergeometrisch"]));

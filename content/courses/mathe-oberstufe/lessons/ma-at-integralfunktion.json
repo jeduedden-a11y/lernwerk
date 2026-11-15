@@ -16,6 +16,165 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$I_a(x) = \\int_a^x f(t)\\,dt$ ist eine Stammfunktion von $f$ mit $I_a(a) = 0$. Also gilt $I_a' = f$: Extremstellen von $I_a$ sind Nullstellen von $f$ mit Vorzeichenwechsel.",
+      "label": "Verfahren",
+      "more": "1. **Stammfunktion** $F$ von $f$ bestimmen.\n2. **$I_a(x) = F(x) - F(a)$** aufschreiben.\n3. **Fragen über $I_a$ mit $f$ beantworten:** $I_a$ steigt, wo $f > 0$; Extremstellen bei Nullstellen von $f$ mit Vorzeichenwechsel; Wendestellen bei Extremstellen von $f$.\n4. **Nullstellen von $I_a$:** immer $x = a$; weitere dort, wo sich positive und negative Flächen ausgleichen.\n\n**Sachkontext:** Ist $f$ eine Rate, dann ist $I_a(x)$ die Bestandsänderung seit dem Zeitpunkt $a$. Eine andere untere Grenze verschiebt $I$ nur um eine Konstante.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $I(x) = \\int_1^x (2t - 4)\\,dt$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "I(x) = \\left[t^2 - 4t\\right]_1^x = x^2 - 4x + 3",
+            "why": "Stammfunktion, Grenzen einsetzen."
+          },
+          {
+            "tex": "I(x) = (x - 1)(x - 3)",
+            "why": "Nullstellen 1 (die untere Grenze) und 3."
+          },
+          {
+            "tex": "I'(x) = 2x - 4 = 0 \\;\\Rightarrow\\; x = 2",
+            "why": "I′ = f; Minimum bei x = 2, wo f von − nach + wechselt."
+          },
+          {
+            "tex": "I(2) = -1",
+            "why": "Bis x = 2 überwiegt die Fläche unter der Achse."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Stammfunktion.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nullstellen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Extremum.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Integralfunktion",
+      "md": "**Fläche sammeln:** blau $f(t) = 2t - 4$, grün die Fläche von 1 bis $x$, orange $I(x)$. Unter der Achse zählt die Fläche negativ.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4.5
+        ],
+        "y": [
+          -3,
+          5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 1,
+            "max": 4.2,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "2*x - 4",
+            "color": "blue"
+          },
+          {
+            "name": "i",
+            "expr": "x^2 - 4*x + 3",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 1,
+            "to": "X",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "i",
+            "color": "orange"
+          }
+        ],
+        "readout": "I({X|2}) = {X^2 - 4*X + 3|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 1: noch keine Fläche, I = 0.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "x = 2: nur Fläche unter der Achse, I = −1, das Minimum.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 3: Die Flächen gleichen sich aus, I = 0.",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 4: I = 3.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$I_a$ hat bei $a$ immer eine Nullstelle, aber oft nicht die einzige.",
+      "label": "Typische Fallen",
+      "more": "Der Hochpunkt von $I_a$ liegt dort, wo $f$ von $+$ nach $-$ wechselt, nicht beim Hochpunkt von $f$.",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Integralfunktion",
@@ -81,6 +240,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Wert",
+      "md": "$I(x) = \\int_0^x (3t^2 - 6t)\\,dt$. Berechne $I(2)$.",
+      "answer": -4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$I(x) = x^3 - 3x^2$, also $I(2) = 8 - 12 = -4$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$f$ hat bei $2$ eine Nullstelle mit Vorzeichenwechsel von $+$ nach $-$. Was hat $I(x) = \\int_0^x f(t)\\,dt$ dort?",
+      "options": [
+        {
+          "md": "einen Hochpunkt",
+          "correct": true
+        },
+        {
+          "md": "eine Nullstelle",
+          "why": "Nullstellen von f sind Extremstellen von I, nicht Nullstellen."
+        },
+        {
+          "md": "einen Wendepunkt"
+        },
+        {
+          "md": "einen Tiefpunkt"
+        }
+      ],
+      "explain": "$I' = f$ wechselt von $+$ nach $-$: I steigt erst und fällt dann.",
+      "label": "Extremum",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\int_a^x f(t)\\,dt$ und $\\int_b^x f(t)\\,dt$ unterscheiden sich nur um eine Konstante.",
+      "answer": true,
+      "explain": "Die Differenz ist $\\int_a^b f(t)\\,dt$, unabhängig von $x$.",
+      "label": "Grenze",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -133,6 +333,38 @@
       },
       "label": "Andere Grenze",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "integralfunktion"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "I_a ist Stammfunktion mit I_a(a) = 0; I_a′ = f."
+      ]
     }
   ]
 }

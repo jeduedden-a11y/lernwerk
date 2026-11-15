@@ -72,6 +72,228 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Der Hauptsatz** in der Grafik aus dem Vault: zwei Wege zur selben Fläche.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Hauptsatz Integralrechnung.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Links die Fläche als Grenzwert von Summen, rechts dieselbe Fläche über die Stammfunktion.",
+          "to": {
+            "x": 0.5,
+            "y": 0.45,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Weg 1: Rechteckstreifen der Breite Δx. Je feiner, desto genauer, aber die Rechnung ist mühsam.",
+          "to": {
+            "x": 0.25,
+            "y": 0.42,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Weg 2: Mit einer Stammfunktion F genügen zwei Werte, F(b) − F(a).",
+          "to": {
+            "x": 0.76,
+            "y": 0.42,
+            "z": 1.9,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Der Hauptsatz verbindet beide: Integral gleich F(b) − F(a), wenn F′ = f.",
+          "to": {
+            "x": 0.5,
+            "y": 0.77,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Warum das gilt: Die Flächenfunktion wächst an jeder Stelle so schnell, wie f hoch ist.",
+          "to": {
+            "x": 0.4,
+            "y": 0.92,
+            "z": 1.8,
+            "s": 0
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Flächenfunktion",
+      "md": "**Die Flächenfunktion wächst mit der Höhe von $f$:** blau $f(x) = 0{,}5x^2 + 1$, die Fläche von 0 bis $x$ ist hinterlegt; orange ihr Wert $I(x)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          3.2
+        ],
+        "y": [
+          0,
+          8
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 3,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2 + 1",
+            "color": "blue"
+          },
+          {
+            "name": "i",
+            "expr": "x^3/6 + x",
+            "color": "orange",
+            "dashed": true
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": "X",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "i",
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "on": "f",
+            "color": "blue"
+          }
+        ],
+        "readout": "Fläche bis x = {X|2}: {X^3/6 + X|2} · Zuwachsrate f(x) = {0.5*X^2 + 1|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 0,5 ist die Fläche 0,52.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "Wo f höher ist, wächst die Fläche schneller: Ihre Ableitung ist f.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei x = 3: Fläche 7,5 = F(3) − F(0).",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "Das **Integral** $\\int_a^b f(x)\\,dx$ ist der Grenzwert der Rechtecksummen, ein orientierter Flächeninhalt. **Hauptsatz:** $\\int_a^b f(x)\\,dx = F(b) - F(a)$ für jede Stammfunktion $F$ mit $F' = f$.",
+      "label": "Integral",
+      "more": "**Orientiert** heißt: Flächen unterhalb der x-Achse zählen negativ. $\\int_{-1}^{1} x^3\\,dx = 0$, obwohl Fläche da ist.\n\n**Stammfunktion:** $F$ mit $F' = f$. Es gibt unendlich viele, sie unterscheiden sich um eine Konstante $C$; beim bestimmten Integral fällt $C$ heraus.\n\n**Regeln:** $\\int x^n\\,dx = \\tfrac{x^{n+1}}{n+1} + C$ für $n \\neq -1$; Summen gliedweise, konstante Faktoren bleiben stehen.\n\n**Warum der Hauptsatz gilt:** Für die Flächenfunktion $I(x) = \\int_a^x f(t)\\,dt$ ist der Zuwachs auf $[x; x + h]$ ungefähr ein Streifen der Höhe $f(x)$ und der Breite $h$. Daraus folgt $I'(x) = f(x)$: $I$ ist eine Stammfunktion mit $I(a) = 0$, also $I(x) = F(x) - F(a)$.",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung des Hauptsatzes** über die Flächenfunktion $I(x) = \\int_a^x f(t)\\,dt$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "I(x + h) - I(x) \\approx f(x) \\cdot h",
+            "why": "Der Zuwachs ist ein schmaler Streifen."
+          },
+          {
+            "tex": "\\frac{I(x + h) - I(x)}{h} \\;\\xrightarrow{h \\to 0}\\; f(x)",
+            "why": "Durch h teilen, Grenzwert."
+          },
+          {
+            "tex": "I'(x) = f(x)",
+            "why": "Die Flächenfunktion ist eine Stammfunktion."
+          },
+          {
+            "tex": "I(x) = F(x) - F(a)",
+            "why": "Stammfunktionen unterscheiden sich um eine Konstante; I(a) = 0 legt sie fest."
+          },
+          {
+            "tex": "\\int_a^b f(x)\\,dx = I(b) = F(b) - F(a)",
+            "why": "Hauptsatz."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Streifen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stammfunktion.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konstante.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hauptsatz.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Integralbegriff und Hauptsatz der Differenzial- und Integralrechnung",
@@ -205,6 +427,61 @@
       ]
     },
     {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Begründung des Hauptsatzes in die richtige Reihenfolge.",
+      "items": [
+        "Der Zuwachs $I(x + h) - I(x)$ ist ungefähr $f(x) \\cdot h$",
+        "Also $I'(x) = f(x)$",
+        "Mit $I(a) = 0$ folgt $I(x) = F(x) - F(a)$",
+        "$\\int_a^b f(x)\\,dx = F(b) - F(a)$"
+      ],
+      "explain": "Die Reihenfolge: 1. Der Zuwachs $I(x + h) - I(x)$ ist ungefähr $f(x) \\cdot h$. 2. Also $I'(x) = f(x)$. 3. Mit $I(a) = 0$ folgt $I(x) = F(x) - F(a)$. 4. $\\int_a^b f(x)\\,dx = F(b) - F(a)$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne $\\displaystyle\\int_1^3 (2x + 1)\\,dx$.",
+      "answer": 10,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\left[x^2 + x\\right]_1^3 = 12 - 2 = 10$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\int_{-1}^{1} x^3\\,dx$ gibt den Flächeninhalt zwischen dem Graphen und der x-Achse an.",
+      "answer": false,
+      "explain": "Das Integral ist 0, weil die Fläche unter der Achse negativ zählt. Die Fläche ist $2 \\cdot \\tfrac14 = \\tfrac12$.",
+      "label": "Orientiert",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Funktion ist eine Stammfunktion von $f(x) = 3x^2 - 4$?",
+      "options": [
+        {
+          "md": "$x^3 - 4x + 7$",
+          "correct": true
+        },
+        {
+          "md": "$6x$",
+          "why": "Das ist die Ableitung."
+        },
+        {
+          "md": "$x^3 - 4$",
+          "why": "Auch −4 wird integriert: −4x."
+        },
+        {
+          "md": "$3x^3 - 4x$"
+        }
+      ],
+      "explain": "Probe: $(x^3 - 4x + 7)' = 3x^2 - 4$; die Konstante 7 ist beliebig.",
+      "label": "Stammfunktion",
+      "id": "vq4"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Stammfunktion zu.",
@@ -274,12 +551,37 @@
       "id": "g4"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "stammfunktion"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "stammfunktion"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Integral: orientierte Fläche, Grenzwert von Rechteckssummen.",
         "Hauptsatz: ∫ₐᵇ f dx = F(b) − F(a).",
-        "Stammfunktion durch Ableiten prüfen."
+        "Stammfunktion durch Ableiten prüfen.",
+        "Hauptsatz: Integral = F(b) − F(a); die Flächenfunktion ist eine Stammfunktion."
       ],
       "id": "summary"
     }

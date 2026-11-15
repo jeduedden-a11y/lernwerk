@@ -16,6 +16,153 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Aus der **Änderungsrate** $r(t)$ wird der **Bestand**: $B(T) = B(0) + \\int_0^T r(t)\\,dt$. Positive Rate heißt Zunahme, negative Abnahme; maximal ist der Bestand dort, wo $r$ von $+$ nach $-$ wechselt.",
+      "label": "Verfahren",
+      "more": "| Frage | Rechnung |\n|---|---|\n| Wie viel kommt zwischen $t_1$ und $t_2$ hinzu? | $\\int_{t_1}^{t_2} r(t)\\,dt$ |\n| Wie viel ist zum Zeitpunkt $T$ vorhanden? | $B(0) + \\int_0^T r(t)\\,dt$ |\n| Wann ist der Bestand am größten? | $r(t) = 0$ mit Wechsel von $+$ nach $-$ |\n| Wann nimmt er am stärksten zu? | Maximum von $r$, also $r'(t) = 0$ |\n| Wann ist er wieder so groß wie am Anfang? | $\\int_0^T r(t)\\,dt = 0$ |\n\n**Einheiten:** Rate mal Zeit gibt die Menge, etwa Liter pro Minute mal Minuten gleich Liter. **Zu- und Abfluss:** Die Netto-Rate ist Zufluss minus Abfluss.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Zuflussrate $r(t) = -t^2 + 6t$ in m³ pro Stunde, anfangs 10 m³.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "B(T) = 10 + \\int_0^T (-t^2 + 6t)\\,dt = 10 - \\tfrac{T^3}{3} + 3T^2",
+            "why": "Bestandsfunktion."
+          },
+          {
+            "tex": "r(t) = -t(t - 6) = 0 \\;\\Rightarrow\\; t = 6",
+            "why": "Nach 6 Stunden wechselt die Rate von + nach −."
+          },
+          {
+            "tex": "B(6) = 10 - 72 + 108 = 46",
+            "why": "Größter Bestand: 46 m³."
+          },
+          {
+            "tex": "r'(t) = -2t + 6 = 0 \\;\\Rightarrow\\; t = 3",
+            "why": "Die stärkste Zunahme ist nach 3 Stunden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bestand.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wechsel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Maximum.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stärkste Zunahme.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Bestand",
+      "md": "**Rate und Bestand:** blau die Zuflussrate $r(t) = -t^2 + 6t$, grün die bis $t$ zugeflossene Menge. Nach 6 Stunden wird die Rate negativ, der Bestand sinkt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          7.5
+        ],
+        "y": [
+          -6,
+          10
+        ],
+        "grid": true,
+        "xLabel": "t in h",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 7.2,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "r",
+            "expr": "-x^2 + 6*x",
+            "color": "blue"
+          }
+        ],
+        "areas": [
+          {
+            "f": "r",
+            "from": 0,
+            "to": "X",
+            "color": "green"
+          }
+        ],
+        "readout": "t = {X|1} h · Rate {-X^2 + 6*X|1} m³/h · Bestand {10 - X^3/3 + 3*X^2|1} m³"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 2 Stunden: 19,3 m³.",
+          "set": {
+            "X": 2
+          }
+        },
+        {
+          "caption": "Nach 3 Stunden ist die Rate am größten.",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 6 Stunden: Rate 0, Bestand maximal mit 46 m³.",
+          "to": {
+            "X": 6
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Danach fließt Wasser ab; die Fläche unter der Achse zählt negativ.",
+          "to": {
+            "X": 7
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Das Integral der Rate ist die **Änderung**, nicht der Bestand: den Anfangsbestand dazurechnen.",
+      "label": "Typische Fallen",
+      "more": "Und die stärkste Zunahme liegt beim Maximum der Rate, nicht beim Maximum des Bestands.",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Bestände und Änderungsraten",
@@ -89,6 +236,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Maximum",
+      "md": "Die Rate ist $r(t) = 4 - t$ (Liter pro Minute). Wann ist der Bestand am größten?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "min",
+      "explain": "$r$ wechselt bei $t = 4$ von $+$ nach $-$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Wann nimmt ein Bestand mit der Zuflussrate r(t) am stärksten zu?",
+      "options": [
+        {
+          "md": "beim Maximum von r",
+          "correct": true
+        },
+        {
+          "md": "bei der Nullstelle von r",
+          "why": "Dort hört die Zunahme gerade auf."
+        },
+        {
+          "md": "beim Maximum des Bestands"
+        },
+        {
+          "md": "beim Wendepunkt von r"
+        }
+      ],
+      "explain": "Die Zunahme pro Zeit ist die Rate selbst; sie ist dort am größten, wo r maximal ist.",
+      "label": "Stärkste Zunahme",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "$\\int_0^{10} r(t)\\,dt$ kann negativ sein.",
+      "answer": true,
+      "explain": "Wenn mehr ab- als zufließt, ist die Netto-Änderung negativ.",
+      "label": "Vorzeichen",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +319,62 @@
       "placeholder": "L",
       "explain": "$20 + \\int_0^5 6t\\,dt = 20 + 3 \\cdot 25 = 95$ Liter.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "bestand"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "bestand"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "bestand"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "bestand"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Bestand = Anfangsbestand + Integral der Rate; Maximum, wo die Rate von + nach − wechselt."
+      ]
     }
   ]
 }

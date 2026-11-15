@@ -15,6 +15,160 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Scheiben",
+      "md": "**Scheiben stapeln:** Der Graph von $f(x) = \\sqrt x$ rotiert um die x-Achse. An jeder Stelle $x$ entsteht eine Scheibe mit dem Radius $f(x)$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.3,
+          4.3
+        ],
+        "y": [
+          -2.5,
+          2.5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": 0.1,
+            "max": 4,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "sqrt(x)",
+            "domain": [
+              0,
+              4
+            ],
+            "color": "blue",
+            "samples": 300
+          },
+          {
+            "name": "m",
+            "expr": "-sqrt(x)",
+            "domain": [
+              0,
+              4
+            ],
+            "color": "gray",
+            "dashed": true,
+            "samples": 300
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X",
+              "-sqrt(X)"
+            ],
+            "to": [
+              "X",
+              "sqrt(X)"
+            ],
+            "color": "orange",
+            "width": 4
+          }
+        ],
+        "readout": "x = {X|2} · Radius {sqrt(X)|2} · Scheibenfläche π·r² = {pi*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Bei x = 1: Radius 1, Scheibenfläche π.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Bei x = 4: Radius 2, Fläche 4π. Alle Scheiben zusammen: π∫f(x)²dx.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Das Volumen ist π∫₀⁴ x dx = 8π ≈ 25,1.",
+          "to": {
+            "X": 2.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Rotiert der Graph von $f$ um die x-Achse, besteht der Körper aus dünnen Scheiben mit dem Radius $f(x)$: $V = \\pi\\int_a^b f(x)^2\\,dx$. Zwischen zwei Graphen: $V = \\pi\\int_a^b \\left(f^2 - g^2\\right)dx$.",
+      "label": "Volumen",
+      "more": "**Warum:** Eine Scheibe der Dicke $\\Delta x$ hat das Volumen $\\pi f(x)^2 \\Delta x$. Summiert und verfeinert wird daraus das Integral.\n\n**Ringscheiben:** Liegt zwischen den Graphen ein Hohlraum, zieht man die innere Scheibe von der äußeren ab: $\\pi(f^2 - g^2)$, nicht $\\pi(f - g)^2$.\n\n**Probe mit bekannten Körpern:** $f(x) = r$ auf $[0; h]$ gibt den Zylinder $\\pi r^2 h$; $f(x) = \\tfrac{r}{h}x$ den Kegel $\\tfrac13\\pi r^2 h$; $f(x) = \\sqrt{r^2 - x^2}$ auf $[-r; r]$ die Kugel $\\tfrac43\\pi r^3$.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Kegelformel:** Die Gerade $f(x) = \\tfrac{r}{h}x$ rotiert auf $[0; h]$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "V = \\pi\\int_0^h \\left(\\tfrac{r}{h}x\\right)^2 dx",
+            "why": "Scheibenformel."
+          },
+          {
+            "tex": "= \\pi\\,\\frac{r^2}{h^2}\\int_0^h x^2\\,dx",
+            "why": "Konstante Faktoren vor das Integral."
+          },
+          {
+            "tex": "= \\pi\\,\\frac{r^2}{h^2} \\cdot \\frac{h^3}{3}",
+            "why": "Stammfunktion x³/3."
+          },
+          {
+            "tex": "= \\tfrac13\\pi r^2 h",
+            "why": "Ein Drittel des Zylinders."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktoren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Rotationskörper – Scheiben- und Ringscheibenverfahren",
@@ -54,6 +208,53 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Kegel",
+      "md": "Der Graph von $f(x) = x$ rotiert auf $[0; 3]$ um die x-Achse. Berechne das Volumen (zwei Nachkommastellen).",
+      "answer": 28.27,
+      "tolerance": 0.05,
+      "placeholder": "",
+      "explain": "$\\pi\\int_0^3 x^2\\,dx = \\pi \\cdot 9 \\approx 28{,}27$: ein Kegel mit $r = h = 3$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Ansatz liefert das Volumen einer Kugel mit Radius $r$?",
+      "options": [
+        {
+          "md": "$\\pi\\int_{-r}^{r} (r^2 - x^2)\\,dx$",
+          "correct": true
+        },
+        {
+          "md": "$\\pi\\int_{-r}^{r} \\sqrt{r^2 - x^2}\\,dx$",
+          "why": "Der Radius muss quadriert werden."
+        },
+        {
+          "md": "$\\pi\\int_0^r (r^2 - x^2)\\,dx$",
+          "why": "Das ist nur eine Halbkugel."
+        },
+        {
+          "md": "$\\int_{-r}^{r} \\pi r^2\\,dx$"
+        }
+      ],
+      "explain": "Halbkreis $f(x) = \\sqrt{r^2 - x^2}$, quadriert $r^2 - x^2$; Ergebnis $\\tfrac43\\pi r^3$.",
+      "label": "Kugel",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Kegelformel in die richtige Reihenfolge.",
+      "items": [
+        "$V = \\pi\\int_0^h \\left(\\tfrac{r}{h}x\\right)^2 dx$",
+        "$= \\pi\\tfrac{r^2}{h^2}\\int_0^h x^2\\,dx$",
+        "$= \\pi\\tfrac{r^2}{h^2} \\cdot \\tfrac{h^3}{3}$",
+        "$= \\tfrac13\\pi r^2 h$"
+      ],
+      "explain": "Die Reihenfolge: 1. $V = \\pi\\int_0^h \\left(\\tfrac{r}{h}x\\right)^2 dx$. 2. $= \\pi\\tfrac{r^2}{h^2}\\int_0^h x^2\\,dx$. 3. $= \\pi\\tfrac{r^2}{h^2} \\cdot \\tfrac{h^3}{3}$. 4. $= \\tfrac13\\pi r^2 h$.",
+      "id": "vq3"
     },
     {
       "type": "choice",
@@ -104,12 +305,37 @@
       "id": "g2"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "rotation"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "rotation"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "V = π ∫ f(x)² dx (Scheiben).",
         "Ringscheibe: π ∫ (f² − g²) dx.",
-        "Zylinder und Kegel als Kontrolle."
+        "Zylinder und Kegel als Kontrolle.",
+        "$V = \\pi\\int f^2\\,dx$; Ringscheiben $\\pi\\int(f^2 - g^2)\\,dx$."
       ],
       "id": "summary"
     }

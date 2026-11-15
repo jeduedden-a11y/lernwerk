@@ -23,6 +23,140 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Konstante",
+      "md": "**Die Konstante C:** Alle Funktionen $\\sin x + C$ sind Stammfunktionen von $\\cos x$. Ihre Graphen sind nur verschoben; an jeder Stelle haben sie dieselbe Steigung.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          6.5
+        ],
+        "y": [
+          -2.5,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "CC",
+            "min": -1.2,
+            "max": 1.6,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "sin(x) + CC",
+            "color": "blue"
+          },
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": 1,
+            "color": "orange",
+            "length": 0.9
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "C = {CC|1} · Steigung bei x = 1: cos 1 ≈ 0,54"
+      },
+      "timeline": [
+        {
+          "caption": "C = 0: sin x.",
+          "set": {
+            "CC": 0
+          }
+        },
+        {
+          "caption": "C = 1,5: um 1,5 nach oben, die Steigung bei 1 bleibt.",
+          "to": {
+            "CC": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "C = −1: nach unten.",
+          "to": {
+            "CC": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Stammfunktionen findet man durch **Rückwärtsableiten**: $\\int e^{kx}dx = \\tfrac1k e^{kx}$, $\\int \\tfrac1x dx = \\ln|x|$, $\\int \\sin(kx)dx = -\\tfrac1k\\cos(kx)$, jeweils $+ C$. Die Probe ist immer das Ableiten.",
+      "label": "Tabelle",
+      "more": "| $f(x)$ | Stammfunktion $F(x)$ |\n|---|---|\n| $x^n$, $n \\neq -1$ | $\\tfrac{x^{n+1}}{n+1}$ |\n| $\\tfrac1x$ | $\\ln|x|$ |\n| $e^{kx}$ | $\\tfrac1k e^{kx}$ |\n| $\\sin(kx)$ | $-\\tfrac1k\\cos(kx)$ |\n| $\\cos(kx)$ | $\\tfrac1k\\sin(kx)$ |\n| $\\ln x$ | $x\\ln x - x$ |\n\n**Lineare Substitution:** $\\int f(ax + b)\\,dx = \\tfrac1a F(ax + b)$; der Faktor $\\tfrac1a$ gleicht die innere Ableitung aus.\n\n**Partielle Integration:** $\\int u\\,v'\\,dx = u\\,v - \\int u'\\,v\\,dx$, für Produkte wie $x\\,e^x$ oder für $\\ln x = 1 \\cdot \\ln x$.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Probe durch Ableiten** für zwei Einträge der Tabelle.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\left(\\tfrac1k e^{kx}\\right)' = \\tfrac1k \\cdot k\\,e^{kx} = e^{kx}",
+            "why": "Kettenregel: Der Faktor 1/k gleicht die innere Ableitung k aus."
+          },
+          {
+            "tex": "(x\\ln x - x)' = \\ln x + x \\cdot \\tfrac1x - 1",
+            "why": "Produktregel für x · ln x."
+          },
+          {
+            "tex": "= \\ln x",
+            "why": "Die Einsen heben sich weg."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Exponential.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produktregel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Integrale von Exponentialfunktionen",
@@ -72,6 +206,48 @@
     },
     {
       "type": "choice",
+      "md": "Welche Funktion ist eine Stammfunktion von $\\cos(2x)$?",
+      "options": [
+        {
+          "md": "$\\tfrac12\\sin(2x) + C$",
+          "correct": true
+        },
+        {
+          "md": "$2\\sin(2x) + C$",
+          "why": "Mit 2 multiplizieren gehört zum Ableiten."
+        },
+        {
+          "md": "$-\\tfrac12\\sin(2x) + C$",
+          "why": "Die Ableitung von sin ist +cos."
+        },
+        {
+          "md": "$\\sin(2x) + C$"
+        }
+      ],
+      "explain": "Probe: $\\left(\\tfrac12\\sin 2x\\right)' = \\tfrac12 \\cdot 2\\cos 2x = \\cos 2x$.",
+      "label": "Trigonometrisch",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Exponential",
+      "md": "Berechne $\\displaystyle\\int_0^1 e^{2x}\\,dx$ (drei Nachkommastellen).",
+      "answer": 3.195,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "$\\left[\\tfrac12 e^{2x}\\right]_0^1 = \\tfrac12(e^2 - 1) \\approx 3{,}195$.",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für $x > 0$ ist $\\ln x$ eine Stammfunktion von $\\tfrac1x$.",
+      "answer": true,
+      "explain": "$(\\ln x)' = \\tfrac1x$.",
+      "label": "Logarithmus",
+      "id": "vq3"
+    },
+    {
+      "type": "choice",
       "md": "Welche Stammfunktion hat $f(x) = 3e^{-2x}$?",
       "options": [
         {
@@ -112,12 +288,49 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "stammfunktion"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "stammfunktion"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "partiell"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "∫ e^{kx} dx = e^{kx}/k; ∫ ln x dx = x ln x − x.",
         "∫ sin(kx) = −cos(kx)/k, ∫ cos(kx) = sin(kx)/k.",
-        "Immer durch Ableiten prüfen."
+        "Immer durch Ableiten prüfen.",
+        "Stammfunktionen durch Rückwärtsableiten; Probe immer durch Ableiten."
       ],
       "id": "summary"
     }

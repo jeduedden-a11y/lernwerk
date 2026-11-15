@@ -16,6 +16,148 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Mittelwert von $f$ auf $[a; b]$: $\\bar m = \\dfrac{1}{b - a}\\int_a^b f(x)\\,dx$. Das Rechteck mit der Höhe $\\bar m$ über $[a; b]$ hat dieselbe Fläche wie die Fläche unter dem Graphen.",
+      "label": "Verfahren",
+      "more": "1. **Integral** $\\int_a^b f(x)\\,dx$ berechnen.\n2. **Durch die Intervalllänge** $b - a$ teilen.\n3. **Deuten:** mittlere Temperatur, mittlere Geschwindigkeit, mittlerer Bestand, mit Einheit.\n\n**Mittelwertsatz der Integralrechnung:** Eine stetige Funktion nimmt ihren Mittelwert an mindestens einer Stelle des Intervalls an.\n\n**Abgrenzung:** Der Mittelwert der Funktionswerte ist nicht der Mittelwert der Randwerte $\\tfrac{f(a) + f(b)}{2}$ und nicht die mittlere Änderungsrate $\\tfrac{f(b) - f(a)}{b - a}$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = 0{,}5x^2 + 1$ auf $[0; 3]$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\int_0^3 (0{,}5x^2 + 1)\\,dx = \\left[\\tfrac{x^3}{6} + x\\right]_0^3 = 7{,}5",
+            "why": "Fläche unter dem Graphen."
+          },
+          {
+            "tex": "\\bar m = \\frac{7{,}5}{3} = 2{,}5",
+            "why": "Durch die Intervalllänge teilen."
+          },
+          {
+            "tex": "0{,}5x^2 + 1 = 2{,}5 \\;\\Rightarrow\\; x = \\sqrt3 \\approx 1{,}73",
+            "why": "Hier nimmt f den Mittelwert an."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stelle.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Mittelwert",
+      "md": "**Gleiche Fläche:** blau die Fläche unter $f(x) = 0{,}5x^2 + 1$ auf $[0; 3]$, orange ein Rechteck der Höhe $m$. Bei $m = 2{,}5$ sind beide gleich groß.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.2,
+          3.4
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "M",
+            "min": 1,
+            "max": 3.5,
+            "value": 1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2 + 1",
+            "color": "blue"
+          },
+          {
+            "name": "m",
+            "expr": "M",
+            "domain": [
+              0,
+              3
+            ],
+            "color": "orange"
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "from": 0,
+            "to": 3,
+            "color": "blue"
+          },
+          {
+            "f": "m",
+            "from": 0,
+            "to": 3,
+            "color": "orange"
+          }
+        ],
+        "readout": "Rechteck {3*M|2} · Fläche unter f: 7,5"
+      },
+      "timeline": [
+        {
+          "caption": "m = 1,5: Rechteck 4,5, zu klein.",
+          "set": {
+            "M": 1.5
+          }
+        },
+        {
+          "caption": "m = 3,2: 9,6, zu groß.",
+          "to": {
+            "M": 3.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "m = 2,5: genau 7,5. Das ist der Mittelwert.",
+          "to": {
+            "M": 2.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Der Mittelwert ist **nicht** $\\tfrac{f(a) + f(b)}{2}$ und nicht die mittlere Änderungsrate $\\tfrac{f(b) - f(a)}{b - a}$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Mittelwert einer Funktion",
@@ -89,6 +231,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Berechne den Mittelwert von $f(x) = x^2$ auf $[0; 3]$.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac13\\int_0^3 x^2\\,dx = \\tfrac13 \\cdot 9 = 3$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$v(t)$ ist die Geschwindigkeit eines Autos in m/s. Was bedeutet $\\tfrac{1}{10}\\int_0^{10} v(t)\\,dt$?",
+      "options": [
+        {
+          "md": "die Durchschnittsgeschwindigkeit in den ersten 10 Sekunden",
+          "correct": true
+        },
+        {
+          "md": "die Beschleunigung",
+          "why": "Das wäre v′."
+        },
+        {
+          "md": "der Weg nach 10 Sekunden"
+        },
+        {
+          "md": "die Geschwindigkeit nach 10 Sekunden"
+        }
+      ],
+      "explain": "Das Integral ist der Weg, geteilt durch die Zeit die mittlere Geschwindigkeit.",
+      "label": "Deutung",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Mittelwert von $f$ auf $[a; b]$ ist immer $\\tfrac{f(a) + f(b)}{2}$.",
+      "answer": false,
+      "explain": "Bei $x^2$ auf $[0; 3]$: Mittelwert 3, aber $\\tfrac{0 + 9}{2} = 4{,}5$.",
+      "label": "Falle",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -141,6 +324,38 @@
       },
       "label": "Mittelwert",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "mittelwert"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Mittelwert $\\tfrac{1}{b - a}\\int_a^b f\\,dx$: das flächengleiche Rechteck."
+      ]
     }
   ]
 }

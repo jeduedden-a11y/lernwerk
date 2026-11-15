@@ -19,6 +19,144 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Zwischen Graphen",
+      "md": "**Fläche zwischen zwei Graphen:** blau $f(x) = -x^2 + 4$, orange $g(x) = x + 2$. Sie schneiden sich bei $-2$ und $1$; dazwischen liegt $f$ oben.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          2.5
+        ],
+        "y": [
+          -1.5,
+          5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 1,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "-x^2 + 4",
+            "color": "blue"
+          },
+          {
+            "name": "g",
+            "expr": "x + 2",
+            "color": "orange"
+          }
+        ],
+        "areas": [
+          {
+            "f": "f",
+            "base": "g",
+            "from": -2,
+            "to": "X",
+            "color": "green"
+          }
+        ],
+        "readout": "Fläche von −2 bis x = {X|2}: {-X^3/3 - X^2/2 + 2*X + 10/3|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Start an der linken Schnittstelle.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "Die Fläche wächst mit dem Abstand f − g.",
+          "to": {
+            "X": -0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bis zur rechten Schnittstelle: insgesamt 4,5.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Fläche zwischen zwei Graphen: Schnittstellen bestimmen, dann auf jedem Teilintervall **oben minus unten** integrieren und die Beträge addieren.",
+      "label": "Verfahren",
+      "more": "1. **Schnittstellen** aus $f(x) = g(x)$; sie sind die Grenzen der Teilintervalle.\n2. **Auf jedem Teilintervall** $\\int (f - g)\\,dx$ berechnen.\n3. **Beträge addieren**, weil die Reihenfolge von oben und unten wechseln kann.\n\n**Mit der x-Achse** ist $g = 0$: Nullstellen sind die Grenzen, Flächen unter der Achse zählen als Betrag.\n\n**Lage zur Achse egal:** Für die Fläche zwischen zwei Graphen zählt nur die Differenz $f - g$; ob beide unter der x-Achse liegen, spielt keine Rolle.\n\n**Typischer Fehler:** über eine Schnitt- oder Nullstelle hinweg integrieren, sodass sich Teilflächen aufheben.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Rechnung:** $f(x) = -x^2 + 4$ und $g(x) = x + 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "-x^2 + 4 = x + 2 \\;\\Rightarrow\\; x^2 + x - 2 = 0 \\;\\Rightarrow\\; x = -2,\\; x = 1",
+            "why": "Schnittstellen."
+          },
+          {
+            "tex": "f(x) - g(x) = -x^2 - x + 2",
+            "why": "Oben minus unten."
+          },
+          {
+            "tex": "\\int_{-2}^{1} (-x^2 - x + 2)\\,dx = \\left[-\\tfrac{x^3}{3} - \\tfrac{x^2}{2} + 2x\\right]_{-2}^{1}",
+            "why": "Stammfunktion."
+          },
+          {
+            "tex": "= \\tfrac76 - \\left(-\\tfrac{10}{3}\\right) = \\tfrac92 = 4{,}5",
+            "why": "Einsetzen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Schnittstellen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Differenz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Integral.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Fläche zwischen Kurven",
@@ -58,6 +196,65 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Zwischen Graphen",
+      "md": "Wie groß ist die Fläche zwischen $y = x$ und $y = x^2$ auf $[0; 1]$? (drei Nachkommastellen)",
+      "answer": 0.167,
+      "tolerance": 0.002,
+      "placeholder": "",
+      "explain": "Dort liegt $x$ oben: $\\int_0^1 (x - x^2)\\,dx = \\tfrac12 - \\tfrac13 = \\tfrac16$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Es gilt $\\int_0^{2\\pi} \\sin x\\,dx = 0$. Wie groß ist die Fläche zwischen dem Graphen und der x-Achse auf $[0; 2\\pi]$?",
+      "options": [
+        {
+          "md": "4",
+          "correct": true
+        },
+        {
+          "md": "0",
+          "why": "Die negative Teilfläche hebt die positive nur im Integral auf."
+        },
+        {
+          "md": "2"
+        },
+        {
+          "md": "$2\\pi$"
+        }
+      ],
+      "explain": "Zwei Bögen mit je der Fläche $\\int_0^\\pi \\sin x\\,dx = 2$.",
+      "label": "Betrag",
+      "id": "vq2"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Fläche zwischen $f(x) = x^3$ und der x-Achse auf $[-1; 1]$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "Im Intervall liegt die Nullstelle $x = 0$.",
+          "why": "Richtig."
+        },
+        {
+          "md": "Fläche $= \\int_{-1}^{1} x^3\\,dx$",
+          "why": "Falsch: Über die Nullstelle hinweg heben sich die Teilflächen auf. Man muss getrennt integrieren."
+        },
+        {
+          "md": "$= \\left[\\tfrac{x^4}{4}\\right]_{-1}^{1} = 0$",
+          "why": "Folgefehler."
+        },
+        {
+          "md": "Die Fläche ist 0.",
+          "why": "Folgefehler: Richtig ist $2 \\cdot \\tfrac14 = \\tfrac12$."
+        }
+      ],
+      "answer": 1,
+      "explain": "Nullstellen sind Grenzen der Teilintervalle.",
+      "id": "vq3"
     },
     {
       "type": "order",
@@ -110,12 +307,25 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "flaeche"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Fläche zwischen Graphen: ∫ |f − g| dx.",
         "Schnittstellen zerlegen das Intervall.",
-        "Oben minus unten, Teilflächen addieren."
+        "Oben minus unten, Teilflächen addieren.",
+        "Oben minus unten, Teilintervalle zwischen Schnittstellen, Beträge addieren."
       ],
       "id": "summary"
     }

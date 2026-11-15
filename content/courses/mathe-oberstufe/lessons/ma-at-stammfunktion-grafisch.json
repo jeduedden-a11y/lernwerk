@@ -16,6 +16,156 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Von $f$ zu $F$ liest man die Übersetzungstabelle rückwärts: **Nullstellen** von $f$ mit Vorzeichenwechsel sind **Extremstellen** von $F$, **Extremstellen** von $f$ sind **Wendestellen** von $F$, und wo $f > 0$ ist, steigt $F$.",
+      "label": "Verfahren",
+      "more": "| Graph von $f$ | Graph jeder Stammfunktion $F$ |\n|---|---|\n| $f > 0$ / $f < 0$ | $F$ steigt / fällt |\n| Nullstelle, Wechsel $+$ nach $-$ | Hochpunkt |\n| Nullstelle, Wechsel $-$ nach $+$ | Tiefpunkt |\n| Nullstelle ohne Wechsel | Sattelpunkt |\n| Extrempunkt | Wendepunkt |\n\n**Schema:** Vorzeichenbereiche von $f$ einzeichnen, daraus Steigen und Fallen von $F$, Extremstellen markieren, Wendestellen aus den Extremstellen von $f$, dann einen glatten Graphen durch einen beliebigen Startpunkt zeichnen. Die Höhe ist frei, weil $F$ nur bis auf $+ C$ bestimmt ist.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^2 - 1$, gesucht der Verlauf von $F$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f > 0 \\text{ für } |x| > 1, \\quad f < 0 \\text{ für } |x| < 1",
+            "why": "Vorzeichenbereiche."
+          },
+          {
+            "tex": "x = -1: + \\to - \\;\\Rightarrow\\; F \\text{ hat einen Hochpunkt}",
+            "why": "Erste Nullstelle."
+          },
+          {
+            "tex": "x = 1: - \\to + \\;\\Rightarrow\\; F \\text{ hat einen Tiefpunkt}",
+            "why": "Zweite Nullstelle."
+          },
+          {
+            "tex": "x = 0: f \\text{ minimal} \\;\\Rightarrow\\; F \\text{ hat einen Wendepunkt}",
+            "why": "Extremstelle von f."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Vorzeichen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hochpunkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tiefpunkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendepunkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Stammfunktion",
+      "md": "**Form fest, Höhe frei:** orange $f(x) = x^2 - 1$, blau eine Stammfunktion $F(x) = \\tfrac{x^3}{3} - x + C$, deren Höhe $C$ sich ändert.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.3,
+          2.3
+        ],
+        "y": [
+          -2.5,
+          3.5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "CC",
+            "min": -1,
+            "max": 1.5,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "d",
+            "expr": "x^2 - 1",
+            "color": "orange"
+          },
+          {
+            "name": "F",
+            "expr": "x^3/3 - x + CC",
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "points": [
+          {
+            "x": -1,
+            "on": "F",
+            "color": "accent",
+            "label": "H"
+          },
+          {
+            "x": 1,
+            "on": "F",
+            "color": "accent",
+            "label": "T"
+          }
+        ],
+        "readout": "C = {CC|1}"
+      },
+      "timeline": [
+        {
+          "caption": "C = 0: Hochpunkt über der Nullstelle −1 von f, Tiefpunkt über 1.",
+          "set": {
+            "CC": 0
+          }
+        },
+        {
+          "caption": "C = 1,5: dieselbe Form, nur höher.",
+          "to": {
+            "CC": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "C = −1: tiefer; die Extremstellen bleiben bei ±1.",
+          "to": {
+            "CC": -1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$F$ ist nur bis auf eine Verschiebung in y-Richtung bestimmt: Aus dem Graphen von $f$ folgt die Form von $F$, nicht seine Höhe.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Stammfunktion grafisch zuordnen",
@@ -73,6 +223,39 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Es gilt $f > 0$ auf $(1; 4)$ und $f < 0$ außerhalb, mit Nullstellen bei 1 und 4. Was gilt für jede Stammfunktion $F$?",
+      "options": [
+        {
+          "md": "$F$ hat bei 1 einen Tiefpunkt und bei 4 einen Hochpunkt.",
+          "correct": true
+        },
+        {
+          "md": "$F$ hat bei 1 einen Hochpunkt und bei 4 einen Tiefpunkt."
+        },
+        {
+          "md": "$F$ hat bei 1 und 4 Nullstellen.",
+          "why": "Die Höhe von F ist nicht festgelegt."
+        },
+        {
+          "md": "$F$ hat bei 1 und 4 Wendepunkte."
+        }
+      ],
+      "explain": "Bei 1 wechselt f von − nach +: F hört auf zu fallen. Bei 4 von + nach −: F hört auf zu steigen.",
+      "label": "Extrema",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "f hat genau drei Extrempunkte, jeweils mit Vorzeichenwechsel von f′. Wie viele Wendepunkte hat jede Stammfunktion F?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Extrempunkte von f = F′ sind Wendepunkte von F.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -112,6 +295,26 @@
       "answer": true,
       "explain": "Jede Konstante $C$ verschwindet beim Ableiten: $F + C$ ist ebenfalls Stammfunktion.",
       "id": "tf1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "graphisch"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f → F: Nullstellen werden Extremstellen, Extremstellen werden Wendestellen; Höhe frei."
+      ]
     }
   ]
 }
