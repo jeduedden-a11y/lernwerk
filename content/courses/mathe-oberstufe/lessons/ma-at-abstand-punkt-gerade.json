@@ -16,6 +16,183 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Den Lotfußpunkt $F$ auf $g: \\vec x = \\vec a + s\\,\\vec u$ so wählen, dass $\\overrightarrow{FP} \\cdot \\vec u = 0$. Der Abstand ist $|\\overrightarrow{FP}|$.",
+      "label": "Verfahren",
+      "more": "**Laufpunkt (Standardweg):** $F_s = \\vec a + s\\,\\vec u$ allgemein ansetzen, $\\overrightarrow{F_sP} \\cdot \\vec u = 0$ nach $s$ lösen, $F$ und $|\\overrightarrow{FP}|$ berechnen.\n\n**Kreuzprodukt (schnell, nur der Abstand):** $d = \\dfrac{|\\overrightarrow{AP} \\times \\vec u|}{|\\vec u|}$: Parallelogrammfläche durch Grundseite.\n\n**Hilfsebene:** Ebene durch $P$ mit dem Normalenvektor $\\vec u$; ihr Schnittpunkt mit $g$ ist $F$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $g: \\vec x = s\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}$ und $P(4 \\mid 0 \\mid 3)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\overrightarrow{F_sP} = \\begin{pmatrix} 4 - s \\\\ -s \\\\ 3 \\end{pmatrix}",
+            "why": "Laufpunkt F_s = (s | s | 0)."
+          },
+          {
+            "tex": "\\overrightarrow{F_sP} \\cdot \\vec u = 4 - s - s = 0 \\;\\Rightarrow\\; s = 2",
+            "why": "Senkrecht auf der Richtung."
+          },
+          {
+            "tex": "F(2 \\mid 2 \\mid 0), \\quad \\overrightarrow{FP} = (2, -2, 3)",
+            "why": "Lotfußpunkt."
+          },
+          {
+            "tex": "d = \\sqrt{4 + 4 + 9} = \\sqrt{17} \\approx 4{,}12",
+            "why": "Länge des Lots."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Laufpunkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fußpunkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Laufpunkt",
+      "md": "**Der kürzeste Weg:** Ein Laufpunkt (orange) wandert auf $g$; grau die Verbindung zu $P$. Am kürzesten ist sie, wenn sie senkrecht auf $g$ steht.",
+      "widget": "raum",
+      "params": {
+        "box": 5,
+        "view": {
+          "az": 35,
+          "el": 22
+        },
+        "vars": [
+          {
+            "name": "S",
+            "value": -1
+          }
+        ],
+        "lines": [
+          {
+            "p": [
+              0,
+              0,
+              0
+            ],
+            "d": [
+              1,
+              1,
+              0
+            ],
+            "t": [
+              -2,
+              4.5
+            ],
+            "color": "blue",
+            "label": "g"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              "S",
+              "S",
+              0
+            ],
+            "to": [
+              4,
+              0,
+              3
+            ],
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              4,
+              0,
+              3
+            ],
+            "label": "P"
+          },
+          {
+            "p": [
+              "S",
+              "S",
+              0
+            ],
+            "color": "orange",
+            "label": "F"
+          }
+        ],
+        "readout": "s = {S|2} · Länge {sqrt((4 - S)^2 + S^2 + 9)|3} · Skalarprodukt {4 - 2*S|2}"
+      },
+      "timeline": [
+        {
+          "caption": "s = −1: lang.",
+          "set": {
+            "S": -1
+          }
+        },
+        {
+          "caption": "s = 0,5: kürzer.",
+          "to": {
+            "S": 0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "s = 2: Skalarprodukt 0, kürzeste Verbindung √17.",
+          "to": {
+            "S": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "s = 3,5: wieder länger.",
+          "to": {
+            "S": 3.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Senkrecht muss das Lot auf der **Richtung** stehen: $\\overrightarrow{FP} \\cdot \\vec u = 0$, nicht $\\overrightarrow{FP} \\cdot \\vec a = 0$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Abstand Punkt-Gerade",
@@ -97,6 +274,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Abstand",
+      "md": "Wie weit ist $P(4 \\mid 5 \\mid 4)$ von der Geraden $g: \\vec x = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}$ entfernt?",
+      "answer": 5,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "Lotfußpunkt $F(1 \\mid 5 \\mid 0)$, $\\overrightarrow{FP} = (3, 0, 4)$, Länge 5.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Lotfußpunkt ist der Punkt der Geraden mit dem kleinsten Abstand zu P.",
+      "answer": true,
+      "explain": "Jeder andere Punkt liegt auf der Hypotenuse eines rechtwinkligen Dreiecks und ist weiter weg.",
+      "label": "Lot",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -139,6 +334,38 @@
       },
       "label": "Punkt und Gerade",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "abstand"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Lotfußpunkt aus FP · u = 0; Abstand |FP|."
+      ]
     }
   ]
 }

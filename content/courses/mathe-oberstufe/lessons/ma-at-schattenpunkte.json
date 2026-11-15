@@ -16,6 +16,192 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Ein Schattenpunkt ist ein **Durchstoßpunkt**: bei Sonnenlicht $\\vec x = \\vec s + t\\,\\vec u$ (feste Richtung), bei einer Lampe $\\vec x = \\vec l + t(\\vec s - \\vec l)$, jeweils geschnitten mit der Fläche, auf die der Schatten fällt.",
+      "label": "Verfahren",
+      "more": "**Sonnenlicht:** parallele Strahlen mit derselben Richtung $\\vec u$. **Punktlicht:** Strahlen gehen von der Lampe $L$ aus, für jeden Punkt in eine andere Richtung.\n\n**Schema:** Lichtgerade durch den Gegenstandspunkt aufstellen, mit der Bodenebene (etwa $x_3 = 0$) oder einer schrägen Wand schneiden, Parameter einsetzen.\n\n**Schattenfläche:** die Schatten der Ecken bestimmen und verbinden. Der Schatten eines Punkts, der schon auf dem Boden liegt, ist der Punkt selbst.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Sonnenlicht in Richtung $(2, 1, -2)$, Mastspitze $S(1 \\mid -1 \\mid 4)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec x = \\begin{pmatrix} 1 \\\\ -1 \\\\ 4 \\end{pmatrix} + t\\begin{pmatrix} 2 \\\\ 1 \\\\ -2 \\end{pmatrix}",
+            "why": "Lichtstrahl durch die Spitze."
+          },
+          {
+            "tex": "4 - 2t = 0 \\;\\Rightarrow\\; t = 2",
+            "why": "Boden x₃ = 0."
+          },
+          {
+            "tex": "S'(5 \\mid 1 \\mid 0)",
+            "why": "Schattenpunkt der Spitze."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Strahl.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Boden.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schatten.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schatten",
+      "md": "**Der Schatten eines Mastes:** Der Lichtstrahl (orange) läuft von der Spitze $S$ bis zum Boden; der Schatten (grau) reicht vom Fußpunkt bis $S'$.",
+      "widget": "raum",
+      "params": {
+        "box": 5,
+        "view": {
+          "az": 30,
+          "el": 20
+        },
+        "vars": [
+          {
+            "name": "T",
+            "value": 0
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              1,
+              -1,
+              0
+            ],
+            "to": [
+              1,
+              -1,
+              4
+            ],
+            "color": "blue",
+            "dashed": false,
+            "width": 4
+          },
+          {
+            "from": [
+              1,
+              -1,
+              0
+            ],
+            "to": [
+              5,
+              1,
+              0
+            ],
+            "color": "gray",
+            "dashed": false,
+            "width": 3
+          },
+          {
+            "from": [
+              1,
+              -1,
+              4
+            ],
+            "to": [
+              "1 + 2*T",
+              "-1 + T",
+              "4 - 2*T"
+            ],
+            "color": "orange",
+            "dashed": false
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              1,
+              -1,
+              4
+            ],
+            "label": "S"
+          },
+          {
+            "p": [
+              "1 + 2*T",
+              "-1 + T",
+              "4 - 2*T"
+            ],
+            "color": "orange"
+          },
+          {
+            "p": [
+              5,
+              1,
+              0
+            ],
+            "label": "S′",
+            "color": "green"
+          }
+        ],
+        "readout": "t = {T|2} · Höhe {4 - 2*T|2}"
+      },
+      "timeline": [
+        {
+          "caption": "t = 0: Der Strahl beginnt an der Spitze.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "t = 1: halbe Höhe.",
+          "to": {
+            "T": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = 2: Boden erreicht, Schattenpunkt S′(5 | 1 | 0).",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gedreht.",
+          "to": {
+            "az": 70,
+            "el": 35
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Bei einer Lampe ändert sich die Richtung von Punkt zu Punkt: Der Strahl geht **von der Lampe durch den Punkt**, nicht in einer festen Richtung.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Schattenpunkte",
@@ -89,6 +275,38 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Lampe",
+      "md": "Eine Lampe hängt in $L(0 \\mid 0 \\mid 10)$. Wo trifft der Schatten von $P(2 \\mid 1 \\mid 5)$ den Boden $x_3 = 0$? Gib die $x_1$-Koordinate an.",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\vec x = \\vec l + t(\\vec p - \\vec l)$: $10 - 5t = 0$, $t = 2$, Schatten $(4 \\mid 2 \\mid 0)$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Gerade beschreibt den Lichtstrahl einer Lampe in $L$ durch einen Punkt $P$?",
+      "options": [
+        {
+          "md": "$\\vec x = \\vec l + t(\\vec p - \\vec l)$",
+          "correct": true
+        },
+        {
+          "md": "$\\vec x = \\vec p + t\\,\\vec l$"
+        },
+        {
+          "md": "$\\vec x = \\vec l + t\\,\\vec p$"
+        },
+        {
+          "md": "$\\vec x = \\vec p + t(\\vec p + \\vec l)$"
+        }
+      ],
+      "explain": "Stützpunkt die Lampe, Richtung von der Lampe zum Punkt.",
+      "label": "Lichtstrahl",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +349,62 @@
       "placeholder": "",
       "explain": "$6 - 3t = 0 \\Rightarrow t = 2$, Schattenpunkt $(2 \\mid 4 \\mid 0)$.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "schatten"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "schatten"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "schatten"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schatten"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Schattenpunkt = Lichtstrahl geschnitten mit dem Boden."
+      ]
     }
   ]
 }

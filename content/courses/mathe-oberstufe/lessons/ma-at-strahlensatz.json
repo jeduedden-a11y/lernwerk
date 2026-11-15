@@ -16,6 +16,155 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Teilt $T$ die Strecke $AB$ im Verhältnis $m : n$, ist $\\vec t = \\vec a + \\tfrac{m}{m + n}\\overrightarrow{AB}$. Der Mittelpunkt ist der Fall $1 : 1$, der Schwerpunkt eines Dreiecks $\\tfrac13(\\vec a + \\vec b + \\vec c)$.",
+      "label": "Verfahren",
+      "more": "**Strahlensatz:** Werden zwei Strahlen von parallelen Geraden geschnitten, stehen die Abschnitte auf den Strahlen im selben Verhältnis wie die Abschnitte auf den Parallelen.\n\n**Vektoriell:** Jeder Punkt der Strecke ist $\\vec a + \\lambda\\overrightarrow{AB}$ mit $0 \\leq \\lambda \\leq 1$; das Verhältnis $m : n$ gehört zu $\\lambda = \\tfrac{m}{m + n}$.\n\n**Schwerpunkt:** Er teilt jede Seitenhalbierende im Verhältnis $2 : 1$, von der Ecke aus gemessen.\n\n**Anwendungen:** Punkte auf Kanten von Körpern, Höhen von Pyramiden, Schnitte von Ebenen mit Körperkanten.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $A(2 \\mid -1 \\mid 4)$, $B(8 \\mid 5 \\mid -2)$, $T$ teilt $AB$ im Verhältnis $2 : 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\overrightarrow{AB} = (6, 6, -6)",
+            "why": "Verbindungsvektor."
+          },
+          {
+            "tex": "\\lambda = \\frac{2}{2 + 1} = \\frac23",
+            "why": "Bruchteil für das Verhältnis 2 : 1."
+          },
+          {
+            "tex": "\\vec t = \\vec a + \\tfrac23\\overrightarrow{AB} = (6 \\mid 3 \\mid 0)",
+            "why": "Teilpunkt."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Vektor.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Anteil.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Teilpunkt",
+      "md": "**Ein Punkt auf der Strecke:** $T = A + \\lambda\\overrightarrow{AB}$ wandert von $A$ nach $B$; der Ablesewert zeigt das Teilverhältnis.",
+      "widget": "raum",
+      "params": {
+        "box": 7,
+        "view": {
+          "az": 30,
+          "el": 22
+        },
+        "vars": [
+          {
+            "name": "L",
+            "value": 0.5
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              2,
+              -1,
+              4
+            ],
+            "to": [
+              8,
+              5,
+              -2
+            ],
+            "color": "blue",
+            "dashed": false,
+            "width": 3
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              2,
+              -1,
+              4
+            ],
+            "label": "A"
+          },
+          {
+            "p": [
+              8,
+              5,
+              -2
+            ],
+            "label": "B"
+          },
+          {
+            "p": [
+              "2 + 6*L",
+              "-1 + 6*L",
+              "4 - 6*L"
+            ],
+            "color": "orange",
+            "label": "T"
+          }
+        ],
+        "readout": "λ = {L|3} · AT : TB = {L/(1 - L)|2} : 1"
+      },
+      "timeline": [
+        {
+          "caption": "λ = 1/2: Mittelpunkt, Verhältnis 1 : 1.",
+          "set": {
+            "L": 0.5
+          }
+        },
+        {
+          "caption": "λ = 2/3: Verhältnis 2 : 1.",
+          "to": {
+            "L": 0.6667
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "λ = 1/4: Verhältnis 1 : 3.",
+          "to": {
+            "L": 0.25
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Das Verhältnis $m : n$ teilt in $m + n$ Teile: Zum Teilpunkt gehört der Bruchteil $\\tfrac{m}{m + n}$, nicht $\\tfrac{m}{n}$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Strahlensatz",
@@ -89,6 +238,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Schwerpunkt",
+      "md": "Bestimme die $x_1$-Koordinate des Schwerpunkts von $A(1 \\mid 0 \\mid 0)$, $B(4 \\mid 3 \\mid 0)$, $C(1 \\mid 6 \\mid 3)$.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac{1 + 4 + 1}{3} = 2$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$T$ teilt $AB$ im Verhältnis $1 : 3$. Dann ist $\\overline{AT}$ ein Viertel von $\\overline{AB}$.",
+      "answer": true,
+      "explain": "$\\lambda = \\tfrac{1}{1 + 3} = \\tfrac14$.",
+      "label": "Verhältnis",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +298,50 @@
       "placeholder": "",
       "explain": "$\\vec t = \\vec a + \\frac13(\\vec b - \\vec a) = (2 \\mid 1 \\mid 3)$.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "teilpunkt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "teilpunkt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "teilpunkt"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Teilverhältnis m : n gibt den Anteil m / (m + n)."
+      ]
     }
   ]
 }

@@ -14,7 +14,7 @@
   "use strict";
 
   const LW = (window.LW = window.LW || {});
-  LW.version = "1.9.3";
+  LW.version = "1.9.4";
   LW.api = 1;
   LW.widgets = LW.widgets || {};
   LW.widget = function (name, def) { LW.widgets[name] = def; };

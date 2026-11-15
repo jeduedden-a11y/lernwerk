@@ -16,6 +16,198 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Spiegeln heißt: den Lotfußpunkt $F$ bestimmen und **noch einmal so weit** gehen, $\\vec p\\,' = \\vec p + 2\\overrightarrow{PF}$. Das gilt für Punkt, Gerade und Ebene als Spiegel.",
+      "label": "Verfahren",
+      "more": "| Spiegel | Lotfußpunkt $F$ |\n|---|---|\n| Punkt $Z$ | $F = Z$, also $\\vec p\\,' = 2\\vec z - \\vec p$ |\n| Ebene | Lotgerade $\\vec p + t\\,\\vec n$ mit der Ebene schneiden |\n| Gerade | Laufpunkt mit $\\overrightarrow{FP} \\cdot \\vec u = 0$ |\n\n**Kontrolle:** $F$ ist der Mittelpunkt von $P$ und $P'$. **Gerade spiegeln:** zwei ihrer Punkte spiegeln und die Bildpunkte verbinden.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $P(1 \\mid 2 \\mid 5)$ an $E: x_1 + x_2 + x_3 = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(1 + t) + (2 + t) + (5 + t) = 2 \\;\\Rightarrow\\; t = -2",
+            "why": "Lotgerade p + t n einsetzen."
+          },
+          {
+            "tex": "F(-1 \\mid 0 \\mid 3)",
+            "why": "Lotfußpunkt."
+          },
+          {
+            "tex": "\\vec p\\,' = 2\\vec f - \\vec p = (-3 \\mid -2 \\mid 1)",
+            "why": "Noch einmal so weit."
+          },
+          {
+            "tex": "\\text{Mittelpunkt von } P, P' = F \\;\\checkmark",
+            "why": "Probe."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Lotgerade.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fußpunkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bildpunkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Spiegeln",
+      "md": "**Durch den Spiegel hindurch:** Ein Punkt läuft von $P$ senkrecht auf die Ebene zu, erreicht $F$ und geht genauso weit weiter bis $P'$.",
+      "widget": "raum",
+      "params": {
+        "box": 5,
+        "view": {
+          "az": 35,
+          "el": 18
+        },
+        "vars": [
+          {
+            "name": "T",
+            "value": 0
+          }
+        ],
+        "planes": [
+          {
+            "n": [
+              1,
+              1,
+              1
+            ],
+            "d": 2,
+            "p": [
+              -1,
+              0,
+              3
+            ],
+            "size": 2.2,
+            "color": "teal",
+            "label": "E"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              1,
+              2,
+              5
+            ],
+            "to": [
+              -3,
+              -2,
+              1
+            ]
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              1,
+              2,
+              5
+            ],
+            "label": "P"
+          },
+          {
+            "p": [
+              -1,
+              0,
+              3
+            ],
+            "label": "F",
+            "color": "green"
+          },
+          {
+            "p": [
+              -3,
+              -2,
+              1
+            ],
+            "label": "P′",
+            "color": "blue"
+          },
+          {
+            "p": [
+              "1 - 2*T",
+              "2 - 2*T",
+              "5 - 2*T"
+            ],
+            "color": "orange"
+          }
+        ],
+        "readout": "t = {T|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Start in P.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "In F, dem Lotfußpunkt.",
+          "to": {
+            "T": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Noch einmal so weit: P′.",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gedreht.",
+          "to": {
+            "az": 100,
+            "el": 10
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Nicht beim Lotfußpunkt aufhören: Der Bildpunkt liegt **doppelt** so weit von $P$ entfernt wie $F$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Spiegelung an Ebene und Gerade",
@@ -89,6 +281,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Punktspiegelung",
+      "md": "Spiegle $P(4 \\mid 1 \\mid -2)$ am Punkt $Z(1 \\mid 1 \\mid 1)$. Welche $x_3$-Koordinate hat das Bild?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\vec p\\,' = 2\\vec z - \\vec p = (-2 \\mid 1 \\mid 4)$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Lotfußpunkt ist der Mittelpunkt von $P$ und seinem Spiegelbild $P'$.",
+      "answer": true,
+      "explain": "Er liegt genau in der Mitte des Lots.",
+      "label": "Mittelpunkt",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +341,62 @@
       "placeholder": "",
       "explain": "Lotfußpunkt $(1 \\mid 2 \\mid 2)$, Abstand 3; also $x_3 = 2 - 3 = -1$.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Spiegeln: Lotfußpunkt F, dann P′ = P + 2 · PF."
+      ]
     }
   ]
 }

@@ -19,6 +19,190 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Skalarprodukt als Projektion** in der Grafik aus dem Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Skalarprodukt und Kreuzprodukt.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Links das Skalarprodukt, rechts das Kreuzprodukt.",
+          "to": {
+            "x": 0.5,
+            "y": 0.45,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Der Schatten von b auf a hat die Länge |b| · cos φ.",
+          "to": {
+            "x": 0.25,
+            "y": 0.45,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Das Skalarprodukt ist |a| mal dieser Schattenlänge, und es ist eine Zahl, kein Vektor.",
+          "to": {
+            "x": 0.26,
+            "y": 0.69,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Winkel",
+      "md": "**Winkel und Vorzeichen:** $\\vec a$ (blau) bleibt fest, $\\vec b$ (orange) dreht sich. Grün der Schatten von $\\vec b$ auf $\\vec a$.",
+      "widget": "raum",
+      "params": {
+        "box": 3.5,
+        "view": {
+          "az": 20,
+          "el": 55
+        },
+        "vars": [
+          {
+            "name": "PHI",
+            "value": 0.5
+          }
+        ],
+        "vectors": [
+          {
+            "to": [
+              3,
+              0,
+              0
+            ],
+            "color": "blue",
+            "label": "a"
+          },
+          {
+            "to": [
+              "2*cos(PHI)",
+              "2*sin(PHI)",
+              0
+            ],
+            "color": "orange",
+            "label": "b"
+          },
+          {
+            "to": [
+              "2*cos(PHI)",
+              0,
+              0
+            ],
+            "color": "green",
+            "width": 4
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              "2*cos(PHI)",
+              "2*sin(PHI)",
+              0
+            ],
+            "to": [
+              "2*cos(PHI)",
+              0,
+              0
+            ],
+            "color": "gray"
+          }
+        ],
+        "readout": "φ = {PHI*180/pi|0}° · a · b = {6*cos(PHI)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Spitzer Winkel: Der Schatten zeigt in Richtung a, das Skalarprodukt ist positiv.",
+          "set": {
+            "PHI": 0.5
+          }
+        },
+        {
+          "caption": "90°: kein Schatten, Skalarprodukt 0. Die Vektoren sind orthogonal.",
+          "to": {
+            "PHI": 1.5708
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Stumpfer Winkel: Der Schatten zeigt nach hinten, das Skalarprodukt ist negativ.",
+          "to": {
+            "PHI": 2.6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "$\\vec a \\cdot \\vec b = a_1b_1 + a_2b_2 + a_3b_3 = |\\vec a|\\,|\\vec b|\\cos\\varphi$. **Null** heißt senkrecht, positiv spitzer, negativ stumpfer Winkel.",
+      "label": "Skalarprodukt",
+      "more": "**Winkel:** $\\cos\\varphi = \\dfrac{\\vec a \\cdot \\vec b}{|\\vec a|\\,|\\vec b|}$.\n\n**Projektion:** Die Länge des Schattens von $\\vec b$ auf $\\vec a$ ist $\\dfrac{\\vec a \\cdot \\vec b}{|\\vec a|}$; der Schattenvektor ist $\\dfrac{\\vec a \\cdot \\vec b}{|\\vec a|^2}\\,\\vec a$.\n\n**Eigenschaften:** $\\vec a \\cdot \\vec b = \\vec b \\cdot \\vec a$, distributiv, $\\vec a \\cdot \\vec a = |\\vec a|^2$.\n\n**Anwendungen:** Orthogonalität prüfen (wichtigster Spezialfall), Winkel zwischen Geraden und Ebenen, in der Physik die Arbeit $W = \\vec F \\cdot \\vec s$.",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Herleitung der Winkelformel** mit dem Kosinussatz im Dreieck aus $\\vec a$, $\\vec b$ und $\\vec a - \\vec b$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2|\\vec a|\\,|\\vec b|\\cos\\varphi",
+            "why": "Kosinussatz."
+          },
+          {
+            "tex": "|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2(a_1b_1 + a_2b_2 + a_3b_3)",
+            "why": "Dieselbe Länge in Koordinaten ausmultipliziert."
+          },
+          {
+            "tex": "a_1b_1 + a_2b_2 + a_3b_3 = |\\vec a|\\,|\\vec b|\\cos\\varphi",
+            "why": "Vergleichen: beide Formen des Skalarprodukts stimmen überein."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kosinussatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Koordinaten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vergleich.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Skalarprodukt",
@@ -200,6 +384,50 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Winkel",
+      "md": "Welchen Winkel schließen $\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}$ und $\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}$ ein (in Grad)?",
+      "answer": 60,
+      "tolerance": 0.1,
+      "placeholder": "°",
+      "explain": "$\\cos\\varphi = \\tfrac{1}{\\sqrt2 \\cdot \\sqrt2} = \\tfrac12$, also $\\varphi = 60^\\circ$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Für welches $t$ steht $\\begin{pmatrix} 2 \\\\ t \\\\ 1 \\end{pmatrix}$ senkrecht auf $\\begin{pmatrix} 1 \\\\ 3 \\\\ -5 \\end{pmatrix}$?",
+      "options": [
+        {
+          "md": "$t = 1$",
+          "correct": true
+        },
+        {
+          "md": "$t = -1$"
+        },
+        {
+          "md": "$t = 3$"
+        },
+        {
+          "md": "$t = 0$"
+        }
+      ],
+      "explain": "$2 + 3t - 5 = 0$, also $t = 1$.",
+      "label": "Orthogonal",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Winkelformel in die richtige Reihenfolge.",
+      "items": [
+        "Kosinussatz: $|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2|\\vec a||\\vec b|\\cos\\varphi$",
+        "In Koordinaten: $|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2(a_1b_1 + a_2b_2 + a_3b_3)$",
+        "Vergleichen: $a_1b_1 + a_2b_2 + a_3b_3 = |\\vec a||\\vec b|\\cos\\varphi$"
+      ],
+      "explain": "Die Reihenfolge: 1. Kosinussatz: $|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2|\\vec a||\\vec b|\\cos\\varphi$. 2. In Koordinaten: $|\\vec a - \\vec b|^2 = |\\vec a|^2 + |\\vec b|^2 - 2(a_1b_1 + a_2b_2 + a_3b_3)$. 3. Vergleichen: $a_1b_1 + a_2b_2 + a_3b_3 = |\\vec a||\\vec b|\\cos\\varphi$.",
+      "id": "vq3"
+    },
+    {
       "type": "truefalse",
       "md": "Ist $\\vec a \\cdot \\vec b < 0$, ist der Winkel zwischen den Vektoren stumpf.",
       "answer": true,
@@ -247,12 +475,25 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "skalarprodukt"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "a · b = Summe der Produkte = |a||b| cos φ.",
         "a · b = 0 ⇔ senkrecht.",
-        "Projektion: (a · b)/|b|."
+        "Projektion: (a · b)/|b|.",
+        "Skalarprodukt 0 heißt orthogonal; Vorzeichen zeigt spitz oder stumpf."
       ],
       "id": "summary"
     }

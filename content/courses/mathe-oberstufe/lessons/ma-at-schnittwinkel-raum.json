@@ -16,6 +16,153 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Zwei Geraden: $\\cos\\varphi = \\dfrac{|\\vec u \\cdot \\vec v|}{|\\vec u|\\,|\\vec v|}$. Zwei Ebenen: dasselbe mit den Normalenvektoren. Gerade und Ebene: $\\sin\\varphi = \\dfrac{|\\vec u \\cdot \\vec n|}{|\\vec u|\\,|\\vec n|}$.",
+      "label": "Verfahren",
+      "more": "**Warum der Sinus:** Der Winkel zwischen $\\vec u$ und $\\vec n$ ist $90^\\circ - \\varphi$, weil $\\vec n$ senkrecht auf der Ebene steht; $\\cos(90^\\circ - \\varphi) = \\sin\\varphi$.\n\n**Betrag:** Er sorgt dafür, dass der Schnittwinkel zwischen $0^\\circ$ und $90^\\circ$ liegt.\n\n**Schema:** passende Vektoren wählen (Richtungs- oder Normalenvektoren), Skalarprodukt und Längen berechnen, die richtige Formel anwenden, mit dem Taschenrechner im Gradmaß den Winkel bestimmen.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Gerade mit $\\vec u = (2, 1, 2)$ und Ebene $x_1 = 0$ mit $\\vec n = (1, 0, 0)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec u \\cdot \\vec n = 2, \\quad |\\vec u| = 3, \\quad |\\vec n| = 1",
+            "why": "Bausteine."
+          },
+          {
+            "tex": "\\sin\\varphi = \\frac{2}{3 \\cdot 1} = \\frac23",
+            "why": "Sinus, weil Gerade und Ebene."
+          },
+          {
+            "tex": "\\varphi \\approx 41{,}8^\\circ",
+            "why": "Gradmaß."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bausteine.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Winkel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Winkel",
+      "md": "**Winkel zur Ebene und zur Normalen:** Die orange Gerade kippt gegen die Bodenebene; grün der Normalenvektor. Beide Winkel ergänzen sich zu $90^\\circ$.",
+      "widget": "raum",
+      "params": {
+        "box": 3.5,
+        "view": {
+          "az": 25,
+          "el": 15
+        },
+        "vars": [
+          {
+            "name": "A",
+            "value": 0.35
+          }
+        ],
+        "planes": [
+          {
+            "n": [
+              0,
+              0,
+              1
+            ],
+            "d": 0,
+            "size": 2.5,
+            "color": "teal"
+          }
+        ],
+        "lines": [
+          {
+            "p": [
+              0,
+              0,
+              0
+            ],
+            "d": [
+              "cos(A)",
+              0,
+              "sin(A)"
+            ],
+            "t": [
+              -3,
+              3
+            ],
+            "color": "orange"
+          }
+        ],
+        "vectors": [
+          {
+            "to": [
+              0,
+              0,
+              2.5
+            ],
+            "color": "green",
+            "label": "n"
+          }
+        ],
+        "readout": "Winkel zur Ebene {A*180/pi|0}° · zum Normalenvektor {90 - A*180/pi|0}°"
+      },
+      "timeline": [
+        {
+          "caption": "20° zur Ebene, 70° zur Normalen.",
+          "set": {
+            "A": 0.35
+          }
+        },
+        {
+          "caption": "45° zu beiden.",
+          "to": {
+            "A": 0.7854
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "70° zur Ebene, 20° zur Normalen.",
+          "to": {
+            "A": 1.22
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Bei Gerade und Ebene den **Sinus** nehmen: Der Kosinus liefert den Winkel zum Normalenvektor, also $90^\\circ$ minus den gesuchten Winkel.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Schnittwinkel im Raum",
@@ -97,6 +244,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Ebenen",
+      "md": "Unter welchem Winkel schneiden sich $E_1: x_1 + x_2 = 1$ und $E_2: x_2 + x_3 = 1$ (in Grad)?",
+      "answer": 60,
+      "tolerance": 0.1,
+      "placeholder": "°",
+      "explain": "$\\cos\\varphi = \\tfrac{|\\vec n_1 \\cdot \\vec n_2|}{|\\vec n_1||\\vec n_2|} = \\tfrac{1}{\\sqrt2 \\cdot \\sqrt2} = \\tfrac12$, also $60^\\circ$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein Schnittwinkel liegt immer zwischen $0^\\circ$ und $90^\\circ$.",
+      "answer": true,
+      "explain": "Der Betrag im Zähler sorgt dafür.",
+      "label": "Bereich",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -159,6 +324,26 @@
       },
       "label": "Ebene-Ebene",
       "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "winkel"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Gerade und Ebene: Sinus; sonst Kosinus; immer mit Betrag."
+      ]
     }
   ]
 }

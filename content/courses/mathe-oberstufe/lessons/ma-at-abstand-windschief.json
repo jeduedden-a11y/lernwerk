@@ -16,6 +16,193 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Bei windschiefen Geraden steht $\\vec n = \\vec u \\times \\vec v$ auf beiden senkrecht. Abstand $= \\dfrac{|(\\vec b - \\vec a) \\cdot \\vec n|}{|\\vec n|}$: die Verbindung zweier Stützpunkte, projiziert auf $\\vec n$.",
+      "label": "Verfahren",
+      "more": "1. **Windschief prüfen:** Richtungen nicht kollinear, kein Schnittpunkt.\n2. **Gemeinsames Lot:** $\\vec n = \\vec u \\times \\vec v$.\n3. **Projizieren:** $d = \\dfrac{|(\\vec b - \\vec a) \\cdot \\vec n|}{|\\vec n|}$ mit den Stützpunkten $A \\in g$ und $B \\in h$.\n\n**Hilfsebene:** Ebene durch $g$ mit dem Normalenvektor $\\vec n$; der Abstand eines Punkts von $h$ zu ihr ist der gesuchte Abstand.\n\n**Lotfußpunkte:** Verbindungsvektor $\\overrightarrow{G_sH_t}$ senkrecht auf $\\vec u$ und auf $\\vec v$ setzen; das gibt zwei Gleichungen für $s$ und $t$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $g: \\vec x = s\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}$, $h: \\vec x = \\begin{pmatrix} 0 \\\\ 2 \\\\ 3 \\end{pmatrix} + t\\begin{pmatrix} 1 \\\\ -1 \\\\ 1 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec n = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ -1 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ -1 \\\\ -2 \\end{pmatrix}",
+            "why": "Gemeinsames Lot."
+          },
+          {
+            "tex": "(\\vec b - \\vec a) \\cdot \\vec n = (0, 2, 3) \\cdot (1, -1, -2) = -8",
+            "why": "Verbindung der Stützpunkte projizieren."
+          },
+          {
+            "tex": "d = \\frac{8}{\\sqrt6} \\approx 3{,}27",
+            "why": "Durch die Länge von n teilen."
+          },
+          {
+            "tex": "G(1 \\mid 1 \\mid 0), \\; H\\left(-\\tfrac13 \\mid \\tfrac73 \\mid \\tfrac83\\right)",
+            "why": "Lotfußpunkte aus den beiden Senkrecht-Bedingungen: s = 1, t = −1/3."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Lot.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Projektion.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fußpunkte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Lot",
+      "md": "**Das gemeinsame Lot:** $g$ (orange) und $h$ (blau) sind windschief; grün die kürzeste Verbindung zwischen den Lotfußpunkten $G$ und $H$.",
+      "widget": "raum",
+      "params": {
+        "box": 4,
+        "view": {
+          "az": 30,
+          "el": 20
+        },
+        "lines": [
+          {
+            "p": [
+              0,
+              0,
+              0
+            ],
+            "d": [
+              1,
+              1,
+              0
+            ],
+            "t": [
+              -2.5,
+              3
+            ],
+            "color": "orange",
+            "label": "g"
+          },
+          {
+            "p": [
+              0,
+              2,
+              3
+            ],
+            "d": [
+              1,
+              -1,
+              1
+            ],
+            "t": [
+              -2.5,
+              2
+            ],
+            "color": "blue",
+            "label": "h"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              1,
+              1,
+              0
+            ],
+            "to": [
+              -0.3333,
+              2.3333,
+              2.6667
+            ],
+            "color": "green",
+            "dashed": false,
+            "width": 3
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              1,
+              1,
+              0
+            ],
+            "label": "G",
+            "color": "orange"
+          },
+          {
+            "p": [
+              -0.3333,
+              2.3333,
+              2.6667
+            ],
+            "label": "H",
+            "color": "blue"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Die grüne Strecke steht auf beiden Geraden senkrecht.",
+          "set": {
+            "az": 30,
+            "el": 20
+          }
+        },
+        {
+          "caption": "Gedreht: Ihre Länge ist der Abstand, etwa 3,27.",
+          "to": {
+            "az": 80,
+            "el": 30
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Von oben scheinen sich g und h zu schneiden.",
+          "to": {
+            "az": 40,
+            "el": 85
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Die Formel gilt nur für **windschiefe** Geraden; bei parallelen ist $\\vec u \\times \\vec v = \\vec 0$. Und den Betrag im Zähler nicht vergessen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Abstand windschiefer Geraden",
@@ -89,6 +276,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Abstand",
+      "md": "Berechne den Abstand von $g: \\vec x = s\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}$ und $h: \\vec x = \\begin{pmatrix} 0 \\\\ 1 \\\\ 4 \\end{pmatrix} + t\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}$ (zwei Nachkommastellen).",
+      "answer": 2.12,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\vec n = (0, -1, 1)$, $(\\vec b - \\vec a) \\cdot \\vec n = -1 + 4 = 3$, $d = \\tfrac{3}{\\sqrt2} \\approx 2{,}12$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für parallele Geraden kann man dieselbe Formel mit $\\vec u \\times \\vec v$ verwenden.",
+      "answer": false,
+      "explain": "Dann ist $\\vec u \\times \\vec v = \\vec 0$; man rechnet den Abstand eines Punkts von der anderen Geraden.",
+      "label": "Grenzen",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +336,26 @@
       "placeholder": "",
       "explain": "$\\vec n = \\vec u \\times \\vec v = (0, 0, 1)$, $\\vec b - \\vec a = (0, 0, 5)$: $d = \\frac{|5|}{1} = 5$. Die x-Achse und eine dazu verdrehte Parallele zur y-Achse in Höhe 5.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "kreuzprodukt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Windschief: n = u × v, Abstand |(b − a) · n| / |n|."
+      ]
     }
   ]
 }

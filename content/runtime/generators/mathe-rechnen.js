@@ -1007,13 +1007,177 @@
       "Gesucht ist $\\int_0^T r(t)\\,dt = 0$: $-\\tfrac{T^3}{3} + " + G.frac(p, 2) + "T^2 = T^2\\left(" + G.frac(p, 2) + " - \\tfrac{T}{3}\\right) = 0$, also $T = " + G.tex((3 * p) / 2, 1) + "$. Erst wächst der Bestand, dann schrumpft er um genau so viel.", 0);
   });
 
+  // ---------------------------------------------------------------- analytic geometry (Mathematik wave)
+  const pk = (v) => "(" + v.map(tnum).join(" \\mid ") + ")";
+  const nzv = (G, k) => [nz(G, -k, k), nz(G, -k, k), nz(G, -k, k)];
+  const add = (a, b, t) => a.map((c, i) => c + (t == null ? 1 : t) * b[i]);
+  const XN = ["x_1", "x_2", "x_3"];
+  const coordForm = (n, d) => {
+    let s = "";
+    n.forEach((c, i) => { if (!c) return; const a = Math.abs(c); s += (s ? (c < 0 ? " - " : " + ") : c < 0 ? "-" : "") + (a === 1 ? "" : tnum(a)) + XN[i]; });
+    return (s || "0") + " = " + tnum(d);
+  };
+  spec("geradenpunkt", (level, G) => {
+    const p = rv(G, 4), u = nzv(G, 3);
+    const g = "g: \\vec x = " + vec(p) + " + s" + vec(u);
+    if (level <= 1) {
+      const s = nz(G, -3, 3), P = add(p, u, s);
+      return num("Der Punkt $P" + pk(P) + "$ liegt auf $" + g + "$. Für welchen Parameter $s$?", s,
+        "Punktprobe: $" + pk(P).replace(/[()]/g, "") + "$ komponentenweise: $" + P[0] + " = " + p[0] + " + s \\cdot " + par(u[0]) + "$ gibt $s = " + s + "$; die anderen Zeilen liefern dasselbe.", 0);
+    }
+    if (level === 2) {
+      const s = nz(G, -3, 3), P = add(p, u, s), on = G.chance(0.5);
+      if (!on) P[G.int(0, 2)] += G.pick([1, -1, 2]);
+      return choice(G, "Liegt $P" + pk(P) + "$ auf $" + g + "$?", on ? "ja, für $s = " + s + "$" : "nein",
+        on ? ["nein", "ja, für $s = " + (s + 1) + "$", "nur, wenn man $s$ negativ wählt"].map((w) => ({ md: w })) : ["ja, für $s = " + s + "$", "ja, für $s = 0$", "das lässt sich nicht entscheiden"].map((w) => ({ md: w })),
+        on ? "Alle drei Zeilen der Punktprobe liefern $s = " + s + "$." : "Die drei Zeilen der Punktprobe liefern nicht alle dasselbe $s$: Der Punkt liegt nicht auf der Geraden.");
+    }
+    const S = [G.int(-4, 4), G.int(-4, 4), 0], w = [nz(G, -2, 2), nz(G, -2, 2), nz(G, -3, 3)], k = G.int(1, 2), m = G.int(1, 3);
+    const A = add(S, w, -k), B = add(S, w, m);
+    if (level === 3) return num("Die Gerade durch $A" + pk(A) + "$ und $B" + pk(B) + "$ durchstößt die $x_1x_2$-Ebene. Bestimme die $x_1$-Koordinate dieses Spurpunkts.", S[0],
+      "$g: \\vec x = " + vec(A) + " + s" + vec(add(B, A, -1)) + "$. Aus $x_3 = 0$ folgt $s = " + G.frac(k, k + m) + "$, eingesetzt $S" + pk(S) + "$.", 0);
+    return num("Die Gerade durch $A" + pk(A) + "$ und $B" + pk(B) + "$ durchstößt die $x_1x_2$-Ebene. Bestimme die $x_2$-Koordinate dieses Spurpunkts.", S[1],
+      "Richtungsvektor $\\overrightarrow{AB} = " + vec(add(B, A, -1)) + "$. $x_3 = 0$ gibt $s = " + G.frac(k, k + m) + "$, also $S" + pk(S) + "$.", 0);
+  });
+  spec("ebenenform", (level, G) => {
+    if (level <= 1) {
+      const n = nzv(G, 4), P = rv(G, 4), d = dot(n, P);
+      return num("Eine Ebene hat den Normalenvektor $\\vec n = " + vec(n) + "$ und enthält $P" + pk(P) + "$. Bestimme $d$ in der Koordinatenform $" + coordForm(n, 0).replace("= 0", "= d") + "$.", d,
+        "$d = \\vec n \\cdot \\vec p = " + n.map((c, i) => par(c) + " \\cdot " + par(P[i])).join(" + ") + " = " + d + "$.", 0);
+    }
+    if (level === 2) {
+      const c = G.pick([1, 2, 3, 4, 6, -2, -3]), x3 = nz(G, -4, 5), d = c * x3, a = nz(G, -4, 4), b = nz(G, -4, 4);
+      return num("Wo schneidet $E: " + coordForm([a, b, c], d) + "$ die $x_3$-Achse? Gib $x_3$ an.", x3,
+        "Auf der $x_3$-Achse ist $x_1 = x_2 = 0$: $" + c + "x_3 = " + d + "$, also $x_3 = " + x3 + "$. Ebenso findet man die anderen Spurpunkte.", 0);
+    }
+    let u, v, n;
+    do { u = rv(G, 3); v = rv(G, 3); n = cross(u, v); } while (n.every((x) => x === 0));
+    const P = rv(G, 4);
+    if (level === 3) {
+      return num("$E: \\vec x = " + vec(P) + " + r" + vec(u) + " + s" + vec(v) + "$. Mit $\\vec n = \\vec u \\times \\vec v$ lautet die Koordinatenform $\\vec n \\cdot \\vec x = d$. Bestimme $d$.", dot(n, P),
+        "$\\vec n = " + vec(u) + " \\times " + vec(v) + " = " + vec(n) + "$, $d = \\vec n \\cdot \\vec p = " + dot(n, P) + "$. Koordinatenform: $" + coordForm(n, dot(n, P)) + "$.", 0);
+    }
+    const A = P, B = add(P, u), C = add(P, v);
+    return num("Die Ebene durch $A" + pk(A) + "$, $B" + pk(B) + "$ und $C" + pk(C) + "$ hat mit $\\vec n = \\overrightarrow{AB} \\times \\overrightarrow{AC}$ die Koordinatenform $\\vec n \\cdot \\vec x = d$. Bestimme $d$.", dot(n, P),
+      "$\\overrightarrow{AB} = " + vec(u) + "$, $\\overrightarrow{AC} = " + vec(v) + "$, $\\vec n = " + vec(n) + "$, $d = \\vec n \\cdot \\vec a = " + dot(n, P) + "$.", 0);
+  });
+  spec("durchstoss", (level, G) => {
+    const p = rv(G, 4), s0 = nz(G, -3, 3);
+    if (level <= 1) {
+      const u = [nz(G, -3, 3), nz(G, -3, 3), nz(G, -3, 3)], c = p[2] + s0 * u[2];
+      return num("Für welchen Parameter $s$ durchstößt $g: \\vec x = " + vec(p) + " + s" + vec(u) + "$ die Ebene $E: x_3 = " + c + "$?", s0,
+        "Die dritte Zeile: $" + p[2] + " + s \\cdot " + par(u[2]) + " = " + c + "$, also $s = " + s0 + "$.", 0);
+    }
+    let n, u;
+    do { n = rv(G, 3); u = rv(G, 3); } while (dot(n, u) === 0 || n.every((x) => x === 0));
+    const S = add(p, u, s0), d = dot(n, S);
+    if (level === 2) return num("Bestimme die $x_1$-Koordinate des Schnittpunkts von $g: \\vec x = " + vec(p) + " + s" + vec(u) + "$ mit $E: " + coordForm(n, d) + "$.", S[0],
+      "Zeilen von $g$ in $E$ einsetzen: $" + dot(n, p) + " + " + par(dot(n, u)) + "s = " + d + "$, also $s = " + s0 + "$. Schnittpunkt $S" + pk(S) + "$.", 0);
+    if (level === 3) {
+      const kind = G.int(0, 2);
+      let uu = u, pp = p, dd = d;
+      if (kind > 0) {
+        // direction parallel to the plane: replace u by a vector orthogonal to n
+        uu = cross(n, [1, 0, 0]); if (uu.every((x) => x === 0)) uu = cross(n, [0, 1, 0]);
+        dd = kind === 2 ? dot(n, pp) : dot(n, pp) + G.pick([1, 2, -3]);
+      }
+      const right = kind === 0 ? "Sie schneiden sich in einem Punkt." : kind === 1 ? "Die Gerade ist echt parallel zur Ebene." : "Die Gerade liegt in der Ebene.";
+      const all = ["Sie schneiden sich in einem Punkt.", "Die Gerade ist echt parallel zur Ebene.", "Die Gerade liegt in der Ebene.", "Die Gerade steht senkrecht auf der Ebene."];
+      return choice(G, "Wie liegen $g: \\vec x = " + vec(pp) + " + s" + vec(uu) + "$ und $E: " + coordForm(n, dd) + "$ zueinander?", right, all.filter((w) => w !== right).map((w) => ({ md: w })),
+        "$\\vec n \\cdot \\vec u = " + dot(n, uu) + "$. " + (kind === 0 ? "Ungleich null: Die Gerade schneidet die Ebene." : "Null: Die Gerade ist parallel; die Punktprobe mit dem Stützpunkt ergibt " + dot(n, pp) + (kind === 2 ? " = " : " \\neq ") + dd + ", also " + (kind === 2 ? "liegt sie in der Ebene." : "echt parallel.")));
+    }
+    const n2 = G.pick([1, -1]), n1 = nz(G, -3, 3), n3 = nz(G, -3, 3), u1 = nz(G, -3, 3), u3 = nz(G, -3, 3);
+    const a = -(n1 * u1 + n3 * u3) / n2;
+    return num("Für welches $a$ ist die Gerade mit dem Richtungsvektor $\\begin{pmatrix} " + u1 + " \\\\ a \\\\ " + u3 + " \\end{pmatrix}$ parallel zur Ebene $E: " + coordForm([n1, n2, n3], 5) + "$?", a,
+      "Parallel heißt $\\vec n \\cdot \\vec u = 0$: $" + par(n1) + " \\cdot " + par(u1) + " + " + par(n2) + "a + " + par(n3) + " \\cdot " + par(u3) + " = 0$, also $a = " + a + "$.", 0);
+  });
+  spec("spiegelpunkt", (level, G) => {
+    if (level <= 1) {
+      const c = G.int(-3, 4), P = rv(G, 5);
+      return num("Spiegle $P" + pk(P) + "$ an der Ebene $x_3 = " + c + "$. Welche $x_3$-Koordinate hat der Bildpunkt?", 2 * c - P[2],
+        "Der Lotfußpunkt hat $x_3 = " + c + "$; der Bildpunkt liegt genauso weit auf der anderen Seite: $2 \\cdot " + par(c) + " - " + par(P[2]) + " = " + (2 * c - P[2]) + "$.", 0);
+    }
+    if (level === 3) {
+      const q = rv(G, 3), u = nzv(G, 2), F = add(q, u, nz(G, -2, 2));
+      let w = cross(u, [0, 0, 1]); if (w.every((x) => x === 0)) w = cross(u, [1, 0, 0]);
+      const P = add(F, w), P2 = add(F, w, -1);
+      return num("Spiegle $P" + pk(P) + "$ an der Geraden $g: \\vec x = " + vec(q) + " + s" + vec(u) + "$. Welche $x_1$-Koordinate hat der Bildpunkt?", P2[0],
+        "Lotfußpunkt $F$ aus $\\overrightarrow{FP} \\cdot \\vec u = 0$: $F" + pk(F) + "$. Bildpunkt $P' = P + 2\\overrightarrow{PF} = " + pk(P2) + "$.", 0);
+    }
+    const F = rv(G, 3), n = nzv(G, 2), t = G.pick([1, 2, -1]), d = dot(n, F), P = add(F, n, t), P2 = add(F, n, -t);
+    const k = level === 2 ? 0 : 2;
+    return num("Spiegle $P" + pk(P) + "$ an der Ebene $E: " + coordForm(n, d) + "$. Welche $" + XN[k] + "$-Koordinate hat der Bildpunkt?", P2[k],
+      "Lotgerade $\\vec x = \\vec p + t\\,\\vec n$ schneidet $E$ bei $t = " + (-t) + "$: Lotfußpunkt $F" + pk(F) + "$. Bildpunkt $P' = P + 2\\overrightarrow{PF} = " + pk(P2) + "$.", 0);
+  });
+  spec("teilpunkt", (level, G) => {
+    const A = rv(G, 5);
+    if (level <= 1) {
+      const B = add(A, [2 * G.int(-3, 3), 2 * G.int(-3, 3), 2 * G.int(-3, 3)]), M = A.map((c, i) => (c + B[i]) / 2), k = G.int(0, 2);
+      return num("Bestimme die $" + XN[k] + "$-Koordinate des Mittelpunkts von $A" + pk(A) + "$ und $B" + pk(B) + "$.", M[k],
+        "$\\vec m = \\tfrac12(\\vec a + \\vec b) = " + vec(M) + "$.", 0);
+    }
+    if (level === 2) {
+      const m = G.int(1, 3), nn = G.int(1, 3), w = [nz(G, -2, 2), nz(G, -2, 2), nz(G, -2, 2)].map((c) => c * (m + nn)), B = add(A, w), T = add(A, w, m / (m + nn)), k = G.int(0, 2);
+      return num("$T$ teilt die Strecke von $A" + pk(A) + "$ nach $B" + pk(B) + "$ im Verhältnis $" + m + " : " + nn + "$. Bestimme die $" + XN[k] + "$-Koordinate von $T$.", T[k],
+        "$\\vec t = \\vec a + \\tfrac{" + m + "}{" + (m + nn) + "}\\overrightarrow{AB} = " + vec(A) + " + \\tfrac{" + m + "}{" + (m + nn) + "}" + vec(w) + " = " + vec(T) + "$.", 0);
+    }
+    if (level === 3) {
+      const B = rv(G, 5), C = rv(G, 5), S = A.map((c, i) => (c + B[i] + C[i]) / 3), k = G.int(0, 2);
+      return num("Bestimme die $" + XN[k] + "$-Koordinate des Schwerpunkts des Dreiecks mit $A" + pk(A) + "$, $B" + pk(B) + "$, $C" + pk(C) + "$ (zwei Nachkommastellen).", S[k],
+        "$\\vec s = \\tfrac13(\\vec a + \\vec b + \\vec c) = " + vec(S.map((c) => +c.toFixed(3))) + "$. Der Schwerpunkt teilt jede Seitenhalbierende im Verhältnis $2 : 1$.", 0.01);
+    }
+    const w = [2 * nz(G, -2, 2), 2 * nz(G, -2, 2), 2 * nz(G, -2, 2)], T = add(A, w), B = add(A, w, 2.5), k = G.int(0, 2);
+    return num("$T" + pk(T) + "$ teilt die Strecke von $A" + pk(A) + "$ nach $B$ im Verhältnis $2 : 3$. Bestimme die $" + XN[k] + "$-Koordinate von $B$.", B[k],
+      "$\\overrightarrow{AT}$ ist $\\tfrac25$ von $\\overrightarrow{AB}$, also $\\overrightarrow{AB} = \\tfrac52\\overrightarrow{AT} = \\tfrac52" + vec(w) + "$ und $B" + pk(B) + "$.", 0);
+  });
+  spec("schatten", (level, G) => {
+    if (level <= 2) {
+      const u3 = G.pick([-1, -2, -3]), t = G.int(1, 4), h = -u3 * t, u = [nz(G, -3, 3), nz(G, -3, 3), u3], S = [G.int(-3, 3), G.int(-3, 3), h], Sh = add(S, u, t), k = level - 1;
+      return num("Sonnenlicht fällt in Richtung $" + vec(u) + "$. Wo trifft der Schatten der Mastspitze $S" + pk(S) + "$ den Boden $x_3 = 0$? Gib die $" + XN[k] + "$-Koordinate an.", Sh[k],
+        "Lichtstrahl $\\vec x = " + vec(S) + " + t" + vec(u) + "$; $x_3 = " + h + " " + G.term(u3, 0) + "t = 0$ gibt $t = " + t + "$, Schattenpunkt $" + pk(Sh) + "$.", 0);
+    }
+    if (level === 3) {
+      const k = G.pick([2, 3]), s3 = k === 2 ? G.int(1, 4) : 2 * G.int(1, 2), l3 = (k * s3) / (k - 1), L = [G.int(-3, 3), G.int(-3, 3), l3], S = [G.int(-3, 3), G.int(-3, 3), s3], Sh = add(L, add(S, L, -1), k);
+      return num("Eine Lampe hängt in $L" + pk(L) + "$. Wo trifft der Schatten von $S" + pk(S) + "$ den Boden $x_3 = 0$? Gib die $x_1$-Koordinate an.", Sh[0],
+        "Strahl von der Lampe durch $S$: $\\vec x = \\vec l + t(\\vec s - \\vec l)$. $x_3 = " + tnum(l3) + " + t \\cdot " + par(s3 - l3) + " = 0$ gibt $t = " + k + "$, Schattenpunkt $" + pk(Sh) + "$.", 0);
+    }
+    const u = [nz(G, -3, 3), nz(G, -3, 3), G.pick([-1, -2])], h = G.int(2, 8), len = (h * Math.hypot(u[0], u[1])) / Math.abs(u[2]);
+    return num("Ein senkrechter Mast der Höhe $" + h + "$ steht im Ursprung. Sonnenlicht fällt in Richtung $" + vec(u) + "$. Wie lang ist sein Schatten auf dem Boden? (zwei Nachkommastellen)", len,
+      "Schatten der Spitze: $t = \\tfrac{" + h + "}{" + Math.abs(u[2]) + "}$, Schattenpunkt $(" + G.tex((h * u[0]) / Math.abs(u[2]), 2) + " \\mid " + G.tex((h * u[1]) / Math.abs(u[2]), 2) + " \\mid 0)$. Länge $= \\sqrt{x_1^2 + x_2^2} \\approx " + G.tex(len, 2) + "$.", 0.01);
+  });
+  spec("linkombi", (level, G) => {
+    const a = nz(G, -3, 3), b = nz(G, -3, 3);
+    if (level <= 1) {
+      const u = [1, 0, nz(G, -3, 3)], w = [0, 1, nz(G, -3, 3)], v = add(u.map((c) => a * c), w, b);
+      return num("Schreibe $\\vec v = " + vec(v) + "$ als $r\\,\\vec u + s\\,\\vec w$ mit $\\vec u = " + vec(u) + "$ und $\\vec w = " + vec(w) + "$. Bestimme $r$.", a,
+        "Erste Zeile: $r \\cdot 1 + s \\cdot 0 = " + v[0] + "$, also $r = " + a + "$; zweite Zeile $s = " + b + "$; die dritte bestätigt: $" + par(a) + " \\cdot " + par(u[2]) + " + " + par(b) + " \\cdot " + par(w[2]) + " = " + v[2] + "$.", 0);
+    }
+    let u, w;
+    do { u = rv(G, 3); w = rv(G, 3); } while (cross(u, w).every((x) => x === 0) || (level === 3 && u[0] * w[1] - u[1] * w[0] === 0));
+    if (level === 2) {
+      const v = add(u.map((c) => a * c), w, b);
+      return num("Schreibe $\\vec v = " + vec(v) + "$ als $r\\,\\vec u + s\\,\\vec w$ mit $\\vec u = " + vec(u) + "$ und $\\vec w = " + vec(w) + "$. Bestimme $r$.", a,
+        "Gleichungssystem aus den drei Zeilen; zwei Zeilen bestimmen $r = " + a + "$ und $s = " + b + "$, die dritte dient als Probe.", 0);
+    }
+    if (level === 3) {
+      const t = a * u[2] + b * w[2], x = [a * u[0] + b * w[0], a * u[1] + b * w[1]];
+      return num("Für welches $t$ sind $\\vec u = " + vec(u) + "$, $\\vec w = " + vec(w) + "$ und $\\vec x = \\begin{pmatrix} " + tnum(x[0]) + " \\\\ " + tnum(x[1]) + " \\\\ t \\end{pmatrix}$ linear abhängig?", t,
+        "Abhängig heißt hier: $\\vec x = r\\,\\vec u + s\\,\\vec w$. Die ersten zwei Zeilen liefern $r = " + a + "$, $s = " + b + "$; die dritte gibt $t = " + par(a) + " \\cdot " + par(u[2]) + " + " + par(b) + " \\cdot " + par(w[2]) + " = " + t + "$. Ebenso: Spatprodukt gleich null.", 0);
+    }
+    let x;
+    do { x = rv(G, 2); } while (Math.abs(dot(cross(u, w), x)) < 1);
+    const c = nz(G, -2, 2), v = add(add(u.map((q) => a * q), w, b), x, c);
+    return num("Schreibe $\\vec v = " + vec(v) + "$ als $r\\,\\vec u + s\\,\\vec w + t\\,\\vec x$ mit $\\vec u = " + vec(u) + "$, $\\vec w = " + vec(w) + "$, $\\vec x = " + vec(x) + "$. Bestimme $t$.", c,
+      "Lineares Gleichungssystem mit drei Unbekannten (Gauß): $r = " + a + "$, $s = " + b + "$, $t = " + c + "$. Probe durch Einsetzen.", 0);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
   LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung", "definitionsbereich", "transformation", "wurzelgleichung", "verkettung", "stetigkeit", "trigwert", "additionstheorem", "restsatz", "potenz", "gebrochen"]));
   LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch", "extremwertproblem", "schar", "oekonomie"]));
   LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum", "stammfunktion", "bestand"]));
-  LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat"]));
+  LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat", "geradenpunkt", "ebenenform", "durchstoss", "spiegelpunkt", "teilpunkt", "schatten", "linkombi"]));
   LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang"]));
   LW.generator("ma-r-stochastik", chapter("Abitur-Stochastik", ["poisson", "mindestens", "hypergeometrisch"]));
   LW.generator("ma-r-techniken", chapter("Rechentechniken", ["partiell", "substitution", "uneigentlich", "trapez", "polar", "geomreihe", "rotation"]));

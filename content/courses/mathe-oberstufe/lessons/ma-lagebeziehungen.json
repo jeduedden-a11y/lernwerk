@@ -15,6 +15,227 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Das Entscheidungsschema** in der Grafik aus dem Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Lagebeziehungen im Raum.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Oben zwei Geraden, unten Gerade und Ebene.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Vier Fälle für zwei Geraden; windschief gibt es nur im Raum.",
+          "to": {
+            "x": 0.5,
+            "y": 0.29,
+            "z": 1.5,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Schritt 1: Sind die Richtungsvektoren Vielfache? Dann identisch oder parallel, sonst schneidend oder windschief.",
+          "to": {
+            "x": 0.38,
+            "y": 0.5,
+            "z": 1.8,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Gerade und Ebene: Das Skalarprodukt n · u entscheidet.",
+          "to": {
+            "x": 0.5,
+            "y": 0.87,
+            "z": 1.6,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Windschief",
+      "md": "**Windschief:** $g$ (orange) verläuft in Höhe 0, $h$ (blau) in Höhe 2. Von oben scheinen sie sich zu schneiden, von der Seite sieht man den Abstand.",
+      "widget": "raum",
+      "params": {
+        "box": 4,
+        "view": {
+          "az": 30,
+          "el": 80
+        },
+        "lines": [
+          {
+            "p": [
+              0,
+              0,
+              0
+            ],
+            "d": [
+              1,
+              0,
+              0
+            ],
+            "t": [
+              -3,
+              3
+            ],
+            "color": "orange",
+            "label": "g"
+          },
+          {
+            "p": [
+              0,
+              0,
+              2
+            ],
+            "d": [
+              0,
+              1,
+              0
+            ],
+            "t": [
+              -3,
+              3
+            ],
+            "color": "blue",
+            "label": "h"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              0,
+              0,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              2
+            ],
+            "color": "green"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Von oben: scheinbar ein Schnittpunkt.",
+          "set": {
+            "az": 30,
+            "el": 80
+          }
+        },
+        {
+          "caption": "Von der Seite: Die Geraden liegen in verschiedenen Höhen, grün ihr Abstand 2.",
+          "to": {
+            "az": 30,
+            "el": 8
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gedreht: weder parallel noch schneidend.",
+          "to": {
+            "az": 75,
+            "el": 25
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "Zwei Geraden: Sind die Richtungsvektoren **Vielfache**, sind sie identisch oder parallel (Punktprobe). Sonst gleichsetzen: eine Lösung heißt schneidend, ein Widerspruch **windschief**. Bei Gerade und Ebene entscheidet $\\vec n \\cdot \\vec u$.",
+      "label": "Schema",
+      "more": "**Gerade und Gerade:** Richtungsvektoren kollinear? Ja: Liegt der Stützpunkt der einen auf der anderen, sind sie identisch, sonst echt parallel. Nein: Gleichsetzen gibt drei Gleichungen für zwei Unbekannte; eine Lösung heißt Schnittpunkt, ein Widerspruch heißt windschief.\n\n**Gerade und Ebene:** $\\vec n \\cdot \\vec u \\neq 0$: schneidend (Gerade einsetzen, Parameter bestimmen). $\\vec n \\cdot \\vec u = 0$: parallel; liegt der Stützpunkt in der Ebene, ist die Gerade enthalten.\n\n**Ebene und Ebene:** Normalenvektoren kollinear: parallel oder identisch. Sonst schneiden sie sich in einer Geraden.",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Gleichsetzen:** $g: \\vec x = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}$, $h: \\vec x = \\begin{pmatrix} 0 \\\\ 0 \\\\ 2 \\end{pmatrix} + t\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Richtungen nicht kollinear}",
+            "why": "Kein Vielfaches: schneidend oder windschief."
+          },
+          {
+            "tex": "1 + s = 0 \\;\\Rightarrow\\; s = -1",
+            "why": "Erste Zeile."
+          },
+          {
+            "tex": "s = t \\;\\Rightarrow\\; t = -1",
+            "why": "Zweite Zeile."
+          },
+          {
+            "tex": "0 = 2 + t \\;\\Rightarrow\\; t = -2 \\neq -1",
+            "why": "Dritte Zeile: Widerspruch."
+          },
+          {
+            "tex": "g, h \\text{ windschief}",
+            "why": "Kein gemeinsamer Punkt, nicht parallel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Richtungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeile 1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeile 2.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeile 3.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Lagebeziehungen von Geraden und Ebenen",
@@ -99,6 +320,38 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Die Richtungsvektoren zweier Geraden sind keine Vielfachen, und das Gleichsetzen führt auf einen Widerspruch. Wie liegen die Geraden?",
+      "options": [
+        {
+          "md": "windschief",
+          "correct": true
+        },
+        {
+          "md": "parallel",
+          "why": "Dafür müssten die Richtungen kollinear sein."
+        },
+        {
+          "md": "identisch"
+        },
+        {
+          "md": "schneidend",
+          "why": "Dann hätte das System eine Lösung."
+        }
+      ],
+      "explain": "Nicht parallel und ohne gemeinsamen Punkt: windschief.",
+      "label": "Fall",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Steht der Richtungsvektor einer Geraden senkrecht auf dem Normalenvektor einer Ebene, dann schneidet die Gerade die Ebene.",
+      "answer": false,
+      "explain": "$\\vec n \\cdot \\vec u = 0$ heißt: Die Gerade ist parallel zur Ebene oder liegt in ihr.",
+      "label": "Gerade und Ebene",
+      "id": "vq2"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Ordne das Ergebnis des Einsetzens der Geraden in die Ebenengleichung zu.",
@@ -139,6 +392,30 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "lage-geraden"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "durchstoss"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
       "type": "truefalse",
       "md": "Zwei Geraden mit nicht kollinearen Richtungsvektoren schneiden sich immer.",
       "answer": false,
@@ -151,7 +428,8 @@
       "points": [
         "Gerade-Gerade: Richtungen kollinear? Dann parallel oder identisch, sonst schneidend oder windschief.",
         "Gerade-Ebene: einsetzen; Lösung, Widerspruch oder allgemeingültig.",
-        "Ebene-Ebene: Normalenvektoren vergleichen."
+        "Ebene-Ebene: Normalenvektoren vergleichen.",
+        "Erst Richtungen vergleichen, dann einen Punkt; n · u entscheidet bei Gerade und Ebene."
       ],
       "id": "summary"
     }

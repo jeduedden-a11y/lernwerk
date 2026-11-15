@@ -15,6 +15,166 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Ebene",
+      "md": "**Eine Ebene im Raum:** $E: x_1 + 2x_2 + 2x_3 = 6$. Die Spurpunkte $S_1$, $S_2$, $S_3$ liegen auf den Achsen; grün der Normalenvektor $\\vec n = (1 \\mid 2 \\mid 2)$.",
+      "widget": "raum",
+      "params": {
+        "box": 6,
+        "view": {
+          "az": 30,
+          "el": 20
+        },
+        "polygons": [
+          {
+            "pts": [
+              [
+                6,
+                0,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                0,
+                3
+              ]
+            ],
+            "color": "teal",
+            "label": "E"
+          }
+        ],
+        "vectors": [
+          {
+            "from": [
+              2,
+              1,
+              1
+            ],
+            "to": [
+              3,
+              3,
+              3
+            ],
+            "color": "green",
+            "label": "n"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              6,
+              0,
+              0
+            ],
+            "label": "S₁"
+          },
+          {
+            "p": [
+              0,
+              3,
+              0
+            ],
+            "label": "S₂"
+          },
+          {
+            "p": [
+              0,
+              0,
+              3
+            ],
+            "label": "S₃"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Das Spurdreieck zeigt die Lage der Ebene.",
+          "set": {
+            "az": 30,
+            "el": 20
+          }
+        },
+        {
+          "caption": "Gedreht: n steht senkrecht auf der Ebene.",
+          "to": {
+            "az": 75,
+            "el": 10
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Von oben.",
+          "to": {
+            "az": 40,
+            "el": 60
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "Drei Formen: **Parameterform** $\\vec x = \\vec p + r\\vec u + s\\vec v$, **Normalenform** $(\\vec x - \\vec p) \\cdot \\vec n = 0$, **Koordinatenform** $n_1x_1 + n_2x_2 + n_3x_3 = d$. Der Normalenvektor steht senkrecht auf der Ebene.",
+      "label": "Ebenenformen",
+      "more": "**Aus drei Punkten:** $\\vec x = \\vec a + r(\\vec b - \\vec a) + s(\\vec c - \\vec a)$.\n\n**Umwandeln:** Parameter- in Normalenform mit $\\vec n = \\vec u \\times \\vec v$; Normalen- in Koordinatenform durch Ausmultiplizieren, $d = \\vec n \\cdot \\vec p$; Koordinaten- in Parameterform über drei Punkte, etwa die Spurpunkte.\n\n**Spurpunkte:** Zwei Koordinaten null setzen. Bei $x_1 + 2x_2 + 2x_3 = 6$: $(6 \\mid 0 \\mid 0)$, $(0 \\mid 3 \\mid 0)$, $(0 \\mid 0 \\mid 3)$.\n\n**Sonderlagen:** Fehlt $x_i$ in der Koordinatenform, ist die Ebene parallel zur $x_i$-Achse; ist $d = 0$, geht sie durch den Ursprung.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Parameterform in Koordinatenform:** $E: \\vec x = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + r\\begin{pmatrix} -1 \\\\ 1 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec n = \\begin{pmatrix} -1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}",
+            "why": "Kreuzprodukt der Spannvektoren."
+          },
+          {
+            "tex": "d = \\vec n \\cdot \\vec p = 1",
+            "why": "Stützpunkt einsetzen."
+          },
+          {
+            "tex": "E: x_1 + x_2 + x_3 = 1",
+            "why": "Koordinatenform."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Normale.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "d.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Form.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Ebenen im Raum",
@@ -96,6 +256,48 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Spurpunkt",
+      "md": "Wo schneidet $E: 2x_1 + 4x_2 + x_3 = 8$ die $x_1$-Achse? Gib $x_1$ an.",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$x_2 = x_3 = 0$: $2x_1 = 8$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Ebene ist parallel zur $x_3$-Achse?",
+      "options": [
+        {
+          "md": "$2x_1 - x_2 = 4$",
+          "correct": true
+        },
+        {
+          "md": "$x_3 = 4$",
+          "why": "Sie ist parallel zur x₁x₂-Ebene."
+        },
+        {
+          "md": "$x_1 + x_2 + x_3 = 1$"
+        },
+        {
+          "md": "$x_2 + x_3 = 2$",
+          "why": "Hier fehlt x₁: parallel zur x₁-Achse."
+        }
+      ],
+      "explain": "In der Gleichung fehlt $x_3$; $\\vec n = (2, -1, 0)$ steht senkrecht auf $(0, 0, 1)$.",
+      "label": "Sonderlage",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Der Normalenvektor einer Ebene ist eindeutig bestimmt.",
+      "answer": false,
+      "explain": "Jedes Vielfache (außer dem Nullvektor) ist ebenfalls ein Normalenvektor.",
+      "label": "Normale",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Umwandeln",
       "md": "Wandle die Parameterform in die Koordinatenform um.",
@@ -137,12 +339,61 @@
       "id": "n1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "ebenenform"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ebenenform"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "ebenenform"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ebenenform"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Parameter-, Normalen-, Koordinatenform.",
         "n = u × v; d durch Einsetzen.",
-        "Spurpunkte: zwei Koordinaten null setzen."
+        "Spurpunkte: zwei Koordinaten null setzen.",
+        "Normalenvektor aus dem Kreuzprodukt; d = n · p; Spurpunkte zeigen die Lage."
       ],
       "id": "summary"
     }

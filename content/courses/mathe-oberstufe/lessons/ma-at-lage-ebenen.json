@@ -16,6 +16,170 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Normalenvektoren **kollinear**: Die Ebenen sind parallel oder identisch (Punktprobe). Sonst schneiden sie sich in einer **Geraden**: beide Gleichungen als System lösen, eine Variable wird zum Parameter.",
+      "label": "Verfahren",
+      "more": "1. **Normalenvektoren vergleichen.**\n2. **Kollinear:** Gleichungen auf denselben Normalenvektor bringen; gleiche rechte Seiten heißen identisch, verschiedene parallel.\n3. **Nicht kollinear:** zwei Gleichungen mit drei Unbekannten; eine Variable gleich $t$ setzen, die anderen durch $t$ ausdrücken: das ist die Schnittgerade.\n\n**Alternative:** Richtungsvektor $\\vec n_1 \\times \\vec n_2$ und ein gemeinsamer Punkt. **Schnittwinkel:** $\\cos\\gamma = \\dfrac{|\\vec n_1 \\cdot \\vec n_2|}{|\\vec n_1|\\,|\\vec n_2|}$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Schnittgerade:** $E_1: x_1 + x_2 + x_3 = 3$, $E_2: x_1 - x_2 + 2x_3 = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x_3 = t: \\; x_1 + x_2 = 3 - t, \\; x_1 - x_2 = 2 - 2t",
+            "why": "Eine Variable als Parameter."
+          },
+          {
+            "tex": "x_1 = 2{,}5 - 1{,}5t, \\quad x_2 = 0{,}5 + 0{,}5t",
+            "why": "Addieren und subtrahieren."
+          },
+          {
+            "tex": "g: \\vec x = \\begin{pmatrix} 2{,}5 \\\\ 0{,}5 \\\\ 0 \\end{pmatrix} + t\\begin{pmatrix} -1{,}5 \\\\ 0{,}5 \\\\ 1 \\end{pmatrix}",
+            "why": "Schnittgerade."
+          },
+          {
+            "tex": "\\vec n_1 \\times \\vec n_2 = (3, -1, -2) = -2 \\cdot (-1{,}5;\\, 0{,}5;\\, 1)",
+            "why": "Probe: Der Richtungsvektor ist kollinear zu n₁ × n₂."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Parameter.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auflösen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gerade.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Schnittgerade",
+      "md": "**Zwei Ebenen, eine Schnittgerade:** $E_1: x_1 + x_3 = 2$ (blau), $E_2: x_2 + x_3 = 2$ (grün) schneiden sich in der orangen Geraden.",
+      "widget": "raum",
+      "params": {
+        "box": 4,
+        "view": {
+          "az": 30,
+          "el": 20
+        },
+        "planes": [
+          {
+            "n": [
+              1,
+              0,
+              1
+            ],
+            "d": 2,
+            "p": [
+              1,
+              1,
+              1
+            ],
+            "size": 2.2,
+            "color": "blue"
+          },
+          {
+            "n": [
+              0,
+              1,
+              1
+            ],
+            "d": 2,
+            "p": [
+              1,
+              1,
+              1
+            ],
+            "size": 2.2,
+            "color": "green"
+          }
+        ],
+        "lines": [
+          {
+            "p": [
+              2,
+              2,
+              0
+            ],
+            "d": [
+              -1,
+              -1,
+              1
+            ],
+            "t": [
+              -1.5,
+              3
+            ],
+            "color": "orange",
+            "label": "g"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Die Schnittgerade liegt in beiden Ebenen.",
+          "set": {
+            "az": 30,
+            "el": 20
+          }
+        },
+        {
+          "caption": "Gedreht: Ihr Richtungsvektor ist n₁ × n₂.",
+          "to": {
+            "az": 100,
+            "el": 25
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Von schräg oben.",
+          "to": {
+            "az": 200,
+            "el": 45
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Kollineare Normalenvektoren heißen **noch nicht** identisch: erst auf denselben Normalenvektor bringen und die rechten Seiten vergleichen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Lagebeziehung Ebene-Ebene",
@@ -97,6 +261,39 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Wie liegen $E_1: 2x_1 - x_2 + x_3 = 4$ und $E_2: -4x_1 + 2x_2 - 2x_3 = -8$ zueinander?",
+      "options": [
+        {
+          "md": "identisch",
+          "correct": true
+        },
+        {
+          "md": "echt parallel",
+          "why": "Nach dem Teilen durch −2 stimmen auch die rechten Seiten überein."
+        },
+        {
+          "md": "schneidend"
+        },
+        {
+          "md": "orthogonal"
+        }
+      ],
+      "explain": "$E_2$ ist $E_1$ mal $-2$.",
+      "label": "Lage",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Winkel",
+      "md": "Unter welchem Winkel schneiden sich $E_1: x_3 = 0$ und $E_2: x_1 + x_3 = 5$ (in Grad)?",
+      "answer": 45,
+      "tolerance": 0.1,
+      "placeholder": "°",
+      "explain": "$\\cos\\gamma = \\tfrac{1}{1 \\cdot \\sqrt2}$, also $45^\\circ$.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -139,6 +336,26 @@
       },
       "label": "Schnittwinkel",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "winkel"
+        ]
+      },
+      "label": "Noch einmal",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Normalenvektoren vergleichen; sonst Schnittgerade über einen Parameter."
+      ]
     }
   ]
 }

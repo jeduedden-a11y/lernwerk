@@ -16,6 +16,180 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Vorabtest $\\vec n \\cdot \\vec u$: **ungleich null**, die Gerade schneidet die Ebene; **null**, sie ist parallel oder liegt in ihr (Punktprobe mit dem Stützpunkt). Den Schnittpunkt liefert das Einsetzen der Geradenzeilen.",
+      "label": "Verfahren",
+      "more": "1. **Vorabtest** $\\vec n \\cdot \\vec u$.\n2. **Einsetzen:** die drei Zeilen der Geraden in die Koordinatenform einsetzen, nach $s$ auflösen.\n3. **Deuten:** eine Lösung, Schnittpunkt; Widerspruch wie $0 = 5$, echt parallel; wahre Aussage $0 = 0$, die Gerade liegt in der Ebene.\n4. **Schnittpunkt** durch Einsetzen von $s$ in die Gerade.\n\n**Winkel** zwischen Gerade und Ebene: $\\sin\\varphi = \\dfrac{|\\vec n \\cdot \\vec u|}{|\\vec n|\\,|\\vec u|}$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $g: \\vec x = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + s\\begin{pmatrix} 1 \\\\ 0 \\\\ -1 \\end{pmatrix}$ und $E: 2x_1 + x_2 + x_3 = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec n \\cdot \\vec u = 2 + 0 - 1 = 1 \\neq 0",
+            "why": "Vorabtest: Die Gerade schneidet E."
+          },
+          {
+            "tex": "2(1 + s) + 2 + (3 - s) = 2",
+            "why": "Zeilen einsetzen."
+          },
+          {
+            "tex": "7 + s = 2 \\;\\Rightarrow\\; s = -5",
+            "why": "Auflösen."
+          },
+          {
+            "tex": "S(-4 \\mid 2 \\mid 8)",
+            "why": "Probe: −8 + 2 + 8 = 2."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Test.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Parameter.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schnittpunkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Durchstoß",
+      "md": "**Durch die Ebene hindurch:** Ein Punkt läuft auf $g$ (orange) durch $E: x_1 + x_2 + x_3 = 3$. Der Wert $\\vec n \\cdot \\vec x - d$ wechselt dabei das Vorzeichen.",
+      "widget": "raum",
+      "params": {
+        "box": 4,
+        "view": {
+          "az": 35,
+          "el": 18
+        },
+        "vars": [
+          {
+            "name": "S",
+            "value": -0.5
+          }
+        ],
+        "planes": [
+          {
+            "n": [
+              1,
+              1,
+              1
+            ],
+            "d": 3,
+            "p": [
+              1,
+              1,
+              1
+            ],
+            "size": 2.2,
+            "color": "teal",
+            "label": "E"
+          }
+        ],
+        "lines": [
+          {
+            "p": [
+              0,
+              0,
+              -2
+            ],
+            "d": [
+              1,
+              0,
+              2
+            ],
+            "t": [
+              -0.8,
+              3
+            ],
+            "color": "orange",
+            "label": "g"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              "S",
+              0,
+              "-2 + 2*S"
+            ],
+            "color": "accent",
+            "label": "X"
+          },
+          {
+            "p": [
+              1.6667,
+              0,
+              1.3333
+            ],
+            "color": "green"
+          }
+        ],
+        "readout": "s = {S|2} · n·x − d = {3*S - 5|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Vor der Ebene: negativ.",
+          "set": {
+            "S": -0.5
+          }
+        },
+        {
+          "caption": "In der Ebene: null, bei s = 5/3.",
+          "to": {
+            "S": 1.6667
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Dahinter: positiv.",
+          "to": {
+            "S": 2.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Bei $\\vec n \\cdot \\vec u = 0$ liegt die Gerade nicht automatisch in der Ebene.",
+      "label": "Typische Fallen",
+      "more": "Erst die Punktprobe mit dem Stützpunkt entscheidet zwischen parallel und enthalten.",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Lagebeziehung Gerade-Ebene",
@@ -89,6 +263,39 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Das Einsetzen einer Geraden in eine Ebenengleichung ergibt die Aussage 0 = 0. Wie liegen sie zueinander?",
+      "options": [
+        {
+          "md": "Die Gerade liegt in der Ebene.",
+          "correct": true
+        },
+        {
+          "md": "Sie schneiden sich im Ursprung.",
+          "why": "0 = 0 gilt für jedes s, nicht nur für einen Punkt."
+        },
+        {
+          "md": "Die Gerade ist echt parallel."
+        },
+        {
+          "md": "Sie stehen senkrecht aufeinander."
+        }
+      ],
+      "explain": "Jeder Punkt der Geraden erfüllt die Ebenengleichung.",
+      "label": "Deutung",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
+      "label": "Schnittpunkt",
+      "md": "Wo schneidet $g: \\vec x = s\\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}$ die Ebene $E: x_1 + 2x_2 + 3x_3 = 12$? Gib $x_3$ an.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$6s = 12$, $s = 2$, also $S(2 \\mid 2 \\mid 2)$.",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +338,38 @@
       },
       "label": "Schnittwinkel",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "durchstoss"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "durchstoss"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Vorabtest n · u; Einsetzen: Lösung, Widerspruch oder 0 = 0."
+      ]
     }
   ]
 }

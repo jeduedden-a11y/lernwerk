@@ -16,6 +16,193 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Erst die **Richtungsvektoren** vergleichen (Vielfache?), dann einen **Punkt**. Keine Vielfachen: gleichsetzen; eine Lösung heißt schneidend, ein Widerspruch windschief.",
+      "label": "Verfahren",
+      "more": "1. **Richtungen kollinear?** Ja: Liegt der Stützpunkt der einen Geraden auf der anderen, sind sie identisch, sonst echt parallel.\n2. **Nicht kollinear:** $\\vec p + s\\vec u = \\vec q + t\\vec v$ gibt drei Gleichungen für zwei Unbekannte. Zwei lösen, die dritte prüfen.\n3. **Ergebnis:** Passt die dritte, schneiden sich die Geraden (Schnittpunkt einsetzen); sonst sind sie windschief.\n\n**Sachkontext Flugbahnen:** Schneiden sich die Bahnen, treffen sich die Flugzeuge nur, wenn sie zur **selben Zeit** am Schnittpunkt sind; dann haben beide Gleichungen denselben Zeitparameter.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $g: \\vec x = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + s\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}$, $h: \\vec x = \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix} + t\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Richtungen nicht kollinear}",
+            "why": "Kein Vielfaches."
+          },
+          {
+            "tex": "1 + s = 2,\\; s = 1",
+            "why": "Zeilen 1 und 2 liefern s = 1."
+          },
+          {
+            "tex": "2 = 1 + t \\;\\Rightarrow\\; t = 1",
+            "why": "Zeile 3 liefert t, kein Widerspruch."
+          },
+          {
+            "tex": "S(2 \\mid 1 \\mid 2)",
+            "why": "Schnittpunkt; Probe in h mit t = 1."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Richtungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeilen 1 und 2.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zeile 3.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schnittpunkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Flugbahnen",
+      "md": "**Bahnen schneiden sich, Flugzeuge nicht:** Beide fliegen in 2 km Höhe. Ihre Bahnen kreuzen sich in $(2 \\mid 3 \\mid 2)$, doch sie erreichen diesen Punkt zu verschiedenen Zeiten.",
+      "widget": "raum",
+      "params": {
+        "box": 5,
+        "view": {
+          "az": 30,
+          "el": 45
+        },
+        "vars": [
+          {
+            "name": "T",
+            "value": 0
+          }
+        ],
+        "lines": [
+          {
+            "p": [
+              -4,
+              0,
+              2
+            ],
+            "d": [
+              2,
+              1,
+              0
+            ],
+            "t": [
+              0,
+              4.2
+            ],
+            "color": "orange"
+          },
+          {
+            "p": [
+              2,
+              -4,
+              2
+            ],
+            "d": [
+              0,
+              2,
+              0
+            ],
+            "t": [
+              0,
+              4.2
+            ],
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              "-4 + 2*T",
+              "T",
+              2
+            ],
+            "color": "orange",
+            "label": "F₁"
+          },
+          {
+            "p": [
+              2,
+              "-4 + 2*T",
+              2
+            ],
+            "color": "blue",
+            "label": "F₂"
+          },
+          {
+            "p": [
+              2,
+              3,
+              2
+            ],
+            "color": "green"
+          }
+        ],
+        "readout": "t = {T|2} · Abstand {sqrt((2*T - 6)^2 + (4 - T)^2)|2} km"
+      },
+      "timeline": [
+        {
+          "caption": "Start.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "t = 3: F₁ ist am Kreuzungspunkt, F₂ noch 1 km davor.",
+          "to": {
+            "T": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = 3,2: kleinster Abstand, etwa 0,89 km.",
+          "to": {
+            "T": 3.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = 3,5: Jetzt ist F₂ am Kreuzungspunkt, F₁ schon weiter.",
+          "to": {
+            "T": 3.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Beim Gleichsetzen **verschiedene** Parameter verwenden ($s$ und $t$) und alle drei Zeilen prüfen: Zwei passende Zeilen reichen nicht.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Lagebeziehung Gerade-Gerade",
@@ -89,6 +276,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Schnittpunkt",
+      "md": "$g: \\vec x = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}$ und $h: \\vec x = \\begin{pmatrix} 3 \\\\ 1 \\\\ 0 \\end{pmatrix} + t\\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}$ schneiden sich. Welche $x_3$-Koordinate hat der Schnittpunkt?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$1 + s = 3 - t$ und $s = t$ geben $s = t = 1$; Schnittpunkt $(2 \\mid 1 \\mid 1)$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Schneiden sich die Bahnen zweier Flugzeuge, dann stoßen die Flugzeuge zusammen.",
+      "answer": false,
+      "explain": "Nur wenn beide zur selben Zeit am Schnittpunkt sind.",
+      "label": "Sachkontext",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -151,6 +356,26 @@
       },
       "label": "Lage bestimmen",
       "id": "g3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "lage-geraden"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Erst Richtungen, dann ein Punkt; beim Gleichsetzen alle drei Zeilen prüfen."
+      ]
     }
   ]
 }

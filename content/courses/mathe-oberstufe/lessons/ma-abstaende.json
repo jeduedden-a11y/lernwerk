@@ -15,6 +15,173 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Lot",
+      "md": "**Abstand ist ein Lot:** Der Punkt $P(4 \\mid 4 \\mid 3)$ wandert entlang des Normalenvektors auf die Ebene $E: x_1 + 2x_2 + 2x_3 = 6$ zu; am Lotfußpunkt $F$ ist der Abstand aufgebraucht.",
+      "widget": "raum",
+      "params": {
+        "box": 5,
+        "view": {
+          "az": 35,
+          "el": 18
+        },
+        "vars": [
+          {
+            "name": "T",
+            "value": 0
+          }
+        ],
+        "planes": [
+          {
+            "n": [
+              1,
+              2,
+              2
+            ],
+            "d": 6,
+            "p": [
+              2.6667,
+              1.3333,
+              0.3333
+            ],
+            "size": 2,
+            "color": "teal",
+            "label": "E"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              4,
+              4,
+              3
+            ],
+            "to": [
+              2.6667,
+              1.3333,
+              0.3333
+            ],
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "p": [
+              4,
+              4,
+              3
+            ],
+            "label": "P"
+          },
+          {
+            "p": [
+              2.6667,
+              1.3333,
+              0.3333
+            ],
+            "label": "F",
+            "color": "green"
+          },
+          {
+            "p": [
+              "4 - T/3",
+              "4 - 2*T/3",
+              "3 - 2*T/3"
+            ],
+            "color": "orange"
+          }
+        ],
+        "readout": "zurückgelegt {T|2} · Restabstand {4 - T|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Start in P: Abstand 4.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Auf dem Lot halbiert.",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "In F angekommen: Der Abstand ist |n · p − d| / |n| = 12/3 = 4.",
+          "to": {
+            "T": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gedreht: Das Lot steht senkrecht auf der Ebene.",
+          "to": {
+            "az": 80,
+            "el": 10
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Hessesche Normalform:** $d(P, E) = \\dfrac{|\\vec n \\cdot \\vec p - d|}{|\\vec n|}$ für $E: \\vec n \\cdot \\vec x = d$. Ein Abstand ist immer die Länge des **Lots**, der kürzesten Verbindung.",
+      "label": "Abstände",
+      "more": "| Objekte | Verfahren |\n|---|---|\n| Punkt und Ebene | Hessesche Normalform, Lotfußpunkt über die Lotgerade $\\vec p + t\\,\\vec n$ |\n| Punkt und Gerade | Lotfußpunkt $F$ mit $\\overrightarrow{FP} \\cdot \\vec u = 0$, oder $\\dfrac{|\\overrightarrow{AP} \\times \\vec u|}{|\\vec u|}$ |\n| windschiefe Geraden | $\\vec n = \\vec u \\times \\vec v$, dann $\\dfrac{|\\overrightarrow{AB} \\cdot \\vec n|}{|\\vec n|}$ |\n| parallele Objekte | Abstand eines beliebigen Punkts des einen vom anderen |\n\n**Vorzeichen:** Ohne Betrag zeigt das Vorzeichen in der HNF, auf welcher Seite der Ebene der Punkt liegt.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Herleitung der Abstandsformel** über die Lotgerade $\\vec x = \\vec p + t\\,\\vec n$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\vec n \\cdot (\\vec p + t\\,\\vec n) = d",
+            "why": "Die Lotgerade trifft die Ebene."
+          },
+          {
+            "tex": "t^* = \\frac{d - \\vec n \\cdot \\vec p}{|\\vec n|^2}",
+            "why": "Nach t auflösen."
+          },
+          {
+            "tex": "d(P, E) = |t^*| \\cdot |\\vec n| = \\frac{|\\vec n \\cdot \\vec p - d|}{|\\vec n|}",
+            "why": "Länge des Lots: |t*| mal |n|."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Parameter.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Abstandsformeln",
@@ -88,6 +255,52 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "HNF",
+      "md": "Wie weit ist $P(1 \\mid 2 \\mid 3)$ von $E: 2x_1 - x_2 + 2x_3 = 3$ entfernt?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac{|2 - 2 + 6 - 3|}{\\sqrt{4 + 1 + 4}} = \\tfrac33 = 1$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Wie bestimmt man den Abstand zweier paralleler Ebenen?",
+      "options": [
+        {
+          "md": "Man nimmt einen beliebigen Punkt der einen Ebene und berechnet seinen Abstand von der anderen.",
+          "correct": true
+        },
+        {
+          "md": "Man subtrahiert die beiden d-Werte."
+        },
+        {
+          "md": "Man berechnet den Winkel zwischen den Normalenvektoren.",
+          "why": "Der ist bei parallelen Ebenen 0."
+        },
+        {
+          "md": "Parallele Ebenen haben keinen Abstand."
+        }
+      ],
+      "explain": "Die d-Werte darf man nur vergleichen, wenn die Normalenvektoren gleich und normiert sind.",
+      "label": "Parallel",
+      "id": "vq2"
+    },
+    {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Abstandsformel in die richtige Reihenfolge.",
+      "items": [
+        "Lotgerade $\\vec x = \\vec p + t\\,\\vec n$ in $E$ einsetzen",
+        "$t^* = \\frac{d - \\vec n \\cdot \\vec p}{|\\vec n|^2}$",
+        "Abstand $= |t^*| \\cdot |\\vec n|$",
+        "$d(P, E) = \\frac{|\\vec n \\cdot \\vec p - d|}{|\\vec n|}$"
+      ],
+      "explain": "Die Reihenfolge: 1. Lotgerade $\\vec x = \\vec p + t\\,\\vec n$ in $E$ einsetzen. 2. $t^* = \\frac{d - \\vec n \\cdot \\vec p}{|\\vec n|^2}$. 3. Abstand $= |t^*| \\cdot |\\vec n|$. 4. $d(P, E) = \\frac{|\\vec n \\cdot \\vec p - d|}{|\\vec n|}$.",
+      "id": "vq3"
+    },
+    {
       "type": "gen",
       "gen": "ma-rechnen",
       "level": 2,
@@ -118,6 +331,18 @@
       "id": "g3"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "spiegelpunkt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
       "type": "truefalse",
       "md": "Der Abstand ist immer die Länge der kürzesten Verbindung, also eines Lots.",
       "answer": true,
@@ -130,7 +355,8 @@
       "points": [
         "Punkt-Ebene: |n · p − d| / |n|.",
         "Punkt-Gerade: |(p − a) × u| / |u| oder Lotfußpunkt.",
-        "Windschief: Projektion von b − a auf n = u × v."
+        "Windschief: Projektion von b − a auf n = u × v.",
+        "Abstand = Länge des Lots; HNF für Punkt und Ebene."
       ],
       "id": "summary"
     }

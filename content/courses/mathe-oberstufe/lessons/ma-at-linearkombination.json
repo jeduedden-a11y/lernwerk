@@ -16,6 +16,189 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$\\vec v$ als **Linearkombination** schreiben heißt $\\vec v = r\\vec a + s\\vec b\\,(+\\,t\\vec c)$ lösen: ein lineares Gleichungssystem in den Koeffizienten. **Linear unabhängig** sind Vektoren, wenn nur die triviale Kombination den Nullvektor ergibt.",
+      "label": "Verfahren",
+      "more": "**Geometrisch:** Zwei Vektoren sind unabhängig, wenn sie nicht kollinear sind; sie spannen eine Ebene auf. Drei Vektoren im Raum sind unabhängig, wenn sie nicht in einer Ebene liegen; dann spannen sie den ganzen Raum auf.\n\n**Test für drei Vektoren:** Spatprodukt (Determinante) ungleich null heißt unabhängig.\n\n**Schema:** Koeffizienten als Unbekannte, zeilenweise Gleichungen, mit dem Gauß-Verfahren lösen, bei zwei Unbekannten die dritte Zeile prüfen.\n\n**Merke:** Vier Vektoren im Raum sind immer linear abhängig.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $\\vec v = \\begin{pmatrix} 7 \\\\ 1 \\\\ 4 \\end{pmatrix}$ als $r\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} + s\\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "r + 2s = 7, \\quad r - s = 1, \\quad 2s = 4",
+            "why": "Drei Zeilen, zwei Unbekannte."
+          },
+          {
+            "tex": "s = 2, \\; r = 3",
+            "why": "Aus Zeile 3 und Zeile 2."
+          },
+          {
+            "tex": "3 + 2 \\cdot 2 = 7 \\;\\checkmark",
+            "why": "Zeile 1 als Probe."
+          },
+          {
+            "tex": "\\vec v = 3\\vec a + 2\\vec b",
+            "why": "v liegt in der Ebene, die a und b aufspannen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "System.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Ebene",
+      "md": "**In der aufgespannten Ebene:** $\\vec a$ (blau) und $\\vec b$ (orange) spannen eine Ebene auf; $\\vec v = 3\\vec a + 2\\vec b$ (grün) liegt darin.",
+      "widget": "raum",
+      "params": {
+        "box": 7,
+        "view": {
+          "az": 25,
+          "el": 25
+        },
+        "planes": [
+          {
+            "p": [
+              0,
+              0,
+              0
+            ],
+            "u": [
+              1,
+              1,
+              0
+            ],
+            "v": [
+              2,
+              -1,
+              2
+            ],
+            "s": [
+              -1,
+              4
+            ],
+            "t": [
+              -1,
+              2.5
+            ],
+            "color": "teal"
+          }
+        ],
+        "vectors": [
+          {
+            "to": [
+              1,
+              1,
+              0
+            ],
+            "color": "blue",
+            "label": "a"
+          },
+          {
+            "to": [
+              2,
+              -1,
+              2
+            ],
+            "color": "orange",
+            "label": "b"
+          },
+          {
+            "to": [
+              7,
+              1,
+              4
+            ],
+            "color": "green",
+            "label": "v"
+          }
+        ],
+        "segments": [
+          {
+            "from": [
+              3,
+              3,
+              0
+            ],
+            "to": [
+              7,
+              1,
+              4
+            ]
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "v = 3a + 2b: erst dreimal a, dann zweimal b.",
+          "set": {
+            "az": 25,
+            "el": 25
+          }
+        },
+        {
+          "caption": "Gedreht, entlang der Ebene geschaut: alle drei Pfeile liegen in ihr.",
+          "to": {
+            "az": 120,
+            "el": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Von schräg oben.",
+          "to": {
+            "az": 60,
+            "el": 50
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Zwei Gleichungen bestimmen die Koeffizienten, die **dritte** muss man prüfen; scheitert sie, ist $\\vec v$ keine Linearkombination.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Linearkombination von Vektoren",
@@ -81,6 +264,24 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Abhängig",
+      "md": "Für welches $t$ sind $\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}$, $\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}$ und $\\begin{pmatrix} 2 \\\\ 5 \\\\ t \\end{pmatrix}$ linear abhängig?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$(2, 5, t) = 2(1, 2, 3) + 1 \\cdot (0, 1, 1) = (2, 5, 7)$, also $t = 7$.",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Vier Vektoren im Raum sind immer linear abhängig.",
+      "answer": true,
+      "explain": "Der Raum ist dreidimensional; spätestens der vierte Vektor ist eine Kombination der anderen.",
+      "label": "Dimension",
+      "id": "vq2"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -123,6 +324,62 @@
       },
       "label": "Spatprodukt-Test",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "linkombi"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "linkombi"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "linkombi"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "linkombi"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Linearkombination: LGS in den Koeffizienten; drei Vektoren unabhängig, wenn Spatprodukt ≠ 0."
+      ]
     }
   ]
 }
