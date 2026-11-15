@@ -2875,6 +2875,8 @@
     }
     const rest = blocks.slice(k).join("\n\n").trim();
     if (rest.length < 120) return null;
+    // tables and materials are what a task works with: they stay visible
+    if (/^\s*\|/m.test(rest) || /\*\*(Material|M\d)/.test(rest)) return null;
     return { head: head.join("\n\n"), rest };
   }
   LW.splitLong = splitLong;
