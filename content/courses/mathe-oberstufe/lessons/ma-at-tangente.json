@@ -16,6 +16,146 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Tangente in $x_0$: $\\;t(x) = f'(x_0)\\,(x - x_0) + f(x_0)$. Man braucht nur den Punkt $\\big(x_0 \\mid f(x_0)\\big)$ und die Steigung $f'(x_0)$.",
+      "label": "Verfahren",
+      "more": "1. **Punkt:** $f(x_0)$ berechnen.\n2. **Steigung:** $f'(x)$ bilden und $f'(x_0)$ berechnen.\n3. **Einsetzen** in die Punkt-Steigungs-Form $t(x) = f'(x_0)(x - x_0) + f(x_0)$.\n4. **Vereinfachen** zu $t(x) = mx + b$.\n\n**Varianten:** Waagerechte Tangenten: $f'(x) = 0$ lösen. Tangente mit vorgegebener Steigung $m$: $f'(x) = m$ lösen. Parallel zu einer Geraden heißt: gleiche Steigung.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - 2x$ an der Stelle $x_0 = 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(1) = 1 - 2 = -1",
+            "why": "Berührpunkt (1 | −1)."
+          },
+          {
+            "tex": "f'(x) = 3x^2 - 2 \\;\\Rightarrow\\; f'(1) = 1",
+            "why": "Steigung."
+          },
+          {
+            "tex": "t(x) = 1 \\cdot (x - 1) + (-1) = x - 2",
+            "why": "Punkt-Steigungs-Form, dann vereinfachen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Steigung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangente.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Tangente",
+      "md": "**Die Tangente gleitet** an $f(x) = x^3 - 2x$ entlang. Bei $x_0 = \\pm\\sqrt{2/3}$ liegt sie waagerecht.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.2,
+          2.2
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 2,
+            "value": -1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 2*x",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x₀ = {X|2} · t(x) = {3*X^2 - 2|2} x + {-2*X^3|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x₀ = −1,5: steile Tangente.",
+          "set": {
+            "X": -1.5
+          }
+        },
+        {
+          "caption": "x₀ ≈ −0,82: waagerecht, f′(x₀) = 0.",
+          "to": {
+            "X": -0.8165
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x₀ = 0: Steigung −2.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x₀ = 1: t(x) = x − 2.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Die Steigung ist $f'(x_0)$, nicht $f(x_0)$. Und $x_0$ einsetzen: Eine Tangente ist eine Gerade, in ihrer Gleichung steht kein $x^2$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Tangente aufstellen",
@@ -87,6 +227,73 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Tangente",
+      "md": "Die Tangente an $f(x) = x^2 - 3x$ an der Stelle $x_0 = 2$ hat welchen y-Achsenabschnitt?",
+      "answer": -4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f(2) = -2$, $f'(x) = 2x - 3$, also $f'(2) = 1$ und $t(x) = (x - 2) - 2 = x - 4$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "An welchen Stellen hat $f(x) = x^3 - 3x$ waagerechte Tangenten?",
+      "options": [
+        {
+          "md": "$x = -1$ und $x = 1$",
+          "correct": true
+        },
+        {
+          "md": "$x = 0$",
+          "why": "Dort ist f(0) = 0, aber f′(0) = −3."
+        },
+        {
+          "md": "$x = \\pm\\sqrt3$"
+        },
+        {
+          "md": "$x = 3$"
+        }
+      ],
+      "explain": "$f'(x) = 3x^2 - 3 = 0$ bei $x = \\pm 1$.",
+      "label": "Waagerecht",
+      "id": "vq2"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Tangente an $f(x) = x^2$ in $x_0 = 3$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$f(3) = 9$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$f'(x) = 2x$, also $f'(3) = 6$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$t(x) = 6(x - 9) + 3$",
+          "why": "Falsch: $x_0$ und $f(x_0)$ vertauscht. Richtig: $t(x) = 6(x - 3) + 9$."
+        },
+        {
+          "md": "$t(x) = 6x - 51$",
+          "why": "Folgefehler; richtig ist $t(x) = 6x - 9$."
+        }
+      ],
+      "answer": 2,
+      "explain": "Punkt-Steigungs-Form: $t(x) = f'(x_0)(x - x_0) + f(x_0)$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Eine Tangente kann den Graphen an einer anderen Stelle schneiden.",
+      "answer": true,
+      "explain": "Die Tangente an $x^3 - 2x$ bei $x_0 = 1$, $t(x) = x - 2$, schneidet den Graphen noch einmal bei $x = -2$.",
+      "label": "Tangente",
+      "id": "vq4"
     },
     {
       "type": "order",
@@ -161,6 +368,14 @@
       },
       "label": "Kubisch",
       "id": "g4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Tangente: Punkt f(x₀) und Steigung f′(x₀) in die Punkt-Steigungs-Form."
+      ]
     }
   ]
 }

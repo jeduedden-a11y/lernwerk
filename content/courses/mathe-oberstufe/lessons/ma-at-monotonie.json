@@ -16,6 +16,158 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Wo $f'(x) > 0$ ist, steigt $f$; wo $f'(x) < 0$ ist, fällt $f$. Also: Nullstellen von $f'$ bestimmen, das Vorzeichen dazwischen testen, Intervalle angeben.",
+      "label": "Verfahren",
+      "more": "1. **$f'$ bilden.**\n2. **Grenzen finden:** Nullstellen von $f'$ und Definitionslücken.\n3. **Vorzeichen** von $f'$ in jedem Teilintervall bestimmen, mit einem Testwert oder an der faktorisierten Form.\n4. **Angeben:** »streng monoton wachsend auf $(-\\infty; 1]$« usw.\n\n**Streng monoton gegen monoton:** $f' > 0$ ist hinreichend für strenges Wachsen, aber nicht notwendig: $x^3$ wächst überall streng, obwohl $f'(0) = 0$. Einzelne Nullstellen von $f'$ stören nicht.\n\n**Ohne Fallunterscheidung** gelingt der Nachweis, wenn sich $f'$ als Summe nicht negativer Terme schreiben lässt, etwa $f'(x) = (x - 1)^2 + 2 > 0$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - 6x^2 + 9x + 1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(x) = 3x^2 - 12x + 9 = 3(x - 1)(x - 3)",
+            "why": "Ableiten und faktorisieren."
+          },
+          {
+            "tex": "x < 1: \\; f' > 0",
+            "why": "Beide Faktoren negativ: Produkt positiv; f steigt."
+          },
+          {
+            "tex": "1 < x < 3: \\; f' < 0",
+            "why": "Verschiedene Vorzeichen: f fällt."
+          },
+          {
+            "tex": "x > 3: \\; f' > 0",
+            "why": "f steigt wieder."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Links.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mitte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rechts.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Monotonie",
+      "md": "**Monotonie aus der Ableitung:** blau $f(x) = x^3 - 6x^2 + 9x + 1$, rot markiert das Intervall, auf dem $f' < 0$ ist und $f$ fällt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          4.5
+        ],
+        "y": [
+          -1,
+          7
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -0.3,
+            "max": 4.3,
+            "value": 0.3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 6*x^2 + 9*x + 1",
+            "color": "blue"
+          }
+        ],
+        "vbands": [
+          {
+            "x": 2,
+            "d": 1,
+            "color": "red"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange",
+            "length": 0.6
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|2} · f′(x) = {3*X^2 - 12*X + 9|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = 0,3: f′ > 0, f steigt.",
+          "set": {
+            "X": 0.3
+          }
+        },
+        {
+          "caption": "x = 2: im roten Bereich ist f′ < 0, f fällt.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 3,8: f′ > 0, f steigt wieder.",
+          "to": {
+            "X": 3.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$f'(x_0) = 0$ heißt nicht, dass sich die Monotonie ändert: $x^3$ wächst überall. Und Definitionslücken sind ebenfalls Intervallgrenzen.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Monotonie untersuchen",
@@ -89,6 +241,46 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Auf welchem Intervall fällt $f(x) = x^3 - 6x^2 + 9x + 1$?",
+      "options": [
+        {
+          "md": "$[1; 3]$",
+          "correct": true
+        },
+        {
+          "md": "$(-\\infty; 1]$"
+        },
+        {
+          "md": "$[3; \\infty)$"
+        },
+        {
+          "md": "$[0; 6]$"
+        }
+      ],
+      "explain": "$f'(x) = 3(x - 1)(x - 3)$ ist genau zwischen 1 und 3 negativ.",
+      "label": "Intervall",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f$ streng monoton wachsend, dann gilt $f'(x) > 0$ für alle $x$.",
+      "answer": false,
+      "explain": "$f(x) = x^3$ wächst streng, aber $f'(0) = 0$.",
+      "label": "Falle",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Grenze",
+      "md": "Ab welcher Stelle wächst $f(x) = x^2 - 6x$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 2x - 6 > 0$ für $x > 3$.",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -141,6 +333,38 @@
       },
       "label": "Monotonie",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "monotonie"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "monotonie"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Vorzeichen von f′ entscheidet über Steigen und Fallen; einzelne Nullstellen stören nicht."
+      ]
     }
   ]
 }

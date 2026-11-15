@@ -16,6 +16,148 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Mittlere** Änderungsrate auf $[a; b]$: $\\tfrac{f(b) - f(a)}{b - a}$, die Sekantensteigung. **Momentane** an der Stelle $x_0$: $f'(x_0)$, die Tangentensteigung.",
+      "label": "Verfahren",
+      "more": "1. **Klären:** Ist nach einem Zeitraum (mittlere Rate) oder einem Zeitpunkt (momentane Rate) gefragt? Signalwörter: »durchschnittlich«, »im Mittel« gegen »zum Zeitpunkt«, »in diesem Moment«.\n2. **Formel anwenden:** Differenzenquotient oder Ableitung.\n3. **Einheit:** y-Einheit pro x-Einheit.\n4. **Deuten** mit Vorzeichen: Eine negative Rate ist eine Abnahme.\n\n**Zusammenhang (Mittelwertsatz):** Bei einer differenzierbaren Funktion gibt es im Intervall mindestens eine Stelle, an der die momentane Rate gleich der mittleren ist; dort ist die Tangente parallel zur Sekante.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Temperatur $T(t) = -0{,}5t^2 + 4t + 10$ (in °C, $t$ in Stunden).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{T(4) - T(0)}{4 - 0} = \\frac{18 - 10}{4} = 2",
+            "why": "Mittlere Änderungsrate in den ersten 4 Stunden: 2 °C pro Stunde."
+          },
+          {
+            "tex": "T'(t) = -t + 4",
+            "why": "Ableiten."
+          },
+          {
+            "tex": "T'(1) = 3, \\quad T'(5) = -1",
+            "why": "Nach 1 h steigt sie um 3 °C pro Stunde, nach 5 h sinkt sie um 1 °C pro Stunde."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Mittel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ableitung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Momentan.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Mittelwertsatz",
+      "md": "**Mittelwertsatz im Bild:** grün die Sekante auf $[0; 4]$ (Steigung 2), orange die Tangente an einer wandernden Stelle.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -0.5,
+          6
+        ],
+        "y": [
+          5,
+          20
+        ],
+        "grid": true,
+        "xLabel": "t in h",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 5.5,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "T",
+            "expr": "-0.5*x^2 + 4*x + 10",
+            "color": "blue"
+          }
+        ],
+        "secants": [
+          {
+            "f": "T",
+            "from": 0,
+            "to": 4,
+            "color": "green"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "T",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "T",
+            "color": "accent"
+          }
+        ],
+        "readout": "Sekante: 2 · Tangente bei t = {X|1}: {4 - X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "t = 0,5: Die Tangente ist steiler als die Sekante.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "t = 3,5: flacher als die Sekante.",
+          "to": {
+            "X": 3.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "t = 2: genau parallel; hier ist die momentane gleich der mittleren Rate.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Die mittlere Änderungsrate ist **nicht** der Mittelwert der Funktionswerte. Und die Einheit gehört dazu: Grad pro Stunde, Meter pro Sekunde.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Mittlere und momentane Steigung",
@@ -89,6 +231,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Sekante",
+      "md": "Berechne die mittlere Änderungsrate von $f(x) = x^2 + 1$ auf $[1; 4]$.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac{17 - 2}{3} = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$V(t)$ ist das Wasservolumen in einem Becken in Litern, $t$ in Minuten. Es gilt $V'(10) = -3$. Was bedeutet das?",
+      "options": [
+        {
+          "md": "Nach 10 Minuten fließen pro Minute etwa 3 Liter ab.",
+          "correct": true
+        },
+        {
+          "md": "Nach 10 Minuten sind noch 3 Liter im Becken.",
+          "why": "Das wäre V(10) = 3."
+        },
+        {
+          "md": "In den ersten 10 Minuten sind insgesamt 3 Liter abgeflossen."
+        },
+        {
+          "md": "Nach 10 Minuten fließen pro Minute 3 Liter zu."
+        }
+      ],
+      "explain": "$V'$ ist die momentane Änderungsrate in Litern pro Minute; das Minus bedeutet Abnahme.",
+      "label": "Deutung",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die mittlere Änderungsrate auf $[a; b]$ hängt nur von $f(a)$ und $f(b)$ ab.",
+      "answer": true,
+      "explain": "Was dazwischen passiert, geht nicht ein; nur Anfangs- und Endwert zählen.",
+      "label": "Sekante",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -131,6 +314,62 @@
       },
       "label": "Momentane Steigung",
       "id": "g1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "aenderungsrate"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "aenderungsrate"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "aenderungsrate"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "aenderungsrate"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Mittlere Rate: Sekante; momentane Rate: Tangente; immer mit Einheit."
+      ]
     }
   ]
 }

@@ -16,6 +16,164 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Notwendig:** $f''(x_W) = 0$. **Hinreichend:** $f'''(x_W) \\neq 0$ oder ein Vorzeichenwechsel von $f''$. Ist zusätzlich $f'(x_W) = 0$, ist es ein **Sattelpunkt**.",
+      "label": "Verfahren",
+      "more": "1. **$f''$ und $f'''$** bilden.\n2. **Kandidaten:** $f''(x) = 0$.\n3. **Prüfen:** $f'''(x_W) \\neq 0$, sonst Vorzeichenwechsel von $f''$.\n4. **y-Wert** in $f$.\n5. **Wendetangente:** $t(x) = f'(x_W)(x - x_W) + f(x_W)$. Am Wendepunkt ist der Graph am steilsten oder am wenigsten steil, die Wendetangente durchsetzt den Graphen.\n\n**Sattelpunkt:** ein Wendepunkt mit waagerechter Tangente, $f'(x_W) = 0$. **Polynome vom Grad 3** haben genau einen Wendepunkt; er ist ihr Symmetriezentrum.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - 3x^2 + 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f''(x) = 6x - 6 = 0 \\;\\Rightarrow\\; x = 1",
+            "why": "Notwendige Bedingung."
+          },
+          {
+            "tex": "f'''(x) = 6 \\neq 0",
+            "why": "Hinreichend: Wendestelle."
+          },
+          {
+            "tex": "f(1) = 0 \\;\\Rightarrow\\; W(1 \\mid 0)",
+            "why": "y-Wert."
+          },
+          {
+            "tex": "f'(1) = -3 \\;\\Rightarrow\\; t(x) = -3x + 3",
+            "why": "Wendetangente mit der kleinsten Steigung des Graphen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kandidat.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prüfung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendetangente.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Wendepunkt",
+      "md": "**Die Steigung am Wendepunkt:** Die Tangente an $f(x) = x^3 - 3x^2 + 2$ wird bis $x = 1$ immer flacher und danach wieder steiler.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -1,
+          3
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -0.8,
+            "max": 2.8,
+            "value": -0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x^2 + 2",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "color": "green",
+            "label": "W"
+          }
+        ],
+        "readout": "x = {X|2} · Steigung {3*X^2 - 6*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = −0,5: Steigung 3,75.",
+          "set": {
+            "X": -0.5
+          }
+        },
+        {
+          "caption": "x = 0,5: Steigung −2,25, die Steigung nimmt ab.",
+          "to": {
+            "X": 0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 1: kleinste Steigung −3; die Wendetangente durchsetzt den Graphen.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 2,5: Die Steigung wächst wieder.",
+          "to": {
+            "X": 2.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Nicht jede Nullstelle von $f''$ ist eine Wendestelle: Bei $x^4$ ist $f''(0) = 0$, doch dort liegt ein Tiefpunkt.",
+      "label": "Typische Fallen",
+      "more": "**Weitere Falle:** Ein Sattelpunkt ist ein Wendepunkt mit waagerechter Tangente, kein Extrempunkt: Die Funktion steigt (oder fällt) vor und nach ihm weiter.",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Wendepunkte bestimmen",
@@ -87,6 +245,57 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Wendestelle",
+      "md": "Bestimme die Wendestelle von $f(x) = x^3 + 6x^2 - 5$.",
+      "answer": -2,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f''(x) = 6x + 12 = 0$ bei $x = -2$; $f''' = 6 \\neq 0$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was liegt bei $f(x) = x^3$ an der Stelle $0$ vor?",
+      "options": [
+        {
+          "md": "ein Sattelpunkt",
+          "correct": true
+        },
+        {
+          "md": "ein Tiefpunkt",
+          "why": "f′ = 3x² wechselt das Vorzeichen nicht."
+        },
+        {
+          "md": "ein Hochpunkt"
+        },
+        {
+          "md": "nichts Besonderes"
+        }
+      ],
+      "explain": "$f'(0) = 0$ und $f''$ wechselt bei 0 das Vorzeichen: Wendepunkt mit waagerechter Tangente.",
+      "label": "Sattelpunkt",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede ganzrationale Funktion vom Grad 3 hat genau einen Wendepunkt.",
+      "answer": true,
+      "explain": "$f''$ ist linear mit genau einer Nullstelle und Vorzeichenwechsel.",
+      "label": "Grad 3",
+      "id": "vq3"
+    },
+    {
+      "type": "numeric",
+      "label": "Wendetangente",
+      "md": "Welche Steigung hat die Wendetangente von $f(x) = -x^3 + 3x^2$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f''(x) = -6x + 6 = 0$ bei $x = 1$; $f'(1) = -3 + 6 = 3$.",
+      "id": "vq4"
     },
     {
       "type": "order",
@@ -161,6 +370,14 @@
       },
       "label": "Wendetangente",
       "id": "g4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Wendepunkt: f″ = 0 mit Vorzeichenwechsel; Sattelpunkt zusätzlich f′ = 0."
+      ]
     }
   ]
 }

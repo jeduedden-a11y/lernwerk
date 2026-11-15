@@ -768,11 +768,105 @@
       "Polynomdivision: $(" + poly([1, p, q]) + ") : (" + linx(G, a) + ") = " + poly([1, p + a]) + " + \\frac{" + (q + a * (p + a)) + "}{" + linx(G, a) + "}$. Der Bruch geht für $x \\to \\pm\\infty$ gegen 0, die Asymptote ist $y = " + poly([1, p + a]) + "$.", 0);
   });
 
+  // ---------------------------------------------------------------- differential calculus (Mathematik wave)
+  spec("aenderungsrate", (level, G) => {
+    if (level <= 1) {
+      const cs = [G.pick([1, -1, 2]), G.int(-4, 4), G.int(-5, 5)], a = G.int(-3, 2), b = a + G.int(1, 4);
+      const m = (ev(cs, b) - ev(cs, a)) / (b - a);
+      return num("Berechne die mittlere Änderungsrate von $f(x) = " + poly(cs) + "$ auf dem Intervall $[" + a + "; " + b + "]$.", m,
+        "$\\dfrac{f(" + b + ") - f(" + a + ")}{" + b + " - " + par(a) + "} = \\dfrac{" + ev(cs, b) + " - " + par(ev(cs, a)) + "}{" + (b - a) + "} = " + tnum(m) + "$: die Steigung der Sekante.", 0.01);
+    }
+    if (level === 2) {
+      const cs = [G.pick([1, -1, 2]), G.int(-4, 4), G.int(-5, 5), G.int(-5, 5)], x0 = G.int(-2, 3);
+      const m = ev(der(cs), x0);
+      return num("Berechne die momentane Änderungsrate von $f(x) = " + poly(cs) + "$ an der Stelle $x_0 = " + x0 + "$.", m,
+        "Die momentane Änderungsrate ist die Ableitung: $f'(x) = " + poly(der(cs)) + "$, also $f'(" + x0 + ") = " + m + "$.", 0);
+    }
+    if (level === 3) {
+      const a = G.pick([0.5, 1, 1.5, 2, 2.5]), b = G.int(0, 6), t1 = G.int(0, 3), t2 = t1 + G.int(1, 4);
+      const s = (t) => a * t * t + b * t;
+      const st = poly([a, b, 0], "t");
+      if (G.chance(0.5)) return num("Ein Körper legt in $t$ Sekunden $s(t) = " + st + "$ Meter zurück. Berechne die Durchschnittsgeschwindigkeit zwischen $t = " + t1 + "$ und $t = " + t2 + "$ in m/s.", (s(t2) - s(t1)) / (t2 - t1),
+        "$\\bar v = \\dfrac{s(" + t2 + ") - s(" + t1 + ")}{" + t2 + " - " + t1 + "} = \\dfrac{" + tnum(s(t2)) + " - " + tnum(s(t1)) + "}{" + (t2 - t1) + "} = " + tnum((s(t2) - s(t1)) / (t2 - t1)) + "$ m/s: die Sekantensteigung im t-s-Diagramm.", 0.01, "m/s");
+      return num("Ein Körper legt in $t$ Sekunden $s(t) = " + st + "$ Meter zurück. Berechne seine Geschwindigkeit zum Zeitpunkt $t = " + t2 + "$ in m/s.", 2 * a * t2 + b,
+        "Die Momentangeschwindigkeit ist die Ableitung: $s'(t) = " + poly([2 * a, b], "t") + "$, also $s'(" + t2 + ") = " + tnum(2 * a * t2 + b) + "$ m/s.", 0.01, "m/s");
+    }
+    const k = G.pick([1, 2, 3]), q = G.int(2, 4);
+    return num("An welcher Stelle im Intervall $[0; " + q + "]$ hat die Tangente an $f(x) = " + fac(k) + "x^3$ dieselbe Steigung wie die Sekante durch die beiden Randpunkte? (zwei Nachkommastellen)", q / Math.sqrt(3),
+      "Sekantensteigung: $\\tfrac{f(" + q + ") - f(0)}{" + q + "} = " + k * q * q + "$. Tangentensteigung: $f'(x) = " + 3 * k + "x^2 = " + k * q * q + "$ gibt $x^2 = " + tnum((q * q) / 3) + "$, also $x = \\tfrac{" + q + "}{\\sqrt3} \\approx " + G.tex(q / Math.sqrt(3), 2) + "$ (Mittelwertsatz).", 0.01);
+  });
+  spec("fernpunkt", (level, G) => {
+    const c = level >= 3 ? nz(G, -3, 3) : 0, a = level <= 1 ? 0 : nz(G, -3, 3), r = G.int(1, 4);
+    const bb = a * a - r * r, b = bb + c, u1 = a - r, u2 = a + r;
+    const f = "x^2" + (c ? " " + G.term(c, 0) : "");
+    const P = "P(" + a + " \\mid " + b + ")";
+    const quad = poly([1, -2 * a, bb], "u") + " = 0";
+    const tang = "y = 2u(x - u) + u^2" + (c ? " " + G.term(c, 0) : "");
+    if (level === 4) return num("Durch $" + P + "$ gehen zwei Tangenten an den Graphen von $f(x) = " + f + "$. Bestimme die **größere** der beiden Tangentensteigungen.", 2 * u2,
+      "Tangente an der Berührstelle $u$: $" + tang + "$. Punktprobe mit $" + P + "$ ergibt $" + quad + "$, also $u = " + u1 + "$ oder $u = " + u2 + "$. Steigungen $f'(u) = 2u$: $" + 2 * u1 + "$ und $" + 2 * u2 + "$.", 0);
+    return num("Durch $" + P + "$ gehen zwei Tangenten an den Graphen von $f(x) = " + f + "$. Bestimme die **größere** Berührstelle $u$.", u2,
+      "Tangente an der Berührstelle $u$: $" + tang + "$. $" + P + "$ einsetzen und ordnen: $" + quad + "$, also $u = " + u1 + "$ oder $u = " + u2 + "$.", 0);
+  });
+  spec("schnittwinkel", (level, G) => {
+    if (level <= 1) {
+      const m = G.pick([0.5, 2, 3, -1.5, 0.25, -4, 1.2]);
+      const w = deg(Math.atan(Math.abs(m)));
+      return num("Ein Graph schneidet die x-Achse mit der Steigung $" + tnum(m) + "$. Unter welchem Winkel schneidet er sie? (in Grad, eine Nachkommastelle)", w,
+        "$\\tan\\alpha = |m| = " + tnum(Math.abs(m)) + "$, also $\\alpha = \\arctan " + tnum(Math.abs(m)) + " \\approx " + G.tex(w, 1) + "^\\circ$.", 0.1, "°");
+    }
+    if (level === 2) {
+      const k = G.int(1, 3), w = deg(Math.atan(2 * k));
+      return num("Unter welchem Winkel schneidet $f(x) = x^2 - " + k * k + "$ die x-Achse an der Stelle $x = " + k + "$? (in Grad, eine Nachkommastelle)", w,
+        "$f'(x) = 2x$, also $f'(" + k + ") = " + 2 * k + "$ und $\\alpha = \\arctan " + 2 * k + " \\approx " + G.tex(w, 1) + "^\\circ$.", 0.1, "°");
+    }
+    if (level === 3) {
+      const m = G.int(1, 3), m1 = 2 * m, m2 = m;
+      const w = deg(Math.atan(Math.abs((m1 - m2) / (1 + m1 * m2))));
+      return num("Die Graphen von $f(x) = x^2$ und $g(x) = " + fac(m) + "x$ schneiden sich bei $x = " + m + "$. Berechne den Schnittwinkel dort (in Grad, eine Nachkommastelle).", w,
+        "Steigungen: $f'(" + m + ") = " + m1 + "$ und $g'(x) = " + m2 + "$. $\\tan\\gamma = \\left|\\dfrac{" + m1 + " - " + m2 + "}{1 + " + m1 + " \\cdot " + m2 + "}\\right| = " + G.frac(m1 - m2, 1 + m1 * m2) + "$, also $\\gamma \\approx " + G.tex(w, 1) + "^\\circ$. Ebenso: $\\arctan " + m1 + " - \\arctan " + m2 + "$.", 0.1, "°");
+    }
+    const n = G.int(2, 5), w = deg(Math.atan(Math.abs((n - 1) / (1 + n))));
+    return num("Die Graphen von $f(x) = x^{" + n + "}$ und $g(x) = x$ schneiden sich im Punkt $(1 \\mid 1)$. Unter welchem Winkel? (in Grad, eine Nachkommastelle)", w,
+      "Steigungen in $x = 1$: $f'(1) = " + n + "$, $g'(1) = 1$. $\\tan\\gamma = \\left|\\dfrac{" + n + " - 1}{1 + " + n + "}\\right| = " + G.frac(n - 1, n + 1) + "$, also $\\gamma \\approx " + G.tex(w, 1) + "^\\circ$.", 0.1, "°");
+  });
+  const GRAPH = [
+    [1, "$f$ hat bei $x = a$ einen Hochpunkt.", "$f'$ hat bei $a$ eine Nullstelle mit Vorzeichenwechsel von $+$ nach $-$.",
+      ["$f'$ hat bei $a$ eine Nullstelle mit Vorzeichenwechsel von $-$ nach $+$.", "$f'$ hat bei $a$ einen Hochpunkt.", "$f'(a) > 0$."]],
+    [1, "$f$ hat bei $x = a$ einen Tiefpunkt.", "$f'$ hat bei $a$ eine Nullstelle mit Vorzeichenwechsel von $-$ nach $+$.",
+      ["$f'$ hat bei $a$ eine Nullstelle mit Vorzeichenwechsel von $+$ nach $-$.", "$f'$ hat bei $a$ einen Tiefpunkt.", "$f'(a) < 0$."]],
+    [1, "$f$ hat bei $x = a$ einen Wendepunkt.", "$f'$ hat bei $a$ einen Extrempunkt.",
+      ["$f'$ hat bei $a$ eine Nullstelle.", "$f'$ hat bei $a$ einen Wendepunkt.", "$f'$ ist bei $a$ nicht definiert."]],
+    [1, "$f$ ist auf $[1; 4]$ streng monoton fallend.", "$f'(x) \\leq 0$ für alle $x$ aus $[1; 4]$.",
+      ["$f'$ ist auf $[1; 4]$ streng monoton fallend.", "$f'(x) \\geq 0$ für alle $x$ aus $[1; 4]$.", "$f$ hat auf $[1; 4]$ eine Nullstelle."]],
+    [2, "$f$ hat bei $x = a$ einen Sattelpunkt.", "$f'$ hat bei $a$ eine Nullstelle ohne Vorzeichenwechsel.",
+      ["$f'$ hat bei $a$ eine Nullstelle mit Vorzeichenwechsel.", "$f'(a) \\neq 0$.", "$f$ hat bei $a$ einen Extrempunkt."]],
+    [2, "$f$ ist auf $[0; 3]$ linksgekrümmt.", "$f'$ ist auf $[0; 3]$ streng monoton wachsend.",
+      ["$f'$ ist auf $[0; 3]$ positiv.", "$f$ ist auf $[0; 3]$ wachsend.", "$f'$ ist auf $[0; 3]$ fallend."]],
+    [2, "$f$ ist ganzrational vom Grad 3.", "$f'$ ist ganzrational vom Grad 2; ihr Graph ist eine Parabel.",
+      ["$f'$ ist ganzrational vom Grad 4.", "Der Graph von $f'$ ist eine Gerade.", "$f'$ hat genau drei Nullstellen."]],
+    [3, "$f'$ hat bei $x = a$ einen Hochpunkt.", "$f$ hat bei $a$ einen Wendepunkt, an dem die Linkskrümmung in eine Rechtskrümmung übergeht.",
+      ["$f$ hat bei $a$ einen Hochpunkt.", "$f$ hat bei $a$ einen Wendepunkt, an dem die Rechtskrümmung in eine Linkskrümmung übergeht.", "$f$ hat bei $a$ eine Nullstelle."]],
+    [3, "$f''(x) < 0$ für alle $x$ aus $[2; 5]$.", "$f$ ist auf $[2; 5]$ rechtsgekrümmt.",
+      ["$f$ ist auf $[2; 5]$ fallend.", "$f$ ist auf $[2; 5]$ linksgekrümmt.", "$f'$ ist auf $[2; 5]$ negativ."]],
+    [3, "$f'(x) > 0$ für alle reellen $x$.", "$f$ ist streng monoton wachsend und hat höchstens eine Nullstelle.",
+      ["$f$ ist überall positiv.", "$f$ ist überall linksgekrümmt.", "$f$ hat genau einen Extrempunkt."]],
+    [4, "$f$ hat bei $x = a$ eine Nullstelle mit Vorzeichenwechsel von $-$ nach $+$.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Tiefpunkt.",
+      ["Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Hochpunkt.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ eine Nullstelle.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Wendepunkt."]],
+    [4, "$f$ hat bei $x = a$ einen Hochpunkt.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Wendepunkt.",
+      ["Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Hochpunkt.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ einen Extrempunkt.", "Jede Stammfunktion $F$ von $f$ hat bei $a$ eine Nullstelle."]],
+  ];
+  spec("graphisch", (level, G) => {
+    const pool = GRAPH.filter((g) => g[0] <= level && g[0] >= Math.max(1, level - 1));
+    const [, premise, right, wrong] = G.pick(pool);
+    return choice(G, "Bekannt ist: " + premise + " Welche Aussage folgt daraus **sicher**?", right, wrong.map((w) => ({ md: w })),
+      "Übersetzung zwischen den Ebenen: Nullstellen der Ableitung sind Kandidaten für Extrempunkte, Extrempunkte der Ableitung sind Wendepunkte, das Vorzeichen der Ableitung ist die Steigung. Hier: " + right);
+  });
+
   const make = LW.rechenEngine(T);
   LW.generator("ma-rechnen", { title: "Mathematik rechnen", make });
   const chapter = (title, typ) => ({ title, make: (level, G) => make(level, G, { typ }) });
   LW.generator("ma-r-funktionen", chapter("Funktionen und Gleichungen", ["gleichung", "nullprodukt", "symmetrie", "unendlich", "umkehr", "logarithmus", "expgleichung", "definitionsbereich", "transformation", "wurzelgleichung", "verkettung", "stetigkeit", "trigwert", "additionstheorem", "restsatz", "potenz", "gebrochen"]));
-  LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton"]));
+  LW.generator("ma-r-differenzial", chapter("Differenzialrechnung", ["ableitung", "tangente", "normale", "extrem", "wendepunkt", "monotonie", "kruemmung", "steckbrief", "newton", "aenderungsrate", "fernpunkt", "schnittwinkel", "graphisch"]));
   LW.generator("ma-r-integral", chapter("Integralrechnung", ["integral", "flaeche", "mittelwert", "integralfunktion", "rotation", "wachstum"]));
   LW.generator("ma-r-geometrie", chapter("Analytische Geometrie", ["skalarprodukt", "kreuzprodukt", "abstand", "lage-geraden", "winkel", "spat"]));
   LW.generator("ma-r-matrizen", chapter("Matrizen", ["matrix", "inverse", "uebergang"]));

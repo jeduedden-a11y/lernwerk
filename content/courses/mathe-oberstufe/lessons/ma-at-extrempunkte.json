@@ -16,6 +16,160 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "**Notwendig:** $f'(x_E) = 0$. **Hinreichend:** $f''(x_E) < 0$ heißt Hochpunkt, $f''(x_E) > 0$ Tiefpunkt; bei $f''(x_E) = 0$ den Vorzeichenwechsel von $f'$ prüfen.",
+      "label": "Verfahren",
+      "more": "1. **$f'$ und $f''$** bilden.\n2. **Kandidaten:** $f'(x) = 0$ lösen.\n3. **Prüfen:** $f''$ an jeder Kandidatenstelle. Ist $f'' = 0$, entscheidet der Vorzeichenwechsel von $f'$.\n4. **y-Werte** in $f$ einsetzen, nicht in $f'$.\n5. **Ränder:** Auf einem abgeschlossenen Intervall die Randwerte mit den lokalen Extremwerten vergleichen; das globale Maximum kann am Rand liegen.\n\n**Begriffe:** Extremstelle ist das $x$, Extremwert das $y$, Extrempunkt das Paar. Lokal heißt in einer Umgebung, global auf dem ganzen Bereich.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^4 - 2x^2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(x) = 4x^3 - 4x = 4x(x^2 - 1) = 0",
+            "why": "Notwendige Bedingung, ausklammern."
+          },
+          {
+            "tex": "x = 0 \\;\\lor\\; x = \\pm 1",
+            "why": "Drei Kandidaten."
+          },
+          {
+            "tex": "f''(x) = 12x^2 - 4: \\; f''(0) = -4,\\; f''(\\pm 1) = 8",
+            "why": "Hinreichende Bedingung."
+          },
+          {
+            "tex": "H(0 \\mid 0), \\quad T(-1 \\mid -1), \\quad T(1 \\mid -1)",
+            "why": "y-Werte in f einsetzen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kandidaten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prüfung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Randextrema",
+      "md": "**Lokal und global:** $f(x) = x^3 - 3x$ auf dem Intervall $[-2; 2{,}5]$. Der Hochpunkt bei $-1$ ist nur lokal am höchsten.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.3,
+          2.8
+        ],
+        "y": [
+          -3,
+          9
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 2.5,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "domain": [
+              -2,
+              2.5
+            ],
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          },
+          {
+            "x": -1,
+            "y": 2,
+            "color": "orange",
+            "label": "H"
+          }
+        ],
+        "readout": "x = {X|2} · f(x) = {X^3 - 3*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Linker Rand: f(−2) = −2.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "Lokaler Hochpunkt bei −1 mit f = 2.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Tiefpunkt bei 1 mit f = −2.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rechter Rand: f(2,5) ≈ 8,1. Das globale Maximum liegt am Rand.",
+          "to": {
+            "X": 2.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Den y-Wert in $f$ einsetzen, nicht in $f'$ (dort steht immer 0). Und $f''(x_E) = 0$ heißt nicht »kein Extrempunkt«: $x^4$ hat bei 0 einen Tiefpunkt.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Extrempunkte bestimmen",
@@ -87,6 +241,69 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Tiefpunkt",
+      "md": "Bestimme die y-Koordinate des Tiefpunkts von $f(x) = x^3 - 3x^2 - 9x + 2$.",
+      "answer": -25,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 3(x - 3)(x + 1)$; $f''(3) = 12 > 0$, also Tiefpunkt bei $x = 3$ mit $f(3) = 27 - 27 - 27 + 2 = -25$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "$f'(x_0) = 0$, $f''(x_0) = 0$, und $f'$ wechselt bei $x_0$ das Vorzeichen von $-$ nach $+$. Was liegt vor?",
+      "options": [
+        {
+          "md": "ein Tiefpunkt",
+          "correct": true
+        },
+        {
+          "md": "ein Sattelpunkt",
+          "why": "Ein Sattelpunkt hat keinen Vorzeichenwechsel von f′."
+        },
+        {
+          "md": "ein Hochpunkt"
+        },
+        {
+          "md": "Darüber lässt sich nichts sagen."
+        }
+      ],
+      "explain": "Erst fällt f, dann steigt f: ein Tiefpunkt. Das Vorzeichenkriterium entscheidet, wenn f″ = 0 ist.",
+      "label": "Vorzeichen",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein lokales Maximum ist immer der größte Funktionswert auf dem ganzen Definitionsbereich.",
+      "answer": false,
+      "explain": "Am Rand oder an einem anderen Hochpunkt kann f größer sein.",
+      "label": "Global",
+      "id": "vq3"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Extrempunkt von $f(x) = x^2 - 4x$. Welche Zeile ist falsch?",
+      "lines": [
+        {
+          "md": "$f'(x) = 2x - 4 = 0$, also $x = 2$",
+          "why": "Richtig."
+        },
+        {
+          "md": "$f''(2) = 2 > 0$, also ein Tiefpunkt",
+          "why": "Richtig."
+        },
+        {
+          "md": "y-Koordinate: $f'(2) = 0$, also $T(2 \\mid 0)$",
+          "why": "Falsch: Der y-Wert kommt aus $f$: $f(2) = -4$, also $T(2 \\mid -4)$."
+        }
+      ],
+      "answer": 2,
+      "explain": "Die erste Ableitung ist an Extremstellen immer 0; der Funktionswert steht in f.",
+      "id": "vq4"
     },
     {
       "type": "order",
@@ -161,6 +378,14 @@
       },
       "label": "Negativer Leitkoeffizient",
       "id": "g4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "y-Koordinate aus f, nicht aus f′; bei f″ = 0 das Vorzeichenkriterium."
+      ]
     }
   ]
 }

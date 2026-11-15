@@ -16,6 +16,170 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "$f''(x) > 0$: **linksgekrümmt** (Linkskurve, nach oben offen). $f''(x) < 0$: **rechtsgekrümmt**. Die Grenzen dazwischen sind Wendestellen.",
+      "label": "Verfahren",
+      "more": "**Schema:** $f''$ bilden, Nullstellen von $f''$ bestimmen, das Vorzeichen in jedem Teilintervall testen, die Intervalle angeben.\n\n**Die drei Stufen hängen zusammen:** $f'' > 0$ heißt $f'$ wächst, also nimmt die Steigung von $f$ zu: Der Graph biegt nach links. Auf dem Fahrrad entlang des Graphen lenkt man nach links.\n\n**Im Sachzusammenhang:** Wächst ein Bestand mit $B'' > 0$, wächst er immer schneller; mit $B'' < 0$ wächst er immer langsamer. Der Wendepunkt markiert die Stelle des stärksten Wachstums.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^4 - 6x^2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f''(x) = 12x^2 - 12 = 12(x^2 - 1)",
+            "why": "Zweite Ableitung."
+          },
+          {
+            "tex": "|x| > 1: \\; f'' > 0 \\;\\Rightarrow\\; \\text{linksgekrümmt}",
+            "why": "Außen."
+          },
+          {
+            "tex": "-1 < x < 1: \\; f'' < 0 \\;\\Rightarrow\\; \\text{rechtsgekrümmt}",
+            "why": "Innen."
+          },
+          {
+            "tex": "\\text{Wendestellen bei } x = \\pm 1",
+            "why": "Dort wechselt das Vorzeichen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "f″.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Außen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Innen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wende.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Krümmung",
+      "md": "**Lenken entlang des Graphen:** $f(x) = x^3 - 3x$. Orange markiert die Rechtskurve ($f'' < 0$), grün die Linkskurve ($f'' > 0$).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.3,
+          2.3
+        ],
+        "y": [
+          -3,
+          3
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 2,
+            "value": -1.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "color": "blue"
+          }
+        ],
+        "vbands": [
+          {
+            "x": -1.15,
+            "d": 1.15,
+            "color": "orange"
+          },
+          {
+            "x": 1.15,
+            "d": 1.15,
+            "color": "green"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "accent",
+            "length": 0.7
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|2} · f″(x) = {6*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = −1,5: Rechtskurve, die Tangente dreht im Uhrzeigersinn.",
+          "set": {
+            "X": -1.5
+          }
+        },
+        {
+          "caption": "x = −0,5: immer noch rechtsgekrümmt.",
+          "to": {
+            "X": -0.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 0: Wendepunkt, die Krümmung wechselt.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 1,5: Linkskurve, die Tangente dreht gegen den Uhrzeigersinn.",
+          "to": {
+            "X": 1.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Krümmung und Monotonie nicht verwechseln: Ein Graph kann fallen und dabei linksgekrümmt sein, etwa $e^{-x}$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Krümmungsverhalten",
@@ -89,6 +253,47 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Ein Bestand $B(t)$ wächst, und es gilt $B''(t) < 0$. Was bedeutet das?",
+      "options": [
+        {
+          "md": "Der Bestand wächst immer langsamer.",
+          "correct": true
+        },
+        {
+          "md": "Der Bestand nimmt ab.",
+          "why": "Er wächst noch, nur die Zunahme schrumpft."
+        },
+        {
+          "md": "Der Bestand wächst immer schneller."
+        },
+        {
+          "md": "Der Bestand bleibt gleich."
+        }
+      ],
+      "explain": "$B' > 0$: Er wächst. $B'' < 0$: Die Wachstumsrate nimmt ab.",
+      "label": "Sachkontext",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = e^{-x}$ ist überall linksgekrümmt.",
+      "answer": true,
+      "explain": "$f''(x) = e^{-x} > 0$, obwohl $f$ überall fällt.",
+      "label": "Krümmung",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Intervall",
+      "md": "$f(x) = x^4 - 6x^2$ ist auf $(-1; b)$ rechtsgekrümmt. Bestimme $b$.",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f''(x) = 12(x^2 - 1) < 0$ genau für $-1 < x < 1$.",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -141,6 +346,38 @@
       },
       "label": "Krümmung",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "kruemmung"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "kruemmung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f″ > 0: linksgekrümmt, f′ wächst; f″ < 0: rechtsgekrümmt."
+      ]
     }
   ]
 }

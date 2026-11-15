@@ -39,6 +39,183 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Herleitung der Produktregel** mit einem Trick: einmal $u(x)\\,v(x + h)$ abziehen und wieder addieren.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{u(x + h)v(x + h) - u(x)v(x)}{h}",
+            "why": "Differenzenquotient von u · v."
+          },
+          {
+            "tex": "= \\frac{u(x + h) - u(x)}{h}\\,v(x + h) + u(x)\\,\\frac{v(x + h) - v(x)}{h}",
+            "why": "− u(x)v(x + h) + u(x)v(x + h) einschieben und sortieren."
+          },
+          {
+            "tex": "\\xrightarrow{h \\to 0}\\; u'(x)\\,v(x) + u(x)\\,v'(x)",
+            "why": "Beide Differenzenquotienten werden zu Ableitungen, v(x + h) zu v(x)."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eingeschoben.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Kettenregel",
+      "md": "**Kettenregel im Bild:** $\\sin(kx)$ durchläuft die Werte $k$-mal so schnell wie $\\sin x$. Deshalb ist die Steigung bei 0 genau $k$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2,
+          4.5
+        ],
+        "y": [
+          -1.6,
+          1.6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "KK",
+            "min": 0.5,
+            "max": 3,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "sin(x)",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "f",
+            "expr": "sin(KK*x)",
+            "color": "blue",
+            "width": 3
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": 0,
+            "color": "orange",
+            "length": 0.8
+          }
+        ],
+        "readout": "k = {KK|1} · Steigung bei 0: {KK|1} · cos 0"
+      },
+      "timeline": [
+        {
+          "caption": "k = 1: Steigung 1.",
+          "set": {
+            "KK": 1
+          }
+        },
+        {
+          "caption": "k = 2: doppelt so schnell, doppelt so steil.",
+          "to": {
+            "KK": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "k = 3: Steigung 3. Allgemein: (sin(kx))′ = k · cos(kx), äußere mal innere Ableitung.",
+          "to": {
+            "KK": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
+      "type": "text",
+      "md": "**Produkt:** $(uv)' = u'v + uv'$. **Quotient:** $\\left(\\tfrac{u}{v}\\right)' = \\tfrac{u'v - uv'}{v^2}$. **Kette:** $\\big(f(g(x))\\big)' = f'(g(x)) \\cdot g'(x)$, äußere mal innere Ableitung.",
+      "label": "Regeln",
+      "more": "**Grundableitungen:** $(x^n)' = nx^{n-1}$ (auch für negative und gebrochene $n$), $(e^x)' = e^x$, $(\\ln x)' = \\tfrac1x$, $(\\sin x)' = \\cos x$, $(\\cos x)' = -\\sin x$, $(a^x)' = \\ln a \\cdot a^x$, $(\\sqrt x)' = \\tfrac{1}{2\\sqrt x}$.\n\n**Summen- und Faktorregel:** Summen gliedweise ableiten, konstante Faktoren bleiben stehen.\n\n**Welche Regel?** Ein Malpunkt zwischen zwei Funktionen von $x$: Produktregel. Ein Bruch mit $x$ im Nenner: Quotientenregel (oder als Produkt mit negativem Exponenten schreiben). Steht im Argument mehr als nur $x$: Kettenregel. Oft greifen mehrere Regeln ineinander, etwa bei $x^2 e^{-3x}$.\n\n**Merkhilfe:** $(e^{kx})' = k\\,e^{kx}$ und $(\\ln(kx))' = \\tfrac1x$.",
+      "id": "ve3"
+    },
+    {
+      "id": "ve4",
+      "type": "anim",
+      "md": "**Beispiel mit Produkt- und Kettenregel:** $f(x) = x^2 e^{-3x}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "u = x^2,\\; u' = 2x; \\quad v = e^{-3x},\\; v' = -3e^{-3x}",
+            "why": "Die Faktoren und ihre Ableitungen; bei v die Kettenregel."
+          },
+          {
+            "tex": "f'(x) = 2x\\,e^{-3x} + x^2 \\cdot (-3)e^{-3x}",
+            "why": "Produktregel."
+          },
+          {
+            "tex": "= x\\,e^{-3x}(2 - 3x)",
+            "why": "Gemeinsame Faktoren ausklammern: so sieht man die Nullstellen 0 und 2/3."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bausteine.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Produktregel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausgeklammert.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Grundableitungen",
@@ -186,6 +363,85 @@
       ]
     },
     {
+      "type": "order",
+      "label": "Herleitung",
+      "md": "Bringe die Herleitung der Produktregel in die richtige Reihenfolge.",
+      "items": [
+        "Differenzenquotient von $u \\cdot v$ aufstellen",
+        "$u(x)\\,v(x + h)$ abziehen und wieder addieren",
+        "In zwei Differenzenquotienten zerlegen",
+        "Grenzwert: $u'v + uv'$"
+      ],
+      "explain": "Die Reihenfolge: 1. Differenzenquotient von $u \\cdot v$ aufstellen. 2. $u(x)\\,v(x + h)$ abziehen und wieder addieren. 3. In zwei Differenzenquotienten zerlegen. 4. Grenzwert: $u'v + uv'$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Ableitung hat $f(x) = \\ln(x^2 + 1)$?",
+      "options": [
+        {
+          "md": "$\\dfrac{2x}{x^2 + 1}$",
+          "correct": true
+        },
+        {
+          "md": "$\\dfrac{1}{x^2 + 1}$",
+          "why": "Die innere Ableitung 2x fehlt."
+        },
+        {
+          "md": "$\\dfrac{2x}{x}$"
+        },
+        {
+          "md": "$2x\\ln(x^2 + 1)$"
+        }
+      ],
+      "explain": "Kettenregel: $\\tfrac{1}{x^2 + 1} \\cdot 2x$.",
+      "label": "Kettenregel",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$f(x) = (2x + 1)^3$. Berechne $f'(1)$.",
+      "answer": 54,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 3(2x + 1)^2 \\cdot 2$, also $f'(1) = 3 \\cdot 9 \\cdot 2 = 54$.",
+      "id": "vq3"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für alle differenzierbaren $u$ und $v$ gilt $(u \\cdot v)' = u' \\cdot v'$.",
+      "answer": false,
+      "explain": "Gegenbeispiel $u = v = x$: $(x^2)' = 2x$, aber $u'v' = 1$.",
+      "label": "Falle",
+      "id": "vq4"
+    },
+    {
+      "type": "match",
+      "label": "Ketten",
+      "md": "Ordne die Ableitung zu.",
+      "pairs": [
+        [
+          "$\\sin(3x)$",
+          "$3\\cos(3x)$"
+        ],
+        [
+          "$e^{2x}$",
+          "$2e^{2x}$"
+        ],
+        [
+          "$\\ln(5x)$",
+          "$\\tfrac1x$"
+        ],
+        [
+          "$\\sqrt{2x}$",
+          "$\\tfrac{1}{\\sqrt{2x}}$"
+        ]
+      ],
+      "explain": "Jedes Mal Kettenregel; bei ln(5x) kürzt sich die innere Ableitung 5.",
+      "id": "vq5"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Ableitung zu.",
@@ -281,12 +537,25 @@
       "id": "g4"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "verkettung"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Potenz-, e-, ln-, sin-, cos-Regeln.",
         "Produkt u'v + uv', Quotient (u'v − uv')/v², Kette: außen mal innen.",
-        "Produkt der Ableitungen ist falsch."
+        "Produkt der Ableitungen ist falsch.",
+        "Produktregel $u'v + uv'$, Kettenregel äußere mal innere Ableitung."
       ],
       "id": "summary"
     }

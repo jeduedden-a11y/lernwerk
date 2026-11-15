@@ -16,6 +16,182 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Vom Graphen von $f$ zum Graphen von $f'$: Extremstellen werden **Nullstellen**, Wendestellen werden **Extremstellen**, steigende Abschnitte liegen **über** der x-Achse.",
+      "label": "Verfahren",
+      "more": "| Graph von $f$ | Graph von $f'$ |\n|---|---|\n| Hochpunkt | Nullstelle, Wechsel von $+$ nach $-$ |\n| Tiefpunkt | Nullstelle, Wechsel von $-$ nach $+$ |\n| Sattelpunkt | Nullstelle ohne Vorzeichenwechsel |\n| Wendepunkt | Extrempunkt |\n| steigt / fällt | über / unter der x-Achse |\n| linksgekrümmt / rechtsgekrümmt | steigt / fällt |\n| Grad $n$ | Grad $n - 1$ |\n\n**Schema:** markante Stellen von $f$ markieren, in die Tabelle übersetzen, Vorzeichenbereiche eintragen, glatt verbinden. **Umgekehrt** (von $f'$ zu $f$) liest man dieselbe Tabelle von rechts nach links.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f$ hat einen Hochpunkt bei $-1$, einen Wendepunkt bei $0$ und einen Tiefpunkt bei $1$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Hochpunkt bei } {-1}: \\; f'(-1) = 0,\\; + \\to -",
+            "why": "Nullstelle von f′, dort fällt f′ durch die Achse."
+          },
+          {
+            "tex": "\\text{Wendepunkt bei } 0: \\; f' \\text{ hat bei } 0 \\text{ ein Minimum}",
+            "why": "Dort ist f am steilsten fallend."
+          },
+          {
+            "tex": "\\text{Tiefpunkt bei } 1: \\; f'(1) = 0,\\; - \\to +",
+            "why": "f′ steigt wieder durch die Achse."
+          },
+          {
+            "tex": "f' \\text{ ist eine nach oben geöffnete Parabel}",
+            "why": "Zum Beispiel f′(x) = x² − 1 zu f(x) = x³/3 − x."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Hochpunkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendepunkt.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tiefpunkt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bild.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Steigung",
+      "md": "**Steigung wird Höhe:** blau $f(x) = \\tfrac13 x^3 - x$, orange $f'(x) = x^2 - 1$. Die Steigung der Tangente an $f$ ist der Wert von $f'$ an derselben Stelle.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.3,
+          2.3
+        ],
+        "y": [
+          -2,
+          3.5
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2.2,
+            "max": 2.2,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3/3 - x",
+            "color": "blue"
+          },
+          {
+            "name": "d",
+            "expr": "x^2 - 1",
+            "color": "orange"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "blue",
+            "length": 0.7,
+            "dashed": true
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "d",
+            "color": "orange"
+          }
+        ],
+        "readout": "Steigung von f bei x = {X|2}: {X^2 - 1|2} = Wert von f′"
+      },
+      "timeline": [
+        {
+          "caption": "x = −2: f steigt steil, f′ liegt hoch.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "x = −1: Hochpunkt von f, Nullstelle von f′.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 0: Wendepunkt von f, Tiefpunkt von f′.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 1: Tiefpunkt von f, wieder eine Nullstelle von f′.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 1,8: f steigt, f′ positiv.",
+          "to": {
+            "X": 1.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Der Graph von $f'$ zeigt die **Steigung**, nicht die Höhe: Wo $f$ hoch liegt, kann $f'$ null oder negativ sein.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Graphisches Ableiten",
@@ -81,6 +257,47 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Der Graph von $f'$ ist eine nach oben geöffnete Parabel mit den Nullstellen $-2$ und $1$. Was gilt für $f$?",
+      "options": [
+        {
+          "md": "$f$ hat bei $-2$ einen Hochpunkt und bei $1$ einen Tiefpunkt.",
+          "correct": true
+        },
+        {
+          "md": "$f$ hat bei $-2$ einen Tiefpunkt und bei $1$ einen Hochpunkt."
+        },
+        {
+          "md": "$f$ hat bei $-2$ und $1$ Nullstellen.",
+          "why": "Nullstellen von f′ sind keine Nullstellen von f."
+        },
+        {
+          "md": "$f$ hat bei $-2$ und $1$ Wendepunkte."
+        }
+      ],
+      "explain": "$f'$ ist links von $-2$ positiv, zwischen $-2$ und $1$ negativ, rechts davon positiv: Bei $-2$ wechselt es von $+$ nach $-$.",
+      "label": "Rückwärts",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Wo $f'$ einen Hochpunkt hat, hat $f$ einen Wendepunkt.",
+      "answer": true,
+      "explain": "Extremstellen der Ableitung sind Wendestellen der Funktion.",
+      "label": "Übersetzung",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Anzahl",
+      "md": "Der Graph von $f'$ schneidet die x-Achse genau dreimal, jedes Mal mit Vorzeichenwechsel. Wie viele Extrempunkte hat $f$?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Jede Nullstelle von f′ mit Vorzeichenwechsel ist eine Extremstelle von f.",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -138,6 +355,62 @@
       ],
       "explain": "Die Ableitung ist der Steigungsgraph: Wo $f$ steigt, liegt $f'$ über der Achse.",
       "id": "ma1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "graphisch"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "graphisch"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "graphisch"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "graphisch"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "f → f′: Extremstellen werden Nullstellen, Wendestellen werden Extremstellen."
+      ]
     }
   ]
 }

@@ -16,6 +16,165 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Die **Normale** steht im Kurvenpunkt senkrecht auf der Tangente: Steigung $m_n = -\\tfrac{1}{f'(x_0)}$, also $n(x) = -\\tfrac{1}{f'(x_0)}(x - x_0) + f(x_0)$.",
+      "label": "Verfahren",
+      "more": "**Warum $-\\tfrac1m$:** Das Steigungsdreieck der Tangente $(1, m)$ um $90^\\circ$ gedreht ergibt $(-m, 1)$, also die Steigung $-\\tfrac1m$. Zwei Geraden stehen genau dann senkrecht aufeinander, wenn $m_1 \\cdot m_2 = -1$.\n\n**Schema:** Punkt $f(x_0)$, Tangentensteigung $f'(x_0)$, Normalensteigung $-\\tfrac{1}{f'(x_0)}$, einsetzen.\n\n**Sonderfälle:** Ist $f'(x_0) = 0$, ist die Tangente waagerecht und die Normale die senkrechte Gerade $x = x_0$. Steht die Tangente senkrecht, ist die Normale waagerecht.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = \\sqrt x$ an der Stelle $x_0 = 4$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(4) = 2",
+            "why": "Kurvenpunkt (4 | 2)."
+          },
+          {
+            "tex": "f'(x) = \\frac{1}{2\\sqrt x} \\;\\Rightarrow\\; f'(4) = \\frac14",
+            "why": "Tangentensteigung."
+          },
+          {
+            "tex": "m_n = -\\frac{1}{1/4} = -4",
+            "why": "Negativer Kehrwert."
+          },
+          {
+            "tex": "n(x) = -4(x - 4) + 2 = -4x + 18",
+            "why": "Einsetzen und vereinfachen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangente.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normale.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Normale",
+      "md": "**Tangente und Normale** an $f(x) = \\tfrac12 x^2$: orange die Tangente, grün die Normale; beide Achsen gleich skaliert, damit der rechte Winkel stimmt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          3
+        ],
+        "y": [
+          -1,
+          4
+        ],
+        "grid": true,
+        "height": 303,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2,
+            "max": 2,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "0.5*x^2",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "X",
+            "color": "orange"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              "X + 2*X/sqrt(1 + X^2)",
+              "0.5*X^2 - 2/sqrt(1 + X^2)"
+            ],
+            "to": [
+              "X - 2*X/sqrt(1 + X^2)",
+              "0.5*X^2 + 2/sqrt(1 + X^2)"
+            ],
+            "color": "green",
+            "width": 2.4
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "accent"
+          }
+        ],
+        "readout": "Tangente {X|2} · Normale {-1/X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x₀ = 1: Tangente mit Steigung 1, Normale mit Steigung −1.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "x₀ = 2: Steigung 2, Normale −1/2.",
+          "to": {
+            "X": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x₀ = 0: waagerechte Tangente, die Normale ist die senkrechte Gerade x = 0.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Kehrwert **und** Vorzeichen: Bei $f'(x_0) = 4$ ist $m_n = -\\tfrac14$, nicht $-4$ und nicht $\\tfrac14$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Normale aufstellen",
@@ -81,6 +240,47 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Steigung",
+      "md": "Die Tangente hat die Steigung $\\tfrac23$. Welche Steigung hat die Normale?",
+      "answer": -1.5,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$-\\tfrac{1}{2/3} = -\\tfrac32$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Welche Normale hat $f(x) = x^2 - 4x$ im Punkt $(2 \\mid -4)$?",
+      "options": [
+        {
+          "md": "$x = 2$",
+          "correct": true
+        },
+        {
+          "md": "$y = -4$",
+          "why": "Das ist die Tangente: f′(2) = 0."
+        },
+        {
+          "md": "$y = -\\tfrac12(x - 2) - 4$"
+        },
+        {
+          "md": "Es gibt keine Normale."
+        }
+      ],
+      "explain": "$f'(2) = 0$: Die Tangente ist waagerecht, die Normale senkrecht.",
+      "label": "Sonderfall",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Haben Tangente und Normale beide eine Steigung, ist deren Produkt $-1$.",
+      "answer": true,
+      "explain": "$m \\cdot \\left(-\\tfrac1m\\right) = -1$.",
+      "label": "Senkrecht",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -133,6 +333,38 @@
       },
       "label": "Normalengleichung",
       "id": "g2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "normale"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "normale"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Normalensteigung: negativer Kehrwert der Tangentensteigung."
+      ]
     }
   ]
 }

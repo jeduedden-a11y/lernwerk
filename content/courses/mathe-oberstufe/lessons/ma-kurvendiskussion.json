@@ -78,6 +78,173 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Drei Stufen",
+      "md": "**Drei Stufen auf einen Blick:** blau $f(x) = x^3 - 3x$, orange gestrichelt $f'$, grün gestrichelt $f''$. Die senkrechte Linie zeigt, was an einer Stelle zusammengehört.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -2.5,
+          2.5
+        ],
+        "y": [
+          -6,
+          6
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "X",
+            "min": -2.5,
+            "max": 2.5,
+            "value": -2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^3 - 3*x",
+            "color": "blue",
+            "width": 3
+          },
+          {
+            "name": "d",
+            "expr": "3*x^2 - 3",
+            "color": "orange",
+            "dashed": true
+          },
+          {
+            "name": "dd",
+            "expr": "6*x",
+            "color": "green",
+            "dashed": true
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "f",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "d",
+            "color": "orange"
+          },
+          {
+            "x": "X",
+            "on": "dd",
+            "color": "green"
+          }
+        ],
+        "readout": "x = {X|2} · f′(x) = {3*X^2 - 3|2} · f″(x) = {6*X|2}"
+      },
+      "timeline": [
+        {
+          "caption": "x = −2: f steigt, also f′ > 0.",
+          "set": {
+            "X": -2
+          }
+        },
+        {
+          "caption": "x = −1: f′ = 0 und f″ < 0: Hochpunkt.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 0: f″ = 0 mit Vorzeichenwechsel: Wendepunkt; f′ ist hier am kleinsten.",
+          "to": {
+            "X": 0
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "x = 1: f′ = 0 und f″ > 0: Tiefpunkt.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "text",
+      "md": "**Notwendig** für einen Extrempunkt ist $f'(x_0) = 0$, **hinreichend** zusätzlich $f''(x_0) \\neq 0$ oder ein Vorzeichenwechsel von $f'$. Für Wendepunkte gilt dasselbe eine Stufe höher.",
+      "label": "Kriterien",
+      "more": "**Ablauf einer Kurvendiskussion:**\n1. Definitionsbereich, Symmetrie, Verhalten im Unendlichen und Asymptoten.\n2. Nullstellen.\n3. Ableitungen $f'$, $f''$, $f'''$.\n4. Extrempunkte: $f'(x) = 0$, dann $f''$ oder Vorzeichenwechsel von $f'$; y-Werte in $f$ einsetzen.\n5. Wendepunkte: $f''(x) = 0$, dann $f'''$ oder Vorzeichenwechsel von $f''$.\n6. Monotonie- und Krümmungsintervalle, Wertetabelle, Skizze.\n\n**Notwendig gegen hinreichend:** Bei $f(x) = x^3$ ist $f'(0) = 0$, aber 0 ist keine Extremstelle (Sattelpunkt). Bei $f(x) = x^4$ ist $f''(0) = 0$, und trotzdem liegt bei 0 ein Tiefpunkt; hier entscheidet der Vorzeichenwechsel von $f'$.",
+      "id": "ve2"
+    },
+    {
+      "id": "ve3",
+      "type": "anim",
+      "md": "**Beispiel:** $f(x) = x^3 - 3x$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f'(x) = 3x^2 - 3 = 0 \\;\\Rightarrow\\; x = \\pm 1",
+            "why": "Notwendige Bedingung für Extremstellen."
+          },
+          {
+            "tex": "f''(x) = 6x: \\; f''(-1) = -6 < 0,\\; f''(1) = 6 > 0",
+            "why": "Hinreichende Bedingung."
+          },
+          {
+            "tex": "H(-1 \\mid 2), \\quad T(1 \\mid -2)",
+            "why": "y-Werte in f einsetzen."
+          },
+          {
+            "tex": "f''(x) = 0 \\Rightarrow x = 0;\\; f'''(0) = 6 \\neq 0 \\;\\Rightarrow\\; W(0 \\mid 0)",
+            "why": "Wendepunkt, zugleich Symmetriezentrum."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kandidaten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prüfung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wendepunkt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Kurvendiskussion",
@@ -191,6 +358,72 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Es gilt $f'(2) = 0$ und $f''(2) = -3$. Was liegt bei $x = 2$ vor?",
+      "options": [
+        {
+          "md": "ein Hochpunkt",
+          "correct": true
+        },
+        {
+          "md": "ein Tiefpunkt",
+          "why": "Negative zweite Ableitung heißt rechtsgekrümmt, also oben."
+        },
+        {
+          "md": "ein Wendepunkt"
+        },
+        {
+          "md": "ein Sattelpunkt"
+        }
+      ],
+      "explain": "Waagerechte Tangente in einer Rechtskurve: Hochpunkt.",
+      "label": "Kriterium",
+      "id": "vq1"
+    },
+    {
+      "type": "truefalse",
+      "md": "$f(x) = x^4$ hat bei 0 einen Tiefpunkt, obwohl $f''(0) = 0$ ist.",
+      "answer": true,
+      "explain": "$f'(x) = 4x^3$ wechselt bei 0 das Vorzeichen von $-$ nach $+$; das zweite Kriterium versagt hier nur.",
+      "label": "Grenzfall",
+      "id": "vq2"
+    },
+    {
+      "type": "numeric",
+      "label": "Tiefpunkt",
+      "md": "$f(x) = x^3 - 12x$. Welche y-Koordinate hat der Tiefpunkt?",
+      "answer": -16,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$f'(x) = 3x^2 - 12 = 0$ bei $x = \\pm 2$; $f''(2) = 12 > 0$, also Tiefpunkt bei $x = 2$ mit $f(2) = 8 - 24 = -16$.",
+      "id": "vq3"
+    },
+    {
+      "type": "match",
+      "label": "Stufen",
+      "md": "Was verrät welche Ableitung?",
+      "pairs": [
+        [
+          "Monotonie",
+          "Vorzeichen von $f'$"
+        ],
+        [
+          "Krümmung",
+          "Vorzeichen von $f''$"
+        ],
+        [
+          "Extremstellen",
+          "Nullstellen von $f'$ mit Vorzeichenwechsel"
+        ],
+        [
+          "Wendestellen",
+          "Nullstellen von $f''$ mit Vorzeichenwechsel"
+        ]
+      ],
+      "explain": "Jede Stufe beschreibt die vorige: f′ die Steigung von f, f″ die Steigung von f′.",
+      "id": "vq4"
+    },
+    {
       "type": "order",
       "label": "Ablauf",
       "md": "Ordne eine typische Kurvendiskussion.",
@@ -212,12 +445,49 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "extrem"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "wendepunkt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "monotonie"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Notwendig: f'(x) = 0; hinreichend: Vorzeichenwechsel oder f''(x) ≠ 0.",
         "Wendepunkt: f''(x) = 0 mit Vorzeichenwechsel.",
-        "Sattelpunkt: waagerechte Tangente ohne Extremum."
+        "Sattelpunkt: waagerechte Tangente ohne Extremum.",
+        "Notwendig: f′ = 0; hinreichend: f″ ≠ 0 oder Vorzeichenwechsel von f′."
       ],
       "id": "summary"
     }

@@ -16,6 +16,163 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Die Berührstelle ist unbekannt: Tangente allgemein als $t_u(x) = f'(u)(x - u) + f(u)$ aufstellen, den äußeren Punkt einsetzen und nach $u$ auflösen.",
+      "label": "Verfahren",
+      "more": "1. **Allgemeine Tangente** an der Stelle $u$: $t_u(x) = f'(u)(x - u) + f(u)$.\n2. **Punktprobe** mit $P(a \\mid b)$: $b = f'(u)(a - u) + f(u)$.\n3. **Nach $u$ lösen**; bei Parabeln entsteht eine quadratische Gleichung.\n4. **Jede Lösung** $u$ in $t_u$ einsetzen: eine Tangente pro Lösung.\n\n**Wie viele Tangenten?** Bei einer nach oben geöffneten Parabel: zwei, wenn $P$ unterhalb liegt; eine, wenn $P$ auf ihr liegt; keine, wenn $P$ im Inneren liegt.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Tangenten an $f(x) = x^2$ durch $P(1 \\mid -3)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "t_u(x) = 2u(x - u) + u^2 = 2ux - u^2",
+            "why": "Allgemeine Tangente an der Stelle u."
+          },
+          {
+            "tex": "-3 = 2u \\cdot 1 - u^2",
+            "why": "P einsetzen."
+          },
+          {
+            "tex": "u^2 - 2u - 3 = 0 \\;\\Rightarrow\\; u = 3 \\;\\lor\\; u = -1",
+            "why": "Quadratische Gleichung in u."
+          },
+          {
+            "tex": "t_3(x) = 6x - 9, \\quad t_{-1}(x) = -2x - 1",
+            "why": "Zwei Tangenten durch P."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Allgemein.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Punktprobe.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gelöst.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tangenten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Fernpunkt",
+      "md": "**Welche Tangente trifft $P$?** Die Tangente an $x^2$ wandert mit der Berührstelle $u$; sie geht durch $P(1 \\mid -3)$, wenn $t_u(1) = -3$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -3,
+          5
+        ],
+        "y": [
+          -5,
+          10
+        ],
+        "grid": true,
+        "vars": [
+          {
+            "name": "U",
+            "min": -2.5,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "x^2",
+            "color": "blue"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "f",
+            "at": "U",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": -3,
+            "color": "accent",
+            "label": "P"
+          },
+          {
+            "x": "U",
+            "on": "f",
+            "color": "orange"
+          }
+        ],
+        "readout": "u = {U|2} · t_u(1) = {2*U - U^2|2} (gesucht: −3)"
+      },
+      "timeline": [
+        {
+          "caption": "u = 0: Die Tangente ist die x-Achse, sie verfehlt P.",
+          "set": {
+            "U": 0
+          }
+        },
+        {
+          "caption": "u = −1: t(1) = −3, die Tangente geht durch P.",
+          "to": {
+            "U": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "u = 1: verfehlt.",
+          "to": {
+            "U": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "u = 3: wieder durch P; die zweite Tangente.",
+          "to": {
+            "U": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "$P$ liegt nicht auf dem Graphen: $f'(a)$ an der Stelle von $P$ ist hier bedeutungslos. Gesucht ist die Berührstelle $u$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Tangente durch Fernpunkt",
@@ -81,6 +238,46 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Berührstelle",
+      "md": "Durch $P(2 \\mid 3)$ gehen zwei Tangenten an $f(x) = x^2$. Bestimme die größere Berührstelle.",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$3 = 2u \\cdot 2 - u^2$ gibt $u^2 - 4u + 3 = 0$, also $u = 1$ oder $u = 3$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Wie viele Tangenten an $f(x) = x^2$ gehen durch $P(0 \\mid 1)$?",
+      "options": [
+        {
+          "md": "keine",
+          "correct": true
+        },
+        {
+          "md": "eine"
+        },
+        {
+          "md": "zwei"
+        },
+        {
+          "md": "unendlich viele"
+        }
+      ],
+      "explain": "$1 = -u^2$ hat keine Lösung: $P$ liegt im Inneren der Parabel.",
+      "label": "Anzahl",
+      "id": "vq2"
+    },
+    {
+      "type": "truefalse",
+      "md": "Liegt $P$ auf dem Graphen einer differenzierbaren Funktion, geht durch $P$ mindestens eine Tangente.",
+      "answer": true,
+      "explain": "Die Tangente im Punkt P selbst.",
+      "label": "Sonderfall",
+      "id": "vq3"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -123,6 +320,62 @@
       "placeholder": "",
       "explain": "$t(x) = 2u(x - u) + u^2 = 2ux - u^2$. Durch $P$: $-u^2 = -4$, also $u = \\pm 2$. Tangenten $y = 4x - 4$ und $y = -4x - 4$.",
       "id": "n1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "fernpunkt"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "fernpunkt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "fernpunkt"
+        ]
+      },
+      "label": "Schwer",
+      "id": "vx3"
+    },
+    {
+      "type": "gen",
+      "gen": "ma-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "fernpunkt"
+        ]
+      },
+      "label": "Abitur",
+      "id": "vx4"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Tangente durch einen äußeren Punkt: Berührstelle u als Unbekannte, Punktprobe, nach u lösen."
+      ]
     }
   ]
 }
