@@ -18,6 +18,185 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Einstellung",
+      "md": "**Ein Gleichgewicht stellt sich ein:** $\\mathrm{A \\rightleftharpoons B}$, anfangs nur A. Blau $c(\\mathrm{A})$, orange $c(\\mathrm{B})$; die Geschwindigkeiten gleichen sich an.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          16
+        ],
+        "y": [
+          0,
+          1.05
+        ],
+        "grid": true,
+        "xLabel": "t",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 16,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "1 - (2/3)*(1 - exp(-0.3*x))",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "(2/3)*(1 - exp(-0.3*x))",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "a",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "b",
+            "color": "orange"
+          }
+        ],
+        "readout": "t = {T|1} · v(hin) = {0.2*(1 - (2/3)*(1 - exp(-0.3*T)))|3} · v(rück) = {0.1*(2/3)*(1 - exp(-0.3*T))|3}"
+      },
+      "timeline": [
+        {
+          "caption": "Am Anfang läuft nur die Hinreaktion.",
+          "set": {
+            "T": 0.5
+          }
+        },
+        {
+          "caption": "Mit wachsendem c(B) wird die Rückreaktion schneller.",
+          "to": {
+            "T": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gleichgewicht: Beide Richtungen laufen gleich schnell weiter; die Konzentrationen bleiben stehen.",
+          "to": {
+            "T": 15
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gleichgewichtskonzept",
+      "path": "02 Wiki/Chemie/01 Grundlagen/Gleichgewichtskonzept.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Das **Gleichgewichtskonzept** beschreibt **umkehrbare Reaktionen**, die einen **dynamischen Gleichgewichtszustand** anstreben. In diesem laufen Hin- und Rückreaktion mit **gleicher Geschwindigkeit** ab, sodass sich die Konzentrationen makroskopisch nicht mehr ändern.\n\n$$\\text{A} + \\text{B} \\rightleftharpoons \\text{C} + \\text{D}$$\n\nDer Doppelpfeil ist die Kurzschrift des gesamten Konzepts: Beide Richtungen laufen gleichzeitig.\n\n> [!warning] Der Doppelpfeil des Gleichgewichts und der Mesomeriepfeil sind verschiedene Zeichen\n> | Zeichen | Bedeutung |\n> |---|---|\n> | $\\rightleftharpoons$ | zwei Reaktionen, die gleichzeitig in beide Richtungen ablaufen; es liegen **beide Stoffe** vor |\n> | $\\leftrightarrow$ | **Mesomerie**: **eine** Struktur, die sich mit einer einzigen Formel nicht darstellen lässt; die Grenzformeln existieren **nicht** einzeln |\n>\n> Diese Verwechslung ist einer der häufigsten Notationsfehler der Oberstufe. Beim Carboxylat-Ion pendeln die Elektronen nicht zwischen zwei Zuständen hin und her -- sie sind delokalisiert."
+            }
+          ]
+        },
+        {
+          "title": "Was \"dynamisch\" bedeutet",
+          "blocks": [
+            {
+              "md": "> [!important] Stillstand nach außen, Betrieb nach innen\n> Ein Gleichgewicht ist **kein Reaktionsende**. Auf Teilchenebene reagieren fortwährend Edukte zu Produkten und umgekehrt -- nur eben gleich schnell, sodass sich die Bilanz aufhebt.\n>\n> Der klassische Nachweis führt über **markierte Isotope**: Gibt man einer Veresterung im Gleichgewicht Alkohol mit dem Sauerstoff-18-Isotop zu, findet man dieses Isotop nach einiger Zeit auch im Ester -- obwohl sich an den Konzentrationen nichts geändert hat. Der Stoffumsatz läuft also weiter.\n>\n> Prüfungsrelevant ist die Folgerung: Aus einer waagerecht verlaufenden Konzentrations-Zeit-Kurve darf **nicht** auf Reaktionsstillstand geschlossen werden. Was zum Stillstand kommt, ist allein die **makroskopisch beobachtbare** Änderung."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Ebenen der Beschreibung",
+          "blocks": [
+            {
+              "md": "| Ebene | Frage | Werkzeug |\n|---|---|---|\n| **qualitativ** | In welche Richtung verschiebt sich das Gleichgewicht bei einer Störung? | **Prinzip von Le Chatelier** |\n| **quantitativ** | Wie weit liegt es auf welcher Seite? | **Massenwirkungsgesetz** |\n| **kinetisch** | Wie schnell stellt es sich ein? | **Reaktionsgeschwindigkeit**, **Katalysator** |\n\n> [!important] Diese drei Fragen sind unabhängig voneinander\n> Eine Reaktion kann eine sehr große Gleichgewichtskonstante haben und trotzdem unmessbar langsam ablaufen. Ein Katalysator beschleunigt die Einstellung, verschiebt aber die Lage nicht.\n>\n> Wer die drei Ebenen sauber trennt, vermeidet die meisten Fehler des Halbjahres Q3. Die Formulierung \"der Katalysator erhöht die Ausbeute\" ist deshalb falsch, \"er verkürzt die Zeit bis zur Gleichgewichtsausbeute\" richtig."
+            }
+          ]
+        },
+        {
+          "title": "Die Gleichgewichtskonstante",
+          "blocks": [
+            {
+              "md": "$$K_c = \\frac{c(\\text{C})\\cdot c(\\text{D})}{c(\\text{A})\\cdot c(\\text{B})}$$\n\n| $K_c$ | Bedeutung |\n|---|---|\n| viel größer als 1 | Gleichgewicht liegt auf der **Produktseite** |\n| ungefähr 1 | beide Seiten vergleichbar vertreten |\n| viel kleiner als 1 | Gleichgewicht liegt auf der **Eduktseite** |\n\n**Nur die Temperatur ändert $K_c$.** Konzentration, Druck und Katalysator verschieben das Gleichgewicht oder beschleunigen seine Einstellung, lassen die Konstante aber unberührt -- ausgeführt in **Massenwirkungsgesetz anwenden und Kc berechnen**."
+            }
+          ]
+        },
+        {
+          "title": "Wo das Konzept überall trägt",
+          "blocks": [
+            {
+              "md": "| Erscheinungsform | Konstante | Notiz |\n|---|---|---|\n| Säurestärke | $K_S$ | **Ks- und pKs-Wert** |\n| Autoprotolyse des Wassers | $K_W$ | **Ionenprodukt des Wassers** |\n| Pufferwirkung | $K_S$ im Verhältnis | **Puffersysteme** |\n| Löslichkeit schwerlöslicher Salze | Löslichkeitsprodukt | Fällungsreaktionen |\n| Elektrodenpotenzial | über die **Nernst-Gleichung** | Redoxgleichgewicht |\n| Komplexbildung | Komplexbildungskonstante | **Komplexchemie** |\n| Veresterung | $K_c$ um 4 | **Ester und Veresterung** |\n| Enzymhemmung | Konkurrenz um die Bindungsstelle | **Katalyse in Natur und Technik** |\n\n> [!tip] Alle diese Konstanten sind dasselbe Massenwirkungsgesetz\n> $K_S$, $K_W$ und das Löslichkeitsprodukt sind keine eigenständigen Gesetze, sondern **Anwendungen einer einzigen Gleichung** auf verschiedene Reaktionstypen. Selbst die Henderson-Hasselbalch- und die Nernst-Gleichung sind nur ihre logarithmierten Formen.\n>\n> Diese Einsicht reduziert den Lernstoff des Halbjahres Q3 erheblich: Statt sechs Formeln merkt man sich eine und weiß, wie man sie zuschneidet."
+            }
+          ]
+        },
+        {
+          "title": "Störungen und ihre Wirkung",
+          "blocks": [
+            {
+              "md": "| Eingriff | Verschiebung | $K_c$ |\n|---|---|---|\n| Eduktkonzentration erhöhen | zu den Produkten | unverändert |\n| Produkt entziehen | zu den Produkten | unverändert |\n| Druck erhöhen (Gase) | zur Seite mit weniger Teilchen | unverändert |\n| Temperatur erhöhen | zur endothermen Seite | **ändert sich** |\n| Katalysator | keine | unverändert |\n\nDer **Produktentzug** ist der wirksamste Eingriff, weil er das Gleichgewicht dauerhaft stört statt es nur zu verschieben -- das Prinzip hinter der Wasserabspaltung bei der Veresterung und hinter der Ammoniakauskondensation bei Haber-Bosch."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Eines der vier **Basiskonzepte** und Leitthema von **01 Chemie Q3**. Es beginnt bereits in der E-Phase mit den **Protolysereaktionen**, trägt in Q1 die **Veresterung**, in Q2 die Ausbeuteüberlegungen der Syntheseplanung und in Q4 den Ligandenaustausch der **Komplexchemie** sowie die Enzymhemmung."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Konstante",
+      "md": "Im Gleichgewicht des Films sind $c(\\mathrm{B}) = \\tfrac23$ und $c(\\mathrm{A}) = \\tfrac13$. Wie groß ist $K = \\tfrac{c(\\mathrm{B})}{c(\\mathrm{A})}$?",
+      "answer": 2,
+      "tolerance": 0.001,
+      "placeholder": "",
+      "explain": "$\\tfrac{2/3}{1/3} = 2$; ebenso $\\tfrac{k_{\\text{hin}}}{k_{\\text{rück}}} = \\tfrac{0{,}2}{0{,}1}$.",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ist im chemischen Gleichgewicht gleich groß?",
+      "options": [
+        {
+          "md": "die Geschwindigkeiten von Hin- und Rückreaktion",
+          "correct": true
+        },
+        {
+          "md": "die Konzentrationen von Edukten und Produkten",
+          "why": "Die Konzentrationen sind nur konstant, nicht gleich."
+        },
+        {
+          "md": "die Massen aller Stoffe"
+        },
+        {
+          "md": "die Aktivierungsenergien"
+        }
+      ],
+      "explain": "Dynamisches Gleichgewicht: Es reagiert ständig weiter, aber in beide Richtungen gleich schnell.",
+      "label": "Dynamisch",
+      "id": "vq2"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Die drei Ebenen der Beschreibung: Ordne zu.",
@@ -83,7 +262,8 @@
         "Gleichgewicht: Hin- und Rückreaktion gleich schnell, Konzentrationen konstant.",
         "Dynamisch: Auf Teilchenebene läuft alles weiter.",
         "K beschreibt die Lage: groß, viel Produkt; klein, viel Edukt.",
-        "Nur im geschlossenen System."
+        "Nur im geschlossenen System.",
+        "Gleichgewicht: v(hin) = v(rück), Konzentrationen konstant, nicht gleich."
       ],
       "id": "summary"
     }

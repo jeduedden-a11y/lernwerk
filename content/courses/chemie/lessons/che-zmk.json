@@ -11,8 +11,242 @@
   "steps": [
     {
       "type": "text",
-      "md": "Zwischen Molekülen wirken drei Arten von Anziehung, in steigender Stärke:\n\n1. **Van-der-Waals-Kräfte** zwischen allen Molekülen, durch kurzzeitige Ladungsverschiebungen. Sie wachsen mit der Größe und der Berührungsfläche der Moleküle.\n2. **Dipol-Dipol-Kräfte** zwischen Molekülen mit permanentem Dipol.\n3. **Wasserstoffbrücken**, wenn ein H-Atom an N, O oder F gebunden ist und ein freies Elektronenpaar eines Nachbarmoleküls bereitsteht.",
-      "id": "t1"
+      "md": "Drei Anziehungen zwischen Molekülen, in steigender Stärke: **Van-der-Waals-Kräfte** (zwischen allen, wachsen mit der Oberfläche), **Dipol-Dipol-Kräfte** und **Wasserstoffbrücken** (H an N, O oder F).",
+      "id": "t1",
+      "more": "Zwischen Molekülen wirken drei Arten von Anziehung, in steigender Stärke:\n\n1. **Van-der-Waals-Kräfte** zwischen allen Molekülen, durch kurzzeitige Ladungsverschiebungen. Sie wachsen mit der Größe und der Berührungsfläche der Moleküle.\n2. **Dipol-Dipol-Kräfte** zwischen Molekülen mit permanentem Dipol.\n3. **Wasserstoffbrücken**, wenn ein H-Atom an N, O oder F gebunden ist und ein freies Elektronenpaar eines Nachbarmoleküls bereitsteht."
+    },
+    {
+      "type": "anim",
+      "label": "Kettenlänge",
+      "md": "**Van-der-Waals-Kräfte wachsen mit der Kettenlänge:** Siedetemperaturen der n-Alkane von Methan bis Octan.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0.5,
+          8.5
+        ],
+        "y": [
+          -180,
+          140
+        ],
+        "grid": true,
+        "xLabel": "C-Atome",
+        "vars": [
+          {
+            "name": "NN",
+            "min": 1,
+            "max": 8,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": -162,
+            "color": "blue"
+          },
+          {
+            "x": 2,
+            "y": -89,
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": -42,
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": -0.5,
+            "color": "blue"
+          },
+          {
+            "x": 5,
+            "y": 36,
+            "color": "blue"
+          },
+          {
+            "x": 6,
+            "y": 69,
+            "color": "blue"
+          },
+          {
+            "x": 7,
+            "y": 98,
+            "color": "blue"
+          },
+          {
+            "x": 8,
+            "y": 126,
+            "color": "blue"
+          },
+          {
+            "x": "NN",
+            "y": -175,
+            "color": "label"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "NN",
+            "color": "gray"
+          }
+        ],
+        "readout": "C-Atome: {NN|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Methan: −162 °C.",
+          "set": {
+            "NN": 1
+          }
+        },
+        {
+          "caption": "Butan: knapp unter 0 °C.",
+          "to": {
+            "NN": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Octan: 126 °C. Jede CH₂-Gruppe mehr vergrößert die Oberfläche.",
+          "to": {
+            "NN": 8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Gleiche Summenformel, andere Kräfte:** Ethanol und Dimethylether, beide $\\mathrm{C_2H_6O}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mathrm{CH_3CH_2OH}: \\text{ OH-Gruppe}",
+            "why": "Wasserstoffbrücken zwischen den Molekülen."
+          },
+          {
+            "tex": "\\mathrm{CH_3OCH_3}: \\text{ kein H an O}",
+            "why": "Nur Dipol-Dipol- und Van-der-Waals-Kräfte."
+          },
+          {
+            "tex": "78\\,°\\mathrm{C} \\;\\text{gegen}\\; -24\\,°\\mathrm{C}",
+            "why": "Die Art der Kräfte entscheidet."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ethanol.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ether.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zwischenmolekulare Kräfte",
+      "path": "02 Wiki/Chemie/01 Grundlagen/Zwischenmolekulare Kräfte.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Zwischenmolekulare Kräfte** sind Anziehungskräfte **zwischen** Molekülen -- im Unterschied zur **chemischen Bindung**, die **innerhalb** eines Moleküls wirkt. Sie bestimmen Schmelz- und Siedetemperatur, Löslichkeit, Viskosität und Oberflächenspannung und sind damit die stoffliche Seite des **Struktur-Eigenschafts-Konzepts**.\n\n> [!warning] Der folgenreichste Fehler des Themas\n> Beim Sieden werden **keine** chemischen Bindungen gebrochen, sondern nur zwischenmolekulare Kräfte überwunden. Wasserdampf besteht aus unversehrten $\\text{H}_2\\text{O}$-Molekülen.\n>\n> Der Größenordnungsvergleich macht das zwingend: Eine Wasserstoffbrücke trägt etwa $20\\,\\text{kJ/mol}$, die $\\text{O}-\\text{H}$-Bindung im Molekül etwa $460\\,\\text{kJ/mol}$. Wäre Sieden ein Bindungsbruch, müsste Wasser bei einigen tausend Grad sieden.\n>\n> Formulierungen wie \"die Bindungen zwischen den Wassermolekülen werden gelöst\" sind unpräzise und kosten in Prüfungen Punkte. Korrekt: \"die Wasserstoffbrücken zwischen den Molekülen werden überwunden\"."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Arten in aufsteigender Stärke",
+          "blocks": [
+            {
+              "md": "| Art | Ursache | Voraussetzung | Größenordnung |\n|---|---|---|---|\n| **Van-der-Waals-Kräfte** (London) | spontane, kurzlebige Ladungsverschiebungen erzeugen temporäre Dipole, die benachbarte Moleküle mitpolarisieren | keine -- wirken **immer** | 0,1 bis 5 kJ/mol |\n| **Dipol-Dipol-Kräfte** | Anziehung permanenter Dipole | polare Bindungen **und** unsymmetrischer Bau | 5 bis 25 kJ/mol |\n| **Wasserstoffbrückenbindungen** | H an O, N oder F wechselwirkt mit einem freien Elektronenpaar | H gebunden an O, N oder F | rund 20 kJ/mol, im Wasser bis 25 |\n\n> [!important] Van-der-Waals-Kräfte wirken auch bei unpolaren Molekülen\n> Das ist der Punkt, der am häufigsten übersehen wird. Ein Alkanmolekül ist unpolar -- trotzdem ist Hexan bei Raumtemperatur flüssig. Wären keine Kräfte vorhanden, müssten alle unpolaren Stoffe Gase sein.\n>\n> Die Ursache sind **momentane** Ladungsverschiebungen: Die Elektronen eines Moleküls sind in einem gegebenen Augenblick nie perfekt gleichmäßig verteilt. Der dabei entstehende kurzlebige Dipol induziert im Nachbarmolekül einen gleichgerichteten Dipol, und beide ziehen sich an. Über die Zeit gemittelt bleibt eine schwache, aber stets vorhandene Anziehung.\n>\n> Sie nehmen zu mit der **Zahl der Elektronen** (Molekülgröße) und mit der **Kontaktfläche** -- deshalb ist die Kettenlänge und die Verzweigung entscheidend."
+            }
+          ]
+        },
+        {
+          "title": "Der Einfluss der Molekülgestalt",
+          "blocks": [
+            {
+              "md": "> [!tip] Verzweigung senkt die Siedetemperatur\n> Bei gleicher Summenformel $\\text{C}_5\\text{H}_{12}$:\n>\n> | Isomer | Gestalt | Siedetemperatur |\n> |---|---|---|\n> | Pentan | gestreckte Kette | 36 °C |\n> | 2-Methylbutan | einfach verzweigt | 28 °C |\n> | 2,2-Dimethylpropan | kugelig | 9 °C |\n>\n> *Literaturwerte.* Alle drei haben **dieselbe** Elektronenzahl, also grundsätzlich dieselbe Polarisierbarkeit. Was sich unterscheidet, ist die **Berührungsfläche**: Gestreckte Moleküle legen sich wie Stäbe aneinander, kugelige berühren sich nur punktuell.\n>\n> Diese Reihe ist ein Musterbeispiel des Struktur-Eigenschafts-Konzepts, weil die Summenformel als Erklärung ausdrücklich ausscheidet. Sie wird in **Isomere ermitteln und Eigenschaften vergleichen** geprüft."
+            }
+          ]
+        },
+        {
+          "title": "Löslichkeit",
+          "blocks": [
+            {
+              "md": "$$\\textit{Similia similibus solvuntur} \\quad\\text{--}\\quad \\text{Ähnliches löst sich in Ähnlichem}$$\n\n> [!important] Weshalb die Regel gilt\n> Damit sich ein Stoff löst, müssen die Anziehungskräfte **zwischen Gelöstem und Lösungsmittel** mindestens so stark sein wie die Kräfte, die dabei aufgegeben werden -- also die zwischen den Gelöst-Teilchen und die zwischen den Lösungsmittelteilchen.\n>\n> Ein unpolarer Stoff kann mit Wasser nur schwache Van-der-Waals-Kräfte bilden. Er müsste dafür aber die starken Wasserstoffbrücken des Wassers auftrennen. Die Bilanz ist ungünstig -- der Stoff löst sich nicht.\n>\n> Umgekehrt ist es ebenso: Ein Salz löst sich nicht in Benzin, weil die schwachen Kräfte des Lösungsmittels die Gitterenergie nicht aufwiegen.\n\n**Der Übergang bei den Alkanolen** zeigt beide Anteile in einem Molekül:\n\n| Alkanol | Wasserlöslichkeit |\n|---|---|\n| Methanol, Ethanol, Propan-1-ol | unbegrenzt mischbar |\n| Butan-1-ol | rund 80 g/l |\n| Pentan-1-ol | rund 22 g/l |\n| Decan-1-ol | praktisch unlöslich |\n\n*Literaturwerte, gerundet.* Die hydrophile **Hydroxygruppe** bleibt immer dieselbe; was wächst, ist der hydrophobe Alkylrest. Ab etwa vier Kohlenstoffatomen überwiegt er. Genau dieses Verhältnis von Kopf und Schwanz trägt später die **Tensidwirkung**, den Aufbau der Zellmembran und die **Proteinfaltung**."
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen beim Vergleich zweier Stoffe",
+          "blocks": [
+            {
+              "md": "1. **Stärkste vorhandene Kraft** bei jedem Stoff bestimmen -- H-Brücken schlagen Dipol-Dipol, diese schlagen Van-der-Waals.\n2. **Bei gleicher Art** die Molekülgröße vergleichen (mehr Elektronen bedeutet stärkere Van-der-Waals-Kräfte).\n3. **Bei gleicher Größe** die Gestalt vergleichen (gestreckt vor verzweigt).\n4. **Zahl der H-Brücken-Stellen** zählen: Ein Molekül mit zwei Hydroxygruppen bindet stärker als eines mit einer.\n5. **Gegenprobe** an einer bekannten Siedetemperatur.\n\n> [!warning] Molare Masse ist nicht das Kriterium, sondern nur ein Stellvertreter\n> Ethanol ($M = 46\\,\\text{g/mol}$, Siedetemperatur 78 °C) und Propan ($M = 44\\,\\text{g/mol}$, $-42$ °C) haben nahezu dieselbe molare Masse. Der Unterschied von 120 Grad entsteht allein aus den Wasserstoffbrücken des Ethanols.\n>\n> Die molare Masse ist also nur dann ein brauchbares Argument, wenn die **Art** der Kräfte gleich ist. Sonst entscheidet immer zuerst die Art, dann die Größe."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Zwischenmolekulare Kräfte sind das Bindeglied zwischen Molekülbau und Stoffeigenschaft und damit der Kern des **Struktur-Eigenschafts-Konzepts**. Sie erklären die Siedereihe der **Alkane**, die Löslichkeit der **Alkanole**, die Wirkung der **Tenside**, die Trennung bei der **fraktionierten Destillation**, die Sekundär- und Tertiärstruktur der **Proteine** und die Bindung von Farbstoffen an Fasern.\n\nGeprüft vor allem in **Siedetemperaturen und Löslichkeit über zwischenmolekulare Kräfte begründen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welcher Stoff hat die höchste Siedetemperatur?",
+      "options": [
+        {
+          "md": "Ethanol",
+          "correct": true
+        },
+        {
+          "md": "Chlorethan",
+          "why": "Nur Dipol-Dipol-Kräfte."
+        },
+        {
+          "md": "Dimethylether"
+        },
+        {
+          "md": "Propan"
+        }
+      ],
+      "explain": "Nur Ethanol bildet Wasserstoffbrücken; die vier Stoffe sind ähnlich schwer.",
+      "label": "Vergleich",
+      "id": "vq1"
     },
     {
       "type": "order",
@@ -102,7 +336,8 @@
       "points": [
         "Van-der-Waals < Dipol-Dipol < Wasserstoffbrücke.",
         "Van-der-Waals wächst mit Kettenlänge und Berührungsfläche.",
-        "Wasserstoffbrücke: H an N, O oder F und ein freies Elektronenpaar."
+        "Wasserstoffbrücke: H an N, O oder F und ein freies Elektronenpaar.",
+        "Van-der-Waals < Dipol-Dipol < Wasserstoffbrücken; Oberfläche zählt."
       ],
       "id": "summary"
     }

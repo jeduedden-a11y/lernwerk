@@ -4,94 +4,515 @@
   "subtitle": "Protonen wandern, und eine logarithmische Skala zählt mit",
   "source": "Kerncurriculum Chemie Hessen (Säure-Base-Konzept nach Brønsted); Lehrbuchstandard der Protolyse",
   "vault": [
-    { "path": "02 Wiki/Chemie/02 E-Phase/Säure-Base-Konzept nach Brønsted.md", "title": "Säure-Base-Konzept nach Brønsted" },
-    { "path": "02 Wiki/Chemie/02 E-Phase/pH-Wert.md", "title": "pH-Wert" },
-    { "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Titration.md", "title": "Titration" }
+    {
+      "path": "02 Wiki/Chemie/02 E-Phase/Säure-Base-Konzept nach Brønsted.md",
+      "title": "Säure-Base-Konzept nach Brønsted"
+    },
+    {
+      "path": "02 Wiki/Chemie/02 E-Phase/pH-Wert.md",
+      "title": "pH-Wert"
+    },
+    {
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Titration.md",
+      "title": "Titration"
+    }
   ],
   "steps": [
     {
-      "id": "film", "type": "anim",
+      "id": "film",
+      "type": "anim",
       "md": "Titration: Zu $10\\,\\mathrm{mL}$ Salzsäure ($c = 0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$) tropft Natronlauge derselben Konzentration. Aufgetragen ist der pH-Wert über dem Laugenvolumen.",
       "widget": "plot",
       "params": {
-        "x": [0, 20], "y": [0, 14], "xLabel": "Lauge in mL", "yLabel": "pH",
-        "vars": [{ "name": "V", "min": 0, "max": 20, "value": 0, "hidden": true }],
-        "functions": [{ "name": "p", "expr": "x < 10 ? -log((1 - 0.1*x)/(10 + x)) : (x > 10 ? 14 + log((0.1*x - 1)/(10 + x)) : 7)", "color": "accent", "samples": 400 }],
-        "hlines": [{ "y": 7, "color": "gray" }],
-        "points": [{ "x": "V", "on": "p", "color": "orange", "guides": true }],
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          14
+        ],
+        "xLabel": "Lauge in mL",
+        "yLabel": "pH",
+        "vars": [
+          {
+            "name": "V",
+            "min": 0,
+            "max": 20,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "p",
+            "expr": "x < 10 ? -log((1 - 0.1*x)/(10 + x)) : (x > 10 ? 14 + log((0.1*x - 1)/(10 + x)) : 7)",
+            "color": "accent",
+            "samples": 400
+          }
+        ],
+        "hlines": [
+          {
+            "y": 7,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "V",
+            "on": "p",
+            "color": "orange",
+            "guides": true
+          }
+        ],
         "readout": "Zugegeben {V|1} mL Lauge: pH **{V < 10 ? -log((1 - 0.1*V)/(10 + V)) : (V > 10 ? 14 + log((0.1*V - 1)/(10 + V)) : 7)|2}**"
       },
       "timeline": [
-        { "caption": "Am Anfang: reine Salzsäure mit $c(\\mathrm{H_3O^+}) = 0{,}1$, also pH 1.", "set": { "V": 0 } },
-        { "caption": "Jedes Hydroxid-Ion der Lauge nimmt einem Oxonium-Ion sein Proton ab: $\\mathrm{H_3O^+ + OH^- \\to 2\\,H_2O}$. Der pH steigt aber nur langsam.", "to": { "V": 5 }, "dur": 2000, "hold": 7000 },
-        { "caption": "Bei 9 mL ist erst eine Zehnerpotenz geschafft. Die Skala ist logarithmisch: Jede Stufe heißt zehnmal weniger Säure.", "to": { "V": 9 }, "dur": 1800, "hold": 8000 },
-        { "caption": "Bei 10 mL ist alle Säure neutralisiert: der Äquivalenzpunkt, pH 7. Hier springt die Kurve, schon ein Tropfen mehr ändert den pH um mehrere Stufen.", "to": { "V": 10 }, "dur": 1500, "hold": 9000 },
-        { "caption": "Danach bestimmt die überschüssige Lauge den pH, und die Kurve flacht wieder ab.", "to": { "V": 20 }, "dur": 2200, "hold": 7000 }
+        {
+          "caption": "Am Anfang: reine Salzsäure mit $c(\\mathrm{H_3O^+}) = 0{,}1$, also pH 1.",
+          "set": {
+            "V": 0
+          }
+        },
+        {
+          "caption": "Jedes Hydroxid-Ion der Lauge nimmt einem Oxonium-Ion sein Proton ab: $\\mathrm{H_3O^+ + OH^- \\to 2\\,H_2O}$. Der pH steigt aber nur langsam.",
+          "to": {
+            "V": 5
+          },
+          "dur": 2000,
+          "hold": 7000
+        },
+        {
+          "caption": "Bei 9 mL ist erst eine Zehnerpotenz geschafft. Die Skala ist logarithmisch: Jede Stufe heißt zehnmal weniger Säure.",
+          "to": {
+            "V": 9
+          },
+          "dur": 1800,
+          "hold": 8000
+        },
+        {
+          "caption": "Bei 10 mL ist alle Säure neutralisiert: der Äquivalenzpunkt, pH 7. Hier springt die Kurve, schon ein Tropfen mehr ändert den pH um mehrere Stufen.",
+          "to": {
+            "V": 10
+          },
+          "dur": 1500,
+          "hold": 9000
+        },
+        {
+          "caption": "Danach bestimmt die überschüssige Lauge den pH, und die Kurve flacht wieder ab.",
+          "to": {
+            "V": 20
+          },
+          "dur": 2200,
+          "hold": 7000
+        }
       ]
     },
     {
-      "id": "intuition", "type": "text", "label": "Intuition",
+      "id": "intuition",
+      "type": "text",
+      "label": "Intuition",
       "md": "Nach Brønsted ist eine **Säure** ein Teilchen, das ein Proton $\\mathrm{H^+}$ abgibt, und eine **Base** eines, das eines aufnimmt. Gibt man Chlorwasserstoff in Wasser, wandert das Proton zum Wasser: $\\mathrm{HCl + H_2O \\to Cl^- + H_3O^+}$. Die Oxonium-Ionen $\\mathrm{H_3O^+}$ machen die Lösung sauer.\n\nWie sauer, sagt der **pH-Wert**: der negative Zehnerlogarithmus der Oxonium-Konzentration. Weil Konzentrationen über viele Zehnerpotenzen reichen, ist die Skala logarithmisch. pH 3 ist zehnmal saurer als pH 4 und hundertmal saurer als pH 5.\n\nWasser selbst ist ein **Ampholyt**: Es kann ein Proton abgeben oder aufnehmen. Ein winziger Teil reagiert immer mit sich selbst. Daraus folgt, dass $\\mathrm{pH} + \\mathrm{pOH} = 14$ ist, bei 25 °C."
     },
     {
-      "id": "definition", "type": "text", "label": "Definition",
+      "id": "definition",
+      "type": "text",
+      "label": "Definition",
       "md": "> [!definition] pH und pOH\n> $\\mathrm{pH} = -\\lg c(\\mathrm{H_3O^+})$, $\\mathrm{pOH} = -\\lg c(\\mathrm{OH^-})$, mit $c$ in $\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$. Bei 25 °C: $\\mathrm{pH} + \\mathrm{pOH} = 14$.\n\n> [!satz] Starke Säuren\n> Sie protolysieren vollständig: $c(\\mathrm{H_3O^+}) = c_0$. Verdünnen auf das Zehnfache hebt den pH um 1.\n\n> [!satz] Schwache Säuren und Puffer\n> Näherung: $\\mathrm{pH} \\approx \\tfrac12(\\mathrm{p}K_S - \\lg c_0)$. Puffer: $\\mathrm{pH} = \\mathrm{p}K_S + \\lg\\dfrac{c(\\mathrm{A^-})}{c(\\mathrm{HA})}$.\n\n> [!definition] Äquivalenzpunkt\n> Zugegebene Base und vorgelegte Säure sind stoffmengengleich: $c_S V_S = c_B V_B$."
     },
     {
-      "id": "titration", "type": "widget", "label": "Ausprobieren",
+      "id": "titration",
+      "type": "widget",
+      "label": "Ausprobieren",
       "md": "Jetzt $25\\,\\mathrm{mL}$ Salzsäure mit $c = 0{,}08\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$, titriert mit Natronlauge ($0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$). Stelle das Laugenvolumen am **Äquivalenzpunkt** ein.",
       "widget": "plot",
       "params": {
-        "x": [0, 30], "y": [0, 14], "xLabel": "Lauge in mL", "yLabel": "pH",
-        "vars": [{ "name": "V", "label": "Lauge", "min": 0, "max": 30, "step": 0.5, "value": 5, "format": "{v} mL", "digits": 1 }],
-        "functions": [{ "name": "p", "expr": "x < 20 ? -log((2 - 0.1*x)/(25 + x)) : (x > 20 ? 14 + log((0.1*x - 2)/(25 + x)) : 7)", "color": "accent", "samples": 400 }],
-        "hlines": [{ "y": 7, "color": "gray" }],
-        "points": [{ "x": "V", "on": "p", "color": "orange", "guides": true }],
+        "x": [
+          0,
+          30
+        ],
+        "y": [
+          0,
+          14
+        ],
+        "xLabel": "Lauge in mL",
+        "yLabel": "pH",
+        "vars": [
+          {
+            "name": "V",
+            "label": "Lauge",
+            "min": 0,
+            "max": 30,
+            "step": 0.5,
+            "value": 5,
+            "format": "{v} mL",
+            "digits": 1
+          }
+        ],
+        "functions": [
+          {
+            "name": "p",
+            "expr": "x < 20 ? -log((2 - 0.1*x)/(25 + x)) : (x > 20 ? 14 + log((0.1*x - 2)/(25 + x)) : 7)",
+            "color": "accent",
+            "samples": 400
+          }
+        ],
+        "hlines": [
+          {
+            "y": 7,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "V",
+            "on": "p",
+            "color": "orange",
+            "guides": true
+          }
+        ],
         "readout": "{V|1} mL Lauge: pH **{V < 20 ? -log((2 - 0.1*V)/(25 + V)) : (V > 20 ? 14 + log((0.1*V - 2)/(25 + V)) : 7)|2}**"
       },
       "goal": {
         "when": "abs(V - 20) < 0.01",
-        "hints": [{ "when": "V < 20", "text": "pH {-log((2 - 0.1*V)/(25 + V))|2}: Es ist noch Säure übrig." }, { "when": "V > 20", "text": "pH {14 + log((0.1*V - 2)/(25 + V))|2}: Hier ist schon Lauge im Überschuss." }],
-        "solve": { "V": 20 }
+        "hints": [
+          {
+            "when": "V < 20",
+            "text": "pH {-log((2 - 0.1*V)/(25 + V))|2}: Es ist noch Säure übrig."
+          },
+          {
+            "when": "V > 20",
+            "text": "pH {14 + log((0.1*V - 2)/(25 + V))|2}: Hier ist schon Lauge im Überschuss."
+          }
+        ],
+        "solve": {
+          "V": 20
+        }
       },
       "explain": "Vorgelegt sind $n = 0{,}025\\,\\mathrm{L} \\cdot 0{,}08\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}} = 2\\,\\mathrm{mmol}$ Säure. Dafür braucht man $\\tfrac{2\\,\\mathrm{mmol}}{0{,}1\\,\\mathrm{mol/L}} = 20\\,\\mathrm{mL}$ Lauge."
     },
     {
-      "id": "verduennen", "type": "numeric", "label": "Rechnen",
+      "id": "notiz",
+      "type": "note",
+      "title": "Säure-Base-Konzept nach Brønsted",
+      "path": "02 Wiki/Chemie/02 E-Phase/Säure-Base-Konzept nach Brønsted.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Nach **Johannes Nicolaus Brønsted** ist eine\n\n- **Säure** ein **Protonendonator** und eine\n- **Base** ein **Protonenakzeptor**.\n\nEine Protolyse ist damit eine Protonenübertragung -- die zweite große Ausprägung des **Donator-Akzeptor-Konzepts**.\n\n> [!important] Säure und Base sind Rollen, keine Stoffklassen\n> Das ist der entscheidende Fortschritt gegenüber der älteren Definition von Arrhenius, nach der eine Säure ein Stoff war, der in Wasser $\\text{H}^+$ abspaltet.\n>\n> Bei Brønsted ist \"Säure\" eine **Rolle in einer bestimmten Reaktion**. Derselbe Stoff kann in einer Reaktion Säure und in einer anderen Base sein. Wasser ist dafür das Musterbeispiel, siehe **Ampholyte**.\n>\n> Prüfungsklassiker: \"Ist $\\text{HCO}_3^-$ eine Säure oder eine Base?\" Die einzig richtige Antwort lautet **beides, je nach Partner**. Wer sich festlegt, hat das Konzept nicht erfasst."
+            }
+          ]
+        },
+        {
+          "title": "Korrespondierende Säure-Base-Paare",
+          "blocks": [
+            {
+              "md": "$$\\underbrace{\\text{HA}}_{\\text{Säure}\\,1} + \\underbrace{\\text{B}}_{\\text{Base}\\,2} \\rightleftharpoons \\underbrace{\\text{A}^-}_{\\text{Base}\\,1} + \\underbrace{\\text{HB}^+}_{\\text{Säure}\\,2}$$\n\nEin korrespondierendes Paar unterscheidet sich um **genau ein Proton**. In jeder Protolysegleichung stecken deshalb immer **zwei** Paare.\n\n*Beispiel:*\n$$\\text{HCl} + \\text{H}_2\\text{O} \\rightleftharpoons \\text{Cl}^- + \\text{H}_3\\text{O}^+$$\n\n| Paar | Säure | korrespondierende Base |\n|---|---|---|\n| 1 | $\\text{HCl}$ | $\\text{Cl}^-$ |\n| 2 | $\\text{H}_3\\text{O}^+$ | $\\text{H}_2\\text{O}$ |\n\n> [!warning] Das Paar bildet sich nicht über den Reaktionspfeil hinweg\n> Ein häufiger Fehler ist, $\\text{HCl}$ und $\\text{H}_3\\text{O}^+$ als Paar zu bezeichnen, weil beide auf verschiedenen Seiten stehen und beide Säuren sind.\n>\n> Das Kriterium ist allein: **Unterscheiden sich die beiden Teilchen um genau ein Proton?** $\\text{HCl}$ und $\\text{Cl}^-$ tun das, $\\text{HCl}$ und $\\text{H}_3\\text{O}^+$ nicht.\n>\n> Praktische Kontrolle: In der korrespondierenden Base fehlt gegenüber der Säure ein Wasserstoffatom, **und** die Ladung ist um eins negativer. Stimmt eines von beidem nicht, ist es kein Paar."
+            }
+          ]
+        },
+        {
+          "title": "Die Umkehrregel",
+          "blocks": [
+            {
+              "md": "> [!important] Starke Säure, schwache korrespondierende Base\n> $$\\text{je stärker die Säure, desto schwächer ihre korrespondierende Base}$$\n>\n> $\\text{HCl}$ gibt sein Proton praktisch vollständig ab. Das Chlorid-Ion nimmt es folglich kaum zurück -- es ist eine extrem schwache Base, weshalb Kochsalzlösung neutral reagiert.\n>\n> Umgekehrt ist Essigsäure eine schwache Säure; ihre korrespondierende Base, das Acetat-Ion, ist eine merkliche Base. Deshalb reagiert eine **Natriumacetat**-Lösung basisch, obwohl es sich um ein Salz handelt.\n>\n> Diese Regel erklärt einen Befund, der sonst überrascht: Der Äquivalenzpunkt einer Titration von Essigsäure mit Natronlauge liegt **nicht** bei pH 7, sondern im Basischen -- weil dort das Acetat vorliegt. Ausgeführt in **Titrationskurve auswerten**.\n>\n> Sie ist im Übrigen genau parallel zur Redoxregel: Ein starkes Reduktionsmittel hat ein schwaches korrespondierendes Oxidationsmittel."
+            }
+          ]
+        },
+        {
+          "title": "Ampholyte",
+          "blocks": [
+            {
+              "md": "Teilchen, die je nach Partner Protonen abgeben **und** aufnehmen können, heißen **Ampholyte**:\n\n$$\\text{H}_2\\text{O} + \\text{NH}_3 \\rightleftharpoons \\text{OH}^- + \\text{NH}_4^+ \\qquad \\text{(Wasser als Säure)}$$\n$$\\text{H}_2\\text{O} + \\text{HCl} \\rightarrow \\text{H}_3\\text{O}^+ + \\text{Cl}^- \\qquad \\text{(Wasser als Base)}$$\n\nWeitere wichtige Ampholyte: $\\text{HCO}_3^-$ (Blutpuffer), $\\text{H}_2\\text{PO}_4^-$ und die **Aminosäuren**, die als **Zwitterionen** vorliegen."
+            }
+          ]
+        },
+        {
+          "title": "Kein freies Proton",
+          "blocks": [
+            {
+              "md": "> [!important] $\\text{H}^+$ existiert in wässriger Lösung nicht frei\n> Ein Proton ist ein nackter Atomkern von etwa $10^{-15}\\,\\text{m}$ Durchmesser -- rund hunderttausendmal kleiner als ein Atom. Seine Ladungsdichte ist so hoch, dass es sich sofort an ein freies Elektronenpaar anlagert.\n>\n> In Wasser entsteht deshalb das **Oxonium-Ion** $\\text{H}_3\\text{O}^+$, nicht ein freies $\\text{H}^+$.\n>\n> Die Schreibweise $\\text{HCl} \\rightarrow \\text{H}^+ + \\text{Cl}^-$ ist damit streng genommen falsch; korrekt ist $\\text{HCl} + \\text{H}_2\\text{O} \\rightarrow \\text{H}_3\\text{O}^+ + \\text{Cl}^-$. In der Oberstufe wird die vollständige Schreibweise erwartet, weil sie den Übertragungscharakter sichtbar macht -- eine Protolyse braucht immer **zwei** Partner."
+            }
+          ]
+        },
+        {
+          "title": "Vergleich der Säure-Base-Konzepte",
+          "blocks": [
+            {
+              "md": "| Konzept | Säure ist | Reichweite |\n|---|---|---|\n| **Arrhenius** | Stoff, der in Wasser $\\text{H}^+$ liefert | nur wässrige Lösungen |\n| **Brønsted** | Protonendonator | auch nichtwässrige Systeme, Gasphase |\n| **Lewis** | Elektronenpaar**akzeptor** | zusätzlich Reaktionen ohne Protonen |\n\nDas Lewis-Konzept ist das allgemeinste und trägt die **Komplexchemie** sowie die Mechanismen der organischen Chemie: Ein Elektrophil ist eine Lewis-Säure, ein Nucleophil eine Lewis-Base. Für die Oberstufe ist Brønsted der Standard."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Das Brønsted-Konzept trägt das Themenfeld E.2 und über den **pH-Wert** die gesamte quantitative Säure-Base-Chemie. In Q3 wird es über **Ks- und pKs-Wert**, **Titration** und **Puffersysteme** quantifiziert, in Q2 auf die **Aminosäuren** angewandt und in Q4 auf die Wirkung von Konservierungsstoffen.\n\nGeprüft in **Protolysegleichung aufstellen und korrespondierende Paare angeben**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "pH-Wert",
+      "path": "02 Wiki/Chemie/02 E-Phase/pH-Wert.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **pH-Wert** ist der negative dekadische Logarithmus der Oxoniumionen-Konzentration, gemessen in mol/l:\n\n$$\\text{pH} = -\\lg \\frac{c(\\text{H}_3\\text{O}^+)}{\\text{mol/l}} \\qquad\\qquad c(\\text{H}_3\\text{O}^+) = 10^{-\\text{pH}}\\,\\frac{\\text{mol}}{\\text{l}}$$\n\n> [!important] Weshalb überhaupt logarithmiert wird\n> Die Oxoniumkonzentration überstreicht in wässrigen Lösungen etwa **vierzehn Zehnerpotenzen** -- von 1 mol/l in konzentrierter Säure bis $10^{-14}$ mol/l in konzentrierter Lauge.\n>\n> Solche Zahlen sind unhandlich und lassen sich nicht sinnvoll auf einer Achse auftragen. Der Logarithmus staucht sie auf die bequeme Skala von 0 bis 14.\n>\n> Der Preis dafür ist, dass **gleiche pH-Differenzen gleiche Faktoren** bedeuten, nicht gleiche Unterschiede. Zwischen pH 3 und pH 5 liegt der Faktor 100, nicht die Differenz 2. Wer das übersieht, unterschätzt die Wirkung von Verdünnungen und die Leistung eines Puffers dramatisch."
+            },
+            {
+              "image": "vault:pH-Skala.svg"
+            }
+          ]
+        },
+        {
+          "title": "Die Skala",
+          "blocks": [
+            {
+              "md": "| pH | Bedeutung | $c(\\text{H}_3\\text{O}^+)$ in mol/l |\n|---|---|---|\n| 0 | stark sauer | $1$ |\n| 3 | sauer | $10^{-3}$ |\n| **7** | **neutral** (bei 25 °C) | $10^{-7}$ |\n| 11 | basisch | $10^{-11}$ |\n| 14 | stark basisch | $10^{-14}$ |\n\n> [!warning] Neutral heißt nicht \"pH 7\", sondern \"gleich viel Oxonium wie Hydroxid\"\n> Der Wert 7 folgt aus dem **Ionenprodukt des Wassers** $K_W = 10^{-14}$ -- und dieses gilt nur bei **25 °C**.\n>\n> Bei 60 °C ist $K_W$ etwa $10^{-13}$, der Neutralpunkt liegt dann bei $\\text{pH} = 6{,}5$. Heißes Wasser mit pH 6,5 ist also **neutral**, nicht sauer.\n>\n> Der Grund ist die Autoprotolyse: Sie ist endotherm, also verschiebt eine Temperaturerhöhung das Gleichgewicht nach **Le Chatelier** auf die Ionenseite.\n>\n> Die tragfähige Definition lautet daher: **neutral** bedeutet $c(\\text{H}_3\\text{O}^+) = c(\\text{OH}^-)$."
+            }
+          ]
+        },
+        {
+          "title": "pOH und der Zusammenhang",
+          "blocks": [
+            {
+              "md": "$$\\text{pOH} = -\\lg\\frac{c(\\text{OH}^-)}{\\text{mol/l}} \\qquad\\qquad \\text{pH} + \\text{pOH} = 14 \\quad (25\\,^\\circ\\text{C})$$\n\nDie Beziehung folgt unmittelbar aus $K_W$: Logarithmiert man $c(\\text{H}_3\\text{O}^+)\\cdot c(\\text{OH}^-) = 10^{-14}$, ergibt sich die Summe 14."
+            }
+          ]
+        },
+        {
+          "title": "Berechnung",
+          "blocks": [
+            {
+              "md": "**Starke Säure** (vollständige Protolyse, etwa Salzsäure):\n$$\\text{pH} = -\\lg c_0(\\text{Säure})$$\n\n**Starke Base** (etwa Natronlauge):\n$$\\text{pOH} = -\\lg c_0(\\text{Base}) \\qquad\\text{dann}\\qquad \\text{pH} = 14 - \\text{pOH}$$\n\n**Schwache Säure:** Hier protolysiert nur ein Bruchteil; die Ausgangskonzentration darf nicht eingesetzt werden. Es gilt $\\text{pH} = \\frac{1}{2}(\\text{p}K_S - \\lg c_0)$, siehe **Ks- und pKs-Wert** und **pH-Wert schwacher Säuren über den Ks-Wert berechnen**.\n\n> [!important] Die Stöchiometrie kommt vor dem Logarithmus\n> Bei mehrprotonigen Säuren wird zuerst die tatsächliche Oxoniumkonzentration bestimmt, dann logarithmiert.\n>\n> Schwefelsäure der Konzentration $0{,}05\\,\\text{mol/l}$ gibt in erster Näherung **zwei** Protonen ab:\n> $$c(\\text{H}_3\\text{O}^+) = 2\\cdot 0{,}05 = 0{,}10\\,\\text{mol/l} \\;\\Longrightarrow\\; \\text{pH} = 1{,}0$$\n>\n> Wer direkt $-\\lg(0{,}05) = 1{,}3$ rechnet, hat den Faktor zwei vergessen. Der Fehler beträgt 0,3 pH-Einheiten -- also den Faktor zwei in der Konzentration.\n>\n> Ebenso bei Calciumhydroxid: Es liefert **zwei** Hydroxid-Ionen je Formeleinheit."
+            }
+          ]
+        },
+        {
+          "title": "Die Verdünnungsregel und ihre Grenze",
+          "blocks": [
+            {
+              "md": "> [!warning] Eine Säure wird durch Verdünnen nie basisch\n> Zehnfaches Verdünnen erhöht den pH einer starken Säure um genau **eine** Einheit, weil die Konzentration auf ein Zehntel sinkt.\n>\n> Diese Regel gilt jedoch nur bis etwa **pH 6**. Danach übernimmt die Autoprotolyse des Wassers: Eine Salzsäure von $10^{-8}\\,\\text{mol/l}$ hat nicht pH 8, sondern etwa pH 6,98 -- sie bleibt schwach sauer.\n>\n> Ein pH über 7 durch Verdünnen einer Säure ist chemisch unmöglich. Ein solches Ergebnis zeigt immer einen Rechenfehler an."
+            }
+          ]
+        },
+        {
+          "title": "pH-Werte im Alltag",
+          "blocks": [
+            {
+              "md": "| Stoff | pH |\n|---|---|\n| Magensäure | 1 bis 2 |\n| Zitronensaft | 2,4 |\n| Cola | 2,5 |\n| Kaffee | 5 |\n| Regenwasser | 5,6 |\n| **Blut** | **7,35 bis 7,45** |\n| Meerwasser | 8,2 |\n| Seifenlösung | 9 bis 10 |\n| Rohrreiniger | 13 bis 14 |\n\n*Literaturwerte, gerundet.*\n\n> [!tip] Der enge Bereich des Blutes ist medizinisch der wichtigste Wert\n> Der Blut-pH darf nur zwischen etwa 7,35 und 7,45 schwanken. Bereits eine Abweichung um 0,4 Einheiten ist lebensbedrohlich -- obwohl das \"nur\" den Faktor 2,5 in der Oxoniumkonzentration bedeutet.\n>\n> Gehalten wird der Wert durch das Hydrogencarbonat-Puffersystem, siehe **Puffersysteme** und **Puffer-pH über Henderson-Hasselbalch berechnen**.\n>\n> Dass Regenwasser mit pH 5,6 **von Natur aus** sauer ist, liegt am gelösten Kohlenstoffdioxid, das Kohlensäure bildet. Von saurem Regen spricht man erst deutlich darunter -- ein Beispiel dafür, dass ein Messwert ohne Referenzwert nicht bewertbar ist."
+            }
+          ]
+        },
+        {
+          "title": "Messung",
+          "blocks": [
+            {
+              "md": "| Verfahren | Genauigkeit | Prinzip |\n|---|---|---|\n| Universalindikator | rund 1 Einheit | Farbumschlag |\n| Indikatorpapier | rund 0,5 Einheiten | Farbumschlag |\n| pH-Elektrode | rund 0,01 Einheiten | Spannungsmessung |\n\nDie **pH-Elektrode** ist im Grunde eine Konzentrationszelle: Je pH-Einheit liefert sie genau $59\\,\\text{mV}$, siehe **Nernst-Gleichung anwenden**. Damit ist die pH-Messung auf eine Spannungsmessung zurückgeführt.\n\nDie Farbe eines **Indikators** beruht ihrerseits auf einer Protolyse, bei der sich das konjugierte System ändert -- siehe **Farbigkeit über Chromophore und Mesomerie begründen**."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung im Vault",
+          "blocks": [
+            {
+              "md": "Der pH-Wert quantifiziert die **Protolysereaktionen** und ist damit das Bindeglied zwischen E.2 und dem gesamten Halbjahr Q3. Er trägt die **Titration**, die **Puffersysteme**, den **isoelektrischen Punkt** der Aminosäuren und die Wirkung von Konservierungsstoffen.\n\nGeprüft in **pH-Wert starker Säuren und Basen berechnen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Titration",
+      "path": "02 Wiki/Chemie/05 Q3 Chemisches Gleichgewicht/Titration.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Die **Säure-Base-Titration** bestimmt die unbekannte **Konzentration** einer Säure/Base durch schrittweise Zugabe einer **Maßlösung** bekannter Konzentration bis zum **Äquivalenzpunkt**."
+            }
+          ]
+        },
+        {
+          "title": "Äquivalenzpunkt (ÄP)",
+          "blocks": [
+            {
+              "md": "Am ÄP ist die zugegebene Stoffmenge äquivalent zur vorgelegten:\n$$n(\\text{Säure}) = n(\\text{Base}) \\;\\Rightarrow\\; c_S V_S = c_B V_B$$"
+            }
+          ]
+        },
+        {
+          "title": "Titrationskurve",
+          "blocks": [
+            {
+              "md": "Auftragung pH gegen Volumen. Der **Wendepunkt** markiert den ÄP.\n- **stark/stark:** ÄP bei pH 7.\n- **schwach/stark:** ÄP im basischen Bereich; im Halbäquivalenzpunkt gilt $\\mathrm{pH} = \\mathrm{p}K_S$ → **Pufferbereich**."
+            }
+          ]
+        },
+        {
+          "title": "Indikator",
+          "blocks": [
+            {
+              "md": "Farbumschlag im Bereich des ÄP (z. B. Phenolphthalein). Rechnerische Basis: **Stoffmengenkonzentration**."
+            }
+          ]
+        },
+        {
+          "title": "Die vier Kennpunkte einer Titrationskurve",
+          "blocks": [
+            {
+              "image": "vault:Titrationskurven Vergleich.svg"
+            },
+            {
+              "md": "| Punkt | Lage | pH folgt aus |\n|---|---|---|\n| **Startpunkt** | vor der ersten Zugabe | reiner Säure, $\\text{p}K_S$ und $c_0$ |\n| **Halbäquivalenzpunkt** | halbes ÄP-Volumen | $\\text{pH} = \\text{p}K_S$ |\n| **Äquivalenzpunkt** | stöchiometrisch äquivalent | dem entstehenden **Salz** |\n| **Endpunkt der Kurve** | großer Überschuss | reiner Maßlösung |\n\n> [!important] Der Äquivalenzpunkt ist stöchiometrisch definiert, nicht über den pH\n> Am ÄP gilt $n(\\text{Säure}) = n(\\text{Base})$ -- unabhängig davon, welcher pH sich dort einstellt.\n>\n> Der pH ergibt sich erst aus dem **Salz**, das dort vorliegt:\n>\n> | Titration | am ÄP liegt vor | pH |\n> |---|---|---|\n> | stark gegen stark | NaCl, reaktionsträge | **7** |\n> | **schwach gegen stark** | Acetat, eine Base | **über 7** |\n> | stark gegen schwach | Ammonium, eine Säure | unter 7 |\n>\n> Die verbreitete Vorstellung \"am Äquivalenzpunkt ist die Lösung neutral\" trifft nur den ersten Fall. Sie ist der häufigste Fehler des Themas.\n>\n> Die Blickrichtung lautet also: **erst das Salz bestimmen, dann den pH beurteilen** -- über die Umkehrregel aus **Ks- und pKs-Wert**."
+            }
+          ]
+        },
+        {
+          "title": "Der Halbäquivalenzpunkt",
+          "blocks": [
+            {
+              "md": "Dort ist genau die Hälfte der Säure umgesetzt, es liegen also gleich viel $\\text{HA}$ und $\\text{A}^-$ vor. Nach **Henderson-Hasselbalch** wird der Logarithmus null:\n\n$$\\text{pH} = \\text{p}K_S$$\n\n> [!tip] Der Pufferbereich einer Titration ist ein Puffer\n> Rund um den Halbäquivalenzpunkt verläuft die Kurve besonders flach -- dort liegt ein Gemisch aus schwacher Säure und korrespondierender Base vor, also genau ein **Puffer**.\n>\n> Damit lässt sich der $\\text{p}K_S$ einer unbekannten Säure **grafisch ablesen**: Man bestimmt das ÄP-Volumen, halbiert es und liest den zugehörigen pH ab. Ein Messverfahren, das ohne jede Rechnung auskommt."
+            }
+          ]
+        },
+        {
+          "title": "Die Indikatorwahl",
+          "blocks": [
+            {
+              "md": "> [!warning] Der Indikator muss zum Äquivalenzpunkt passen\n> Sein Umschlagsbereich muss im **Sprungbereich** der Kurve liegen. Andernfalls entsteht ein **systematischer** Fehler -- er lässt sich durch Wiederholung nicht verkleinern.\n>\n> | Titration | ÄP bei | geeigneter Indikator |\n> |---|---|---|\n> | stark gegen stark | pH 7 | fast jeder |\n> | schwach gegen stark | pH 8 bis 9 | **Phenolphthalein** |\n> | stark gegen schwach | pH 5 bis 6 | **Methylorange** |\n>\n> Phenolphthalein bei einer Ammoniak-Titration würde deutlich zu spät umschlagen und ein zu großes Volumen liefern.\n>\n> Die Farbe des Indikators beruht selbst auf einer Protolyse, bei der sich das konjugierte System ändert -- siehe **Farbigkeit über Chromophore und Mesomerie begründen**. Sein Umschlagsbereich liegt bei seinem eigenen $\\text{p}K_S$."
+            }
+          ]
+        },
+        {
+          "title": "Mehrprotonige Säuren",
+          "blocks": [
+            {
+              "md": "Phosphorsäure zeigt **drei** Äquivalenzpunkte, weil sie ihre Protonen stufenweise abgibt. Die Stufen sind unterscheidbar, solange sich die $\\text{p}K_S$-Werte um mehr als etwa vier Einheiten unterscheiden -- bei Phosphorsäure gilt das für die ersten beiden Stufen."
+            }
+          ]
+        },
+        {
+          "title": "Auswertung",
+          "blocks": [
+            {
+              "md": "$$c(\\text{Säure}) = \\frac{c(\\text{Maßlösung})\\cdot V(\\text{Maßlösung})}{V(\\text{Probe})}$$\n\nBei mehrprotonigen Säuren oder mehrwertigen Basen ist zusätzlich das **stöchiometrische Verhältnis** einzurechnen -- ein Schritt, der beim Rechnen häufig übersprungen wird."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verduennen",
+      "type": "numeric",
+      "label": "Rechnen",
       "md": "Salzsäure mit pH 2 wird auf das hundertfache Volumen verdünnt. Welchen pH-Wert hat sie danach?",
-      "answer": 4, "tolerance": 0.01, "placeholder": "pH",
+      "answer": 4,
+      "tolerance": 0.01,
+      "placeholder": "pH",
       "explain": "$c(\\mathrm{H_3O^+})$ sinkt von $10^{-2}$ auf $10^{-4}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$, der pH steigt um $\\lg 100 = 2$ auf 4."
     },
     {
-      "id": "ampholyt", "type": "choice", "label": "Brønsted",
+      "id": "ampholyt",
+      "type": "choice",
+      "label": "Brønsted",
       "md": "In der Reaktion $\\mathrm{NH_3 + H_2O \\rightleftharpoons NH_4^+ + OH^-}$: Welche Rolle spielt das Wasser?",
       "options": [
-        { "md": "Säure: Es gibt ein Proton an das Ammoniak ab.", "correct": true, "why": "Aus $\\mathrm{H_2O}$ wird $\\mathrm{OH^-}$; es hat ein Proton verloren." },
-        { "md": "Base: Es nimmt ein Proton auf.", "why": "Das tut hier das Ammoniak; aus $\\mathrm{NH_3}$ wird $\\mathrm{NH_4^+}$." },
-        { "md": "Es ist nur Lösungsmittel und reagiert nicht.", "why": "Es reagiert mit: Ohne das Proton des Wassers entstünde kein $\\mathrm{OH^-}$." }
+        {
+          "md": "Säure: Es gibt ein Proton an das Ammoniak ab.",
+          "correct": true,
+          "why": "Aus $\\mathrm{H_2O}$ wird $\\mathrm{OH^-}$; es hat ein Proton verloren."
+        },
+        {
+          "md": "Base: Es nimmt ein Proton auf.",
+          "why": "Das tut hier das Ammoniak; aus $\\mathrm{NH_3}$ wird $\\mathrm{NH_4^+}$."
+        },
+        {
+          "md": "Es ist nur Lösungsmittel und reagiert nicht.",
+          "why": "Es reagiert mit: Ohne das Proton des Wassers entstünde kein $\\mathrm{OH^-}$."
+        }
       ],
       "explain": "Gegenüber Ammoniak ist Wasser eine Säure, gegenüber Chlorwasserstoff eine Base. Ein solcher Ampholyt kann beides."
     },
     {
-      "id": "herleitung", "type": "proof", "mode": "justify", "label": "Herleitung begründen",
+      "id": "herleitung",
+      "type": "proof",
+      "mode": "justify",
+      "label": "Herleitung begründen",
       "md": "Woher kommt $\\mathrm{pH} + \\mathrm{pOH} = 14$? Wähle für jede Zeile die Begründung.",
       "given": "Bei 25 °C gilt $c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-}) = 10^{-14}\\,\\tfrac{\\mathrm{mol}^2}{\\mathrm{L}^2}$.",
       "claim": "$\\mathrm{pH} + \\mathrm{pOH} = 14$.",
       "steps": [
-        { "md": "$c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-}) = 10^{-14}$.", "by": "Ionenprodukt des Wassers" },
-        { "md": "$-\\lg\\left(c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-})\\right) = 14$.", "by": "Logarithmieren" },
-        { "md": "$-\\lg c(\\mathrm{H_3O^+}) - \\lg c(\\mathrm{OH^-}) = 14$.", "by": "Logarithmengesetz", "why": "$\\lg(a \\cdot b) = \\lg a + \\lg b$." },
-        { "md": "$\\mathrm{pH} + \\mathrm{pOH} = 14$.", "by": "Definition von pH und pOH" }
+        {
+          "md": "$c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-}) = 10^{-14}$.",
+          "by": "Ionenprodukt des Wassers"
+        },
+        {
+          "md": "$-\\lg\\left(c(\\mathrm{H_3O^+}) \\cdot c(\\mathrm{OH^-})\\right) = 14$.",
+          "by": "Logarithmieren"
+        },
+        {
+          "md": "$-\\lg c(\\mathrm{H_3O^+}) - \\lg c(\\mathrm{OH^-}) = 14$.",
+          "by": "Logarithmengesetz",
+          "why": "$\\lg(a \\cdot b) = \\lg a + \\lg b$."
+        },
+        {
+          "md": "$\\mathrm{pH} + \\mathrm{pOH} = 14$.",
+          "by": "Definition von pH und pOH"
+        }
       ],
-      "reasons": ["Massenwirkungsgesetz", "Le Chatelier"],
+      "reasons": [
+        "Massenwirkungsgesetz",
+        "Le Chatelier"
+      ],
       "explain": "Das Ionenprodukt ist ein Produkt; der Logarithmus macht daraus eine Summe. Deshalb ergänzen sich pH und pOH immer zu 14."
     },
-    { "id": "neu1", "type": "gen", "gen": "che-ph", "level": 1, "label": "Zehnerpotenzen" },
-    { "id": "neu2", "type": "gen", "gen": "che-ph", "level": 2, "label": "Säuren und Laugen" },
-    { "id": "neu3", "type": "gen", "gen": "che-ph", "level": 3, "label": "Verdünnen und Titrieren" },
-    { "id": "neu4", "type": "gen", "gen": "che-ph", "level": 4, "label": "Schwache Säuren und Puffer" },
     {
-      "id": "summary", "type": "summary", "md": "Das Wichtigste:",
+      "id": "neu1",
+      "type": "gen",
+      "gen": "che-ph",
+      "level": 1,
+      "label": "Zehnerpotenzen"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "che-ph",
+      "level": 2,
+      "label": "Säuren und Laugen"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "che-ph",
+      "level": 3,
+      "label": "Verdünnen und Titrieren"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "che-ph",
+      "level": 4,
+      "label": "Schwache Säuren und Puffer"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
       "points": [
         "Brønsted: Säuren geben Protonen ab, Basen nehmen sie auf; Wasser kann beides.",
         "$\\mathrm{pH} = -\\lg c(\\mathrm{H_3O^+})$; eine Stufe heißt Faktor zehn.",
