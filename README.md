@@ -22,7 +22,7 @@ Lern-App für iPhone und iPad im Stil von Brilliant: Themen werden mit interakti
 - **Jedes Mal neue Aufgaben**: Generatoren erzeugen Aufgaben mit anderen Zahlen, Funktionen oder Fällen, damit man das Verfahren lernt und nicht die Lösung. Unter jeder solchen Aufgabe gibt es »Noch eine Aufgabe dieser Art«. Innerhalb einer Runde kommt keine Aufgabe doppelt, und die App merkt sich die zuletzt gesehenen, damit auch die nächsten Runden Neues bringen. Wissensfragen entstehen aus Pools von Aussagen und Begriffen in wechselnden Formen: Richtig oder falsch, mehrere richtige, die falsche Aussage finden, zuordnen, einordnen.
 - **Training in vier Stufen**: Zu jedem abgeschlossenen Thema Runden mit neuen Aufgaben in **Leicht**, **Mittel**, **Schwer** und **Experte**, jede Stufe mit eigenem Farbverlauf (grün, orange, rot, violett). Ab 80 Prozent beim ersten Versuch gilt eine Stufe als geschafft, die nächste wird empfohlen.
 - **Wiederholung**: Jede Aufgabe einer abgeschlossenen Lektion kommt in Abständen wieder (erst nach Stunden, dann nach Tagen, dann nach Wochen). Was sitzt, kommt seltener. Generierte Aufgaben kommen mit neuen Werten zurück.
-- **Fortschritt**: Punkte, Tagesziel, Serie, Lernzeit, Stand je Fach und Kurs.
+- **Bibliothek** (Vault-Tab, Umschalter »Notizen | Bibliothek«): Die Bücher aus `Bücher/` als Cover-Regal mit Filtern, oben das Buch, das gerade gelesen wird. Die Buchseite zeigt Kapitel zum Abhaken, die Notizen, die aus dem Buch entstanden sind, und die Gedanken beim Lesen. **Abfragen** gibt es je Buch und je Notiz: Fragen stehen in den Standard-Notizen als einklappbare Callouts (`> [!question]- Frage`, darunter Stichpunkte zum Abhaken oder ein Fließtext zum Vergleichen); ohne eigene Fragen macht die App aus dem Abschnitt `## Definition` einer Buchnotiz eine. **Scannen**: Strichcode der Buchrückseite, die App findet Titel, Autor, Seiten und Cover online und speichert das Buch sofort; die Karte kommt über die Brücke als `book.add` in den Vault (`Bücher/`, Cover in `Cover/`).
 - **Notizen**: Zu jeder Lektion eine eigene Notiz. Sie wird über die Tagwerk Bridge in die passende Vault-Notiz geschrieben, unter `## Eigene Notizen`.
 - Oberfläche in Liquid Glass (iOS 26): Tab-Leiste, schwebende Bedienelemente im Lektions-Player, Glas-Knöpfe.
 
@@ -57,6 +57,8 @@ In der App unter *Lernen › Zahnrad › Vault über Tagwerk Bridge*:
 - **Verbindung prüfen**
 
 Lernnotizen versteht das Plugin ab **Tagwerk Bridge 1.3** (Ereignistyp `learn.note`, Funktion `lernen`). Mit einem älteren Plugin warten die Notizen auf dem iPhone und gehen nach dem Update von selbst raus.
+
+Die Bibliothek braucht **Tagwerk Bridge 1.4**: Das Plugin kopiert dann auch `Bücher/` und `Cover/` in die Wiki-Kopie (Plugin-Einstellung »Weitere Ordner«; was unter einem Namen mit `_` am Anfang liegt, etwa `Bücher/_Inbox`, bleibt im Vault) und legt gescannte Bücher an (Ereignistyp `book.add`, Funktion `buecher`). Ohne 1.4 bleiben gescannte Bücher auf dem Gerät und gehen nach dem Update von selbst raus. Lesestand und Gedanken beim Lesen stehen als verwaltete Blöcke unter `## Lesenotizen` in der Buchkarte.
 
 ### 3. Wohin die Notizen gehen
 
