@@ -43,6 +43,101 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Mutarotation",
+      "md": "**Mutarotation:** Frisch gelöste α- und β-Glucose drehen polarisiertes Licht verschieden stark. Über die offene Kette wandeln sie sich ineinander um.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          5
+        ],
+        "y": [
+          0,
+          125
+        ],
+        "grid": true,
+        "xLabel": "Zeit in Stunden",
+        "yLabel": "Drehwinkel in °",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 5,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "52.7 + 59.5*exp(-x/1.1)",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "52.7 - 34*exp(-x/1.1)",
+            "color": "orange"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 52.7,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "a",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "b",
+            "color": "orange"
+          }
+        ],
+        "labels": [
+          {
+            "x": 0.6,
+            "y": 118,
+            "text": "α",
+            "color": "blue"
+          },
+          {
+            "x": 0.6,
+            "y": 10,
+            "text": "β",
+            "color": "orange"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Am Anfang: reine α-Glucose +112°, reine β-Glucose +19°.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Beide Lösungen nähern sich demselben Wert.",
+          "to": {
+            "T": 1.5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gleichgewicht bei +52,7°: rund 36 % α und 64 % β.",
+          "to": {
+            "T": 4.8
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Kohlenhydrate",
@@ -132,6 +227,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Gleichgewicht",
+      "md": "Welcher Anteil der Glucose liegt im Gleichgewicht als β-Form vor (in %)?",
+      "answer": 64,
+      "tolerance": 1,
+      "placeholder": "%",
+      "explain": "Hebelregel: $\\tfrac{112 - 52{,}7}{112 - 19} \\approx 0{,}64$. Die β-Form überwiegt, weil alle großen Gruppen äquatorial stehen.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was für eine Reaktion ist der Ringschluss der Glucose?",
       "options": [
@@ -216,7 +321,8 @@
       "points": [
         "Kohlenhydrate: viele OH-Gruppen, wasserlöslich.",
         "Ringschluss: nucleophile Addition von O5 an C1, Halbacetal, neues Stereozentrum.",
-        "In Wasser vor allem β-Glucose (alles äquatorial)."
+        "In Wasser vor allem β-Glucose (alles äquatorial).",
+        "α und β wandeln sich über die offene Kette um; 64 % β."
       ],
       "id": "summary"
     }

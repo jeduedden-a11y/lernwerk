@@ -15,6 +15,81 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Ladung und pH",
+      "md": "**Glycin bei verschiedenen pH-Werten:** Anteile von Kation (blau), Zwitterion (grün) und Anion (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          14
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "pH",
+        "yLabel": "%",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 14,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "k",
+            "expr": "100/(1 + 10^(x - 2.34) + 10^(2*x - 11.94))",
+            "color": "blue"
+          },
+          {
+            "name": "z",
+            "expr": "100*10^(x - 2.34)/(1 + 10^(x - 2.34) + 10^(2*x - 11.94))",
+            "color": "green"
+          },
+          {
+            "name": "a",
+            "expr": "100*10^(2*x - 11.94)/(1 + 10^(x - 2.34) + 10^(2*x - 11.94))",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "accent"
+          }
+        ],
+        "readout": "pH {X|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Stark sauer: Das Kation überwiegt; in der Elektrophorese wandert es zur Kathode.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Beim isoelektrischen Punkt (pH 5,97) liegt fast nur das Zwitterion vor: keine Wanderung.",
+          "to": {
+            "X": 5.97
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Stark basisch: Das Anion überwiegt und wandert zur Anode.",
+          "to": {
+            "X": 11.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Zwitterion und isoelektrischer Punkt",
@@ -78,6 +153,29 @@
           ]
         }
       ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Form von Glycin überwiegt bei pH 2?",
+      "options": [
+        {
+          "md": "das Kation $\\mathrm{H_3N^+{-}CH_2{-}COOH}$",
+          "correct": true
+        },
+        {
+          "md": "das Zwitterion $\\mathrm{H_3N^+{-}CH_2{-}COO^-}$",
+          "why": "Unterhalb von pKs1 = 2,34 ist die Carboxygruppe überwiegend protoniert."
+        },
+        {
+          "md": "das Anion $\\mathrm{H_2N{-}CH_2{-}COO^-}$"
+        },
+        {
+          "md": "das neutrale Molekül ohne Ladungen"
+        }
+      ],
+      "explain": "pH 2 liegt unter pKs1: Die Carboxygruppe ist protoniert, die Aminogruppe ohnehin.",
+      "label": "pH 2",
+      "id": "vq1"
     },
     {
       "type": "match",
@@ -147,7 +245,8 @@
         "Zwitterion H₃N⁺–CHR–COO⁻.",
         "Unter dem pI positiv, darüber negativ.",
         "pI = (pKS1 + pKS2)/2 für neutrale Aminosäuren.",
-        "Elektrophorese trennt nach Ladung."
+        "Elektrophorese trennt nach Ladung.",
+        "pH < pI: Kation, pH = pI: Zwitterion, pH > pI: Anion."
       ],
       "id": "summary"
     }

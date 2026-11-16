@@ -11,8 +11,84 @@
   "steps": [
     {
       "type": "text",
-      "md": "Ob ein Kunststoff schmilzt, entscheidet seine **Vernetzung**:\n\n- **Thermoplaste:** unvernetzte Ketten, nur durch zwischenmolekulare Kräfte gehalten. Beim Erwärmen werden sie weich und schmelzbar, man kann sie formen und schweißen.\n- **Elastomere:** weitmaschig vernetzt. Sie sind gummielastisch und schmelzen nicht.\n- **Duroplaste:** engmaschig vernetzt. Sie sind hart, schmelzen nicht und zersetzen sich bei starker Hitze.",
-      "id": "t1"
+      "md": "Die **Vernetzung** entscheidet: **Thermoplaste** sind unvernetzt und schmelzen, **Elastomere** weitmaschig vernetzt und gummielastisch, **Duroplaste** engmaschig vernetzt und hart bis zur Zersetzung.",
+      "id": "t1",
+      "more": "Ob ein Kunststoff schmilzt, entscheidet seine **Vernetzung**:\n\n- **Thermoplaste:** unvernetzte Ketten, nur durch zwischenmolekulare Kräfte gehalten. Beim Erwärmen werden sie weich und schmelzbar, man kann sie formen und schweißen.\n- **Elastomere:** weitmaschig vernetzt. Sie sind gummielastisch und schmelzen nicht.\n- **Duroplaste:** engmaschig vernetzt. Sie sind hart, schmelzen nicht und zersetzen sich bei starker Hitze."
+    },
+    {
+      "type": "anim",
+      "label": "Erwärmen",
+      "md": "**Verhalten beim Erwärmen** (schematisch): Härte von Thermoplast (blau), Duroplast (orange) und Elastomer (grün).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          350
+        ],
+        "y": [
+          0,
+          115
+        ],
+        "grid": true,
+        "xLabel": "Temperatur in °C",
+        "yLabel": "Härte",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 350,
+            "value": 25,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "t",
+            "expr": "100/(1 + exp((x - 120)/10))",
+            "color": "blue"
+          },
+          {
+            "name": "d",
+            "expr": "100/(1 + exp((x - 300)/8))",
+            "color": "orange"
+          },
+          {
+            "name": "e",
+            "expr": "25/(1 + exp((x - 250)/10))",
+            "color": "green"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "accent"
+          }
+        ],
+        "readout": "{T|0} °C"
+      },
+      "timeline": [
+        {
+          "caption": "Raumtemperatur: Thermoplast und Duroplast sind hart, das Elastomer gummielastisch.",
+          "set": {
+            "T": 25
+          }
+        },
+        {
+          "caption": "Der Thermoplast wird weich und schmilzt: Die Ketten gleiten aneinander vorbei.",
+          "to": {
+            "T": 160
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Duroplast und Elastomer schmelzen nie; sie zersetzen sich, wenn Atombindungen brechen.",
+          "to": {
+            "T": 320
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
     },
     {
       "id": "notiz",
@@ -62,6 +138,29 @@
           ]
         }
       ]
+    },
+    {
+      "type": "choice",
+      "md": "Ein Kunststoff wird beim Erwärmen weich und lässt sich schweißen. Was ist er?",
+      "options": [
+        {
+          "md": "ein Thermoplast",
+          "correct": true
+        },
+        {
+          "md": "ein Duroplast",
+          "why": "Duroplaste zersetzen sich, bevor sie weich werden."
+        },
+        {
+          "md": "ein Elastomer"
+        },
+        {
+          "md": "ein vernetzter Kautschuk"
+        }
+      ],
+      "explain": "Nur unvernetzte Ketten können aneinander vorbeigleiten.",
+      "label": "Klasse",
+      "id": "vq1"
     },
     {
       "type": "sort",
@@ -134,7 +233,8 @@
       "points": [
         "Thermoplaste: unvernetzt, schmelzbar, recycelbar.",
         "Elastomere: weitmaschig vernetzt, gummielastisch.",
-        "Duroplaste: engmaschig vernetzt, hart, zersetzen sich."
+        "Duroplaste: engmaschig vernetzt, hart, zersetzen sich.",
+        "Unvernetzt: schmelzbar; vernetzt: zersetzt sich."
       ],
       "id": "summary"
     }

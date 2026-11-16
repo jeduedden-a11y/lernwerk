@@ -258,6 +258,93 @@
       Math.round(c * 100), "mg", "$\\mathrm{Ca^{2+} + 2\\,HCO_3^- \\to CaCO_3 + CO_2 + H_2O}$: je Calcium-Ion ein $\\mathrm{CaCO_3}$, also $" + G.tex(c, 1) + "\\,\\mathrm{mmol} \\cdot 100\\,\\tfrac{\\mathrm{mg}}{\\mathrm{mmol}} = " + Math.round(c * 100) + "$ mg.");
   } });
 
+  // ---------------------------------------------------------------- Naturstoffe: Zucker und Peptide
+  const ZK = [["Glucose", "Aldohexose"], ["Fructose", "Ketohexose"], ["Galactose", "Aldohexose"], ["Mannose", "Aldohexose"], ["Ribose", "Aldopentose"],
+    ["Desoxyribose", "Aldopentose"], ["Maltose", "Disaccharid"], ["Saccharose", "Disaccharid"], ["Lactose", "Disaccharid"], ["Cellobiose", "Disaccharid"],
+    ["Stärke", "Polysaccharid"], ["Cellulose", "Polysaccharid"], ["Glykogen", "Polysaccharid"]];
+  const ZK_W = { Aldohexose: "sechs C-Atome, Aldehydgruppe an C1", Ketohexose: "sechs C-Atome, Ketogruppe an C2", Aldopentose: "fünf C-Atome, Aldehydgruppe an C1",
+    Disaccharid: "zwei Monosaccharide, glycosidisch verknüpft", Polysaccharid: "Hunderte bis Tausende Glucose-Einheiten" };
+  const GLY = [["Maltose", "α-1,4", "zwei Glucose-Einheiten"], ["Cellobiose", "β-1,4", "zwei Glucose-Einheiten"], ["Lactose", "β-1,4", "Galactose an Glucose"],
+    ["Saccharose", "α,β-1,2", "Glucose und Fructose, beide anomeren C-Atome sind gebunden"], ["Amylose", "α-1,4", "unverzweigte Glucose-Kette, die sich zur Helix windet"],
+    ["Amylopektin", "α-1,4 und α-1,6", "Glucose-Kette mit Verzweigungen"], ["Cellulose", "β-1,4", "gestreckte Glucose-Ketten, die Fasern bilden"],
+    ["Glykogen", "α-1,4 und α-1,6", "stark verzweigter Glucose-Speicher in Leber und Muskel"]];
+  const GLY_N = ["α-1,4", "β-1,4", "α,β-1,2", "α-1,4 und α-1,6", "β-1,6"];
+  spec("zucker", { custom(level, G) {
+    if (level <= 2) {
+      const [z, k] = G.pick(ZK);
+      return choiceStep("Zu welcher Gruppe gehört **" + z + "**?", k, G.shuffle(Object.keys(ZK_W).filter((x) => x !== k)).slice(0, 3),
+        "**" + z + "**: " + k + ", also " + ZK_W[k] + ".");
+    }
+    const [z, b, why] = G.pick(GLY);
+    return choiceStep("Welche glycosidische Bindung verknüpft die Bausteine in **" + z + "**?", b, G.shuffle(GLY_N.filter((x) => x !== b)).slice(0, 3),
+      "**" + z + "**: " + b + "-glycosidisch; " + why + ". Ob α oder β, entscheidet die Stellung der OH-Gruppe am anomeren C-Atom.");
+  } });
+
+  const AS = [["Gly", 75.07], ["Ala", 89.09], ["Ser", 105.09], ["Cys", 121.16], ["Val", 117.15], ["Leu", 131.17], ["Phe", 165.19], ["Lys", 146.19], ["Glu", 147.13]];
+  spec("peptid", { custom(level, G) {
+    if (level <= 1) {
+      const n = G.int(3, 12);
+      return H.numericStep("Ein Peptid besteht aus " + n + " Aminosäuren in einer Kette. Wie viele Wassermoleküle wurden bei seiner Bildung abgespalten?", n - 1, "",
+        "Jede Peptidbindung entsteht unter Abspaltung eines Wassermoleküls. Eine Kette aus " + n + " Bausteinen hat " + (n - 1) + " Peptidbindungen.");
+    }
+    if (level === 2) {
+      const k = G.pick([3, 4, 5, 20]), n = k === 20 ? G.int(2, 3) : G.int(2, 4);
+      return H.numericStep("Wie viele verschiedene Peptide aus " + n + " Aminosäuren lassen sich bilden, wenn " + k + " verschiedene Aminosäuren zur Verfügung stehen und jede beliebig oft vorkommen darf?", Math.pow(k, n), "",
+        "An jeder der " + n + " Positionen kann jede der " + k + " Aminosäuren stehen, und die Reihenfolge zählt (vom N- zum C-Terminus): $" + k + "^{" + n + "} = " + Math.pow(k, n) + "$.");
+    }
+    if (level === 3) {
+      const pep = G.pickN(AS, G.int(2, 4)), n = pep.length;
+      const sum = pep.reduce((a, x) => a + x[1], 0), M = sum - (n - 1) * 18.02;
+      return H.numericStep("Berechne die molare Masse des Peptids **" + pep.map((x) => x[0]).join("-") + "** in g/mol. Molare Massen: " + pep.map((x) => x[0] + " $" + G.tex(x[1], 2) + "$").join(", ") + ", Wasser $18{,}02$ (alle in g/mol).",
+        Math.round(M * 100) / 100, "g/mol", "Summe der Aminosäuren minus " + (n - 1) + " abgespaltene Wassermoleküle: $" + G.tex(sum, 2) + " - " + (n - 1) + " \\cdot 18{,}02 = " + G.tex(M, 2) + "$ g/mol.");
+    }
+    const kda = G.int(10, 120);
+    return H.numericStep("Ein Protein hat die molare Masse $" + kda + "\\,000\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$. Ein Aminosäurerest wiegt im Mittel $110\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$. Aus wie vielen Aminosäuren besteht es ungefähr?",
+      Math.round((kda * 1000) / 110), "", "$\\tfrac{" + kda + "\\,000}{110} \\approx " + Math.round((kda * 1000) / 110) + "$ Aminosäuren.");
+  } });
+
+  // ---------------------------------------------------------------- Kunststoffe: Polymerisationsgrad und Polyreaktionen
+  const MONO = [["Ethen", "Polyethen (PE)", 28.05], ["Propen", "Polypropen (PP)", 42.08], ["Chlorethen (Vinylchlorid)", "Polyvinylchlorid (PVC)", 62.5],
+    ["Styrol", "Polystyrol (PS)", 104.15], ["Tetrafluorethen", "Polytetrafluorethen (PTFE)", 100.02], ["Methacrylsäuremethylester", "Polymethylmethacrylat (PMMA)", 100.12]];
+  spec("polymergrad", { custom(level, G) {
+    const [m, p, M] = G.pick(MONO);
+    const n = G.int(4, 60) * 500, Mp = Math.round((n * M) / 1000) * 1000;
+    const tm = G.tex(M, 2);
+    if (level <= 1) {
+      return H.numericStep("Ein Molekül " + p + " hat die molare Masse $" + G.tex(Mp, 0) + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$. Wie viele Monomere (" + m + ", $M = " + tm + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$) enthält es?",
+        Math.round(Mp / M), "", "Polymerisationsgrad $n = \\tfrac{M(\\text{Polymer})}{M(\\text{Monomer})} = \\tfrac{" + G.tex(Mp, 0) + "}{" + tm + "} \\approx " + G.tex(Math.round(Mp / M), 0) + "$.");
+    }
+    if (level === 2) {
+      return H.numericStep("Ein Molekül " + p + " hat die molare Masse $" + G.tex(Mp / 1000, 0) + "\\,\\tfrac{\\mathrm{kg}}{\\mathrm{mol}}$. Wie viele Monomere (" + m + ", $M = " + tm + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$) enthält es?",
+        Math.round(Mp / M), "", "Zuerst in g/mol umrechnen: $" + G.tex(Mp, 0) + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$. Dann $n = \\tfrac{" + G.tex(Mp, 0) + "}{" + tm + "} \\approx " + G.tex(Math.round(Mp / M), 0) + "$.");
+    }
+    if (level === 3) {
+      return H.numericStep("Ein Molekül " + p + " besteht aus $" + G.tex(n, 0) + "$ Monomereinheiten (" + m + ", $M = " + tm + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$). Wie groß ist seine molare Masse in kg/mol?",
+        Math.round((n * M) / 100) / 10, "kg/mol", "$M = n \\cdot M(\\text{Monomer}) = " + G.tex(n, 0) + " \\cdot " + tm + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}} \\approx " + G.tex((n * M) / 1000, 1) + "\\,\\tfrac{\\mathrm{kg}}{\\mathrm{mol}}$.");
+    }
+    const [name, mu] = G.pick([["PET", 192.17], ["Nylon-6,6", 226.32]]);
+    const k = G.int(10, 200), Mq = Math.round(k * mu);
+    return H.numericStep("Ein Molekül " + name + " hat die molare Masse $" + G.tex(Mq, 0) + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$; eine Wiederholungseinheit wiegt $" + G.tex(mu, 2) + "\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$. Wie viele Wassermoleküle wurden bei der Bildung ungefähr abgespalten?",
+      2 * k, "", "Die Kette hat $\\tfrac{" + G.tex(Mq, 0) + "}{" + G.tex(mu, 2) + "} \\approx " + k + "$ Wiederholungseinheiten. Jede enthält zwei " + (name === "PET" ? "Ester" : "Amid") + "bindungen, und für jede wird ein Wassermolekül abgespalten: rund $2 \\cdot " + k + " = " + 2 * k + "$.");
+  } });
+
+  const POLY = [["Ethen", "Polymerisation", "Polyethen"], ["Styrol", "Polymerisation", "Polystyrol"], ["Chlorethen", "Polymerisation", "Polyvinylchlorid"],
+    ["Terephthalsäure und Ethandiol", "Polykondensation", "ein Polyester (PET)"], ["Hexandisäure und Hexan-1,6-diamin", "Polykondensation", "ein Polyamid (Nylon-6,6)"],
+    ["Milchsäure", "Polykondensation", "ein Polyester (PLA)"], ["Aminosäuren", "Polykondensation", "ein Protein (Polyamid)"], ["Diisocyanat und Diol", "Polyaddition", "ein Polyurethan"],
+    ["Glucose in der Pflanze", "Polykondensation", "Stärke oder Cellulose"]];
+  const POLY_W = { Polymerisation: "Die C=C-Doppelbindung öffnet sich, die Monomere lagern sich ohne Nebenprodukt aneinander.",
+    Polykondensation: "Jedes Monomer trägt zwei funktionelle Gruppen; sie reagieren unter Abspaltung kleiner Moleküle wie Wasser.",
+    Polyaddition: "Die Monomere verknüpfen sich ohne Nebenprodukt; dabei wandert ein H-Atom." };
+  spec("polyreaktion", { custom(level, G) {
+    const [mono, art, prod] = G.pick(POLY);
+    if (level <= 2) {
+      return choiceStep("Welche Polyreaktion bildet aus **" + mono + "** ein Makromolekül?", art, Object.keys(POLY_W).filter((x) => x !== art),
+        "**" + art + ".** " + POLY_W[art] + " Produkt: " + prod + ".");
+    }
+    const wrong = G.shuffle([...new Set(POLY.map((x) => x[2]))].filter((x) => x !== prod)).slice(0, 3);
+    return choiceStep("Was entsteht aus **" + mono + "**?", prod, wrong, "Aus " + mono + " entsteht " + prod + " durch " + art + ". " + POLY_W[art]);
+  } });
+
   const make = LW.rechenEngine(T);
   LW.generator("che-rechnen", { title: "Chemie rechnen", make });
   LW.chemieTypen = T;
@@ -265,7 +352,8 @@
   LW.generator("che-r-grundlagen", chapter(["stoffmenge", "konzentration", "gasvolumen"]));
   LW.generator("che-r-ephase", chapter(["konzentration", "verduennung", "ph-stark", "ph-base", "oxidationszahl", "galvanisch", "iupac"]));
   LW.generator("che-r-organik", chapter(["iupac", "isomere-anzahl", "oxidationszahl", "mwg", "saeurestaerke", "markovnikov", "mechanismus", "nachweis", "wasserhaerte"]));
-  LW.generator("che-r-naturstoffe", chapter(["chiralitaet", "isoelektrisch", "verseifungszahl", "iodzahl"]));
+  LW.generator("che-r-naturstoffe", chapter(["chiralitaet", "isoelektrisch", "verseifungszahl", "iodzahl", "zucker", "peptid"]));
   LW.generator("che-r-gleichgewicht", chapter(["mwg", "ph-schwach", "puffer", "titration", "nernst", "konzentrationszelle", "geschwindigkeit", "rgt"]));
   LW.generator("che-r-wahl", chapter(["ausbeute", "atomoekonomie", "freie-enthalpie", "kalorimetrie", "faraday"]));
+  LW.generator("che-r-kunststoffe", chapter(["polymergrad", "polyreaktion", "verseifungszahl", "iodzahl"]));
 })();
