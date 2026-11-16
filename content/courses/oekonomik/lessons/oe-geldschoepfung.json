@@ -15,6 +15,92 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Geldschöpfung",
+      "md": "**Einlagen Runde für Runde** nach einer ersten Einlage von 100 €: bei 10 % Reservesatz (blau) und bei 20 % (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          1050
+        ],
+        "grid": true,
+        "xLabel": "Runde",
+        "yLabel": "Einlagen in €",
+        "vars": [
+          {
+            "name": "N",
+            "min": 0,
+            "max": 40,
+            "value": 5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "1000*(1 - 0.9^(x + 1))",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "500*(1 - 0.8^(x + 1))",
+            "color": "orange"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 1000,
+            "color": "blue"
+          },
+          {
+            "y": 500,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "N",
+            "on": "a",
+            "color": "blue"
+          },
+          {
+            "x": "N",
+            "on": "b",
+            "color": "orange"
+          }
+        ],
+        "readout": "nach {N|0} Runden: {1000*(1 - 0.9^(N + 1))|0} € oder {500*(1 - 0.8^(N + 1))|0} €"
+      },
+      "timeline": [
+        {
+          "caption": "Nach fünf Runden: rund 470 € oder 370 €.",
+          "set": {
+            "N": 5
+          }
+        },
+        {
+          "caption": "Die Summen nähern sich ihren Grenzen: 100 / 0,1 = 1000 und 100 / 0,2 = 500.",
+          "to": {
+            "N": 15
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Je kleiner der Reservesatz, desto mehr Giralgeld kann entstehen.",
+          "to": {
+            "N": 40
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Geldschöpfung",
@@ -63,6 +149,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Grenze",
+      "md": "Reservesatz 5 %: Wie hoch können die Einlagen nach einer ersten Einlage von 200 € insgesamt höchstens werden (in €)?",
+      "answer": 4000,
+      "tolerance": 0,
+      "placeholder": "€",
+      "explain": "$\\tfrac{200}{0{,}05} = 4\\,000$.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was passiert, wenn ein Kunde einen Kredit tilgt?",
       "options": [
@@ -100,7 +196,8 @@
       "points": [
         "Giralgeld durch Kreditvergabe.",
         "Tilgung vernichtet Geld.",
-        "M1, M2, M3."
+        "M1, M2, M3.",
+        "Kredite schaffen Einlagen; Grenze D/r."
       ],
       "id": "summary"
     }

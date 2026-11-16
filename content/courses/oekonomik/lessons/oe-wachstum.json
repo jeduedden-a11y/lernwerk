@@ -9,6 +9,103 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Solow",
+      "md": "**Solow-Modell:** Produktion je Arbeiter (blau), davon investiert 30 % (orange), Abschreibung 10 % des Kapitals (grau).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          120
+        ],
+        "y": [
+          0,
+          35
+        ],
+        "grid": true,
+        "xLabel": "Kapital je Arbeiter",
+        "yLabel": "je Arbeiter",
+        "vars": [
+          {
+            "name": "K",
+            "min": 0,
+            "max": 120,
+            "value": 25,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "3*sqrt(x)",
+            "color": "blue"
+          },
+          {
+            "name": "i",
+            "expr": "0.9*sqrt(x)",
+            "color": "orange"
+          },
+          {
+            "name": "d",
+            "expr": "0.1*x",
+            "color": "gray"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "K",
+            "color": "accent"
+          }
+        ],
+        "readout": "Kapital {K|0} · Investition {0.9*sqrt(K)|1} · Abschreibung {0.1*K|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Wenig Kapital: Die Investition übersteigt die Abschreibung, das Kapital wächst.",
+          "set": {
+            "K": 25
+          }
+        },
+        {
+          "caption": "Bei 81 gleichen sie sich aus: der langfristige Gleichgewichtszustand.",
+          "to": {
+            "K": 81
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Darüber verschleißt mehr, als investiert wird. Dauerhaftes Wachstum je Kopf braucht technischen Fortschritt.",
+          "to": {
+            "K": 110
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum wächst ein armes Land im Solow-Modell schneller?",
+      "options": [
+        {
+          "md": "Bei wenig Kapital bringt jede zusätzliche Einheit viel zusätzliche Produktion.",
+          "correct": true
+        },
+        {
+          "md": "Weil es mehr spart als ein reiches Land."
+        },
+        {
+          "md": "Weil Abschreibungen dort keine Rolle spielen."
+        },
+        {
+          "md": "Weil technischer Fortschritt nur dort wirkt."
+        }
+      ],
+      "explain": "Abnehmende Grenzerträge des Kapitals: Die Kurve ist am Anfang steil.",
+      "label": "Aufholen",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Ein Land wächst real um 3,5 % pro Jahr. Nach wie vielen Jahren hat sich sein BIP etwa verdoppelt? (Faustregel)",
@@ -44,12 +141,37 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "wachstum"
+        ]
+      },
+      "label": "Pro Kopf",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "wachstum"
+        ]
+      },
+      "label": "Durchschnitt",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Arbeit, Kapital, Technik.",
         "Abnehmende Kapitalerträge, Konvergenz.",
-        "Regel der 70."
+        "Regel der 70.",
+        "Kapital mit abnehmendem Ertrag; Wachstum je Kopf durch Technik."
       ],
       "id": "summary"
     }

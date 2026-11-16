@@ -15,6 +15,85 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Zyklus",
+      "md": "**Schwankungen um den Trend:** reale Produktion (blau) und Wachstumstrend (grau).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          16
+        ],
+        "y": [
+          90,
+          140
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "yLabel": "reales BIP",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 16,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "y",
+            "expr": "100 + 2*x + 6*sin(pi*x/4)",
+            "color": "blue"
+          },
+          {
+            "name": "t",
+            "expr": "100 + 2*x",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "y",
+            "color": "accent"
+          }
+        ],
+        "readout": "Jahr {T|0} · Abstand zum Trend {6*sin(pi*T/4)|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Aufschwung: Die Produktion steigt über den Trend.",
+          "set": {
+            "T": 1
+          }
+        },
+        {
+          "caption": "Boom: Die Kapazitäten sind ausgelastet, Preise und Löhne ziehen an.",
+          "to": {
+            "T": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Abschwung: Die Produktion fällt zurück auf den Trend.",
+          "to": {
+            "T": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Rezession: Sie liegt darunter, die Arbeitslosigkeit steigt.",
+          "to": {
+            "T": 6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Konjunktur",
@@ -53,6 +132,14 @@
           ]
         }
       ]
+    },
+    {
+      "type": "truefalse",
+      "md": "In einer Rezession liegt die Produktion unter ihrem Trend.",
+      "answer": true,
+      "explain": "Der Tiefpunkt des Zyklus.",
+      "label": "Rezession",
+      "id": "vq1"
     },
     {
       "type": "sort",
@@ -109,7 +196,8 @@
       "points": [
         "Vier Phasen um den Trend.",
         "Früh- und Spätindikatoren.",
-        "Technische Rezession: zwei Quartale Rückgang."
+        "Technische Rezession: zwei Quartale Rückgang.",
+        "Aufschwung, Boom, Abschwung, Rezession um einen steigenden Trend."
       ],
       "id": "summary"
     }

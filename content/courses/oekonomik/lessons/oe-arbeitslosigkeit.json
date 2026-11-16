@@ -9,6 +9,90 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Phillips",
+      "md": "**Phillips-Kurve** (schematisch): kurzfristig weniger Arbeitslosigkeit gegen mehr Inflation (blau). Langfristig liegt die Wirtschaft bei der natürlichen Arbeitslosenquote (grau).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          2,
+          10
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "grid": true,
+        "xLabel": "Arbeitslosenquote in %",
+        "yLabel": "Inflation in %",
+        "vars": [
+          {
+            "name": "U",
+            "min": 2.4,
+            "max": 10,
+            "value": 6,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "p",
+            "expr": "12/x - 1",
+            "color": "blue",
+            "domain": [
+              1.75,
+              10
+            ]
+          }
+        ],
+        "vlines": [
+          {
+            "x": 4,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "U",
+            "on": "p",
+            "color": "accent"
+          }
+        ],
+        "readout": "Arbeitslosigkeit {U|1} % · Inflation {12/U - 1|1} %"
+      },
+      "timeline": [
+        {
+          "caption": "6 % Arbeitslosigkeit, 1 % Inflation.",
+          "set": {
+            "U": 6
+          }
+        },
+        {
+          "caption": "Mehr Nachfrage drückt die Arbeitslosigkeit auf 3 %, die Inflation steigt auf 3 %.",
+          "to": {
+            "U": 3
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Langfristig passen sich die Erwartungen an: Die Arbeitslosigkeit kehrt zur natürlichen Quote zurück, die höhere Inflation bleibt (Friedman).",
+          "to": {
+            "U": 4
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Phillips-Kurve bietet langfristig keinen dauerhaften Tausch von Inflation gegen Arbeitslosigkeit, weil sich die Erwartungen anpassen.",
+      "answer": true,
+      "explain": "Friedman und Phelps: Langfristig ist die Phillips-Kurve senkrecht bei der natürlichen Arbeitslosenquote.",
+      "label": "Langfristig",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Welche Art von Arbeitslosigkeit?",
@@ -54,12 +138,37 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "arbeitslosenquote"
+        ]
+      },
+      "label": "Quote",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "arbeitslosenquote"
+        ]
+      },
+      "label": "Erwerbsquote",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Friktionell, strukturell, konjunkturell, saisonal.",
         "Phillips-Kurve kurzfristig.",
-        "Natürliche Arbeitslosenquote langfristig."
+        "Natürliche Arbeitslosenquote langfristig.",
+        "Arten der Arbeitslosigkeit; Phillips-Kurve nur kurzfristig."
       ],
       "id": "summary"
     }

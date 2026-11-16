@@ -9,6 +9,92 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Zinseszins",
+      "md": "**Zinseszins gegen einfache Zinsen:** 1 000 € bei 5 %. Blau mit Zinseszins, orange ohne.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          7500
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "yLabel": "€",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 40,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "z",
+            "expr": "1000*1.05^x",
+            "color": "blue"
+          },
+          {
+            "name": "e",
+            "expr": "1000*(1 + 0.05*x)",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "z",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "e",
+            "color": "orange"
+          }
+        ],
+        "readout": "nach {T|0} Jahren: {1000*1.05^T|0} € gegen {1000*(1 + 0.05*T)|0} €"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 10 Jahren liegen beide noch nah beieinander: 1 629 gegen 1 500 €.",
+          "set": {
+            "T": 10
+          }
+        },
+        {
+          "caption": "Nach 20 Jahren: 2 653 gegen 2 000 €.",
+          "to": {
+            "T": 20
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 40 Jahren: 7 040 gegen 3 000 €. Zinsen auf Zinsen wachsen exponentiell.",
+          "to": {
+            "T": 40
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Barwert",
+      "md": "Was ist eine Zahlung von 1 000 € in einem Jahr heute wert, bei 4 % Zins? (zwei Nachkommastellen)",
+      "answer": 961.54,
+      "tolerance": 0.02,
+      "placeholder": "€",
+      "explain": "$\\tfrac{1\\,000}{1{,}04} \\approx 961{,}54$ €.",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Wie viel ist eine Zahlung von 1210 € in zwei Jahren heute wert, bei 10 % Zins?",
@@ -37,12 +123,49 @@
       "id": "c1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "zinseszins"
+        ]
+      },
+      "label": "Endkapital",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "zinseszins"
+        ]
+      },
+      "label": "Verdopplung",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "zinseszins"
+        ]
+      },
+      "label": "Nötiger Zins",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Kₙ = K₀(1 + i)ⁿ.",
         "Barwert: abzinsen.",
-        "Realzins ≈ Nominalzins − Inflation."
+        "Realzins ≈ Nominalzins − Inflation.",
+        "K_n = K₀(1 + i)ⁿ; Barwert durch Abzinsen."
       ],
       "id": "summary"
     }

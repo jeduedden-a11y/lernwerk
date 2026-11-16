@@ -5,8 +5,79 @@
   "steps": [
     {
       "type": "text",
-      "md": "**Fiskalpolitik** steuert über Staatsausgaben und Steuern. In der Rezession kann der Staat mehr ausgeben (Multiplikator), im Boom sparen (**antizyklisch**). **Automatische Stabilisatoren** wirken von selbst. Staatsschulden finanzieren Investitionen, belasten aber künftige Haushalte mit Zinsen. Die deutsche **Schuldenbremse** erlaubt dem Bund ein strukturelles Defizit von höchstens 0,35 % des BIP, mit Ausnahmen in Notlagen.",
-      "id": "t1"
+      "md": "Der Staat steuert über **Ausgaben und Steuern**: in der Rezession mehr ausgeben, im Boom sparen (**antizyklisch**). Die **Schuldenbremse** erlaubt dem Bund ein strukturelles Defizit von höchstens 0,35 % des BIP.",
+      "id": "t1",
+      "more": "**Fiskalpolitik** steuert über Staatsausgaben und Steuern. In der Rezession kann der Staat mehr ausgeben (Multiplikator), im Boom sparen (**antizyklisch**). **Automatische Stabilisatoren** wirken von selbst. Staatsschulden finanzieren Investitionen, belasten aber künftige Haushalte mit Zinsen. Die deutsche **Schuldenbremse** erlaubt dem Bund ein strukturelles Defizit von höchstens 0,35 % des BIP, mit Ausnahmen in Notlagen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Stabilisatoren und Schuldenquote.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{Rezession: weniger Steuern, mehr Arbeitslosengeld}",
+            "why": "Automatische Stabilisatoren stützen die Nachfrage ohne neuen Beschluss."
+          },
+          {
+            "tex": "\\text{Schuldenquote} = \\frac{D}{Y}",
+            "why": "Schulden im Verhältnis zur Wirtschaftsleistung."
+          },
+          {
+            "tex": "\\frac{2\\,400 + 60}{4\\,000 \\cdot 1{,}04} \\approx 59{,}1\\,\\%",
+            "why": "Von 60 % aus: Mit 1,5 % Defizit und 4 % nominalem Wachstum sinkt die Quote."
+          },
+          {
+            "tex": "0{,}35\\,\\% \\cdot 4\\,000 = 14",
+            "why": "Höchstes strukturelles Defizit des Bundes nach der Schuldenbremse, in Mrd. €."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Stabilisatoren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Quote.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dynamik.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schuldenbremse.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Defizit",
+      "md": "Ein Staat hat ein Defizit von 90 Mrd. € bei einem BIP von 4 500 Mrd. €. Wie hoch ist die Defizitquote (in %)?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "%",
+      "explain": "$\\tfrac{90}{4\\,500} = 2\\,\\%$; unter der Maastricht-Grenze von 3 %.",
+      "id": "vq1"
     },
     {
       "type": "choice",
@@ -41,12 +112,49 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "schulden"
+        ]
+      },
+      "label": "Schuldenquote",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "schulden"
+        ]
+      },
+      "label": "Dynamik",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "schulden"
+        ]
+      },
+      "label": "Schuldenbremse",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Antizyklische Fiskalpolitik.",
         "Automatische Stabilisatoren.",
-        "Schulden, Crowding-out, Schuldenbremse."
+        "Schulden, Crowding-out, Schuldenbremse.",
+        "Antizyklisch ausgeben; Schuldenquote hängt an Defizit und Wachstum."
       ],
       "id": "summary"
     }

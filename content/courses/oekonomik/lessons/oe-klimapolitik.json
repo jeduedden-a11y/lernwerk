@@ -5,8 +5,93 @@
   "steps": [
     {
       "type": "text",
-      "md": "CO₂-Emissionen sind eine negative externe Wirkung mit globalen, langfristigen Folgen. Ökonomen empfehlen meist einen **CO₂-Preis**: Der **EU-Emissionshandel** deckelt die Emissionen von Energie und Industrie, in Deutschland gibt es zusätzlich einen CO₂-Preis für Wärme und Verkehr. Probleme: **Carbon Leakage** (Abwanderung in Länder ohne Preis) und soziale Härten, die man etwa mit einer Pro-Kopf-Rückzahlung (Klimageld) ausgleichen kann.",
-      "id": "t1"
+      "md": "CO₂ ist ein globaler **externer Effekt**. Ökonomen empfehlen einen **CO₂-Preis** (EU-Emissionshandel, nationaler Preis für Wärme und Verkehr). Probleme: **Carbon Leakage** und soziale Härten, etwa mit einem Klimageld ausgleichbar.",
+      "id": "t1",
+      "more": "CO₂-Emissionen sind eine negative externe Wirkung mit globalen, langfristigen Folgen. Ökonomen empfehlen meist einen **CO₂-Preis**: Der **EU-Emissionshandel** deckelt die Emissionen von Energie und Industrie, in Deutschland gibt es zusätzlich einen CO₂-Preis für Wärme und Verkehr. Probleme: **Carbon Leakage** (Abwanderung in Länder ohne Preis) und soziale Härten, die man etwa mit einer Pro-Kopf-Rückzahlung (Klimageld) ausgleichen kann."
+    },
+    {
+      "type": "anim",
+      "label": "CO₂-Preis",
+      "md": "**Ein CO₂-Preis verteilt die Vermeidung:** Firma A vermeidet billig (Grenzkosten 2q, blau), Firma B teuer (6q, orange). Jede vermeidet, bis ihre Grenzkosten den Preis erreichen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          130
+        ],
+        "grid": true,
+        "xLabel": "vermiedene Tonnen",
+        "yLabel": "€ je Tonne",
+        "vars": [
+          {
+            "name": "P",
+            "min": 0,
+            "max": 120,
+            "value": 30,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "2*x",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "6*x",
+            "color": "orange",
+            "domain": [
+              0,
+              21
+            ]
+          }
+        ],
+        "hlines": [
+          {
+            "y": "P",
+            "color": "accent"
+          }
+        ],
+        "readout": "Preis {P|0} € · A vermeidet {P/2|0} t · B {P/6|0} t · zusammen {2*P/3|0} t"
+      },
+      "timeline": [
+        {
+          "caption": "Bei 30 € vermeidet A 15 t, B 5 t.",
+          "set": {
+            "P": 30
+          }
+        },
+        {
+          "caption": "Bei 60 € sind es 30 t und 10 t: Wer billig vermeiden kann, vermeidet mehr. So wird ein Ziel von 40 t am günstigsten erreicht.",
+          "to": {
+            "P": 60
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Ein Zertifikatehandel mit 40 t Ziel führt zum selben Preis.",
+          "to": {
+            "P": 60
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Vermeidung",
+      "md": "Bei einem CO₂-Preis von 90 € je Tonne: Wie viele Tonnen vermeidet Firma A (Grenzvermeidungskosten 2q)?",
+      "answer": 45,
+      "tolerance": 0,
+      "placeholder": "t",
+      "explain": "$2q = 90$, also $q = 45$.",
+      "id": "vq1"
     },
     {
       "type": "choice",
@@ -46,7 +131,8 @@
       "points": [
         "CO₂ als externer Effekt.",
         "Emissionshandel und CO₂-Preis.",
-        "Carbon Leakage, soziale Ausgleich (Klimageld)."
+        "Carbon Leakage, soziale Ausgleich (Klimageld).",
+        "CO₂-Preis: Vermeidung dort, wo sie am billigsten ist; Leakage und Härten abfedern."
       ],
       "id": "summary"
     }

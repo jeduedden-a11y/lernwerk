@@ -15,6 +15,82 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Taylor-Regel",
+      "md": "**Faustregel für den Leitzins** nach John Taylor (Produktion im Potenzial): Zins (blau) gegen Inflation. Grau: Zins gleich Inflation, also Realzins null.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          8
+        ],
+        "y": [
+          0,
+          12
+        ],
+        "grid": true,
+        "xLabel": "Inflation in %",
+        "yLabel": "Leitzins in %",
+        "vars": [
+          {
+            "name": "P",
+            "min": 0,
+            "max": 8,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "t",
+            "expr": "1.5*x - 0.5",
+            "color": "blue",
+            "domain": [
+              0.34,
+              8
+            ]
+          },
+          {
+            "name": "g",
+            "expr": "x",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": "P",
+            "on": "t",
+            "color": "accent"
+          }
+        ],
+        "readout": "Inflation {P|1} % · Leitzins {1.5*P - 0.5|1} % · Realzins {0.5*P - 0.5|1} %"
+      },
+      "timeline": [
+        {
+          "caption": "Inflation beim Ziel von 2 %: Leitzins etwa 2,5 %.",
+          "set": {
+            "P": 2
+          }
+        },
+        {
+          "caption": "Inflation 5 %: Der Zins steigt stärker als die Inflation, auf 7 %. So steigt auch der Realzins und bremst die Nachfrage.",
+          "to": {
+            "P": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bleibt der Zins darunter, sinkt der Realzins, und die Inflation wird angeheizt.",
+          "to": {
+            "P": 7
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Geldpolitik",
@@ -71,6 +147,29 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Warum erhöht die EZB bei hoher Inflation die Leitzinsen?",
+      "options": [
+        {
+          "md": "Kredite werden teurer, Investitionen und Konsum sinken, der Preisdruck lässt nach.",
+          "correct": true
+        },
+        {
+          "md": "Damit die Banken mehr Gewinn machen.",
+          "why": "Der Zweck ist Preisstabilität, nicht Bankgewinn."
+        },
+        {
+          "md": "Damit der Staat sich billiger verschulden kann."
+        },
+        {
+          "md": "Weil höhere Zinsen die Preise sofort senken."
+        }
+      ],
+      "explain": "Die Wirkung braucht über die Transmission oft ein bis zwei Jahre.",
+      "label": "Leitzins",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Transmission",
       "md": "Ordne die Wirkungskette einer Leitzinserhöhung.",
@@ -104,7 +203,8 @@
       "points": [
         "Unabhängig, Ziel Preisstabilität (2 %).",
         "Leitzinsen, Anleihekäufe.",
-        "Transmission mit Verzögerung."
+        "Transmission mit Verzögerung.",
+        "Preisstabilität 2 %; Leitzins wirkt verzögert über Kredite und Nachfrage."
       ],
       "id": "summary"
     }

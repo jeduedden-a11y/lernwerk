@@ -5,8 +5,111 @@
   "steps": [
     {
       "type": "text",
-      "md": "Inflation misst man mit dem **Verbraucherpreisindex** (Warenkorb). Ursachen: **Nachfragesog** (mehr Nachfrage als Angebot), **Kostendruck** (etwa Energiepreise), **Geldmengenwachstum** über das Wachstum hinaus (Quantitätsgleichung $M \\cdot V = P \\cdot Y$). Kosten: Entwertung von Ersparnissen, Unsicherheit, Umverteilung von Gläubigern zu Schuldnern. **Deflation** ist ebenfalls gefährlich: Man verschiebt Käufe, die Wirtschaft schrumpft.",
-      "id": "t1"
+      "md": "Inflation misst man mit dem **Verbraucherpreisindex**. Ursachen: **Nachfragesog**, **Kostendruck**, zu schnelles **Geldmengenwachstum**. Sie entwertet Ersparnisse und verteilt um; auch **Deflation** ist gefährlich.",
+      "id": "t1",
+      "more": "Inflation misst man mit dem **Verbraucherpreisindex** (Warenkorb). Ursachen: **Nachfragesog** (mehr Nachfrage als Angebot), **Kostendruck** (etwa Energiepreise), **Geldmengenwachstum** über das Wachstum hinaus (Quantitätsgleichung $M \\cdot V = P \\cdot Y$). Kosten: Entwertung von Ersparnissen, Unsicherheit, Umverteilung von Gläubigern zu Schuldnern. **Deflation** ist ebenfalls gefährlich: Man verschiebt Käufe, die Wirtschaft schrumpft."
+    },
+    {
+      "type": "anim",
+      "label": "Kaufkraft",
+      "md": "**Was 100 € später noch wert sind**, bei 2 % (blau), 5 % (orange) und 10 % (grün) Inflation pro Jahr.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          30
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "yLabel": "Kaufkraft in €",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 30,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "100/1.02^x",
+            "color": "blue"
+          },
+          {
+            "name": "b",
+            "expr": "100/1.05^x",
+            "color": "orange"
+          },
+          {
+            "name": "c",
+            "expr": "100/1.1^x",
+            "color": "green"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "a",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "b",
+            "color": "orange"
+          },
+          {
+            "x": "T",
+            "on": "c",
+            "color": "green"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "gray"
+          }
+        ],
+        "readout": "nach {T|0} Jahren: {100/1.02^T|0} € · {100/1.05^T|0} € · {100/1.1^T|0} €"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 10 Jahren: 82, 61 oder 39 € Kaufkraft.",
+          "set": {
+            "T": 10
+          }
+        },
+        {
+          "caption": "Nach 20 Jahren hat die 2-%-Inflation ein Drittel gekostet, die 10-%-Inflation fast alles.",
+          "to": {
+            "T": 20
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Deshalb zielt die EZB auf niedrige, stabile 2 %.",
+          "to": {
+            "T": 30
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Index",
+      "md": "Der Verbraucherpreisindex steigt von 112,0 auf 115,4. Wie hoch ist die Inflationsrate (in %, eine Nachkommastelle)?",
+      "answer": 3.0,
+      "tolerance": 0.05,
+      "placeholder": "%",
+      "explain": "$\\tfrac{115{,}4}{112{,}0} - 1 \\approx 3{,}0\\,\\%$, nicht 3,4: Gezählt wird die relative Änderung.",
+      "id": "vq1"
     },
     {
       "type": "numeric",
@@ -47,12 +150,49 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "vpi"
+        ]
+      },
+      "label": "Inflationsrate",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "vpi"
+        ]
+      },
+      "label": "Kaufkraft",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "vpi"
+        ]
+      },
+      "label": "Reallohn",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Verbraucherpreisindex.",
         "Nachfragesog, Kostendruck, Geldmenge.",
-        "Umverteilung zu Schuldnern; Deflationsgefahr."
+        "Umverteilung zu Schuldnern; Deflationsgefahr.",
+        "VPI misst die Inflation; sie zinst die Kaufkraft herunter."
       ],
       "id": "summary"
     }
