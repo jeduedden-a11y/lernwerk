@@ -28,6 +28,7 @@ struct LessonPlayerView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var sizeClass
     @AppStorage("reduceMotion") private var reduceMotion = false
+    @AppStorage("answerHaptics") private var answerHaptics = true
     let session: LessonSession
 
     @State private var controller = LessonController()
@@ -39,6 +40,7 @@ struct LessonPlayerView: View {
     @State private var success = 0
     @State private var failure = 0
     @State private var tap = 0
+    @State private var completed = 0
     @State private var finished: FinishedSheet?
     @State private var showNote = false
     @State private var runtimeError: String?
@@ -62,8 +64,10 @@ struct LessonPlayerView: View {
     @Namespace private var glass
 
     private var accent: Color { Color(hex: session.accentHex) }
-    /// iPad in full width: the scratch pad is a column beside the lesson. Otherwise a panel above the buttons.
+    /// iPad in full width: the scratch pad is a column beside or below the lesson. Otherwise a panel above the buttons.
     private var padAsColumn: Bool { sizeClass == .regular }
+    /// iPad: a column (notepad, formulas, calculator, note, vault) is open and takes its share of the screen.
+    private var splitOpen: Bool { padAsColumn && column != nil }
     private var padInline: Bool { showPad && !padAsColumn && !keyboardUp }
     private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
     /// The course of the session has a formula book: the formula button and the formula column appear.
@@ -80,6 +84,100 @@ struct LessonPlayerView: View {
     private var formulasOpen: Bool { padAsColumn ? column == .formulas : showFormulaSheet }
 
     var body: some View {
+        // iPad: an open column takes its own share of the screen, and the lesson gets smaller instead of being
+        // covered. Landscape: beside the lesson. Portrait: below it, so the Pencil writes under the task.
+        GeometryReader { outer in
+            let below = outer.size.height > outer.size.width
+            let layout = below ? AnyLayout(VStackLayout(spacing: 0)) : AnyLayout(HStackLayout(spacing: 0))
+            layout {
+                lessonPane
+                if splitOpen {
+                    sideColumn
+                        .frame(width: below ? nil : columnWidth(outer.size), height: below ? columnHeight(outer.size) : nil)
+                        .background(Color(uiColor: .systemBackground).ignoresSafeArea())
+                        .overlay(alignment: below ? .top : .leading) {
+                            Rectangle()
+                                .fill(Color(uiColor: .separator))
+                                .frame(width: below ? nil : 0.5, height: below ? 0.5 : nil)
+                                .ignoresSafeArea()
+                        }
+                        .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: below ? .bottom : .trailing))
+                }
+            }
+            .animation(reduceMotion ? nil : .smooth(duration: 0.35), value: splitOpen)
+        }
+        .onChange(of: splitOpen) { _, _ in
+            // once the lesson has its new size, the current step moves back into view
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 420_000_000)
+                controller.revealCurrent()
+            }
+        }
+        .sheet(isPresented: $showFormulaSheet) {
+            if let course = session.course {
+                FormulaSheet(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex)
+                    .environment(model)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            }
+        }
+        .sheet(item: $vaultNote) { target in
+            // half height first, and the lesson stays usable behind it: the question remains readable
+            VaultNoteSheet(path: target.path)
+                .environment(model)
+                .presentationDetents([.medium, .large])
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+        }
+        .task {
+            if session.mode == .lesson, let course = session.course, let lesson = session.lesson {
+                wikiPath = model.wikiNote(for: course, lesson)
+            }
+        }
+        // a light tap for a correct answer, a clear one for a wrong answer, the success pattern at the end
+        .sensoryFeedback(trigger: success) { _, _ in answerHaptics ? SensoryFeedback.impact(weight: .light, intensity: 0.9) : nil }
+        .sensoryFeedback(trigger: failure) { _, _ in answerHaptics ? SensoryFeedback.error : nil }
+        .sensoryFeedback(.success, trigger: completed)
+        .sensoryFeedback(.selection, trigger: tap)
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in keyboardUp = true }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in keyboardUp = false }
+        .onDisappear { speaker.stop() }
+        .sheet(isPresented: $showNote, onDismiss: { if isFinished { dismiss() } }) {
+            if let course = session.course, let lesson = session.lesson {
+                NoteEditor(course: course, lesson: lesson, meta: session.meta, stepID: session.meta?.stepIDs[safe: stepIndex], existing: model.notes(for: lesson.id).first)
+                    .environment(model)
+            }
+        }
+        .sheet(item: $finished, onDismiss: afterCompletion) { f in
+            CompletionView(session: session, result: f.result, xp: f.xp, onNote: {
+                noteAfterFinish = true
+                finished = nil
+            }, onRound: { level in
+                nextRound = level
+                finished = nil
+            }, onTrain: { topic in
+                trainAfterFinish = topic
+                finished = nil
+            }, onReview: {
+                reviewAfterFinish = true
+                finished = nil
+            })
+            .environment(model)
+            .presentationDetents([.medium, .large])
+        }
+        .alert("Fehler in der Lektion", isPresented: Binding(get: { runtimeError != nil }, set: { if !$0 { runtimeError = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(runtimeError ?? "")
+        }
+        .statusBarHidden(false)
+    }
+
+    private func columnWidth(_ size: CGSize) -> CGFloat { min(520, max(340, (size.width * 0.42).rounded())) }
+    private func columnHeight(_ size: CGSize) -> CGFloat { min(600, max(300, (size.height * 0.45).rounded())) }
+
+    /// The lesson with its floating controls. On narrow screens the notepad, calculator and note sit in panels above
+    /// the buttons, and the page gets that much room at its end, so the question can stay in view.
+    private var lessonPane: some View {
         GeometryReader { geo in
             let padHeight = min(380, max(220, geo.size.height * 0.4))
             let noteHeight = min(320, max(210, geo.size.height * 0.34))
@@ -93,7 +191,7 @@ struct LessonPlayerView: View {
             .overlay(alignment: .bottom) {
                 VStack(spacing: 10) {
                     if padInline {
-                        ScratchPad(drawing: $drawing, systemTools: isPad) { showPad = false }
+                        ScratchPad(drawing: $drawing, pencil: isPad) { showPad = false }
                             .frame(height: padHeight)
                             .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                             .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
@@ -137,65 +235,6 @@ struct LessonPlayerView: View {
                 if new > old { controller.revealCurrent() }
             }
         }
-        .inspector(isPresented: Binding(get: { padAsColumn && column != nil }, set: { if !$0 { column = nil } })) {
-            sideColumn
-                .inspectorColumnWidth(min: 300, ideal: 380, max: 520)
-        }
-        .sheet(isPresented: $showFormulaSheet) {
-            if let course = session.course {
-                FormulaSheet(courses: [course], lessonID: session.lesson?.id, accentHex: session.accentHex)
-                    .environment(model)
-                    .presentationDetents([.medium, .large])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            }
-        }
-        .sheet(item: $vaultNote) { target in
-            // half height first, and the lesson stays usable behind it: the question remains readable
-            VaultNoteSheet(path: target.path)
-                .environment(model)
-                .presentationDetents([.medium, .large])
-                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-        }
-        .task {
-            if session.mode == .lesson, let course = session.course, let lesson = session.lesson {
-                wikiPath = model.wikiNote(for: course, lesson)
-            }
-        }
-        .sensoryFeedback(.success, trigger: success)
-        .sensoryFeedback(.error, trigger: failure)
-        .sensoryFeedback(.selection, trigger: tap)
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in keyboardUp = true }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in keyboardUp = false }
-        .onDisappear { speaker.stop() }
-        .sheet(isPresented: $showNote, onDismiss: { if isFinished { dismiss() } }) {
-            if let course = session.course, let lesson = session.lesson {
-                NoteEditor(course: course, lesson: lesson, meta: session.meta, stepID: session.meta?.stepIDs[safe: stepIndex], existing: model.notes(for: lesson.id).first)
-                    .environment(model)
-            }
-        }
-        .sheet(item: $finished, onDismiss: afterCompletion) { f in
-            CompletionView(session: session, result: f.result, xp: f.xp, onNote: {
-                noteAfterFinish = true
-                finished = nil
-            }, onRound: { level in
-                nextRound = level
-                finished = nil
-            }, onTrain: { topic in
-                trainAfterFinish = topic
-                finished = nil
-            }, onReview: {
-                reviewAfterFinish = true
-                finished = nil
-            })
-            .environment(model)
-            .presentationDetents([.medium, .large])
-        }
-        .alert("Fehler in der Lektion", isPresented: Binding(get: { runtimeError != nil }, set: { if !$0 { runtimeError = nil } })) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(runtimeError ?? "")
-        }
-        .statusBarHidden(false)
     }
 
     /// Height a panel or sheet takes from the bottom of the lesson (iPhone); 0 when none is open.
@@ -361,8 +400,8 @@ struct LessonPlayerView: View {
     /// The lesson has a vault note to write (lessons, not training or exams).
     private var canWriteNote: Bool { session.mode == .lesson && session.course != nil && session.lesson != nil }
 
-    /// iPad: notepad, formulas, the note being written or the vault note beside the lesson, switched with a
-    /// segmented control; the lesson stays fully visible.
+    /// iPad: notepad, formulas, calculator, the note being written or the vault note beside or below the lesson,
+    /// switched with a segmented control; the lesson gets smaller and stays fully visible.
     @ViewBuilder private var sideColumn: some View {
         VStack(spacing: 0) {
             if hasFormulas || calculatorAllowed || canWriteNote || wikiPath != nil {
@@ -397,7 +436,7 @@ struct LessonPlayerView: View {
                     VaultNoteColumn(path: wikiPath) { column = nil }
                 }
             case .pad:
-                ScratchPad(drawing: $drawing, systemTools: isPad) { column = nil }
+                ScratchPad(drawing: $drawing, pencil: isPad) { column = nil }
             }
         }
     }
@@ -544,7 +583,7 @@ struct LessonPlayerView: View {
         case .finished(let result):
             let xp = model.finish(session, result: result)
             isFinished = true
-            success += 1
+            completed += 1
             speaker.stop()
             primary = PrimaryState(label: "Schließen", enabled: true, style: "finish")
             finished = FinishedSheet(result: result, xp: xp)

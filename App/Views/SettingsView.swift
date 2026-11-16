@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 import LernwerkCore
 
@@ -12,6 +13,10 @@ struct SettingsView: View {
     @AppStorage("reminderMinute") private var reminderMinute = 0
     @AppStorage("badgeOn") private var badgeOn = true
     @AppStorage("progressSyncOn") private var progressSyncOn = true
+    @AppStorage(Speaker.voiceKey) private var voiceID = ""
+    @AppStorage("answerHaptics") private var answerHaptics = true
+    @State private var voices: [AVSpeechSynthesisVoice] = []
+    @StateObject private var probe = Speaker()
     @State private var notificationsDenied = false
 
     // Edited locally and written back on "Fertig", so a half-typed token never reaches the keychain.
@@ -76,6 +81,29 @@ struct SettingsView: View {
                 } footer: {
                     Text("Animationen in den Lektionen springen gleich ans Ende, Seiten scrollen ohne Gleiten. Gilt auch, wenn »Bewegung reduzieren« in den Bedienungshilfen von iOS an ist.")
                 }
+
+                Section {
+                    Picker("Stimme", selection: $voiceID) {
+                        Text("Automatisch").tag("")
+                        ForEach(voices, id: \.identifier) { voice in
+                            Text("\(voice.name) · \(Speaker.qualityLabel(voice))").tag(voice.identifier)
+                        }
+                    }
+                    Button(probe.isSpeaking ? "Probe beenden" : "Probe hören") {
+                        if probe.isSpeaking {
+                            probe.stop()
+                        } else {
+                            probe.speak("So klingt das Vorlesen in Lernwerk. Die Ableitung von x hoch zwei ist zwei x. Danach geht es mit dem nächsten Schritt weiter.")
+                        }
+                    }
+                    Toggle("Vibration bei Antworten", isOn: $answerHaptics)
+                } header: {
+                    Text("Vorlesen und Vibration")
+                } footer: {
+                    Text("»Automatisch« nimmt die natürlichste geladene deutsche Stimme. Bessere Stimmen lassen sich in den iOS-Einstellungen unter Bedienungshilfen › Gesprochene Inhalte › Stimmen › Deutsch laden, am besten eine mit dem Zusatz »Premium« oder »Erweitert«; danach stehen sie hier zur Wahl. Bei einer richtigen Antwort tippt das Gerät leicht, bei einer falschen deutlicher.")
+                }
+                .onAppear { voices = Speaker.germanVoices() }
+                .onDisappear { probe.stop() }
 
                 Section {
                     LabeledContent("Weiter lernen", value: "lernwerk://weiter")
