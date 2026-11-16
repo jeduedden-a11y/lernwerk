@@ -485,6 +485,11 @@
 
   /* params: lines [{tex, why}], start (lines shown at the start, default all)
    * scope:  k */
+  // A line that is only \text{…} is a sentence, not a formula: it wraps like text instead of scrolling sideways.
+  const derWords = (tex) => {
+    const m = /^\s*\\text\{((?:[^{}\\$^_~#%&]|\\[%&#$_])*)\}\s*$/.exec(tex || "");
+    return m ? m[1].replace(/\\([%&#$_])/g, "$1").replace(/---/g, "—").replace(/--/g, "–") : null;
+  };
   LW.widget("derivation", {
     mount(host, p, ctx) {
       const lines = p.lines || [];
@@ -504,7 +509,8 @@
         if (!items[i]) {
           const l = lines[i];
           const it = LW.el("div", { class: "lw-der-line" });
-          it.append(LW.el("div", { class: "lw-der-math", html: LW.math(l.tex, true) }));
+          const words = derWords(l.tex);
+          it.append(words != null ? LW.el("div", { class: "lw-der-math lw-der-text", text: words }) : LW.el("div", { class: "lw-der-math", html: LW.math(l.tex, true) }));
           if (l.why) it.append(LW.el("div", { class: "lw-der-why lw-md", html: LW.md(l.why) }));
           items[i] = it;
         }
