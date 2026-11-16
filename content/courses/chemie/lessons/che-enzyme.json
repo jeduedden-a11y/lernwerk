@@ -77,6 +77,131 @@
       "id": "w1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Wie ein Enzym arbeitet.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mathrm{E + S \\rightleftharpoons ES \\to E + P}",
+            "why": "Enzym und Substrat bilden einen Komplex; das Enzym geht unverändert daraus hervor."
+          },
+          {
+            "tex": "\\text{aktives Zentrum: Schlüssel-Schloss, induzierte Passform}",
+            "why": "Nur das passende Substrat bindet; dabei passt sich das Zentrum an."
+          },
+          {
+            "tex": "\\text{Optimum für Temperatur und pH}",
+            "why": "Zu heiß oder zu sauer: Das Protein denaturiert, das aktive Zentrum verliert seine Form."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ablauf.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spezifität.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingungen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Sättigung",
+      "md": "**Sättigung:** Geschwindigkeit in Abhängigkeit von der Substratkonzentration. Ab einem Punkt sind alle aktiven Zentren besetzt.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          12
+        ],
+        "y": [
+          0,
+          110
+        ],
+        "grid": true,
+        "xLabel": "Substratkonzentration",
+        "yLabel": "v in %",
+        "vars": [
+          {
+            "name": "C",
+            "min": 0,
+            "max": 12,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "100*x/(2 + x)",
+            "color": "blue"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 100,
+            "color": "gray"
+          },
+          {
+            "y": 50,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "C",
+            "on": "v",
+            "color": "accent"
+          }
+        ],
+        "readout": "v = {100*C/(2 + C)|0} % der Höchstgeschwindigkeit"
+      },
+      "timeline": [
+        {
+          "caption": "Wenig Substrat: Doppelt so viel Substrat, fast doppelt so schnell.",
+          "set": {
+            "C": 1
+          }
+        },
+        {
+          "caption": "Bei der halben Höchstgeschwindigkeit ist die Hälfte der Zentren besetzt.",
+          "to": {
+            "C": 2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Viel Substrat: Alle Zentren arbeiten; mehr Substrat bringt kaum noch etwas.",
+          "to": {
+            "C": 11
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Katalyse in Natur und Technik",
@@ -150,6 +275,14 @@
       ]
     },
     {
+      "type": "truefalse",
+      "md": "Ein Enzym wird bei der Reaktion verbraucht.",
+      "answer": false,
+      "explain": "Es geht unverändert aus der Reaktion hervor und setzt viele Substratmoleküle nacheinander um.",
+      "label": "Katalysator",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Enzym oder technischer Katalysator?",
@@ -208,7 +341,8 @@
       "points": [
         "Enzyme: Proteine, aktives Zentrum, spezifisch, mild.",
         "Temperatur- und pH-Optimum; darüber Denaturierung.",
-        "Technische Katalysatoren: robust, heiß, weniger spezifisch."
+        "Technische Katalysatoren: robust, heiß, weniger spezifisch.",
+        "Enzyme: spezifisch, Optimum, Sättigung bei viel Substrat."
       ],
       "id": "summary"
     }

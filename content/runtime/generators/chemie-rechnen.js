@@ -390,6 +390,55 @@
       "Neutral heißt $c(\\mathrm{H_3O^+}) = c(\\mathrm{OH^-})$, also $\\mathrm{pH} = \\tfrac{\\mathrm{p}K_W}{2} = " + G.tex(pkw / 2, 2) + "$. Neutral ist nur bei 25 °C dasselbe wie pH 7.");
   } });
 
+  // ---------------------------------------------------------------- Wahlthemen: Komplexe und Doppelbindungsäquivalent
+  const KPX = [
+    ["[\\mathrm{Cu(NH_3)_4}]^{2+}", "Tetraamminkupfer(II)-Ion", 4, 2, 2, 0, ["kupfer", "cuprat"]],
+    ["[\\mathrm{Ag(NH_3)_2}]^{+}", "Diamminsilber(I)-Ion", 2, 1, 1, 0, ["silber", "argentat"]],
+    ["[\\mathrm{Fe(CN)_6}]^{3-}", "Hexacyanidoferrat(III)-Ion", 6, 3, -3, -6, ["ferrat", "eisen"]],
+    ["[\\mathrm{Fe(CN)_6}]^{4-}", "Hexacyanidoferrat(II)-Ion", 6, 2, -4, -6, ["ferrat", "eisen"]],
+    ["[\\mathrm{Fe(H_2O)_6}]^{3+}", "Hexaaquaeisen(III)-Ion", 6, 3, 3, 0, ["eisen", "ferrat"]],
+    ["[\\mathrm{Co(NH_3)_6}]^{3+}", "Hexaammincobalt(III)-Ion", 6, 3, 3, 0, ["cobalt", "cobaltat"]],
+    ["[\\mathrm{CoCl_4}]^{2-}", "Tetrachloridocobaltat(II)-Ion", 4, 2, -2, -4, ["cobaltat", "cobalt"]],
+    ["[\\mathrm{Zn(OH)_4}]^{2-}", "Tetrahydroxidozinkat(II)-Ion", 4, 2, -2, -4, ["zinkat", "zink"]],
+    ["[\\mathrm{Al(OH)_4}]^{-}", "Tetrahydroxidoaluminat(III)-Ion", 4, 3, -1, -4, ["aluminat", "aluminium"]],
+    ["[\\mathrm{Ni(CO)_4}]", "Tetracarbonylnickel(0)", 4, 0, 0, 0, ["nickel", "nickelat"]],
+    ["[\\mathrm{Cu(H_2O)_6}]^{2+}", "Hexaaquakupfer(II)-Ion", 6, 2, 2, 0, ["kupfer", "cuprat"]],
+    ["[\\mathrm{Co(en)_3}]^{3+}", "Tris(ethylendiamin)cobalt(III)-Ion", 6, 3, 3, 0, ["cobalt", "cobaltat"]],
+    ["[\\mathrm{PtCl_4}]^{2-}", "Tetrachloridoplatinat(II)-Ion", 4, 2, -2, -4, ["platinat", "platin"]],
+    ["[\\mathrm{Au(CN)_2}]^{-}", "Dicyanidoaurat(I)-Ion", 2, 1, -1, -2, ["aurat", "gold"]]];
+  const ROM = ["0", "I", "II", "III", "IV"];
+  const PREF = [["Tetra", "Hexa"], ["Hexa", "Tetra"], ["Tris", "Bis"], ["Di", "Tetra"]];
+  spec("komplex", { custom(level, G) {
+    const [f, name, kz, ox, q, lig, stems] = G.pick(KPX);
+    if (level <= 1) {
+      return H.numericStep("Welche Koordinationszahl hat das Zentralion in $" + f + "$?", kz, "",
+        "Gezählt werden die Bindungen zum Zentralion: " + kz + "." + (name.indexOf("ethylendiamin") >= 0 ? " Ethylendiamin ist zweizähnig: drei Liganden, sechs Bindungen." : ""));
+    }
+    if (level === 2) {
+      return H.numericStep("Welche Oxidationszahl hat das Zentralion in $" + f + "$? (als Zahl)", ox, "",
+        "Gesamtladung " + q + ", Liganden zusammen " + lig + " (NH₃, H₂O, CO und en sind neutral, CN⁻, Cl⁻ und OH⁻ tragen −1): $x = " + q + " - (" + lig + ") = " + ox + "$.");
+    }
+    const wrong = [name.replace("(" + ROM[ox] + ")", "(" + ROM[ox === 4 ? 3 : ox + 1] + ")")];
+    const pf = PREF.find((p) => name.startsWith(p[0]));
+    if (pf) wrong.push(pf[1] + name.slice(pf[0].length));
+    wrong.push(name.replace(stems[0], stems[1]));
+    return choiceStep("Wie heißt $" + f + "$?", name, wrong.filter((w) => w !== name),
+      "Zuerst Zahl und Art der Liganden, dann das Zentralion mit seiner Oxidationszahl in römischen Ziffern; negativ geladene Komplexe enden auf »-at« (oft mit lateinischem Stamm: Ferrat, Cuprat, Argentat, Aurat). Richtig: **" + name + "**.");
+  } });
+
+  spec("dbe", { custom(level, G) {
+    const c = G.int(2, 10), d = G.int(0, Math.min(4, c)), o = level === 2 ? G.int(1, 2) : 0, n = level === 3 ? G.int(1, 2) : 0;
+    const x = level >= 4 ? G.int(1, 2) : 0, hal = G.pick(["Cl", "Br"]);
+    const h = 2 * c + 2 + n - x - 2 * d;
+    if (h < 1) return spec_dbe_fallback(G);
+    const sub = (k) => (k > 1 ? "_{" + k + "}" : "");
+    const f = "\\mathrm{C" + sub(c) + "H" + sub(h) + (o ? "O" + sub(o) : "") + (n ? "N" + sub(n) : "") + (x ? hal + sub(x) : "") + "}";
+    return H.numericStep("Berechne das Doppelbindungsäquivalent von $" + f + "$.", d, "",
+      "$\\mathrm{DBE} = \\tfrac{2C + 2 + N - H - X}{2} = \\tfrac{" + (2 * c) + " + 2" + (n ? " + " + n : "") + " - " + h + (x ? " - " + x : "") + "}{2} = " + d + "$." + (o ? " Sauerstoff zählt nicht mit." : "") +
+      (d === 0 ? " Das Molekül hat weder Ringe noch Mehrfachbindungen." : d === 1 ? " Also ein Ring oder eine Doppelbindung." : " Zusammen also " + d + " Ringe oder Doppelbindungen; eine Dreifachbindung zählt doppelt."));
+  } });
+  const spec_dbe_fallback = (G) => H.numericStep("Berechne das Doppelbindungsäquivalent von $\\mathrm{C_6H_6}$.", 4, "", "$\\tfrac{12 + 2 - 6}{2} = 4$: ein Ring und drei Doppelbindungen.");
+
   const make = LW.rechenEngine(T);
   LW.generator("che-rechnen", { title: "Chemie rechnen", make });
   LW.chemieTypen = T;
@@ -399,6 +448,6 @@
   LW.generator("che-r-organik", chapter(["iupac", "isomere-anzahl", "oxidationszahl", "mwg", "saeurestaerke", "markovnikov", "mechanismus", "nachweis", "wasserhaerte"]));
   LW.generator("che-r-naturstoffe", chapter(["chiralitaet", "isoelektrisch", "verseifungszahl", "iodzahl", "zucker", "peptid"]));
   LW.generator("che-r-gleichgewicht", chapter(["mwg", "ph-schwach", "puffer", "titration", "nernst", "konzentrationszelle", "geschwindigkeit", "rgt", "energiediagramm", "ionenprodukt"]));
-  LW.generator("che-r-wahl", chapter(["ausbeute", "atomoekonomie", "freie-enthalpie", "kalorimetrie", "faraday"]));
+  LW.generator("che-r-wahl", chapter(["ausbeute", "atomoekonomie", "freie-enthalpie", "kalorimetrie", "faraday", "komplex", "dbe"]));
   LW.generator("che-r-kunststoffe", chapter(["polymergrad", "polyreaktion", "verseifungszahl", "iodzahl"]));
 })();

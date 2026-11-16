@@ -22,6 +22,199 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Absorption und Komplementärfarbe**, aus der Grafik im Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Absorption und Komplementaerfarbe.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Links der Farbkreis, rechts die Tabelle: absorbierte und gesehene Farbe.",
+          "to": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Im Farbkreis liegen Komplementärfarben einander gegenüber.",
+          "to": {
+            "x": 0.22,
+            "y": 0.45,
+            "z": 1.8,
+            "s": 0.35
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Absorbiert ein Stoff Blau (435 bis 480 nm), erscheint er gelb.",
+          "to": {
+            "x": 0.6,
+            "y": 0.34,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Absorbiert er Grün (500 bis 560 nm), erscheint er purpur.",
+          "to": {
+            "x": 0.6,
+            "y": 0.46,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Konjugation",
+      "md": "**Längere Konjugation, längere Wellenlänge:** Absorptionsmaximum über der Zahl konjugierter Doppelbindungen. Grün markiert: sichtbares Licht.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          12
+        ],
+        "y": [
+          100,
+          600
+        ],
+        "grid": true,
+        "xLabel": "konjugierte Doppelbindungen",
+        "yLabel": "nm",
+        "vars": [
+          {
+            "name": "N",
+            "min": 1,
+            "max": 11,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "hbands": [
+          {
+            "y": 500,
+            "eps": 100,
+            "color": "green"
+          }
+        ],
+        "lines": [
+          {
+            "from": [
+              1,
+              165
+            ],
+            "to": [
+              2,
+              217
+            ],
+            "color": "blue",
+            "dashed": true
+          },
+          {
+            "from": [
+              2,
+              217
+            ],
+            "to": [
+              3,
+              258
+            ],
+            "color": "blue",
+            "dashed": true
+          },
+          {
+            "from": [
+              3,
+              258
+            ],
+            "to": [
+              4,
+              290
+            ],
+            "color": "blue",
+            "dashed": true
+          },
+          {
+            "from": [
+              4,
+              290
+            ],
+            "to": [
+              11,
+              451
+            ],
+            "color": "blue",
+            "dashed": true
+          }
+        ],
+        "points": [
+          {
+            "x": 1,
+            "y": 165,
+            "color": "blue"
+          },
+          {
+            "x": 2,
+            "y": 217,
+            "color": "blue"
+          },
+          {
+            "x": 3,
+            "y": 258,
+            "color": "blue"
+          },
+          {
+            "x": 4,
+            "y": 290,
+            "color": "blue"
+          },
+          {
+            "x": 11,
+            "y": 451,
+            "color": "blue",
+            "label": "β-Carotin"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "N",
+            "color": "accent"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Butadien mit zwei Doppelbindungen absorbiert bei 217 nm im UV: farblos.",
+          "set": {
+            "N": 2
+          }
+        },
+        {
+          "caption": "Mit jeder weiteren Doppelbindung rückt die Absorption weiter nach rechts.",
+          "to": {
+            "N": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "β-Carotin mit elf Doppelbindungen absorbiert Blau um 450 nm und erscheint orange.",
+          "to": {
+            "N": 11
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Farbstoffe",
@@ -98,6 +291,29 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Ein Farbstoff absorbiert Licht von 435 bis 480 nm. Welche Farbe hat er?",
+      "options": [
+        {
+          "md": "gelb",
+          "correct": true
+        },
+        {
+          "md": "blau",
+          "why": "Blau wird absorbiert; wir sehen den Rest, die Komplementärfarbe."
+        },
+        {
+          "md": "violett"
+        },
+        {
+          "md": "grün"
+        }
+      ],
+      "explain": "Gesehen wird die Komplementärfarbe der absorbierten Farbe.",
+      "label": "Komplementär",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Absorbiert ein Stoff diese Farbe, erscheint er …",
@@ -168,7 +384,8 @@
       "points": [
         "Farbig: Absorption im Sichtbaren, wir sehen die Komplementärfarbe.",
         "Chromophor: konjugiertes System; länger heißt langwelliger.",
-        "Auxochrome (Donatoren) und Antiauxochrome (Akzeptoren) vertiefen die Farbe."
+        "Auxochrome (Donatoren) und Antiauxochrome (Akzeptoren) vertiefen die Farbe.",
+        "Absorbiert wird ein Teil des Lichts, gesehen die Komplementärfarbe; Konjugation verschiebt nach rot."
       ],
       "id": "summary"
     }
