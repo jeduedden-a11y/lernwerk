@@ -6,31 +6,52 @@ enum VaultRoute: Hashable {
     case folder(String)
     case note(String, heading: String?)
     case learnNotes
+    case book(String)
 }
 
-/// The Vault tab: the whole wiki of the Obsidian vault, offline and searchable, plus the notes written in lessons.
+/// The two halves of the Vault tab: the notes of the wiki, and the library of books.
+enum VaultSection: String, CaseIterable, Identifiable {
+    case notes = "Notizen"
+    case library = "Bibliothek"
+    var id: String { rawValue }
+}
+
+/// The Vault tab: the whole wiki of the Obsidian vault, offline and searchable, plus the notes written in lessons,
+/// and the library with the books of the vault and the questions in their notes.
 struct VaultView: View {
     @Environment(AppModel.self) private var store
     @State private var showSettings = false
     @State private var path: [VaultRoute] = []
     @State private var query = ""
+    @State private var section: VaultSection = .notes
 
     var body: some View {
         NavigationStack(path: $path) {
             Group {
-                if query.trimmingCharacters(in: .whitespaces).count >= 2 {
+                if section == .library {
+                    LibraryView(query: query)
+                } else if query.trimmingCharacters(in: .whitespaces).count >= 2 {
                     VaultSearchResults(query: query)
                 } else {
                     VaultHome(showSettings: $showSettings)
                 }
             }
-            .navigationTitle("Vault")
-            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Im Vault suchen")
+            .navigationTitle(section == .library ? "Bibliothek" : "Vault")
+            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: section == .library ? "Bücher suchen" : "Im Vault suchen")
+            .safeAreaInset(edge: .top, spacing: 0) {
+                Picker("Bereich", selection: $section) {
+                    ForEach(VaultSection.allCases) { Text($0.rawValue).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+            }
             .navigationDestination(for: VaultRoute.self) { route in
                 switch route {
                 case .folder(let f): VaultFolderView(folder: f)
                 case .note(let p, let h): VaultNoteReader(path: p, heading: h) { path.append($0) }
                 case .learnNotes: LearnNotesView()
+                case .book(let id): BookView(id: id)
                 }
             }
             .toolbar {
@@ -52,6 +73,7 @@ struct VaultView: View {
             if let p = UserDefaults.standard.string(forKey: "LWNote"), path.isEmpty { path = [.note(p, heading: nil)] }
             openPending(store.pendingVaultNote)
             await store.syncWiki()
+            await store.refreshLibrary()
         }
     }
 }
@@ -334,22 +356,39 @@ struct VaultNoteReader: View {
         }
         .safeAreaInset(edge: .bottom) {
             let linked = showLessons ? store.lessons(forWikiPath: path) : []
-            if !linked.isEmpty {
-                Menu {
-                    ForEach(linked, id: \.lesson.id) { item in
+            // questions written into the note (> [!question]-), and for notes that came out of a book its definition
+            let asked = showLessons ? store.library.questions(forNote: path) : []
+            if !linked.isEmpty || !asked.isEmpty {
+                HStack(spacing: 10) {
+                    if !asked.isEmpty {
                         Button {
-                            store.start(item.course, item.lesson)
+                            store.askLibrary(asked, title: title, all: true)
                         } label: {
-                            Label(item.lesson.title, systemImage: store.state.lessons[item.lesson.id]?.isCompleted == true ? "checkmark.circle.fill" : "play.circle")
+                            Label("Abfragen · \(asked.count)", systemImage: "questionmark.bubble.fill")
+                                .font(.headline)
+                                .padding(.horizontal, 8)
                         }
+                        .buttonStyle(.glass)
+                        .controlSize(.large)
                     }
-                } label: {
-                    Label(linked.count == 1 ? "Lektion dazu" : "\(linked.count) Lektionen dazu", systemImage: "graduationcap.fill")
-                        .font(.headline)
-                        .padding(.horizontal, 8)
+                    if !linked.isEmpty {
+                        Menu {
+                            ForEach(linked, id: \.lesson.id) { item in
+                                Button {
+                                    store.start(item.course, item.lesson)
+                                } label: {
+                                    Label(item.lesson.title, systemImage: store.state.lessons[item.lesson.id]?.isCompleted == true ? "checkmark.circle.fill" : "play.circle")
+                                }
+                            }
+                        } label: {
+                            Label(linked.count == 1 ? "Lektion dazu" : "\(linked.count) Lektionen dazu", systemImage: "graduationcap.fill")
+                                .font(.headline)
+                                .padding(.horizontal, 8)
+                        }
+                        .buttonStyle(.glassProminent)
+                        .controlSize(.large)
+                    }
                 }
-                .buttonStyle(.glassProminent)
-                .controlSize(.large)
                 .padding(.bottom, 10)
             }
         }

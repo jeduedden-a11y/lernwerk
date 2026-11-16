@@ -2055,16 +2055,18 @@
     const label = card.querySelector(".lw-step-label");
     // Bewertungseinheiten in Abitur exams, Punkte in university exams
     const unit = (S.exam && S.exam.unit) || "BE";
+    // plain: questions of the library (own notes): points to tick off, without exam units
+    const plain = !!step.plain;
     if (step.part) label.append(el("span", { class: "lw-be", text: "Aufgabe " + step.part }));
-    label.append(el("span", { class: "lw-be", text: max + " " + unit }));
+    if (!plain) label.append(el("span", { class: "lw-be", text: max + " " + unit }));
     if (step.operator) card.append(el("div", { class: "lw-operator lw-md", html: md("**" + step.operator.word + "**: " + step.operator.means) }));
-    const sol = el("div", { class: "lw-reveal lw-rubric-sol" }, [el("div", { class: "lw-rubric-head", text: "Erwartungshorizont" }), mdEl(step.solution || "")]);
+    const sol = el("div", { class: "lw-reveal lw-rubric-sol" }, [el("div", { class: "lw-rubric-head", text: plain ? "Das gehört zur Antwort" : "Erwartungshorizont" }), mdEl(step.solution || "")]);
     const box = el("div", { class: "lw-rubric", style: "display:none" });
     let awarded = 0, opened = false, locked = false;
     const total = el("div", { class: "lw-rubric-total" });
     const rows = crits.map((c) => {
       const pts = c.points || 1;
-      const b = el("button", { class: "lw-crit", type: "button", role: "checkbox", "aria-checked": "false" }, [el("span", { class: "box" }), el("span", { class: "body lw-md", html: md(c.md) }), el("span", { class: "pts", text: pts + " " + unit })]);
+      const b = el("button", { class: "lw-crit", type: "button", role: "checkbox", "aria-checked": "false" }, [el("span", { class: "box" }), el("span", { class: "body lw-md", html: md(c.md) }), plain ? null : el("span", { class: "pts", text: pts + " " + unit })]);
       b.addEventListener("click", () => {
         if (locked) return;
         const on = !b.classList.contains("on");
@@ -2090,7 +2092,7 @@
     box.append(total);
     function tally() {
       if (rows.length) awarded = rows.reduce((s, x) => s + (x.b.classList.contains("on") ? x.pts : 0), 0);
-      total.textContent = awarded + " von " + max + " " + unit;
+      total.textContent = plain ? awarded + " von " + max + " Punkten" : awarded + " von " + max + " " + unit;
     }
     tally();
     card.append(sol, box);
@@ -2099,7 +2101,7 @@
       el: card,
       question: true,
       selfCheck: true,
-      primaryLabel: () => (opened ? "Bewertung übernehmen" : "Erwartungshorizont zeigen"),
+      primaryLabel: () => (opened ? "Bewertung übernehmen" : plain ? "Antwort zeigen" : "Erwartungshorizont zeigen"),
       canCheck: () => true,
       check() {
         if (!opened) { open(); return { pending: true }; }

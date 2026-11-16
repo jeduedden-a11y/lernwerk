@@ -61,6 +61,8 @@ struct LessonPlayerView: View {
     @State private var wikiPath: String?
     @State private var drawing = PKDrawing()
     @State private var keyboardUp = false
+    /// iPad: height of the system tool palette (the Apple Notes one) while it is docked at the bottom of the screen.
+    @State private var paletteInset: CGFloat = 0
     @Namespace private var glass
 
     private var accent: Color { Color(hex: session.accentHex) }
@@ -104,7 +106,10 @@ struct LessonPlayerView: View {
                         .transition(reduceMotion ? AnyTransition.opacity : AnyTransition.move(edge: below ? .bottom : .trailing))
                 }
             }
+            // the palette docked at the bottom takes its share too: lesson and notepad stay above it
+            .padding(.bottom, splitOpen ? paletteInset : 0)
             .animation(reduceMotion ? nil : .smooth(duration: 0.35), value: splitOpen)
+            .animation(reduceMotion ? nil : .smooth(duration: 0.25), value: paletteInset)
         }
         .onChange(of: splitOpen) { _, _ in
             // once the lesson has its new size, the current step moves back into view
@@ -191,7 +196,7 @@ struct LessonPlayerView: View {
             .overlay(alignment: .bottom) {
                 VStack(spacing: 10) {
                     if padInline {
-                        ScratchPad(drawing: $drawing, pencil: isPad) { showPad = false }
+                        ScratchPad(drawing: $drawing, systemTools: isPad, onClose: { showPad = false })
                             .frame(height: padHeight)
                             .background(Color(uiColor: .systemBackground), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                             .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
@@ -436,7 +441,7 @@ struct LessonPlayerView: View {
                     VaultNoteColumn(path: wikiPath) { column = nil }
                 }
             case .pad:
-                ScratchPad(drawing: $drawing, pencil: isPad) { column = nil }
+                ScratchPad(drawing: $drawing, systemTools: isPad, onPaletteInset: { paletteInset = $0 }, onClose: { column = nil })
             }
         }
     }
@@ -534,6 +539,7 @@ struct LessonPlayerView: View {
             options["title"] = "Heute fällig"
             options["items"] = session.reviewItems.map(\.json)
             if session.mistakeRound { options["title"] = "Fehler von früher" }
+            if session.library { options["title"] = session.title }
         case .practice:
             guard let course = session.course, let topic = session.topic else { return options }
             options["mode"] = "practice"

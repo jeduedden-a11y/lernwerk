@@ -70,6 +70,8 @@ struct LessonSession: Identifiable, Equatable {
     var mistakeRound = false
     /// Seeds the generated tasks: every run of a lesson or training round brings new numbers.
     var seed: Int = Int.random(in: 1...999_983)
+    /// Questions from the library (the standard notes of the vault): a review of steps that come complete.
+    var library = false
 }
 
 enum AppTab: String, Hashable {
@@ -102,6 +104,8 @@ final class AppModel {
     var toast: String?
     /// Read-only offline copy of the vault's wiki. Tagwerk Bridge uploads it for Tagwerk; Lernwerk reads the same copy.
     let wiki = WikiStore()
+    /// The books of the vault (Bücher/), scanned books, reading progress and the questions in the notes.
+    let library: LibraryStore
     /// A wiki note the Vault tab should open next, e.g. from a lesson.
     var pendingVaultNote: String?
     private(set) var vault: VaultSettings
@@ -125,6 +129,7 @@ final class AppModel {
         try? fm.createDirectory(at: base, withIntermediateDirectories: true)
         stateURL = base.appendingPathComponent(demo ? "state-demo.json" : "state.json")
         cacheRoot = base.appendingPathComponent("Content", isDirectory: true)
+        library = LibraryStore(directory: demo ? nil : base.appendingPathComponent("Library", isDirectory: true))
         locator = ContentLocator(cacheRoot: demo ? base.appendingPathComponent("NoCache") : cacheRoot,
                                  bundleRoot: Bundle.main.url(forResource: "Content", withExtension: nil))
         let defaults = UserDefaults.standard
@@ -652,6 +657,7 @@ final class AppModel {
     @discardableResult
     func finish(_ session: LessonSession, result: FinishedLesson) -> Int {
         let xp = state.record(result, course: session.course, meta: session.meta)
+        if session.library { library.recordResults(result.results) }
         // the formulas of a finished lesson become cards of their own, asked in changing directions
         if session.mode == .lesson, let course = session.course, let lesson = session.lesson, let book = formulaBook(course) {
             state.addFormulaCards(courseId: course.id, ids: book.formulas(forLesson: lesson.id).map(\.id))
@@ -767,7 +773,8 @@ final class AppModel {
             vaultPhase = .idle
             scheduleSave()
             let version = status.pluginVersion ?? "?"
-            return bridgeReady ? "Verbunden. Tagwerk Bridge \(version) nimmt Lernnotizen an." :
+            let books = status.features.contains(LibraryBridge.bookFeature)
+            return bridgeReady ? "Verbunden. Tagwerk Bridge \(version) nimmt Lernnotizen an\(books ? " und Bücher aus der Bibliothek." : ". Für gescannte Bücher wird Version 1.4 gebraucht, bis dahin warten sie auf dem Gerät.")" :
                 "Verbunden mit Tagwerk Bridge \(version). Für Lernnotizen wird Version 1.3 gebraucht, bis dahin warten Notizen auf dem iPhone."
         } catch {
             vaultPhase = .failed(error.localizedDescription)
