@@ -16,6 +16,154 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "RGT-Regel: 10 K wärmer, 2- bis 4-mal schneller. Mit Faktor $f$ je 10 K gilt $v_2 = v_1 \\cdot f^{\\Delta T / 10\\,\\mathrm{K}}$; die Reaktionsdauer sinkt um denselben Faktor.",
+      "label": "Verfahren",
+      "more": "1. Temperaturdifferenz $\\Delta T$ bestimmen.\n2. Zahl der 10-K-Schritte: $n = \\Delta T / 10\\,\\mathrm{K}$.\n3. Gesamtfaktor $f^n$ mit dem Faktor $f$ aus der Aufgabe (2 bis 4).\n4. Geschwindigkeit mal $f^n$, Reaktionsdauer durch $f^n$.\n5. Aus Messwerten: mittlere Geschwindigkeit $-\\tfrac{\\Delta c}{\\Delta t}$, momentane über die Tangentensteigung.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Bei 20 °C dauert eine Reaktion 80 min; Faktor 2 je 10 K. Wie lange bei 50 °C?",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\Delta T = 30\\,\\mathrm{K} \\Rightarrow n = 3",
+            "why": "Drei Zehnerschritte."
+          },
+          {
+            "tex": "2^3 = 8",
+            "why": "Achtmal so schnell."
+          },
+          {
+            "tex": "t = \\frac{80\\,\\mathrm{min}}{8} = 10\\,\\mathrm{min}",
+            "why": "Die Dauer sinkt um denselben Faktor."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Schritte.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Faktor.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dauer.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Faktor",
+      "md": "**Exponentielles Wachstum:** Gesamtfaktor in Abhängigkeit von der Temperaturerhöhung, für 2 (blau) und 3 (orange) je 10 K.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          30
+        ],
+        "grid": true,
+        "xLabel": "Temperaturerhöhung in K",
+        "yLabel": "Faktor",
+        "vars": [
+          {
+            "name": "D",
+            "min": 0,
+            "max": 40,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "f",
+            "expr": "2^(x/10)",
+            "color": "blue"
+          },
+          {
+            "name": "g",
+            "expr": "3^(x/10)",
+            "color": "orange",
+            "domain": [
+              0,
+              30
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": "D",
+            "on": "f",
+            "color": "blue"
+          },
+          {
+            "x": "D",
+            "on": "g",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "D",
+            "color": "gray"
+          }
+        ],
+        "readout": "+{D|0} K · Faktor {2^(D/10)|0} oder {3^(D/10)|0}"
+      },
+      "timeline": [
+        {
+          "caption": "10 K: zweimal oder dreimal so schnell.",
+          "set": {
+            "D": 10
+          }
+        },
+        {
+          "caption": "20 K: vier- oder neunmal.",
+          "to": {
+            "D": 20
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "30 K: acht- oder 27-mal.",
+          "to": {
+            "D": 30
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Die Dauer wird durch den Faktor **geteilt**. Und er wächst exponentiell: 30 K bringen $2^3 = 8$, nicht $3 \\cdot 2 = 6$.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Reaktionsgeschwindigkeit bestimmen und RGT-Regel anwenden",
@@ -97,6 +245,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Faktor",
+      "md": "Eine Reaktion wird von 25 °C auf 55 °C erwärmt; Faktor 3 je 10 K. Um welchen Faktor steigt die Geschwindigkeit?",
+      "answer": 27,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$3^3 = 27$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -172,6 +330,14 @@
       },
       "label": "Rückwärts rechnen",
       "id": "g3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Faktor hoch Zahl der 10-K-Schritte; Dauer teilen."
+      ]
     }
   ]
 }

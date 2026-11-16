@@ -345,6 +345,51 @@
     return choiceStep("Was entsteht aus **" + mono + "**?", prod, wrong, "Aus " + mono + " entsteht " + prod + " durch " + art + ". " + POLY_W[art]);
   } });
 
+  // ---------------------------------------------------------------- Q3: Energiediagramm und Ionenprodukt
+  spec("energiediagramm", { custom(level, G) {
+    const Ep = G.int(-12, 6) * 10, top = Math.max(0, Ep), Em = top + G.int(5, 18) * 10;
+    const ctx = "Im Energiediagramm liegen die Edukte bei 0 kJ/mol, das Maximum bei " + Em + " kJ/mol und die Produkte bei " + Ep + " kJ/mol.";
+    if (level <= 1) {
+      return H.numericStep(ctx + " Wie groß ist die Reaktionsenthalpie in kJ/mol?", Ep, "kJ/mol",
+        "$\\Delta_r H = E(\\text{Produkte}) - E(\\text{Edukte}) = " + Ep + "$ kJ/mol; " + (Ep < 0 ? "negativ, also exotherm." : Ep > 0 ? "positiv, also endotherm." : "weder exo- noch endotherm."));
+    }
+    if (level === 2) {
+      return H.numericStep(ctx + " Wie groß ist die Aktivierungsenergie der **Rückreaktion** in kJ/mol?", Em - Ep, "kJ/mol",
+        "Vom Produktniveau bis zum Maximum: $" + Em + " - (" + Ep + ") = " + (Em - Ep) + "$ kJ/mol.");
+    }
+    if (level === 3) {
+      const d = G.int(2, (Em - top) / 10 - 1) * 10;
+      return H.numericStep(ctx + " Ein Katalysator senkt das Maximum auf " + (Em - d) + " kJ/mol. Wie groß ist jetzt die Aktivierungsenergie der Rückreaktion in kJ/mol?", Em - d - Ep, "kJ/mol",
+        "Edukt- und Produktniveau bleiben, nur das Maximum sinkt: $" + (Em - d) + " - (" + Ep + ") = " + (Em - d - Ep) + "$ kJ/mol. Hin- und Rückreaktion werden um denselben Betrag (" + d + " kJ/mol) erleichtert.");
+    }
+    return choiceStep("Ein Katalysator wird zugesetzt. Was ändert sich im Energiediagramm?", "Die Aktivierungsenergien von Hin- und Rückreaktion sinken um denselben Betrag; die Reaktionsenthalpie bleibt.",
+      ["Die Reaktionsenthalpie wird kleiner.", "Nur die Aktivierungsenergie der Hinreaktion sinkt.", "Das Produktniveau sinkt, das Gleichgewicht verschiebt sich zu den Produkten."],
+      "Der Katalysator öffnet einen Weg über einen niedrigeren Übergangszustand. Anfang und Ende des Weges bleiben gleich, deshalb bleiben Reaktionsenthalpie und Gleichgewichtslage unverändert.");
+  } });
+
+  const KW = [[0, 14.94], [10, 14.53], [25, 14.0], [40, 13.53], [60, 13.02], [80, 12.6], [100, 12.29]];
+  spec("ionenprodukt", { custom(level, G) {
+    if (level <= 1) {
+      const p = G.int(5, 130) / 10;
+      return H.numericStep("Eine Lösung hat bei 25 °C den pOH-Wert $" + G.tex(p, 1) + "$. Welchen pH-Wert hat sie?", Math.round((14 - p) * 10) / 10, "",
+        "$\\mathrm{pH} + \\mathrm{pOH} = 14$ bei 25 °C, also $\\mathrm{pH} = 14 - " + G.tex(p, 1) + " = " + G.tex(14 - p, 1) + "$.");
+    }
+    if (level === 2) {
+      const b = G.int(1, 13);
+      return H.numericStep("In einer Lösung (25 °C) ist $c(\\mathrm{OH^-}) = 10^{-" + b + "}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$. Welchen pH-Wert hat sie?", 14 - b, "",
+        "$c(\\mathrm{H_3O^+}) = \\tfrac{K_W}{c(\\mathrm{OH^-})} = \\tfrac{10^{-14}}{10^{-" + b + "}} = 10^{-" + (14 - b) + "}$, also pH " + (14 - b) + ".");
+    }
+    if (level === 3) {
+      const b = G.int(2, 12), a = G.pick([2, 3, 4, 5]);
+      const ph = Math.round((14 - b + Math.log10(a)) * 100) / 100;
+      return H.numericStep("In einer Lösung (25 °C) ist $c(\\mathrm{OH^-}) = " + a + " \\cdot 10^{-" + b + "}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$. Welchen pH-Wert hat sie (zwei Nachkommastellen)?", ph, "",
+        "$\\mathrm{pOH} = -\\lg(" + a + " \\cdot 10^{-" + b + "}) = " + G.tex(b - Math.log10(a), 2) + "$, also $\\mathrm{pH} = 14 - \\mathrm{pOH} = " + G.tex(ph, 2) + "$.");
+    }
+    const [t, pkw] = G.pick(KW.filter((x) => x[0] !== 25));
+    return H.numericStep("Bei " + t + " °C ist $\\mathrm{p}K_W = " + G.tex(pkw, 2) + "$. Welchen pH-Wert hat reines, neutrales Wasser bei dieser Temperatur?", Math.round((pkw / 2) * 100) / 100, "",
+      "Neutral heißt $c(\\mathrm{H_3O^+}) = c(\\mathrm{OH^-})$, also $\\mathrm{pH} = \\tfrac{\\mathrm{p}K_W}{2} = " + G.tex(pkw / 2, 2) + "$. Neutral ist nur bei 25 °C dasselbe wie pH 7.");
+  } });
+
   const make = LW.rechenEngine(T);
   LW.generator("che-rechnen", { title: "Chemie rechnen", make });
   LW.chemieTypen = T;
@@ -353,7 +398,7 @@
   LW.generator("che-r-ephase", chapter(["konzentration", "verduennung", "ph-stark", "ph-base", "oxidationszahl", "galvanisch", "iupac"]));
   LW.generator("che-r-organik", chapter(["iupac", "isomere-anzahl", "oxidationszahl", "mwg", "saeurestaerke", "markovnikov", "mechanismus", "nachweis", "wasserhaerte"]));
   LW.generator("che-r-naturstoffe", chapter(["chiralitaet", "isoelektrisch", "verseifungszahl", "iodzahl", "zucker", "peptid"]));
-  LW.generator("che-r-gleichgewicht", chapter(["mwg", "ph-schwach", "puffer", "titration", "nernst", "konzentrationszelle", "geschwindigkeit", "rgt"]));
+  LW.generator("che-r-gleichgewicht", chapter(["mwg", "ph-schwach", "puffer", "titration", "nernst", "konzentrationszelle", "geschwindigkeit", "rgt", "energiediagramm", "ionenprodukt"]));
   LW.generator("che-r-wahl", chapter(["ausbeute", "atomoekonomie", "freie-enthalpie", "kalorimetrie", "faraday"]));
   LW.generator("che-r-kunststoffe", chapter(["polymergrad", "polyreaktion", "verseifungszahl", "iodzahl"]));
 })();

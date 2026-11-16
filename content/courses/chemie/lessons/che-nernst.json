@@ -15,6 +15,72 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Nernst",
+      "md": "**Nernst für eine Zinkelektrode:** $E = -0{,}76\\,\\mathrm{V} + \\tfrac{0{,}059\\,\\mathrm{V}}{2} \\lg c(\\mathrm{Zn^{2+}})$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -4,
+          0
+        ],
+        "y": [
+          -0.9,
+          -0.7
+        ],
+        "grid": true,
+        "xLabel": "lg c(Zn²⁺)",
+        "yLabel": "E in V",
+        "vars": [
+          {
+            "name": "X",
+            "min": -4,
+            "max": 0,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "e",
+            "expr": "-0.76 + 0.0295*x",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "e",
+            "color": "accent"
+          }
+        ],
+        "readout": "c = 10^{X|0} mol/L · E = {-0.76 + 0.0295*X|3} V"
+      },
+      "timeline": [
+        {
+          "caption": "Standard: 1 mol/L, E = −0,76 V.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "Ein Zehntel: E sinkt um 0,03 V, weil z = 2.",
+          "to": {
+            "X": -1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Ein Tausendstel: −0,85 V. Verdünnen macht die Elektrode unedler.",
+          "to": {
+            "X": -3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Nernst-Gleichung",
@@ -81,6 +147,16 @@
     },
     {
       "type": "numeric",
+      "label": "Silber",
+      "md": "Silberelektrode in Silbernitratlösung mit $c = 0{,}001\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$ ($E^0 = +0{,}80$ V). Welches Potenzial hat sie in V?",
+      "answer": 0.623,
+      "tolerance": 0.002,
+      "placeholder": "V",
+      "explain": "$0{,}80 + 0{,}059 \\cdot (-3) = 0{,}623$ V; hier ist z = 1.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
       "label": "Rechnen",
       "md": "Eine Kupferelektrode taucht in Kupfersulfatlösung mit c = 0,01 mol/L (E⁰ = +0,34 V). Welches Potenzial hat sie in V?",
       "answer": 0.281,
@@ -132,7 +208,8 @@
       "points": [
         "E = E⁰ + (0,059 V/z) · lg(c(Ox)/c(Red)).",
         "Zehnfache Konzentration: +59 mV/z.",
-        "Konzentrationszelle: Pluspol in der konzentrierteren Lösung."
+        "Konzentrationszelle: Pluspol in der konzentrierteren Lösung.",
+        "E = E⁰ + (0,059 V / z) · lg c(Ox)."
       ],
       "id": "summary"
     }

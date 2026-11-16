@@ -18,6 +18,81 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Katalyse",
+      "md": "**Energiediagramm mit und ohne Katalysator:** Der Katalysator senkt den Berg; Anfang und Ende bleiben.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          -80,
+          140
+        ],
+        "grid": true,
+        "xLabel": "Reaktionsverlauf",
+        "yLabel": "kJ/mol",
+        "vars": [
+          {
+            "name": "K",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "u",
+            "expr": "-60/(1 + exp(-(x - 5)*1.6)) + 150*exp(-(x - 5)^2/2)",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "k",
+            "expr": "-60/(1 + exp(-(x - 5)*1.6)) + (150 - 80*K)*exp(-(x - 5)^2/2)",
+            "color": "accent"
+          }
+        ],
+        "hlines": [
+          {
+            "y": 0,
+            "color": "blue"
+          },
+          {
+            "y": -60,
+            "color": "orange"
+          }
+        ],
+        "readout": "Ea hin ≈ {120 - 80*K|0} kJ/mol · Ea rück ≈ {180 - 80*K|0} kJ/mol"
+      },
+      "timeline": [
+        {
+          "caption": "Ohne Katalysator: hoher Übergangszustand.",
+          "set": {
+            "K": 0
+          }
+        },
+        {
+          "caption": "Mit Katalysator: niedrigerer Übergangszustand. Hin- und Rückreaktion werden um denselben Betrag leichter.",
+          "to": {
+            "K": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Edukt- und Produktniveau bleiben: Die Reaktionsenthalpie und die Gleichgewichtslage ändern sich nicht.",
+          "to": {
+            "K": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Katalysator",
@@ -94,6 +169,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Rückreaktion",
+      "md": "Ein Katalysator senkt die Aktivierungsenergie der Hinreaktion um 50 kJ/mol. Um wie viel sinkt die der Rückreaktion? (in kJ/mol)",
+      "answer": 50,
+      "tolerance": 0,
+      "placeholder": "kJ/mol",
+      "explain": "Um denselben Betrag: Der Übergangszustand ist für beide Richtungen derselbe.",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Was ändert ein Katalysator?",
@@ -159,12 +244,25 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "che-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "energiediagramm"
+        ]
+      },
+      "label": "Mit Katalysator",
+      "id": "vx1"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Katalysator: niedrigere Aktivierungsenergie, wird nicht verbraucht.",
         "Beschleunigt Hin- und Rückreaktion, Lage des Gleichgewichts bleibt.",
-        "Homogen, heterogen, Enzyme."
+        "Homogen, heterogen, Enzyme.",
+        "Katalysator: Ea sinkt für beide Richtungen; ΔH und K bleiben."
       ],
       "id": "summary"
     }

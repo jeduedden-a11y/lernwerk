@@ -16,6 +16,132 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Für schwache Säuren gilt $\\mathrm{pH} = \\tfrac12(\\mathrm{p}K_S - \\lg c_0)$, solange der Protolysegrad klein bleibt. Rückwärts: $\\mathrm{p}K_S = 2\\,\\mathrm{pH} + \\lg c_0$.",
+      "label": "Verfahren",
+      "more": "1. Prüfen, ob die Säure schwach ist (pKs über etwa 4).\n2. Formel anwenden: $\\mathrm{pH} = \\tfrac12(\\mathrm{p}K_S - \\lg c_0)$.\n3. Kontrolle: Protolysegrad $\\alpha = \\tfrac{10^{-\\mathrm{pH}}}{c_0}$ sollte unter etwa 5 % liegen.\n4. Rückwärts: $\\mathrm{p}K_S = 2\\,\\mathrm{pH} + \\lg c_0$.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Methansäure, $c_0 = 0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$, $\\mathrm{p}K_S = 3{,}75$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\mathrm{pH} = \\tfrac12(3{,}75 + 1) \\approx 2{,}38",
+            "why": "Mit lg 0,1 = −1."
+          },
+          {
+            "tex": "\\alpha = \\frac{10^{-2{,}38}}{0{,}1} \\approx 4\\,\\%",
+            "why": "Die Näherung ist gerade noch zulässig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "pH.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontrolle.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Verdünnen",
+      "md": "**Stark gegen schwach beim Verdünnen:** pH von Salzsäure (blau) und Essigsäure (orange) über $-\\lg c_0$.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          6
+        ],
+        "grid": true,
+        "xLabel": "−lg c₀",
+        "yLabel": "pH",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 4,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "x",
+            "color": "blue"
+          },
+          {
+            "name": "w",
+            "expr": "(4.76 + x)/2",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "s",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "w",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "pH {X|0} gegen {(4.76 + X)/2|2}"
+      },
+      "timeline": [
+        {
+          "caption": "0,1 mol/L: Salzsäure pH 1, Essigsäure pH 2,88.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Jede Verdünnung auf ein Zehntel hebt den pH der starken Säure um 1, den der schwachen nur um 0,5.",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Nicht $\\mathrm{pH} = -\\lg c_0$ rechnen, das gilt nur für starke Säuren. Und $\\lg c_0$ ist negativ: Minus mal minus wird plus.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "pH-Wert schwacher Säuren über den Ks-Wert berechnen",
@@ -97,6 +223,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Rückwärts",
+      "md": "Eine Säure mit $c_0 = 0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$ hat pH 2,88. Wie groß ist ihr pKs?",
+      "answer": 4.76,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\mathrm{p}K_S = 2 \\cdot 2{,}88 + \\lg 0{,}1 = 4{,}76$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Lösungsweg",
       "md": "Bringe die Schritte des Lösungswegs in die richtige Reihenfolge.",
@@ -149,6 +285,14 @@
       },
       "label": "Rückwärts rechnen",
       "id": "g2"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "pH = ½(pKs − lg c₀); Protolysegrad prüfen."
+      ]
     }
   ]
 }

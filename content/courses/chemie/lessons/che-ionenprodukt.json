@@ -15,6 +15,88 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Ionenprodukt",
+      "md": "**Zwei Konzentrationen, ein Produkt:** $\\lg c(\\mathrm{H_3O^+})$ (blau) und $\\lg c(\\mathrm{OH^-})$ (orange) über dem pH-Wert. Ihre Summe ist immer −14.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          14
+        ],
+        "y": [
+          -14,
+          0
+        ],
+        "grid": true,
+        "xLabel": "pH",
+        "yLabel": "lg c",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 14,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "h",
+            "expr": "-x",
+            "color": "blue"
+          },
+          {
+            "name": "o",
+            "expr": "x - 14",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "h",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "o",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "X",
+            "color": "gray"
+          }
+        ],
+        "readout": "pH {X|0}: c(H₃O⁺) = 10^{-X|0}, c(OH⁻) = 10^{X-14|0} mol/L"
+      },
+      "timeline": [
+        {
+          "caption": "Sauer, pH 3: viel Oxonium, sehr wenig Hydroxid.",
+          "set": {
+            "X": 3
+          }
+        },
+        {
+          "caption": "Neutral, pH 7: beide 10⁻⁷ mol/L.",
+          "to": {
+            "X": 7
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Basisch, pH 11: die Verhältnisse kehren sich um.",
+          "to": {
+            "X": 11
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Ionenprodukt des Wassers",
@@ -65,6 +147,16 @@
     },
     {
       "type": "numeric",
+      "label": "pOH",
+      "md": "In einer Lösung ist $c(\\mathrm{H_3O^+}) = 10^{-9}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$ (25 °C). Welchen pOH-Wert hat sie?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\mathrm{pOH} = 14 - 9 = 5$.",
+      "id": "vq1"
+    },
+    {
+      "type": "numeric",
       "label": "Rechnen",
       "md": "In einer Lösung ist c(OH⁻) = 10⁻³ mol/L. Wie groß ist c(H₃O⁺) in mol/L? Gib den Exponenten zur Basis 10 an.",
       "answer": -11,
@@ -101,12 +193,37 @@
       "id": "tf1"
     },
     {
+      "type": "gen",
+      "gen": "che-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "ionenprodukt"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "che-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "ionenprodukt"
+        ]
+      },
+      "label": "Temperatur",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Kw = c(H₃O⁺) · c(OH⁻) = 10⁻¹⁴ bei 25 °C.",
         "pH + pOH = 14.",
-        "Neutral heißt c(H₃O⁺) = c(OH⁻); bei 60 °C liegt das unter pH 7."
+        "Neutral heißt c(H₃O⁺) = c(OH⁻); bei 60 °C liegt das unter pH 7.",
+        "K_W = 10⁻¹⁴ bei 25 °C; pH + pOH = 14."
       ],
       "id": "summary"
     }
