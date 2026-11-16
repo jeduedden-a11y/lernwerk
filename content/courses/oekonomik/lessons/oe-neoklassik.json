@@ -9,6 +9,96 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grenznutzen",
+      "md": "**Abnehmender Grenznutzen:** Gesamtnutzen (blau) und Nutzen der jeweils nächsten Einheit (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          16
+        ],
+        "y": [
+          0,
+          42
+        ],
+        "grid": true,
+        "xLabel": "Menge",
+        "yLabel": "Nutzen",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0.5,
+            "max": 16,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "u",
+            "expr": "10*sqrt(x)",
+            "color": "blue"
+          },
+          {
+            "name": "g",
+            "expr": "5/sqrt(x)",
+            "color": "orange",
+            "domain": [
+              0.2,
+              16
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "u",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "g",
+            "color": "orange"
+          }
+        ],
+        "readout": "Menge {X|1} · Gesamtnutzen {10*sqrt(X)|1} · Grenznutzen {5/sqrt(X)|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Das erste Glas Wasser ist viel wert.",
+          "set": {
+            "X": 1
+          }
+        },
+        {
+          "caption": "Mit jeder weiteren Einheit wächst der Gesamtnutzen langsamer.",
+          "to": {
+            "X": 4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei reichlich Wasser ist die letzte Einheit kaum etwas wert. Deshalb ist Wasser billig, obwohl es lebenswichtig ist: Den Preis bestimmt der Grenznutzen.",
+          "to": {
+            "X": 16
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Grenznutzen",
+      "md": "Der Gesamtnutzen steigt von 30 auf 34, wenn man eine weitere Einheit konsumiert. Wie groß ist der Grenznutzen dieser Einheit?",
+      "answer": 4,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "Der Zuwachs des Gesamtnutzens: 34 − 30 = 4.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum ist Wasser billig und ein Diamant teuer, obwohl Wasser lebenswichtig ist?",
       "options": [
@@ -39,7 +129,8 @@
       "points": [
         "Wert aus Grenznutzen, nicht aus Arbeit.",
         "Wasser-Diamant-Paradox gelöst.",
-        "Walras: allgemeines Gleichgewicht."
+        "Walras: allgemeines Gleichgewicht.",
+        "Wert aus dem Grenznutzen; Wasser-Diamant-Paradoxon gelöst."
       ],
       "id": "summary"
     }

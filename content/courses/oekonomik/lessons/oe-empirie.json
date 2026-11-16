@@ -9,6 +9,113 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Scheinkorrelation",
+      "md": "**Korrelation ist keine Kausalität:** Eisverkauf und Badeunfälle pro Woche hängen eng zusammen.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          70
+        ],
+        "y": [
+          0,
+          12
+        ],
+        "grid": true,
+        "xLabel": "verkaufte Eis (Tausend)",
+        "yLabel": "Badeunfälle",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "points": [
+          {
+            "x": 10,
+            "y": 2,
+            "color": "blue"
+          },
+          {
+            "x": 20,
+            "y": 3,
+            "color": "blue"
+          },
+          {
+            "x": 30,
+            "y": 5,
+            "color": "blue"
+          },
+          {
+            "x": 40,
+            "y": 6,
+            "color": "blue"
+          },
+          {
+            "x": 50,
+            "y": 9,
+            "color": "blue"
+          },
+          {
+            "x": 60,
+            "y": 10,
+            "color": "blue"
+          }
+        ],
+        "functions": [
+          {
+            "name": "r",
+            "expr": "0.17*x",
+            "color": "orange",
+            "dashed": true
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Je mehr Eis verkauft wird, desto mehr Badeunfälle: eine starke Korrelation.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Eis verursacht aber keine Unfälle. Beide hängen an einer dritten Größe, der Temperatur.",
+          "to": {
+            "T": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Welches Verfahren schätzt eine kausale Wirkung am saubersten?",
+      "options": [
+        {
+          "md": "eine randomisierte kontrollierte Studie",
+          "correct": true
+        },
+        {
+          "md": "ein Streudiagramm",
+          "why": "Es zeigt nur Zusammenhänge."
+        },
+        {
+          "md": "eine Umfrage unter Fachleuten"
+        },
+        {
+          "md": "eine Zeitreihe ohne Vergleichsgruppe"
+        }
+      ],
+      "explain": "Der Zufall verteilt die Maßnahme; deshalb unterscheiden sich die Gruppen sonst im Mittel nicht.",
+      "label": "Kausalität",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "In Städten mit mehr Polizisten gibt es mehr Verbrechen. Was ist die wahrscheinlichste Erklärung?",
       "options": [
@@ -39,7 +146,8 @@
       "points": [
         "Korrelation ist nicht Kausalität.",
         "Natürliche Experimente, Zufallsstudien, Regression.",
-        "Umgekehrte Kausalität und Drittvariablen beachten."
+        "Umgekehrte Kausalität und Drittvariablen beachten.",
+        "Korrelation ist nicht Kausalität; Experimente und natürliche Experimente helfen."
       ],
       "id": "summary"
     }

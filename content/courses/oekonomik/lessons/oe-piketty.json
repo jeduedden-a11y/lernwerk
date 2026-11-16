@@ -5,8 +5,95 @@
   "steps": [
     {
       "type": "text",
-      "md": "Thomas Piketty (»Das Kapital im 21. Jahrhundert«, 2013) wertete lange Reihen von Steuer- und Vermögensdaten aus. Seine Kernthese: Liegt die **Kapitalrendite r** dauerhaft über dem **Wirtschaftswachstum g**, wachsen Vermögen schneller als Einkommen, und Vermögen konzentriert sich. Er schlägt eine progressive globale Vermögenssteuer vor. Kritiker bezweifeln, dass r dauerhaft über g bleibt, und verweisen auf die Rolle von Immobilienpreisen.",
-      "id": "t1"
+      "md": "Piketty (2013): Liegt die **Kapitalrendite r** dauerhaft über dem **Wachstum g**, wachsen Vermögen schneller als Einkommen und konzentrieren sich. Er schlägt eine globale Vermögenssteuer vor; Kritiker bezweifeln, dass r > g dauerhaft gilt.",
+      "id": "t1",
+      "more": "Thomas Piketty (»Das Kapital im 21. Jahrhundert«, 2013) wertete lange Reihen von Steuer- und Vermögensdaten aus. Seine Kernthese: Liegt die **Kapitalrendite r** dauerhaft über dem **Wirtschaftswachstum g**, wachsen Vermögen schneller als Einkommen, und Vermögen konzentriert sich. Er schlägt eine progressive globale Vermögenssteuer vor. Kritiker bezweifeln, dass r dauerhaft über g bleibt, und verweisen auf die Rolle von Immobilienpreisen."
+    },
+    {
+      "type": "anim",
+      "label": "r > g",
+      "md": "**r größer als g:** Vermögen wächst mit 5 % (blau), Einkommen mit 1,5 % (orange), beide starten bei 100.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          50
+        ],
+        "y": [
+          0,
+          1200
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "yLabel": "Index",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 50,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "w",
+            "expr": "100*1.05^x",
+            "color": "blue"
+          },
+          {
+            "name": "y",
+            "expr": "100*1.015^x",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "w",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "y",
+            "color": "orange"
+          }
+        ],
+        "readout": "nach {T|0} Jahren: Vermögen {100*1.05^T|0}, Einkommen {100*1.015^T|0}, Verhältnis {1.05^T/1.015^T|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 10 Jahren liegen beide noch nah beieinander.",
+          "set": {
+            "T": 10
+          }
+        },
+        {
+          "caption": "Nach 30 Jahren hat sich das Verhältnis fast verdreifacht.",
+          "to": {
+            "T": 30
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Nach 50 Jahren ist das Vermögen über fünfmal so stark gewachsen wie die Einkommen, sofern die Erträge reinvestiert werden.",
+          "to": {
+            "T": 50
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Faktor",
+      "md": "Vermögen wächst mit 5 %, Einkommen mit 1,5 % pro Jahr. Um welchen Faktor ist das Verhältnis von Vermögen zu Einkommen nach 20 Jahren gestiegen? (zwei Nachkommastellen)",
+      "answer": 1.97,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$\\left(\\tfrac{1{,}05}{1{,}015}\\right)^{20} \\approx 1{,}97$.",
+      "id": "vq1"
     },
     {
       "type": "choice",
@@ -39,7 +126,8 @@
       "points": [
         "r > g: Vermögen wächst schneller als Einkommen.",
         "Lange Datenreihen zu Ungleichheit.",
-        "Vorschlag Vermögenssteuer; Kritik."
+        "Vorschlag Vermögenssteuer; Kritik.",
+        "r > g lässt Vermögen schneller wachsen als Einkommen; umstritten, ob dauerhaft."
       ],
       "id": "summary"
     }

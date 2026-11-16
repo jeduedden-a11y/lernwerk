@@ -9,6 +9,90 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Zerstörung",
+      "md": "**Schöpferische Zerstörung:** Marktanteil einer alten Technik (orange) und einer neuen (blau) im Zeitverlauf.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "Jahre",
+        "yLabel": "Marktanteil in %",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 20,
+            "value": 5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "100/(1 + exp(x - 10))",
+            "color": "orange"
+          },
+          {
+            "name": "n",
+            "expr": "100/(1 + exp(10 - x))",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "a",
+            "color": "orange"
+          },
+          {
+            "x": "T",
+            "on": "n",
+            "color": "blue"
+          }
+        ],
+        "readout": "Jahr {T|0} · alt {100/(1 + exp(T - 10))|0} % · neu {100/(1 + exp(10 - T))|0} %"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Unternehmer setzt eine neue Kombination durch; erst wenige steigen um.",
+          "set": {
+            "T": 5
+          }
+        },
+        {
+          "caption": "Der Durchbruch: Die neue Technik gewinnt schnell Anteile.",
+          "to": {
+            "T": 10
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die alte verschwindet, mit ihren Firmen und Arbeitsplätzen. Wachstum entsteht durch diesen Wandel.",
+          "to": {
+            "T": 15
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Für Schumpeter sind die Gewinne eines erfolgreichen Innovators immer schädlich.",
+      "answer": false,
+      "explain": "Der vorübergehende Vorsprung ist der Lohn für die Neuerung; Nachahmer lassen ihn wieder schrumpfen.",
+      "label": "Innovator",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was ist ein Beispiel für schöpferische Zerstörung?",
       "options": [
@@ -39,7 +123,8 @@
       "points": [
         "Unternehmer setzt neue Kombinationen durch.",
         "Schöpferische Zerstörung.",
-        "Innovation als Wachstumsmotor."
+        "Innovation als Wachstumsmotor.",
+        "Unternehmer, neue Kombinationen, schöpferische Zerstörung."
       ],
       "id": "summary"
     }
