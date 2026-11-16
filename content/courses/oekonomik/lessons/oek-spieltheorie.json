@@ -110,13 +110,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Die **Spieltheorie** untersucht Entscheidungen, deren Erfolg auch von den Entscheidungen anderer abhängt. Ihr berühmtestes Beispiel ist das **Gefangenendilemma**: Zwei Verdächtige werden getrennt verhört. Schweigen beide, bekommen beide eine milde Strafe. Gesteht einer und der andere schweigt, kommt der Geständige frei, und der andere bekommt die Höchststrafe. Gestehen beide, bekommen beide eine mittlere Strafe.\n\nWas auch immer der andere tut: Gestehen ist für jeden besser. Also gestehen beide und landen bei der mittleren Strafe, obwohl gemeinsames Schweigen für beide besser gewesen wäre. Einzeln vernünftig, gemeinsam schlecht.\n\nEin **Nash-Gleichgewicht** ist eine Kombination von Strategien, bei der niemand gewinnt, wenn er allein abweicht. Es muss nicht gut für alle sein. Dieselbe Struktur steckt in Kartellen, im Wettrüsten oder beim Klimaschutz. Kooperation kann trotzdem entstehen, wenn sich das Spiel oft wiederholt und Abweichen später bestraft wird."
+      "md": "Im **Gefangenendilemma** ist Gestehen für jeden die beste Antwort, egal was der andere tut. Also gestehen beide und stehen schlechter da, als wenn beide geschwiegen hätten: einzeln vernünftig, gemeinsam schlecht.",
+      "more": "Die **Spieltheorie** untersucht Entscheidungen, deren Erfolg auch von den Entscheidungen anderer abhängt. Ihr berühmtestes Beispiel ist das **Gefangenendilemma**: Zwei Verdächtige werden getrennt verhört. Schweigen beide, bekommen beide eine milde Strafe. Gesteht einer und der andere schweigt, kommt der Geständige frei, und der andere bekommt die Höchststrafe. Gestehen beide, bekommen beide eine mittlere Strafe.\n\nWas auch immer der andere tut: Gestehen ist für jeden besser. Also gestehen beide und landen bei der mittleren Strafe, obwohl gemeinsames Schweigen für beide besser gewesen wäre. Einzeln vernünftig, gemeinsam schlecht.\n\nEin **Nash-Gleichgewicht** ist eine Kombination von Strategien, bei der niemand gewinnt, wenn er allein abweicht. Es muss nicht gut für alle sein. Dieselbe Struktur steckt in Kartellen, im Wettrüsten oder beim Klimaschutz. Kooperation kann trotzdem entstehen, wenn sich das Spiel oft wiederholt und Abweichen später bestraft wird."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Dominante Strategie\n> Eine Strategie ist **dominant**, wenn sie für jede Strategie des Gegners die beste Antwort ist.\n\n> [!definition] Nash-Gleichgewicht\n> Eine Strategiekombination, bei der jede Strategie die beste Antwort auf die der anderen ist. Kein Spieler verbessert sich durch **alleiniges** Abweichen.\n\n> [!satz] Nash (1950)\n> Jedes Spiel mit endlich vielen Spielern und Strategien hat ein Gleichgewicht, wenn man zufällige (gemischte) Strategien zulässt."
+      "md": "**Dominante Strategie**: beste Antwort auf alles, was der andere tut. **Nash-Gleichgewicht**: Niemand verbessert sich durch **alleiniges** Abweichen. Mit gemischten Strategien hat jedes endliche Spiel eines.",
+      "more": "> [!definition] Dominante Strategie\n> Eine Strategie ist **dominant**, wenn sie für jede Strategie des Gegners die beste Antwort ist.\n\n> [!definition] Nash-Gleichgewicht\n> Eine Strategiekombination, bei der jede Strategie die beste Antwort auf die der anderen ist. Kein Spieler verbessert sich durch **alleiniges** Abweichen.\n\n> [!satz] Nash (1950)\n> Jedes Spiel mit endlich vielen Spielern und Strategien hat ein Gleichgewicht, wenn man zufällige (gemischte) Strategien zulässt."
     },
     {
       "id": "gleichgewicht",
@@ -168,6 +170,227 @@
         }
       },
       "explain": "Nur im Schnittpunkt $(3, 3)$ liegt jede Menge auf der besten Antwort zur anderen. Rechnerisch: $3 = 9 - 2 \\cdot 3$ und $3 = 4{,}5 - 0{,}5 \\cdot 3$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Gefangenendilemma durchrechnen:** Jahre Haft für A (weniger ist besser).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{B schweigt: A schweigt } 2, \\text{ gesteht } 0",
+            "why": "Gegen einen schweigenden B ist Gestehen besser."
+          },
+          {
+            "tex": "\\text{B gesteht: A schweigt } 8, \\text{ gesteht } 4",
+            "why": "Gegen einen gestehenden B ebenfalls."
+          },
+          {
+            "tex": "\\Rightarrow \\text{Gestehen ist dominant}",
+            "why": "Für B gilt dasselbe."
+          },
+          {
+            "tex": "(4, 4) \\text{ statt } (2, 2)",
+            "why": "Das Nash-Gleichgewicht ist für beide schlechter als gemeinsames Schweigen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "B schweigt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "B gesteht.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dominanz.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Spieltheorie",
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Spieltheorie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Die **Spieltheorie** untersucht Entscheidungen, deren Ergebnis auch von den Entscheidungen anderer abhängt. Ein Spiel besteht aus Spielern, ihren möglichen Strategien und den Auszahlungen für jede Kombination."
+            }
+          ]
+        },
+        {
+          "title": "Grundbegriffe",
+          "blocks": [
+            {
+              "md": "- **Dominante Strategie**: die beste Antwort auf jede Strategie des Gegners.\n- **Nash-Gleichgewicht**: eine Strategiekombination, bei der jede Strategie die beste Antwort auf die der anderen ist. Niemand verbessert sich durch **alleiniges** Abweichen.\n- **Gemischte Strategie**: eine Zufallsauswahl zwischen reinen Strategien. Nach John Nash (1950) hat jedes endliche Spiel ein Gleichgewicht in gemischten Strategien."
+            }
+          ]
+        },
+        {
+          "title": "Gefangenendilemma",
+          "blocks": [
+            {
+              "md": "Jahre im Gefängnis, erst A, dann B:\n\n| | B schweigt | B gesteht |\n|---|---|---|\n| **A schweigt** | 1, 1 | 10, 0 |\n| **A gesteht** | 0, 10 | 5, 5 |\n\nGestehen ist für beide dominant. Das Gleichgewicht ist (5, 5), obwohl (1, 1) für beide besser wäre. Individuell vernünftiges Handeln führt zu einem gemeinsam schlechten Ergebnis."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Kartelle** sind instabil: Hält sich der andere an die Absprache, lohnt es sich, heimlich mehr zu verkaufen (siehe **Marktformen**).\n- **Cournot-Duopol**: Jede Firma wählt die beste Menge zur Menge der anderen; im Schnittpunkt der Reaktionsfunktionen liegt das Gleichgewicht. Zusammen bieten sie mehr als ein **Monopol**, aber weniger als bei vollkommenem Wettbewerb.\n- **Koordinationsspiele** haben mehrere Gleichgewichte; welches erreicht wird, hängt an Gewohnheiten und Absprachen.\n- In wiederholten Spielen kann Kooperation stabil werden, etwa mit »Wie du mir, so ich dir«."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Ein Nash-Gleichgewicht ist eine Vorhersage über stabiles Verhalten, keine Empfehlung und kein Wohlfahrtsoptimum.\n- Nicht jedes Spiel hat ein Gleichgewicht in reinen Strategien (Elfmeter), manche haben mehrere.\n- Bei Spielen mit Zügen nacheinander rechnet man rückwärts; das verbindet die Spieltheorie mit **Minimax**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Marktformen",
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Marktformen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Mikroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Mikroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Übersicht",
+          "blocks": [
+            {
+              "md": "| Marktform | Anbieter | Preisbildung |\n|---|---|---|\n| vollkommene Konkurrenz (Polypol) | viele kleine, gleiches Gut | Preisnehmer: Preis = Grenzkosten |\n| monopolistische Konkurrenz | viele, verschiedene Produkte | jeder hat einen kleinen Preisspielraum |\n| Oligopol | wenige | strategisch: jeder rechnet mit den Reaktionen der anderen |\n| Monopol | einer | Grenzerlös = Grenzkosten (**Monopol**) |"
+            }
+          ]
+        },
+        {
+          "title": "Oligopol",
+          "blocks": [
+            {
+              "md": "Weil wenige Anbieter einander beobachten, hängt das Ergebnis von ihrer Strategie ab:\n- **Cournot** (1838): Die Anbieter wählen Mengen. Das Ergebnis liegt zwischen Monopol und Wettbewerb und nähert sich mit wachsender Anbieterzahl dem Wettbewerbspreis.\n- **Bertrand:** Die Anbieter wählen Preise. Bei gleichen Gütern unterbieten sie sich bis auf die Grenzkosten, schon bei zwei Anbietern."
+            }
+          ]
+        },
+        {
+          "title": "Kartelle",
+          "blocks": [
+            {
+              "md": "Gemeinsam könnten Oligopolisten den Monopolgewinn erzielen. Doch jeder einzelne gewinnt, wenn er heimlich mehr verkauft: ein Gefangenendilemma. Kartelle sind deshalb instabil, und sie sind verboten."
+            }
+          ]
+        },
+        {
+          "title": "Wettbewerb als Ideal und Wirklichkeit",
+          "blocks": [
+            {
+              "md": "Vollkommene Konkurrenz ist ein Modell: viele Anbieter, gleiche Güter, volle Information, freier Marktzutritt. Reale Märkte weichen davon ab; wie stark, entscheidet über die Notwendigkeit von Wettbewerbspolitik."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Monopol",
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Monopol.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Mikroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Mikroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein **Monopol** ist ein Markt mit einem einzigen Anbieter. Er sieht sich der ganzen Nachfragekurve gegenüber: Will er mehr verkaufen, muss er den Preis für alle Einheiten senken."
+            }
+          ]
+        },
+        {
+          "title": "Grenzerlös und Gewinnmaximum",
+          "blocks": [
+            {
+              "md": "Der **Grenzerlös** $GE$ ist der Zusatzerlös einer weiteren Einheit. Weil der Preis für alle sinkt, liegt er unter dem Preis. Der Monopolist wählt die Menge mit $GE = GK$ (Grenzkosten) und verlangt dafür den höchsten Preis, den die Nachfrage hergibt."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Nachfrage $p = 12 - Q$, Grenzkosten $GK = 2$. Erlös $E = (12 - Q)Q$, also $GE = 12 - 2Q$.\n- Monopol: $12 - 2Q = 2 \\Rightarrow Q = 5$, $p = 7$.\n- Wettbewerb: $p = GK = 2 \\Rightarrow Q = 10$.\n- Wohlfahrtsverlust: $\\tfrac12 \\cdot (7 - 2) \\cdot (10 - 5) = 12{,}5$.\n\nDer Monopolist verkauft weniger zu einem höheren Preis; Käufer, die mehr als die Kosten, aber weniger als den Monopolpreis zahlen würden, gehen leer aus."
+            }
+          ]
+        },
+        {
+          "title": "Ursachen",
+          "blocks": [
+            {
+              "md": "Patente und Lizenzen, Kontrolle über knappe Ressourcen, **Größenvorteile** (natürliches Monopol, etwa Schienen- oder Stromnetze), **Netzwerkeffekte** (ein soziales Netzwerk ist wertvoller, je mehr es nutzen)."
+            }
+          ]
+        },
+        {
+          "title": "Antworten des Staates",
+          "blocks": [
+            {
+              "md": "Kartellrecht und Fusionskontrolle, Regulierung natürlicher Monopole (Preisaufsicht, Netzzugang für Wettbewerber), zeitlich begrenzte Patente als bewusster Tausch: Monopolgewinn gegen Anreiz zur Innovation.\n\nMehr Anbieter: **Marktformen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "In einem Nash-Gleichgewicht sind alle Spieler bestmöglich gestellt.",
+      "answer": false,
+      "explain": "Es heißt nur, dass niemand durch alleiniges Abweichen gewinnt. Im Gefangenendilemma stünden beide zusammen besser da.",
+      "label": "Nash",
+      "id": "vq1"
     },
     {
       "id": "dilemma",
@@ -250,7 +473,8 @@
         "Dominante Strategie: beste Antwort auf alles, was der andere tut.",
         "Nash-Gleichgewicht: Niemand gewinnt durch alleiniges Abweichen. Es muss nicht gut für alle sein.",
         "Im Gefangenendilemma führt individuelle Vernunft zu einem schlechten gemeinsamen Ergebnis; Kartelle sind deshalb instabil.",
-        "Wiederholte Spiele können Kooperation stabilisieren."
+        "Wiederholte Spiele können Kooperation stabilisieren.",
+        "Dominante Strategien, Nash-Gleichgewicht, Dilemma von Einzel- und Gemeinwohl."
       ]
     }
   ]

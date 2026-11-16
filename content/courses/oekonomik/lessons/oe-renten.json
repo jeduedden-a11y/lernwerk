@@ -15,6 +15,150 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Renten",
+      "md": "**Renten im Diagramm:** Nachfrage $P = 9 - Q$, Angebot $P = 1 + Q$, Gleichgewicht bei $Q = 4$, $P = 5$. Blau die Konsumentenrente, orange die Produzentenrente.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          9
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "grid": true,
+        "xLabel": "Menge",
+        "yLabel": "Preis",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 1,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "n",
+            "expr": "9 - x",
+            "color": "blue"
+          },
+          {
+            "name": "a",
+            "expr": "1 + x",
+            "color": "orange"
+          },
+          {
+            "name": "p",
+            "expr": "5",
+            "color": "gray",
+            "dashed": true
+          }
+        ],
+        "areas": [
+          {
+            "f": "n",
+            "base": "p",
+            "from": 0,
+            "to": 4,
+            "color": "blue"
+          },
+          {
+            "f": "p",
+            "base": "a",
+            "from": 0,
+            "to": 4,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": 4,
+            "y": 5,
+            "color": "accent",
+            "label": "Gleichgewicht"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Konsumentenrente: Wer mehr gezahlt hätte, als er musste, gewinnt die Differenz. Hier ein Dreieck mit Fläche 8.",
+          "set": {
+            "T": 0
+          }
+        },
+        {
+          "caption": "Produzentenrente: Wer billiger hätte liefern können, gewinnt die Differenz. Ebenfalls 8.",
+          "to": {
+            "T": 1
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Konsumenten- und Produzentenrente",
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Konsumenten- und Produzentenrente.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Mikroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Mikroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "- **Konsumentenrente:** Summe dessen, was Käufer mehr zu zahlen bereit wären, als sie zahlen. Im Diagramm die Fläche zwischen Nachfragekurve und Preis.\n- **Produzentenrente:** Summe dessen, was Anbieter mehr bekommen, als sie mindestens verlangen würden. Die Fläche zwischen Preis und Angebotskurve.\n- **Gesamtrente** = Konsumentenrente + Produzentenrente: der Gewinn der Gesellschaft aus dem Handel."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$Q_D = 100 - 10p$ (niemand zahlt mehr als $10$), $Q_S = 20p - 20$ (niemand bietet unter $1$ an). Gleichgewicht $p^* = 4$, $Q^* = 60$:\n- Konsumentenrente $= \\tfrac12 \\cdot 60 \\cdot (10 - 4) = 180$,\n- Produzentenrente $= \\tfrac12 \\cdot 60 \\cdot (4 - 1) = 90$."
+            }
+          ]
+        },
+        {
+          "title": "Effizienz des Gleichgewichts",
+          "blocks": [
+            {
+              "md": "Im Wettbewerbsgleichgewicht ist die Gesamtrente maximal: Gehandelt wird genau dort, wo die Zahlungsbereitschaft die Kosten übersteigt. Jeder Eingriff, der die Menge verändert, erzeugt einen **Wohlfahrtsverlust** (Deadweight Loss): Tauschgewinne, die niemandem mehr zufallen."
+            }
+          ]
+        },
+        {
+          "title": "Preiskontrollen",
+          "blocks": [
+            {
+              "md": "- **Höchstpreis** unter dem Gleichgewicht (etwa Mietpreisdeckel): Die Nachfrage übersteigt das Angebot, es entsteht Knappheit; gehandelt wird weniger, und wer zum Zug kommt, entscheidet nicht mehr der Preis.\n- **Mindestpreis** über dem Gleichgewicht (etwa Agrarpreise, Mindestlohn): Überschussangebot.\n\nOb solche Eingriffe trotzdem gewollt sind, ist eine Frage der Verteilung, nicht der Effizienz."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Wohlfahrt",
+      "md": "Wie groß ist die Wohlfahrt (Konsumenten- plus Produzentenrente) im Beispiel?",
+      "answer": 16,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac12 \\cdot 4 \\cdot 4 + \\tfrac12 \\cdot 4 \\cdot 4 = 16$.",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Nachfrage p = 10 − q, Angebot p = q. Wie groß ist die Konsumentenrente im Gleichgewicht?",
@@ -55,7 +199,8 @@
       "points": [
         "Konsumentenrente: Zahlungsbereitschaft minus Preis.",
         "Produzentenrente: Preis minus Grenzkosten.",
-        "Eingriffe verursachen Wohlfahrtsverluste."
+        "Eingriffe verursachen Wohlfahrtsverluste.",
+        "KR über dem Preis, PR darunter; zusammen die Wohlfahrt."
       ],
       "id": "summary"
     }

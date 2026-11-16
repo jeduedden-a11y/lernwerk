@@ -9,6 +9,95 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Wertfunktion",
+      "md": "**Verlustaversion:** die Wertfunktion von Kahneman und Tversky. Verluste (links) wiegen etwa doppelt so schwer wie gleich große Gewinne (rechts).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          -100,
+          100
+        ],
+        "y": [
+          -140,
+          70
+        ],
+        "grid": true,
+        "xLabel": "Gewinn oder Verlust in €",
+        "yLabel": "empfundener Wert",
+        "vars": [
+          {
+            "name": "X",
+            "min": -100,
+            "max": 100,
+            "value": 50,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "v",
+            "expr": "(1 + sign(x))/2*abs(x)^0.88 - 2.25*(1 - sign(x))/2*abs(x)^0.88",
+            "color": "blue"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "v",
+            "color": "accent"
+          }
+        ],
+        "readout": "{X|0} € fühlen sich an wie {(1 + sign(X))/2*abs(X)^0.88 - 2.25*(1 - sign(X))/2*abs(X)^0.88|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Ein Gewinn von 50 € fühlt sich an wie etwa 31.",
+          "set": {
+            "X": 50
+          }
+        },
+        {
+          "caption": "Ein Verlust von 50 € wie etwa −70: mehr als doppelt so stark.",
+          "to": {
+            "X": -50
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Kurve flacht nach außen ab: Der hundertste Euro bewegt weniger als der erste.",
+          "to": {
+            "X": 100
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Münzwurf: Mit 50 % gewinnst du 100 €, mit 50 % verlierst du 100 €. Die meisten lehnen ab. Warum?",
+      "options": [
+        {
+          "md": "Der mögliche Verlust wiegt schwerer als der gleich große Gewinn.",
+          "correct": true
+        },
+        {
+          "md": "Der Erwartungswert ist negativ.",
+          "why": "Er ist genau null."
+        },
+        {
+          "md": "Menschen können keine Wahrscheinlichkeiten schätzen."
+        },
+        {
+          "md": "Weil 100 € zu wenig sind, um sich zu lohnen."
+        }
+      ],
+      "explain": "Verlustaversion: Bei einem Erwartungswert von null überwiegt das Gewicht des Verlusts.",
+      "label": "Verlustaversion",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne das Phänomen zu.",
@@ -53,7 +142,8 @@
       "points": [
         "Begrenzte Rationalität, Verlustaversion, Anker, Status quo.",
         "Vorhersagbare Verzerrungen.",
-        "Nudges: Entscheidungsarchitektur ohne Verbote."
+        "Nudges: Entscheidungsarchitektur ohne Verbote.",
+        "Verluste wiegen etwa doppelt; Rahmung und Voreinstellungen lenken Entscheidungen."
       ],
       "id": "summary"
     }

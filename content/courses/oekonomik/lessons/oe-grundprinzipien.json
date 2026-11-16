@@ -19,6 +19,137 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Opportunitätskosten",
+      "md": "**Produktionsmöglichkeiten:** Mit gegebenen Mitteln lässt sich mehr Weizen nur gegen weniger Autos herstellen. Je weiter man geht, desto teurer wird jede zusätzliche Einheit.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          11
+        ],
+        "y": [
+          0,
+          11
+        ],
+        "grid": true,
+        "xLabel": "Weizen",
+        "yLabel": "Autos",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 10,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "k",
+            "expr": "sqrt(100 - x^2)",
+            "color": "blue",
+            "domain": [
+              0,
+              10
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "k",
+            "color": "accent"
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "color": "orange",
+            "label": "ungenutzt"
+          }
+        ],
+        "tangents": [
+          {
+            "f": "k",
+            "at": "X",
+            "length": 3
+          }
+        ],
+        "readout": "Weizen {X|1} · Autos {sqrt(100 - X^2)|1} · eine Einheit Weizen kostet {X/sqrt(100 - X^2)|2} Autos"
+      },
+      "timeline": [
+        {
+          "caption": "Wenig Weizen: Eine Einheit mehr kostet kaum Autos.",
+          "set": {
+            "X": 2
+          }
+        },
+        {
+          "caption": "In der Mitte kostet sie schon fast eine ganze Einheit.",
+          "to": {
+            "X": 7
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Fast nur Weizen: Jede weitere Einheit wird sehr teuer. Das sind steigende Opportunitätskosten.",
+          "to": {
+            "X": 9.5
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Mikroökonomie",
+      "path": "02 Wiki/Ökonomik/Mikroökonomie.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "**Mikroökonomie** untersucht das Verhalten einzelner Wirtschaftssubjekte – Haushalte, Unternehmen, Märkte – und wie sie durch **Angebot und Nachfrage** Preise und Mengen bestimmen. Zentrale Themen sind Marktgleichgewichte, Konsumentscheidungen, Produktionstheorie und Marktversagen."
+            }
+          ]
+        },
+        {
+          "title": "Verwandte Gebiete",
+          "blocks": [
+            {
+              "md": "Ergänzt durch die **Makroökonomie**, die gesamtwirtschaftliche Größen betrachtet. Siehe auch **Ökonomik**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was zeigt ein Punkt außerhalb der Produktionsmöglichkeitenkurve?",
+      "options": [
+        {
+          "md": "Er ist mit den vorhandenen Mitteln und der Technik nicht erreichbar.",
+          "correct": true
+        },
+        {
+          "md": "Ressourcen bleiben ungenutzt.",
+          "why": "Das zeigt ein Punkt innerhalb der Kurve."
+        },
+        {
+          "md": "Die Produktion ist effizient."
+        },
+        {
+          "md": "Die Opportunitätskosten sind null."
+        }
+      ],
+      "explain": "Erst Wachstum (mehr Ressourcen, bessere Technik) schiebt die Kurve nach außen.",
+      "label": "Grenze",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Lea könnte am Samstag für 80 € kellnern oder für 50 € babysitten. Sie geht stattdessen ins Kino (Eintritt 12 €). Wie hoch sind ihre Opportunitätskosten?",
       "options": [
@@ -66,7 +197,8 @@
       "points": [
         "Knappheit erzwingt Wahl.",
         "Opportunitätskosten: beste entgangene Alternative.",
-        "Grenzbetrachtung, Anreize, Tausch."
+        "Grenzbetrachtung, Anreize, Tausch.",
+        "Knappheit, Opportunitätskosten, steigende Kosten entlang der Kurve."
       ],
       "id": "summary"
     }

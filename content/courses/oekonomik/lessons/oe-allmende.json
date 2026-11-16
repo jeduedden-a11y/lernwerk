@@ -15,6 +15,154 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Allmende",
+      "md": "**Überfischung:** Fangertrag in Abhängigkeit vom Fangaufwand (blau) und Kosten (orange). Gemeinsam optimal wäre weniger Aufwand.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          20
+        ],
+        "y": [
+          0,
+          110
+        ],
+        "grid": true,
+        "xLabel": "Fangaufwand",
+        "yLabel": "Wert",
+        "vars": [
+          {
+            "name": "E",
+            "min": 0,
+            "max": 20,
+            "value": 8,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "r",
+            "expr": "20*x - x^2",
+            "color": "blue"
+          },
+          {
+            "name": "c",
+            "expr": "4*x",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "E",
+            "on": "r",
+            "color": "accent"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "E",
+            "color": "gray"
+          }
+        ],
+        "readout": "Aufwand {E|0} · Ertrag {20*E - E^2|0} · Kosten {4*E|0} · Gewinn {16*E - E^2|0}"
+      },
+      "timeline": [
+        {
+          "caption": "Aufwand 8: Grenzertrag gleich Kosten, gemeinsam der größte Gewinn (64).",
+          "set": {
+            "E": 8
+          }
+        },
+        {
+          "caption": "Mit freiem Zugang kommen so lange neue Boote, wie es sich für den Einzelnen lohnt.",
+          "to": {
+            "E": 12
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Aufwand 16: Der Gewinn ist null, der Bestand übernutzt. Das ist die Tragik der Allmende.",
+          "to": {
+            "E": 16
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Öffentliche Güter",
+      "path": "02 Wiki/Ökonomik/01 Mikroökonomik/Öffentliche Güter.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Mikroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Mikroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Merkmale",
+          "blocks": [
+            {
+              "md": "- **Rivalität:** Was eine Person nutzt, kann eine andere nicht mehr nutzen.\n- **Ausschließbarkeit:** Wer nicht zahlt, kann von der Nutzung ferngehalten werden.\n\n| | ausschließbar | nicht ausschließbar |\n|---|---|---|\n| **rival** | private Güter: Brot, Kleidung | Allmendegüter: Fischbestände, Grundwasser |\n| **nicht rival** | Klubgüter: Streaming, Mautstraße ohne Stau | öffentliche Güter: Landesverteidigung, Deich, Leuchtturm |"
+            }
+          ]
+        },
+        {
+          "title": "Das Trittbrettfahrerproblem",
+          "blocks": [
+            {
+              "md": "Bei öffentlichen Gütern kann niemand ausgeschlossen werden. Jeder hofft, dass andere bezahlen; freiwillig kommt zu wenig zusammen. Deshalb finanziert sie meist der Staat über Steuern."
+            }
+          ]
+        },
+        {
+          "title": "Die Tragik der Allmende",
+          "blocks": [
+            {
+              "md": "Bei Allmendegütern nutzt jeder so viel, wie ihm selbst nützt, und die Ressource wird übernutzt (Garrett Hardin, 1968). Lösungen: Eigentumsrechte, Quoten, Abgaben, oder Regeln einer Gemeinschaft. Elinor Ostrom zeigte an vielen Beispielen, dass Gemeinschaften Allmenden über Generationen erfolgreich selbst verwalten können."
+            }
+          ]
+        },
+        {
+          "title": "Grenzfälle",
+          "blocks": [
+            {
+              "md": "Ob ein Gut rival ist, kann von der Auslastung abhängen: Eine freie Straße ist ohne Stau fast ein öffentliches Gut, im Stau ein Allmendegut.\n\nVerwandt: **Externe Effekte**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was schlug Elinor Ostrom gegen die Übernutzung vor?",
+      "options": [
+        {
+          "md": "Gemeinschaften, die eigene Nutzungsregeln aufstellen, überwachen und durchsetzen",
+          "correct": true
+        },
+        {
+          "md": "jede Ressource zu verstaatlichen",
+          "why": "Ostrom zeigte gerade, dass es Lösungen jenseits von Staat und Markt gibt."
+        },
+        {
+          "md": "jede Ressource zu privatisieren"
+        },
+        {
+          "md": "abzuwarten, bis sich der Bestand erholt"
+        }
+      ],
+      "explain": "Ihre Feldstudien zeigten funktionierende Allmenden mit klaren Grenzen, Mitsprache und abgestuften Sanktionen.",
+      "label": "Ostrom",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Ordne das Gut ein.",
@@ -76,7 +224,8 @@
       "points": [
         "Allmende: rivalisierend, nicht ausschließbar.",
         "Individuelle Anreize zur Übernutzung.",
-        "Eigentum, Staat oder Selbstorganisation (Ostrom)."
+        "Eigentum, Staat oder Selbstorganisation (Ostrom).",
+        "Rival, aber nicht ausschließbar: Übernutzung; Regeln der Nutzer können helfen."
       ],
       "id": "summary"
     }

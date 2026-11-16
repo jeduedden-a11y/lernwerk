@@ -9,6 +9,95 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Optimum",
+      "md": "**Das Haushaltsoptimum:** Budget 40 €, Gut x kostet 2 €, Gut y 4 €. Der Haushalt sucht auf der Budgetgeraden (blau) den Punkt mit dem höchsten Nutzen; dort berührt sie eine Indifferenzkurve (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          21
+        ],
+        "y": [
+          0,
+          11
+        ],
+        "grid": true,
+        "xLabel": "Gut x",
+        "yLabel": "Gut y",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 20,
+            "value": 4,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "b",
+            "expr": "10 - 0.5*x",
+            "color": "blue",
+            "domain": [
+              0,
+              20
+            ]
+          },
+          {
+            "name": "u",
+            "expr": "50/x",
+            "color": "orange",
+            "domain": [
+              4.6,
+              21
+            ]
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "b",
+            "color": "accent"
+          }
+        ],
+        "readout": "x = {X|1} · y = {10 - 0.5*X|1} · Nutzen {sqrt(X*(10 - 0.5*X))|2}"
+      },
+      "timeline": [
+        {
+          "caption": "Wenig x, viel y: Das Budget ist ausgeschöpft, aber der Nutzen ist niedriger als möglich.",
+          "set": {
+            "X": 4
+          }
+        },
+        {
+          "caption": "Zu viel x: Auch hier geht Nutzen verloren.",
+          "to": {
+            "X": 16
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Optimum bei x = 10, y = 5: Hier ist der Grenznutzen je Euro bei beiden Gütern gleich.",
+          "to": {
+            "X": 10
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Budget",
+      "md": "Ein Haushalt mit 60 € kauft nur ein Gut zu 4 €. Wie viele Einheiten kann er höchstens kaufen?",
+      "answer": 15,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\tfrac{60}{4} = 15$.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Kaffee kostet 2 €, Kuchen 4 €. Der Grenznutzen der letzten Tasse Kaffee ist 10, des letzten Stücks Kuchen 16. Was sollte der Haushalt tun?",
       "options": [
@@ -44,12 +133,37 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "haushalt"
+        ]
+      },
+      "label": "Grenznutzen je Euro",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "haushalt"
+        ]
+      },
+      "label": "Optimum",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Abnehmender Grenznutzen.",
         "Optimum: GN/p gleich für alle Güter.",
-        "Indifferenzkurve berührt Budgetgerade."
+        "Indifferenzkurve berührt Budgetgerade.",
+        "Budget ausschöpfen; Grenznutzen je Euro angleichen."
       ],
       "id": "summary"
     }

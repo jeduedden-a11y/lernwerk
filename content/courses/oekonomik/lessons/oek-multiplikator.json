@@ -4,8 +4,14 @@
   "subtitle": "Warum ein Euro Staatsausgaben mehr als einen Euro Einkommen schaffen kann",
   "source": "John Maynard Keynes, General Theory (1936); Paul Samuelson, Economics (1948), keynesianisches Kreuz",
   "vault": [
-    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Multiplikator.md", "title": "Multiplikator" },
-    { "path": "02 Wiki/Ökonomik/03 Ideengeschichte/John Maynard Keynes.md", "title": "John Maynard Keynes" }
+    {
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Multiplikator.md",
+      "title": "Multiplikator"
+    },
+    {
+      "path": "02 Wiki/Ökonomik/03 Ideengeschichte/John Maynard Keynes.md",
+      "title": "John Maynard Keynes"
+    }
   ],
   "steps": [
     {
@@ -14,20 +20,77 @@
       "md": "Waagerecht das Einkommen $Y$, senkrecht die geplanten Ausgaben, beides in Hunderten Milliarden. Die graue Diagonale ist $Y = $ Ausgaben. Die blaue Linie sagt, wie viel bei jedem Einkommen ausgegeben werden soll: ein fester Teil $A$ plus $60\\,\\%$ des Einkommens.",
       "widget": "curves",
       "params": {
-        "x": [0, 10], "y": [0, 10], "xLabel": "Einkommen Y", "yLabel": "Ausgaben",
-        "vars": [{ "name": "A", "min": 0, "max": 5, "value": 2, "hidden": true }],
-        "lines": [
-          { "id": "D", "label": "Y = Ausgaben", "a": 0, "m": 1, "color": "gray", "width": 2 },
-          { "id": "AE", "label": "A + 0,6Y", "a": "A", "m": 0.6, "color": "accent" }
+        "x": [
+          0,
+          10
         ],
-        "intersections": [{ "id": "E", "of": ["D", "AE"], "label": "Y*" }],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "Einkommen Y",
+        "yLabel": "Ausgaben",
+        "vars": [
+          {
+            "name": "A",
+            "min": 0,
+            "max": 5,
+            "value": 2,
+            "hidden": true
+          }
+        ],
+        "lines": [
+          {
+            "id": "D",
+            "label": "Y = Ausgaben",
+            "a": 0,
+            "m": 1,
+            "color": "gray",
+            "width": 2
+          },
+          {
+            "id": "AE",
+            "label": "A + 0,6Y",
+            "a": "A",
+            "m": 0.6,
+            "color": "accent"
+          }
+        ],
+        "intersections": [
+          {
+            "id": "E",
+            "of": [
+              "D",
+              "AE"
+            ],
+            "label": "Y*"
+          }
+        ],
         "readout": "Autonome Ausgaben **{A|1}**, Gleichgewicht **Y* = {E_x|2}**"
       },
       "timeline": [
-        { "caption": "Im Schnittpunkt wird genau so viel ausgegeben, wie produziert wird: $Y^* = 5$. Liegt das Einkommen darüber, bleiben Waren liegen, und die Firmen drosseln die Produktion. Liegt es darunter, leeren sich die Lager." },
-        { "caption": "Der Staat gibt $1$ mehr aus: Die blaue Linie rückt um $1$ nach oben. Das neue Gleichgewicht liegt aber nicht bei $6$, sondern bei $7{,}5$.", "to": { "A": 3 }, "dur": 2400, "hold": 7000 },
-        { "caption": "Warum $2{,}5$-mal so viel? Die $1$ wird zu Einkommen. Davon werden $60\\,\\%$ wieder ausgegeben, also $0{,}6$, das wird wieder Einkommen, davon $0{,}36$ … Die Summe ist $1 + 0{,}6 + 0{,}36 + \\dots = \\tfrac{1}{1 - 0{,}6} = 2{,}5$. Das ist der **Multiplikator**.", "hold": 9000 },
-        { "caption": "Er wirkt auch nach unten: Sinken die Investitionen um $1$, fällt das Einkommen um $2{,}5$. So erklärte Keynes, wie aus kleinen Störungen tiefe Krisen werden können.", "to": { "A": 1 }, "dur": 2400 }
+        {
+          "caption": "Im Schnittpunkt wird genau so viel ausgegeben, wie produziert wird: $Y^* = 5$. Liegt das Einkommen darüber, bleiben Waren liegen, und die Firmen drosseln die Produktion. Liegt es darunter, leeren sich die Lager."
+        },
+        {
+          "caption": "Der Staat gibt $1$ mehr aus: Die blaue Linie rückt um $1$ nach oben. Das neue Gleichgewicht liegt aber nicht bei $6$, sondern bei $7{,}5$.",
+          "to": {
+            "A": 3
+          },
+          "dur": 2400,
+          "hold": 7000
+        },
+        {
+          "caption": "Warum $2{,}5$-mal so viel? Die $1$ wird zu Einkommen. Davon werden $60\\,\\%$ wieder ausgegeben, also $0{,}6$, das wird wieder Einkommen, davon $0{,}36$ … Die Summe ist $1 + 0{,}6 + 0{,}36 + \\dots = \\tfrac{1}{1 - 0{,}6} = 2{,}5$. Das ist der **Multiplikator**.",
+          "hold": 9000
+        },
+        {
+          "caption": "Er wirkt auch nach unten: Sinken die Investitionen um $1$, fällt das Einkommen um $2{,}5$. So erklärte Keynes, wie aus kleinen Störungen tiefe Krisen werden können.",
+          "to": {
+            "A": 1
+          },
+          "dur": 2400
+        }
       ]
     },
     {
@@ -41,13 +104,58 @@
       "label": "Die Runden",
       "md": "Blau: die Ausgaben jeder Runde, wenn der Staat einmalig $1$ ausgibt und $c$ der Anteil ist, der jeweils weitergegeben wird. Orange: die Summe aller Runden bis dahin.",
       "widget": "sequence",
-      "params": { "term": "c^(n-1)", "mode": "both", "vars": [{ "name": "c", "label": "c", "min": 0.3, "max": 0.9, "step": 0.05, "value": 0.6, "digits": 2 }], "limit": "1/(1 - c)", "limitLabel": "Multiplikator", "nMax": 20, "n": 1, "yRange": [0, 10.5], "readout": "Runde {N|0}: Ausgabe {a|3}, Summe **{s|3}**, Grenzwert {L|2}" },
-      "int": ["N"],
+      "params": {
+        "term": "c^(n-1)",
+        "mode": "both",
+        "vars": [
+          {
+            "name": "c",
+            "label": "c",
+            "min": 0.3,
+            "max": 0.9,
+            "step": 0.05,
+            "value": 0.6,
+            "digits": 2
+          }
+        ],
+        "limit": "1/(1 - c)",
+        "limitLabel": "Multiplikator",
+        "nMax": 20,
+        "n": 1,
+        "yRange": [
+          0,
+          10.5
+        ],
+        "readout": "Runde {N|0}: Ausgabe {a|3}, Summe **{s|3}**, Grenzwert {L|2}"
+      },
+      "int": [
+        "N"
+      ],
       "timeline": [
-        { "caption": "Runde $1$: Der Staat gibt $1$ aus." },
-        { "caption": "Jede Runde ist $60\\,\\%$ der vorigen. Nach fünf Runden ist die Summe schon gut $2{,}3$.", "to": { "N": 5 }, "dur": 1600 },
-        { "caption": "Die Summe nähert sich $2{,}5$, dem Multiplikator $\\tfrac{1}{1 - 0{,}6}$.", "to": { "N": 20 }, "dur": 1800 },
-        { "caption": "Geben die Haushalte $90\\,\\%$ weiter, ist der Multiplikator $10$. Kleine Änderungen von $c$ haben große Wirkung.", "to": { "c": 0.9 }, "dur": 2000 }
+        {
+          "caption": "Runde $1$: Der Staat gibt $1$ aus."
+        },
+        {
+          "caption": "Jede Runde ist $60\\,\\%$ der vorigen. Nach fünf Runden ist die Summe schon gut $2{,}3$.",
+          "to": {
+            "N": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Summe nähert sich $2{,}5$, dem Multiplikator $\\tfrac{1}{1 - 0{,}6}$.",
+          "to": {
+            "N": 20
+          },
+          "dur": 1800
+        },
+        {
+          "caption": "Geben die Haushalte $90\\,\\%$ weiter, ist der Multiplikator $10$. Kleine Änderungen von $c$ haben große Wirkung.",
+          "to": {
+            "c": 0.9
+          },
+          "dur": 2000
+        }
       ]
     },
     {
@@ -57,25 +165,166 @@
       "md": "Jetzt ist $c = 0{,}5$ und das Gleichgewicht liegt bei $4$. **Verschiebe die Ausgabenlinie so weit nach oben, dass das Gleichgewicht bei $6$ liegt.** Wie groß muss die Erhöhung sein?",
       "widget": "curves",
       "params": {
-        "x": [0, 10], "y": [0, 10], "xLabel": "Einkommen Y", "yLabel": "Ausgaben",
-        "lines": [
-          { "id": "D", "label": "Y = Ausgaben", "a": 0, "m": 1, "color": "gray", "width": 2 },
-          { "id": "AE", "label": "A + 0,5Y", "a": 2, "m": 0.5, "color": "accent", "shift": true, "shiftRange": [-2, 4], "shiftStep": 0.5 }
+        "x": [
+          0,
+          10
         ],
-        "intersections": [{ "id": "E", "of": ["D", "AE"], "label": "Y*" }],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "Einkommen Y",
+        "yLabel": "Ausgaben",
+        "lines": [
+          {
+            "id": "D",
+            "label": "Y = Ausgaben",
+            "a": 0,
+            "m": 1,
+            "color": "gray",
+            "width": 2
+          },
+          {
+            "id": "AE",
+            "label": "A + 0,5Y",
+            "a": 2,
+            "m": 0.5,
+            "color": "accent",
+            "shift": true,
+            "shiftRange": [
+              -2,
+              4
+            ],
+            "shiftStep": 0.5
+          }
+        ],
+        "intersections": [
+          {
+            "id": "E",
+            "of": [
+              "D",
+              "AE"
+            ],
+            "label": "Y*"
+          }
+        ],
         "readout": "Erhöhung **{AE_dy|1}**, Gleichgewicht **{E_x|2}**"
       },
-      "goal": { "when": "abs(E_x - 6) < 0.01", "hints": [{ "when": "E_x < 6", "text": "Das Gleichgewicht liegt erst bei {E_x|2}." }, { "when": "E_x > 6", "text": "Zu weit: Das Gleichgewicht liegt bei {E_x|2}." }], "solve": { "AE_dy": 1 } },
+      "goal": {
+        "when": "abs(E_x - 6) < 0.01",
+        "hints": [
+          {
+            "when": "E_x < 6",
+            "text": "Das Gleichgewicht liegt erst bei {E_x|2}."
+          },
+          {
+            "when": "E_x > 6",
+            "text": "Zu weit: Das Gleichgewicht liegt bei {E_x|2}."
+          }
+        ],
+        "solve": {
+          "AE_dy": 1
+        }
+      },
       "explain": "Eine Erhöhung um $1$ genügt: Mit $c = 0{,}5$ ist der Multiplikator $2$, also $\\Delta Y = 2$. Man muss die Lücke nicht vollständig selbst füllen, den Rest erledigt die Kettenreaktion."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Multiplikator",
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Multiplikator.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Makroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Makroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Keynesianisches Kreuz",
+          "blocks": [
+            {
+              "md": "Gesamtnachfrage $Y = C + I + G$ mit der Konsumfunktion $C = C_0 + cY$, wobei $c$ die **marginale Konsumquote** ist (der Anteil jedes zusätzlichen Euros, der ausgegeben wird). Im Gleichgewicht:\n$$Y^* = \\frac{C_0 + I + G}{1 - c}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Der Multiplikator",
+          "blocks": [
+            {
+              "md": "Steigen die Staatsausgaben um $\\Delta G$, steigt das Einkommen um\n$$\\Delta Y = \\frac{1}{1 - c}\\,\\Delta G.$$\nMit $c = 0{,}8$ ist der Multiplikator $5$: Zehn Milliarden zusätzliche Ausgaben erhöhen das Einkommen um fünfzig Milliarden.\n\n**Warum:** Die zehn Milliarden sind Einkommen für andere, die davon acht ausgeben, die wiederum Einkommen sind, von denen $6{,}4$ ausgegeben werden, und so fort. Die Runden bilden eine geometrische Reihe: $10\\,(1 + 0{,}8 + 0{,}8^2 + \\dots) = \\frac{10}{1 - 0{,}8} = 50$ (**Reihen**)."
+            }
+          ]
+        },
+        {
+          "title": "Varianten",
+          "blocks": [
+            {
+              "md": "- **Steuermultiplikator:** $-\\frac{c}{1 - c}$, betragsmäßig kleiner, weil die erste Runde nur zum Teil ausgegeben wird.\n- **Haushaltsneutraler Multiplikator:** Werden zusätzliche Ausgaben voll durch Steuern finanziert, ist der Multiplikator $1$.\n- In der Wirklichkeit fällt er kleiner aus: Steuern und Importe lassen in jeder Runde Geld aus dem Kreislauf fließen, und steigende Zinsen können private Investitionen verdrängen (Crowding-out).\n\nIdeengeschichtlicher Hintergrund: **John Maynard Keynes**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "John Maynard Keynes",
+      "path": "02 Wiki/Ökonomik/03 Ideengeschichte/John Maynard Keynes.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Ideengeschichte\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs)."
+            }
+          ]
+        },
+        {
+          "title": "Person",
+          "blocks": [
+            {
+              "md": "John Maynard Keynes (1883 bis 1946), britischer Ökonom aus Cambridge, Berater der Regierung, Verhandlungsführer in Bretton Woods (1944). Hauptwerk: *Allgemeine Theorie der Beschäftigung, des Zinses und des Geldes* (1936), geschrieben unter dem Eindruck der Weltwirtschaftskrise."
+            }
+          ]
+        },
+        {
+          "title": "Kernideen",
+          "blocks": [
+            {
+              "md": "- **Effektive Nachfrage:** Wie viel produziert wird, hängt von der Gesamtnachfrage ab. Fehlt sie, bleiben Menschen unfreiwillig arbeitslos, und Märkte finden nicht von selbst zur Vollbeschäftigung zurück, jedenfalls nicht schnell.\n- **Sparparadoxon:** Sparen alle gleichzeitig mehr, sinken Nachfrage und Einkommen, und am Ende wird nicht mehr gespart.\n- **Liquiditätspräferenz:** Der Zins ist der Preis dafür, Geld nicht bar zu halten. In tiefer Unsicherheit horten Menschen Geld, und Zinssenkungen verpuffen.\n- **Animal Spirits:** Investitionen hängen an Stimmungen und Erwartungen, nicht nur an Rechnungen.\n- **Staatliche Nachfrage:** In der Krise soll der Staat Ausgaben erhöhen, die über den **Multiplikator** das Einkommen stärker steigern.\n\nSein bekanntester Satz, gegen das Vertrauen auf Selbstheilung: »Auf lange Sicht sind wir alle tot« (1923)."
+            }
+          ]
+        },
+        {
+          "title": "Wirkung und Kritik",
+          "blocks": [
+            {
+              "md": "Nach 1945 prägte der Keynesianismus die Wirtschaftspolitik. In den 1970ern brachte die Stagflation ihn in Bedrängnis; Monetaristen um Milton Friedman und **Friedrich August von Hayek** kritisierten ihn scharf. In der Finanzkrise 2008 und der Pandemie kehrten keynesianische Konjunkturpakete zurück."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "steuern",
       "type": "choice",
       "md": "Warum wirkt eine Steuersenkung um $10$ Mrd. schwächer als zusätzliche Staatsausgaben von $10$ Mrd.?",
       "options": [
-        { "md": "Die Haushalte geben nur einen Teil der Entlastung aus, die erste Runde ist kleiner.", "correct": true },
-        { "md": "Steuersenkungen haben gar keine Wirkung auf das Einkommen.", "why": "Sie wirken, nur schwächer." },
-        { "md": "Weil Staatsausgaben nie gespart werden können.", "why": "Der Punkt ist richtig gedacht, aber die Begründung ist die erste Runde: Der Staat gibt alles aus, die Haushalte nur den Anteil $c$." }
+        {
+          "md": "Die Haushalte geben nur einen Teil der Entlastung aus, die erste Runde ist kleiner.",
+          "correct": true
+        },
+        {
+          "md": "Steuersenkungen haben gar keine Wirkung auf das Einkommen.",
+          "why": "Sie wirken, nur schwächer."
+        },
+        {
+          "md": "Weil Staatsausgaben nie gespart werden können.",
+          "why": "Der Punkt ist richtig gedacht, aber die Begründung ist die erste Runde: Der Staat gibt alles aus, die Haushalte nur den Anteil $c$."
+        }
       ],
       "explain": "Steuermultiplikator $\\tfrac{-c}{1 - c}$ gegen Ausgabenmultiplikator $\\tfrac{1}{1 - c}$. Bei $c = 0{,}8$: $4$ gegen $5$."
     },
@@ -93,10 +342,34 @@
       "step": 1,
       "explain": "Der Multiplikator ist $\\tfrac{1}{1 - 0{,}8} = 5$, also steigt das Einkommen um $5 \\cdot 10 = 50$ Mrd. Euro. Die Runden summieren sich: $10 + 8 + 6{,}4 + \\dots$, eine geometrische Reihe."
     },
-    { "id": "neu1", "type": "gen", "gen": "oek-multiplikator", "level": 1, "label": "Multiplikator" },
-    { "id": "neu2", "type": "gen", "gen": "oek-multiplikator", "level": 2, "label": "Staatsausgaben" },
-    { "id": "neu3", "type": "gen", "gen": "oek-multiplikator", "level": 3, "label": "Mit Steuern" },
-    { "id": "neu4", "type": "gen", "gen": "oek-multiplikator", "level": 4, "label": "Steuersenkung" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "oek-multiplikator",
+      "level": 1,
+      "label": "Multiplikator"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "oek-multiplikator",
+      "level": 2,
+      "label": "Staatsausgaben"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "oek-multiplikator",
+      "level": 3,
+      "label": "Mit Steuern"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "oek-multiplikator",
+      "level": 4,
+      "label": "Steuersenkung"
+    },
     {
       "id": "summary",
       "type": "summary",

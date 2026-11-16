@@ -4,8 +4,14 @@
   "subtitle": "Wer Geld schafft und wie die Zentralbank steuert",
   "source": "Lehrbuchstandard der Makroökonomik; Irving Fisher, The Purchasing Power of Money (1911)",
   "vault": [
-    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldschöpfung.md", "title": "Geldschöpfung" },
-    { "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldpolitik.md", "title": "Geldpolitik" }
+    {
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldschöpfung.md",
+      "title": "Geldschöpfung"
+    },
+    {
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldpolitik.md",
+      "title": "Geldpolitik"
+    }
   ],
   "steps": [
     {
@@ -13,13 +19,60 @@
       "type": "anim",
       "md": "Jemand zahlt $100$ € bei einer Bank ein. Die Bank muss einen Anteil $r$ als Reserve halten und verleiht den Rest. Der Kredit wird ausgegeben und landet als Einlage bei der nächsten Bank. Blau die neue Einlage jeder Runde, orange alle Einlagen zusammen.",
       "widget": "sequence",
-      "params": { "term": "100*(1 - r)^(n-1)", "mode": "both", "vars": [{ "name": "r", "label": "Reservesatz r", "min": 0.05, "max": 0.5, "step": 0.05, "value": 0.2, "digits": 2 }], "limit": "100/r", "limitLabel": "Obergrenze 100/r", "nMax": 25, "n": 1, "yRange": [0, 1050], "readout": "Runde {N|0}: neue Einlage {a|1} €, Einlagen zusammen **{s|1} €**" },
-      "int": ["N"],
+      "params": {
+        "term": "100*(1 - r)^(n-1)",
+        "mode": "both",
+        "vars": [
+          {
+            "name": "r",
+            "label": "Reservesatz r",
+            "min": 0.05,
+            "max": 0.5,
+            "step": 0.05,
+            "value": 0.2,
+            "digits": 2
+          }
+        ],
+        "limit": "100/r",
+        "limitLabel": "Obergrenze 100/r",
+        "nMax": 25,
+        "n": 1,
+        "yRange": [
+          0,
+          1050
+        ],
+        "readout": "Runde {N|0}: neue Einlage {a|1} €, Einlagen zusammen **{s|1} €**"
+      },
+      "int": [
+        "N"
+      ],
       "timeline": [
-        { "caption": "Runde $1$: $100$ € Einlage. Bei $r = 20\\,\\%$ behält die Bank $20$ € und verleiht $80$ €." },
-        { "caption": "Die $80$ € werden ausgegeben und wieder eingezahlt, davon werden $64$ € verliehen, dann $51{,}20$ € … Jede Runde schafft neues **Giralgeld**: Guthaben, mit denen man bezahlen kann.", "to": { "N": 4 }, "dur": 1600, "hold": 7500 },
-        { "caption": "Zusammen können höchstens $\\tfrac{100}{0{,}2} = 500$ € Einlagen entstehen. Aus $100$ € Zentralbankgeld werden bis zu $500$ € Geld, mit dem man bezahlen kann.", "to": { "N": 25 }, "dur": 2000, "hold": 7000 },
-        { "caption": "Je kleiner der Reservesatz, desto größer die mögliche Geldschöpfung: bei $r = 10\\,\\%$ bis zu $1000$ €. In Wirklichkeit begrenzen eher die Nachfrage nach Krediten und die Eigenkapitalregeln, wie viel Geld entsteht.", "to": { "r": 0.1 }, "dur": 2000 }
+        {
+          "caption": "Runde $1$: $100$ € Einlage. Bei $r = 20\\,\\%$ behält die Bank $20$ € und verleiht $80$ €."
+        },
+        {
+          "caption": "Die $80$ € werden ausgegeben und wieder eingezahlt, davon werden $64$ € verliehen, dann $51{,}20$ € … Jede Runde schafft neues **Giralgeld**: Guthaben, mit denen man bezahlen kann.",
+          "to": {
+            "N": 4
+          },
+          "dur": 1600,
+          "hold": 7500
+        },
+        {
+          "caption": "Zusammen können höchstens $\\tfrac{100}{0{,}2} = 500$ € Einlagen entstehen. Aus $100$ € Zentralbankgeld werden bis zu $500$ € Geld, mit dem man bezahlen kann.",
+          "to": {
+            "N": 25
+          },
+          "dur": 2000,
+          "hold": 7000
+        },
+        {
+          "caption": "Je kleiner der Reservesatz, desto größer die mögliche Geldschöpfung: bei $r = 10\\,\\%$ bis zu $1000$ €. In Wirklichkeit begrenzen eher die Nachfrage nach Krediten und die Eigenkapitalregeln, wie viel Geld entsteht.",
+          "to": {
+            "r": 0.1
+          },
+          "dur": 2000
+        }
       ]
     },
     {
@@ -39,16 +92,179 @@
       "md": "Der Geldmarkt: Blau die Nachfrage nach Geld (bei hohem Zins hält man lieber Anleihen als Bargeld), rot gestrichelt das Geldangebot der Zentralbank. **Stelle die Geldmenge so ein, dass der Zins bei $3\\,\\%$ liegt.**",
       "widget": "curves",
       "params": {
-        "x": [0, 10], "y": [0, 10], "xLabel": "Geldmenge", "yLabel": "Zins in %",
-        "vars": [{ "name": "Ms", "label": "Geldangebot", "min": 2, "max": 9, "step": 0.5, "value": 4, "digits": 1 }],
-        "lines": [{ "id": "L", "label": "Geldnachfrage", "a": 10, "m": -1, "color": "accent" }],
-        "derived": [{ "name": "i", "expr": "10 - Ms" }],
-        "vlines": [{ "x": "Ms", "color": "red", "label": "Angebot" }],
-        "hlines": [{ "y": "i", "color": "gray", "label": "Zins" }],
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "xLabel": "Geldmenge",
+        "yLabel": "Zins in %",
+        "vars": [
+          {
+            "name": "Ms",
+            "label": "Geldangebot",
+            "min": 2,
+            "max": 9,
+            "step": 0.5,
+            "value": 4,
+            "digits": 1
+          }
+        ],
+        "lines": [
+          {
+            "id": "L",
+            "label": "Geldnachfrage",
+            "a": 10,
+            "m": -1,
+            "color": "accent"
+          }
+        ],
+        "derived": [
+          {
+            "name": "i",
+            "expr": "10 - Ms"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "Ms",
+            "color": "red",
+            "label": "Angebot"
+          }
+        ],
+        "hlines": [
+          {
+            "y": "i",
+            "color": "gray",
+            "label": "Zins"
+          }
+        ],
         "readout": "Geldmenge {Ms|1}, Zins **{i|1} %**"
       },
-      "goal": { "when": "abs(i - 3) < 0.01", "hints": [{ "when": "i > 3", "text": "Der Zins ist noch {i|1} %. Mehr Geld senkt den Zins." }, { "when": "i < 3", "text": "Der Zins ist auf {i|1} % gefallen. Weniger Geld." }], "solve": { "Ms": 7 } },
+      "goal": {
+        "when": "abs(i - 3) < 0.01",
+        "hints": [
+          {
+            "when": "i > 3",
+            "text": "Der Zins ist noch {i|1} %. Mehr Geld senkt den Zins."
+          },
+          {
+            "when": "i < 3",
+            "text": "Der Zins ist auf {i|1} % gefallen. Weniger Geld."
+          }
+        ],
+        "solve": {
+          "Ms": 7
+        }
+      },
       "explain": "Bei der Geldmenge $7$ trifft das Angebot die Nachfrage beim Zins $3\\,\\%$. Mehr Geld senkt den Zins, weil die Leute es nur halten, wenn das Halten von Anleihen weniger lockt."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Geldschöpfung",
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldschöpfung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Makroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Makroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei Arten von Geld",
+          "blocks": [
+            {
+              "md": "- **Zentralbankgeld:** Bargeld und Guthaben der Banken bei der Zentralbank.\n- **Giralgeld:** Guthaben von Haushalten und Unternehmen auf Bankkonten. Es macht den weitaus größten Teil der Geldmenge aus."
+            }
+          ]
+        },
+        {
+          "title": "Banken schaffen Geld durch Kredite",
+          "blocks": [
+            {
+              "md": "Vergibt eine Bank einen Kredit, schreibt sie dem Kreditnehmer den Betrag auf seinem Konto gut. In diesem Moment entsteht neues Giralgeld, ohne dass jemand vorher gespart haben musste. Wird ein Kredit getilgt, verschwindet das Geld wieder."
+            }
+          ]
+        },
+        {
+          "title": "Was die Geldschöpfung begrenzt",
+          "blocks": [
+            {
+              "md": "- die Nachfrage nach Krediten und die Kreditwürdigkeit der Kunden,\n- Eigenkapitalvorschriften und Mindestreserven,\n- der Zins, zu dem sich Banken Zentralbankgeld beschaffen (**Geldpolitik**).\n\nDas Lehrbuchmodell des Geldschöpfungsmultiplikators $\\frac{1}{r}$ (mit Reservesatz $r$) ist eine Vereinfachung: Heute steuert die Zentralbank vor allem über den Preis des Zentralbankgeldes, nicht über seine Menge."
+            }
+          ]
+        },
+        {
+          "title": "Quantitätsgleichung",
+          "blocks": [
+            {
+              "md": "$M \\cdot V = P \\cdot Y$: Geldmenge mal Umlaufgeschwindigkeit gleich Preisniveau mal realem Einkommen. Wächst die Geldmenge dauerhaft schneller als die Wirtschaft, steigen die Preise, sofern die Umlaufgeschwindigkeit stabil bleibt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Geldpolitik",
+      "path": "02 Wiki/Ökonomik/02 Makroökonomik/Geldpolitik.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Makroökonomik\n> Teil der Sammlung **Ökonomik** (Lernwerk-Kurs) und **Makroökonomie**."
+            }
+          ]
+        },
+        {
+          "title": "Ziel",
+          "blocks": [
+            {
+              "md": "Die Europäische Zentralbank soll vorrangig die **Preisstabilität** sichern; sie strebt mittelfristig eine Inflationsrate von zwei Prozent an."
+            }
+          ]
+        },
+        {
+          "title": "Instrumente",
+          "blocks": [
+            {
+              "md": "- **Leitzinsen:** zu welchen Zinsen sich Banken bei der Zentralbank Geld leihen oder dort anlegen können.\n- **Offenmarktgeschäfte:** Kauf und Verkauf von Wertpapieren, im großen Stil als Anleihekäufe (Quantitative Easing).\n- **Mindestreserve:** Anteil der Einlagen, den Banken bei der Zentralbank halten müssen."
+            }
+          ]
+        },
+        {
+          "title": "Wie ein Zinsschritt wirkt",
+          "blocks": [
+            {
+              "md": "Steigt der Leitzins, werden Kredite teurer, Sparen attraktiver: Investitionen und Konsum gehen zurück, die Gesamtnachfrage sinkt, der Preisauftrieb lässt nach. Zusätzlich wertet die Währung tendenziell auf, und Erwartungen passen sich an. Die Wirkung kommt mit Verzögerung, oft nach einem bis zwei Jahren."
+            }
+          ]
+        },
+        {
+          "title": "Realzins",
+          "blocks": [
+            {
+              "md": "Entscheidend für Sparer und Investoren ist der **Realzins**: Nominalzins minus Inflationsrate (Fisher). Bei $4\\,\\%$ Zins und $3\\,\\%$ Inflation wächst die Kaufkraft nur um etwa $1\\,\\%$."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen",
+          "blocks": [
+            {
+              "md": "Bei Zinsen nahe null wirkt die Zinssenkung kaum noch; gegen Angebotsschocks wie steigende Energiepreise kann Geldpolitik die Inflation nur um den Preis einer schwächeren Wirtschaft dämpfen (**AD-AS-Modell**)."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "real",
@@ -73,10 +289,34 @@
       ],
       "explain": "Das ist der **Zinskanal** der Geldpolitik. Er wirkt mit Verzögerung, oft von ein bis zwei Jahren. Darum muss eine Zentralbank auf die erwartete, nicht auf die heutige Inflation reagieren."
     },
-    { "id": "neu1", "type": "gen", "gen": "oek-geld", "level": 1, "label": "Geldschöpfung" },
-    { "id": "neu2", "type": "gen", "gen": "oek-geld", "level": 2, "label": "Quantitätsgleichung" },
-    { "id": "neu3", "type": "gen", "gen": "oek-geld", "level": 3, "label": "Realzins" },
-    { "id": "neu4", "type": "gen", "gen": "oek-geld", "level": 4, "label": "Anleihen" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "oek-geld",
+      "level": 1,
+      "label": "Geldschöpfung"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "oek-geld",
+      "level": 2,
+      "label": "Quantitätsgleichung"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "oek-geld",
+      "level": 3,
+      "label": "Realzins"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "oek-geld",
+      "level": 4,
+      "label": "Anleihen"
+    },
     {
       "id": "summary",
       "type": "summary",

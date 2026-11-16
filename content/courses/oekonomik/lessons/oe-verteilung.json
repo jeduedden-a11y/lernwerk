@@ -9,6 +9,97 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Lorenzkurve",
+      "md": "**Lorenzkurve** $L(x) = x^2$ (blau) und Gleichverteilung (grau). Die Fläche dazwischen, ins Verhältnis gesetzt, ist der Gini-Koeffizient.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          0,
+          1
+        ],
+        "grid": true,
+        "xLabel": "Anteil der Haushalte",
+        "yLabel": "Anteil am Einkommen",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 1,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "g",
+            "expr": "x",
+            "color": "gray",
+            "dashed": true
+          },
+          {
+            "name": "l",
+            "expr": "x^2",
+            "color": "blue"
+          }
+        ],
+        "areas": [
+          {
+            "f": "g",
+            "base": "l",
+            "from": 0,
+            "to": 1,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "l",
+            "color": "accent"
+          }
+        ],
+        "readout": "die ärmsten {100*X|0} % haben {100*X^2|0} % des Einkommens"
+      },
+      "timeline": [
+        {
+          "caption": "Die ärmere Hälfte hat ein Viertel des Einkommens.",
+          "set": {
+            "X": 0.5
+          }
+        },
+        {
+          "caption": "Die ärmsten 90 % haben 81 %, die reichsten 10 % also 19 %.",
+          "to": {
+            "X": 0.9
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Gini = Fläche zwischen den Kurven geteilt durch die Fläche unter der Diagonalen; hier ein Drittel.",
+          "to": {
+            "X": 0.75
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Gini",
+      "md": "Wie groß ist der Gini-Koeffizient für die Lorenzkurve $L(x) = x^2$? (zwei Nachkommastellen)",
+      "answer": 0.33,
+      "tolerance": 0.01,
+      "placeholder": "",
+      "explain": "$1 - 2\\int_0^1 x^2\\,dx = 1 - \\tfrac23 \\approx 0{,}33$.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Die ärmsten 50 % haben 20 % des Einkommens. Was zeigt die Lorenzkurve bei 50 %?",
       "options": [
@@ -41,12 +132,49 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "gini"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "gini"
+        ]
+      },
+      "label": "Mittel",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "gini"
+        ]
+      },
+      "label": "Quartile",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Lorenzkurve: Anteile der Haushalte und Einkommen.",
         "Gini von 0 bis 1.",
-        "Umverteilung senkt den Gini."
+        "Umverteilung senkt den Gini.",
+        "Lorenzkurve und Gini: 0 Gleichverteilung, 1 maximale Ungleichheit."
       ],
       "id": "summary"
     }

@@ -9,6 +9,108 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Kostenkurven",
+      "md": "**Kostenkurven:** $K(x) = 100 + 2x + 0{,}25x^2$. Durchschnittskosten (blau) und Grenzkosten (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          40
+        ],
+        "y": [
+          0,
+          30
+        ],
+        "grid": true,
+        "xLabel": "Menge x",
+        "yLabel": "€",
+        "vars": [
+          {
+            "name": "X",
+            "min": 2,
+            "max": 38,
+            "value": 10,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "d",
+            "expr": "100/x + 2 + 0.25*x",
+            "color": "blue",
+            "domain": [
+              4,
+              40
+            ]
+          },
+          {
+            "name": "g",
+            "expr": "2 + 0.5*x",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "d",
+            "color": "blue"
+          },
+          {
+            "x": "X",
+            "on": "g",
+            "color": "orange"
+          }
+        ],
+        "readout": "x = {X|0} · Durchschnitt {100/X + 2 + 0.25*X|2} € · Grenzkosten {2 + 0.5*X|2} €"
+      },
+      "timeline": [
+        {
+          "caption": "Bei 10 Stück liegen die Grenzkosten unter dem Durchschnitt: Jede weitere Einheit senkt ihn.",
+          "set": {
+            "X": 10
+          }
+        },
+        {
+          "caption": "Bei 20 Stück schneiden sich die Kurven: Das ist das Minimum der Durchschnittskosten, 12 €.",
+          "to": {
+            "X": 20
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Darüber liegen die Grenzkosten über dem Durchschnitt und ziehen ihn nach oben.",
+          "to": {
+            "X": 30
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Warum schneidet die Grenzkostenkurve die Durchschnittskostenkurve in deren Minimum?",
+      "options": [
+        {
+          "md": "Kostet die nächste Einheit weniger als der Durchschnitt, sinkt er; kostet sie mehr, steigt er.",
+          "correct": true
+        },
+        {
+          "md": "Weil die Fixkosten dort null sind."
+        },
+        {
+          "md": "Weil der Gewinn dort maximal ist."
+        },
+        {
+          "md": "Das ist Zufall und gilt nur in diesem Beispiel."
+        }
+      ],
+      "explain": "Wie bei Noten: Eine Arbeit unter dem Schnitt senkt ihn, eine darüber hebt ihn.",
+      "label": "Schnittpunkt",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Kosten: 100 € fix, 5 € variabel pro Stück. Wie hoch sind die Durchschnittskosten bei 50 Stück?",
@@ -33,12 +135,49 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "kosten"
+        ]
+      },
+      "label": "Leicht",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 3,
+      "params": {
+        "typ": [
+          "kosten"
+        ]
+      },
+      "label": "Gewinnschwelle",
+      "id": "vx2"
+    },
+    {
+      "type": "gen",
+      "gen": "oek-rechnen",
+      "level": 4,
+      "params": {
+        "typ": [
+          "kosten"
+        ]
+      },
+      "label": "Betriebsminimum",
+      "id": "vx3"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Fix, variabel, Grenzkosten, Durchschnittskosten.",
         "GK schneidet DK im Minimum.",
-        "Betriebsminimum und Skalenerträge."
+        "Betriebsminimum und Skalenerträge.",
+        "Grenzkosten schneiden die Durchschnittskosten in deren Minimum."
       ],
       "id": "summary"
     }
