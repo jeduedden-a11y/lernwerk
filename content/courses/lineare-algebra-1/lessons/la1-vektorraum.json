@@ -98,7 +98,8 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "Ein **Vektorraum** über einem Körper $K$ ist eine Menge $V$ mit einer Addition $V \\times V \\to V$ und einer Skalarmultiplikation $K \\times V \\to V$, so dass\n\n1. $(V, +)$ eine abelsche Gruppe ist (mit Nullvektor $0$),\n2. $\\lambda(\\mu v) = (\\lambda\\mu) v$ und $1 \\cdot v = v$,\n3. $\\lambda(v + w) = \\lambda v + \\lambda w$ und $(\\lambda + \\mu)v = \\lambda v + \\mu v$.\n\nDie Elemente heißen **Vektoren**, auch wenn sie gar keine Pfeile sind. Beispiele:\n\n- $K^n$, die Spalten mit $n$ Einträgen,\n- die Polynome vom Grad höchstens $n$,\n- alle Funktionen $\\mathbb{R} \\to \\mathbb{R}$, mit $(f + g)(x) = f(x) + g(x)$,\n- die $m \\times n$-Matrizen."
+      "md": "Ein **Vektorraum** über $K$ ist mit seiner Addition eine abelsche Gruppe und hat eine Skalarmultiplikation mit $1 \\cdot v = v$, $\\lambda(\\mu v) = (\\lambda\\mu)v$ und beiden Distributivgesetzen. Vektoren müssen keine Pfeile sein: $K^n$, Polynome und Funktionen sind Vektorräume.",
+      "more": "Ein **Vektorraum** über einem Körper $K$ ist eine Menge $V$ mit einer Addition $V \\times V \\to V$ und einer Skalarmultiplikation $K \\times V \\to V$, so dass\n\n1. $(V, +)$ eine abelsche Gruppe ist (mit Nullvektor $0$),\n2. $\\lambda(\\mu v) = (\\lambda\\mu) v$ und $1 \\cdot v = v$,\n3. $\\lambda(v + w) = \\lambda v + \\lambda w$ und $(\\lambda + \\mu)v = \\lambda v + \\mu v$.\n\nDie Elemente heißen **Vektoren**, auch wenn sie gar keine Pfeile sind. Beispiele:\n\n- $K^n$, die Spalten mit $n$ Einträgen,\n- die Polynome vom Grad höchstens $n$,\n- alle Funktionen $\\mathbb{R} \\to \\mathbb{R}$, mit $(f + g)(x) = f(x) + g(x)$,\n- die $m \\times n$-Matrizen."
     },
     {
       "id": "beispiel",
@@ -181,6 +182,125 @@
       "id": "kriterium",
       "type": "text",
       "md": "Um zu prüfen, ob eine Teilmenge $U \\subseteq V$ selbst ein Vektorraum ist, muss man nicht alle Axiome nachrechnen. Es reicht das **Unterraumkriterium**:\n\n1. $0 \\in U$,\n2. $u, w \\in U \\Rightarrow u + w \\in U$,\n3. $u \\in U, \\lambda \\in K \\Rightarrow \\lambda u \\in U$.\n\nDie übrigen Axiome erbt $U$ von $V$. Meist scheitert eine Menge schon an Punkt 1, so wie die verschobene Gerade."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**$0 \\cdot v = 0$** folgt aus den Axiomen, man muss es nicht fordern.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "0 \\cdot v = (0 + 0) \\cdot v",
+            "why": "Im Körper ist $0 = 0 + 0$."
+          },
+          {
+            "tex": "= 0 \\cdot v + 0 \\cdot v",
+            "why": "Distributivgesetz."
+          },
+          {
+            "tex": "0_V = 0 \\cdot v",
+            "why": "Auf beiden Seiten $-(0 \\cdot v)$ addieren."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Körper.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Distributiv.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abziehen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vektorraum",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Vektorraum.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 2\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein **Vektorraum** über einem Körper $K$ ist eine abelsche Gruppe $(V, +)$ mit einer Skalarmultiplikation $K \\times V \\to V$, sodass für alle $\\lambda, \\mu \\in K$ und $v, w \\in V$ gilt:\n$$\\lambda(v + w) = \\lambda v + \\lambda w, \\quad (\\lambda + \\mu) v = \\lambda v + \\mu v, \\quad (\\lambda\\mu) v = \\lambda(\\mu v), \\quad 1 \\cdot v = v.$$\nVektoren sind also alles, was man addieren und mit Zahlen strecken kann, nicht nur Pfeile."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "- $K^n$ mit komponentenweisen Operationen.\n- Polynome, Funktionen $\\mathbb{R} \\to \\mathbb{R}$, Folgen, Matrizen $K^{m \\times n}$.\n- Die Lösungsmenge eines homogenen linearen Gleichungssystems $Ax = 0$.\n\nAus den Axiomen folgt $0 \\cdot v = 0$ und $(-1) \\cdot v = -v$."
+            }
+          ]
+        },
+        {
+          "title": "Untervektorraum",
+          "blocks": [
+            {
+              "md": "$U \\subseteq V$ ist ein **Untervektorraum**, wenn\n1. $0 \\in U$,\n2. $u, w \\in U \\Rightarrow u + w \\in U$,\n3. $u \\in U$, $\\lambda \\in K \\Rightarrow \\lambda u \\in U$.\n\n| Teilmenge von $\\mathbb{R}^2$ | Unterraum? |\n|---|---|\n| Gerade durch den Ursprung | ja |\n| Gerade, die den Ursprung verfehlt | nein, kein Nullvektor |\n| erster Quadrant | nein, $-1 \\cdot v$ fällt heraus |\n| Vereinigung zweier Ursprungsgeraden | nein, die Summe fällt heraus |"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "Nur den Nullvektor prüfen: Er ist nötig, aber nicht hinreichend. Und Abgeschlossenheit braucht alle Skalare, auch negative.\n\nWeiter mit **Linearkombination und Spann**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Menge ist mit der üblichen Addition und Skalarmultiplikation **kein** Vektorraum über $\\R$?",
+      "options": [
+        {
+          "md": "$\\set{(x, y) \\in \\R^2 : x + y = 1}$",
+          "correct": true
+        },
+        {
+          "md": "die Polynome vom Grad höchstens $3$"
+        },
+        {
+          "md": "alle Funktionen $\\R \\to \\R$"
+        },
+        {
+          "md": "$\\set{(x, y) \\in \\R^2 : x + y = 0}$"
+        }
+      ],
+      "explain": "Der Nullvektor $(0, 0)$ fehlt, und $(1, 0) + (0, 1) = (1, 1)$ liegt nicht mehr darin.",
+      "label": "Vektorraum",
+      "id": "vq1"
     },
     {
       "id": "null",
@@ -344,7 +464,8 @@
         "Unterraumkriterium: Nullvektor, abgeschlossen unter Addition und unter Vielfachen.",
         "Geraden und Ebenen sind genau dann Unterräume, wenn sie durch den Ursprung gehen.",
         "Alle Rechenregeln wie $0 \\cdot v = 0$ folgen aus den Axiomen.",
-        "Lösungsmengen homogener linearer Bedingungen sind Vektorräume; Mengen mit Konstanten oder Ungleichungen nicht."
+        "Lösungsmengen homogener linearer Bedingungen sind Vektorräume; Mengen mit Konstanten oder Ungleichungen nicht.",
+        "$0 \\cdot v = 0$ und $(-1) \\cdot v = -v$ folgen aus den Axiomen."
       ]
     }
   ]

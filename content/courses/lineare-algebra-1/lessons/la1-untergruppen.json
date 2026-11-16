@@ -54,13 +54,124 @@
     },
     {
       "type": "text",
-      "md": "Eine **Untergruppe** ist eine Teilmenge, die mit derselben Verknüpfung selbst eine Gruppe ist. Kurz prüft man: $H \\ne \\emptyset$ und mit $a, b \\in H$ liegt auch $ab^{-1}$ in $H$ (**Untergruppenkriterium**).\n\nDie **Ordnung** eines Elements $a$ ist das kleinste $k \\ge 1$ mit $a^k = e$ (additiv: $k \\cdot a = 0$). Die Potenzen $e, a, a^2, \\dots, a^{k-1}$ bilden die von $a$ **erzeugte** Untergruppe $\\langle a \\rangle$, sie hat genau $k$ Elemente.",
-      "id": "t1"
+      "md": "Eine **Untergruppe** ist eine Teilmenge, die selbst eine Gruppe ist. **Kriterium:** $H \\ne \\emptyset$, und aus $a, b \\in H$ folgt $ab^{-1} \\in H$. Die **Ordnung** von $a$ ist das kleinste $k \\ge 1$ mit $a^k = e$; dann hat $\\langle a \\rangle$ genau $k$ Elemente.",
+      "id": "t1",
+      "more": "Eine **Untergruppe** ist eine Teilmenge, die mit derselben Verknüpfung selbst eine Gruppe ist. Kurz prüft man: $H \\ne \\emptyset$ und mit $a, b \\in H$ liegt auch $ab^{-1}$ in $H$ (**Untergruppenkriterium**).\n\nDie **Ordnung** eines Elements $a$ ist das kleinste $k \\ge 1$ mit $a^k = e$ (additiv: $k \\cdot a = 0$). Die Potenzen $e, a, a^2, \\dots, a^{k-1}$ bilden die von $a$ **erzeugte** Untergruppe $\\langle a \\rangle$, sie hat genau $k$ Elemente."
     },
     {
       "type": "text",
       "md": "> [!theorem] Satz von Lagrange\n> Ist $G$ eine endliche Gruppe und $H$ eine Untergruppe, so teilt $|H|$ die Ordnung $|G|$.\n>\n> **Folgerungen:** Die Ordnung jedes Elements teilt $|G|$, und $a^{|G|} = e$ für alle $a$. Gruppen von Primzahlordnung sind zyklisch.\n\nDie Idee: Die **Nebenklassen** $aH = \\{ah : h \\in H\\}$ zerlegen $G$ in gleich große Stücke.",
       "id": "t2"
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Die von $8$ erzeugte Untergruppe** in $(\\Z/12\\Z, +)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\langle 8 \\rangle = \\set{0, 8, 4}",
+            "why": "$8 + 8 = 16 \\equiv 4$ und $4 + 8 = 12 \\equiv 0$."
+          },
+          {
+            "tex": "\\operatorname{ord}(8) = 3",
+            "why": "Das kleinste $k$ mit $k \\cdot 8 \\equiv 0 \\pmod{12}$."
+          },
+          {
+            "tex": "\\operatorname{ord}(a) = \\frac{n}{\\operatorname{ggT}(a, n)} = \\frac{12}{4}",
+            "why": "In $\\Z/n\\Z$ allgemein."
+          },
+          {
+            "tex": "3 \\mid 12",
+            "why": "Die Ordnung einer Untergruppe teilt die Gruppenordnung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Vielfache.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ordnung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lagrange.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gruppen und Körper",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 1\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Gruppe",
+          "blocks": [
+            {
+              "md": "Eine **Gruppe** $(G, \\circ)$ ist eine Menge mit einer Verknüpfung, für die gilt:\n1. Assoziativität: $(a \\circ b) \\circ c = a \\circ (b \\circ c)$,\n2. neutrales Element $e$ mit $e \\circ a = a \\circ e = a$,\n3. zu jedem $a$ ein Inverses $a^{-1}$ mit $a \\circ a^{-1} = a^{-1} \\circ a = e$.\n\nGilt zusätzlich $a \\circ b = b \\circ a$, heißt die Gruppe **abelsch**. Neutrales Element und Inverse sind eindeutig, und $(a \\circ b)^{-1} = b^{-1} \\circ a^{-1}$.\n\n| Beispiel | Gruppe? |\n|---|---|\n| $(\\mathbb{Z}, +)$, $(\\mathbb{Q} \\setminus \\{0\\}, \\cdot)$ | ja, abelsch |\n| $(\\mathbb{Z}/n\\mathbb{Z}, +)$, Rechnen mit Resten | ja, abelsch |\n| Permutationen von $\\{1, \\dots, n\\}$ mit Hintereinanderausführung | ja, für $n \\ge 3$ nicht abelsch |\n| invertierbare $n \\times n$-Matrizen mit dem Matrixprodukt | ja, für $n \\ge 2$ nicht abelsch |\n| $(\\mathbb{N}, +)$ | nein, keine Inversen |\n| $(\\mathbb{Z}, \\cdot)$ | nein, $2$ hat kein Inverses |"
+            }
+          ]
+        },
+        {
+          "title": "Körper",
+          "blocks": [
+            {
+              "md": "Ein **Körper** $(K, +, \\cdot)$: $(K, +)$ ist eine abelsche Gruppe mit neutralem Element $0$, $(K \\setminus \\{0\\}, \\cdot)$ ist eine abelsche Gruppe, und es gilt das Distributivgesetz. Beispiele: $\\mathbb{Q}$, $\\mathbb{R}$, $\\mathbb{C}$ und $\\mathbb{F}_p = \\mathbb{Z}/p\\mathbb{Z}$ für Primzahlen $p$.\n\n$\\mathbb{Z}/6\\mathbb{Z}$ ist kein Körper: $2 \\cdot 3 = 0$, also können $2$ und $3$ keine Inversen haben (Nullteiler). In $\\mathbb{Z}/7\\mathbb{Z}$ dagegen ist $3^{-1} = 5$, denn $3 \\cdot 5 = 15 \\equiv 1$."
+            }
+          ]
+        },
+        {
+          "title": "Wozu",
+          "blocks": [
+            {
+              "md": "Vektorräume brauchen einen Körper für die Skalare (**Vektorraum**). Lineare Algebra funktioniert über jedem Körper gleich, auch über $\\mathbb{F}_2$, dem Körper der Codierungstheorie. Die Axiome der reellen Zahlen: **Körper- und Anordnungsaxiome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Ordnung",
+      "md": "Welche Ordnung hat $6$ in $(\\Z/15\\Z, +)$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "Ordnung",
+      "explain": "$\\operatorname{ggT}(6, 15) = 3$, also $\\tfrac{15}{3} = 5$: $5 \\cdot 6 = 30 \\equiv 0$.",
+      "id": "vq1"
     },
     {
       "type": "proof",
@@ -233,7 +344,8 @@
         "Untergruppenkriterium: $H \\ne \\emptyset$ und $a, b \\in H \\Rightarrow ab^{-1} \\in H$.",
         "Die Ordnung von $a$ ist $|\\langle a \\rangle|$; in $\\mathbb{Z}/n\\mathbb{Z}$ ist sie $n/\\gcd(a, n)$.",
         "Lagrange: $|H|$ teilt $|G|$, weil die Nebenklassen $G$ in gleich große Stücke zerlegen.",
-        "Die Umkehrung gilt nicht allgemein ($A_4$ hat keine Untergruppe der Ordnung $6$), wohl aber für zyklische Gruppen."
+        "Die Umkehrung gilt nicht allgemein ($A_4$ hat keine Untergruppe der Ordnung $6$), wohl aber für zyklische Gruppen.",
+        "In $\\Z/n\\Z$ hat $a$ die Ordnung $n / \\operatorname{ggT}(a, n)$."
       ],
       "id": "summary"
     }

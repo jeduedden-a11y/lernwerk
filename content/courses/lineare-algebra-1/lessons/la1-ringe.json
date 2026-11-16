@@ -54,13 +54,125 @@
     },
     {
       "type": "text",
-      "md": "Ein **Ring** hat eine Addition und eine Multiplikation: $(R, +)$ ist eine abelsche Gruppe, die Multiplikation ist assoziativ mit Eins, und es gelten die Distributivgesetze. Beispiele: $\\mathbb{Z}$, $\\mathbb{Z}/n\\mathbb{Z}$, Polynome, $n \\times n$-Matrizen.\n\nDie **Einheiten** $R^\\times$ sind die multiplikativ invertierbaren Elemente. Ein **Nullteiler** ist ein $a \\ne 0$ mit $ab = 0$ für ein $b \\ne 0$. Ein **Körper** ist ein kommutativer Ring, in dem jedes $a \\ne 0$ eine Einheit ist.",
-      "id": "t1"
+      "md": "Ein **Ring** hat eine Addition (abelsche Gruppe) und eine assoziative Multiplikation mit Eins, verbunden durch Distributivgesetze: $\\Z$, $\\Z/n\\Z$, Polynome, Matrizen. **Einheiten** sind invertierbar, **Nullteiler** sind $a \\ne 0$ mit $ab = 0$ für ein $b \\ne 0$. Ein Körper ist ein kommutativer Ring, in dem jedes $a \\ne 0$ eine Einheit ist.",
+      "id": "t1",
+      "more": "Ein **Ring** hat eine Addition und eine Multiplikation: $(R, +)$ ist eine abelsche Gruppe, die Multiplikation ist assoziativ mit Eins, und es gelten die Distributivgesetze. Beispiele: $\\mathbb{Z}$, $\\mathbb{Z}/n\\mathbb{Z}$, Polynome, $n \\times n$-Matrizen.\n\nDie **Einheiten** $R^\\times$ sind die multiplikativ invertierbaren Elemente. Ein **Nullteiler** ist ein $a \\ne 0$ mit $ab = 0$ für ein $b \\ne 0$. Ein **Körper** ist ein kommutativer Ring, in dem jedes $a \\ne 0$ eine Einheit ist."
     },
     {
       "type": "text",
-      "md": "> [!definition] Charakteristik\n> Die **Charakteristik** von $K$ ist die kleinste Zahl $p \\ge 1$ mit $\\underbrace{1 + \\dots + 1}_{p} = 0$, oder $0$, wenn es keine gibt.\n>\n> Die Charakteristik eines Körpers ist $0$ oder eine Primzahl: Wäre sie $mn$ mit $1 < m, n$, dann wären $m \\cdot 1$ und $n \\cdot 1$ Nullteiler.\n\nIn Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$. Viele Formeln der Schule gelten dort nicht, etwa $x = -x \\Rightarrow x = 0$.",
-      "id": "t2"
+      "md": "Die **Charakteristik** ist die kleinste Zahl $p$, für die $p$ Einsen zusammen $0$ ergeben, sonst $0$. Bei Körpern ist sie $0$ oder eine Primzahl. In Charakteristik $2$ gilt $-1 = 1$ und $(a + b)^2 = a^2 + b^2$.",
+      "id": "t2",
+      "more": "> [!definition] Charakteristik\n> Die **Charakteristik** von $K$ ist die kleinste Zahl $p \\ge 1$ mit $\\underbrace{1 + \\dots + 1}_{p} = 0$, oder $0$, wenn es keine gibt.\n>\n> Die Charakteristik eines Körpers ist $0$ oder eine Primzahl: Wäre sie $mn$ mit $1 < m, n$, dann wären $m \\cdot 1$ und $n \\cdot 1$ Nullteiler.\n\nIn Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$. Viele Formeln der Schule gelten dort nicht, etwa $x = -x \\Rightarrow x = 0$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Warum $\\Z/6\\Z$ kein Körper ist** und $\\Z/p\\Z$ schon.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "2 \\cdot 3 = 6 \\equiv 0 \\pmod 6",
+            "why": "Zwei Elemente $\\ne 0$ mit Produkt $0$."
+          },
+          {
+            "tex": "2x \\equiv 1 \\pmod 6 \\text{ ist unlösbar}",
+            "why": "$2x$ ist modulo $6$ immer $0$, $2$ oder $4$."
+          },
+          {
+            "tex": "ab = 0,\\ a \\ne 0 \\Rightarrow b = a^{-1}ab = 0",
+            "why": "In einem Körper gibt es keine Nullteiler."
+          },
+          {
+            "tex": "\\Z/p\\Z \\text{ ist ein Körper}",
+            "why": "Für $a \\not\\equiv 0$ ist $\\operatorname{ggT}(a, p) = 1$, und Bézout liefert das Inverse."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Nullteiler.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kein Inverses.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Körper.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Primzahl.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gruppen und Körper",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 1\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Gruppe",
+          "blocks": [
+            {
+              "md": "Eine **Gruppe** $(G, \\circ)$ ist eine Menge mit einer Verknüpfung, für die gilt:\n1. Assoziativität: $(a \\circ b) \\circ c = a \\circ (b \\circ c)$,\n2. neutrales Element $e$ mit $e \\circ a = a \\circ e = a$,\n3. zu jedem $a$ ein Inverses $a^{-1}$ mit $a \\circ a^{-1} = a^{-1} \\circ a = e$.\n\nGilt zusätzlich $a \\circ b = b \\circ a$, heißt die Gruppe **abelsch**. Neutrales Element und Inverse sind eindeutig, und $(a \\circ b)^{-1} = b^{-1} \\circ a^{-1}$.\n\n| Beispiel | Gruppe? |\n|---|---|\n| $(\\mathbb{Z}, +)$, $(\\mathbb{Q} \\setminus \\{0\\}, \\cdot)$ | ja, abelsch |\n| $(\\mathbb{Z}/n\\mathbb{Z}, +)$, Rechnen mit Resten | ja, abelsch |\n| Permutationen von $\\{1, \\dots, n\\}$ mit Hintereinanderausführung | ja, für $n \\ge 3$ nicht abelsch |\n| invertierbare $n \\times n$-Matrizen mit dem Matrixprodukt | ja, für $n \\ge 2$ nicht abelsch |\n| $(\\mathbb{N}, +)$ | nein, keine Inversen |\n| $(\\mathbb{Z}, \\cdot)$ | nein, $2$ hat kein Inverses |"
+            }
+          ]
+        },
+        {
+          "title": "Körper",
+          "blocks": [
+            {
+              "md": "Ein **Körper** $(K, +, \\cdot)$: $(K, +)$ ist eine abelsche Gruppe mit neutralem Element $0$, $(K \\setminus \\{0\\}, \\cdot)$ ist eine abelsche Gruppe, und es gilt das Distributivgesetz. Beispiele: $\\mathbb{Q}$, $\\mathbb{R}$, $\\mathbb{C}$ und $\\mathbb{F}_p = \\mathbb{Z}/p\\mathbb{Z}$ für Primzahlen $p$.\n\n$\\mathbb{Z}/6\\mathbb{Z}$ ist kein Körper: $2 \\cdot 3 = 0$, also können $2$ und $3$ keine Inversen haben (Nullteiler). In $\\mathbb{Z}/7\\mathbb{Z}$ dagegen ist $3^{-1} = 5$, denn $3 \\cdot 5 = 15 \\equiv 1$."
+            }
+          ]
+        },
+        {
+          "title": "Wozu",
+          "blocks": [
+            {
+              "md": "Vektorräume brauchen einen Körper für die Skalare (**Vektorraum**). Lineare Algebra funktioniert über jedem Körper gleich, auch über $\\mathbb{F}_2$, dem Körper der Codierungstheorie. Die Axiome der reellen Zahlen: **Körper- und Anordnungsaxiome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Inverses",
+      "md": "Welches $x \\in \\set{1, \\dots, 6}$ erfüllt $3x \\equiv 1 \\pmod 7$?",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "x",
+      "explain": "$3 \\cdot 5 = 15 = 2 \\cdot 7 + 1$.",
+      "id": "vq1"
     },
     {
       "type": "proof",
@@ -243,7 +355,8 @@
         "Einheiten von $\\mathbb{Z}/n\\mathbb{Z}$: die zu $n$ teilerfremden Reste; die übrigen $\\ne 0$ sind Nullteiler.",
         "$\\mathbb{Z}/n\\mathbb{Z}$ ist ein Körper genau dann, wenn $n$ prim ist.",
         "Die Charakteristik eines Körpers ist $0$ oder prim; endliche Körper haben $p^n$ Elemente.",
-        "In Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$."
+        "In Charakteristik $2$ ist $-1 = 1$ und $(a + b)^2 = a^2 + b^2$.",
+        "$\\Z/n\\Z$ ist genau dann ein Körper, wenn $n$ prim ist."
       ],
       "id": "summary"
     }

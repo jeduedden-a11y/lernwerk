@@ -77,7 +77,8 @@
     {
       "id": "idee",
       "type": "text",
-      "md": "Drei **elementare Zeilenumformungen** verändern die Lösungsmenge eines Gleichungssystems nicht:\n\n1. zwei Zeilen vertauschen,\n2. eine Zeile mit einer Zahl $\\ne 0$ multiplizieren,\n3. ein Vielfaches einer Zeile zu einer anderen addieren.\n\nDas **Gauß-Verfahren** benutzt sie, um die Matrix in **Stufenform** zu bringen: In jeder Zeile beginnt der erste Eintrag $\\ne 0$ weiter rechts als in der Zeile darüber. Dann löst man von unten nach oben auf.\n\nAus der Stufenform liest man auch ab, **wie viele** Lösungen es gibt: Eine Nullzeile mit rechter Seite $\\ne 0$ bedeutet Widerspruch, keine Lösung. Sonst gibt es so viele freie Parameter, wie Spalten ohne Stufe sind."
+      "md": "Drei **Zeilenumformungen** ändern die Lösungsmenge nicht: Zeilen tauschen, eine Zeile mit $\\lambda \\ne 0$ multiplizieren, ein Vielfaches einer Zeile addieren. Gauß bringt die Matrix damit in **Stufenform** und löst von unten nach oben. Eine Zeile $0 = c$ mit $c \\ne 0$ heißt: keine Lösung.",
+      "more": "Drei **elementare Zeilenumformungen** verändern die Lösungsmenge eines Gleichungssystems nicht:\n\n1. zwei Zeilen vertauschen,\n2. eine Zeile mit einer Zahl $\\ne 0$ multiplizieren,\n3. ein Vielfaches einer Zeile zu einer anderen addieren.\n\nDas **Gauß-Verfahren** benutzt sie, um die Matrix in **Stufenform** zu bringen: In jeder Zeile beginnt der erste Eintrag $\\ne 0$ weiter rechts als in der Zeile darüber. Dann löst man von unten nach oben auf.\n\nAus der Stufenform liest man auch ab, **wie viele** Lösungen es gibt: Eine Nullzeile mit rechter Seite $\\ne 0$ bedeutet Widerspruch, keine Lösung. Sonst gibt es so viele freie Parameter, wie Spalten ohne Stufe sind."
     },
     {
       "id": "selbst",
@@ -113,6 +114,283 @@
         "message": "Noch nicht in Stufenform. Unter dem ersten Eintrag von Zeile 1 müssen Nullen entstehen, danach unter dem Stufeneintrag von Zeile 2."
       },
       "explain": "Zum Beispiel: Z2 ← Z2 − 2·Z1 ergibt $(0, 1, 3, 7)$, Z3 ← Z3 − (−1)·Z1 ergibt $(0, 3, 3, 10)$, dann Z3 ← Z3 − 3·Z2 ergibt $(0, 0, -6, -11)$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Gauß an einem Beispiel:** zwei Eliminationsschritte, dann rückwärts einsetzen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\left(\\begin{array}{rrr|r} 1 & 1 & 1 & 6 \\\\ 2 & 1 & -1 & 1 \\\\ 1 & -1 & 1 & 2 \\end{array}\\right)",
+            "why": "Die erweiterte Matrix."
+          },
+          {
+            "tex": "\\left(\\begin{array}{rrr|r} 1 & 1 & 1 & 6 \\\\ 0 & -1 & -3 & -11 \\\\ 0 & -2 & 0 & -4 \\end{array}\\right)",
+            "why": "$\\mathrm{II} - 2\\,\\mathrm{I}$ und $\\mathrm{III} - \\mathrm{I}$."
+          },
+          {
+            "tex": "\\left(\\begin{array}{rrr|r} 1 & 1 & 1 & 6 \\\\ 0 & -1 & -3 & -11 \\\\ 0 & 0 & 6 & 18 \\end{array}\\right)",
+            "why": "$\\mathrm{III} - 2\\,\\mathrm{II}$."
+          },
+          {
+            "tex": "z = 3,\\ \\ y = 2,\\ \\ x = 1",
+            "why": "Aus $6z = 18$, dann $-y - 9 = -11$, dann $x + 2 + 3 = 6$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "System.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erste Spalte.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stufenform.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rückwärts.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gauß-Algorithmus",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Gauß-Algorithmus.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Gauß-Algorithmus** (Gauß'sches Eliminationsverfahren) löst lineare Gleichungssysteme systematisch, indem die erweiterte Koeffizientenmatrix durch elementare Zeilenumformungen auf **Dreiecksform (Stufenform)** gebracht wird."
+            }
+          ]
+        },
+        {
+          "title": "Erlaubte Zeilenumformungen",
+          "blocks": [
+            {
+              "md": "1. Zwei Zeilen vertauschen.\n2. Eine Zeile mit einer Zahl $\\neq 0$ multiplizieren.\n3. Ein Vielfaches einer Zeile zu einer anderen addieren.\n\nDiese Umformungen ändern die **Lösungsmenge nicht**."
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen",
+          "blocks": [
+            {
+              "md": "1. LGS als **erweiterte Koeffizientenmatrix** $(A|\\mathbf{b})$ schreiben.\n2. Mit der ersten Zeile die $x_1$-Koeffizienten aller darunterliegenden Zeilen eliminieren (Vielfache der ersten Zeile abziehen).\n3. Mit der zweiten Zeile die $x_2$-Koeffizienten der darunterliegenden Zeilen eliminieren — usw., bis **Dreiecksform** erreicht ist.\n4. **Rückwärtseinsetzen**: von der letzten Zeile beginnend jede Variable bestimmen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 2 & -1 & 1 & | & 3 \\\\ 1 & 2 & -1 & | & 2 \\end{pmatrix}$$\nZeile 2 $-2\\cdot$Zeile 1, Zeile 3 $-$ Zeile 1:\n$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 0 & -3 & -1 & | & -9 \\\\ 0 & 1 & -2 & | & -4 \\end{pmatrix}$$\nZeile 3 $+\\frac13\\cdot$Zeile 2:\n$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 0 & -3 & -1 & | & -9 \\\\ 0 & 0 & -\\frac{7}{3} & | & -7 \\end{pmatrix}$$\nRückwärts: $z=3$, dann $-3y-3=-9 \\Rightarrow y=2$, dann $x+2+3=6 \\Rightarrow x=1$. Lösung $(1,2,3)$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsmenge ablesen",
+          "blocks": [
+            {
+              "md": "- **Genau eine Lösung:** so viele \"Stufen\" (führende Einsen) wie Variablen.\n- **Unendlich viele Lösungen:** eine Zeile wird zu $0=0$ → freier Parameter, Lösungsmenge in Parameterform angeben.\n- **Keine Lösung:** eine Zeile wird zu $0 = c$ mit $c \\neq 0$ (Widerspruch)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Rechenfehler beim Multiplizieren/Addieren von Zeilen — nach jedem Schritt Probe an der Ausgangsgleichung sinnvoll.\n- Beim Rückwärtseinsetzen die Reihenfolge vertauschen (immer von unten nach oben).\n- Bei $0=0$-Zeile die Lösungsmenge fälschlich als \"eindeutig\" oder \"leer\" statt als unendlich (mit Parameter) angeben.\n\nGrundlage für die Untersuchung von **Matrizen** und deren Anwendung in **Übergangsprozessen**."
+            }
+          ]
+        },
+        {
+          "title": "Das Verfahren",
+          "blocks": [
+            {
+              "md": "> [!important] Drei erlaubte Umformungen -- und nur diese\n> 1. Zwei Zeilen **vertauschen**\n> 2. Eine Zeile mit einer Zahl $\\ne 0$ **multiplizieren**\n> 3. Zu einer Zeile das Vielfache einer anderen **addieren**\n>\n> Alle drei sind **umkehrbar**, und genau darauf beruht die Berechtigung des Verfahrens: Umkehrbare Umformungen ändern die Lösungsmenge nicht. Das umgeformte System ist zum ursprünglichen gleichwertig.\n>\n> Die Multiplikation mit null wäre nicht umkehrbar und ist deshalb ausgeschlossen -- sie würde eine Gleichung vernichten und die Lösungsmenge vergrößern. Ebenso wenig darf eine Zeile zu sich selbst mit dem Faktor $-1$ addiert werden.\n>\n> Ziel ist die **Zeilenstufenform**: In jeder Zeile beginnt die erste von null verschiedene Zahl weiter rechts als in der Zeile darüber."
+            }
+          ]
+        },
+        {
+          "title": "Vorwärtselimination und Rückwärtseinsetzen",
+          "blocks": [
+            {
+              "md": "> [!info] Zwei Phasen mit verschiedenen Zielen\n> Die **Vorwärtselimination** erzeugt Nullen unterhalb der Diagonale und führt auf die Dreiecksgestalt. Das **Rückwärtseinsetzen** löst von unten nach oben auf.\n>\n> Bei der Gauß-Jordan-Variante wird auch oberhalb der Diagonale ausgeräumt, sodass die Lösung direkt abzulesen ist. Das ist aufwendiger, aber übersichtlicher -- und der Weg, auf dem die inverse Matrix berechnet wird.\n>\n> Praktisch arbeitet man mit der **erweiterten Koeffizientenmatrix**, in der die rechten Seiten durch einen Strich abgetrennt sind. Das erspart das Mitschleppen der Variablennamen und macht die Rechnung übersichtlich."
+            }
+          ]
+        },
+        {
+          "title": "Ablesen des Ergebnisses",
+          "blocks": [
+            {
+              "md": "| letzte Zeile | Bedeutung |\n|---|---|\n| $0 = 0$ | keine Information -- freie Variable |\n| $0 = c$ mit $c \\ne 0$ | **Widerspruch**, keine Lösung |\n| $a x_3 = b$ mit $a \\ne 0$ | eindeutig lösbar |\n\n> [!tip] Freie Variablen werden zu Parametern\n> Bleibt eine Variable unbestimmt, setzt man sie gleich einem Parameter -- etwa $x_3 = t$ -- und drückt die übrigen durch $t$ aus. Die Lösungsmenge nimmt dann die Gestalt einer Geradengleichung an, was die geometrische Deutung unmittelbar sichtbar macht.\n>\n> Die Schreibweise der Lösungsmenge gehört zur vollständigen Antwort: $L = \\{\\vec{p}+t\\vec{u} \\mid t\\in\\mathbb{R}\\}$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenhinweise",
+          "blocks": [
+            {
+              "md": "> [!warning] Brüche vermeiden, Zwischenergebnisse prüfen\n> Man wählt als Pivotzeile möglichst eine mit einer Eins an führender Stelle, notfalls durch Vertauschen. Das hält die Rechnung ganzzahlig und vermeidet den größten Teil der Fehler.\n>\n> Eine Zeile darf mit einer Zahl multipliziert werden, um Brüche zu beseitigen -- das ändert die Lösungsmenge nicht.\n>\n> Die **Probe** durch Einsetzen in die ursprünglichen Gleichungen ist bei diesem Verfahren besonders wertvoll, weil sich ein einziger Vorzeichenfehler durch alle folgenden Zeilen fortpflanzt. Sie kostet wenig Zeit und deckt praktisch jeden Fehler auf."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Gauß-Algorithmus ist das Standardverfahren für **Lineare Gleichungssysteme** und wird bei **Matrizen** zur Berechnung der Inversen gebraucht. Geometrisch bestimmt er Schnittgeraden von **Ebenen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lineare Gleichungssysteme (LGS)",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Lineare Gleichungssysteme.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein **lineares Gleichungssystem (LGS)** besteht aus mehreren linearen Gleichungen mit denselben Variablen, die **gleichzeitig** erfüllt sein müssen:\n$$\\begin{aligned} a_{11}x_1 + a_{12}x_2 + \\dots + a_{1n}x_n &= b_1 \\\\ a_{21}x_1 + a_{22}x_2 + \\dots + a_{2n}x_n &= b_2 \\\\ &\\ \\vdots \\end{aligned}$$"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsmengen",
+          "blocks": [
+            {
+              "md": "Ein LGS hat entweder:\n\n| Fall | Geometrisch (2 Variablen) | Geometrisch (3 Variablen) |\n|------|----------------------------|------------------------------|\n| **genau eine Lösung** | zwei Geraden schneiden sich in einem Punkt | drei Ebenen schneiden sich in einem Punkt |\n| **unendlich viele Lösungen** | Geraden sind identisch | Ebenen schneiden sich in einer Geraden/Ebene |\n| **keine Lösung** | Geraden sind parallel (verschieden) | keine gemeinsame Schnittmenge |"
+            }
+          ]
+        },
+        {
+          "title": "Lösungsverfahren",
+          "blocks": [
+            {
+              "md": "- **Einsetzungs-/Gleichsetzungs-/Additionsverfahren:** für kleine Systeme (2 Variablen) von Hand.\n- ****Gauß-Algorithmus**:** systematisches Verfahren für beliebig große Systeme.\n- **Matrixschreibweise:** das LGS lässt sich kompakt als $A\\mathbf{x} = \\mathbf{b}$ mit Koeffizientenmatrix $A$ schreiben (siehe **Matrizen Grundlagen**)."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\begin{aligned} 2x + y &= 5 \\\\ x - y &= 1 \\end{aligned}$$\nAddition beider Gleichungen: $3x = 6 \\Rightarrow x=2$, eingesetzt: $y=1$. Eindeutige Lösung $(2,1)$."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungskontext",
+          "blocks": [
+            {
+              "md": "LGS treten überall dort auf, wo mehrere Bedingungen gleichzeitig gelten sollen: Schnittpunkte von **Geraden** und **Ebenen** (siehe **Lagebeziehungen von Geraden und Ebenen**), Mischungsprobleme, Bestimmung von Funktionsparametern aus mehreren Bedingungen (z. B. Steckbriefaufgaben bei **Funktionenscharen**)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Beim Einsetzen/Addieren Vorzeichenfehler.\n- Bei unendlich vielen Lösungen die Lösungsmenge nicht als **Menge** (mit freiem Parameter) angeben, sondern nur einen Einzelwert.\n- Nicht erkennen, dass ein System **unterbestimmt** (weniger Gleichungen als Variablen) oder **überbestimmt** ist.\n\nFür größere Systeme: **Gauß-Algorithmus**."
+            }
+          ]
+        },
+        {
+          "title": "Die drei Lösungsfälle",
+          "blocks": [
+            {
+              "md": "| Fall | Zeilenstufenform endet mit | geometrisch (drei Ebenen) |\n|---|---|---|\n| **genau eine** Lösung | jede Variable ist Stufenvariable | ein gemeinsamer Punkt |\n| **keine** Lösung | Widerspruchszeile $0 = c$, $c\\ne 0$ | kein gemeinsamer Punkt |\n| **unendlich viele** | mindestens eine freie Variable | Schnittgerade oder -ebene |\n\n> [!important] Die geometrische Deutung macht die Fälle einsichtig\n> Jede lineare Gleichung in drei Unbekannten beschreibt eine **Ebene**. Ein System aus drei Gleichungen fragt daher nach dem gemeinsamen Schnitt dreier Ebenen.\n>\n> Die Anschauung liefert dabei mehr Fälle, als die Algebra unterscheidet: Keine Lösung kann bedeuten, dass zwei Ebenen parallel sind -- oder dass die drei Ebenen ein Dreiecksprisma bilden, sich also paarweise schneiden, ohne eine gemeinsame Gerade zu haben. Beide Fälle liefern dieselbe Widerspruchszeile.\n>\n> Bei unendlich vielen Lösungen entscheidet die Zahl der freien Variablen über die Dimension: eine freie Variable ergibt eine Gerade, zwei eine Ebene."
+            }
+          ]
+        },
+        {
+          "title": "Homogene und inhomogene Systeme",
+          "blocks": [
+            {
+              "md": "> [!info] Homogene Systeme haben immer mindestens eine Lösung\n> Ist die rechte Seite durchgehend null, so ist der Nullvektor stets Lösung -- die **triviale** Lösung. Die Frage lautet daher nicht, ob es Lösungen gibt, sondern ob es außer der trivialen noch weitere gibt.\n>\n> Nichttriviale Lösungen existieren genau dann, wenn das System mehr Unbekannte als unabhängige Gleichungen hat. Daraus folgt unmittelbar der Zusammenhang zur **linearen Abhängigkeit**: Die Spalten sind genau dann linear abhängig, wenn das homogene System nichttrivial lösbar ist.\n>\n> Die Lösungsmenge eines inhomogenen Systems hat die Gestalt \"eine spezielle Lösung plus alle Lösungen des zugehörigen homogenen Systems\". Diese Struktur begegnet in derselben Form bei Differenzialgleichungen wieder -- sie ist kein Zufall, sondern eine Eigenschaft aller linearen Probleme."
+            }
+          ]
+        },
+        {
+          "title": "Überbestimmte und unterbestimmte Systeme",
+          "blocks": [
+            {
+              "md": "> [!warning] Mehr Gleichungen bedeutet nicht weniger Lösungen\n> Ein überbestimmtes System -- mehr Gleichungen als Unbekannte -- ist meist unlösbar, kann aber sehr wohl unendlich viele Lösungen haben, wenn die Gleichungen voneinander abhängen. Umgekehrt hat ein unterbestimmtes System nie genau eine Lösung, aber möglicherweise gar keine.\n>\n> Entscheidend ist nicht die **Anzahl** der Gleichungen, sondern die Anzahl der **voneinander unabhängigen** -- der Rang. Wer nach Gleichungszahl urteilt statt nach Rang, kommt regelmäßig zu falschen Aussagen."
+            }
+          ]
+        },
+        {
+          "title": "Systeme mit Parameter",
+          "blocks": [
+            {
+              "md": "> [!tip] Die Fallunterscheidung gehört an die Stelle, an der dividiert wird\n> Bei Aufgaben mit einem Parameter $a$ in den Koeffizienten führt der **Gauß-Algorithmus** auf eine Zeile der Form $(\\ldots a \\ldots)\\,x_3 = (\\ldots)$. Dort ist zu unterscheiden, ob der Koeffizient null wird.\n>\n> Ist er von null verschieden, gibt es genau eine Lösung. Wird er null, entscheidet die rechte Seite: null ergibt unendlich viele Lösungen, sonst keine.\n>\n> Der Fehler, an dem solche Aufgaben scheitern, ist die stillschweigende Division durch einen Term, der null sein kann. Jede Division im Verlauf des Verfahrens ist daher zu begründen."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Lineare Gleichungssysteme werden mit dem **Gauß-Algorithmus** gelöst und lassen sich als **Matrizengleichung** schreiben. Geometrisch entsprechen sie den **Lagebeziehungen von Geraden und Ebenen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Die letzte Zeile der Stufenform lautet $(0\\ \\ 0\\ \\ 0 \\mid 5)$. Was folgt?",
+      "options": [
+        {
+          "md": "Das System hat keine Lösung.",
+          "correct": true
+        },
+        {
+          "md": "Es gibt unendlich viele Lösungen.",
+          "why": "Das wäre bei $(0\\ \\ 0\\ \\ 0 \\mid 0)$ möglich."
+        },
+        {
+          "md": "$z = 5$"
+        },
+        {
+          "md": "Es gibt genau eine Lösung."
+        }
+      ],
+      "explain": "Die Zeile bedeutet $0 = 5$, ein Widerspruch.",
+      "label": "Widerspruch",
+      "id": "vq1"
     },
     {
       "id": "warum",
@@ -269,7 +547,8 @@
         "Nullzeile mit rechter Seite $\\ne 0$: keine Lösung. Sonst gibt jede Spalte ohne Stufe einen freien Parameter.",
         "Rang = Zahl der Stufen = Zahl der unabhängigen Gleichungen.",
         "Erlaubt sind nur umkehrbare Zeilenumformungen.",
-        "Nullzeile $0 = 0$: überflüssig. Zeile $0 = c \\ne 0$: Widerspruch."
+        "Nullzeile $0 = 0$: überflüssig. Zeile $0 = c \\ne 0$: Widerspruch.",
+        "Gauß: Stufenform durch Zeilenumformungen, dann von unten auflösen."
       ]
     }
   ]

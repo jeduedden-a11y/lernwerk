@@ -66,7 +66,8 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "Für eine lineare Abbildung $f: V \\to W$ sind\n\n- der **Kern** $\\ker f = \\{v \\in V : f(v) = 0\\}$, alles, was auf null abgebildet wird,\n- das **Bild** $\\operatorname{im} f = \\{f(v) : v \\in V\\}$, alles, was erreicht wird.\n\nBeide sind Untervektorräume. Der **Rang** von $f$ ist $\\dim \\operatorname{im} f$; bei einer Matrix ist das die Zahl linear unabhängiger Spalten.\n\n**Dimensionsformel:** Ist $V$ endlichdimensional, dann\n\n$$\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f.$$"
+      "md": "Der **Kern** $\\ker f = \\set{v : f(v) = 0}$ ist, was auf null geht, das **Bild** $\\operatorname{im} f$, was erreicht wird; beide sind Unterräume. Der Rang ist $\\dim \\operatorname{im} f$. **Dimensionsformel:** $\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f$.",
+      "more": "Für eine lineare Abbildung $f: V \\to W$ sind\n\n- der **Kern** $\\ker f = \\{v \\in V : f(v) = 0\\}$, alles, was auf null abgebildet wird,\n- das **Bild** $\\operatorname{im} f = \\{f(v) : v \\in V\\}$, alles, was erreicht wird.\n\nBeide sind Untervektorräume. Der **Rang** von $f$ ist $\\dim \\operatorname{im} f$; bei einer Matrix ist das die Zahl linear unabhängiger Spalten.\n\n**Dimensionsformel:** Ist $V$ endlichdimensional, dann\n\n$$\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f.$$"
     },
     {
       "id": "platt",
@@ -111,6 +112,132 @@
         "message": "Lege Ae₁ und Ae₂ auf eine gemeinsame Gerade durch den Ursprung."
       },
       "explain": "Liegen die Bilder von $e_1$ und $e_2$ auf einer Geraden, ist das ganze Bild diese Gerade. Dann muss eine Richtung auf $0$ fallen: Der Kern ist nicht mehr nur $\\{0\\}$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Kern und Rang** einer Matrix mit abhängigen Zeilen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}",
+            "why": "Die zweite Zeile ist das Doppelte der ersten."
+          },
+          {
+            "tex": "x + 2y = 0",
+            "why": "Mehr bleibt von $Av = 0$ nicht übrig."
+          },
+          {
+            "tex": "\\ker A = \\operatorname{span}\\bigl((-2, 1)\\bigr)",
+            "why": "$y$ frei wählen, $x = -2y$."
+          },
+          {
+            "tex": "\\dim \\ker A + \\operatorname{Rang} A = 1 + 1 = 2",
+            "why": "Dimensionsformel."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Matrix.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kern.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dimensionen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Kern und Bild",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Kern und Bild.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definitionen",
+          "blocks": [
+            {
+              "md": "Für eine lineare Abbildung $f: V \\to W$:\n- **Kern** $\\ker f = \\{v \\in V : f(v) = 0\\}$, was die Abbildung verschluckt,\n- **Bild** $\\operatorname{im} f = \\{f(v) : v \\in V\\}$, was sie erreicht.\n\nBeides sind Untervektorräume: Der Kern enthält $0$, und mit $u, v$ auch $u + v$ und $\\lambda v$, weil $f(u + v) = f(u) + f(v) = 0$ und $f(\\lambda v) = \\lambda f(v) = 0$. Der **Rang** von $f$ ist $\\dim \\operatorname{im} f$, bei einer Matrix die Zahl linear unabhängiger Spalten."
+            }
+          ]
+        },
+        {
+          "title": "Injektivität",
+          "blocks": [
+            {
+              "md": "$f$ ist genau dann injektiv, wenn $\\ker f = \\{0\\}$. Denn $f(u) = f(v) \\Leftrightarrow f(u - v) = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Dimensionsformel",
+          "blocks": [
+            {
+              "md": "$$\\dim V = \\dim \\ker f + \\dim \\operatorname{im} f.$$\nWas an Dimension im Kern verloren geht, fehlt im Bild."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$A = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}$ drückt die Ebene auf eine Gerade zusammen. Kern: alle Vielfachen von $(2, -1)$. Bild: alle Vielfachen von $(1, 2)$. Dimensionen: $1 + 1 = 2$."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen",
+          "blocks": [
+            {
+              "md": "- Für quadratische Matrizen sind gleichwertig: injektiv, surjektiv, bijektiv, $\\det A \\ne 0$ (**Determinante**).\n- Ist $Ax = b$ lösbar und $x_p$ eine Lösung, so ist die Lösungsmenge $x_p + \\ker A$. Eindeutig lösbar ist es genau bei trivialem Kern."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Dimensionsformel",
+      "md": "$f: \\R^5 \\to \\R^3$ ist linear und surjektiv. Wie groß ist $\\dim \\ker f$?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "dim",
+      "explain": "Surjektiv heißt Rang $3$, also $\\dim \\ker f = 5 - 3 = 2$.",
+      "id": "vq1"
     },
     {
       "id": "injektiv",
@@ -290,7 +417,8 @@
         "$f$ ist injektiv genau dann, wenn $\\ker f = \\{0\\}$.",
         "Der Lösungsraum von $Ax = 0$ ist der Kern von $A$, seine Dimension ist Spaltenzahl minus Rang.",
         "Die Dimensionsformel verbietet manches: kein $\\ker f = \\operatorname{im} f$ in ungerader Dimension, keine Injektion in einen kleineren Raum.",
-        "$f^2 = 0$ heißt $\\operatorname{im} f \\subseteq \\ker f$, also $\\operatorname{rang} f \\le \\tfrac n2$."
+        "$f^2 = 0$ heißt $\\operatorname{im} f \\subseteq \\ker f$, also $\\operatorname{rang} f \\le \\tfrac n2$.",
+        "$\\dim V = \\dim \\ker f + \\operatorname{Rang} f$."
       ]
     }
   ]

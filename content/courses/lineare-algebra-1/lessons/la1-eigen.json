@@ -71,7 +71,8 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "Ein Vektor $v \\ne 0$ heißt **Eigenvektor** von $A$ zum **Eigenwert** $\\lambda$, wenn\n\n$$Av = \\lambda v.$$\n\nUmgeformt: $(A - \\lambda E)v = 0$ hat eine Lösung $v \\ne 0$. Das geht genau dann, wenn $A - \\lambda E$ nicht invertierbar ist, also\n\n$$\\det(A - \\lambda E) = 0.$$\n\nDas ist das **charakteristische Polynom**. Für $2 \\times 2$-Matrizen lautet es $\\lambda^2 - (\\operatorname{Spur} A)\\,\\lambda + \\det A$, wobei die Spur die Summe der Diagonaleinträge ist. Seine Nullstellen sind die Eigenwerte; die Eigenvektoren findet man danach als Kern von $A - \\lambda E$."
+      "md": "$v \\ne 0$ ist **Eigenvektor** zum **Eigenwert** $\\lambda$, wenn $Av = \\lambda v$. Dann ist $A - \\lambda E$ nicht invertierbar: $\\det(A - \\lambda E) = 0$. Für $2 \\times 2$ heißt das $\\lambda^2 - \\operatorname{Spur}(A)\\,\\lambda + \\det A = 0$; die Eigenvektoren bilden den Kern von $A - \\lambda E$.",
+      "more": "Ein Vektor $v \\ne 0$ heißt **Eigenvektor** von $A$ zum **Eigenwert** $\\lambda$, wenn\n\n$$Av = \\lambda v.$$\n\nUmgeformt: $(A - \\lambda E)v = 0$ hat eine Lösung $v \\ne 0$. Das geht genau dann, wenn $A - \\lambda E$ nicht invertierbar ist, also\n\n$$\\det(A - \\lambda E) = 0.$$\n\nDas ist das **charakteristische Polynom**. Für $2 \\times 2$-Matrizen lautet es $\\lambda^2 - (\\operatorname{Spur} A)\\,\\lambda + \\det A$, wobei die Spur die Summe der Diagonaleinträge ist. Seine Nullstellen sind die Eigenwerte; die Eigenvektoren findet man danach als Kern von $A - \\lambda E$."
     },
     {
       "id": "suchen",
@@ -114,6 +115,124 @@
         }
       },
       "explain": "Eigenvektoren sind $(1, 0)$ mit Eigenwert $3$ und $(1, -1)$ mit Eigenwert $2$, und alle ihre Vielfachen. Bei einer Dreiecksmatrix stehen die Eigenwerte auf der Diagonale."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Eigenwerte und Eigenvektoren** von $A = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\det\\begin{pmatrix} 2 - \\lambda & 1 \\\\ 1 & 2 - \\lambda \\end{pmatrix} = 0",
+            "why": "Charakteristisches Polynom."
+          },
+          {
+            "tex": "(2 - \\lambda)^2 - 1 = 0",
+            "why": "$ad - bc$."
+          },
+          {
+            "tex": "\\lambda_1 = 1,\\ \\ \\lambda_2 = 3",
+            "why": "$2 - \\lambda = \\pm 1$."
+          },
+          {
+            "tex": "v_1 = (1, -1),\\ \\ v_2 = (1, 1)",
+            "why": "Kerne von $A - E$ und $A - 3E$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausrechnen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eigenwerte.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eigenvektoren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Eigenwerte und Eigenvektoren",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Eigenwerte und Eigenvektoren.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 6\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Vektor $v \\ne 0$ heißt **Eigenvektor** von $A$ zum **Eigenwert** $\\lambda$, wenn $Av = \\lambda v$. Eigenvektoren sind die Richtungen, die die Abbildung nicht dreht, sondern nur streckt, staucht oder umkehrt."
+            }
+          ]
+        },
+        {
+          "title": "Berechnung",
+          "blocks": [
+            {
+              "md": "1. Eigenwerte: Nullstellen des **charakteristischen Polynoms** $\\det(A - \\lambda I) = 0$, denn $(A - \\lambda I)v = 0$ hat genau dann eine Lösung $v \\ne 0$, wenn $A - \\lambda I$ nicht invertierbar ist.\n2. Eigenvektoren zu $\\lambda$: der Kern von $A - \\lambda I$ ohne den Nullvektor.\n\nBeispiel $A = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$: $\\det(A - \\lambda I) = (2 - \\lambda)^2 - 1 = \\lambda^2 - 4\\lambda + 3$, also $\\lambda = 1$ und $\\lambda = 3$, mit Eigenvektoren $(1, -1)$ und $(1, 1)$. Die Diagonale wird verdreifacht, die Gegendiagonale bleibt.\n\nEine Drehung um $90°$ hat keinen reellen Eigenwert ($\\lambda^2 + 1 = 0$): Keine Richtung bleibt erhalten."
+            }
+          ]
+        },
+        {
+          "title": "Nützliche Fakten",
+          "blocks": [
+            {
+              "md": "- Spur (Summe der Diagonale) $=$ Summe der Eigenwerte, $\\det A =$ Produkt der Eigenwerte.\n- Eigenvektoren zu verschiedenen Eigenwerten sind linear unabhängig."
+            }
+          ]
+        },
+        {
+          "title": "Diagonalisieren",
+          "blocks": [
+            {
+              "md": "Hat eine $n \\times n$-Matrix $n$ linear unabhängige Eigenvektoren, so ist $A = S D S^{-1}$ mit den Eigenvektoren als Spalten von $S$ und den Eigenwerten in der Diagonalmatrix $D$. Dann ist $A^k = S D^k S^{-1}$ leicht zu berechnen. Anwendungen: Fibonacci-Zahlen, Schwingungen und Übergangsprozesse, bei denen die stationäre Verteilung ein Eigenvektor zum Eigenwert $1$ ist (**Übergangsmatrizen und Populationsmodelle**, **Markov-Modelle**)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Spur",
+      "md": "Wie groß ist die Summe der Eigenwerte von $\\begin{pmatrix} 4 & 2 \\\\ 1 & 3 \\end{pmatrix}$?",
+      "answer": 7,
+      "tolerance": 0,
+      "placeholder": "Summe",
+      "explain": "Die Summe der Eigenwerte ist die Spur: $4 + 3 = 7$. (Die Eigenwerte sind $2$ und $5$.)",
+      "id": "vq1"
     },
     {
       "id": "eigenwerte",
@@ -270,7 +389,8 @@
         "Eigenvektoren zu $\\lambda$ bilden den Kern von $A - \\lambda E$.",
         "Gibt es eine Basis aus Eigenvektoren, ist $A$ diagonalisierbar, und Potenzen werden leicht.",
         "Eigenvektoren zu verschiedenen Eigenwerten sind unabhängig.",
-        "Ist $\\lambda$ Eigenwert von $A$, so ist $p(\\lambda)$ Eigenwert von $p(A)$."
+        "Ist $\\lambda$ Eigenwert von $A$, so ist $p(\\lambda)$ Eigenwert von $p(A)$.",
+        "Eigenwerte aus $\\det(A - \\lambda E) = 0$; Summe gleich Spur, Produkt gleich Determinante."
       ]
     }
   ]

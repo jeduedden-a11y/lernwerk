@@ -56,13 +56,134 @@
     },
     {
       "type": "text",
-      "md": "$f: V \\to W$ heißt **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Beispiele außerhalb des $\\mathbb{R}^n$: die Ableitung $p \\mapsto p'$, das Auswerten $p \\mapsto p(2)$, das Integral, die Spur, das Transponieren. Keine linearen Abbildungen sind Verschiebungen $v \\mapsto v + a$ ($a \\ne 0$), $x \\mapsto x^2$ oder $A \\mapsto \\det A$.\n\nJede lineare Abbildung bildet $0$ auf $0$ ab, Unterräume auf Unterräume und Linearkombinationen auf Linearkombinationen.",
-      "id": "t1"
+      "md": "$f$ ist **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Linear sind Ableiten, Auswerten, Integrieren, Spur und Transponieren, nicht linear Verschiebungen, $x^2$ und $\\det$. Lineare Abbildungen schicken $0$ auf $0$ und Unterräume auf Unterräume.",
+      "id": "t1",
+      "more": "$f: V \\to W$ heißt **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Beispiele außerhalb des $\\mathbb{R}^n$: die Ableitung $p \\mapsto p'$, das Auswerten $p \\mapsto p(2)$, das Integral, die Spur, das Transponieren. Keine linearen Abbildungen sind Verschiebungen $v \\mapsto v + a$ ($a \\ne 0$), $x \\mapsto x^2$ oder $A \\mapsto \\det A$.\n\nJede lineare Abbildung bildet $0$ auf $0$ ab, Unterräume auf Unterräume und Linearkombinationen auf Linearkombinationen."
     },
     {
       "type": "text",
       "md": "> [!theorem] Fortsetzungssatz\n> Ist $b_1, \\dots, b_n$ eine Basis von $V$ und sind $w_1, \\dots, w_n \\in W$ **beliebig**, so gibt es genau eine lineare Abbildung $f$ mit $f(b_i) = w_i$.\n\nVorschreiben darf man also die Bilder einer Basis, aber nicht die Bilder weiterer Vektoren, denn die sind dann schon festgelegt.",
       "id": "t2"
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Lineare Abbildungen schicken $0$ auf $0$:** darum ist keine Verschiebung linear.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(0) = f(0 \\cdot v)",
+            "why": "Für irgendeinen Vektor $v$."
+          },
+          {
+            "tex": "= 0 \\cdot f(v) = 0",
+            "why": "Homogenität."
+          },
+          {
+            "tex": "T(v) = v + a:\\ \\ T(0) = a",
+            "why": "Für $a \\ne 0$ also nicht linear."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Null.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Homogen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verschiebung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lineare Abbildungen und Matrizen",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**. Schulfassung: **Matrizen als lineare Abbildungen**."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Abbildung",
+          "blocks": [
+            {
+              "md": "$f: V \\to W$ heißt **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Dann gilt $f(0) = 0$, und Geraden werden auf Geraden oder Punkte abgebildet."
+            }
+          ]
+        },
+        {
+          "title": "Die Spalten verraten alles",
+          "blocks": [
+            {
+              "md": "Eine lineare Abbildung ist durch die Bilder der Basisvektoren festgelegt: $f(x_1 e_1 + \\dots + x_n e_n) = x_1 f(e_1) + \\dots + x_n f(e_n)$. Schreibt man $f(e_1), \\dots, f(e_n)$ als Spalten nebeneinander, erhält man die **Darstellungsmatrix** $A$, und es gilt $f(x) = Ax$. Jede Matrix definiert umgekehrt eine lineare Abbildung $K^n \\to K^m$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele in der Ebene",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix |\n|---|---|\n| Drehung um $\\varphi$ | $\\begin{pmatrix} \\cos\\varphi & -\\sin\\varphi \\\\ \\sin\\varphi & \\cos\\varphi \\end{pmatrix}$ |\n| Spiegelung an der $x$-Achse | $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ |\n| Streckung um $k$ | $\\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}$ |\n| Scherung | $\\begin{pmatrix} 1 & s \\\\ 0 & 1 \\end{pmatrix}$ |\n| Projektion auf die $x$-Achse | $\\begin{pmatrix} 1 & 0 \\\\ 0 & 0 \\end{pmatrix}$ |\n\nMan liest die Spalten als „wohin geht $e_1$, wohin geht $e_2$“."
+            }
+          ]
+        },
+        {
+          "title": "Nicht linear",
+          "blocks": [
+            {
+              "md": "Verschiebungen $x \\mapsto x + b$ mit $b \\ne 0$ (der Nullpunkt bewegt sich) und Abbildungen wie $x \\mapsto x^2$.\n\nWeiter: **Matrixmultiplikation** (Verkettung), **Kern und Bild**, **Determinante**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Abbildung $\\R^2 \\to \\R^2$ ist linear?",
+      "options": [
+        {
+          "md": "$(x, y) \\mapsto (y, x)$",
+          "correct": true
+        },
+        {
+          "md": "$(x, y) \\mapsto (x + 1, y)$",
+          "why": "Sie schickt $0$ nicht auf $0$."
+        },
+        {
+          "md": "$(x, y) \\mapsto (x^2, y)$"
+        },
+        {
+          "md": "$(x, y) \\mapsto (xy, 0)$"
+        }
+      ],
+      "explain": "Vertauschen der Koordinaten ist eine Spiegelung an der Winkelhalbierenden.",
+      "label": "Linear",
+      "id": "vq1"
     },
     {
       "type": "proof",
@@ -233,7 +354,8 @@
         "Linear heißt additiv und homogen; $0 \\mapsto 0$ ist der schnellste Test.",
         "Fortsetzungssatz: Die Bilder einer Basis darf man beliebig vorgeben, dann ist alles festgelegt.",
         "Spalte $j$ der Abbildungsmatrix = Koordinaten des Bildes des $j$-ten Basisvektors.",
-        "In unendlicher Dimension trennen sich injektiv und surjektiv, etwa bei der Ableitung."
+        "In unendlicher Dimension trennen sich injektiv und surjektiv, etwa bei der Ableitung.",
+        "$f(0) = 0$ ist notwendig für Linearität."
       ],
       "id": "summary"
     }

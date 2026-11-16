@@ -62,7 +62,8 @@
     {
       "id": "gruppe",
       "type": "text",
-      "md": "Eine **Gruppe** ist eine Menge $G$ mit einer Verknüpfung $\\circ$, für die gilt:\n\n1. **Abgeschlossenheit:** $a \\circ b \\in G$ für alle $a, b \\in G$.\n2. **Assoziativität:** $(a \\circ b) \\circ c = a \\circ (b \\circ c)$.\n3. **Neutrales Element:** Es gibt $e \\in G$ mit $e \\circ a = a \\circ e = a$.\n4. **Inverse:** Zu jedem $a$ gibt es $a^{-1}$ mit $a \\circ a^{-1} = a^{-1} \\circ a = e$.\n\nGilt zusätzlich $a \\circ b = b \\circ a$, heißt die Gruppe **abelsch**. Beispiele: $(\\mathbb{Z}, +)$, $(\\mathbb{Q} \\setminus \\{0\\}, \\cdot)$, die Drehungen der Ebene. Keine Gruppe: $(\\mathbb{N}, +)$, denn $3$ hat kein additives Inverses in $\\mathbb{N}$."
+      "md": "Eine **Gruppe** $(G, \\circ)$ ist abgeschlossen und assoziativ, hat ein **neutrales Element** $e$ und zu jedem $a$ ein **Inverses** $a^{-1}$. Ist sie kommutativ, heißt sie **abelsch**. Beispiele: $(\\Z, +)$, $(\\Q \\setminus \\set{0}, \\cdot)$, die Drehungen der Ebene.",
+      "more": "Eine **Gruppe** ist eine Menge $G$ mit einer Verknüpfung $\\circ$, für die gilt:\n\n1. **Abgeschlossenheit:** $a \\circ b \\in G$ für alle $a, b \\in G$.\n2. **Assoziativität:** $(a \\circ b) \\circ c = a \\circ (b \\circ c)$.\n3. **Neutrales Element:** Es gibt $e \\in G$ mit $e \\circ a = a \\circ e = a$.\n4. **Inverse:** Zu jedem $a$ gibt es $a^{-1}$ mit $a \\circ a^{-1} = a^{-1} \\circ a = e$.\n\nGilt zusätzlich $a \\circ b = b \\circ a$, heißt die Gruppe **abelsch**. Beispiele: $(\\mathbb{Z}, +)$, $(\\mathbb{Q} \\setminus \\{0\\}, \\cdot)$, die Drehungen der Ebene. Keine Gruppe: $(\\mathbb{N}, +)$, denn $3$ hat kein additives Inverses in $\\mathbb{N}$."
     },
     {
       "id": "tafel",
@@ -104,6 +105,128 @@
       "explain": "Modulo 8 haben genau die geraden Zahlen kein Inverses, denn ein Produkt mit einer geraden Zahl bleibt gerade und kann nie $\\equiv 1$ sein. Allgemein ist $a$ modulo $n$ genau dann invertierbar, wenn $\\operatorname{ggT}(a, n) = 1$."
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Das Inverse ist eindeutig:** Sind $b$ und $c$ beide invers zu $a$, dann ist $b = c$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "b = b \\circ e",
+            "why": "$e$ ist neutral."
+          },
+          {
+            "tex": "= b \\circ (a \\circ c)",
+            "why": "$c$ ist invers zu $a$."
+          },
+          {
+            "tex": "= (b \\circ a) \\circ c",
+            "why": "Assoziativität."
+          },
+          {
+            "tex": "= e \\circ c = c",
+            "why": "$b$ ist invers zu $a$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Neutral.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umklammern.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schluss.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gruppen und Körper",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Gruppen und Körper.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 1\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Gruppe",
+          "blocks": [
+            {
+              "md": "Eine **Gruppe** $(G, \\circ)$ ist eine Menge mit einer Verknüpfung, für die gilt:\n1. Assoziativität: $(a \\circ b) \\circ c = a \\circ (b \\circ c)$,\n2. neutrales Element $e$ mit $e \\circ a = a \\circ e = a$,\n3. zu jedem $a$ ein Inverses $a^{-1}$ mit $a \\circ a^{-1} = a^{-1} \\circ a = e$.\n\nGilt zusätzlich $a \\circ b = b \\circ a$, heißt die Gruppe **abelsch**. Neutrales Element und Inverse sind eindeutig, und $(a \\circ b)^{-1} = b^{-1} \\circ a^{-1}$.\n\n| Beispiel | Gruppe? |\n|---|---|\n| $(\\mathbb{Z}, +)$, $(\\mathbb{Q} \\setminus \\{0\\}, \\cdot)$ | ja, abelsch |\n| $(\\mathbb{Z}/n\\mathbb{Z}, +)$, Rechnen mit Resten | ja, abelsch |\n| Permutationen von $\\{1, \\dots, n\\}$ mit Hintereinanderausführung | ja, für $n \\ge 3$ nicht abelsch |\n| invertierbare $n \\times n$-Matrizen mit dem Matrixprodukt | ja, für $n \\ge 2$ nicht abelsch |\n| $(\\mathbb{N}, +)$ | nein, keine Inversen |\n| $(\\mathbb{Z}, \\cdot)$ | nein, $2$ hat kein Inverses |"
+            }
+          ]
+        },
+        {
+          "title": "Körper",
+          "blocks": [
+            {
+              "md": "Ein **Körper** $(K, +, \\cdot)$: $(K, +)$ ist eine abelsche Gruppe mit neutralem Element $0$, $(K \\setminus \\{0\\}, \\cdot)$ ist eine abelsche Gruppe, und es gilt das Distributivgesetz. Beispiele: $\\mathbb{Q}$, $\\mathbb{R}$, $\\mathbb{C}$ und $\\mathbb{F}_p = \\mathbb{Z}/p\\mathbb{Z}$ für Primzahlen $p$.\n\n$\\mathbb{Z}/6\\mathbb{Z}$ ist kein Körper: $2 \\cdot 3 = 0$, also können $2$ und $3$ keine Inversen haben (Nullteiler). In $\\mathbb{Z}/7\\mathbb{Z}$ dagegen ist $3^{-1} = 5$, denn $3 \\cdot 5 = 15 \\equiv 1$."
+            }
+          ]
+        },
+        {
+          "title": "Wozu",
+          "blocks": [
+            {
+              "md": "Vektorräume brauchen einen Körper für die Skalare (**Vektorraum**). Lineare Algebra funktioniert über jedem Körper gleich, auch über $\\mathbb{F}_2$, dem Körper der Codierungstheorie. Die Axiome der reellen Zahlen: **Körper- und Anordnungsaxiome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Struktur ist **keine** Gruppe?",
+      "options": [
+        {
+          "md": "$(\\Z, \\cdot)$",
+          "correct": true
+        },
+        {
+          "md": "$(\\Z, +)$"
+        },
+        {
+          "md": "$(\\Q \\setminus \\set{0}, \\cdot)$"
+        },
+        {
+          "md": "$(\\Z/5\\Z, +)$"
+        }
+      ],
+      "explain": "$2$ hat in $\\Z$ kein multiplikatives Inverses: $\\tfrac12 \\notin \\Z$.",
+      "label": "Gruppe",
+      "id": "vq1"
+    },
+    {
       "id": "keine-gruppe",
       "type": "choice",
       "md": "Welche der folgenden Strukturen ist **keine** Gruppe?",
@@ -137,7 +260,8 @@
     {
       "id": "koerper",
       "type": "text",
-      "md": "Ein **Körper** $K$ hat zwei Verknüpfungen $+$ und $\\cdot$, so dass\n\n- $(K, +)$ eine abelsche Gruppe ist (neutrales Element $0$),\n- $(K \\setminus \\{0\\}, \\cdot)$ eine abelsche Gruppe ist (neutrales Element $1$),\n- das **Distributivgesetz** $a \\cdot (b + c) = a \\cdot b + a \\cdot c$ gilt.\n\nKörper sind $\\mathbb{Q}$, $\\mathbb{R}$, $\\mathbb{C}$ und $\\mathbb{Z}/p\\mathbb{Z}$ für jede Primzahl $p$. Kein Körper sind $\\mathbb{Z}$ (keine Kehrwerte) und $\\mathbb{Z}/6\\mathbb{Z}$ (Nullteiler). In der linearen Algebra sind die Zahlen, mit denen man Vektoren streckt, immer aus einem Körper."
+      "md": "Ein **Körper** $K$: $(K, +)$ und $(K \\setminus \\set{0}, \\cdot)$ sind abelsche Gruppen, und das Distributivgesetz gilt. Körper sind $\\Q$, $\\R$, $\\C$ und $\\Z/p\\Z$ für Primzahlen $p$. Keine Körper: $\\Z$ (keine Kehrwerte) und $\\Z/6\\Z$ (Nullteiler).",
+      "more": "Ein **Körper** $K$ hat zwei Verknüpfungen $+$ und $\\cdot$, so dass\n\n- $(K, +)$ eine abelsche Gruppe ist (neutrales Element $0$),\n- $(K \\setminus \\{0\\}, \\cdot)$ eine abelsche Gruppe ist (neutrales Element $1$),\n- das **Distributivgesetz** $a \\cdot (b + c) = a \\cdot b + a \\cdot c$ gilt.\n\nKörper sind $\\mathbb{Q}$, $\\mathbb{R}$, $\\mathbb{C}$ und $\\mathbb{Z}/p\\mathbb{Z}$ für jede Primzahl $p$. Kein Körper sind $\\mathbb{Z}$ (keine Kehrwerte) und $\\mathbb{Z}/6\\mathbb{Z}$ (Nullteiler). In der linearen Algebra sind die Zahlen, mit denen man Vektoren streckt, immer aus einem Körper."
     },
     {
       "id": "inverses",
@@ -328,7 +452,8 @@
         "Körper: Addition und Multiplikation (ohne $0$) sind abelsche Gruppen, verbunden durch das Distributivgesetz.",
         "$\\mathbb{Z}/n\\mathbb{Z}$ ist genau dann ein Körper, wenn $n$ prim ist. Sonst gibt es Nullteiler.",
         "$(ab)^{-1} = b^{-1}a^{-1}$, die Reihenfolge dreht sich um.",
-        "Neutrales Element und Inverse sind eindeutig; Körper haben keine Nullteiler."
+        "Neutrales Element und Inverse sind eindeutig; Körper haben keine Nullteiler.",
+        "Neutrales Element und Inverse sind eindeutig; der Beweis braucht nur die Assoziativität."
       ]
     }
   ]

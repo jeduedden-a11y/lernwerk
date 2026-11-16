@@ -69,7 +69,8 @@
     {
       "id": "produkt",
       "type": "text",
-      "md": "Sind $f(x) = Ax$ und $g(x) = Bx$ linear, dann ist auch $f \\circ g$ linear, mit Matrix $AB$:\n\n$$(f \\circ g)(x) = A(Bx) = (AB)x.$$\n\nDie $j$-te Spalte von $AB$ ist $A$ mal die $j$-te Spalte von $B$, denn sie ist das Bild von $e_j$: erst $B e_j$, dann $A$ darauf. Daraus folgt die Rechenregel **Zeile mal Spalte**:\n\n$$(AB)_{ij} = \\sum_k a_{ik} b_{kj}.$$\n\nDas Produkt ist assoziativ, $(AB)C = A(BC)$, denn Verkettung ist assoziativ. Kommutativ ist es im Allgemeinen nicht."
+      "md": "Die Verkettung von $x \\mapsto Bx$ und $x \\mapsto Ax$ hat die Matrix $AB$. Ihre $j$-te Spalte ist $A$ mal die $j$-te Spalte von $B$, daher **Zeile mal Spalte**: $(AB)_{ij} = \\sum_k a_{ik} b_{kj}$. Das Produkt ist assoziativ, aber im Allgemeinen nicht kommutativ.",
+      "more": "Sind $f(x) = Ax$ und $g(x) = Bx$ linear, dann ist auch $f \\circ g$ linear, mit Matrix $AB$:\n\n$$(f \\circ g)(x) = A(Bx) = (AB)x.$$\n\nDie $j$-te Spalte von $AB$ ist $A$ mal die $j$-te Spalte von $B$, denn sie ist das Bild von $e_j$: erst $B e_j$, dann $A$ darauf. Daraus folgt die Rechenregel **Zeile mal Spalte**:\n\n$$(AB)_{ij} = \\sum_k a_{ik} b_{kj}.$$\n\nDas Produkt ist assoziativ, $(AB)C = A(BC)$, denn Verkettung ist assoziativ. Kommutativ ist es im Allgemeinen nicht."
     },
     {
       "id": "beispiel",
@@ -109,6 +110,145 @@
         ]
       },
       "explain": "Spiegeln: $e_1 \\mapsto e_1$, $e_2 \\mapsto -e_2$. Drehen: $e_1 \\mapsto e_2$, $-e_2 \\mapsto e_1$. Zusammen $e_1 \\mapsto e_2$ und $e_2 \\mapsto e_1$: die Spiegelung an der Diagonalen $y = x$, mit Matrix $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Warum $(AB)^{-1} = B^{-1} A^{-1}$:** Die Reihenfolge kehrt sich um.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "(AB)(B^{-1}A^{-1})",
+            "why": "Probe mit dem Kandidaten."
+          },
+          {
+            "tex": "= A(BB^{-1})A^{-1}",
+            "why": "Assoziativität."
+          },
+          {
+            "tex": "= AEA^{-1} = AA^{-1} = E",
+            "why": "$BB^{-1} = E$."
+          },
+          {
+            "tex": "(AB)^{-1} = B^{-1}A^{-1}",
+            "why": "Von links genauso: erst Schuhe aus, dann Socken."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kandidat.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Umklammern.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kürzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Matrixmultiplikation",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**. Rechenregeln aus der Schule: **Matrizen Grundlagen**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Für eine $m \\times n$-Matrix $A$ und eine $n \\times p$-Matrix $B$ ist $AB$ die $m \\times p$-Matrix mit\n$$(AB)_{ij} = \\sum_{k=1}^{n} a_{ik}\\, b_{kj}:$$\nZeile $i$ von $A$ mal Spalte $j$ von $B$."
+            }
+          ]
+        },
+        {
+          "title": "Warum gerade so",
+          "blocks": [
+            {
+              "md": "$AB$ ist die Matrix der Verkettung: erst $B$ anwenden, dann $A$. Denn $A(Bx) = (AB)x$. Die Spalten von $AB$ sind die Bilder der Spalten von $B$ unter $A$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "- assoziativ: $(AB)C = A(BC)$; distributiv; die Einheitsmatrix $I$ ist neutral.\n- **Nicht kommutativ:** Erst um $90°$ drehen und dann an der $x$-Achse spiegeln ist etwas anderes als umgekehrt:\n$$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}, \\quad \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Inverse",
+          "blocks": [
+            {
+              "md": "$A^{-1}$ mit $AA^{-1} = A^{-1}A = I$ existiert genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$:\n$$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}.$$\nEs gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst $B$ und dann $A$ ausführt, muss zuerst $A$ rückgängig machen. Größere Inverse berechnet man mit dem **Gauß-Algorithmus**, indem man $(A \\mid I)$ zu $(I \\mid A^{-1})$ umformt."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Einträge komponentenweise multiplizieren.\n- Die Reihenfolge vertauschen, etwa $(AB)^{-1} = A^{-1}B^{-1}$ schreiben."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$A = \\begin{pmatrix} 1 & 1 \\\\ 0 & 1 \\end{pmatrix}$, $B = \\begin{pmatrix} 1 & 0 \\\\ 1 & 1 \\end{pmatrix}$. Was ist $AB$?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix} 2 & 1 \\\\ 1 & 1 \\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix} 1 & 1 \\\\ 1 & 2 \\end{pmatrix}$",
+          "why": "Das ist $BA$: Das Produkt ist nicht kommutativ."
+        },
+        {
+          "md": "$\\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$"
+        },
+        {
+          "md": "$\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$"
+        }
+      ],
+      "explain": "Zeile mal Spalte: $(1, 1) \\cdot (1, 1) = 2$, $(1, 1) \\cdot (0, 1) = 1$, $(0, 1) \\cdot (1, 1) = 1$, $(0, 1) \\cdot (0, 1) = 1$.",
+      "label": "Produkt",
+      "id": "vq1"
     },
     {
       "id": "rechnen",
@@ -153,7 +293,8 @@
     {
       "id": "inverse",
       "type": "text",
-      "md": "Eine Matrix $A$ heißt **invertierbar**, wenn es $A^{-1}$ gibt mit $AA^{-1} = A^{-1}A = E$. Geometrisch: Die Abbildung lässt sich rückgängig machen. Das geht genau dann, wenn $\\det A \\ne 0$, wenn also keine Richtung platt gedrückt wird. Für $2 \\times 2$-Matrizen gilt\n\n$$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}.$$\n\nUnd es gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst Socken, dann Schuhe anzieht, zieht zuerst die Schuhe aus."
+      "md": "$A$ ist **invertierbar**, wenn es $A^{-1}$ mit $AA^{-1} = A^{-1}A = E$ gibt, genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$-Matrizen: Diagonale tauschen, Vorzeichen daneben wechseln, durch $ad - bc$ teilen. Und $(AB)^{-1} = B^{-1}A^{-1}$.",
+      "more": "Eine Matrix $A$ heißt **invertierbar**, wenn es $A^{-1}$ gibt mit $AA^{-1} = A^{-1}A = E$. Geometrisch: Die Abbildung lässt sich rückgängig machen. Das geht genau dann, wenn $\\det A \\ne 0$, wenn also keine Richtung platt gedrückt wird. Für $2 \\times 2$-Matrizen gilt\n\n$$\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}.$$\n\nUnd es gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst Socken, dann Schuhe anzieht, zieht zuerst die Schuhe aus."
     },
     {
       "id": "invers-rechnen",
@@ -322,7 +463,8 @@
         "$A$ ist invertierbar genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$: $\\tfrac{1}{ad - bc}\\begin{pmatrix}d&-b\\\\-c&a\\end{pmatrix}$.",
         "$(AB)^{-1} = B^{-1}A^{-1}$, die Reihenfolge kehrt sich um.",
         "Matrizen vertauschen im Allgemeinen nicht und haben Nullteiler; $(A + B)^2 \\ne A^2 + 2AB + B^2$.",
-        "Für quadratische Matrizen reicht $AB = E$, dann ist auch $BA = E$."
+        "Für quadratische Matrizen reicht $AB = E$, dann ist auch $BA = E$.",
+        "$(AB)^{-1} = B^{-1}A^{-1}$; $AB \\ne BA$ im Allgemeinen."
       ]
     }
   ]

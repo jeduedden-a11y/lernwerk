@@ -93,6 +93,159 @@
       "id": "t2"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gauß-Algorithmus",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Gauß-Algorithmus.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Der **Gauß-Algorithmus** (Gauß'sches Eliminationsverfahren) löst lineare Gleichungssysteme systematisch, indem die erweiterte Koeffizientenmatrix durch elementare Zeilenumformungen auf **Dreiecksform (Stufenform)** gebracht wird."
+            }
+          ]
+        },
+        {
+          "title": "Erlaubte Zeilenumformungen",
+          "blocks": [
+            {
+              "md": "1. Zwei Zeilen vertauschen.\n2. Eine Zeile mit einer Zahl $\\neq 0$ multiplizieren.\n3. Ein Vielfaches einer Zeile zu einer anderen addieren.\n\nDiese Umformungen ändern die **Lösungsmenge nicht**."
+            }
+          ]
+        },
+        {
+          "title": "Vorgehen",
+          "blocks": [
+            {
+              "md": "1. LGS als **erweiterte Koeffizientenmatrix** $(A|\\mathbf{b})$ schreiben.\n2. Mit der ersten Zeile die $x_1$-Koeffizienten aller darunterliegenden Zeilen eliminieren (Vielfache der ersten Zeile abziehen).\n3. Mit der zweiten Zeile die $x_2$-Koeffizienten der darunterliegenden Zeilen eliminieren — usw., bis **Dreiecksform** erreicht ist.\n4. **Rückwärtseinsetzen**: von der letzten Zeile beginnend jede Variable bestimmen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 2 & -1 & 1 & | & 3 \\\\ 1 & 2 & -1 & | & 2 \\end{pmatrix}$$\nZeile 2 $-2\\cdot$Zeile 1, Zeile 3 $-$ Zeile 1:\n$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 0 & -3 & -1 & | & -9 \\\\ 0 & 1 & -2 & | & -4 \\end{pmatrix}$$\nZeile 3 $+\\frac13\\cdot$Zeile 2:\n$$\\begin{pmatrix} 1 & 1 & 1 & | & 6 \\\\ 0 & -3 & -1 & | & -9 \\\\ 0 & 0 & -\\frac{7}{3} & | & -7 \\end{pmatrix}$$\nRückwärts: $z=3$, dann $-3y-3=-9 \\Rightarrow y=2$, dann $x+2+3=6 \\Rightarrow x=1$. Lösung $(1,2,3)$."
+            }
+          ]
+        },
+        {
+          "title": "Lösungsmenge ablesen",
+          "blocks": [
+            {
+              "md": "- **Genau eine Lösung:** so viele \"Stufen\" (führende Einsen) wie Variablen.\n- **Unendlich viele Lösungen:** eine Zeile wird zu $0=0$ → freier Parameter, Lösungsmenge in Parameterform angeben.\n- **Keine Lösung:** eine Zeile wird zu $0 = c$ mit $c \\neq 0$ (Widerspruch)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Rechenfehler beim Multiplizieren/Addieren von Zeilen — nach jedem Schritt Probe an der Ausgangsgleichung sinnvoll.\n- Beim Rückwärtseinsetzen die Reihenfolge vertauschen (immer von unten nach oben).\n- Bei $0=0$-Zeile die Lösungsmenge fälschlich als \"eindeutig\" oder \"leer\" statt als unendlich (mit Parameter) angeben.\n\nGrundlage für die Untersuchung von **Matrizen** und deren Anwendung in **Übergangsprozessen**."
+            }
+          ]
+        },
+        {
+          "title": "Das Verfahren",
+          "blocks": [
+            {
+              "md": "> [!important] Drei erlaubte Umformungen -- und nur diese\n> 1. Zwei Zeilen **vertauschen**\n> 2. Eine Zeile mit einer Zahl $\\ne 0$ **multiplizieren**\n> 3. Zu einer Zeile das Vielfache einer anderen **addieren**\n>\n> Alle drei sind **umkehrbar**, und genau darauf beruht die Berechtigung des Verfahrens: Umkehrbare Umformungen ändern die Lösungsmenge nicht. Das umgeformte System ist zum ursprünglichen gleichwertig.\n>\n> Die Multiplikation mit null wäre nicht umkehrbar und ist deshalb ausgeschlossen -- sie würde eine Gleichung vernichten und die Lösungsmenge vergrößern. Ebenso wenig darf eine Zeile zu sich selbst mit dem Faktor $-1$ addiert werden.\n>\n> Ziel ist die **Zeilenstufenform**: In jeder Zeile beginnt die erste von null verschiedene Zahl weiter rechts als in der Zeile darüber."
+            }
+          ]
+        },
+        {
+          "title": "Vorwärtselimination und Rückwärtseinsetzen",
+          "blocks": [
+            {
+              "md": "> [!info] Zwei Phasen mit verschiedenen Zielen\n> Die **Vorwärtselimination** erzeugt Nullen unterhalb der Diagonale und führt auf die Dreiecksgestalt. Das **Rückwärtseinsetzen** löst von unten nach oben auf.\n>\n> Bei der Gauß-Jordan-Variante wird auch oberhalb der Diagonale ausgeräumt, sodass die Lösung direkt abzulesen ist. Das ist aufwendiger, aber übersichtlicher -- und der Weg, auf dem die inverse Matrix berechnet wird.\n>\n> Praktisch arbeitet man mit der **erweiterten Koeffizientenmatrix**, in der die rechten Seiten durch einen Strich abgetrennt sind. Das erspart das Mitschleppen der Variablennamen und macht die Rechnung übersichtlich."
+            }
+          ]
+        },
+        {
+          "title": "Ablesen des Ergebnisses",
+          "blocks": [
+            {
+              "md": "| letzte Zeile | Bedeutung |\n|---|---|\n| $0 = 0$ | keine Information -- freie Variable |\n| $0 = c$ mit $c \\ne 0$ | **Widerspruch**, keine Lösung |\n| $a x_3 = b$ mit $a \\ne 0$ | eindeutig lösbar |\n\n> [!tip] Freie Variablen werden zu Parametern\n> Bleibt eine Variable unbestimmt, setzt man sie gleich einem Parameter -- etwa $x_3 = t$ -- und drückt die übrigen durch $t$ aus. Die Lösungsmenge nimmt dann die Gestalt einer Geradengleichung an, was die geometrische Deutung unmittelbar sichtbar macht.\n>\n> Die Schreibweise der Lösungsmenge gehört zur vollständigen Antwort: $L = \\{\\vec{p}+t\\vec{u} \\mid t\\in\\mathbb{R}\\}$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenhinweise",
+          "blocks": [
+            {
+              "md": "> [!warning] Brüche vermeiden, Zwischenergebnisse prüfen\n> Man wählt als Pivotzeile möglichst eine mit einer Eins an führender Stelle, notfalls durch Vertauschen. Das hält die Rechnung ganzzahlig und vermeidet den größten Teil der Fehler.\n>\n> Eine Zeile darf mit einer Zahl multipliziert werden, um Brüche zu beseitigen -- das ändert die Lösungsmenge nicht.\n>\n> Die **Probe** durch Einsetzen in die ursprünglichen Gleichungen ist bei diesem Verfahren besonders wertvoll, weil sich ein einziger Vorzeichenfehler durch alle folgenden Zeilen fortpflanzt. Sie kostet wenig Zeit und deckt praktisch jeden Fehler auf."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Gauß-Algorithmus ist das Standardverfahren für **Lineare Gleichungssysteme** und wird bei **Matrizen** zur Berechnung der Inversen gebraucht. Geometrisch bestimmt er Schnittgeraden von **Ebenen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Matrixmultiplikation",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**. Rechenregeln aus der Schule: **Matrizen Grundlagen**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Für eine $m \\times n$-Matrix $A$ und eine $n \\times p$-Matrix $B$ ist $AB$ die $m \\times p$-Matrix mit\n$$(AB)_{ij} = \\sum_{k=1}^{n} a_{ik}\\, b_{kj}:$$\nZeile $i$ von $A$ mal Spalte $j$ von $B$."
+            }
+          ]
+        },
+        {
+          "title": "Warum gerade so",
+          "blocks": [
+            {
+              "md": "$AB$ ist die Matrix der Verkettung: erst $B$ anwenden, dann $A$. Denn $A(Bx) = (AB)x$. Die Spalten von $AB$ sind die Bilder der Spalten von $B$ unter $A$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "- assoziativ: $(AB)C = A(BC)$; distributiv; die Einheitsmatrix $I$ ist neutral.\n- **Nicht kommutativ:** Erst um $90°$ drehen und dann an der $x$-Achse spiegeln ist etwas anderes als umgekehrt:\n$$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}, \\quad \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Inverse",
+          "blocks": [
+            {
+              "md": "$A^{-1}$ mit $AA^{-1} = A^{-1}A = I$ existiert genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$:\n$$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}.$$\nEs gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst $B$ und dann $A$ ausführt, muss zuerst $A$ rückgängig machen. Größere Inverse berechnet man mit dem **Gauß-Algorithmus**, indem man $(A \\mid I)$ zu $(I \\mid A^{-1})$ umformt."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Einträge komponentenweise multiplizieren.\n- Die Reihenfolge vertauschen, etwa $(AB)^{-1} = A^{-1}B^{-1}$ schreiben."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "numeric",
       "label": "Verständnis",
       "md": "$A \\in \\mathbb{R}^{3 \\times 3}$ mit $\\det A = 4$. Man vertauscht zwei Zeilen, multipliziert dann eine Zeile mit $3$ und addiert danach das Doppelte von Zeile 1 zu Zeile 2. Welche Determinante hat das Ergebnis?",

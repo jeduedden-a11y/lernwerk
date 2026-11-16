@@ -70,7 +70,8 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "> [!definition] Lineare Abbildung\n> Eine Abbildung $f : V \\to W$ zwischen $\\K$-Vektorräumen heißt **linear**, wenn für alle $x, y \\in V$ und $\\lambda \\in \\K$ gilt:\n> $$f(x + y) = f(x) + f(y), \\qquad f(\\lambda x) = \\lambda f(x).$$\n\nIm $\\R^2$ folgt daraus etwas Erstaunliches: Kennt man nur die Bilder der beiden Einheitsvektoren $e_1 = (1, 0)$ und $e_2 = (0, 1)$, kennt man die **ganze** Abbildung, denn $f(x, y) = x f(e_1) + y f(e_2)$.\n\nSchreibt man $f(e_1)$ und $f(e_2)$ als **Spalten** nebeneinander, erhält man die Matrix $A$ von $f$."
+      "md": "Linear heißt $f(x + y) = f(x) + f(y)$ und $f(\\lambda x) = \\lambda f(x)$. Darum genügen die Bilder der Einheitsvektoren: $f(x, y) = x\\,f(e_1) + y\\,f(e_2)$. Schreibt man $f(e_1)$ und $f(e_2)$ als **Spalten** nebeneinander, entsteht die Matrix von $f$.",
+      "more": "> [!definition] Lineare Abbildung\n> Eine Abbildung $f : V \\to W$ zwischen $\\K$-Vektorräumen heißt **linear**, wenn für alle $x, y \\in V$ und $\\lambda \\in \\K$ gilt:\n> $$f(x + y) = f(x) + f(y), \\qquad f(\\lambda x) = \\lambda f(x).$$\n\nIm $\\R^2$ folgt daraus etwas Erstaunliches: Kennt man nur die Bilder der beiden Einheitsvektoren $e_1 = (1, 0)$ und $e_2 = (0, 1)$, kennt man die **ganze** Abbildung, denn $f(x, y) = x f(e_1) + y f(e_2)$.\n\nSchreibt man $f(e_1)$ und $f(e_2)$ als **Spalten** nebeneinander, erhält man die Matrix $A$ von $f$."
     },
     {
       "id": "erkunden",
@@ -155,6 +156,234 @@
         ]
       },
       "explain": "$e_1$ bleibt, $e_2$ zeigt nach unten: $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$. Die Determinante ist $-1$: Die Fläche bleibt gleich, die Orientierung kippt."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Die Matrix der Drehung um $90°$:** Bilder der Einheitsvektoren als Spalten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(e_1) = (0, 1)",
+            "why": "$e_1$ dreht nach oben."
+          },
+          {
+            "tex": "f(e_2) = (-1, 0)",
+            "why": "$e_2$ dreht nach links."
+          },
+          {
+            "tex": "A = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}",
+            "why": "Die Bilder als Spalten."
+          },
+          {
+            "tex": "A \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 2 \\end{pmatrix}",
+            "why": "$(2, 1)$ dreht zu $(-1, 2)$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "e1.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "e2.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Matrix.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Probe.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lineare Abbildungen und Matrizen",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Lineare Abbildungen und Matrizen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**. Schulfassung: **Matrizen als lineare Abbildungen**."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Abbildung",
+          "blocks": [
+            {
+              "md": "$f: V \\to W$ heißt **linear**, wenn $f(v + w) = f(v) + f(w)$ und $f(\\lambda v) = \\lambda f(v)$. Dann gilt $f(0) = 0$, und Geraden werden auf Geraden oder Punkte abgebildet."
+            }
+          ]
+        },
+        {
+          "title": "Die Spalten verraten alles",
+          "blocks": [
+            {
+              "md": "Eine lineare Abbildung ist durch die Bilder der Basisvektoren festgelegt: $f(x_1 e_1 + \\dots + x_n e_n) = x_1 f(e_1) + \\dots + x_n f(e_n)$. Schreibt man $f(e_1), \\dots, f(e_n)$ als Spalten nebeneinander, erhält man die **Darstellungsmatrix** $A$, und es gilt $f(x) = Ax$. Jede Matrix definiert umgekehrt eine lineare Abbildung $K^n \\to K^m$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele in der Ebene",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix |\n|---|---|\n| Drehung um $\\varphi$ | $\\begin{pmatrix} \\cos\\varphi & -\\sin\\varphi \\\\ \\sin\\varphi & \\cos\\varphi \\end{pmatrix}$ |\n| Spiegelung an der $x$-Achse | $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ |\n| Streckung um $k$ | $\\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}$ |\n| Scherung | $\\begin{pmatrix} 1 & s \\\\ 0 & 1 \\end{pmatrix}$ |\n| Projektion auf die $x$-Achse | $\\begin{pmatrix} 1 & 0 \\\\ 0 & 0 \\end{pmatrix}$ |\n\nMan liest die Spalten als „wohin geht $e_1$, wohin geht $e_2$“."
+            }
+          ]
+        },
+        {
+          "title": "Nicht linear",
+          "blocks": [
+            {
+              "md": "Verschiebungen $x \\mapsto x + b$ mit $b \\ne 0$ (der Nullpunkt bewegt sich) und Abbildungen wie $x \\mapsto x^2$.\n\nWeiter: **Matrixmultiplikation** (Verkettung), **Kern und Bild**, **Determinante**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Matrizen als lineare Abbildungen",
+      "path": "02 Wiki/Mathematik/08 Lineare Algebra/Matrizen als lineare Abbildungen.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **lineare Abbildung** $f: \\mathbb{R}^n \\to \\mathbb{R}^n$ lässt sich durch eine Matrix $A$ darstellen: $f(\\mathbf{x}) = A\\mathbf{x}$. Jeder Punkt/Vektor der Ebene (oder des Raums) wird dabei auf einen neuen Punkt abgebildet — geometrisch entspricht das **Drehungen, Spiegelungen, Skalierungen** und Kombinationen davon."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Abbildungsmatrizen (2D)",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix |\n|-----------|--------|\n| **Skalierung** (Streckung/Stauchung um Faktoren $s_x, s_y$) | $\\begin{pmatrix}s_x & 0\\\\0 & s_y\\end{pmatrix}$ |\n| **Spiegelung an der $x$-Achse** | $\\begin{pmatrix}1 & 0\\\\0 & -1\\end{pmatrix}$ |\n| **Spiegelung an der $y$-Achse** | $\\begin{pmatrix}-1 & 0\\\\0 & 1\\end{pmatrix}$ |\n| **Drehung um Winkel $\\varphi$** (Ursprung, Gegenuhrzeigersinn) | $\\begin{pmatrix}\\cos\\varphi & -\\sin\\varphi\\\\\\sin\\varphi & \\cos\\varphi\\end{pmatrix}$ |"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel — Drehung um 90°",
+          "blocks": [
+            {
+              "md": "$\\varphi = 90°$: $\\begin{pmatrix}0 & -1\\\\1 & 0\\end{pmatrix}$. Angewendet auf $\\mathbf{x}=\\begin{pmatrix}1\\\\0\\end{pmatrix}$: $\\begin{pmatrix}0\\\\1\\end{pmatrix}$ — der Punkt $(1,0)$ landet nach einer Vierteldrehung bei $(0,1)$, wie erwartet."
+            }
+          ]
+        },
+        {
+          "title": "Verkettung von Abbildungen",
+          "blocks": [
+            {
+              "md": "Werden zwei Abbildungen nacheinander ausgeführt (erst $A$, dann $B$), entspricht das der **Matrizenmultiplikation** $B \\cdot A$ (die zuerst angewendete Matrix steht rechts!) — angewendet als eine einzige Matrix auf den Ausgangsvektor."
+            }
+          ]
+        },
+        {
+          "title": "Fixpunkte und invariante Eigenschaften",
+          "blocks": [
+            {
+              "md": "- Der **Ursprung** ist bei allen linearen Abbildungen ein Fixpunkt: $A\\mathbf{0}=\\mathbf{0}$.\n- Die **Determinante** von $A$ gibt an, wie sich Flächeninhalte unter der Abbildung verändern (Flächenskalierungsfaktor); ihr Vorzeichen zeigt an, ob die Orientierung erhalten bleibt ($\\det A>0$) oder gespiegelt wird ($\\det A<0$)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Reihenfolge bei Verkettung vertauschen — Matrizenmultiplikation ist **nicht kommutativ**.\n- Bei Drehmatrizen Vorzeichen von $\\sin\\varphi$ vertauschen (führt zur entgegengesetzten Drehrichtung).\n- Abbildungsmatrix mit einer Übergangsmatrix (siehe **Übergangsmatrizen und Populationsmodelle**) verwechseln — konzeptionell unterschiedliche Anwendung derselben Matrix-Vektor-Multiplikation.\n\nErgänzt die geometrischen Werkzeuge aus **Vektoralgebra** und **Kreuzprodukt** um eine algebraische Beschreibung von Bewegungen im Raum."
+            }
+          ]
+        },
+        {
+          "title": "Der Grundgedanke",
+          "blocks": [
+            {
+              "md": "$$\\vec{x} \\longmapsto A\\cdot\\vec{x}$$\n\n> [!important] Die Spalten der Matrix sind die Bilder der Einheitsvektoren\n> Das ist die nützlichste Einzelbeobachtung des Themas. Setzt man $\\vec{e}_1 = \\binom{1}{0}$ ein, so liefert die Multiplikation genau die erste Spalte von $A$.\n>\n> Daraus folgt ein Bauverfahren: Um die Matrix einer geometrischen Abbildung aufzustellen, überlegt man sich, wohin die Einheitsvektoren gehen, und schreibt diese Bilder als Spalten. Für die Drehung um $90°$ etwa geht $\\vec{e}_1$ nach $\\binom{0}{1}$ und $\\vec{e}_2$ nach $\\binom{-1}{0}$.\n>\n> Umgekehrt lässt sich aus einer gegebenen Matrix ablesen, was sie tut -- indem man die Spalten als Bildvektoren deutet."
+            }
+          ]
+        },
+        {
+          "title": "Linearität",
+          "blocks": [
+            {
+              "md": "$$A(\\vec{x}+\\vec{y}) = A\\vec{x}+A\\vec{y} \\qquad A(r\\vec{x}) = r\\,A\\vec{x}$$\n\n> [!info] Diese beiden Regeln definieren, was linear heißt\n> Anschaulich bedeuten sie: Geraden bleiben Geraden, der Ursprung bleibt fest, und Parallelität bleibt erhalten. Ein Gitter wird zu einem anderen Gitter -- verzerrt, gedreht, gestaucht, aber nie verbogen.\n>\n> Verschiebungen sind deshalb **keine** linearen Abbildungen: Sie bewegen den Ursprung. Um sie mit einzubeziehen, braucht es affine Abbildungen der Form $\\vec{x}\\mapsto A\\vec{x}+\\vec{b}$ -- in der Computergrafik löst man das über homogene Koordinaten mit einer zusätzlichen Dimension."
+            }
+          ]
+        },
+        {
+          "title": "Geometrische Grundtypen",
+          "blocks": [
+            {
+              "md": "| Abbildung | Matrix (2D) | Determinante |\n|---|---|---|\n| Drehung um $\\alpha$ | $\\begin{pmatrix}\\cos\\alpha & -\\sin\\alpha\\\\ \\sin\\alpha & \\cos\\alpha\\end{pmatrix}$ | $1$ |\n| Spiegelung an der x-Achse | $\\begin{pmatrix}1 & 0\\\\ 0 & -1\\end{pmatrix}$ | $-1$ |\n| zentrische Streckung mit $k$ | $\\begin{pmatrix}k & 0\\\\ 0 & k\\end{pmatrix}$ | $k^2$ |\n| Projektion auf die x-Achse | $\\begin{pmatrix}1 & 0\\\\ 0 & 0\\end{pmatrix}$ | $0$ |\n\n> [!tip] Die Determinante ist der Flächenverzerrungsfaktor\n> Ein Einheitsquadrat wird auf ein Parallelogramm der Fläche $|\\det A|$ abgebildet. Das erklärt die Werte in der Tabelle: Drehungen erhalten die Fläche, Streckungen mit $k$ vergrößern sie um $k^2$.\n>\n> Das **Vorzeichen** gibt die Orientierung an. Negative Determinante bedeutet Umkehrung -- die Spiegelung macht aus einem im Uhrzeigersinn durchlaufenen Dreieck eines gegen den Uhrzeigersinn.\n>\n> Determinante null bedeutet **Entartung**: Die Abbildung drückt den Raum auf eine Gerade oder einen Punkt zusammen. Information geht verloren, die Abbildung ist nicht umkehrbar. Das ist die geometrische Erklärung dafür, weshalb genau die Matrizen mit Determinante null keine Inverse besitzen. Im Raum ist die Determinante entsprechend der Volumenfaktor -- siehe **Spatprodukt**."
+            }
+          ]
+        },
+        {
+          "title": "Hintereinanderausführung",
+          "blocks": [
+            {
+              "md": "> [!warning] Die zuerst ausgeführte Abbildung steht rechts\n> $B\\cdot A$ bedeutet: erst $A$, dann $B$. Die Schreibweise folgt der Funktionsschreibweise $B(A(\\vec{x}))$ und läuft der Leserichtung entgegen.\n>\n> Damit erklärt sich auch die fehlende Kommutativität geometrisch: Drehung nach Spiegelung ergibt eine andere Abbildung als Spiegelung nach Drehung.\n>\n> Für Determinanten gilt dagegen die einfache Regel $\\det(AB) = \\det A \\cdot \\det B$ -- Verzerrungsfaktoren multiplizieren sich, unabhängig von der Reihenfolge."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Lineare Abbildungen geben den **Matrizen** ihre geometrische Bedeutung. Der Determinantenbegriff verbindet sie mit dem **Spatprodukt** der Vektorrechnung."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Matrix spiegelt an der $x$-Achse?",
+      "options": [
+        {
+          "md": "$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$",
+          "correct": true
+        },
+        {
+          "md": "$\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$",
+          "why": "Das spiegelt an der $y$-Achse."
+        },
+        {
+          "md": "$\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$"
+        },
+        {
+          "md": "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$"
+        }
+      ],
+      "explain": "$e_1$ bleibt, $e_2$ wird zu $-e_2$.",
+      "label": "Spiegelung",
+      "id": "vq1"
     },
     {
       "id": "rechnen",
@@ -341,7 +570,8 @@
         "Hintereinanderausführung entspricht dem Matrixprodukt, und das ist nicht kommutativ.",
         "$|\\det A|$ misst die Flächenänderung, $\\det A = 0$ heißt nicht invertierbar.",
         "Die $j$-te Spalte ist das Bild von $e_j$; Matrizen liest man spaltenweise.",
-        "$|\\det A|$ ist der Flächenfaktor für jede Figur."
+        "$|\\det A|$ ist der Flächenfaktor für jede Figur.",
+        "Die Spalten der Matrix sind die Bilder der Einheitsvektoren."
       ]
     }
   ]

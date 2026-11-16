@@ -75,7 +75,8 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "Vektoren $v_1, \\dots, v_k$ heißen **linear unabhängig**, wenn aus\n\n$$\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0$$\n\nfolgt, dass alle $\\lambda_i = 0$ sind. Sonst heißen sie **linear abhängig**: Dann lässt sich einer der Vektoren durch die anderen ausdrücken, er ist überflüssig.\n\nEine **Basis** von $V$ ist eine Familie von Vektoren, die linear unabhängig ist und $V$ erzeugt. Jeder Vektor hat dann **genau eine** Darstellung als Linearkombination der Basis, seine **Koordinaten**.\n\nAlle Basen eines Vektorraums haben gleich viele Elemente (**Austauschsatz von Steinitz**). Diese Zahl ist die **Dimension** $\\dim V$. Beispiele: $\\dim \\mathbb{R}^n = n$, $\\dim$ der Polynome vom Grad $\\le 2$ ist $3$ (Basis $1, x, x^2$)."
+      "md": "$v_1, \\dots, v_k$ sind **linear unabhängig**, wenn $\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0$ nur mit lauter $\\lambda_i = 0$ geht. Eine **Basis** ist linear unabhängig und erzeugt $V$; dann hat jeder Vektor genau eine Darstellung, seine Koordinaten. Alle Basen sind gleich groß.",
+      "more": "Vektoren $v_1, \\dots, v_k$ heißen **linear unabhängig**, wenn aus\n\n$$\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0$$\n\nfolgt, dass alle $\\lambda_i = 0$ sind. Sonst heißen sie **linear abhängig**: Dann lässt sich einer der Vektoren durch die anderen ausdrücken, er ist überflüssig.\n\nEine **Basis** von $V$ ist eine Familie von Vektoren, die linear unabhängig ist und $V$ erzeugt. Jeder Vektor hat dann **genau eine** Darstellung als Linearkombination der Basis, seine **Koordinaten**.\n\nAlle Basen eines Vektorraums haben gleich viele Elemente (**Austauschsatz von Steinitz**). Diese Zahl ist die **Dimension** $\\dim V$. Beispiele: $\\dim \\mathbb{R}^n = n$, $\\dim$ der Polynome vom Grad $\\le 2$ ist $3$ (Basis $1, x, x^2$)."
     },
     {
       "id": "abhaengig",
@@ -99,6 +100,145 @@
         "dependent": true
       },
       "explain": "Abhängig sind $v$ und $w$, sobald $w$ auf der Geraden durch $v$ liegt, also $w = t \\cdot v$ für ein $t$, auch $t = 0$. Dann schrumpft der Spann von der Ebene auf diese Gerade."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Sind $(1, 2)$ und $(3, 4)$ eine Basis des $\\R^2$?** Die Unabhängigkeit prüfen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\lambda (1, 2) + \\mu (3, 4) = (0, 0)",
+            "why": "Nur die triviale Lösung?"
+          },
+          {
+            "tex": "\\lambda + 3\\mu = 0,\\ \\ 2\\lambda + 4\\mu = 0",
+            "why": "Komponentenweise."
+          },
+          {
+            "tex": "-2\\mu = 0 \\Rightarrow \\mu = 0,\\ \\lambda = 0",
+            "why": "Zweite Gleichung minus zweimal die erste."
+          },
+          {
+            "tex": "\\text{Basis des } \\R^2",
+            "why": "Zwei unabhängige Vektoren in einem zweidimensionalen Raum."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Eliminieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Basis und Dimension",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 2\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Unabhängigkeit",
+          "blocks": [
+            {
+              "md": "$v_1, \\dots, v_k$ heißen **linear unabhängig**, wenn\n$$\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0 \\ \\Rightarrow\\ \\lambda_1 = \\dots = \\lambda_k = 0.$$\nGleichwertig: Keiner der Vektoren ist eine Linearkombination der anderen; jeder bringt eine neue Richtung."
+            }
+          ]
+        },
+        {
+          "title": "Basis",
+          "blocks": [
+            {
+              "md": "Eine **Basis** ist ein linear unabhängiges Erzeugendensystem. Dann lässt sich jeder Vektor auf **genau eine** Weise als Linearkombination der Basisvektoren schreiben; die Koeffizienten sind seine **Koordinaten**."
+            }
+          ]
+        },
+        {
+          "title": "Dimension",
+          "blocks": [
+            {
+              "md": "Alle Basen eines Vektorraums haben gleich viele Elemente (Austauschsatz von Steinitz). Diese Zahl ist die **Dimension**.\n\n| Raum | Basis | Dimension |\n|---|---|---|\n| $K^n$ | Einheitsvektoren $e_1, \\dots, e_n$ | $n$ |\n| Polynome vom Grad höchstens $n$ | $1, x, \\dots, x^n$ | $n + 1$ |\n| $\\mathbb{C}$ als $\\mathbb{R}$-Vektorraum | $1, i$ | $2$ |\n| $2 \\times 2$-Matrizen | vier Matrizen mit einer $1$ | $4$ |"
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen in einem Raum der Dimension n",
+          "blocks": [
+            {
+              "md": "- Mehr als $n$ Vektoren sind linear abhängig; weniger als $n$ erzeugen nicht den ganzen Raum.\n- $n$ Vektoren bilden genau dann eine Basis, wenn sie linear unabhängig sind, und genau dann, wenn sie erzeugen.\n- In $K^n$: $n$ Vektoren sind eine Basis $\\Leftrightarrow$ die Matrix mit diesen Spalten hat Rang $n$ $\\Leftrightarrow$ ihre **Determinante** ist nicht $0$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$(1, 2)$ und $(3, 6)$ sind abhängig ($3 \\cdot (1, 2) = (3, 6)$, Determinante $1 \\cdot 6 - 3 \\cdot 2 = 0$). $(1, 2)$ und $(2, 1)$ sind eine Basis des $\\mathbb{R}^2$ (Determinante $-3$)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Drei Vektoren im $\\R^2$ sind immer …",
+      "options": [
+        {
+          "md": "linear abhängig",
+          "correct": true
+        },
+        {
+          "md": "linear unabhängig"
+        },
+        {
+          "md": "eine Basis"
+        },
+        {
+          "md": "ein Erzeugendensystem",
+          "why": "Dreimal derselbe Vektor erzeugt nur eine Gerade."
+        }
+      ],
+      "explain": "Im $\\R^2$ sind höchstens zwei Vektoren unabhängig.",
+      "label": "Anzahl",
+      "id": "vq1"
     },
     {
       "id": "koordinaten",
@@ -292,7 +432,8 @@
         "Alle Basen sind gleich groß. Ihre Größe ist die Dimension.",
         "$n$ Vektoren im $\\mathbb{R}^n$ bilden genau dann eine Basis, wenn ihre Determinante nicht null ist.",
         "Paarweise unabhängig heißt nicht unabhängig; prüfe die ganze Familie.",
-        "Bei genau $\\dim V$ Vektoren genügt eine der Eigenschaften »unabhängig« oder »erzeugend«."
+        "Bei genau $\\dim V$ Vektoren genügt eine der Eigenschaften »unabhängig« oder »erzeugend«.",
+        "In einem $n$-dimensionalen Raum sind mehr als $n$ Vektoren abhängig, $n$ unabhängige eine Basis."
       ]
     }
   ]

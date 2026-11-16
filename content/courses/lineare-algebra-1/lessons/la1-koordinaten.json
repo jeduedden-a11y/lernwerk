@@ -64,13 +64,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Eine Basis ist ein Satz von Maßstäben. In der Standardbasis zählt man »so viel nach rechts, so viel nach oben«. Mit einer anderen Basis zählt man »so viel in Richtung $b_1$, so viel in Richtung $b_2$«. Weil eine Basis linear unabhängig ist und alles erzeugt, gibt es für jeden Vektor genau eine solche Beschreibung: seine **Koordinaten** bezüglich dieser Basis.\n\nZum Übersetzen braucht man eine Matrix. Schreibt man $b_1$ und $b_2$ als Spalten in eine Matrix $T$, dann macht $T$ aus den $B$-Koordinaten $(c_1, c_2)$ den Vektor $c_1 b_1 + c_2 b_2$ in Standardkoordinaten. Der Rückweg ist $T^{-1}$.\n\nWarum der Aufwand? Manche Abbildungen sehen in einer passenden Basis viel einfacher aus. Eine Spiegelung an einer schrägen Geraden ist in der Standardbasis unübersichtlich, in einer Basis aus Richtungs- und Normalenvektor aber einfach $\\operatorname{diag}(1, -1)$."
+      "md": "Eine Basis ist ein Satz von Maßstäben: »so viel in Richtung $b_1$, so viel in Richtung $b_2$«. Jeder Vektor hat genau eine solche Beschreibung, seine **Koordinaten**. Die Matrix $T$ mit den Spalten $b_1, b_2$ übersetzt sie in Standardkoordinaten, $T^{-1}$ zurück.",
+      "more": "Eine Basis ist ein Satz von Maßstäben. In der Standardbasis zählt man »so viel nach rechts, so viel nach oben«. Mit einer anderen Basis zählt man »so viel in Richtung $b_1$, so viel in Richtung $b_2$«. Weil eine Basis linear unabhängig ist und alles erzeugt, gibt es für jeden Vektor genau eine solche Beschreibung: seine **Koordinaten** bezüglich dieser Basis.\n\nZum Übersetzen braucht man eine Matrix. Schreibt man $b_1$ und $b_2$ als Spalten in eine Matrix $T$, dann macht $T$ aus den $B$-Koordinaten $(c_1, c_2)$ den Vektor $c_1 b_1 + c_2 b_2$ in Standardkoordinaten. Der Rückweg ist $T^{-1}$.\n\nWarum der Aufwand? Manche Abbildungen sehen in einer passenden Basis viel einfacher aus. Eine Spiegelung an einer schrägen Geraden ist in der Standardbasis unübersichtlich, in einer Basis aus Richtungs- und Normalenvektor aber einfach $\\operatorname{diag}(1, -1)$."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Koordinaten\n> Ist $B = (b_1, \\dots, b_n)$ eine Basis und $v = c_1 b_1 + \\dots + c_n b_n$, dann heißt $(c_1, \\dots, c_n)$ der **Koordinatenvektor** von $v$ bezüglich $B$. Er ist eindeutig.\n\n> [!definition] Basiswechselmatrix\n> $T = (b_1 \\mid \\dots \\mid b_n)$ hat die Basisvektoren als Spalten. Dann gilt $v_E = T\\, v_B$ und $v_B = T^{-1} v_E$.\n\n> [!satz] Abbildungen in neuer Basis\n> Hat eine lineare Abbildung in Standardkoordinaten die Matrix $A$, so hat sie bezüglich $B$ die Matrix $T^{-1} A T$. Ähnliche Matrizen haben dieselben Eigenwerte, dieselbe Determinante und dieselbe Spur."
+      "md": "Aus $v = c_1 b_1 + \\dots + c_n b_n$ entsteht der eindeutige **Koordinatenvektor** $v_B = (c_1, \\dots, c_n)$. Mit $T = (b_1 \\mid \\dots \\mid b_n)$ gilt $v_E = T v_B$ und $v_B = T^{-1} v_E$. Eine Abbildung mit Matrix $A$ hat bezüglich $B$ die Matrix $T^{-1} A T$.",
+      "more": "> [!definition] Koordinaten\n> Ist $B = (b_1, \\dots, b_n)$ eine Basis und $v = c_1 b_1 + \\dots + c_n b_n$, dann heißt $(c_1, \\dots, c_n)$ der **Koordinatenvektor** von $v$ bezüglich $B$. Er ist eindeutig.\n\n> [!definition] Basiswechselmatrix\n> $T = (b_1 \\mid \\dots \\mid b_n)$ hat die Basisvektoren als Spalten. Dann gilt $v_E = T\\, v_B$ und $v_B = T^{-1} v_E$.\n\n> [!satz] Abbildungen in neuer Basis\n> Hat eine lineare Abbildung in Standardkoordinaten die Matrix $A$, so hat sie bezüglich $B$ die Matrix $T^{-1} A T$. Ähnliche Matrizen haben dieselben Eigenwerte, dieselbe Determinante und dieselbe Spur."
     },
     {
       "id": "ziel",
@@ -102,6 +104,257 @@
         ]
       },
       "explain": "$1 \\cdot (2, 1) + 2 \\cdot (-1, 1) = (0, 3)$. Die Koordinaten bezüglich $B$ sind $(1, 2)$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Koordinaten von $v = (3, 1)$** bezüglich $B = \\bigl((1, 1), (1, -1)\\bigr)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "v = c_1 (1, 1) + c_2 (1, -1)",
+            "why": "Gesucht sind $c_1$ und $c_2$."
+          },
+          {
+            "tex": "c_1 + c_2 = 3,\\ \\ c_1 - c_2 = 1",
+            "why": "Komponentenweise."
+          },
+          {
+            "tex": "c_1 = 2,\\ \\ c_2 = 1",
+            "why": "Addieren und subtrahieren."
+          },
+          {
+            "tex": "v_B = (2, 1)",
+            "why": "Probe: $2(1, 1) + (1, -1) = (3, 1)$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ansatz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gleichungen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Lösen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Koordinaten und Basiswechsel",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Koordinaten und Basiswechsel.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Koordinaten",
+          "blocks": [
+            {
+              "md": "Ist $B = (b_1, \\dots, b_n)$ eine Basis von $V$, dann lässt sich jedes $v \\in V$ auf genau eine Weise schreiben als\n$$v = c_1 b_1 + \\dots + c_n b_n.$$\nDer Vektor $(c_1, \\dots, c_n)$ heißt **Koordinatenvektor** von $v$ bezüglich $B$. Eindeutig ist er, weil eine Basis linear unabhängig ist; existieren tut er, weil sie den Raum erzeugt (siehe **Basis und Dimension**)."
+            }
+          ]
+        },
+        {
+          "title": "Basiswechselmatrix",
+          "blocks": [
+            {
+              "md": "Schreibt man die Basisvektoren als **Spalten** in eine Matrix $T = (b_1 \\mid \\dots \\mid b_n)$, dann gilt\n$$v_E = T\\, v_B, \\qquad v_B = T^{-1} v_E,$$\nwobei $v_E$ die Standardkoordinaten und $v_B$ die Koordinaten bezüglich $B$ sind. $T$ ist invertierbar, weil ihre Spalten eine Basis bilden."
+            }
+          ]
+        },
+        {
+          "title": "Abbildungen in einer neuen Basis",
+          "blocks": [
+            {
+              "md": "Hat eine lineare Abbildung in Standardkoordinaten die Matrix $A$, so hat sie bezüglich $B$ die Matrix\n$$A_B = T^{-1} A\\, T.$$\nLesart von rechts nach links: $B$-Koordinaten in Standardkoordinaten umrechnen, abbilden, zurückrechnen. Matrizen dieser Form heißen **ähnlich**; sie haben dieselbe Determinante, dieselbe Spur und dieselben Eigenwerte. In einer Basis aus Eigenvektoren wird $A_B$ diagonal (siehe **Eigenwerte und Eigenvektoren**)."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$b_1 = (2, 1)$, $b_2 = (-1, 1)$. Der Punkt $(3, 3)$ ist $2 b_1 + 1 b_2$, hat also bezüglich $B$ die Koordinaten $(2, 1)$. Zur Kontrolle: $T = \\begin{pmatrix} 2 & -1 \\\\ 1 & 1 \\end{pmatrix}$ und $T \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 3 \\end{pmatrix}$."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Die Basisvektoren gehören in die **Spalten** von $T$, nicht in die Zeilen.\n- $T$ rechnet von $B$ nach Standard, $T^{-1}$ in die Gegenrichtung. Wer die Richtung verwechselt, erhält eine falsche, aber plausibel aussehende Antwort.\n- Koordinaten hängen von der Reihenfolge der Basisvektoren ab: $(b_2, b_1)$ ist eine andere geordnete Basis."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Basis und Dimension",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Basis und Dimension.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 2\n> Teil der Sammlung **Lineare Algebra I MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Lineare Unabhängigkeit",
+          "blocks": [
+            {
+              "md": "$v_1, \\dots, v_k$ heißen **linear unabhängig**, wenn\n$$\\lambda_1 v_1 + \\dots + \\lambda_k v_k = 0 \\ \\Rightarrow\\ \\lambda_1 = \\dots = \\lambda_k = 0.$$\nGleichwertig: Keiner der Vektoren ist eine Linearkombination der anderen; jeder bringt eine neue Richtung."
+            }
+          ]
+        },
+        {
+          "title": "Basis",
+          "blocks": [
+            {
+              "md": "Eine **Basis** ist ein linear unabhängiges Erzeugendensystem. Dann lässt sich jeder Vektor auf **genau eine** Weise als Linearkombination der Basisvektoren schreiben; die Koeffizienten sind seine **Koordinaten**."
+            }
+          ]
+        },
+        {
+          "title": "Dimension",
+          "blocks": [
+            {
+              "md": "Alle Basen eines Vektorraums haben gleich viele Elemente (Austauschsatz von Steinitz). Diese Zahl ist die **Dimension**.\n\n| Raum | Basis | Dimension |\n|---|---|---|\n| $K^n$ | Einheitsvektoren $e_1, \\dots, e_n$ | $n$ |\n| Polynome vom Grad höchstens $n$ | $1, x, \\dots, x^n$ | $n + 1$ |\n| $\\mathbb{C}$ als $\\mathbb{R}$-Vektorraum | $1, i$ | $2$ |\n| $2 \\times 2$-Matrizen | vier Matrizen mit einer $1$ | $4$ |"
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen in einem Raum der Dimension n",
+          "blocks": [
+            {
+              "md": "- Mehr als $n$ Vektoren sind linear abhängig; weniger als $n$ erzeugen nicht den ganzen Raum.\n- $n$ Vektoren bilden genau dann eine Basis, wenn sie linear unabhängig sind, und genau dann, wenn sie erzeugen.\n- In $K^n$: $n$ Vektoren sind eine Basis $\\Leftrightarrow$ die Matrix mit diesen Spalten hat Rang $n$ $\\Leftrightarrow$ ihre **Determinante** ist nicht $0$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$(1, 2)$ und $(3, 6)$ sind abhängig ($3 \\cdot (1, 2) = (3, 6)$, Determinante $1 \\cdot 6 - 3 \\cdot 2 = 0$). $(1, 2)$ und $(2, 1)$ sind eine Basis des $\\mathbb{R}^2$ (Determinante $-3$)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Matrixmultiplikation",
+      "path": "02 Wiki/Mathematik/12 Lineare Algebra I/Matrixmultiplikation.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Lineare Algebra I, Kapitel 3\n> Teil der Sammlung **Lineare Algebra I MOC**. Rechenregeln aus der Schule: **Matrizen Grundlagen**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Für eine $m \\times n$-Matrix $A$ und eine $n \\times p$-Matrix $B$ ist $AB$ die $m \\times p$-Matrix mit\n$$(AB)_{ij} = \\sum_{k=1}^{n} a_{ik}\\, b_{kj}:$$\nZeile $i$ von $A$ mal Spalte $j$ von $B$."
+            }
+          ]
+        },
+        {
+          "title": "Warum gerade so",
+          "blocks": [
+            {
+              "md": "$AB$ ist die Matrix der Verkettung: erst $B$ anwenden, dann $A$. Denn $A(Bx) = (AB)x$. Die Spalten von $AB$ sind die Bilder der Spalten von $B$ unter $A$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "- assoziativ: $(AB)C = A(BC)$; distributiv; die Einheitsmatrix $I$ ist neutral.\n- **Nicht kommutativ:** Erst um $90°$ drehen und dann an der $x$-Achse spiegeln ist etwas anderes als umgekehrt:\n$$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}, \\quad \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}.$$"
+            }
+          ]
+        },
+        {
+          "title": "Inverse",
+          "blocks": [
+            {
+              "md": "$A^{-1}$ mit $AA^{-1} = A^{-1}A = I$ existiert genau dann, wenn $\\det A \\ne 0$. Für $2 \\times 2$:\n$$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^{-1} = \\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}.$$\nEs gilt $(AB)^{-1} = B^{-1}A^{-1}$: Wer erst $B$ und dann $A$ ausführt, muss zuerst $A$ rückgängig machen. Größere Inverse berechnet man mit dem **Gauß-Algorithmus**, indem man $(A \\mid I)$ zu $(I \\mid A^{-1})$ umformt."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Einträge komponentenweise multiplizieren.\n- Die Reihenfolge vertauschen, etwa $(AB)^{-1} = A^{-1}B^{-1}$ schreiben."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$T$ hat die Basisvektoren von $B$ als Spalten. Wie erhält man $v_B$ aus $v_E$?",
+      "options": [
+        {
+          "md": "$v_B = T^{-1} v_E$",
+          "correct": true
+        },
+        {
+          "md": "$v_B = T v_E$",
+          "why": "$T$ übersetzt in die andere Richtung, von $B$ nach $E$."
+        },
+        {
+          "md": "$v_B = T^T v_E$"
+        },
+        {
+          "md": "$v_B = v_E$"
+        }
+      ],
+      "explain": "$v_E = T v_B$, also $v_B = T^{-1} v_E$.",
+      "label": "Basiswechsel",
+      "id": "vq1"
     },
     {
       "id": "koordinaten",
@@ -271,7 +524,8 @@
         "Eine Abbildung mit Matrix $A$ hat in der neuen Basis die Matrix $T^{-1} A T$.",
         "Determinante, Spur und Eigenwerte ändern sich beim Basiswechsel nicht.",
         "Neue Koordinaten $= T^{-1} \\cdot$ alte, wenn $T$ die neuen Basisvektoren als Spalten hat.",
-        "Koordinaten bezüglich $1, (x - a), (x - a)^2, \\dots$ sind die Taylor-Koeffizienten um $a$."
+        "Koordinaten bezüglich $1, (x - a), (x - a)^2, \\dots$ sind die Taylor-Koeffizienten um $a$.",
+        "$v_E = T v_B$, $v_B = T^{-1} v_E$, und $A$ wird zu $T^{-1} A T$."
       ]
     }
   ]
