@@ -15,8 +15,91 @@
   "steps": [
     {
       "type": "text",
-      "md": "Der Klimawandel stellt neue ethische Fragen: Wir schaden Menschen, die weit entfernt oder noch nicht geboren sind. **Generationengerechtigkeit** fragt, was wir künftigen Generationen schulden. Strittig ist die Lastenverteilung: Verursacherprinzip (wer emittiert hat, zahlt), Nutznießerprinzip, Fähigkeitsprinzip (wer kann, trägt mehr). Jonas' Heuristik der Furcht rät zur Vorsicht bei ungewissen, aber katastrophalen Folgen.",
-      "id": "t1"
+      "md": "Der Klimawandel trifft Ferne und Ungeborene. **Generationengerechtigkeit** fragt, was wir ihnen schulden. Strittig ist die Lastenverteilung: **Verursacher-**, **Nutznießer-** und **Fähigkeitsprinzip**. Jonas rät bei ungewissen Katastrophen zur Vorsicht.",
+      "id": "t1",
+      "more": "Der Klimawandel stellt neue ethische Fragen: Wir schaden Menschen, die weit entfernt oder noch nicht geboren sind. **Generationengerechtigkeit** fragt, was wir künftigen Generationen schulden. Strittig ist die Lastenverteilung: Verursacherprinzip (wer emittiert hat, zahlt), Nutznießerprinzip, Fähigkeitsprinzip (wer kann, trägt mehr). Jonas' Heuristik der Furcht rät zur Vorsicht bei ungewissen, aber katastrophalen Folgen."
+    },
+    {
+      "type": "anim",
+      "label": "Abdiskontieren",
+      "md": "**Wie viel ein künftiger Schaden heute zählt:** ein Schaden von 100 in der Zukunft, abdiskontiert mit 1,4 % (blau) und 5,5 % (orange) pro Jahr.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          100
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "Jahre bis zum Schaden",
+        "yLabel": "heutiger Wert",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 100,
+            "value": 50,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "100/1.014^x",
+            "color": "blue"
+          },
+          {
+            "name": "n",
+            "expr": "100/1.055^x",
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "T",
+            "on": "s",
+            "color": "blue"
+          },
+          {
+            "x": "T",
+            "on": "n",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "gray"
+          }
+        ],
+        "readout": "in {T|0} Jahren: {100/1.014^T|1} gegen {100/1.055^T|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Nach 50 Jahren zählt der Schaden mit niedriger Rate noch die Hälfte, mit hoher kaum ein Vierzehntel.",
+          "set": {
+            "T": 50
+          }
+        },
+        {
+          "caption": "Nach 100 Jahren: ein Viertel gegen ein halbes Prozent.",
+          "to": {
+            "T": 100
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Die Wahl der Rate ist eine ethische Entscheidung darüber, wie viel künftige Generationen zählen (Stern gegen Nordhaus).",
+          "to": {
+            "T": 75
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
     },
     {
       "id": "notiz",
@@ -117,6 +200,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Gewicht",
+      "md": "Mit 2 % pro Jahr abdiskontiert: Wie viel Prozent seines Werts hat ein Schaden in 50 Jahren heute? (eine Nachkommastelle)",
+      "answer": 37.2,
+      "tolerance": 0.5,
+      "placeholder": "%",
+      "explain": "$\\tfrac{100}{1{,}02^{50}} \\approx 37{,}2$.",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne das Prinzip der Lastenverteilung zu.",
@@ -152,12 +245,37 @@
       "id": "g1"
     },
     {
+      "type": "gen",
+      "gen": "phi-rechnen",
+      "level": 1,
+      "params": {
+        "typ": [
+          "diskontierung"
+        ]
+      },
+      "label": "Abdiskontieren",
+      "id": "vx1"
+    },
+    {
+      "type": "gen",
+      "gen": "phi-rechnen",
+      "level": 2,
+      "params": {
+        "typ": [
+          "diskontierung"
+        ]
+      },
+      "label": "Zwei Raten",
+      "id": "vx2"
+    },
+    {
       "type": "summary",
       "md": "Das Wichtigste:",
       "points": [
         "Generationengerechtigkeit.",
         "Verursacher-, Nutznießer-, Fähigkeitsprinzip.",
-        "Vorsicht bei ungewissen Katastrophen (Jonas)."
+        "Vorsicht bei ungewissen Katastrophen (Jonas).",
+        "Generationengerechtigkeit; Diskontrate als ethische Wahl; Lastenverteilung."
       ],
       "id": "summary"
     }

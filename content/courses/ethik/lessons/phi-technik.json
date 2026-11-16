@@ -19,6 +19,76 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Dilemma",
+      "md": "**Collingridge-Dilemma** (schematisch): Wissen über die Folgen einer Technik (blau) und Möglichkeit, sie noch zu gestalten (orange).",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          12
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "Zeit seit der Einführung",
+        "yLabel": "%",
+        "vars": [
+          {
+            "name": "T",
+            "min": 0,
+            "max": 12,
+            "value": 1,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "w",
+            "expr": "100*(1 - exp(-x/3))",
+            "color": "blue"
+          },
+          {
+            "name": "g",
+            "expr": "100*exp(-x/3)",
+            "color": "orange"
+          }
+        ],
+        "vlines": [
+          {
+            "x": "T",
+            "color": "gray"
+          }
+        ],
+        "readout": "Wissen {100*(1 - exp(-T/3))|0} % · Gestaltbarkeit {100*exp(-T/3)|0} %"
+      },
+      "timeline": [
+        {
+          "caption": "Früh lässt sich eine Technik leicht ändern, aber man weiß wenig über ihre Folgen.",
+          "set": {
+            "T": 1
+          }
+        },
+        {
+          "caption": "Mit der Zeit wächst das Wissen.",
+          "to": {
+            "T": 5
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Spät kennt man die Folgen, doch die Technik ist fest verankert und kaum noch zu ändern.",
+          "to": {
+            "T": 10
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Mensch und Technik",
@@ -62,6 +132,29 @@
     },
     {
       "type": "choice",
+      "md": "Welches Beispiel zeigt die Ambivalenz der Technik am deutlichsten?",
+      "options": [
+        {
+          "md": "Die Kernspaltung liefert Energie und ermöglicht Waffen.",
+          "correct": true
+        },
+        {
+          "md": "Ein Hammer ist schwer.",
+          "why": "Gemeint ist der doppelte Charakter von Nutzen und Gefahr."
+        },
+        {
+          "md": "Computer werden schneller."
+        },
+        {
+          "md": "Autos haben vier Räder."
+        }
+      ],
+      "explain": "Technik entlastet und gefährdet zugleich.",
+      "label": "Ambivalenz",
+      "id": "vq1"
+    },
+    {
+      "type": "choice",
       "md": "Was beschreibt das Collingridge-Dilemma?",
       "options": [
         {
@@ -98,7 +191,8 @@
       "points": [
         "Ambivalenz der Technik.",
         "Collingridge-Dilemma.",
-        "Technikfolgenabschätzung und Vorsorge."
+        "Technikfolgenabschätzung und Vorsorge.",
+        "Technik ist ambivalent; Folgenabschätzung; Collingridge-Dilemma."
       ],
       "id": "summary"
     }
