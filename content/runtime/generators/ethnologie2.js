@@ -36,3 +36,93 @@
     { lv: 4, ok: false, md: "Digitale Ethnographie verzichtet auf teilnehmende Beobachtung, weil online alles messbar ist.", why: "Sie nimmt an Online-Gemeinschaften teil und verbindet das oft mit Forschung offline; Zahlen allein erklären keine Bedeutungen." },
   ]);
 })();
+/* Übungen zur Ethnologie (eth-ueben): Kreuz- und Parallelcousinen, Lineage-Zugehörigkeit, Heiratsregeln,
+   Tauschformen nach Sahlins und Polanyi, Residenzregeln. Built on first use (load order). */
+(function () {
+  "use strict";
+  const LW = window.LW;
+  let engine = null;
+  function init() {
+  const T = {};
+  const spec = (id, s) => { T[id] = s; };
+  const choiceStep = (md, right, wrong, explain) => {
+    const seen = new Set([right]);
+    const opts = [{ md: right, correct: true }];
+    wrong.forEach((w) => { if (!seen.has(w) && opts.length < 5) { seen.add(w); opts.push({ md: w }); } });
+    return { type: "choice", md, options: opts, explain };
+  };
+
+  const PAR = [["Vater", "F", "seines", true], ["Mutter", "M", "ihrer", false]];
+  const SIB = [["Bruder", "B", true], ["Schwester", "Z", false]];
+  const KID = [["Sohn", "S", "Cousin"], ["Tochter", "D", "Cousine"]];
+  spec("verwandte", { custom(level, G) {
+    const [pn, pk, , pMale] = G.pick(PAR), [sn, sk, sMale] = G.pick(SIB), [kn, kk, kw] = G.pick(KID);
+    const art = pn === "Vater" ? "deines Vaters" : "deiner Mutter";
+    const rest = " " + kn + " " + (sMale ? "des Bruders " : "der Schwester ") + art + " (" + pk + sk + kk + ")";
+    const desc = (kn === "Sohn" ? "der" : "die") + rest, acc = (kn === "Sohn" ? "den" : "die") + rest;
+    const parallel = pMale === sMale;
+    if (level <= 2) {
+      const right = (parallel ? "Parallel" : "Kreuz") + kw.toLowerCase();
+      return choiceStep("Wie nennt die Ethnologie " + acc + "?", right, [(parallel ? "Kreuz" : "Parallel") + kw.toLowerCase(), kn === "Sohn" ? "Neffe" : "Nichte", "Halb" + (kn === "Sohn" ? "bruder" : "schwester")],
+        "Haben Elternteil und dessen Geschwister dasselbe Geschlecht (Bruder des Vaters, Schwester der Mutter), spricht man von **Parallel**cousins, sonst von **Kreuz**cousins. Hier: **" + right + "**.");
+    }
+    const sys = G.pick(["patrilinear", "matrilinear"]);
+    const inLine = sys === "patrilinear" ? (pMale && sMale) : (!pMale && !sMale);
+    const right = inLine ? "ja" : "nein";
+    return choiceStep("In einer **" + sys + "en** Gesellschaft: Gehört " + desc + " zu deiner eigenen Lineage?", right, [inLine ? "nein" : "ja", "nur, wenn es ein Sohn ist"],
+      sys === "patrilinear" ? "Patrilinear zählt nur die Linie über Männer: Kinder des Bruders des Vaters gehören dazu; die Kinder der Schwester des Vaters gehören zur Lineage ihres eigenen Vaters, die der Mutterseite zu anderen Lineages."
+        : "Matrilinear zählt nur die Linie über Frauen: Kinder der Schwester der Mutter gehören dazu; die Kinder des Bruders der Mutter gehören zur Lineage ihrer eigenen Mutter.");
+  } });
+
+  const HEIRAT = [
+    ["Man muss außerhalb der eigenen Lineage heiraten.", "Exogamie"], ["Man heiratet innerhalb der eigenen Kaste.", "Endogamie"],
+    ["Ein Mann ist mit mehreren Frauen zugleich verheiratet.", "Polygynie"], ["Eine Frau ist mit mehreren Männern zugleich verheiratet, oft mit Brüdern.", "Polyandrie"],
+    ["Die Familie des Bräutigams überträgt Vieh an die Familie der Braut, oft mit Rechten an den Kindern.", "Brautpreis"],
+    ["Die Braut bringt Vermögen ihrer Familie in die Ehe mit.", "Mitgift"],
+    ["Stirbt ein Mann, heiratet sein Bruder die Witwe.", "Levirat"], ["Stirbt eine Frau, heiratet ihr Witwer ihre Schwester.", "Sororat"]];
+  spec("heirat", { custom(level, G) {
+    const [txt, name] = G.pick(level <= 1 ? HEIRAT.slice(0, 6) : HEIRAT);
+    return choiceStep("Wie heißt diese Regel oder Leistung? " + txt, name, G.shuffle(HEIRAT.map((x) => x[1]).filter((n) => n !== name)).slice(0, 3),
+      "**" + name + "**. Heiratsregeln und -leistungen verbinden Gruppen; Lévi-Strauss sah in der Heirat einen Tausch, der Allianzen stiftet.");
+  } });
+
+  const SAHLINS = [
+    ["Eltern versorgen ihre Kinder, ohne je eine Rechnung aufzumachen.", "generalisierte Reziprozität"],
+    ["In einer Wildbeutergruppe wird erlegtes Wild unter allen geteilt.", "generalisierte Reziprozität"],
+    ["Nachbarn tauschen Geschenke von ungefähr gleichem Wert, ohne große Verzögerung.", "ausgeglichene Reziprozität"],
+    ["Zwei Dörfer tauschen bei einem Fest Yams gegen Fisch in festen Mengen.", "ausgeglichene Reziprozität"],
+    ["Ein Händler versucht, einem Fremden möglichst viel abzuhandeln.", "negative Reziprozität"],
+    ["Bei einem Viehraub nimmt man einer fremden Gruppe Tiere weg.", "negative Reziprozität"]];
+  const POLANYI = [
+    ["Ein Häuptling sammelt Ernteanteile und verteilt sie bei einem Fest.", "Redistribution"],
+    ["Der Staat erhebt Steuern und finanziert damit Renten.", "Redistribution"],
+    ["Auf einem Wochenmarkt bestimmen Angebot und Nachfrage den Preis.", "Marktaustausch"],
+    ["Verwandte helfen einander beim Hausbau und erwarten später Hilfe zurück.", "Reziprozität"]];
+  spec("tausch", { custom(level, G) {
+    if (level <= 2) {
+      const [txt, name] = G.pick(SAHLINS);
+      return choiceStep("Welche Form der Reziprozität nach Sahlins liegt vor? " + txt, name, ["generalisierte Reziprozität", "ausgeglichene Reziprozität", "negative Reziprozität"].filter((n) => n !== name),
+        "Sahlins ordnet Reziprozität nach sozialer Nähe: **generalisiert** bei engen Beziehungen ohne Aufrechnung, **ausgeglichen** bei mittlerer Distanz mit gleichwertiger Gegengabe, **negativ** gegenüber Fremden, wenn jeder auf seinen Vorteil aus ist.");
+    }
+    const [txt, name] = G.pick(POLANYI);
+    return choiceStep("Welche Integrationsform nach Polanyi liegt vor? " + txt, name, ["Reziprozität", "Redistribution", "Marktaustausch"].filter((n) => n !== name),
+      "Polanyi: **Reziprozität** zwischen Gleichgestellten, **Redistribution** über ein Zentrum, das sammelt und verteilt, **Marktaustausch** zu Preisen.");
+  } });
+
+  const RES = [["Das Paar zieht zur Familie des Mannes.", "patrilokal (virilokal)"], ["Das Paar zieht zur Familie der Frau.", "matrilokal (uxorilokal)"],
+    ["Das Paar gründet einen eigenen Haushalt an einem neuen Ort.", "neolokal"], ["Das Paar zieht zum Bruder der Mutter des Mannes.", "avunkulokal"]];
+  spec("residenz", { custom(level, G) {
+    const [txt, name] = G.pick(level <= 1 ? RES.slice(0, 3) : RES);
+    return choiceStep("Welche Residenzregel liegt vor? " + txt, name, RES.map((x) => x[1]).filter((n) => n !== name),
+      "**" + name + "**. Wohnregeln nach der Heirat passen oft zur Abstammung: avunkulokal etwa in matrilinearen Gesellschaften, wo der Mutterbruder Autorität hat.");
+  } });
+
+  LW.ethnoTypen = T;
+  return LW.rechenEngine(T);
+  }
+  const make = (level, G, params) => (engine || (engine = init()))(level, G, params);
+  LW.generator("eth-ueben", { title: "Ethnologie üben", make });
+  const chapter = (typ) => ({ title: "Ethnologie üben", make: (level, G) => make(level, G, { typ }) });
+  LW.generator("eth-u-verwandtschaft", chapter(["verwandte", "heirat", "residenz"]));
+  LW.generator("eth-u-tausch", chapter(["tausch"]));
+})();
