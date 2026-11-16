@@ -9,6 +9,80 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Suchen in Liste und Set: gleiches Ergebnis, andere Laufzeit.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "xs = list(range(100000))\ns = set(xs)\nprint(99999 in xs)\nprint(99999 in s)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "xs": "[0, 1, 2, …, 99999]"
+            }
+          },
+          {
+            "line": 2,
+            "vars": {
+              "s": "{0, 1, 2, …, 99999}"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {},
+            "out": "True"
+          },
+          {
+            "line": 4,
+            "vars": {},
+            "out": "True"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine Liste mit 100 000 Zahlen.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Dieselben Zahlen als Set.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "`in` auf einer Liste vergleicht der Reihe nach: hier 100 000 Vergleiche, $O(n)$.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "`in` auf einem Set rechnet einen Hash aus und schaut direkt nach: im Mittel $O(1)$.",
+          "set": {
+            "k": 3
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Wachstum",
+      "md": "Ein $O(n)$-Algorithmus braucht für $1000$ Elemente $2$ ms. Wie viele Millisekunden etwa für $4000$ Elemente?",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "ms",
+      "explain": "Linear: viermal so viele Elemente, viermal so lange.",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Ordne die typische Laufzeit zu.",
@@ -73,7 +147,8 @@
       "points": [
         "O-Notation: Wachstum der Laufzeit.",
         "Set und Dict O(1), Liste O(n), Sortieren O(n log n).",
-        "Suche oft exponentiell."
+        "Suche oft exponentiell.",
+        "`x in liste` ist $O(n)$, `x in set` im Mittel $O(1)$."
       ],
       "id": "summary"
     }

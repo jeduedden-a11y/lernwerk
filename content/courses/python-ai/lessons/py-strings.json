@@ -9,6 +9,124 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Ein Satz wird zerlegt und wieder zusammengesetzt.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "satz = \"  Die KI lernt  \"\nw = satz.strip().lower().split()\nprint(w)\nprint(\"-\".join(w))\nn = len(w)\nprint(f\"{n} Wörter\")",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "satz": "'  Die KI lernt  '"
+            }
+          },
+          {
+            "line": 2,
+            "vars": {
+              "satz": "'  Die KI lernt  '",
+              "w": "['die', 'ki', 'lernt']"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "w": "['die', 'ki', 'lernt']"
+            },
+            "out": "['die', 'ki', 'lernt']"
+          },
+          {
+            "line": 4,
+            "vars": {
+              "w": "['die', 'ki', 'lernt']"
+            },
+            "out": "die-ki-lernt"
+          },
+          {
+            "line": 5,
+            "vars": {
+              "w": "['die', 'ki', 'lernt']",
+              "n": "3"
+            }
+          },
+          {
+            "line": 6,
+            "vars": {
+              "n": "3"
+            },
+            "out": "3 Wörter"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein String mit Leerzeichen am Rand.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Methoden lassen sich verketten: Ränder weg, klein schreiben, an Leerzeichen zerlegen.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Eine Liste aus drei Wörtern. `satz` selbst bleibt unverändert.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "`join` steht am Trennzeichen und klebt die Teile zusammen.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "`len` zählt die Einträge.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Im f-String werden Ausdrücke in geschweiften Klammern eingesetzt.",
+          "set": {
+            "k": 5
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ergibt `'a,b,,c'.split(',')`?",
+      "options": [
+        {
+          "md": "`['a', 'b', '', 'c']`",
+          "correct": true
+        },
+        {
+          "md": "`['a', 'b', 'c']`",
+          "why": "Zwischen zwei Kommas steht ein leerer String."
+        },
+        {
+          "md": "`['a,b,,c']`"
+        },
+        {
+          "md": "`'abc'`"
+        }
+      ],
+      "explain": "`split` mit Trennzeichen schneidet an jedem Komma, auch wenn dazwischen nichts steht.",
+      "label": "split",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Was ergibt der Ausdruck?",
@@ -64,7 +182,8 @@
       "points": [
         "Strings sind unveränderlich.",
         "split, join, strip, lower, replace.",
-        "Einfachste Tokenisierung: lower().split()."
+        "Einfachste Tokenisierung: lower().split().",
+        "Strings sind unveränderlich; `split` zerlegt, `join` klebt zusammen, f-Strings setzen Werte ein."
       ],
       "id": "summary"
     }

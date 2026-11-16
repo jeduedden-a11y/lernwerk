@@ -78,6 +78,190 @@
       "id": "w1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Flache und tiefe Kopie einer verschachtelten Liste.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "import copy\na = [[1, 2], [3]]\nb = copy.copy(a)\nc = copy.deepcopy(a)\na[0].append(9)\nprint(b[0], c[0])",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {}
+          },
+          {
+            "line": 2,
+            "vars": {
+              "a": "[[1, 2], [3]]"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "a": "[[1, 2], [3]]",
+              "b": "[[1, 2], [3]]"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "a": "[[1, 2], [3]]",
+              "b": "[[1, 2], [3]]",
+              "c": "[[1, 2], [3]]"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "a": "[[1, 2, 9], [3]]",
+              "b": "[[1, 2, 9], [3]]",
+              "c": "[[1, 2], [3]]"
+            }
+          },
+          {
+            "line": 6,
+            "vars": {
+              "b": "[[1, 2, 9], [3]]",
+              "c": "[[1, 2], [3]]"
+            },
+            "out": "[1, 2, 9] [1, 2]"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Das Modul `copy` kennt flache und tiefe Kopien.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Eine Liste aus zwei inneren Listen.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Flache Kopie: eine neue äußere Liste, aber dieselben inneren Listen.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "Tiefe Kopie: Auch die inneren Listen sind neu.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Die innere Liste von `a` ist auch die von `b`. `c` bleibt unberührt.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Ausgabe: Die flache Kopie hat die Änderung mitbekommen.",
+          "set": {
+            "k": 5
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Python Mutability and Copying",
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Mutability and Copying.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Lesson 5 — Mutability and Copying",
+          "blocks": [
+            {
+              "md": "> [!info] What this lesson buys you\n> Immunity to the single most common category of bug in Tic-Tac-Toe, Minesweeper, Nim and Crossword. Every one of those projects asks for a function that returns a *new* state derived from an old one, and every one of them punishes an accidentally shared reference with symptoms that look like broken game logic rather than broken copying."
+            }
+          ]
+        },
+        {
+          "title": "Names are references",
+          "blocks": [
+            {
+              "md": "Assignment binds a name to an object; it never copies. Two names can therefore denote the same object, and mutation through one is visible through the other.\n\n```python\na = [1, 2]\nb = a\nb.append(3)\na            # [1, 2, 3]\na is b       # True — the same object\n```\n\n`is` compares identity, `==` compares value. Reserve `is` for `None`, `True` and `False`; use `==` everywhere else.\n\nImmutable objects — `int`, `float`, `str`, `tuple`, `frozenset` — sidestep the issue entirely, because nothing can be mutated through any reference to them. `s += \"x\"` rebinds `s` to a new string rather than modifying the old one."
+            }
+          ]
+        },
+        {
+          "title": "Arguments are passed by reference",
+          "blocks": [
+            {
+              "md": "A function receives the same object the caller holds. Mutating it is visible outside; rebinding the parameter is not.\n\n```python\ndef wipe(xs):\n    xs.clear()      # the caller sees this\n\ndef rebind(xs):\n    xs = []         # the caller sees nothing\n```"
+            }
+          ]
+        },
+        {
+          "title": "Three depths of copy",
+          "blocks": [
+            {
+              "md": "```python\nb = a                  # no copy at all — an alias\nb = a.copy()           # shallow: new outer object, same inner objects\nb = a[:]               # shallow, for lists\nimport copy\nb = copy.deepcopy(a)   # recursive, fully independent\n```\n\nFor a board represented as a list of rows, a shallow copy produces a new outer list whose entries are still the original row objects. Writing `new[1][2] = \"X\"` then mutates the original board through the shared row. The symptom is a game that appears to make two moves at once.\n\n```python\nnew = copy.deepcopy(board)\nnew[i][j] = player\nreturn new\n```\n\nFor grids of plain scalars a nested comprehension is faster than `deepcopy` and equally safe:\n\n```python\nnew = [row[:] for row in grid]\n```\n\n> [!warning] The multiplication trap\n> `grid = [[0] * width] * height` creates one row and repeats the *reference* to it `height` times. Use `[[0] * width for _ in range(height)]`."
+            }
+          ]
+        },
+        {
+          "title": "Mutating while iterating",
+          "blocks": [
+            {
+              "md": "Removing elements from a list during a `for` over that same list shifts the remaining elements past the advancing index, so items are silently skipped. Either iterate over a copy or rebuild:\n\n```python\nfor x in xs[:]:          # iterate a snapshot\n    if unwanted(x):\n        xs.remove(x)\n\nxs[:] = [x for x in xs if not unwanted(x)]   # rebuild in place\n```\n\nThe second form is the idiom worth keeping. Note the difference between `xs[:] = ...`, which replaces the contents of the existing object so every alias sees the change, and `xs = ...`, which merely rebinds the local name.\n\nThe same applies to dictionaries: mutating a dict during iteration raises `RuntimeError`. Iterate `list(d)` or `list(d.items())` when the loop body changes the dict."
+            }
+          ]
+        },
+        {
+          "title": "Hashability",
+          "blocks": [
+            {
+              "md": "An object may serve as a dict key or set element only if it is hashable, and mutable built-ins deliberately are not. Consequently:\n\n- coordinates are `tuple`, never `list`;\n- a set of sets must be a set of `frozenset`;\n- a custom class needs `__eq__` and `__hash__`, covered in **Python Classes**.\n\n```python\nlookup = {(r, c): value for r, row in enumerate(grid) for c, value in enumerate(row)}\ndistinct = {frozenset(s) for s in list_of_sets}\n```"
+            }
+          ]
+        },
+        {
+          "title": "Exercises",
+          "blocks": [
+            {
+              "md": "| ID | Task | Focus |\n|---|---|---|\n| 5.1 | `safe_move` | `deepcopy`, non-destructive state transition |\n| 5.2 | `copy_grid` | shallow copy of rows via slicing |\n| 5.3 | `drop_evens` | in-place rebuild with slice assignment |\n| 5.4 | `build_lookup`, `filled_cells` | tuples as keys, sorted coordinates |\n| 5.5 | `distinct` | `frozenset` |\n\nContinue with **Python Classes**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wie probiert man im Tic-Tac-Toe-Projekt einen Zug aus, ohne das Brett zu verändern?",
+      "options": [
+        {
+          "md": "mit `copy.deepcopy(board)` und dem Zug auf der Kopie",
+          "correct": true
+        },
+        {
+          "md": "mit `board.copy()`",
+          "why": "Die inneren Zeilen wären weiter geteilt."
+        },
+        {
+          "md": "mit `neu = board`",
+          "why": "Das ist nur ein zweiter Name für dasselbe Brett."
+        },
+        {
+          "md": "gar nicht, man verändert das Brett direkt"
+        }
+      ],
+      "explain": "Das Brett ist eine Liste von Listen; nur die tiefe Kopie trennt auch die Zeilen.",
+      "label": "Kopie",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was gibt dieser Code aus?\n\n```python\ndef add(x, liste=[]):\n    liste.append(x)\n    return liste\n\nadd(1)\nprint(add(2))\n```",
       "options": [
@@ -118,7 +302,8 @@
       "points": [
         "Variablen sind Namen für Objekte.",
         "Listen, Dicts, Sets sind veränderlich; b = a kopiert nicht.",
-        "copy() flach, deepcopy() tief; kein veränderlicher Standardwert."
+        "copy() flach, deepcopy() tief; kein veränderlicher Standardwert.",
+        "`copy.copy` teilt innere Objekte, `copy.deepcopy` kopiert alles."
       ],
       "id": "summary"
     }

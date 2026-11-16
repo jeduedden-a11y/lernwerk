@@ -9,6 +9,114 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Die Teilmengenregel aus Minesweeper mit Sets.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "a, n_a = {\"A\", \"B\", \"C\"}, 1\nb, n_b = {\"A\", \"B\"}, 1\nif b <= a:\n    rest = a - b\n    print(rest, n_a - n_b)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "a": "{'A', 'B', 'C'}",
+              "n_a": "1"
+            }
+          },
+          {
+            "line": 2,
+            "vars": {
+              "a": "{'A', 'B', 'C'}",
+              "n_a": "1",
+              "b": "{'A', 'B'}",
+              "n_b": "1"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "a": "{'A', 'B', 'C'}",
+              "b": "{'A', 'B'}"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "rest": "{'C'}"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "rest": "{'C'}"
+            },
+            "out": "{'C'} 0"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Unter A, B, C liegt eine Mine.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Unter A, B liegt eine Mine.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "`<=` prüft, ob `b` eine Teilmenge von `a` ist.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "Die Mengendifferenz.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Unter C liegen 0 Minen: C ist sicher.",
+          "set": {
+            "k": 4
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Was ergibt `{1, 2, 3} & {2, 3, 4}`?",
+      "options": [
+        {
+          "md": "`{2, 3}`",
+          "correct": true
+        },
+        {
+          "md": "`{1, 2, 3, 4}`",
+          "why": "Das wäre `|`, die Vereinigung."
+        },
+        {
+          "md": "`{1, 4}`",
+          "why": "Das wäre `^`, die symmetrische Differenz."
+        },
+        {
+          "md": "`{1}`"
+        }
+      ],
+      "explain": "`&` ist der Schnitt: Elemente, die in beiden Mengen liegen.",
+      "label": "Mengen",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Was ergibt der Ausdruck?",
@@ -67,7 +175,8 @@
       "points": [
         "Sets: |, &, -, <=.",
         "Minesweeper: Sätze als (Zellen, Anzahl).",
-        "Teilmenge ⇒ neuer Satz aus der Differenz."
+        "Teilmenge ⇒ neuer Satz aus der Differenz.",
+        "`<=` Teilmenge, `-` Differenz, `&` Schnitt, `|` Vereinigung."
       ],
       "id": "summary"
     }

@@ -9,6 +9,95 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Ein fehlender Schlüssel, sauber abgefangen.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "d = {\"A\": 1}\ntry:\n    x = d[\"B\"]\nexcept KeyError:\n    x = 0\nfinally:\n    print(\"fertig\")\nprint(x)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "d": "{'A': 1}"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "d": "{'A': 1}"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "d": "{'A': 1}",
+              "x": "0"
+            }
+          },
+          {
+            "line": 7,
+            "vars": {
+              "x": "0"
+            },
+            "out": "fertig"
+          },
+          {
+            "line": 8,
+            "vars": {
+              "x": "0"
+            },
+            "out": "0"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein Dictionary mit nur einem Schlüssel.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Der Schlüssel B fehlt: Python löst `KeyError` aus und springt zum passenden `except`.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Der Ersatzwert.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "`finally` läuft in jedem Fall.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Das Programm läuft normal weiter.",
+          "set": {
+            "k": 4
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "truefalse",
+      "md": "Ein `except Exception:` ohne genauen Fehlertyp ist meist besser, weil es alle Fehler abfängt.",
+      "answer": false,
+      "explain": "Es verdeckt auch echte Programmierfehler. Man fängt gezielt den Fehler ab, den man erwartet.",
+      "label": "Gezielt",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Welcher Code fängt einen fehlenden Schlüssel sauber ab?",
       "options": [
@@ -52,7 +141,8 @@
       "points": [
         "try/except gezielt, finally immer.",
         "with open schließt sicher.",
-        "csv.DictReader für Tabellen."
+        "csv.DictReader für Tabellen.",
+        "`try`/`except` fängt erwartete Fehler, `finally` läuft immer."
       ],
       "id": "summary"
     }

@@ -15,6 +15,169 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Gewichtet ziehen und zählen: eine kleine Simulation.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "import random\nfrom collections import Counter\nw = [0.85, 0.15]\nz = random.choices(\"AB\", w, k=1000)\nc = Counter(z)\nprint(c[\"A\"] / 1000)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {}
+          },
+          {
+            "line": 2,
+            "vars": {}
+          },
+          {
+            "line": 3,
+            "vars": {
+              "w": "[0.85, 0.15]"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "w": "[0.85, 0.15]",
+              "z": "['A', 'A', 'B', 'A', …]"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "c": "Counter({'A': 853, 'B': 147})"
+            }
+          },
+          {
+            "line": 6,
+            "vars": {
+              "c": "Counter({'A': 853, 'B': 147})"
+            },
+            "out": "0.853"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zufallszahlen aus dem Modul `random`.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "`Counter` zählt Elemente.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Gewichte für A und B.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "1000 Ziehungen mit Zurücklegen, A mit Gewicht 0,85.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Wie oft kommt jedes Element vor?",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Der Anteil schwankt um 0,85; mehr Ziehungen machen ihn genauer.",
+          "set": {
+            "k": 5
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Python Probability and Data",
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Probability and Data.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Lesson 8 — Probability and Data",
+          "blocks": [
+            {
+              "md": "> [!info] What this lesson buys you\n> The idioms behind PageRank, Heredity, Shopping and Traffic. Distributions in this course are plain dicts, sampling is a cumulative walk over them, and model quality is reported as sensitivity and specificity rather than accuracy. None of it requires a library; the libraries only enter at the very end."
+            }
+          ]
+        },
+        {
+          "title": "A distribution is a dict",
+          "blocks": [
+            {
+              "md": "```python\ndist = {\"a\": 0.2, \"b\": 0.3, \"c\": 0.5}\n```\n\nTwo operations recur constantly. Normalising rescales the values so they sum to one:\n\n```python\ntotal = sum(dist.values())\nfor key in dist:\n    dist[key] = dist[key] / total\n```\n\nAnd taking the expected value, or the most probable outcome:\n\n```python\nexpected = sum(value * p for value, p in dist.items())\nbest = max(dist, key=lambda k: dist[k])\n```\n\n`max` over a dict iterates its keys, so the `key=` function looks the probability up. Without `key=` you would get the largest key, not the most probable one.\n\n> [!warning] Never test floats for equality\n> Accumulated rounding means a normalised distribution rarely sums to exactly `1.0`. Assert `abs(total - 1) < 1e-9` instead, and be aware that PageRank's iterative variant is specified to stop when no value changes by more than `0.001` — a tolerance, not an equality."
+            }
+          ]
+        },
+        {
+          "title": "Sampling",
+          "blocks": [
+            {
+              "md": "Sampling proportionally to probability is a cumulative walk: draw `r` uniformly from `[0, 1)`, accumulate probabilities in a fixed order, and take the first outcome whose running total exceeds `r`.\n\n```python\nimport random\nr = random.random()\nrunning = 0.0\nfor key in sorted(dist):\n    running += dist[key]\n    if r < running:\n        return key\n```\n\nIterating in a fixed order — hence `sorted` — is what makes a run reproducible under a fixed seed. `random.choices(population, weights=...)` does the same thing in one call, and `random.seed(0)` fixes the sequence for debugging."
+            }
+          ]
+        },
+        {
+          "title": "Counting",
+          "blocks": [
+            {
+              "md": "```python\nfrom collections import Counter, defaultdict\n\ncounts = Counter(labels)\ncounts.most_common(3)          # the three most frequent, as (item, count) pairs\ncounts[\"absent\"]               # 0, never a KeyError\n\ngroups = defaultdict(list)\ngroups[key].append(value)      # the list is created on first access\n```\n\n`Counter` is a `dict` subclass, so everything you know about dicts still applies; it merely adds counting and ranking."
+            }
+          ]
+        },
+        {
+          "title": "Evaluating a classifier",
+          "blocks": [
+            {
+              "md": "Accuracy is a poor summary on imbalanced data — a model that always predicts \"no purchase\" scores well on a dataset where few users purchase. The course therefore asks for two conditional rates:\n\n- **Sensitivity**, the true positive rate: of all actual positives, the proportion correctly identified.\n- **Specificity**, the true negative rate: of all actual negatives, the proportion correctly identified.\n\n```python\npairs = zip(actual, predicted)\n```\n\n`zip` aligns the two label sequences element by element and stops at the shorter one, which makes the single-pass tally straightforward. Guard both denominators: a fold containing no positives must not raise `ZeroDivisionError`."
+            }
+          ]
+        },
+        {
+          "title": "Where the libraries enter",
+          "blocks": [
+            {
+              "md": "Only the last three projects need them, and only shallowly.\n\n```python\nimport csv\nwith open(\"shopping.csv\") as f:\n    for row in csv.DictReader(f):\n        evidence.append([int(row[\"Administrative\"]), float(row[\"BounceRates\"])])\n\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)\nmodel = KNeighborsClassifier(n_neighbors=1).fit(X_train, y_train)\npredictions = model.predict(X_test)\n\nimport numpy as np\na = np.array(images)      # a.shape, a[a > 2], a.sum(axis=0), a @ b\n\nimport tensorflow as tf\nmodel = tf.keras.models.Sequential([\n    tf.keras.layers.Conv2D(32, (3, 3), activation=\"relu\", input_shape=(30, 30, 3)),\n    tf.keras.layers.MaxPooling2D((2, 2)),\n    tf.keras.layers.Flatten(),\n    tf.keras.layers.Dropout(0.5),\n    tf.keras.layers.Dense(43, activation=\"softmax\"),\n])\nmodel.compile(optimizer=\"adam\", loss=\"categorical_crossentropy\", metrics=[\"accuracy\"])\n```\n\nThe API surface you actually need is `fit`, `predict`, `evaluate`, and the layer constructors. Everything else in those libraries can wait."
+            }
+          ]
+        },
+        {
+          "title": "Exercises",
+          "blocks": [
+            {
+              "md": "| ID | Task | Focus |\n|---|---|---|\n| 8.1 | `normalize` | in-place rescaling, the zero-sum edge case |\n| 8.2 | `expected`, `most_likely` | generator sum, `max` with `key` and tie-breaking |\n| 8.3 | `top_k` | `Counter.most_common` |\n| 8.4 | `sample` | cumulative walk over a distribution (PageRank) |\n| 8.5 | `evaluate` | `zip`, sensitivity and specificity (Shopping) |\n\nThat completes the course. The condensed single-page recap is **Python Syntax Reference**; the project mapping is in **Python for CS50 AI (MOC)**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Erwartung",
+      "md": "Wie oft erwartet man »B« bei $2000$ Ziehungen mit den Gewichten $0{,}85$ und $0{,}15$?",
+      "answer": 300,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$0{,}15 \\cdot 2000 = 300$. Eine echte Simulation weicht davon etwas ab.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Wie zieht man ein Element mit Wahrscheinlichkeiten 0,85 und 0,15?",
       "options": [
@@ -68,7 +231,8 @@
       "points": [
         "random.random, choice, choices mit weights.",
         "Counter zählt Häufigkeiten.",
-        "Simulation: oft wiederholen, relative Häufigkeit."
+        "Simulation: oft wiederholen, relative Häufigkeit.",
+        "`random.choices(folge, gewichte, k=n)` zieht gewichtet, `Counter` zählt."
       ],
       "id": "summary"
     }

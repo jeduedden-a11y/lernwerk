@@ -19,6 +19,291 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Wahrheitswerte, `None` und `==` in sieben Zeilen.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "xs = []\nif not xs:\n    print(\"leer\")\nwert = None\nif wert is None:\n    print(\"kein Wert\")\nprint(3 == 3.0)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "xs": "[]"
+            }
+          },
+          {
+            "line": 2,
+            "vars": {
+              "xs": "[]"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "xs": "[]"
+            },
+            "out": "leer"
+          },
+          {
+            "line": 4,
+            "vars": {
+              "xs": "[]",
+              "wert": "None"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "xs": "[]",
+              "wert": "None"
+            }
+          },
+          {
+            "line": 6,
+            "vars": {
+              "xs": "[]",
+              "wert": "None"
+            },
+            "out": "kein Wert"
+          },
+          {
+            "line": 7,
+            "vars": {
+              "xs": "[]",
+              "wert": "None"
+            },
+            "out": "True"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Eine leere Liste.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Leere Sammlungen gelten als falsch, `not xs` ist also wahr.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Darum wird »leer« ausgegeben.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "`None` steht für »kein Wert«.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "`is` prüft, ob es dasselbe Objekt ist; für `None` ist das die übliche Form.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Die Bedingung ist wahr.",
+          "set": {
+            "k": 5
+          }
+        },
+        {
+          "caption": "`==` vergleicht Werte: 3 und 3.0 sind gleich, obwohl die Typen verschieden sind.",
+          "set": {
+            "k": 6
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Python Syntax Reference",
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Syntax Reference.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Python Syntax Reference",
+          "blocks": [
+            {
+              "md": "Everything you actually need to read and write the code in CS50 AI (Search, Knowledge, Uncertainty, Optimization, Learning, Neural Nets, Language).\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "1. The shape of Python",
+          "blocks": [
+            {
+              "md": "No braces, no semicolons. **Indentation defines blocks** (4 spaces). A colon `:` opens a block.\n\n```python\nif x > 0:\n    print(\"positive\")\n    print(\"still inside\")\nprint(\"outside\")\n```\n\nComments: `#`. Docstrings: `\"\"\"triple quotes\"\"\"`.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "2. Variables and types",
+          "blocks": [
+            {
+              "md": "```python\nn = 5            # int\npi = 3.14        # float\nname = \"Alice\"   # str\nflag = True      # bool  (True/False capitalized!)\nnothing = None   # null value\n```\n\nDynamically typed — no declarations. Type hints are optional and purely cosmetic:\n\n```python\ndef f(x: int) -> str:\n    return str(x)\n```\n\nUseful conversions: `int(\"5\")`, `float(\"2.5\")`, `str(5)`, `list(\"abc\")` → `['a','b','c']`.\n\nDivision: `7 / 2 → 3.5`, `7 // 2 → 3` (floor), `7 % 2 → 1`, `2 ** 10 → 1024`.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "3. Strings",
+          "blocks": [
+            {
+              "md": "```python\ns = \"hello\"\ns[0]        # 'h'\ns[-1]       # 'o'      negative = from the end\ns[1:3]      # 'el'     slice [start:stop) — stop excluded\nlen(s)      # 5\ns.upper(), s.strip(), s.split(\",\"), \", \".join([\"a\",\"b\"])\n\"lo\" in s   # True\n```\n\n**f-strings** (use these everywhere):\n\n```python\nprint(f\"{name} has {n} items, avg {pi:.2f}\")\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "4. The four collections",
+          "blocks": [
+            {
+              "md": "| Type | Literal | Ordered | Mutable | Duplicates | Use for |\n|---|---|---|---|---|---|\n| `list` | `[1,2,3]` | yes | yes | yes | sequences, frontier/queue |\n| `tuple` | `(1,2)` | yes | **no** | yes | coordinates, dict keys |\n| `dict` | `{\"a\":1}` | insertion | yes | keys unique | maps, counts, probabilities |\n| `set` | `{1,2}` | no | yes | **no** | visited/explored, membership |\n\n### list\n```python\nxs = [3, 1, 2]\nxs.append(4); xs.pop(); xs.pop(0)   # pop(0) is O(n) — use deque for BFS\nxs.remove(1); xs.extend([7,8])\nxs[::-1]                            # reversed copy\nsorted(xs), sorted(xs, reverse=True)\nsorted(people, key=lambda p: p.age) # sort by computed key\nsum(xs), min(xs), max(xs), len(xs)\n```\n\n### dict\n```python\nd = {\"a\": 1, \"b\": 2}\nd[\"c\"] = 3\nd[\"z\"]                # KeyError if missing\nd.get(\"z\", 0)         # 0 instead of error  ← use this constantly\nfor k in d: ...\nfor k, v in d.items(): ...\nd.keys(), d.values()\n\"a\" in d              # checks KEYS\n```\n\n### set\n```python\nseen = set()          # NOT {} — that's an empty dict\nseen.add(x); seen.discard(x)\na | b, a & b, a - b   # union, intersection, difference\nfrozenset({1,2})      # immutable set → can be a dict key / put in a set\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "5. Unpacking",
+          "blocks": [
+            {
+              "md": "```python\na, b = 1, 2\na, b = b, a                    # swap\n(row, col) = cell\nfor i, item in enumerate(xs): ...\nfor x, y in zip(xs, ys): ...\nfirst, *rest = [1,2,3,4]       # first=1, rest=[2,3,4]\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "6. Control flow",
+          "blocks": [
+            {
+              "md": "```python\nif x > 0:\n    ...\nelif x == 0:\n    ...\nelse:\n    ...\n\n# ternary\nlabel = \"pos\" if x > 0 else \"neg\"\n\nfor i in range(5):        # 0..4\nfor i in range(2, 10, 2): # 2,4,6,8\nfor item in collection:   # iterate directly — no index needed\n\nwhile condition:\n    ...\n    break      # exit loop\n    continue   # next iteration\n```\n\nTruthiness: `0`, `\"\"`, `[]`, `{}`, `set()`, `None` are all **falsy**. So `if not frontier:` means \"frontier is empty\".\n\nLogic words, not symbols: `and`, `or`, `not`. Comparison chaining works: `0 <= i < 3`.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "7. Comprehensions ← the single most Pythonic thing",
+          "blocks": [
+            {
+              "md": "```python\nsquares  = [x**2 for x in range(10)]\nevens    = [x for x in xs if x % 2 == 0]\npairs    = [(i, j) for i in range(3) for j in range(3)]\nlookup   = {word: len(word) for word in words}\nuniq     = {x.lower() for x in words}\n```\n\nGenerator version (lazy, memory-free) — great inside `sum`/`any`/`all`:\n\n```python\nsum(1 for c in cells if c == 1)\nany(row.count(\"X\") == 3 for row in board)\nall(v is not None for v in assignment.values())\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "8. Functions",
+          "blocks": [
+            {
+              "md": "```python\ndef cost(a, b=1, *args, **kwargs):\n    \"\"\"Docstring.\"\"\"\n    return a + b\n\ncost(2)            # b defaults to 1\ncost(2, b=5)       # keyword argument\n```\n\n- `*args` → extra positional args as a tuple\n- `**kwargs` → extra keyword args as a dict\n- Functions are objects: pass them around, `sorted(xs, key=myfunc)`\n- `lambda x: x * 2` — anonymous one-expression function\n\n**Gotcha:** never use a mutable default (`def f(x, acc=[])`). It's shared between calls. Use `acc=None` then `if acc is None: acc = []`.\n\nMultiple returns are just tuples: `return x, y` → `a, b = f()`.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "9. Mutability — the #1 source of AI-project bugs",
+          "blocks": [
+            {
+              "md": "Lists/dicts/sets are passed **by reference**. Modifying inside a function changes the caller's object.\n\n```python\nboard2 = board          # SAME object\nboard2 = board.copy()   # shallow — nested lists still shared!\nimport copy\nboard2 = copy.deepcopy(board)   # fully independent — use for game states\n```\n\nIn Minesweeper/Tic-Tac-Toe/CSP you almost always want `deepcopy` (or build a fresh list) before trying a move.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "10. Classes",
+          "blocks": [
+            {
+              "md": "```python\nclass Node:\n    def __init__(self, state, parent=None):   # constructor\n        self.state = state                     # instance attribute\n        self.parent = parent\n\n    def __repr__(self):                        # how it prints\n        return f\"Node({self.state})\"\n\n    def __eq__(self, other):                   # == comparison\n        return self.state == other.state\n\n    def __hash__(self):                        # needed to put in a set/dict\n        return hash(self.state)\n\nn = Node(\"A\")\nn.state\n```\n\n`self` is always the explicit first parameter. Inheritance:\n\n```python\nclass StackFrontier:\n    def add(self, node): ...\n\nclass QueueFrontier(StackFrontier):\n    def remove(self):\n        ...          # override just this method\n```\n\nCS50 AI's `logic.py`, `nim.py`, `crossword.py` all hand you classes like this — you mostly *use* them and implement a few methods.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "11. Exceptions",
+          "blocks": [
+            {
+              "md": "```python\ntry:\n    x = d[\"missing\"]\nexcept KeyError:\n    x = 0\nexcept (ValueError, TypeError) as e:\n    print(e)\nfinally:\n    cleanup()\n\nraise ValueError(\"bad input\")\nif not valid:\n    raise Exception(\"Invalid move\")   # very common in CS50 AI specs\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "12. Modules, imports, files",
+          "blocks": [
+            {
+              "md": "```python\nimport sys\nimport math\nfrom collections import deque, Counter\nimport numpy as np\n\nif len(sys.argv) != 2:\n    sys.exit(\"Usage: python program.py filename\")\n\nwith open(\"data.csv\") as f:        # `with` auto-closes\n    for line in f:\n        print(line.strip())\n\nimport csv\nwith open(\"data.csv\") as f:\n    reader = csv.DictReader(f)\n    for row in reader:\n        print(row[\"column_name\"])\n```\n\nEvery file gets:\n```python\nif __name__ == \"__main__\":\n    main()\n```\nMeaning: only run this when the file is executed directly, not when imported.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "13. Standard-library bits CS50 AI actually uses",
+          "blocks": [
+            {
+              "md": "```python\nfrom collections import deque, Counter, defaultdict\nq = deque([1,2]); q.append(3); q.popleft()      # O(1) BFS queue\nCounter([\"a\",\"b\",\"a\"])                           # {'a':2,'b':1}\nCounter(xs).most_common(1)\nd = defaultdict(list); d[\"k\"].append(1)          # no KeyError\n\nimport itertools\nitertools.product([0,1], repeat=3)               # all combos\nitertools.combinations(cells, 2)\nitertools.permutations(xs)\n\nimport random\nrandom.choice(xs), random.random(), random.shuffle(xs)\nrandom.randint(0, 9)\n\nimport heapq                                      # priority queue for A*\nheapq.heappush(pq, (priority, item)); heapq.heappop(pq)\n\nimport math\nmath.inf, math.log2(x), math.sqrt(x)\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "14. NumPy / pandas / scikit-learn — the 20% you need",
+          "blocks": [
+            {
+              "md": "```python\nimport numpy as np\na = np.array([[1,2],[3,4]])\na.shape          # (2, 2)\na * 2            # elementwise\na @ b            # matrix multiply\na.sum(axis=0)    # column sums\na[a > 2]         # boolean mask\n\nimport pandas as pd\ndf = pd.read_csv(\"f.csv\")\ndf.head(); df[\"col\"]; df[df[\"col\"] > 3]\n\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)\nmodel = KNeighborsClassifier(n_neighbors=1)\nmodel.fit(X_train, y_train)\npreds = model.predict(X_test)\n\nimport tensorflow as tf                     # Neural Networks week\nmodel = tf.keras.models.Sequential([\n    tf.keras.layers.Dense(128, activation=\"relu\"),\n    tf.keras.layers.Dropout(0.5),\n    tf.keras.layers.Dense(10, activation=\"softmax\"),\n])\nmodel.compile(optimizer=\"adam\", loss=\"categorical_crossentropy\", metrics=[\"accuracy\"])\nmodel.fit(X_train, y_train, epochs=10)\nmodel.evaluate(X_test, y_test, verbose=2)\n```\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "15. Recursion (Search, Minimax, DFS)",
+          "blocks": [
+            {
+              "md": "```python\ndef minimax(state):\n    if terminal(state):\n        return utility(state)\n    return max(minimax(result(state, a)) for a in actions(state))\n```\n\nBase case first, then recurse on a smaller problem. That's the entire pattern.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "16. Gotchas checklist",
+          "blocks": [
+            {
+              "md": "- `{}` is an empty **dict**; use `set()` for an empty set.\n- `is` compares identity, `==` compares value. Use `is` only with `None`/`True`/`False`.\n- Don't modify a list while iterating over it — iterate over a copy: `for x in xs[:]`.\n- `range(n)` stops at `n-1`. Slices `[a:b]` exclude `b`.\n- Integer keys and string keys differ: `d[1] != d[\"1\"]`.\n- Custom objects need `__eq__` **and** `__hash__` to work in sets/dicts.\n- `sorted()` returns a new list; `.sort()` mutates and returns `None`.\n- Floats are approximate: `0.1 + 0.2 != 0.3`.\n\n---"
+            }
+          ]
+        },
+        {
+          "title": "17. Fastest path to fluency",
+          "blocks": [
+            {
+              "md": "1. Rewrite one CS50 P-Set solution using comprehensions instead of loops.\n2. Implement BFS and DFS from scratch with `deque` and a `set` for explored states.\n3. Build a small class with `__init__`, `__repr__`, `__eq__`, `__hash__` and put instances in a set.\n4. In the REPL (`python3`), poke at anything unclear: `dir(obj)`, `help(obj)`, `type(obj)`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Werte gelten in einer `if`-Bedingung als falsch?",
+      "options": [
+        {
+          "md": "`0`, `''`, `[]`, `{}` und `None`",
+          "correct": true
+        },
+        {
+          "md": "nur `False`"
+        },
+        {
+          "md": "`'0'` und `'False'`",
+          "why": "Nicht leere Strings sind wahr, auch `'0'`."
+        },
+        {
+          "md": "`0` und `False`, aber nicht `[]`"
+        }
+      ],
+      "explain": "Null, leere Sammlungen, der leere String und `None` sind falsch, fast alles andere wahr.",
+      "label": "Wahrheitswerte",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Was ergibt der Ausdruck?",
@@ -84,7 +369,8 @@
       "points": [
         "Einrückung bildet Blöcke.",
         "== Wert, is Identität (für None).",
-        "Slicing, Wahrheitswerte, f-Strings."
+        "Slicing, Wahrheitswerte, f-Strings.",
+        "Leere Sammlungen, `0`, `''` und `None` sind falsch; `x is None` prüft auf `None`."
       ],
       "id": "summary"
     }

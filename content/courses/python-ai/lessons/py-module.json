@@ -9,6 +9,91 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Was beim Start mit `python degrees.py large` passiert.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "import sys\n\ndef main():\n    print(sys.argv)\n\nif __name__ == \"__main__\":\n    main()",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {}
+          },
+          {
+            "line": 3,
+            "vars": {}
+          },
+          {
+            "line": 6,
+            "vars": {
+              "__name__": "'__main__'"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "__name__": "'__main__'"
+            },
+            "out": "['degrees.py', 'large']"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Module werden einmal geladen.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Die Funktion wird nur definiert, noch nicht ausgeführt.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Direkt gestartet heißt das Modul `__main__`.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "`sys.argv[0]` ist der Dateiname, danach folgen die Argumente.",
+          "set": {
+            "k": 3
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Welchen Wert hat `__name__` in `degrees.py`, wenn ein Test `import degrees` ausführt?",
+      "options": [
+        {
+          "md": "`'degrees'`",
+          "correct": true
+        },
+        {
+          "md": "`'__main__'`"
+        },
+        {
+          "md": "`None`"
+        },
+        {
+          "md": "`'test'`"
+        }
+      ],
+      "explain": "Beim Import trägt das Modul seinen Dateinamen; darum startet `main()` dann nicht.",
+      "label": "__name__",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was steht in `sys.argv` bei `python degrees.py large`?",
       "options": [
@@ -42,7 +127,8 @@
       "points": [
         "import und from … import.",
         "__name__ == \"__main__\" schützt das Hauptprogramm.",
-        "sys.argv: Argumente der Kommandozeile."
+        "sys.argv: Argumente der Kommandozeile.",
+        "`if __name__ == '__main__':` startet nur beim direkten Aufruf; `sys.argv` enthält die Argumente."
       ],
       "id": "summary"
     }

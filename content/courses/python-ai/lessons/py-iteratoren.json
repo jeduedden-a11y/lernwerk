@@ -9,6 +9,112 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Alle Wahrheitsbelegungen mit `itertools.product`.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "from itertools import product\nTF = [True, False]\nfor p, q in product(TF, repeat=2):\n    print(p, q, p or q)",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {}
+          },
+          {
+            "line": 2,
+            "vars": {
+              "TF": "[True, False]"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "p": "True",
+              "q": "True"
+            },
+            "out": "True True True"
+          },
+          {
+            "line": 4,
+            "vars": {
+              "p": "True",
+              "q": "False"
+            },
+            "out": "True False True"
+          },
+          {
+            "line": 4,
+            "vars": {
+              "p": "False",
+              "q": "True"
+            },
+            "out": "False True True"
+          },
+          {
+            "line": 4,
+            "vars": {
+              "p": "False",
+              "q": "False"
+            },
+            "out": "False False False"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "`product` bildet das kartesische Produkt.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Die beiden Wahrheitswerte.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Erste Belegung.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "Zweite.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Dritte.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Alle $2^2 = 4$ Belegungen, wie beim Model Checking.",
+          "set": {
+            "k": 5
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Generator",
+      "md": "`g = (x * x for x in range(3))`. Was liefert der **zweite** Aufruf von `next(g)`?",
+      "answer": 1,
+      "tolerance": 0,
+      "placeholder": "Wert",
+      "explain": "Der Generator liefert der Reihe nach $0$, $1$, $4$, jeweils erst auf Nachfrage.",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Wie viele Elemente liefert der Ausdruck?",
@@ -64,7 +170,8 @@
       "points": [
         "product, permutations, combinations.",
         "Generatoren erzeugen Werte bei Bedarf.",
-        "Model Checking: alle 2ⁿ Belegungen."
+        "Model Checking: alle 2ⁿ Belegungen.",
+        "`product`, `permutations`, `combinations` liefern Kombinatorik; Generatoren rechnen erst auf Nachfrage."
       ],
       "id": "summary"
     }

@@ -9,6 +9,139 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "`fak(3)` ruft sich selbst auf, bis der Basisfall greift.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "def fak(n):\n    if n == 0:\n        return 1\n    return n * fak(n - 1)\n\nprint(fak(3))",
+        "trace": [
+          {
+            "line": 6,
+            "vars": {}
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "3"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "2"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "1"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "n": "0"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "1"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "2"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "n": "3"
+            }
+          },
+          {
+            "line": 6,
+            "vars": {},
+            "out": "6"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Der Aufruf `fak(3)` startet.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "3 ist nicht 0: Es braucht `fak(2)`.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "Wieder ein Aufruf mit kleinerem `n`.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "Und noch einer.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Basisfall: `fak(0)` liefert 1 ohne weiteren Aufruf.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "Zurück im Aufruf mit `n = 1`: 1 · 1 = 1.",
+          "set": {
+            "k": 5
+          }
+        },
+        {
+          "caption": "Mit `n = 2`: 2 · 1 = 2.",
+          "set": {
+            "k": 6
+          }
+        },
+        {
+          "caption": "Mit `n = 3`: 3 · 2 = 6.",
+          "set": {
+            "k": 7
+          }
+        },
+        {
+          "caption": "Das Ergebnis kommt ganz oben an.",
+          "set": {
+            "k": 8
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "numeric",
+      "label": "Aufrufe",
+      "md": "Wie viele Aufrufe von `fak` entstehen bei `fak(5)` insgesamt?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Aufrufe",
+      "explain": "`fak(5)`, `fak(4)`, `fak(3)`, `fak(2)`, `fak(1)` und `fak(0)`.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Aufrufkette",
       "md": "Ordne die Aufrufe von `fak(3)` mit `fak(n) = 1 if n == 0 else n * fak(n - 1)`.",
@@ -60,7 +193,8 @@
       "points": [
         "Rekursion: kleineres Problem plus Basisfall.",
         "Minimax ist rekursiv.",
-        "Memoisierung mit lru_cache."
+        "Memoisierung mit lru_cache.",
+        "Rekursion: kleineres Problem plus Basisfall; die Ergebnisse kommen rückwärts zurück."
       ],
       "id": "summary"
     }

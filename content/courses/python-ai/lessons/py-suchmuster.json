@@ -15,6 +15,241 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Breitensuche als Code: Frontier, explored-Set, Nachbarn.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "g = {\"A\": \"BC\", \"B\": \"D\"}\nfront, seen = [\"A\"], set()\nwhile front:\n    s = front.pop(0)\n    seen.add(s)\n    for n in g.get(s, \"\"):\n        if n not in seen:\n            front.append(n)\nprint(sorted(seen))",
+        "trace": [
+          {
+            "line": 1,
+            "vars": {
+              "g": "{'A': 'BC', 'B': 'D'}"
+            }
+          },
+          {
+            "line": 2,
+            "vars": {
+              "front": "['A']",
+              "seen": "set()"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "front": "[]",
+              "seen": "set()",
+              "s": "'A'"
+            }
+          },
+          {
+            "line": 8,
+            "vars": {
+              "front": "['B', 'C']",
+              "seen": "{'A'}",
+              "s": "'A'"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "front": "['C']",
+              "seen": "{'A'}",
+              "s": "'B'"
+            }
+          },
+          {
+            "line": 8,
+            "vars": {
+              "front": "['C', 'D']",
+              "seen": "{'A', 'B'}",
+              "s": "'B'"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "front": "['D']",
+              "seen": "{'A', 'B', 'C'}",
+              "s": "'C'"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "front": "[]",
+              "seen": "{'A', 'B', 'C', 'D'}",
+              "s": "'D'"
+            }
+          },
+          {
+            "line": 9,
+            "vars": {
+              "seen": "{'A', 'B', 'C', 'D'}"
+            },
+            "out": "['A', 'B', 'C', 'D']"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ein kleiner Graph: A zeigt auf B und C, B auf D.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Die Frontier startet mit A, besucht ist noch nichts.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "`pop(0)` nimmt den ältesten Knoten: eine Warteschlange.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "A ist besucht, seine Nachbarn kommen hinten an.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Als Nächstes B.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "D kommt hinter C.",
+          "set": {
+            "k": 5
+          }
+        },
+        {
+          "caption": "C hat keine Nachbarn.",
+          "set": {
+            "k": 6
+          }
+        },
+        {
+          "caption": "Zuletzt D. Die Frontier ist leer, die Schleife endet.",
+          "set": {
+            "k": 7
+          }
+        },
+        {
+          "caption": "Alle Knoten wurden Schicht für Schicht besucht.",
+          "set": {
+            "k": 8
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Python Search Patterns",
+      "path": "02 Wiki/Informatik/Python CS50 AI/Python Search Patterns.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Lesson 7 — Search",
+          "blocks": [
+            {
+              "md": "> [!info] What this lesson buys you\n> The three data structures that every uninformed and informed search shares — a frontier, an explored set, and a parent map — plus the Python that expresses them. Once this skeleton is automatic, Degrees is a twenty-line function and A* is the same loop with a different priority."
+            }
+          ]
+        },
+        {
+          "title": "The skeleton",
+          "blocks": [
+            {
+              "md": "Every search in the course is this loop, differing only in how the next node is chosen.\n\n```python\nfrontier = deque([start])\nparent = {start: None}\nwhile frontier:\n    node = frontier.popleft()          # pop() would make it depth-first\n    if node == goal:\n        return build_path(parent, goal)\n    for nxt in neighbours(node):\n        if nxt not in parent:\n            parent[nxt] = node\n            frontier.append(nxt)\nreturn None\n```\n\nThe `parent` dict does double duty: it records how each state was reached *and* serves as the explored set, since membership in it means \"already discovered\".\n\n> [!warning] Mark on enqueue, not on dequeue\n> If a node is only marked explored when it is removed from the frontier, a cyclic or densely connected graph will enqueue the same state many times before any of the copies is processed. In Degrees, with actors sharing dozens of films, that alone is the difference between a query returning and a query appearing to hang."
+            }
+          ]
+        },
+        {
+          "title": "deque",
+          "blocks": [
+            {
+              "md": "```python\nfrom collections import deque\nq = deque([1, 2])\nq.append(3)      # push right, O(1)\nq.popleft()      # pop left,  O(1)\nq.pop()          # pop right, O(1)\nq.appendleft(0)\n```\n\nA `deque` is a doubly linked structure; both ends are constant time. A plain list gives O(1) only at the right end, so a list-based queue degrades to quadratic behaviour."
+            }
+          ]
+        },
+        {
+          "title": "Reconstructing the path",
+          "blocks": [
+            {
+              "md": "The search finds the goal but the answer is the route, which must be walked backwards from the goal and reversed.\n\n```python\ndef build_path(parent, goal):\n    path = []\n    node = goal\n    while node is not None:\n        path.append(node)\n        node = parent[node]\n    return path[::-1]\n```"
+            }
+          ]
+        },
+        {
+          "title": "Priority queues with heapq",
+          "blocks": [
+            {
+              "md": "`heapq` turns an ordinary list into a binary min-heap. Push tuples whose first element is the priority; Python compares tuples lexicographically, so the smallest priority pops first.\n\n```python\nimport heapq\npq = []\nheapq.heappush(pq, (cost, node))\ncost, node = heapq.heappop(pq)\n```\n\nUniform-cost search — Dijkstra — pops the cheapest frontier node, settles it, and relaxes its neighbours. A* changes exactly one thing: the priority becomes `cost_so_far + heuristic(node)`, where the heuristic must never overestimate the true remaining cost for the result to stay optimal.\n\n> [!warning] Tie-breaking on unorderable payloads\n> If two entries share a priority, Python falls through to comparing the second tuple element. When that is a custom object without `__lt__`, the push raises `TypeError`. Insert a unique monotonically increasing counter as a middle element — `(priority, counter, node)` — to guarantee comparability."
+            }
+          ]
+        },
+        {
+          "title": "Grid neighbours",
+          "blocks": [
+            {
+              "md": "Most of the projects search a grid rather than an abstract graph. Express the four or eight candidate offsets as data and filter once, instead of writing four near-identical conditionals.\n\n```python\ncandidates = [(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)]\nreturn [(i, j) for i, j in candidates\n        if 0 <= i < height and 0 <= j < width and maze[i][j] != \"#\"]\n```\n\nOrder the candidate list deliberately: it determines the order in which a depth-first search explores, and therefore which of several equally short solutions is reported."
+            }
+          ]
+        },
+        {
+          "title": "Adversarial search",
+          "blocks": [
+            {
+              "md": "Minimax is the same recursion pattern, with the value of a state defined in terms of the values of its successors and a base case at terminal states.\n\n```python\ndef minimax_value(state):\n    if terminal(state):\n        return utility(state)\n    if player(state) == MAX:\n        return max(minimax_value(result(state, a)) for a in actions(state))\n    return min(minimax_value(result(state, a)) for a in actions(state))\n```\n\nNote the dependency on lesson 5: `result` must return a fresh board, or the recursion corrupts the state it is exploring."
+            }
+          ]
+        },
+        {
+          "title": "Exercises",
+          "blocks": [
+            {
+              "md": "| ID | Task | Focus |\n|---|---|---|\n| 7.1 | `bfs_path` | deque frontier, parent map, cycle safety (Degrees) |\n| 7.2 | `reachable` | explicit stack, depth-first traversal |\n| 7.3 | `maze_neighbors` | bounds checking, candidate offsets |\n| 7.4 | `build_path` | backward reconstruction, `[::-1]` |\n| 7.5 | `cheapest_cost` | `heapq`, settled set, Dijkstra |\n\nContinue with **Python Probability and Data**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was ändert sich, wenn man `front.pop(0)` durch `front.pop()` ersetzt?",
+      "options": [
+        {
+          "md": "Aus der Breitensuche wird eine Tiefensuche.",
+          "correct": true
+        },
+        {
+          "md": "nichts"
+        },
+        {
+          "md": "Die Suche findet keine Knoten mehr."
+        },
+        {
+          "md": "Aus der Tiefensuche wird eine Breitensuche."
+        }
+      ],
+      "explain": "`pop()` nimmt den zuletzt hinzugefügten Knoten: ein Stapel.",
+      "label": "Frontier",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Welche Datenstruktur ergibt welche Suche?",
@@ -68,7 +303,8 @@
       "points": [
         "Frontier + explored + Knoten mit Eltern.",
         "Stapel: DFS, Schlange: BFS, Heap: A*.",
-        "Pfad rückwärts über die Eltern."
+        "Pfad rückwärts über die Eltern.",
+        "Frontier mit `pop(0)` ist Breitensuche, mit `pop()` Tiefensuche; `seen` verhindert Wiederholungen."
       ],
       "id": "summary"
     }

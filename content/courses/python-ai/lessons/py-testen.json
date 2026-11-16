@@ -9,6 +9,121 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Film",
+      "md": "Ein Test findet einen Fehler.",
+      "widget": "codetrace",
+      "params": {
+        "buttons": false,
+        "code": "def summe(xs):\n    s = 0\n    for x in xs[1:]:\n        s += x\n    return s\n\nassert summe([2, 3]) == 5",
+        "trace": [
+          {
+            "line": 7,
+            "vars": {}
+          },
+          {
+            "line": 2,
+            "vars": {
+              "xs": "[2, 3]",
+              "s": "0"
+            }
+          },
+          {
+            "line": 3,
+            "vars": {
+              "xs": "[2, 3]",
+              "s": "0",
+              "x": "3"
+            }
+          },
+          {
+            "line": 4,
+            "vars": {
+              "xs": "[2, 3]",
+              "s": "3",
+              "x": "3"
+            }
+          },
+          {
+            "line": 5,
+            "vars": {
+              "s": "3"
+            }
+          },
+          {
+            "line": 7,
+            "vars": {},
+            "out": "AssertionError"
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Der Test ruft `summe([2, 3])` auf.",
+          "set": {
+            "k": 0
+          }
+        },
+        {
+          "caption": "Der Startwert.",
+          "set": {
+            "k": 1
+          }
+        },
+        {
+          "caption": "`xs[1:]` lässt das erste Element aus. Hier steckt der Fehler.",
+          "set": {
+            "k": 2
+          }
+        },
+        {
+          "caption": "Nur die 3 wird addiert.",
+          "set": {
+            "k": 3
+          }
+        },
+        {
+          "caption": "Ergebnis 3.",
+          "set": {
+            "k": 4
+          }
+        },
+        {
+          "caption": "3 ist nicht 5: Der Test schlägt an und zeigt, wo man suchen muss.",
+          "set": {
+            "k": 5
+          }
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "choice",
+      "md": "Wie behebt man den Fehler?",
+      "options": [
+        {
+          "md": "`for x in xs:` statt `for x in xs[1:]:`",
+          "correct": true
+        },
+        {
+          "md": "`s = 1` statt `s = 0`"
+        },
+        {
+          "md": "`return s + 2`",
+          "why": "Das passt nur zufällig für diese eine Eingabe."
+        },
+        {
+          "md": "den Test löschen"
+        }
+      ],
+      "explain": "Die Schleife muss alle Elemente durchlaufen.",
+      "label": "Fehler beheben",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Vorgehen",
       "md": "Ordne ein gutes Vorgehen bei einem Fehler.",
@@ -46,7 +161,8 @@
       "points": [
         "Reproduzieren, verkleinern, Hypothese, prüfen.",
         "assert und automatische Tests.",
-        "Jeder behobene Fehler bekommt einen Test."
+        "Jeder behobene Fehler bekommt einen Test.",
+        "`assert` hält fest, was der Code tun soll; ein kleiner Test findet den Fehler schnell."
       ],
       "id": "summary"
     }
