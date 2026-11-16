@@ -16,6 +16,144 @@
       "id": "t1"
     },
     {
+      "type": "text",
+      "md": "Starke Säuren protolysieren vollständig: $c(\\mathrm{H_3O^+}) = c_0$, also $\\mathrm{pH} = -\\lg c_0$. Bei starken Basen erst $\\mathrm{pOH} = -\\lg c_0$, dann $\\mathrm{pH} = 14 - \\mathrm{pOH}$.",
+      "label": "Verfahren",
+      "more": "1. Stark oder schwach? Salzsäure, Salpetersäure, Natronlauge, Kalilauge sind stark.\n2. **Säure:** $c(\\mathrm{H_3O^+}) = c_0$ (Schwefelsäure in der Schulnäherung mal 2), $\\mathrm{pH} = -\\lg c$.\n3. **Base:** $c(\\mathrm{OH^-}) = c_0$, $\\mathrm{pOH} = -\\lg c$, $\\mathrm{pH} = 14 - \\mathrm{pOH}$.\n4. **Verdünnen auf das Zehnfache** verschiebt den pH-Wert um eine Einheit Richtung 7.",
+      "id": "ve1"
+    },
+    {
+      "id": "ve2",
+      "type": "anim",
+      "md": "**Beispiel:** Natronlauge mit $c = 0{,}01\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "c(\\mathrm{OH^-}) = 10^{-2}\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}",
+            "why": "Vollständige Dissoziation."
+          },
+          {
+            "tex": "\\mathrm{pOH} = 2",
+            "why": "Negativer Zehnerlogarithmus."
+          },
+          {
+            "tex": "\\mathrm{pH} = 14 - 2 = 12",
+            "why": "Über das Ionenprodukt des Wassers."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Konzentration.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "pOH.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "pH.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "anim",
+      "label": "Verdünnen",
+      "md": "**Verdünnen in Zehnerschritten:** Salzsäure mit $c = 0{,}1\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$ (pH 1). Jede Verdünnung auf das Zehnfache hebt den pH-Wert um 1.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4.2
+        ],
+        "y": [
+          0,
+          7.5
+        ],
+        "grid": true,
+        "xLabel": "Zehnerpotenz der Verdünnung",
+        "yLabel": "pH",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 4,
+            "value": 0,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "p",
+            "expr": "1 + x",
+            "color": "blue",
+            "domain": [
+              0,
+              4
+            ]
+          }
+        ],
+        "hlines": [
+          {
+            "y": 7,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "p",
+            "color": "accent"
+          }
+        ],
+        "readout": "Verdünnung 1 : {10^X|0} · pH {1 + X|1}"
+      },
+      "timeline": [
+        {
+          "caption": "Unverdünnt: pH 1.",
+          "set": {
+            "X": 0
+          }
+        },
+        {
+          "caption": "1 : 10: pH 2.",
+          "to": {
+            "X": 1
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "1 : 1000: pH 4. Weiter verdünnt nähert sich der Wert der 7 nur noch an.",
+          "to": {
+            "X": 3
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve3"
+    },
+    {
+      "type": "text",
+      "md": "Bei Basen nicht den pOH-Wert als pH-Wert angeben. Und Verdünnen bringt den pH-Wert nie über 7 hinaus: Säure bleibt sauer.",
+      "label": "Typische Fallen",
+      "id": "ve4"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "pH-Wert starker Säuren und Basen berechnen",
@@ -87,6 +225,16 @@
           ]
         }
       ]
+    },
+    {
+      "type": "numeric",
+      "label": "Base",
+      "md": "Welchen pH-Wert hat Kalilauge mit $c = 0{,}001\\,\\tfrac{\\mathrm{mol}}{\\mathrm{L}}$?",
+      "answer": 11,
+      "tolerance": 0,
+      "placeholder": "",
+      "explain": "$\\mathrm{pOH} = 3$, $\\mathrm{pH} = 11$.",
+      "id": "vq1"
     },
     {
       "type": "order",
@@ -171,6 +319,14 @@
       },
       "label": "Rückwärts rechnen",
       "id": "g3"
+    },
+    {
+      "id": "summary",
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stark: pH = −lg c₀; Basen über pOH."
+      ]
     }
   ]
 }
