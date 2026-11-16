@@ -137,13 +137,134 @@
     return H.numericStep(md, dE, "V", "$\\Delta E = E^0(\\text{Akzeptor}) - E^0(\\text{Donator}) = " + String(b[1]).replace(".", "{,}") + "\\,\\mathrm{V} - (" + String(a[1]).replace(".", "{,}") + "\\,\\mathrm{V}) = " + String(dE).replace(".", "{,}") + "\\,\\mathrm{V}$.");
   } });
 
+  // ---------------------------------------------------------------- Organik: Säurestärke, Markovnikov, Mechanismen, Nachweise, Wasserhärte
+  const ACIDS = [
+    ["Chlorethansäure", "Ethansäure", "Das Chloratom zieht Elektronen ab (−I-Effekt); das Carboxylat-Ion wird stabilisiert."],
+    ["Ethansäure", "Propansäure", "Die längere Alkylgruppe schiebt Elektronen (+I-Effekt) und destabilisiert das Carboxylat-Ion etwas."],
+    ["Trichlorethansäure", "Dichlorethansäure", "Drei Chloratome ziehen stärker als zwei: Die −I-Effekte addieren sich."],
+    ["2-Chlorbutansäure", "4-Chlorbutansäure", "Der −I-Effekt nimmt mit der Entfernung rasch ab; das Chloratom an C2 sitzt nah an der Carboxygruppe."],
+    ["Methansäure", "Ethansäure", "Ethansäure trägt eine Methylgruppe mit +I-Effekt, Methansäure nur ein H-Atom."],
+    ["Ethansäure", "Ethanol", "Das Acetat-Ion ist mesomeriestabilisiert, das Ethanolat-Ion nicht."],
+    ["Fluorethansäure", "Chlorethansäure", "Fluor ist elektronegativer als Chlor und zieht stärker (−I-Effekt)."],
+    ["Phenol", "Ethanol", "Das Phenolat-Ion ist mesomeriestabilisiert: Die Ladung verteilt sich über den Ring."],
+    ["Ethansäure", "Phenol", "Im Carboxylat verteilt sich die Ladung auf zwei gleichwertige O-Atome, im Phenolat zum Teil auf weniger elektronegative C-Atome."],
+    ["Dichlorethansäure", "Chlorethansäure", "Zwei Chloratome ziehen stärker als eins: Die −I-Effekte addieren sich."],
+    ["3-Chlorpropansäure", "Propansäure", "Auch über zwei Bindungen hinweg wirkt der −I-Effekt des Chloratoms noch."],
+    ["Benzoesäure", "Phenol", "Benzoesäure ist eine Carbonsäure: Das Carboxylat-Ion ist über zwei O-Atome stabilisiert."]];
+  const ACID_WRONG = ["Ein +I-Effekt stabilisiert das Säure-Anion.", "Die größere Molekülmasse erleichtert die Abgabe des Protons.",
+    "Mehr Wasserstoffatome im Molekül bedeuten mehr abspaltbare Protonen.", "Das Säure-Anion ist weniger stabil; deshalb wird das Proton leichter abgegeben."];
+  spec("saeurestaerke", { custom(level, G) {
+    const [s, w, why] = G.pick(level <= 1 ? ACIDS.slice(0, 6) : ACIDS);
+    const pair = G.chance(0.5) ? [s, w] : [w, s];
+    if (level <= 2) {
+      return choiceStep("Welche Säure ist stärker: **" + pair[0] + "** oder **" + pair[1] + "**?", s, [w, "Beide sind gleich stark."],
+        "**" + s + "** ist stärker. " + why + " Je stabiler das Säure-Anion, desto leichter wird das Proton abgegeben.");
+    }
+    return choiceStep("**" + s + "** ist eine stärkere Säure als **" + w + "**. Welche Begründung trifft zu?", why, G.pickN(ACID_WRONG, 3),
+      why + " Merksatz: Alles, was die negative Ladung des Anions verteilt oder abzieht (−I-Effekt, Mesomerie), macht die Säure stärker; +I-Effekte schwächen sie.");
+  } });
+
+  const MARK = [
+    ["Propen $\\mathrm{CH_2{=}CH{-}CH_3}$", "Bromwasserstoff", "2-Brompropan", ["1-Brompropan", "1,2-Dibrompropan", "Propan-2-ol"]],
+    ["Propen $\\mathrm{CH_2{=}CH{-}CH_3}$", "Wasser (säurekatalysiert)", "Propan-2-ol", ["Propan-1-ol", "Propanal", "Propanon"]],
+    ["2-Methylpropen $\\mathrm{CH_2{=}C(CH_3)_2}$", "Chlorwasserstoff", "2-Chlor-2-methylpropan", ["1-Chlor-2-methylpropan", "2-Chlorbutan", "1,2-Dichlor-2-methylpropan"]],
+    ["2-Methylpropen $\\mathrm{CH_2{=}C(CH_3)_2}$", "Wasser (säurekatalysiert)", "2-Methylpropan-2-ol", ["2-Methylpropan-1-ol", "Butan-2-ol", "2-Methylpropanal"]],
+    ["But-1-en $\\mathrm{CH_2{=}CH{-}CH_2{-}CH_3}$", "Bromwasserstoff", "2-Brombutan", ["1-Brombutan", "1,2-Dibrombutan", "2-Brombut-1-en"]],
+    ["2-Methylbut-2-en $\\mathrm{(CH_3)_2C{=}CH{-}CH_3}$", "Bromwasserstoff", "2-Brom-2-methylbutan", ["2-Brom-3-methylbutan", "1-Brom-2-methylbutan", "2,3-Dibrom-2-methylbutan"]],
+    ["Styrol $\\mathrm{C_6H_5{-}CH{=}CH_2}$", "Bromwasserstoff", "1-Brom-1-phenylethan", ["2-Brom-1-phenylethan", "Brombenzol", "1,2-Dibrom-1-phenylethan"]]];
+  const MARK_WRONG = ["Weil das Halogenid- oder Wassermolekül zuerst angreift.", "Weil das H-Atom an das C-Atom mit weniger H-Atomen geht.",
+    "Weil die Reaktion über Radikale verläuft.", "Weil das primäre Carbenium-Ion am stabilsten ist."];
+  spec("markovnikov", { custom(level, G) {
+    const [alken, reag, right, wrong] = G.pick(level <= 1 ? MARK.slice(0, 4) : MARK);
+    const why = "Nach Markovnikov geht das H-Atom an das C-Atom der Doppelbindung, das schon mehr H-Atome trägt. So entsteht das stabilere, höher substituierte Carbenium-Ion (stabilisiert durch den +I-Effekt der Alkylgruppen, beim Styrol durch Mesomerie mit dem Ring), an das sich das Nucleophil anlagert.";
+    if (level <= 2) {
+      return choiceStep("Welches Hauptprodukt entsteht bei der Addition von " + reag + " an " + alken + "?", right, wrong, why + " Hauptprodukt: **" + right + "**.");
+    }
+    return choiceStep("Bei der Addition von " + reag + " an " + alken + " entsteht vor allem **" + right + "**. Warum?",
+      "Weil dabei das stabilere, höher substituierte Carbenium-Ion entsteht.", G.pickN(MARK_WRONG, 3), why);
+  } });
+
+  const MECH = [
+    ["$\\mathrm{CH_2{=}CH_2 + Br_2 \\to CH_2Br{-}CH_2Br}$", 0],
+    ["$\\mathrm{C_6H_6 + Br_2 \\xrightarrow{FeBr_3} C_6H_5Br + HBr}$", 1],
+    ["$\\mathrm{CH_3Br + OH^- \\to CH_3OH + Br^-}$", 2],
+    ["$\\mathrm{(CH_3)_3CBr + H_2O \\to (CH_3)_3COH + HBr}$", 3],
+    ["$\\mathrm{CH_4 + Cl_2 \\xrightarrow{\\text{Licht}} CH_3Cl + HCl}$", 4],
+    ["$\\mathrm{CH_3{-}CH{=}CH_2 + HBr \\to CH_3{-}CHBr{-}CH_3}$", 0],
+    ["$\\mathrm{n\\,CH_2{=}CH_2 \\xrightarrow{\\text{Radikalstarter}} {-}[CH_2{-}CH_2]_n{-}}$", 5],
+    ["$\\mathrm{C_6H_6 + HNO_3 \\xrightarrow{H_2SO_4} C_6H_5NO_2 + H_2O}$", 1],
+    ["$\\mathrm{C_2H_5Br + CN^- \\to C_2H_5CN + Br^-}$", 2],
+    ["$\\mathrm{CH_2{=}C(CH_3)_2 + H_2O \\xrightarrow{H^+} (CH_3)_3COH}$", 0],
+    ["$\\mathrm{C_2H_6 + Br_2 \\xrightarrow{\\text{Licht}} C_2H_5Br + HBr}$", 4],
+    ["$\\mathrm{n\\,CH_2{=}C(CH_3)_2 \\xrightarrow{H^+} \\text{Polyisobuten}}$", 6]];
+  const MECH_N = ["elektrophile Addition", "elektrophile Substitution", "nucleophile Substitution (SN2)", "nucleophile Substitution (SN1)",
+    "radikalische Substitution", "radikalische Polymerisation", "kationische Polymerisation"];
+  const MECH_W = ["Ein Elektrophil greift die π-Elektronen der Doppelbindung an; aus zwei Teilchen wird eines, die Doppelbindung verschwindet.",
+    "Ein Elektrophil (mit Katalysator erzeugt) ersetzt ein H-Atom am Aromaten; über den σ-Komplex bleibt das aromatische System erhalten.",
+    "Ein Nucleophil ersetzt die Abgangsgruppe in einem Schritt, Rückseitenangriff; typisch für primäre Halogenalkane.",
+    "Die Abgangsgruppe geht zuerst, es entsteht ein tertiäres Carbenium-Ion, dann greift das Nucleophil an; typisch für tertiäre Halogenalkane in Wasser.",
+    "Licht spaltet das Halogen in Radikale; eine Kettenreaktion ersetzt H-Atome des Alkans.",
+    "Ein Radikalstarter öffnet die Doppelbindung; die Kette wächst, bis zwei Radikale sich treffen.",
+    "Ein Proton startet die Kette über ein Carbenium-Ion; Monomere mit elektronenschiebenden Gruppen eignen sich besonders."];
+  spec("mechanismus", { custom(level, G) {
+    const [eq, k] = G.pick(level <= 1 ? MECH.slice(0, 6) : MECH);
+    return choiceStep("Nach welchem Mechanismus verläuft diese Reaktion? " + eq, MECH_N[k], G.shuffle(MECH_N.filter((n, i) => i !== k)).slice(0, 3),
+      "**" + MECH_N[k] + ".** " + MECH_W[k]);
+  } });
+
+  const NACHW = [
+    ["Bromwasser wird ohne Belichtung sofort entfärbt.", "eine C=C-Doppelbindung", "Brom addiert an die Doppelbindung (elektrophile Addition)."],
+    ["Fehling-Probe: Beim Erwärmen fällt ein ziegelroter Niederschlag aus.", "eine Aldehydgruppe", "Cu²⁺ wird zu Cu₂O reduziert, der Aldehyd zur Carbonsäure oxidiert."],
+    ["Tollens-Probe: An der Glaswand bildet sich ein Silberspiegel.", "eine Aldehydgruppe", "Ag⁺ wird zu Silber reduziert, der Aldehyd oxidiert."],
+    ["Kalkwasser trübt sich beim Einleiten des Gases.", "Kohlenstoffdioxid", "Es fällt Calciumcarbonat aus."],
+    ["Iod-Kaliumiodid-Lösung färbt sich tiefblau.", "Stärke", "Iod lagert sich in die Helix der Amylose ein."],
+    ["Biuret-Reagenz färbt sich violett.", "Peptidbindungen (Proteine)", "Cu²⁺ bildet mit den Peptidbindungen einen violetten Komplex."],
+    ["Ein glimmender Holzspan flammt im Gas auf.", "Sauerstoff", "Glimmspanprobe."],
+    ["Das aufgefangene Gas verbrennt mit pfeifendem Knall.", "Wasserstoff", "Knallgasprobe."],
+    ["Weißes, wasserfreies Kupfersulfat färbt sich blau.", "Wasser", "Es bildet sich blaues Kupfersulfat-Hydrat."],
+    ["Mit Silbernitratlösung fällt ein weißer Niederschlag aus.", "Chlorid-Ionen", "Silberchlorid ist schwer löslich."],
+    ["Mit Bariumchloridlösung fällt ein weißer Niederschlag aus.", "Sulfat-Ionen", "Bariumsulfat ist schwer löslich."],
+    ["Ninhydrin färbt sich beim Erwärmen blauviolett.", "Aminosäuren", "Ninhydrin reagiert mit freien Aminogruppen zu einem Farbstoff."],
+    ["Ein Glucose-Teststreifen (GOD) verfärbt sich.", "Glucose", "Das Enzym Glucoseoxidase setzt nur Glucose um."]];
+  spec("nachweis", { custom(level, G) {
+    const [obs, right, why] = G.pick(level <= 1 ? NACHW.slice(0, 8) : NACHW);
+    const wrong = G.shuffle([...new Set(NACHW.map((x) => x[1]))].filter((x) => x !== right)).slice(0, 3);
+    return choiceStep("Beobachtung: " + obs + " Was ist damit nachgewiesen?", right, wrong, "Nachgewiesen ist **" + right + "**. " + why);
+  } });
+
+  spec("wasserhaerte", { custom(level, G) {
+    const c = G.int(5, 40) / 10;
+    if (level <= 1) {
+      return H.numericStep("Ein Leitungswasser enthält $c = " + G.tex(c, 1) + "\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$ Calcium- und Magnesium-Ionen. Wie hoch ist die Härte in °dH? ($1\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}} \\approx 5{,}6\\,{}^{\\circ}\\mathrm{dH}$)",
+        Math.round(c * 5.6 * 10) / 10, "°dH", "$" + G.tex(c, 1) + " \\cdot 5{,}6 \\approx " + G.tex(c * 5.6, 1) + "$ °dH.");
+    }
+    if (level === 2) {
+      const b = G.int(4, 32) * 5, cc = b / 40.08;
+      return H.numericStep("Ein Wasser enthält $" + b + "\\,\\tfrac{\\mathrm{mg}}{\\mathrm{L}}$ Calcium-Ionen ($M = 40{,}1\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$), sonst keine Härtebildner. Wie hoch ist die Härte in °dH? ($1\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}} \\approx 5{,}6\\,{}^{\\circ}\\mathrm{dH}$)",
+        Math.round(cc * 5.6 * 10) / 10, "°dH", "Erst die Stoffmengenkonzentration: $c = \\tfrac{" + b + "}{40{,}1} \\approx " + G.tex(cc, 2) + "\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$, dann mal 5,6: etwa $" + G.tex(cc * 5.6, 1) + "$ °dH.");
+    }
+    const h = Math.round(c * 5.6 * 10) / 10;
+    if (level === 3) {
+      return H.numericStep("Ein Wasser hat eine Härte von $" + G.tex(h, 1) + "$ °dH. Wie groß ist die Konzentration der Erdalkali-Ionen in $\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$? ($1\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}} \\approx 5{,}6\\,{}^{\\circ}\\mathrm{dH}$)",
+        Math.round((h / 5.6) * 100) / 100, "mmol/L", "Rückwärts: $c = \\tfrac{" + G.tex(h, 1) + "}{5{,}6} \\approx " + G.tex(h / 5.6, 2) + "\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$.");
+    }
+    if (G.chance(0.5)) {
+      const r = c < 1.5 ? "weich" : c <= 2.5 ? "mittel" : "hart";
+      return choiceStep("Ein Wasser enthält $" + G.tex(c, 1) + "\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$ Erdalkali-Ionen ($" + G.tex(h, 1) + "$ °dH). In welchen Härtebereich fällt es?", r,
+        ["weich", "mittel", "hart"].filter((x) => x !== r),
+        "Härtebereiche nach dem Waschmittelgesetz: weich unter 1,5 mmol/L (8,4 °dH), mittel bis 2,5 mmol/L (14 °dH), hart darüber. Hier: **" + r + "**.");
+    }
+    return H.numericStep("Ein Wasser enthält $" + G.tex(c, 1) + "\\,\\tfrac{\\mathrm{mmol}}{\\mathrm{L}}$ Calcium-Ionen, alle als Hydrogencarbonat gelöst. Wie viel Milligramm Kesselstein ($\\mathrm{CaCO_3}$, $M = 100\\,\\tfrac{\\mathrm{g}}{\\mathrm{mol}}$) kann sich beim Kochen aus einem Liter höchstens abscheiden?",
+      Math.round(c * 100), "mg", "$\\mathrm{Ca^{2+} + 2\\,HCO_3^- \\to CaCO_3 + CO_2 + H_2O}$: je Calcium-Ion ein $\\mathrm{CaCO_3}$, also $" + G.tex(c, 1) + "\\,\\mathrm{mmol} \\cdot 100\\,\\tfrac{\\mathrm{mg}}{\\mathrm{mmol}} = " + Math.round(c * 100) + "$ mg.");
+  } });
+
   const make = LW.rechenEngine(T);
   LW.generator("che-rechnen", { title: "Chemie rechnen", make });
   LW.chemieTypen = T;
   const chapter = (typ) => ({ title: "Chemie üben", make: (level, G) => make(level, G, { typ }) });
   LW.generator("che-r-grundlagen", chapter(["stoffmenge", "konzentration", "gasvolumen"]));
   LW.generator("che-r-ephase", chapter(["konzentration", "verduennung", "ph-stark", "ph-base", "oxidationszahl", "galvanisch", "iupac"]));
-  LW.generator("che-r-organik", chapter(["iupac", "isomere-anzahl", "oxidationszahl", "mwg"]));
+  LW.generator("che-r-organik", chapter(["iupac", "isomere-anzahl", "oxidationszahl", "mwg", "saeurestaerke", "markovnikov", "mechanismus", "nachweis", "wasserhaerte"]));
   LW.generator("che-r-naturstoffe", chapter(["chiralitaet", "isoelektrisch", "verseifungszahl", "iodzahl"]));
   LW.generator("che-r-gleichgewicht", chapter(["mwg", "ph-schwach", "puffer", "titration", "nernst", "konzentrationszelle", "geschwindigkeit", "rgt"]));
   LW.generator("che-r-wahl", chapter(["ausbeute", "atomoekonomie", "freie-enthalpie", "kalorimetrie", "faraday"]));

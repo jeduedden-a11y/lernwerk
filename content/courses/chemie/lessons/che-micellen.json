@@ -18,6 +18,126 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "Grafik erkunden",
+      "md": "**Eine Micelle im Querschnitt**, aus der Grafik im Vault.",
+      "widget": "bildtour",
+      "params": {
+        "image": "vault:Micelle.svg"
+      },
+      "timeline": [
+        {
+          "caption": "Seifen-Anionen ordnen sich zu einer Kugel.",
+          "to": {
+            "x": 0.48,
+            "y": 0.52,
+            "z": 1,
+            "s": 0
+          }
+        },
+        {
+          "caption": "Innen: Die lipophilen Schwänze umschließen den Fettschmutz.",
+          "to": {
+            "x": 0.48,
+            "y": 0.52,
+            "z": 2.0,
+            "s": 0.3
+          },
+          "dur": 1300
+        },
+        {
+          "caption": "Außen: Die hydrophilen Köpfe zeigen ins Wasser. Ihre gleichen Ladungen halten die Micellen auseinander.",
+          "to": {
+            "x": 0.48,
+            "y": 0.22,
+            "z": 2.2,
+            "s": 0.3
+          },
+          "dur": 1300
+        }
+      ],
+      "id": "ve1"
+    },
+    {
+      "type": "anim",
+      "label": "Micellbildung",
+      "md": "**Oberflächenspannung und Micellbildung** (schematisch): Erst sinkt die Spannung, ab der kritischen Konzentration bleibt sie konstant.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          0,
+          4
+        ],
+        "y": [
+          0,
+          80
+        ],
+        "grid": true,
+        "xLabel": "Tensidkonzentration (logarithmisch)",
+        "yLabel": "mN/m",
+        "vars": [
+          {
+            "name": "X",
+            "min": 0,
+            "max": 4,
+            "value": 0.5,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "s",
+            "expr": "72 - 15*min(x, 2.4)",
+            "color": "blue"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 2.4,
+            "color": "orange"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "s",
+            "color": "accent"
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.4,
+            "y": 76,
+            "text": "kritische Konzentration",
+            "color": "orange"
+          }
+        ]
+      },
+      "timeline": [
+        {
+          "caption": "Wenig Tensid: Die Moleküle besetzen die Oberfläche, die Spannung sinkt.",
+          "set": {
+            "X": 1.2
+          }
+        },
+        {
+          "caption": "Die Oberfläche ist voll besetzt: kritische Micellbildungskonzentration.",
+          "to": {
+            "X": 2.4
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Mehr Tensid bildet nur noch Micellen; die Spannung ändert sich nicht.",
+          "to": {
+            "X": 3.6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve2"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Micellbildung",
@@ -70,6 +190,29 @@
       ]
     },
     {
+      "type": "choice",
+      "md": "Warum lagern sich Micellen nicht zu großen Fetttropfen zusammen?",
+      "options": [
+        {
+          "md": "Ihre Oberflächen tragen gleiche Ladungen und stoßen sich ab.",
+          "correct": true
+        },
+        {
+          "md": "Die Schwänze sind hydrophil.",
+          "why": "Die Schwänze sind lipophil und liegen innen."
+        },
+        {
+          "md": "Das Fett ist im Wasser gelöst."
+        },
+        {
+          "md": "Die Micellen sind kleiner als Wassermoleküle."
+        }
+      ],
+      "explain": "Die Carboxylat-Köpfe bilden eine negativ geladene Hülle.",
+      "label": "Abstoßung",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Ordnen",
       "md": "Ordne den Waschvorgang.",
@@ -115,7 +258,8 @@
       "points": [
         "Tenside senken die Oberflächenspannung.",
         "Micellen: Schwänze innen, Köpfe außen, Fett eingeschlossen.",
-        "Gleiches Prinzip bei Membranen und Gallensalzen."
+        "Gleiches Prinzip bei Membranen und Gallensalzen.",
+        "Micelle: Fett innen, Köpfe außen; ab der kritischen Konzentration."
       ],
       "id": "summary"
     }

@@ -19,6 +19,78 @@
       "id": "t1"
     },
     {
+      "type": "anim",
+      "label": "pH-Abhängigkeit",
+      "md": "**Nur die undissoziierte Säure wirkt:** Anteil undissoziierter Benzoesäure (pKs 4,2) in Abhängigkeit vom pH-Wert.",
+      "widget": "plot",
+      "params": {
+        "x": [
+          2,
+          8
+        ],
+        "y": [
+          0,
+          105
+        ],
+        "grid": true,
+        "xLabel": "pH",
+        "yLabel": "%",
+        "vars": [
+          {
+            "name": "X",
+            "min": 2,
+            "max": 8,
+            "value": 3,
+            "hidden": true
+          }
+        ],
+        "functions": [
+          {
+            "name": "a",
+            "expr": "100/(1 + 10^(x - 4.2))",
+            "color": "blue"
+          }
+        ],
+        "vlines": [
+          {
+            "x": 4.2,
+            "color": "gray"
+          }
+        ],
+        "points": [
+          {
+            "x": "X",
+            "on": "a",
+            "color": "accent"
+          }
+        ],
+        "readout": "pH {X|1} · undissoziiert {100/(1 + 10^(X - 4.2))|0} %"
+      },
+      "timeline": [
+        {
+          "caption": "Saure Lebensmittel, pH 3: Über 90 % liegen als Säure vor. Sie dringt in die Zellen der Keime ein.",
+          "set": {
+            "X": 3
+          }
+        },
+        {
+          "caption": "Bei pH = pKs ist genau die Hälfte dissoziiert.",
+          "to": {
+            "X": 4.2
+          },
+          "dur": 1600
+        },
+        {
+          "caption": "Bei pH 6 sind es nur noch knapp 2 %: Die Konservierung wirkt kaum.",
+          "to": {
+            "X": 6
+          },
+          "dur": 1600
+        }
+      ],
+      "id": "ve1"
+    },
+    {
       "id": "notiz",
       "type": "note",
       "title": "Konservierungsstoffe",
@@ -133,6 +205,16 @@
       ]
     },
     {
+      "type": "numeric",
+      "label": "Anteil",
+      "md": "Wie viel Prozent Benzoesäure (pKs 4,2) liegen bei pH 5,2 undissoziiert vor?",
+      "answer": 9.1,
+      "tolerance": 0.5,
+      "placeholder": "%",
+      "explain": "Bei pH = pKs + 1 ist das Verhältnis Anion zu Säure 10 : 1, also $\\tfrac{1}{11} \\approx 9{,}1$ %.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Benzoesäure hat den pKS 4,2. In welchem Lebensmittel wirkt sie am besten?",
       "options": [
@@ -214,7 +296,8 @@
       "points": [
         "Konservierungssäuren wirken undissoziiert, also bei pH unter pKS.",
         "Antioxidantien werden selbst oxidiert.",
-        "Ascorbinsäure: Endiol, sauer durch Mesomerie, reduziert Iod."
+        "Ascorbinsäure: Endiol, sauer durch Mesomerie, reduziert Iod.",
+        "Konservierungssäuren wirken undissoziiert, also in sauren Lebensmitteln."
       ],
       "id": "summary"
     }
