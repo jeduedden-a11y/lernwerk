@@ -102,3 +102,142 @@
     { lv: 4, ok: false, md: "Die Sophisten suchten wie Sokrates nach einer für alle gültigen Wahrheit.", why: "Sie neigten zum Relativismus (»Der Mensch ist das Maß aller Dinge«); Sokrates trat dem entgegen." },
   ]);
 })();
+/* Übungen zur Ethik (phi-rechnen): Schlussformen prüfen, hedonistisches Kalkül, Kants Handlungsarten,
+   Maximin gegen Nutzensumme, Abdiskontieren künftiger Schäden. Stufen 1 bis 4. Built on first use,
+   because some pages load this file before physik-rechnen.js defines the engine. */
+(function () {
+  "use strict";
+  const LW = window.LW;
+  let engine = null;
+  function init() {
+  const T = {};
+  const spec = (id, s) => { T[id] = s; };
+  const H = LW.rechenHelpers;
+  const choiceStep = (md, right, wrong, explain) => {
+    const seen = new Set([right]);
+    const opts = [{ md: right, correct: true }];
+    wrong.forEach((w) => { if (!seen.has(w) && opts.length < 5) { seen.add(w); opts.push({ md: w }); } });
+    return { type: "choice", md, options: opts, explain };
+  };
+
+  const FORMS = [
+    ["Wenn es regnet, ist die Straße nass. Es regnet. Also ist die Straße nass.", true, "Modus ponens"],
+    ["Wenn es regnet, ist die Straße nass. Die Straße ist nicht nass. Also regnet es nicht.", true, "Modus tollens"],
+    ["Wenn es regnet, ist die Straße nass. Die Straße ist nass. Also regnet es.", false, "Bejahung des Hinterglieds"],
+    ["Wenn es regnet, ist die Straße nass. Es regnet nicht. Also ist die Straße nicht nass.", false, "Verneinung des Vorderglieds"],
+    ["Wenn jemand lügt, verletzt er Vertrauen. Wer Vertrauen verletzt, schadet anderen. Also schadet anderen, wer lügt.", true, "Kettenschluss"],
+    ["Anna handelt aus Pflicht oder aus Neigung. Sie handelt nicht aus Neigung. Also handelt sie aus Pflicht.", true, "disjunktiver Syllogismus"],
+    ["Wenn eine Handlung das Glück mehrt, ist sie gut. Diese Handlung ist gut. Also mehrt sie das Glück.", false, "Bejahung des Hinterglieds"],
+    ["Wenn Tiere leiden können, zählen ihre Interessen. Tiere können leiden. Also zählen ihre Interessen.", true, "Modus ponens"],
+    ["Wenn man lügt, wird man bestraft. Tom lügt nicht. Also wird Tom nicht bestraft.", false, "Verneinung des Vorderglieds"],
+    ["Wenn ein Gesetz gerecht ist, stimmen ihm alle zu. Nicht alle stimmen diesem Gesetz zu. Also ist es nicht gerecht.", true, "Modus tollens"],
+    ["Alle Menschen sind sterblich. Sokrates ist ein Mensch. Also ist Sokrates sterblich.", true, "kategorischer Syllogismus"]];
+  const FORM_N = ["Modus ponens", "Modus tollens", "Bejahung des Hinterglieds", "Verneinung des Vorderglieds", "Kettenschluss", "disjunktiver Syllogismus", "kategorischer Syllogismus"];
+  spec("logik", { custom(level, G) {
+    const [txt, valid, name] = G.pick(level <= 1 ? FORMS.slice(0, 6) : FORMS);
+    if (level <= 2) {
+      return choiceStep("Ist dieser Schluss **gültig**? »" + txt + "«", valid ? "gültig" : "ungültig", [valid ? "ungültig" : "gültig", "Das hängt davon ab, ob die Prämissen wahr sind."],
+        "**" + (valid ? "Gültig" : "Ungültig") + "** (" + name + "). " + (valid ? "Sind die Prämissen wahr, muss die Konklusion wahr sein." : "Die Prämissen können wahr sein, während die Konklusion falsch ist.") + " Gültigkeit hängt an der Form, nicht an der Wahrheit der Prämissen.");
+    }
+    return choiceStep("Welche Schlussform liegt vor? »" + txt + "«", name, G.shuffle(FORM_N.filter((n) => n !== name)).slice(0, 3),
+      "**" + name + "**, " + (valid ? "ein gültiger Schluss." : "ein Fehlschluss.") + " Gültig sind Modus ponens, Modus tollens, Kettenschluss sowie disjunktiver und kategorischer Syllogismus; die Bejahung des Hinterglieds und die Verneinung des Vorderglieds sind Fehlschlüsse.");
+  } });
+
+  spec("kalkuel", { custom(level, G) {
+    if (level <= 1) {
+      const v = [G.int(1, 6), -G.int(1, 5), G.int(-3, 6)], s = v.reduce((a, b) => a + b, 0);
+      return H.numericStep("Eine Handlung bewirkt bei drei Betroffenen " + v.map((x) => (x > 0 ? "+" + x : "−" + -x)).join(", ") + " Glückseinheiten. Wie groß ist die Nutzensumme?", s, "",
+        "Alle zählen gleich: $" + v.join(" + ").replace(/\+ -/g, "- ") + " = " + s + "$.");
+    }
+    if (level === 3) {
+      const i1 = G.int(2, 5), d1 = G.int(1, 4), p1 = G.pick([0.5, 0.8, 1]), i2 = G.int(1, 5), d2 = G.int(1, 4), p2 = G.pick([0.5, 0.8, 1]);
+      const net = i1 * d1 * p1 - i2 * d2 * p2;
+      return H.numericStep("Nach Bentham: Eine Handlung bringt eine Freude der Intensität $" + i1 + "$, Dauer $" + d1 + "$ h, Gewissheit $" + G.tex(p1, 1) + "$, und ein Leid der Intensität $" + i2 + "$, Dauer $" + d2 + "$ h, Gewissheit $" + G.tex(p2, 1) + "$. Wie groß ist der Nettowert (Intensität mal Dauer mal Gewissheit)?", Math.round(net * 10) / 10, "",
+        "Freude $" + i1 + " \\cdot " + d1 + " \\cdot " + G.tex(p1, 1) + " = " + G.tex(i1 * d1 * p1, 1) + "$, Leid $" + i2 + " \\cdot " + d2 + " \\cdot " + G.tex(p2, 1) + " = " + G.tex(i2 * d2 * p2, 1) + "$, netto $" + G.tex(net, 1) + "$.");
+    }
+    let a, b, sa, sb;
+    do {
+      a = [G.int(-2, 6), G.int(-2, 6), G.int(-2, 6)]; b = [G.int(-2, 6), G.int(-2, 6), level >= 4 ? -G.int(6, 10) : G.int(-2, 6)];
+      if (level >= 4) b = [G.int(5, 9), G.int(5, 9), b[2]];
+      sa = a.reduce((x, y) => x + y, 0); sb = b.reduce((x, y) => x + y, 0);
+    } while (sa === sb);
+    const fmt = (v) => v.map((x) => (x >= 0 ? "+" + x : "−" + -x)).join(", ");
+    const right = sa > sb ? "Handlung A" : "Handlung B";
+    return choiceStep("Handlung A bewirkt bei drei Betroffenen " + fmt(a) + ", Handlung B " + fmt(b) + " Glückseinheiten. Welche Handlung verlangt der Handlungsutilitarismus?", right,
+      [sa > sb ? "Handlung B" : "Handlung A", "keine von beiden, beide verletzen jemanden"],
+      "Summen: A $" + sa + "$, B $" + sb + "$. Gewählt wird die größere Summe." + (level >= 4 ? " Kritiker wenden ein, dass so ein schwerer Schaden für eine Person durch kleine Vorteile vieler aufgewogen werden kann: der Rechte-Einwand." : ""));
+  } });
+
+  const DUTY = [
+    ["Ein Kaufmann gibt auch Kindern korrektes Wechselgeld, damit sein Ruf keinen Schaden nimmt.", 1],
+    ["Ein Kaufmann gibt korrektes Wechselgeld, weil er es als Pflicht erkennt, auch wenn niemand es merken würde.", 2],
+    ["Ein Kaufmann betrügt ein Kind beim Wechselgeld.", 0],
+    ["Jemand hilft einem Fremden, weil es ihm Freude macht zu helfen.", 1],
+    ["Jemand hilft einem Fremden, obwohl er keine Lust dazu hat, weil er es als Pflicht erkennt.", 2],
+    ["Jemand bricht ein Versprechen, weil es ihm einen Vorteil bringt.", 0],
+    ["Ein Lebensmüder erhält sein Leben, nicht aus Neigung, sondern weil er es als Pflicht erkennt.", 2],
+    ["Jemand erhält sein Leben, weil er gern lebt.", 1],
+    ["Jemand lügt, um einer peinlichen Lage zu entgehen.", 0],
+    ["Eine Ärztin klärt einen Patienten ehrlich auf, weil sie sonst eine Klage fürchtet.", 1]];
+  const DUTY_N = ["pflichtwidrig", "pflichtgemäß", "aus Pflicht"];
+  spec("handlungsart", { custom(level, G) {
+    const [txt, k] = G.pick(DUTY);
+    if (level <= 2) {
+      return choiceStep("Wie ordnet Kant diese Handlung ein? " + txt, DUTY_N[k], DUTY_N.filter((_, i) => i !== k),
+        "**" + DUTY_N[k] + ".** Pflichtwidrig widerspricht der Pflicht; pflichtgemäß entspricht ihr äußerlich, geschieht aber aus Neigung oder Eigennutz; aus Pflicht geschieht sie aus Achtung vor dem Sittengesetz.");
+    }
+    const right = k === 2 ? "ja, sie geschieht aus Pflicht" : k === 1 ? "nein, sie ist nur pflichtgemäß" : "nein, sie ist pflichtwidrig";
+    return choiceStep("Hat diese Handlung nach Kant **moralischen Wert**? " + txt, right, ["ja, sie geschieht aus Pflicht", "nein, sie ist nur pflichtgemäß", "nein, sie ist pflichtwidrig"].filter((x) => x !== right),
+      "Moralischen Wert hat für Kant nur, was aus Pflicht geschieht. Eine pflichtgemäße Handlung ist lobenswert, aber ihr Motiv ist Neigung oder Eigennutz.");
+  } });
+
+  spec("maximin", { custom(level, G) {
+    let D;
+    for (;;) {
+      D = [0, 1, 2].map(() => [G.int(2, 12), G.int(4, 20), G.int(6, 40)].sort((x, y) => x - y));
+      const mins = D.map((d) => d[0]), sums = D.map((d) => d[0] + d[1] + d[2]);
+      if (new Set(mins).size === 3 && new Set(sums).size === 3) break;
+    }
+    const mins = D.map((d) => d[0]), sums = D.map((d) => d[0] + d[1] + d[2]);
+    const names = ["A", "B", "C"], txt = D.map((d, i) => names[i] + ": (" + d.join(", ") + ")").join("; ");
+    const rawls = names[mins.indexOf(Math.max(...mins))], util = names[sums.indexOf(Math.max(...sums))];
+    if (level <= 2) {
+      return choiceStep("Drei mögliche Verteilungen von Einkommen auf drei Personen: " + txt + ". Welche wählt man hinter dem Schleier des Nichtwissens nach dem Maximin-Prinzip?", "Verteilung " + rawls,
+        names.filter((n) => n !== rawls).map((n) => "Verteilung " + n),
+        "Maximin: die Verteilung, in der es der am schlechtesten gestellten Person am besten geht. Minima: " + D.map((d, i) => names[i] + " " + d[0]).join(", ") + ".");
+    }
+    return choiceStep("Drei mögliche Verteilungen von Einkommen auf drei Personen: " + txt + ". Welche wählt ein Utilitarist, der die Summe maximiert?", "Verteilung " + util,
+      names.filter((n) => n !== util).map((n) => "Verteilung " + n),
+      "Summen: " + D.map((d, i) => names[i] + " " + sums[i]).join(", ") + ". " + (util === rawls ? "Hier kommen Utilitarist und Rawls zum selben Ergebnis." : "Rawls würde dagegen " + rawls + " wählen, weil es dort dem Schlechtestgestellten am besten geht."));
+  } });
+
+  spec("diskontierung", { custom(level, G) {
+    if (level <= 1) {
+      const D = G.pick([100, 500, 1000]), r = G.pick([1, 2, 3, 5]), n = G.pick([20, 50, 100]), v = D / Math.pow(1 + r / 100, n);
+      return H.numericStep("Ein Klimaschaden von $" + D + "$ Mrd. € tritt in $" + n + "$ Jahren ein. Wie viel ist er heute wert, wenn man mit " + "$" + r + "\\,\\%$ pro Jahr abdiskontiert? (in Mrd. €)", v < 10 ? Math.round(v * 100) / 100 : Math.round(v), "Mrd. €",
+        "$\\tfrac{" + D + "}{" + G.tex(1 + r / 100, 2) + "^{" + n + "}} \\approx " + G.tex(v, v < 10 ? 2 : 0) + "$ Mrd. €. Je höher die Rate, desto weniger zählt die Zukunft.");
+    }
+    if (level === 2) {
+      const n = G.pick([50, 100]), f1 = Math.pow(1.014, -n), f2 = Math.pow(1.055, -n), q = f1 / f2;
+      return H.numericStep("Ein Schaden in $" + n + "$ Jahren wird einmal mit $1{,}4\\,\\%$, einmal mit $5{,}5\\,\\%$ pro Jahr abdiskontiert. Um welchen Faktor ist der heutige Wert bei der niedrigen Rate größer? (ganze Zahl)", Math.round(q), "",
+        "$\\left(\\tfrac{1{,}055}{1{,}014}\\right)^{" + n + "} \\approx " + G.tex(q, 0) + "$. Die Wahl der Rate ist eine ethische Entscheidung darüber, wie viel künftige Generationen zählen.");
+    }
+    if (level === 3) {
+      const n = G.pick([20, 35, 50, 70]), r = (Math.pow(2, 1 / n) - 1) * 100;
+      return H.numericStep("Bei welcher jährlichen Rate ist ein Schaden, der in $" + n + "$ Jahren eintritt, heute nur noch halb so viel wert? (in %, zwei Nachkommastellen)", Math.round(r * 100) / 100, "%",
+        "$(1 + r)^{" + n + "} = 2$, also $r = 2^{1/" + n + "} - 1 \\approx " + G.tex(r, 2) + "\\,\\%$.");
+    }
+    const r = G.pick([0.5, 1, 2, 3, 5]), f = Math.pow(1 + r / 100, -100) * 100;
+    return H.numericStep("Mit welchem Gewicht (in % des heutigen Werts) zählt ein Schaden in 100 Jahren bei einer Rate von $" + G.tex(r, 1) + "\\,\\%$? (eine Nachkommastelle)", Math.round(f * 10) / 10, "%",
+      "$" + G.tex(1 + r / 100, 3) + "^{-100} \\approx " + G.tex(f / 100, 3) + "$, also etwa $" + G.tex(f, 1) + "\\,\\%$.");
+  } });
+
+  LW.philoTypen = T;
+  return LW.rechenEngine(T);
+  }
+  const make = (level, G, params) => (engine || (engine = init()))(level, G, params);
+  LW.generator("phi-rechnen", { title: "Ethik üben", make });
+  const chapter = (typ) => ({ title: "Ethik üben", make: (level, G) => make(level, G, { typ }) });
+  LW.generator("phi-r-logik", chapter(["logik"]));
+  LW.generator("phi-r-abwaegen", chapter(["kalkuel", "handlungsart", "maximin", "diskontierung"]));
+})();
