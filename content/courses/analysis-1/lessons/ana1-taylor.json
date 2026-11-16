@@ -87,12 +87,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Die Tangente ist die beste Gerade an einer Stelle: Sie hat denselben Wert und dieselbe Steigung. Warum bei der Steigung aufhören? Ein Polynom vom Grad $n$ hat genug Freiheit, um auch die zweite, dritte, ..., $n$-te Ableitung zu treffen.\n\nWelche Koeffizienten braucht es? Leitet man $c_k x^k$ $k$-mal ab und setzt $0$ ein, bleibt $k! \\, c_k$ übrig. Soll das gleich $f^{(k)}(0)$ sein, muss $c_k = \\dfrac{f^{(k)}(0)}{k!}$ gelten. Daher die Fakultäten in jeder Taylorformel.\n\nEntscheidend ist der **Fehler**. Das Restglied von Lagrange sieht aus wie der nächste Summand, nur mit der Ableitung an einer unbekannten Zwischenstelle $\\xi$. Kann man diese Ableitung beschränken, hat man eine garantierte Genauigkeit. Beim Sinus sind alle Ableitungen höchstens $1$, also ist der Fehler höchstens $\\tfrac{|x|^{n+1}}{(n+1)!}$, und das geht für jedes feste $x$ gegen $0$."
+      "md": "Die Tangente trifft Wert und Steigung; ein Polynom vom Grad $n$ trifft auch die ersten $n$ Ableitungen. Um $0$ entwickelt muss dafür $c_k = \\tfrac{f^{(k)}(0)}{k!}$ sein, daher die Fakultäten. Den Fehler beschreibt das Restglied, das wie der nächste Summand aussieht.",
+      "more": "Die Tangente ist die beste Gerade an einer Stelle: Sie hat denselben Wert und dieselbe Steigung. Warum bei der Steigung aufhören? Ein Polynom vom Grad $n$ hat genug Freiheit, um auch die zweite, dritte, ..., $n$-te Ableitung zu treffen.\n\nWelche Koeffizienten braucht es? Leitet man $c_k x^k$ $k$-mal ab und setzt $0$ ein, bleibt $k! \\, c_k$ übrig. Soll das gleich $f^{(k)}(0)$ sein, muss $c_k = \\dfrac{f^{(k)}(0)}{k!}$ gelten. Daher die Fakultäten in jeder Taylorformel.\n\nEntscheidend ist der **Fehler**. Das Restglied von Lagrange sieht aus wie der nächste Summand, nur mit der Ableitung an einer unbekannten Zwischenstelle $\\xi$. Kann man diese Ableitung beschränken, hat man eine garantierte Genauigkeit. Beim Sinus sind alle Ableitungen höchstens $1$, also ist der Fehler höchstens $\\tfrac{|x|^{n+1}}{(n+1)!}$, und das geht für jedes feste $x$ gegen $0$."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Taylorpolynom\n> Ist $f$ an der Stelle $x_0$ $n$-mal differenzierbar, dann heißt\n> $$T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x - x_0)^k$$\n> das **Taylorpolynom** vom Grad $n$. Es ist das einzige Polynom vom Grad höchstens $n$ mit $T_n^{(k)}(x_0) = f^{(k)}(x_0)$ für $k = 0, \\dots, n$.\n\n> [!satz] Restglied nach Lagrange\n> Ist $f$ $(n+1)$-mal differenzierbar, dann gibt es $\\xi$ zwischen $x_0$ und $x$ mit\n> $$f(x) - T_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}.$$\n\nFür $n = 0$ ist das genau der Mittelwertsatz. Wichtige Beispiele um $0$: $e^x \\approx \\sum \\tfrac{x^k}{k!}$, $\\sin x \\approx x - \\tfrac{x^3}{6} + \\tfrac{x^5}{120}$, $\\cos x \\approx 1 - \\tfrac{x^2}{2} + \\tfrac{x^4}{24}$."
+      "md": "$T_n(x) = \\sum_{k=0}^n \\tfrac{f^{(k)}(x_0)}{k!}(x - x_0)^k$ ist das einzige Polynom vom Grad $\\le n$ mit denselben Ableitungen bis zur Ordnung $n$ in $x_0$. **Lagrange:** $f(x) - T_n(x) = \\tfrac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}$ mit $\\xi$ zwischen $x_0$ und $x$.",
+      "more": "> [!definition] Taylorpolynom\n> Ist $f$ an der Stelle $x_0$ $n$-mal differenzierbar, dann heißt\n> $$T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x - x_0)^k$$\n> das **Taylorpolynom** vom Grad $n$. Es ist das einzige Polynom vom Grad höchstens $n$ mit $T_n^{(k)}(x_0) = f^{(k)}(x_0)$ für $k = 0, \\dots, n$.\n\n> [!satz] Restglied nach Lagrange\n> Ist $f$ $(n+1)$-mal differenzierbar, dann gibt es $\\xi$ zwischen $x_0$ und $x$ mit\n> $$f(x) - T_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}.$$\n\nFür $n = 0$ ist das genau der Mittelwertsatz. Wichtige Beispiele um $0$: $e^x \\approx \\sum \\tfrac{x^k}{k!}$, $\\sin x \\approx x - \\tfrac{x^3}{6} + \\tfrac{x^5}{120}$, $\\cos x \\approx 1 - \\tfrac{x^2}{2} + \\tfrac{x^4}{24}$."
     },
     {
       "id": "kosinus",
@@ -157,6 +159,180 @@
         }
       },
       "explain": "$T_4(1) \\approx 0{,}541667$ weicht um $0{,}0014$ ab, $T_6(1) \\approx 0{,}540278$ nur noch um $0{,}00002$. Grad $5$ bringt nichts Neues, weil der Kosinus nur gerade Potenzen hat. Lagrange garantiert für $n = 5$ den Fehler $\\le \\tfrac{1}{6!} \\approx 0{,}0014$, für $n = 6$ sogar $\\le \\tfrac{1}{7!} \\approx 0{,}0002$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Taylor für $e^x$ um $0$** und wie genau $T_5(1)$ ist.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f^{(k)}(0) = 1",
+            "why": "Alle Ableitungen von $e^x$ sind $e^x$."
+          },
+          {
+            "tex": "T_n(x) = \\sum_{k=0}^n \\frac{x^k}{k!}",
+            "why": "Die Koeffizienten $\\tfrac{1}{k!}$."
+          },
+          {
+            "tex": "|e^x - T_n(x)| = \\frac{e^\\xi}{(n+1)!}\\, |x|^{n+1}",
+            "why": "Lagrange, $\\xi$ zwischen $0$ und $x$."
+          },
+          {
+            "tex": "|e - T_5(1)| \\le \\frac{3}{720} < 0{,}005",
+            "why": "Für $x = 1$ und $n = 5$, mit $e^\\xi < 3$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ableitungen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Polynom.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Restglied.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abschätzung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Taylorpolynome",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Taylorpolynome.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 15\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Reihenfassung: **Taylor- und Maclaurin-Reihen**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Für eine $n$-mal differenzierbare Funktion $f$ ist\n$$T_n(x) = \\sum_{k=0}^{n} \\frac{f^{(k)}(a)}{k!}\\,(x - a)^k$$\ndas **Taylorpolynom** vom Grad $n$ um $a$: das einzige Polynom vom Grad höchstens $n$, das in $a$ mit $f$ in Wert und den ersten $n$ Ableitungen übereinstimmt. $T_1$ ist die Tangente."
+            }
+          ]
+        },
+        {
+          "title": "Restglied",
+          "blocks": [
+            {
+              "md": "Ist $f$ sogar $(n+1)$-mal differenzierbar, gibt es ein $\\xi$ zwischen $a$ und $x$ mit (Lagrange)\n$$f(x) - T_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!}\\,(x - a)^{n+1}.$$\nDas ist die Garantie: Man weiß, wie groß der Fehler höchstens ist."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele um a = 0",
+          "blocks": [
+            {
+              "md": "| Funktion | Taylorpolynom | |\n|---|---|---|\n| $e^x$ | $1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$ | |\n| $\\sin x$ | $x - \\frac{x^3}{6} + \\frac{x^5}{120}$ | nur ungerade Potenzen |\n| $\\cos x$ | $1 - \\frac{x^2}{2} + \\frac{x^4}{24}$ | nur gerade Potenzen |\n| $\\ln(1 + x)$ | $x - \\frac{x^2}{2} + \\frac{x^3}{3}$ | |\n\nFehlerabschätzung: $\\sin(0{,}1) \\approx 0{,}1 - \\frac{0{,}001}{6} = 0{,}0998\\overline{3}$ mit einem Fehler von höchstens $\\frac{0{,}1^5}{120} \\approx 8 \\cdot 10^{-8}$."
+            }
+          ]
+        },
+        {
+          "title": "Taylorreihe",
+          "blocks": [
+            {
+              "md": "Geht das Restglied gegen $0$, ist $f$ gleich seiner Taylorreihe, wie bei $\\exp$, $\\sin$, $\\cos$. Das muss nicht so sein: $f(x) = e^{-1/x^2}$ mit $f(0) = 0$ hat in $0$ nur verschwindende Ableitungen, die Taylorreihe ist $0$, die Funktion nicht."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "Grenzwerte wie $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3} = -\\frac16$; Extremstellen über $f'(x_0) = 0$ und das Vorzeichen von $f''(x_0)$; Näherungen in der Physik wie $\\sin x \\approx x$ für kleine Winkel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Ableitung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 13.1 bis 13.11\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Analysis Grundlagen MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt in $x_0$ **differenzierbar**, wenn der Grenzwert\n$$f'(x_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h) - f(x_0)}{h}$$\nexistiert: die Steigungen der Sekanten nähern sich einer Grenzsteigung, der Steigung der Tangente.\n\n**Gleichwertig, als lineare Näherung:** $f(x_0 + h) = f(x_0) + f'(x_0)\\,h + r(h)$ mit $\\frac{r(h)}{h} \\to 0$. Nahe $x_0$ verhält sich $f$ wie die Gerade mit Steigung $f'(x_0)$; der Fehler ist klein gegenüber $h$. Diese Sicht trägt bis in die mehrdimensionale Analysis."
+            }
+          ]
+        },
+        {
+          "title": "Differenzierbar und stetig",
+          "blocks": [
+            {
+              "md": "Jede differenzierbare Funktion ist stetig. Die Umkehrung gilt nicht: $|x|$ ist in $0$ stetig, hat dort aber einen Knick (rechts Steigung $1$, links $-1$)."
+            }
+          ]
+        },
+        {
+          "title": "Regeln",
+          "blocks": [
+            {
+              "md": "- Summe und Vielfaches: $(f + g)' = f' + g'$, $(cf)' = c f'$.\n- Produkt: $(fg)' = f'g + fg'$.\n- Quotient: $\\left(\\frac{f}{g}\\right)' = \\frac{f'g - fg'}{g^2}$.\n- Kette: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$.\n- Umkehrfunktion: $(f^{-1})'(y) = \\frac{1}{f'(f^{-1}(y))}$, falls $f' \\ne 0$; so folgt $\\ln'(x) = \\frac1x$ aus $\\exp' = \\exp$.\n\nGrundableitungen: $(x^n)' = n x^{n-1}$, $\\exp' = \\exp$, $\\sin' = \\cos$, $\\cos' = -\\sin$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Bei der Kettenregel die innere Ableitung vergessen: $(\\sin(x^2))' = 2x\\cos(x^2)$.\n- Die Produktregel als Produkt der Ableitungen rechnen.\n- Differenzierbarkeit an Nahtstellen stückweise definierter Funktionen nicht prüfen.\n\nWeiter: **Mittelwertsatz**, **Taylorpolynome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Taylor",
+      "md": "Berechne $T_2(0{,}1)$ für $f(x) = \\cos x$ um $0$.",
+      "answer": 0.995,
+      "tolerance": 0.0005,
+      "placeholder": "T",
+      "explain": "$T_2(x) = 1 - \\tfrac{x^2}{2}$, also $1 - 0{,}005 = 0{,}995$.",
+      "id": "vq1"
     },
     {
       "id": "koeffizienten",
@@ -263,7 +439,8 @@
         "Lagrange: Der Fehler ist $\\tfrac{f^{(n+1)}(\\xi)}{(n+1)!}(x - x_0)^{n+1}$ für ein unbekanntes $\\xi$.",
         "Mit beschränkten Ableitungen liefert das eine garantierte Genauigkeit.",
         "Hohe Ableitungen über Koeffizienten bekannter Reihen.",
-        "Konvergenz der Taylorreihe reicht nicht, das Restglied muss verschwinden."
+        "Konvergenz der Taylorreihe reicht nicht, das Restglied muss verschwinden.",
+        "$T_n$ trifft die Ableitungen bis $n$; Lagrange schätzt den Fehler ab."
       ]
     }
   ]

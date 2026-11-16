@@ -127,12 +127,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Anschaulich heißt stetig: Man kann den Graphen zeichnen, ohne den Stift abzusetzen. Für Beweise braucht man es genauer, und es gibt zwei gleichwertige Formulierungen.\n\n**Mit Folgen:** Wann immer $x_n \\to x_0$, gilt auch $f(x_n) \\to f(x_0)$. Man darf also den Grenzwert in die Funktion hineinziehen: $\\lim f(x_n) = f(\\lim x_n)$. Das ist praktisch, weil man alle Rechenregeln für Folgengrenzwerte benutzen kann.\n\n**Mit $\\varepsilon$ und $\\delta$:** Ein Spiel wie bei der Konvergenz. Der Gegner gibt eine Toleranz $\\varepsilon$ für die Funktionswerte vor, du antwortest mit einem $\\delta$ für die Argumente. Gewinnst du für jedes $\\varepsilon$, ist $f$ stetig.\n\nAus beiden folgt: Summen, Produkte, Quotienten (mit Nenner ungleich $0$) und Verkettungen stetiger Funktionen sind stetig. Polynome, $\\exp$, $\\sin$ und $\\cos$ sind überall stetig."
+      "md": "**Stetig** heißt präzise: Aus $x_n \\to x_0$ folgt $f(x_n) \\to f(x_0)$; man darf den Grenzwert hineinziehen. Gleichwertig ist das **$\\varepsilon$-$\\delta$-Spiel**: Zu jeder Toleranz $\\varepsilon$ für die Werte gibt es ein $\\delta$ für die Stellen.",
+      "more": "Anschaulich heißt stetig: Man kann den Graphen zeichnen, ohne den Stift abzusetzen. Für Beweise braucht man es genauer, und es gibt zwei gleichwertige Formulierungen.\n\n**Mit Folgen:** Wann immer $x_n \\to x_0$, gilt auch $f(x_n) \\to f(x_0)$. Man darf also den Grenzwert in die Funktion hineinziehen: $\\lim f(x_n) = f(\\lim x_n)$. Das ist praktisch, weil man alle Rechenregeln für Folgengrenzwerte benutzen kann.\n\n**Mit $\\varepsilon$ und $\\delta$:** Ein Spiel wie bei der Konvergenz. Der Gegner gibt eine Toleranz $\\varepsilon$ für die Funktionswerte vor, du antwortest mit einem $\\delta$ für die Argumente. Gewinnst du für jedes $\\varepsilon$, ist $f$ stetig.\n\nAus beiden folgt: Summen, Produkte, Quotienten (mit Nenner ungleich $0$) und Verkettungen stetiger Funktionen sind stetig. Polynome, $\\exp$, $\\sin$ und $\\cos$ sind überall stetig."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Stetigkeit (Folgen)\n> $f: D \\to \\R$ heißt **stetig in $x_0 \\in D$**, wenn für jede Folge $(x_n)$ in $D$ mit $x_n \\to x_0$ auch $f(x_n) \\to f(x_0)$ gilt.\n\n> [!satz] $\\varepsilon$-$\\delta$-Kriterium\n> $f$ ist genau dann stetig in $x_0$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D:\\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon.$$\n\n$f$ heißt **stetig**, wenn $f$ in jedem Punkt von $D$ stetig ist.\n\n**Unstetigkeit zeigen:** Eine einzige Folge $x_n \\to x_0$ mit $f(x_n) \\not\\to f(x_0)$ genügt. Das ist meist leichter als das Verneinen des $\\varepsilon$-$\\delta$-Satzes."
+      "md": "$f$ ist **stetig in $x_0$**, wenn für jede Folge $x_n \\to x_0$ auch $f(x_n) \\to f(x_0)$ gilt. Gleichwertig: $\\forall \\varepsilon\\ \\exists \\delta: |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon$. Für **Unstetigkeit** genügt eine einzige Folge mit $f(x_n) \\not\\to f(x_0)$.",
+      "more": "> [!definition] Stetigkeit (Folgen)\n> $f: D \\to \\R$ heißt **stetig in $x_0 \\in D$**, wenn für jede Folge $(x_n)$ in $D$ mit $x_n \\to x_0$ auch $f(x_n) \\to f(x_0)$ gilt.\n\n> [!satz] $\\varepsilon$-$\\delta$-Kriterium\n> $f$ ist genau dann stetig in $x_0$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D:\\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon.$$\n\n$f$ heißt **stetig**, wenn $f$ in jedem Punkt von $D$ stetig ist.\n\n**Unstetigkeit zeigen:** Eine einzige Folge $x_n \\to x_0$ mit $f(x_n) \\not\\to f(x_0)$ genügt. Das ist meist leichter als das Verneinen des $\\varepsilon$-$\\delta$-Satzes."
     },
     {
       "id": "delta",
@@ -205,6 +207,146 @@
         }
       },
       "explain": "Rechts wird es zuerst eng: $(1 + \\delta)^2 \\le 1{,}5 \\iff \\delta \\le \\sqrt{1{,}5} - 1 \\approx 0{,}2247$. Links wäre bis $1 - \\sqrt{0{,}5} \\approx 0{,}29$ Platz. Jedes kleinere $\\delta$ funktioniert auch; man muss nicht das größte finden."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ein $\\varepsilon$-$\\delta$-Beweis:** $f(x) = x^2$ ist stetig in $x_0 = 2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "|x^2 - 4| = |x - 2|\\, |x + 2|",
+            "why": "Der Abstand der Werte."
+          },
+          {
+            "tex": "|x - 2| < 1 \\Rightarrow |x + 2| < 5",
+            "why": "Erst $\\delta \\le 1$ verlangen: Dann ist $1 < x < 3$."
+          },
+          {
+            "tex": "|x^2 - 4| < 5\\, |x - 2|",
+            "why": "Nur noch ein Faktor hängt an $x$."
+          },
+          {
+            "tex": "\\delta = \\min\\left(1, \\tfrac\\varepsilon5\\right)",
+            "why": "Dann ist $|x^2 - 4| < 5\\delta \\le \\varepsilon$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Faktorisieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorab.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abschätzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wahl.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Stetigkeit",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 12.1 bis 12.12\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Aufgabentypen aus der Schule: **Stetigkeit (Aufgabentypen)**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei gleichwertige Definitionen",
+          "blocks": [
+            {
+              "md": "Sei $f: D \\to \\mathbb{R}$ und $x_0 \\in D$.\n- **Folgenstetigkeit:** Für jede Folge $x_n \\to x_0$ in $D$ gilt $f(x_n) \\to f(x_0)$.\n- **ε-δ-Stetigkeit:** $\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D: \\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon$.\n\nKleine Ursache, kleine Wirkung: Wer $f(x_0)$ auf $\\varepsilon$ genau treffen will, muss $x$ nur auf $\\delta$ genau kennen. $f$ heißt stetig, wenn es in jedem Punkt stetig ist."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit δ",
+          "blocks": [
+            {
+              "md": "$f(x) = x^2$ in $x_0 = 1$: $|x^2 - 1| = |x - 1|\\,|x + 1| < 3\\,|x - 1|$, falls $|x - 1| < 1$. Also genügt $\\delta = \\min\\left(1, \\frac{\\varepsilon}{3}\\right)$."
+            }
+          ]
+        },
+        {
+          "title": "Stetige und unstetige Funktionen",
+          "blocks": [
+            {
+              "md": "- Stetig: Polynome, rationale Funktionen auf ihrem Definitionsbereich, $\\exp$, $\\sin$, $\\cos$, Beträge; Summen, Produkte, Quotienten und Verkettungen stetiger Funktionen.\n- Unstetig in $0$: die Vorzeichenfunktion. Die Dirichlet-Funktion ($1$ auf $\\mathbb{Q}$, $0$ sonst) ist nirgends stetig.\n- **Stetig ergänzbar:** $\\frac{x^2 - 1}{x - 1}$ mit dem Wert $2$ an der Stelle $1$; $x \\sin\\frac1x$ mit dem Wert $0$. Nicht ergänzbar: $\\sin\\frac1x$ in $0$, denn die Folgen $x_n = \\frac{1}{n\\pi}$ und $x_n = \\frac{1}{2n\\pi + \\pi/2}$ liefern die Grenzwerte $0$ und $1$."
+            }
+          ]
+        },
+        {
+          "title": "Gleichmäßige Stetigkeit",
+          "blocks": [
+            {
+              "md": "Hängt $\\delta$ nur von $\\varepsilon$ und nicht von $x_0$ ab, heißt $f$ gleichmäßig stetig. Jede stetige Funktion auf einem abgeschlossenen Intervall $[a, b]$ ist gleichmäßig stetig; $\\frac1x$ auf $(0, 1]$ ist es nicht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Stetigkeit mit „zeichnen ohne abzusetzen“ gleichsetzen; das passt nur auf Intervallen.\n- Nur eine Folge prüfen: Für Unstetigkeit genügt eine Folge, für Stetigkeit braucht man alle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$f(x) = 0$ für $x \\le 0$ und $f(x) = 1$ für $x > 0$. Welche Folge zeigt, dass $f$ in $0$ unstetig ist?",
+      "options": [
+        {
+          "md": "$x_n = \\tfrac1n$",
+          "correct": true
+        },
+        {
+          "md": "$x_n = -\\tfrac1n$",
+          "why": "Hier ist $f(x_n) = 0 = f(0)$."
+        },
+        {
+          "md": "$x_n = n$",
+          "why": "Die Folge muss gegen $0$ gehen."
+        },
+        {
+          "md": "$x_n = 0$"
+        }
+      ],
+      "explain": "$\\tfrac1n \\to 0$, aber $f(\\tfrac1n) = 1 \\not\\to 0 = f(0)$.",
+      "label": "Unstetig",
+      "id": "vq1"
     },
     {
       "id": "beweis",
@@ -321,7 +463,8 @@
         "Unstetigkeit zeigt man mit einer einzigen passenden Folge.",
         "Summen, Produkte, Quotienten und Verkettungen stetiger Funktionen sind stetig.",
         "Folgenkriterium: eine schlechte Folge widerlegt Stetigkeit.",
-        "Stückweise definiert: linker und rechter Grenzwert müssen übereinstimmen."
+        "Stückweise definiert: linker und rechter Grenzwert müssen übereinstimmen.",
+        "$\\varepsilon$-$\\delta$: $|f(x) - f(x_0)|$ durch $C\\,|x - x_0|$ abschätzen und $\\delta$ passend wählen."
       ]
     }
   ]

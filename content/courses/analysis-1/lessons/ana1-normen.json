@@ -58,12 +58,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Was erwartet man von einer Länge? Drei Dinge:\n\n1. Nur der Nullvektor hat die Länge $0$, alle anderen sind positiv.\n2. Verdoppelt man einen Vektor, verdoppelt sich seine Länge; dreht man die Richtung um, bleibt sie gleich: $\\|\\lambda v\\| = |\\lambda| \\, \\|v\\|$.\n3. Ein Umweg ist nie kürzer: $\\|v + w\\| \\le \\|v\\| + \\|w\\|$.\n\nJede Funktion mit diesen Eigenschaften heißt **Norm**. Die Animation zeigt: Es gibt viele, und ihre Einheitskugeln sind immer **konvex**, also ohne Dellen. Das ist kein Zufall, sondern eine Folge der Dreiecksungleichung.\n\nDie euklidische Norm ist besonders, weil sie von einem **Skalarprodukt** kommt: $\\|v\\|_2 = \\sqrt{\\langle v, v\\rangle}$. Das Skalarprodukt misst zusätzlich **Winkel**. Die zentrale Ungleichung dazu ist **Cauchy-Schwarz**: $|\\langle v, w\\rangle| \\le \\|v\\| \\, \\|w\\|$. Sie garantiert, dass der Kosinus eines Winkels zwischen $-1$ und $1$ liegt."
+      "md": "Eine **Norm** misst Länge: Nur der Nullvektor hat Länge $0$, es gilt $\\|\\lambda v\\| = |\\lambda|\\,\\|v\\|$, und ein Umweg ist nie kürzer, $\\|v + w\\| \\le \\|v\\| + \\|w\\|$. Es gibt viele Normen; ihre Einheitskugeln sind immer **konvex**.",
+      "more": "Was erwartet man von einer Länge? Drei Dinge:\n\n1. Nur der Nullvektor hat die Länge $0$, alle anderen sind positiv.\n2. Verdoppelt man einen Vektor, verdoppelt sich seine Länge; dreht man die Richtung um, bleibt sie gleich: $\\|\\lambda v\\| = |\\lambda| \\, \\|v\\|$.\n3. Ein Umweg ist nie kürzer: $\\|v + w\\| \\le \\|v\\| + \\|w\\|$.\n\nJede Funktion mit diesen Eigenschaften heißt **Norm**. Die Animation zeigt: Es gibt viele, und ihre Einheitskugeln sind immer **konvex**, also ohne Dellen. Das ist kein Zufall, sondern eine Folge der Dreiecksungleichung.\n\nDie euklidische Norm ist besonders, weil sie von einem **Skalarprodukt** kommt: $\\|v\\|_2 = \\sqrt{\\langle v, v\\rangle}$. Das Skalarprodukt misst zusätzlich **Winkel**. Die zentrale Ungleichung dazu ist **Cauchy-Schwarz**: $|\\langle v, w\\rangle| \\le \\|v\\| \\, \\|w\\|$. Sie garantiert, dass der Kosinus eines Winkels zwischen $-1$ und $1$ liegt."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Norm\n> Eine Abbildung $\\|\\cdot\\|: \\R^n \\to [0, \\infty)$ heißt **Norm**, wenn für alle $v, w$ und $\\lambda \\in \\R$ gilt:\n> - $\\|v\\| = 0 \\iff v = 0$ (definit),\n> - $\\|\\lambda v\\| = |\\lambda|\\,\\|v\\|$ (homogen),\n> - $\\|v + w\\| \\le \\|v\\| + \\|w\\|$ (Dreiecksungleichung).\n\n> [!definition] Standardskalarprodukt\n> $\\langle v, w \\rangle = \\sum_{k=1}^n v_k w_k$. Es ist symmetrisch, linear in jedem Argument und $\\langle v, v\\rangle > 0$ für $v \\ne 0$.\n\n> [!satz] Cauchy-Schwarz\n> $|\\langle v, w \\rangle| \\le \\|v\\|_2 \\, \\|w\\|_2$, mit Gleichheit genau dann, wenn $v$ und $w$ parallel sind.\n\nDamit definiert man den Winkel durch $\\cos\\alpha = \\dfrac{\\langle v, w\\rangle}{\\|v\\|_2\\|w\\|_2}$. Insbesondere stehen $v$ und $w$ senkrecht, wenn $\\langle v, w\\rangle = 0$."
+      "md": "**Norm:** definit, homogen, Dreiecksungleichung. **Skalarprodukt:** $\\langle v, w \\rangle = \\sum v_k w_k$. **Cauchy-Schwarz:** $|\\langle v, w \\rangle| \\le \\|v\\|_2\\,\\|w\\|_2$, Gleichheit genau für parallele Vektoren. Senkrecht heißt $\\langle v, w \\rangle = 0$.",
+      "more": "> [!definition] Norm\n> Eine Abbildung $\\|\\cdot\\|: \\R^n \\to [0, \\infty)$ heißt **Norm**, wenn für alle $v, w$ und $\\lambda \\in \\R$ gilt:\n> - $\\|v\\| = 0 \\iff v = 0$ (definit),\n> - $\\|\\lambda v\\| = |\\lambda|\\,\\|v\\|$ (homogen),\n> - $\\|v + w\\| \\le \\|v\\| + \\|w\\|$ (Dreiecksungleichung).\n\n> [!definition] Standardskalarprodukt\n> $\\langle v, w \\rangle = \\sum_{k=1}^n v_k w_k$. Es ist symmetrisch, linear in jedem Argument und $\\langle v, v\\rangle > 0$ für $v \\ne 0$.\n\n> [!satz] Cauchy-Schwarz\n> $|\\langle v, w \\rangle| \\le \\|v\\|_2 \\, \\|w\\|_2$, mit Gleichheit genau dann, wenn $v$ und $w$ parallel sind.\n\nDamit definiert man den Winkel durch $\\cos\\alpha = \\dfrac{\\langle v, w\\rangle}{\\|v\\|_2\\|w\\|_2}$. Insbesondere stehen $v$ und $w$ senkrecht, wenn $\\langle v, w\\rangle = 0$."
     },
     {
       "id": "punkt",
@@ -97,6 +99,137 @@
         }
       },
       "explain": "Aus $|x| + |y| = 1$ und $\\max(|x|, |y|) = 0{,}5$ folgt $|x| = |y| = 0{,}5$. Es gibt genau vier solche Punkte: $(\\pm 0{,}5 \\mid \\pm 0{,}5)$, die Mittelpunkte der Rautenseiten."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Cauchy-Schwarz** aus einem einzigen Quadrat, euklidische Norm, $w \\ne 0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "0 \\le \\|v - t w\\|^2",
+            "why": "Für jede Zahl $t \\in \\R$."
+          },
+          {
+            "tex": "= \\|v\\|^2 - 2t\\,\\langle v, w\\rangle + t^2\\, \\|w\\|^2",
+            "why": "Eine Parabel in $t$."
+          },
+          {
+            "tex": "t = \\frac{\\langle v, w\\rangle}{\\|w\\|^2}",
+            "why": "Den günstigsten Wert einsetzen."
+          },
+          {
+            "tex": "0 \\le \\|v\\|^2 - \\frac{\\langle v, w\\rangle^2}{\\|w\\|^2}",
+            "why": "Umgestellt: $\\langle v, w\\rangle^2 \\le \\|v\\|^2\\, \\|w\\|^2$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Quadrat.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ausmultiplizieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Scheitel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Normen und Skalarprodukt",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Normen und Skalarprodukt.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 7\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Norm",
+          "blocks": [
+            {
+              "md": "Eine **Norm** auf einem reellen Vektorraum $V$ ist eine Abbildung $\\|\\cdot\\|: V \\to [0, \\infty)$ mit\n1. $\\|x\\| = 0 \\Leftrightarrow x = 0$,\n2. $\\|\\lambda x\\| = |\\lambda|\\,\\|x\\|$,\n3. $\\|x + y\\| \\le \\|x\\| + \\|y\\|$ (Dreiecksungleichung).\n\nAuf $\\mathbb{R}^n$: $\\|x\\|_1 = \\sum_i |x_i|$ (Manhattan), $\\|x\\|_2 = \\sqrt{\\sum_i x_i^2}$ (euklidisch), $\\|x\\|_\\infty = \\max_i |x_i|$. Ihre Einheitskugeln $\\{x : \\|x\\| \\le 1\\}$ sind in der Ebene Raute, Kreisscheibe und Quadrat. Auf $\\mathbb{R}^n$ sind alle Normen äquivalent, zum Beispiel $\\|x\\|_\\infty \\le \\|x\\|_2 \\le \\|x\\|_1 \\le n\\,\\|x\\|_\\infty$."
+            }
+          ]
+        },
+        {
+          "title": "Skalarprodukt",
+          "blocks": [
+            {
+              "md": "Ein **Skalarprodukt** $\\langle x, y \\rangle$ ist bilinear, symmetrisch und positiv definit ($\\langle x, x \\rangle > 0$ für $x \\ne 0$). Standard auf $\\mathbb{R}^n$: $\\langle x, y \\rangle = \\sum_i x_i y_i$. Es erzeugt die Norm $\\|x\\| = \\sqrt{\\langle x, x \\rangle}$.\n\n**Cauchy-Schwarz:** $|\\langle x, y \\rangle| \\le \\|x\\|\\,\\|y\\|$, mit Gleichheit genau für linear abhängige $x, y$. Damit ist der **Winkel** durch $\\cos \\angle(x, y) = \\frac{\\langle x, y \\rangle}{\\|x\\|\\,\\|y\\|}$ wohldefiniert, und $x \\perp y$ heißt $\\langle x, y \\rangle = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Welche Normen kommen von einem Skalarprodukt?",
+          "blocks": [
+            {
+              "md": "Genau die, die die **Parallelogrammgleichung** $\\|x + y\\|^2 + \\|x - y\\|^2 = 2\\|x\\|^2 + 2\\|y\\|^2$ erfüllen. $\\|\\cdot\\|_2$ tut es, $\\|\\cdot\\|_1$ und $\\|\\cdot\\|_\\infty$ nicht."
+            }
+          ]
+        },
+        {
+          "title": "Weiter",
+          "blocks": [
+            {
+              "md": "Jede Norm liefert eine Metrik $d(x, y) = \\|x - y\\|$: **Metrische Räume**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wann gilt in Cauchy-Schwarz Gleichheit?",
+      "options": [
+        {
+          "md": "wenn $v$ und $w$ parallel sind",
+          "correct": true
+        },
+        {
+          "md": "wenn $v$ und $w$ senkrecht sind",
+          "why": "Dann ist die linke Seite $0$."
+        },
+        {
+          "md": "immer"
+        },
+        {
+          "md": "nur für $v = w$"
+        }
+      ],
+      "explain": "Gleichheit heißt $\\|v - tw\\| = 0$ für ein $t$, also $v = tw$.",
+      "label": "Gleichheit",
+      "id": "vq1"
     },
     {
       "id": "welche",
@@ -219,7 +352,8 @@
         "Das Skalarprodukt liefert Länge und Winkel: $\\cos\\alpha = \\tfrac{\\langle v, w\\rangle}{\\|v\\|\\|w\\|}$.",
         "Cauchy-Schwarz: $|\\langle v, w\\rangle| \\le \\|v\\|\\,\\|w\\|$, mit Gleichheit nur bei parallelen Vektoren.",
         "Im $\\mathbb{R}^n$ sind alle Normen äquivalent; Konstanten: $\\|x\\|_\\infty \\le \\|x\\|_2 \\le \\sqrt n\\|x\\|_\\infty$.",
-        "Cauchy-Schwarz löst Optimierungsaufgaben auf Kreisen."
+        "Cauchy-Schwarz löst Optimierungsaufgaben auf Kreisen.",
+        "Cauchy-Schwarz folgt aus $\\|v - tw\\|^2 \\ge 0$ mit dem Scheitel $t$."
       ]
     }
   ]

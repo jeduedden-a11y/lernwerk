@@ -83,12 +83,153 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Dass $\\N$ unbeschränkt ist, klingt selbstverständlich. Es folgt aber **nicht** aus den Körper- und Anordnungsaxiomen allein: Es gibt angeordnete Körper, in denen eine Zahl größer ist als alle natürlichen Zahlen. Dort gäbe es »unendlich kleine« positive Zahlen, und $\\tfrac1n \\to 0$ wäre falsch.\n\nIn $\\R$ rettet uns das Vollständigkeitsaxiom. Die Beweisidee: Wäre $\\N$ beschränkt, hätte es ein Supremum $s$. Dann wäre $s - 1$ keine obere Schranke mehr, es gäbe also ein $n > s - 1$. Aber dann ist $n + 1 > s$, und $n + 1$ ist auch eine natürliche Zahl. Widerspruch.\n\nDas Prinzip hat viele Gesichter, die alle dasselbe sagen:\n\n- Zu jedem $x \\in \\R$ gibt es $n \\in \\N$ mit $n > x$.\n- Zu jedem $\\varepsilon > 0$ gibt es $n$ mit $\\tfrac1n < \\varepsilon$.\n- Addiert man eine noch so kleine positive Zahl oft genug, überschreitet man jede Schranke."
+      "md": "Dass $\\N$ unbeschränkt ist, folgt nicht aus Körper- und Anordnungsaxiomen allein, sondern aus der Vollständigkeit. Hätte $\\N$ ein Supremum $s$, gäbe es ein $n > s - 1$, also $n + 1 > s$. Widerspruch.",
+      "more": "Dass $\\N$ unbeschränkt ist, klingt selbstverständlich. Es folgt aber **nicht** aus den Körper- und Anordnungsaxiomen allein: Es gibt angeordnete Körper, in denen eine Zahl größer ist als alle natürlichen Zahlen. Dort gäbe es »unendlich kleine« positive Zahlen, und $\\tfrac1n \\to 0$ wäre falsch.\n\nIn $\\R$ rettet uns das Vollständigkeitsaxiom. Die Beweisidee: Wäre $\\N$ beschränkt, hätte es ein Supremum $s$. Dann wäre $s - 1$ keine obere Schranke mehr, es gäbe also ein $n > s - 1$. Aber dann ist $n + 1 > s$, und $n + 1$ ist auch eine natürliche Zahl. Widerspruch.\n\nDas Prinzip hat viele Gesichter, die alle dasselbe sagen:\n\n- Zu jedem $x \\in \\R$ gibt es $n \\in \\N$ mit $n > x$.\n- Zu jedem $\\varepsilon > 0$ gibt es $n$ mit $\\tfrac1n < \\varepsilon$.\n- Addiert man eine noch so kleine positive Zahl oft genug, überschreitet man jede Schranke."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!satz] Archimedisches Prinzip\n> Zu jedem $x \\in \\R$ gibt es ein $n \\in \\N$ mit $n > x$. Insbesondere gibt es zu jedem $\\varepsilon > 0$ ein $n$ mit $\\tfrac1n < \\varepsilon$.\n\n> [!satz] Wohlordnungsprinzip\n> Jede nichtleere Teilmenge von $\\N$ besitzt ein **kleinstes** Element.\n\nAus beiden zusammen bekommt man die **Gaußklammer**: Zu jedem $x \\in \\R$ gibt es genau eine ganze Zahl $\\lfloor x \\rfloor$ mit $\\lfloor x \\rfloor \\le x < \\lfloor x \\rfloor + 1$. Das ist die größte ganze Zahl, die nicht größer als $x$ ist.\n\n**Beispiel.** $\\lfloor 2{,}7 \\rfloor = 2$, $\\lfloor -2{,}7 \\rfloor = -3$. Bei negativen Zahlen wird also nicht einfach »abgeschnitten«."
+      "md": "**Archimedisches Prinzip:** Zu jedem $x \\in \\R$ gibt es $n \\in \\N$ mit $n > x$, also zu jedem $\\varepsilon > 0$ ein $n$ mit $\\tfrac1n < \\varepsilon$. **Wohlordnung:** Jede nichtleere Teilmenge von $\\N$ hat ein kleinstes Element. Zusammen liefern sie die Gaußklammer $\\lfloor x \\rfloor$.",
+      "more": "> [!satz] Archimedisches Prinzip\n> Zu jedem $x \\in \\R$ gibt es ein $n \\in \\N$ mit $n > x$. Insbesondere gibt es zu jedem $\\varepsilon > 0$ ein $n$ mit $\\tfrac1n < \\varepsilon$.\n\n> [!satz] Wohlordnungsprinzip\n> Jede nichtleere Teilmenge von $\\N$ besitzt ein **kleinstes** Element.\n\nAus beiden zusammen bekommt man die **Gaußklammer**: Zu jedem $x \\in \\R$ gibt es genau eine ganze Zahl $\\lfloor x \\rfloor$ mit $\\lfloor x \\rfloor \\le x < \\lfloor x \\rfloor + 1$. Das ist die größte ganze Zahl, die nicht größer als $x$ ist.\n\n**Beispiel.** $\\lfloor 2{,}7 \\rfloor = 2$, $\\lfloor -2{,}7 \\rfloor = -3$. Bei negativen Zahlen wird also nicht einfach »abgeschnitten«."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Warum $\\N$ unbeschränkt ist:** ein Widerspruch aus der Vollständigkeit.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n \\le s \\text{ für alle } n \\in \\N",
+            "why": "$\\N$ wäre nach oben beschränkt."
+          },
+          {
+            "tex": "s^* = \\sup \\N \\text{ existiert}",
+            "why": "Vollständigkeitsaxiom."
+          },
+          {
+            "tex": "\\exists\\, n \\in \\N:\\ n > s^* - 1",
+            "why": "$s^* - 1$ ist kleiner als das Supremum."
+          },
+          {
+            "tex": "n + 1 > s^*,\\ \\ n + 1 \\in \\N",
+            "why": "$s^*$ war doch eine obere Schranke von $\\N$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Annahme.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Supremum.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Keine Schranke.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Widerspruch.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Archimedisches Prinzip",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Archimedisches Prinzip.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 3.10 bis 3.21\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Aussage",
+          "blocks": [
+            {
+              "md": "Zu jeder reellen Zahl $x$ gibt es eine natürliche Zahl $n > x$. Gleichwertig: Zu jedem $\\varepsilon > 0$ gibt es ein $n \\in \\mathbb{N}$ mit $\\frac1n < \\varepsilon$. Es gibt also keine unendlich großen reellen Zahlen und keine positiven, die kleiner sind als alle $\\frac1n$."
+            }
+          ]
+        },
+        {
+          "title": "Beweis aus der Vollständigkeit",
+          "blocks": [
+            {
+              "md": "Angenommen, $\\mathbb{N}$ wäre nach oben beschränkt. Dann gibt es $s = \\sup \\mathbb{N}$. Weil $s - 1$ keine obere Schranke ist, gibt es ein $n \\in \\mathbb{N}$ mit $n > s - 1$, also $n + 1 > s$, obwohl $n + 1 \\in \\mathbb{N}$. Widerspruch."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen",
+          "blocks": [
+            {
+              "md": "- $\\frac1n \\to 0$, und damit jede Abschätzung der Form „wähle $n_0 > \\frac{c}{\\varepsilon}$“ in Grenzwertbeweisen.\n- **Wohlordnung:** Jede nichtleere Teilmenge von $\\mathbb{N}$ hat ein kleinstes Element.\n- Zu jedem $x$ gibt es genau ein $m \\in \\mathbb{Z}$ mit $m \\le x < m + 1$, die Gaußklammer $\\lfloor x \\rfloor$.\n- Zwischen zwei reellen Zahlen liegt eine rationale (**Wurzeln und Dichtheit**)."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Das kleinste $n$ mit $\\frac1n < 0{,}003$: Es muss $n > \\frac{1}{0{,}003} \\approx 333{,}3$ sein, also $n = 334$."
+            }
+          ]
+        },
+        {
+          "title": "Einordnung",
+          "blocks": [
+            {
+              "md": "Es gibt angeordnete Körper, die nicht archimedisch sind, etwa solche mit „unendlich kleinen“ Elementen. Dort gilt $\\frac1n \\to 0$ nicht, und die gewohnte Analysis bricht zusammen. Deshalb ist der Satz wichtiger, als er aussieht."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wofür braucht man das archimedische Prinzip beim Beweis von $\\tfrac1n \\to 0$?",
+      "options": [
+        {
+          "md": "Zu jedem $\\varepsilon > 0$ gibt es $n_0$ mit $\\tfrac{1}{n_0} < \\varepsilon$.",
+          "correct": true
+        },
+        {
+          "md": "Es zeigt, dass $\\tfrac1n$ fällt.",
+          "why": "Das Fallen allein liefert noch keinen Grenzwert $0$."
+        },
+        {
+          "md": "Es liefert den Grenzwert $1$."
+        },
+        {
+          "md": "Es wird dafür nicht gebraucht."
+        }
+      ],
+      "explain": "Für $n \\ge n_0$ folgt dann $\\tfrac1n \\le \\tfrac1{n_0} < \\varepsilon$.",
+      "label": "Archimedes",
+      "id": "vq1"
     },
     {
       "id": "beweis",
@@ -240,7 +381,8 @@
         "Zu jedem $\\varepsilon > 0$ gibt es $n$ mit $\\tfrac1n < \\varepsilon$: Es gibt keine unendlich kleinen positiven Zahlen.",
         "Jede nichtleere Teilmenge von $\\N$ hat ein kleinstes Element.",
         "$\\lfloor x \\rfloor$ ist die größte ganze Zahl $\\le x$, auch für negative $x$.",
-        "Archimedes folgt aus der Vollständigkeit, nicht aus den Anordnungsaxiomen allein."
+        "Archimedes folgt aus der Vollständigkeit, nicht aus den Anordnungsaxiomen allein.",
+        "Das archimedische Prinzip folgt aus der Vollständigkeit."
       ]
     }
   ]

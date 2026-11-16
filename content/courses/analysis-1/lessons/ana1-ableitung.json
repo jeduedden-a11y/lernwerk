@@ -96,12 +96,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Die Ableitung beantwortet die Frage: **Wie stark ändert sich $f$, wenn sich $x$ ein kleines bisschen ändert?** Eine Durchschnittsgeschwindigkeit ist Weg durch Zeit. Die Geschwindigkeit in einem Augenblick erhält man, indem man das Zeitintervall gegen $0$ schrumpfen lässt.\n\nEs gibt zwei Bilder, die beide wichtig sind:\n\n1. **Grenzwert der Sekantensteigungen:** $f'(x_0) = \\lim_{h \\to 0} \\dfrac{f(x_0 + h) - f(x_0)}{h}$.\n2. **Lineare Näherung:** Zoomt man in den Graphen hinein, sieht er aus wie eine Gerade. Deren Steigung ist $f'(x_0)$.\n\nDas zweite Bild erklärt die Rechenregeln: Bei Verkettungen werden lineare Näherungen hintereinander ausgeführt, also multiplizieren sich die Steigungen (Kettenregel). Und es zeigt, wann eine Ableitung fehlt: $|x|$ hat bei $0$ einen Knick, und kein Zoom macht daraus eine Gerade."
+      "md": "Die Ableitung misst, wie stark sich $f$ bei einer kleinen Änderung von $x$ ändert. Zwei Bilder: der Grenzwert der **Sekantensteigungen** $\\tfrac{f(x_0 + h) - f(x_0)}{h}$ und die **lineare Näherung**: Hineingezoomt sieht der Graph aus wie eine Gerade mit Steigung $f'(x_0)$.",
+      "more": "Die Ableitung beantwortet die Frage: **Wie stark ändert sich $f$, wenn sich $x$ ein kleines bisschen ändert?** Eine Durchschnittsgeschwindigkeit ist Weg durch Zeit. Die Geschwindigkeit in einem Augenblick erhält man, indem man das Zeitintervall gegen $0$ schrumpfen lässt.\n\nEs gibt zwei Bilder, die beide wichtig sind:\n\n1. **Grenzwert der Sekantensteigungen:** $f'(x_0) = \\lim_{h \\to 0} \\dfrac{f(x_0 + h) - f(x_0)}{h}$.\n2. **Lineare Näherung:** Zoomt man in den Graphen hinein, sieht er aus wie eine Gerade. Deren Steigung ist $f'(x_0)$.\n\nDas zweite Bild erklärt die Rechenregeln: Bei Verkettungen werden lineare Näherungen hintereinander ausgeführt, also multiplizieren sich die Steigungen (Kettenregel). Und es zeigt, wann eine Ableitung fehlt: $|x|$ hat bei $0$ einen Knick, und kein Zoom macht daraus eine Gerade."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Differenzierbarkeit\n> $f$ heißt **differenzierbar in $x_0$**, wenn der Grenzwert\n> $$f'(x_0) = \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0}$$\n> existiert. Gleichwertig: $f(x) = f(x_0) + f'(x_0)(x - x_0) + r(x)$ mit $\\dfrac{r(x)}{x - x_0} \\to 0$.\n\n> [!satz] Rechenregeln\n> - $(f + g)' = f' + g'$, $(cf)' = cf'$\n> - Produktregel: $(fg)' = f'g + fg'$\n> - Quotientenregel: $\\left(\\tfrac fg\\right)' = \\dfrac{f'g - fg'}{g^2}$\n> - Kettenregel: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$\n\n> [!satz] Differenzierbar heißt stetig\n> Ist $f$ in $x_0$ differenzierbar, dann ist $f$ dort stetig. Die Umkehrung ist falsch."
+      "md": "$f'(x_0) = \\lim_{x \\to x_0} \\tfrac{f(x) - f(x_0)}{x - x_0}$, gleichwertig $f(x) = f(x_0) + f'(x_0)(x - x_0) + r(x)$ mit $\\tfrac{r(x)}{x - x_0} \\to 0$. Regeln: Summe, Produkt $f'g + fg'$, Quotient, Kette $g'(f(x))\\,f'(x)$. Differenzierbar heißt stetig.",
+      "more": "> [!definition] Differenzierbarkeit\n> $f$ heißt **differenzierbar in $x_0$**, wenn der Grenzwert\n> $$f'(x_0) = \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0}$$\n> existiert. Gleichwertig: $f(x) = f(x_0) + f'(x_0)(x - x_0) + r(x)$ mit $\\dfrac{r(x)}{x - x_0} \\to 0$.\n\n> [!satz] Rechenregeln\n> - $(f + g)' = f' + g'$, $(cf)' = cf'$\n> - Produktregel: $(fg)' = f'g + fg'$\n> - Quotientenregel: $\\left(\\tfrac fg\\right)' = \\dfrac{f'g - fg'}{g^2}$\n> - Kettenregel: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$\n\n> [!satz] Differenzierbar heißt stetig\n> Ist $f$ in $x_0$ differenzierbar, dann ist $f$ dort stetig. Die Umkehrung ist falsch."
     },
     {
       "id": "tangente",
@@ -170,6 +172,122 @@
         }
       },
       "explain": "$f'(x) = x^2 - 1 = 3 \\iff x = \\pm 2$. Beide Stellen sind richtig. Bei $x = \\pm1$ ist die Tangente waagerecht, dort liegen die Extrema."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Produktregel** aus dem Differenzenquotienten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(x)g(x) - f(x_0)g(x_0)",
+            "why": "Zähler des Differenzenquotienten von $fg$."
+          },
+          {
+            "tex": "= \\Delta f \\cdot g(x) + f(x_0) \\cdot \\Delta g",
+            "why": "$f(x_0)\\,g(x)$ abziehen und addieren, mit $\\Delta f = f(x) - f(x_0)$ und $\\Delta g = g(x) - g(x_0)$."
+          },
+          {
+            "tex": "\\frac{\\Delta f}{\\Delta x}\\, g(x) + f(x_0)\\, \\frac{\\Delta g}{\\Delta x}",
+            "why": "Durch $\\Delta x = x - x_0$ teilen."
+          },
+          {
+            "tex": "\\to f'(x_0)\\, g(x_0) + f(x_0)\\, g'(x_0)",
+            "why": "$g(x) \\to g(x_0)$, denn differenzierbare Funktionen sind stetig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Zähler.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Null addieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Teilen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Ableitung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 13.1 bis 13.11\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Analysis Grundlagen MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt in $x_0$ **differenzierbar**, wenn der Grenzwert\n$$f'(x_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h) - f(x_0)}{h}$$\nexistiert: die Steigungen der Sekanten nähern sich einer Grenzsteigung, der Steigung der Tangente.\n\n**Gleichwertig, als lineare Näherung:** $f(x_0 + h) = f(x_0) + f'(x_0)\\,h + r(h)$ mit $\\frac{r(h)}{h} \\to 0$. Nahe $x_0$ verhält sich $f$ wie die Gerade mit Steigung $f'(x_0)$; der Fehler ist klein gegenüber $h$. Diese Sicht trägt bis in die mehrdimensionale Analysis."
+            }
+          ]
+        },
+        {
+          "title": "Differenzierbar und stetig",
+          "blocks": [
+            {
+              "md": "Jede differenzierbare Funktion ist stetig. Die Umkehrung gilt nicht: $|x|$ ist in $0$ stetig, hat dort aber einen Knick (rechts Steigung $1$, links $-1$)."
+            }
+          ]
+        },
+        {
+          "title": "Regeln",
+          "blocks": [
+            {
+              "md": "- Summe und Vielfaches: $(f + g)' = f' + g'$, $(cf)' = c f'$.\n- Produkt: $(fg)' = f'g + fg'$.\n- Quotient: $\\left(\\frac{f}{g}\\right)' = \\frac{f'g - fg'}{g^2}$.\n- Kette: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$.\n- Umkehrfunktion: $(f^{-1})'(y) = \\frac{1}{f'(f^{-1}(y))}$, falls $f' \\ne 0$; so folgt $\\ln'(x) = \\frac1x$ aus $\\exp' = \\exp$.\n\nGrundableitungen: $(x^n)' = n x^{n-1}$, $\\exp' = \\exp$, $\\sin' = \\cos$, $\\cos' = -\\sin$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Bei der Kettenregel die innere Ableitung vergessen: $(\\sin(x^2))' = 2x\\cos(x^2)$.\n- Die Produktregel als Produkt der Ableitungen rechnen.\n- Differenzierbarkeit an Nahtstellen stückweise definierter Funktionen nicht prüfen.\n\nWeiter: **Mittelwertsatz**, **Taylorpolynome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede stetige Funktion ist differenzierbar.",
+      "answer": false,
+      "explain": "$|x|$ ist in $0$ stetig, aber die Sekantensteigungen sind links $-1$ und rechts $1$.",
+      "label": "Stetig",
+      "id": "vq1"
     },
     {
       "id": "betrag",
@@ -301,7 +419,8 @@
         "Produkt-, Quotienten- und Kettenregel folgen aus dieser Näherung.",
         "Differenzierbar heißt stetig, aber $|x|$ zeigt: nicht umgekehrt.",
         "Differenzierbar heißt: Differenzenquotient hat einen Grenzwert.",
-        "Ableitungen können existieren, ohne stetig zu sein."
+        "Ableitungen können existieren, ohne stetig zu sein.",
+        "Produktregel: geschickt Null addieren; differenzierbar heißt stetig, nicht umgekehrt."
       ]
     }
   ]

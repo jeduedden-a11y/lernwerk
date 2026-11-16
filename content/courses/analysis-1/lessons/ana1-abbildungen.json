@@ -98,12 +98,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Denk an Gäste ($A$) und Plätze ($B$) in einem Kino, und $f$ weist jedem Gast einen Platz zu.\n\n- **Injektiv:** Keine zwei Gäste sitzen auf demselben Platz. Verschiedene Elemente haben verschiedene Bilder.\n- **Surjektiv:** Kein Platz bleibt frei. Jedes Element von $B$ wird getroffen.\n- **Bijektiv:** beides. Gäste und Plätze sind perfekt gepaart, und man kann von jedem Platz eindeutig auf seinen Gast zurückschließen.\n\nWichtig: Diese Eigenschaften gehören nicht zur Formel allein, sondern zur Formel **mit** Start- und Zielmenge. $x \\mapsto x^2$ ist als Abbildung $\\R \\to \\R$ weder injektiv noch surjektiv, als Abbildung $[0, \\infty) \\to [0, \\infty)$ aber bijektiv mit der Umkehrung $y \\mapsto \\sqrt y$."
+      "md": "Gäste und Kinoplätze: **Injektiv** heißt, keine zwei Gäste teilen sich einen Platz. **Surjektiv** heißt, kein Platz bleibt frei. **Bijektiv** heißt beides. Die Eigenschaften hängen von Start- und Zielmenge ab, nicht von der Formel allein.",
+      "more": "Denk an Gäste ($A$) und Plätze ($B$) in einem Kino, und $f$ weist jedem Gast einen Platz zu.\n\n- **Injektiv:** Keine zwei Gäste sitzen auf demselben Platz. Verschiedene Elemente haben verschiedene Bilder.\n- **Surjektiv:** Kein Platz bleibt frei. Jedes Element von $B$ wird getroffen.\n- **Bijektiv:** beides. Gäste und Plätze sind perfekt gepaart, und man kann von jedem Platz eindeutig auf seinen Gast zurückschließen.\n\nWichtig: Diese Eigenschaften gehören nicht zur Formel allein, sondern zur Formel **mit** Start- und Zielmenge. $x \\mapsto x^2$ ist als Abbildung $\\R \\to \\R$ weder injektiv noch surjektiv, als Abbildung $[0, \\infty) \\to [0, \\infty)$ aber bijektiv mit der Umkehrung $y \\mapsto \\sqrt y$."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Injektiv, surjektiv, bijektiv\n> Sei $f: A \\to B$.\n> - $f$ ist **injektiv**, wenn aus $f(x) = f(y)$ stets $x = y$ folgt.\n> - $f$ ist **surjektiv**, wenn es zu jedem $b \\in B$ ein $a \\in A$ mit $f(a) = b$ gibt.\n> - $f$ ist **bijektiv**, wenn $f$ injektiv und surjektiv ist. Dann gibt es genau eine Abbildung $f^{-1}: B \\to A$ mit $f^{-1}(f(a)) = a$ und $f(f^{-1}(b)) = b$.\n\nFür $M \\subset A$ heißt $f(M) = \\set{f(x) : x \\in M}$ das **Bild**, für $N \\subset B$ heißt $f^{-1}(N) = \\set{x \\in A : f(x) \\in N}$ das **Urbild** von $N$. Das Urbild ist auch definiert, wenn $f$ nicht umkehrbar ist.\n\nDie **Verkettung** $g \\circ f$ bedeutet: erst $f$, dann $g$, also $(g \\circ f)(x) = g(f(x))$."
+      "md": "$f: A \\to B$ ist **injektiv**, wenn aus $f(x) = f(y)$ stets $x = y$ folgt, **surjektiv**, wenn jedes $b \\in B$ getroffen wird, und **bijektiv**, wenn beides gilt. Dann gibt es die Umkehrabbildung $f^{-1}$. Bild $f(M)$ und Urbild $f^{-1}(N)$ sind Mengen.",
+      "more": "> [!definition] Injektiv, surjektiv, bijektiv\n> Sei $f: A \\to B$.\n> - $f$ ist **injektiv**, wenn aus $f(x) = f(y)$ stets $x = y$ folgt.\n> - $f$ ist **surjektiv**, wenn es zu jedem $b \\in B$ ein $a \\in A$ mit $f(a) = b$ gibt.\n> - $f$ ist **bijektiv**, wenn $f$ injektiv und surjektiv ist. Dann gibt es genau eine Abbildung $f^{-1}: B \\to A$ mit $f^{-1}(f(a)) = a$ und $f(f^{-1}(b)) = b$.\n\nFür $M \\subset A$ heißt $f(M) = \\set{f(x) : x \\in M}$ das **Bild**, für $N \\subset B$ heißt $f^{-1}(N) = \\set{x \\in A : f(x) \\in N}$ das **Urbild** von $N$. Das Urbild ist auch definiert, wenn $f$ nicht umkehrbar ist.\n\nDie **Verkettung** $g \\circ f$ bedeutet: erst $f$, dann $g$, also $(g \\circ f)(x) = g(f(x))$."
     },
     {
       "id": "pfeile",
@@ -146,6 +148,138 @@
         }
       },
       "explain": "Bei drei Elementen auf beiden Seiten genügt es, injektiv zu sein: Dann werden drei verschiedene Elemente getroffen, also alle. Es gibt $3! = 6$ Bijektionen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Verkettung injektiver Abbildungen** ist injektiv: zwei Schritte rückwärts.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "g(f(x)) = g(f(y))",
+            "why": "Zwei Stellen mit demselben Bild unter $g \\circ f$."
+          },
+          {
+            "tex": "\\Rightarrow f(x) = f(y)",
+            "why": "$g$ trennt verschiedene Werte."
+          },
+          {
+            "tex": "\\Rightarrow x = y",
+            "why": "$f$ trennt verschiedene Stellen."
+          },
+          {
+            "tex": "g \\circ f \\text{ ist injektiv}",
+            "why": "Genau das verlangt die Definition."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Annahme.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "g injektiv.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "f injektiv.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schluss.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Abbildungen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Abbildungen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 1.4\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Abbildung** $f: A \\to B$ ordnet jedem $a \\in A$ genau ein $f(a) \\in B$ zu. $A$ ist der Definitionsbereich, $B$ die Zielmenge, $f(A) = \\{f(a) : a \\in A\\}$ das Bild.\n\n| Eigenschaft | Definition | anschaulich |\n|---|---|---|\n| injektiv | $f(a) = f(a') \\Rightarrow a = a'$ | kein Element von $B$ wird zweimal getroffen |\n| surjektiv | $\\forall b \\in B\\ \\exists a \\in A: f(a) = b$ | jedes Element von $B$ wird getroffen |\n| bijektiv | injektiv und surjektiv | jedes Element von $B$ wird genau einmal getroffen |\n\nGenau die bijektiven Abbildungen haben eine **Umkehrabbildung** $f^{-1}: B \\to A$ mit $f^{-1}(f(a)) = a$ und $f(f^{-1}(b)) = b$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "- $f: \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto x^2$ ist weder injektiv ($f(-1) = f(1)$) noch surjektiv ($-1$ wird nicht getroffen).\n- Dieselbe Vorschrift als $[0, \\infty) \\to [0, \\infty)$ ist bijektiv, die Umkehrung ist die Wurzel. Ob eine Abbildung injektiv oder surjektiv ist, hängt also von Definitions- und Zielmenge ab, nicht nur von der Vorschrift.\n- $\\exp: \\mathbb{R} \\to (0, \\infty)$ ist bijektiv mit Umkehrung $\\ln$."
+            }
+          ]
+        },
+        {
+          "title": "Verkettung",
+          "blocks": [
+            {
+              "md": "$(g \\circ f)(a) = g(f(a))$. Sind $f$ und $g$ injektiv (surjektiv, bijektiv), so auch $g \\circ f$. Im bijektiven Fall gilt $(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}$: Die Reihenfolge dreht sich um, wie beim Ausziehen von Schuhen und Socken."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Injektiv mit „jedes $a$ hat ein Bild“ verwechseln; das gilt für jede Abbildung.\n- Surjektivität behaupten, ohne zu jedem $b$ ein Urbild $a$ anzugeben.\n\nMit Abbildungen vergleicht man die Größe unendlicher Mengen: **Abzählbarkeit**. In der linearen Algebra: **Lineare Abbildungen und Matrizen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "$f: \\R \\to \\R$, $f(x) = x^2$. Was gilt?",
+      "options": [
+        {
+          "md": "weder injektiv noch surjektiv",
+          "correct": true
+        },
+        {
+          "md": "injektiv",
+          "why": "$f(-1) = f(1)$."
+        },
+        {
+          "md": "surjektiv",
+          "why": "Negative Zahlen werden nicht getroffen."
+        },
+        {
+          "md": "bijektiv"
+        }
+      ],
+      "explain": "Auf $[0, \\infty) \\to [0, \\infty)$ wäre dieselbe Formel bijektiv.",
+      "label": "Eigenschaften",
+      "id": "vq1"
     },
     {
       "id": "quadrat",
@@ -292,7 +426,8 @@
         "Die Eigenschaften hängen von Start- und Zielmenge ab, nicht nur von der Formel.",
         "Urbilder $f^{-1}(N)$ gibt es immer, auch ohne Umkehrabbildung.",
         "$g \\circ f$ injektiv $\\Rightarrow f$ injektiv; $g \\circ f$ surjektiv $\\Rightarrow g$ surjektiv.",
-        "Bilder vertragen sich nicht mit Durchschnitten, Urbilder schon."
+        "Bilder vertragen sich nicht mit Durchschnitten, Urbilder schon.",
+        "Verkettungen injektiver Abbildungen sind injektiv."
       ]
     }
   ]

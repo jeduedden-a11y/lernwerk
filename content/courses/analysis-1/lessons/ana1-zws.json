@@ -112,12 +112,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Der Zwischenwertsatz sagt etwas scheinbar Banales: Wer von unterhalb einer Linie nach oberhalb will, ohne zu springen, muss die Linie irgendwo treffen. Aber der Satz braucht **zwei** Zutaten, und ohne eine von beiden ist er falsch:\n\n- **Stetigkeit:** Eine Funktion mit Sprung kann über die Null hinwegspringen.\n- **Vollständigkeit:** Auf $\\Q$ ist $f(x) = x^2 - 2$ stetig, wechselt auf $[1, 2]$ das Vorzeichen und hat trotzdem keine Nullstelle, weil $\\sqrt2$ fehlt.\n\nDer zweite große Satz dieser Lektion handelt von **Extrema**: Eine stetige Funktion auf einem **abgeschlossenen und beschränkten** Intervall $[a, b]$ nimmt dort ein Maximum und ein Minimum an. Auch hier ist jede Voraussetzung nötig. Auf $(0, 1]$ ist $\\tfrac1x$ stetig, aber unbeschränkt; auf $[0, 1)$ hat $f(x) = x$ kein Maximum, weil der Rand fehlt."
+      "md": "Wer ohne Sprung von unterhalb einer Linie nach oberhalb will, muss sie treffen. Der Satz braucht **Stetigkeit** und **Vollständigkeit**: Auf $\\Q$ wechselt $x^2 - 2$ auf $[1, 2]$ das Vorzeichen ohne Nullstelle. Dazu: Stetige Funktionen auf $[a, b]$ nehmen Maximum und Minimum an.",
+      "more": "Der Zwischenwertsatz sagt etwas scheinbar Banales: Wer von unterhalb einer Linie nach oberhalb will, ohne zu springen, muss die Linie irgendwo treffen. Aber der Satz braucht **zwei** Zutaten, und ohne eine von beiden ist er falsch:\n\n- **Stetigkeit:** Eine Funktion mit Sprung kann über die Null hinwegspringen.\n- **Vollständigkeit:** Auf $\\Q$ ist $f(x) = x^2 - 2$ stetig, wechselt auf $[1, 2]$ das Vorzeichen und hat trotzdem keine Nullstelle, weil $\\sqrt2$ fehlt.\n\nDer zweite große Satz dieser Lektion handelt von **Extrema**: Eine stetige Funktion auf einem **abgeschlossenen und beschränkten** Intervall $[a, b]$ nimmt dort ein Maximum und ein Minimum an. Auch hier ist jede Voraussetzung nötig. Auf $(0, 1]$ ist $\\tfrac1x$ stetig, aber unbeschränkt; auf $[0, 1)$ hat $f(x) = x$ kein Maximum, weil der Rand fehlt."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!satz] Zwischenwertsatz\n> Ist $f: [a, b] \\to \\R$ stetig und liegt $c$ zwischen $f(a)$ und $f(b)$, dann gibt es ein $\\xi \\in [a, b]$ mit $f(\\xi) = c$.\n\nSonderfall **Nullstellensatz**: Haben $f(a)$ und $f(b)$ verschiedene Vorzeichen, dann hat $f$ in $[a, b]$ eine Nullstelle.\n\n> [!satz] Satz vom Maximum und Minimum\n> Ist $f: [a, b] \\to \\R$ stetig, dann ist $f$ beschränkt, und es gibt $x_{\\min}, x_{\\max} \\in [a, b]$ mit $f(x_{\\min}) \\le f(x) \\le f(x_{\\max})$ für alle $x \\in [a, b]$.\n\nFolgerung: Das Bild eines abgeschlossenen Intervalls unter einer stetigen Funktion ist wieder ein abgeschlossenes Intervall $[\\min f, \\max f]$."
+      "md": "**Zwischenwertsatz:** Ist $f: [a, b] \\to \\R$ stetig und $c$ zwischen $f(a)$ und $f(b)$, dann gibt es $\\xi$ mit $f(\\xi) = c$. **Extremwertsatz:** Stetige Funktionen auf $[a, b]$ sind beschränkt und nehmen Maximum und Minimum an. Das Bild von $[a, b]$ ist ein abgeschlossenes Intervall.",
+      "more": "> [!satz] Zwischenwertsatz\n> Ist $f: [a, b] \\to \\R$ stetig und liegt $c$ zwischen $f(a)$ und $f(b)$, dann gibt es ein $\\xi \\in [a, b]$ mit $f(\\xi) = c$.\n\nSonderfall **Nullstellensatz**: Haben $f(a)$ und $f(b)$ verschiedene Vorzeichen, dann hat $f$ in $[a, b]$ eine Nullstelle.\n\n> [!satz] Satz vom Maximum und Minimum\n> Ist $f: [a, b] \\to \\R$ stetig, dann ist $f$ beschränkt, und es gibt $x_{\\min}, x_{\\max} \\in [a, b]$ mit $f(x_{\\min}) \\le f(x) \\le f(x_{\\max})$ für alle $x \\in [a, b]$.\n\nFolgerung: Das Bild eines abgeschlossenen Intervalls unter einer stetigen Funktion ist wieder ein abgeschlossenes Intervall $[\\min f, \\max f]$."
     },
     {
       "id": "kosinus",
@@ -188,6 +190,194 @@
         }
       },
       "explain": "Die Lösung ist $x \\approx 0{,}7391$. Jedes Intervall $[a, a + 0{,}25]$ mit $0{,}49 \\le a \\le 0{,}73$ enthält sie, und dort haben die Randwerte verschiedene Vorzeichen. Der Satz garantiert die Lösung, ohne sie zu berechnen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Nullstellensatz durch Halbieren:** Der Vorzeichenwechsel wird eingekreist.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(a) < 0 < f(b)",
+            "why": "Vorzeichenwechsel auf $[a, b]$."
+          },
+          {
+            "tex": "m = \\tfrac{a + b}{2}",
+            "why": "Ist $f(m) \\ge 0$, geht es mit $[a, m]$ weiter, sonst mit $[m, b]$: Der Vorzeichenwechsel bleibt."
+          },
+          {
+            "tex": "a_n \\uparrow \\xi,\\ \\ b_n \\downarrow \\xi",
+            "why": "Die Längen $\\tfrac{b - a}{2^n}$ gehen gegen $0$."
+          },
+          {
+            "tex": "\\lim f(a_n) \\le 0 \\le \\lim f(b_n)",
+            "why": "Beide Grenzwerte sind $f(\\xi)$, weil $f$ stetig ist. Also $f(\\xi) = 0$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Halbieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schachtelung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stetigkeit.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Zwischenwertsatz",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Zwischenwertsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 12.26 bis 12.34\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Ist $f: [a, b] \\to \\mathbb{R}$ stetig und liegt $c$ zwischen $f(a)$ und $f(b)$, so gibt es ein $\\xi \\in [a, b]$ mit $f(\\xi) = c$. Spezialfall (Nullstellensatz): Haben $f(a)$ und $f(b)$ verschiedene Vorzeichen, hat $f$ dazwischen eine Nullstelle.\n\n**Beweis durch Bisektion:** Sei $f(a) < 0 < f(b)$. Halbiere das Intervall und behalte die Hälfte, an deren Rändern das Vorzeichen wechselt. Die **Intervallschachtelung** erfasst einen Punkt $\\xi$; wegen der Stetigkeit gilt $f(\\xi) \\le 0$ und $f(\\xi) \\ge 0$, also $f(\\xi) = 0$. Das Verfahren berechnet die Nullstelle zugleich näherungsweise."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- Jedes Polynom ungeraden Grades hat eine reelle Nullstelle: Für große $|x|$ dominiert der höchste Term, und dessen Vorzeichen wechselt.\n- $\\cos x = x$ hat eine Lösung in $[0, 1]$: $g(x) = \\cos x - x$ ist bei $0$ positiv und bei $1$ negativ.\n- Das Bild eines Intervalls unter einer stetigen Funktion ist wieder ein Intervall."
+            }
+          ]
+        },
+        {
+          "title": "Satz vom Maximum",
+          "blocks": [
+            {
+              "md": "Eine stetige Funktion auf $[a, b]$ ist beschränkt und nimmt Maximum und Minimum an (über **Bolzano-Weierstraß**). Beide Voraussetzungen sind nötig: $\\frac1x$ auf $(0, 1]$ ist unbeschränkt, $x$ auf $(0, 1)$ hat kein Maximum."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Satz ohne Stetigkeit anwenden: $\\frac1x$ wechselt auf $[-1, 1]$ das Vorzeichen und hat keine Nullstelle.\n- Eindeutigkeit folgern: Der Satz sagt nur „mindestens eine“ Stelle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Stetigkeit",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 12.1 bis 12.12\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Aufgabentypen aus der Schule: **Stetigkeit (Aufgabentypen)**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei gleichwertige Definitionen",
+          "blocks": [
+            {
+              "md": "Sei $f: D \\to \\mathbb{R}$ und $x_0 \\in D$.\n- **Folgenstetigkeit:** Für jede Folge $x_n \\to x_0$ in $D$ gilt $f(x_n) \\to f(x_0)$.\n- **ε-δ-Stetigkeit:** $\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D: \\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon$.\n\nKleine Ursache, kleine Wirkung: Wer $f(x_0)$ auf $\\varepsilon$ genau treffen will, muss $x$ nur auf $\\delta$ genau kennen. $f$ heißt stetig, wenn es in jedem Punkt stetig ist."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit δ",
+          "blocks": [
+            {
+              "md": "$f(x) = x^2$ in $x_0 = 1$: $|x^2 - 1| = |x - 1|\\,|x + 1| < 3\\,|x - 1|$, falls $|x - 1| < 1$. Also genügt $\\delta = \\min\\left(1, \\frac{\\varepsilon}{3}\\right)$."
+            }
+          ]
+        },
+        {
+          "title": "Stetige und unstetige Funktionen",
+          "blocks": [
+            {
+              "md": "- Stetig: Polynome, rationale Funktionen auf ihrem Definitionsbereich, $\\exp$, $\\sin$, $\\cos$, Beträge; Summen, Produkte, Quotienten und Verkettungen stetiger Funktionen.\n- Unstetig in $0$: die Vorzeichenfunktion. Die Dirichlet-Funktion ($1$ auf $\\mathbb{Q}$, $0$ sonst) ist nirgends stetig.\n- **Stetig ergänzbar:** $\\frac{x^2 - 1}{x - 1}$ mit dem Wert $2$ an der Stelle $1$; $x \\sin\\frac1x$ mit dem Wert $0$. Nicht ergänzbar: $\\sin\\frac1x$ in $0$, denn die Folgen $x_n = \\frac{1}{n\\pi}$ und $x_n = \\frac{1}{2n\\pi + \\pi/2}$ liefern die Grenzwerte $0$ und $1$."
+            }
+          ]
+        },
+        {
+          "title": "Gleichmäßige Stetigkeit",
+          "blocks": [
+            {
+              "md": "Hängt $\\delta$ nur von $\\varepsilon$ und nicht von $x_0$ ab, heißt $f$ gleichmäßig stetig. Jede stetige Funktion auf einem abgeschlossenen Intervall $[a, b]$ ist gleichmäßig stetig; $\\frac1x$ auf $(0, 1]$ ist es nicht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Stetigkeit mit „zeichnen ohne abzusetzen“ gleichsetzen; das passt nur auf Intervallen.\n- Nur eine Folge prüfen: Für Unstetigkeit genügt eine Folge, für Stetigkeit braucht man alle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Warum hat $f(x) = x^5 + x - 1$ eine Nullstelle in $[0, 1]$?",
+      "options": [
+        {
+          "md": "$f$ ist stetig mit $f(0) = -1 < 0 < 1 = f(1)$.",
+          "correct": true
+        },
+        {
+          "md": "weil der Grad ungerade ist",
+          "why": "Das sichert eine Nullstelle irgendwo, nicht in $[0, 1]$."
+        },
+        {
+          "md": "weil $f$ streng monoton ist",
+          "why": "Monotonie gibt Eindeutigkeit, keine Existenz."
+        },
+        {
+          "md": "weil $f(0) < 0$ ist"
+        }
+      ],
+      "explain": "Zwischenwertsatz mit $c = 0$.",
+      "label": "Nullstelle",
+      "id": "vq1"
     },
     {
       "id": "beweis",
@@ -306,7 +496,8 @@
         "Stetige Funktionen auf $[a, b]$ sind beschränkt und nehmen Maximum und Minimum an.",
         "Offene oder unbeschränkte Intervalle reichen dafür nicht.",
         "Zwischenwertsatz zählt Nullstellen über Vorzeichenwechsel.",
-        "Fixpunkte über Hilfsfunktionen $f(x) - x$."
+        "Fixpunkte über Hilfsfunktionen $f(x) - x$.",
+        "Nullstellensatz: Halbieren, Intervallschachtelung, Stetigkeit."
       ]
     }
   ]

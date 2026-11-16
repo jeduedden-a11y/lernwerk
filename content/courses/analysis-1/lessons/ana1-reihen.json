@@ -84,12 +84,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "»Unendlich viele Zahlen addieren« kann man nicht wörtlich tun. Man addiert endlich viele, schaut, ob sich die Ergebnisse einem Wert nähern, und **definiert** diesen Grenzwert als die Summe.\n\nFür die geometrische Reihe gibt es eine geschlossene Formel. Multipliziert man $s_n = 1 + q + \\dots + q^{n-1}$ mit $q$, verschiebt sich alles um eine Stelle, und beim Abziehen bleibt fast nichts übrig:\n\n$$s_n - q s_n = 1 - q^n \\quad\\Longrightarrow\\quad s_n = \\frac{1 - q^n}{1 - q}.$$\n\nFür $|q| < 1$ geht $q^n \\to 0$, also $s_n \\to \\tfrac{1}{1-q}$.\n\nEine Lehre aus dem Beispiel: Damit eine Reihe konvergiert, **müssen** die Summanden gegen $0$ gehen. Die **harmonische Reihe** $1 + \\tfrac12 + \\tfrac13 + \\dots$ zeigt aber, dass das nicht **reicht**: Ihre Summanden gehen gegen $0$, und trotzdem wachsen die Teilsummen über jede Schranke, nur sehr langsam."
+      "md": "Eine unendliche Summe ist der Grenzwert der **Partialsummen**. Für die geometrische Reihe gilt $s_n = \\tfrac{1 - q^n}{1 - q}$, also für $|q| < 1$: $\\sum q^k = \\tfrac{1}{1 - q}$.",
+      "more": "»Unendlich viele Zahlen addieren« kann man nicht wörtlich tun. Man addiert endlich viele, schaut, ob sich die Ergebnisse einem Wert nähern, und **definiert** diesen Grenzwert als die Summe.\n\nFür die geometrische Reihe gibt es eine geschlossene Formel. Multipliziert man $s_n = 1 + q + \\dots + q^{n-1}$ mit $q$, verschiebt sich alles um eine Stelle, und beim Abziehen bleibt fast nichts übrig:\n\n$$s_n - q s_n = 1 - q^n \\quad\\Longrightarrow\\quad s_n = \\frac{1 - q^n}{1 - q}.$$\n\nFür $|q| < 1$ geht $q^n \\to 0$, also $s_n \\to \\tfrac{1}{1-q}$.\n\nEine Lehre aus dem Beispiel: Damit eine Reihe konvergiert, **müssen** die Summanden gegen $0$ gehen. Die **harmonische Reihe** $1 + \\tfrac12 + \\tfrac13 + \\dots$ zeigt aber, dass das nicht **reicht**: Ihre Summanden gehen gegen $0$, und trotzdem wachsen die Teilsummen über jede Schranke, nur sehr langsam."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Reihe\n> Zu einer Folge $(a_k)$ heißt die Folge der **Partialsummen** $s_n = \\sum_{k=1}^n a_k$ eine **Reihe**. Sie **konvergiert** gegen $s$, wenn $s_n \\to s$. Dann schreibt man $\\sum_{k=1}^\\infty a_k = s$.\n\n> [!satz] Geometrische Reihe\n> Für $|q| < 1$ ist $\\sum_{k=0}^\\infty q^k = \\dfrac{1}{1-q}$. Für $|q| \\ge 1$ divergiert die Reihe.\n\n> [!satz] Notwendiges Kriterium\n> Konvergiert $\\sum a_k$, dann gilt $a_k \\to 0$. Die Umkehrung ist falsch.\n\n> [!satz] Harmonische Reihe\n> $\\sum_{k=1}^\\infty \\dfrac1k$ divergiert.\n\nDie Bezeichnung $\\sum_{k=1}^\\infty a_k$ steht also für zweierlei: für die Folge der Partialsummen und, falls sie konvergiert, für ihren Grenzwert."
+      "md": "$\\sum a_k = s$ heißt $s_n = \\sum_{k=1}^n a_k \\to s$. **Geometrisch:** $\\sum q^k = \\tfrac{1}{1-q}$ für $|q| < 1$. **Notwendig:** Aus Konvergenz folgt $a_k \\to 0$, aber nicht umgekehrt. Die **harmonische Reihe** $\\sum \\tfrac1k$ divergiert.",
+      "more": "> [!definition] Reihe\n> Zu einer Folge $(a_k)$ heißt die Folge der **Partialsummen** $s_n = \\sum_{k=1}^n a_k$ eine **Reihe**. Sie **konvergiert** gegen $s$, wenn $s_n \\to s$. Dann schreibt man $\\sum_{k=1}^\\infty a_k = s$.\n\n> [!satz] Geometrische Reihe\n> Für $|q| < 1$ ist $\\sum_{k=0}^\\infty q^k = \\dfrac{1}{1-q}$. Für $|q| \\ge 1$ divergiert die Reihe.\n\n> [!satz] Notwendiges Kriterium\n> Konvergiert $\\sum a_k$, dann gilt $a_k \\to 0$. Die Umkehrung ist falsch.\n\n> [!satz] Harmonische Reihe\n> $\\sum_{k=1}^\\infty \\dfrac1k$ divergiert.\n\nDie Bezeichnung $\\sum_{k=1}^\\infty a_k$ steht also für zweierlei: für die Folge der Partialsummen und, falls sie konvergiert, für ihren Grenzwert."
     },
     {
       "id": "harmonisch",
@@ -123,6 +125,234 @@
         }
       },
       "explain": "$s_{82} \\approx 4{,}990$, $s_{83} \\approx 5{,}002$. Für $5$ braucht man $83$ Summanden, für $10$ schon $12\\,367$, für $20$ über $272$ Millionen. Die Teilsummen wachsen ungefähr wie $\\ln n$: unbeschränkt, aber extrem langsam."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Die harmonische Reihe divergiert:** Blöcke bis zur nächsten Zweierpotenz.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\tfrac12 + \\left(\\tfrac13 + \\tfrac14\\right) + \\left(\\tfrac15 + \\dots + \\tfrac18\\right)",
+            "why": "Nach der $1$ in Blöcke bis $2, 4, 8, 16, \\dots$ gruppieren."
+          },
+          {
+            "tex": "\\tfrac13 + \\tfrac14 \\ge 2 \\cdot \\tfrac14 = \\tfrac12",
+            "why": "Jeder Block ist mindestens $\\tfrac12$ groß."
+          },
+          {
+            "tex": "s_{2^m} \\ge 1 + \\tfrac m2",
+            "why": "$m$ Blöcke zu je mindestens $\\tfrac12$."
+          },
+          {
+            "tex": "s_n \\to \\infty",
+            "why": "Obwohl $\\tfrac1k \\to 0$ geht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Gruppieren.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Block.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Divergenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Reihen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Reihen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 10.1 bis 10.8\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Reihen und Partialsummen**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Zu einer Folge $(a_k)$ bildet man die **Partialsummen** $s_n = \\sum_{k=1}^{n} a_k$. Die **Reihe** $\\sum_{k=1}^{\\infty} a_k$ konvergiert, wenn $(s_n)$ konvergiert; ihr Wert ist $\\lim s_n$. Eine Reihe ist also eine Folge, nämlich die der Partialsummen."
+            }
+          ]
+        },
+        {
+          "title": "Notwendige Bedingung",
+          "blocks": [
+            {
+              "md": "Konvergiert $\\sum a_k$, so gilt $a_k \\to 0$, denn $a_n = s_n - s_{n-1} \\to 0$. Die Umkehrung ist falsch."
+            }
+          ]
+        },
+        {
+          "title": "Die beiden Grundbeispiele",
+          "blocks": [
+            {
+              "md": "**Geometrische Reihe:** Für $|q| < 1$ ist\n$$\\sum_{k=0}^{\\infty} q^k = \\frac{1}{1 - q}, \\quad \\text{weil } s_n = \\frac{1 - q^{n+1}}{1 - q} \\text{ und } q^{n+1} \\to 0.$$\nFür $|q| \\ge 1$ divergiert sie. Beispiel: $\\sum_{k=0}^{\\infty} \\left(\\frac12\\right)^k = 2$.\n\n**Harmonische Reihe:** $\\sum \\frac1k$ divergiert, obwohl $\\frac1k \\to 0$. Man fasst Blöcke zusammen: $\\frac13 + \\frac14 > \\frac12$, $\\frac15 + \\dots + \\frac18 > \\frac12$, und so weiter; jeder Block liefert mehr als $\\frac12$, also wächst $s_n$ über alle Grenzen, nur sehr langsam.\n\nDagegen konvergiert $\\sum \\frac{1}{k^2}$ (ihr Wert ist $\\frac{\\pi^2}{6}$)."
+            }
+          ]
+        },
+        {
+          "title": "Teleskopsummen",
+          "blocks": [
+            {
+              "md": "$\\sum_{k=1}^{\\infty} \\frac{1}{k(k+1)} = \\sum \\left(\\frac1k - \\frac{1}{k+1}\\right) = 1$, weil sich in $s_n = 1 - \\frac{1}{n+1}$ fast alles weghebt."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Aus $a_k \\to 0$ auf Konvergenz schließen.\n- Folge und Reihe verwechseln: $\\left(\\frac1k\\right)$ konvergiert, $\\sum \\frac1k$ nicht.\n\nFür schwierigere Reihen: **Konvergenzkriterien für Reihen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Folgen und Konvergenz",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Folgen und Konvergenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Folge** ist eine Funktion von den natürlichen Zahlen in die reellen Zahlen: $a:\\mathbb{N}\\to\\mathbb{R}$, geschrieben $a_1,a_2,a_3,\\ldots$\n\n**Konvergenz:** $\\{a_n\\}$ konvergiert gegen $L$, wenn $\\displaystyle\\lim_{n\\to\\infty}a_n = L$ (formal: für jedes $\\varepsilon>0$ existiert $N$ mit $|a_n-L|<\\varepsilon$ für alle $n>N$). Existiert kein solches $L$, **divergiert** die Folge."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Sätze",
+          "blocks": [
+            {
+              "md": "- **Sandwich-Theorem (Folgen):** $a_n\\leq b_n\\leq c_n$ und $\\lim a_n=\\lim c_n=L \\Rightarrow \\lim b_n=L$.\n- **Stetigkeitssatz:** $\\lim a_n=L$ und $f$ stetig bei $L$ $\\Rightarrow \\lim f(a_n)=f(L)$.\n- **Monotoniekriterium:** Jede **monotone und beschränkte** Folge konvergiert — mächtig, weil der Grenzwert nicht explizit bekannt sein muss."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Folgenklassen",
+          "blocks": [
+            {
+              "md": "**Geometrische Folgen** $a_n=r^n$:\n$$\\lim_{n\\to\\infty} r^n = \\begin{cases}0 & |r|<1\\\\ 1 & r=1\\\\ \\text{divergiert} & |r|>1 \\text{ oder } r=-1\\end{cases}$$\n\n**Wachstumshierarchie** (jeder Term wächst strikt schneller als der vorherige):\n$$\\ln n \\ll n^p \\ll a^n \\ll n! \\ll n^n \\qquad (p>0,\\ a>1)$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$a_n = \\frac{\\cos n}{n}: \\quad -\\frac1n \\leq \\frac{\\cos n}{n} \\leq \\frac1n \\;\\Longrightarrow\\; a_n \\to 0 \\text{ (Sandwich-Theorem)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Folge $\\{a_n\\}$ (Liste) und **Reihe** $\\sum a_n$ (Summe) verwechseln.\n- Annehmen, beschränkt ⟹ konvergent: $\\{(-1)^n\\}$ ist beschränkt, oszilliert aber ohne Grenzwert. Nötig ist **beschränkt UND monoton**.\n- Wachstumshierarchie unterschätzen: $n!$ wächst für große $n$ weit schneller als jede Exponentialfunktion $a^n$.\n\nGrundlage für **Reihen und Partialsummen** und das **Quotienten- und Wurzelkriterium**."
+            }
+          ]
+        },
+        {
+          "title": "Der Grenzwertbegriff",
+          "blocks": [
+            {
+              "md": "$$\\lim_{n\\to\\infty} a_n = a \\;:\\Longleftrightarrow\\; \\forall \\varepsilon>0\\;\\exists N\\;\\forall n>N:\\; |a_n-a|<\\varepsilon$$\n\n> [!important] Die Epsilon-Definition sagt: jede noch so enge Schranke wird ab irgendwann eingehalten\n> Der Gedanke lässt sich als Herausforderung lesen. Der Gegenspieler nennt eine beliebig kleine Toleranz $\\varepsilon$; die Folge muss ab einem Index $N$ dauerhaft innerhalb dieser Toleranz um $a$ bleiben. Gelingt das für **jedes** $\\varepsilon$, konvergiert die Folge.\n>\n> Entscheidend ist die Reihenfolge der Quantoren: $N$ darf von $\\varepsilon$ abhängen, aber nicht umgekehrt. Je enger die Toleranz, desto später darf der Eintritt erfolgen -- er muss nur irgendwann kommen.\n>\n> Anschaulich bedeutet das: In **jeder** Umgebung des Grenzwerts liegen fast alle Folgenglieder, also alle bis auf endlich viele. Endlich viele Ausreißer am Anfang sind belanglos -- das Konvergenzverhalten hängt nie von den ersten Gliedern ab."
+            }
+          ]
+        },
+        {
+          "title": "Konvergenz, Divergenz, Beschränktheit",
+          "blocks": [
+            {
+              "md": "| Verhalten | Beispiel |\n|---|---|\n| konvergent | $a_n = 1/n \\to 0$ |\n| bestimmt divergent | $a_n = n^2 \\to \\infty$ |\n| unbestimmt divergent | $a_n = (-1)^n$ |\n| Nullfolge | konvergent mit Grenzwert 0 |\n\n> [!info] Konvergent impliziert beschränkt, aber nicht umgekehrt\n> Eine konvergente Folge ist stets beschränkt: Ab einem Index liegen alle Glieder in einem festen Intervall, und die endlich vielen davor lassen sich mit einbeziehen.\n>\n> Die Umkehrung gilt nicht -- $(-1)^n$ ist beschränkt und divergiert. Erst mit der **Monotonie** wird der Schluss gültig: Jede monotone und beschränkte Folge konvergiert. Dieses Monotoniekriterium ist deshalb so wertvoll, weil es Konvergenz nachweist, **ohne** den Grenzwert zu kennen.\n>\n> Dass es überhaupt gilt, ist keine Selbstverständlichkeit, sondern eine Eigenschaft der reellen Zahlen -- ihre Vollständigkeit. In den rationalen Zahlen ist es falsch: Die Näherungsfolge für $\\sqrt{2}$ ist monoton und beschränkt, hat dort aber keinen Grenzwert."
+            }
+          ]
+        },
+        {
+          "title": "Grenzwertsätze und ihre Grenzen",
+          "blocks": [
+            {
+              "md": "$$\\lim(a_n \\pm b_n) = \\lim a_n \\pm \\lim b_n \\qquad \\lim(a_n\\cdot b_n) = \\lim a_n \\cdot \\lim b_n$$\n\n> [!warning] Die Sätze gelten nur, wenn beide Grenzwerte existieren und endlich sind\n> Bei Quotienten kommt hinzu, dass der Grenzwert des Nenners nicht null sein darf. Wird er null, entsteht ein **unbestimmter Ausdruck**, der eine eigene Behandlung verlangt: Ausklammern der höchsten Potenz, Kürzen, Erweitern mit dem konjugierten Term bei Wurzeln.\n>\n> Bei rationalen Folgen entscheidet der Gradvergleich:\n>\n> | Grade | Grenzwert |\n> |---|---|\n> | Zählergrad $<$ Nennergrad | $0$ |\n> | Zählergrad $=$ Nennergrad | Quotient der Leitkoeffizienten |\n> | Zählergrad $>$ Nennergrad | bestimmt divergent |\n>\n> Das ist dieselbe Systematik wie beim Verhalten gebrochenrationaler Funktionen im Unendlichen -- Folgen sind Funktionen auf den natürlichen Zahlen, und die Regeln übertragen sich."
+            }
+          ]
+        },
+        {
+          "title": "Explizite und rekursive Darstellung",
+          "blocks": [
+            {
+              "md": "> [!tip] Die rekursive Form beschreibt den Schritt, die explizite den Zustand\n> $a_{n+1} = a_n + d$ sagt, wie es weitergeht; $a_n = a_1 + (n-1)d$ sagt, wo man landet. Für die Untersuchung des Grenzverhaltens ist die explizite Form fast immer die brauchbarere.\n>\n> Bei rekursiven Folgen bestimmt man einen möglichen Grenzwert über die **Fixpunktgleichung**: Konvergiert $a_n$ gegen $a$, so muss $a$ die Gleichung $a = f(a)$ erfüllen. Das liefert Kandidaten -- die Konvergenz selbst ist damit noch nicht bewiesen und muss über Monotonie und Beschränktheit gezeigt werden."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Konvergenzbegriff für Folgen ist die Grundlage für **Reihen und Partialsummen**, denn eine Reihe ist definitionsgemäß die Folge ihrer Partialsummen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was folgt aus $a_k \\to 0$ allein?",
+      "options": [
+        {
+          "md": "nichts über die Konvergenz von $\\sum a_k$",
+          "correct": true
+        },
+        {
+          "md": "$\\sum a_k$ konvergiert.",
+          "why": "Die harmonische Reihe ist das Gegenbeispiel."
+        },
+        {
+          "md": "$\\sum a_k$ divergiert."
+        },
+        {
+          "md": "$\\sum a_k = 0$"
+        }
+      ],
+      "explain": "$a_k \\to 0$ ist nur notwendig: Ohne sie divergiert die Reihe sicher.",
+      "label": "Notwendig",
+      "id": "vq1"
     },
     {
       "id": "zehn",
@@ -263,7 +493,8 @@
         "Konvergenz verlangt $a_k \\to 0$, aber das reicht nicht.",
         "Die harmonische Reihe divergiert, ihre Teilsummen wachsen wie $\\ln n$.",
         "Teleskopsummen und Ableiten geometrischer Reihen liefern Werte.",
-        "Glieder gegen $0$ ist nur notwendig."
+        "Glieder gegen $0$ ist nur notwendig.",
+        "$\\sum \\tfrac1k$ divergiert: Blöcke von mindestens $\\tfrac12$."
       ]
     }
   ]

@@ -65,12 +65,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Wie vergleicht man die Größe unendlicher Mengen? Zählen geht nicht mehr. Aber man kann **paaren**: Zwei Mengen sind gleich groß, wenn es eine Bijektion zwischen ihnen gibt, so wie man ohne Zählen sieht, dass in einem vollen Kino gleich viele Gäste wie Plätze sind.\n\nMit dieser Definition passieren überraschende Dinge:\n\n- $\\N$ und die geraden Zahlen sind gleich groß: $n \\mapsto 2n$ ist eine Bijektion. Ein Teil kann so groß sein wie das Ganze.\n- $\\Z$ ist abzählbar: $0, 1, -1, 2, -2, 3, \\dots$\n- $\\Q$ ist abzählbar, wie der Zickzack zeigt.\n\nAber nicht alles ist abzählbar. Cantors **Diagonalargument** zeigt: Wie man die reellen Zahlen (oder die unendlichen 0-1-Folgen) auch auflistet, es bleibt immer eine übrig, die in der Liste fehlt. $\\R$ ist eine wirklich größere Unendlichkeit."
+      "md": "Unendliche Mengen vergleicht man durch **Paaren**: Gleich groß heißt, es gibt eine Bijektion. $\\N$, die geraden Zahlen, $\\Z$ und $\\Q$ sind gleich groß. $\\R$ ist größer, wie Cantors **Diagonalargument** zeigt.",
+      "more": "Wie vergleicht man die Größe unendlicher Mengen? Zählen geht nicht mehr. Aber man kann **paaren**: Zwei Mengen sind gleich groß, wenn es eine Bijektion zwischen ihnen gibt, so wie man ohne Zählen sieht, dass in einem vollen Kino gleich viele Gäste wie Plätze sind.\n\nMit dieser Definition passieren überraschende Dinge:\n\n- $\\N$ und die geraden Zahlen sind gleich groß: $n \\mapsto 2n$ ist eine Bijektion. Ein Teil kann so groß sein wie das Ganze.\n- $\\Z$ ist abzählbar: $0, 1, -1, 2, -2, 3, \\dots$\n- $\\Q$ ist abzählbar, wie der Zickzack zeigt.\n\nAber nicht alles ist abzählbar. Cantors **Diagonalargument** zeigt: Wie man die reellen Zahlen (oder die unendlichen 0-1-Folgen) auch auflistet, es bleibt immer eine übrig, die in der Liste fehlt. $\\R$ ist eine wirklich größere Unendlichkeit."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Gleichmächtig, abzählbar\n> $A$ und $B$ heißen **gleichmächtig**, wenn es eine Bijektion $A \\to B$ gibt.\n> $A$ heißt **abzählbar unendlich**, wenn $A$ gleichmächtig zu $\\N$ ist, und **abzählbar**, wenn $A$ endlich oder abzählbar unendlich ist. Sonst heißt $A$ **überabzählbar**.\n\n> [!satz] Rechenregeln\n> - Teilmengen abzählbarer Mengen sind abzählbar.\n> - $\\N \\times \\N$ ist abzählbar, und damit auch jede abzählbare Vereinigung abzählbarer Mengen.\n> - $\\Z$ und $\\Q$ sind abzählbar.\n> - $\\R$ ist überabzählbar, ebenso jedes Intervall $[a, b]$ mit $a < b$.\n\nWeil $\\Q$ abzählbar und $\\R$ überabzählbar ist, sind die irrationalen Zahlen überabzählbar: »Fast alle« reellen Zahlen sind irrational."
+      "md": "**Gleichmächtig:** Es gibt eine Bijektion. **Abzählbar:** endlich oder gleichmächtig zu $\\N$, sonst **überabzählbar**. Teilmengen und abzählbare Vereinigungen abzählbarer Mengen sind abzählbar. $\\Z$ und $\\Q$ sind abzählbar, $\\R$ und jedes Intervall $[a, b]$ mit $a < b$ nicht.",
+      "more": "> [!definition] Gleichmächtig, abzählbar\n> $A$ und $B$ heißen **gleichmächtig**, wenn es eine Bijektion $A \\to B$ gibt.\n> $A$ heißt **abzählbar unendlich**, wenn $A$ gleichmächtig zu $\\N$ ist, und **abzählbar**, wenn $A$ endlich oder abzählbar unendlich ist. Sonst heißt $A$ **überabzählbar**.\n\n> [!satz] Rechenregeln\n> - Teilmengen abzählbarer Mengen sind abzählbar.\n> - $\\N \\times \\N$ ist abzählbar, und damit auch jede abzählbare Vereinigung abzählbarer Mengen.\n> - $\\Z$ und $\\Q$ sind abzählbar.\n> - $\\R$ ist überabzählbar, ebenso jedes Intervall $[a, b]$ mit $a < b$.\n\nWeil $\\Q$ abzählbar und $\\R$ überabzählbar ist, sind die irrationalen Zahlen überabzählbar: »Fast alle« reellen Zahlen sind irrational."
     },
     {
       "id": "diagonale",
@@ -90,6 +92,193 @@
         }
       },
       "explain": "Die neue Folge unterscheidet sich von $x_n$ an der Stelle $n$, also von jeder Zeile. Keine Liste kann alle 0-1-Folgen enthalten. Weil man jede solche Folge als Binärdarstellung einer Zahl in $[0, 1]$ lesen kann, folgt daraus die Überabzählbarkeit von $\\R$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Cantors Diagonalargument:** Keine Liste enthält alle Zahlen aus $(0, 1)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x_1 = 0{,}\\mathbf{d_{11}}\\, d_{12}\\, d_{13} \\dots",
+            "why": "Angenommen, alle Zahlen stehen in einer Liste."
+          },
+          {
+            "tex": "x_2 = 0{,}d_{21}\\, \\mathbf{d_{22}}\\, d_{23} \\dots",
+            "why": "Jede hat eine Dezimaldarstellung."
+          },
+          {
+            "tex": "y = 0{,}e_1 e_2 e_3 \\dots,\\ \\ e_k \\ne d_{kk}",
+            "why": "Etwa $e_k = 5$, außer wenn $d_{kk} = 5$, dann $e_k = 4$."
+          },
+          {
+            "tex": "y \\ne x_k \\text{ für jedes } k",
+            "why": "$y$ weicht von $x_k$ an der $k$-ten Stelle ab: Die Liste war unvollständig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Liste.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Diagonale.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ändern.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fehlt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Abzählbarkeit",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Abzählbarkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 5.1 bis 5.15\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Menge $M$ heißt **abzählbar**, wenn sie leer ist oder es eine surjektive Abbildung $\\mathbb{N} \\to M$ gibt; anschaulich: wenn man ihre Elemente in einer Liste $m_1, m_2, m_3, \\dots$ aufschreiben kann. Gleichwertig: Es gibt eine injektive Abbildung $M \\to \\mathbb{N}$. Unendliche abzählbare Mengen stehen in Bijektion zu $\\mathbb{N}$. Was nicht abzählbar ist, heißt **überabzählbar**."
+            }
+          ]
+        },
+        {
+          "title": "Abzählbar",
+          "blocks": [
+            {
+              "md": "- $\\mathbb{Z}$: $0, 1, -1, 2, -2, \\dots$\n- $\\mathbb{N} \\times \\mathbb{N}$ und damit $\\mathbb{Q}$: Cantors Zickzack durch das Gitter der Brüche $\\frac{p}{q}$, doppelte überspringen.\n- Abzählbare Vereinigungen abzählbarer Mengen, die algebraischen Zahlen, alle endlichen Wörter über einem endlichen Alphabet."
+            }
+          ]
+        },
+        {
+          "title": "Überabzählbar: ℝ",
+          "blocks": [
+            {
+              "md": "**Diagonalargument.** Angenommen, $(0, 1)$ sei vollständig aufgelistet als $x_1, x_2, \\dots$ mit $x_n = 0{,}d_{n1} d_{n2} d_{n3} \\dots$ Bilde $y = 0{,}e_1 e_2 e_3 \\dots$ mit $e_n = 5$, falls $d_{nn} \\ne 5$, und $e_n = 4$ sonst. Dann unterscheidet sich $y$ von jedem $x_n$ an der $n$-ten Stelle und fehlt in der Liste. Die Ziffern $4$ und $5$ umgehen Zahlen mit zwei Darstellungen wie $0{,}1\\overline{9} = 0{,}2$.\n\nEin zweiter Beweis nutzt die **Intervallschachtelung**: Man wählt Intervalle, die nacheinander $x_1, x_2, \\dots$ ausschließen; ihr gemeinsamer Punkt kommt in der Liste nicht vor."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen",
+          "blocks": [
+            {
+              "md": "- Es gibt überabzählbar viele irrationale und sogar transzendente Zahlen.\n- $\\mathcal{P}(\\mathbb{N})$ ist überabzählbar; allgemein ist die Potenzmenge jeder Menge echt mächtiger als die Menge selbst (Satz von Cantor)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "Eine unendliche Ziffernfolge als natürliche Zahl lesen: Natürliche Zahlen haben nur endlich viele Ziffern."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Intervallschachtelung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Beweis von Satz 5.13 und Übungsblatt 2\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Intervallschachtelung** ist eine Folge abgeschlossener Intervalle $I_n = [a_n, b_n]$ mit\n1. $I_{n+1} \\subseteq I_n$ für alle $n$,\n2. $b_n - a_n \\to 0$."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "In $\\mathbb{R}$ enthält der Durchschnitt $\\bigcap_n I_n$ genau eine Zahl.\n\nBeweis: $(a_n)$ wächst und ist durch $b_1$ beschränkt, also existiert $x = \\sup_n a_n$. Jedes $b_m$ ist obere Schranke aller $a_n$, also $a_m \\le x \\le b_m$ für alle $m$: $x$ liegt in jedem $I_m$. Läge auch $y$ im Durchschnitt, wäre $|x - y| \\le b_n - a_n$ für alle $n$, also $x = y$."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen sind nötig",
+          "blocks": [
+            {
+              "md": "- Offene Intervalle: $\\bigcap_n \\left(0, \\tfrac1n\\right) = \\emptyset$.\n- Rationale Zahlen: Die Intervalle $[1{,}4;\\ 1{,}5] \\supset [1{,}41;\\ 1{,}42] \\supset \\dots$ um $\\sqrt2$ haben in $\\mathbb{Q}$ keinen gemeinsamen Punkt."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Bisektion:** Intervall halbieren, die Hälfte mit Vorzeichenwechsel behalten. So beweist man den **Zwischenwertsatz** und berechnet Nullstellen.\n- Konstruktion von Wurzeln und Dezimaldarstellungen (**Wurzeln und Dichtheit**).\n- Beweis, dass $\\mathbb{R}$ überabzählbar ist (**Abzählbarkeit**)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Menge ist **überabzählbar**?",
+      "options": [
+        {
+          "md": "$[0, 1]$",
+          "correct": true
+        },
+        {
+          "md": "$\\Q$",
+          "why": "Der Zickzack zählt alle Brüche ab."
+        },
+        {
+          "md": "$\\Z \\times \\Z$"
+        },
+        {
+          "md": "die Menge der endlichen 0-1-Folgen"
+        }
+      ],
+      "explain": "$[0, 1]$ enthält $(0, 1)$, und das ist schon überabzählbar.",
+      "label": "Überabzählbar",
+      "id": "vq1"
     },
     {
       "id": "nummer",
@@ -216,7 +405,8 @@
         "$\\R$ ist überabzählbar: Diagonalargument oder Intervallschachtelung.",
         "Weil $\\Q$ abzählbar ist, sind die irrationalen Zahlen überabzählbar.",
         "Endliche Teilmengen: abzählbar; alle Teilmengen: überabzählbar.",
-        "Abzählbarkeit der algebraischen Zahlen zeigt die Existenz transzendenter Zahlen."
+        "Abzählbarkeit der algebraischen Zahlen zeigt die Existenz transzendenter Zahlen.",
+        "Diagonalargument: $(0, 1)$ und damit $\\R$ sind überabzählbar."
       ]
     }
   ]

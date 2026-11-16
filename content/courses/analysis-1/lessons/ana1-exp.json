@@ -90,12 +90,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Warum gerade diese Reihe? Leite sie summandenweise ab: Aus $\\tfrac{x^k}{k!}$ wird $\\tfrac{x^{k-1}}{(k-1)!}$, also genau der vorige Summand. Die Reihe reproduziert sich beim Ableiten selbst. Sie ist die Funktion, die ihre eigene Ableitung ist und bei $0$ den Wert $1$ hat. Das macht sie zum Modell für jedes Wachstum, das proportional zum Bestand ist.\n\nDie wichtigste Eigenschaft ist die **Funktionalgleichung** $\\exp(x + y) = \\exp(x)\\exp(y)$. Man beweist sie, indem man die beiden Reihen ausmultipliziert und die Summanden geschickt ordnet, und dabei taucht genau der binomische Lehrsatz auf.\n\nAus der Funktionalgleichung folgt fast alles andere: $\\exp(-x) = \\tfrac{1}{\\exp(x)}$, also ist $\\exp$ nie $0$; $\\exp(x) = \\exp(\\tfrac x2)^2 > 0$; und mit $e = \\exp(1)$ ist $\\exp(n) = e^n$. Deshalb schreibt man $e^x$."
+      "md": "Leitet man $\\sum \\tfrac{x^k}{k!}$ gliedweise ab, entsteht dieselbe Reihe: $\\exp$ ist ihre eigene Ableitung mit $\\exp(0) = 1$. Die wichtigste Eigenschaft ist $\\exp(x + y) = \\exp(x)\\exp(y)$; man beweist sie mit dem Cauchy-Produkt.",
+      "more": "Warum gerade diese Reihe? Leite sie summandenweise ab: Aus $\\tfrac{x^k}{k!}$ wird $\\tfrac{x^{k-1}}{(k-1)!}$, also genau der vorige Summand. Die Reihe reproduziert sich beim Ableiten selbst. Sie ist die Funktion, die ihre eigene Ableitung ist und bei $0$ den Wert $1$ hat. Das macht sie zum Modell für jedes Wachstum, das proportional zum Bestand ist.\n\nDie wichtigste Eigenschaft ist die **Funktionalgleichung** $\\exp(x + y) = \\exp(x)\\exp(y)$. Man beweist sie, indem man die beiden Reihen ausmultipliziert und die Summanden geschickt ordnet, und dabei taucht genau der binomische Lehrsatz auf.\n\nAus der Funktionalgleichung folgt fast alles andere: $\\exp(-x) = \\tfrac{1}{\\exp(x)}$, also ist $\\exp$ nie $0$; $\\exp(x) = \\exp(\\tfrac x2)^2 > 0$; und mit $e = \\exp(1)$ ist $\\exp(n) = e^n$. Deshalb schreibt man $e^x$."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Exponentialfunktion\n> $$\\exp(x) = \\sum_{k=0}^\\infty \\frac{x^k}{k!} \\quad\\text{für alle } x \\in \\R \\text{ (sogar } x \\in \\C).$$\n> Die Reihe konvergiert für jedes $x$ absolut, nach dem Quotientenkriterium: $\\left|\\tfrac{x^{k+1}/(k+1)!}{x^k/k!}\\right| = \\tfrac{|x|}{k+1} \\to 0$.\n\n> [!satz] Eigenschaften\n> - $\\exp(x + y) = \\exp(x)\\exp(y)$ und $\\exp(0) = 1$,\n> - $\\exp(x) > 0$, $\\exp(-x) = \\tfrac{1}{\\exp(x)}$,\n> - $\\exp$ ist streng monoton wachsend, $\\exp(x) \\ge 1 + x$,\n> - $e = \\exp(1) = \\sum \\tfrac{1}{k!} = \\lim (1 + \\tfrac1n)^n$.\n\nDie Umkehrfunktion von $\\exp: \\R \\to (0, \\infty)$ ist der **natürliche Logarithmus** $\\ln$, mit $\\ln(xy) = \\ln x + \\ln y$."
+      "md": "$\\exp(x) = \\sum_{k=0}^\\infty \\tfrac{x^k}{k!}$ konvergiert für jedes $x$ absolut, denn der Quotient $\\tfrac{|x|}{k+1}$ geht gegen $0$. Es gilt $\\exp(x + y) = \\exp(x)\\exp(y)$, $\\exp(x) > 0$, $\\exp(x) \\ge 1 + x$ und $e = \\exp(1)$. Die Umkehrfunktion ist $\\ln$.",
+      "more": "> [!definition] Exponentialfunktion\n> $$\\exp(x) = \\sum_{k=0}^\\infty \\frac{x^k}{k!} \\quad\\text{für alle } x \\in \\R \\text{ (sogar } x \\in \\C).$$\n> Die Reihe konvergiert für jedes $x$ absolut, nach dem Quotientenkriterium: $\\left|\\tfrac{x^{k+1}/(k+1)!}{x^k/k!}\\right| = \\tfrac{|x|}{k+1} \\to 0$.\n\n> [!satz] Eigenschaften\n> - $\\exp(x + y) = \\exp(x)\\exp(y)$ und $\\exp(0) = 1$,\n> - $\\exp(x) > 0$, $\\exp(-x) = \\tfrac{1}{\\exp(x)}$,\n> - $\\exp$ ist streng monoton wachsend, $\\exp(x) \\ge 1 + x$,\n> - $e = \\exp(1) = \\sum \\tfrac{1}{k!} = \\lim (1 + \\tfrac1n)^n$.\n\nDie Umkehrfunktion von $\\exp: \\R \\to (0, \\infty)$ ist der **natürliche Logarithmus** $\\ln$, mit $\\ln(xy) = \\ln x + \\ln y$."
     },
     {
       "id": "genau",
@@ -156,6 +158,156 @@
         }
       },
       "explain": "Ab $n = 7$: $T_7(2) \\approx 7{,}3810$, Abweichung $0{,}008$. Für größere $x$ braucht man mehr Summanden, weil $\\tfrac{x^k}{k!}$ erst klein wird, wenn $k$ deutlich größer als $x$ ist."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Funktionalgleichung** $\\exp(x + y) = \\exp(x)\\exp(y)$ aus dem Cauchy-Produkt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\exp(x)\\exp(y) = \\sum_{n=0}^\\infty c_n",
+            "why": "Cauchy-Produkt, erlaubt wegen absoluter Konvergenz."
+          },
+          {
+            "tex": "c_n = \\sum_{k=0}^n \\frac{x^k}{k!} \\cdot \\frac{y^{n-k}}{(n-k)!}",
+            "why": "Alle Produkte mit Gesamtgrad $n$."
+          },
+          {
+            "tex": "= \\frac{1}{n!} \\sum_{k=0}^n \\binom nk x^k y^{n-k}",
+            "why": "$\\tfrac{n!}{k!\\,(n-k)!} = \\binom nk$."
+          },
+          {
+            "tex": "= \\frac{(x + y)^n}{n!}",
+            "why": "Binomischer Lehrsatz."
+          },
+          {
+            "tex": "\\textstyle\\sum_n c_n = \\exp(x + y)",
+            "why": "Die Funktionalgleichung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Produkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Glieder.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Erweitern.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Binom.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Exponentialfunktion",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Exponentialfunktion.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 11\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Exponentialfunktionen (Grundlagen)**."
+            }
+          ]
+        },
+        {
+          "title": "Definition als Reihe",
+          "blocks": [
+            {
+              "md": "$$\\exp(x) = \\sum_{k=0}^{\\infty} \\frac{x^k}{k!} = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\dots$$\nDie Reihe konvergiert für jedes reelle (und komplexe) $x$ absolut: Der Quotient $\\frac{|x|}{k+1}$ geht gegen $0$."
+            }
+          ]
+        },
+        {
+          "title": "Funktionalgleichung",
+          "blocks": [
+            {
+              "md": "$$\\exp(x + y) = \\exp(x)\\,\\exp(y).$$\nBeweis über das Cauchy-Produkt der Reihen und den **binomischen Lehrsatz**. Folgerungen: $\\exp(0) = 1$, $\\exp(-x) = \\frac{1}{\\exp(x)}$, also $\\exp(x) > 0$; $\\exp(n) = e^n$ mit $e = \\exp(1) = \\sum \\frac{1}{k!} = \\lim \\left(1 + \\frac1n\\right)^n$."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften",
+          "blocks": [
+            {
+              "md": "- $\\exp$ ist stetig, streng wachsend und bildet $\\mathbb{R}$ bijektiv auf $(0, \\infty)$ ab. Die Umkehrfunktion ist $\\ln$, und man definiert $a^x = \\exp(x \\ln a)$ für $a > 0$.\n- $\\exp' = \\exp$, gliedweise abgeleitet.\n- $\\exp$ wächst schneller als jedes Polynom: $\\frac{x^n}{\\exp(x)} \\to 0$ für $x \\to \\infty$."
+            }
+          ]
+        },
+        {
+          "title": "Fehlerabschätzung",
+          "blocks": [
+            {
+              "md": "Bricht man nach dem Glied $\\frac{x^N}{N!}$ ab, gilt für $|x| \\le 1 + \\frac N2$\n$$\\left|\\exp(x) - \\sum_{k=0}^{N} \\frac{x^k}{k!}\\right| \\le 2\\,\\frac{|x|^{N+1}}{(N+1)!}.$$\nBeispiel: $\\sum_{k=0}^{6} \\frac{1}{k!} \\approx 2{,}71806$ weicht von $e$ um höchstens $\\frac{2}{7!} \\approx 0{,}0004$ ab."
+            }
+          ]
+        },
+        {
+          "title": "Komplex",
+          "blocks": [
+            {
+              "md": "Für reelles $\\varphi$ gilt $\\exp(i\\varphi) = \\cos\\varphi + i \\sin\\varphi$; Kosinus und Sinus lassen sich so über Reihen definieren (**Komplexe Zahlen**)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Warum ist $\\exp(x) > 0$ für alle $x \\in \\R$?",
+      "options": [
+        {
+          "md": "$\\exp(x)\\exp(-x) = \\exp(0) = 1$, und für $x \\ge 0$ ist $\\exp(x) \\ge 1$.",
+          "correct": true
+        },
+        {
+          "md": "Alle Summanden $\\tfrac{x^k}{k!}$ sind positiv.",
+          "why": "Für $x < 0$ sind die ungeraden Summanden negativ."
+        },
+        {
+          "md": "Weil $e > 0$ ist."
+        },
+        {
+          "md": "Weil die Reihe konvergiert."
+        }
+      ],
+      "explain": "Für $x < 0$ ist $\\exp(x) = \\tfrac{1}{\\exp(-x)}$ und $\\exp(-x) \\ge 1$.",
+      "label": "Positiv",
+      "id": "vq1"
     },
     {
       "id": "positiv",
@@ -256,7 +408,8 @@
         "Funktionalgleichung: $\\exp(x + y) = \\exp(x)\\exp(y)$. Daraus folgen Positivität und $\\exp(-x) = 1/\\exp(x)$.",
         "$e = \\exp(1)$, und $\\ln$ ist die Umkehrfunktion von $\\exp$.",
         "$e^x \\ge 1 + x$: Die Tangente in $0$ liegt unter dem Graphen.",
-        "$\\exp$ ist auf $\\mathbb{C}$ periodisch mit Periode $2\\pi i$ und nie null."
+        "$\\exp$ ist auf $\\mathbb{C}$ periodisch mit Periode $2\\pi i$ und nie null.",
+        "$\\exp(x + y) = \\exp(x)\\exp(y)$ folgt aus Cauchy-Produkt und binomischem Lehrsatz."
       ]
     }
   ]

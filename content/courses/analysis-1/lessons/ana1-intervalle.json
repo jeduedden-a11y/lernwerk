@@ -83,6 +83,137 @@
       }
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Intervallschachtelung für $\\sqrt2$:** Jedes Intervall liegt im vorigen, die Längen gehen gegen $0$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "[1,\\ 2]",
+            "why": "$1^2 < 2 < 2^2$."
+          },
+          {
+            "tex": "[1{,}4;\\ 1{,}5]",
+            "why": "$1{,}4^2 = 1{,}96 < 2 < 2{,}25 = 1{,}5^2$."
+          },
+          {
+            "tex": "[1{,}41;\\ 1{,}42]",
+            "why": "$1{,}41^2 = 1{,}9881 < 2 < 2{,}0164 = 1{,}42^2$."
+          },
+          {
+            "tex": "\\textstyle\\bigcap_n I_n = \\set{\\sqrt2}",
+            "why": "In $\\R$ liegt genau eine Zahl in allen Intervallen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zehntel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Hundertstel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenze.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Intervallschachtelung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Intervallschachtelung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Beweis von Satz 5.13 und Übungsblatt 2\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Intervallschachtelung** ist eine Folge abgeschlossener Intervalle $I_n = [a_n, b_n]$ mit\n1. $I_{n+1} \\subseteq I_n$ für alle $n$,\n2. $b_n - a_n \\to 0$."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "In $\\mathbb{R}$ enthält der Durchschnitt $\\bigcap_n I_n$ genau eine Zahl.\n\nBeweis: $(a_n)$ wächst und ist durch $b_1$ beschränkt, also existiert $x = \\sup_n a_n$. Jedes $b_m$ ist obere Schranke aller $a_n$, also $a_m \\le x \\le b_m$ für alle $m$: $x$ liegt in jedem $I_m$. Läge auch $y$ im Durchschnitt, wäre $|x - y| \\le b_n - a_n$ für alle $n$, also $x = y$."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen sind nötig",
+          "blocks": [
+            {
+              "md": "- Offene Intervalle: $\\bigcap_n \\left(0, \\tfrac1n\\right) = \\emptyset$.\n- Rationale Zahlen: Die Intervalle $[1{,}4;\\ 1{,}5] \\supset [1{,}41;\\ 1{,}42] \\supset \\dots$ um $\\sqrt2$ haben in $\\mathbb{Q}$ keinen gemeinsamen Punkt."
+            }
+          ]
+        },
+        {
+          "title": "Anwendungen",
+          "blocks": [
+            {
+              "md": "- **Bisektion:** Intervall halbieren, die Hälfte mit Vorzeichenwechsel behalten. So beweist man den **Zwischenwertsatz** und berechnet Nullstellen.\n- Konstruktion von Wurzeln und Dezimaldarstellungen (**Wurzeln und Dichtheit**).\n- Beweis, dass $\\mathbb{R}$ überabzählbar ist (**Abzählbarkeit**)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was sichert, dass eine Intervallschachtelung in $\\R$ genau einen Punkt trifft?",
+      "options": [
+        {
+          "md": "die Vollständigkeit von $\\R$ und Längen, die gegen $0$ gehen",
+          "correct": true
+        },
+        {
+          "md": "dass die Intervalle offen sind",
+          "why": "Bei $(0, \\tfrac1n)$ ist der Schnitt sogar leer."
+        },
+        {
+          "md": "dass die Grenzen rational sind"
+        },
+        {
+          "md": "dass es endlich viele Intervalle sind"
+        }
+      ],
+      "explain": "In $\\Q$ würde die Schachtelung oben ins Leere laufen, weil $\\sqrt2$ fehlt.",
+      "label": "Schachtelung",
+      "id": "vq1"
+    },
+    {
       "id": "q-luecke",
       "type": "choice",
       "md": "Alle Randpunkte dieser Intervalle sind rational. Was wäre, wenn man nur in $\\Q$ rechnen dürfte?",
@@ -235,7 +366,8 @@
         "Beweisidee: $\\sup A \\le \\inf B$, und alles dazwischen liegt in jedem $I_n$.",
         "Schrumpfen die Längen gegen $0$, bleibt genau ein Punkt.",
         "Abgeschlossen und Längen gegen $0$: genau ein gemeinsamer Punkt.",
-        "In $\\mathbb{Q}$ kann eine Schachtelung leer ausgehen."
+        "In $\\mathbb{Q}$ kann eine Schachtelung leer ausgehen.",
+        "Abgeschlossene, geschachtelte Intervalle mit Länge gegen $0$ treffen in $\\R$ genau einen Punkt."
       ]
     }
   ]

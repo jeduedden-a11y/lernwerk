@@ -67,7 +67,8 @@
     {
       "id": "induktiv",
       "type": "text",
-      "md": "Im Skript wird $\\N$ nicht durch »$1, 2, 3, \\dots$« definiert, sondern präzise:\n\n> [!definition] Induktive Mengen (Def. 3.2, 3.4)\n> $M \\subset \\R$ heißt **induktiv**, wenn $1 \\in M$ und aus $n \\in M$ stets $n + 1 \\in M$ folgt. $\\N$ ist der Schnitt **aller** induktiven Teilmengen von $\\R$, also die kleinste induktive Menge.\n\nDaraus folgt sofort das **Induktionsprinzip**: Ist $M \\subset \\N$ induktiv, dann ist $M = \\N$. Genau darauf beruht jeder Induktionsbeweis."
+      "md": "$M \\subset \\R$ heißt **induktiv**, wenn $1 \\in M$ und aus $n \\in M$ stets $n + 1 \\in M$ folgt. $\\N$ ist die **kleinste** induktive Menge. Daraus folgt das Induktionsprinzip: Eine induktive Teilmenge von $\\N$ ist ganz $\\N$.",
+      "more": "Im Skript wird $\\N$ nicht durch »$1, 2, 3, \\dots$« definiert, sondern präzise:\n\n> [!definition] Induktive Mengen (Def. 3.2, 3.4)\n> $M \\subset \\R$ heißt **induktiv**, wenn $1 \\in M$ und aus $n \\in M$ stets $n + 1 \\in M$ folgt. $\\N$ ist der Schnitt **aller** induktiven Teilmengen von $\\R$, also die kleinste induktive Menge.\n\nDaraus folgt sofort das **Induktionsprinzip**: Ist $M \\subset \\N$ induktiv, dann ist $M = \\N$. Genau darauf beruht jeder Induktionsbeweis."
     },
     {
       "id": "domino",
@@ -78,6 +79,145 @@
       "params": {
         "n": 8
       }
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Gaußsche Summenformel** $1 + 2 + \\dots + n = \\tfrac{n(n+1)}{2}$ mit Induktion.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "n = 1:\\ 1 = \\tfrac{1 \\cdot 2}{2}",
+            "why": "Die Formel stimmt für den ersten Wert."
+          },
+          {
+            "tex": "\\textstyle\\sum_{k=1}^{n+1} k = \\sum_{k=1}^{n} k + (n + 1)",
+            "why": "Den letzten Summanden abtrennen."
+          },
+          {
+            "tex": "= \\tfrac{n(n+1)}{2} + (n + 1)",
+            "why": "Hier steckt die Annahme $A(n)$."
+          },
+          {
+            "tex": "= \\tfrac{(n + 1)(n + 2)}{2}",
+            "why": "$(n + 1)$ ausklammern: Das ist $A(n + 1)$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Anfang.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abspalten.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Voraussetzung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ziel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Vollständige Induktion",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Vollständige Induktion.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 3.2 bis Bsp. 3.9\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Prinzip",
+          "blocks": [
+            {
+              "md": "Ist $A(n)$ eine Aussage über natürliche Zahlen und gilt\n1. **Induktionsanfang:** $A(n_0)$ ist wahr,\n2. **Induktionsschritt:** für jedes $n \\ge n_0$ folgt aus $A(n)$ (Induktionsannahme) auch $A(n + 1)$,\n\ndann gilt $A(n)$ für alle $n \\ge n_0$. Bild: Der erste Dominostein fällt, und jeder reißt den nächsten mit.\n\nBegründung: Die Menge der $n$, für die $A(n)$ gilt, enthält $n_0$ und mit jedem $n$ auch $n + 1$. Weil $\\mathbb{N}$ die kleinste Menge mit dieser Eigenschaft ist (die kleinste induktive Menge), sind das alle natürlichen Zahlen ab $n_0$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: Gaußsche Summenformel",
+          "blocks": [
+            {
+              "md": "$A(n)$: $\\sum_{k=1}^{n} k = \\frac{n(n+1)}{2}$.\n- Anfang $n = 1$: $1 = \\frac{1 \\cdot 2}{2}$.\n- Schritt: $\\sum_{k=1}^{n+1} k = \\frac{n(n+1)}{2} + (n + 1) = \\frac{(n+1)(n+2)}{2}$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: Teilbarkeit",
+          "blocks": [
+            {
+              "md": "$n^3 - n$ ist durch $3$ teilbar: $(n+1)^3 - (n+1) = (n^3 - n) + 3(n^2 + n)$. Der erste Summand ist nach Annahme durch $3$ teilbar, der zweite offensichtlich."
+            }
+          ]
+        },
+        {
+          "title": "Varianten",
+          "blocks": [
+            {
+              "md": "- **Starke Induktion:** Im Schritt darf man $A(n_0), \\dots, A(n)$ alle benutzen.\n- **Rekursive Definitionen** von Summen, Produkten, $n!$ oder Folgen sind die Schwester der Induktion: Man legt den Anfang fest und den Übergang von $n$ zu $n + 1$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Anfang vergessen: Der Schritt allein beweist nichts. „$n = n + 1$“ hat einen gültigen Schritt und ist trotzdem immer falsch.\n- Im Schritt die Behauptung für $n + 1$ schon benutzen, statt sie herzuleiten.\n- Die Annahme „für alle $n$“ statt „für ein festes $n$“ formulieren.\n\nAnwendungen: **Binomischer Lehrsatz**, Bernoulli-Ungleichung, **Archimedisches Prinzip**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was zeigt man im Induktionsschritt?",
+      "options": [
+        {
+          "md": "Aus $A(n)$ folgt $A(n + 1)$, für jedes $n \\ge n_0$.",
+          "correct": true
+        },
+        {
+          "md": "$A(n)$ gilt für alle $n$.",
+          "why": "Das ist die Behauptung selbst."
+        },
+        {
+          "md": "$A(n + 1)$ gilt für ein bestimmtes $n$."
+        },
+        {
+          "md": "$A(1)$ und $A(2)$ gelten."
+        }
+      ],
+      "explain": "Mit dem Anfang $A(n_0)$ ergibt das eine Kette, die jedes $n \\ge n_0$ erreicht.",
+      "label": "Schritt",
+      "id": "vq1"
     },
     {
       "id": "nur-schritt",
@@ -368,7 +508,8 @@
         "Im Schritt: Fall $n + 1$ auf Fall $n$ zurückführen und die Induktionsvoraussetzung genau einmal sichtbar einsetzen.",
         "Der Anfang darf bei jedem $n_0 \\in \\Z$ liegen (Satz 3.20).",
         "Der Induktionsschritt muss ab dem Anfang ausnahmslos funktionieren.",
-        "Rekursionen zählen: Fallunterscheidung nach dem letzten Element."
+        "Rekursionen zählen: Fallunterscheidung nach dem letzten Element.",
+        "Induktion: Anfang $A(n_0)$, Schritt $A(n) \\Rightarrow A(n + 1)$."
       ]
     }
   ]

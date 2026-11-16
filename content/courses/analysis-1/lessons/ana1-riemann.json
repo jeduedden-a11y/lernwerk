@@ -100,12 +100,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Die Idee ist dieselbe wie bei der Intervallschachtelung: Was man nicht direkt berechnen kann, schließt man von beiden Seiten ein. Jede Untersumme ist zu klein, jede Obersumme zu groß. Wenn sich die beiden Schätzungen beliebig nahe kommen, gibt es genau eine Zahl dazwischen, und die nennt man die Fläche.\n\nBei manchen Funktionen klappt das nicht. Die Funktion, die auf rationalen Zahlen $1$ und auf irrationalen $0$ ist, springt in jedem noch so kleinen Streifen zwischen $0$ und $1$. Jede Obersumme ist $1$, jede Untersumme $0$, und keine Verfeinerung hilft. Sie ist **nicht integrierbar**.\n\nGutartig sind dagegen **monotone** und **stetige** Funktionen: Bei ihnen werden die Treppenstufen zwischen Ober- und Untersumme mit feinerer Zerlegung beliebig klein. Und dann liefert der **Hauptsatz** einen Rechenweg: Ist $F' = f$, dann ist $\\int_a^b f\\,dx = F(b) - F(a)$. Fläche und Ableitung sind zwei Seiten derselben Sache."
+      "md": "Man schließt die Fläche von beiden Seiten ein: Untersummen sind zu klein, Obersummen zu groß. Kommen sie sich beliebig nahe, ist die Zahl dazwischen das Integral. Bei der Funktion, die auf Brüchen $1$ und sonst $0$ ist, bleibt jede Obersumme $1$ und jede Untersumme $0$.",
+      "more": "Die Idee ist dieselbe wie bei der Intervallschachtelung: Was man nicht direkt berechnen kann, schließt man von beiden Seiten ein. Jede Untersumme ist zu klein, jede Obersumme zu groß. Wenn sich die beiden Schätzungen beliebig nahe kommen, gibt es genau eine Zahl dazwischen, und die nennt man die Fläche.\n\nBei manchen Funktionen klappt das nicht. Die Funktion, die auf rationalen Zahlen $1$ und auf irrationalen $0$ ist, springt in jedem noch so kleinen Streifen zwischen $0$ und $1$. Jede Obersumme ist $1$, jede Untersumme $0$, und keine Verfeinerung hilft. Sie ist **nicht integrierbar**.\n\nGutartig sind dagegen **monotone** und **stetige** Funktionen: Bei ihnen werden die Treppenstufen zwischen Ober- und Untersumme mit feinerer Zerlegung beliebig klein. Und dann liefert der **Hauptsatz** einen Rechenweg: Ist $F' = f$, dann ist $\\int_a^b f\\,dx = F(b) - F(a)$. Fläche und Ableitung sind zwei Seiten derselben Sache."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Ober- und Untersumme\n> Für eine Zerlegung $a = x_0 < x_1 < \\dots < x_n = b$ und beschränktes $f$ ist\n> $$U = \\sum_{k=1}^n \\inf_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}), \\qquad O = \\sum_{k=1}^n \\sup_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}).$$\n\n> [!definition] Riemann-integrierbar\n> $f$ heißt **integrierbar**, wenn das Supremum aller Untersummen gleich dem Infimum aller Obersummen ist. Dieser gemeinsame Wert ist $\\int_a^b f(x)\\,dx$.\n\nGleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$.\n\n> [!satz] Integrierbare Funktionen\n> Monotone Funktionen und stetige Funktionen auf $[a, b]$ sind integrierbar."
+      "md": "Ober- und Untersumme nehmen auf jedem Teilintervall Supremum bzw. Infimum mal Breite. $f$ ist **integrierbar**, wenn $\\sup U = \\inf O$; gleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$. Monotone und stetige Funktionen auf $[a, b]$ sind integrierbar.",
+      "more": "> [!definition] Ober- und Untersumme\n> Für eine Zerlegung $a = x_0 < x_1 < \\dots < x_n = b$ und beschränktes $f$ ist\n> $$U = \\sum_{k=1}^n \\inf_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}), \\qquad O = \\sum_{k=1}^n \\sup_{[x_{k-1}, x_k]} f \\cdot (x_k - x_{k-1}).$$\n\n> [!definition] Riemann-integrierbar\n> $f$ heißt **integrierbar**, wenn das Supremum aller Untersummen gleich dem Infimum aller Obersummen ist. Dieser gemeinsame Wert ist $\\int_a^b f(x)\\,dx$.\n\nGleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$.\n\n> [!satz] Integrierbare Funktionen\n> Monotone Funktionen und stetige Funktionen auf $[a, b]$ sind integrierbar."
     },
     {
       "id": "fein",
@@ -177,6 +179,132 @@
         }
       },
       "explain": "Für eine wachsende Funktion ist $O - U = \\big(f(2) - f(0)\\big) \\cdot \\tfrac{2}{n} = \\tfrac8n$, denn die Stufen ergeben zusammengeschoben eine Säule der Höhe $f(2) - f(0)$ und Breite $\\tfrac2n$. Also braucht man $n \\ge 41$. Der Grenzwert ist $\\int_0^2 x^2\\,dx = \\tfrac83$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**$\\int_0^1 x\\,dx$ aus Ober- und Untersummen**, $n$ gleiche Teile.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "O_n = \\sum_{k=1}^n \\frac kn \\cdot \\frac1n",
+            "why": "Auf $[\\tfrac{k-1}n, \\tfrac kn]$ ist das Supremum $\\tfrac kn$."
+          },
+          {
+            "tex": "= \\frac{1}{n^2} \\cdot \\frac{n(n+1)}{2} = \\frac{n + 1}{2n}",
+            "why": "Gaußsche Summenformel."
+          },
+          {
+            "tex": "U_n = \\frac{n - 1}{2n}",
+            "why": "Mit dem Infimum $\\tfrac{k-1}n$."
+          },
+          {
+            "tex": "O_n - U_n = \\tfrac1n \\to 0",
+            "why": "Beide Summen gehen gegen $\\tfrac12$, also $\\int_0^1 x\\,dx = \\tfrac12$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Obersumme.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gauß.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Untersumme.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Riemann-Integral",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Riemann-Integral.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 14\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Rechentechnik: **Integrationstechniken MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Ober- und Untersummen",
+          "blocks": [
+            {
+              "md": "Sei $f: [a, b] \\to \\mathbb{R}$ beschränkt und $Z: a = x_0 < x_1 < \\dots < x_n = b$ eine Zerlegung. Mit $m_i = \\inf f$ und $M_i = \\sup f$ auf $[x_{i-1}, x_i]$ sind\n$$U(f, Z) = \\sum_i m_i\\,(x_i - x_{i-1}), \\qquad O(f, Z) = \\sum_i M_i\\,(x_i - x_{i-1})$$\nUnter- und Obersumme: zwei Treppen unterhalb und oberhalb des Graphen. Verfeinern hebt die Untersumme und senkt die Obersumme, und stets gilt $U \\le O$."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt **Riemann-integrierbar**, wenn $\\sup_Z U(f, Z) = \\inf_Z O(f, Z)$; dieser Wert ist $\\int_a^b f(x)\\,dx$. Gleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$\\int_0^1 x\\,dx$ mit $n$ gleichen Teilen: $U = \\frac{n-1}{2n}$, $O = \\frac{n+1}{2n}$. Die Differenz $\\frac1n$ geht gegen $0$, beide gegen $\\frac12$."
+            }
+          ]
+        },
+        {
+          "title": "Welche Funktionen sind integrierbar?",
+          "blocks": [
+            {
+              "md": "Stetige Funktionen (über die gleichmäßige **Stetigkeit**), monotone Funktionen, stückweise stetige. Nicht integrierbar ist die Dirichlet-Funktion: Jede Untersumme ist $0$, jede Obersumme $1$."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften und Hauptsatz",
+          "blocks": [
+            {
+              "md": "- Linear, monoton, $\\left|\\int f\\right| \\le \\int |f|$, additiv über aneinandergrenzende Intervalle.\n- **Hauptsatz:** Für stetiges $f$ ist $F(x) = \\int_a^x f(t)\\,dt$ differenzierbar mit $F' = f$. Für jede Stammfunktion $G$ gilt $\\int_a^b f = G(b) - G(a)$. Damit sind Integrieren und Ableiten Umkehrungen voneinander."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Obersumme",
+      "md": "Wie groß ist die Obersumme $O_n$ für $n = 10$?",
+      "answer": 0.55,
+      "tolerance": 0.001,
+      "placeholder": "O",
+      "explain": "$O_{10} = \\tfrac{11}{20} = 0{,}55$.",
+      "id": "vq1"
     },
     {
       "id": "monoton-beweis",
@@ -281,7 +409,8 @@
         "Für monotone $f$ ist $O - U = h\\,(f(b) - f(a))$ bei Streifenbreite $h$.",
         "Hauptsatz: Ist $F' = f$, dann $\\int_a^b f\\,dx = F(b) - F(a)$.",
         "Monotone und stetige Funktionen sind integrierbar.",
-        "Integrierbar trotz unendlich vieler Unstetigkeiten ist möglich."
+        "Integrierbar trotz unendlich vieler Unstetigkeiten ist möglich.",
+        "Integral als gemeinsamer Grenzwert von Ober- und Untersummen."
       ]
     }
   ]

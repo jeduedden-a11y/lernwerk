@@ -109,7 +109,8 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Woher kommen die Zahlen beim Ausmultiplizieren? Schreibe $(a + b)^3 = (a + b)(a + b)(a + b)$. Jeder Summand des Ergebnisses entsteht, indem man aus **jeder** der drei Klammern entweder $a$ oder $b$ wählt.\n\nDer Summand $a^2 b$ entsteht, wenn man genau **einmal** $b$ wählt. Dafür gibt es drei Möglichkeiten: aus der ersten, zweiten oder dritten Klammer. Darum steht vor $a^2 b$ eine $3$.\n\nAllgemein: Der Koeffizient vor $a^{n-k} b^k$ ist die Anzahl der Möglichkeiten, aus $n$ Klammern $k$ auszuwählen. Diese Zahl heißt **Binomialkoeffizient** $\\binom nk$, gelesen »$n$ über $k$«. Damit ist der binomische Lehrsatz eigentlich ein Abzählargument."
+      "md": "Beim Ausmultiplizieren von $(a + b)^n$ wählt man aus jeder Klammer $a$ oder $b$. Der Koeffizient vor $a^{n-k} b^k$ zählt, auf wie viele Arten man genau $k$-mal $b$ wählen kann: $\\binom nk$.",
+      "more": "Woher kommen die Zahlen beim Ausmultiplizieren? Schreibe $(a + b)^3 = (a + b)(a + b)(a + b)$. Jeder Summand des Ergebnisses entsteht, indem man aus **jeder** der drei Klammern entweder $a$ oder $b$ wählt.\n\nDer Summand $a^2 b$ entsteht, wenn man genau **einmal** $b$ wählt. Dafür gibt es drei Möglichkeiten: aus der ersten, zweiten oder dritten Klammer. Darum steht vor $a^2 b$ eine $3$.\n\nAllgemein: Der Koeffizient vor $a^{n-k} b^k$ ist die Anzahl der Möglichkeiten, aus $n$ Klammern $k$ auszuwählen. Diese Zahl heißt **Binomialkoeffizient** $\\binom nk$, gelesen »$n$ über $k$«. Damit ist der binomische Lehrsatz eigentlich ein Abzählargument."
     },
     {
       "id": "pascal",
@@ -146,7 +147,120 @@
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Fakultät und Binomialkoeffizient\n> $n! = 1 \\cdot 2 \\cdots n$ mit $0! = 1$, und für $0 \\le k \\le n$\n> $$\\binom nk = \\frac{n!}{k!\\,(n-k)!}.$$\n\n> [!satz] Binomischer Lehrsatz\n> Für alle $a, b \\in \\R$ und $n \\in \\N$ gilt $(a + b)^n = \\sum_{k=0}^{n} \\binom nk a^{n-k} b^k$.\n\n> [!satz] Bernoulli-Ungleichung\n> Für $x \\ge -1$ und $n \\in \\N$ gilt $(1 + x)^n \\ge 1 + nx$.\n\nBeide beweist man mit Induktion. Für $x \\ge 0$ folgt Bernoulli auch direkt aus dem Lehrsatz: $(1 + x)^n = 1 + nx + \\binom n2 x^2 + \\dots$, und alle weiteren Summanden sind nicht negativ."
+      "md": "$\\binom nk = \\dfrac{n!}{k!\\,(n-k)!}$. **Binomischer Lehrsatz:** $(a + b)^n = \\sum_{k=0}^n \\binom nk a^{n-k} b^k$. **Bernoulli:** $(1 + x)^n \\ge 1 + nx$ für $x \\ge -1$. Beide zeigt man mit Induktion.",
+      "more": "> [!definition] Fakultät und Binomialkoeffizient\n> $n! = 1 \\cdot 2 \\cdots n$ mit $0! = 1$, und für $0 \\le k \\le n$\n> $$\\binom nk = \\frac{n!}{k!\\,(n-k)!}.$$\n\n> [!satz] Binomischer Lehrsatz\n> Für alle $a, b \\in \\R$ und $n \\in \\N$ gilt $(a + b)^n = \\sum_{k=0}^{n} \\binom nk a^{n-k} b^k$.\n\n> [!satz] Bernoulli-Ungleichung\n> Für $x \\ge -1$ und $n \\in \\N$ gilt $(1 + x)^n \\ge 1 + nx$.\n\nBeide beweist man mit Induktion. Für $x \\ge 0$ folgt Bernoulli auch direkt aus dem Lehrsatz: $(1 + x)^n = 1 + nx + \\binom n2 x^2 + \\dots$, und alle weiteren Summanden sind nicht negativ."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Binomischer Lehrsatz",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Binomischer Lehrsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 3.22 bis 3.31\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Rechenaufgaben: **Binomischer Lehrsatz (TMUA)**."
+            }
+          ]
+        },
+        {
+          "title": "Binomialkoeffizient",
+          "blocks": [
+            {
+              "md": "$\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$ für $0 \\le k \\le n$ zählt die $k$-elementigen Teilmengen einer $n$-elementigen Menge. Es gilt $\\binom{n}{0} = \\binom{n}{n} = 1$, $\\binom{n}{k} = \\binom{n}{n-k}$ und die **Pascal-Regel** $\\binom{n}{k} + \\binom{n}{k+1} = \\binom{n+1}{k+1}$."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Für alle reellen oder komplexen $a, b$ und $n \\in \\mathbb{N}_0$ gilt\n$$(a + b)^n = \\sum_{k=0}^{n} \\binom{n}{k}\\, a^{k}\\, b^{n-k}.$$\nKombinatorisch: Beim Ausmultiplizieren von $n$ Klammern wählt man in $k$ Klammern das $a$, in den übrigen das $b$; dafür gibt es $\\binom{n}{k}$ Möglichkeiten. Der Induktionsbeweis benutzt die Pascal-Regel."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen",
+          "blocks": [
+            {
+              "md": "- $\\sum_{k=0}^{n} \\binom{n}{k} = 2^n$ (setze $a = b = 1$): Eine $n$-elementige Menge hat $2^n$ Teilmengen.\n- $\\sum_{k=0}^{n} (-1)^k \\binom{n}{k} = 0$ für $n \\ge 1$.\n- **Bernoulli-Ungleichung** $(1 + x)^n \\ge 1 + nx$ für $x \\ge -1$. Für $x \\ge 0$ steht sie schon in den ersten beiden Summanden, allgemein beweist man sie mit Induktion."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Koeffizient von $x^3$ in $(2x - 1)^5$: $\\binom{5}{3} \\cdot 2^3 \\cdot (-1)^2 = 10 \\cdot 8 = 80$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $(a + b)^n = a^n + b^n$ schreiben; das stimmt nur für $n = 1$.\n- Bei $(a - b)^n$ die wechselnden Vorzeichen vergessen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Vollständige Induktion",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Vollständige Induktion.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 3.2 bis Bsp. 3.9\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Prinzip",
+          "blocks": [
+            {
+              "md": "Ist $A(n)$ eine Aussage über natürliche Zahlen und gilt\n1. **Induktionsanfang:** $A(n_0)$ ist wahr,\n2. **Induktionsschritt:** für jedes $n \\ge n_0$ folgt aus $A(n)$ (Induktionsannahme) auch $A(n + 1)$,\n\ndann gilt $A(n)$ für alle $n \\ge n_0$. Bild: Der erste Dominostein fällt, und jeder reißt den nächsten mit.\n\nBegründung: Die Menge der $n$, für die $A(n)$ gilt, enthält $n_0$ und mit jedem $n$ auch $n + 1$. Weil $\\mathbb{N}$ die kleinste Menge mit dieser Eigenschaft ist (die kleinste induktive Menge), sind das alle natürlichen Zahlen ab $n_0$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: Gaußsche Summenformel",
+          "blocks": [
+            {
+              "md": "$A(n)$: $\\sum_{k=1}^{n} k = \\frac{n(n+1)}{2}$.\n- Anfang $n = 1$: $1 = \\frac{1 \\cdot 2}{2}$.\n- Schritt: $\\sum_{k=1}^{n+1} k = \\frac{n(n+1)}{2} + (n + 1) = \\frac{(n+1)(n+2)}{2}$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: Teilbarkeit",
+          "blocks": [
+            {
+              "md": "$n^3 - n$ ist durch $3$ teilbar: $(n+1)^3 - (n+1) = (n^3 - n) + 3(n^2 + n)$. Der erste Summand ist nach Annahme durch $3$ teilbar, der zweite offensichtlich."
+            }
+          ]
+        },
+        {
+          "title": "Varianten",
+          "blocks": [
+            {
+              "md": "- **Starke Induktion:** Im Schritt darf man $A(n_0), \\dots, A(n)$ alle benutzen.\n- **Rekursive Definitionen** von Summen, Produkten, $n!$ oder Folgen sind die Schwester der Induktion: Man legt den Anfang fest und den Übergang von $n$ zu $n + 1$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Anfang vergessen: Der Schritt allein beweist nichts. „$n = n + 1$“ hat einen gültigen Schritt und ist trotzdem immer falsch.\n- Im Schritt die Behauptung für $n + 1$ schon benutzen, statt sie herzuleiten.\n- Die Annahme „für alle $n$“ statt „für ein festes $n$“ formulieren.\n\nAnwendungen: **Binomischer Lehrsatz**, Bernoulli-Ungleichung, **Archimedisches Prinzip**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "teilmengen",

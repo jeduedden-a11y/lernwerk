@@ -65,12 +65,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Eine **Teilfolge** entsteht, wenn man unendlich viele Glieder auswählt und ihre Reihenfolge beibehält, etwa jedes zweite oder alle mit Primzahlindex.\n\n**Warum hat jede beschränkte Folge eine konvergente Teilfolge?** Die Glieder liegen in einem Intervall $[A, B]$. Halbiere es. Mindestens eine Hälfte enthält **unendlich viele** Glieder, denn sonst hätte die Folge insgesamt nur endlich viele. Halbiere diese Hälfte wieder, und so weiter. Die Intervalle schrumpfen auf einen Punkt zusammen, und aus jedem Intervall nimmt man ein Glied. Das gibt eine Teilfolge, die gegen diesen Punkt konvergiert. Es ist die Intervallhalbierung vom Anfang des Kurses, nur auf Folgen angewendet.\n\n**Cauchy-Folgen** lösen ein anderes Problem: Man will Konvergenz zeigen, ohne den Grenzwert zu kennen, und die Folge ist nicht monoton. Dann prüft man, ob die Glieder **untereinander** beliebig nahe zusammenrücken. In $\\R$ reicht das für Konvergenz. Es ist eine weitere Form der Vollständigkeit."
+      "md": "Eine **Teilfolge** wählt unendlich viele Glieder in ihrer Reihenfolge. Jede beschränkte Folge hat eine konvergente: Man halbiert das Intervall immer wieder und behält eine Hälfte mit unendlich vielen Gliedern. Die Intervalle schrumpfen auf einen Punkt.",
+      "more": "Eine **Teilfolge** entsteht, wenn man unendlich viele Glieder auswählt und ihre Reihenfolge beibehält, etwa jedes zweite oder alle mit Primzahlindex.\n\n**Warum hat jede beschränkte Folge eine konvergente Teilfolge?** Die Glieder liegen in einem Intervall $[A, B]$. Halbiere es. Mindestens eine Hälfte enthält **unendlich viele** Glieder, denn sonst hätte die Folge insgesamt nur endlich viele. Halbiere diese Hälfte wieder, und so weiter. Die Intervalle schrumpfen auf einen Punkt zusammen, und aus jedem Intervall nimmt man ein Glied. Das gibt eine Teilfolge, die gegen diesen Punkt konvergiert. Es ist die Intervallhalbierung vom Anfang des Kurses, nur auf Folgen angewendet.\n\n**Cauchy-Folgen** lösen ein anderes Problem: Man will Konvergenz zeigen, ohne den Grenzwert zu kennen, und die Folge ist nicht monoton. Dann prüft man, ob die Glieder **untereinander** beliebig nahe zusammenrücken. In $\\R$ reicht das für Konvergenz. Es ist eine weitere Form der Vollständigkeit."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Teilfolge und Häufungspunkt\n> Ist $n_1 < n_2 < n_3 < \\dots$, dann ist $(a_{n_k})_k$ eine **Teilfolge** von $(a_n)$. Eine Zahl $h$ heißt **Häufungspunkt**, wenn eine Teilfolge gegen $h$ konvergiert.\n\n> [!satz] Bolzano-Weierstraß\n> Jede beschränkte Folge in $\\R$ besitzt eine konvergente Teilfolge.\n\n> [!definition] Cauchy-Folge\n> $(a_n)$ heißt **Cauchy-Folge**, wenn es zu jedem $\\varepsilon > 0$ ein $n_0$ gibt mit $|a_n - a_m| < \\varepsilon$ für alle $n, m \\ge n_0$.\n\n> [!satz] Cauchy-Kriterium\n> In $\\R$ konvergiert eine Folge genau dann, wenn sie eine Cauchy-Folge ist.\n\nDie Richtung »konvergent ⇒ Cauchy« gilt überall. Die Umkehrung braucht Vollständigkeit: In $\\Q$ ist die Folge der Dezimalnäherungen von $\\sqrt2$ eine Cauchy-Folge ohne Grenzwert."
+      "md": "**Bolzano-Weierstraß:** Jede beschränkte Folge in $\\R$ hat eine konvergente Teilfolge. **Cauchy-Folge:** $|a_n - a_m| < \\varepsilon$ für alle $n, m \\ge n_0$. **Cauchy-Kriterium:** In $\\R$ konvergiert eine Folge genau dann, wenn sie eine Cauchy-Folge ist.",
+      "more": "> [!definition] Teilfolge und Häufungspunkt\n> Ist $n_1 < n_2 < n_3 < \\dots$, dann ist $(a_{n_k})_k$ eine **Teilfolge** von $(a_n)$. Eine Zahl $h$ heißt **Häufungspunkt**, wenn eine Teilfolge gegen $h$ konvergiert.\n\n> [!satz] Bolzano-Weierstraß\n> Jede beschränkte Folge in $\\R$ besitzt eine konvergente Teilfolge.\n\n> [!definition] Cauchy-Folge\n> $(a_n)$ heißt **Cauchy-Folge**, wenn es zu jedem $\\varepsilon > 0$ ein $n_0$ gibt mit $|a_n - a_m| < \\varepsilon$ für alle $n, m \\ge n_0$.\n\n> [!satz] Cauchy-Kriterium\n> In $\\R$ konvergiert eine Folge genau dann, wenn sie eine Cauchy-Folge ist.\n\nDie Richtung »konvergent ⇒ Cauchy« gilt überall. Die Umkehrung braucht Vollständigkeit: In $\\Q$ ist die Folge der Dezimalnäherungen von $\\sqrt2$ eine Cauchy-Folge ohne Grenzwert."
     },
     {
       "id": "erkunden",
@@ -89,6 +91,193 @@
         ],
         "readout": "$a_{{N|0}} = {a|4}$"
       }
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Bolzano-Weierstraß durch Halbieren:** eine Teilfolge in immer kleineren Intervallen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "a_n \\in [A, B] = I_0",
+            "why": "Alle Glieder liegen in einem Intervall."
+          },
+          {
+            "tex": "I_{k+1} \\subset I_k,\\ \\ |I_{k+1}| = \\tfrac12\\, |I_k|",
+            "why": "Eine Hälfte mit unendlich vielen Gliedern behalten."
+          },
+          {
+            "tex": "n_{k+1} > n_k,\\ \\ a_{n_{k+1}} \\in I_{k+1}",
+            "why": "Aus jedem Intervall ein Glied mit größerem Index."
+          },
+          {
+            "tex": "a_{n_k} \\to h,\\ \\ \\set{h} = \\textstyle\\bigcap_k I_k",
+            "why": "Intervallschachtelung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Beschränkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Halbieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Auswählen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Grenzwert.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Teilfolgen und Cauchy-Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Teilfolgen und Cauchy-Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 9.26 bis 9.50\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Teilfolgen und Häufungspunkte",
+          "blocks": [
+            {
+              "md": "Für Indizes $n_1 < n_2 < n_3 < \\dots$ heißt $(a_{n_k})_k$ **Teilfolge** von $(a_n)$. Eine Zahl $h$ heißt **Häufungspunkt**, wenn eine Teilfolge gegen $h$ konvergiert. Konvergiert $(a_n)$ gegen $a$, so konvergiert jede Teilfolge gegen $a$. Beispiel: $(-1)^n$ hat die Häufungspunkte $1$ und $-1$, also keinen Grenzwert.\n\n**Limes superior und inferior** sind der größte und der kleinste Häufungspunkt einer beschränkten Folge. Sie existieren immer, und $(a_n)$ konvergiert genau dann, wenn beide übereinstimmen."
+            }
+          ]
+        },
+        {
+          "title": "Satz von Bolzano-Weierstraß",
+          "blocks": [
+            {
+              "md": "**Jede beschränkte Folge in $\\mathbb{R}$ (und in $\\mathbb{R}^n$) hat eine konvergente Teilfolge.**\n\nBeweisidee: Liegen alle Glieder in $[a, b]$, so enthält eine der beiden Hälften unendlich viele davon. Diese Hälfte wieder halbieren und so fort: Die entstehende **Intervallschachtelung** erfasst einen Punkt, gegen den eine Teilfolge konvergiert."
+            }
+          ]
+        },
+        {
+          "title": "Cauchy-Folgen",
+          "blocks": [
+            {
+              "md": "$(a_n)$ heißt **Cauchy-Folge**, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall m, n \\ge n_0: \\ |a_n - a_m| < \\varepsilon.$$\nDie Glieder kommen sich also beliebig nahe, ohne dass ein Grenzwert genannt wird.\n\n**Cauchy-Kriterium:** In $\\mathbb{R}$ ist eine Folge genau dann konvergent, wenn sie eine Cauchy-Folge ist. In $\\mathbb{Q}$ gilt das nicht: Die Dezimalnäherungen $1;\\ 1{,}4;\\ 1{,}41;\\ \\dots$ von $\\sqrt2$ bilden eine Cauchy-Folge ohne rationalen Grenzwert."
+            }
+          ]
+        },
+        {
+          "title": "Wozu das gut ist",
+          "blocks": [
+            {
+              "md": "Das Cauchy-Kriterium beweist Konvergenz, wenn man den Grenzwert nicht kennt, etwa bei Reihen (**Konvergenzkriterien für Reihen**). Bolzano-Weierstraß liefert Existenzsätze wie den Satz vom Maximum stetiger Funktionen (**Zwischenwertsatz**)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Konvergenz von Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 9.3 bis Bem. 9.13\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Folgen und Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Folge $(a_n)$ **konvergiert** gegen $a$, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\mathbb{N}\\ \\forall n \\ge n_0: \\ |a_n - a| < \\varepsilon.$$\nAnschaulich: Um $a$ liegt ein Band der Breite $2\\varepsilon$; egal wie schmal, ab einem Index $n_0$ bleiben alle Glieder darin. $n_0$ darf von $\\varepsilon$ abhängen. Man schreibt $a = \\lim_{n \\to \\infty} a_n$ oder $a_n \\to a$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit ε und n₀",
+          "blocks": [
+            {
+              "md": "$a_n = \\frac{n+1}{2n} \\to \\frac12$: Es ist $\\left|a_n - \\frac12\\right| = \\frac{1}{2n} < \\varepsilon \\Leftrightarrow n > \\frac{1}{2\\varepsilon}$. Nach dem **archimedischen Prinzip** gibt es ein solches $n_0$; für $\\varepsilon = 0{,}01$ genügt $n_0 = 51$."
+            }
+          ]
+        },
+        {
+          "title": "Grundtatsachen",
+          "blocks": [
+            {
+              "md": "- Der Grenzwert ist eindeutig (Widerspruchsbeweis mit $\\varepsilon = \\frac{|a - b|}{2}$).\n- Konvergente Folgen sind beschränkt. Die Umkehrung ist falsch: $(-1)^n$.\n- **Grenzwertsätze:** Aus $a_n \\to a$, $b_n \\to b$ folgt $a_n + b_n \\to a + b$, $a_n b_n \\to ab$ und, falls $b \\ne 0$, $\\frac{a_n}{b_n} \\to \\frac{a}{b}$.\n- **Sandwich:** $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to a$ ergibt $c_n \\to a$.\n- Ungleichungen bleiben im Grenzwert erhalten, aber nur als $\\le$: $\\frac1n > 0$, doch $\\lim \\frac1n = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Grenzwerte",
+          "blocks": [
+            {
+              "md": "$\\frac1n \\to 0$, $q^n \\to 0$ für $|q| < 1$, $\\sqrt[n]{n} \\to 1$, $\\frac{n^k}{q^n} \\to 0$ für $|q| > 1$. Bei Brüchen von Polynomen teilt man durch die höchste Potenz des Nenners."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $n_0$ unabhängig von $\\varepsilon$ wählen wollen.\n- Mit „$\\frac{\\infty}{\\infty} = 1$“ rechnen; das ist kein Wert, sondern eine unbestimmte Form."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Folge hat **keine** konvergente Teilfolge?",
+      "options": [
+        {
+          "md": "$a_n = n$",
+          "correct": true
+        },
+        {
+          "md": "$a_n = (-1)^n$",
+          "why": "Die Teilfolge der geraden Glieder ist konstant $1$."
+        },
+        {
+          "md": "$a_n = \\sin n$"
+        },
+        {
+          "md": "$a_n = \\tfrac{(-1)^n\\, n}{n + 1}$"
+        }
+      ],
+      "explain": "Alle anderen sind beschränkt, also greift Bolzano-Weierstraß. $a_n = n$ wächst über jede Schranke.",
+      "label": "Teilfolge",
+      "id": "vq1"
     },
     {
       "id": "haeufung",
@@ -226,7 +415,8 @@
         "Cauchy-Folge: Die Glieder rücken untereinander beliebig nahe zusammen.",
         "In $\\R$ ist jede Cauchy-Folge konvergent, in $\\Q$ nicht.",
         "Beschränkt mit genau einem Häufungspunkt heißt konvergent.",
-        "Cauchy-Folgen konvergieren in $\\mathbb{R}$, nicht in $\\mathbb{Q}$."
+        "Cauchy-Folgen konvergieren in $\\mathbb{R}$, nicht in $\\mathbb{Q}$.",
+        "Bolzano-Weierstraß: Halbieren und eine Hälfte mit unendlich vielen Gliedern behalten."
       ]
     }
   ]

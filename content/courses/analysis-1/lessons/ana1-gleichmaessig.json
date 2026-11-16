@@ -120,12 +120,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Bei einer Folge von **Funktionen** kann man an jeder Stelle $x$ einzeln fragen, ob $f_n(x)$ konvergiert. Das ist **punktweise Konvergenz**. Das Problem: Das nötige $n_0$ darf von $x$ abhängen, und bei $x^n$ wird es beliebig groß, je näher $x$ an $1$ liegt.\n\n**Gleichmäßige Konvergenz** verlangt mehr: ein einziges $n_0$, das für **alle** $x$ zugleich funktioniert. Bildlich: Ab $n_0$ liegt der **ganze Graph** von $f_n$ im $\\varepsilon$-Schlauch um die Grenzfunktion. Man misst den Abstand zweier Funktionen durch den größten Abstand ihrer Werte, $\\sup_x |f_n(x) - f(x)|$, und verlangt, dass er gegen $0$ geht.\n\nWarum der Aufwand? Weil nur gleichmäßige Konvergenz gute Eigenschaften vererbt. Der gleichmäßige Grenzwert stetiger Funktionen ist stetig, und man darf Grenzwert und Integral vertauschen. Bei $x^n$ auf $[0, 1]$ geht genau das schief: Die Grenzfunktion springt."
+      "md": "**Punktweise:** $f_n(x)$ konvergiert an jeder Stelle einzeln, das $n_0$ darf von $x$ abhängen. **Gleichmäßig:** ein $n_0$ für alle $x$, ab dem der ganze Graph im $\\varepsilon$-Schlauch um die Grenzfunktion liegt. Bei $x^n$ auf $[0, 1)$ klappt das nicht.",
+      "more": "Bei einer Folge von **Funktionen** kann man an jeder Stelle $x$ einzeln fragen, ob $f_n(x)$ konvergiert. Das ist **punktweise Konvergenz**. Das Problem: Das nötige $n_0$ darf von $x$ abhängen, und bei $x^n$ wird es beliebig groß, je näher $x$ an $1$ liegt.\n\n**Gleichmäßige Konvergenz** verlangt mehr: ein einziges $n_0$, das für **alle** $x$ zugleich funktioniert. Bildlich: Ab $n_0$ liegt der **ganze Graph** von $f_n$ im $\\varepsilon$-Schlauch um die Grenzfunktion. Man misst den Abstand zweier Funktionen durch den größten Abstand ihrer Werte, $\\sup_x |f_n(x) - f(x)|$, und verlangt, dass er gegen $0$ geht.\n\nWarum der Aufwand? Weil nur gleichmäßige Konvergenz gute Eigenschaften vererbt. Der gleichmäßige Grenzwert stetiger Funktionen ist stetig, und man darf Grenzwert und Integral vertauschen. Bei $x^n$ auf $[0, 1]$ geht genau das schief: Die Grenzfunktion springt."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Punktweise und gleichmäßige Konvergenz\n> $f_n: D \\to \\R$ konvergiert **punktweise** gegen $f$, wenn $f_n(x) \\to f(x)$ für jedes $x \\in D$.\n> $f_n$ konvergiert **gleichmäßig** gegen $f$, wenn\n> $$\\sup_{x \\in D} |f_n(x) - f(x)| \\to 0,$$\n> das heißt: $\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0\\ \\forall x \\in D: |f_n(x) - f(x)| < \\varepsilon$.\n\nDer Unterschied liegt nur in der Reihenfolge der Quantoren: Bei punktweiser Konvergenz steht $\\forall x$ vor $\\exists n_0$, bei gleichmäßiger dahinter.\n\n> [!satz] Stetigkeit vererbt sich\n> Sind alle $f_n$ stetig und konvergiert $f_n$ gleichmäßig gegen $f$, dann ist $f$ stetig. Außerdem gilt auf $[a, b]$: $\\int_a^b f_n\\,dx \\to \\int_a^b f\\,dx$."
+      "md": "**Punktweise:** $f_n(x) \\to f(x)$ für jedes $x$. **Gleichmäßig:** $\\sup_x |f_n(x) - f(x)| \\to 0$. Der Unterschied ist die Reihenfolge der Quantoren: $\\forall x\\ \\exists n_0$ gegen $\\exists n_0\\ \\forall x$. Gleichmäßige Grenzwerte stetiger Funktionen sind stetig.",
+      "more": "> [!definition] Punktweise und gleichmäßige Konvergenz\n> $f_n: D \\to \\R$ konvergiert **punktweise** gegen $f$, wenn $f_n(x) \\to f(x)$ für jedes $x \\in D$.\n> $f_n$ konvergiert **gleichmäßig** gegen $f$, wenn\n> $$\\sup_{x \\in D} |f_n(x) - f(x)| \\to 0,$$\n> das heißt: $\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0\\ \\forall x \\in D: |f_n(x) - f(x)| < \\varepsilon$.\n\nDer Unterschied liegt nur in der Reihenfolge der Quantoren: Bei punktweiser Konvergenz steht $\\forall x$ vor $\\exists n_0$, bei gleichmäßiger dahinter.\n\n> [!satz] Stetigkeit vererbt sich\n> Sind alle $f_n$ stetig und konvergiert $f_n$ gleichmäßig gegen $f$, dann ist $f$ stetig. Außerdem gilt auf $[a, b]$: $\\int_a^b f_n\\,dx \\to \\int_a^b f\\,dx$."
     },
     {
       "id": "schlauch",
@@ -196,6 +198,201 @@
         }
       },
       "explain": "$0{,}9^{28} \\approx 0{,}052$, $0{,}9^{29} \\approx 0{,}047$. Ab $n = 29$ liegt der ganze Graph im Schlauch, für alle $x \\in [0;\\ 0{,}9]$ gleichzeitig. Das ist gleichmäßige Konvergenz: ein $n_0$ für alle Stellen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**$x^n$ auf $[0, 1)$:** punktweise, aber nicht gleichmäßig konvergent.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x^n \\to 0 \\text{ für } 0 \\le x < 1",
+            "why": "Jede Stelle einzeln."
+          },
+          {
+            "tex": "\\sup_{0 \\le x < 1} |x^n - 0| = 1",
+            "why": "Nahe bei $1$ ist $x^n$ fast $1$, für jedes $n$."
+          },
+          {
+            "tex": "\\sup \\not\\to 0",
+            "why": "Kein gemeinsames $n_0$ für alle $x$."
+          },
+          {
+            "tex": "\\sup_{0 \\le x \\le 1/2} x^n = 2^{-n} \\to 0",
+            "why": "Auf $[0, \\tfrac12]$ dagegen gleichmäßig."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Punktweise.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Supremum.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nicht gleichmäßig.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kleineres Intervall.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Gleichmäßige Konvergenz",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Gleichmäßige Konvergenz.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 16\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Punktweise und gleichmäßig",
+          "blocks": [
+            {
+              "md": "Seien $f_n, f: D \\to \\mathbb{R}$.\n- **Punktweise:** Für jedes $x$ gilt $f_n(x) \\to f(x)$; $n_0$ darf von $x$ abhängen.\n- **Gleichmäßig:** $\\sup_{x \\in D} |f_n(x) - f(x)| \\to 0$; ein $n_0$ passt für alle $x$ zugleich. Bild: Ab $n_0$ liegt der ganze Graph von $f_n$ in einem $\\varepsilon$-Schlauch um $f$."
+            }
+          ]
+        },
+        {
+          "title": "Das Standardbeispiel",
+          "blocks": [
+            {
+              "md": "$f_n(x) = x^n$ auf $[0, 1]$ konvergiert punktweise gegen $f(x) = 0$ für $x < 1$ und $f(1) = 1$. Die Grenzfunktion springt, obwohl alle $f_n$ stetig sind. Die Konvergenz ist nicht gleichmäßig, denn $\\sup_{x < 1} x^n = 1$ für jedes $n$. Auf $[0, q]$ mit $q < 1$ ist sie gleichmäßig: $\\sup = q^n \\to 0$."
+            }
+          ]
+        },
+        {
+          "title": "Was gleichmäßige Konvergenz rettet",
+          "blocks": [
+            {
+              "md": "- **Stetigkeit:** Der gleichmäßige Grenzwert stetiger Funktionen ist stetig.\n- **Integral:** Auf $[a, b]$ gilt dann $\\int_a^b f_n \\to \\int_a^b f$.\n- **Ableitung:** nur, wenn die Ableitungen gleichmäßig konvergieren. $f_n(x) = \\frac{\\sin(nx)}{n}$ konvergiert gleichmäßig gegen $0$, aber $f_n'(x) = \\cos(nx)$ konvergiert nicht."
+            }
+          ]
+        },
+        {
+          "title": "Weierstraß-Kriterium",
+          "blocks": [
+            {
+              "md": "Ist $|f_k(x)| \\le M_k$ für alle $x$ und $\\sum M_k < \\infty$, so konvergiert $\\sum f_k$ gleichmäßig. Damit konvergieren Potenzreihen auf jedem kleineren abgeschlossenen Intervall innerhalb ihres Konvergenzradius gleichmäßig, und $\\exp$, $\\sin$, $\\cos$ als Reihen sind stetig."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Annehmen, punktweise Grenzwerte stetiger Funktionen seien stetig.\n- Grenzwert und Integral vertauschen, ohne gleichmäßige Konvergenz zu prüfen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Konvergenz von Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 9.3 bis Bem. 9.13\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Folgen und Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Folge $(a_n)$ **konvergiert** gegen $a$, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\mathbb{N}\\ \\forall n \\ge n_0: \\ |a_n - a| < \\varepsilon.$$\nAnschaulich: Um $a$ liegt ein Band der Breite $2\\varepsilon$; egal wie schmal, ab einem Index $n_0$ bleiben alle Glieder darin. $n_0$ darf von $\\varepsilon$ abhängen. Man schreibt $a = \\lim_{n \\to \\infty} a_n$ oder $a_n \\to a$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit ε und n₀",
+          "blocks": [
+            {
+              "md": "$a_n = \\frac{n+1}{2n} \\to \\frac12$: Es ist $\\left|a_n - \\frac12\\right| = \\frac{1}{2n} < \\varepsilon \\Leftrightarrow n > \\frac{1}{2\\varepsilon}$. Nach dem **archimedischen Prinzip** gibt es ein solches $n_0$; für $\\varepsilon = 0{,}01$ genügt $n_0 = 51$."
+            }
+          ]
+        },
+        {
+          "title": "Grundtatsachen",
+          "blocks": [
+            {
+              "md": "- Der Grenzwert ist eindeutig (Widerspruchsbeweis mit $\\varepsilon = \\frac{|a - b|}{2}$).\n- Konvergente Folgen sind beschränkt. Die Umkehrung ist falsch: $(-1)^n$.\n- **Grenzwertsätze:** Aus $a_n \\to a$, $b_n \\to b$ folgt $a_n + b_n \\to a + b$, $a_n b_n \\to ab$ und, falls $b \\ne 0$, $\\frac{a_n}{b_n} \\to \\frac{a}{b}$.\n- **Sandwich:** $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to a$ ergibt $c_n \\to a$.\n- Ungleichungen bleiben im Grenzwert erhalten, aber nur als $\\le$: $\\frac1n > 0$, doch $\\lim \\frac1n = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Grenzwerte",
+          "blocks": [
+            {
+              "md": "$\\frac1n \\to 0$, $q^n \\to 0$ für $|q| < 1$, $\\sqrt[n]{n} \\to 1$, $\\frac{n^k}{q^n} \\to 0$ für $|q| > 1$. Bei Brüchen von Polynomen teilt man durch die höchste Potenz des Nenners."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $n_0$ unabhängig von $\\varepsilon$ wählen wollen.\n- Mit „$\\frac{\\infty}{\\infty} = 1$“ rechnen; das ist kein Wert, sondern eine unbestimmte Form."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was folgt aus gleichmäßiger Konvergenz stetiger Funktionen $f_n \\to f$?",
+      "options": [
+        {
+          "md": "$f$ ist stetig.",
+          "correct": true
+        },
+        {
+          "md": "$f$ ist differenzierbar.",
+          "why": "$\\sqrt{x^2 + 1/n} \\to |x|$ gleichmäßig, aber $|x|$ ist in $0$ nicht differenzierbar."
+        },
+        {
+          "md": "Die Folge ist monoton."
+        },
+        {
+          "md": "$f$ ist konstant."
+        }
+      ],
+      "explain": "Der $\\tfrac\\varepsilon3$-Beweis braucht genau ein $n$, das für alle $x$ zugleich passt.",
+      "label": "Vererbung",
+      "id": "vq1"
     },
     {
       "id": "stetig-beweis",
@@ -299,7 +496,8 @@
         "Gleichmäßige Grenzwerte stetiger Funktionen sind stetig, Integral und Grenzwert dürfen vertauscht werden.",
         "$x^n$ konvergiert auf $[0, 1]$ nur punktweise, auf $[0, a]$ mit $a < 1$ gleichmäßig.",
         "Gleichmäßig: Integrale und Stetigkeit gehen mit, Ableitungen nicht.",
-        "Dini: monoton und kompakt macht punktweise zu gleichmäßig."
+        "Dini: monoton und kompakt macht punktweise zu gleichmäßig.",
+        "Gleichmäßig: $\\sup_x |f_n(x) - f(x)| \\to 0$; die Grenzfunktion bleibt stetig."
       ]
     }
   ]

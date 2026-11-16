@@ -107,12 +107,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Konvergenz, Stetigkeit, offene Mengen: Alles in der Analysis hängt nur davon ab, wie man **Abstände** misst. Eine **Metrik** ist genau das: eine Abstandsfunktion $d(x, y)$ mit drei vernünftigen Eigenschaften. Abstand $0$ nur für denselben Punkt, Symmetrie, und die Dreiecksungleichung.\n\nDer Gewinn: Man beweist einen Satz einmal für metrische Räume und hat ihn dann für Zahlen, Vektoren, Funktionen und vieles mehr.\n\nBeispiele:\n\n- $d(x, y) = |x - y|$ auf $\\R$, oder $\\|x - y\\|$ für jede Norm.\n- Die **diskrete Metrik**: $d(x, y) = 1$ für $x \\ne y$. Jeder Punkt ist von allen anderen gleich weit weg. Seltsam, aber erlaubt.\n\nDie Grundidee der Animation überträgt sich wörtlich: Eine Menge heißt **offen**, wenn um jeden ihrer Punkte eine kleine Kugel ganz in ihr liegt. Offene Mengen sind Mengen »ohne Rand«."
+      "md": "Konvergenz, Stetigkeit und offene Mengen hängen nur davon ab, wie man **Abstände** misst. Eine **Metrik** ist $0$ nur für gleiche Punkte, symmetrisch und erfüllt die Dreiecksungleichung. Ein Satz für metrische Räume gilt dann für Zahlen, Vektoren und Funktionen zugleich.",
+      "more": "Konvergenz, Stetigkeit, offene Mengen: Alles in der Analysis hängt nur davon ab, wie man **Abstände** misst. Eine **Metrik** ist genau das: eine Abstandsfunktion $d(x, y)$ mit drei vernünftigen Eigenschaften. Abstand $0$ nur für denselben Punkt, Symmetrie, und die Dreiecksungleichung.\n\nDer Gewinn: Man beweist einen Satz einmal für metrische Räume und hat ihn dann für Zahlen, Vektoren, Funktionen und vieles mehr.\n\nBeispiele:\n\n- $d(x, y) = |x - y|$ auf $\\R$, oder $\\|x - y\\|$ für jede Norm.\n- Die **diskrete Metrik**: $d(x, y) = 1$ für $x \\ne y$. Jeder Punkt ist von allen anderen gleich weit weg. Seltsam, aber erlaubt.\n\nDie Grundidee der Animation überträgt sich wörtlich: Eine Menge heißt **offen**, wenn um jeden ihrer Punkte eine kleine Kugel ganz in ihr liegt. Offene Mengen sind Mengen »ohne Rand«."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Metrik\n> $d: X \\times X \\to [0, \\infty)$ heißt **Metrik**, wenn für alle $x, y, z$ gilt: $d(x, y) = 0 \\iff x = y$, $d(x, y) = d(y, x)$ und $d(x, z) \\le d(x, y) + d(y, z)$.\n\n> [!definition] Kugeln, offen, abgeschlossen\n> $B_r(x) = \\set{y : d(x, y) < r}$ ist die **offene Kugel** um $x$ mit Radius $r$.\n> $U \\subset X$ heißt **offen**, wenn es zu jedem $x \\in U$ ein $r > 0$ mit $B_r(x) \\subset U$ gibt.\n> $A \\subset X$ heißt **abgeschlossen**, wenn $X \\setminus A$ offen ist.\n\n> [!satz] Folgenkriterium\n> $A$ ist genau dann abgeschlossen, wenn jeder Grenzwert einer konvergenten Folge aus $A$ wieder in $A$ liegt.\n\nAchtung: »Abgeschlossen« ist nicht das Gegenteil von »offen«. $[0, 1)$ ist weder offen noch abgeschlossen, $\\R$ und $\\emptyset$ sind beides."
+      "md": "**Metrik:** $d(x, y) = 0 \\iff x = y$, Symmetrie, $d(x, z) \\le d(x, y) + d(y, z)$. $U$ ist **offen**, wenn um jeden Punkt eine Kugel $B_r(x)$ in $U$ liegt. $A$ ist **abgeschlossen**, wenn $X \\setminus A$ offen ist, gleichwertig: Grenzwerte von Folgen in $A$ liegen in $A$.",
+      "more": "> [!definition] Metrik\n> $d: X \\times X \\to [0, \\infty)$ heißt **Metrik**, wenn für alle $x, y, z$ gilt: $d(x, y) = 0 \\iff x = y$, $d(x, y) = d(y, x)$ und $d(x, z) \\le d(x, y) + d(y, z)$.\n\n> [!definition] Kugeln, offen, abgeschlossen\n> $B_r(x) = \\set{y : d(x, y) < r}$ ist die **offene Kugel** um $x$ mit Radius $r$.\n> $U \\subset X$ heißt **offen**, wenn es zu jedem $x \\in U$ ein $r > 0$ mit $B_r(x) \\subset U$ gibt.\n> $A \\subset X$ heißt **abgeschlossen**, wenn $X \\setminus A$ offen ist.\n\n> [!satz] Folgenkriterium\n> $A$ ist genau dann abgeschlossen, wenn jeder Grenzwert einer konvergenten Folge aus $A$ wieder in $A$ liegt.\n\nAchtung: »Abgeschlossen« ist nicht das Gegenteil von »offen«. $[0, 1)$ ist weder offen noch abgeschlossen, $\\R$ und $\\emptyset$ sind beides."
     },
     {
       "id": "kugeln",
@@ -146,6 +148,129 @@
         }
       },
       "explain": "In den Ecken des Quadrats ist der euklidische Abstand bis zu $\\sqrt2 \\approx 1{,}41$. Trotzdem beschreiben alle drei Metriken dieselben offenen Mengen, denn jede Kugel der einen enthält eine kleinere Kugel der anderen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Offene Kugeln sind offen:** Um jeden Punkt passt eine kleinere Kugel.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y \\in B_r(x)",
+            "why": "Ein beliebiger Punkt der Kugel."
+          },
+          {
+            "tex": "\\rho = r - d(x, y) > 0",
+            "why": "So weit ist $y$ vom Rand entfernt."
+          },
+          {
+            "tex": "d(x, z) \\le d(x, y) + d(y, z)",
+            "why": "Für jedes $z \\in B_\\rho(y)$: Dreiecksungleichung."
+          },
+          {
+            "tex": "< d(x, y) + \\rho = r",
+            "why": "Also liegt $B_\\rho(y)$ in $B_r(x)$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Punkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Dreieck.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schluss.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Metrische Räume",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Metrische Räume.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 8\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Metrik** auf einer Menge $X$ ist eine Abbildung $d: X \\times X \\to [0, \\infty)$ mit\n1. $d(x, y) = 0 \\Leftrightarrow x = y$,\n2. $d(x, y) = d(y, x)$,\n3. $d(x, z) \\le d(x, y) + d(y, z)$ (Dreiecksungleichung).\n\n$(X, d)$ heißt **metrischer Raum**. Beispiele: $d(x, y) = |x - y|$ auf $\\mathbb{R}$; $d(x, y) = \\|x - y\\|$ für jede Norm (**Normen und Skalarprodukt**); die diskrete Metrik ($d = 1$ für $x \\ne y$); der Hamming-Abstand zwischen Wörtern gleicher Länge."
+            }
+          ]
+        },
+        {
+          "title": "Kugeln, offene und abgeschlossene Mengen",
+          "blocks": [
+            {
+              "md": "- **Offene Kugel:** $B_\\varepsilon(x) = \\{y \\in X : d(x, y) < \\varepsilon\\}$.\n- $U$ heißt **offen**, wenn um jeden Punkt von $U$ eine ganze Kugel in $U$ liegt.\n- $A$ heißt **abgeschlossen**, wenn $X \\setminus A$ offen ist. Gleichwertig: Jeder Grenzwert einer konvergenten Folge aus $A$ liegt in $A$.\n\n| Menge in $\\mathbb{R}$ | offen | abgeschlossen |\n|---|---|---|\n| $(0, 1)$ | ja | nein |\n| $[0, 1]$ | nein | ja |\n| $[0, 1)$ | nein | nein |\n| $\\mathbb{R}$, $\\emptyset$ | ja | ja |\n\n„Offen“ und „abgeschlossen“ sind also keine Gegensätze."
+            }
+          ]
+        },
+        {
+          "title": "Konvergenz und Kompaktheit",
+          "blocks": [
+            {
+              "md": "$x_n \\to x$ heißt $d(x_n, x) \\to 0$; so überträgt sich alles aus **Konvergenz von Folgen**. In $\\mathbb{R}^n$ sind für eine Menge $K$ gleichwertig: $K$ ist beschränkt und abgeschlossen; jede Folge in $K$ hat eine Teilfolge, die in $K$ konvergiert (Heine-Borel, Bolzano-Weierstraß). Solche Mengen heißen **kompakt**; auf ihnen nehmen stetige Funktionen Maximum und Minimum an."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Menge ist in $\\R$ mit $d(x, y) = |x - y|$ offen?",
+      "options": [
+        {
+          "md": "$(0, 1)$",
+          "correct": true
+        },
+        {
+          "md": "$[0, 1]$",
+          "why": "Um $0$ passt keine Kugel hinein."
+        },
+        {
+          "md": "$[0, 1)$"
+        },
+        {
+          "md": "$\\set{0}$"
+        }
+      ],
+      "explain": "Um jedes $x \\in (0, 1)$ passt die Kugel mit Radius $\\min(x, 1 - x)$.",
+      "label": "Offen",
+      "id": "vq1"
     },
     {
       "id": "kugel-offen",
@@ -256,7 +381,8 @@
         "Abgeschlossene Mengen enthalten die Grenzwerte ihrer konvergenten Folgen.",
         "Offen und abgeschlossen sind keine Gegensätze: Es gibt Mengen, die beides oder keines sind.",
         "Die Dreiecksungleichung ist der Knackpunkt jeder Metrik.",
-        "Heine-Borel gilt im $\\mathbb{R}^n$, nicht in $\\mathbb{Q}$."
+        "Heine-Borel gilt im $\\mathbb{R}^n$, nicht in $\\mathbb{Q}$.",
+        "Offene Kugeln sind offen; der Beweis braucht nur die Dreiecksungleichung."
       ]
     }
   ]

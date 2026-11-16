@@ -100,6 +100,193 @@
       "id": "t2"
     },
     {
+      "id": "notiz",
+      "type": "note",
+      "title": "Uneigentliche Integrale",
+      "path": "02 Wiki/Mathematik/03 Integrationstechniken/Uneigentliche Integrale.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Ein Integral ist **uneigentlich**, wenn entweder das **Integrationsintervall unendlich** ist oder der **Integrand eine unendliche Definitionslücke** besitzt. Beide Fälle werden über einen **Grenzwert** definiert."
+            }
+          ]
+        },
+        {
+          "title": "Typ I — Unendliche Intervalle",
+          "blocks": [
+            {
+              "md": "$$\\int_a^{\\infty} f(x)\\,dx = \\lim_{t\\to\\infty}\\int_a^t f(x)\\,dx$$\n\n**Beispiel:** $\\displaystyle\\int_1^\\infty \\frac{1}{x^2}\\,dx = \\lim_{t\\to\\infty}\\left[-\\frac1x\\right]_1^t = 1$ — **konvergent**.\n\nVergleich: $\\displaystyle\\int_1^\\infty \\frac1x\\,dx = \\lim_{t\\to\\infty}\\ln t = \\infty$ — **divergent** (obwohl $\\frac1x\\to0$)."
+            }
+          ]
+        },
+        {
+          "title": "Typ II — Unendliche Definitionslücken",
+          "blocks": [
+            {
+              "md": "Bei einer Polstelle $x=a$:\n$$\\int_a^b f(x)\\,dx = \\lim_{t\\to a^+}\\int_t^b f(x)\\,dx$$\n\n**Beispiel:** $\\displaystyle\\int_0^1 \\frac{1}{\\sqrt{x}}\\,dx = \\lim_{t\\to0^+}\\left[2\\sqrt{x}\\right]_t^1 = 2$ — **konvergent**."
+            }
+          ]
+        },
+        {
+          "title": "Das $p$-Integral — kritisches Vergleichsergebnis",
+          "blocks": [
+            {
+              "md": "$$\\int_1^{\\infty} \\frac{1}{x^p}\\,dx \\text{ konvergiert} \\iff p>1 \\qquad \\int_0^1 \\frac{1}{x^p}\\,dx \\text{ konvergiert} \\iff p<1$$\n\nDie Umkehrung zwischen $[1,\\infty)$ und $[0,1]$ ist bemerkenswert — direktes Analogon zur **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Vergleichskriterium",
+          "blocks": [
+            {
+              "md": "Für $0\\leq f(x)\\leq g(x)$: konvergiert $\\int g$, konvergiert auch $\\int f$; divergiert $\\int f$, divergiert auch $\\int g$. Analog zum **direkten Vergleichskriterium** bei Reihen."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Grenzwert weglassen (uneigentliche Integrale sind **keine** normalen bestimmten Integrale).\n- Bei $\\int_{-\\infty}^{\\infty}$ beide Hälften **getrennt** über eigene Grenzwerte prüfen — nicht symmetrisch als ein Grenzwert.\n- Innere Singularitäten übersehen (nicht nur an den Grenzen prüfen)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Integralkriterium",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Integralkriterium.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "Ist $f$ stetig, positiv und fallend auf $[1,\\infty)$ mit $a_n=f(n)$, dann:\n$$\\sum_{n=1}^{\\infty} a_n \\text{ konvergiert} \\iff \\int_1^{\\infty} f(x)\\,dx \\text{ konvergiert}$$"
+            }
+          ]
+        },
+        {
+          "title": "Intuition",
+          "blocks": [
+            {
+              "md": "Reihe und **uneigentliches Integral** schließen sich gegenseitig ein (Ober-/Untersumme) — ist eines endlich, ist es das andere auch."
+            }
+          ]
+        },
+        {
+          "title": "Wichtig",
+          "blocks": [
+            {
+              "md": "Das Kriterium liefert **nur** eine Konvergenzaussage — der Reihenwert selbst entspricht **nicht** dem Integralwert. Voraussetzungen (stetig, positiv, **fallend**) müssen erfüllt sein; bei oszillierenden Funktionen ist das Kriterium nicht anwendbar.\n\nBeweisgrundlage der **p-Reihe**."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$f \\text{ stetig, positiv, monoton fallend} \\;\\Longrightarrow\\; \\sum_{n=1}^\\infty f(n) \\text{ und } \\int_1^\\infty f(x)\\,dx \\text{ verhalten sich gleich}$$\n\n> [!important] Die Reihe ist eine Treppenfläche, das Integral die glatte Fläche darunter\n> Die Reihenglieder $f(n)$ lassen sich als Flächen von Rechtecken der Breite eins deuten. Weil $f$ monoton fällt, liegt die Treppe je nach Anordnung vollständig über oder unter der Kurve. Daraus ergeben sich zwei Abschätzungen, die Reihe und Integral gegenseitig einschließen:\n> $$\\int_1^{\\infty} f(x)\\,dx \\;\\le\\; \\sum_{n=1}^{\\infty} f(n) \\;\\le\\; f(1) + \\int_1^{\\infty} f(x)\\,dx$$\n> Ist das Integral endlich, so ist die Reihe nach oben beschränkt und konvergiert; ist es unendlich, treibt die untere Schranke die Reihe über jede Grenze.\n>\n> Das Kriterium ist damit im Kern nichts anderes als ein Vergleich -- nur mit einem Integral statt einer anderen Reihe. Es schlägt eine Brücke zwischen diskreter Summation und Integralrechnung, die in beide Richtungen nutzbar ist."
+            }
+          ]
+        },
+        {
+          "title": "Die Voraussetzungen",
+          "blocks": [
+            {
+              "md": "> [!warning] Alle drei Bedingungen sind zu prüfen und in der Lösung zu nennen\n> **Positiv** und **monoton fallend** müssen nicht von Anfang an gelten -- es genügt ab einem Index, weil endlich viele Glieder das Konvergenzverhalten nicht ändern. Die Monotonie ist dabei meist über die Ableitung nachzuweisen und der Schritt, der am häufigsten unterschlagen wird.\n>\n> Ohne Monotonie versagt das Kriterium: Die Treppenabschätzung setzt voraus, dass die Funktion zwischen zwei ganzzahligen Stellen nicht ausschlägt.\n>\n> Zu beachten ist außerdem, dass das Integral zwar über Konvergenz **entscheidet**, aber **nicht** den Summenwert liefert. Reihenwert und Integralwert unterscheiden sich; das Integral liefert lediglich Schranken."
+            }
+          ]
+        },
+        {
+          "title": "Der typische Anwendungsfall",
+          "blocks": [
+            {
+              "md": "> [!tip] Immer dann, wenn ein Logarithmus im Spiel ist\n> Bei Reihen wie $\\sum \\frac{1}{n\\ln n}$ versagen Quotienten- und Wurzelkriterium, weil sie den Grenzwert 1 liefern. Der Vergleich mit einer p-Reihe scheitert, weil der Logarithmus zwischen alle Potenzen fällt.\n>\n> Das Integral dagegen lässt sich durch Substitution $u=\\ln x$ sofort auswerten: $\\int \\frac{dx}{x\\ln x} = \\ln|\\ln x|$, was für $x\\to\\infty$ unbeschränkt wächst -- die Reihe divergiert.\n>\n> Bei $\\sum \\frac{1}{n(\\ln n)^2}$ ergibt dieselbe Substitution $-\\frac{1}{\\ln x}$, was gegen null strebt -- die Reihe konvergiert. Diese beiden Beispiele zeigen die Feinheit der Konvergenzgrenze und sind der eigentliche Grund, weshalb das Kriterium gebraucht wird.\n>\n> Sein zweiter Hauptzweck ist der Beweis der **p-Reihe** selbst -- die Grundlage aller Vergleichskriterien."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Das Integralkriterium verbindet **Reihen und Partialsummen** mit der Integralrechnung und liefert den Beweis für die **p-Reihe**. Es greift dort, wo das **Quotienten- und Wurzelkriterium** versagt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "p-Reihe",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/p-Reihe.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^{\\infty} \\frac{1}{n^p} \\;\\text{konvergiert} \\iff p>1$$"
+            }
+          ]
+        },
+        {
+          "title": "Zwei berühmte Spezialfälle",
+          "blocks": [
+            {
+              "md": "- **$p=1$ — harmonische Reihe** $\\sum \\frac1n$: divergiert, obwohl die Glieder gegen $0$ gehen. Eines der wichtigsten Gegenbeispiele der Mathematik.\n- **$p=2$ — Basel-Problem:** $\\sum \\frac{1}{n^2} = \\dfrac{\\pi^2}{6}$, gelöst von Euler 1734."
+            }
+          ]
+        },
+        {
+          "title": "Beweis-Idee",
+          "blocks": [
+            {
+              "md": "Folgt aus dem **Integralkriterium**: $\\sum \\frac1{n^p}$ verhält sich wie $\\int_1^\\infty x^{-p}\\,dx$, das genau für $p>1$ konvergiert (siehe **$p$-Integral**) — eine direkte Parallele zwischen Reihen und uneigentlichen Integralen."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage",
+          "blocks": [
+            {
+              "md": "$$\\sum_{n=1}^{\\infty}\\frac{1}{n^p} \\quad \\begin{cases} \\text{konvergent} & p>1\\\\ \\text{divergent} & p\\le 1\\end{cases}$$\n\n> [!important] Die Grenze liegt bei genau eins -- und der Grenzfall selbst divergiert\n> Für $p=1$ entsteht die harmonische Reihe, die divergiert. Schon $p=1{,}001$ führt zur Konvergenz. Die Grenze ist damit scharf, aber der kritische Wert gehört zur divergenten Seite.\n>\n> Diese Feinheit ist bemerkenswert: Zwischen $\\sum 1/n$ und $\\sum 1/n^{1{,}001}$ liegt für jedes einzelne Glied ein kaum messbarer Unterschied, im Summenverhalten aber der zwischen unendlich und endlich.\n>\n> Der Nachweis gelingt am elegantesten über das **Integralkriterium**: Das uneigentliche Integral $\\int_1^\\infty x^{-p}\\,dx$ konvergiert genau für $p>1$, weil dort die Stammfunktion $\\frac{x^{1-p}}{1-p}$ für $x\\to\\infty$ gegen null geht. Für $p=1$ ist die Stammfunktion $\\ln x$, die unbeschränkt wächst."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Einzelfälle",
+          "blocks": [
+            {
+              "md": "| $p$ | Reihe | Verhalten |\n|---|---|---|\n| $\\tfrac{1}{2}$ | $\\sum \\frac{1}{\\sqrt{n}}$ | divergent |\n| $1$ | $\\sum \\frac{1}{n}$ | divergent |\n| $2$ | $\\sum \\frac{1}{n^2}$ | konvergent, Wert $\\frac{\\pi^2}{6}$ |\n| $3$ | $\\sum \\frac{1}{n^3}$ | konvergent |\n\n> [!info] Das Basler Problem\n> Dass $\\sum 1/n^2 = \\pi^2/6$ ist, wurde 1735 von Euler gefunden und gilt als eines der überraschendsten Ergebnisse der Analysis -- die Kreiszahl tritt in einer Summe auf, in der weder Kreise noch Winkel vorkommen.\n>\n> Für die Prüfung ist der Wert nicht zu behalten. Bemerkenswert ist die allgemeine Lage: Von den p-Reihen kennt man geschlossene Summenwerte nur für **gerade** $p$. Der Wert von $\\sum 1/n^3$ ist bis heute nicht in geschlossener Form bekannt. Konvergenz nachzuweisen und den Grenzwert zu bestimmen sind grundverschiedene Aufgaben -- die erste ist meist leicht, die zweite oft unmöglich."
+            }
+          ]
+        },
+        {
+          "title": "Die Rolle als Vergleichsmaßstab",
+          "blocks": [
+            {
+              "md": "> [!tip] Die p-Reihe ist die Skala, an der alles andere gemessen wird\n> Ihre Bedeutung liegt weniger in ihr selbst als in ihrer Verwendung. Bei den **Vergleichskriterien** und beim **Grenzwertvergleichskriterium** ist sie in praktisch jedem Fall die herangezogene Vergleichsreihe.\n>\n> Deshalb genügt es, eine einzige Frage zu beantworten: Wie schnell fallen die Glieder im Vergleich zu $1/n^p$? Bei rationalen Ausdrücken ist $p$ der Gradunterschied, bei Wurzelausdrücken entsprechend gebrochen.\n>\n> Terme mit Logarithmus verschieben die Grenze nur unwesentlich: $\\sum \\frac{1}{n\\ln n}$ divergiert noch, $\\sum \\frac{1}{n(\\ln n)^2}$ konvergiert bereits. Der Logarithmus wirkt schwächer als jede noch so kleine Potenz -- ein weiterer Beleg für die Wachstumsrangfolge."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Die p-Reihe ist der Maßstab aller Vergleichskriterien und wird über das **Integralkriterium** bewiesen. Ihr Grenzfall $p=1$ ist die harmonische Reihe aus **Reihen und Partialsummen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Berechne $\\int_1^\\infty\\tfrac{dx}{x^3}$.",

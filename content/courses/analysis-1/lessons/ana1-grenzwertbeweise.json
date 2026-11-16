@@ -74,13 +74,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "»Die Folge kommt dem Grenzwert beliebig nahe« ist anschaulich klar, aber für einen Beweis zu vage. Die Definition macht daraus ein Spiel: Jemand gibt ein noch so kleines $\\varepsilon > 0$ vor, und man muss eine Stelle $N$ nennen, ab der alle Glieder näher als $\\varepsilon$ am Grenzwert liegen.\n\nEin Beweis gewinnt dieses Spiel für jedes $\\varepsilon$ gleichzeitig. Er hat fast immer denselben Aufbau: $\\varepsilon$ beliebig vorgeben, den Abstand $\\abs{a_n - a}$ nach oben abschätzen, $N$ so wählen, dass die Schranke unter $\\varepsilon$ fällt, und zum Schluss die Kette sauber hinschreiben.\n\nBei Summen und Produkten teilt man sich den Spielraum: Jede Folge bekommt $\\tfrac{\\varepsilon}{2}$. Und wer zeigen will, dass etwas **nicht** konvergiert, nimmt das Gegenteil an und findet ein ε, für das es kein $N$ gibt."
+      "md": "Ein Konvergenzbeweis gewinnt ein Spiel für jedes $\\varepsilon$ zugleich: $\\varepsilon$ vorgeben, $|a_n - a|$ nach oben abschätzen, $N$ so wählen, dass die Schranke unter $\\varepsilon$ fällt, und die Ungleichungskette aufschreiben.",
+      "more": "»Die Folge kommt dem Grenzwert beliebig nahe« ist anschaulich klar, aber für einen Beweis zu vage. Die Definition macht daraus ein Spiel: Jemand gibt ein noch so kleines $\\varepsilon > 0$ vor, und man muss eine Stelle $N$ nennen, ab der alle Glieder näher als $\\varepsilon$ am Grenzwert liegen.\n\nEin Beweis gewinnt dieses Spiel für jedes $\\varepsilon$ gleichzeitig. Er hat fast immer denselben Aufbau: $\\varepsilon$ beliebig vorgeben, den Abstand $\\abs{a_n - a}$ nach oben abschätzen, $N$ so wählen, dass die Schranke unter $\\varepsilon$ fällt, und zum Schluss die Kette sauber hinschreiben.\n\nBei Summen und Produkten teilt man sich den Spielraum: Jede Folge bekommt $\\tfrac{\\varepsilon}{2}$. Und wer zeigen will, dass etwas **nicht** konvergiert, nimmt das Gegenteil an und findet ein ε, für das es kein $N$ gibt."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Konvergenz\n> $a_n \\to a$, wenn es zu jedem $\\varepsilon > 0$ ein $N \\in \\N$ gibt mit $\\abs{a_n - a} < \\varepsilon$ für alle $n \\ge N$.\n\n> [!satz] Bauplan eines ε-N-Beweises\n> 1. Sei $\\varepsilon > 0$ beliebig. 2. Schätze $\\abs{a_n - a}$ durch etwas Einfaches ab, das mit $n$ kleiner wird. 3. Wähle $N$ so, dass diese Schranke für $n \\ge N$ unter $\\varepsilon$ liegt. 4. Schreibe die Ungleichungskette hin.\n\n> [!tip] Werkzeuge\n> Dreiecksungleichung $\\abs{x + y} \\le \\abs{x} + \\abs{y}$, das archimedische Axiom (zu jedem $x$ gibt es $N > x$), und $\\max(N_1, N_2)$, wenn zwei Bedingungen gleichzeitig gelten sollen."
+      "md": "**Bauplan:** 1. Sei $\\varepsilon > 0$. 2. Schätze $|a_n - a|$ durch etwas Einfaches ab, das mit $n$ fällt. 3. Wähle $N$ so, dass die Schranke für $n \\ge N$ unter $\\varepsilon$ liegt. 4. Schreibe die Kette hin. Werkzeuge: Dreiecksungleichung und archimedisches Prinzip.",
+      "more": "> [!definition] Konvergenz\n> $a_n \\to a$, wenn es zu jedem $\\varepsilon > 0$ ein $N \\in \\N$ gibt mit $\\abs{a_n - a} < \\varepsilon$ für alle $n \\ge N$.\n\n> [!satz] Bauplan eines ε-N-Beweises\n> 1. Sei $\\varepsilon > 0$ beliebig. 2. Schätze $\\abs{a_n - a}$ durch etwas Einfaches ab, das mit $n$ kleiner wird. 3. Wähle $N$ so, dass diese Schranke für $n \\ge N$ unter $\\varepsilon$ liegt. 4. Schreibe die Ungleichungskette hin.\n\n> [!tip] Werkzeuge\n> Dreiecksungleichung $\\abs{x + y} \\le \\abs{x} + \\abs{y}$, das archimedische Axiom (zu jedem $x$ gibt es $N > x$), und $\\max(N_1, N_2)$, wenn zwei Bedingungen gleichzeitig gelten sollen."
     },
     {
       "id": "band",
@@ -104,6 +106,188 @@
         "minimal": true
       },
       "explain": "$\\abs{a_n - 1} = \\tfrac1n < 0{,}08 \\iff n > 12{,}5$. Also ab $n_0 = 13$. Im Beweis würde man allgemein $N > \\tfrac{1}{\\varepsilon}$ wählen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ein $\\varepsilon$-$N$-Beweis** für $\\tfrac{3n + 1}{n + 2} \\to 3$, Schritt für Schritt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\left|\\frac{3n + 1}{n + 2} - 3\\right| = \\frac{5}{n + 2}",
+            "why": "Hauptnenner: $3n + 1 - 3(n + 2) = -5$."
+          },
+          {
+            "tex": "\\frac{5}{n + 2} < \\frac5n",
+            "why": "Ein einfacherer Ausdruck, der mit $n$ fällt."
+          },
+          {
+            "tex": "\\frac5n < \\varepsilon \\iff n > \\frac5\\varepsilon",
+            "why": "So groß muss $n$ sein."
+          },
+          {
+            "tex": "N > \\tfrac5\\varepsilon:\\ \\ |a_n - 3| < \\varepsilon \\text{ für } n \\ge N",
+            "why": "Archimedes liefert so ein $N$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Abschätzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wahl.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Konvergenz von Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 9.3 bis Bem. 9.13\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Folgen und Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Folge $(a_n)$ **konvergiert** gegen $a$, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\mathbb{N}\\ \\forall n \\ge n_0: \\ |a_n - a| < \\varepsilon.$$\nAnschaulich: Um $a$ liegt ein Band der Breite $2\\varepsilon$; egal wie schmal, ab einem Index $n_0$ bleiben alle Glieder darin. $n_0$ darf von $\\varepsilon$ abhängen. Man schreibt $a = \\lim_{n \\to \\infty} a_n$ oder $a_n \\to a$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit ε und n₀",
+          "blocks": [
+            {
+              "md": "$a_n = \\frac{n+1}{2n} \\to \\frac12$: Es ist $\\left|a_n - \\frac12\\right| = \\frac{1}{2n} < \\varepsilon \\Leftrightarrow n > \\frac{1}{2\\varepsilon}$. Nach dem **archimedischen Prinzip** gibt es ein solches $n_0$; für $\\varepsilon = 0{,}01$ genügt $n_0 = 51$."
+            }
+          ]
+        },
+        {
+          "title": "Grundtatsachen",
+          "blocks": [
+            {
+              "md": "- Der Grenzwert ist eindeutig (Widerspruchsbeweis mit $\\varepsilon = \\frac{|a - b|}{2}$).\n- Konvergente Folgen sind beschränkt. Die Umkehrung ist falsch: $(-1)^n$.\n- **Grenzwertsätze:** Aus $a_n \\to a$, $b_n \\to b$ folgt $a_n + b_n \\to a + b$, $a_n b_n \\to ab$ und, falls $b \\ne 0$, $\\frac{a_n}{b_n} \\to \\frac{a}{b}$.\n- **Sandwich:** $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to a$ ergibt $c_n \\to a$.\n- Ungleichungen bleiben im Grenzwert erhalten, aber nur als $\\le$: $\\frac1n > 0$, doch $\\lim \\frac1n = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Grenzwerte",
+          "blocks": [
+            {
+              "md": "$\\frac1n \\to 0$, $q^n \\to 0$ für $|q| < 1$, $\\sqrt[n]{n} \\to 1$, $\\frac{n^k}{q^n} \\to 0$ für $|q| > 1$. Bei Brüchen von Polynomen teilt man durch die höchste Potenz des Nenners."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $n_0$ unabhängig von $\\varepsilon$ wählen wollen.\n- Mit „$\\frac{\\infty}{\\infty} = 1$“ rechnen; das ist kein Wert, sondern eine unbestimmte Form."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Stetigkeit",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Stetigkeit.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 12.1 bis 12.12\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Aufgabentypen aus der Schule: **Stetigkeit (Aufgabentypen)**."
+            }
+          ]
+        },
+        {
+          "title": "Zwei gleichwertige Definitionen",
+          "blocks": [
+            {
+              "md": "Sei $f: D \\to \\mathbb{R}$ und $x_0 \\in D$.\n- **Folgenstetigkeit:** Für jede Folge $x_n \\to x_0$ in $D$ gilt $f(x_n) \\to f(x_0)$.\n- **ε-δ-Stetigkeit:** $\\forall \\varepsilon > 0\\ \\exists \\delta > 0\\ \\forall x \\in D: \\ |x - x_0| < \\delta \\Rightarrow |f(x) - f(x_0)| < \\varepsilon$.\n\nKleine Ursache, kleine Wirkung: Wer $f(x_0)$ auf $\\varepsilon$ genau treffen will, muss $x$ nur auf $\\delta$ genau kennen. $f$ heißt stetig, wenn es in jedem Punkt stetig ist."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit δ",
+          "blocks": [
+            {
+              "md": "$f(x) = x^2$ in $x_0 = 1$: $|x^2 - 1| = |x - 1|\\,|x + 1| < 3\\,|x - 1|$, falls $|x - 1| < 1$. Also genügt $\\delta = \\min\\left(1, \\frac{\\varepsilon}{3}\\right)$."
+            }
+          ]
+        },
+        {
+          "title": "Stetige und unstetige Funktionen",
+          "blocks": [
+            {
+              "md": "- Stetig: Polynome, rationale Funktionen auf ihrem Definitionsbereich, $\\exp$, $\\sin$, $\\cos$, Beträge; Summen, Produkte, Quotienten und Verkettungen stetiger Funktionen.\n- Unstetig in $0$: die Vorzeichenfunktion. Die Dirichlet-Funktion ($1$ auf $\\mathbb{Q}$, $0$ sonst) ist nirgends stetig.\n- **Stetig ergänzbar:** $\\frac{x^2 - 1}{x - 1}$ mit dem Wert $2$ an der Stelle $1$; $x \\sin\\frac1x$ mit dem Wert $0$. Nicht ergänzbar: $\\sin\\frac1x$ in $0$, denn die Folgen $x_n = \\frac{1}{n\\pi}$ und $x_n = \\frac{1}{2n\\pi + \\pi/2}$ liefern die Grenzwerte $0$ und $1$."
+            }
+          ]
+        },
+        {
+          "title": "Gleichmäßige Stetigkeit",
+          "blocks": [
+            {
+              "md": "Hängt $\\delta$ nur von $\\varepsilon$ und nicht von $x_0$ ab, heißt $f$ gleichmäßig stetig. Jede stetige Funktion auf einem abgeschlossenen Intervall $[a, b]$ ist gleichmäßig stetig; $\\frac1x$ auf $(0, 1]$ ist es nicht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Stetigkeit mit „zeichnen ohne abzusetzen“ gleichsetzen; das passt nur auf Intervallen.\n- Nur eine Folge prüfen: Für Unstetigkeit genügt eine Folge, für Stetigkeit braucht man alle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Wahl von N",
+      "md": "Für $\\varepsilon = 0{,}01$: Welches ist das kleinste $N$, für das die Abschätzung $\\tfrac5n < \\varepsilon$ für alle $n \\ge N$ gilt?",
+      "answer": 501,
+      "tolerance": 0,
+      "placeholder": "N",
+      "explain": "$\\tfrac5n < 0{,}01 \\iff n > 500$, also $N = 501$.",
+      "id": "vq1"
     },
     {
       "id": "schwelle",
@@ -279,7 +463,8 @@
         "Bei zwei Bedingungen gleichzeitig: $\\max(N_1, N_2)$; bei Summen: je $\\tfrac{\\varepsilon}{2}$.",
         "Divergenz und Eindeutigkeit zeigt man oft per Widerspruch mit einem geschickt gewählten ε.",
         "$n_0$ ist eine natürliche Zahl; Archimedes liefert sie.",
-        "Unbestimmte Ausdrücke wie $\\infty - \\infty$ umformen, nicht raten."
+        "Unbestimmte Ausdrücke wie $\\infty - \\infty$ umformen, nicht raten.",
+        "$\\varepsilon$-$N$-Beweis: Abstand ausrechnen, nach oben abschätzen, $N$ wählen."
       ]
     }
   ]

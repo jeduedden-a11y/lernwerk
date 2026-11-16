@@ -108,13 +108,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Stell dir vor, $f(t)$ ist die Geschwindigkeit eines Autos und $F(x)$ die bis zur Zeit $x$ gefahrene Strecke. Die Strecke wächst genau so schnell, wie das Auto fährt: $F' = f$. Fläche unter der Geschwindigkeit ist Weg, und die Ableitung des Wegs ist die Geschwindigkeit.\n\nFür die Mathematik ist das eine Befreiung. Ein Integral über Ober- und Untersummen auszurechnen ist mühsam. Der Hauptsatz sagt: Finde irgendeine Funktion $F$ mit $F' = f$, eine **Stammfunktion**. Dann ist $\\int_a^b f(x)\\,dx = F(b) - F(a)$. Aus einem Grenzwertproblem wird Rückwärtsableiten.\n\nWarum gilt das? Der Zuwachs $F(b + h) - F(b)$ ist der schmale Streifen unter $f$ zwischen $b$ und $b + h$. Weil $f$ stetig ist, ist der Streifen fast ein Rechteck der Höhe $f(b)$. Teilt man durch $h$ und lässt $h$ gegen $0$ gehen, bleibt $f(b)$."
+      "md": "Ist $f$ die Geschwindigkeit und $F(x)$ der bis $x$ gefahrene Weg, dann wächst $F$ genau so schnell, wie das Auto fährt: $F' = f$. Darum genügt eine Stammfunktion: $\\int_a^b f(x)\\,dx = F(b) - F(a)$. Aus einem Grenzwertproblem wird Rückwärtsableiten.",
+      "more": "Stell dir vor, $f(t)$ ist die Geschwindigkeit eines Autos und $F(x)$ die bis zur Zeit $x$ gefahrene Strecke. Die Strecke wächst genau so schnell, wie das Auto fährt: $F' = f$. Fläche unter der Geschwindigkeit ist Weg, und die Ableitung des Wegs ist die Geschwindigkeit.\n\nFür die Mathematik ist das eine Befreiung. Ein Integral über Ober- und Untersummen auszurechnen ist mühsam. Der Hauptsatz sagt: Finde irgendeine Funktion $F$ mit $F' = f$, eine **Stammfunktion**. Dann ist $\\int_a^b f(x)\\,dx = F(b) - F(a)$. Aus einem Grenzwertproblem wird Rückwärtsableiten.\n\nWarum gilt das? Der Zuwachs $F(b + h) - F(b)$ ist der schmale Streifen unter $f$ zwischen $b$ und $b + h$. Weil $f$ stetig ist, ist der Streifen fast ein Rechteck der Höhe $f(b)$. Teilt man durch $h$ und lässt $h$ gegen $0$ gehen, bleibt $f(b)$."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Stammfunktion\n> $F$ heißt Stammfunktion von $f$ auf einem Intervall, wenn $F' = f$ gilt. Zwei Stammfunktionen unterscheiden sich nur um eine Konstante.\n\n> [!satz] Hauptsatz, erster Teil\n> Ist $f$ stetig auf $[a, b]$, dann ist $F(x) = \\displaystyle\\int_a^x f(t)\\,dt$ differenzierbar mit $F'(x) = f(x)$.\n\n> [!satz] Hauptsatz, zweiter Teil\n> Ist $F$ eine Stammfunktion der stetigen Funktion $f$, dann gilt $\\displaystyle\\int_a^b f(x)\\,dx = F(b) - F(a)$.\n\n> [!warning] Variable Grenzen\n> Steht oben eine Funktion von $x$, kommt die Kettenregel dazu: $\\dfrac{d}{dx}\\displaystyle\\int_0^{g(x)} f(t)\\,dt = f(g(x)) \\cdot g'(x)$."
+      "md": "$F$ ist **Stammfunktion** von $f$, wenn $F' = f$; zwei unterscheiden sich nur um eine Konstante. **Teil 1:** Für stetiges $f$ ist $F(x) = \\int_a^x f(t)\\,dt$ differenzierbar mit $F' = f$. **Teil 2:** $\\int_a^b f(x)\\,dx = F(b) - F(a)$.",
+      "more": "> [!definition] Stammfunktion\n> $F$ heißt Stammfunktion von $f$ auf einem Intervall, wenn $F' = f$ gilt. Zwei Stammfunktionen unterscheiden sich nur um eine Konstante.\n\n> [!satz] Hauptsatz, erster Teil\n> Ist $f$ stetig auf $[a, b]$, dann ist $F(x) = \\displaystyle\\int_a^x f(t)\\,dt$ differenzierbar mit $F'(x) = f(x)$.\n\n> [!satz] Hauptsatz, zweiter Teil\n> Ist $F$ eine Stammfunktion der stetigen Funktion $f$, dann gilt $\\displaystyle\\int_a^b f(x)\\,dx = F(b) - F(a)$.\n\n> [!warning] Variable Grenzen\n> Steht oben eine Funktion von $x$, kommt die Kettenregel dazu: $\\dfrac{d}{dx}\\displaystyle\\int_0^{g(x)} f(t)\\,dt = f(g(x)) \\cdot g'(x)$."
     },
     {
       "id": "flaeche-eins",
@@ -181,6 +183,301 @@
         }
       },
       "explain": "Mit der Stammfunktion $\\tfrac{x^3}{3}$: $\\tfrac{b^3}{3} = 1 \\iff b = \\sqrt[3]{3} \\approx 1{,}442$. Dafür braucht man keine einzige Riemann-Summe."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Hauptsatz, erster Teil:** Warum $F(x) = \\int_a^x f(t)\\,dt$ die Ableitung $f$ hat.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\frac{F(x + h) - F(x)}{h} = \\frac1h \\int_x^{x + h} f",
+            "why": "Der Flächenstreifen über $[x, x + h]$, geteilt durch seine Breite."
+          },
+          {
+            "tex": "= f(\\xi_h),\\ \\ \\xi_h \\text{ zwischen } x \\text{ und } x + h",
+            "why": "Mittelwertsatz der Integralrechnung, $f$ stetig."
+          },
+          {
+            "tex": "h \\to 0 \\Rightarrow \\xi_h \\to x",
+            "why": "$\\xi_h$ sitzt zwischen $x$ und $x + h$."
+          },
+          {
+            "tex": "F'(x) = f(x)",
+            "why": "Stetigkeit von $f$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Differenz.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mittelwert.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einklemmen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Integralbegriff und Hauptsatz der Differenzial- und Integralrechnung",
+      "path": "02 Wiki/Mathematik/02 Analysis Grundlagen/Integralbegriff und Hauptsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Motivation",
+          "blocks": [
+            {
+              "md": "Wie beim Ableitungsbegriff (lokale Änderungsrate) stellt sich hier die umgekehrte Frage: Wie berechnet man den **Flächeninhalt** unter einem Funktionsgraphen — insbesondere, wenn dieser gekrümmt ist?"
+            }
+          ]
+        },
+        {
+          "title": "Bestimmtes Integral als Grenzwert von Summen",
+          "blocks": [
+            {
+              "md": "Man approximiert die Fläche unter $f$ über $[a,b]$ durch $n$ Rechtecke der Breite $\\Delta x = \\frac{b-a}{n}$ und lässt $n \\to \\infty$ gehen (Ober-/Untersummen):\n$$\\int_a^b f(x)\\,dx = \\lim_{n\\to\\infty} \\sum_{i=1}^{n} f(x_i)\\,\\Delta x$$"
+            }
+          ]
+        },
+        {
+          "title": "Stammfunktion",
+          "blocks": [
+            {
+              "md": "$F$ heißt **Stammfunktion** von $f$, wenn $F'(x) = f(x)$ gilt. Stammfunktionen sind nicht eindeutig — sie unterscheiden sich nur um eine additive Konstante $C$ (unbestimmtes Integral $\\int f(x)\\,dx = F(x)+C$)."
+            }
+          ]
+        },
+        {
+          "title": "Hauptsatz der Differenzial- und Integralrechnung",
+          "blocks": [
+            {
+              "md": "Der Hauptsatz verbindet Differenzieren und Integrieren als **Umkehroperationen**:\n$$\\int_a^b f(x)\\,dx = F(b) - F(a) =: \\big[F(x)\\big]_a^b$$\nwobei $F$ **irgendeine** Stammfunktion von $f$ ist. Damit lässt sich ein bestimmtes Integral berechnen, ohne die (umständliche) Grenzwertbildung von Summen jedes Mal durchzuführen."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$\\int_0^2 x^2\\,dx = \\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{8}{3} - 0 = \\frac{8}{3}$$"
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung des Integrals",
+          "blocks": [
+            {
+              "md": "- **Geometrisch:** (vorzeichenbehafteter) Flächeninhalt zwischen Graph und $x$-Achse.\n- **Im Sachkontext:** Integriert man eine Änderungsrate, erhält man den **Gesamtbestand**. Beispiel: Integriert man eine Geschwindigkeit $v(t)$, erhält man die zurückgelegte Strecke $s(t)$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Integrationskonstante $C$ beim unbestimmten Integral vergessen.\n- Bei Flächen **unterhalb** der $x$-Achse liefert das Integral einen **negativen** Wert — für den tatsächlichen Flächeninhalt muss der Betrag genommen werden (siehe **Fläche zwischen Kurven**).\n- Stammfunktion falsch abgeleitet, um sie zu überprüfen — Kontrolle: $F'(x) \\overset{!}{=} f(x)$.\n\nGrundformeln: **Grundintegrale**. Weiterführende Techniken: **Integration durch Substitution**, **Partielle Integration**, **Partialbruchzerlegung**. Anwendungen: **Fläche zwischen Kurven** und die gesamte **Anwendungen-der-Integration-Sammlung**."
+            }
+          ]
+        },
+        {
+          "title": "Die Aussage des Hauptsatzes",
+          "blocks": [
+            {
+              "image": "vault:Hauptsatz Integralrechnung.svg"
+            },
+            {
+              "md": "> [!important] Weshalb er ein Satz und keine Definition ist\n> Dass sich eine Fläche durch Einsetzen zweier Werte berechnen lässt, ist alles andere als selbstverständlich. Fläche und Steigung sind zunächst völlig verschiedene Fragen.\n>\n> Der Beweisgedanke: Man betrachtet die **Integralfunktion**\n> $$I(x) = \\int_a^x f(t)\\,dt$$\n> also die Fläche vom festen Rand $a$ bis zur variablen Stelle $x$.\n>\n> Vergrößert man $x$ um ein kleines Stück $h$, wächst die Fläche um näherungsweise $f(x)\\cdot h$ -- einen schmalen Streifen. Also gilt\n> $$\\frac{I(x+h)-I(x)}{h} \\approx f(x) \\;\\xrightarrow{\\;h\\to0\\;}\\; I'(x) = f(x)$$\n>\n> Die Integralfunktion ist damit eine **Stammfunktion** von $f$. Und weil sich Stammfunktionen nur um eine Konstante unterscheiden, die sich bei der Differenzbildung heraushebt, gilt $\\int_a^b f = F(b) - F(a)$ für **jede** Stammfunktion.\n>\n> Das ist der Kern: Differenzieren und Integrieren sind Umkehroperationen -- und deshalb ersetzt eine Subtraktion die Grenzwertbildung."
+            }
+          ]
+        },
+        {
+          "title": "Bestimmtes und unbestimmtes Integral",
+          "blocks": [
+            {
+              "md": "| | bestimmtes Integral | unbestimmtes Integral |\n|---|---|---|\n| Schreibweise | $\\int_a^b f(x)\\,dx$ | $\\int f(x)\\,dx$ |\n| Ergebnis | eine **Zahl** | eine **Funktionenschar** |\n| Konstante | fällt weg | $+\\,C$ bleibt |\n| Bedeutung | orientierter Flächeninhalt | Menge aller Stammfunktionen |\n\n> [!warning] Das Integral ist nicht die Fläche, sondern der orientierte Flächeninhalt\n> Wo der Graph unterhalb der x-Achse verläuft, liefert das Integral **negative** Beiträge. Bei $\\int_0^{2\\pi}\\sin x\\,dx = 0$ heben sie sich vollständig auf, obwohl die eingeschlossene Fläche keineswegs null ist.\n>\n> Ist die **geometrische Fläche** gefragt, müssen die Nullstellen bestimmt und die Teilintegrale **einzeln betragsmäßig** addiert werden.\n>\n> Die Aufgabenstellung entscheidet also, welcher Weg richtig ist -- \"Berechnen Sie das Integral\" und \"Berechnen Sie den Flächeninhalt\" verlangen Verschiedenes. Das ist die häufigste Falle des Themas."
+            }
+          ]
+        },
+        {
+          "title": "Die Konstante $C$",
+          "blocks": [
+            {
+              "md": "> [!tip] Sie fällt nur beim bestimmten Integral weg\n> Bei $F(b)+C - (F(a)+C)$ hebt sie sich auf. Deshalb ist es gleichgültig, welche Stammfunktion man wählt.\n>\n> Beim **Anfangswertproblem** ist sie dagegen entscheidend: Kennt man einen Funktionswert, lässt sich $C$ bestimmen. Genau so rekonstruiert man aus einer Änderungsrate den Bestand -- in der Physik aus der Geschwindigkeit den Ort, in der Biologie aus der Wachstumsrate die Population.\n>\n> Die Änderungsrate allein legt den Verlauf **nicht** fest; es fehlt der Anfangswert. Das ist eine inhaltliche Aussage, keine Rechenformalie."
+            }
+          ]
+        },
+        {
+          "title": "Was das Integral sonst noch bedeutet",
+          "blocks": [
+            {
+              "md": "| Anwendung | Integriert wird | Ergebnis |\n|---|---|---|\n| Fläche | $f(x)$ | Flächeninhalt |\n| **Volumen** | $\\pi f(x)^2$ | Rotationsvolumen |\n| Mittelwert | $\\frac{1}{b-a}f(x)$ | mittlerer Funktionswert |\n| Physik: Arbeit | Kraft über Weg | verrichtete Arbeit |\n| Physik: Weg | Geschwindigkeit über Zeit | zurückgelegte Strecke |\n| Stochastik | Dichtefunktion | Wahrscheinlichkeit |\n\n> [!important] Das Integral summiert stets Produkte auf\n> In jeder Zeile wird ein Produkt aus zwei Größen über einen Bereich aufsummiert -- Kraft mal Weg, Geschwindigkeit mal Zeit, Dichte mal Intervall.\n>\n> Wer bei einer Sachaufgabe erkennt, **welches Produkt** aufsummiert werden soll, hat den Ansatz. Die Einheit des Ergebnisses ist stets das Produkt der beiden Achseneinheiten -- eine schnelle Kontrolle.\n>\n> Diese Deutung als aufsummiertes Produkt trägt auch die Stochastik: Bei der **Normalverteilung** ist die Fläche unter der Dichtefunktion die Wahrscheinlichkeit."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Hauptsatz verbindet **Ableitungsbegriff** und Integralrechnung. Die Rechentechniken stehen in den **Integrationstechniken**, die Anwendungen in **Anwendungen der Integration**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Riemann-Integral",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Riemann-Integral.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 14\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Rechentechnik: **Integrationstechniken MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Ober- und Untersummen",
+          "blocks": [
+            {
+              "md": "Sei $f: [a, b] \\to \\mathbb{R}$ beschränkt und $Z: a = x_0 < x_1 < \\dots < x_n = b$ eine Zerlegung. Mit $m_i = \\inf f$ und $M_i = \\sup f$ auf $[x_{i-1}, x_i]$ sind\n$$U(f, Z) = \\sum_i m_i\\,(x_i - x_{i-1}), \\qquad O(f, Z) = \\sum_i M_i\\,(x_i - x_{i-1})$$\nUnter- und Obersumme: zwei Treppen unterhalb und oberhalb des Graphen. Verfeinern hebt die Untersumme und senkt die Obersumme, und stets gilt $U \\le O$."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt **Riemann-integrierbar**, wenn $\\sup_Z U(f, Z) = \\inf_Z O(f, Z)$; dieser Wert ist $\\int_a^b f(x)\\,dx$. Gleichwertig: Zu jedem $\\varepsilon > 0$ gibt es eine Zerlegung mit $O - U < \\varepsilon$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$\\int_0^1 x\\,dx$ mit $n$ gleichen Teilen: $U = \\frac{n-1}{2n}$, $O = \\frac{n+1}{2n}$. Die Differenz $\\frac1n$ geht gegen $0$, beide gegen $\\frac12$."
+            }
+          ]
+        },
+        {
+          "title": "Welche Funktionen sind integrierbar?",
+          "blocks": [
+            {
+              "md": "Stetige Funktionen (über die gleichmäßige **Stetigkeit**), monotone Funktionen, stückweise stetige. Nicht integrierbar ist die Dirichlet-Funktion: Jede Untersumme ist $0$, jede Obersumme $1$."
+            }
+          ]
+        },
+        {
+          "title": "Eigenschaften und Hauptsatz",
+          "blocks": [
+            {
+              "md": "- Linear, monoton, $\\left|\\int f\\right| \\le \\int |f|$, additiv über aneinandergrenzende Intervalle.\n- **Hauptsatz:** Für stetiges $f$ ist $F(x) = \\int_a^x f(t)\\,dt$ differenzierbar mit $F' = f$. Für jede Stammfunktion $G$ gilt $\\int_a^b f = G(b) - G(a)$. Damit sind Integrieren und Ableiten Umkehrungen voneinander."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Ableitung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 13.1 bis 13.11\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Analysis Grundlagen MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt in $x_0$ **differenzierbar**, wenn der Grenzwert\n$$f'(x_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h) - f(x_0)}{h}$$\nexistiert: die Steigungen der Sekanten nähern sich einer Grenzsteigung, der Steigung der Tangente.\n\n**Gleichwertig, als lineare Näherung:** $f(x_0 + h) = f(x_0) + f'(x_0)\\,h + r(h)$ mit $\\frac{r(h)}{h} \\to 0$. Nahe $x_0$ verhält sich $f$ wie die Gerade mit Steigung $f'(x_0)$; der Fehler ist klein gegenüber $h$. Diese Sicht trägt bis in die mehrdimensionale Analysis."
+            }
+          ]
+        },
+        {
+          "title": "Differenzierbar und stetig",
+          "blocks": [
+            {
+              "md": "Jede differenzierbare Funktion ist stetig. Die Umkehrung gilt nicht: $|x|$ ist in $0$ stetig, hat dort aber einen Knick (rechts Steigung $1$, links $-1$)."
+            }
+          ]
+        },
+        {
+          "title": "Regeln",
+          "blocks": [
+            {
+              "md": "- Summe und Vielfaches: $(f + g)' = f' + g'$, $(cf)' = c f'$.\n- Produkt: $(fg)' = f'g + fg'$.\n- Quotient: $\\left(\\frac{f}{g}\\right)' = \\frac{f'g - fg'}{g^2}$.\n- Kette: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$.\n- Umkehrfunktion: $(f^{-1})'(y) = \\frac{1}{f'(f^{-1}(y))}$, falls $f' \\ne 0$; so folgt $\\ln'(x) = \\frac1x$ aus $\\exp' = \\exp$.\n\nGrundableitungen: $(x^n)' = n x^{n-1}$, $\\exp' = \\exp$, $\\sin' = \\cos$, $\\cos' = -\\sin$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Bei der Kettenregel die innere Ableitung vergessen: $(\\sin(x^2))' = 2x\\cos(x^2)$.\n- Die Produktregel als Produkt der Ableitungen rechnen.\n- Differenzierbarkeit an Nahtstellen stückweise definierter Funktionen nicht prüfen.\n\nWeiter: **Mittelwertsatz**, **Taylorpolynome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wie lautet die Ableitung von $G(x) = \\int_0^{x^2} \\cos t\\,dt$?",
+      "options": [
+        {
+          "md": "$2x \\cos(x^2)$",
+          "correct": true
+        },
+        {
+          "md": "$\\cos(x^2)$",
+          "why": "Die Kettenregel fehlt."
+        },
+        {
+          "md": "$\\sin(x^2)$"
+        },
+        {
+          "md": "$2x \\sin(x^2)$"
+        }
+      ],
+      "explain": "$G = F(x^2)$ mit $F' = \\cos$, also $G'(x) = \\cos(x^2) \\cdot 2x$.",
+      "label": "Variable Grenze",
+      "id": "vq1"
     },
     {
       "id": "rechnen",
@@ -308,7 +605,8 @@
         "Stammfunktionen sind bis auf eine Konstante eindeutig.",
         "Bei variablen Grenzen die Kettenregel nicht vergessen: $f(g(x)) \\cdot g'(x)$.",
         "Obere Grenze $g(x)$: Kettenregel, $F'(x) = f(g(x))g'(x)$.",
-        "Integrierbar heißt nicht: Stammfunktion vorhanden."
+        "Integrierbar heißt nicht: Stammfunktion vorhanden.",
+        "$\\tfrac{d}{dx} \\int_a^x f(t)\\,dt = f(x)$; bei variabler Grenze $u(x)$ kommt $u'(x)$ dazu."
       ]
     }
   ]

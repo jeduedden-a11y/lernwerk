@@ -77,12 +77,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Eine **Menge** ist eine Zusammenfassung von Objekten, ihren **Elementen**. Mehr steckt zunächst nicht dahinter: Für jedes Objekt $x$ ist klar, ob $x \\in M$ gilt oder nicht. Reihenfolge und Wiederholung spielen keine Rolle, $\\set{1, 2, 2} = \\set{2, 1}$.\n\nDie Animation hat gezeigt, dass die Mengenoperationen genau den Junktoren entsprechen:\n\n| Menge | Element $x$ liegt darin, wenn … |\n|---|---|\n| $A \\cap B$ | $x \\in A \\wedge x \\in B$ |\n| $A \\cup B$ | $x \\in A \\vee x \\in B$ |\n| $A \\setminus B$ | $x \\in A \\wedge x \\notin B$ |\n| $A^c$ | $\\neg(x \\in A)$ |\n\nDarum beweist man Mengengleichungen so wie logische Äquivalenzen: Man nimmt ein **beliebiges Element** und verfolgt, wo es landet. Diese Methode heißt Elementjagd, und sie ist das wichtigste Werkzeug dieser Lektion."
+      "md": "Eine **Menge** fasst Objekte zusammen; für jedes $x$ steht fest, ob $x \\in M$. Reihenfolge und Wiederholung zählen nicht. Mengenoperationen sind Junktoren: $\\cap$ heißt »und«, $\\cup$ »oder«, $A \\setminus B$ »in $A$ und nicht in $B$«.",
+      "more": "Eine **Menge** ist eine Zusammenfassung von Objekten, ihren **Elementen**. Mehr steckt zunächst nicht dahinter: Für jedes Objekt $x$ ist klar, ob $x \\in M$ gilt oder nicht. Reihenfolge und Wiederholung spielen keine Rolle, $\\set{1, 2, 2} = \\set{2, 1}$.\n\nDie Animation hat gezeigt, dass die Mengenoperationen genau den Junktoren entsprechen:\n\n| Menge | Element $x$ liegt darin, wenn … |\n|---|---|\n| $A \\cap B$ | $x \\in A \\wedge x \\in B$ |\n| $A \\cup B$ | $x \\in A \\vee x \\in B$ |\n| $A \\setminus B$ | $x \\in A \\wedge x \\notin B$ |\n| $A^c$ | $\\neg(x \\in A)$ |\n\nDarum beweist man Mengengleichungen so wie logische Äquivalenzen: Man nimmt ein **beliebiges Element** und verfolgt, wo es landet. Diese Methode heißt Elementjagd, und sie ist das wichtigste Werkzeug dieser Lektion."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Teilmenge und Gleichheit\n> $A \\subset B$, wenn jedes Element von $A$ auch in $B$ liegt: $\\forall x: x \\in A \\Rightarrow x \\in B$.\n> $A = B$ genau dann, wenn $A \\subset B$ und $B \\subset A$.\n\n> [!definition] Potenzmenge und Produkt\n> Die **Potenzmenge** $\\mathcal{P}(M)$ ist die Menge aller Teilmengen von $M$, die leere Menge $\\emptyset$ und $M$ selbst eingeschlossen.\n> Das **kartesische Produkt** $A \\times B = \\set{(a, b) : a \\in A, b \\in B}$ besteht aus geordneten Paaren. Hier kommt es auf die Reihenfolge an: $(1, 2) \\ne (2, 1)$.\n\n**Beispiel.** $M = \\set{1, 2}$ hat die Potenzmenge $\\set{\\emptyset, \\set1, \\set2, \\set{1,2}}$ mit $4 = 2^2$ Elementen. Allgemein hat eine $n$-elementige Menge $2^n$ Teilmengen, denn jedes Element ist drin oder nicht."
+      "md": "$A \\subset B$: Jedes Element von $A$ liegt in $B$. $A = B$ heißt $A \\subset B$ und $B \\subset A$. Die **Potenzmenge** $\\mathcal P(M)$ enthält alle Teilmengen, das **Produkt** $A \\times B$ alle geordneten Paare $(a, b)$.",
+      "more": "> [!definition] Teilmenge und Gleichheit\n> $A \\subset B$, wenn jedes Element von $A$ auch in $B$ liegt: $\\forall x: x \\in A \\Rightarrow x \\in B$.\n> $A = B$ genau dann, wenn $A \\subset B$ und $B \\subset A$.\n\n> [!definition] Potenzmenge und Produkt\n> Die **Potenzmenge** $\\mathcal{P}(M)$ ist die Menge aller Teilmengen von $M$, die leere Menge $\\emptyset$ und $M$ selbst eingeschlossen.\n> Das **kartesische Produkt** $A \\times B = \\set{(a, b) : a \\in A, b \\in B}$ besteht aus geordneten Paaren. Hier kommt es auf die Reihenfolge an: $(1, 2) \\ne (2, 1)$.\n\n**Beispiel.** $M = \\set{1, 2}$ hat die Potenzmenge $\\set{\\emptyset, \\set1, \\set2, \\set{1,2}}$ mit $4 = 2^2$ Elementen. Allgemein hat eine $n$-elementige Menge $2^n$ Teilmengen, denn jedes Element ist drin oder nicht."
     },
     {
       "id": "venn-aufgabe",
@@ -111,6 +113,129 @@
       "explain": "Erst die Vereinigung: alles in $A$ oder $B$, das sind fünf Bereiche. Dann alles weg, was in $C$ liegt. Übrig bleiben die drei Bereiche von $A \\cup B$ außerhalb von $C$."
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**De Morgan für Mengen:** Das Komplement einer Vereinigung, Element für Element.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x \\in (A \\cup B)^c",
+            "why": "Ein beliebiges Element des Komplements."
+          },
+          {
+            "tex": "\\iff \\neg(x \\in A \\vee x \\in B)",
+            "why": "Komplement heißt »nicht«, Vereinigung »oder«."
+          },
+          {
+            "tex": "\\iff x \\notin A \\wedge x \\notin B",
+            "why": "Ein verneintes Oder ist ein Und der Verneinungen."
+          },
+          {
+            "tex": "\\iff x \\in A^c \\cap B^c",
+            "why": "Also $(A \\cup B)^c = A^c \\cap B^c$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ausgangspunkt.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Übersetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "De Morgan.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zurück.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Mengen und Relationen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Mengen und Relationen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 1.2 bis 1.3\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Mengen",
+          "blocks": [
+            {
+              "md": "Eine **Menge** fasst Objekte zusammen, ihre Elemente; $x \\in M$ heißt „$x$ ist Element von $M$“. Zwei Mengen sind gleich, wenn sie dieselben Elemente haben.\n\n- **Teilmenge:** $A \\subseteq B :\\Leftrightarrow \\forall x: (x \\in A \\Rightarrow x \\in B)$. Gleichheit zeigt man oft über $A \\subseteq B$ und $B \\subseteq A$.\n- **Vereinigung** $A \\cup B$, **Schnitt** $A \\cap B$, **Differenz** $A \\setminus B$, **Komplement** $\\overline{A}$ in einer Grundmenge.\n- **Potenzmenge** $\\mathcal{P}(M)$: die Menge aller Teilmengen. Hat $M$ genau $n$ Elemente, hat $\\mathcal{P}(M)$ genau $2^n$.\n- **Kartesisches Produkt** $A \\times B = \\{(a, b) : a \\in A,\\ b \\in B\\}$.\n\nDie Rechenregeln folgen aus der Logik, etwa $A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$ und de Morgan $\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$."
+            }
+          ]
+        },
+        {
+          "title": "Relationen",
+          "blocks": [
+            {
+              "md": "Eine **Relation** auf $M$ ist eine Teilmenge $R \\subseteq M \\times M$; man schreibt $x \\, R \\, y$ für $(x, y) \\in R$.\n\n| Eigenschaft | Bedeutung |\n|---|---|\n| reflexiv | $x \\, R \\, x$ für alle $x$ |\n| symmetrisch | $x \\, R \\, y \\Rightarrow y \\, R \\, x$ |\n| antisymmetrisch | $x \\, R \\, y \\land y \\, R \\, x \\Rightarrow x = y$ |\n| transitiv | $x \\, R \\, y \\land y \\, R \\, z \\Rightarrow x \\, R \\, z$ |\n\n- Eine **Äquivalenzrelation** ist reflexiv, symmetrisch und transitiv. Sie zerlegt $M$ in disjunkte **Äquivalenzklassen** $[x] = \\{y \\in M : y \\, R \\, x\\}$. Beispiel: $a \\sim b :\\Leftrightarrow n \\mid (a - b)$ auf $\\mathbb{Z}$; die Klassen sind die Restklassen modulo $n$.\n- Eine **Ordnungsrelation** ist reflexiv, antisymmetrisch und transitiv, etwa $\\le$ auf $\\mathbb{R}$ oder $\\subseteq$ auf $\\mathcal{P}(M)$. **Total** heißt sie, wenn je zwei Elemente vergleichbar sind; $\\le$ ist total, $\\subseteq$ nicht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $\\in$ und $\\subseteq$ verwechseln: $1 \\in \\{1, 2\\}$, aber $\\{1\\} \\subseteq \\{1, 2\\}$.\n- Die leere Menge vergessen: $\\emptyset \\subseteq M$ gilt für jede Menge."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Menge ist $(A \\cap B)^c$?",
+      "options": [
+        {
+          "md": "$A^c \\cup B^c$",
+          "correct": true
+        },
+        {
+          "md": "$A^c \\cap B^c$",
+          "why": "Das ist $(A \\cup B)^c$."
+        },
+        {
+          "md": "$A \\cup B$"
+        },
+        {
+          "md": "$(A \\cup B)^c$"
+        }
+      ],
+      "explain": "$\\neg(x \\in A \\wedge x \\in B)$ heißt $x \\notin A \\vee x \\notin B$.",
+      "label": "De Morgan",
+      "id": "vq1"
+    },
+    {
       "id": "demorgan-beweis",
       "type": "reveal",
       "label": "Elementjagd",
@@ -120,7 +245,8 @@
     {
       "id": "relationen",
       "type": "text",
-      "md": "Eine **Relation** auf $M$ ist eine Teilmenge $R \\subset M \\times M$. Man schreibt $x \\sim y$ statt $(x, y) \\in R$. So wird jeder Vergleich zu einem mathematischen Objekt, etwa »$\\le$« oder »hat denselben Rest bei Division durch $3$«.\n\n> [!definition] Äquivalenzrelation\n> $\\sim$ heißt Äquivalenzrelation, wenn sie\n> - **reflexiv** ist: $x \\sim x$ für alle $x$,\n> - **symmetrisch** ist: aus $x \\sim y$ folgt $y \\sim x$,\n> - **transitiv** ist: aus $x \\sim y$ und $y \\sim z$ folgt $x \\sim z$.\n\nEine Äquivalenzrelation zerlegt $M$ in **Äquivalenzklassen** $[x] = \\set{y : y \\sim x}$: Jedes Element liegt in genau einer Klasse. Beispiel: $x \\sim y :\\iff 3 \\mid (x - y)$ zerlegt $\\Z$ in die drei Restklassen $[0], [1], [2]$."
+      "md": "Eine **Relation** auf $M$ ist eine Teilmenge von $M \\times M$. Eine **Äquivalenzrelation** ist reflexiv, symmetrisch und transitiv. Sie zerlegt $M$ in disjunkte **Äquivalenzklassen**, etwa die Reste bei Division durch $3$.",
+      "more": "Eine **Relation** auf $M$ ist eine Teilmenge $R \\subset M \\times M$. Man schreibt $x \\sim y$ statt $(x, y) \\in R$. So wird jeder Vergleich zu einem mathematischen Objekt, etwa »$\\le$« oder »hat denselben Rest bei Division durch $3$«.\n\n> [!definition] Äquivalenzrelation\n> $\\sim$ heißt Äquivalenzrelation, wenn sie\n> - **reflexiv** ist: $x \\sim x$ für alle $x$,\n> - **symmetrisch** ist: aus $x \\sim y$ folgt $y \\sim x$,\n> - **transitiv** ist: aus $x \\sim y$ und $y \\sim z$ folgt $x \\sim z$.\n\nEine Äquivalenzrelation zerlegt $M$ in **Äquivalenzklassen** $[x] = \\set{y : y \\sim x}$: Jedes Element liegt in genau einer Klasse. Beispiel: $x \\sim y :\\iff 3 \\mid (x - y)$ zerlegt $\\Z$ in die drei Restklassen $[0], [1], [2]$."
     },
     {
       "id": "aequivalenz",
@@ -296,7 +422,8 @@
         "Eine $n$-elementige Menge hat $2^n$ Teilmengen, $|A \\times B| = |A| \\cdot |B|$.",
         "Äquivalenzrelationen sind reflexiv, symmetrisch und transitiv und zerlegen die Menge in disjunkte Klassen.",
         "De Morgan gilt auch für Differenzen.",
-        "Äquivalenzrelationen brauchen Transitivität; »ungefähr gleich« ist keine."
+        "Äquivalenzrelationen brauchen Transitivität; »ungefähr gleich« ist keine.",
+        "$(A \\cup B)^c = A^c \\cap B^c$ und $(A \\cap B)^c = A^c \\cup B^c$."
       ]
     }
   ]

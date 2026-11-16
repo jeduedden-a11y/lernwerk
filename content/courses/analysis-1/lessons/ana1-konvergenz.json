@@ -69,7 +69,8 @@
     {
       "id": "def",
       "type": "text",
-      "md": "> [!definition] Konvergenz (Def. 9.3, hier in $\\R$)\n> Eine Folge $(a_n)_n$ **konvergiert gegen** $a$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| < \\varepsilon.$$\n\nIn Worten: Gib mir **irgendeine** Toleranz $\\varepsilon$, so klein du willst. Dann kann ich eine Stelle $n_0$ nennen, ab der **alle** Folgenglieder näher als $\\varepsilon$ an $a$ liegen. Bildlich: Ab $n_0$ bleiben alle Punkte im **$\\varepsilon$-Streifen** um $a$."
+      "md": "$a_n \\to a$ heißt: $\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0: |a_n - a| < \\varepsilon$. Zu **jeder** Toleranz gibt es eine Stelle, ab der **alle** Glieder im $\\varepsilon$-Streifen um $a$ bleiben.",
+      "more": "> [!definition] Konvergenz (Def. 9.3, hier in $\\R$)\n> Eine Folge $(a_n)_n$ **konvergiert gegen** $a$, wenn gilt:\n> $$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\N\\ \\forall n \\ge n_0 : |a_n - a| < \\varepsilon.$$\n\nIn Worten: Gib mir **irgendeine** Toleranz $\\varepsilon$, so klein du willst. Dann kann ich eine Stelle $n_0$ nennen, ab der **alle** Folgenglieder näher als $\\varepsilon$ an $a$ liegen. Bildlich: Ab $n_0$ bleiben alle Punkte im **$\\varepsilon$-Streifen** um $a$."
     },
     {
       "id": "band-erkunden",
@@ -112,6 +113,234 @@
         "minimal": true
       },
       "explain": "$\\tfrac1n < 0{,}1 \\iff n > 10$. Also ist $n_0 = 11$ das kleinste. Bei $n = 10$ ist $|a_{10} - 0| = 0{,}1$, und das ist **nicht kleiner** als $\\varepsilon$."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Divergenz zeigen:** die Definition verneinen und ein Gegenbeispiel finden.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0:\\ |a_n - a| < \\varepsilon",
+            "why": "$a_n \\to a$."
+          },
+          {
+            "tex": "\\exists \\varepsilon > 0\\ \\forall n_0\\ \\exists n \\ge n_0:\\ |a_n - a| \\ge \\varepsilon",
+            "why": "Jeder Quantor kippt, die Ungleichung auch."
+          },
+          {
+            "tex": "a_n = (-1)^n,\\ \\ a = 1,\\ \\ \\varepsilon = 1",
+            "why": "Kann $(-1)^n$ gegen $1$ gehen?"
+          },
+          {
+            "tex": "n \\text{ ungerade}:\\ |{-1} - 1| = 2 \\ge 1",
+            "why": "Hinter jedem $n_0$ liegt ein ungerades $n$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Definition.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Verneinung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Beispiel.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gegenbeispiel.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Konvergenz von Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 9.3 bis Bem. 9.13\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Folgen und Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Folge $(a_n)$ **konvergiert** gegen $a$, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\mathbb{N}\\ \\forall n \\ge n_0: \\ |a_n - a| < \\varepsilon.$$\nAnschaulich: Um $a$ liegt ein Band der Breite $2\\varepsilon$; egal wie schmal, ab einem Index $n_0$ bleiben alle Glieder darin. $n_0$ darf von $\\varepsilon$ abhängen. Man schreibt $a = \\lim_{n \\to \\infty} a_n$ oder $a_n \\to a$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit ε und n₀",
+          "blocks": [
+            {
+              "md": "$a_n = \\frac{n+1}{2n} \\to \\frac12$: Es ist $\\left|a_n - \\frac12\\right| = \\frac{1}{2n} < \\varepsilon \\Leftrightarrow n > \\frac{1}{2\\varepsilon}$. Nach dem **archimedischen Prinzip** gibt es ein solches $n_0$; für $\\varepsilon = 0{,}01$ genügt $n_0 = 51$."
+            }
+          ]
+        },
+        {
+          "title": "Grundtatsachen",
+          "blocks": [
+            {
+              "md": "- Der Grenzwert ist eindeutig (Widerspruchsbeweis mit $\\varepsilon = \\frac{|a - b|}{2}$).\n- Konvergente Folgen sind beschränkt. Die Umkehrung ist falsch: $(-1)^n$.\n- **Grenzwertsätze:** Aus $a_n \\to a$, $b_n \\to b$ folgt $a_n + b_n \\to a + b$, $a_n b_n \\to ab$ und, falls $b \\ne 0$, $\\frac{a_n}{b_n} \\to \\frac{a}{b}$.\n- **Sandwich:** $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to a$ ergibt $c_n \\to a$.\n- Ungleichungen bleiben im Grenzwert erhalten, aber nur als $\\le$: $\\frac1n > 0$, doch $\\lim \\frac1n = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Grenzwerte",
+          "blocks": [
+            {
+              "md": "$\\frac1n \\to 0$, $q^n \\to 0$ für $|q| < 1$, $\\sqrt[n]{n} \\to 1$, $\\frac{n^k}{q^n} \\to 0$ für $|q| > 1$. Bei Brüchen von Polynomen teilt man durch die höchste Potenz des Nenners."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $n_0$ unabhängig von $\\varepsilon$ wählen wollen.\n- Mit „$\\frac{\\infty}{\\infty} = 1$“ rechnen; das ist kein Wert, sondern eine unbestimmte Form."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Folgen und Konvergenz",
+      "path": "02 Wiki/Mathematik/04 Folgen und Reihen/Folgen und Konvergenz.md",
+      "review": false,
+      "sections": [
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Folge** ist eine Funktion von den natürlichen Zahlen in die reellen Zahlen: $a:\\mathbb{N}\\to\\mathbb{R}$, geschrieben $a_1,a_2,a_3,\\ldots$\n\n**Konvergenz:** $\\{a_n\\}$ konvergiert gegen $L$, wenn $\\displaystyle\\lim_{n\\to\\infty}a_n = L$ (formal: für jedes $\\varepsilon>0$ existiert $N$ mit $|a_n-L|<\\varepsilon$ für alle $n>N$). Existiert kein solches $L$, **divergiert** die Folge."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Sätze",
+          "blocks": [
+            {
+              "md": "- **Sandwich-Theorem (Folgen):** $a_n\\leq b_n\\leq c_n$ und $\\lim a_n=\\lim c_n=L \\Rightarrow \\lim b_n=L$.\n- **Stetigkeitssatz:** $\\lim a_n=L$ und $f$ stetig bei $L$ $\\Rightarrow \\lim f(a_n)=f(L)$.\n- **Monotoniekriterium:** Jede **monotone und beschränkte** Folge konvergiert — mächtig, weil der Grenzwert nicht explizit bekannt sein muss."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Folgenklassen",
+          "blocks": [
+            {
+              "md": "**Geometrische Folgen** $a_n=r^n$:\n$$\\lim_{n\\to\\infty} r^n = \\begin{cases}0 & |r|<1\\\\ 1 & r=1\\\\ \\text{divergiert} & |r|>1 \\text{ oder } r=-1\\end{cases}$$\n\n**Wachstumshierarchie** (jeder Term wächst strikt schneller als der vorherige):\n$$\\ln n \\ll n^p \\ll a^n \\ll n! \\ll n^n \\qquad (p>0,\\ a>1)$$"
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "$$a_n = \\frac{\\cos n}{n}: \\quad -\\frac1n \\leq \\frac{\\cos n}{n} \\leq \\frac1n \\;\\Longrightarrow\\; a_n \\to 0 \\text{ (Sandwich-Theorem)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Folge $\\{a_n\\}$ (Liste) und **Reihe** $\\sum a_n$ (Summe) verwechseln.\n- Annehmen, beschränkt ⟹ konvergent: $\\{(-1)^n\\}$ ist beschränkt, oszilliert aber ohne Grenzwert. Nötig ist **beschränkt UND monoton**.\n- Wachstumshierarchie unterschätzen: $n!$ wächst für große $n$ weit schneller als jede Exponentialfunktion $a^n$.\n\nGrundlage für **Reihen und Partialsummen** und das **Quotienten- und Wurzelkriterium**."
+            }
+          ]
+        },
+        {
+          "title": "Der Grenzwertbegriff",
+          "blocks": [
+            {
+              "md": "$$\\lim_{n\\to\\infty} a_n = a \\;:\\Longleftrightarrow\\; \\forall \\varepsilon>0\\;\\exists N\\;\\forall n>N:\\; |a_n-a|<\\varepsilon$$\n\n> [!important] Die Epsilon-Definition sagt: jede noch so enge Schranke wird ab irgendwann eingehalten\n> Der Gedanke lässt sich als Herausforderung lesen. Der Gegenspieler nennt eine beliebig kleine Toleranz $\\varepsilon$; die Folge muss ab einem Index $N$ dauerhaft innerhalb dieser Toleranz um $a$ bleiben. Gelingt das für **jedes** $\\varepsilon$, konvergiert die Folge.\n>\n> Entscheidend ist die Reihenfolge der Quantoren: $N$ darf von $\\varepsilon$ abhängen, aber nicht umgekehrt. Je enger die Toleranz, desto später darf der Eintritt erfolgen -- er muss nur irgendwann kommen.\n>\n> Anschaulich bedeutet das: In **jeder** Umgebung des Grenzwerts liegen fast alle Folgenglieder, also alle bis auf endlich viele. Endlich viele Ausreißer am Anfang sind belanglos -- das Konvergenzverhalten hängt nie von den ersten Gliedern ab."
+            }
+          ]
+        },
+        {
+          "title": "Konvergenz, Divergenz, Beschränktheit",
+          "blocks": [
+            {
+              "md": "| Verhalten | Beispiel |\n|---|---|\n| konvergent | $a_n = 1/n \\to 0$ |\n| bestimmt divergent | $a_n = n^2 \\to \\infty$ |\n| unbestimmt divergent | $a_n = (-1)^n$ |\n| Nullfolge | konvergent mit Grenzwert 0 |\n\n> [!info] Konvergent impliziert beschränkt, aber nicht umgekehrt\n> Eine konvergente Folge ist stets beschränkt: Ab einem Index liegen alle Glieder in einem festen Intervall, und die endlich vielen davor lassen sich mit einbeziehen.\n>\n> Die Umkehrung gilt nicht -- $(-1)^n$ ist beschränkt und divergiert. Erst mit der **Monotonie** wird der Schluss gültig: Jede monotone und beschränkte Folge konvergiert. Dieses Monotoniekriterium ist deshalb so wertvoll, weil es Konvergenz nachweist, **ohne** den Grenzwert zu kennen.\n>\n> Dass es überhaupt gilt, ist keine Selbstverständlichkeit, sondern eine Eigenschaft der reellen Zahlen -- ihre Vollständigkeit. In den rationalen Zahlen ist es falsch: Die Näherungsfolge für $\\sqrt{2}$ ist monoton und beschränkt, hat dort aber keinen Grenzwert."
+            }
+          ]
+        },
+        {
+          "title": "Grenzwertsätze und ihre Grenzen",
+          "blocks": [
+            {
+              "md": "$$\\lim(a_n \\pm b_n) = \\lim a_n \\pm \\lim b_n \\qquad \\lim(a_n\\cdot b_n) = \\lim a_n \\cdot \\lim b_n$$\n\n> [!warning] Die Sätze gelten nur, wenn beide Grenzwerte existieren und endlich sind\n> Bei Quotienten kommt hinzu, dass der Grenzwert des Nenners nicht null sein darf. Wird er null, entsteht ein **unbestimmter Ausdruck**, der eine eigene Behandlung verlangt: Ausklammern der höchsten Potenz, Kürzen, Erweitern mit dem konjugierten Term bei Wurzeln.\n>\n> Bei rationalen Folgen entscheidet der Gradvergleich:\n>\n> | Grade | Grenzwert |\n> |---|---|\n> | Zählergrad $<$ Nennergrad | $0$ |\n> | Zählergrad $=$ Nennergrad | Quotient der Leitkoeffizienten |\n> | Zählergrad $>$ Nennergrad | bestimmt divergent |\n>\n> Das ist dieselbe Systematik wie beim Verhalten gebrochenrationaler Funktionen im Unendlichen -- Folgen sind Funktionen auf den natürlichen Zahlen, und die Regeln übertragen sich."
+            }
+          ]
+        },
+        {
+          "title": "Explizite und rekursive Darstellung",
+          "blocks": [
+            {
+              "md": "> [!tip] Die rekursive Form beschreibt den Schritt, die explizite den Zustand\n> $a_{n+1} = a_n + d$ sagt, wie es weitergeht; $a_n = a_1 + (n-1)d$ sagt, wo man landet. Für die Untersuchung des Grenzverhaltens ist die explizite Form fast immer die brauchbarere.\n>\n> Bei rekursiven Folgen bestimmt man einen möglichen Grenzwert über die **Fixpunktgleichung**: Konvergiert $a_n$ gegen $a$, so muss $a$ die Gleichung $a = f(a)$ erfüllen. Das liefert Kandidaten -- die Konvergenz selbst ist damit noch nicht bewiesen und muss über Monotonie und Beschränktheit gezeigt werden."
+            }
+          ]
+        },
+        {
+          "title": "Bezug im Vault",
+          "blocks": [
+            {
+              "md": "Der Konvergenzbegriff für Folgen ist die Grundlage für **Reihen und Partialsummen**, denn eine Reihe ist definitionsgemäß die Folge ihrer Partialsummen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was bedeutet $a_n \\not\\to a$?",
+      "options": [
+        {
+          "md": "Es gibt ein $\\varepsilon > 0$, sodass hinter jedem $n_0$ ein $n$ mit $|a_n - a| \\ge \\varepsilon$ liegt.",
+          "correct": true
+        },
+        {
+          "md": "Für alle $n$ ist $|a_n - a| \\ge \\varepsilon$.",
+          "why": "Es genügen unendlich viele Ausreißer, nicht alle."
+        },
+        {
+          "md": "Es gibt ein $n$ mit $|a_n - a| \\ge 1$."
+        },
+        {
+          "md": "Die Folge ist unbeschränkt."
+        }
+      ],
+      "explain": "Die Verneinung kippt alle drei Quantoren.",
+      "label": "Verneinung",
+      "id": "vq1"
     },
     {
       "id": "n0-rechnen",
@@ -360,7 +589,8 @@
         "Nicht-Konvergenz: Ein einziges $\\varepsilon$, für das kein $n_0$ funktioniert, genügt.",
         "Konvergent heißt beschränkt, aber nicht umgekehrt.",
         "In der Definition darf $n_0$ von $\\varepsilon$ abhängen.",
-        "Strikte Ungleichungen werden im Grenzwert zu $\\le$."
+        "Strikte Ungleichungen werden im Grenzwert zu $\\le$.",
+        "$a_n \\not\\to a$: $\\exists \\varepsilon\\ \\forall n_0\\ \\exists n \\ge n_0: |a_n - a| \\ge \\varepsilon$."
       ]
     }
   ]

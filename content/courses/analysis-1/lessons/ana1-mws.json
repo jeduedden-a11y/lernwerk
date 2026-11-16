@@ -117,12 +117,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Ein Auto fährt $160$ km in zwei Stunden, im Schnitt $80$ km/h. Dann zeigt der Tacho in mindestens einem Augenblick **genau** $80$ km/h. Wer immer langsamer gefahren wäre, käme nicht so weit; wer immer schneller gewesen wäre, käme weiter. Weil sich die Geschwindigkeit nicht sprunghaft ändert, muss sie den Durchschnitt irgendwann treffen.\n\nDer Spezialfall mit gleicher Start- und Endhöhe heißt **Satz von Rolle**: Wer zum Ausgangspunkt zurückkehrt, stand irgendwann still, $f'(\\xi) = 0$.\n\nDie eigentliche Stärke des Satzes: Er verbindet **lokale** Information (die Ableitung in jedem Punkt) mit **globaler** (wie sich $f$ auf einem ganzen Intervall verhält). Daraus folgen:\n\n- $f' > 0$ auf einem Intervall, dann ist $f$ dort streng wachsend.\n- $f' = 0$ auf einem Intervall, dann ist $f$ dort konstant.\n- $|f'| \\le L$, dann ist $|f(x) - f(y)| \\le L\\,|x - y|$."
+      "md": "$160$ km in zwei Stunden: Irgendwann zeigt der Tacho genau $80$ km/h. **Rolle** ist der Fall gleicher Start- und Endhöhe: Irgendwo ist $f'(\\xi) = 0$. Der Mittelwertsatz verbindet die Ableitung an einer Stelle mit der Änderung über ein ganzes Intervall.",
+      "more": "Ein Auto fährt $160$ km in zwei Stunden, im Schnitt $80$ km/h. Dann zeigt der Tacho in mindestens einem Augenblick **genau** $80$ km/h. Wer immer langsamer gefahren wäre, käme nicht so weit; wer immer schneller gewesen wäre, käme weiter. Weil sich die Geschwindigkeit nicht sprunghaft ändert, muss sie den Durchschnitt irgendwann treffen.\n\nDer Spezialfall mit gleicher Start- und Endhöhe heißt **Satz von Rolle**: Wer zum Ausgangspunkt zurückkehrt, stand irgendwann still, $f'(\\xi) = 0$.\n\nDie eigentliche Stärke des Satzes: Er verbindet **lokale** Information (die Ableitung in jedem Punkt) mit **globaler** (wie sich $f$ auf einem ganzen Intervall verhält). Daraus folgen:\n\n- $f' > 0$ auf einem Intervall, dann ist $f$ dort streng wachsend.\n- $f' = 0$ auf einem Intervall, dann ist $f$ dort konstant.\n- $|f'| \\le L$, dann ist $|f(x) - f(y)| \\le L\\,|x - y|$."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!satz] Satz von Rolle\n> Ist $f$ stetig auf $[a, b]$, differenzierbar auf $(a, b)$ und $f(a) = f(b)$, dann gibt es $\\xi \\in (a, b)$ mit $f'(\\xi) = 0$.\n\n> [!satz] Mittelwertsatz\n> Ist $f$ stetig auf $[a, b]$ und differenzierbar auf $(a, b)$, dann gibt es $\\xi \\in (a, b)$ mit\n> $$f'(\\xi) = \\frac{f(b) - f(a)}{b - a}.$$\n\n**Beweisidee.** Ziehe von $f$ die Sekante ab: $g(x) = f(x) - \\tfrac{f(b) - f(a)}{b - a}(x - a)$. Dann ist $g(a) = g(b)$, und Rolle liefert $g'(\\xi) = 0$, das heißt $f'(\\xi)$ ist die Sekantensteigung. Rolle selbst folgt aus dem Satz vom Maximum: An einem inneren Extremum ist die Ableitung $0$."
+      "md": "**Rolle:** $f$ stetig auf $[a, b]$, differenzierbar auf $(a, b)$ und $f(a) = f(b)$, dann gibt es $\\xi$ mit $f'(\\xi) = 0$. **Mittelwertsatz:** ohne $f(a) = f(b)$ gibt es $\\xi$ mit $f'(\\xi) = \\tfrac{f(b) - f(a)}{b - a}$. Beweis: Rolle auf $f$ minus Sekante anwenden.",
+      "more": "> [!satz] Satz von Rolle\n> Ist $f$ stetig auf $[a, b]$, differenzierbar auf $(a, b)$ und $f(a) = f(b)$, dann gibt es $\\xi \\in (a, b)$ mit $f'(\\xi) = 0$.\n\n> [!satz] Mittelwertsatz\n> Ist $f$ stetig auf $[a, b]$ und differenzierbar auf $(a, b)$, dann gibt es $\\xi \\in (a, b)$ mit\n> $$f'(\\xi) = \\frac{f(b) - f(a)}{b - a}.$$\n\n**Beweisidee.** Ziehe von $f$ die Sekante ab: $g(x) = f(x) - \\tfrac{f(b) - f(a)}{b - a}(x - a)$. Dann ist $g(a) = g(b)$, und Rolle liefert $g'(\\xi) = 0$, das heißt $f'(\\xi)$ ist die Sekantensteigung. Rolle selbst folgt aus dem Satz vom Maximum: An einem inneren Extremum ist die Ableitung $0$."
     },
     {
       "id": "parallel",
@@ -208,6 +210,178 @@
         }
       },
       "explain": "Die Sekante hat die Steigung $\\tfrac{\\sin 2}{2} \\approx 0{,}455$. Aus $\\cos\\xi = 0{,}455$ folgt $\\xi \\approx 1{,}099$. Der Satz hat die Existenz garantiert, die Lage musste man suchen."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Monotonie aus der Ableitung** mit dem Mittelwertsatz.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "x < y",
+            "why": "Zwei beliebige Stellen im Intervall."
+          },
+          {
+            "tex": "f(y) - f(x) = f'(\\xi)\\,(y - x)",
+            "why": "Mittelwertsatz auf $[x, y]$."
+          },
+          {
+            "tex": "f'(\\xi) > 0,\\ \\ y - x > 0",
+            "why": "Voraussetzung $f' > 0$."
+          },
+          {
+            "tex": "f(y) > f(x)",
+            "why": "$f$ ist streng monoton wachsend."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Stellen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "MWS.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorzeichen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Mittelwertsatz",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Mittelwertsatz.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 13.12 bis 13.24\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Satz von Rolle",
+          "blocks": [
+            {
+              "md": "Ist $f$ stetig auf $[a, b]$, differenzierbar auf $(a, b)$ und $f(a) = f(b)$, so gibt es ein $\\xi \\in (a, b)$ mit $f'(\\xi) = 0$. Grund: $f$ hat auf $[a, b]$ ein Maximum oder Minimum im Inneren (oder ist konstant), und an einer inneren Extremstelle verschwindet die Ableitung."
+            }
+          ]
+        },
+        {
+          "title": "Mittelwertsatz",
+          "blocks": [
+            {
+              "md": "Unter denselben Voraussetzungen, ohne $f(a) = f(b)$, gibt es $\\xi \\in (a, b)$ mit\n$$f'(\\xi) = \\frac{f(b) - f(a)}{b - a}.$$\nIrgendwo ist die Tangente parallel zur Sekante. Im Alltag: Wer 120 km in einer Stunde fährt, war irgendwann genau 120 km/h schnell."
+            }
+          ]
+        },
+        {
+          "title": "Folgerungen",
+          "blocks": [
+            {
+              "md": "- $f' = 0$ auf einem Intervall $\\Rightarrow$ $f$ ist konstant. Zwei Stammfunktionen unterscheiden sich daher nur um eine Konstante.\n- $f' \\ge 0$ $\\Rightarrow$ $f$ wachsend; $f' > 0$ $\\Rightarrow$ streng wachsend. Die Umkehrung des zweiten gilt nicht: $x^3$ wächst streng, und $f'(0) = 0$.\n- **Schrankensatz:** Ist $|f'| \\le L$, so gilt $|f(x) - f(y)| \\le L\\,|x - y|$. Beispiele: $|\\sin x - \\sin y| \\le |x - y|$, und $\\ln(1 + x) \\le x$ für $x > -1$."
+            }
+          ]
+        },
+        {
+          "title": "Extrema",
+          "blocks": [
+            {
+              "md": "$f'(x_0) = 0$ ist an einer inneren Extremstelle notwendig, aber nicht hinreichend ($x^3$). Hinreichend ist ein Vorzeichenwechsel von $f'$ oder $f'(x_0) = 0$ mit $f''(x_0) \\ne 0$ (**Taylorpolynome**)."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Satz auf Funktionen mit Knick anwenden: $|x|$ auf $[-1, 1]$ hat keine Stelle mit Ableitung $0$.\n- Annehmen, $\\xi$ sei die Mitte des Intervalls."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Ableitung",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Ableitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 13.1 bis 13.11\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Analysis Grundlagen MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "$f$ heißt in $x_0$ **differenzierbar**, wenn der Grenzwert\n$$f'(x_0) = \\lim_{h \\to 0} \\frac{f(x_0 + h) - f(x_0)}{h}$$\nexistiert: die Steigungen der Sekanten nähern sich einer Grenzsteigung, der Steigung der Tangente.\n\n**Gleichwertig, als lineare Näherung:** $f(x_0 + h) = f(x_0) + f'(x_0)\\,h + r(h)$ mit $\\frac{r(h)}{h} \\to 0$. Nahe $x_0$ verhält sich $f$ wie die Gerade mit Steigung $f'(x_0)$; der Fehler ist klein gegenüber $h$. Diese Sicht trägt bis in die mehrdimensionale Analysis."
+            }
+          ]
+        },
+        {
+          "title": "Differenzierbar und stetig",
+          "blocks": [
+            {
+              "md": "Jede differenzierbare Funktion ist stetig. Die Umkehrung gilt nicht: $|x|$ ist in $0$ stetig, hat dort aber einen Knick (rechts Steigung $1$, links $-1$)."
+            }
+          ]
+        },
+        {
+          "title": "Regeln",
+          "blocks": [
+            {
+              "md": "- Summe und Vielfaches: $(f + g)' = f' + g'$, $(cf)' = c f'$.\n- Produkt: $(fg)' = f'g + fg'$.\n- Quotient: $\\left(\\frac{f}{g}\\right)' = \\frac{f'g - fg'}{g^2}$.\n- Kette: $(g \\circ f)'(x) = g'(f(x)) \\cdot f'(x)$.\n- Umkehrfunktion: $(f^{-1})'(y) = \\frac{1}{f'(f^{-1}(y))}$, falls $f' \\ne 0$; so folgt $\\ln'(x) = \\frac1x$ aus $\\exp' = \\exp$.\n\nGrundableitungen: $(x^n)' = n x^{n-1}$, $\\exp' = \\exp$, $\\sin' = \\cos$, $\\cos' = -\\sin$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Bei der Kettenregel die innere Ableitung vergessen: $(\\sin(x^2))' = 2x\\cos(x^2)$.\n- Die Produktregel als Produkt der Ableitungen rechnen.\n- Differenzierbarkeit an Nahtstellen stückweise definierter Funktionen nicht prüfen.\n\nWeiter: **Mittelwertsatz**, **Taylorpolynome**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Ist $f$ differenzierbar und streng monoton wachsend, dann gilt $f'(x) > 0$ überall.",
+      "answer": false,
+      "explain": "$f(x) = x^3$ wächst streng, aber $f'(0) = 0$. Es gilt nur $f' \\ge 0$.",
+      "label": "Umkehrung",
+      "id": "vq1"
     },
     {
       "id": "abschaetzung",
@@ -325,7 +499,8 @@
         "Folgerungen: $f' > 0$ heißt streng wachsend, $f' = 0$ heißt konstant, $|f'| \\le L$ begrenzt Änderungen.",
         "Alle Voraussetzungen sind nötig: Ein Knick genügt, um den Satz scheitern zu lassen.",
         "Mittelwertsatz braucht ein Intervall.",
-        "Lipschitz-Konstante $= \\sup|f'|$."
+        "Lipschitz-Konstante $= \\sup|f'|$.",
+        "$f' > 0$ auf einem Intervall heißt streng wachsend, $f' = 0$ heißt konstant."
       ]
     }
   ]

@@ -77,7 +77,8 @@
     {
       "id": "def-schranke",
       "type": "text",
-      "md": "> [!definition] Schranken (Def. 2.8)\n> Sei $M \\subset \\K$ in einem angeordneten Körper $\\K$.\n> - $s$ heißt **obere Schranke** von $M$, falls $x \\le s$ für alle $x \\in M$.\n> - $s$ heißt **untere Schranke** von $M$, falls $s \\le x$ für alle $x \\in M$.\n> - $M$ heißt **nach oben beschränkt**, wenn es eine obere Schranke gibt.\n\nEine obere Schranke ist nie allein: Ist $s$ eine, dann auch $s+1$, $s+100$ und jede größere Zahl. Interessant ist deshalb die *kleinste*."
+      "md": "$s$ ist **obere Schranke** von $M$, wenn $x \\le s$ für alle $x \\in M$ gilt. Mit $s$ ist auch jede größere Zahl eine obere Schranke. Interessant ist deshalb die **kleinste**.",
+      "more": "> [!definition] Schranken (Def. 2.8)\n> Sei $M \\subset \\K$ in einem angeordneten Körper $\\K$.\n> - $s$ heißt **obere Schranke** von $M$, falls $x \\le s$ für alle $x \\in M$.\n> - $s$ heißt **untere Schranke** von $M$, falls $s \\le x$ für alle $x \\in M$.\n> - $M$ heißt **nach oben beschränkt**, wenn es eine obere Schranke gibt.\n\nEine obere Schranke ist nie allein: Ist $s$ eine, dann auch $s+1$, $s+100$ und jede größere Zahl. Interessant ist deshalb die *kleinste*."
     },
     {
       "id": "w-intervall",
@@ -107,6 +108,204 @@
       "explain": "$1$ ist eine obere Schranke, und jede Zahl $s < 1$ ist keine mehr: Zwischen $s$ und $1$ liegen noch Elemente von $M$. Also ist $1$ die kleinste obere Schranke, obwohl $1 \\notin M$."
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Supremum ohne Maximum:** $M = \\set{1 - \\tfrac1n : n \\in \\N}$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "M = \\set{0, \\tfrac12, \\tfrac23, \\tfrac34, \\dots}",
+            "why": "Die Elemente wachsen gegen $1$."
+          },
+          {
+            "tex": "1 - \\tfrac1n < 1",
+            "why": "$1$ ist eine obere Schranke."
+          },
+          {
+            "tex": "\\varepsilon > 0:\\ \\text{wähle } n > \\tfrac1\\varepsilon",
+            "why": "Dann ist $\\tfrac1n < \\varepsilon$."
+          },
+          {
+            "tex": "1 - \\tfrac1n > 1 - \\varepsilon",
+            "why": "Keine Zahl unter $1$ ist obere Schranke."
+          },
+          {
+            "tex": "\\sup M = 1 \\notin M",
+            "why": "Das Supremum gehört nicht zu $M$, ein Maximum gibt es nicht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Menge.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schranke.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Archimedes.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kleinste.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Supremum und Infimum",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Supremum und Infimum.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 2.8 bis Satz 2.16\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Sei $M \\subseteq \\mathbb{R}$ nicht leer.\n- $s$ heißt **obere Schranke** von $M$, wenn $x \\le s$ für alle $x \\in M$.\n- $s$ heißt **Supremum** $\\sup M$, wenn $s$ obere Schranke ist und keine kleinere obere Schranke existiert. Gleichwertig: Für jedes $\\varepsilon > 0$ gibt es ein $x \\in M$ mit $x > s - \\varepsilon$.\n- Liegt $\\sup M$ selbst in $M$, heißt es **Maximum**.\n\nUntere Schranke, **Infimum** und Minimum sind entsprechend erklärt; es gilt $\\inf M = -\\sup(-M)$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "| Menge | Supremum | Maximum |\n|---|---|---|\n| $[0, 1]$ | $1$ | $1$ |\n| $(0, 1)$ | $1$ | keins |\n| $\\{1 - \\tfrac1n : n \\in \\mathbb{N}\\}$ | $1$ | keins |\n| $\\{x \\in \\mathbb{Q} : x^2 < 2\\}$ | $\\sqrt2$, in $\\mathbb{Q}$ keins | keins |"
+            }
+          ]
+        },
+        {
+          "title": "Ein Supremum nachweisen",
+          "blocks": [
+            {
+              "md": "Man zeigt zwei Dinge: (1) $s$ ist obere Schranke; (2) zu jedem $\\varepsilon > 0$ gibt es ein $x \\in M$ mit $x > s - \\varepsilon$. Für $M = \\{1 - \\tfrac1n\\}$ und $s = 1$: (1) ist klar; zu (2) wählt man nach dem **archimedischen Prinzip** ein $n > \\tfrac1\\varepsilon$, dann ist $1 - \\tfrac1n > 1 - \\varepsilon$."
+            }
+          ]
+        },
+        {
+          "title": "Rechenregeln",
+          "blocks": [
+            {
+              "md": "$\\sup(M + N) = \\sup M + \\sup N$ und $\\sup(cM) = c \\sup M$ für $c > 0$, wobei $M + N = \\{x + y : x \\in M,\\ y \\in N\\}$."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Supremum und Maximum gleichsetzen.\n- Annehmen, jede beschränkte Menge habe ein größtes Element.\n\nDass jede nichtleere, nach oben beschränkte Menge reeller Zahlen überhaupt ein Supremum hat, ist das **Vollständigkeitsaxiom**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Vollständigkeitsaxiom",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Vollständigkeitsaxiom.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Kapitel 2 und Bem. 4.10\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Aussage",
+          "blocks": [
+            {
+              "md": "**Jede nichtleere, nach oben beschränkte Teilmenge von $\\mathbb{R}$ hat ein Supremum in $\\mathbb{R}$.**\n\nZusammen mit den **Körper- und Anordnungsaxiomen** legt das Axiom $\\mathbb{R}$ bis auf Isomorphie fest: $\\mathbb{R}$ ist der vollständige angeordnete Körper."
+            }
+          ]
+        },
+        {
+          "title": "Warum ℚ nicht reicht",
+          "blocks": [
+            {
+              "md": "$M = \\{x \\in \\mathbb{Q} : x > 0,\\ x^2 < 2\\}$ ist nach oben beschränkt, etwa durch $2$, hat aber in $\\mathbb{Q}$ kein Supremum: Die einzige Kandidatin wäre $\\sqrt2$, und die ist irrational. $\\mathbb{Q}$ hat Lücken, $\\mathbb{R}$ nicht."
+            }
+          ]
+        },
+        {
+          "title": "Gleichwertige Formulierungen",
+          "blocks": [
+            {
+              "md": "In einem angeordneten Körper sind gleichwertig:\n- das Supremumsaxiom,\n- jede monotone, beschränkte Folge konvergiert (**Monotone Folgen**),\n- der Körper ist archimedisch und jede Cauchy-Folge konvergiert (**Teilfolgen und Cauchy-Folgen**),\n- der Körper ist archimedisch und jede **Intervallschachtelung** erfasst einen Punkt."
+            }
+          ]
+        },
+        {
+          "title": "Was daraus folgt",
+          "blocks": [
+            {
+              "md": "Die Existenz von Wurzeln (**Wurzeln und Dichtheit**), das **archimedische Prinzip**, der **Zwischenwertsatz**, Maximum und Minimum stetiger Funktionen auf $[a, b]$, die Existenz des **Riemann-Integrals** stetiger Funktionen. Fast jeder Existenzsatz der Analysis führt am Ende auf dieses Axiom zurück."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was macht eine obere Schranke $s$ von $M$ zum Supremum?",
+      "options": [
+        {
+          "md": "Zu jedem $\\varepsilon > 0$ gibt es $x \\in M$ mit $x > s - \\varepsilon$.",
+          "correct": true
+        },
+        {
+          "md": "$s$ liegt in $M$.",
+          "why": "Das wäre ein Maximum. Ein Supremum muss nicht in $M$ liegen."
+        },
+        {
+          "md": "$s > x$ für alle $x \\in M$."
+        },
+        {
+          "md": "$s$ ist eine ganze Zahl."
+        }
+      ],
+      "explain": "Dann ist keine kleinere Zahl obere Schranke: $s$ ist die kleinste.",
+      "label": "Supremum",
+      "id": "vq1"
+    },
+    {
       "id": "max",
       "type": "choice",
       "md": "Besitzt $M = [-1, 1)$ ein **Maximum**, also ein größtes Element?",
@@ -133,7 +332,8 @@
     {
       "id": "def-sup",
       "type": "text",
-      "md": "> [!definition] Supremum und Infimum (Def. 2.10)\n> Eine obere Schranke $s$ von $M$ heißt **Supremum** von $M$, wenn $s \\le \\tilde s$ für jede obere Schranke $\\tilde s$ gilt. Kurz: $\\sup M$ ist die **kleinste obere Schranke**.\n> Entsprechend ist das **Infimum** $\\inf M$ die **größte untere Schranke**.\n\nWenn es existiert, ist das Supremum eindeutig (Bem. 2.11). Besitzt $M$ ein Maximum, dann ist $\\max M = \\sup M$. Umgekehrt muss ein Supremum nicht zu $M$ gehören."
+      "md": "$\\sup M$ ist die **kleinste obere Schranke**, $\\inf M$ die **größte untere Schranke**. Das Supremum ist eindeutig, muss aber nicht zu $M$ gehören. Hat $M$ ein Maximum, ist $\\max M = \\sup M$.",
+      "more": "> [!definition] Supremum und Infimum (Def. 2.10)\n> Eine obere Schranke $s$ von $M$ heißt **Supremum** von $M$, wenn $s \\le \\tilde s$ für jede obere Schranke $\\tilde s$ gilt. Kurz: $\\sup M$ ist die **kleinste obere Schranke**.\n> Entsprechend ist das **Infimum** $\\inf M$ die **größte untere Schranke**.\n\nWenn es existiert, ist das Supremum eindeutig (Bem. 2.11). Besitzt $M$ ein Maximum, dann ist $\\max M = \\sup M$. Umgekehrt muss ein Supremum nicht zu $M$ gehören."
     },
     {
       "id": "w-folge",
@@ -178,7 +378,8 @@
     {
       "id": "axiom",
       "type": "text",
-      "md": "> [!satz] Vollständigkeitsaxiom (Def. 2.13)\n> **(V)** Jede nichtleere, nach oben beschränkte Teilmenge von $\\K$ besitzt ein Supremum in $\\K$.\n\nNach Satz 2.14 gibt es bis auf strukturerhaltende Bijektion genau einen vollständig angeordneten Körper. Das ist $\\R$. Alles, was die Analysis über Grenzwerte beweist, lebt letztlich von (V): Monotone beschränkte Folgen konvergieren, Wurzeln existieren, der Zwischenwertsatz gilt."
+      "md": "**Vollständigkeitsaxiom:** Jede nichtleere, nach oben beschränkte Teilmenge besitzt ein Supremum. Damit ist $\\R$ der einzige vollständig angeordnete Körper, und von diesem Axiom leben Monotoniesatz, Wurzeln und Zwischenwertsatz.",
+      "more": "> [!satz] Vollständigkeitsaxiom (Def. 2.13)\n> **(V)** Jede nichtleere, nach oben beschränkte Teilmenge von $\\K$ besitzt ein Supremum in $\\K$.\n\nNach Satz 2.14 gibt es bis auf strukturerhaltende Bijektion genau einen vollständig angeordneten Körper. Das ist $\\R$. Alles, was die Analysis über Grenzwerte beweist, lebt letztlich von (V): Monotone beschränkte Folgen konvergieren, Wurzeln existieren, der Zwischenwertsatz gilt."
     },
     {
       "id": "unbeschraenkt",
@@ -356,7 +557,8 @@
         "**(V)**: Jede nichtleere, nach oben beschränkte Menge hat ein Supremum. Das unterscheidet $\\R$ von $\\Q$.",
         "Das Infimum folgt aus (V) durch Spiegelung: $\\inf M = -\\sup(-M)$.",
         "$\\sup$ über die $\\varepsilon$-Bedingung prüfen.",
-        "$\\sup(A + B) = \\sup A + \\sup B$, aber nicht für Produkte."
+        "$\\sup(A + B) = \\sup A + \\sup B$, aber nicht für Produkte.",
+        "$s = \\sup M$: obere Schranke, und zu jedem $\\varepsilon > 0$ gibt es $x \\in M$ mit $x > s - \\varepsilon$."
       ]
     }
   ]

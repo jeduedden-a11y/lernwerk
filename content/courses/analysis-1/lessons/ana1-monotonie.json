@@ -65,12 +65,14 @@
     {
       "id": "intuition",
       "type": "text",
-      "md": "Bisher hast du Konvergenz bewiesen, indem du den Grenzwert $a$ kanntest und $|a_n - a| < \\varepsilon$ gezeigt hast. Was, wenn man den Grenzwert gar nicht kennt, wie bei $e$?\n\nDer **Monotoniesatz** hilft: Eine Folge, die nur wächst und nach oben beschränkt ist, konvergiert. Ihr Grenzwert ist das Supremum ihrer Glieder. Bild: Jemand steigt eine Treppe hinauf, die unter einer Decke endet. Er kommt nie durch die Decke, steigt aber immer weiter, also nähert er sich einer bestimmten Höhe.\n\nDas ist eine reine Existenzaussage, und sie lebt von der Vollständigkeit. In $\\Q$ wäre sie falsch: Die Dezimalnäherungen $1;\\ 1{,}4;\\ 1{,}41;\\ 1{,}414;\\ \\dots$ wachsen, sind beschränkt, aber ihr Grenzwert $\\sqrt2$ liegt nicht in $\\Q$.\n\nBesonders nützlich ist der Satz für **rekursive** Folgen $a_{n+1} = f(a_n)$: Man zeigt per Induktion Monotonie und Beschränktheit, bekommt die Konvergenz geschenkt und findet den Grenzwert $a$ dann aus der Gleichung $a = f(a)$."
+      "md": "Kennt man den Grenzwert nicht, hilft der **Monotoniesatz**: Eine wachsende, nach oben beschränkte Folge konvergiert gegen das Supremum ihrer Glieder, wie eine Treppe unter einer Decke. Die Aussage lebt von der Vollständigkeit.",
+      "more": "Bisher hast du Konvergenz bewiesen, indem du den Grenzwert $a$ kanntest und $|a_n - a| < \\varepsilon$ gezeigt hast. Was, wenn man den Grenzwert gar nicht kennt, wie bei $e$?\n\nDer **Monotoniesatz** hilft: Eine Folge, die nur wächst und nach oben beschränkt ist, konvergiert. Ihr Grenzwert ist das Supremum ihrer Glieder. Bild: Jemand steigt eine Treppe hinauf, die unter einer Decke endet. Er kommt nie durch die Decke, steigt aber immer weiter, also nähert er sich einer bestimmten Höhe.\n\nDas ist eine reine Existenzaussage, und sie lebt von der Vollständigkeit. In $\\Q$ wäre sie falsch: Die Dezimalnäherungen $1;\\ 1{,}4;\\ 1{,}41;\\ 1{,}414;\\ \\dots$ wachsen, sind beschränkt, aber ihr Grenzwert $\\sqrt2$ liegt nicht in $\\Q$.\n\nBesonders nützlich ist der Satz für **rekursive** Folgen $a_{n+1} = f(a_n)$: Man zeigt per Induktion Monotonie und Beschränktheit, bekommt die Konvergenz geschenkt und findet den Grenzwert $a$ dann aus der Gleichung $a = f(a)$."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Monotonie\n> $(a_n)$ heißt **monoton wachsend**, wenn $a_n \\le a_{n+1}$ für alle $n$, und **streng** monoton wachsend bei $<$. Entsprechend monoton fallend.\n\n> [!satz] Monotoniesatz\n> Jede monoton wachsende, nach oben beschränkte Folge konvergiert gegen $\\sup\\set{a_n : n \\in \\N}$. Jede monoton fallende, nach unten beschränkte Folge konvergiert gegen ihr Infimum.\n\n> [!definition] Die Eulersche Zahl\n> $e = \\lim_{n\\to\\infty} \\left(1 + \\tfrac1n\\right)^n \\approx 2{,}718281828$.\n\n**Beweisidee Monotoniesatz.** Sei $s$ das Supremum und $\\varepsilon > 0$. Dann ist $s - \\varepsilon$ keine obere Schranke, es gibt also ein $a_{n_0} > s - \\varepsilon$. Weil die Folge wächst, gilt $s - \\varepsilon < a_n \\le s$ für alle $n \\ge n_0$."
+      "md": "**Monoton wachsend:** $a_n \\le a_{n+1}$. **Monotoniesatz:** wachsend und nach oben beschränkt, dann $a_n \\to \\sup_n a_n$; fallend und nach unten beschränkt, dann $a_n \\to \\inf_n a_n$. So erhält man $e = \\lim (1 + \\tfrac1n)^n \\approx 2{,}718$.",
+      "more": "> [!definition] Monotonie\n> $(a_n)$ heißt **monoton wachsend**, wenn $a_n \\le a_{n+1}$ für alle $n$, und **streng** monoton wachsend bei $<$. Entsprechend monoton fallend.\n\n> [!satz] Monotoniesatz\n> Jede monoton wachsende, nach oben beschränkte Folge konvergiert gegen $\\sup\\set{a_n : n \\in \\N}$. Jede monoton fallende, nach unten beschränkte Folge konvergiert gegen ihr Infimum.\n\n> [!definition] Die Eulersche Zahl\n> $e = \\lim_{n\\to\\infty} \\left(1 + \\tfrac1n\\right)^n \\approx 2{,}718281828$.\n\n**Beweisidee Monotoniesatz.** Sei $s$ das Supremum und $\\varepsilon > 0$. Dann ist $s - \\varepsilon$ keine obere Schranke, es gibt also ein $a_{n_0} > s - \\varepsilon$. Weil die Folge wächst, gilt $s - \\varepsilon < a_n \\le s$ für alle $n \\ge n_0$."
     },
     {
       "id": "rekursiv",
@@ -109,6 +111,186 @@
         }
       },
       "explain": "$a_6 \\approx 1{,}998929$ ist noch $0{,}00107$ entfernt, $a_7 \\approx 1{,}999732$ nur noch $0{,}00027$. Der Abstand zu $2$ schrumpft in jedem Schritt etwa auf ein Viertel."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Beweis des Monotoniesatzes:** Das Supremum ist der Grenzwert.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "s = \\sup\\set{a_n : n \\in \\N}",
+            "why": "Existiert, weil die Glieder nach oben beschränkt sind."
+          },
+          {
+            "tex": "\\exists\\, n_0:\\ a_{n_0} > s - \\varepsilon",
+            "why": "$s - \\varepsilon$ ist keine obere Schranke."
+          },
+          {
+            "tex": "n \\ge n_0:\\ s - \\varepsilon < a_{n_0} \\le a_n \\le s",
+            "why": "Die Folge wächst und bleibt unter $s$."
+          },
+          {
+            "tex": "|a_n - s| < \\varepsilon",
+            "why": "Für alle $n \\ge n_0$: $a_n \\to s$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Supremum.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Unter s.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Monotonie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konvergenz.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Monotone Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Monotone Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 9.15 bis 9.24\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Satz",
+          "blocks": [
+            {
+              "md": "**Jede monotone, beschränkte Folge reeller Zahlen konvergiert.** Ist $(a_n)$ wachsend und nach oben beschränkt, so gilt $a_n \\to \\sup_n a_n$.\n\nBeweis: Sei $s = \\sup_n a_n$ (existiert nach dem **Vollständigkeitsaxiom**). Zu $\\varepsilon > 0$ gibt es ein $n_0$ mit $a_{n_0} > s - \\varepsilon$. Für $n \\ge n_0$ ist dann $s - \\varepsilon < a_{n_0} \\le a_n \\le s$.\n\nDer Wert des Satzes: Man beweist Konvergenz, **ohne den Grenzwert zu kennen**, und bestimmt ihn danach."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel: rekursive Folge",
+          "blocks": [
+            {
+              "md": "$a_1 = 1$, $a_{n+1} = \\sqrt{2 + a_n}$.\n1. Beschränkt: Aus $a_n < 2$ folgt $a_{n+1} < \\sqrt{4} = 2$ (Induktion).\n2. Wachsend: $a_{n+1}^2 - a_n^2 = 2 + a_n - a_n^2 = (2 - a_n)(1 + a_n) > 0$.\n3. Grenzwert: $a = \\sqrt{2 + a}$ ergibt $a^2 - a - 2 = 0$, also $a = 2$ (die Lösung $-1$ scheidet aus)."
+            }
+          ]
+        },
+        {
+          "title": "Die Zahl e",
+          "blocks": [
+            {
+              "md": "$a_n = \\left(1 + \\frac1n\\right)^n$ wächst (Bernoulli-Ungleichung) und bleibt unter $3$, konvergiert also. Der Grenzwert ist $e \\approx 2{,}71828$, und es gilt auch $e = \\sum_{k=0}^{\\infty} \\frac{1}{k!}$ (**Exponentialfunktion**)."
+            }
+          ]
+        },
+        {
+          "title": "Heron-Verfahren",
+          "blocks": [
+            {
+              "md": "$x_{n+1} = \\frac12\\left(x_n + \\frac{a}{x_n}\\right)$ mit $x_1 > 0$ fällt ab dem zweiten Glied und ist nach unten durch $\\sqrt a$ beschränkt; es konvergiert gegen $\\sqrt a$, und zwar sehr schnell."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Den Grenzwert über die Fixpunktgleichung bestimmen, ohne vorher Konvergenz gezeigt zu haben: $a_{n+1} = 2a_n$ mit $a_1 = 1$ hätte nach dieser „Rechnung“ den Grenzwert $0$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Konvergenz von Folgen",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Konvergenz von Folgen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Def. 9.3 bis Bem. 9.13\n> Teil der Sammlung **Analysis I (Jarohs) MOC**. Schulfassung: **Folgen und Konvergenz**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine Folge $(a_n)$ **konvergiert** gegen $a$, wenn\n$$\\forall \\varepsilon > 0\\ \\exists n_0 \\in \\mathbb{N}\\ \\forall n \\ge n_0: \\ |a_n - a| < \\varepsilon.$$\nAnschaulich: Um $a$ liegt ein Band der Breite $2\\varepsilon$; egal wie schmal, ab einem Index $n_0$ bleiben alle Glieder darin. $n_0$ darf von $\\varepsilon$ abhängen. Man schreibt $a = \\lim_{n \\to \\infty} a_n$ oder $a_n \\to a$."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel mit ε und n₀",
+          "blocks": [
+            {
+              "md": "$a_n = \\frac{n+1}{2n} \\to \\frac12$: Es ist $\\left|a_n - \\frac12\\right| = \\frac{1}{2n} < \\varepsilon \\Leftrightarrow n > \\frac{1}{2\\varepsilon}$. Nach dem **archimedischen Prinzip** gibt es ein solches $n_0$; für $\\varepsilon = 0{,}01$ genügt $n_0 = 51$."
+            }
+          ]
+        },
+        {
+          "title": "Grundtatsachen",
+          "blocks": [
+            {
+              "md": "- Der Grenzwert ist eindeutig (Widerspruchsbeweis mit $\\varepsilon = \\frac{|a - b|}{2}$).\n- Konvergente Folgen sind beschränkt. Die Umkehrung ist falsch: $(-1)^n$.\n- **Grenzwertsätze:** Aus $a_n \\to a$, $b_n \\to b$ folgt $a_n + b_n \\to a + b$, $a_n b_n \\to ab$ und, falls $b \\ne 0$, $\\frac{a_n}{b_n} \\to \\frac{a}{b}$.\n- **Sandwich:** $a_n \\le c_n \\le b_n$ und $a_n, b_n \\to a$ ergibt $c_n \\to a$.\n- Ungleichungen bleiben im Grenzwert erhalten, aber nur als $\\le$: $\\frac1n > 0$, doch $\\lim \\frac1n = 0$."
+            }
+          ]
+        },
+        {
+          "title": "Wichtige Grenzwerte",
+          "blocks": [
+            {
+              "md": "$\\frac1n \\to 0$, $q^n \\to 0$ für $|q| < 1$, $\\sqrt[n]{n} \\to 1$, $\\frac{n^k}{q^n} \\to 0$ für $|q| > 1$. Bei Brüchen von Polynomen teilt man durch die höchste Potenz des Nenners."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- $n_0$ unabhängig von $\\varepsilon$ wählen wollen.\n- Mit „$\\frac{\\infty}{\\infty} = 1$“ rechnen; das ist kein Wert, sondern eine unbestimmte Form."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Jede beschränkte Folge konvergiert.",
+      "answer": false,
+      "explain": "$(-1)^n$ ist beschränkt und divergiert. Der Satz braucht zusätzlich **Monotonie**.",
+      "label": "Monotonie",
+      "id": "vq1"
     },
     {
       "id": "beweis",
@@ -212,7 +394,8 @@
         "Bei rekursiven Folgen findet man den Grenzwert aus $a = f(a)$, aber erst nach dem Konvergenzbeweis.",
         "$e = \\lim (1 + \\tfrac1n)^n \\approx 2{,}71828$.",
         "Rekursive Folgen: erst Monotonie und Beschränktheit, dann Fixpunktgleichung.",
-        "Konvergent heißt nicht monoton."
+        "Konvergent heißt nicht monoton.",
+        "Monoton und beschränkt heißt konvergent, Grenzwert ist das Supremum oder Infimum."
       ]
     }
   ]

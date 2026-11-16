@@ -95,7 +95,8 @@
     {
       "id": "aussage",
       "type": "text",
-      "md": "Eine **Aussage** ist ein sprachliches Gebilde, das entweder wahr oder falsch ist. »$8$ ist eine ungerade Zahl« ist eine (falsche) Aussage. »Frankfurt ist die schönste Stadt Deutschlands« ist erst dann eine, wenn »schön« genau definiert ist.\n\nAus Aussagen $A$ und $B$ baut man neue: $\\neg A$ (nicht $A$), $A \\wedge B$ (und), $A \\vee B$ (oder, einschließend), $A \\Rightarrow B$ (wenn, dann), $A \\Leftrightarrow B$ (genau dann, wenn). Ihre Bedeutung ist durch **Wahrheitstafeln** festgelegt."
+      "md": "Eine **Aussage** ist entweder wahr oder falsch. Aus $A$ und $B$ baut man $\\neg A$, $A \\wedge B$, $A \\vee B$ (einschließend), $A \\Rightarrow B$ und $A \\Leftrightarrow B$. Was sie bedeuten, legen **Wahrheitstafeln** fest.",
+      "more": "Eine **Aussage** ist ein sprachliches Gebilde, das entweder wahr oder falsch ist. »$8$ ist eine ungerade Zahl« ist eine (falsche) Aussage. »Frankfurt ist die schönste Stadt Deutschlands« ist erst dann eine, wenn »schön« genau definiert ist.\n\nAus Aussagen $A$ und $B$ baut man neue: $\\neg A$ (nicht $A$), $A \\wedge B$ (und), $A \\vee B$ (oder, einschließend), $A \\Rightarrow B$ (wenn, dann), $A \\Leftrightarrow B$ (genau dann, wenn). Ihre Bedeutung ist durch **Wahrheitstafeln** festgelegt."
     },
     {
       "id": "tafel-und-oder",
@@ -145,6 +146,145 @@
       },
       "goal": {},
       "explain": "$A \\Rightarrow B$ ist nur falsch, wenn $A$ wahr und $B$ falsch ist. Ist $A$ falsch, ist die Implikation wahr, egal was $B$ ist. Das Skript sagt dazu: Aus einer falschen Aussage lässt sich **alles** folgern."
+    },
+    {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Kontraposition** aus der Wahrheitstafel: Warum $A \\Rightarrow B$ dasselbe ist wie $\\neg B \\Rightarrow \\neg A$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "A \\Rightarrow B",
+            "why": "Falsch nur, wenn $A$ wahr und $B$ falsch ist."
+          },
+          {
+            "tex": "\\equiv\\ \\neg A \\vee B",
+            "why": "Genau diese eine Zeile der Tafel ist falsch."
+          },
+          {
+            "tex": "\\equiv\\ B \\vee \\neg A",
+            "why": "»Oder« ist kommutativ."
+          },
+          {
+            "tex": "\\equiv\\ \\neg B \\Rightarrow \\neg A",
+            "why": "Dieselbe Form wie oben, mit $\\neg B$ statt $A$ und $\\neg A$ statt $B$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Implikation.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Als Oder.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Tauschen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontraposition.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Aussagenlogik und Quantoren",
+      "path": "02 Wiki/Mathematik/11 Analysis I/Aussagenlogik und Quantoren.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Analysis I (Jarohs), Abschnitt 1.1\n> Teil der Sammlung **Analysis I (Jarohs) MOC**."
+            }
+          ]
+        },
+        {
+          "title": "Definition",
+          "blocks": [
+            {
+              "md": "Eine **Aussage** ist ein sprachliches Gebilde, das entweder wahr oder falsch ist. Aus Aussagen $A, B$ entstehen mit **Junktoren** neue:\n\n| Junktor | Zeichen | wahr genau dann, wenn |\n|---|---|---|\n| Negation | $\\neg A$ | $A$ falsch ist |\n| Konjunktion | $A \\land B$ | beide wahr sind |\n| Disjunktion | $A \\lor B$ | mindestens eine wahr ist (einschließendes Oder) |\n| Implikation | $A \\Rightarrow B$ | nicht $A$ wahr und zugleich $B$ falsch ist |\n| Äquivalenz | $A \\Leftrightarrow B$ | beide denselben Wahrheitswert haben |\n\n**Quantoren** binden Variablen: $\\forall x \\in M: P(x)$ heißt „für alle $x$ aus $M$ gilt $P(x)$“, $\\exists x \\in M: P(x)$ heißt „es gibt mindestens ein $x$ aus $M$ mit $P(x)$“."
+            }
+          ]
+        },
+        {
+          "title": "Die Implikation",
+          "blocks": [
+            {
+              "md": "$A \\Rightarrow B$ behauptet nur: Wenn $A$ gilt, dann auch $B$. Ist $A$ falsch, ist die Implikation wahr, gleichgültig was $B$ ist. Gleichwertig zu $A \\Rightarrow B$ ist die **Kontraposition** $\\neg B \\Rightarrow \\neg A$, nicht aber die **Umkehrung** $B \\Rightarrow A$."
+            }
+          ]
+        },
+        {
+          "title": "Verneinen",
+          "blocks": [
+            {
+              "md": "- De Morgan: $\\neg(A \\land B) \\Leftrightarrow \\neg A \\lor \\neg B$ und $\\neg(A \\lor B) \\Leftrightarrow \\neg A \\land \\neg B$.\n- $\\neg(A \\Rightarrow B) \\Leftrightarrow A \\land \\neg B$.\n- Quantoren tauschen beim Verneinen: $\\neg\\,\\forall x: P(x) \\Leftrightarrow \\exists x: \\neg P(x)$ und $\\neg\\,\\exists x: P(x) \\Leftrightarrow \\forall x: \\neg P(x)$.\n\nBeispiel: „$(a_n)$ konvergiert gegen $a$“ heißt $\\forall \\varepsilon > 0\\ \\exists n_0\\ \\forall n \\ge n_0: |a_n - a| < \\varepsilon$. Die Verneinung lautet $\\exists \\varepsilon > 0\\ \\forall n_0\\ \\exists n \\ge n_0: |a_n - a| \\ge \\varepsilon$: Es gibt einen Abstand, den die Folge immer wieder überschreitet."
+            }
+          ]
+        },
+        {
+          "title": "Reihenfolge der Quantoren",
+          "blocks": [
+            {
+              "md": "$\\forall x\\ \\exists y: P(x, y)$ und $\\exists y\\ \\forall x: P(x, y)$ sind verschiedene Aussagen. „Zu jeder Zahl gibt es eine größere“ ist wahr, „es gibt eine Zahl, die größer ist als jede“ ist falsch. In der Grenzwertdefinition darf $n_0$ von $\\varepsilon$ abhängen, weil $\\exists n_0$ hinter $\\forall \\varepsilon$ steht."
+            }
+          ]
+        },
+        {
+          "title": "Häufige Fehler",
+          "blocks": [
+            {
+              "md": "- Implikation und Umkehrung verwechseln: Aus „konvergent $\\Rightarrow$ beschränkt“ folgt nicht „beschränkt $\\Rightarrow$ konvergent“.\n- Beim Verneinen die Quantoren stehen lassen.\n- „Oder“ ausschließend lesen.\n\nWeiter mit **Mengen und Relationen**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wie lautet die Verneinung von $\\forall x\\ \\exists y:\\ x < y$?",
+      "options": [
+        {
+          "md": "$\\exists x\\ \\forall y:\\ x \\ge y$",
+          "correct": true
+        },
+        {
+          "md": "$\\forall x\\ \\exists y:\\ x \\ge y$",
+          "why": "Beim Verneinen kippt **jeder** Quantor."
+        },
+        {
+          "md": "$\\exists x\\ \\exists y:\\ x \\ge y$"
+        },
+        {
+          "md": "$\\forall x\\ \\forall y:\\ x \\ge y$"
+        }
+      ],
+      "explain": "Aus $\\forall$ wird $\\exists$, aus $\\exists$ wird $\\forall$, und die Aussage dahinter wird verneint: $\\neg(x < y)$ ist $x \\ge y$.",
+      "label": "Verneinen",
+      "id": "vq1"
     },
     {
       "id": "falsch-folgern",
@@ -408,7 +548,8 @@
         "Die Reihenfolge von Quantoren ist entscheidend.",
         "Direkt, per Kontraposition oder per Widerspruch: drei Wege zu $A \\Rightarrow B$.",
         "Verneinen: Quantoren tauschen, $\\lnot(P \\Rightarrow Q) = P \\land \\lnot Q$.",
-        "Die Reihenfolge von $\\forall$ und $\\exists$ ist entscheidend."
+        "Die Reihenfolge von $\\forall$ und $\\exists$ ist entscheidend.",
+        "$A \\Rightarrow B$ ist gleichwertig zu $\\neg B \\Rightarrow \\neg A$; beim Verneinen kippen alle Quantoren."
       ]
     }
   ]
