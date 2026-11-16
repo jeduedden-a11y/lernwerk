@@ -15,6 +15,136 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Was eine gute Heuristik für A\\* ausmacht.**",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "f(n) = g(n) + h(n)",
+            "why": "Bisherige Kosten plus geschätzte Restkosten."
+          },
+          {
+            "tex": "h(n) \\le h^*(n)",
+            "why": "Die Schätzung ist nie größer als die wahren Restkosten $h^*(n)$."
+          },
+          {
+            "tex": "h(n) \\le c(n, n') + h(n')",
+            "why": "Pro Schritt fällt die Schätzung um höchstens dessen Kosten."
+          },
+          {
+            "tex": "h(n) = |x - x_Z| + |y - y_Z|",
+            "why": "Die Manhattan-Distanz erfüllt beides: Jeder Schritt bringt höchstens $1$ näher."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bewertung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zulässig.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Konsistent.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gitter.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Informierte Suche",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Informierte Suche.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 0: Search. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Heuristik",
+          "blocks": [
+            {
+              "md": "Eine **Heuristik** $h(n)$ schätzt die Kosten vom Knoten $n$ zum Ziel. Im Gitterlabyrinth ist der **Manhattan-Abstand** $|x_1 - x_2| + |y_1 - y_2|$ eine natürliche Wahl: Er ignoriert Wände und ist deshalb nie zu groß."
+            }
+          ]
+        },
+        {
+          "title": "Gierige Bestensuche",
+          "blocks": [
+            {
+              "md": "Entnimmt immer den Knoten mit dem kleinsten $h(n)$. Sie ist oft schnell, aber nicht optimal: Sie läuft auf das scheinbar nahe Ziel zu und kann sich in Sackgassen verrennen, weil sie die schon zurückgelegten Kosten nicht beachtet."
+            }
+          ]
+        },
+        {
+          "title": "A*",
+          "blocks": [
+            {
+              "md": "Entnimmt den Knoten mit dem kleinsten\n$$f(n) = g(n) + h(n),$$\nalso bisherige Kosten plus geschätzte Restkosten. A* findet garantiert einen optimalen Weg, wenn die Heuristik\n- **zulässig** ist: Sie überschätzt die wahren Restkosten nie, und\n- **konsistent** ist: $h(n) \\le c(n, n') + h(n')$ für jeden Nachfolger $n'$.\n\nEine Heuristik, die überschätzt, kann den kürzesten Weg übersehen. Im schlimmsten Fall braucht auch A* exponentiell viel Speicher; gute Heuristiken machen den Unterschied."
+            }
+          ]
+        },
+        {
+          "title": "Vergleich",
+          "blocks": [
+            {
+              "md": "| Verfahren | wählt nach | optimal |\n|---|---|---|\n| Breitensuche | Tiefe im Baum | bei gleichen Schrittkosten |\n| Tiefensuche | zuletzt gefunden | nein |\n| gierige Bestensuche | $h(n)$ | nein |\n| A* | $g(n) + h(n)$ | mit zulässiger, konsistenter Heuristik |"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Welche Heuristik ist im Gitter mit Schritten nach oben, unten, links und rechts (Kosten $1$) **nicht** zulässig?",
+      "options": [
+        {
+          "md": "die doppelte Manhattan-Distanz",
+          "correct": true
+        },
+        {
+          "md": "die Manhattan-Distanz"
+        },
+        {
+          "md": "die euklidische Distanz"
+        },
+        {
+          "md": "$h(n) = 0$"
+        }
+      ],
+      "explain": "Ein Feld direkt neben dem Ziel bekäme die Schätzung $2$, der wahre Weg kostet $1$: Sie überschätzt.",
+      "label": "Zulässig",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum darf eine Heuristik für optimales A* nicht überschätzen?",
       "options": [
@@ -81,7 +211,8 @@
       "points": [
         "f = g + h.",
         "Zulässig: nie überschätzen; konsistent: Dreiecksungleichung.",
-        "Manhattan-Distanz im Gitter."
+        "Manhattan-Distanz im Gitter.",
+        "Zulässig: nie überschätzen; konsistent: $h(n) \\le c(n, n') + h(n')$."
       ],
       "id": "summary"
     }

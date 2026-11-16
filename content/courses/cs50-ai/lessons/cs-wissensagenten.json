@@ -15,6 +15,146 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Folgerung durch Ausschließen:** Wenn es regnet, ist Harry drinnen. Harry ist nicht drinnen.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{KB}:\\ R \\to D,\\ \\ \\neg D",
+            "why": "$R$: Es regnet. $D$: Harry ist drinnen."
+          },
+          {
+            "tex": "D = \\text{falsch}",
+            "why": "Nur Modelle, in denen Harry nicht drinnen ist, bleiben."
+          },
+          {
+            "tex": "R \\to D,\\ D \\text{ falsch} \\Rightarrow R \\text{ falsch}",
+            "why": "Sonst wäre die Implikation verletzt."
+          },
+          {
+            "tex": "\\text{KB} \\models \\neg R",
+            "why": "In jedem übrigen Modell regnet es nicht."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Wissen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Streichen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Implikation.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Folgerung.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wissensbasierte Agenten",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Wissensbasierte Agenten.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 1: Knowledge. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Ein **wissensbasierter Agent** hält eine **Wissensbasis** (Knowledge Base, KB) aus Sätzen einer formalen Sprache und zieht daraus Schlüsse. In der Aussagenlogik sind das Aussagesymbole wie $R$ (»es regnet«) und ihre Verknüpfungen mit $\\neg, \\land, \\lor, \\Rightarrow, \\Leftrightarrow$ (siehe **Aussagenlogik und Quantoren**)."
+            }
+          ]
+        },
+        {
+          "title": "Modelle und Folgerung",
+          "blocks": [
+            {
+              "md": "Ein **Modell** belegt jedes Symbol mit wahr oder falsch. Die KB **impliziert** einen Satz $\\alpha$, geschrieben $KB \\models \\alpha$, wenn $\\alpha$ in **jedem** Modell wahr ist, in dem die KB wahr ist."
+            }
+          ]
+        },
+        {
+          "title": "Model Checking",
+          "blocks": [
+            {
+              "md": "Man zählt alle Modelle auf, bei $n$ Symbolen sind das $2^n$, und prüft: Ist $\\alpha$ überall dort wahr, wo die KB wahr ist?\n\nBeispiel: KB $= \\{R \\Rightarrow N,\\ \\neg N\\}$ (»Wenn es regnet, ist die Straße nass«, »die Straße ist nicht nass«). Von den vier Modellen ist nur $R = $ falsch, $N = $ falsch mit der KB verträglich. Dort ist $\\neg R$ wahr, also $KB \\models \\neg R$."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen und Ausblick",
+          "blocks": [
+            {
+              "md": "Model Checking ist einfach, aber exponentiell. Schlussregeln und **Resolution** kommen oft schneller zum Ziel. Prädikatenlogik erster Stufe erlaubt Objekte und Quantoren und damit kompaktere Wissensbasen."
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "*Knights*: Rätsel um Ritter, die immer die Wahrheit sagen, und Schurken, die immer lügen. *Minesweeper*: Der Agent folgert aus den Zahlen, welche Felder sicher sind."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was bedeutet $\\text{KB} \\models \\alpha$?",
+      "options": [
+        {
+          "md": "$\\alpha$ ist in jedem Modell wahr, in dem die KB wahr ist.",
+          "correct": true
+        },
+        {
+          "md": "$\\alpha$ ist in mindestens einem Modell der KB wahr.",
+          "why": "Das reicht nicht: In **allen** Modellen der KB muss $\\alpha$ gelten."
+        },
+        {
+          "md": "$\\alpha$ steht wörtlich in der KB."
+        },
+        {
+          "md": "Die KB ist in jedem Modell von $\\alpha$ wahr.",
+          "why": "Das ist die umgekehrte Richtung."
+        }
+      ],
+      "explain": "Folgerung heißt: Es gibt keine mögliche Welt, in der die KB stimmt und $\\alpha$ nicht.",
+      "label": "Folgerung",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Wissensbasis: »Wenn es regnet, ist Harry drinnen.« und »Harry ist nicht drinnen.« Was folgt?",
       "options": [
@@ -62,7 +202,8 @@
       "points": [
         "Wissensbasis: TELL und ASK.",
         "Folgerung: wahr in allen Modellen der KB.",
-        "Rätsel als logische Sätze kodieren."
+        "Rätsel als logische Sätze kodieren.",
+        "$\\text{KB} \\models \\alpha$: $\\alpha$ gilt in allen Modellen der KB."
       ],
       "id": "summary"
     }

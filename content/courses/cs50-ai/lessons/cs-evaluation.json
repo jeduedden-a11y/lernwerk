@@ -15,6 +15,142 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Genauigkeit kann täuschen:** $50$ Käufer, $950$ Nicht-Käufer.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\tfrac{TP}{TP + FN} = \\tfrac{30}{50} = 0{,}6",
+            "why": "Nur $30$ der $50$ Käufer werden erkannt."
+          },
+          {
+            "tex": "\\tfrac{TN}{TN + FP} = \\tfrac{940}{950}",
+            "why": "Etwa $0{,}99$ der Nicht-Käufer werden richtig erkannt."
+          },
+          {
+            "tex": "\\tfrac{30 + 940}{1000} = 0{,}97",
+            "why": "Sieht gut aus, obwohl $40\\,\\%$ der Käufer übersehen werden."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Sensitivität.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Spezifität.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Genauigkeit.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Überanpassung",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überanpassung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 4: Learning. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Ein Modell soll aus Beispielen ein Muster lernen, das auch für **neue** Fälle gilt. **Überanpassung** (overfitting) heißt: Es lernt die Trainingsdaten samt ihrer Zufälle und Fehler auswendig. Auf den Trainingsdaten ist es dann sehr gut, auf neuen Daten schlecht. Das Gegenstück ist **Unteranpassung**: Das Modell ist zu einfach und trifft schon die Trainingsdaten schlecht."
+            }
+          ]
+        },
+        {
+          "title": "Verlustfunktionen",
+          "blocks": [
+            {
+              "md": "Eine Verlustfunktion misst, wie schlecht Vorhersagen $\\hat y$ zu den wahren Werten $y$ passen:\n- **0-1-Verlust**: zählt falsche Vorhersagen, typisch für Klassifikation.\n- **L1-Verlust**: $\\sum \\lvert y - \\hat y \\rvert$.\n- **L2-Verlust**: $\\sum (y - \\hat y)^2$; große Fehler zählen überproportional."
+            }
+          ]
+        },
+        {
+          "title": "Regularisierung",
+          "blocks": [
+            {
+              "md": "Statt nur den Verlust zu minimieren, minimiert man\n$$\\text{Kosten}(h) = \\text{Verlust}(h) + \\lambda \\cdot \\text{Komplexität}(h).$$\nDer Strafterm bevorzugt einfache Modelle; $\\lambda$ regelt den Kompromiss. In neuronalen Netzen wirkt **Dropout** ähnlich: Beim Training werden zufällig Neuronen abgeschaltet (siehe **Neuronale Netze**)."
+            }
+          ]
+        },
+        {
+          "title": "Prüfen mit zurückgehaltenen Daten",
+          "blocks": [
+            {
+              "md": "- **Holdout**: Ein Teil der Daten bleibt beim Training außen vor und dient nur zum Testen.\n- **Kreuzvalidierung**: Die Daten werden in $k$ Teile geteilt, jeder Teil ist einmal die Testmenge.\n- Warnsignal: großer Abstand zwischen Trainings- und Testfehler."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "k-Nearest-Neighbors mit einem falsch eingetragenen Punkt mitten in einer Klasse: Mit $k = 1$ folgt die Vorhersage in seiner Umgebung dem Ausreißer, mit $k = 3$ wird er überstimmt. Ein zu großes $k$ glättet dagegen auch echte Muster weg (siehe **Überwachtes Lernen**)."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Wer mit den Testdaten das Modell auswählt und mit denselben Daten bewertet, überschätzt die Güte; dafür braucht es eine eigene Validierungsmenge.\n- Null Fehler auf den Trainingsdaten ist kein gutes Zeichen, sondern eher ein Warnsignal.\n- Mehr Daten helfen fast immer, mehr Parameter fast nie."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Ein Modell sagt immer »kein Kauf«, und $2\\,\\%$ der Kunden kaufen. Was gilt?",
+      "options": [
+        {
+          "md": "Genauigkeit $98\\,\\%$, Sensitivität $0$",
+          "correct": true
+        },
+        {
+          "md": "Genauigkeit $2\\,\\%$"
+        },
+        {
+          "md": "Sensitivität $100\\,\\%$"
+        },
+        {
+          "md": "Spezifität $0$",
+          "why": "Alle Nicht-Käufer werden richtig erkannt: Spezifität $1$."
+        }
+      ],
+      "explain": "Darum berichtet man bei seltenen Positiven Sensitivität und Spezifität getrennt.",
+      "label": "Seltene Klasse",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Ein Modell erkennt 80 von 100 Käufern (positiv) und 900 von 1000 Nicht-Käufern richtig. Wie groß ist die Sensitivität?",
@@ -55,7 +191,8 @@
       "points": [
         "Bewerten auf ungesehenen Daten.",
         "Sensitivität TP/(TP+FN), Spezifität TN/(TN+FP).",
-        "Genauigkeit allein täuscht bei Ungleichgewicht."
+        "Genauigkeit allein täuscht bei Ungleichgewicht.",
+        "Sensitivität $\\tfrac{TP}{TP + FN}$, Spezifität $\\tfrac{TN}{TN + FP}$."
       ],
       "id": "summary"
     }

@@ -9,6 +9,76 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Crossword als CSP** in vier Schritten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{nur Wörter passender Länge}",
+            "why": "**Knotenkonsistenz** für jede Lücke."
+          },
+          {
+            "tex": "w_1[i] = w_2[j]",
+            "why": "An einer Kreuzung müssen die Buchstaben übereinstimmen."
+          },
+          {
+            "tex": "\\text{Wörter ohne passenden Partner streichen}",
+            "why": "**Bogenkonsistenz** für alle Kreuzungen."
+          },
+          {
+            "tex": "\\text{Backtracking mit MRV und LCV}",
+            "why": "Lücke mit den wenigsten Wörtern zuerst, Wort mit den wenigsten Streichungen zuerst."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Knoten.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kreuzung.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "AC-3.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Suche.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Knotenkonsistenz",
+      "md": "Eine Lücke hat $5$ Felder. Das Wörterbuch enthält $3$ Wörter mit $4$, $6$ mit $5$ und $2$ mit $6$ Buchstaben. Wie viele Wörter bleiben nach der Knotenkonsistenz?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Wörter",
+      "explain": "Nur die $6$ Wörter mit genau $5$ Buchstaben passen.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Ablauf",
       "md": "Ordne den Lösungsweg.",
@@ -41,7 +111,8 @@
       "points": [
         "Variablen: Lücken; Domänen: Wörter.",
         "Knoten- und Bogenkonsistenz.",
-        "Backtracking mit MRV, Grad, LCV."
+        "Backtracking mit MRV, Grad, LCV.",
+        "Erst Knoten-, dann Bogenkonsistenz, dann Backtracking mit Heuristiken."
       ],
       "id": "summary"
     }

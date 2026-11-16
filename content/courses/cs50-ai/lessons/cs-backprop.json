@@ -15,6 +15,143 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ein Gradientenschritt** für ein Gewicht: $\\hat y = wx$, Verlust $L = \\tfrac12 (\\hat y - y)^2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "L = \\tfrac12 (wx - y)^2",
+            "why": "Ein Gewicht, ein Beispiel."
+          },
+          {
+            "tex": "\\frac{\\partial L}{\\partial w} = (\\hat y - y) \\cdot x",
+            "why": "Äußere mal innere Ableitung."
+          },
+          {
+            "tex": "\\hat y = 2:\\ \\ \\frac{\\partial L}{\\partial w} = (2 - 1) \\cdot 2 = 2",
+            "why": "Mit $x = 2$, $y = 1$, $w = 1$."
+          },
+          {
+            "tex": "w \\leftarrow 1 - 0{,}1 \\cdot 2 = 0{,}8",
+            "why": "Gradientenabstieg mit Lernrate $0{,}1$."
+          },
+          {
+            "tex": "\\text{Schicht für Schicht rückwärts}",
+            "why": "**Backpropagation** wiederholt die Kettenregel von der Ausgabe zu den früheren Schichten."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Verlust.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kettenregel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zahlen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rückwärts.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Neuronale Netze",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Neuronale Netze.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 5: Neural Networks. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Ein künstliches Neuron",
+          "blocks": [
+            {
+              "md": "Es bildet eine gewichtete Summe seiner Eingaben plus einen Schwellenwert (Bias) und wendet eine **Aktivierungsfunktion** an:\n$$h(x) = g(w_0 + w_1 x_1 + \\dots + w_n x_n).$$\nTypische $g$: Stufenfunktion, Sigmoid $\\frac{1}{1 + e^{-z}}$, ReLU $\\max(0, z)$. Ein einzelnes Neuron kann UND und ODER darstellen, aber nicht XOR, weil sich XOR nicht durch eine Gerade trennen lässt. Dafür braucht man **versteckte Schichten**."
+            }
+          ]
+        },
+        {
+          "title": "Lernen mit Gradientenabstieg",
+          "blocks": [
+            {
+              "md": "Eine Verlustfunktion misst, wie falsch das Netz liegt. Man verschiebt jedes Gewicht ein Stück entgegen der Ableitung des Verlusts nach diesem Gewicht (**Ableitung**). Stochastischer Gradientenabstieg nimmt dafür ein einzelnes Beispiel, Mini-Batch eine kleine Gruppe. **Backpropagation** berechnet die Ableitungen Schicht für Schicht von hinten nach vorn mit der Kettenregel."
+            }
+          ]
+        },
+        {
+          "title": "Overfitting",
+          "blocks": [
+            {
+              "md": "Große Netze lernen Trainingsdaten auswendig. **Dropout** schaltet beim Training zufällig Neuronen ab, damit sich das Netz nicht auf einzelne verlässt."
+            }
+          ]
+        },
+        {
+          "title": "Spezielle Netze",
+          "blocks": [
+            {
+              "md": "- **Faltungsnetze (CNN)** für Bilder: Filter (Kernel) erkennen lokale Muster wie Kanten, **Pooling** fasst Bereiche zusammen (etwa das Maximum), am Ende entscheiden dichte Schichten.\n- **Rekurrente Netze (RNN)** für Folgen wie Text oder Sprache, mit Gedächtnis über frühere Eingaben."
+            }
+          ]
+        },
+        {
+          "title": "Projekt",
+          "blocks": [
+            {
+              "md": "*Traffic*: Ein Faltungsnetz mit TensorFlow erkennt Verkehrszeichen auf Fotos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Gradient",
+      "md": "Gleiche Situation, aber $w = 2$. Wie groß ist $\\tfrac{\\partial L}{\\partial w}$?",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Gradient",
+      "explain": "$\\hat y = 4$, also $(4 - 1) \\cdot 2 = 6$.",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Trainingsschritt",
       "md": "Ordne einen Trainingsschritt.",
@@ -58,7 +195,8 @@
       "points": [
         "Gradientenabstieg auf dem Verlust.",
         "Backpropagation: Kettenregel rückwärts.",
-        "Mini-Batch, Dropout."
+        "Mini-Batch, Dropout.",
+        "Gradient über die Kettenregel; Backpropagation geht Schicht für Schicht rückwärts."
       ],
       "id": "summary"
     }

@@ -4,7 +4,10 @@
   "subtitle": "CS50 AI, Lecture 0: informierte Suche",
   "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 0",
   "vault": [
-    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Informierte Suche.md", "title": "Informierte Suche" }
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Informierte Suche.md",
+      "title": "Informierte Suche"
+    }
   ],
   "steps": [
     {
@@ -12,19 +15,114 @@
       "type": "anim",
       "md": "Dieselbe Aufgabe, drei Strategien. Die Breitensuche weiß nicht, wo das Ziel liegt. Die beiden anderen schätzen es mit einer **Heuristik**: der Manhattan-Distanz, die in den Feldern steht.",
       "widget": "maze-search",
-      "params": { "maze": ["###########", "#         #", "# ##### # #", "#A    # # #", "##### # # #", "#     #  B#", "###########"], "algorithm": "bfs", "algorithms": ["bfs", "gbfs", "astar"] },
+      "params": {
+        "maze": [
+          "###########",
+          "#         #",
+          "# ##### # #",
+          "#A    # # #",
+          "##### # # #",
+          "#     #  B#",
+          "###########"
+        ],
+        "algorithm": "bfs",
+        "algorithms": [
+          "bfs",
+          "gbfs",
+          "astar"
+        ]
+      },
       "timeline": [
-        { "caption": "Die Breitensuche sucht in alle Richtungen gleichmäßig, auch weg vom Ziel.", "do": { "alg": "bfs", "step": 10 } },
-        { "caption": "Bis sie $B$ erreicht, hat sie $30$ Felder erkundet.", "do": { "alg": "bfs", "finish": true } },
-        { "caption": "**Greedy Best-First:** Die Zahl in jedem Feld ist $h(n)$, die Manhattan-Distanz zu $B$, als ob es keine Wände gäbe. Greedy nimmt immer das Feld mit dem kleinsten $h$ und läuft dorthin, wo das Ziel nah aussieht.", "do": { "alg": "gbfs", "step": 8 }, "hold": 7000 },
-        { "caption": "Greedy braucht nur $25$ Felder. Aber es ignoriert, wie weit es schon gelaufen ist, und kann sich in Umwege verrennen.", "do": { "alg": "gbfs", "finish": true } },
-        { "caption": "**A\\*** nimmt das Feld mit dem kleinsten $g(n) + h(n)$: bisheriger Weg plus geschätzter Rest. $23$ Felder, und trotzdem ein kürzester Weg. Das garantiert A\\*, solange die Heuristik nie überschätzt.", "do": { "alg": "astar", "finish": true } }
+        {
+          "caption": "Die Breitensuche sucht in alle Richtungen gleichmäßig, auch weg vom Ziel.",
+          "do": {
+            "alg": "bfs",
+            "step": 10
+          }
+        },
+        {
+          "caption": "Bis sie $B$ erreicht, hat sie $30$ Felder erkundet.",
+          "do": {
+            "alg": "bfs",
+            "finish": true
+          }
+        },
+        {
+          "caption": "**Greedy Best-First:** Die Zahl in jedem Feld ist $h(n)$, die Manhattan-Distanz zu $B$, als ob es keine Wände gäbe. Greedy nimmt immer das Feld mit dem kleinsten $h$ und läuft dorthin, wo das Ziel nah aussieht.",
+          "do": {
+            "alg": "gbfs",
+            "step": 8
+          },
+          "hold": 7000
+        },
+        {
+          "caption": "Greedy braucht nur $25$ Felder. Aber es ignoriert, wie weit es schon gelaufen ist, und kann sich in Umwege verrennen.",
+          "do": {
+            "alg": "gbfs",
+            "finish": true
+          }
+        },
+        {
+          "caption": "**A\\*** nimmt das Feld mit dem kleinsten $g(n) + h(n)$: bisheriger Weg plus geschätzter Rest. $23$ Felder, und trotzdem ein kürzester Weg. Das garantiert A\\*, solange die Heuristik nie überschätzt.",
+          "do": {
+            "alg": "astar",
+            "finish": true
+          }
+        }
       ]
     },
     {
       "id": "intro",
       "type": "text",
       "md": "Tiefen- und Breitensuche sind **uninformiert**: Sie wissen nichts darüber, wo das Ziel liegt. **Informierte Suche** nutzt zusätzliches Wissen in Form einer **Heuristik** $h(n)$, einer Schätzung, wie weit ein Zustand noch vom Ziel entfernt ist.\n\nIm Labyrinth ist die **Manhattan-Distanz** eine natürliche Heuristik: waagerechte plus senkrechte Entfernung zum Ziel, so als gäbe es keine Wände."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Informierte Suche",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Informierte Suche.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 0: Search. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Heuristik",
+          "blocks": [
+            {
+              "md": "Eine **Heuristik** $h(n)$ schätzt die Kosten vom Knoten $n$ zum Ziel. Im Gitterlabyrinth ist der **Manhattan-Abstand** $|x_1 - x_2| + |y_1 - y_2|$ eine natürliche Wahl: Er ignoriert Wände und ist deshalb nie zu groß."
+            }
+          ]
+        },
+        {
+          "title": "Gierige Bestensuche",
+          "blocks": [
+            {
+              "md": "Entnimmt immer den Knoten mit dem kleinsten $h(n)$. Sie ist oft schnell, aber nicht optimal: Sie läuft auf das scheinbar nahe Ziel zu und kann sich in Sackgassen verrennen, weil sie die schon zurückgelegten Kosten nicht beachtet."
+            }
+          ]
+        },
+        {
+          "title": "A*",
+          "blocks": [
+            {
+              "md": "Entnimmt den Knoten mit dem kleinsten\n$$f(n) = g(n) + h(n),$$\nalso bisherige Kosten plus geschätzte Restkosten. A* findet garantiert einen optimalen Weg, wenn die Heuristik\n- **zulässig** ist: Sie überschätzt die wahren Restkosten nie, und\n- **konsistent** ist: $h(n) \\le c(n, n') + h(n')$ für jeden Nachfolger $n'$.\n\nEine Heuristik, die überschätzt, kann den kürzesten Weg übersehen. Im schlimmsten Fall braucht auch A* exponentiell viel Speicher; gute Heuristiken machen den Unterschied."
+            }
+          ]
+        },
+        {
+          "title": "Vergleich",
+          "blocks": [
+            {
+              "md": "| Verfahren | wählt nach | optimal |\n|---|---|---|\n| Breitensuche | Tiefe im Baum | bei gleichen Schrittkosten |\n| Tiefensuche | zuletzt gefunden | nein |\n| gierige Bestensuche | $h(n)$ | nein |\n| A* | $g(n) + h(n)$ | mit zulässiger, konsistenter Heuristik |"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "manhattan",
@@ -41,8 +139,23 @@
       "md": "**Greedy Best-First Search** entfernt immer den Knoten mit dem kleinsten $h(n)$. Die Zahlen in den Feldern sind die Manhattan-Distanzen. Lass sie laufen.",
       "widget": "maze-search",
       "params": {
-        "maze": ["###############", "#A      #     #", "# ##### # ### #", "# #   # #   # #", "# # # # ### # #", "#   #     # # #", "##### ### # # #", "#       #   #B#", "###############"],
-        "algorithm": "gbfs", "algorithms": ["gbfs", "bfs"], "speed": 120
+        "maze": [
+          "###############",
+          "#A      #     #",
+          "# ##### # ### #",
+          "# #   # #   # #",
+          "# # # # ### # #",
+          "#   #     # # #",
+          "##### ### # # #",
+          "#       #   #B#",
+          "###############"
+        ],
+        "algorithm": "gbfs",
+        "algorithms": [
+          "gbfs",
+          "bfs"
+        ],
+        "speed": 120
       }
     },
     {
@@ -56,7 +169,8 @@
     {
       "id": "astar-text",
       "type": "text",
-      "md": "**A\\*** behebt genau das. Es entfernt den Knoten mit dem kleinsten\n$$g(n) + h(n),$$\nwobei $g(n)$ die bisherigen Kosten bis $n$ sind. A* wägt also ab: bisheriger Weg plus geschätzter Rest.\n\n> [!satz] Optimalität von A*\n> A* findet einen optimalen Weg, wenn die Heuristik **zulässig** ist (sie überschätzt die wahren Kosten nie) und **konsistent** (für jeden Nachfolger $n'$ mit Schrittkosten $c$ gilt $h(n) \\le c + h(n')$)."
+      "md": "**A\\*** entfernt den Knoten mit kleinstem $g(n) + h(n)$: bisheriger Weg plus geschätzter Rest. Es findet einen optimalen Weg, wenn $h$ **zulässig** ist (nie überschätzt) und **konsistent** ($h(n) \\le c + h(n')$ für jeden Nachfolger $n'$).",
+      "more": "**A\\*** behebt genau das. Es entfernt den Knoten mit dem kleinsten\n$$g(n) + h(n),$$\nwobei $g(n)$ die bisherigen Kosten bis $n$ sind. A* wägt also ab: bisheriger Weg plus geschätzter Rest.\n\n> [!satz] Optimalität von A*\n> A* findet einen optimalen Weg, wenn die Heuristik **zulässig** ist (sie überschätzt die wahren Kosten nie) und **konsistent** (für jeden Nachfolger $n'$ mit Schrittkosten $c$ gilt $h(n) \\le c + h(n')$)."
     },
     {
       "id": "astar",
@@ -65,10 +179,26 @@
       "md": "Hier ist ein Labyrinth mit Abkürzungen und Sackgassen. **Lass A\\* bis zum Ziel laufen** und vergleiche die Zahl der erkundeten Zustände mit der Breitensuche.",
       "widget": "maze-search",
       "params": {
-        "maze": ["###########", "#         #", "# ##### # #", "#A    # # #", "##### # # #", "#     #  B#", "###########"],
-        "algorithm": "astar", "algorithms": ["bfs", "gbfs", "astar"], "speed": 140
+        "maze": [
+          "###########",
+          "#         #",
+          "# ##### # #",
+          "#A    # # #",
+          "##### # # #",
+          "#     #  B#",
+          "###########"
+        ],
+        "algorithm": "astar",
+        "algorithms": [
+          "bfs",
+          "gbfs",
+          "astar"
+        ],
+        "speed": 140
       },
-      "goal": { "run": "astar" },
+      "goal": {
+        "run": "astar"
+      },
       "explain": "Alle drei finden hier einen Weg mit 14 Schritten. A* erkundet dafür 23 Zustände, Greedy 25, die Breitensuche 30. Die Heuristik spart Arbeit, und $g(n)$ sorgt dafür, dass A* trotzdem keinen Umweg in Kauf nimmt."
     },
     {
@@ -76,10 +206,22 @@
       "type": "choice",
       "md": "Warum ist die Manhattan-Distanz im Labyrinth eine **zulässige** Heuristik?",
       "options": [
-        { "md": "Jeder echte Weg braucht mindestens so viele Schritte, weil Wände nur Umwege erzwingen.", "correct": true },
-        { "md": "Sie ist immer gleich der wahren Weglänge.", "why": "Dann wäre die Suche trivial. Mit Wänden ist der echte Weg oft länger." },
-        { "md": "Sie ist größer als jeder echte Weg.", "why": "Eine Heuristik, die überschätzt, ist gerade **nicht** zulässig." },
-        { "md": "Weil sie ganze Zahlen liefert.", "why": "Mit Zulässigkeit hat das nichts zu tun." }
+        {
+          "md": "Jeder echte Weg braucht mindestens so viele Schritte, weil Wände nur Umwege erzwingen.",
+          "correct": true
+        },
+        {
+          "md": "Sie ist immer gleich der wahren Weglänge.",
+          "why": "Dann wäre die Suche trivial. Mit Wänden ist der echte Weg oft länger."
+        },
+        {
+          "md": "Sie ist größer als jeder echte Weg.",
+          "why": "Eine Heuristik, die überschätzt, ist gerade **nicht** zulässig."
+        },
+        {
+          "md": "Weil sie ganze Zahlen liefert.",
+          "why": "Mit Zulässigkeit hat das nichts zu tun."
+        }
       ],
       "explain": "Zulässig heißt: optimistisch. Die Manhattan-Distanz zählt nur die Schritte, die man selbst ohne Wände bräuchte."
     },
@@ -88,10 +230,22 @@
       "type": "match",
       "md": "Welche Suche entfernt welchen Knoten aus der Frontier?",
       "pairs": [
-        ["Tiefensuche", "den zuletzt hinzugefügten"],
-        ["Breitensuche", "den zuerst hinzugefügten"],
-        ["Greedy Best-First", "den mit kleinstem $h(n)$"],
-        ["A*", "den mit kleinstem $g(n) + h(n)$"]
+        [
+          "Tiefensuche",
+          "den zuletzt hinzugefügten"
+        ],
+        [
+          "Breitensuche",
+          "den zuerst hinzugefügten"
+        ],
+        [
+          "Greedy Best-First",
+          "den mit kleinstem $h(n)$"
+        ],
+        [
+          "A*",
+          "den mit kleinstem $g(n) + h(n)$"
+        ]
       ],
       "explain": "Vier Strategien, ein Algorithmus: Nur die Auswahl aus der Frontier ändert sich."
     },
@@ -134,10 +288,34 @@
       ],
       "explain": "BFS findet bei gleichen Schrittkosten immer einen kürzesten Weg, DFS nicht. Die gierige Suche schaut nur auf die Heuristik und kann sich verrennen. A* ist optimal, solange die Heuristik nie überschätzt; eine überschätzende Heuristik kann den kürzesten Weg übersehen."
     },
-    { "id": "neu1", "type": "gen", "gen": "cs-astar", "level": 1, "label": "Neue Aufgabe" },
-    { "id": "neu2", "type": "gen", "gen": "cs-astar", "level": 2, "label": "Neue Aufgabe" },
-    { "id": "neu3", "type": "gen", "gen": "cs-astar", "level": 3, "label": "Neue Aufgabe" },
-    { "id": "neu4", "type": "gen", "gen": "cs-astar", "level": 4, "label": "Nachdenken" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 1,
+      "label": "Neue Aufgabe"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 2,
+      "label": "Neue Aufgabe"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 3,
+      "label": "Neue Aufgabe"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "cs-astar",
+      "level": 4,
+      "label": "Nachdenken"
+    },
     {
       "id": "summary",
       "type": "summary",

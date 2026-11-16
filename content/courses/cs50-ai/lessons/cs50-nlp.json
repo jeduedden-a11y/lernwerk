@@ -4,8 +4,14 @@
   "subtitle": "CS50 AI, Lecture 6: Language",
   "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 6",
   "vault": [
-    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md", "title": "Sprachverarbeitung" },
-    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md", "title": "Lecture 6 - Language (Kurs)" }
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md",
+      "title": "Sprachverarbeitung"
+    },
+    {
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md",
+      "title": "Lecture 6 - Language (Kurs)"
+    }
   ],
   "steps": [
     {
@@ -13,18 +19,62 @@
       "type": "anim",
       "md": "Ein kleiner Text über Katzen, Hunde und Mäuse. Ein **Bigramm-Modell** zählt darin nur eines: welches Wort auf welches folgt. Damit kann es neue Sätze erzeugen.",
       "widget": "ngram",
-      "params": { "start": "die" },
+      "params": {
+        "start": "die"
+      },
       "timeline": [
-        { "caption": "Nach »die« kam im Text viermal »katze«, zweimal »maus« und einmal »sonne«. Das sind die Wahrscheinlichkeiten für das nächste Wort.", "do": { "words": ["die"] } },
-        { "caption": "Das Modell würfelt nach diesen Häufigkeiten, hier »katze«. Nach »katze« ging es im Text auf vier verschiedene Arten weiter.", "do": { "words": ["die", "katze"] } },
-        { "caption": "Wort für Wort entsteht »die katze jagt die maus«. Jedes Wortpaar kommt so im Text vor.", "do": { "words": ["die", "katze", "jagt", "die", "maus"] } },
-        { "caption": "Weiter: »… maus schläft im garten.« Jedes Paar klingt richtig, der ganze Satz ist Unsinn. Das Modell sieht immer nur ein Wort zurück. Längere $n$-Gramme helfen etwas, aber erst Modelle mit **Attention** überblicken den ganzen Text.", "do": { "words": ["die", "katze", "jagt", "die", "maus", "schläft", "im", "garten", "."] } }
+        {
+          "caption": "Nach »die« kam im Text viermal »katze«, zweimal »maus« und einmal »sonne«. Das sind die Wahrscheinlichkeiten für das nächste Wort.",
+          "do": {
+            "words": [
+              "die"
+            ]
+          }
+        },
+        {
+          "caption": "Das Modell würfelt nach diesen Häufigkeiten, hier »katze«. Nach »katze« ging es im Text auf vier verschiedene Arten weiter.",
+          "do": {
+            "words": [
+              "die",
+              "katze"
+            ]
+          }
+        },
+        {
+          "caption": "Wort für Wort entsteht »die katze jagt die maus«. Jedes Wortpaar kommt so im Text vor.",
+          "do": {
+            "words": [
+              "die",
+              "katze",
+              "jagt",
+              "die",
+              "maus"
+            ]
+          }
+        },
+        {
+          "caption": "Weiter: »… maus schläft im garten.« Jedes Paar klingt richtig, der ganze Satz ist Unsinn. Das Modell sieht immer nur ein Wort zurück. Längere $n$-Gramme helfen etwas, aber erst Modelle mit **Attention** überblicken den ganzen Text.",
+          "do": {
+            "words": [
+              "die",
+              "katze",
+              "jagt",
+              "die",
+              "maus",
+              "schläft",
+              "im",
+              "garten",
+              "."
+            ]
+          }
+        }
       ]
     },
     {
       "id": "intuition",
       "type": "text",
-      "md": "Sprache ist für Computer schwer, weil sie **Syntax** (Struktur) und **Semantik** (Bedeutung) hat und beides mehrdeutig ist. Die Vorlesung geht in drei Stufen vor.\n\n**1. Zählen.** $n$-Gramme zählen Folgen von $n$ Wörtern. Ein Markov-Modell darüber erzeugt Text, der lokal plausibel ist. Für Klassifikation, etwa ob eine Rezension positiv ist, genügt oft ein **Bag of Words**: Die Reihenfolge wird ignoriert, nur gezählt, welche Wörter vorkommen. **Naive Bayes** rechnet damit nach Bayes, mit der »naiven« Annahme, dass die Wörter unabhängig sind.\n\n**2. Bedeutung als Ort.** Statt jedes Wort als eigenes Symbol zu behandeln, gibt man ihm einen Vektor, ein **Embedding**. word2vec lernt die Vektoren so, dass Wörter in ähnlichen Zusammenhängen nahe beieinander liegen. Dann tragen sogar **Richtungen** Bedeutung: König minus Mann plus Frau landet bei Königin.\n\n**3. Aufmerksamkeit.** Um ein Wort zu verstehen, muss man wissen, auf welche anderen Wörter es sich bezieht. **Attention** berechnet für jedes Wort, wie stark es jedes andere beachten soll. **Transformer** bestehen fast nur aus solchen Attention-Schichten und verarbeiten alle Wörter gleichzeitig; die Reihenfolge steckt in einer **Positionskodierung**. Auf dieser Idee beruhen heutige große Sprachmodelle."
+      "md": "Sprache hat Syntax und Semantik, beide mehrdeutig. Drei Stufen: **zählen** ($n$-Gramme, Bag of Words, Naive Bayes), **Bedeutung als Ort** (Wortvektoren, ähnliche Wörter liegen nah beieinander) und **Aufmerksamkeit** (Transformer beachten für jedes Wort die passenden anderen).",
+      "more": "Sprache ist für Computer schwer, weil sie **Syntax** (Struktur) und **Semantik** (Bedeutung) hat und beides mehrdeutig ist. Die Vorlesung geht in drei Stufen vor.\n\n**1. Zählen.** $n$-Gramme zählen Folgen von $n$ Wörtern. Ein Markov-Modell darüber erzeugt Text, der lokal plausibel ist. Für Klassifikation, etwa ob eine Rezension positiv ist, genügt oft ein **Bag of Words**: Die Reihenfolge wird ignoriert, nur gezählt, welche Wörter vorkommen. **Naive Bayes** rechnet damit nach Bayes, mit der »naiven« Annahme, dass die Wörter unabhängig sind.\n\n**2. Bedeutung als Ort.** Statt jedes Wort als eigenes Symbol zu behandeln, gibt man ihm einen Vektor, ein **Embedding**. word2vec lernt die Vektoren so, dass Wörter in ähnlichen Zusammenhängen nahe beieinander liegen. Dann tragen sogar **Richtungen** Bedeutung: König minus Mann plus Frau landet bei Königin.\n\n**3. Aufmerksamkeit.** Um ein Wort zu verstehen, muss man wissen, auf welche anderen Wörter es sich bezieht. **Attention** berechnet für jedes Wort, wie stark es jedes andere beachten soll. **Transformer** bestehen fast nur aus solchen Attention-Schichten und verarbeiten alle Wörter gleichzeitig; die Reihenfolge steckt in einer **Positionskodierung**. Auf dieser Idee beruhen heutige große Sprachmodelle."
     },
     {
       "id": "vektoren",
@@ -34,9 +84,33 @@
       "widget": "embedding",
       "params": {},
       "timeline": [
-        { "caption": "Personen liegen auf der einen Seite, Obst auf der anderen. Männliche Wörter oben, weibliche unten: Diese Struktur hat niemand vorgegeben, sie entsteht beim Lernen aus Texten.", "do": { "analogy": null } },
-        { "caption": "Der orange Pfeil führt von »Mann« zu »Frau«. Setzt man denselben Pfeil bei »König« an (grün), landet man fast genau bei »Königin«.", "do": { "analogy": ["König", "Mann", "Frau"] }, "hold": 7000 },
-        { "caption": "Dasselbe mit Prinz, Junge und Mädchen: Der Unterschied »männlich zu weiblich« ist eine feste Richtung im Raum. Echte Embeddings haben Hunderte Dimensionen, aber die Idee ist dieselbe.", "do": { "analogy": ["Prinz", "Junge", "Mädchen"] } }
+        {
+          "caption": "Personen liegen auf der einen Seite, Obst auf der anderen. Männliche Wörter oben, weibliche unten: Diese Struktur hat niemand vorgegeben, sie entsteht beim Lernen aus Texten.",
+          "do": {
+            "analogy": null
+          }
+        },
+        {
+          "caption": "Der orange Pfeil führt von »Mann« zu »Frau«. Setzt man denselben Pfeil bei »König« an (grün), landet man fast genau bei »Königin«.",
+          "do": {
+            "analogy": [
+              "König",
+              "Mann",
+              "Frau"
+            ]
+          },
+          "hold": 7000
+        },
+        {
+          "caption": "Dasselbe mit Prinz, Junge und Mädchen: Der Unterschied »männlich zu weiblich« ist eine feste Richtung im Raum. Echte Embeddings haben Hunderte Dimensionen, aber die Idee ist dieselbe.",
+          "do": {
+            "analogy": [
+              "Prinz",
+              "Junge",
+              "Mädchen"
+            ]
+          }
+        }
       ]
     },
     {
@@ -45,8 +119,18 @@
       "label": "Rechnen",
       "md": "**Tippe auf das Wort, das am nächsten bei »Junge« minus »Mann« plus »Frau« liegt.**",
       "widget": "embedding",
-      "params": { "analogy": ["Junge", "Mann", "Frau"], "select": true, "target": "Mädchen" },
-      "goal": { "nearest": true },
+      "params": {
+        "analogy": [
+          "Junge",
+          "Mann",
+          "Frau"
+        ],
+        "select": true,
+        "target": "Mädchen"
+      },
+      "goal": {
+        "nearest": true
+      },
       "explain": "»Junge« $(-1{,}2;\\ 1{,}4)$ minus »Mann« $(0{,}5;\\ 2)$ plus »Frau« $(0{,}5;\\ -1{,}6)$ ergibt $(-1{,}2;\\ -2{,}2)$, und am nächsten liegt »Mädchen«. Vektorrechnung ersetzt hier das Nachdenken über Bedeutung."
     },
     {
@@ -55,9 +139,109 @@
       "label": "Aufmerksamkeit",
       "md": "»Das Tier überquerte die Straße nicht, weil es zu müde war.« **Auf welches Wort muss »es« am stärksten achten, damit der Satz verstanden wird?** Tippe es an.",
       "widget": "attention",
-      "params": { "select": true },
-      "goal": { "attention": true },
+      "params": {
+        "select": true
+      },
+      "goal": {
+        "attention": true
+      },
       "explain": "»es« ist müde, also meint es das Tier. Ein Transformer lernt solche Bezüge selbst: Die Linien zeigen, wie stark »es« die anderen Wörter gewichtet. Steht im Satz »weil es zu breit war«, verschiebt sich die Aufmerksamkeit zur Straße, ohne dass irgendwo eine Regel steht."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Sprachverarbeitung",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 6: Language. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Syntax",
+          "blocks": [
+            {
+              "md": "Eine **kontextfreie Grammatik** beschreibt mit Regeln wie $S \\to NP\\ VP$ und $NP \\to D\\ N$, wie Sätze aufgebaut sind. Ein Parser baut daraus **Syntaxbäume**; mehrdeutige Sätze haben mehrere. Projekt *Parser*: Sätze zerlegen und Nominalphrasen herausziehen."
+            }
+          ]
+        },
+        {
+          "title": "Statistische Modelle",
+          "blocks": [
+            {
+              "md": "- **n-Gramme:** Folgen von $n$ Wörtern. Ihre Häufigkeiten in einem Text ergeben ein Markov-Modell, das Wort für Wort neuen, oberflächlich plausiblen Text erzeugt.\n- **Tokenisierung:** Text in Wörter oder Wortteile zerlegen.\n- **Bag of Words:** Ein Text als Menge seiner Wörter, ohne Reihenfolge. Mit **Naive Bayes** klassifiziert man so etwa die Stimmung einer Bewertung: $P(\\text{positiv} \\mid \\text{Wörter}) \\propto P(\\text{positiv}) \\prod P(\\text{Wort} \\mid \\text{positiv})$, mit Glättung für unbekannte Wörter."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung als Vektor",
+          "blocks": [
+            {
+              "md": "**Wortvektoren** (Embeddings wie word2vec) legen Wörter so in einen Raum, dass ähnliche nahe beieinander liegen. Beziehungen werden zu Richtungen: $\\text{König} - \\text{Mann} + \\text{Frau} \\approx \\text{Königin}$."
+            }
+          ]
+        },
+        {
+          "title": "Attention und Transformer",
+          "blocks": [
+            {
+              "md": "Ein Wort hängt vom Kontext ab. **Attention** berechnet für jedes Wort Gewichte, wie stark es die anderen Wörter berücksichtigt. **Transformer** bestehen im Kern aus vielen solchen Schichten und verarbeiten alle Wörter parallel; auf ihnen beruhen heutige Sprachmodelle. Projekt *Attention*: Die Aufmerksamkeitsgewichte eines Modells sichtbar machen, das maskierte Wörter vorhersagt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lecture 6 - Language (Kurs)",
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Vorlesung 6 von **CS50 AI** (HarvardX, edX). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Syntax und Semantik, kontextfreie Grammatiken, n-Gramme und Tokenisierung, Bag of Words und Naive Bayes, Wortvektoren, Attention und Transformer."
+            }
+          ]
+        },
+        {
+          "title": "Begriffsnotizen",
+          "blocks": [
+            {
+              "md": "- **Sprachverarbeitung**"
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "Parser, Attention."
+            }
+          ]
+        },
+        {
+          "title": "Lernwerk",
+          "blocks": [
+            {
+              "md": "Die passenden Lektionen mit Animationen und Übungen in vier Stufen stehen in der Tabelle der **CS50 AI MOC**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bayes",
@@ -78,10 +262,34 @@
       "whyNot": "Er verarbeitet alle Wörter gleichzeitig. Die Reihenfolge erhält er über eine Positionskodierung, die zu jedem Wortvektor addiert wird.",
       "explain": "Gerade das gleichzeitige Verarbeiten macht Transformer auf moderner Hardware so schnell trainierbar. Jedes Wort kann über Attention direkt auf jedes andere schauen, statt Information über viele Schritte weiterzureichen."
     },
-    { "id": "neu1", "type": "gen", "gen": "cs-nlp", "level": 1, "label": "Bigramm" },
-    { "id": "neu2", "type": "gen", "gen": "cs-nlp", "level": 2, "label": "Naive Bayes" },
-    { "id": "neu3", "type": "gen", "gen": "cs-nlp", "level": 3, "label": "Glättung" },
-    { "id": "neu4", "type": "gen", "gen": "cs-nlp", "level": 4, "label": "Vektoren" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "cs-nlp",
+      "level": 1,
+      "label": "Bigramm"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "cs-nlp",
+      "level": 2,
+      "label": "Naive Bayes"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "cs-nlp",
+      "level": 3,
+      "label": "Glättung"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "cs-nlp",
+      "level": 4,
+      "label": "Vektoren"
+    },
     {
       "id": "summary",
       "type": "summary",

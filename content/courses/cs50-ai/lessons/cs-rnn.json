@@ -9,6 +9,89 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ein rekurrentes Netz, aufgerollt:** derselbe Baustein in jedem Schritt.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "h_t = f(W h_{t-1} + U x_t)",
+            "why": "Neuer Zustand aus altem Zustand und neuer Eingabe."
+          },
+          {
+            "tex": "h_1 = f(U x_1)",
+            "why": "Start mit $h_0 = 0$."
+          },
+          {
+            "tex": "h_2 = f(W h_1 + U x_2)",
+            "why": "Dieselben Gewichte $W$ und $U$ wie zuvor."
+          },
+          {
+            "tex": "h_3 = f(W h_2 + U x_3)",
+            "why": "$h_3$ trägt Information aus $x_1$, $x_2$ und $x_3$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Regel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 2.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schritt 3.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Warum vergessen einfache rekurrente Netze den Anfang langer Folgen?",
+      "options": [
+        {
+          "md": "Die Information muss durch viele Schritte, und ihr Einfluss wird dabei immer schwächer.",
+          "correct": true
+        },
+        {
+          "md": "Sie haben zu wenige Gewichte."
+        },
+        {
+          "md": "Sie lesen den Text rückwärts."
+        },
+        {
+          "md": "Sie verarbeiten alle Wörter gleichzeitig.",
+          "why": "Das tun Transformer."
+        }
+      ],
+      "explain": "Auch die Gradienten werden beim Rückwärtsrechnen durch viele Schritte sehr klein. LSTM-Zellen und Attention helfen dagegen.",
+      "label": "Gedächtnis",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Aufgabe der Form zu.",
@@ -49,7 +132,8 @@
       "points": [
         "Zustand wird weitergegeben: Folgen.",
         "Eins zu vielen, viele zu eins, viele zu vielen.",
-        "LSTM, heute meist Transformer."
+        "LSTM, heute meist Transformer.",
+        "$h_t = f(W h_{t-1} + U x_t)$ mit denselben Gewichten in jedem Schritt."
       ],
       "id": "summary"
     }

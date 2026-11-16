@@ -15,6 +15,148 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Von $P \\leftrightarrow Q$ zur Resolution:** erst KNF, dann ein Widerspruchsbeweis für $Q$ mit $P$ in der KB.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P \\leftrightarrow Q",
+            "why": "Ausgangsformel."
+          },
+          {
+            "tex": "(P \\to Q) \\wedge (Q \\to P)",
+            "why": "Bikonditionalelimination."
+          },
+          {
+            "tex": "(\\neg P \\vee Q) \\wedge (\\neg Q \\vee P)",
+            "why": "Implikationen auflösen: zwei Klauseln."
+          },
+          {
+            "tex": "\\neg Q,\\ \\ \\neg P \\vee Q \\ \\Rightarrow\\ \\neg P",
+            "why": "Um $Q$ zu zeigen, $\\neg Q$ hinzufügen und mit einer Klausel resolvieren."
+          },
+          {
+            "tex": "\\neg P,\\ \\ P \\ \\Rightarrow\\ ()",
+            "why": "Die leere Klausel: Also folgt $Q$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zerlegen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "KNF.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Resolvieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Widerspruch.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Resolution",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Resolution.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 1: Knowledge. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Schlussregeln",
+          "blocks": [
+            {
+              "md": "Statt alle Modelle durchzugehen, leitet man neue Sätze ab. Gültige Regeln sind etwa\n- **Modus ponens:** aus $\\alpha \\Rightarrow \\beta$ und $\\alpha$ folgt $\\beta$,\n- **Und-Elimination:** aus $\\alpha \\land \\beta$ folgt $\\alpha$,\n- Implikation ersetzen: $\\alpha \\Rightarrow \\beta$ ist gleichwertig zu $\\neg\\alpha \\lor \\beta$,\n- de Morgan und Distributivgesetze."
+            }
+          ]
+        },
+        {
+          "title": "Konjunktive Normalform",
+          "blocks": [
+            {
+              "md": "Jeder Satz lässt sich in eine **KNF** bringen: eine Und-Verknüpfung von **Klauseln**, die jeweils Oder-Verknüpfungen von Literalen sind. Schritte: Äquivalenzen und Implikationen auflösen, Negationen nach innen schieben, Distributivgesetz anwenden."
+            }
+          ]
+        },
+        {
+          "title": "Resolutionsregel",
+          "blocks": [
+            {
+              "md": "$$\\frac{P \\lor Q_1 \\lor \\dots \\qquad \\neg P \\lor R_1 \\lor \\dots}{Q_1 \\lor \\dots \\lor R_1 \\lor \\dots}$$\nEin Literal und seine Negation heben sich auf. Aus $P$ und $\\neg P$ entsteht die **leere Klausel**, ein Widerspruch."
+            }
+          ]
+        },
+        {
+          "title": "Beweis durch Widerspruch",
+          "blocks": [
+            {
+              "md": "Um $KB \\models \\alpha$ zu zeigen: $\\neg\\alpha$ zur KB hinzufügen, alles in KNF bringen, so lange resolvieren, bis die leere Klausel entsteht (dann folgt $\\alpha$) oder nichts Neues mehr hinzukommt (dann nicht).\n\nBeispiel: KB $= \\{A \\lor B,\\ \\neg B \\lor C,\\ \\neg C\\}$, zu zeigen $A$. Füge $\\neg A$ hinzu. Aus $A \\lor B$ und $\\neg A$ wird $B$, aus $B$ und $\\neg B \\lor C$ wird $C$, aus $C$ und $\\neg C$ die leere Klausel. Also gilt $A$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was ist die KNF von $\\neg(P \\wedge Q)$?",
+      "options": [
+        {
+          "md": "$\\neg P \\vee \\neg Q$",
+          "correct": true
+        },
+        {
+          "md": "$\\neg P \\wedge \\neg Q$",
+          "why": "Das ist $\\neg(P \\vee Q)$."
+        },
+        {
+          "md": "$P \\vee Q$"
+        },
+        {
+          "md": "$\\neg P \\wedge Q$"
+        }
+      ],
+      "explain": "De Morgan: Ein verneintes Und wird ein Oder der Verneinungen, hier eine einzige Klausel.",
+      "label": "De Morgan",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Umformen",
       "md": "Forme $P \\to (Q \\land R)$ in KNF um. Ordne.",
@@ -66,7 +208,8 @@
       "points": [
         "Resolution braucht Klauseln in KNF.",
         "Äquivalenz, Implikation, De Morgan, Distribution.",
-        "Leere Klausel = Widerspruch: Beweis gelungen."
+        "Leere Klausel = Widerspruch: Beweis gelungen.",
+        "KNF: Bikonditionale und Implikationen auflösen, Verneinungen nach innen, ausmultiplizieren."
       ],
       "id": "summary"
     }

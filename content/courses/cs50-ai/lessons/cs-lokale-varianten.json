@@ -15,6 +15,138 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Simulated Annealing beim Abkühlen:** ein Nachbar mit $\\Delta E = -2$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P = e^{\\Delta E / T}",
+            "why": "Wahrscheinlichkeit, einen schlechteren Nachbarn zu nehmen."
+          },
+          {
+            "tex": "T = 4:\\ \\ e^{-0{,}5} \\approx 0{,}61",
+            "why": "Schlechtere Züge sind oft erlaubt."
+          },
+          {
+            "tex": "T = 1:\\ \\ e^{-2} \\approx 0{,}14",
+            "why": "Nur noch selten."
+          },
+          {
+            "tex": "T = 0{,}25:\\ \\ e^{-8} \\approx 0{,}0003",
+            "why": "Fast nur noch Verbesserungen, wie Hill Climbing."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Regel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Heiß.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kühler.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kalt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Lokale Suche",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Lokale Suche.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 3: Optimization. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Bei vielen Problemen zählt nicht der Weg, sondern nur ein guter Zustand: Standorte planen, Stundenpläne bauen, eine Rundreise kurz machen. **Lokale Suche** hält nur einen aktuellen Zustand und verbessert ihn schrittweise über seine **Nachbarn**, gemessen an einer Ziel- oder Kostenfunktion."
+            }
+          ]
+        },
+        {
+          "title": "Hill Climbing",
+          "blocks": [
+            {
+              "md": "Gehe immer zum besten Nachbarn, solange er besser ist. Varianten: zufälliger besserer Nachbar (stochastisch), erster besserer Nachbar, **Neustarts von zufälligen Anfangszuständen**, mehrere Zustände parallel (Local Beam Search).\n\nProbleme:\n- **lokale Maxima**: kein Nachbar ist besser, das globale Optimum liegt woanders,\n- **Plateaus** und Schultern: Nachbarn sind gleich gut, keine Richtung erkennbar,\n- **Grate**, auf denen jeder Einzelschritt bergab führt."
+            }
+          ]
+        },
+        {
+          "title": "Simulated Annealing",
+          "blocks": [
+            {
+              "md": "Erlaubt anfangs auch Schritte bergab, mit Wahrscheinlichkeit $e^{\\Delta E / T}$ für eine Verschlechterung um $\\Delta E < 0$. Die **Temperatur** $T$ sinkt mit der Zeit: Erst wird viel erkundet, später kaum noch. So entkommt das Verfahren lokalen Maxima."
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "Problem des Handlungsreisenden (Nachbar: zwei Kanten tauschen), Platzierung von Einrichtungen, damit Wege kurz werden. Für Probleme mit linearen Zielfunktionen und Nebenbedingungen gibt es eigene Verfahren der **linearen Optimierung**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was macht **Random-Restart Hill Climbing** gegen lokale Maxima?",
+      "options": [
+        {
+          "md": "Es startet oft von zufälligen Zuständen neu und behält das beste Ergebnis.",
+          "correct": true
+        },
+        {
+          "md": "Es akzeptiert manchmal schlechtere Nachbarn.",
+          "why": "Das macht Simulated Annealing."
+        },
+        {
+          "md": "Es verfolgt $k$ Zustände parallel.",
+          "why": "Das ist Local Beam Search."
+        },
+        {
+          "md": "Es durchsucht alle Zustände."
+        }
+      ],
+      "explain": "Jeder Lauf endet in irgendeinem lokalen Maximum; viele Läufe erhöhen die Chance auf ein gutes.",
+      "label": "Neustart",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was passiert bei Simulated Annealing, wenn die Temperatur hoch ist?",
       "options": [
@@ -55,7 +187,8 @@
       "points": [
         "Lokale Optima als Problem.",
         "Random-Restart, Beam Search.",
-        "Simulated Annealing: e^{ΔE/T}, sinkende Temperatur."
+        "Simulated Annealing: e^{ΔE/T}, sinkende Temperatur.",
+        "Je kälter, desto seltener werden schlechtere Nachbarn angenommen."
       ],
       "id": "summary"
     }

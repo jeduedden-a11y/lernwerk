@@ -15,6 +15,147 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Eine Ableitung** mit $S \\to NP\\ VP$, $NP \\to N \\mid D\\ N$, $VP \\to V\\ NP$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "S",
+            "why": "Das Startsymbol."
+          },
+          {
+            "tex": "\\to NP\\ \\ VP",
+            "why": "Regel $S \\to NP\\ VP$."
+          },
+          {
+            "tex": "\\to \\text{she}\\ \\ VP",
+            "why": "$NP \\to N$ und $N \\to \\text{she}$."
+          },
+          {
+            "tex": "\\to \\text{she}\\ \\ V\\ \\ NP",
+            "why": "Regel $VP \\to V\\ NP$."
+          },
+          {
+            "tex": "\\to \\text{she saw the city}",
+            "why": "$V \\to \\text{saw}$, $NP \\to D\\ N$, $D \\to \\text{the}$, $N \\to \\text{city}$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Satz.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Subjekt.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Prädikat.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Fertig.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Sprachverarbeitung",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 6: Language. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Syntax",
+          "blocks": [
+            {
+              "md": "Eine **kontextfreie Grammatik** beschreibt mit Regeln wie $S \\to NP\\ VP$ und $NP \\to D\\ N$, wie Sätze aufgebaut sind. Ein Parser baut daraus **Syntaxbäume**; mehrdeutige Sätze haben mehrere. Projekt *Parser*: Sätze zerlegen und Nominalphrasen herausziehen."
+            }
+          ]
+        },
+        {
+          "title": "Statistische Modelle",
+          "blocks": [
+            {
+              "md": "- **n-Gramme:** Folgen von $n$ Wörtern. Ihre Häufigkeiten in einem Text ergeben ein Markov-Modell, das Wort für Wort neuen, oberflächlich plausiblen Text erzeugt.\n- **Tokenisierung:** Text in Wörter oder Wortteile zerlegen.\n- **Bag of Words:** Ein Text als Menge seiner Wörter, ohne Reihenfolge. Mit **Naive Bayes** klassifiziert man so etwa die Stimmung einer Bewertung: $P(\\text{positiv} \\mid \\text{Wörter}) \\propto P(\\text{positiv}) \\prod P(\\text{Wort} \\mid \\text{positiv})$, mit Glättung für unbekannte Wörter."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung als Vektor",
+          "blocks": [
+            {
+              "md": "**Wortvektoren** (Embeddings wie word2vec) legen Wörter so in einen Raum, dass ähnliche nahe beieinander liegen. Beziehungen werden zu Richtungen: $\\text{König} - \\text{Mann} + \\text{Frau} \\approx \\text{Königin}$."
+            }
+          ]
+        },
+        {
+          "title": "Attention und Transformer",
+          "blocks": [
+            {
+              "md": "Ein Wort hängt vom Kontext ab. **Attention** berechnet für jedes Wort Gewichte, wie stark es die anderen Wörter berücksichtigt. **Transformer** bestehen im Kern aus vielen solchen Schichten und verarbeiten alle Wörter parallel; auf ihnen beruhen heutige Sprachmodelle. Projekt *Attention*: Die Aufmerksamkeitsgewichte eines Modells sichtbar machen, das maskierte Wörter vorhersagt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was erzeugt die Regel $NP \\to D\\ N$?",
+      "options": [
+        {
+          "md": "einen Artikel und ein Nomen, etwa »the city«",
+          "correct": true
+        },
+        {
+          "md": "ein Verb mit Objekt"
+        },
+        {
+          "md": "einen ganzen Satz"
+        },
+        {
+          "md": "ein Nomen allein"
+        }
+      ],
+      "explain": "$D$ steht für Determinierer (Artikel), $N$ für Nomen.",
+      "label": "Regel",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Ableitung",
       "md": "Leite »the dog saw a cat« mit S → NP VP, NP → D N, VP → V NP ab. Ordne.",
@@ -50,7 +191,8 @@
       "points": [
         "Kontextfreie Grammatik: Ersetzungsregeln.",
         "Parser baut Syntaxbäume.",
-        "NP-Chunks: Nominalphrasen ohne innere Nominalphrase."
+        "NP-Chunks: Nominalphrasen ohne innere Nominalphrase.",
+        "Eine kontextfreie Grammatik ersetzt Symbole schrittweise, bis nur Wörter übrig sind."
       ],
       "id": "summary"
     }

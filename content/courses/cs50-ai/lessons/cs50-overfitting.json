@@ -142,13 +142,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Ein Modell soll aus Beispielen ein Muster lernen, das auch für neue Fälle gilt. Die Gefahr: Es lernt die Beispiele **auswendig**, samt ihrer Zufälle und Fehler. Auf den Trainingsdaten ist es dann perfekt, auf neuen Daten aber schlecht. Das heißt **Überanpassung** (overfitting). Wie ein Schüler, der alte Klausuren auswendig kann, aber keine neue Aufgabe löst.\n\nDas Gegenteil ist **Unteranpassung**: Das Modell ist so einfach, dass es schon die Trainingsdaten schlecht trifft, etwa eine Gerade durch Daten, die deutlich einer Kurve folgen.\n\nWie erkennt man Überanpassung? Man hält einen Teil der Daten zurück und prüft das Modell nur damit. Großer Abstand zwischen Trainingsfehler und Testfehler ist das Warnsignal. Dagegen helfen mehr Daten, einfachere Modelle und **Regularisierung**: Man bestraft Komplexität, indem man zum Fehler einen Strafterm addiert, und lässt das Modell den besten Kompromiss suchen."
+      "md": "**Überanpassung:** Das Modell lernt die Beispiele samt Zufällen auswendig, perfekt im Training, schlecht bei neuen Daten. **Unteranpassung:** zu einfach, schon das Training passt schlecht. Erkennen kann man beides nur an Daten, die beim Training nicht dabei waren.",
+      "more": "Ein Modell soll aus Beispielen ein Muster lernen, das auch für neue Fälle gilt. Die Gefahr: Es lernt die Beispiele **auswendig**, samt ihrer Zufälle und Fehler. Auf den Trainingsdaten ist es dann perfekt, auf neuen Daten aber schlecht. Das heißt **Überanpassung** (overfitting). Wie ein Schüler, der alte Klausuren auswendig kann, aber keine neue Aufgabe löst.\n\nDas Gegenteil ist **Unteranpassung**: Das Modell ist so einfach, dass es schon die Trainingsdaten schlecht trifft, etwa eine Gerade durch Daten, die deutlich einer Kurve folgen.\n\nWie erkennt man Überanpassung? Man hält einen Teil der Daten zurück und prüft das Modell nur damit. Großer Abstand zwischen Trainingsfehler und Testfehler ist das Warnsignal. Dagegen helfen mehr Daten, einfachere Modelle und **Regularisierung**: Man bestraft Komplexität, indem man zum Fehler einen Strafterm addiert, und lässt das Modell den besten Kompromiss suchen."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Verlustfunktion\n> Sie misst, wie schlecht Vorhersagen $\\hat y$ zu den wahren Werten $y$ passen. **0-1-Verlust**: zählt falsche Vorhersagen. **L1**: $\\sum \\abs{y - \\hat y}$. **L2**: $\\sum (y - \\hat y)^2$, große Fehler zählen überproportional.\n\n> [!definition] Regularisierung\n> Statt nur den Verlust zu minimieren, minimiert man $\\text{Kosten}(h) = \\text{Verlust}(h) + \\lambda \\cdot \\text{Komplexität}(h)$. Größeres $\\lambda$ bevorzugt einfachere Modelle.\n\n> [!tip] Prüfen\n> **Holdout**: Ein Teil der Daten bleibt beim Training außen vor. **Kreuzvalidierung**: Die Daten werden in $k$ Teile geteilt, und jeder Teil ist einmal die Testmenge."
+      "md": "**Verlust:** 0-1 zählt Fehler, $L_1$ summiert $|y - \\hat y|$, $L_2$ summiert $(y - \\hat y)^2$ und bestraft große Fehler stärker. **Regularisierung:** Verlust plus $\\lambda$ mal Komplexität. **Prüfen:** Holdout oder $k$-fache **Kreuzvalidierung**.",
+      "more": "> [!definition] Verlustfunktion\n> Sie misst, wie schlecht Vorhersagen $\\hat y$ zu den wahren Werten $y$ passen. **0-1-Verlust**: zählt falsche Vorhersagen. **L1**: $\\sum \\abs{y - \\hat y}$. **L2**: $\\sum (y - \\hat y)^2$, große Fehler zählen überproportional.\n\n> [!definition] Regularisierung\n> Statt nur den Verlust zu minimieren, minimiert man $\\text{Kosten}(h) = \\text{Verlust}(h) + \\lambda \\cdot \\text{Komplexität}(h)$. Größeres $\\lambda$ bevorzugt einfachere Modelle.\n\n> [!tip] Prüfen\n> **Holdout**: Ein Teil der Daten bleibt beim Training außen vor. **Kreuzvalidierung**: Die Daten werden in $k$ Teile geteilt, und jeder Teil ist einmal die Testmenge."
     },
     {
       "id": "ausreisser",
@@ -258,6 +260,166 @@
         }
       },
       "explain": "Mit k = 3 stimmen der Ausreißer und zwei Regentage ab, Regen gewinnt. Ein einzelner Messfehler bestimmt die Vorhersage nicht mehr."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Überanpassung",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überanpassung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 4: Learning. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Ein Modell soll aus Beispielen ein Muster lernen, das auch für **neue** Fälle gilt. **Überanpassung** (overfitting) heißt: Es lernt die Trainingsdaten samt ihrer Zufälle und Fehler auswendig. Auf den Trainingsdaten ist es dann sehr gut, auf neuen Daten schlecht. Das Gegenstück ist **Unteranpassung**: Das Modell ist zu einfach und trifft schon die Trainingsdaten schlecht."
+            }
+          ]
+        },
+        {
+          "title": "Verlustfunktionen",
+          "blocks": [
+            {
+              "md": "Eine Verlustfunktion misst, wie schlecht Vorhersagen $\\hat y$ zu den wahren Werten $y$ passen:\n- **0-1-Verlust**: zählt falsche Vorhersagen, typisch für Klassifikation.\n- **L1-Verlust**: $\\sum \\lvert y - \\hat y \\rvert$.\n- **L2-Verlust**: $\\sum (y - \\hat y)^2$; große Fehler zählen überproportional."
+            }
+          ]
+        },
+        {
+          "title": "Regularisierung",
+          "blocks": [
+            {
+              "md": "Statt nur den Verlust zu minimieren, minimiert man\n$$\\text{Kosten}(h) = \\text{Verlust}(h) + \\lambda \\cdot \\text{Komplexität}(h).$$\nDer Strafterm bevorzugt einfache Modelle; $\\lambda$ regelt den Kompromiss. In neuronalen Netzen wirkt **Dropout** ähnlich: Beim Training werden zufällig Neuronen abgeschaltet (siehe **Neuronale Netze**)."
+            }
+          ]
+        },
+        {
+          "title": "Prüfen mit zurückgehaltenen Daten",
+          "blocks": [
+            {
+              "md": "- **Holdout**: Ein Teil der Daten bleibt beim Training außen vor und dient nur zum Testen.\n- **Kreuzvalidierung**: Die Daten werden in $k$ Teile geteilt, jeder Teil ist einmal die Testmenge.\n- Warnsignal: großer Abstand zwischen Trainings- und Testfehler."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "k-Nearest-Neighbors mit einem falsch eingetragenen Punkt mitten in einer Klasse: Mit $k = 1$ folgt die Vorhersage in seiner Umgebung dem Ausreißer, mit $k = 3$ wird er überstimmt. Ein zu großes $k$ glättet dagegen auch echte Muster weg (siehe **Überwachtes Lernen**)."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Wer mit den Testdaten das Modell auswählt und mit denselben Daten bewertet, überschätzt die Güte; dafür braucht es eine eigene Validierungsmenge.\n- Null Fehler auf den Trainingsdaten ist kein gutes Zeichen, sondern eher ein Warnsignal.\n- Mehr Daten helfen fast immer, mehr Parameter fast nie."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Überwachtes Lernen",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überwachtes Lernen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 4: Learning. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Aufgabe",
+          "blocks": [
+            {
+              "md": "Aus Beispielen $(x, y)$ mit bekannter richtiger Antwort lernt ein Modell eine Funktion $h(x) \\approx y$. Ist $y$ eine Kategorie, heißt das **Klassifikation** (Spam oder nicht), ist $y$ eine Zahl, **Regression** (Preis eines Hauses)."
+            }
+          ]
+        },
+        {
+          "title": "Verfahren",
+          "blocks": [
+            {
+              "md": "- **k-nächste Nachbarn:** Ein neuer Punkt bekommt die Mehrheitsklasse seiner $k$ nächsten Trainingspunkte. Einfach, aber langsam bei vielen Daten.\n- **Perzeptron:** $h(x) = 1$, falls $w_0 + w_1 x_1 + \\dots + w_n x_n \\ge 0$, sonst $0$. Lernregel nach jedem Beispiel: $w_i \\leftarrow w_i + \\alpha\\,(y - h(x))\\,x_i$. Es findet eine Trenngerade, wenn die Klassen linear trennbar sind.\n- **Support Vector Machines** suchen die Trennlinie mit dem größten Abstand zu beiden Klassen."
+            }
+          ]
+        },
+        {
+          "title": "Bewerten",
+          "blocks": [
+            {
+              "md": "- **Verlustfunktionen:** 0-1-Verlust für Klassifikation, $L_1 = |y - h(x)|$ oder $L_2 = (y - h(x))^2$ für Regression.\n- **Overfitting:** Das Modell lernt die Trainingsdaten auswendig, samt Rauschen, und versagt bei neuen. Gegenmittel: **Regularisierung** (Strafe für komplexe Modelle) und **Validierung** auf zurückgehaltenen Daten, etwa mit $k$-facher Kreuzvalidierung.\n- Bei Klassifikation: **Sensitivität** (Anteil erkannter Positiver) und **Spezifität** (Anteil erkannter Negativer)."
+            }
+          ]
+        },
+        {
+          "title": "Projekt",
+          "blocks": [
+            {
+              "md": "*Shopping*: Mit k-nächsten Nachbarn vorhersagen, ob ein Besuch im Onlineshop zu einem Kauf führt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Lecture 4 - Learning (Kurs)",
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 4 - Learning (Kurs).md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Vorlesung 4 von **CS50 AI** (HarvardX, edX). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Überwachtes Lernen mit k-nächsten Nachbarn, Perzeptron und Support Vector Machines, Regression, Verlustfunktionen, Overfitting und Regularisierung; Reinforcement Learning mit Q-Learning; unüberwachtes Lernen mit k-Means-Clustering."
+            }
+          ]
+        },
+        {
+          "title": "Begriffsnotizen",
+          "blocks": [
+            {
+              "md": "- **Überwachtes Lernen**\n- **Reinforcement Learning**"
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "Shopping, Nim."
+            }
+          ]
+        },
+        {
+          "title": "Lernwerk",
+          "blocks": [
+            {
+              "md": "Die passenden Lektionen mit Animationen und Übungen in vier Stufen stehen in der Tabelle der **CS50 AI MOC**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "diagnose",

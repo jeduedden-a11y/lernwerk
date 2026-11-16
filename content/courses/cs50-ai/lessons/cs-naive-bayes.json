@@ -9,6 +9,76 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Naive Bayes für »great but boring«** mit $P(\\text{pos}) = P(\\text{neg}) = 0{,}5$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "0{,}5 \\cdot 0{,}4 \\cdot 0{,}05 = 0{,}01",
+            "why": "$P(\\text{great} \\mid \\text{pos}) = 0{,}4$, $P(\\text{boring} \\mid \\text{pos}) = 0{,}05$."
+          },
+          {
+            "tex": "0{,}5 \\cdot 0{,}1 \\cdot 0{,}3 = 0{,}015",
+            "why": "$P(\\text{great} \\mid \\text{neg}) = 0{,}1$, $P(\\text{boring} \\mid \\text{neg}) = 0{,}3$."
+          },
+          {
+            "tex": "P(\\text{pos} \\mid \\dots) = \\tfrac{0{,}01}{0{,}025} = 0{,}4",
+            "why": "Teilen durch die Summe."
+          },
+          {
+            "tex": "\\text{Wörter gelten als unabhängig}",
+            "why": "Darum darf man die Einzelwahrscheinlichkeiten einfach multiplizieren: die naive Annahme."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Positiv.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Negativ.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normieren.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Annahme.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Naive Bayes",
+      "md": "Gleiche Zahlen, aber die Rezension enthält nur »boring«. Wie groß ist $P(\\text{pos} \\mid \\text{boring})$? (drei Nachkommastellen)",
+      "answer": 0.143,
+      "tolerance": 0.002,
+      "placeholder": "P",
+      "explain": "$0{,}5 \\cdot 0{,}05 = 0{,}025$ gegen $0{,}5 \\cdot 0{,}3 = 0{,}15$, also $\\tfrac{0{,}025}{0{,}175} \\approx 0{,}143$.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum braucht man Glättung?",
       "options": [
@@ -49,7 +119,8 @@
       "points": [
         "Bag of Words: Häufigkeiten ohne Reihenfolge.",
         "Naive Bayes: Produkt der Wortwahrscheinlichkeiten.",
-        "Glättung gegen Nullen."
+        "Glättung gegen Nullen.",
+        "Naive Bayes: Prior mal Wortwahrscheinlichkeiten, dann normieren."
       ],
       "id": "summary"
     }

@@ -15,6 +15,121 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ähnlichkeit und Richtung** bei Wortvektoren.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\cos\\theta = \\frac{u \\cdot v}{\\|u\\|\\,\\|v\\|}",
+            "why": "Misst den Winkel, nicht die Länge."
+          },
+          {
+            "tex": "u = (1, 2),\\ v = (2, 4):\\ \\ \\cos\\theta = 1",
+            "why": "Gleiche Richtung: größte Ähnlichkeit."
+          },
+          {
+            "tex": "v_{\\text{König}} - v_{\\text{Mann}} + v_{\\text{Frau}}",
+            "why": "Landet nahe bei $v_{\\text{Königin}}$: Richtungen tragen Beziehungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Kosinus.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Parallel.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Analogie.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformer",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Transformer.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 6: Language, ergänzt um den Artikel »Attention Is All You Need« (Vaswani u. a., 2017). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Ältere Sprachmodelle lasen einen Text Wort für Wort und trugen einen Zustand mit sich; bei langen Sätzen verblasste der Anfang. Ein **Transformer** betrachtet alle Wörter zugleich und bestimmt für jedes Wort, welche anderen Wörter für seine Bedeutung wichtig sind. Weil das für alle Wörter parallel geschieht, lässt er sich auf großen Rechnern schnell trainieren."
+            }
+          ]
+        },
+        {
+          "title": "Self-Attention",
+          "blocks": [
+            {
+              "md": "Aus jedem Wortvektor $x_i$ entstehen durch gelernte Matrizen drei Vektoren: Query $q_i = W_Q x_i$, Key $k_i = W_K x_i$ und Value $v_i = W_V x_i$. Die Gewichte sind\n$$\\alpha_{ij} = \\operatorname{softmax}_j \\frac{q_i \\cdot k_j}{\\sqrt{d}}, \\qquad \\operatorname{softmax}(s)_j = \\frac{e^{s_j}}{\\sum_k e^{s_k}},$$\nund die Ausgabe für Wort $i$ ist der gewichtete Mittelwert $\\sum_j \\alpha_{ij} v_j$. Das Teilen durch $\\sqrt{d}$ verhindert, dass bei großer Dimension fast alles Gewicht auf ein einziges Wort fällt."
+            }
+          ]
+        },
+        {
+          "title": "Bausteine",
+          "blocks": [
+            {
+              "md": "- **Positionskodierung**: Attention selbst kennt keine Reihenfolge; ohne sie wären »Hund beißt Mann« und »Mann beißt Hund« gleich.\n- **Mehrere Köpfe** (multi-head attention): eigene Projektionen für verschiedene Beziehungen, etwa Bezüge von Pronomen oder Satzbau.\n- **Schichten**: Attention und gewöhnliche neuronale Schichten abwechselnd, viele Male übereinander (siehe **Neuronale Netze**)."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "»Der Pokal passte nicht in den Koffer, weil er zu groß war.« Ein gutes Modell lässt »er« vor allem auf »Pokal« achten. Heißt es »weil er zu klein war«, muss die Aufmerksamkeit auf »Koffer« wechseln. Solche Satzpaare prüfen, ob Bezüge aus der Bedeutung erschlossen werden."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Attention-Gewichte zeigen, was ein Kopf mischt, sind aber keine vollständige Erklärung des Modells.\n- Ein Sprachmodell schlägt nichts nach: Es berechnet aus seinen Gewichten eine Wahrscheinlichkeitsverteilung über das nächste Wort.\n- Der Rechenaufwand wächst quadratisch mit der Textlänge, weil jedes Wort mit jedem verglichen wird."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Kosinus",
+      "md": "Wie groß ist die Kosinus-Ähnlichkeit von $(1, 0)$ und $(0, 1)$?",
+      "answer": 0,
+      "tolerance": 0,
+      "placeholder": "cos",
+      "explain": "Das Skalarprodukt ist $0$: Die Vektoren stehen senkrecht, die Wörter haben nichts gemeinsam.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Was misst man meist, um die Ähnlichkeit zweier Wortvektoren zu bestimmen?",
       "options": [
@@ -59,7 +174,8 @@
       "points": [
         "Wörter als Vektoren, Kontext bestimmt Ähnlichkeit.",
         "Vektorarithmetik für Analogien.",
-        "Attention: kontextabhängige Darstellungen."
+        "Attention: kontextabhängige Darstellungen.",
+        "Kosinus-Ähnlichkeit vergleicht Richtungen; Differenzen von Wortvektoren kodieren Beziehungen."
       ],
       "id": "summary"
     }

@@ -9,6 +9,99 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**k-Means mit $k = 2$:** Punkte $A(0, 0)$, $B(2, 0)$, $C(6, 4)$, $D(8, 4)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "c_1 = (0, 0),\\ \\ c_2 = (2, 0)",
+            "why": "Zwei Startzentren."
+          },
+          {
+            "tex": "\\set{A},\\ \\ \\set{B, C, D}",
+            "why": "$C$ und $D$ liegen näher an $c_2$."
+          },
+          {
+            "tex": "c_2 = \\left(\\tfrac{16}{3}, \\tfrac{8}{3}\\right)",
+            "why": "Neues Zentrum: Mittelwert von $B$, $C$, $D$."
+          },
+          {
+            "tex": "\\set{A, B},\\ \\ \\set{C, D}",
+            "why": "$B$ liegt jetzt näher an $c_1$."
+          },
+          {
+            "tex": "c_1 = (1, 0),\\ \\ c_2 = (7, 4)",
+            "why": "Danach ändert sich nichts mehr."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Zuordnen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mitteln.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Neu zuordnen.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Stabil.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Wann hört k-Means auf?",
+      "options": [
+        {
+          "md": "wenn sich die Zuordnung nicht mehr ändert",
+          "correct": true
+        },
+        {
+          "md": "wenn alle Cluster gleich groß sind"
+        },
+        {
+          "md": "wenn der Abstand jedes Punkts zu seinem Zentrum $0$ ist"
+        },
+        {
+          "md": "nach genau $k$ Runden"
+        }
+      ],
+      "explain": "Dann bleiben auch die Zentren gleich. Das Ergebnis hängt vom Start ab.",
+      "label": "Abbruch",
+      "id": "vq1"
+    },
+    {
       "type": "order",
       "label": "Ablauf",
       "md": "Ordne k-Means.",
@@ -44,7 +137,8 @@
       "points": [
         "Unüberwacht: Struktur ohne Etiketten.",
         "Zuordnen und Mittelwert bilden, wiederholen.",
-        "Mehrere Starts wegen lokaler Lösungen."
+        "Mehrere Starts wegen lokaler Lösungen.",
+        "k-Means: zuordnen, mitteln, wiederholen, bis nichts mehr wechselt."
       ],
       "id": "summary"
     }

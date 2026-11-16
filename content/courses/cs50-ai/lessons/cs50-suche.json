@@ -82,7 +82,104 @@
     {
       "id": "intro",
       "type": "text",
-      "md": "Ein **Suchproblem** besteht in CS50 aus wenigen Bausteinen:\n- einem **Anfangszustand** (initial state),\n- den **Aktionen**, die in einem Zustand möglich sind,\n- einem **Übergangsmodell** $\\text{Result}(s, a)$: welcher Zustand nach Aktion $a$ in $s$ folgt,\n- einem **Zieltest** und\n- **Pfadkosten**.\n\nEine **Lösung** ist eine Folge von Aktionen vom Anfangszustand zu einem Ziel. Eine **optimale Lösung** hat die geringsten Pfadkosten."
+      "md": "Ein **Suchproblem** hat einen **Anfangszustand**, **Aktionen**, ein **Übergangsmodell** $\\text{Result}(s, a)$, einen **Zieltest** und **Pfadkosten**. Eine Lösung ist eine Aktionsfolge zum Ziel, eine **optimale** hat die geringsten Kosten.",
+      "more": "Ein **Suchproblem** besteht in CS50 aus wenigen Bausteinen:\n- einem **Anfangszustand** (initial state),\n- den **Aktionen**, die in einem Zustand möglich sind,\n- einem **Übergangsmodell** $\\text{Result}(s, a)$: welcher Zustand nach Aktion $a$ in $s$ folgt,\n- einem **Zieltest** und\n- **Pfadkosten**.\n\nEine **Lösung** ist eine Folge von Aktionen vom Anfangszustand zu einem Ziel. Eine **optimale Lösung** hat die geringsten Pfadkosten."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Suchprobleme",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Suchprobleme.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 0: Search. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Bausteine eines Suchproblems",
+          "blocks": [
+            {
+              "md": "- **Anfangszustand**, von dem der Agent startet,\n- **Aktionen**, die in einem Zustand möglich sind,\n- **Übergangsmodell**: welcher Zustand nach einer Aktion folgt,\n- **Zieltest** und **Pfadkosten**.\n\nZustände und Übergänge bilden einen Graphen, den **Zustandsraum**. Eine Lösung ist ein Weg vom Anfang zu einem Ziel, eine optimale Lösung einer mit minimalen Kosten."
+            }
+          ]
+        },
+        {
+          "title": "Der allgemeine Algorithmus",
+          "blocks": [
+            {
+              "md": "```\nFrontier := {Anfangsknoten};  Erkundet := {}\nsolange Frontier nicht leer:\n    Knoten := Frontier.entnehmen()\n    wenn Zieltest(Knoten): Weg über die Elternverweise zurückgeben\n    Erkundet.hinzufügen(Knoten.zustand)\n    für jede Aktion: Nachfolger in die Frontier, falls weder dort noch erkundet\nkeine Lösung\n```\nDie Suchverfahren unterscheiden sich nur darin, **welcher** Knoten entnommen wird."
+            }
+          ]
+        },
+        {
+          "title": "Tiefen- und Breitensuche",
+          "blocks": [
+            {
+              "md": "| | Tiefensuche (DFS) | Breitensuche (BFS) |\n|---|---|---|\n| Frontier | Stapel: zuletzt hinein, zuerst heraus | Warteschlange: zuerst hinein, zuerst heraus |\n| Verhalten | geht einen Weg bis zum Ende, dann zurück | erkundet ringförmig nach Abstand |\n| optimal | nein | ja, wenn jeder Schritt gleich viel kostet |\n| Speicher | wenig | viel, die ganze äußere Schicht |"
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "Labyrinthe, Routenplanung, Schiebepuzzles. Im Projekt *Degrees* sucht die Breitensuche die kürzeste Verbindung zweier Schauspieler über gemeinsame Filme.\n\nPython-Muster dazu: **Python Search Patterns**. Mit Schätzwissen über die Entfernung zum Ziel: **Informierte Suche**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lecture 0 - Search (Kurs)",
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 0 - Search (Kurs).md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Vorlesung 0 von **CS50 AI** (HarvardX, edX). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Suchprobleme und ihre Bausteine, Tiefen- und Breitensuche, gierige Bestensuche und A* mit Heuristiken, Spiele gegen einen Gegner mit Minimax und Alpha-Beta-Schnitt, Suche mit begrenzter Tiefe und Bewertungsfunktion."
+            }
+          ]
+        },
+        {
+          "title": "Begriffsnotizen",
+          "blocks": [
+            {
+              "md": "- **Suchprobleme**\n- **Informierte Suche**\n- **Minimax**"
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "Degrees, Tic-Tac-Toe."
+            }
+          ]
+        },
+        {
+          "title": "Lernwerk",
+          "blocks": [
+            {
+              "md": "Die passenden Lektionen mit Animationen und Übungen in vier Stufen stehen in der Tabelle der **CS50 AI MOC**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "begriffe",

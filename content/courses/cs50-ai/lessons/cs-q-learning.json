@@ -15,6 +15,145 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Ein Q-Learning-Schritt** mit $Q(s, a) = 1$, $r = 2$, $\\max_{a'} Q(s', a') = 4$, $\\alpha = 0{,}5$, $\\gamma = 0{,}9$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "r + \\gamma \\max_{a'} Q(s', a')",
+            "why": "Neue Schätzung: Belohnung plus bester Folgewert."
+          },
+          {
+            "tex": "= 2 + 0{,}9 \\cdot 4 = 5{,}6",
+            "why": "So viel scheint die Aktion wert zu sein."
+          },
+          {
+            "tex": "Q \\leftarrow 1 + 0{,}5\\,(5{,}6 - 1)",
+            "why": "Um die Hälfte des Unterschieds."
+          },
+          {
+            "tex": "Q(s, a) = 3{,}3",
+            "why": "Die alte Schätzung rückt zur neuen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ziel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Einsetzen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nachziehen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Reinforcement Learning",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Reinforcement Learning.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 4: Learning. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Ein Agent handelt in einer Umgebung, bekommt **Belohnungen** oder Strafen und lernt daraus, welche Aktionen sich lohnen, ohne dass ihm jemand die richtige Antwort sagt. Formal ist das ein **Markov-Entscheidungsprozess**: Zustände, Aktionen, Übergangswahrscheinlichkeiten und eine Belohnungsfunktion."
+            }
+          ]
+        },
+        {
+          "title": "Q-Learning",
+          "blocks": [
+            {
+              "md": "Der Agent schätzt für jedes Paar aus Zustand und Aktion einen Wert $Q(s, a)$, den erwarteten Nutzen. Nach jedem Schritt von $s$ mit Aktion $a$ nach $s'$ mit Belohnung $r$:\n$$Q(s, a) \\leftarrow Q(s, a) + \\alpha\\left(r + \\gamma \\max_{a'} Q(s', a') - Q(s, a)\\right).$$\n$\\alpha$ ist die Lernrate, $\\gamma$ der Abschlag für spätere Belohnungen. Belohnungen am Ziel wandern so Schritt für Schritt zurück zu den Zügen, die dorthin führen."
+            }
+          ]
+        },
+        {
+          "title": "Erkunden oder ausnutzen",
+          "blocks": [
+            {
+              "md": "Wer immer die bisher beste Aktion wählt, findet bessere Wege nie. **ε-greedy:** mit Wahrscheinlichkeit $\\varepsilon$ zufällig handeln, sonst die beste bekannte Aktion."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen",
+          "blocks": [
+            {
+              "md": "Bei riesigen Zustandsräumen kann man nicht jedes $Q(s, a)$ speichern; dann schätzt man $Q$ mit einer Funktion, etwa einem neuronalen Netz."
+            }
+          ]
+        },
+        {
+          "title": "Projekt",
+          "blocks": [
+            {
+              "md": "*Nim*: Die KI spielt tausende Partien gegen sich selbst und lernt dabei eine gute Strategie für das Streichholzspiel."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was bewirkt ein Diskontfaktor $\\gamma$ nahe $0$?",
+      "options": [
+        {
+          "md": "Der Agent achtet fast nur auf sofortige Belohnungen.",
+          "correct": true
+        },
+        {
+          "md": "Der Agent lernt schneller."
+        },
+        {
+          "md": "Der Agent erkundet mehr.",
+          "why": "Das steuert $\\varepsilon$."
+        },
+        {
+          "md": "Der Agent achtet fast nur auf späte Belohnungen."
+        }
+      ],
+      "explain": "Spätere Belohnungen werden mit $\\gamma$, $\\gamma^2$, … gewichtet und verschwinden fast.",
+      "label": "Diskont",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Q(s, a) = 2, Belohnung r = 0, bester künftiger Wert 6, α = 0,5, γ = 1. Wie lautet das neue Q(s, a)?",
@@ -55,7 +194,8 @@
       "points": [
         "MDP: Zustände, Aktionen, Übergänge, Belohnungen.",
         "Q-Update mit Lernrate α und Diskont γ.",
-        "ε-greedy: erkunden und ausnutzen."
+        "ε-greedy: erkunden und ausnutzen.",
+        "$Q \\leftarrow Q + \\alpha\\,(r + \\gamma \\max Q' - Q)$."
       ],
       "id": "summary"
     }

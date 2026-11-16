@@ -9,6 +9,88 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Shopping mit dem nächsten Nachbarn** ($k = 1$).",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "d(x, x_i) = \\sqrt{\\textstyle\\sum_j (x_j - x_{ij})^2}",
+            "why": "Von der neuen Sitzung zu jeder bekannten."
+          },
+          {
+            "tex": "i^* = \\arg\\min_i d(x, x_i)",
+            "why": "Die ähnlichste bekannte Sitzung."
+          },
+          {
+            "tex": "\\hat y = y_{i^*}",
+            "why": "Ihre Klasse wird übernommen: Kauf oder kein Kauf."
+          },
+          {
+            "tex": "\\text{Sensitivität und Spezifität}",
+            "why": "Auf Testdaten, weil Käufe selten sind."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Abstand.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Nachbar.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vorhersage.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bewerten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was passiert bei 1-NN, wenn man ein Merkmal in Sekunden statt in Minuten angibt?",
+      "options": [
+        {
+          "md": "Dieses Merkmal bestimmt den Abstand viel stärker.",
+          "correct": true
+        },
+        {
+          "md": "nichts"
+        },
+        {
+          "md": "Das Modell wird genauer."
+        },
+        {
+          "md": "Das Merkmal wird ignoriert."
+        }
+      ],
+      "explain": "Seine Werte und Differenzen werden $60$-mal größer. Darum bringt man Merkmale oft auf ähnliche Skalen.",
+      "label": "Skalen",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum muss man im Projekt Shopping den Monat »Feb« in eine Zahl umwandeln?",
       "options": [
@@ -46,7 +128,8 @@
       "points": [
         "Shopping: k-NN, Merkmale kodieren, Sensitivität und Spezifität.",
         "Nim: Q-Learning durch Selbstspiel.",
-        "Belohnung am Ende, Werte wandern zurück."
+        "Belohnung am Ende, Werte wandern zurück.",
+        "1-NN übernimmt die Klasse des nächsten Beispiels; Abstände hängen von den Skalen ab."
       ],
       "id": "summary"
     }

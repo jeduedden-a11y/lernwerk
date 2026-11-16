@@ -4,8 +4,14 @@
   "subtitle": "CS50 AI, Lecture 2: Uncertainty",
   "source": "CS50's Introduction to Artificial Intelligence with Python, Lecture 2",
   "vault": [
-    { "path": "02 Wiki/Informatik/Künstliche Intelligenz/Markov-Modelle.md", "title": "Markov-Modelle" },
-    { "path": "02 Wiki/Kurse/CS50 AI/Lecture 2 - Uncertainty (Kurs).md", "title": "Lecture 2 - Uncertainty (Kurs)" }
+    {
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Markov-Modelle.md",
+      "title": "Markov-Modelle"
+    },
+    {
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 2 - Uncertainty (Kurs).md",
+      "title": "Lecture 2 - Uncertainty (Kurs)"
+    }
   ],
   "steps": [
     {
@@ -13,24 +19,53 @@
       "type": "anim",
       "md": "Das Wetter als Kette von Tagen. Oben das **Übergangsmodell**: Auf Sonne folgt mit $0{,}8$ wieder Sonne, auf Regen mit $0{,}7$ wieder Regen. Unten simulierte Tage und darunter, wie wahrscheinlich an jedem Tag Sonne ist.",
       "widget": "markov",
-      "params": { "n": 1, "nMax": 10 },
-      "int": ["n"],
+      "params": {
+        "n": 1,
+        "nMax": 10
+      },
+      "int": [
+        "n"
+      ],
       "timeline": [
-        { "caption": "Tag $1$: Sonne. Mehr wissen wir nicht. Die **Markov-Annahme**: Das Wetter von morgen hängt nur vom Wetter von heute ab, nicht von früheren Tagen." },
-        { "caption": "Für Tag $2$ gilt also $P(\\text{Sonne}) = 0{,}8$. Für Tag $3$ gibt es zwei Wege zur Sonne: $0{,}8 \\cdot 0{,}8 + 0{,}2 \\cdot 0{,}3 = 0{,}7$.", "to": { "n": 3 }, "dur": 1200, "hold": 7000 },
-        { "caption": "Die simulierten Tage entstehen, indem man jeden Tag mit diesen Wahrscheinlichkeiten auslost. So erzeugt das Modell realistisch aussehende Wetterfolgen.", "to": { "n": 7 }, "dur": 2000, "hold": 6000 },
-        { "caption": "Die Balken nähern sich $60\\,\\%$. Langfristig ist der Starttag vergessen: Das ist die **stationäre Verteilung**, bei der genau so viel Sonne zu Regen wird wie Regen zu Sonne, $\\pi_S \\cdot 0{,}2 = \\pi_R \\cdot 0{,}3$.", "to": { "n": 10 }, "dur": 1600 }
+        {
+          "caption": "Tag $1$: Sonne. Mehr wissen wir nicht. Die **Markov-Annahme**: Das Wetter von morgen hängt nur vom Wetter von heute ab, nicht von früheren Tagen."
+        },
+        {
+          "caption": "Für Tag $2$ gilt also $P(\\text{Sonne}) = 0{,}8$. Für Tag $3$ gibt es zwei Wege zur Sonne: $0{,}8 \\cdot 0{,}8 + 0{,}2 \\cdot 0{,}3 = 0{,}7$.",
+          "to": {
+            "n": 3
+          },
+          "dur": 1200,
+          "hold": 7000
+        },
+        {
+          "caption": "Die simulierten Tage entstehen, indem man jeden Tag mit diesen Wahrscheinlichkeiten auslost. So erzeugt das Modell realistisch aussehende Wetterfolgen.",
+          "to": {
+            "n": 7
+          },
+          "dur": 2000,
+          "hold": 6000
+        },
+        {
+          "caption": "Die Balken nähern sich $60\\,\\%$. Langfristig ist der Starttag vergessen: Das ist die **stationäre Verteilung**, bei der genau so viel Sonne zu Regen wird wie Regen zu Sonne, $\\pi_S \\cdot 0{,}2 = \\pi_R \\cdot 0{,}3$.",
+          "to": {
+            "n": 10
+          },
+          "dur": 1600
+        }
       ]
     },
     {
       "id": "intuition",
       "type": "text",
-      "md": "Viele Probleme spielen in der **Zeit**: Wetter, Sprache, Aktienkurse. Man bräuchte eigentlich für jeden Zeitpunkt die ganze Vorgeschichte. Die **Markov-Annahme** vereinfacht radikal: Der aktuelle Zustand hängt nur von einer festen, kleinen Zahl vorheriger Zustände ab, meist nur vom letzten. Dann genügen ein Startzustand und eine Übergangstabelle, um beliebig lange Folgen zu beschreiben.\n\nOft sieht man den Zustand aber gar nicht. Ein Wachmann im fensterlosen Raum sieht nur, ob Besucher einen **Schirm** tragen. Das Wetter ist **verborgen**, der Schirm ist eine **Beobachtung**, die mit dem Wetter zusammenhängt. Das ist ein **Hidden Markov Model**: Übergangsmodell für die verborgenen Zustände plus **Sensormodell** $P(\\text{Beobachtung} \\mid \\text{Zustand})$.\n\nTypische Fragen an ein HMM: **Filtern** (Wie ist das Wetter heute, nach allen bisherigen Beobachtungen?), **Vorhersage** (morgen?), **Glätten** (gestern, mit dem Wissen von heute?) und die **wahrscheinlichste Erklärung** einer ganzen Beobachtungsfolge (Viterbi)."
+      "md": "Die **Markov-Annahme**: Der aktuelle Zustand hängt nur vom letzten ab. Dann genügen Start und Übergangstabelle. Oft ist der Zustand **verborgen**: Der Wachmann ohne Fenster sieht nur Schirme und schließt auf das Wetter. Das ist ein **Hidden Markov Model**.",
+      "more": "Viele Probleme spielen in der **Zeit**: Wetter, Sprache, Aktienkurse. Man bräuchte eigentlich für jeden Zeitpunkt die ganze Vorgeschichte. Die **Markov-Annahme** vereinfacht radikal: Der aktuelle Zustand hängt nur von einer festen, kleinen Zahl vorheriger Zustände ab, meist nur vom letzten. Dann genügen ein Startzustand und eine Übergangstabelle, um beliebig lange Folgen zu beschreiben.\n\nOft sieht man den Zustand aber gar nicht. Ein Wachmann im fensterlosen Raum sieht nur, ob Besucher einen **Schirm** tragen. Das Wetter ist **verborgen**, der Schirm ist eine **Beobachtung**, die mit dem Wetter zusammenhängt. Das ist ein **Hidden Markov Model**: Übergangsmodell für die verborgenen Zustände plus **Sensormodell** $P(\\text{Beobachtung} \\mid \\text{Zustand})$.\n\nTypische Fragen an ein HMM: **Filtern** (Wie ist das Wetter heute, nach allen bisherigen Beobachtungen?), **Vorhersage** (morgen?), **Glätten** (gestern, mit dem Wissen von heute?) und die **wahrscheinlichste Erklärung** einer ganzen Beobachtungsfolge (Viterbi)."
     },
     {
       "id": "definition",
       "type": "text",
-      "md": "> [!definition] Markov-Kette\n> Eine Folge $X_0, X_1, \\dots$ von Zufallsvariablen mit $P(X_t \\mid X_{t-1}, X_{t-2}, \\dots) = P(X_t \\mid X_{t-1})$. Das **Übergangsmodell** gibt $P(X_t \\mid X_{t-1})$ an.\n\n> [!definition] Hidden Markov Model\n> Verborgene Zustände $X_t$ bilden eine Markov-Kette. Zu jedem Zeitpunkt gibt es eine Beobachtung $E_t$, die nur von $X_t$ abhängt: das **Sensormodell** $P(E_t \\mid X_t)$.\n\n**Filtern in einem Schritt:** Vorhersage mit dem Übergangsmodell, dann Bayes mit der neuen Beobachtung:\n$$P(X_t \\mid e_{1:t}) \\propto P(e_t \\mid X_t) \\sum_{x} P(X_t \\mid x)\\,P(x \\mid e_{1:t-1}).$$"
+      "md": "**Markov-Kette:** $P(X_t \\mid X_{t-1}, X_{t-2}, \\dots) = P(X_t \\mid X_{t-1})$, gegeben durch das Übergangsmodell. **HMM:** Die Beobachtung $E_t$ hängt nur von $X_t$ ab (Sensormodell). **Filtern:** mit dem Übergangsmodell vorhersagen, dann mit Bayes an die neue Beobachtung anpassen.",
+      "more": "> [!definition] Markov-Kette\n> Eine Folge $X_0, X_1, \\dots$ von Zufallsvariablen mit $P(X_t \\mid X_{t-1}, X_{t-2}, \\dots) = P(X_t \\mid X_{t-1})$. Das **Übergangsmodell** gibt $P(X_t \\mid X_{t-1})$ an.\n\n> [!definition] Hidden Markov Model\n> Verborgene Zustände $X_t$ bilden eine Markov-Kette. Zu jedem Zeitpunkt gibt es eine Beobachtung $E_t$, die nur von $X_t$ abhängt: das **Sensormodell** $P(E_t \\mid X_t)$.\n\n**Filtern in einem Schritt:** Vorhersage mit dem Übergangsmodell, dann Bayes mit der neuen Beobachtung:\n$$P(X_t \\mid e_{1:t}) \\propto P(e_t \\mid X_t) \\sum_{x} P(X_t \\mid x)\\,P(x \\mid e_{1:t-1}).$$"
     },
     {
       "id": "schirm",
@@ -38,9 +73,121 @@
       "label": "Beobachten",
       "md": "Schirm bei Regen mit $0{,}9$, bei Sonne mit $0{,}2$. Beobachtet wird fünf Tage lang. **Geh Tag für Tag weiter bis Tag 5** und beobachte, wie sich die Einschätzung für Regen ändert.",
       "widget": "markov",
-      "params": { "mode": "hmm", "obs": [0, 0, 1, 0, 0], "n": 1 },
-      "goal": { "when": "n == 5", "message": "Geh bis Tag 5.", "solve": { "n": 5 } },
+      "params": {
+        "mode": "hmm",
+        "obs": [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "n": 1
+      },
+      "goal": {
+        "when": "n == 5",
+        "message": "Geh bis Tag 5.",
+        "solve": {
+          "n": 5
+        }
+      },
       "explain": "Zwei Schirmtage machen Regen sehr wahrscheinlich ($88\\,\\%$). Am dritten Tag ohne Schirm fällt die Einschätzung auf $18\\,\\%$, steigt aber mit neuen Schirmen wieder. Jede Beobachtung verschiebt das Vorwissen, das aus dem Vortag kommt."
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Markov-Modelle",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Markov-Modelle.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 2: Uncertainty. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Markov-Annahme",
+          "blocks": [
+            {
+              "md": "Der nächste Zustand hängt nur vom aktuellen ab, nicht von der ganzen Vorgeschichte. Damit lassen sich Abläufe in der Zeit mit wenigen Zahlen beschreiben."
+            }
+          ]
+        },
+        {
+          "title": "Markov-Kette",
+          "blocks": [
+            {
+              "md": "Eine **Übergangsmatrix** gibt an, wie wahrscheinlich jeder Folgezustand ist. Beispiel Wetter:\n\n| heute \\ morgen | Sonne | Regen |\n|---|---|---|\n| Sonne | $0{,}8$ | $0{,}2$ |\n| Regen | $0{,}3$ | $0{,}7$ |\n\nAuf lange Sicht stellt sich eine **stationäre Verteilung** $\\pi$ ein mit $\\pi = \\pi T$: hier $\\pi = (0{,}6;\\ 0{,}4)$, denn $0{,}2 \\cdot 0{,}6 = 0{,}3 \\cdot 0{,}4$. Sie ist ein Eigenvektor zum Eigenwert $1$ (**Eigenwerte und Eigenvektoren**)."
+            }
+          ]
+        },
+        {
+          "title": "Hidden Markov Model",
+          "blocks": [
+            {
+              "md": "Oft sieht man den Zustand nicht, nur Beobachtungen, die von ihm abhängen: Ob es regnet, erschließt man daraus, ob jemand einen Schirm mitbringt. Ein HMM hat Übergangswahrscheinlichkeiten zwischen verborgenen Zuständen und **Emissionswahrscheinlichkeiten** für die Beobachtungen. Typische Aufgaben:\n- **Filtern:** Wie ist der Zustand jetzt, nach allen Beobachtungen bis jetzt?\n- **Vorhersagen** künftiger Zustände.\n- **Glätten:** frühere Zustände im Licht späterer Beobachtungen.\n- **Wahrscheinlichste Erklärung:** die plausibelste Zustandsfolge (Viterbi-Algorithmus)."
+            }
+          ]
+        },
+        {
+          "title": "Projekt PageRank",
+          "blocks": [
+            {
+              "md": "Ein zufälliger Surfer folgt mit Wahrscheinlichkeit $0{,}85$ einem Link der aktuellen Seite und springt sonst auf eine beliebige Seite. Die stationäre Verteilung dieser Markov-Kette bewertet die Seiten."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Lecture 2 - Uncertainty (Kurs)",
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 2 - Uncertainty (Kurs).md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Vorlesung 2 von **CS50 AI** (HarvardX, edX). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Wahrscheinlichkeit und bedingte Wahrscheinlichkeit, Zufallsvariablen, Satz von Bayes, gemeinsame Verteilungen, Bayessche Netze mit exakter und stichprobenbasierter Inferenz, Markov-Ketten und Hidden Markov Models."
+            }
+          ]
+        },
+        {
+          "title": "Begriffsnotizen",
+          "blocks": [
+            {
+              "md": "- **Wahrscheinlichkeit in der KI**\n- **Bayessche Netze**\n- **Markov-Modelle**"
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "PageRank, Heredity."
+            }
+          ]
+        },
+        {
+          "title": "Lernwerk",
+          "blocks": [
+            {
+              "md": "Die passenden Lektionen mit Animationen und Übungen in vier Stufen stehen in der Tabelle der **CS50 AI MOC**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "tiefpunkt",
@@ -65,17 +212,53 @@
       "type": "match",
       "md": "Ordne den Fragen an ein HMM ihre Namen zu.",
       "pairs": [
-        ["Wie ist das Wetter heute, nach allen bisherigen Beobachtungen?", "Filtern"],
-        ["Wie wird das Wetter morgen?", "Vorhersage"],
-        ["Wie war das Wetter vorgestern, wenn man auch die späteren Beobachtungen nutzt?", "Glätten"],
-        ["Welche Wetterfolge erklärt alle Beobachtungen am besten?", "wahrscheinlichste Erklärung"]
+        [
+          "Wie ist das Wetter heute, nach allen bisherigen Beobachtungen?",
+          "Filtern"
+        ],
+        [
+          "Wie wird das Wetter morgen?",
+          "Vorhersage"
+        ],
+        [
+          "Wie war das Wetter vorgestern, wenn man auch die späteren Beobachtungen nutzt?",
+          "Glätten"
+        ],
+        [
+          "Welche Wetterfolge erklärt alle Beobachtungen am besten?",
+          "wahrscheinlichste Erklärung"
+        ]
       ],
       "explain": "Spracherkennung ist ein klassisches Beispiel für die letzte Frage: Die Wörter sind verborgen, die Laute sind die Beobachtungen."
     },
-    { "id": "neu1", "type": "gen", "gen": "cs-markov", "level": 1, "label": "Zwei Tage" },
-    { "id": "neu2", "type": "gen", "gen": "cs-markov", "level": 2, "label": "Folge" },
-    { "id": "neu3", "type": "gen", "gen": "cs-markov", "level": 3, "label": "Gleichgewicht" },
-    { "id": "neu4", "type": "gen", "gen": "cs-markov", "level": 4, "label": "Filtern" },
+    {
+      "id": "neu1",
+      "type": "gen",
+      "gen": "cs-markov",
+      "level": 1,
+      "label": "Zwei Tage"
+    },
+    {
+      "id": "neu2",
+      "type": "gen",
+      "gen": "cs-markov",
+      "level": 2,
+      "label": "Folge"
+    },
+    {
+      "id": "neu3",
+      "type": "gen",
+      "gen": "cs-markov",
+      "level": 3,
+      "label": "Gleichgewicht"
+    },
+    {
+      "id": "neu4",
+      "type": "gen",
+      "gen": "cs-markov",
+      "level": 4,
+      "label": "Filtern"
+    },
     {
       "id": "summary",
       "type": "summary",

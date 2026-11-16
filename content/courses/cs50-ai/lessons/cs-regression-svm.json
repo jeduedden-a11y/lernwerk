@@ -15,6 +15,124 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**$L_1$ gegen $L_2$:** drei Vorhersagen, eine davon mit Ausreißer.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "y - \\hat y = 1,\\ 1,\\ 6",
+            "why": "Zwei kleine Fehler, ein großer."
+          },
+          {
+            "tex": "L_1 = 1 + 1 + 6 = 8",
+            "why": "Jeder Fehler zählt einfach."
+          },
+          {
+            "tex": "L_2 = 1 + 1 + 36 = 38",
+            "why": "Der Ausreißer zählt $36$-fach."
+          },
+          {
+            "tex": "\\text{SVM: größter Abstand zur Trennlinie}",
+            "why": "Die **Support Vector Machine** wählt unter allen Trennlinien die mit dem breitesten Rand."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Fehler.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "L1.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "L2.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "SVM.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Überwachtes Lernen",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Überwachtes Lernen.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 4: Learning. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Aufgabe",
+          "blocks": [
+            {
+              "md": "Aus Beispielen $(x, y)$ mit bekannter richtiger Antwort lernt ein Modell eine Funktion $h(x) \\approx y$. Ist $y$ eine Kategorie, heißt das **Klassifikation** (Spam oder nicht), ist $y$ eine Zahl, **Regression** (Preis eines Hauses)."
+            }
+          ]
+        },
+        {
+          "title": "Verfahren",
+          "blocks": [
+            {
+              "md": "- **k-nächste Nachbarn:** Ein neuer Punkt bekommt die Mehrheitsklasse seiner $k$ nächsten Trainingspunkte. Einfach, aber langsam bei vielen Daten.\n- **Perzeptron:** $h(x) = 1$, falls $w_0 + w_1 x_1 + \\dots + w_n x_n \\ge 0$, sonst $0$. Lernregel nach jedem Beispiel: $w_i \\leftarrow w_i + \\alpha\\,(y - h(x))\\,x_i$. Es findet eine Trenngerade, wenn die Klassen linear trennbar sind.\n- **Support Vector Machines** suchen die Trennlinie mit dem größten Abstand zu beiden Klassen."
+            }
+          ]
+        },
+        {
+          "title": "Bewerten",
+          "blocks": [
+            {
+              "md": "- **Verlustfunktionen:** 0-1-Verlust für Klassifikation, $L_1 = |y - h(x)|$ oder $L_2 = (y - h(x))^2$ für Regression.\n- **Overfitting:** Das Modell lernt die Trainingsdaten auswendig, samt Rauschen, und versagt bei neuen. Gegenmittel: **Regularisierung** (Strafe für komplexe Modelle) und **Validierung** auf zurückgehaltenen Daten, etwa mit $k$-facher Kreuzvalidierung.\n- Bei Klassifikation: **Sensitivität** (Anteil erkannter Positiver) und **Spezifität** (Anteil erkannter Negativer)."
+            }
+          ]
+        },
+        {
+          "title": "Projekt",
+          "blocks": [
+            {
+              "md": "*Shopping*: Mit k-nächsten Nachbarn vorhersagen, ob ein Besuch im Onlineshop zu einem Kauf führt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "L2",
+      "md": "Die Fehler sind $2$, $-1$ und $3$. Wie groß ist der $L_2$-Verlust?",
+      "answer": 14,
+      "tolerance": 0,
+      "placeholder": "L2",
+      "explain": "$4 + 1 + 9 = 14$.",
+      "id": "vq1"
+    },
+    {
       "type": "sort",
       "label": "Einordnen",
       "md": "Klassifikation oder Regression?",
@@ -74,7 +192,8 @@
       "points": [
         "Klassifikation: Kategorie; Regression: Zahl.",
         "0-1-, L1-, L2-Verlust.",
-        "SVM: maximaler Abstand."
+        "SVM: maximaler Abstand.",
+        "$L_2$ quadriert Fehler und reagiert stark auf Ausreißer."
       ],
       "id": "summary"
     }

@@ -15,6 +15,124 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Bogenkonsistenz herstellen:** $X, Y \\in \\set{1, 2, 3}$ mit $X < Y$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "X, Y \\in \\set{1, 2, 3},\\ \\ X < Y",
+            "why": "Zwei Variablen, eine binäre Bedingung."
+          },
+          {
+            "tex": "X = 3:\\ \\text{kein } Y > 3",
+            "why": "Für $X = 3$ passt kein Wert von $Y$: streichen."
+          },
+          {
+            "tex": "D_X = \\set{1, 2}",
+            "why": "Jetzt ist der Bogen $X \\to Y$ konsistent."
+          },
+          {
+            "tex": "D_Y = \\set{2, 3}",
+            "why": "Ebenso $Y \\to X$: Für $Y = 1$ gibt es kein kleineres $X$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Bedingung.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Revise X.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bereich X.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Bereich Y.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Constraint Satisfaction",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Constraint Satisfaction.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 3: Optimization. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Problemform",
+          "blocks": [
+            {
+              "md": "Ein **Constraint-Satisfaction-Problem** besteht aus Variablen, ihren Wertebereichen (Domänen) und Bedingungen (Constraints). Gesucht ist eine Belegung, die alle Bedingungen erfüllt. Beispiel Prüfungsplan: Variablen sind Prüfungen, Werte Tage, und Prüfungen mit gemeinsamen Teilnehmern dürfen nicht am selben Tag liegen. Weitere Beispiele: Sudoku, Stundenpläne, Kreuzworträtsel."
+            }
+          ]
+        },
+        {
+          "title": "Konsistenz",
+          "blocks": [
+            {
+              "md": "- **Knotenkonsistenz:** Jeder Wert erfüllt die einstelligen Bedingungen der Variablen.\n- **Kantenkonsistenz:** Für jeden Wert von $X$ gibt es einen passenden Wert von $Y$ für jede Bedingung zwischen $X$ und $Y$. Der Algorithmus AC-3 streicht so lange Werte, bis das gilt."
+            }
+          ]
+        },
+        {
+          "title": "Backtracking",
+          "blocks": [
+            {
+              "md": "Variablen der Reihe nach belegen; verletzt ein Wert eine Bedingung, den nächsten probieren; geht keiner, zurückspringen. Heuristiken machen das schnell:\n- **MRV** (minimum remaining values): zuerst die Variable mit den wenigsten übrigen Werten,\n- **Grad-Heuristik**: bei Gleichstand die Variable mit den meisten Bedingungen,\n- **LCV** (least constraining value): zuerst den Wert, der den Nachbarn die meisten Möglichkeiten lässt,\n- **Inferenz** während der Suche: nach jeder Belegung Kantenkonsistenz herstellen."
+            }
+          ]
+        },
+        {
+          "title": "Projekt",
+          "blocks": [
+            {
+              "md": "*Crossword*: Wörter so in ein Gitter setzen, dass Längen und Kreuzungsbuchstaben passen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "AC-3",
+      "md": "$X, Y \\in \\set{1, \\dots, 5}$ mit $X + 2 \\le Y$. Wie viele Werte bleiben in $D_X$, nachdem $X \\to Y$ bogenkonsistent gemacht wurde?",
+      "answer": 3,
+      "tolerance": 0,
+      "placeholder": "Anzahl",
+      "explain": "$X \\le Y - 2 \\le 3$, also bleiben $1$, $2$ und $3$.",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne die Heuristik zu.",
@@ -73,7 +191,8 @@
       "points": [
         "Backtracking mit Rückschritt.",
         "AC-3 für Bogenkonsistenz.",
-        "MRV, Gradheuristik, LCV."
+        "MRV, Gradheuristik, LCV.",
+        "Bogenkonsistenz: Werte streichen, zu denen der Nachbar keinen passenden Wert hat."
       ],
       "id": "summary"
     }

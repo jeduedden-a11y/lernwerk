@@ -15,6 +15,124 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Tic-Tac-Toe:** die Wertfunktion hinter `minimax(board)`.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{terminal}(s) \\Rightarrow V(s) = \\text{utility}(s)",
+            "why": "Gewinn für X $1$, Unentschieden $0$, Gewinn für O $-1$."
+          },
+          {
+            "tex": "V(s) = \\max_a V(\\text{result}(s, a))",
+            "why": "X ist MAX."
+          },
+          {
+            "tex": "V(s) = \\min_a V(\\text{result}(s, a))",
+            "why": "O ist MIN."
+          },
+          {
+            "tex": "\\text{result gibt ein neues Brett zurück}",
+            "why": "Eine tiefe Kopie, sonst verändert die Suche das echte Brett."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Ende.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "X am Zug.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "O am Zug.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kopie.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Suchprobleme",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Suchprobleme.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 0: Search. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Bausteine eines Suchproblems",
+          "blocks": [
+            {
+              "md": "- **Anfangszustand**, von dem der Agent startet,\n- **Aktionen**, die in einem Zustand möglich sind,\n- **Übergangsmodell**: welcher Zustand nach einer Aktion folgt,\n- **Zieltest** und **Pfadkosten**.\n\nZustände und Übergänge bilden einen Graphen, den **Zustandsraum**. Eine Lösung ist ein Weg vom Anfang zu einem Ziel, eine optimale Lösung einer mit minimalen Kosten."
+            }
+          ]
+        },
+        {
+          "title": "Der allgemeine Algorithmus",
+          "blocks": [
+            {
+              "md": "```\nFrontier := {Anfangsknoten};  Erkundet := {}\nsolange Frontier nicht leer:\n    Knoten := Frontier.entnehmen()\n    wenn Zieltest(Knoten): Weg über die Elternverweise zurückgeben\n    Erkundet.hinzufügen(Knoten.zustand)\n    für jede Aktion: Nachfolger in die Frontier, falls weder dort noch erkundet\nkeine Lösung\n```\nDie Suchverfahren unterscheiden sich nur darin, **welcher** Knoten entnommen wird."
+            }
+          ]
+        },
+        {
+          "title": "Tiefen- und Breitensuche",
+          "blocks": [
+            {
+              "md": "| | Tiefensuche (DFS) | Breitensuche (BFS) |\n|---|---|---|\n| Frontier | Stapel: zuletzt hinein, zuerst heraus | Warteschlange: zuerst hinein, zuerst heraus |\n| Verhalten | geht einen Weg bis zum Ende, dann zurück | erkundet ringförmig nach Abstand |\n| optimal | nein | ja, wenn jeder Schritt gleich viel kostet |\n| Speicher | wenig | viel, die ganze äußere Schicht |"
+            }
+          ]
+        },
+        {
+          "title": "Beispiele",
+          "blocks": [
+            {
+              "md": "Labyrinthe, Routenplanung, Schiebepuzzles. Im Projekt *Degrees* sucht die Breitensuche die kürzeste Verbindung zweier Schauspieler über gemeinsame Filme.\n\nPython-Muster dazu: **Python Search Patterns**. Mit Schätzwissen über die Entfernung zum Ziel: **Informierte Suche**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Degrees",
+      "md": "Degrees: A und C haben nie zusammen gespielt, aber beide mit B. Wie viele Filme liegen auf dem kürzesten Weg von A nach C?",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Filme",
+      "explain": "A und B über einen Film, B und C über einen zweiten: Abstand $2$. Breitensuche findet genau diesen kürzesten Weg.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum findet bei Degrees Breitensuche den kürzesten Weg, Tiefensuche aber nicht unbedingt?",
       "options": [
@@ -52,7 +170,8 @@
       "points": [
         "Degrees: BFS über Personen und Filme.",
         "Tic-Tac-Toe: Spielfunktionen plus Minimax.",
-        "result arbeitet auf einer Kopie."
+        "result arbeitet auf einer Kopie.",
+        "Degrees: Breitensuche über Personen und Filme; Tic-Tac-Toe: Minimax mit unveränderten Brettern."
       ],
       "id": "summary"
     }

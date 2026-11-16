@@ -19,6 +19,196 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Normieren statt dividieren:** $P(R \\mid V)$ aus den gemeinsamen Wahrscheinlichkeiten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "P(R, V) = 0{,}06",
+            "why": "Gemeinsame Wahrscheinlichkeit, summiert über alle versteckten Variablen."
+          },
+          {
+            "tex": "P(\\neg R, V) = 0{,}18",
+            "why": "Ebenso für $\\neg R$."
+          },
+          {
+            "tex": "\\alpha \\cdot \\langle 0{,}06;\\ 0{,}18 \\rangle",
+            "why": "Die Werte für $R$ und $\\neg R$ bei der Evidenz $V$."
+          },
+          {
+            "tex": "\\alpha = \\frac{1}{0{,}06 + 0{,}18}",
+            "why": "Die Summe muss $1$ ergeben."
+          },
+          {
+            "tex": "P(R \\mid V) = \\frac{0{,}06}{0{,}24} = 0{,}25",
+            "why": "Regen erklärt ein Viertel der Verspätungen."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Mit Regen.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ohne Regen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Vektor.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Normieren.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Ergebnis.",
+          "to": {
+            "k": 5
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Wahrscheinlichkeit in der KI",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Wahrscheinlichkeit in der KI.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 2: Uncertainty. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Warum Wahrscheinlichkeiten",
+          "blocks": [
+            {
+              "md": "Agenten wissen selten alles: Sensoren rauschen, Ereignisse sind zufällig, Informationen fehlen. Statt »wahr« oder »falsch« arbeiten sie mit Graden von Gewissheit."
+            }
+          ]
+        },
+        {
+          "title": "Werkzeuge",
+          "blocks": [
+            {
+              "md": "- **Bedingte Wahrscheinlichkeit:** $P(a \\mid b) = \\frac{P(a \\land b)}{P(b)}$ (**Bedingte Wahrscheinlichkeit**).\n- **Zufallsvariablen** mit Verteilungen, etwa Wetter $\\in \\{\\text{Sonne}, \\text{Wolken}, \\text{Regen}\\}$.\n- **Unabhängigkeit:** $P(a \\land b) = P(a)\\,P(b)$.\n- **Satz von Bayes:** $P(a \\mid b) = \\frac{P(b \\mid a)\\,P(a)}{P(b)}$ (**Satz von Bayes**). Er dreht Schlüsse um: von der Wirkung zur Ursache.\n- **Gemeinsame Verteilung** aller Variablen; aus ihr gewinnt man durch **Marginalisieren** $P(a) = \\sum_b P(a, b)$ und **Bedingen** jede gesuchte Wahrscheinlichkeit."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Morgens ist es bewölkt. Wie wahrscheinlich regnet es nachmittags? Mit $P(\\text{Wolken} \\mid \\text{Regen}) = 0{,}9$, $P(\\text{Regen}) = 0{,}15$ und $P(\\text{Wolken}) = 0{,}45$ ergibt Bayes $P(\\text{Regen} \\mid \\text{Wolken}) = \\frac{0{,}9 \\cdot 0{,}15}{0{,}45} = 0{,}3$."
+            }
+          ]
+        },
+        {
+          "title": "Das Problem",
+          "blocks": [
+            {
+              "md": "Die gemeinsame Verteilung von $n$ Variablen wächst exponentiell. **Bayessche Netze** nutzen Unabhängigkeiten, um sie kompakt darzustellen.\n\nPython dazu: **Python Probability and Data**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Bayessche Netze",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Bayessche Netze.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 2: Uncertainty. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Aufbau",
+          "blocks": [
+            {
+              "md": "Ein **Bayessches Netz** ist ein gerichteter, kreisfreier Graph. Knoten sind Zufallsvariablen, ein Pfeil $X \\to Y$ heißt: $X$ beeinflusst $Y$ direkt. Jeder Knoten trägt eine Tabelle $P(X \\mid \\text{Eltern}(X))$."
+            }
+          ]
+        },
+        {
+          "title": "Faktorisierung",
+          "blocks": [
+            {
+              "md": "Die gemeinsame Verteilung zerfällt in ein Produkt kleiner Tabellen:\n$$P(x_1, \\dots, x_n) = \\prod_i P(x_i \\mid \\text{Eltern}(x_i)).$$\nStatt $2^n$ Einträgen braucht man nur die Tabellen der einzelnen Knoten."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "Kette Regen $\\to$ Gleiswartung $\\to$ Zug pünktlich $\\to$ Termin erreicht (Regen beeinflusst auch den Zug direkt). Die Wahrscheinlichkeit einer vollständigen Belegung ist das Produkt der passenden Tabelleneinträge entlang der Pfeile, etwa\n$$P(\\text{leicht}, \\text{keine Wartung}, \\text{pünktlich}, \\text{erreicht}) = P(\\text{leicht}) \\cdot P(\\text{keine} \\mid \\text{leicht}) \\cdot P(\\text{pünktlich} \\mid \\text{leicht}, \\text{keine}) \\cdot P(\\text{erreicht} \\mid \\text{pünktlich}).$$"
+            }
+          ]
+        },
+        {
+          "title": "Inferenz",
+          "blocks": [
+            {
+              "md": "- **Exakt durch Aufzählen:** über alle nicht beobachteten Variablen summieren und normieren; exponentiell im schlimmsten Fall.\n- **Näherungsweise durch Stichproben:** viele Zufallsbelegungen entlang der Pfeile ziehen und auszählen. Bei Beobachtungen verwirft Rejection Sampling die unpassenden Stichproben; Likelihood Weighting gewichtet stattdessen jede Stichprobe danach, wie gut sie zu den Beobachtungen passt.\n\nProjekt *Heredity*: Wahrscheinlichkeiten für Gene und Merkmale in einer Familie aus einem solchen Netz berechnen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "md": "Was ist der Faktor $\\alpha$ bei der Inferenz durch Aufzählung?",
+      "options": [
+        {
+          "md": "ein Normierungsfaktor, damit die Wahrscheinlichkeiten zusammen $1$ ergeben",
+          "correct": true
+        },
+        {
+          "md": "die Wahrscheinlichkeit der Evidenz",
+          "why": "Er ist ihr Kehrwert, $\\tfrac{1}{P(e)}$."
+        },
+        {
+          "md": "die Lernrate"
+        },
+        {
+          "md": "der Anteil der verworfenen Stichproben"
+        }
+      ],
+      "explain": "Man rechnet ungenormt für jeden Wert der Anfrage und teilt am Ende durch die Summe.",
+      "label": "Normieren",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Gemeinsame Verteilung: P(Regen, Verspätung) = 0,08; P(kein Regen, Verspätung) = 0,12. Wie groß ist P(Regen | Verspätung)?",
@@ -55,7 +245,8 @@
       "points": [
         "Marginalisieren über versteckte Variablen.",
         "Mit α normieren.",
-        "Exakt, aber exponentiell teuer."
+        "Exakt, aber exponentiell teuer.",
+        "$P(X \\mid e) = \\alpha \\sum_y P(X, e, y)$; $\\alpha$ normiert auf Summe $1$."
       ],
       "id": "summary"
     }

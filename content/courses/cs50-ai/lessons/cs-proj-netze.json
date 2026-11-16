@@ -9,6 +9,76 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Attention-Gewichte mit der Softmax:** Punktzahlen eines Wortes zu drei Wörtern.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "s = (2,\\ 1,\\ 0)",
+            "why": "Skalarprodukte aus Query und Keys."
+          },
+          {
+            "tex": "e^s \\approx (7{,}39;\\ 2{,}72;\\ 1)",
+            "why": "Alle Werte werden positiv."
+          },
+          {
+            "tex": "7{,}39 + 2{,}72 + 1 = 11{,}11",
+            "why": "Für die Normierung."
+          },
+          {
+            "tex": "\\alpha \\approx (0{,}67;\\ 0{,}24;\\ 0{,}09)",
+            "why": "Summe $1$: Das erste Wort bekommt die meiste Aufmerksamkeit."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Punkte.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Exponieren.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Summe.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gewichte.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Softmax",
+      "md": "Die Punktzahlen sind $(1, 1)$. Wie groß ist das erste Softmax-Gewicht?",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "Gewicht",
+      "explain": "Gleiche Punktzahlen geben gleiche Gewichte: $\\tfrac{e}{e + e} = 0{,}5$.",
+      "id": "vq1"
+    },
+    {
       "type": "match",
       "label": "Zuordnen",
       "md": "Ordne Projekt und Technik zu.",
@@ -49,7 +119,8 @@
       "points": [
         "Traffic: CNN mit 43 Klassen.",
         "Parser: Grammatik und NP-Chunks.",
-        "Attention: BERT und Attention-Köpfe."
+        "Attention: BERT und Attention-Köpfe.",
+        "Softmax: exponieren und durch die Summe teilen."
       ],
       "id": "summary"
     }

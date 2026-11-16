@@ -15,6 +15,130 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Alpha-Beta Schritt für Schritt:** MAX wählt zwischen zwei MIN-Knoten mit den Blättern $3, 5$ und $2, 9$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "\\text{MIN}_1 = \\min(3, 5) = 3",
+            "why": "Der linke Teilbaum wird ganz ausgewertet."
+          },
+          {
+            "tex": "\\alpha = 3",
+            "why": "So viel hat MAX an der Wurzel sicher."
+          },
+          {
+            "tex": "\\text{MIN}_2 \\le 2",
+            "why": "MIN liest zuerst die $2$: Mehr als $2$ wird es rechts nicht."
+          },
+          {
+            "tex": "2 < \\alpha \\Rightarrow 9 \\text{ überspringen}",
+            "why": "MAX wählt rechts ohnehin nicht. Der Wert der Wurzel bleibt $3$."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Links.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Alpha.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Rechts.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schnitt.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Minimax",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Minimax.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 0: Search. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Spiele als Suche",
+          "blocks": [
+            {
+              "md": "Bei Spielen gegen einen Gegner sucht man keinen Weg, sondern einen Zug, der trotz Gegenwehr möglichst gut ausgeht (**adversariale Suche**). Spieler MAX will den Endwert maximieren, MIN will ihn minimieren. Endzustände haben einen Nutzen, bei Tic-Tac-Toe etwa $1$ (MAX gewinnt), $0$ (unentschieden), $-1$ (MIN gewinnt)."
+            }
+          ]
+        },
+        {
+          "title": "Der Algorithmus",
+          "blocks": [
+            {
+              "md": "Der **Minimax-Wert** eines Zustands ist\n- im Endzustand sein Nutzen,\n- an einem MAX-Knoten das Maximum der Werte seiner Nachfolger,\n- an einem MIN-Knoten das Minimum.\n\nMAX wählt den Zug zum Nachfolger mit dem größten Wert. Beide Seiten werden dabei als perfekt spielend angenommen; der Wert ist das, was MAX garantiert erreichen kann."
+            }
+          ]
+        },
+        {
+          "title": "Alpha-Beta-Schnitt",
+          "blocks": [
+            {
+              "md": "Man merkt sich, was MAX ($\\alpha$) und MIN ($\\beta$) schon sicher haben. Sobald ein Ast nachweislich nichts mehr an der Entscheidung ändern kann, wird er übersprungen. Das Ergebnis ist identisch, aber es werden weniger Knoten ausgewertet, im besten Fall nur etwa die Wurzel der ursprünglichen Zahl."
+            }
+          ]
+        },
+        {
+          "title": "Grenzen",
+          "blocks": [
+            {
+              "md": "Tic-Tac-Toe lässt sich vollständig durchrechnen (Projekt *Tic-Tac-Toe*). Bei Schach ist der Baum astronomisch groß. Dann sucht man nur bis zu einer festen Tiefe und schätzt die Stellungen dort mit einer **Bewertungsfunktion**, etwa nach Material und Position."
+            }
+          ]
+        },
+        {
+          "title": "Häufiger Fehler",
+          "blocks": [
+            {
+              "md": "An MIN-Knoten das Maximum nehmen: Der Gegner wählt das für MAX schlechteste Ergebnis."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "truefalse",
+      "md": "Die Reihenfolge, in der die Züge untersucht werden, beeinflusst, wie viel Alpha-Beta abschneidet.",
+      "answer": true,
+      "explain": "Gute Züge zuerst liefern früh starke Schranken, dann fallen mehr Äste weg. Der Wert der Wurzel ändert sich dadurch nie.",
+      "label": "Reihenfolge",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "MAX wählt zwischen zwei MIN-Knoten. Links liegen die Blätter 3 und 5, rechts 2 und 9 (in dieser Reihenfolge). Welches Blatt muss Alpha-Beta nicht auswerten?",
       "options": [
@@ -62,7 +186,8 @@
       "points": [
         "α: bester sicherer Wert für MAX, β: für MIN.",
         "Abbruch bei α ≥ β.",
-        "Gleiches Ergebnis wie Minimax, weniger Arbeit."
+        "Gleiches Ergebnis wie Minimax, weniger Arbeit.",
+        "Abschneiden, sobald $\\alpha \\ge \\beta$; das Ergebnis bleibt das von Minimax."
       ],
       "id": "summary"
     }

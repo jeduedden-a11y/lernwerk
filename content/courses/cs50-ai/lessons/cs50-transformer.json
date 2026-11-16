@@ -106,13 +106,15 @@
       "id": "intuition",
       "type": "text",
       "label": "Intuition",
-      "md": "Ältere Sprachmodelle lasen einen Satz Wort für Wort und trugen eine Art Gedächtnis mit sich. Bei langen Sätzen verblasste der Anfang. Der **Transformer** macht es anders: Er schaut auf alle Wörter gleichzeitig und fragt für jedes Wort, welche anderen Wörter für seine Bedeutung wichtig sind.\n\nDafür bekommt jedes Wort drei Vektoren. Mit der **Query** fragt es, wonach es sucht. Mit dem **Key** zeigt es, wofür es steht. Der **Value** ist das, was es weitergibt. Das Skalarprodukt aus Query und Key misst, wie gut zwei Wörter zusammenpassen. Die **Softmax** macht aus diesen Punktzahlen Gewichte, die sich zu $1$ addieren, und das Wort bekommt den gewichteten Mittelwert der Values.\n\nWeil das für alle Wörter parallel geschieht, lässt sich ein Transformer auf großen Rechnern sehr schnell trainieren. Mehrere solche **Attention-Köpfe** und viele Schichten übereinander ergeben die großen Sprachmodelle von heute. Die Reihenfolge der Wörter muss man allerdings eigens hineingeben, mit einer **Positionskodierung**."
+      "md": "Der **Transformer** liest alle Wörter zugleich und fragt für jedes, welche anderen für seine Bedeutung wichtig sind. Jedes Wort hat eine **Query** (was es sucht), einen **Key** (wofür es steht) und einen **Value** (was es weitergibt). Query mal Key misst die Passung, die **Softmax** macht daraus Gewichte.",
+      "more": "Ältere Sprachmodelle lasen einen Satz Wort für Wort und trugen eine Art Gedächtnis mit sich. Bei langen Sätzen verblasste der Anfang. Der **Transformer** macht es anders: Er schaut auf alle Wörter gleichzeitig und fragt für jedes Wort, welche anderen Wörter für seine Bedeutung wichtig sind.\n\nDafür bekommt jedes Wort drei Vektoren. Mit der **Query** fragt es, wonach es sucht. Mit dem **Key** zeigt es, wofür es steht. Der **Value** ist das, was es weitergibt. Das Skalarprodukt aus Query und Key misst, wie gut zwei Wörter zusammenpassen. Die **Softmax** macht aus diesen Punktzahlen Gewichte, die sich zu $1$ addieren, und das Wort bekommt den gewichteten Mittelwert der Values.\n\nWeil das für alle Wörter parallel geschieht, lässt sich ein Transformer auf großen Rechnern sehr schnell trainieren. Mehrere solche **Attention-Köpfe** und viele Schichten übereinander ergeben die großen Sprachmodelle von heute. Die Reihenfolge der Wörter muss man allerdings eigens hineingeben, mit einer **Positionskodierung**."
     },
     {
       "id": "definition",
       "type": "text",
       "label": "Definition",
-      "md": "> [!definition] Self-Attention\n> Aus jedem Wortvektor $x_i$ entstehen $q_i = W_Q x_i$, $k_i = W_K x_i$, $v_i = W_V x_i$. Die Gewichte sind $\\alpha_{ij} = \\operatorname{softmax}_j \\dfrac{q_i \\cdot k_j}{\\sqrt d}$, die Ausgabe ist $\\sum_j \\alpha_{ij} v_j$.\n\n> [!definition] Softmax\n> $\\operatorname{softmax}(s)_j = \\dfrac{e^{s_j}}{\\sum_k e^{s_k}}$: positive Gewichte mit Summe $1$, große Punktzahlen bekommen viel Gewicht.\n\n> [!tip] Bausteine\n> Positionskodierung für die Reihenfolge, mehrere Köpfe für verschiedene Beziehungen, dazwischen gewöhnliche neuronale Schichten."
+      "md": "**Self-Attention:** $q_i = W_Q x_i$, $k_i = W_K x_i$, $v_i = W_V x_i$, Gewichte $\\alpha_{ij} = \\operatorname{softmax}_j \\tfrac{q_i \\cdot k_j}{\\sqrt d}$, Ausgabe $\\sum_j \\alpha_{ij} v_j$. Die **Softmax** macht aus Punktzahlen positive Gewichte mit Summe $1$. Dazu kommen Positionskodierung und mehrere Köpfe.",
+      "more": "> [!definition] Self-Attention\n> Aus jedem Wortvektor $x_i$ entstehen $q_i = W_Q x_i$, $k_i = W_K x_i$, $v_i = W_V x_i$. Die Gewichte sind $\\alpha_{ij} = \\operatorname{softmax}_j \\dfrac{q_i \\cdot k_j}{\\sqrt d}$, die Ausgabe ist $\\sum_j \\alpha_{ij} v_j$.\n\n> [!definition] Softmax\n> $\\operatorname{softmax}(s)_j = \\dfrac{e^{s_j}}{\\sum_k e^{s_k}}$: positive Gewichte mit Summe $1$, große Punktzahlen bekommen viel Gewicht.\n\n> [!tip] Bausteine\n> Positionskodierung für die Reihenfolge, mehrere Köpfe für verschiedene Beziehungen, dazwischen gewöhnliche neuronale Schichten."
     },
     {
       "id": "pokal",
@@ -157,6 +159,158 @@
       "goal": {},
       "explain": "»er« bezieht sich auf den Pokal: Nur ein zu großer Pokal passt nicht hinein. Hieße der Satz »weil er zu klein war«, müsste die Aufmerksamkeit auf den Koffer gehen. Solche Satzpaare prüfen, ob ein Modell Bedeutung versteht.",
       "review": true
+    },
+    {
+      "id": "notiz",
+      "type": "note",
+      "title": "Transformer",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Transformer.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 6: Language, ergänzt um den Artikel »Attention Is All You Need« (Vaswani u. a., 2017). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Idee",
+          "blocks": [
+            {
+              "md": "Ältere Sprachmodelle lasen einen Text Wort für Wort und trugen einen Zustand mit sich; bei langen Sätzen verblasste der Anfang. Ein **Transformer** betrachtet alle Wörter zugleich und bestimmt für jedes Wort, welche anderen Wörter für seine Bedeutung wichtig sind. Weil das für alle Wörter parallel geschieht, lässt er sich auf großen Rechnern schnell trainieren."
+            }
+          ]
+        },
+        {
+          "title": "Self-Attention",
+          "blocks": [
+            {
+              "md": "Aus jedem Wortvektor $x_i$ entstehen durch gelernte Matrizen drei Vektoren: Query $q_i = W_Q x_i$, Key $k_i = W_K x_i$ und Value $v_i = W_V x_i$. Die Gewichte sind\n$$\\alpha_{ij} = \\operatorname{softmax}_j \\frac{q_i \\cdot k_j}{\\sqrt{d}}, \\qquad \\operatorname{softmax}(s)_j = \\frac{e^{s_j}}{\\sum_k e^{s_k}},$$\nund die Ausgabe für Wort $i$ ist der gewichtete Mittelwert $\\sum_j \\alpha_{ij} v_j$. Das Teilen durch $\\sqrt{d}$ verhindert, dass bei großer Dimension fast alles Gewicht auf ein einziges Wort fällt."
+            }
+          ]
+        },
+        {
+          "title": "Bausteine",
+          "blocks": [
+            {
+              "md": "- **Positionskodierung**: Attention selbst kennt keine Reihenfolge; ohne sie wären »Hund beißt Mann« und »Mann beißt Hund« gleich.\n- **Mehrere Köpfe** (multi-head attention): eigene Projektionen für verschiedene Beziehungen, etwa Bezüge von Pronomen oder Satzbau.\n- **Schichten**: Attention und gewöhnliche neuronale Schichten abwechselnd, viele Male übereinander (siehe **Neuronale Netze**)."
+            }
+          ]
+        },
+        {
+          "title": "Beispiel",
+          "blocks": [
+            {
+              "md": "»Der Pokal passte nicht in den Koffer, weil er zu groß war.« Ein gutes Modell lässt »er« vor allem auf »Pokal« achten. Heißt es »weil er zu klein war«, muss die Aufmerksamkeit auf »Koffer« wechseln. Solche Satzpaare prüfen, ob Bezüge aus der Bedeutung erschlossen werden."
+            }
+          ]
+        },
+        {
+          "title": "Vorsicht",
+          "blocks": [
+            {
+              "md": "- Attention-Gewichte zeigen, was ein Kopf mischt, sind aber keine vollständige Erklärung des Modells.\n- Ein Sprachmodell schlägt nichts nach: Es berechnet aus seinen Gewichten eine Wahrscheinlichkeitsverteilung über das nächste Wort.\n- Der Rechenaufwand wächst quadratisch mit der Textlänge, weil jedes Wort mit jedem verglichen wird."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz2",
+      "type": "note",
+      "title": "Sprachverarbeitung",
+      "path": "02 Wiki/Informatik/Künstliche Intelligenz/Sprachverarbeitung.md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Aus **CS50 AI**, Lecture 6: Language. Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Syntax",
+          "blocks": [
+            {
+              "md": "Eine **kontextfreie Grammatik** beschreibt mit Regeln wie $S \\to NP\\ VP$ und $NP \\to D\\ N$, wie Sätze aufgebaut sind. Ein Parser baut daraus **Syntaxbäume**; mehrdeutige Sätze haben mehrere. Projekt *Parser*: Sätze zerlegen und Nominalphrasen herausziehen."
+            }
+          ]
+        },
+        {
+          "title": "Statistische Modelle",
+          "blocks": [
+            {
+              "md": "- **n-Gramme:** Folgen von $n$ Wörtern. Ihre Häufigkeiten in einem Text ergeben ein Markov-Modell, das Wort für Wort neuen, oberflächlich plausiblen Text erzeugt.\n- **Tokenisierung:** Text in Wörter oder Wortteile zerlegen.\n- **Bag of Words:** Ein Text als Menge seiner Wörter, ohne Reihenfolge. Mit **Naive Bayes** klassifiziert man so etwa die Stimmung einer Bewertung: $P(\\text{positiv} \\mid \\text{Wörter}) \\propto P(\\text{positiv}) \\prod P(\\text{Wort} \\mid \\text{positiv})$, mit Glättung für unbekannte Wörter."
+            }
+          ]
+        },
+        {
+          "title": "Bedeutung als Vektor",
+          "blocks": [
+            {
+              "md": "**Wortvektoren** (Embeddings wie word2vec) legen Wörter so in einen Raum, dass ähnliche nahe beieinander liegen. Beziehungen werden zu Richtungen: $\\text{König} - \\text{Mann} + \\text{Frau} \\approx \\text{Königin}$."
+            }
+          ]
+        },
+        {
+          "title": "Attention und Transformer",
+          "blocks": [
+            {
+              "md": "Ein Wort hängt vom Kontext ab. **Attention** berechnet für jedes Wort Gewichte, wie stark es die anderen Wörter berücksichtigt. **Transformer** bestehen im Kern aus vielen solchen Schichten und verarbeiten alle Wörter parallel; auf ihnen beruhen heutige Sprachmodelle. Projekt *Attention*: Die Aufmerksamkeitsgewichte eines Modells sichtbar machen, das maskierte Wörter vorhersagt."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "notiz3",
+      "type": "note",
+      "title": "Lecture 6 - Language (Kurs)",
+      "path": "02 Wiki/Kurse/CS50 AI/Lecture 6 - Language (Kurs).md",
+      "review": false,
+      "sections": [
+        {
+          "blocks": [
+            {
+              "md": "> [!info] Herkunft\n> Vorlesung 6 von **CS50 AI** (HarvardX, edX). Eigene Zusammenfassung, kein Kursmaterial übernommen."
+            }
+          ]
+        },
+        {
+          "title": "Worum es geht",
+          "blocks": [
+            {
+              "md": "Syntax und Semantik, kontextfreie Grammatiken, n-Gramme und Tokenisierung, Bag of Words und Naive Bayes, Wortvektoren, Attention und Transformer."
+            }
+          ]
+        },
+        {
+          "title": "Begriffsnotizen",
+          "blocks": [
+            {
+              "md": "- **Sprachverarbeitung**"
+            }
+          ]
+        },
+        {
+          "title": "Projekte",
+          "blocks": [
+            {
+              "md": "Parser, Attention."
+            }
+          ]
+        },
+        {
+          "title": "Lernwerk",
+          "blocks": [
+            {
+              "md": "Die passenden Lektionen mit Animationen und Übungen in vier Stufen stehen in der Tabelle der **CS50 AI MOC**."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "softmax",

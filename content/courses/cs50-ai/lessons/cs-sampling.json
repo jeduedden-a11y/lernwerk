@@ -9,6 +9,76 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**Rejection Sampling an Zahlen:** $1000$ Stichproben, gesucht $P(R \\mid V)$.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "N(V) = 200",
+            "why": "Nur $200$ Stichproben zeigen die Evidenz $V$; $800$ werden verworfen."
+          },
+          {
+            "tex": "N(R, V) = 50",
+            "why": "Davon regnet es in $50$."
+          },
+          {
+            "tex": "P(R \\mid V) \\approx \\tfrac{50}{200} = 0{,}25",
+            "why": "Der Anteil unter den behaltenen."
+          },
+          {
+            "tex": "w = P(V \\mid \\text{Eltern von } V)",
+            "why": "**Likelihood Weighting** verwirft nichts: Die Evidenz wird festgesetzt, jede Stichprobe gewichtet."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Passend.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Mit Regen.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Schätzen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Gewichten.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Schätzen",
+      "md": "Von $500$ Stichproben passen $40$ zur Evidenz, davon $12$ mit $X$ wahr. Schätze $P(X \\mid e)$.",
+      "answer": 0.3,
+      "tolerance": 0.001,
+      "placeholder": "P",
+      "explain": "$\\tfrac{12}{40} = 0{,}3$. Die $460$ verworfenen Stichproben zählen nicht.",
+      "id": "vq1"
+    },
+    {
       "type": "choice",
       "md": "Warum ist Rejection Sampling bei sehr seltener Evidenz ineffizient?",
       "options": [
@@ -52,7 +122,8 @@
       "points": [
         "Sampling nähert Wahrscheinlichkeiten an.",
         "Rejection: verwerfen, was der Evidenz widerspricht.",
-        "Likelihood Weighting: Evidenz fixieren, gewichten."
+        "Likelihood Weighting: Evidenz fixieren, gewichten.",
+        "Rejection Sampling: passende Stichproben zählen; Likelihood Weighting: Evidenz festsetzen und gewichten."
       ],
       "id": "summary"
     }

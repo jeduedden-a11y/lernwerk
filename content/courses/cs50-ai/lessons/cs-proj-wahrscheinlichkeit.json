@@ -9,6 +9,76 @@
       "id": "t1"
     },
     {
+      "id": "ve1",
+      "type": "anim",
+      "md": "**PageRank iterativ berechnen**, Dämpfung $d = 0{,}85$, $N$ Seiten.",
+      "widget": "derivation",
+      "params": {
+        "start": 0,
+        "lines": [
+          {
+            "tex": "PR(p) = \\frac{1 - d}{N} + d \\sum_i \\frac{PR(i)}{L(i)}",
+            "why": "$i$ verlinkt auf $p$ und hat $L(i)$ Links."
+          },
+          {
+            "tex": "PR_0(p) = \\tfrac1N",
+            "why": "Alle Seiten gleich."
+          },
+          {
+            "tex": "\\text{bis sich nichts mehr als 0,001 ändert}",
+            "why": "Die Formel immer wieder auf die neuen Werte anwenden."
+          },
+          {
+            "tex": "\\textstyle\\sum_p PR(p) = 1",
+            "why": "Es bleibt eine Wahrscheinlichkeitsverteilung."
+          }
+        ]
+      },
+      "int": [
+        "k"
+      ],
+      "timeline": [
+        {
+          "caption": "Formel.",
+          "to": {
+            "k": 1
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Start.",
+          "to": {
+            "k": 2
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Wiederholen.",
+          "to": {
+            "k": 3
+          },
+          "dur": 900
+        },
+        {
+          "caption": "Kontrolle.",
+          "to": {
+            "k": 4
+          },
+          "dur": 900
+        }
+      ]
+    },
+    {
+      "type": "numeric",
+      "label": "Heredity",
+      "md": "Heredity: Ein Elternteil hat genau ein Exemplar des Gens, die Mutationswahrscheinlichkeit ist $0{,}01$. Mit welcher Wahrscheinlichkeit gibt es das Gen weiter?",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "placeholder": "P",
+      "explain": "$0{,}5 \\cdot 0{,}99 + 0{,}5 \\cdot 0{,}01 = 0{,}5$: Die Mutation hebt sich in beide Richtungen auf.",
+      "id": "vq1"
+    },
+    {
       "type": "numeric",
       "label": "Rechnen",
       "md": "Eine Seite ohne eingehende Links in einem Netz aus 4 Seiten: Welchen PageRank hat sie (d = 0,85)?",
@@ -38,7 +108,8 @@
       "points": [
         "PageRank: Zufallssurfer mit d = 0,85.",
         "Iterieren bis zur Konvergenz oder Sampling.",
-        "Heredity: gemeinsame Wahrscheinlichkeit, dann normieren."
+        "Heredity: gemeinsame Wahrscheinlichkeit, dann normieren.",
+        "PageRank: Zufallssprung plus Links, iterieren bis zur Ruhe."
       ],
       "id": "summary"
     }
