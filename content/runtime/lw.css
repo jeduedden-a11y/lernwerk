@@ -384,6 +384,8 @@ body {
 /* ---------- Widgets ---------- */
 .lw-widget { margin-top: 12px; position: relative; }
 .lw-widget svg { display: block; width: 100%; height: auto; touch-action: none; overflow: visible; }
+/* KaTeX draws roots and long arrows as SVG that takes its height from the surrounding span */
+.lw-widget .katex svg { height: inherit; }
 .lw-widget .w-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
 .lw-widget .w-readout {
   font-size: 0.92em; color: var(--label-2); margin-top: 10px; min-height: 1.4em;
@@ -413,15 +415,25 @@ body {
   -webkit-user-select: text; user-select: text; font-variant-numeric: tabular-nums;
 }
 .lw-lab-input:focus { border-color: var(--accent); }
-.lw-lab-keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.lw-lab-label .katex { font-size: 1.08em; }
+/* the term typeset under the input, or the reason it cannot be read */
+.lw-lab-tex { min-height: 2.1em; margin: 6px 2px 0; display: flex; align-items: center; overflow-x: auto; overflow-y: hidden; color: var(--label); }
+.lw-lab-tex .katex { font-size: 1.12em; white-space: nowrap; }
+.lw-lab-tex.err { color: var(--red); font-size: 0.88em; }
+/* keys in the shape of the exercise book: two rows that scroll sideways when the screen is narrow */
+.lw-lab-keys { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.lw-lab-keyrow { display: flex; gap: 4px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; touch-action: pan-x; }
+.lw-lab-keyrow::-webkit-scrollbar { display: none; }
 .lw-lab-key {
-  appearance: none; border: 0; cursor: pointer; font: inherit; font-size: 0.86em; font-weight: 600;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace; padding: 6px 10px; min-width: 2.2em;
-  border-radius: 10px; background: var(--fill); color: var(--label);
+  appearance: none; border: 0; cursor: pointer; flex: 1 0 auto; height: 2.45em; min-width: 2.15em; padding: 0 6px;
+  display: inline-flex; align-items: center; justify-content: center; font: inherit; font-size: 0.9em;
+  border-radius: 10px; background: var(--fill); color: var(--label); -webkit-user-select: none; user-select: none;
 }
-.lw-lab-key:active { transform: scale(0.96); }
-.lw-lab-key.on { background: var(--accent); color: white; }
-.lw-lab-error { color: var(--red); font-size: 0.88em; min-height: 1.2em; margin-top: 6px; }
+.lw-lab-key .katex { font-size: 1.02em; pointer-events: none; }
+.lw-lab-key .katex .mord.amsrm { color: var(--label-3); }
+.lw-lab-key:active { transform: scale(0.96); background: var(--accent-soft); color: var(--accent); }
+.lw-lab-erase { font-size: 1.15em; line-height: 1; }
+.lw-slider label .katex { font-size: 1.05em; }
 .lw-lab-sliders .lw-slider:first-child { margin-top: 2px; }
 .lw-lab-goals { list-style: none; padding: 0; margin: 4px 0 6px; }
 .lw-lab-goals li { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 0.5px solid var(--separator); color: var(--label-2); }

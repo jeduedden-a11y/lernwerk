@@ -78,6 +78,109 @@
     return { f, names, scope, src: s };
   }
 
+  /** The term as TeX for the line under the input: fractions, powers, roots and function names typeset.
+   *  Same grammar as LW.expr, so the picture shows what the lab computes (1/2x is ½·x). null if it does not parse. */
+  function toTex(src) {
+    const toks = [];
+    const re = /\s*(?:(\d+(?:\.\d+)?|\.\d+)|([A-Za-z_][A-Za-z_0-9]*)|(\*\*|[-+*/^(),!]))/gy;
+    while (re.lastIndex < src.length) {
+      const at = re.lastIndex;
+      const m = re.exec(src);
+      if (!m) { if (/^\s*$/.test(src.slice(at))) break; return null; }
+      if (m[1]) toks.push({ t: "num", v: m[1] });
+      else if (m[2]) toks.push({ t: "id", v: m[2] });
+      else toks.push({ t: "op", v: m[3] === "**" ? "^" : m[3] });
+    }
+    let p = 0;
+    const isOp = (v) => toks[p] && toks[p].t === "op" && toks[p].v === v;
+    const starts = () => toks[p] && (toks[p].t === "num" || toks[p].t === "id" || isOp("("));
+    function primary() {
+      const tk = toks[p++];
+      if (!tk) throw new Error("end");
+      if (tk.t === "num") return { t: "num", v: tk.v };
+      if (tk.t === "op" && tk.v === "(") { const e = add(); if (!isOp(")")) throw new Error(")"); p++; return { t: "par", a: e }; }
+      if (tk.t === "op" && tk.v === "-") return { t: "neg", a: power() };
+      if (tk.t === "op" && tk.v === "+") return power();
+      if (tk.t === "id") {
+        if (!isOp("(")) return { t: "id", v: tk.v };
+        p++;
+        const args = [add()];
+        while (isOp(",")) { p++; args.push(add()); }
+        if (!isOp(")")) throw new Error(")");
+        p++;
+        return { t: "call", f: tk.v, args };
+      }
+      throw new Error("symbol");
+    }
+    function postfix() { let e = primary(); while (isOp("!")) { p++; e = { t: "fact", a: e }; } return e; }
+    function power() { const b = postfix(); if (isOp("^")) { p++; return { t: "pow", a: b, b: unary() }; } return b; }
+    function unary() { if (isOp("-")) { p++; return { t: "neg", a: unary() }; } if (isOp("+")) { p++; return unary(); } return power(); }
+    function mul() {
+      let e = unary();
+      for (;;) {
+        if (isOp("*") || isOp("/")) { const op = toks[p++].v; e = { t: "mul", op, a: e, b: unary() }; }
+        else if (starts()) e = { t: "mul", op: "", a: e, b: unary() };
+        else return e;
+      }
+    }
+    function add() {
+      let e = mul();
+      while (isOp("+") || isOp("-")) { const op = toks[p++].v; e = { t: "add", op, a: e, b: mul() }; }
+      return e;
+    }
+    let tree;
+    try { tree = add(); } catch (e) { return null; }
+    if (p < toks.length) return null;
+    const NAMED = { sin: "\\sin", cos: "\\cos", tan: "\\tan", ln: "\\ln", log: "\\log", exp: "\\exp", min: "\\min", max: "\\max", atan: "\\arctan" };
+    const strip = (n) => (n.t === "par" ? n.a : n);
+    const simple = (n) => n.t === "num" || n.t === "id";
+    const wrap = (t) => "\\left(" + t + "\\right)";
+    function tex(n) {
+      switch (n.t) {
+        case "num": return (n.v[0] === "." ? "0" + n.v : n.v).replace(".", "{,}");
+        case "id": return n.v === "pi" ? "\\pi" : n.v.length > 1 ? "\\mathrm{" + n.v + "}" : n.v;
+        case "par": return wrap(tex(n.a));
+        case "neg": return "-" + (n.a.t === "add" || n.a.t === "neg" ? wrap(tex(n.a)) : tex(n.a));
+        case "fact": return (simple(n.a) || n.a.t === "par" ? tex(n.a) : wrap(tex(n.a))) + "!";
+        case "add": return tex(n.a) + (n.op === "+" ? " + " : " - ") + (n.b.t === "neg" ? wrap(tex(n.b)) : tex(n.b));
+        case "mul": {
+          if (n.op === "/") {
+            // -(x-1)/(x-2) reads as minus a fraction
+            const top = strip(n.a);
+            if (top.t === "neg") return "-\\frac{" + tex(strip(top.a)) + "}{" + tex(strip(n.b)) + "}";
+            return "\\frac{" + tex(top) + "}{" + tex(strip(n.b)) + "}";
+          }
+          const R = n.b;
+          // a dot where juxtaposition would read wrongly: 2·3, x·2, 2·½, 3·2^x
+          const dot = R.t === "num" || R.t === "neg" || R.t === "fact" || (R.t === "mul" && R.op === "/") || (R.t === "pow" && R.a.t === "num");
+          const thin = !dot && R.t === "call" && !simple(n.a);
+          return tex(n.a) + (dot ? " \\cdot " : thin ? "\\," : "") + tex(R);
+        }
+        case "pow": {
+          const base = simple(n.a) || n.a.t === "par" || n.a.t === "call" ? tex(n.a) : wrap(tex(n.a));
+          return "{" + base + "}^{" + tex(strip(n.b)) + "}";
+        }
+        case "call": {
+          const args = n.args.map((a) => tex(a));
+          if (n.f === "sqrt") return "\\sqrt{" + args[0] + "}";
+          if (n.f === "abs") return "\\left|" + args[0] + "\\right|";
+          if (n.f === "exp") return "e^{" + args[0] + "}";
+          const name = NAMED[n.f] || "\\operatorname{" + n.f + "}";
+          return name + (n.args.length === 1 && simple(n.args[0]) ? "(" + args[0] + ")" : wrap(args.join(", ")));
+        }
+      }
+      return "";
+    }
+    return tex(tree);
+  }
+
+  // keys in the shape the learner knows from the exercise book: [TeX on the key, text it types, spoken name]
+  const BOX = "\\square";
+  const KEYS_A = [["x", "x", "x"], [BOX + "^{2}", "^2", "hoch zwei"], [BOX + "^{" + BOX + "}", "^", "hoch"], ["(", "(", "Klammer auf"], [")", ")", "Klammer zu"],
+    ["\\cdot", "*", "mal"], ["\\frac{" + BOX + "}{" + BOX + "}", "/", "geteilt durch"]];
+  const KEYS_B = [["\\sqrt{" + BOX + "}", "sqrt(", "Wurzel"], ["\\sin", "sin(", "Sinus"], ["\\cos", "cos(", "Kosinus"], ["\\tan", "tan(", "Tangens"], ["e^{" + BOX + "}", "e^(", "e hoch"],
+    ["\\ln", "ln(", "natürlicher Logarithmus"], ["\\left|" + BOX + "\\right|", "abs(", "Betrag"], ["\\pi", "pi", "pi"]];
+
   // numeric derivatives
   const d1 = (f, x) => { const h = 1e-4 * Math.max(1, Math.abs(x)); return (f(x + h) - f(x - h)) / (2 * h); };
   const d2 = (f, x) => { const h = 1e-3 * Math.max(1, Math.abs(x)); return (f(x + h) - 2 * f(x) + f(x - h)) / (h * h); };
@@ -229,30 +332,48 @@
       const cam = { az: 35, el: 28 };
       let surface = true;
 
-      // input row with quick keys for the phone
-      const label = two ? "f(x, y) =" : "f(x) =";
+      // input row; under it the term typeset (or what is wrong with it), then keys in the shape of the exercise book
+      const fx = two ? "f(x, y) =" : "f(x) =";
       const input = LW.el("input", { class: "lw-lab-input", type: "text", value: src, spellcheck: "false", autocapitalize: "off", autocomplete: "off",
-        "aria-label": "Funktionsterm", placeholder: two ? "z. B. x^2 - y^2" : "z. B. x^3 - 3x" });
-      const err = LW.el("div", { class: "lw-lab-error", "aria-live": "polite" });
-      host.append(LW.el("div", { class: "lw-lab-row" }, [LW.el("span", { class: "lw-lab-label", text: label }), input]));
-      const keys = LW.el("div", { class: "lw-lab-keys" });
-      (two ? ["x", "y", "^", "(", ")", "*", "sin(", "cos(", "e^(", "sqrt("] : ["x", "^", "(", ")", "*", "/", "sin(", "cos(", "e^(", "ln(", "sqrt(", "pi"]).forEach((k) => {
-        const b2 = LW.el("button", { class: "lw-lab-key", type: "button", text: k });
-        b2.addEventListener("click", () => {
-          const s0 = input.selectionStart != null ? input.selectionStart : input.value.length;
-          const s1 = input.selectionEnd != null ? input.selectionEnd : s0;
-          input.value = input.value.slice(0, s0) + k + input.value.slice(s1);
-          const at = s0 + k.length;
-          input.focus();
-          try { input.setSelectionRange(at, at); } catch (e) { /* older WebKit */ }
-          update();
-        });
-        keys.append(b2);
-      });
-      const back = LW.el("button", { class: "lw-lab-key", type: "button", text: "⌫", "aria-label": "Zeichen löschen" });
-      back.addEventListener("click", () => { input.value = input.value.slice(0, -1); update(); });
-      keys.append(back);
-      host.append(keys, err);
+        autocorrect: "off", inputmode: "text", "aria-label": "Funktionsterm", placeholder: two ? "z. B. x^2 - y^2" : "z. B. x^3 - 3x" });
+      host.append(LW.el("div", { class: "lw-lab-row" }, [LW.el("span", { class: "lw-lab-label", html: LW.math(fx), "aria-hidden": "true" }), input]));
+      const line = LW.el("div", { class: "lw-lab-tex", "aria-live": "polite" });
+      host.append(line);
+      // the caret: where the learner last put it, else the end
+      let caretSeen = false;
+      input.addEventListener("focus", () => { caretSeen = true; });
+      const range = () => {
+        if (!caretSeen || input.selectionStart == null) return [input.value.length, input.value.length];
+        return [input.selectionStart, input.selectionEnd == null ? input.selectionStart : input.selectionEnd];
+      };
+      const typeIn = (text) => {
+        const [s0, s1] = range();
+        input.value = input.value.slice(0, s0) + text + input.value.slice(s1);
+        try { input.setSelectionRange(s0 + text.length, s0 + text.length); } catch (e) { /* older WebKit */ }
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      };
+      const erase = () => {
+        const [s0, s1] = range();
+        if (s0 === s1 && s0 === 0) return;
+        const a0 = s0 === s1 ? s0 - 1 : s0;
+        input.value = input.value.slice(0, a0) + input.value.slice(s1);
+        try { input.setSelectionRange(a0, a0); } catch (e) { /* older WebKit */ }
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      };
+      const keyButton = (html, name, act) => {
+        const b2 = LW.el("button", { class: "lw-lab-key", type: "button", html, "aria-label": name });
+        // pointerdown with preventDefault keeps the focus where it is: an open keyboard stays open, a closed one stays closed
+        b2.addEventListener("pointerdown", (e) => { e.preventDefault(); act(); });
+        b2.addEventListener("click", (e) => { e.preventDefault(); if (e.detail === 0) act(); });
+        return b2;
+      };
+      const keys = LW.el("div", { class: "lw-lab-keys", role: "toolbar", "aria-label": "Rechenzeichen" });
+      const rowA = LW.el("div", { class: "lw-lab-keyrow" }), rowB = LW.el("div", { class: "lw-lab-keyrow" });
+      (two ? [["x", "x", "x"], ["y", "y", "y"]].concat(KEYS_A.slice(1)) : KEYS_A).forEach(([t, ins, name]) => rowA.append(keyButton(LW.math(t), name, () => typeIn(ins))));
+      rowA.append(keyButton('<span class="lw-lab-erase" aria-hidden="true">⌫</span>', "Zeichen löschen", erase));
+      (two ? KEYS_B.filter((k) => k[1] !== "tan(") : KEYS_B).forEach(([t, ins, name]) => rowB.append(keyButton(LW.math(t), name, () => typeIn(ins))));
+      keys.append(rowA, rowB);
+      host.append(keys);
       const list = task ? LW.el("ul", { class: "lw-lab-goals" }) : null;
       if (list) host.append(list);
       const sliders = LW.el("div", { class: "lw-lab-sliders" });
@@ -261,15 +382,15 @@
       // toggles
       const toggles = LW.el("div", { class: "w-btns" });
       host.append(toggles);
-      const toggle = (key, text) => {
-        const t = LW.el("button", { class: "w-btn" + (show[key] ? " on" : ""), type: "button", text });
+      const toggle = (key, text, tex) => {
+        const t = LW.el("button", tex ? { class: "w-btn" + (show[key] ? " on" : ""), type: "button", html: LW.math(tex), "aria-label": text } : { class: "w-btn" + (show[key] ? " on" : ""), type: "button", text });
         t.addEventListener("click", () => { show[key] = !show[key]; t.classList.toggle("on", show[key]); paint(); });
         toggles.append(t);
       };
       if (two) {
         K.segmented(toggles, [{ id: "s", label: "Fläche" }, { id: "c", label: "Höhenlinien" }], "s", (id) => { surface = id === "s"; paint(); });
       } else {
-        toggle("d1", "f′"); toggle("d2", "f″"); toggle("tangent", "Tangente"); toggle("area", "Integral");
+        toggle("d1", "erste Ableitung", "f'"); toggle("d2", "zweite Ableitung", "f''"); toggle("tangent", "Tangente"); toggle("area", "Integral");
       }
       const W = 360, H = two ? 300 : 260;
       const svg = K.root(host, W, H, two ? "Fläche der Funktion" : "Graph der Funktion");
@@ -321,8 +442,18 @@
       function update(silent) {
         src = input.value;
         const r = compile(src, vars, values);
-        if (r.error) { err.textContent = r.error; cur = null; }
-        else { err.textContent = ""; cur = r; }
+        if (r.error) {
+          cur = null;
+          line.classList.add("err");
+          line.removeAttribute("aria-hidden");
+          line.textContent = input.value.trim() ? r.error : "";
+        } else {
+          cur = r;
+          const t = toTex(r.src);
+          line.classList.remove("err");
+          line.setAttribute("aria-hidden", "true");
+          line.innerHTML = t ? LW.math(fx + " " + t) : "";
+        }
         // one slider per parameter
         const names = (r && r.names) || [];
         const have = [...sliders.children].map((n) => n.dataset.name);
@@ -330,7 +461,7 @@
           sliders.innerHTML = "";
           names.forEach((n) => {
             if (values[n] == null) values[n] = 1;
-            const sl = K.slider(sliders, { label: n, min: -5, max: 5, step: 0.1, value: values[n], onInput: (v) => { values[n] = v; if (cur) cur.scope[n] = v; paint(); ctx.changed(); } });
+            const sl = K.slider(sliders, { label: n, labelHtml: LW.math(n), min: -5, max: 5, step: 0.1, value: values[n], onInput: (v) => { values[n] = v; if (cur) cur.scope[n] = v; paint(); ctx.changed(); } });
             sl.el.dataset.name = n;
           });
         }
@@ -587,5 +718,5 @@
     },
   });
 
-  LW.labMath = { normalize, compile, holds, holdsAll };
+  LW.labMath = { normalize, compile, holds, holdsAll, toTex };
 })();
