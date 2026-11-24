@@ -212,7 +212,8 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(state.exams.last?.examId, "tara-komplett")
         XCTAssertEqual(state.exams.last?.parts?.first?.max, 22)
 
-        let json = #"{"id":"tara","title":"TARA","color":"#B0396F","symbol":"x","chapters":[],"exams":[{"id":"tara-ct","title":"Critical Thinking"}],"drill":{"count":5,"minutes":9,"format":"tara"},"testDate":"2027-10-11"}"#
+        // two hashes: the colour "#B0396F" contains the sequence that would end a one-hash raw string
+        let json = ##"{"id":"tara","title":"TARA","color":"#B0396F","symbol":"x","chapters":[],"exams":[{"id":"tara-ct","title":"Critical Thinking"}],"drill":{"count":5,"minutes":9,"format":"tara"},"testDate":"2027-10-11"}"##
         let course = try JSONDecoder().decode(Course.self, from: Data(json.utf8))
         XCTAssertEqual(course.examFiles.first?.format, "abitur")
         XCTAssertEqual(course.examFiles.first?.minutes, 60)
