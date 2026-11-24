@@ -336,6 +336,8 @@
           try { made = LW.realize({ id: "g", type: "gen", gen: name, level, params: f ? { course: f.course, id: f.id } : undefined }, name + "|" + level + "|" + seed); }
           catch (e) { errs.push("Stufe " + level + ": wirft " + e.message); break; }
           const e = checkStep(made, "Stufe " + level + " Variante " + seed + " (" + made.type + ")", LW);
+          // lab tasks: the start must not meet the goal, the sample solution must
+          if (!e.length && name.startsWith("lab-") && made.type === "widget") e.push(...goalErrors({ steps: [made] }, LW).map((x) => "Stufe " + level + " Variante " + seed + ": " + x));
           if (e.length) { errs.push(...e.slice(0, 2)); break; }
         }
       }

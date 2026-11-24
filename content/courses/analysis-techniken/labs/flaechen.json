@@ -1,0 +1,62 @@
+{
+  "id": "lab-flaechen",
+  "title": "Flächenlabor",
+  "subtitle": "Funktionen von zwei Variablen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Eine Funktion $f(x, y)$ ordnet jedem Punkt $(x \\mid y)$ der Ebene eine Höhe $z = f(x, y)$ zu. Ihr Graph ist eine **Fläche** im Raum. Tippe einen Term mit $x$ und $y$ ein; ziehe über die Fläche, um sie zu drehen.\n\nUnter **Höhenlinien** siehst du die Fläche von oben wie eine Wanderkarte. Der türkise Punkt lässt sich verschieben; der Pfeil ist sein **Gradient** $\\nabla f = (f_x, f_y)$. Er zeigt in die Richtung des steilsten Anstiegs und steht senkrecht auf der Höhenlinie."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Sattel",
+      "md": "$f(x, y) = x^2 - y^2$ steigt in $x$-Richtung an und fällt in $y$-Richtung ab: ein **Sattel**. Im Ursprung ist der Gradient null, trotzdem liegt dort weder ein Minimum noch ein Maximum.",
+      "widget": "funklabor",
+      "params": { "mode": "r2", "f": "x^2 - y^2" }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Höhenlinien",
+      "md": "Wechsle zu »Höhenlinien« und ziehe den Punkt. Wo die Linien dicht liegen, ist der Pfeil lang; an Gipfeln, Senken und Sätteln schrumpft er auf null.",
+      "widget": "funklabor",
+      "params": { "mode": "r2", "f": "sin(x)*cos(y)", "view": { "x": [-3.2, 3.2], "y": [-3.2, 3.2] } }
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Ändere den Term so, dass aus der Schale ein **Hügel** wird: Maximum im Ursprung mit der Höhe $2$, die Höhenlinien bleiben Kreise.",
+      "widget": "funklabor",
+      "params": {
+        "mode": "r2",
+        "f": "x^2 + y^2",
+        "task": {
+          "conditions": [
+            { "c": "rotsym", "show": "Höhenlinien sind Kreise um den Ursprung" },
+            { "c": ["max 0,0", "f(0,0) = 2"], "show": "Hochpunkt $(0 \\mid 0 \\mid 2)$" }
+          ],
+          "sample": "2 - x^2 - y^2"
+        }
+      },
+      "goal": {},
+      "hint": "Ein Minus vor $x^2 + y^2$ dreht die Schale um, eine Konstante hebt sie an.",
+      "explain": "$f(x, y) = 2 - (x^2 + y^2)$: Der Gradient $(-2x, -2y)$ ist nur im Ursprung null, $f_{xx} = f_{yy} = -2$, $f_{xy} = 0$, also $D = 4 > 0$ mit $f_{xx} < 0$: ein Maximum mit $f(0, 0) = 2$."
+    },
+    {
+      "id": "w4",
+      "type": "widget",
+      "label": "Kritische Punkte",
+      "md": "$f(x, y) = x^3 - 3x + y^2$ hat zwei kritische Punkte. Suche sie unter »Höhenlinien« mit dem Punkt: Die Anzeige meldet, wenn der Gradient null ist, und bestimmt die Art mit der Hesse-Matrix.",
+      "widget": "funklabor",
+      "params": { "mode": "r2", "f": "x^3 - 3x + y^2", "view": { "x": [-2.5, 2.5], "y": [-2, 2] } }
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** baust du selbst: Ebenen mit vorgegebenen Steigungen, Paraboloide mit Hoch- oder Tiefpunkt, Sättel, Flächen mit vorgegebenem Gradienten und Flächen mit mehreren kritischen Punkten. Jede Bedingung hakt sich ab, sobald dein Term sie erfüllt."
+    }
+  ]
+}
