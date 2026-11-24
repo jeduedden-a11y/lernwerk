@@ -531,6 +531,13 @@ struct LessonPlayerView: View {
             "formulaUrls": model.formulaURLs,
             "logMistakes": session.logMistakes,
         ]
+        // a free lab: its file is a lesson with the lab widget
+        if let lab = session.labURL {
+            options["mode"] = "lesson"
+            options["lessonUrl"] = lab
+            options["kicker"] = "Labor"
+            return options
+        }
         switch session.mode {
         case .lesson:
             guard let course = session.course, let lesson = session.lesson else { return options }
@@ -543,7 +550,7 @@ struct LessonPlayerView: View {
             options["title"] = "Heute fällig"
             options["items"] = session.reviewItems.map(\.json)
             if session.mistakeRound { options["title"] = "Fehler von früher" }
-            if session.library { options["title"] = session.title }
+            if session.library || session.skipTest != nil { options["title"] = session.title }
         case .practice:
             guard let course = session.course, let topic = session.topic else { return options }
             options["mode"] = "practice"
@@ -846,6 +853,8 @@ struct CompletionView: View {
     }
 
     private var title: String {
+        if session.labURL != nil { return "Labor beendet" }
+        if session.skipTest != nil { return result.score >= 0.8 ? "Kurztest bestanden" : "Kurztest nicht bestanden" }
         switch session.mode {
         case .review: return "Wiederholung abgeschlossen"
         case .practice: return passed ? "Stufe bestanden" : "Runde abgeschlossen"
@@ -866,8 +875,14 @@ struct CompletionView: View {
     }
 
     private var summary: String {
+        if session.labURL != nil { return "Bauaufgaben auf vier Stufen findest du im Üben-Tab unter Labor." }
         let n = result.results.count
         if n == 0 { return "Keine Aufgaben in dieser Runde." }
+        if session.skipTest != nil {
+            return result.score >= 0.8
+                ? "\(correct) von \(n) sofort richtig. Die Lektion zählt jetzt voll, mit Punkten und Wiederholungskarten."
+                : "\(correct) von \(n) sofort richtig. Ab 80 Prozent zählt die Lektion voll; ein bestandenes Training zählt ebenso."
+        }
         switch session.mode {
         case .practice:
             if passed && session.level < 4 { return "\(correct) von \(n) Aufgaben sofort gelöst. Bereit für \(Level(session.level + 1).name)." }

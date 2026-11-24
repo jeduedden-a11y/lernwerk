@@ -215,6 +215,8 @@ struct LessonRow: View {
     var isFirst: Bool
     var isLast: Bool
 
+    @State private var askSkipped = false
+
     private var progress: LessonProgress? { model.state.lessons[lesson.id] }
     private var done: Bool { progress?.isCompleted == true }
     private var skipped: Bool { progress?.isSkipped == true }
@@ -222,7 +224,7 @@ struct LessonRow: View {
 
     var body: some View {
         Button {
-            model.start(course, lesson)
+            if skipped { askSkipped = true } else { model.start(course, lesson) }
         } label: {
             HStack(spacing: 14) {
                 node
@@ -248,9 +250,21 @@ struct LessonRow: View {
         }
         .buttonStyle(.plain)
         .disabled(!lesson.isReady)
+        .confirmationDialog("»\(lesson.title)« ist übersprungen", isPresented: $askSkipped, titleVisibility: .visible) {
+            Button("Kurztest (bis zu 8 Fragen)") { model.startSkipTest(course, lesson) }
+            Button("Lektion öffnen") { model.start(course, lesson) }
+            Button("Abbrechen", role: .cancel) {}
+        } message: {
+            Text("Mit 80 Prozent im Kurztest oder einer bestandenen Trainingsstufe zum Thema zählt die Lektion voll: Punkte, Wiederholungskarten und Ampel.")
+        }
         .contextMenu {
             if lesson.isReady {
                 if skipped {
+                    Button {
+                        model.startSkipTest(course, lesson)
+                    } label: {
+                        Label("Kurztest machen", systemImage: "checkmark.seal")
+                    }
                     Button {
                         model.unskip(lesson)
                     } label: {
@@ -293,7 +307,7 @@ struct LessonRow: View {
     private var detail: String {
         if !lesson.isReady { return "Bald verfügbar" + (lesson.ref.map { " · \($0)" } ?? "") }
         var parts: [String] = []
-        if skipped { parts.append("Übersprungen") }
+        if skipped { parts.append("Übersprungen · Kurztest macht sie voll") }
         if let m = lesson.minutes { parts.append(Format.minutes(m)) }
         if let r = lesson.ref { parts.append(r) }
         if done, let s = progress?.bestScore { parts.append("\(Int((s * 100).rounded())) %") }

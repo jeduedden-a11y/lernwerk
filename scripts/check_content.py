@@ -295,6 +295,48 @@ def check_formulas(cid: str, cdir: Path, listed: set) -> None:
 
 
 EXAM_COUNT = [0]
+LAB_COUNT = [0]
+
+
+def check_labs(cid: str, cdir: Path, course: dict, widgets: set[str]) -> None:
+    """courses/<course>/labs/<id>.json: free labs (a lesson with the lab widget), listed in course.json under labs."""
+    where = f"courses/{cid}/course.json"
+    seen: set[str] = set()
+    for lab in course.get("labs") or []:
+        lid = lab.get("id") if isinstance(lab, dict) else None
+        if not lid or not re.fullmatch(r"[a-z0-9-]+", lid) or lid in seen:
+            problem(where, f"Labor-id fehlt, ist doppelt oder enthält andere Zeichen als a-z, 0-9 und -: {lid!r}")
+            continue
+        seen.add(lid)
+        if not lab.get("title"):
+            problem(where, f"Labor {lid}: title fehlt")
+        for g in lab.get("tasks") or []:
+            if g not in GENERATORS:
+                problem(where, f"Labor {lid}: Generator {g} gibt es nicht")
+        if lab.get("count") is not None and not (isinstance(lab["count"], int) and lab["count"] >= 1):
+            problem(where, f"Labor {lid}: count muss eine ganze Zahl ab 1 sein")
+        path = cdir / "labs" / f"{lid}.json"
+        lwhere = f"courses/{cid}/labs/{lid}.json"
+        if not path.is_file():
+            problem(where, f"Labor {lid}: Datei {lwhere} fehlt")
+            continue
+        spec = load(path)
+        if spec is None:
+            continue
+        LAB_COUNT[0] += 1
+        if spec.get("id") != f"lab-{lid}":
+            problem(lwhere, f"id muss lab-{lid} sein")
+        if not spec.get("title"):
+            problem(lwhere, "title fehlt")
+        steps = spec.get("steps") or []
+        if not steps:
+            problem(lwhere, "keine Schritte")
+        for i, s in enumerate(steps):
+            check_step(f"{lwhere} Schritt {i + 1} ({s.get('type')})", s, widgets)
+    folder = cdir / "labs"
+    for f in folder.glob("*.json") if folder.is_dir() else []:
+        if f.stem not in seen:
+            problem(f"courses/{cid}/labs/{f.name}", "steht nicht unter labs in course.json")
 
 
 def check_exams(cid: str, cdir: Path, course: dict, listed: set, widgets: set[str]) -> None:
@@ -505,6 +547,7 @@ def main() -> int:
         if course.get("testDate") is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(course["testDate"])):
             problem(where, "testDate muss JJJJ-MM-TT sein")
         check_exams(cid, cdir, course, listed, widgets)
+        check_labs(cid, cdir, course, widgets)
         check_formulas(cid, cdir, listed)
 
     # learning path: prerequisites inside the course, links to existing lessons, no cycles
@@ -568,7 +611,7 @@ def main() -> int:
         for p in problems:
             print(" -", p)
         return 1
-    print(f"Inhalte in Ordnung: {len(index.get('courses', []))} Kurse, {lesson_count} Lektionen, {EXAM_COUNT[0]} Klausuren, {len(widgets)} Widgets")
+    print(f"Inhalte in Ordnung: {len(index.get('courses', []))} Kurse, {lesson_count} Lektionen, {EXAM_COUNT[0]} Klausuren, {LAB_COUNT[0]} Labore, {len(widgets)} Widgets")
     return 0
 
 

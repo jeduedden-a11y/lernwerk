@@ -369,6 +369,75 @@ public struct LearnerState: Codable, Sendable {
         lessons[lessonID] = p
     }
 
+    /// A skipped lesson made good by exercises (a passed training level or a short test from its questions): it
+    /// counts as finished, with the points of a first completion and review cards for its questions. Returns the XP.
+    @discardableResult
+    public mutating func completeSkipped(lessonID: String, courseID: String, meta: LessonMeta?, now: Date = Date()) -> Int {
+        guard var p = lessons[lessonID], p.isSkipped else { return 0 }
+        p.completedAt = now
+        p.skippedAt = nil
+        p.timesCompleted += 1
+        p.updatedAt = now
+        lessons[lessonID] = p
+        let xp = 10
+        let dayKey = DayKey.key(for: now)
+        var stat = days[dayKey] ?? DayStat()
+        stat.xp += xp
+        stat.lessons += 1
+        days[dayKey] = stat
+        var own = ownDays[dayKey] ?? DayStat()
+        own.xp += xp
+        own.lessons += 1
+        ownDays[dayKey] = own
+        for stepID in meta?.reviewableStepIDs ?? [] {
+            let key = ReviewCard.key(lessonID, stepID)
+            if cards[key] != nil { continue }
+            let base = ReviewCard(courseId: courseID, lessonId: lessonID, stepId: stepID, due: now)
+            cards[key] = Scheduler.review(base, quality: 4, now: now)
+        }
+        return xp
+    }
+
+    /// Moves everything recorded under merged courses to the course they went into (CourseAliases).
+    /// Returns true when something changed.
+    @discardableResult
+    public mutating func renameCourses(_ map: [String: String]) -> Bool {
+        guard !map.isEmpty else { return false }
+        var changed = false
+        for (id, p) in lessons {
+            if let to = map[p.courseId] { var q = p; q.courseId = to; lessons[id] = q; changed = true }
+        }
+        for (key, card) in cards {
+            if let to = map[card.courseId] { var c = card; c.courseId = to; cards[key] = c; changed = true }
+        }
+        func move(_ stats: [String: PracticeStat]) -> [String: PracticeStat] {
+            var out: [String: PracticeStat] = [:]
+            for (key, value) in stats {
+                let parts = key.split(separator: "/", maxSplits: 1).map(String.init)
+                if parts.count == 2, let to = map[parts[0]] {
+                    let moved = PracticeStat.key(course: to, topic: parts[1])
+                    if out[moved] == nil { out[moved] = value }
+                    changed = true
+                } else if out[key] == nil {
+                    out[key] = value
+                }
+            }
+            return out
+        }
+        practice = move(practice)
+        ownPractice = move(ownPractice)
+        for i in exams.indices {
+            if let c = exams[i].courseId, let to = map[c] { exams[i].courseId = to; changed = true }
+        }
+        for i in mistakes.indices {
+            if let to = map[mistakes[i].courseId] { mistakes[i].courseId = to; changed = true }
+        }
+        for i in notes.indices {
+            if let to = map[notes[i].courseId] { notes[i].courseId = to; changed = true }
+        }
+        return changed
+    }
+
     /// What most needs practice, weakest first.
     /// Topics: hit rate at the first try in training and the daily mix plus the last ten exams; from 6 answers on, below 70 %.
     /// Lessons: at least two of their questions were not known at the last repetition.

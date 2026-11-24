@@ -63,6 +63,9 @@
     <button id="practice">Training starten</button>
     <select id="exam" title="Klausur"></select>
     <button id="examstart">Klausur starten</button>
+    <select id="lab" title="Labor"></select>
+    <button id="labstart">Labor frei</button>
+    <button id="labtasks">Laboraufgaben</button>
     <button id="gens">Generatoren prüfen</button>
     <button id="formulas">Formeln</button>
     <button id="path">Lernpfad</button>
@@ -135,6 +138,8 @@
     for (const t of c.practice || []) { const o = document.createElement("option"); o.value = t.id; o.textContent = "Training: " + t.title; $("topic").append(o); }
     $("exam").innerHTML = "";
     for (const x of c.exams || []) { const o = document.createElement("option"); o.value = x.id; o.textContent = "Klausur: " + x.title; $("exam").append(o); }
+    $("lab").innerHTML = "";
+    for (const x of c.labs || []) { const o = document.createElement("option"); o.value = x.id; o.textContent = "Labor: " + x.title; $("lab").append(o); }
     start();
   }
   $("practice").onclick = () => {
@@ -410,8 +415,25 @@
         if (errs.length) bad++;
       }
     }
-    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen, Formelsammlungen und Klausuren (" + examCount + " Klausuren), " + bad + " mit Fehlern</b>"; rep.prepend(s);
-    window.lwReport = { total, bad, exams: examCount, text: rep.innerText };
+    // labs: the free lab file like a lesson (goals included)
+    let labCount = 0;
+    for (const id of index.courses) {
+      for (const x of courses[id].labs || []) {
+        total++;
+        labCount++;
+        let errs;
+        try { const L = await fetchJSON("../courses/" + id + "/labs/" + x.id + ".json"); errs = checkLesson(L, LW).concat(goalErrors(L, LW)); }
+        catch (e) { errs = [String(e.message || e)]; }
+        (x.tasks || []).forEach((g) => { if (!LW.generators[g]) errs.push("Generator " + g + " fehlt"); });
+        const d = document.createElement("div");
+        d.className = errs.length ? "err" : "ok";
+        d.textContent = (errs.length ? "Fehler " : "OK ") + id + "/labs/" + x.id + (errs.length ? ": " + errs.join(" | ") : "");
+        rep.append(d);
+        if (errs.length) bad++;
+      }
+    }
+    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen, Formelsammlungen, Klausuren und Labore (" + examCount + " Klausuren, " + labCount + " Labore), " + bad + " mit Fehlern</b>"; rep.prepend(s);
+    window.lwReport = { total, bad, exams: examCount, labs: labCount, text: rep.innerText };
   };
 
   /** An exam file: format, parts, times, points; tasks from lessons must exist, generators must make clean tasks. */
@@ -453,6 +475,22 @@
     if (!questions) errs.push("keine Aufgaben");
     return errs;
   }
+
+  // labs: the free lab is a lesson file, the build tasks a training round with the lab's generators
+  const currentLab = () => (courses[$("course").value].labs || []).find((x) => x.id === $("lab").value);
+  $("labstart").onclick = () => {
+    const cid = $("course").value, c = courses[cid], x = currentLab();
+    if (!x) return;
+    frame.contentWindow.LW.start({ lessonUrl: "../courses/" + cid + "/labs/" + x.id + ".json", kicker: "Labor", theme: { accent: c.color }, insets: { top: 112, bottom: 120 }, formulaUrls: formulaUrls() });
+  };
+  $("labtasks").onclick = () => {
+    const cid = $("course").value, c = courses[cid], x = currentLab();
+    if (!x || !(x.tasks || []).length) return;
+    frame.contentWindow.LW.start({
+      mode: "practice", theme: { accent: c.color }, insets: { top: 112, bottom: 120 }, formulaUrls: formulaUrls(),
+      practice: { title: x.title, kicker: "Labor", topicId: "lab-" + x.id, courseId: cid, gens: x.tasks, level: +$("level").value, count: x.count || 5 },
+    });
+  };
 
   $("examstart").onclick = () => {
     const cid = $("course").value, c = courses[cid];

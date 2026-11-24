@@ -164,6 +164,42 @@ public struct ExamRef: Codable, Hashable, Identifiable, Sendable {
     public static func path(course: String, exam: String) -> String { "courses/\(course)/exams/\(exam).json" }
 }
 
+/// A lab: a free playground (a lesson file courses/<course>/labs/<id>.json with the lab widget) and build tasks from
+/// generators, in training rounds on four levels. Labs live in the Üben tab.
+public struct LabRef: Codable, Hashable, Identifiable, Sendable {
+    public var id: String
+    public var title: String
+    public var summary: String?
+    /// SF Symbol of the lab.
+    public var symbol: String?
+    /// Generators of the build tasks.
+    public var tasks: [String]?
+    /// Tasks per round.
+    public var count: Int?
+
+    public init(id: String, title: String, summary: String? = nil, symbol: String? = nil, tasks: [String]? = nil, count: Int? = nil) {
+        self.id = id
+        self.title = title
+        self.summary = summary
+        self.symbol = symbol
+        self.tasks = tasks
+        self.count = count
+    }
+
+    public static func path(course: String, lab: String) -> String { "courses/\(course)/labs/\(lab).json" }
+
+    /// The build tasks as a training topic of their own; it is not listed among the course's training topics.
+    public var taskTopic: PracticeTopic? {
+        guard let gens = tasks, !gens.isEmpty else { return nil }
+        return PracticeTopic(id: "lab-" + id, title: title, summary: summary, gens: gens, count: count ?? 5)
+    }
+}
+
+/// Courses that were merged into others: progress, cards, training, exams, mistakes and notes move along.
+public enum CourseAliases {
+    public static let map: [String: String] = ["stochastik": "mathe-oberstufe"]
+}
+
 /// A short round at test pace for an admission test: a few tasks from the course's training topics, weak ones first,
 /// with a clock and the solutions at the end.
 public struct Drill: Codable, Hashable, Sendable {
@@ -245,9 +281,12 @@ public struct Course: Codable, Hashable, Identifiable, Sendable {
     public var drill: Drill?
     /// First day of the planned test window of an admission test, yyyy-MM-dd.
     public var testDate: String?
+    /// Labs (free playground plus build tasks), shown in the Üben tab.
+    public var labs: [LabRef]?
 
     public var lessons: [LessonRef] { chapters.flatMap(\.lessons) }
     public var examFiles: [ExamRef] { exams ?? [] }
+    public var labList: [LabRef] { labs ?? [] }
 
     /// The planned test day as a date (local midnight).
     public var testDay: Date? {
@@ -282,8 +321,10 @@ public struct LessonMeta: Codable, Hashable, Sendable {
         public var type: String
         public var review: Bool?
         public var hasGoal: Bool
+        /// Generated steps name their generator; a training round with it covers the lesson.
+        public var gen: String?
 
-        enum CodingKeys: String, CodingKey { case id, type, review, goal }
+        enum CodingKeys: String, CodingKey { case id, type, review, goal, gen }
 
         public init(from decoder: Decoder) throws {
             let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -291,6 +332,7 @@ public struct LessonMeta: Codable, Hashable, Sendable {
             type = (try? c.decode(String.self, forKey: .type)) ?? "text"
             review = try c.decodeIfPresent(Bool.self, forKey: .review)
             hasGoal = c.contains(.goal)
+            gen = try? c.decodeIfPresent(String.self, forKey: .gen)
         }
 
         public func encode(to encoder: Encoder) throws {
@@ -298,8 +340,12 @@ public struct LessonMeta: Codable, Hashable, Sendable {
             try c.encodeIfPresent(id, forKey: .id)
             try c.encode(type, forKey: .type)
             try c.encodeIfPresent(review, forKey: .review)
+            try c.encodeIfPresent(gen, forKey: .gen)
         }
     }
+
+    /// The generators the lesson's generated steps use.
+    public var gens: Set<String> { Set(steps.compactMap(\.gen)) }
 
     public var id: String
     public var title: String

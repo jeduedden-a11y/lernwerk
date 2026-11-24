@@ -31,6 +31,8 @@ struct ReviewView: View {
                     }
                     TrainingSection(target: $practiceTarget)
                         .appearOnce(2)
+                    LabSection(practiceTarget: $practiceTarget)
+                        .appearOnce(3)
                     ExamCenterSection(examTarget: $examTarget)
                         .appearOnce(3)
                     if !model.state.cards.isEmpty {

@@ -188,6 +188,24 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(m, .primary(label: "Antwort abgeben", enabled: true, style: "check", canGiveUp: true, giveUpLabel: "Überspringen"))
     }
 
+    func testMergedCourseAndSkippedLessonMadeGood() {
+        var state = LearnerState()
+        state.skip(lessonID: "stoch-laplace", courseID: "stochastik")
+        state.practice["stochastik/laplace"] = PracticeStat()
+        state.cards["stoch-urne#q1"] = ReviewCard(courseId: "stochastik", lessonId: "stoch-urne", stepId: "q1", due: Date())
+        XCTAssertTrue(state.renameCourses(CourseAliases.map))
+        XCTAssertEqual(state.lessons["stoch-laplace"]?.courseId, "mathe-oberstufe")
+        XCTAssertNotNil(state.practice["mathe-oberstufe/laplace"])
+        XCTAssertNil(state.practice["stochastik/laplace"])
+        XCTAssertEqual(state.cards["stoch-urne#q1"]?.courseId, "mathe-oberstufe")
+        XCTAssertFalse(state.renameCourses(CourseAliases.map))
+
+        XCTAssertEqual(state.completeSkipped(lessonID: "stoch-laplace", courseID: "mathe-oberstufe", meta: nil), 10)
+        XCTAssertEqual(state.lessons["stoch-laplace"]?.isCompleted, true)
+        XCTAssertEqual(state.lessons["stoch-laplace"]?.isSkipped, false)
+        XCTAssertEqual(state.completeSkipped(lessonID: "stoch-laplace", courseID: "mathe-oberstufe", meta: nil), 0)
+    }
+
     func testToolsMessage() {
         XCTAssertEqual(RuntimeMessage.parse(["type": "tools", "calculator": false, "formulas": true]), .tools(calculator: false, formulas: true))
         XCTAssertEqual(RuntimeMessage.parse(["type": "tools"]), .tools(calculator: true, formulas: true))

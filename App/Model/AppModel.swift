@@ -68,6 +68,10 @@ struct LessonSession: Identifiable, Equatable {
     /// An exam from a file (courses/<course>/exams/<id>.json) instead of generated tasks.
     var examURL: String? = nil
     var examId: String? = nil
+    /// A short test from the questions of a skipped lesson (its id): 80 percent make the lesson count in full.
+    var skipTest: String? = nil
+    /// A free lab (courses/<course>/labs/<id>.json): a playground, nothing is recorded.
+    var labURL: String? = nil
     /// Wrong generated tasks come back with their wording, for the mistake log.
     var logMistakes = false
     /// A round of tasks from the mistake log: solved ones leave it.
@@ -139,13 +143,13 @@ final class AppModel {
         let defaults = UserDefaults.standard
         vault = (defaults.data(forKey: "vault").flatMap { try? JSONDecoder().decode(VaultSettings.self, from: $0) }) ?? VaultSettings()
         contentSource = (defaults.data(forKey: "contentSource").flatMap { try? JSONDecoder().decode(ContentSource.self, from: $0) }) ?? ContentSource()
-        if demo {
-            state = LearnerState()
-        } else if let data = try? Data(contentsOf: stateURL), let s = try? JSONDecoder().decode(LearnerState.self, from: data) {
-            state = s
-        } else {
-            state = LearnerState()
+        var loaded = LearnerState()
+        if !demo, let data = try? Data(contentsOf: stateURL), let s = try? JSONDecoder().decode(LearnerState.self, from: data) {
+            loaded = s
         }
+        // courses merged into others take their progress along (Stochastik into Mathematik Oberstufe)
+        loaded.renameCourses(CourseAliases.map)
+        state = loaded
         let contentSync = ContentSync(source: contentSource, root: cacheRoot, shellVersion: Self.shellVersion, bundleRoot: locator.bundleRoot)
         // a new install brings newer lessons than older downloads; they must not hide them
         if !demo { contentSync.adoptBundle() }
@@ -427,6 +431,50 @@ final class AppModel {
         scheduleSave()
     }
 
+    /// A short test from the questions of a skipped lesson, at most eight in the lesson's order. With 80 percent the
+    /// lesson counts in full (points, review cards, Ampel).
+    func startSkipTest(_ course: Course, _ lesson: LessonRef) {
+        guard let meta = meta(course, lesson) else { start(course, lesson); return }
+        let ids = meta.reviewableStepIDs
+        guard !ids.isEmpty else { start(course, lesson); return }
+        let picked = Set(ids.shuffled().prefix(8))
+        let items = ids.filter { picked.contains($0) }.map { ReviewItem(lessonUrl: lessonURL(course, lesson.id), stepId: $0) }
+        var session = LessonSession(mode: .review, course: course, meta: meta, reviewItems: items, title: "Kurztest: \(lesson.title)", accentHex: course.color)
+        session.skipTest = lesson.id
+        presentedLesson = session
+    }
+
+    /// The lessons a training topic covers: the lesson it belongs to, every lesson that uses its generators, and for a
+    /// topic that only names a chapter, the chapter's lessons without a topic of their own.
+    func lessonsCovered(by topic: PracticeTopic, in course: Course) -> [LessonRef] {
+        let gens = Set(topic.gens)
+        var covered = course.readyLessons.filter { lesson in
+            lesson.id == topic.after || !(meta(course, lesson)?.gens ?? []).isDisjoint(with: gens)
+        }
+        if covered.isEmpty, let chapterID = topic.chapter, let chapter = course.chapters.first(where: { $0.id == chapterID }) {
+            let owned = Set(course.practiceTopics.compactMap(\.after))
+            covered = chapter.lessons.filter { $0.isReady && !owned.contains($0.id) }
+        }
+        return covered
+    }
+
+    /// Makes skipped lessons count in full after exercises; tells the learner which. Returns the points.
+    @discardableResult
+    private func completeSkipped(_ course: Course, _ lessons: [LessonRef]) -> Int {
+        var names: [String] = []
+        var xp = 0
+        for lesson in lessons where state.lessons[lesson.id]?.isSkipped == true {
+            xp += state.completeSkipped(lessonID: lesson.id, courseID: course.id, meta: meta(course, lesson))
+            if let book = formulaBook(course) {
+                state.addFormulaCards(courseId: course.id, ids: book.formulas(forLesson: lesson.id).map(\.id))
+            }
+            names.append(lesson.title)
+        }
+        guard !names.isEmpty else { return 0 }
+        toast = names.count == 1 ? "»\(names[0])« zählt jetzt als abgeschlossen" : "\(names.count) übersprungene Lektionen zählen jetzt als abgeschlossen"
+        return xp
+    }
+
     func start(_ course: Course, _ lesson: LessonRef, fromStart: Bool = false) {
         guard lesson.isReady else { return }
         let p = state.lessons[lesson.id]
@@ -528,6 +576,26 @@ final class AppModel {
         session.format = paper.testFormat
         session.logMistakes = course.mistakeLog == true
         presentedLesson = session
+    }
+
+    // MARK: labs
+
+    func labURL(_ course: Course, _ lab: LabRef) -> String { "lw://app/" + LabRef.path(course: course.id, lab: lab.id) }
+
+    /// The free lab: a playground with the lab widget; nothing is recorded.
+    func startLab(_ course: Course, _ lab: LabRef) {
+        var session = LessonSession(mode: .lesson, course: course, title: lab.title, accentHex: course.color)
+        session.labURL = labURL(course, lab)
+        presentedLesson = session
+    }
+
+    /// Labs by subject, in the order of the subjects, for the Üben tab.
+    var labGroups: [(subject: Subject, items: [(course: Course, lab: LabRef)])] {
+        subjects.compactMap { subject -> (subject: Subject, items: [(course: Course, lab: LabRef)])? in
+            let found: [Course] = subject.courses.compactMap { course($0) }
+            let items: [(course: Course, lab: LabRef)] = found.flatMap { c in c.labList.map { (course: c, lab: $0) } }
+            return items.isEmpty ? nil : (subject: subject, items: items)
+        }
     }
 
     // MARK: exams from files and the admission tests
@@ -759,7 +827,24 @@ final class AppModel {
 
     @discardableResult
     func finish(_ session: LessonSession, result: FinishedLesson) -> Int {
+        // a free lab is a playground: nothing is recorded
+        if session.labURL != nil { return 0 }
+        // the short test of a skipped lesson: its questions have no cards yet, only the pass counts
+        if let lessonID = session.skipTest, let course = session.course {
+            var gained = 0
+            if result.score >= 0.8, let lesson = course.lessons.first(where: { $0.id == lessonID }) {
+                gained = completeSkipped(course, [lesson])
+            } else {
+                toast = "Noch nicht: Ab 80 Prozent zählt die Lektion voll."
+            }
+            scheduleSave()
+            return gained
+        }
         let xp = state.record(result, course: session.course, meta: session.meta)
+        // a passed training level makes the skipped lessons of its topic count in full
+        if session.mode == .practice, result.score >= 0.8, let course = session.course, let topic = session.topic {
+            completeSkipped(course, lessonsCovered(by: topic, in: course))
+        }
         if session.library { library.recordResults(result.results) }
         // the formulas of a finished lesson become cards of their own, asked in changing directions
         if session.mode == .lesson, let course = session.course, let lesson = session.lesson, let book = formulaBook(course) {
@@ -988,6 +1073,8 @@ final class AppModel {
                     if let snap = try await sync.download(device: device) { incoming.append((snapshot: snap, sha: sha)) }
                 }
                 if state.merge(incoming) { takenFrom += incoming.map { $0.snapshot.name } }
+                // another device on an older version may still use the ids of merged courses
+                state.renameCourses(CourseAliases.map)
                 everything = false
             }
             let snapshot = ProgressSnapshot(state: state, name: deviceName, savedAt: Date())
