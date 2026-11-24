@@ -2254,11 +2254,22 @@
     }
     let touched = false;
     let inst = null;
+    // goal.list: a checklist under the widget, one line per condition of the goal, ticked off while the learner works
+    let goalList = null;
+    function paintGoalList() {
+      if (!goalList || !inst || typeof inst.check !== "function") return;
+      goalList.innerHTML = "";
+      step.goal.list.forEach((it) => {
+        let ok = false;
+        try { ok = !!(inst.check({ when: it.when }) || {}).correct; } catch (e) { ok = false; }
+        goalList.append(el("li", { class: ok ? "ok" : "" }, [el("span", { class: "mark", text: ok ? "✓" : "" }), el("span", { class: "lw-md", html: md(it.show || it.when) })]));
+      });
+    }
     const wctx = {
       theme: ctx.theme,
       seed: ctx.seed + step.id,
       md: md, math: math, el: el, expr: expr,
-      changed() { touched = true; fb.hide(); ctx.changed(); },
+      changed() { touched = true; fb.hide(); paintGoalList(); ctx.changed(); },
       color(name) { return getComputedStyle(document.documentElement).getPropertyValue("--" + name).trim(); },
     };
     try {
@@ -2268,6 +2279,11 @@
       return { el: card, question: false };
     }
     const isQuestion = !!(step.goal && typeof inst.check === "function");
+    if (isQuestion && Array.isArray(step.goal.list) && step.goal.list.length) {
+      goalList = el("ul", { class: "lw-lab-goals" });
+      host.append(goalList);
+      paintGoalList();
+    }
     if (step.after) card.append(mdEl(step.after));
     if (isQuestion) { hintButton(step, card); card.append(fb.el); }
     let locked = false;
@@ -2283,6 +2299,7 @@
       },
       reveal() {
         if (typeof inst.solve === "function") inst.solve(step.goal);
+        paintGoalList();
         fb.show(true, "Lösung", step.explain);
       },
       lock() { locked = true; if (inst.lock) inst.lock(); },

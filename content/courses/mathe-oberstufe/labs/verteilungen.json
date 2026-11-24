@@ -1,0 +1,51 @@
+{
+  "id": "lab-verteilungen",
+  "title": "Verteilungslabor",
+  "subtitle": "Wahrscheinlichkeitsverteilungen einstellen und ablesen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Im Verteilungslabor wählst du eine Verteilung und stellst ihre Parameter mit Reglern ein. Darunter wählst du, welche Wahrscheinlichkeit du sehen willst: $P(X \\le b)$, $P(a \\le X \\le b)$ oder $P(X \\ge a)$. Die Grenzen $a$ und $b$ ziehst du unter dem Diagramm.\n\nBinomial-, Poisson-, geometrische und hypergeometrische Verteilung sind **diskret** (Balken), Normal- und Exponentialverteilung **stetig** (Kurve, Fläche)."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Wechsle zwischen den Verteilungen und beobachte, wie $E(X)$, $\\mathrm{Var}(X)$ und die Form auf die Parameter reagieren.",
+      "widget": "verteilung",
+      "params": { "dist": "binomial", "n": 20, "p": 0.3 }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Normalkurve",
+      "md": "Die Binomialverteilung mit der Normalkurve darüber. Vergrößere $n$: Ab $\\sigma > 3$ (Laplace-Bedingung) passt die Kurve sehr gut.",
+      "widget": "verteilung",
+      "params": { "dists": ["binomial"], "n": 10, "p": 0.3, "approx": true, "ranges": { "n": [1, 200] } }
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Eine Binomialverteilung soll den Erwartungswert $E(X) = 12$ und die Varianz $\\mathrm{Var}(X) = 9$ haben. Stelle $n$ und $p$ ein.",
+      "widget": "verteilung",
+      "params": { "dists": ["binomial"], "n": 20, "p": 0.3, "ranges": { "n": [1, 100] } },
+      "goal": {
+        "when": "abs(E - 12) < 0.0005 && abs(V - 9) < 0.0005",
+        "list": [
+          { "when": "abs(E - 12) < 0.0005", "show": "$E(X) = 12$" },
+          { "when": "abs(V - 9) < 0.0005", "show": "$\\mathrm{Var}(X) = 9$" }
+        ],
+        "solve": { "n": 48, "p": 0.25 }
+      },
+      "hint": "$\\frac{\\mathrm{Var}(X)}{E(X)} = 1 - p$.",
+      "explain": "$1 - p = \\frac{9}{12} = 0{,}75$, also $p = 0{,}25$ und $n = \\frac{12}{0{,}25} = 48$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** stellst du Verteilungen nach Vorgaben ein: Parameter aus Erwartungswert und Varianz, kleinste Grenzen für eine Sicherheit, Normalverteilungen aus zwei Wahrscheinlichkeiten, die Laplace-Bedingung und Urnenmodelle ohne Zurücklegen."
+    }
+  ]
+}

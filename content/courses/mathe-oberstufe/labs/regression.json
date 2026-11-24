@@ -1,0 +1,43 @@
+{
+  "id": "lab-regression",
+  "title": "Regressionslabor",
+  "subtitle": "Ausgleichsgerade und Korrelation",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Eine **Ausgleichsgerade** legt man so durch eine Punktwolke, dass die Summe der quadrierten senkrechten Abstände möglichst klein wird. Im Labor siehst du jeden Abstand als Quadrat: Die Summe dieser Flächen soll minimal werden.\n\nDer **Korrelationskoeffizient** $r$ zwischen $-1$ und $1$ sagt, wie eng die Punkte an einer Geraden liegen."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Ziehe die Punkte und beobachte $r$ und die Regressionsgerade. Was bewirkt ein einzelner Ausreißer?",
+      "widget": "regression",
+      "params": { "points": [[1, 2.1], [2, 2.9], [3, 4.2], [4, 4.8], [5, 6.1], [6, 6.8], [7, 8.2]], "x": [0, 10], "y": [0, 10], "dragPoints": true, "userLine": false, "showLS": true }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Lege deine Gerade mit den beiden Griffen so, dass die **Summe der Abweichungsquadrate** höchstens 10 % über dem kleinstmöglichen Wert liegt.",
+      "widget": "regression",
+      "params": { "points": [[1, 2.4], [2, 2.7], [3, 4.4], [4, 4.6], [5, 6.3], [6, 6.6], [8, 8.9]], "x": [0, 10], "y": [0, 10], "userLine": true, "showLS": false, "line": [5.1, 0] },
+      "goal": {
+        "when": "ratio <= 1.1",
+        "list": [
+          { "when": "ratio <= 1.5", "show": "höchstens 50 % über dem Minimum" },
+          { "when": "ratio <= 1.1", "show": "höchstens 10 % über dem Minimum" }
+        ],
+        "solve": {}
+      },
+      "hint": "Die beste Gerade geht durch den Schwerpunkt $(\\bar x \\mid \\bar y)$ der Punktwolke.",
+      "explain": "Die Regressionsgerade nach der Methode der kleinsten Quadrate macht die Summe der Abweichungsquadrate minimal. Sie geht durch den Schwerpunkt der Punkte."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** legst du Geraden nach Augenmaß, verschiebst Punkte zu einer vorgegebenen Korrelation und baust Punktwolken mit einer vorgegebenen Regressionsgeraden."
+    }
+  ]
+}

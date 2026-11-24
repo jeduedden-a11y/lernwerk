@@ -1,0 +1,43 @@
+{
+  "id": "lab-hypothesentest",
+  "title": "Testlabor",
+  "subtitle": "Hypothesentests mit der Binomialverteilung",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Im Testlabor siehst du die Verteilung der Trefferzahl $X$ unter der Nullhypothese. Der **Ablehnungsbereich** ist rot. Du ziehst seine Grenze und liest den **Fehler 1. Art** $\\alpha$ ab: die Wahrscheinlichkeit, $H_0$ zu verwerfen, obwohl sie stimmt.\n\nMit »Fehler 2. Art« kommt die Verteilung unter einem anderen, wahren $p_1$ dazu (orange): $\\beta$ ist die Wahrscheinlichkeit, $H_0$ dann trotzdem zu behalten. Die **Gütefunktion** zeigt für jedes $p$, wie oft der Test ablehnt."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Verändere $n$, $p_0$, das Niveau und die Seite. Mit »Bereich automatisch« folgt der Ablehnungsbereich immer dem größtmöglichen.",
+      "widget": "testlabor",
+      "params": { "n": 50, "p0": 0.5, "p1": 0.65, "level": 0.05, "side": "rechts", "auto": true, "power": true }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Ein Hersteller behauptet, höchstens 10 % seiner Bauteile seien defekt. Eine Abnehmerin prüft $n = 100$ Teile. Teste $H_0\\colon p \\le 0{,}1$ auf dem Niveau 5 %: Ziehe die Grenze des Ablehnungsbereichs.",
+      "widget": "testlabor",
+      "params": { "n": 100, "p0": 0.1, "level": 0.05, "side": "rechts", "adjust": [], "beta": false, "k": 13 },
+      "goal": {
+        "when": "ok == 1 && optimal == 1",
+        "list": [
+          { "when": "ok == 1", "show": "Fehler 1. Art $\\alpha \\le 5\\,\\%$" },
+          { "when": "optimal == 1", "show": "Ablehnungsbereich so groß wie möglich" }
+        ],
+        "solve": {}
+      },
+      "hint": "Gesucht ist das kleinste $k$ mit $P(X \\ge k) \\le 0{,}05$ unter $p = 0{,}1$.",
+      "explain": "$P(X \\ge 16) \\approx 0{,}0399 \\le 0{,}05$, aber $P(X \\ge 15) \\approx 0{,}0726 > 0{,}05$. Also lehnt man $H_0$ ab 16 defekten Teilen ab."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** bestimmst du Ablehnungsbereiche für links-, rechts- und zweiseitige Tests, suchst den Stichprobenumfang, der eine Abweichung sicher genug erkennt, und die kleinste Abweichung, die ein Test bemerkt."
+    }
+  ]
+}

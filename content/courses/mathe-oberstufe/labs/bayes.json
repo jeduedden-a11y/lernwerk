@@ -1,0 +1,51 @@
+{
+  "id": "lab-bayes",
+  "title": "Bayes-Labor",
+  "subtitle": "Bedingte Wahrscheinlichkeiten und Unabhängigkeit",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Wie wahrscheinlich ist eine Krankheit, wenn ein Test positiv ausfällt? Das Bayes-Labor rechnet mit **natürlichen Häufigkeiten**: 1000 Personen, davon so viele krank wie die Prävalenz sagt, davon so viele positiv wie die Sensitivität sagt, dazu die falsch positiven Gesunden. Wechsle zwischen Personen, Baum und Vierfeldertafel.\n\nDas **Mosaik** zeigt zwei Ereignisse als Flächen: Sind beide Spalten gleich hoch geteilt, sind die Ereignisse unabhängig."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Verändere Prävalenz, Sensitivität und Spezifität und beobachte $P(\\text{krank} \\mid \\text{positiv})$.",
+      "widget": "bayes",
+      "params": { "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.95 }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Mosaik",
+      "md": "Zwei Ereignisse als Flächen. Wann ist das Wissen über $A$ für $B$ ohne Bedeutung?",
+      "widget": "mosaic",
+      "params": { "pa": 0.4, "pba": 0.6, "pbna": 0.3 }
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Prävalenz 1 %, Sensitivität 90 %. Welche **Spezifität** braucht der Test mindestens, damit ein positives Ergebnis in mindestens der Hälfte der Fälle stimmt?",
+      "widget": "bayes",
+      "params": { "prevalence": 0.01, "sensitivity": 0.9, "specificity": 0.9, "sliders": ["specificity"] },
+      "goal": {
+        "when": "post >= 0.5 && spec <= 0.99501",
+        "list": [
+          { "when": "post >= 0.5", "show": "$P(\\text{krank} \\mid \\text{positiv}) \\ge 50\\,\\%$" },
+          { "when": "spec <= 0.99501", "show": "kleinstmögliche Spezifität (Schritte von 0,5 %)" }
+        ],
+        "solve": { "spec": 0.995 }
+      },
+      "hint": "Von 1000 Personen sind 10 krank, 9 davon positiv. Wie viele der 990 Gesunden dürfen falsch positiv sein?",
+      "explain": "Höchstens 9 falsch Positive unter 990 Gesunden: $1 - \\text{Spezifität} \\le \\frac{9}{990} \\approx 0{,}91\\,\\%$, also Spezifität mindestens etwa 99,1 %. Auf dem Regler mit Schritten von 0,5 % ist das 99,5 %; bei 99,0 % stimmt ein positives Ergebnis nur in etwa 48 % der Fälle."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** stellst du Testsituationen ein, suchst die nötige Spezifität oder Prävalenz für einen Vorhersagewert und machst zwei Ereignisse unabhängig."
+    }
+  ]
+}

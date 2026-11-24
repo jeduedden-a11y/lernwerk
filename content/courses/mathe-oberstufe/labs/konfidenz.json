@@ -1,0 +1,43 @@
+{
+  "id": "lab-konfidenz",
+  "title": "Konfidenzlabor",
+  "subtitle": "Konfidenzintervalle für einen Anteil",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Aus einer Stichprobe mit $k$ Treffern bei $n$ Versuchen schätzt man den Anteil $p$ durch $h = \\frac{k}{n}$. Das **Konfidenzintervall** $h \\pm z\\sqrt{\\frac{h(1-h)}{n}}$ gibt an, welche Anteile mit den Daten verträglich sind; $z = 1{,}96$ gehört zum Niveau 95 %.\n\nIm unteren Teil ziehst du viele Stichproben aus einer Grundgesamtheit mit bekanntem $p$: Jede liefert ein Intervall, grün, wenn es $p$ enthält."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Stelle $n$, $k$ und das Niveau ein. Wie verändert sich die Breite, wenn du $n$ vervierfachst?",
+      "widget": "konfidenzlabor",
+      "params": { "n": 100, "k": 60, "level": 0.95, "p": 0.6 }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Das 95-%-Konfidenzintervall soll auch im ungünstigsten Fall $h = 0{,}5$ höchstens $0{,}1$ breit sein. Wie viele Personen braucht die Umfrage mindestens? (Der Regler geht in Fünferschritten.)",
+      "widget": "konfidenzlabor",
+      "params": { "n": 100, "k": 50, "level": 0.95, "p": 0.5, "adjust": ["n"] },
+      "goal": {
+        "when": "wmax <= 0.1 && n < 390",
+        "list": [
+          { "when": "wmax <= 0.1", "show": "größte Breite höchstens $0{,}1$" },
+          { "when": "n < 390", "show": "möglichst kleines $n$" }
+        ],
+        "solve": { "n": 385 }
+      },
+      "hint": "Bei $h = 0{,}5$ ist die Breite $\\frac{z}{\\sqrt n}$.",
+      "explain": "$\\frac{1{,}96}{\\sqrt n} \\le 0{,}1 \\iff n \\ge 19{,}6^2 \\approx 384{,}2$; mit dem Fünferschritt also $n = 385$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** liest du Intervalle aus Umfragen ab, planst Stichprobenumfänge für eine Genauigkeit, suchst Trefferzahlen, bei denen ein Wert aus dem Intervall fällt, und prüfst per Simulation, wie oft Intervalle treffen."
+    }
+  ]
+}
