@@ -112,14 +112,76 @@ public struct Paper: Codable, Hashable, Identifiable, Sendable {
     public var count: Int
     public var level: Int?
     public var topics: [String]
+    /// "tmua" (the default: options A to H, estimated score 1 to 9) or "tara" (options A to E, raw score).
+    public var format: String?
 
-    public init(id: String, title: String, subtitle: String? = nil, minutes: Int, count: Int, level: Int? = nil, topics: [String]) {
+    public init(id: String, title: String, subtitle: String? = nil, minutes: Int, count: Int, level: Int? = nil, topics: [String], format: String? = nil) {
         self.id = id
         self.title = title
         self.subtitle = subtitle
         self.minutes = minutes
         self.count = count
         self.level = level
+        self.topics = topics
+        self.format = format
+    }
+
+    public var testFormat: String { format ?? "tmua" }
+}
+
+/// An exam from a file, courses/<course>/exams/<id>.json: an Abitur or university exam, a TARA module or a whole test.
+/// The runtime runs the file (parts with their own time, tasks from lessons or generators, written tasks the learner
+/// marks against the expected answer); the app lists it, starts it and keeps the result.
+public struct ExamRef: Codable, Hashable, Identifiable, Sendable {
+    public var id: String
+    public var title: String
+    public var subtitle: String?
+    /// "abitur" (Bewertungseinheiten, Notenpunkte), "uni" (Punkte, Note 1,0 to 5,0), "tmua" or "tara" (raw score per module).
+    public var format: String
+    public var minutes: Int
+    /// What the exam covers, a sentence or two for the start sheet.
+    public var about: String?
+
+    public init(id: String, title: String, subtitle: String? = nil, format: String, minutes: Int, about: String? = nil) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+        self.format = format
+        self.minutes = minutes
+        self.about = about
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        title = try c.decode(String.self, forKey: .title)
+        subtitle = try? c.decodeIfPresent(String.self, forKey: .subtitle)
+        format = (try? c.decode(String.self, forKey: .format)) ?? "abitur"
+        minutes = (try? c.decode(Int.self, forKey: .minutes)) ?? 60
+        about = try? c.decodeIfPresent(String.self, forKey: .about)
+    }
+
+    public static func path(course: String, exam: String) -> String { "courses/\(course)/exams/\(exam).json" }
+}
+
+/// A short round at test pace for an admission test: a few tasks from the course's training topics, weak ones first,
+/// with a clock and the solutions at the end.
+public struct Drill: Codable, Hashable, Sendable {
+    public var title: String?
+    public var count: Int
+    public var minutes: Int
+    public var level: Int?
+    /// "tmua" or "tara": letters and result as in the test.
+    public var format: String?
+    /// The training topics a round draws from; all of the course when nil.
+    public var topics: [String]?
+
+    public init(title: String? = nil, count: Int, minutes: Int, level: Int? = nil, format: String? = nil, topics: [String]? = nil) {
+        self.title = title
+        self.count = count
+        self.minutes = minutes
+        self.level = level
+        self.format = format
         self.topics = topics
     }
 }
@@ -177,8 +239,26 @@ public struct Course: Codable, Hashable, Identifiable, Sendable {
     public var papers: [Paper]?
     /// Wrong generated tasks of training and papers go into a mistake log.
     public var mistakeLog: Bool?
+    /// Exams from files (Abitur, university, TARA).
+    public var exams: [ExamRef]?
+    /// A short round at test pace (admission tests).
+    public var drill: Drill?
+    /// First day of the planned test window of an admission test, yyyy-MM-dd.
+    public var testDate: String?
 
     public var lessons: [LessonRef] { chapters.flatMap(\.lessons) }
+    public var examFiles: [ExamRef] { exams ?? [] }
+
+    /// The planned test day as a date (local midnight).
+    public var testDay: Date? {
+        guard let testDate else { return nil }
+        let f = DateFormatter()
+        f.calendar = Calendar(identifier: .gregorian)
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = .current
+        f.dateFormat = "yyyy-MM-dd"
+        return f.date(from: testDate)
+    }
     public var readyLessons: [LessonRef] { lessons.filter(\.isReady) }
     public var practiceTopics: [PracticeTopic] { practice ?? [] }
 
@@ -269,6 +349,8 @@ public enum RuntimeMessage: Sendable, Equatable {
     /// From the learning path page: open a lesson, or start training on a topic at a level.
     case open(courseId: String, lessonId: String)
     case practice(courseId: String, topicId: String, level: Int)
+    /// An exam part begins (or the exam ends): which aids are allowed now.
+    case tools(calculator: Bool, formulas: Bool)
     case unknown
 
     public static func parse(_ body: Any) -> RuntimeMessage {
@@ -290,6 +372,10 @@ public enum RuntimeMessage: Sendable, Equatable {
         case "practice":
             guard let course = dict["courseId"] as? String, let topic = dict["topicId"] as? String else { return .unknown }
             return .practice(courseId: course, topicId: topic, level: max(1, min(4, int("level"))))
+        case "tools":
+            let calculator = (dict["calculator"] as? NSNumber)?.boolValue ?? true
+            let formulas = (dict["formulas"] as? NSNumber)?.boolValue ?? true
+            return .tools(calculator: calculator, formulas: formulas)
         case "finished":
             // a wrong generated task comes along as an object; it is kept as JSON text
             var d = dict
@@ -392,6 +478,19 @@ public struct PracticeInfo: Codable, Sendable, Equatable {
     }
 }
 
+/// Points of one part of an exam from a file (a TARA module, Teil A of an Abitur exam).
+public struct ExamPartScore: Codable, Hashable, Sendable {
+    public var title: String
+    public var got: Double
+    public var max: Double
+
+    public init(title: String, got: Double, max: Double) {
+        self.title = title
+        self.got = got
+        self.max = max
+    }
+}
+
 /// What the runtime reports about an exam besides the results.
 public struct ExamInfo: Codable, Sendable, Equatable {
     public var title: String
@@ -399,16 +498,30 @@ public struct ExamInfo: Codable, Sendable, Equatable {
     public var chapterId: String?
     public var timeUp: Bool
     public var minutes: Int?
-    /// "tmua" for a paper.
+    /// "tmua" for a paper; "abitur", "uni", "tmua" or "tara" for an exam from a file.
     public var format: String?
+    /// Exams from a file: their id, the points, the grade as text ("2,3", "11 NP", "CT 15/22") and the parts.
+    public var examId: String?
+    public var points: Double?
+    public var maxPoints: Double?
+    public var grade: String?
+    public var passed: Bool?
+    public var parts: [ExamPartScore]?
 
-    public init(title: String, courseId: String? = nil, chapterId: String? = nil, timeUp: Bool = false, minutes: Int? = nil, format: String? = nil) {
+    public init(title: String, courseId: String? = nil, chapterId: String? = nil, timeUp: Bool = false, minutes: Int? = nil, format: String? = nil,
+                examId: String? = nil, points: Double? = nil, maxPoints: Double? = nil, grade: String? = nil, passed: Bool? = nil, parts: [ExamPartScore]? = nil) {
         self.title = title
         self.courseId = courseId
         self.chapterId = chapterId
         self.timeUp = timeUp
         self.minutes = minutes
         self.format = format
+        self.examId = examId
+        self.points = points
+        self.maxPoints = maxPoints
+        self.grade = grade
+        self.passed = passed
+        self.parts = parts
     }
 
     public init(from decoder: Decoder) throws {
@@ -419,6 +532,12 @@ public struct ExamInfo: Codable, Sendable, Equatable {
         timeUp = (try? c.decode(Bool.self, forKey: .timeUp)) ?? false
         minutes = try? c.decodeIfPresent(Int.self, forKey: .minutes)
         format = try? c.decodeIfPresent(String.self, forKey: .format)
+        examId = try? c.decodeIfPresent(String.self, forKey: .examId)
+        points = try? c.decodeIfPresent(Double.self, forKey: .points)
+        maxPoints = try? c.decodeIfPresent(Double.self, forKey: .maxPoints)
+        grade = try? c.decodeIfPresent(String.self, forKey: .grade)
+        passed = try? c.decodeIfPresent(Bool.self, forKey: .passed)
+        parts = try? c.decodeIfPresent([ExamPartScore].self, forKey: .parts)
     }
 }
 

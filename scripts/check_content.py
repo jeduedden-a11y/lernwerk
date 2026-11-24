@@ -11,7 +11,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "content"
 TYPES = {"text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen",
-         "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note"}
+         "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note", "essay"}
+EXAM_FORMATS = {"abitur", "uni", "tmua", "tara"}
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
 ALLOWED_SYMBOLS = re.compile("[✓←-⇿]")  # check mark and arrows are fine
 NUMBER = re.compile(r"^\s*[-−]?\d+([.,]\d+)?\s*(/\s*\d+([.,]\d+)?)?\s*$")
@@ -59,12 +60,24 @@ def text_fields(step: dict):
             for side, v in zip("LR", p):
                 if isinstance(v, str):
                     yield f"pair {i + 1}{side}", v
-    for i, t in enumerate(step.get("points") or []):
+    # summary points are texts; rubric and essay steps keep a number under "points"
+    for i, t in enumerate(step.get("points") if isinstance(step.get("points"), list) else []):
         if isinstance(t, str):
             yield f"point {i + 1}", t
     for key in ("given", "claim"):
         if isinstance(step.get(key), str):
             yield key, step[key]
+    # writing tasks: the statements to choose from with their model outlines, the self-check
+    for i, p in enumerate(step.get("prompts") or []):
+        if isinstance(p, str):
+            yield f"prompt {i + 1}", p
+        elif isinstance(p, dict):
+            for key in ("md", "outline"):
+                if isinstance(p.get(key), str):
+                    yield f"prompt {i + 1} {key}", p[key]
+    for i, c in enumerate(step.get("criteria") or []):
+        if isinstance(c, dict) and isinstance(c.get("md"), str):
+            yield f"criterion {i + 1}", c["md"]
     for list_key in ("lines", "steps", "distractors"):
         for i, it in enumerate(step.get(list_key) or []):
             if isinstance(it, str):
@@ -161,6 +174,20 @@ def check_step(where: str, s: dict, widgets: set[str]) -> None:
                 problem(where, f"Kategorie von Eintrag {k + 1} unbekannt")
     if t == "widget" and s.get("widget") not in widgets:
         problem(where, f"Widget {s.get('widget')!r} gibt es in der Runtime nicht")
+    if t == "essay":
+        prompts = s.get("prompts") or []
+        if not prompts:
+            problem(where, "prompts fehlen")
+        for k, p in enumerate(prompts):
+            if not (isinstance(p, str) and p) and not (isinstance(p, dict) and isinstance(p.get("md"), str) and p["md"]):
+                problem(where, f"prompt {k + 1} ohne Text")
+        crits = s.get("criteria") or []
+        if not crits:
+            problem(where, "criteria fehlen")
+        if s.get("points") and crits and sum((c.get("points") or 1) for c in crits if isinstance(c, dict)) != s["points"]:
+            problem(where, "Summe der criteria passt nicht zu points")
+        if s.get("mode") not in (None, "essay", "plan"):
+            problem(where, "mode ist essay oder plan")
     if t == "spot":
         lines = s.get("lines") or []
         answers = s.get("answer") if isinstance(s.get("answer"), list) else [s.get("answer")]
@@ -265,6 +292,80 @@ def check_formulas(cid: str, cdir: Path, listed: set) -> None:
                     problem(fwhere, f"{key}: Emoji gefunden")
     if len(ids) < 4:
         problem(where, "mindestens vier Formeln, sonst hat das Training keine Auswahl")
+
+
+EXAM_COUNT = [0]
+
+
+def check_exams(cid: str, cdir: Path, course: dict, listed: set, widgets: set[str]) -> None:
+    """courses/<course>/exams/<id>.json: exams from files, listed in course.json under exams."""
+    where = f"courses/{cid}/course.json"
+    entries = course.get("exams") or []
+    seen: set[str] = set()
+    lessons: dict[str, dict] = {}
+    for entry in entries:
+        eid = entry.get("id") if isinstance(entry, dict) else None
+        if not eid or not re.fullmatch(r"[a-z0-9-]+", eid) or eid in seen:
+            problem(where, f"Klausur-id fehlt, ist doppelt oder enthält andere Zeichen als a-z, 0-9 und -: {eid!r}")
+            continue
+        seen.add(eid)
+        if not entry.get("title") or entry.get("format") not in EXAM_FORMATS or not isinstance(entry.get("minutes"), int) or entry["minutes"] < 1:
+            problem(where, f"Klausur {eid}: title, format ({', '.join(sorted(EXAM_FORMATS))}) und minutes sind Pflicht")
+        path = cdir / "exams" / f"{eid}.json"
+        ewhere = f"courses/{cid}/exams/{eid}.json"
+        if not path.is_file():
+            problem(where, f"Klausur {eid}: Datei {ewhere} fehlt")
+            continue
+        spec = load(path)
+        if spec is None:
+            continue
+        EXAM_COUNT[0] += 1
+        if spec.get("id") != eid:
+            problem(ewhere, f"id {spec.get('id')!r} passt nicht zum Dateinamen")
+        if spec.get("format") != entry.get("format"):
+            problem(ewhere, f"format {spec.get('format')!r} weicht von course.json ab ({entry.get('format')!r})")
+        if not spec.get("title"):
+            problem(ewhere, "title fehlt")
+        parts = spec.get("parts") or [{"steps": spec.get("steps") or []}]
+        part_minutes = sum(p.get("minutes") or 0 for p in parts)
+        minutes = spec.get("minutes") or part_minutes
+        if minutes != entry.get("minutes"):
+            problem(ewhere, f"{minutes} Minuten, in course.json stehen {entry.get('minutes')}")
+        if spec.get("minutes") and part_minutes > spec["minutes"]:
+            problem(ewhere, "die Teile dauern zusammen länger als die Klausur")
+        questions = 0
+        for pi, part in enumerate(parts):
+            pwhere = f"{ewhere} Teil {part.get('id') or pi + 1}"
+            steps = part.get("steps") or []
+            if not steps:
+                problem(pwhere, "keine Aufgaben")
+            for k, raw in enumerate(steps):
+                swhere = f"{pwhere} Aufgabe {k + 1} ({raw.get('type')})"
+                if raw.get("points") is not None and not (number(raw["points"]) and raw["points"] > 0):
+                    problem(swhere, "points muss positiv sein")
+                if raw.get("type") == "ref":
+                    lid, sid = raw.get("lesson"), raw.get("step")
+                    if lid not in listed:
+                        problem(swhere, f"Lektion {lid!r} gibt es in diesem Kurs nicht")
+                        continue
+                    if lid not in lessons:
+                        lessons[lid] = load(cdir / "lessons" / f"{lid}.json") or {}
+                    found = next((s for i, s in enumerate(lessons[lid].get("steps") or []) if (s.get("id") or f"s{i + 1}") == sid), None)
+                    if found is None:
+                        problem(swhere, f"Schritt {sid!r} fehlt in {lid}")
+                        continue
+                    if found.get("type") != "text":
+                        questions += 1
+                    continue
+                if raw.get("type") != "text":
+                    questions += 1
+                check_step(swhere, raw, widgets)
+        if not questions:
+            problem(ewhere, "keine Aufgaben")
+    folder = cdir / "exams"
+    for f in folder.glob("*.json") if folder.is_dir() else []:
+        if f.stem not in seen:
+            problem(f"courses/{cid}/exams/{f.name}", "steht nicht unter exams in course.json")
 
 
 def main() -> int:
@@ -388,6 +489,22 @@ def main() -> int:
                     problem(where, f"Paper {pid}: Trainingsthema {tp} gibt es nicht")
             if not paper.get("topics"):
                 problem(where, f"Paper {pid}: keine Themen")
+            if paper.get("format") not in (None, "tmua", "tara"):
+                problem(where, f"Paper {pid}: format ist tmua oder tara")
+        drill = course.get("drill")
+        if drill is not None:
+            if not isinstance(drill, dict) or not isinstance(drill.get("count"), int) or drill["count"] < 1 or not isinstance(drill.get("minutes"), int) or drill["minutes"] < 1:
+                problem(where, "drill braucht count und minutes (ganze Zahlen ab 1)")
+            elif drill.get("format") not in (None, "tmua", "tara") or not 1 <= drill.get("level", 3) <= 4:
+                problem(where, "drill: format ist tmua oder tara, level 1 bis 4")
+            if not topic_ids:
+                problem(where, "drill braucht Trainingsthemen")
+            for tp in (drill.get("topics") or []) if isinstance(drill, dict) else []:
+                if tp not in topic_ids:
+                    problem(where, f"drill: Trainingsthema {tp} gibt es nicht")
+        if course.get("testDate") is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(course["testDate"])):
+            problem(where, "testDate muss JJJJ-MM-TT sein")
+        check_exams(cid, cdir, course, listed, widgets)
         check_formulas(cid, cdir, listed)
 
     # learning path: prerequisites inside the course, links to existing lessons, no cycles
@@ -451,7 +568,7 @@ def main() -> int:
         for p in problems:
             print(" -", p)
         return 1
-    print(f"Inhalte in Ordnung: {len(index.get('courses', []))} Kurse, {lesson_count} Lektionen, {len(widgets)} Widgets")
+    print(f"Inhalte in Ordnung: {len(index.get('courses', []))} Kurse, {lesson_count} Lektionen, {EXAM_COUNT[0]} Klausuren, {len(widgets)} Widgets")
     return 0
 
 

@@ -63,6 +63,9 @@ struct LessonPlayerView: View {
     @State private var keyboardUp = false
     /// iPad: height of the system tool palette (the Apple Notes one) while it is docked at the bottom of the screen.
     @State private var paletteInset: CGFloat = 0
+    /// Aids the running exam part allows (the runtime reports them when a part begins).
+    @State private var toolsCalculator = true
+    @State private var toolsFormulas = true
     @Namespace private var glass
 
     private var accent: Color { Color(hex: session.accentHex) }
@@ -73,11 +76,12 @@ struct LessonPlayerView: View {
     private var padInline: Bool { showPad && !padAsColumn && !keyboardUp }
     private var isPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
     /// The course of the session has a formula book: the formula button and the formula column appear.
-    private var hasFormulas: Bool { session.course.flatMap { model.formulaBook($0) } != nil }
+    /// An exam part without aids (Teil A of an Abitur exam) hides it while it runs.
+    private var hasFormulas: Bool { toolsFormulas && session.course.flatMap { model.formulaBook($0) } != nil }
     private var padOpen: Bool { padAsColumn ? column == .pad : showPad }
     private var noteInline: Bool { notePanel && !padAsColumn }
-    /// No calculator in a TMUA paper: the real test allows none.
-    private var calculatorAllowed: Bool { session.format != "tmua" }
+    /// No calculator in a TMUA or TARA paper: the real tests allow none. Exam parts may switch it off as well.
+    private var calculatorAllowed: Bool { session.format != "tmua" && session.format != "tara" && toolsCalculator }
     private var calcInline: Bool { calcPanel && !padAsColumn && !keyboardUp }
     private var calcOpen: Bool { padAsColumn ? column == .calc : calcPanel }
     private var noteOpen: Bool { padAsColumn ? column == .note : notePanel }
@@ -547,6 +551,15 @@ struct LessonPlayerView: View {
                 "title": topic.title, "kicker": course.title, "topicId": topic.id, "courseId": course.id,
                 "gens": topic.gens, "level": session.level, "count": topic.count ?? 6,
             ] as [String: Any]
+        case .exam where session.examURL != nil:
+            // an exam from a file: the runtime loads it and runs its parts
+            guard let course = session.course, let url = session.examURL else { return options }
+            options["mode"] = "exam"
+            var exam: [String: Any] = [
+                "url": url, "examId": session.examId ?? "", "title": session.title, "courseId": course.id, "minutes": session.minutes,
+            ]
+            if let format = session.format { exam["format"] = format }
+            options["exam"] = exam
         case .exam:
             guard let course = session.course else { return options }
             options["mode"] = "exam"
@@ -595,6 +608,18 @@ struct LessonPlayerView: View {
             finished = FinishedSheet(result: result, xp: xp)
         case .error(let text):
             runtimeError = text
+        case .tools(let calculator, let formulas):
+            toolsCalculator = calculator
+            toolsFormulas = formulas
+            // an aid that is not allowed any more closes
+            if !calculator {
+                calcPanel = false
+                if column == .calc { column = nil }
+            }
+            if !formulas {
+                showFormulaSheet = false
+                if column == .formulas { column = nil }
+            }
         default:
             break
         }
@@ -679,13 +704,16 @@ struct CompletionView: View {
                     GoalRing(value: result.score, tint: accent, lineWidth: 12)
                 }
                 VStack(spacing: 2) {
-                    Text("\(Int((result.score * 100).rounded())) %")
+                    Text(ring.big)
                         .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .minimumScaleFactor(0.6)
+                        .lineLimit(1)
                         .contentTransition(.numericText())
-                    Text(session.mode == .exam ? "richtig" : "beim ersten Versuch")
+                    Text(ring.caption)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                .padding(.horizontal, 18)
             }
             .frame(width: 150, height: 150)
             .padding(.top, 26)
@@ -787,14 +815,54 @@ struct CompletionView: View {
         .padding(.horizontal)
     }
 
+    /// An exam from a file with its grade (Abitur, university, TMUA, TARA).
+    private var examFile: ExamInfo? {
+        guard session.mode == .exam, session.examURL != nil, let info = result.exam, info.examId != nil else { return nil }
+        return info
+    }
+
+    /// A round at test pace of an admission test.
+    private var isDrill: Bool {
+        session.mode == .exam && session.examURL == nil && session.course?.drill != nil
+            && session.title == (session.course?.drill?.title ?? "Tagesrunde")
+    }
+
+    /// The middle of the ring: the grade of an exam file, otherwise the share of correct answers.
+    private var ring: (big: String, caption: String) {
+        if let info = examFile, let grade = info.grade {
+            switch info.format {
+            case "abitur": return (grade.replacingOccurrences(of: " NP", with: ""), "Notenpunkte")
+            case "uni": return (grade, "Note")
+            case "tmua": return (grade, "von 9,0")
+            default: return ("\(Int((result.score * 100).rounded())) %", "richtig")
+            }
+        }
+        return ("\(Int((result.score * 100).rounded())) %", session.mode == .exam ? "richtig" : "beim ersten Versuch")
+    }
+
+    private static func points(_ x: Double) -> String {
+        let r = (x * 10).rounded() / 10
+        return (r == r.rounded() ? String(Int(r)) : String(format: "%.1f", r)).replacingOccurrences(of: ".", with: ",")
+    }
+
     private var title: String {
         switch session.mode {
         case .review: return "Wiederholung abgeschlossen"
         case .practice: return passed ? "Stufe bestanden" : "Runde abgeschlossen"
         case .lesson: return "Lektion abgeschlossen"
-        case .exam: return session.format == "tmua" ? "Paper ausgewertet" : "Klausur ausgewertet"
+        case .exam:
+            if isDrill { return "Runde ausgewertet" }
+            if session.format == "tmua" || session.format == "tara" { return "Paper ausgewertet" }
+            return "Klausur ausgewertet"
         case .mix: return "Tagesmix abgeschlossen"
         }
+    }
+
+    /// Time per question against the pace of the test (TARA: 40 minutes for 22 questions).
+    private var paceText: String? {
+        guard session.format == "tara", let seconds = result.seconds, !result.results.isEmpty else { return nil }
+        let per = seconds / result.results.count
+        return "Im Schnitt \(per / 60):\(String(format: "%02d", per % 60)) pro Frage, im Test sind es knapp 1:50."
     }
 
     private var summary: String {
@@ -807,6 +875,26 @@ struct CompletionView: View {
             return "\(correct) von \(n) Aufgaben sofort gelöst. Ab 80 Prozent gilt eine Stufe als bestanden, jede Runde bringt neue Aufgaben."
         case .exam:
             let time = result.exam?.timeUp == true ? "Die Zeit war abgelaufen. " : ""
+            if let info = examFile {
+                let got = info.points ?? 0, full = info.maxPoints ?? 0
+                switch info.format {
+                case "tara":
+                    let parts = (info.parts ?? []).map { p in
+                        p.title.hasPrefix("Writing") ? "\(p.title): Selbstcheck \(Self.points(p.got)) von \(Self.points(p.max))"
+                            : "\(p.title) \(Self.points(p.got)) von \(Self.points(p.max))"
+                    }
+                    return time + (parts.isEmpty ? "\(correct) von \(n) richtig." : parts.joined(separator: " · ") + ".") + " Lösungen und Erklärungen stehen unter den Fragen."
+                case "uni":
+                    return "\(time)\(Self.points(got)) von \(Self.points(full)) Punkten, Note \(info.grade ?? "–")" + (info.passed == true ? ", bestanden." : ", nicht bestanden.")
+                case "tmua":
+                    return "\(time)\(correct) von \(n) richtig, geschätzter TMUA-Wert \(info.grade ?? "–")."
+                default:
+                    return "\(time)\(Self.points(got)) von \(Self.points(full)) BE, \(info.grade ?? "–")." + (info.passed == true ? " Ausreichend oder besser." : " Unter 5 Punkten.")
+                }
+            }
+            if session.format == "tara" {
+                return "\(time)\(correct) von \(n) richtig. " + (paceText ?? "") + " Falsche Aufgaben stehen im Fehlerprotokoll."
+            }
             if session.format == "tmua" {
                 let score = String(format: "%.1f", TMUAScale.score(correct: correct, total: n)).replacingOccurrences(of: ".", with: ",")
                 return "\(time)\(correct) von \(n) richtig, geschätzter TMUA-Wert \(score). Falsche Aufgaben stehen im Fehlerprotokoll."

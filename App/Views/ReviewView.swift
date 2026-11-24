@@ -6,6 +6,7 @@ import LernwerkCore
 struct ReviewView: View {
     @Environment(AppModel.self) private var model
     @State private var practiceTarget: PracticeTarget?
+    @State private var examTarget: ExamTarget?
 
     var body: some View {
         NavigationStack {
@@ -15,6 +16,8 @@ struct ReviewView: View {
                         MixCard()
                             .appearOnce(0)
                     }
+                    TestsSection(examTarget: $examTarget)
+                        .appearOnce(1)
                     if model.state.cards.isEmpty {
                         ContentUnavailableView {
                             Label("Noch nichts zu wiederholen", systemImage: "arrow.clockwise")
@@ -28,6 +31,8 @@ struct ReviewView: View {
                     }
                     TrainingSection(target: $practiceTarget)
                         .appearOnce(2)
+                    ExamCenterSection(examTarget: $examTarget)
+                        .appearOnce(3)
                     if !model.state.cards.isEmpty {
                         ForecastCard()
                             .appearOnce(3)
@@ -46,6 +51,7 @@ struct ReviewView: View {
             .background { TintBackground(tints: [Color.accentColor]) }
             .navigationTitle("Üben")
             .practiceLauncher($practiceTarget)
+            .examLauncher($examTarget)
         }
     }
 

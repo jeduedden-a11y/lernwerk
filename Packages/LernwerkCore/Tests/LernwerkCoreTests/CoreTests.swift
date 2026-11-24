@@ -188,6 +188,39 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(m, .primary(label: "Antwort abgeben", enabled: true, style: "check", canGiveUp: true, giveUpLabel: "Überspringen"))
     }
 
+    func testToolsMessage() {
+        XCTAssertEqual(RuntimeMessage.parse(["type": "tools", "calculator": false, "formulas": true]), .tools(calculator: false, formulas: true))
+        XCTAssertEqual(RuntimeMessage.parse(["type": "tools"]), .tools(calculator: true, formulas: true))
+    }
+
+    func testExamFileResultAndEntries() throws {
+        let message: [String: Any] = [
+            "type": "finished", "mode": "exam", "score": 0.5, "seconds": 2400,
+            "results": [["stepId": "CT.s1", "type": "choice", "correct": true, "firstTry": true, "attempts": 1, "revealed": false]],
+            "exam": ["title": "TARA komplett", "courseId": "tara", "timeUp": false, "minutes": 120, "format": "tara", "examId": "tara-komplett",
+                     "points": 19, "maxPoints": 50, "grade": "CT 11/22 · PS 6/22", "passed": false,
+                     "parts": [["title": "Critical Thinking", "got": 11, "max": 22], ["title": "Writing Task", "got": 2.5, "max": 6]]],
+        ]
+        guard case .finished(let f) = RuntimeMessage.parse(message) else { return XCTFail("not parsed") }
+        XCTAssertEqual(f.exam?.examId, "tara-komplett")
+        XCTAssertEqual(f.exam?.grade, "CT 11/22 · PS 6/22")
+        XCTAssertEqual(f.exam?.parts?.count, 2)
+        XCTAssertEqual(f.exam?.parts?.last?.got, 2.5)
+
+        var state = LearnerState()
+        _ = state.record(f, course: nil, meta: nil, now: Date())
+        XCTAssertEqual(state.exams.last?.examId, "tara-komplett")
+        XCTAssertEqual(state.exams.last?.parts?.first?.max, 22)
+
+        let json = #"{"id":"tara","title":"TARA","color":"#B0396F","symbol":"x","chapters":[],"exams":[{"id":"tara-ct","title":"Critical Thinking"}],"drill":{"count":5,"minutes":9,"format":"tara"},"testDate":"2027-10-11"}"#
+        let course = try JSONDecoder().decode(Course.self, from: Data(json.utf8))
+        XCTAssertEqual(course.examFiles.first?.format, "abitur")
+        XCTAssertEqual(course.examFiles.first?.minutes, 60)
+        XCTAssertEqual(course.drill?.count, 5)
+        XCTAssertNotNil(course.testDay)
+        XCTAssertEqual(ExamRef.path(course: "tara", exam: "tara-ct"), "courses/tara/exams/tara-ct.json")
+    }
+
     func testPathMessages() {
         XCTAssertEqual(RuntimeMessage.parse(["type": "open", "courseId": "ethnologie", "lessonId": "eth-gabe"]), .open(courseId: "ethnologie", lessonId: "eth-gabe"))
         XCTAssertEqual(RuntimeMessage.parse(["type": "practice", "courseId": "stochastik", "topicId": "schaetzen", "level": 7]), .practice(courseId: "stochastik", topicId: "schaetzen", level: 4))

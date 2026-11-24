@@ -72,7 +72,9 @@ struct PapersCard: View {
             Label("Papers auf Zeit", systemImage: "timer")
                 .font(.title3.bold())
                 .foregroundStyle(course.tint)
-            Text("Wie im Test: Antworten A bis H, keine Rückmeldung bis zum Ende, kein Taschenrechner. Danach ein geschätzter Wert von 1 bis 9 und alle Lösungen.")
+            Text(papers.first?.testFormat == "tara"
+                 ? "Wie im Test: Antworten A bis E, keine Rückmeldung bis zum Ende, kein Taschenrechner. Danach der Rohwert und alle Lösungen."
+                 : "Wie im Test: Antworten A bis H, keine Rückmeldung bis zum Ende, kein Taschenrechner. Danach ein geschätzter Wert von 1 bis 9 und alle Lösungen.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -90,7 +92,7 @@ struct PapersCard: View {
                         Spacer(minLength: 0)
                         if let last = model.paperHistory(course, paper).first {
                             VStack(alignment: .trailing, spacing: 0) {
-                                Text(String(format: "%.1f", TMUAScale.score(correct: last.correct, total: last.total)).replacingOccurrences(of: ".", with: ","))
+                                Text(TestCard.paperResult(last, paper))
                                     .font(.headline.monospacedDigit())
                                 Text("\(last.correct)/\(last.total)").font(.caption2).foregroundStyle(.secondary)
                             }

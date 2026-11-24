@@ -16,11 +16,31 @@ struct CourseView: View {
                     WeekBanner(course: course, chapter: week)
                         .appearOnce(1)
                 }
-                if let papers = course.papers, !papers.isEmpty {
+                if course.drill != nil {
+                    TestCard(course: course, examTarget: $examTarget)
+                        .appearOnce(2)
+                } else if let papers = course.papers, !papers.isEmpty {
                     PapersCard(course: course, papers: papers)
                         .appearOnce(2)
                 }
-                if course.mistakeLog == true {
+                if course.drill == nil && !course.examFiles.isEmpty {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Label("Klausuren", systemImage: "doc.text")
+                            .font(.title3.bold())
+                            .foregroundStyle(course.tint)
+                        ForEach(course.examFiles) { exam in
+                            Button {
+                                examTarget = ExamTarget(course: course, chapter: nil, exam: exam)
+                            } label: {
+                                ExamFileRow(course: course, exam: exam)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .card()
+                    .appearOnce(2)
+                }
+                if course.mistakeLog == true && course.drill == nil {
                     MistakeLogCard(course: course)
                         .appearOnce(3)
                 }

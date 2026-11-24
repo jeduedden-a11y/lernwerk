@@ -62,8 +62,12 @@ struct LessonSession: Identifiable, Equatable {
     var chapterId: String? = nil
     var taskCount: Int = 0
     var minutes: Int = 0
-    /// "tmua" for a paper: answers A to H, no calculator, an estimated score at the end.
+    /// "tmua" for a paper: answers A to H, no calculator, an estimated score at the end. "tara": answers A to E, raw
+    /// score. Exams from a file also name "abitur" or "uni".
     var format: String? = nil
+    /// An exam from a file (courses/<course>/exams/<id>.json) instead of generated tasks.
+    var examURL: String? = nil
+    var examId: String? = nil
     /// Wrong generated tasks come back with their wording, for the mistake log.
     var logMistakes = false
     /// A round of tasks from the mistake log: solved ones leave it.
@@ -521,9 +525,108 @@ final class AppModel {
         guard !picks.isEmpty else { return }
         var session = LessonSession(mode: .exam, course: course, title: paper.title, accentHex: course.color, picks: picks,
                                     taskCount: paper.count, minutes: paper.minutes)
-        session.format = "tmua"
+        session.format = paper.testFormat
         session.logMistakes = course.mistakeLog == true
         presentedLesson = session
+    }
+
+    // MARK: exams from files and the admission tests
+
+    func examURL(_ course: Course, _ exam: ExamRef) -> String { "lw://app/" + ExamRef.path(course: course.id, exam: exam.id) }
+
+    /// An exam from a file: the runtime loads it, runs its parts with their own clocks and marks it at the end.
+    func startExamFile(_ course: Course, _ exam: ExamRef) {
+        var session = LessonSession(mode: .exam, course: course, title: exam.title, accentHex: course.color, minutes: exam.minutes)
+        session.examURL = examURL(course, exam)
+        session.examId = exam.id
+        session.format = exam.format
+        session.logMistakes = course.mistakeLog == true
+        presentedLesson = session
+    }
+
+    /// Earlier attempts at an exam file, newest first.
+    func examFileHistory(_ course: Course, _ exam: ExamRef) -> [ExamRecord] {
+        state.exams.filter { $0.courseId == course.id && $0.examId == exam.id }.reversed()
+    }
+
+    /// Courses with exam files, in the order of the subjects.
+    var examFileCourses: [Course] { courses.filter { !$0.examFiles.isEmpty } }
+
+    /// Admission tests (TMUA, TARA): the courses with a round at test pace.
+    var testCourses: [Course] { courses.filter { $0.drill != nil } }
+
+    /// When a training topic of the course last came up, in training or in an exam, round or paper.
+    private func lastSeen(_ course: Course) -> [String: Date] {
+        var seen: [String: Date] = [:]
+        for exam in state.exams where exam.courseId == course.id {
+            for topic in exam.topics.keys { seen[topic] = max(seen[topic] ?? .distantPast, exam.date) }
+        }
+        for topic in course.practiceTopics {
+            if let at = practiceStat(course, topic).lastAt { seen[topic.id] = max(seen[topic.id] ?? .distantPast, at) }
+        }
+        return seen
+    }
+
+    /// The topics of the next round at test pace: weak ones first, then those that came up longest ago; ties at random,
+    /// so every round mixes the question types anew.
+    func drillTopics(_ course: Course) -> [PracticeTopic] {
+        guard let drill = course.drill else { return [] }
+        let allowed: Set<String>? = drill.topics.map { Set($0) }
+        let topics = course.practiceTopics.filter { isUnlocked($0) && (allowed?.contains($0.id) ?? true) }
+        let weak = Set(weakSpots.compactMap { spot -> String? in
+            if case .topic(let c, let t) = spot.kind, c == course.id { return t }
+            return nil
+        })
+        let seen = lastSeen(course)
+        let jitter = Dictionary(topics.map { ($0.id, Double.random(in: 0..<1)) }, uniquingKeysWith: { first, _ in first })
+        let ranked = topics.sorted { a, b in
+            let wa = weak.contains(a.id), wb = weak.contains(b.id)
+            if wa != wb { return wa }
+            let la = seen[a.id] ?? .distantPast, lb = seen[b.id] ?? .distantPast
+            if la != lb { return la < lb }
+            return (jitter[a.id] ?? 0) < (jitter[b.id] ?? 0)
+        }
+        return Array(ranked.prefix(max(1, drill.count)))
+    }
+
+    /// A round at test pace: a few tasks with a clock, no feedback until the end, as in the test.
+    func startDrill(_ course: Course) {
+        guard let drill = course.drill else { return }
+        let topics = drillTopics(course)
+        let picks = topics.flatMap { t in
+            t.gens.map { GenPick(gen: $0, level: drill.level ?? 3, topicId: t.id, topicTitle: t.title, courseId: course.id) }
+        }
+        guard !picks.isEmpty else { return }
+        var session = LessonSession(mode: .exam, course: course, title: drill.title ?? "Tagesrunde", accentHex: course.color, picks: picks,
+                                    taskCount: drill.count, minutes: drill.minutes)
+        session.format = drill.format
+        session.logMistakes = course.mistakeLog == true
+        presentedLesson = session
+    }
+
+    /// Rounds at test pace written today.
+    func drillsToday(_ course: Course) -> Int {
+        let title = course.drill?.title ?? "Tagesrunde"
+        let start = Calendar.current.startOfDay(for: Date())
+        return state.exams.filter { $0.courseId == course.id && $0.title == title && $0.date >= start }.count
+    }
+
+    /// The latest result of a whole module or paper of an admission test, for the comparison of the raw scores:
+    /// TMUA papers with at least 20 questions, TARA module parts with at least 20 questions.
+    func latestRawScores(_ course: Course) -> [(label: String, got: Double, max: Double, date: Date)] {
+        var out: [(label: String, got: Double, max: Double, date: Date)] = []
+        let records = state.exams.filter { $0.courseId == course.id }
+        if course.drill?.format == "tara" {
+            for title in ["Critical Thinking", "Problem Solving"] {
+                if let r = records.last(where: { ($0.parts ?? []).contains { $0.title == title && $0.max >= 20 } }),
+                   let part = r.parts?.first(where: { $0.title == title }) {
+                    out.append((label: title, got: part.got, max: part.max, date: r.date))
+                }
+            }
+        } else if let r = records.last(where: { $0.format == "tmua" && $0.total >= 20 }) {
+            out.append((label: r.title, got: Double(r.correct), max: Double(r.total), date: r.date))
+        }
+        return out
     }
 
     /// Papers of a course already written, newest first.

@@ -61,6 +61,8 @@
       <option value="1">Leicht</option><option value="2" selected>Mittel</option><option value="3">Schwer</option><option value="4">Experte</option>
     </select>
     <button id="practice">Training starten</button>
+    <select id="exam" title="Klausur"></select>
+    <button id="examstart">Klausur starten</button>
     <button id="gens">Generatoren prüfen</button>
     <button id="formulas">Formeln</button>
     <button id="path">Lernpfad</button>
@@ -131,6 +133,8 @@
     if (sel) $("lesson").value = sel;
     $("topic").innerHTML = "";
     for (const t of c.practice || []) { const o = document.createElement("option"); o.value = t.id; o.textContent = "Training: " + t.title; $("topic").append(o); }
+    $("exam").innerHTML = "";
+    for (const x of c.exams || []) { const o = document.createElement("option"); o.value = x.id; o.textContent = "Klausur: " + x.title; $("exam").append(o); }
     start();
   }
   $("practice").onclick = () => {
@@ -174,14 +178,16 @@
   };
 
   // ---------------------------------------------------------------- validation of every lesson
-  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note"];
+  const TYPES = ["text", "widget", "choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "summary", "anim", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "grade", "note", "essay"];
   function mdFields(step) {
     const out = [];
     ["md", "more", "explain", "hint", "wrong", "solution", "after"].forEach((k) => { if (step[k]) out.push([k, step[k]]); });
+    (step.prompts || []).forEach((p, i) => { const o = typeof p === "string" ? { md: p } : p; out.push(["prompt " + i, o.md || ""]); if (o.outline) out.push(["outline " + i, o.outline]); });
     (step.options || []).forEach((o, i) => { if (o.md) out.push(["option " + i, o.md]); if (o.why) out.push(["why " + i, o.why]); });
     (step.items || []).forEach((t, i) => out.push(["item " + i, typeof t === "string" ? t : t.md]));
     (step.pairs || []).forEach((p, i) => { out.push(["pair " + i + "L", p[0]]); out.push(["pair " + i + "R", p[1]]); });
-    (step.points || []).forEach((t, i) => out.push(["point " + i, t]));
+    // summary points are texts; rubric and essay steps keep a number under "points"
+    (Array.isArray(step.points) ? step.points : []).forEach((t, i) => out.push(["point " + i, t]));
     if (step.type === "sort") (step.items || []).forEach((t, i) => out.push(["sort " + i, t.md]));
     (step.timeline || []).forEach((t, i) => { if (t.caption) out.push(["scene " + (i + 1), t.caption]); });
     (step.blanks || []).forEach((b, i) => { if (b.after) out.push(["blank " + i, b.after]); });
@@ -242,6 +248,12 @@
       if (s.type === "note") (s.sections || []).forEach((sec, i) => { if (!(sec.blocks || []).length) errs.push(at + ": Abschnitt " + (i + 1) + " ohne blocks"); });
       if (s.type === "rubric" && (!s.solution || !(s.points || (s.criteria || []).length))) errs.push(at + ": rubric braucht solution und points oder criteria");
       if (s.type === "rubric" && s.points && (s.criteria || []).length && s.criteria.reduce((n, c) => n + (c.points || 1), 0) !== s.points) errs.push(at + ": Summe der criteria passt nicht zu points");
+      if (s.type === "essay") {
+        if (!(s.prompts || []).length) errs.push(at + ": prompts fehlen");
+        (s.prompts || []).forEach((p, i) => { if (!(typeof p === "string" ? p : p && p.md)) errs.push(at + ": prompt " + i + " ohne Text"); });
+        if (!(s.criteria || []).length) errs.push(at + ": criteria fehlen");
+        if (s.points && (s.criteria || []).length && s.criteria.reduce((n, c) => n + (c.points || 1), 0) !== s.points) errs.push(at + ": Summe der criteria passt nicht zu points");
+      }
       (s.criteria || []).forEach((c, i) => { if (/katex-error|lw-error/.test(LW.md(c.md || ""))) errs.push(at + " criterion " + i + ": Formelfehler"); });
       if (s.type === "sort") (s.items || []).forEach((it, k) => { const ci = typeof it.cat === "number" ? it.cat : (s.categories || []).indexOf(it.cat); if (ci < 0) errs.push(at + ": Kategorie von Eintrag " + (k + 1) + " unbekannt"); });
       if (s.type === "widget" && !LW.widgets[s.widget]) errs.push(at + ": Widget " + s.widget + " fehlt");
@@ -383,8 +395,73 @@
       rep.append(d);
       if (errs.length) bad++;
     }
-    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen und Formelsammlungen, " + bad + " mit Fehlern</b>"; rep.prepend(s);
-    window.lwReport = { total, bad, text: rep.innerText };
+    // exam files: every part, every task taken from a lesson, every generator
+    let examCount = 0;
+    for (const id of index.courses) {
+      for (const x of courses[id].exams || []) {
+        total++;
+        examCount++;
+        let errs = [];
+        try { errs = await checkExam(id, x, LW); } catch (e) { errs = [String(e.message || e)]; }
+        const d = document.createElement("div");
+        d.className = errs.length ? "err" : "ok";
+        d.textContent = (errs.length ? "Fehler " : "OK ") + id + "/exams/" + x.id + (errs.length ? ": " + errs.join(" | ") : "");
+        rep.append(d);
+        if (errs.length) bad++;
+      }
+    }
+    const s = document.createElement("div"); s.innerHTML = "<b>" + total + " Lektionen, Formelsammlungen und Klausuren (" + examCount + " Klausuren), " + bad + " mit Fehlern</b>"; rep.prepend(s);
+    window.lwReport = { total, bad, exams: examCount, text: rep.innerText };
+  };
+
+  /** An exam file: format, parts, times, points; tasks from lessons must exist, generators must make clean tasks. */
+  async function checkExam(cid, entry, LW) {
+    const errs = [];
+    const spec = await fetchJSON("../courses/" + cid + "/exams/" + entry.id + ".json");
+    if (spec.id !== entry.id) errs.push("id " + spec.id + " passt nicht zum Eintrag " + entry.id);
+    if (!["abitur", "uni", "tmua", "tara"].includes(spec.format)) errs.push("unbekanntes format " + spec.format);
+    if (spec.format !== entry.format) errs.push("format im Kurs (" + entry.format + ") und in der Datei (" + spec.format + ") verschieden");
+    if (!spec.title) errs.push("title fehlt");
+    const parts = spec.parts && spec.parts.length ? spec.parts : [{ steps: spec.steps || [] }];
+    const partMinutes = parts.reduce((n, p) => n + (p.minutes || 0), 0);
+    const minutes = spec.minutes || partMinutes;
+    if (!(minutes > 0)) errs.push("keine Zeit angegeben");
+    if (entry.minutes !== minutes) errs.push("Minuten im Kurs (" + entry.minutes + ") und in der Datei (" + minutes + ") verschieden");
+    if (spec.minutes && partMinutes > spec.minutes) errs.push("Teile zusammen länger als die Klausur");
+    const lessons = new Map();
+    let questions = 0;
+    for (const [pi, P] of parts.entries()) {
+      const pat = "Teil " + (P.id || pi + 1);
+      if (!(P.steps || []).length) { errs.push(pat + ": keine Aufgaben"); continue; }
+      for (const [k, raw] of P.steps.entries()) {
+        const at = pat + " Aufgabe " + (k + 1);
+        let st = raw;
+        if (raw.type === "ref") {
+          const url = "../courses/" + cid + "/lessons/" + raw.lesson + ".json";
+          try { if (!lessons.has(url)) lessons.set(url, await fetchJSON(url)); }
+          catch (e) { errs.push(at + ": Lektion " + raw.lesson + " fehlt"); continue; }
+          const L = lessons.get(url);
+          const found = (L.steps || []).map((s, i) => Object.assign({ id: s.id || "s" + (i + 1) }, s)).find((s) => s.id === raw.step);
+          if (!found) { errs.push(at + ": Schritt " + raw.step + " fehlt in " + raw.lesson); continue; }
+          st = Object.assign({}, found, raw.points != null ? { points: raw.points } : {});
+        }
+        if (raw.points != null && !(raw.points > 0)) errs.push(at + ": points muss positiv sein");
+        if (st.type !== "text") questions++;
+        errs.push(...checkStep(st, at + " (" + st.type + ")", LW));
+      }
+    }
+    if (!questions) errs.push("keine Aufgaben");
+    return errs;
+  }
+
+  $("examstart").onclick = () => {
+    const cid = $("course").value, c = courses[cid];
+    const x = (c.exams || []).find((e) => e.id === $("exam").value);
+    if (!x) return;
+    frame.contentWindow.LW.start({
+      mode: "exam", theme: { accent: c.color }, insets: { top: 112, bottom: 120 }, formulaUrls: formulaUrls(), logMistakes: !!c.mistakeLog,
+      exam: { url: "../courses/" + cid + "/exams/" + x.id + ".json", examId: x.id, title: x.title, courseId: cid, format: x.format, minutes: x.minutes },
+    });
   };
 
   // learning path with made-up progress: about every second lesson whose prerequisites are done

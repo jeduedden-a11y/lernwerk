@@ -161,11 +161,25 @@ public struct ExamRecord: Codable, Hashable, Sendable, Identifiable {
     public var timeUp: Bool
     /// Per training topic id.
     public var topics: [String: Tally]
-    /// "tmua" for a paper.
+    /// "tmua" for a paper; "abitur", "uni", "tmua" or "tara" for an exam from a file.
     public var format: String? = nil
+    /// Exams from a file: which one, the points, the grade as text and the points per part.
+    public var examId: String? = nil
+    public var points: Double? = nil
+    public var maxPoints: Double? = nil
+    public var grade: String? = nil
+    public var passed: Bool? = nil
+    public var parts: [ExamPartScore]? = nil
 
-    public init(date: Date, title: String, courseId: String?, chapterId: String?, correct: Int, total: Int, seconds: Int, timeUp: Bool, topics: [String: Tally], format: String? = nil) {
+    public init(date: Date, title: String, courseId: String?, chapterId: String?, correct: Int, total: Int, seconds: Int, timeUp: Bool, topics: [String: Tally], format: String? = nil,
+                examId: String? = nil, points: Double? = nil, maxPoints: Double? = nil, grade: String? = nil, passed: Bool? = nil, parts: [ExamPartScore]? = nil) {
         self.format = format
+        self.examId = examId
+        self.points = points
+        self.maxPoints = maxPoints
+        self.grade = grade
+        self.passed = passed
+        self.parts = parts
         self.date = date
         self.title = title
         self.courseId = courseId
@@ -476,7 +490,9 @@ public struct LearnerState: Codable, Sendable {
             let info = finished.exam
             exams.append(ExamRecord(date: now, title: info?.title ?? "Klausur", courseId: info?.courseId ?? course?.id, chapterId: info?.chapterId,
                                     correct: correct, total: finished.results.count, seconds: finished.seconds ?? 0,
-                                    timeUp: info?.timeUp ?? false, topics: topics, format: info?.format))
+                                    timeUp: info?.timeUp ?? false, topics: topics, format: info?.format,
+                                    examId: info?.examId, points: info?.points, maxPoints: info?.maxPoints, grade: info?.grade,
+                                    passed: info?.passed, parts: info?.parts))
             if exams.count > 50 { exams.removeFirst(exams.count - 50) }
         } else if finished.mode == "mix" {
             // daily mix: repetitions move their cards, new tasks count towards the topic's hit rate on their level

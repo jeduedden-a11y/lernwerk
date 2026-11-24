@@ -407,7 +407,7 @@
   const LABELS = {
     text: "Erklärung", widget: "Ausprobieren", choice: "Frage", multi: "Mehrfachauswahl", truefalse: "Wahr oder falsch",
     numeric: "Rechnen", cloze: "Lückentext", order: "Reihenfolge", match: "Zuordnen", sort: "Einordnen", reveal: "Selbst prüfen",
-    summary: "Zusammenfassung", anim: "Animation", gen: "Aufgabe", rubric: "Klausuraufgabe", grade: "Bewertung",
+    summary: "Zusammenfassung", anim: "Animation", gen: "Aufgabe", rubric: "Klausuraufgabe", grade: "Bewertung", essay: "Writing Task",
     spot: "Fehler finden", proof: "Beweis bauen", estimate: "Schätzen", timeline: "Zeitstrahl", quadrant: "Vierfeldertafel",
     note: "Notiz durcharbeiten",
   };
@@ -750,6 +750,8 @@
       card.append(img);
       if (step.caption) card.append(el("div", { class: "lw-step-caption lw-md", html: md(step.caption) }));
     }
+    // a bar or line chart as data of a task: { type: "bar" | "line", labels, series: [{ title, data }] }
+    if (step.chart) card.append(chartEl(step.chart));
     return card;
   }
 
@@ -2116,6 +2118,110 @@
     };
   };
 
+  // ------------------------------------------------------------------ writing task (TARA): pick a statement, write, check
+  // { "type": "essay", "lang": "en", "mode": "essay" | "plan", "md": "…", "words": 750,
+  //   "prompts": [{ "md": "statement", "outline": "model outline (Markdown)" }, …],
+  //   "criteria": [{ "md": "…", "points": 1 }, …], "points": 6, "solution": "notes for every statement" }
+  // essay: the text is typed here (word counter, limit as in the test) or written on paper; plan: a short outline.
+  // Afterwards the model outline of the chosen statement opens and the learner ticks what the own text does.
+  R.essay = function (step, ctx) {
+    const card = shell(step, ctx);
+    card.classList.add("lw-essay-card");
+    const prompts = (step.prompts || []).map((p) => (typeof p === "string" ? { md: p } : p));
+    const plan = step.mode === "plan";
+    const limit = step.words || (plan ? 0 : 750);
+    const crits = step.criteria || [];
+    const max = step.points || crits.reduce((s, c) => s + (c.points || 1), 0) || 1;
+    let chosen = prompts.length <= 1 ? 0 : -1, opened = false, locked = false, awarded = 0;
+    const text = el("textarea", { class: "lw-essay-text", rows: plan ? "7" : "14", spellcheck: "false", autocapitalize: "sentences",
+      placeholder: plan ? "1. What the statement means: …\n2. The strongest argument against it: …\n3. How far I agree, and why: …"
+        : "Write your answer here, or on paper …",
+      "aria-label": plan ? "Gliederung" : "Text der Writing Task" });
+    const count = el("div", { class: "lw-essay-count", "aria-live": "off" });
+    const area = el("div", { class: "lw-essay-area" }, [text, count]);
+    area.hidden = chosen < 0;
+    const list = el("div", { class: "lw-options lw-essay-prompts", role: "radiogroup" });
+    const buttons = prompts.map((p, i) => {
+      const b = el("button", { class: "lw-option" + (i === chosen ? " selected" : ""), type: "button", role: "radio", "aria-checked": i === chosen ? "true" : "false" },
+        [el("span", { class: "mark", text: String(i + 1) }), el("span", { class: "body" }, [mdEl(p.md)])]);
+      b.addEventListener("click", () => {
+        if (locked || opened) return;
+        chosen = i;
+        buttons.forEach((x, k) => { x.classList.toggle("selected", k === i); x.setAttribute("aria-checked", k === i ? "true" : "false"); });
+        area.hidden = false;
+        ctx.changed();
+      });
+      list.append(b);
+      return b;
+    });
+    const words = () => (text.value.match(/[A-Za-zÀ-ÿ0-9][A-Za-zÀ-ÿ0-9'’-]*/g) || []).length;
+    const paint = () => {
+      const n = words();
+      count.textContent = limit ? n + " / " + limit + " Wörter" : n + (n === 1 ? " Wort" : " Wörter");
+      count.classList.toggle("over", !!limit && n > limit);
+    };
+    text.addEventListener("input", () => { paint(); ctx.changed(); });
+    paint();
+    if (prompts.length > 1) card.append(list);
+    else if (prompts.length === 1) card.append(mdEl(prompts[0].md, "lw-essay-single"));
+    card.append(area);
+    // after handing in: the model outline of the chosen statement and the self-check
+    const sol = el("div", { class: "lw-reveal lw-rubric-sol" });
+    const box = el("div", { class: "lw-rubric", style: "display:none" });
+    const total = el("div", { class: "lw-rubric-total" });
+    box.append(el("div", { class: "lw-subtitle", text: plan ? "Hake ab, was deine Gliederung schon enthält:" : "Hake ab, was dein Text wirklich leistet:" }));
+    const rows = crits.map((c) => {
+      const pts = c.points || 1;
+      const b = el("button", { class: "lw-crit", type: "button", role: "checkbox", "aria-checked": "false" }, [el("span", { class: "box" }), el("span", { class: "body lw-md", html: md(c.md) })]);
+      b.addEventListener("click", () => {
+        if (locked) return;
+        const on = !b.classList.contains("on");
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        tally();
+        ctx.changed();
+      });
+      box.append(b);
+      return { b, pts };
+    });
+    box.append(total);
+    function tally() {
+      awarded = rows.reduce((s, x) => s + (x.b.classList.contains("on") ? x.pts : 0), 0);
+      total.textContent = awarded + " von " + max + " Punkten der Checkliste";
+    }
+    tally();
+    card.append(sol, box);
+    const open = () => {
+      if (opened) return;
+      opened = true;
+      const p = prompts[chosen >= 0 ? chosen : 0];
+      sol.innerHTML = "";
+      sol.append(el("div", { class: "lw-rubric-head", text: plan ? "Mustergliederung" : "So kann eine starke Antwort gebaut sein" }));
+      if (p && p.outline) sol.append(mdEl(p.outline));
+      if (step.solution) sol.append(mdEl(step.solution));
+      sol.classList.add("open");
+      box.style.display = "";
+      text.readOnly = true;
+    };
+    return {
+      el: card,
+      question: true,
+      selfCheck: true,
+      primaryLabel: () => (opened ? "Bewertung übernehmen" : plan ? "Mustergliederung zeigen" : "Fertig, Muster zeigen"),
+      canCheck: () => chosen >= 0,
+      check() {
+        if (!opened) { open(); return { pending: true }; }
+        tally();
+        return { correct: awarded >= max / 2, self: true, points: awarded, max };
+      },
+      reveal: open,
+      lock() { locked = true; text.readOnly = true; rows.forEach((x) => x.b.setAttribute("disabled", "")); },
+      // after an exam: the model outline opens and the checklist can be ticked
+      assess() { locked = false; rows.forEach((x) => x.b.removeAttribute("disabled")); open(); },
+      result() { tally(); return { points: awarded, max }; },
+    };
+  };
+
   // { "type": "grade", "md": "…" }: adds up the marked tasks of the lesson into Bewertungseinheiten and Notenpunkte
   const NP_KEY = [[95, 15], [90, 14], [85, 13], [80, 12], [75, 11], [70, 10], [65, 9], [60, 8], [55, 7], [50, 6], [45, 5], [40, 4], [33, 3], [27, 2], [20, 1], [0, 0]];
   LW.notenpunkte = (pct) => (NP_KEY.find(([p]) => pct >= p) || [0, 0])[1];
@@ -2496,6 +2602,7 @@
       el("div", { class: "lw-subtitle", text: (timeUp ? "Die Zeit ist abgelaufen. " : "") + "Gebraucht: " + fmtClock(used) + " von " + fmtClock(E.minutes * 60) + " Minuten." }),
       el("div", { class: "lw-exam-table" }, rows),
       E.format === "tmua" ? el("div", { class: "lw-md lw-tmua-score", html: md(tmuaScoreText(ok, total)) }) : null,
+      E.format === "tara" ? el("div", { class: "lw-md lw-tmua-score", html: md(taraPaceText(used, total)) }) : null,
       el("div", { class: "lw-md", html: md(ok === total ? "Alles richtig. Diese Themen sitzen." : "Unten stehen alle Aufgaben mit Lösung. Rot markierte Themen lohnen eine Trainingsrunde." + (S.logMistakes ? " Falsch beantwortete Aufgaben stehen im **Fehlerprotokoll** und kommen wieder." : "")) }),
     ]);
     const head = S.root.querySelector(".lw-head");
@@ -2514,6 +2621,14 @@
     return 9;
   }
   LW.tmuaScore = tmuaScore;
+  /** TARA: time per question against the test, 40 minutes for 22 questions. */
+  function taraPaceText(used, total) {
+    if (!total) return "";
+    const per = Math.round(used / total);
+    const slow = per > 115;
+    return "Im Schnitt **" + fmtClock(per) + "** pro Frage; im Test sind es 40 Minuten für 22 Fragen, also knapp **1:50**. " +
+      (slow ? "Lass harte Fragen schneller los: Raten kostet nichts, Zeit schon." : "Das Tempo passt zum Test.");
+  }
   function tmuaScoreText(ok, total) {
     const s = tmuaScore(ok, total);
     return "Geschätzter TMUA-Wert: **" + String(s).replace(".", ",") + "** von 9,0. Grobe Schätzung aus " + ok + " von " + total + " richtig, auf 40 Fragen hochgerechnet: Früher entsprachen rund 26 von 40 etwa 7,0 und rund 34 von 40 etwa 8,0. Dein Arbeitsziel 7,5 heißt etwa 29 bis 30 von 40; die echte Umrechnung schwankt von Jahr zu Jahr.";
@@ -2531,15 +2646,25 @@
 
   const UNI_KEY = [[95, "1,0"], [90, "1,3"], [85, "1,7"], [80, "2,0"], [75, "2,3"], [70, "2,7"], [65, "3,0"], [60, "3,3"], [55, "3,7"], [50, "4,0"], [0, "5,0"]];
   LW.uniNote = (pct) => (UNI_KEY.find(([p]) => pct >= p) || [0, "5,0"])[1];
-  const EXAM_KICKER = { abitur: "Abiturklausur", uni: "Uni-Klausur", tmua: "TMUA-Paper" };
+  const EXAM_KICKER = { abitur: "Abiturklausur", uni: "Uni-Klausur", tmua: "TMUA-Paper", tara: "TARA" };
   const fmtPts = (x) => String(Math.round(x * 10) / 10).replace(".", ",");
-  const pointsOf = (st) => (st.type === "rubric"
+  const pointsOf = (st) => (st.type === "rubric" || st.type === "essay"
     ? st.points || (st.criteria || []).reduce((s, c) => s + (c.points || 1), 0) || 1
     : st.points != null ? st.points : 1);
+  /** A writing task: an essay step, or a generator that makes one (its definition says kind: "essay"). */
+  const isEssay = (st) => !!st && (st.type === "essay" || (st.type === "gen" && !!LW.generators[st.gen] && LW.generators[st.gen].kind === "essay"));
+  /** TARA module names in short: CT, PS. */
+  const taraShort = (t) => (/^critical/i.test(t) ? "CT" : /^problem/i.test(t) ? "PS" : t);
 
   /** The grade of an exam: big for the summary, text for the app, passed, and the percentage. */
-  function examGrade(format, got, max, ok, total) {
+  function examGrade(format, got, max, ok, total, parts) {
     const pct = max ? (100 * got) / max : 0;
+    if (format === "tara") {
+      // raw score per module; the Writing Task is not marked in the test and stays out of it
+      const mods = (parts || []).filter((x) => x.max > 0 && !/^writing/i.test(x.title));
+      const text = mods.length ? mods.map((x) => taraShort(x.title) + " " + fmtPts(x.got) + "/" + fmtPts(x.max)).join(" · ") : ok + "/" + total;
+      return { text, big: text, passed: pct >= 50, pct };
+    }
     if (format === "tmua") {
       const s = tmuaScore(ok, total), t = String(s).replace(".", ",");
       return { text: t, big: t + " von 9,0", passed: s >= 7, pct };
@@ -2554,6 +2679,7 @@
   LW.examGrade = examGrade;
 
   function gradeKeyText(format) {
+    if (format === "tara") return "Rohwert je Modul: jede richtige Antwort ein Punkt, falsche kosten nichts. UAT-UK rechnet jedes Modul auf 1,0 bis 9,0 um (Median 4,5, 90. Perzentil 7,0); eine offizielle Umrechnungstabelle gibt es nicht. Die Writing Task wird im Test nicht benotet, sondern an die Universitäten geschickt.";
     if (format === "uni") return "Notenschlüssel: ab 50 Prozent 4,0 (bestanden), dann alle 5 Prozent eine Stufe besser: 3,7, 3,3, 3,0, 2,7, 2,3, 2,0, 1,7, 1,3 und ab 95 Prozent 1,0. Unter 50 Prozent 5,0.";
     if (format === "tmua") return "Die Schätzung rechnet auf 40 Fragen hoch: rund 26 von 40 entsprachen früher etwa 7,0, rund 34 von 40 etwa 8,0. Falsche Antworten kosten nichts.";
     const key = NP_KEY.filter(([, n]) => n % 3 === 0 || n === 15).map(([p, n]) => n + " NP ab " + p + " %").join(" · ");
@@ -2564,14 +2690,16 @@
     const spec = X.spec || (await fetchJSON(X.url));
     const base = X.url ? X.url.replace(/[^/]*$/, "") : "";
     const format = spec.format || X.format || "abitur";
-    const unit = format === "uni" ? "P." : format === "tmua" ? "" : "BE";
+    // admission tests count questions, not points, and allow no calculator
+    const test = format === "tmua" || format === "tara";
+    const unit = format === "uni" ? "P." : test ? "" : "BE";
     const parts = spec.parts && spec.parts.length ? spec.parts : [{ steps: spec.steps || [] }];
     const lessons = new Map();
     const steps = [], meta = [], partInfo = [];
     for (let pi = 0; pi < parts.length; pi++) {
       const P = parts[pi];
       const pid = P.id || String.fromCharCode(65 + pi);
-      const aidsOk = format !== "tmua" && P.calculator !== false;
+      const aidsOk = !test && P.calculator !== false;
       const info = { id: pid, title: P.title || (parts.length > 1 ? "Teil " + pid : "Aufgaben"), minutes: P.minutes || 0,
         calculator: aidsOk, formulas: aidsOk && P.formulas !== false, max: 0, first: steps.length, deadline: 0 };
       const resolved = [];
@@ -2590,8 +2718,11 @@
       }
       const isQ = (st) => QUESTION_TYPES.includes(st.type);
       info.max = resolved.filter(isQ).reduce((sum, st) => sum + pointsOf(st), 0);
+      const qCount = resolved.filter(isQ).length;
+      const writing = resolved.some(isEssay);
       const facts = [info.minutes ? info.minutes + " Minuten" : null,
-        info.max ? fmtPts(info.max) + " " + (unit || (info.max === 1 ? "Frage" : "Fragen")) : null,
+        unit ? (info.max ? fmtPts(info.max) + " " + unit : null)
+          : writing ? (qCount === 1 ? "eine Aufgabe" : qCount + " Aufgaben") : qCount ? qCount + (qCount === 1 ? " Frage" : " Fragen") : null,
         P.aids || (aidsOk ? "Taschenrechner und Formelsammlung erlaubt" : "ohne Taschenrechner und Formelsammlung")].filter(Boolean);
       const intro = ["**" + info.title + "**", facts.join(" · ")];
       if (pi === 0 && spec.md) intro.push(spec.md);
@@ -2602,9 +2733,10 @@
       resolved.forEach((st, k) => {
         const q = isQ(st);
         if (q) n += 1;
-        const label = st.part ? "Aufgabe " + st.part : format === "tmua" ? "Question " + n : "Aufgabe " + (parts.length > 1 ? pid : "") + n;
+        const label = st.part ? "Aufgabe " + st.part : isEssay(st) ? "Writing Task" : test ? "Question " + n : "Aufgabe " + (parts.length > 1 ? pid : "") + n;
         steps.push(Object.assign({}, st, { id: pid + "." + (st.id || "s" + (k + 1)), lessonId: null, review: false, from: null, courseId: st.courseId || X.courseId }));
-        meta.push({ partIndex: pi, question: q, points: q ? pointsOf(st) : 0, self: q && st.type === "rubric", label, topicId: st.topicId || null });
+        meta.push({ partIndex: pi, question: q, points: q ? pointsOf(st) : 0, self: q && (st.type === "rubric" || isEssay(st)), label,
+          topicId: st.topicId || null, topicTitle: st.topicTitle || null });
       });
       partInfo.push(info);
     }
@@ -2618,11 +2750,13 @@
     S.base = base + "../lessons/";
     const clock = el("div", { class: "lw-exam-clock", role: "timer", "aria-live": "off", text: fmtClock(minutes * 60) });
     S.root.classList.add("lw-exam-running");
-    if (format === "tmua") S.root.classList.add("lw-paper");
+    if (test) S.root.classList.add("lw-paper");
+    const size = format === "tara" ? (partInfo.length > 1 ? partInfo.length + " Module" : null)
+      : maxPoints ? fmtPts(maxPoints) + " " + (unit === "P." ? "Punkte" : unit || "Fragen") : null;
     S.root.append(el("header", { class: "lw-head exam" }, [
       el("div", { class: "lw-kicker", text: X.kicker || EXAM_KICKER[format] || "Klausur" }),
       el("div", { class: "lw-title", text: S.exam.title }),
-      el("div", { class: "lw-subtitle", text: [spec.subtitle, minutes + " Minuten", maxPoints ? fmtPts(maxPoints) + " " + (unit === "P." ? "Punkte" : unit || "Fragen") : null].filter(Boolean).join(" · ") + ". Bewertet wird erst am Ende." }),
+      el("div", { class: "lw-subtitle", text: [spec.subtitle, minutes + " Minuten", size].filter(Boolean).join(" · ") + ". Bewertet wird erst am Ende." }),
     ]), clock);
     S.exam.clock = clock;
     S.exam.timer = setInterval(examTick, 1000);
@@ -2669,9 +2803,12 @@
   /** Exam tasks are named by number with their points, whatever their source called them. */
   function examDecorate(i, inst) {
     const m = S.exam.meta[i];
-    if (!m || !m.question || m.self) return;
+    if (!m || !m.question) return;
     const label = inst.el.querySelector(".lw-step-label");
     if (!label) return;
+    // no training level inside an exam, also not on written tasks
+    label.querySelectorAll(".lw-level").forEach((x) => x.remove());
+    if (m.self) return;
     const name = label.querySelector("span:not(.dot)");
     if (name) name.textContent = m.label;
     label.querySelectorAll(".lw-level").forEach((x) => x.remove());
@@ -2711,7 +2848,8 @@
       S.inst.el.classList.add("done");
     }
     S.root.classList.remove("lw-exam-running");
-    post({ type: "tools", calculator: E.format !== "tmua", formulas: E.format !== "tmua" });
+    const free = E.format !== "tmua" && E.format !== "tara";
+    post({ type: "tools", calculator: free, formulas: free });
     for (let i = 0; i < S.steps.length; i++) if (!S.insts[i]) renderLate(i);
     E.used = Math.round((Date.now() - S.startedAt) / 1000);
     E.items = [];
@@ -2773,25 +2911,45 @@
   function paintExam(final) {
     const E = S.exam;
     const T = examTotals();
-    const g = examGrade(E.format, T.got, T.max, T.ok, T.total);
+    const g = examGrade(E.format, T.got, T.max, T.ok, T.total, T.parts);
     const row = (name, got, max) => el("div", { class: "lw-exam-row" + (max && got / max < 0.5 ? " weak" : "") }, [
       el("span", { class: "name", text: name }),
       el("span", { class: "bar" }, [el("span", { style: "width:" + (max ? Math.round((100 * got) / max) : 0) + "%" })]),
       el("span", { class: "count", text: fmtPts(got) + " / " + fmtPts(max) }),
     ]);
-    const amount = E.format === "tmua" ? T.ok + " von " + T.total + " richtig" : fmtPts(T.got) + " von " + fmtPts(T.max) + (E.unit === "P." ? " Punkten" : " BE");
+    const tara = E.format === "tara";
+    // TARA: the multiple-choice questions count, the Writing Task is checked apart
+    const mcq = E.items.filter((x) => !x.self), okMcq = mcq.filter((x) => x.correct).length;
+    const amount = tara ? okMcq + " von " + mcq.length + " Fragen richtig"
+      : E.format === "tmua" ? T.ok + " von " + T.total + " richtig" : fmtPts(T.got) + " von " + fmtPts(T.max) + (E.unit === "P." ? " Punkten" : " BE");
+    const pct = tara ? (mcq.length ? (100 * okMcq) / mcq.length : 0) : g.pct;
     const verdict = E.format === "uni" ? (g.passed ? ", bestanden" : ", nicht bestanden") : "";
     E.card.innerHTML = "";
     E.card.append(
       el("div", { class: "lw-step-label" }, [el("span", { class: "dot" }), el("span", { text: final ? "Auswertung" : "Selbstbewertung" })]),
       el("div", { class: "lw-exam-score", text: g.big }),
-      el("div", { class: "lw-subtitle", text: amount + ", " + Math.round(g.pct) + " Prozent" + verdict + ". " + (E.timeUp ? "Die Zeit ist abgelaufen. " : "") + "Gebraucht: " + fmtClock(E.used) + " von " + fmtClock(E.minutes * 60) + " Minuten." }),
+      el("div", { class: "lw-subtitle", text: amount + ", " + Math.round(pct) + " Prozent" + verdict + ". " + (E.timeUp ? "Die Zeit ist abgelaufen. " : "") + "Gebraucht: " + fmtClock(E.used) + " von " + fmtClock(E.minutes * 60) + " Minuten." }),
     );
     if (!final) {
-      E.card.append(el("div", { class: "lw-md lw-exam-hint", html: md("**Jetzt bewertest du selbst.** Unter jeder schriftlichen Aufgabe steht der Erwartungshorizont. Hake ab, was deine Lösung wirklich enthält; Punkte und Note rechnen mit. Auswahl-, Rechen- und Beweisbausteine sind schon bewertet. Zum Schluss: **Bewertung abschließen**.") }));
+      E.card.append(el("div", { class: "lw-md lw-exam-hint", html: md(tara
+        ? "**Jetzt prüfst du deine Writing Task.** Unter dem Text steht eine Mustergliederung zu deiner Aussage. Hake ab, was dein Text wirklich leistet. Die Fragen sind schon ausgewertet. Zum Schluss: **Bewertung abschließen**."
+        : "**Jetzt bewertest du selbst.** Unter jeder schriftlichen Aufgabe steht der Erwartungshorizont. Hake ab, was deine Lösung wirklich enthält; Punkte und Note rechnen mit. Auswahl-, Rechen- und Beweisbausteine sind schon bewertet. Zum Schluss: **Bewertung abschließen**.") }));
     }
     if (T.parts.length > 1) E.card.append(el("div", { class: "lw-exam-table" }, T.parts.map((x) => row(x.title, x.got, x.max))));
-    E.card.append(el("div", { class: "lw-exam-table lw-exam-tasks" }, E.items.map((x) => row(x.m.label + (x.answered ? "" : " (offen)"), x.now, x.max))));
+    if (E.items.some((x) => x.m.topicTitle)) {
+      // by question type: where the points went
+      const by = new Map();
+      for (const x of E.items) {
+        const key = x.m.topicTitle || x.m.label;
+        const t = by.get(key) || { got: 0, max: 0 };
+        t.got += x.now;
+        t.max += x.max;
+        by.set(key, t);
+      }
+      E.card.append(el("div", { class: "lw-exam-table lw-exam-tasks" }, [...by.entries()].sort((a, b) => a[1].got / a[1].max - b[1].got / b[1].max).map(([k, t]) => row(k, t.got, t.max))));
+    } else {
+      E.card.append(el("div", { class: "lw-exam-table lw-exam-tasks" }, E.items.map((x) => row(x.m.label + (x.answered ? "" : " (offen)"), x.now, x.max))));
+    }
     if (final) {
       E.card.append(el("div", { class: "lw-md lw-np-key", html: md(gradeKeyText(E.format)) }));
       if (S.logMistakes && E.items.some((x) => !x.correct && S.steps[x.i].gen)) {
@@ -2818,8 +2976,9 @@
       if (!r.topicId && x.m.topicId) r.topicId = x.m.topicId;
     }
     const T = examTotals();
-    const g = examGrade(E.format, T.got, T.max, T.ok, T.total);
-    Object.assign(E, { points: T.got, maxPoints: T.max, grade: g.text, passed: g.passed, share: T.max ? T.got / T.max : 0 });
+    const g = examGrade(E.format, T.got, T.max, T.ok, T.total, T.parts);
+    Object.assign(E, { points: T.got, maxPoints: T.max, grade: g.text, passed: g.passed, share: T.max ? T.got / T.max : 0,
+      partScores: T.parts.map((x) => ({ title: x.title, got: x.got, max: x.max })) });
     paintExam(true);
     finish();
   }
@@ -2959,7 +3118,7 @@
       level: step.level || null, gen: step.gen || null, skipped: !!result.skipped,
     });
     if (result.max) Object.assign(S.results[S.results.length - 1], { points: result.points || 0, max: result.max, part: step.part || step.label || null });
-    if (S.logMistakes && !result.correct && step.gen) {
+    if (S.logMistakes && !result.correct && !result.self && step.gen) {
       try {
         const task = JSON.parse(JSON.stringify(step));
         delete task.alt;
@@ -2983,7 +3142,7 @@
     if (S.practice) msg.practice = { topicId: S.practice.topicId || null, courseId: S.practice.courseId || null, level: S.practice.level };
     if (S.exam) {
       msg.exam = { title: S.exam.title, courseId: S.exam.courseId || null, chapterId: S.exam.chapterId || null, timeUp: !!S.exam.timeUp, minutes: S.exam.minutes, format: S.exam.format || null };
-      if (S.exam.spec) Object.assign(msg.exam, { examId: S.exam.examId, points: S.exam.points, maxPoints: S.exam.maxPoints, grade: S.exam.grade, passed: !!S.exam.passed });
+      if (S.exam.spec) Object.assign(msg.exam, { examId: S.exam.examId, points: S.exam.points, maxPoints: S.exam.maxPoints, grade: S.exam.grade, passed: !!S.exam.passed, parts: S.exam.partScores || [] });
     }
     post(msg);
     if (S.mode === "exam") announce();
@@ -3349,9 +3508,11 @@
           el("div", { class: "lw-title", text: S.exam.title }),
           el("div", { class: "lw-subtitle", text: X.format === "tmua"
             ? count + " questions, " + minutes + " minutes, no calculator. Wie im Test: eine Antwort von A bis H, Lösungen erst am Ende."
-            : count + " Aufgaben, " + minutes + " Minuten. Rückmeldung und Lösungen gibt es erst am Ende." }),
+            : X.format === "tara"
+              ? count + " questions, " + minutes + " minutes, no calculator. Wie im Test: eine Antwort von A bis E, Lösungen erst am Ende."
+              : count + " Aufgaben, " + minutes + " Minuten. Rückmeldung und Lösungen gibt es erst am Ende." }),
         ]), clock);
-        if (X.format === "tmua") S.root.classList.add("lw-paper");
+        if (X.format === "tmua" || X.format === "tara") S.root.classList.add("lw-paper");
         const E = S.exam;
         E.timer = setInterval(() => {
           const left = (E.deadline - Date.now()) / 1000;
@@ -3446,7 +3607,7 @@
   };
 
   /** Collects question steps that are worth repeating later (used by the shell for spaced repetition). */
-  const QUESTION_TYPES = ["choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric"];
+  const QUESTION_TYPES = ["choice", "multi", "truefalse", "numeric", "cloze", "order", "match", "sort", "reveal", "gen", "spot", "proof", "estimate", "timeline", "quadrant", "rubric", "essay"];
   LW.questionTypes = QUESTION_TYPES;
   LW.reviewable = function (lesson) {
     return normalizeSteps(lesson).filter((s) => s.review !== false && QUESTION_TYPES.includes(s.type) || (s.type === "widget" && s.goal && s.review === true)).map((s) => s.id);
