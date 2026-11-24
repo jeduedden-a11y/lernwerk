@@ -386,4 +386,46 @@
         "Unabhängigkeit bedeutet $P(B \\mid A) = P(B \\mid \\bar A) = P(B)$, hier also " + P(G, pba, 0) + ". Im Mosaik sind dann beide Spalten gleich hoch geteilt.");
     },
   });
+
+  // ---------------------------------------------------------------- central limit theorem (zgslabor widget)
+  gen("lab-zgs", {
+    title: "Zentraler Grenzwertsatz",
+    make(level, G) {
+      const L = S();
+      if (level === 1 || level === 4) {
+        // populations with several values: their distance falls steadily with n (two-point populations would mislead)
+        const pops = level === 1 ? [[16, 8, 4, 2, 1, 1], [1, 2, 4, 8, 16], [10, 5, 2, 1]] : [[5, 1, 0, 1, 5], [16, 8, 4, 2, 1, 1]];
+        for (const pop of G.shuffle(pops)) for (const eps of G.shuffle(level === 1 ? [0.03, 0.04, 0.05] : [0.02, 0.025])) {
+          let nmin = null;
+          for (let n = 2; n <= 100; n++) if (L.clDistance(pop, n) <= eps) { nmin = n; break; }
+          if (!nmin || L.clDistance(pop, 1) <= eps) continue;
+          const twin = pop[0] === pop[pop.length - 1];
+          return task("zgslabor", "Grenzwertsatz-Labor",
+            (twin ? "Die Grundgesamtheit ist **zweigipflig**: viel Gewicht an beiden Rändern, kaum etwas in der Mitte." : "Die Grundgesamtheit ist **schief**.") +
+            " Erhöhe $n$, bis die standardisierte Summe der Normalverteilung nahekommt: Finde das **kleinste** $n$ mit $d \\le " + G.tex(eps) + "$.",
+            { pop, n: 1, editable: false, presets: false },
+            goal([{ when: "d <= " + eps, show: "Abstand $d \\le " + G.tex(eps) + "$" }, { when: "n == " + nmin, show: "kleinstes solches $n$" }], { n: nmin }),
+            "Je schiefer die Grundgesamtheit, desto größer muss $n$ sein. Beobachte, wie die Balken die Glockenkurve füllen.",
+            "Bei $n = " + nmin + "$ ist der Abstand zum ersten Mal höchstens " + G.fmt(eps) + ". Der zentrale Grenzwertsatz garantiert $d \\to 0$, sagt aber nicht, wie schnell; die Schiefe der Grundgesamtheit bremst (Satz von Berry-Esseen: $d \\le C\\frac{E|X - \\mu|^3}{\\sigma^3\\sqrt n}$).");
+        }
+      }
+      if (level === 2) {
+        const mu = G.pick([1.5, 2, 2.5]), sMin = G.pick([1.2, 1.4, 1.6]);
+        const sample = mu === 2 ? [1, 0, 0, 0, 1] : mu === 1.5 ? [5, 0, 0, 0, 3] : [3, 0, 0, 0, 5];
+        return task("zgslabor", "Grenzwertsatz-Labor",
+          "Ziehe die Balken so, dass die Grundgesamtheit auf $\\{0, \\dots, 4\\}$ den Erwartungswert $\\mu = " + G.tex(mu) + "$ und eine Standardabweichung von mindestens $" + G.tex(sMin) + "$ hat.",
+          { pop: [1, 2, 3, 2, 1], n: 1, presets: false },
+          goal([{ when: "abs(mu - " + mu + ") < 0.03", show: "$\\mu = " + G.tex(mu) + "$" }, { when: "sigma >= " + sMin, show: "$\\sigma \\ge " + G.tex(sMin) + "$" }], { pop: sample }),
+          "Viel Gewicht an den Rändern macht die Streuung groß; der Schwerpunkt der Balken ist $\\mu$.",
+          "Zum Beispiel Gewichte " + sample.join(", ") + " auf 0 bis 4: Schwerpunkt " + G.fmt(mu) + ", die Masse sitzt weit außen.");
+      }
+      const thr = 0.015;
+      return task("zgslabor", "Grenzwertsatz-Labor",
+        "Baue eine Grundgesamtheit, deren standardisierte Summe schon bei **n = 3** fast normalverteilt ist ($d \\le " + G.tex(thr) + "$).",
+        { pop: [16, 8, 4, 2, 1, 1], n: 1, presets: true },
+        goal([{ when: "n == 3", show: "$n = 3$" }, { when: "d <= " + thr, show: "Abstand $d \\le " + G.tex(thr) + "$" }], { pop: [1, 3, 4, 3, 1], n: 3 }),
+        "Symmetrische, eingipflige Grundgesamtheiten nähern sich am schnellsten der Glockenkurve.",
+        "Eine symmetrische, glockenähnliche Grundgesamtheit wie 1, 3, 4, 3, 1 hat keine Schiefe; schon die Summe von drei Ziehungen liegt sehr nah an der Normalverteilung.");
+    },
+  });
 })();

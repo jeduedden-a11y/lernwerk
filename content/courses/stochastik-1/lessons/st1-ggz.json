@@ -1,0 +1,108 @@
+{
+  "id": "st1-ggz",
+  "title": "Gesetze der großen Zahlen",
+  "subtitle": "Mittelwerte werden sicher",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zentraler Grenzwertsatz.md",
+      "title": "Zentraler Grenzwertsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bernoulli-Kette.md",
+      "title": "Bernoulli-Kette"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Schwaches Gesetz:** Für unabhängige $X_i$ mit gleichem Erwartungswert $\\mu$ und beschränkten Varianzen gilt $\\bar X_n \\to \\mu$ stochastisch. **Starkes Gesetz** (Kolmogorov, Etemadi): Für unabhängige, identisch verteilte $X_i$ mit $E|X_1| < \\infty$ gilt $\\bar X_n \\to \\mu$ fast sicher.\n\nDas schwache Gesetz steht in einer Zeile: $P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\le \\frac{\\sigma^2}{n\\varepsilon^2}$. Damit wird die Deutung der Wahrscheinlichkeit als Grenzwert relativer Häufigkeiten zu einem Satz. Vorsicht: Die **relative** Abweichung verschwindet, die absolute Abweichung der Trefferzahl von $np$ wächst wie $\\sqrt n$. Ohne Erwartungswert geht es schief: Mittelwerte Cauchy-verteilter Werte konvergieren nicht.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Gesetz der großen Zahlen",
+      "md": "Die relative Häufigkeit der Sechs nähert sich $\\frac16$; die absolute Abweichung von $\\frac n6$ wird dabei nicht kleiner.",
+      "widget": "lln",
+      "params": {
+        "p": "1/6",
+        "event": "Sechs",
+        "unit": "Würfe"
+      },
+      "id": "s2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis des schwachen Gesetzes der großen Zahlen.",
+      "given": "$X_1, X_2, \\dots$ unabhängig mit $E(X_i) = \\mu$ und $\\mathrm{Var}(X_i) = \\sigma^2$.",
+      "claim": "$P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\to 0$ für jedes $\\varepsilon > 0$.",
+      "steps": [
+        "$E(\\bar X_n) = \\mu$, und wegen der Unabhängigkeit $\\mathrm{Var}(\\bar X_n) = \\frac{1}{n^2}\\cdot n\\sigma^2 = \\frac{\\sigma^2}{n}$.",
+        "Tschebyscheff: $P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\le \\frac{\\sigma^2}{n\\varepsilon^2}$.",
+        "Die rechte Seite geht für $n \\to \\infty$ gegen 0."
+      ],
+      "distractors": [
+        {
+          "md": "$\\mathrm{Var}(\\bar X_n) = \\sigma^2$, da alle $X_i$ dieselbe Varianz haben.",
+          "why": "Das Mitteln teilt die Varianz durch $n$."
+        },
+        {
+          "md": "Nach dem zentralen Grenzwertsatz ist $\\bar X_n$ normalverteilt.",
+          "why": "Nur näherungsweise, und das braucht man hier gar nicht."
+        }
+      ],
+      "explain": "Varianz des Mittelwerts plus Tschebyscheff.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Würfe einer Münze mit unbekanntem $p$ garantiert Tschebyscheff, damit $P(|h_n - p| \\ge 0{,}01) \\le 0{,}05$?",
+      "answer": 50000,
+      "tolerance": 0,
+      "placeholder": "ganze Zahl",
+      "explain": "$\\frac{1}{4n \\cdot 0{,}01^2} \\le 0{,}05 \\iff n \\ge 50000$; die Normalnäherung käme mit etwa 9604 aus.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Das starke Gesetz der großen Zahlen setzt eine endliche Varianz voraus.",
+      "answer": false,
+      "explain": "Für unabhängige, identisch verteilte $X_i$ genügt $E|X_1| < \\infty$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Nach dem Gesetz der großen Zahlen wird die Abweichung der Trefferzahl von $np$ immer kleiner.",
+      "answer": false,
+      "explain": "Die absolute Abweichung wächst typischerweise wie $\\sqrt n$; nur geteilt durch $n$ geht sie gegen 0.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ungleichung",
+      "level": 3,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-konvergenz",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Schwaches Gesetz: $\\bar X_n \\to \\mu$ stochastisch, Beweis mit Tschebyscheff.",
+        "Starkes Gesetz: fast sicher, schon bei $E|X_1| < \\infty$.",
+        "Relative Abweichungen verschwinden, absolute nicht."
+      ],
+      "id": "s9"
+    }
+  ]
+}

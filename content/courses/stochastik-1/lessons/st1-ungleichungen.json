@@ -1,0 +1,132 @@
+{
+  "id": "st1-ungleichungen",
+  "title": "Markov, Tschebyscheff und Jensen",
+  "subtitle": "Schranken für jede Verteilung",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Varianz und Standardabweichung (Stochastik).md",
+      "title": "Varianz und Standardabweichung (Stochastik)"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Markov:** Für $X \\ge 0$ und $a > 0$ ist $P(X \\ge a) \\le \\frac{E(X)}{a}$. **Tschebyscheff:** $P(|X - EX| \\ge c) \\le \\frac{\\mathrm{Var}(X)}{c^2}$. **Jensen:** Für konvexes $\\varphi$ ist $\\varphi(EX) \\le E\\,\\varphi(X)$.\n\nMarkov folgt aus der punktweisen Ungleichung $a\\,\\mathbb 1_{\\{X \\ge a\\}} \\le X$, Tschebyscheff ist Markov für $(X - EX)^2$. Die Schranken sind grob, gelten aber für **jede** Verteilung; Tschebyscheff liefert das schwache Gesetz der großen Zahlen. Jensen ergibt etwa $(EX)^2 \\le E(X^2)$, also $\\mathrm{Var}(X) \\ge 0$, und die Ungleichung zwischen arithmetischem und geometrischem Mittel.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis der Markov-Ungleichung.",
+      "given": "$X \\ge 0$ mit endlichem Erwartungswert, $a > 0$.",
+      "claim": "$P(X \\ge a) \\le \\dfrac{E(X)}{a}$.",
+      "steps": [
+        "Punktweise gilt $a\\,\\mathbb 1_{\\{X \\ge a\\}} \\le X$, denn wo $X \\ge a$ ist, steht links $a$, sonst 0.",
+        "Monotonie des Erwartungswerts: $a\\,P(X \\ge a) = E\\bigl(a\\,\\mathbb 1_{\\{X \\ge a\\}}\\bigr) \\le E(X)$.",
+        "Teilen durch $a > 0$."
+      ],
+      "distractors": [
+        {
+          "md": "Nach Definition ist $P(X \\ge a) = \\frac{E(X)}{a}$.",
+          "why": "Das ist keine Definition und im Allgemeinen falsch."
+        },
+        {
+          "md": "Punktweise gilt $X \\le a\\,\\mathbb 1_{\\{X \\ge a\\}}$.",
+          "why": "Falsch herum: Für $0 < X < a$ steht rechts 0."
+        }
+      ],
+      "explain": "Eine punktweise Ungleichung und die Monotonie des Erwartungswerts.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\ge 0$ mit $E(X) = 3$. Welche Schranke liefert Markov für $P(X \\ge 12)$?",
+      "answer": 0.25,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\frac{3}{12} = 0{,}25$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X$ hat die Standardabweichung 2. Welche Schranke liefert Tschebyscheff für $P(|X - EX| \\ge 5)$?",
+      "answer": 0.16,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\frac{4}{25} = 0{,}16$.",
+      "id": "q2"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Welche Ungleichung gilt nach Jensen für **jede** Zufallsvariable mit den nötigen Erwartungswerten?",
+      "options": [
+        {
+          "md": "$E(X^2) \\ge (EX)^2$",
+          "correct": true,
+          "why": "$x \\mapsto x^2$ ist konvex."
+        },
+        {
+          "md": "$E(\\sqrt X) \\ge \\sqrt{EX}$ für $X \\ge 0$",
+          "why": "Die Wurzel ist konkav: Es gilt $\\le$."
+        },
+        {
+          "md": "$E(e^X) \\le e^{EX}$",
+          "why": "Die Exponentialfunktion ist konvex: Es gilt $\\ge$."
+        },
+        {
+          "md": "$E|X| \\le |EX|$",
+          "why": "Der Betrag ist konvex: Es gilt $\\ge$."
+        }
+      ],
+      "explain": "Konvex: Funktion des Erwartungswerts höchstens Erwartungswert der Funktion; konkav umgekehrt.",
+      "id": "q3"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Die Tschebyscheff-Ungleichung gilt nur für normalverteilte Zufallsvariablen.",
+      "answer": false,
+      "explain": "Sie gilt für jede Verteilung mit endlicher Varianz; darum ist sie oft grob.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ungleichung",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ungleichung",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ungleichung",
+      "level": 3,
+      "id": "s9"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ungleichung",
+      "level": 4,
+      "id": "s10"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Markov: $P(X \\ge a) \\le \\frac{E X}{a}$ für $X \\ge 0$.",
+        "Tschebyscheff: $P(|X - \\mu| \\ge c) \\le \\frac{\\sigma^2}{c^2}$.",
+        "Jensen: $\\varphi(EX) \\le E\\varphi(X)$ für konvexes $\\varphi$."
+      ],
+      "id": "s11"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": "st1-poisson",
+  "title": "Der Poisson-Grenzwertsatz",
+  "subtitle": "Viele seltene Ereignisse",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Gilt $n \\to \\infty$ und $np_n \\to \\lambda$, so ist $\\binom nk p_n^k (1 - p_n)^{n-k} \\to e^{-\\lambda}\\frac{\\lambda^k}{k!}$. Viele seltene, unabhängige Ereignisse ergeben eine Poisson-Verteilung.\n\nBeweisidee: $\\binom nk p_n^k = \\frac{n(n-1)\\cdots(n-k+1)}{n^k}\\cdot\\frac{(np_n)^k}{k!} \\to \\frac{\\lambda^k}{k!}$, und $(1 - p_n)^{n-k} \\to e^{-\\lambda}$, weil $(1 - \\frac{\\lambda_n}{n})^n \\to e^{-\\lambda}$ für $\\lambda_n \\to \\lambda$. Beispiele: Druckfehler pro Seite, radioaktive Zerfälle pro Sekunde, Unfälle pro Tag.",
+      "id": "s1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim \\mathrm{Bin}(1000; 0{,}003)$. Bestimme die Poisson-Näherung für $P(X = 2)$.",
+      "answer": 0.22404180765538775,
+      "tolerance": 0.001,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\lambda = 3$: $e^{-3}\\frac{3^2}{2!} \\approx 0{,}2240$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim \\mathrm{Poi}(2)$. Bestimme $P(X \\ge 1)$.",
+      "answer": 0.8646647167633873,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$1 - P(X = 0) = 1 - e^{-2} \\approx 0{,}8647$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Bei der Poisson-Verteilung sind Erwartungswert und Varianz gleich.",
+      "answer": true,
+      "explain": "Beide sind $\\lambda$.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 4,
+      "label": "Üben",
+      "id": "s5"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 2,
+      "id": "s6"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Poisson-Grenzwertsatz: $\\mathrm{Bin}(n, p_n) \\to \\mathrm{Poi}(\\lambda)$ bei $np_n \\to \\lambda$.",
+        "Faustregel: großes $n$, kleines $p$.",
+        "$E = \\mathrm{Var} = \\lambda$."
+      ],
+      "id": "s7"
+    }
+  ]
+}

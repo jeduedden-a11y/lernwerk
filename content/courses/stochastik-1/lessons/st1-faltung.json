@@ -1,0 +1,108 @@
+{
+  "id": "st1-faltung",
+  "title": "Summen unabhängiger Zufallsvariablen",
+  "subtitle": "Faltung und stabile Familien",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Für unabhängige $X$, $Y$ ist die Verteilung von $X + Y$ die **Faltung**: diskret $P(X + Y = z) = \\sum_x P(X = x)\\,P(Y = z - x)$, stetig $f_{X+Y}(z) = \\int f_X(x)\\,f_Y(z - x)\\,dx$.\n\nViele Familien sind faltungsstabil: $\\mathrm{Bin}(n, p) * \\mathrm{Bin}(m, p) = \\mathrm{Bin}(n + m, p)$, $\\mathrm{Poi}(\\lambda) * \\mathrm{Poi}(\\mu) = \\mathrm{Poi}(\\lambda + \\mu)$, $N(\\mu_1, \\sigma_1^2) * N(\\mu_2, \\sigma_2^2) = N(\\mu_1 + \\mu_2, \\sigma_1^2 + \\sigma_2^2)$. Die Summe von $n$ unabhängigen $\\mathrm{Exp}(\\lambda)$ ist gammaverteilt, die Summe zweier gleichverteilter Zahlen dreieckverteilt.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Faltung",
+      "md": "Die Augenzahl eines Würfels (hier 0 bis 5) und ihre Summen: Bei $n = 2$ entsteht die Dreiecksform, bei wachsendem $n$ die Glocke.",
+      "widget": "zgslabor",
+      "params": {
+        "pop": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "n": 2,
+        "presets": false,
+        "editable": false,
+        "nRange": [
+          1,
+          12
+        ]
+      },
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim \\mathrm{Poi}(2)$ und $Y \\sim \\mathrm{Poi}(3)$ unabhängig. Bestimme $P(X + Y = 4)$.",
+      "answer": 0.1754673697678507,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$X + Y \\sim \\mathrm{Poi}(5)$: $e^{-5}\\frac{5^4}{4!} \\approx 0{,}1755$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Zwei faire Würfel: Bestimme $P(\\text{Augensumme } 8)$.",
+      "answer": 0.1388888888888889,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "Faltung: $(2, 6), (3, 5), (4, 4), (5, 3), (6, 2)$, also $\\frac5{36} \\approx 0{,}1389$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Sind $X, Y \\sim U(0, 1)$ unabhängig, so ist $X + Y$ gleichverteilt auf $(0, 2)$.",
+      "answer": false,
+      "explain": "Die Faltung ergibt die Dreiecksdichte mit Spitze bei 1.",
+      "id": "q3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim N(1, 4)$ und $Y \\sim N(2, 5)$ unabhängig. Bestimme $P(X + Y \\le 3)$.",
+      "answer": 0.5,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$X + Y \\sim N(3, 9)$, und 3 ist der Erwartungswert: $0{,}5$.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 2,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 1,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Summe unabhängiger Zufallsvariablen: Faltung der Verteilungen.",
+        "Binomial, Poisson und Normal sind faltungsstabil; Exponential summiert sich zur Gammaverteilung.",
+        "Wiederholte Faltung führt zur Glockenform: der zentrale Grenzwertsatz."
+      ],
+      "id": "s9"
+    }
+  ]
+}

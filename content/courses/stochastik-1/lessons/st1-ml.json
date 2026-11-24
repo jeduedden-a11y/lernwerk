@@ -1,0 +1,109 @@
+{
+  "id": "st1-ml",
+  "title": "Maximum-Likelihood und Momentenmethode",
+  "subtitle": "Der plausibelste Parameter",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Konfidenzintervalle.md",
+      "title": "Konfidenzintervalle"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Der **Maximum-Likelihood-Schätzer** wählt den Parameter, unter dem die Daten am wahrscheinlichsten sind: Maximiere $L(\\vartheta) = \\prod_i f_\\vartheta(x_i)$, meist bequemer $\\ln L$.\n\nBernoulli: $\\hat p = \\frac kn$. Poisson: $\\hat\\lambda = \\bar x$. Exponential: $\\hat\\lambda = \\frac1{\\bar x}$. Normal: $\\hat\\mu = \\bar x$ und $\\hat\\sigma^2 = \\frac1n\\sum (x_i - \\bar x)^2$ (verzerrt). Gleichverteilung auf $[0, \\vartheta]$: $\\hat\\vartheta = \\max x_i$, hier hilft keine Ableitung, denn $L(\\vartheta) = \\vartheta^{-n}$ fällt für $\\vartheta \\ge \\max x_i$. Die **Momentenmethode** setzt Stichprobenmomente gleich den theoretischen: Für die Gleichverteilung ist $E(X) = \\frac\\vartheta2$, also $\\tilde\\vartheta = 2\\bar x$.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Leite den Maximum-Likelihood-Schätzer für Bernoulli-Daten her.",
+      "given": "$k$ Erfolge in $n$ unabhängigen Versuchen, $0 < k < n$.",
+      "claim": "$\\hat p = \\frac kn$.",
+      "steps": [
+        "$\\ln L(p) = k\\ln p + (n - k)\\ln(1 - p)$.",
+        "$\\frac{d}{dp}\\ln L(p) = \\frac kp - \\frac{n-k}{1-p}$.",
+        "Nullsetzen: $k(1 - p) = (n - k)p$, also $p = \\frac kn$.",
+        "Die Ableitung wechselt dort von positiv zu negativ: Es ist ein Maximum."
+      ],
+      "distractors": [
+        {
+          "md": "$L(p) = \\binom nk p^k(1 - p)^{n-k}$ ist bei $p = \\frac12$ maximal.",
+          "why": "Das hängt von $k$ ab; $\\frac12$ ist nur für $k = \\frac n2$ richtig."
+        }
+      ],
+      "explain": "Logarithmieren, ableiten, nullsetzen, Vorzeichenwechsel prüfen.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Exponentialverteilte Wartezeiten mit Mittelwert $\\bar x = 2{,}5$ Minuten. Bestimme den Maximum-Likelihood-Schätzer für $\\lambda$.",
+      "answer": 0.4,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\hat\\lambda = \\frac1{\\bar x} = 0{,}4$ pro Minute.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Werte, gleichverteilt auf $[0, \\vartheta]$, haben den Mittelwert $3{,}1$. Bestimme den Momentenschätzer für $\\vartheta$.",
+      "answer": 6.2,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$E(X) = \\frac\\vartheta2$, also $\\tilde\\vartheta = 2\\bar x = 6{,}2$.",
+      "id": "q2"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Werte $1{,}2;\\ 4{,}7;\\ 3{,}3$ stammen aus einer Gleichverteilung auf $[0, \\vartheta]$. Welchen Wert liefert der Maximum-Likelihood-Schätzer?",
+      "options": [
+        {
+          "md": "$4{,}7$",
+          "correct": true,
+          "why": "Das Maximum der Daten."
+        },
+        {
+          "md": "$6{,}13$",
+          "why": "Das ist $2\\bar x$, der Momentenschätzer."
+        },
+        {
+          "md": "$3{,}07$",
+          "why": "Das ist $\\bar x$."
+        },
+        {
+          "md": "$9{,}4$",
+          "why": "Das ist $2\\max$."
+        }
+      ],
+      "explain": "$L(\\vartheta) = \\vartheta^{-3}$ für $\\vartheta \\ge 4{,}7$, also maximal bei $\\vartheta = 4{,}7$; kleinere Werte sind unmöglich.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-schaetzer",
+      "level": 1,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-schaetzer",
+      "level": 2,
+      "id": "s7"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Maximum-Likelihood: Parameter, unter dem die Daten am plausibelsten sind.",
+        "Standardfälle: $\\frac kn$, $\\bar x$, $\\frac1{\\bar x}$, $\\max x_i$.",
+        "Momentenmethode: theoretische gleich empirischen Momenten."
+      ],
+      "id": "s8"
+    }
+  ]
+}

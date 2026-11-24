@@ -1,0 +1,104 @@
+{
+  "id": "st1-borel-cantelli",
+  "title": "Die Lemmata von Borel-Cantelli",
+  "subtitle": "Unendlich oft oder nur endlich oft",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Stochastische Unabhängigkeit.md",
+      "title": "Stochastische Unabhängigkeit"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "$\\limsup_n A_n = \\bigcap_N \\bigcup_{n \\ge N} A_n$ ist das Ereignis »unendlich viele $A_n$ treten ein«. **Erstes Lemma:** Aus $\\sum P(A_n) < \\infty$ folgt $P(\\limsup A_n) = 0$. **Zweites Lemma:** Sind die $A_n$ unabhängig und $\\sum P(A_n) = \\infty$, so ist $P(\\limsup A_n) = 1$.\n\nMit $P(A_n) = \\frac1{n^2}$ treten fast sicher nur endlich viele $A_n$ ein, ganz ohne Unabhängigkeit. Mit unabhängigen $A_n$ und $P(A_n) = \\frac1n$ treten fast sicher unendlich viele ein. Das zweite Lemma braucht die Unabhängigkeit wirklich: Für $A_n = A$ mit $P(A) = \\frac12$ ist $\\sum P(A_n) = \\infty$, aber $P(\\limsup A_n) = \\frac12$.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis des ersten Lemmas von Borel-Cantelli.",
+      "given": "$\\sum_n P(A_n) < \\infty$.",
+      "claim": "$P(\\limsup_n A_n) = 0$.",
+      "steps": [
+        "Für jedes $N$ ist $\\limsup A_n \\subseteq \\bigcup_{n \\ge N} A_n$.",
+        "Subadditivität: $P(\\limsup A_n) \\le \\sum_{n \\ge N} P(A_n)$.",
+        "Die Reste einer konvergenten Reihe gehen gegen 0, also ist $P(\\limsup A_n) = 0$."
+      ],
+      "distractors": [
+        {
+          "md": "Da $P(A_n) \\to 0$, folgt $P(\\limsup A_n) = 0$.",
+          "why": "Reicht nicht: Bei unabhängigen $A_n$ mit $P(A_n) = \\frac1n$ ist $P(\\limsup A_n) = 1$."
+        }
+      ],
+      "explain": "Abschätzen durch die Reste der Reihe.",
+      "id": "b1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Aus $P(A_n) \\to 0$ folgt, dass fast sicher nur endlich viele $A_n$ eintreten.",
+      "answer": false,
+      "explain": "Unabhängige $A_n$ mit $P(A_n) = \\frac1n$: Die Reihe divergiert, nach dem zweiten Lemma treten unendlich viele ein.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Das zweite Lemma gilt auch ohne Unabhängigkeit.",
+      "answer": false,
+      "explain": "$A_n = A$ für alle $n$ mit $P(A) = \\frac12$: Die Reihe divergiert, aber $P(\\limsup A_n) = \\frac12$.",
+      "id": "q2"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Ein Würfel wird unendlich oft geworfen; $A_n$: Die Würfe $n, \\dots, n + 9$ zeigen zehnmal die Sechs. Was folgt?",
+      "options": [
+        {
+          "md": "Fast sicher tritt das unendlich oft ein.",
+          "correct": true,
+          "why": "Die Ereignisse $A_{10k}$ sind unabhängig mit konstanter Wahrscheinlichkeit $6^{-10}$; ihre Summe divergiert."
+        },
+        {
+          "md": "Fast sicher tritt das nur endlich oft ein.",
+          "why": "Die Reihe der Wahrscheinlichkeiten divergiert."
+        },
+        {
+          "md": "Es tritt mit Wahrscheinlichkeit $6^{-10}$ ein.",
+          "why": "Das ist die Wahrscheinlichkeit für einen einzelnen Block."
+        },
+        {
+          "md": "Borel-Cantelli ist nicht anwendbar, weil die $A_n$ abhängig sind.",
+          "why": "Auf die unabhängige Teilfolge $A_{10k}$ schon."
+        }
+      ],
+      "explain": "Trick: auf eine Teilfolge unabhängiger Ereignisse ausweichen.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-konvergenz",
+      "level": 4,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-raeume",
+      "level": 4,
+      "id": "s7"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\limsup A_n$: unendlich viele $A_n$ treten ein.",
+        "Erstes Lemma: konvergente Reihe, fast sicher endlich oft.",
+        "Zweites Lemma: unabhängig und divergente Reihe, fast sicher unendlich oft."
+      ],
+      "id": "s8"
+    }
+  ]
+}

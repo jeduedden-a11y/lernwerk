@@ -1,0 +1,124 @@
+{
+  "id": "st1-bayes",
+  "title": "Der Satz von Bayes",
+  "subtitle": "Von der Wirkung zur Ursache",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Satz von Bayes.md",
+      "title": "Satz von Bayes"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bedingte Wahrscheinlichkeit.md",
+      "title": "Bedingte Wahrscheinlichkeit"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "**Satz von Bayes:** Für eine Zerlegung $B_1, B_2, \\dots$ ist $P(B_k \\mid A) = \\frac{P(A \\mid B_k)\\,P(B_k)}{\\sum_i P(A \\mid B_i)\\,P(B_i)}$. Er dreht die Bedingung um: von der Wirkung $A$ zurück zur Ursache $B_k$.\n\nDas klassische Beispiel ist der medizinische Test. Bei einer seltenen Krankheit sind die meisten positiven Ergebnisse falsch positiv, selbst bei einem guten Test, weil es so viel mehr Gesunde gibt. In natürlichen Häufigkeiten sieht man es sofort.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Natürliche Häufigkeiten",
+      "md": "Eine Krankheit mit Prävalenz 0,1 %, ein Test mit 99 % Sensitivität und Spezifität. Wie viele der positiv Getesteten sind krank?",
+      "widget": "bayes",
+      "params": {
+        "prevalence": 0.001,
+        "sensitivity": 0.99,
+        "specificity": 0.99
+      },
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Prävalenz 0,1 %, Sensitivität 99 %, Spezifität 99 %. Bestimme $P(\\text{krank} \\mid \\text{positiv})$.",
+      "answer": 0.09016393442622951,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\frac{0{,}001 \\cdot 0{,}99}{0{,}001 \\cdot 0{,}99 + 0{,}999 \\cdot 0{,}01} \\approx 0{,}0902$: nur etwa 9 %.",
+      "id": "q1"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Ziegenproblem: Hinter einer von drei Türen steht ein Auto. Du wählst Tür 1, der Moderator öffnet eine andere Tür mit einer Ziege (er kennt die Lage und öffnet immer eine Ziegentür). Was ist besser?",
+      "options": [
+        {
+          "md": "Wechseln: Gewinnwahrscheinlichkeit $\\frac23$",
+          "correct": true,
+          "why": "Mit $\\frac23$ stand das Auto anfangs hinter einer der anderen Türen; der Moderator verrät, hinter welcher."
+        },
+        {
+          "md": "Egal: beide Türen haben $\\frac12$",
+          "why": "Der Moderator handelt nicht zufällig; seine Wahl trägt Information."
+        },
+        {
+          "md": "Bleiben: Gewinnwahrscheinlichkeit $\\frac23$",
+          "why": "Bleiben gewinnt nur, wenn die erste Wahl stimmte: $\\frac13$."
+        },
+        {
+          "md": "Wechseln: Gewinnwahrscheinlichkeit $\\frac12$",
+          "why": "Die Rechnung mit Bayes ergibt $\\frac23$."
+        }
+      ],
+      "explain": "Bayes: $P(\\text{Auto hinter 2} \\mid \\text{Moderator öffnet 3}) = \\frac{1 \\cdot \\frac13}{\\frac12 \\cdot \\frac13 + 1 \\cdot \\frac13 + 0} = \\frac23$.",
+      "id": "q2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Leite den Satz von Bayes für zwei Ereignisse her.",
+      "given": "$P(A) > 0$ und $P(B) > 0$.",
+      "claim": "$P(B \\mid A) = \\dfrac{P(A \\mid B)\\,P(B)}{P(A)}$.",
+      "steps": [
+        "Nach Definition ist $P(B \\mid A) = \\frac{P(A \\cap B)}{P(A)}$.",
+        "Ebenso ist $P(A \\cap B) = P(A \\mid B)\\,P(B)$.",
+        "Einsetzen ergibt die Behauptung."
+      ],
+      "distractors": [
+        {
+          "md": "Es gilt $P(A \\cap B) = P(A)\\,P(B)$.",
+          "why": "Nur bei Unabhängigkeit."
+        },
+        {
+          "md": "$P(B \\mid A) = P(A \\mid B)$ nach Definition.",
+          "why": "Die Definition ist nicht symmetrisch."
+        }
+      ],
+      "explain": "Zweimal die Definition der bedingten Wahrscheinlichkeit, einmal nach $A \\cap B$ aufgelöst.",
+      "id": "b1"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-bayes",
+      "level": 3,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-bayes",
+      "level": 4,
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-bayes",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Bayes: $P(B_k \\mid A) = \\frac{P(A \\mid B_k)\\,P(B_k)}{\\sum_i P(A \\mid B_i)\\,P(B_i)}$.",
+        "Seltene Ursachen: Selbst gute Tests liefern viele falsch Positive.",
+        "Natürliche Häufigkeiten machen die Rechnung anschaulich."
+      ],
+      "id": "s9"
+    }
+  ]
+}

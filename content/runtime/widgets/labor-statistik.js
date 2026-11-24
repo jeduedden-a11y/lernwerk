@@ -514,5 +514,130 @@
     },
   });
 
-  LW.labStat = { DISTS, binom, Phi, logC };
+  // ---------------------------------------------------------------- central limit theorem lab
+  /* zgslabor: a population on the values 0..m (bars the learner can drag or presets), the exact distribution of the sum of
+   *   n independent draws (by convolution), standardised and laid over the standard normal density. The distance
+   *   d = max |P(S ≤ s) - Φ((s + 1/2 - nμ)/(σ√n))| measures how normal it already is.
+   *   params: pop (weights for 0..m), n, editable (bars draggable, default true), presets (default true), nRange, task-free goals
+   *   scope:  n, mu, sigma, skew, d, m */
+  function sumDist(pop, n) {
+    let cur = [1];
+    for (let k = 0; k < n; k++) {
+      const next = new Array(cur.length + pop.length - 1).fill(0);
+      for (let i = 0; i < cur.length; i++) { if (!cur[i]) continue; for (let j = 0; j < pop.length; j++) next[i + j] += cur[i] * pop[j]; }
+      cur = next;
+    }
+    return cur;
+  }
+  function popStats(w) {
+    const t = w.reduce((a, b) => a + b, 0) || 1, p = w.map((x) => x / t);
+    const mu = p.reduce((s, q, i) => s + i * q, 0), v = p.reduce((s, q, i) => s + q * (i - mu) ** 2, 0), sd = Math.sqrt(v);
+    const sk = sd > 0 ? p.reduce((s, q, i) => s + q * (i - mu) ** 3, 0) / (sd * sd * sd) : 0;
+    return { p, mu, sd, sk };
+  }
+  function clDistance(w, n) {
+    const { p, mu, sd } = popStats(w);
+    if (!(sd > 0)) return 1;
+    const f = sumDist(p, n), s = sd * Math.sqrt(n);
+    let F = 0, d = 0;
+    for (let k = 0; k < f.length; k++) { F += f[k]; d = Math.max(d, Math.abs(F - Phi((k + 0.5 - n * mu) / s)), Math.abs(F - f[k] - Phi((k - 0.5 - n * mu) / s))); }
+    return d;
+  }
+  const PRESETS = { gleich: [1, 1, 1, 1, 1], schief: [16, 8, 4, 2, 1, 1], zweigipflig: [5, 1, 0, 1, 5], muenze: [12, 4, 1, 0, 0, 1] };
+  LW.widget("zgslabor", {
+    mount(host, p, ctx) {
+      let w = (p.pop || PRESETS.schief).slice();
+      let n = p.n || 1;
+      const editable = p.editable !== false;
+      const nr = p.nRange || [1, 100];
+      if (p.presets !== false) {
+        const row = LW.el("div", { class: "w-btns" });
+        host.append(row);
+        [["gleich", "Gleichverteilt"], ["schief", "Schief"], ["zweigipflig", "Zweigipflig"], ["muenze", "Langer Rand"]].forEach(([id, t]) => K.button(row, t, () => { w = PRESETS[id].slice(); paint(); ctx.changed(); }));
+      }
+      const W = 360, H1 = 132;
+      const svg1 = K.root(host, W, H1, "Grundgesamtheit");
+      svg1.style.touchAction = "pan-y";
+      const g1 = K.svg("g", null, svg1);
+      const sl = K.slider(host, { label: "n", labelHtml: LW.math("n"), min: nr[0], max: nr[1], step: 1, value: n, format: (v) => String(v), onInput: (v) => { n = v; paint(); ctx.changed(); } });
+      const H2 = 230;
+      const svg2 = K.root(host, W, H2, "Verteilung der standardisierten Summe");
+      const g2 = K.svg("g", null, svg2);
+      const out = K.readout(host);
+      let barX = null, barY = null;
+      if (editable) {
+        // drag on a bar to set its height
+        let active = false;
+        const set = (e) => {
+          if (!barX) return;
+          const q = K.point(svg1, e);
+          const i = Math.round(barX.inv(q.x));
+          if (i < 0 || i >= w.length) return;
+          // the dragged bar gets the probability under the finger; the others keep their proportions
+          const v = K.clamp(barY.inv(q.y), 0, 0.98);
+          const t = w.reduce((a, b) => a + b, 0) || 1;
+          const pr = w.map((x) => x / t), others = 1 - pr[i];
+          if (others <= 1e-9) w = pr.map((x, k) => (k === i ? v : (1 - v) / (pr.length - 1)));
+          else w = pr.map((x, k) => (k === i ? v : (x * (1 - v)) / others));
+          paint(); ctx.changed();
+        };
+        svg1.addEventListener("pointerdown", (e) => { active = true; try { svg1.setPointerCapture(e.pointerId); } catch (err) { /* synthetic */ } set(e); });
+        svg1.addEventListener("pointermove", (e) => { if (active) set(e); });
+        svg1.addEventListener("pointerup", () => { active = false; });
+        svg1.addEventListener("pointercancel", () => { active = false; });
+      }
+      function scope() { const st = popStats(w); return { n, mu: st.mu, sigma: st.sd, skew: st.sk, d: clDistance(w, n), m: w.length - 1 }; }
+      function paint() {
+        const st = popStats(w);
+        // population
+        K.clear(g1);
+        const m = w.length - 1, L = 34, R = W - 12, T = 10, B = H1 - 22;
+        barX = K.scale(-0.6, m + 0.6, L, R);
+        const pmax = Math.max(...st.p, 0.05);
+        barY = K.scale(0, pmax * 1.1, B, T);
+        K.svg("line", { x1: L, y1: B, x2: R, y2: B, class: "s-axis" }, g1);
+        const bw = Math.min(40, (barX(1) - barX(0)) * 0.7);
+        st.p.forEach((q, i) => {
+          K.svg("rect", { x: barX(i) - bw / 2, y: barY(q), width: bw, height: Math.max(0, B - barY(q)), rx: 4, fill: "var(--orange)", opacity: 0.85 }, g1);
+          K.text(g1, barX(i), B + 12, String(i), "s-text");
+        });
+        K.text(g1, R, T + 2, editable ? "Balken ziehen" : "", "s-text", "end");
+        // the standardised sum
+        K.clear(g2);
+        const L2 = 34, R2 = W - 12, T2 = 10, B2 = H2 - 24;
+        const zx = K.scale(-4, 4, L2, R2), zy = K.scale(0, 0.62, B2, T2);
+        K.svg("line", { x1: L2, y1: B2, x2: R2, y2: B2, class: "s-axis" }, g2);
+        [-3, -2, -1, 0, 1, 2, 3].forEach((t) => K.text(g2, zx(t), B2 + 12, String(t), "s-text"));
+        if (st.sd > 0) {
+          const f = sumDist(st.p, n), s = st.sd * Math.sqrt(n), wz = 1 / s;
+          const pw = Math.max(1, (zx(wz) - zx(0)) * 0.92);
+          f.forEach((q, k) => {
+            const z = (k - n * st.mu) / s;
+            if (z < -4.2 || z > 4.2 || q < 1e-6) return;
+            const hgt = q * s;
+            K.svg("rect", { x: zx(z) - pw / 2, y: zy(Math.min(0.62, hgt)), width: pw, height: Math.max(0, B2 - zy(Math.min(0.62, hgt))), fill: "var(--accent)", opacity: 0.55 }, g2);
+          });
+          let d = "";
+          for (let i = 0; i <= 160; i++) { const z = -4 + (8 * i) / 160; d += (i ? "L" : "M") + zx(z).toFixed(1) + "," + zy(Math.exp((-z * z) / 2) / Math.sqrt(2 * Math.PI)).toFixed(1); }
+          K.svg("path", { d, fill: "none", stroke: "var(--label)", "stroke-width": 2 }, g2);
+        }
+        const S = scope();
+        out.set(LW.esc("Grundgesamtheit: μ = " + K.fmt(S.mu, 3) + ", σ = " + K.fmt(S.sigma, 3) + ", Schiefe " + K.fmt(S.skew, 2)) + "<br>" +
+          LW.esc("Summe aus n = " + n + " Ziehungen, standardisiert. Abstand zur Normalverteilung: d = " + K.fmt(S.d, 4)));
+      }
+      paint();
+      return {
+        check: (goal) => checkGoal(goal, scope()),
+        solve(goal) {
+          const s = (goal && goal.solve) || {};
+          if (Array.isArray(s.pop)) w = s.pop.slice();
+          if (s.n != null) { n = s.n; sl.set(n); }
+          paint();
+        },
+        getVar: (name) => scope()[name],
+      };
+    },
+  });
+
+  LW.labStat = { DISTS, binom, Phi, logC, clDistance, popStats, PRESETS };
 })();

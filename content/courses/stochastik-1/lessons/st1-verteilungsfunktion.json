@@ -1,0 +1,108 @@
+{
+  "id": "st1-verteilungsfunktion",
+  "title": "Stetigkeit von Maßen und Verteilungsfunktionen",
+  "subtitle": "Ein Maß auf ℝ in einer Funktion",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Axiome von Kolmogorow.md",
+      "title": "Axiome von Kolmogorow"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Wahrscheinlichkeitsmaße sind **stetig**: Aus $A_n \\uparrow A$ folgt $P(A_n) \\to P(A)$, aus $A_n \\downarrow A$ ebenso. Das ist die $\\sigma$-Additivität in anderer Form.\n\nEin Wahrscheinlichkeitsmaß auf $(\\mathbb R, \\mathcal B)$ ist durch seine **Verteilungsfunktion** $F(x) = P((-\\infty, x])$ festgelegt. $F$ ist monoton wachsend, rechtsstetig, mit $F(x) \\to 0$ für $x \\to -\\infty$ und $F(x) \\to 1$ für $x \\to \\infty$; umgekehrt gehört zu jeder solchen Funktion genau ein Maß. Sprünge sind Punktmassen: $P(\\{x\\}) = F(x) - F(x^-)$.",
+      "id": "s1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Jede Verteilungsfunktion ist stetig.",
+      "answer": false,
+      "explain": "Diskrete Verteilungen haben Sprünge, etwa die Verteilungsfunktion eines Würfels bei $1, \\dots, 6$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Jede Verteilungsfunktion ist rechtsstetig.",
+      "answer": true,
+      "explain": "Stetigkeit von oben: $(-\\infty, x + \\tfrac1n] \\downarrow (-\\infty, x]$, also $F(x + \\tfrac1n) \\to F(x)$.",
+      "id": "q2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Es ist $F(x) = 1 - e^{-2x}$ für $x \\ge 0$ (sonst 0). Bestimme $P(1 < X \\le 2)$.",
+      "answer": 0.11701964434787852,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$F(2) - F(1) = e^{-2} - e^{-4} \\approx 0{,}1170$.",
+      "id": "q3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$F$ springt bei $x = 3$ von $0{,}25$ auf $0{,}6$. Bestimme $P(X = 3)$.",
+      "answer": 0.35,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "Sprunghöhe: $F(3) - F(3^-) = 0{,}6 - 0{,}25 = 0{,}35$.",
+      "id": "q4"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Warum ist eine Verteilungsfunktion rechtsstetig?",
+      "options": [
+        {
+          "md": "Stetigkeit von oben: $(-\\infty, x + \\tfrac1n] \\downarrow (-\\infty, x]$",
+          "correct": true,
+          "why": "Genau das ist der Grund."
+        },
+        {
+          "md": "Weil $P$ monoton ist",
+          "why": "Monotonie gibt nur die Existenz der Grenzwerte, nicht ihren Wert."
+        },
+        {
+          "md": "Weil $F$ differenzierbar ist",
+          "why": "Viele Verteilungsfunktionen sind es nicht."
+        },
+        {
+          "md": "Weil $P(\\{x\\}) = 0$ für alle $x$",
+          "why": "Das gilt nur für stetige Verteilungen; dann ist $F$ sogar stetig."
+        }
+      ],
+      "explain": "Links gilt nur $(-\\infty, x - \\tfrac1n] \\uparrow (-\\infty, x)$, ohne den Punkt $x$; daher der mögliche Sprung.",
+      "id": "q5"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-raeume",
+      "level": 3,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Stetigkeit von unten und oben folgt aus der $\\sigma$-Additivität.",
+        "Verteilungsfunktion: monoton, rechtsstetig, Grenzen 0 und 1; sie legt die Verteilung fest.",
+        "Sprünge von $F$ sind Punktmassen."
+      ],
+      "id": "s9"
+    }
+  ]
+}

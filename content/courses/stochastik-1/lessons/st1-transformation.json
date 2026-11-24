@@ -1,0 +1,108 @@
+{
+  "id": "st1-transformation",
+  "title": "Transformationen von Zufallsvariablen",
+  "subtitle": "Die Verteilung von g(X)",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Für $Y = g(X)$ bestimmt man die Verteilung über die Verteilungsfunktion: $F_Y(y) = P(g(X) \\le y)$. Für streng monotones, differenzierbares $g$ gilt der **Transformationssatz** $f_Y(y) = f_X(g^{-1}(y))\\,\\bigl|(g^{-1})'(y)\\bigr|$.\n\nLineare Transformationen erhalten die Normalverteilung: $aX + b \\sim N(a\\mu + b, a^2\\sigma^2)$, insbesondere ist $\\frac{X - \\mu}{\\sigma}$ standardnormalverteilt. Mit der **Inversionsmethode** erzeugt man aus $U \\sim U(0, 1)$ jede Verteilung: $F^{-1}(U)$ hat die Verteilungsfunktion $F$. So wird $-\\frac1\\lambda \\ln U$ exponentialverteilt.",
+      "id": "s1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim N(10, 4)$ und $Y = 3X - 5$. Bestimme $\\mathrm{Var}(Y)$.",
+      "answer": 36,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$3^2 \\cdot 4 = 36$; es ist $Y \\sim N(25, 36)$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$U \\sim U(0, 1)$. Bestimme $P(U^2 \\le 0{,}49)$.",
+      "answer": 0.7,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$P(U \\le 0{,}7) = 0{,}7$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Ist $X$ standardnormalverteilt, so auch $-X$.",
+      "answer": true,
+      "explain": "Die Dichte ist symmetrisch: $f(-x) = f(x)$.",
+      "id": "q3"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "$X \\sim N(0, 1)$. Welche Dichte hat $Y = e^X$ für $y > 0$?",
+      "options": [
+        {
+          "md": "$\\dfrac{1}{y\\sqrt{2\\pi}}e^{-\\frac{(\\ln y)^2}{2}}$",
+          "correct": true,
+          "why": "Transformationssatz mit $g^{-1}(y) = \\ln y$ und $(g^{-1})'(y) = \\frac1y$."
+        },
+        {
+          "md": "$\\dfrac{1}{\\sqrt{2\\pi}}e^{-\\frac{y^2}{2}}$",
+          "why": "Das ist die Dichte von $X$, nicht von $Y$."
+        },
+        {
+          "md": "$\\dfrac{1}{\\sqrt{2\\pi}}e^{-\\frac{(\\ln y)^2}{2}}$",
+          "why": "Der Faktor $\\frac1y$ fehlt."
+        },
+        {
+          "md": "$e^{y}\\dfrac{1}{\\sqrt{2\\pi}}e^{-\\frac{y^2}{2}}$",
+          "why": "Hier wurde $g$ statt $g^{-1}$ abgeleitet."
+        }
+      ],
+      "explain": "Das ist die Log-Normalverteilung.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-transform",
+      "level": 1,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-transform",
+      "level": 2,
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-transform",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-transform",
+      "level": 4,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Über die Verteilungsfunktion: $F_Y(y) = P(g(X) \\le y)$.",
+        "Transformationssatz: $f_Y = f_X(g^{-1})\\,|(g^{-1})'|$.",
+        "Inversionsmethode: $F^{-1}(U)$ hat die Verteilung $F$."
+      ],
+      "id": "s10"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "id": "st1-laplace",
+  "title": "Laplace-Räume und Abzählen",
+  "subtitle": "Gleich wahrscheinliche Ergebnisse",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Laplace-Wahrscheinlichkeit.md",
+      "title": "Laplace-Wahrscheinlichkeit"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md",
+      "title": "Kombinatorik"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "In einem **Laplace-Raum** sind alle Ergebnisse gleich wahrscheinlich: $P(A) = \\frac{|A|}{|\\Omega|}$. Wahrscheinlichkeiten werden zu Anzahlen.\n\nOb ein Modell Laplace ist, hängt von der Wahl von $\\Omega$ ab. Bei zwei Würfeln sind die 36 geordneten Paare gleich wahrscheinlich, die 11 Augensummen nicht. Ein Grundsatz: Unterscheide die Dinge, auch wenn sie gleich aussehen; dann sind die Ergebnisse meist gleich wahrscheinlich.",
+      "id": "s1"
+    },
+    {
+      "type": "text",
+      "md": "| Ziehen von $k$ aus $n$ | mit Reihenfolge | ohne Reihenfolge |\n|---|---|---|\n| mit Zurücklegen | $n^k$ | $\\binom{n+k-1}{k}$ |\n| ohne Zurücklegen | $\\frac{n!}{(n-k)!}$ | $\\binom nk$ |\n\nVorsicht beim Feld rechts oben: Die ungeordneten Ergebnisse beim Ziehen mit Zurücklegen sind **nicht** gleich wahrscheinlich. Bei zwei Münzwürfen hat »einmal Kopf, einmal Zahl« die Wahrscheinlichkeit $\\frac12$, »zweimal Kopf« nur $\\frac14$.",
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Lotto 6 aus 49: Wie wahrscheinlich sind **genau 3 Richtige**?",
+      "answer": 0.017650403866870102,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\frac{\\binom63\\binom{43}3}{\\binom{49}6} = \\frac{20 \\cdot 12341}{13983816} \\approx 0{,}0177$.",
+      "id": "q1"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Zwei Würfel werden geworfen. Mit welchem Ergebnisraum ist das ein Laplace-Experiment?",
+      "options": [
+        {
+          "md": "Geordnete Paare $(i, j)$ mit $i, j \\in \\{1, \\dots, 6\\}$",
+          "correct": true,
+          "why": "36 gleich wahrscheinliche Ergebnisse."
+        },
+        {
+          "md": "Die Augensummen $\\{2, \\dots, 12\\}$",
+          "why": "Die 7 ist sechsmal so wahrscheinlich wie die 2."
+        },
+        {
+          "md": "Ungeordnete Paare $\\{i, j\\}$",
+          "why": "Ein Pasch hat $\\frac1{36}$, ein ungeordnetes Paar verschiedener Zahlen $\\frac2{36}$."
+        },
+        {
+          "md": "Die Anzahl der Sechsen, $\\{0, 1, 2\\}$",
+          "why": "$P(0) = \\frac{25}{36}$, $P(2) = \\frac1{36}$."
+        }
+      ],
+      "explain": "Erst durch das Unterscheiden der Würfel werden alle Ergebnisse gleich wahrscheinlich.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Beim Ziehen mit Zurücklegen ohne Beachtung der Reihenfolge sind alle $\\binom{n+k-1}{k}$ Ergebnisse gleich wahrscheinlich.",
+      "answer": false,
+      "explain": "Für $n = 2$, $k = 2$: $\\{1, 1\\}$ hat Wahrscheinlichkeit $\\frac14$, $\\{1, 2\\}$ dagegen $\\frac12$.",
+      "id": "q3"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Drei faire Würfel: Wie wahrscheinlich ist die Augensumme 10?",
+      "answer": 0.125,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "27 der 216 geordneten Tripel haben Summe 10, also $\\frac{27}{216} = 0{,}125$.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-kombi",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-kombi",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-kombi",
+      "level": 3,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Laplace: $P(A) = \\frac{|A|}{|\\Omega|}$, wenn alle Ergebnisse gleich wahrscheinlich sind.",
+        "Vier Urnenmodelle; ungeordnet mit Zurücklegen ist kein Laplace-Modell.",
+        "Gleiche Dinge unterscheiden, dann wird das Modell meist Laplace."
+      ],
+      "id": "s10"
+    }
+  ]
+}

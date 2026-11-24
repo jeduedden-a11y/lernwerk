@@ -1,0 +1,163 @@
+{
+  "id": "uni-stoch1",
+  "format": "uni",
+  "title": "Klausur Stochastik I",
+  "subtitle": "Rechnen, Verstehen, Beweisen",
+  "md": "Wie eine Klausur zur Stochastik I: Taschenrechner und Tabelle der Normalverteilung erlaubt, Punkte und Note von 1,0 bis 5,0; bestanden ab 50 Prozent.",
+  "parts": [
+    {
+      "id": "A",
+      "title": "Teil A: Aufgaben",
+      "minutes": 55,
+      "calculator": true,
+      "formulas": false,
+      "aids": "Taschenrechner, Tabelle der Normalverteilung",
+      "md": "Rechen- und Verständnisaufgaben aus der ganzen Vorlesung, automatisch bewertet.",
+      "steps": [
+        {
+          "type": "ref",
+          "lesson": "st1-axiome",
+          "step": "q1",
+          "points": 1
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-laplace",
+          "step": "q1",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-siebformel",
+          "step": "q2",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-bayes",
+          "step": "q1",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-unabhaengig",
+          "step": "q4",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-dichten",
+          "step": "q1",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-varianz",
+          "step": "q1",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-zgws",
+          "step": "q1",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-konfidenz",
+          "step": "q2",
+          "points": 2
+        },
+        {
+          "type": "ref",
+          "lesson": "st1-gauss-t",
+          "step": "q3",
+          "points": 2
+        },
+        {
+          "type": "gen",
+          "gen": "ust-ew",
+          "level": 3,
+          "points": 2,
+          "topicId": "erwartung",
+          "topicTitle": "Erwartungswert und Varianz"
+        },
+        {
+          "type": "gen",
+          "gen": "ust-chi2",
+          "level": 3,
+          "points": 2,
+          "topicId": "chi2",
+          "topicTitle": "Chi-Quadrat-Tests"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "Teil B: Beweise",
+      "minutes": 35,
+      "calculator": false,
+      "formulas": false,
+      "aids": "keine Hilfsmittel",
+      "md": "Zwei Beweise auf Papier oder im Notizblatt. Am Ende bewertest du sie nach dem Erwartungshorizont.",
+      "steps": [
+        {
+          "type": "rubric",
+          "part": "B1",
+          "operator": {
+            "word": "Beweisen",
+            "means": "Eine Aussage nach gültigen Schlussregeln lückenlos herleiten."
+          },
+          "md": "Seien $X_1, X_2, \\dots$ unabhängig mit $E(X_i) = \\mu$ und $\\mathrm{Var}(X_i) = \\sigma^2 < \\infty$. Zeigen Sie mit der Tschebyscheff-Ungleichung: Für jedes $\\varepsilon > 0$ gilt $P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\to 0$. (6 Punkte)",
+          "criteria": [
+            {
+              "md": "$E(\\bar X_n) = \\mu$ mit der Linearität",
+              "points": 1
+            },
+            {
+              "md": "$\\mathrm{Var}(\\bar X_n) = \\frac{\\sigma^2}{n}$, Unabhängigkeit ausdrücklich benutzt",
+              "points": 2
+            },
+            {
+              "md": "Tschebyscheff richtig angewandt: $P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\le \\frac{\\sigma^2}{n\\varepsilon^2}$",
+              "points": 2
+            },
+            {
+              "md": "Grenzübergang $n \\to \\infty$ und Schluss",
+              "points": 1
+            }
+          ],
+          "solution": "$E(\\bar X_n) = \\frac1n\\sum E(X_i) = \\mu$. Wegen der Unabhängigkeit ist $\\mathrm{Var}(\\bar X_n) = \\frac{1}{n^2}\\sum \\mathrm{Var}(X_i) = \\frac{\\sigma^2}{n}$. Tschebyscheff: $P(|\\bar X_n - \\mu| \\ge \\varepsilon) \\le \\frac{\\mathrm{Var}(\\bar X_n)}{\\varepsilon^2} = \\frac{\\sigma^2}{n\\varepsilon^2} \\to 0$."
+        },
+        {
+          "type": "rubric",
+          "part": "B2",
+          "operator": {
+            "word": "Beweisen",
+            "means": "Eine Aussage nach gültigen Schlussregeln lückenlos herleiten."
+          },
+          "md": "$x_1, \\dots, x_n$ sind Beobachtungen einer Poisson-Verteilung mit unbekanntem $\\lambda > 0$, nicht alle 0. Bestimmen Sie den Maximum-Likelihood-Schätzer für $\\lambda$ und begründen Sie, dass es ein Maximum ist. (6 Punkte)",
+          "criteria": [
+            {
+              "md": "Likelihood $L(\\lambda) = \\prod_i e^{-\\lambda}\\frac{\\lambda^{x_i}}{x_i!}$ aufgestellt",
+              "points": 1
+            },
+            {
+              "md": "$\\ln L(\\lambda) = -n\\lambda + \\bigl(\\sum x_i\\bigr)\\ln\\lambda - \\sum \\ln(x_i!)$",
+              "points": 2
+            },
+            {
+              "md": "Ableitung $-n + \\frac{\\sum x_i}{\\lambda}$ null gesetzt: $\\hat\\lambda = \\bar x$",
+              "points": 2
+            },
+            {
+              "md": "Maximum begründet (Vorzeichenwechsel oder zweite Ableitung $-\\frac{\\sum x_i}{\\lambda^2} < 0$)",
+              "points": 1
+            }
+          ],
+          "solution": "$\\ln L(\\lambda) = -n\\lambda + \\bigl(\\sum x_i\\bigr)\\ln\\lambda - \\sum \\ln(x_i!)$. Ableitung $-n + \\frac{\\sum x_i}{\\lambda} = 0$ ergibt $\\hat\\lambda = \\bar x$. Die zweite Ableitung $-\\frac{\\sum x_i}{\\lambda^2}$ ist negativ, also ein Maximum."
+        }
+      ]
+    }
+  ]
+}

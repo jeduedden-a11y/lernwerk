@@ -1,0 +1,96 @@
+{
+  "id": "st1-erzeugende",
+  "title": "Erzeugende Funktionen",
+  "subtitle": "Faltung wird Multiplikation",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsgröße und Erwartungswert.md",
+      "title": "Zufallsgröße und Erwartungswert"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Die **wahrscheinlichkeitserzeugende Funktion** einer Zufallsvariable mit Werten in $\\mathbb N_0$ ist $G_X(s) = E(s^X) = \\sum_k P(X = k)\\,s^k$. Sie bestimmt die Verteilung, und $E(X) = G_X'(1)$.\n\nFür unabhängige $X$, $Y$ ist $G_{X+Y} = G_X \\cdot G_Y$: Aus der Faltung wird eine Multiplikation. $\\mathrm{Bin}(n, p)$ hat $G(s) = (1 - p + ps)^n$, $\\mathrm{Poi}(\\lambda)$ hat $G(s) = e^{\\lambda(s - 1)}$; die Faltungsstabilität folgt sofort. Die **momenterzeugende Funktion** $M_X(t) = E(e^{tX})$ leistet dasselbe für allgemeine Verteilungen mit $E(X^k) = M_X^{(k)}(0)$; die charakteristische Funktion $E(e^{itX})$ existiert immer und trägt den Beweis des zentralen Grenzwertsatzes.",
+      "id": "s1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X$ hat die erzeugende Funktion $G(s) = (0{,}7 + 0{,}3s)^5$. Bestimme $E(X)$.",
+      "answer": 1.5,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$G'(1) = 5 \\cdot 0{,}3 \\cdot (0{,}7 + 0{,}3)^4 = 1{,}5$; es ist $X \\sim \\mathrm{Bin}(5; 0{,}3)$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X$ hat die erzeugende Funktion $G(s) = e^{2(s - 1)}$. Bestimme $P(X = 0)$.",
+      "answer": 0.1353352832366127,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$P(X = 0) = G(0) = e^{-2} \\approx 0{,}1353$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Für unabhängige $X$, $Y$ gilt $G_{X+Y} = G_X + G_Y$.",
+      "answer": false,
+      "explain": "$E(s^{X+Y}) = E(s^X s^Y) = E(s^X)\\,E(s^Y)$: ein Produkt.",
+      "id": "q3"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Welche erzeugende Funktion gehört zu $\\mathrm{Poi}(\\lambda) * \\mathrm{Poi}(\\mu)$?",
+      "options": [
+        {
+          "md": "$e^{(\\lambda + \\mu)(s - 1)}$",
+          "correct": true,
+          "why": "Produkt $e^{\\lambda(s-1)}e^{\\mu(s-1)}$: wieder Poisson."
+        },
+        {
+          "md": "$e^{\\lambda\\mu(s - 1)}$",
+          "why": "Die Exponenten addieren sich, sie multiplizieren sich nicht."
+        },
+        {
+          "md": "$e^{\\lambda(s - 1)} + e^{\\mu(s - 1)}$",
+          "why": "Summen gehören zu Mischungen, nicht zu Faltungen."
+        },
+        {
+          "md": "$(1 + s)^{\\lambda + \\mu}$",
+          "why": "Das ist keine Poisson-Funktion."
+        }
+      ],
+      "explain": "Faltungsstabilität in einer Zeile.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 2,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 2,
+      "id": "s7"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$G_X(s) = E(s^X)$ legt die Verteilung fest, $E(X) = G'(1)$.",
+        "Unabhängig: $G_{X+Y} = G_X G_Y$.",
+        "Momenterzeugende und charakteristische Funktionen verallgemeinern das."
+      ],
+      "id": "s8"
+    }
+  ]
+}

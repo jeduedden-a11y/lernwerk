@@ -1,0 +1,112 @@
+{
+  "id": "st1-siebformel",
+  "title": "Die Siebformel",
+  "subtitle": "Einschluss und Ausschluss",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Kombinatorik.md",
+      "title": "Kombinatorik"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Die **Siebformel** berechnet eine Vereinigung aus den Schnitten: $P\\bigl(\\bigcup_{i=1}^n A_i\\bigr) = \\sum_{k=1}^n (-1)^{k+1} \\sum_{i_1 < \\dots < i_k} P(A_{i_1} \\cap \\dots \\cap A_{i_k})$.\n\nFür zwei Mengen: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$, das doppelt Gezählte wird einmal abgezogen. Bei drei Mengen kommt der dreifache Schnitt wieder hinzu. Beweis über Indikatoren: $1 - \\mathbb 1_{\\bigcup A_i} = \\prod_i (1 - \\mathbb 1_{A_i})$; ausmultiplizieren und den Erwartungswert nehmen.",
+      "id": "s1"
+    },
+    {
+      "type": "text",
+      "md": "**Rencontre-Problem:** $n$ Briefe werden zufällig in $n$ adressierte Umschläge gesteckt, $A_i$ heißt »Brief $i$ richtig«. Es ist $P(A_{i_1} \\cap \\dots \\cap A_{i_k}) = \\frac{(n-k)!}{n!}$, und es gibt $\\binom nk$ solche Schnitte.\n\nAlso $P(\\text{mindestens ein Treffer}) = \\sum_{k=1}^n \\frac{(-1)^{k+1}}{k!} \\to 1 - e^{-1} \\approx 0{,}632$. Erstaunlich: Das Ergebnis hängt kaum von $n$ ab, ob 5 oder 5000 Briefe.",
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Wie viele Zahlen in $\\{1, \\dots, 100\\}$ sind durch 2, 3 oder 5 teilbar?",
+      "answer": 74,
+      "tolerance": 0,
+      "placeholder": "ganze Zahl",
+      "explain": "$50 + 33 + 20 - 16 - 10 - 6 + 3 = 74$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Vier Briefe in vier Umschläge, zufällig: Wie wahrscheinlich steckt **keiner** richtig?",
+      "answer": 0.375,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$1 - 1 + \\frac12 - \\frac16 + \\frac1{24} = \\frac{9}{24} = 0{,}375$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Für alle Ereignisse gilt $P(A \\cup B \\cup C) = P(A) + P(B) + P(C) - P(A \\cap B \\cap C)$.",
+      "answer": false,
+      "explain": "Die drei Paarschnitte fehlen: Richtig ist $\\dots - P(A \\cap B) - P(A \\cap C) - P(B \\cap C) + P(A \\cap B \\cap C)$.",
+      "id": "q3"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis der Siebformel für zwei Ereignisse.",
+      "given": "$A$, $B$ sind Ereignisse.",
+      "claim": "$P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+      "steps": [
+        "Zerlege $A \\cup B = A \\cup (B \\setminus A)$ in disjunkte Teile.",
+        "Also $P(A \\cup B) = P(A) + P(B \\setminus A)$.",
+        "Ebenso $B = (A \\cap B) \\cup (B \\setminus A)$ disjunkt, also $P(B \\setminus A) = P(B) - P(A \\cap B)$.",
+        "Einsetzen ergibt die Behauptung."
+      ],
+      "distractors": [
+        {
+          "md": "$A$ und $B$ sind disjunkt, also $P(A \\cup B) = P(A) + P(B)$.",
+          "why": "Im Allgemeinen sind sie nicht disjunkt."
+        },
+        {
+          "md": "$P(B \\setminus A) = P(B) - P(A)$.",
+          "why": "Gilt nur für $A \\subseteq B$."
+        }
+      ],
+      "explain": "Zweimal disjunkt zerlegen, zweimal Additivität.",
+      "id": "b1"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-sieb",
+      "level": 2,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-sieb",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-sieb",
+      "level": 4,
+      "id": "s9"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-kombi",
+      "level": 4,
+      "id": "s10"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Siebformel: abwechselnd Schnitte addieren und abziehen.",
+        "Rencontre-Problem: $P(\\text{kein Treffer}) \\to e^{-1}$.",
+        "Beweis für zwei Mengen durch disjunkte Zerlegung, allgemein mit Indikatoren."
+      ],
+      "id": "s11"
+    }
+  ]
+}

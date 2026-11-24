@@ -1,0 +1,136 @@
+{
+  "id": "st1-axiome",
+  "title": "Die Axiome von Kolmogorow",
+  "subtitle": "Alles folgt aus drei Regeln",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Axiome von Kolmogorow.md",
+      "title": "Axiome von Kolmogorow"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Ein **Wahrscheinlichkeitsmaß** erfüllt $P(\\Omega) = 1$, $P(A) \\ge 0$ und die **$\\sigma$-Additivität**: Für paarweise disjunkte $A_1, A_2, \\dots$ ist $P\\bigl(\\bigcup_n A_n\\bigr) = \\sum_n P(A_n)$.\n\nAlle Rechenregeln folgen daraus: $P(\\emptyset) = 0$, endliche Additivität, $P(A^c) = 1 - P(A)$, die Monotonie $A \\subseteq B \\Rightarrow P(A) \\le P(B)$, die Siebformel $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$ und die Subadditivität $P\\bigl(\\bigcup A_n\\bigr) \\le \\sum P(A_n)$. Wahrscheinlichkeiten sind damit nicht mehr »Grenzwerte relativer Häufigkeiten«, sondern Maße; das Gesetz der großen Zahlen wird ein Satz statt einer Definition.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis für die Gegenwahrscheinlichkeit. Nicht alle Bausteine gehören dazu.",
+      "given": "$P$ ist ein Wahrscheinlichkeitsmaß, $A$ ein Ereignis.",
+      "claim": "$P(A^c) = 1 - P(A)$.",
+      "steps": [
+        "$A$ und $A^c$ sind disjunkt, und $A \\cup A^c = \\Omega$.",
+        "Mit der Additivität ist $P(A) + P(A^c) = P(\\Omega)$.",
+        "Wegen $P(\\Omega) = 1$ folgt $P(A^c) = 1 - P(A)$."
+      ],
+      "distractors": [
+        {
+          "md": "Da $P(A) \\le 1$ ist, gilt $P(A^c) = 1 - P(A)$.",
+          "why": "Eine Ungleichung liefert keine Gleichung."
+        },
+        {
+          "md": "$A^c$ und $\\Omega$ sind disjunkt.",
+          "why": "Falsch: $A^c \\subseteq \\Omega$."
+        }
+      ],
+      "explain": "Zerlegen in disjunkte Teile und Additivität: das Grundmuster fast aller Beweise mit den Axiomen.",
+      "id": "b1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Baue den Beweis der Monotonie.",
+      "given": "$A \\subseteq B$ sind Ereignisse.",
+      "claim": "$P(A) \\le P(B)$.",
+      "steps": [
+        "Zerlege $B = A \\cup (B \\setminus A)$, die Teile sind disjunkt.",
+        "Additivität: $P(B) = P(A) + P(B \\setminus A)$.",
+        "Wegen $P(B \\setminus A) \\ge 0$ folgt $P(B) \\ge P(A)$."
+      ],
+      "distractors": [
+        {
+          "md": "Wegen $A \\subseteq B$ ist $P(B \\setminus A) = P(B) - P(A)$, also folgt die Behauptung sofort.",
+          "why": "Das benutzt schon, was gezeigt werden soll, und beweist die Ungleichung nicht."
+        }
+      ],
+      "explain": "Wieder: disjunkt zerlegen, Additivität, Nichtnegativität.",
+      "id": "b2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Es gilt $P(A) = 0{,}5$, $P(B) = 0{,}4$ und $P(A \\cup B) = 0{,}7$. Bestimme $P(A \\cap B)$.",
+      "answer": 0.2,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "Siebformel umgestellt: $P(A \\cap B) = 0{,}5 + 0{,}4 - 0{,}7 = 0{,}2$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Aus $P(A) = P(B)$ folgt $A = B$.",
+      "answer": false,
+      "explain": "Beim Würfeln haben $\\{1\\}$ und $\\{2\\}$ beide Wahrscheinlichkeit $\\frac16$.",
+      "id": "q2"
+    },
+    {
+      "type": "spot",
+      "label": "Fehler finden",
+      "md": "Behauptung: Ist $P(A) = 0{,}6$ und $P(B) = 0{,}7$, so ist $P(A \\cap B) \\ge 0{,}3$. In welcher Zeile steckt der Fehler?",
+      "lines": [
+        {
+          "md": "Es gilt $P(A \\cup B) \\le 1$.",
+          "why": "Jede Wahrscheinlichkeit ist höchstens 1."
+        },
+        {
+          "md": "Siebformel: $P(A \\cap B) = P(A) + P(B) - P(A \\cup B)$.",
+          "why": "Richtig umgestellt."
+        },
+        {
+          "md": "Also $P(A \\cap B) \\le 0{,}6 + 0{,}7 - 1 = 0{,}3$.",
+          "why": "Hier ist der Fehler: Wer $P(A \\cup B) \\le 1$ abzieht, bekommt eine **untere** Schranke, also $\\ge 0{,}3$."
+        },
+        {
+          "md": "Damit ist $P(A \\cap B) \\ge 0{,}3$ gezeigt.",
+          "why": "Folgt erst mit der korrigierten Zeile."
+        }
+      ],
+      "answer": 2,
+      "explain": "Ein Minuszeichen dreht die Ungleichung: $-P(A \\cup B) \\ge -1$.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-raeume",
+      "level": 2,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-raeume",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-sieb",
+      "level": 1,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Axiome: $P(\\Omega) = 1$, $P \\ge 0$, $\\sigma$-Additivität.",
+        "Folgerungen: Gegenwahrscheinlichkeit, Monotonie, Siebformel, Subadditivität.",
+        "Beweismuster: in disjunkte Teile zerlegen und die Additivität anwenden."
+      ],
+      "id": "s10"
+    }
+  ]
+}

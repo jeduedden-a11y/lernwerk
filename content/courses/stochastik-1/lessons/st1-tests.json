@@ -1,0 +1,106 @@
+{
+  "id": "st1-tests",
+  "title": "Statistische Tests",
+  "subtitle": "Hypothesen, Fehler, Güte, p-Wert",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Hypothesentests (Binomialverteilung).md",
+      "title": "Hypothesentests (Binomialverteilung)"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Ein **Test** entscheidet zwischen der Nullhypothese $H_0\\colon \\vartheta \\in \\Theta_0$ und der Alternative $H_1\\colon \\vartheta \\in \\Theta_1$: $H_0$ wird verworfen, wenn die Teststatistik in den **Ablehnungsbereich** fällt. Fehler 1. Art: $H_0$ verworfen, obwohl sie stimmt; Fehler 2. Art: $H_0$ behalten, obwohl $H_1$ stimmt.\n\nEin Test zum **Niveau** $\\alpha$ hält den Fehler 1. Art unter $\\alpha$; die **Gütefunktion** $g(\\vartheta) = P_\\vartheta(\\text{Ablehnung})$ zeigt, wie oft er bei jedem $\\vartheta$ ablehnt. Der **$p$-Wert** ist das kleinste Niveau, auf dem die Beobachtung zur Ablehnung führt. Die Asymmetrie ist gewollt: Was man zeigen will, gehört in $H_1$; ein Nicht-Verwerfen beweist $H_0$ nicht.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Testlabor",
+      "md": "Verändere $n$, $p_0$, $p_1$ und das Niveau und beobachte $\\alpha$, $\\beta$ und die Gütefunktion.",
+      "widget": "testlabor",
+      "params": {
+        "n": 50,
+        "p0": 0.5,
+        "p1": 0.65,
+        "level": 0.05,
+        "side": "rechts",
+        "auto": true,
+        "power": true
+      },
+      "id": "s2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Ein nicht signifikantes Ergebnis beweist die Nullhypothese.",
+      "answer": false,
+      "explain": "Es zeigt nur, dass die Daten nicht genug gegen $H_0$ sprechen; vielleicht war $n$ zu klein.",
+      "id": "q1"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Ein Test liefert den $p$-Wert $0{,}03$. Was folgt?",
+      "options": [
+        {
+          "md": "Auf dem Niveau 5 % wird verworfen, auf 1 % nicht.",
+          "correct": true,
+          "why": "Verworfen wird genau bei $p \\le \\alpha$."
+        },
+        {
+          "md": "$H_0$ ist mit Wahrscheinlichkeit 3 % wahr.",
+          "why": "Der $p$-Wert ist keine Wahrscheinlichkeit für $H_0$."
+        },
+        {
+          "md": "Auf jedem Niveau wird verworfen.",
+          "why": "Nicht bei $\\alpha < 0{,}03$."
+        },
+        {
+          "md": "Mit 97 % ist $H_1$ wahr.",
+          "why": "Auch das ist eine Fehldeutung."
+        }
+      ],
+      "explain": "$p$-Wert: Wahrscheinlichkeit unter $H_0$ für ein mindestens so extremes Ergebnis.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Verkleinert man bei festem $n$ das Niveau $\\alpha$, so wächst der Fehler 2. Art (oder bleibt gleich).",
+      "answer": true,
+      "explain": "Der Ablehnungsbereich schrumpft, also lehnt der Test auch unter $H_1$ seltener ab.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-test",
+      "level": 2,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-test",
+      "level": 3,
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-test",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Fehler 1. Art unter Kontrolle ($\\le \\alpha$), Fehler 2. Art über die Güte.",
+        "$p$-Wert: kleinstes Niveau mit Ablehnung.",
+        "Was gezeigt werden soll, gehört in $H_1$."
+      ],
+      "id": "s9"
+    }
+  ]
+}

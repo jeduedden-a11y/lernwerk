@@ -1,0 +1,91 @@
+{
+  "id": "st1-schaetzer",
+  "title": "Schätzer und ihre Güte",
+  "subtitle": "Erwartungstreu, konsistent, kleiner Fehler",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Konfidenzintervalle.md",
+      "title": "Konfidenzintervalle"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Ein **statistisches Modell** ist eine Familie von Verteilungen $(P_\\vartheta)_{\\vartheta \\in \\Theta}$; aus Beobachtungen soll man $\\vartheta$ schätzen. Ein **Schätzer** ist eine Funktion $T(X_1, \\dots, X_n)$ der Daten.\n\nGütekriterien: **erwartungstreu**, wenn $E_\\vartheta(T) = \\vartheta$ für alle $\\vartheta$; **konsistent**, wenn $T_n \\to \\vartheta$ stochastisch; kleiner **mittlerer quadratischer Fehler** $\\mathrm{MSE} = E\\bigl((T - \\vartheta)^2\\bigr) = \\mathrm{Var}(T) + \\mathrm{Bias}^2$. $\\bar X$ ist erwartungstreu für $\\mu$, $s^2 = \\frac1{n-1}\\sum (X_i - \\bar X)^2$ für $\\sigma^2$; mit $\\frac1n$ wäre die Schätzung im Mittel zu klein. Erwartungstreue ist nicht alles: Ein leicht verzerrter Schätzer kann den kleineren MSE haben.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Zeige, warum man bei der Stichprobenvarianz durch $n - 1$ teilt.",
+      "given": "$X_1, \\dots, X_n$ unabhängig mit $E(X_i) = \\mu$, $\\mathrm{Var}(X_i) = \\sigma^2$.",
+      "claim": "$E\\bigl(\\sum_i (X_i - \\bar X)^2\\bigr) = (n - 1)\\sigma^2$.",
+      "steps": [
+        "$\\sum_i (X_i - \\bar X)^2 = \\sum_i (X_i - \\mu)^2 - n(\\bar X - \\mu)^2$.",
+        "$E\\bigl(\\sum_i (X_i - \\mu)^2\\bigr) = n\\sigma^2$.",
+        "$E\\bigl(n(\\bar X - \\mu)^2\\bigr) = n\\,\\mathrm{Var}(\\bar X) = \\sigma^2$.",
+        "Also $E\\bigl(\\sum_i (X_i - \\bar X)^2\\bigr) = n\\sigma^2 - \\sigma^2 = (n - 1)\\sigma^2$."
+      ],
+      "distractors": [
+        {
+          "md": "$E\\bigl((\\bar X - \\mu)^2\\bigr) = \\sigma^2$.",
+          "why": "Es ist $\\mathrm{Var}(\\bar X) = \\frac{\\sigma^2}{n}$."
+        }
+      ],
+      "explain": "Ein Freiheitsgrad geht an die Schätzung von $\\mu$ durch $\\bar X$ verloren.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$n = 5$ unabhängige Werte mit $\\sigma^2 = 10$. Bestimme $E\\bigl(\\frac15\\sum (X_i - \\bar X)^2\\bigr)$.",
+      "answer": 8,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$\\frac{n-1}{n}\\sigma^2 = \\frac45 \\cdot 10 = 8$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Ein erwartungstreuer Schätzer hat immer den kleinsten mittleren quadratischen Fehler.",
+      "answer": false,
+      "explain": "$\\mathrm{MSE} = \\mathrm{Var} + \\mathrm{Bias}^2$: Etwas Verzerrung kann viel Varianz sparen.",
+      "id": "q2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Ein Schätzer hat die Varianz 4 und den Bias 1. Bestimme seinen mittleren quadratischen Fehler.",
+      "answer": 5,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "$4 + 1^2 = 5$.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-schaetzer",
+      "level": 3,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-schaetzer",
+      "level": 4,
+      "id": "s7"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Schätzer: Funktion der Daten; Kriterien Erwartungstreue, Konsistenz, MSE.",
+        "$\\mathrm{MSE} = \\mathrm{Var} + \\mathrm{Bias}^2$.",
+        "Stichprobenvarianz mit $\\frac1{n-1}$ ist erwartungstreu."
+      ],
+      "id": "s8"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "st1-zgws",
+  "title": "Der zentrale Grenzwertsatz",
+  "subtitle": "Warum alles normal wird",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zentraler Grenzwertsatz.md",
+      "title": "Zentraler Grenzwertsatz"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Sind $X_1, X_2, \\dots$ unabhängig und identisch verteilt mit $E(X_i) = \\mu$ und $0 < \\mathrm{Var}(X_i) = \\sigma^2 < \\infty$, so gilt für $S_n = X_1 + \\dots + X_n$: $P\\Bigl(\\frac{S_n - n\\mu}{\\sigma\\sqrt n} \\le x\\Bigr) \\to \\Phi(x)$ für alle $x$.\n\nGanz gleich, wie die einzelnen $X_i$ verteilt sind: Ihre standardisierte Summe wird normalverteilt. Darum ist die Normalverteilung überall, wo sich viele kleine, unabhängige Einflüsse addieren. Der Sonderfall der Binomialverteilung ist der Satz von de Moivre-Laplace. Wie schnell es geht, hängt an der Schiefe: Nach Berry-Esseen ist der Fehler höchstens $C\\,\\frac{E|X - \\mu|^3}{\\sigma^3\\sqrt n}$. Bewiesen wird der Satz mit charakteristischen Funktionen: $\\varphi_{S_n^*}(t) = \\bigl(1 - \\frac{t^2}{2n} + o(\\frac1n)\\bigr)^n \\to e^{-t^2/2}$.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Grenzwertsatz-Labor",
+      "md": "Wähle eine Grundgesamtheit oder ziehe die Balken selbst. Erhöhe $n$: Die standardisierte Summe legt sich an die Glockenkurve. $d$ misst den größten Abstand der Verteilungsfunktionen.",
+      "widget": "zgslabor",
+      "params": {
+        "pop": [
+          16,
+          8,
+          4,
+          2,
+          1,
+          1
+        ],
+        "n": 1
+      },
+      "id": "s2"
+    },
+    {
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Diese Grundgesamtheit ist schief. Finde das **kleinste** $n$, für das der Abstand zur Normalverteilung höchstens $0{,}05$ beträgt.",
+      "widget": "zgslabor",
+      "params": {
+        "pop": [
+          16,
+          8,
+          4,
+          2,
+          1,
+          1
+        ],
+        "n": 1,
+        "editable": false,
+        "presets": false
+      },
+      "goal": {
+        "when": "d <= 0.05 && n == 5",
+        "list": [
+          {
+            "when": "d <= 0.05",
+            "show": "Abstand $d \\le 0{,}05$"
+          },
+          {
+            "when": "n == 5",
+            "show": "kleinstes solches $n$"
+          }
+        ],
+        "solve": {
+          "n": 5
+        }
+      },
+      "explain": "Bei $n = 5$ fällt der Abstand zum ersten Mal unter die Schranke. Je schiefer die Grundgesamtheit, desto größer das nötige $n$.",
+      "hint": "Erhöhe $n$ in Einerschritten und beobachte $d$.",
+      "id": "w2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "100 Würfe eines fairen Würfels: Bestimme mit dem zentralen Grenzwertsatz (ohne Stetigkeitskorrektur) $P(S \\le 380)$.",
+      "answer": 0.9605087103681085,
+      "tolerance": 0.004,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\Phi\\bigl(\\frac{380 - 350}{\\sqrt{291{,}67}}\\bigr) = \\Phi(1{,}757) \\approx 0{,}9605$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Der zentrale Grenzwertsatz setzt normalverteilte $X_i$ voraus.",
+      "answer": false,
+      "explain": "Gerade nicht: Die $X_i$ dürfen beliebig verteilt sein, nur mit endlicher, positiver Varianz.",
+      "id": "q2"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Für welche unabhängigen, identisch verteilten $X_i$ gilt der zentrale Grenzwertsatz **nicht**?",
+      "options": [
+        {
+          "md": "Cauchy-verteilte",
+          "correct": true,
+          "why": "Sie haben weder Erwartungswert noch Varianz; $\\bar X_n$ bleibt Cauchy-verteilt."
+        },
+        {
+          "md": "Bernoulli-verteilte",
+          "why": "Das ist de Moivre-Laplace."
+        },
+        {
+          "md": "exponentialverteilte",
+          "why": "Endliche Varianz $\\frac1{\\lambda^2}$ genügt."
+        },
+        {
+          "md": "gleichverteilte auf $[0, 1]$",
+          "why": "Schon die Summe von zwölf sieht fast normal aus."
+        }
+      ],
+      "explain": "Ohne endliche Varianz versagt der Satz.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 3,
+      "id": "s9"
+    },
+    {
+      "type": "gen",
+      "gen": "lab-zgs",
+      "level": 1,
+      "id": "s10"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\frac{S_n - n\\mu}{\\sigma\\sqrt n} \\to N(0, 1)$ in Verteilung, für jede Verteilung mit endlicher Varianz.",
+        "Schiefe bremst die Konvergenz (Berry-Esseen).",
+        "Beweis über charakteristische Funktionen."
+      ],
+      "id": "s11"
+    }
+  ]
+}

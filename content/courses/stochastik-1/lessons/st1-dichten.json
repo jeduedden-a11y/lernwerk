@@ -1,0 +1,116 @@
+{
+  "id": "st1-dichten",
+  "title": "Stetige Verteilungen und Dichten",
+  "subtitle": "Gleichverteilung, Exponential, Normal",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Hat $X$ eine **Dichte** $f \\ge 0$ mit $\\int f = 1$, so ist $P(a \\le X \\le b) = \\int_a^b f(x)\\,dx$, und $F' = f$ an Stetigkeitsstellen von $f$. Einzelne Punkte haben Wahrscheinlichkeit 0.\n\nGleichverteilung auf $[a, b]$: $f = \\frac1{b-a}$. Exponentialverteilung: $f(x) = \\lambda e^{-\\lambda x}$ für $x \\ge 0$, $E(X) = \\frac1\\lambda$, **gedächtnislos**: $P(X > s + t \\mid X > s) = P(X > t)$. Normalverteilung $N(\\mu, \\sigma^2)$: $f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}}e^{-\\frac{(x - \\mu)^2}{2\\sigma^2}}$. Die Summe von $n$ unabhängigen $\\mathrm{Exp}(\\lambda)$-Wartezeiten ist gammaverteilt.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Verteilungslabor",
+      "md": "Ändere $\\mu$ und $\\sigma$ und die Grenzen: Die Wahrscheinlichkeit ist die Fläche unter der Dichte.",
+      "widget": "verteilung",
+      "params": {
+        "dists": [
+          "normal",
+          "exponential"
+        ],
+        "dist": "normal",
+        "mu": 0,
+        "sigma": 1,
+        "ranges": {
+          "mu": [
+            -5,
+            5
+          ],
+          "sigma": [
+            0.2,
+            5
+          ]
+        }
+      },
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Für welches $c$ ist $f(x) = c\\,x^2$ auf $[0, 3]$ (sonst 0) eine Dichte?",
+      "answer": 0.1111111111111111,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\int_0^3 c\\,x^2\\,dx = 9c = 1$, also $c = \\frac19 \\approx 0{,}1111$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim \\mathrm{Exp}(0{,}5)$. Bestimme $P(X > 4)$.",
+      "answer": 0.1353352832366127,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$e^{-0{,}5 \\cdot 4} = e^{-2} \\approx 0{,}1353$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Eine Dichte ist überall höchstens 1.",
+      "answer": false,
+      "explain": "Die Gleichverteilung auf $[0, \\frac12]$ hat die Dichte 2; nur die Fläche muss 1 sein.",
+      "id": "q3"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Unter den stetigen Verteilungen auf $(0, \\infty)$ ist nur die Exponentialverteilung gedächtnislos.",
+      "answer": true,
+      "explain": "Gedächtnislosigkeit führt auf $G(s + t) = G(s)G(t)$ für $G = 1 - F$; die monotonen Lösungen sind $e^{-\\lambda t}$.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 3,
+      "id": "s9"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 4,
+      "id": "s10"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Dichte: $P(a \\le X \\le b) = \\int_a^b f$, Punkte haben Wahrscheinlichkeit 0.",
+        "Exponentialverteilung: gedächtnislos, $E = \\frac1\\lambda$.",
+        "Normalverteilung $N(\\mu, \\sigma^2)$ mit Glockenkurve."
+      ],
+      "id": "s11"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "st1-varianz",
+  "title": "Varianz, Kovarianz und Korrelation",
+  "subtitle": "Streuung und linearer Zusammenhang",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Varianz und Standardabweichung (Stochastik).md",
+      "title": "Varianz und Standardabweichung (Stochastik)"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Korrelation und Regression.md",
+      "title": "Korrelation und Regression"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "$\\mathrm{Var}(X) = E\\bigl((X - EX)^2\\bigr) = E(X^2) - (EX)^2$ misst die Streuung, $\\mathrm{Var}(aX + b) = a^2\\,\\mathrm{Var}(X)$. Die **Kovarianz** $\\mathrm{Cov}(X, Y) = E(XY) - E(X)E(Y)$ misst den linearen Zusammenhang.\n\n$\\mathrm{Var}(X + Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\,\\mathrm{Cov}(X, Y)$; für unkorrelierte, insbesondere unabhängige Zufallsvariablen addieren sich die Varianzen (Bienaymé). Der **Korrelationskoeffizient** $\\rho = \\frac{\\mathrm{Cov}(X, Y)}{\\sigma_X\\sigma_Y}$ liegt nach Cauchy-Schwarz in $[-1, 1]$, mit $|\\rho| = 1$ genau bei linearem Zusammenhang. Unkorreliert heißt nicht unabhängig: $X \\sim N(0, 1)$ und $Y = X^2$ sind unkorreliert, aber völlig abhängig.",
+      "id": "s1"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Zeige, dass sich die Varianzen unabhängiger Zufallsvariablen addieren.",
+      "given": "$X$, $Y$ unabhängig mit endlichen Varianzen.",
+      "claim": "$\\mathrm{Var}(X + Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y)$.",
+      "steps": [
+        "$\\mathrm{Var}(X + Y) = E\\bigl((X - EX + Y - EY)^2\\bigr)$.",
+        "Ausmultipliziert: $= \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2E\\bigl((X - EX)(Y - EY)\\bigr)$.",
+        "Bei Unabhängigkeit ist $E\\bigl((X - EX)(Y - EY)\\bigr) = E(X - EX)\\,E(Y - EY) = 0$.",
+        "Also bleibt $\\mathrm{Var}(X) + \\mathrm{Var}(Y)$."
+      ],
+      "distractors": [
+        {
+          "md": "Die Varianz ist linear, also $\\mathrm{Var}(X + Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y)$.",
+          "why": "Die Varianz ist nicht linear: $\\mathrm{Var}(2X) = 4\\,\\mathrm{Var}(X)$."
+        }
+      ],
+      "explain": "Der Mischterm ist $2\\,\\mathrm{Cov}(X, Y)$; Unabhängigkeit macht ihn null.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme die Varianz der Augenzahl eines fairen Würfels.",
+      "answer": 2.9166666666666665,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$E(X^2) - (EX)^2 = \\frac{91}{6} - 3{,}5^2 = \\frac{35}{12} \\approx 2{,}9167$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Für unabhängige $X$, $Y$ gilt $\\mathrm{Var}(X - Y) = \\mathrm{Var}(X) - \\mathrm{Var}(Y)$.",
+      "answer": false,
+      "explain": "$\\mathrm{Var}(X - Y) = \\mathrm{Var}(X) + (-1)^2\\mathrm{Var}(Y)$: Auch Differenzen streuen mehr.",
+      "id": "q2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Es ist $\\mathrm{Cov}(X, Y) = -2$, $\\sigma_X = 2$ und $\\sigma_Y = 2$. Bestimme den Korrelationskoeffizienten.",
+      "answer": -0.5,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\rho = \\frac{-2}{2 \\cdot 2} = -0{,}5$.",
+      "id": "q3"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Unkorrelierte Zufallsvariablen sind unabhängig.",
+      "answer": false,
+      "explain": "$X \\sim N(0, 1)$, $Y = X^2$: $\\mathrm{Cov}(X, Y) = E(X^3) = 0$, aber $Y$ ist eine Funktion von $X$.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 2,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 4,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "$\\mathrm{Var}(X) = E(X^2) - (EX)^2$, $\\mathrm{Var}(aX + b) = a^2\\mathrm{Var}(X)$.",
+        "$\\mathrm{Var}(X + Y) = \\mathrm{Var}(X) + \\mathrm{Var}(Y) + 2\\,\\mathrm{Cov}(X, Y)$.",
+        "$|\\rho| \\le 1$; unkorreliert ist schwächer als unabhängig."
+      ],
+      "id": "s10"
+    }
+  ]
+}

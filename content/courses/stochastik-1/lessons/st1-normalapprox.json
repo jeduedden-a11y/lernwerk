@@ -1,0 +1,103 @@
+{
+  "id": "st1-normalapprox",
+  "title": "Normalapproximation in der Praxis",
+  "subtitle": "Stetigkeitskorrektur und Faustregeln",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Normalverteilung.md",
+      "title": "Normalverteilung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Für $X \\sim \\mathrm{Bin}(n, p)$ mit $\\sigma = \\sqrt{np(1-p)} > 3$ ist $P(X \\le k) \\approx \\Phi\\bigl(\\frac{k + 0{,}5 - np}{\\sigma}\\bigr)$. Die **Stetigkeitskorrektur** $+0{,}5$ berücksichtigt, dass die Balken der Binomialverteilung die Breite 1 haben.\n\nAllgemein ersetzt man eine Summe vieler unabhängiger Größen durch die Normalverteilung mit passendem Erwartungswert und passender Varianz. Typische Anwendungen sind Überbuchung, Rundungsfehler bei Summen und Mittelwerte von Messreihen. Grenzen: kleines $n$, sehr schiefe Verteilungen und Wahrscheinlichkeiten weit draußen im Rand, wo der relative Fehler groß wird.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Verteilungslabor",
+      "md": "Vergleiche die Balken mit der Normalkurve. Wo passt sie, wo nicht?",
+      "widget": "verteilung",
+      "params": {
+        "dists": [
+          "binomial"
+        ],
+        "n": 30,
+        "p": 0.2,
+        "approx": true,
+        "mode": "links",
+        "b": 8,
+        "ranges": {
+          "n": [
+            1,
+            200
+          ]
+        }
+      },
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "$X \\sim \\mathrm{Bin}(100; 0{,}5)$. Bestimme mit Stetigkeitskorrektur die Näherung für $P(X \\le 55)$.",
+      "answer": 0.8643339390536173,
+      "tolerance": 0.002,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\Phi\\bigl(\\frac{55{,}5 - 50}{5}\\bigr) = \\Phi(1{,}1) \\approx 0{,}8643$; exakt sind es $0{,}8644$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Eine Fluggesellschaft verkauft 200 Tickets; jeder Fluggast erscheint unabhängig mit Wahrscheinlichkeit 0,9. Wie wahrscheinlich erscheinen mehr als 185? (Normalnäherung mit Stetigkeitskorrektur)",
+      "answer": 0.09742532430443474,
+      "tolerance": 0.003,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$\\mu = 180$, $\\sigma = \\sqrt{18} \\approx 4{,}243$: $1 - \\Phi\\bigl(\\frac{185{,}5 - 180}{4{,}243}\\bigr) = 1 - \\Phi(1{,}296) \\approx 0{,}0974$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Die Laplace-Bedingung $\\sigma > 3$ ist für $n = 30$ und $p = 0{,}2$ erfüllt.",
+      "answer": false,
+      "explain": "$\\sigma = \\sqrt{30 \\cdot 0{,}2 \\cdot 0{,}8} \\approx 2{,}19$.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 2,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-zgws",
+      "level": 4,
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-normal",
+      "level": 3,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Binomial durch Normal: bei $\\sigma > 3$, mit Stetigkeitskorrektur.",
+        "Summen vieler unabhängiger Größen: Normal mit $n\\mu$ und $n\\sigma^2$.",
+        "Im Rand und bei Schiefe vorsichtig sein."
+      ],
+      "id": "s9"
+    }
+  ]
+}

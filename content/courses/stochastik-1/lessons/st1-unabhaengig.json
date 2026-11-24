@@ -1,0 +1,118 @@
+{
+  "id": "st1-unabhaengig",
+  "title": "Unabhängigkeit",
+  "subtitle": "Wenn Wissen nichts ändert",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Stochastische Unabhängigkeit.md",
+      "title": "Stochastische Unabhängigkeit"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bernoulli-Kette.md",
+      "title": "Bernoulli-Kette"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "$A$ und $B$ heißen **unabhängig**, wenn $P(A \\cap B) = P(A)\\,P(B)$; bei $P(B) > 0$ bedeutet das $P(A \\mid B) = P(A)$. Eine Familie $A_1, \\dots, A_n$ ist unabhängig, wenn das Produktgesetz für **jede** Teilfamilie gilt.\n\nPaarweise Unabhängigkeit reicht nicht. Zwei Münzwürfe, $A$ = »erster Wurf Kopf«, $B$ = »zweiter Wurf Kopf«, $C$ = »beide gleich«: Je zwei sind unabhängig, aber $P(A \\cap B \\cap C) = \\frac14 \\ne \\frac18$. Unabhängige Wiederholungen modelliert man auf dem **Produktraum**, auf dem sich die Wahrscheinlichkeiten der Einzelversuche multiplizieren.",
+      "id": "s1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Disjunkte Ereignisse mit positiver Wahrscheinlichkeit sind unabhängig.",
+      "answer": false,
+      "explain": "$P(A \\cap B) = 0 \\ne P(A)\\,P(B)$: Tritt $A$ ein, ist $B$ ausgeschlossen, das Gegenteil von Unabhängigkeit.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Sind $A$ und $B$ unabhängig, so auch $A$ und $B^c$.",
+      "answer": true,
+      "explain": "$P(A \\cap B^c) = P(A) - P(A \\cap B) = P(A)(1 - P(B))$.",
+      "id": "q2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Drei Bauteile arbeiten unabhängig mit je Wahrscheinlichkeit $0{,}9$. Wie wahrscheinlich funktioniert eine **Reihenschaltung** aus allen dreien?",
+      "answer": 0.729,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "Alle drei müssen funktionieren: $0{,}9^3 = 0{,}729$.",
+      "id": "q3"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Zwei faire Münzwürfe; $A$: erster Wurf Kopf, $B$: zweiter Wurf Kopf, $C$: beide Würfe gleich. Was stimmt?",
+      "options": [
+        {
+          "md": "Je zwei sind unabhängig, alle drei zusammen nicht.",
+          "correct": true,
+          "why": "$P(A \\cap B \\cap C) = \\frac14 \\ne \\frac18$."
+        },
+        {
+          "md": "$A$, $B$, $C$ sind unabhängig.",
+          "why": "Der Dreifachschnitt verletzt das Produktgesetz."
+        },
+        {
+          "md": "$A$ und $C$ sind abhängig.",
+          "why": "$P(A \\cap C) = \\frac14 = P(A)\\,P(C)$."
+        },
+        {
+          "md": "$C$ ist von $A$ und $B$ zusammen unabhängig.",
+          "why": "Kennt man $A$ und $B$, steht $C$ fest."
+        }
+      ],
+      "explain": "Unabhängigkeit einer Familie verlangt das Produktgesetz für alle Teilfamilien.",
+      "id": "q4"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Zeige, dass mit $A, B$ auch $A, B^c$ unabhängig sind.",
+      "given": "$P(A \\cap B) = P(A)\\,P(B)$.",
+      "claim": "$P(A \\cap B^c) = P(A)\\,P(B^c)$.",
+      "steps": [
+        "$A = (A \\cap B) \\cup (A \\cap B^c)$ ist eine disjunkte Zerlegung.",
+        "Also $P(A \\cap B^c) = P(A) - P(A \\cap B) = P(A) - P(A)P(B)$.",
+        "$= P(A)(1 - P(B)) = P(A)\\,P(B^c)$."
+      ],
+      "distractors": [
+        {
+          "md": "$P(A \\cap B^c) = P(A) - P(B)$.",
+          "why": "Abgezogen wird $P(A \\cap B)$, nicht $P(B)$."
+        }
+      ],
+      "explain": "Disjunkt zerlegen, dann ausklammern.",
+      "id": "b1"
+    },
+    {
+      "type": "gen",
+      "gen": "stoch-unabh",
+      "level": 3,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-bayes",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Unabhängig: $P(A \\cap B) = P(A)\\,P(B)$.",
+        "Für Familien: Produktgesetz für jede Teilfamilie; paarweise reicht nicht.",
+        "Unabhängige Wiederholungen leben auf dem Produktraum."
+      ],
+      "id": "s9"
+    }
+  ]
+}

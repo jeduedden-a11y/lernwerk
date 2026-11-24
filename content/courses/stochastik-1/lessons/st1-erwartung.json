@@ -1,0 +1,105 @@
+{
+  "id": "st1-erwartung",
+  "title": "Der Erwartungswert",
+  "subtitle": "Schwerpunkt einer Verteilung",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Zufallsgröße und Erwartungswert.md",
+      "title": "Zufallsgröße und Erwartungswert"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Der **Erwartungswert** ist der Schwerpunkt der Verteilung: diskret $E(X) = \\sum_x x\\,P(X = x)$, stetig $E(X) = \\int x\\,f(x)\\,dx$, sofern Summe oder Integral absolut konvergieren.\n\nEr ist **linear**, $E(aX + bY) = aE(X) + bE(Y)$, ganz ohne Unabhängigkeit, und monoton. Die **Transformationsformel** $E(g(X)) = \\sum_x g(x)\\,P(X = x)$ beziehungsweise $\\int g(x) f(x)\\,dx$ braucht die Verteilung von $g(X)$ nicht. Für unabhängige $X$, $Y$ gilt zusätzlich $E(XY) = E(X)E(Y)$. Nicht jede Zufallsvariable hat einen Erwartungswert: Bei der Cauchy-Verteilung divergiert das Integral.",
+      "id": "s1"
+    },
+    {
+      "type": "text",
+      "md": "**Der Indikator-Trick:** Zählt $X = \\sum_i \\mathbb 1_{A_i}$, wie viele der Ereignisse $A_i$ eintreten, so ist $E(X) = \\sum_i P(A_i)$, auch wenn die $A_i$ abhängig sind.\n\nSo folgt $E(X) = np$ für $X \\sim \\mathrm{Bin}(n, p)$ ohne Binomialkoeffizienten, $E(X) = n\\frac MN$ für die hypergeometrische Verteilung, und die erwartete Zahl der Fixpunkte einer zufälligen Permutation ist 1, für jedes $n$.",
+      "id": "s2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Zeige die Additivität des Erwartungswerts für abzählbares $\\Omega$.",
+      "given": "$\\Omega$ ist abzählbar, $X$ und $Y$ haben Erwartungswerte.",
+      "claim": "$E(X + Y) = E(X) + E(Y)$.",
+      "steps": [
+        "Für abzählbares $\\Omega$ ist $E(X) = \\sum_\\omega X(\\omega)\\,P(\\{\\omega\\})$.",
+        "Also $E(X + Y) = \\sum_\\omega \\bigl(X(\\omega) + Y(\\omega)\\bigr)P(\\{\\omega\\})$.",
+        "Absolut konvergente Reihen darf man trennen: $= \\sum_\\omega X(\\omega)P(\\{\\omega\\}) + \\sum_\\omega Y(\\omega)P(\\{\\omega\\}) = E(X) + E(Y)$."
+      ],
+      "distractors": [
+        {
+          "md": "Da $X$ und $Y$ unabhängig sind, gilt $E(X + Y) = E(X) + E(Y)$.",
+          "why": "Die Unabhängigkeit wird gar nicht gebraucht und ist auch nicht vorausgesetzt."
+        },
+        {
+          "md": "$E(X + Y) = E(X)\\,E(Y)$.",
+          "why": "Das wäre die Produktregel, und die gilt nur bei Unabhängigkeit."
+        }
+      ],
+      "explain": "Linearität ist eine Eigenschaft der Summe, nicht der Verteilung.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $E(X^2)$ für die Augenzahl $X$ eines fairen Würfels.",
+      "answer": 15.166666666666666,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "Transformationsformel: $\\frac16(1 + 4 + 9 + 16 + 25 + 36) = \\frac{91}{6} \\approx 15{,}1667$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Aus einer Urne mit 5 roten und 5 weißen Kugeln werden 4 ohne Zurücklegen gezogen. Bestimme die erwartete Anzahl roter Kugeln.",
+      "answer": 2,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Indikatoren: Jede gezogene Kugel ist mit $\\frac12$ rot, also $4 \\cdot \\frac12 = 2$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "$E(XY) = E(X)\\,E(Y)$ gilt für alle Zufallsvariablen mit Erwartungswert.",
+      "answer": false,
+      "explain": "Für $Y = X$ mit $X = \\pm 1$ (je $\\frac12$) ist $E(X^2) = 1 \\ne 0 = E(X)^2$.",
+      "id": "q3"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-ew",
+      "level": 4,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-dichte",
+      "level": 4,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Erwartungswert als Schwerpunkt; linear ohne Unabhängigkeit.",
+        "Transformationsformel für $E(g(X))$; Produktregel nur bei Unabhängigkeit.",
+        "Indikator-Trick: Erwartete Anzahl = Summe der Wahrscheinlichkeiten."
+      ],
+      "id": "s10"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "st1-regression",
+  "title": "Das lineare Modell und kleinste Quadrate",
+  "subtitle": "Eine Gerade durch Daten",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Korrelation und Regression.md",
+      "title": "Korrelation und Regression"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Im **linearen Regressionsmodell** $Y_i = a + bx_i + \\varepsilon_i$ mit unabhängigen Fehlern, $E(\\varepsilon_i) = 0$ und $\\mathrm{Var}(\\varepsilon_i) = \\sigma^2$, schätzt man $a$ und $b$ nach der **Methode der kleinsten Quadrate**: Minimiere $\\sum (y_i - a - bx_i)^2$.\n\nAbleiten und Nullsetzen ergibt $\\hat b = \\frac{s_{xy}}{s_{xx}} = \\frac{\\sum (x_i - \\bar x)(y_i - \\bar y)}{\\sum (x_i - \\bar x)^2}$ und $\\hat a = \\bar y - \\hat b\\bar x$; die Gerade geht durch den Schwerpunkt $(\\bar x, \\bar y)$, und die Residuen $y_i - \\hat y_i$ summieren sich zu null. Bei normalverteilten Fehlern sind das zugleich die Maximum-Likelihood-Schätzer.",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Regressionslabor",
+      "md": "Lege deine Gerade, dann blende die Regressionsgerade ein. Die Quadrate zeigen, was minimiert wird.",
+      "widget": "regression",
+      "params": {
+        "points": [
+          [
+            1,
+            2.2
+          ],
+          [
+            2,
+            2.8
+          ],
+          [
+            3,
+            4.5
+          ],
+          [
+            4,
+            4.4
+          ],
+          [
+            5,
+            6.3
+          ],
+          [
+            6,
+            6.9
+          ],
+          [
+            7,
+            7.6
+          ]
+        ],
+        "x": [
+          0,
+          10
+        ],
+        "y": [
+          0,
+          10
+        ],
+        "dragPoints": true,
+        "userLine": true,
+        "showLS": false,
+        "line": [
+          5,
+          0
+        ]
+      },
+      "id": "s2"
+    },
+    {
+      "type": "proof",
+      "label": "Beweis bauen",
+      "md": "Leite die Formeln der Kleinste-Quadrate-Schätzer her.",
+      "given": "Daten $(x_i, y_i)$, nicht alle $x_i$ gleich.",
+      "claim": "$\\hat b = \\frac{s_{xy}}{s_{xx}}$ und $\\hat a = \\bar y - \\hat b\\bar x$.",
+      "steps": [
+        "$Q(a, b) = \\sum (y_i - a - bx_i)^2$ ist zu minimieren.",
+        "$\\partial_a Q = -2\\sum (y_i - a - bx_i) = 0$ ergibt $a = \\bar y - b\\bar x$.",
+        "Einsetzen und $\\partial_b Q = 0$ ergibt $\\sum (x_i - \\bar x)(y_i - \\bar y) = b\\sum (x_i - \\bar x)^2$.",
+        "Also $\\hat b = \\frac{s_{xy}}{s_{xx}}$; $Q$ ist konvex, es ist das Minimum."
+      ],
+      "distractors": [
+        {
+          "md": "$b = \\frac{\\bar y}{\\bar x}$.",
+          "why": "Das wäre eine Gerade durch den Ursprung, nicht die Lösung der Gleichungen."
+        }
+      ],
+      "explain": "Zwei Normalgleichungen, eine davon liefert den Schwerpunkt.",
+      "id": "b1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Es ist $\\bar x = 4$, $\\bar y = 10$, $s_{xx} = 20$, $s_{xy} = 30$. Bestimme $\\hat a$.",
+      "answer": 4,
+      "tolerance": 0.001,
+      "placeholder": "Zahl",
+      "explain": "$\\hat b = \\frac{30}{20} = 1{,}5$, $\\hat a = 10 - 1{,}5 \\cdot 4 = 4$.",
+      "id": "q1"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Die Residuen der Kleinste-Quadrate-Geraden (mit Achsenabschnitt) summieren sich zu null.",
+      "answer": true,
+      "explain": "Das ist die erste Normalgleichung $\\partial_a Q = 0$.",
+      "id": "q2"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-regression",
+      "level": 1,
+      "label": "Üben",
+      "id": "s6"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-regression",
+      "level": 2,
+      "id": "s7"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Modell $Y = a + bx + \\varepsilon$, Schätzung durch kleinste Quadrate.",
+        "$\\hat b = \\frac{s_{xy}}{s_{xx}}$, $\\hat a = \\bar y - \\hat b\\bar x$.",
+        "Die Gerade geht durch den Schwerpunkt, die Residuen summieren sich zu null."
+      ],
+      "id": "s8"
+    }
+  ]
+}

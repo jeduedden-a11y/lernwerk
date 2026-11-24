@@ -1,0 +1,124 @@
+{
+  "id": "st1-diskret",
+  "title": "Diskrete Verteilungen",
+  "subtitle": "Binomial, geometrisch, Poisson, hypergeometrisch",
+  "source": "Lehrbuchstandard Stochastik I (Wahrscheinlichkeitstheorie und Statistik), eigenständig formuliert",
+  "vault": [
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Binomialverteilung.md",
+      "title": "Binomialverteilung"
+    },
+    {
+      "path": "02 Wiki/Mathematik/09 Stochastik/Bernoulli-Kette.md",
+      "title": "Bernoulli-Kette"
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "md": "Diskrete Verteilungen sind durch ihre Zähldichte $p(k) = P(X = k)$ gegeben. Die wichtigsten Familien zählen Erfolge oder warten auf sie.\n\n| Verteilung | $P(X = k)$ | $E(X)$ | $\\mathrm{Var}(X)$ |\n|---|---|---|---|\n| $\\mathrm{Bin}(n, p)$ | $\\binom nk p^k(1-p)^{n-k}$ | $np$ | $np(1-p)$ |\n| geometrisch, $k \\ge 1$ | $(1-p)^{k-1}p$ | $\\frac1p$ | $\\frac{1-p}{p^2}$ |\n| $\\mathrm{Poi}(\\lambda)$ | $e^{-\\lambda}\\frac{\\lambda^k}{k!}$ | $\\lambda$ | $\\lambda$ |\n| $\\mathrm{Hyp}(N, M, n)$ | $\\frac{\\binom Mk\\binom{N-M}{n-k}}{\\binom Nn}$ | $n\\frac MN$ | $n\\frac MN(1 - \\frac MN)\\frac{N-n}{N-1}$ |",
+      "id": "s1"
+    },
+    {
+      "type": "widget",
+      "label": "Verteilungslabor",
+      "md": "Vergleiche die vier Familien: Wie hängen Form, Erwartungswert und Varianz an den Parametern?",
+      "widget": "verteilung",
+      "params": {
+        "dists": [
+          "binomial",
+          "poisson",
+          "geometrisch",
+          "hypergeometrisch"
+        ],
+        "dist": "binomial",
+        "n": 20,
+        "p": 0.3
+      },
+      "id": "s2"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme den Erwartungswert der Anzahl der Würfe bis zur ersten Sechs.",
+      "answer": 6,
+      "tolerance": 0,
+      "placeholder": "Zahl",
+      "explain": "Geometrisch mit $p = \\frac16$: $E(X) = \\frac1p = 6$.",
+      "id": "q1"
+    },
+    {
+      "type": "numeric",
+      "label": "Rechnen",
+      "md": "Bestimme $\\mathrm{Var}(X)$ für $X \\sim \\mathrm{Bin}(20; 0{,}3)$.",
+      "answer": 4.2,
+      "tolerance": 0.0006,
+      "placeholder": "Dezimalzahl, vier Stellen",
+      "explain": "$np(1-p) = 20 \\cdot 0{,}3 \\cdot 0{,}7 = 4{,}2$.",
+      "id": "q2"
+    },
+    {
+      "type": "truefalse",
+      "label": "Stimmt das?",
+      "md": "Die hypergeometrische Verteilung hat bei $n > 1$ eine kleinere Varianz als die Binomialverteilung mit $p = \\frac MN$.",
+      "answer": true,
+      "explain": "Der Faktor $\\frac{N-n}{N-1} < 1$: Ohne Zurücklegen streut es weniger.",
+      "id": "q3"
+    },
+    {
+      "type": "choice",
+      "label": "Auswählen",
+      "md": "Welche Verteilung beschreibt die Zahl der Anrufe pro Minute in einer Zentrale am besten?",
+      "options": [
+        {
+          "md": "Poisson",
+          "correct": true,
+          "why": "Viele mögliche Anrufer, jeder ruft selten und unabhängig an."
+        },
+        {
+          "md": "Binomial mit kleinem $n$",
+          "why": "Die Zahl der möglichen Anrufer ist groß und unbekannt."
+        },
+        {
+          "md": "Geometrisch",
+          "why": "Die zählt Versuche bis zum ersten Erfolg."
+        },
+        {
+          "md": "Hypergeometrisch",
+          "why": "Es wird nicht aus einer festen Urne gezogen."
+        }
+      ],
+      "explain": "Seltene, unabhängige Ereignisse in einem Zeitraum: Poisson.",
+      "id": "q4"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 1,
+      "label": "Üben",
+      "id": "s7"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 2,
+      "id": "s8"
+    },
+    {
+      "type": "gen",
+      "gen": "ust-diskret",
+      "level": 3,
+      "id": "s9"
+    },
+    {
+      "type": "summary",
+      "md": "Das Wichtigste:",
+      "points": [
+        "Binomial zählt Erfolge, geometrisch wartet auf den ersten, Poisson zählt seltene Ereignisse, hypergeometrisch zieht ohne Zurücklegen.",
+        "Erwartungswerte $np$, $\\frac1p$, $\\lambda$, $n\\frac MN$.",
+        "Ohne Zurücklegen: kleinere Varianz um den Faktor $\\frac{N-n}{N-1}$."
+      ],
+      "id": "s10"
+    }
+  ]
+}

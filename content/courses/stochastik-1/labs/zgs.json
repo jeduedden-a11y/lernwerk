@@ -1,0 +1,71 @@
+{
+  "id": "lab-zgs",
+  "title": "Grenzwertsatz-Labor",
+  "subtitle": "Summen werden normalverteilt",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Im Grenzwertsatz-Labor baust du eine Grundgesamtheit auf den Werten $0, 1, \\dots$: Ziehe die Balken oder wähle eine Vorlage. Darunter siehst du die exakte Verteilung der Summe von $n$ unabhängigen Ziehungen, standardisiert, und darüber die Dichte der Standardnormalverteilung.\n\n$d$ ist der größte Abstand zwischen der Verteilungsfunktion der standardisierten Summe und $\\Phi$. Der zentrale Grenzwertsatz sagt $d \\to 0$; wie schnell, hängt vor allem an der Schiefe der Grundgesamtheit."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Probiere die Vorlagen aus und baue eigene Grundgesamtheiten. Welche werden schnell normal, welche langsam?",
+      "widget": "zgslabor",
+      "params": {
+        "pop": [
+          16,
+          8,
+          4,
+          2,
+          1,
+          1
+        ],
+        "n": 1
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Die Grundgesamtheit auf $\\{0, 1, 2, 3\\}$ mit den Gewichten 10, 5, 2, 1 ist schief. Finde das **kleinste** $n$, für das der Abstand zur Normalverteilung höchstens $0{,}03$ ist.",
+      "widget": "zgslabor",
+      "params": {
+        "pop": [
+          10,
+          5,
+          2,
+          1
+        ],
+        "n": 1,
+        "editable": false,
+        "presets": false
+      },
+      "goal": {
+        "when": "d <= 0.03 && n == 8",
+        "list": [
+          {
+            "when": "d <= 0.03",
+            "show": "Abstand $d \\le 0{,}03$"
+          },
+          {
+            "when": "n == 8",
+            "show": "kleinstes solches $n$"
+          }
+        ],
+        "solve": {
+          "n": 8
+        }
+      },
+      "hint": "Erhöhe $n$ in Einerschritten; der Abstand fällt, aber langsam.",
+      "explain": "Erst bei $n = 8$ ist der Abstand klein genug. Schiefe bremst die Konvergenz: Der Fehler fällt nur wie $\\frac{1}{\\sqrt n}$ (Berry-Esseen)."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** bestimmst du nötige Stichprobengrößen für schiefe Grundgesamtheiten und baust Grundgesamtheiten mit vorgegebenem Erwartungswert, vorgegebener Streuung oder schneller Normalität."
+    }
+  ]
+}
