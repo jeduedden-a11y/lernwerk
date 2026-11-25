@@ -435,22 +435,86 @@ body {
 .lw-lab-erase { font-size: 1.15em; line-height: 1; }
 .lw-slider label .katex { font-size: 1.05em; }
 
-/* Molecule lab: element chips in atom colours, bond and tool buttons, the 3D view, name and formula */
-.lw-mol-bar { display: flex; flex-direction: column; gap: 6px; }
-.lw-mol-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.lw-mol-el {
-  appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 0.9em; min-width: 2.4em; height: 2.4em; border-radius: 999px;
-  background: color-mix(in srgb, var(--el) 20%, var(--fill)); color: var(--label); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--el) 60%, transparent);
+/* Molecule lab: tool, element tiles and bond order on top, a line that says what the next tap does,
+   the 3D stage, view buttons, name and formula */
+.lw-mol-bar { display: flex; flex-direction: column; gap: 14px; container-type: inline-size; }
+.lw-mol-sec { transition: opacity 0.2s; }
+.lw-mol-sec.idle { opacity: 0.45; }
+.lw-mol-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 0 2px 7px;
+  font-size: 0.72em; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; color: var(--label-2);
 }
-.lw-mol-el.on { background: var(--el); color: #fff; box-shadow: none; }
-.lw-mol-bond { appearance: none; border: 0; cursor: pointer; font: inherit; font-size: 1.1em; font-weight: 700; min-width: 2.7em; height: 2.2em; border-radius: 10px; background: var(--fill); color: var(--label); }
-.lw-mol-bond.on { background: var(--accent); color: #fff; }
-.lw-widget .lw-mol-tools .w-btn { margin: 0; }
+.lw-mol-headinfo { text-transform: none; letter-spacing: 0; font-size: 1.18em; font-weight: 600; color: var(--label); }
+.lw-mol-links { display: flex; gap: 2px; }
+.lw-mol-link {
+  appearance: none; border: 0; background: none; cursor: pointer; font: inherit; text-transform: none; letter-spacing: 0;
+  font-size: 1.18em; font-weight: 600; color: var(--accent); padding: 3px 7px; border-radius: 8px;
+}
+.lw-mol-link:disabled { color: var(--label-3); cursor: default; }
+.lw-mol-link:not(:disabled):active { background: var(--accent-soft); }
+/* element tiles: atom in model colour with one stroke per bond, name below; the chosen one framed in the accent */
+.lw-mol-els { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+@container (min-width: 560px) { .lw-mol-els { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+.lw-mol-el {
+  appearance: none; border: 0; cursor: pointer; font: inherit; color: var(--label); background: var(--fill);
+  border-radius: 14px; padding: 5px 2px 7px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  box-shadow: inset 0 0 0 2px transparent; transition: background 0.15s, box-shadow 0.15s;
+}
+.lw-mol-el.on { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+.lw-mol-el:active { transform: scale(0.96); }
+.lw-widget .lw-mol-elicon { width: 46px; height: 42px; pointer-events: none; touch-action: auto; }
+.lw-mol-arm { stroke: var(--label-3); stroke-width: 3.2; stroke-linecap: round; }
+.lw-mol-el.on .lw-mol-arm { stroke: var(--accent); }
+.lw-mol-elsym { fill: #fff; font-size: 12.5px; font-weight: 750; font-family: -apple-system, system-ui, sans-serif; }
+.lw-mol-elsym.ink, .lw-mol-label.ink { fill: #1c1c1e; }
+.lw-mol-elname { font-size: 0.7em; font-weight: 600; color: var(--label-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; padding: 0 2px; }
+.lw-mol-el.on .lw-mol-elname { color: var(--accent); }
+/* segmented choices: tool, bond order, model */
+.lw-mol-seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; padding: 3px; border-radius: 13px; background: var(--fill); }
+.lw-mol-segbtn {
+  appearance: none; border: 0; cursor: pointer; font: inherit; font-size: 0.76em; font-weight: 600; color: var(--label);
+  background: transparent; border-radius: 10px; min-height: 44px; padding: 5px 2px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px; white-space: nowrap; transition: background 0.15s, color 0.15s;
+}
+.lw-mol-segbtn.lw-mol-flat { flex-direction: row; gap: 7px; font-size: 0.82em; }
+.lw-mol-segbtn.on { background: var(--accent); color: #fff; }
+.lw-mol-segbtn:disabled { color: var(--label-3); cursor: default; }
+.lw-mol-segbtn:not(:disabled):not(.on):active { background: var(--fill-2); }
+.lw-widget .lw-mol-segbtn svg, .lw-widget .lw-mol-vbtn svg {
+  width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  pointer-events: none; touch-action: auto; flex: none;
+}
+.lw-widget .lw-mol-segbtn .lw-mol-bondicon { width: 26px; height: 13px; stroke-width: 2.2; }
+.lw-mol-seg.small { border-radius: 999px; }
+.lw-mol-seg.small .lw-mol-segbtn { min-height: 34px; font-size: 0.8em; padding: 4px 11px; border-radius: 999px; }
+/* what the next tap does; red when it did not work */
+.lw-mol-say {
+  margin-top: 12px; padding: 9px 12px; border-radius: 12px; background: var(--fill); color: var(--label-2);
+  font-size: 0.84em; line-height: 1.38; min-height: calc(3 * 1.38em + 18px);
+}
+.lw-mol-say b { color: var(--label); font-weight: 650; }
+.lw-mol-say.err { background: color-mix(in srgb, var(--red) 13%, transparent); color: var(--red); }
+.lw-mol-stage { position: relative; max-width: 560px; margin: 8px auto 0; }
+.lw-widget .lw-mol-svg { border-radius: 18px; background: var(--fill); }
+.lw-mol-zoom { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 6px; }
+.lw-mol-zoom .lw-mol-vbtn { min-width: 34px; height: 34px; padding: 0; background: color-mix(in srgb, var(--card-solid) 82%, transparent); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
+.lw-mol-stagehint { fill: var(--label-3); font-size: 10px; font-family: -apple-system, system-ui, sans-serif; pointer-events: none; }
+.lw-mol-viewbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.lw-mol-vgroup { display: flex; align-items: center; gap: 6px; }
+.lw-mol-vbtn {
+  appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 650; font-size: 0.95em; min-width: 38px; height: 38px;
+  padding: 0 11px; border-radius: 999px; background: var(--fill); color: var(--label); display: inline-flex; align-items: center; justify-content: center;
+}
+.lw-mol-vbtn.on { background: var(--accent); color: #fff; }
+.lw-mol-viewbar .lw-mol-vbtn { font-size: 0.8em; height: 40px; padding: 0 14px; }
+.lw-widget .lw-mol-vbtn svg { width: 18px; height: 18px; stroke-width: 2; }
+.lw-mol-vbtn:active { transform: scale(0.95); }
+.lw-mol-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.lw-widget .lw-mol-row .w-btn { margin: 0; }
 .lw-mol-cap { font-size: 0.86em; color: var(--label-2); margin-right: 2px; }
-.lw-mol-svg { margin-top: 6px; }
 .lw-mol-label { fill: #fff; font-size: 11px; font-weight: 700; font-family: -apple-system, system-ui, sans-serif; }
 .lw-mol-stereo { fill: var(--accent); font-size: 12.5px; font-weight: 800; font-family: -apple-system, system-ui, sans-serif; }
-.lw-mol-info { margin-top: 8px; line-height: 1.6; color: var(--label-2); font-size: 0.92em; }
+.lw-mol-info { margin-top: 10px; line-height: 1.6; color: var(--label-2); font-size: 0.92em; }
 .lw-mol-info b { color: var(--label); }
 .lw-mol-chip { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--fill); font-size: 0.86em; margin: 2px 2px 0 0; }
 .lw-lab-tex.lw-mol-hint { color: var(--label-2); font-size: 0.86em; }

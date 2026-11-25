@@ -1055,109 +1055,264 @@
       }
 
       // ------------------------------------------------ the controls
-      let tool = "add", elSel = "C", order = 1, pick = null, model = "kugel", showH = true, msg = "";
-      const bar = LW.el("div", { class: "lw-mol-bar" });
-      host.append(bar);
-      const elRow = LW.el("div", { class: "lw-mol-row", role: "toolbar", "aria-label": "Element" });
-      ["C", "O", "N", "S", "F", "Cl", "Br", "I"].forEach((e) => {
-        const b = LW.el("button", { class: "lw-mol-el" + (e === elSel ? " on" : ""), type: "button", text: e, "aria-label": EL[e].name });
-        b.style.setProperty("--el", EL[e].col);
-        b.addEventListener("click", () => { elSel = e; [...elRow.children].forEach((x) => x.classList.toggle("on", x === b)); if (tool !== "add" && tool !== "swap") setTool("add"); });
-        elRow.append(b);
-      });
-      const bondRow = LW.el("div", { class: "lw-mol-row" });
-      const bondBtns = [[1, "–", "Einfachbindung"], [2, "=", "Doppelbindung"], [3, "≡", "Dreifachbindung"]].map(([o, t, nm]) => {
-        const b = LW.el("button", { class: "lw-mol-bond" + (o === order ? " on" : ""), type: "button", text: t, "aria-label": nm });
-        b.addEventListener("click", () => { order = o; bondBtns.forEach((x, k) => x.classList.toggle("on", k + 1 === o)); });
-        bondRow.append(b);
-        return b;
-      });
-      const tools = [["add", "Anbauen"], ["swap", "Ersetzen"], ["ring", "Ring schließen"], ["del", "Löschen"], ["stereo", "Stereo umkehren"]];
-      const toolRow = LW.el("div", { class: "lw-mol-row lw-mol-tools" });
-      const toolBtns = tools.map(([id, t]) => {
-        const b = LW.el("button", { class: "w-btn" + (id === tool ? " on" : ""), type: "button", text: t });
-        b.addEventListener("click", () => setTool(id));
-        toolRow.append(b);
-        return b;
-      });
-      function setTool(id) { tool = id; pick = null; toolBtns.forEach((b, k) => b.classList.toggle("on", tools[k][0] === id)); hint(); paint(); }
-      bar.append(elRow, bondRow, toolRow);
-      if (p.blocks && p.blocks.length) {
-        const blockRow = LW.el("div", { class: "lw-mol-row" }, [LW.el("span", { class: "lw-mol-cap", text: "Aminosäure anhängen:" })]);
-        p.blocks.forEach((code) => {
-          if (!BLOCKS.has(code)) return;
-          const b = LW.el("button", { class: "w-btn", type: "button", text: "+ " + code, "aria-label": BLOCKS.get(code).name + " anhängen" });
-          b.addEventListener("click", () => { pushUndo(); if (!attachResidue(code)) { undo.pop(); say("Hier gibt es keine freie Carboxygruppe für eine Peptidbindung."); } else { say(""); } changed(); });
-          blockRow.append(b);
-        });
-        bar.append(blockRow);
-      }
-
-      const W = 360, H = 300;
-      const svg = K.root(host, W, H, "Molekül im Raum");
-      svg.classList.add("lw-mol-svg");
-      svg.style.maxWidth = "560px";
-      svg.style.margin = "0 auto";
-      const defs = K.svg("defs", null, svg);
-      const scene = K.svg("g", null, svg);
+      // top to bottom: tool, element, bond, a line that says what the next tap does, the model, view buttons, name and formula
+      let tool = "add", elSel = "C", order = 1, pick = null, model = "kugel", showH = true, fitted = null;
+      const ELS = ["C", "O", "N", "S", "F", "Cl", "Br", "I"];
+      const BOND = ["", "Einfachbindung", "Doppelbindung", "Dreifachbindung"];
+      const bonds = (n) => n + (n === 1 ? " Bindung" : " Bindungen");
       const gradId = "lwmol" + Math.random().toString(36).slice(2, 8);
+      const darkMQ = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+      // dark mode as the page shows it: white text means a dark background
+      const isDark = () => /^#fff(fff)?$|255,\s*255,\s*255/i.test(getComputedStyle(host).getPropertyValue("--label").trim());
+      let darkNow = false;
+      const colOf = (e) => (darkNow ? EL[e].dark : EL[e].col);
+      /** Light atom colours get dark letters. */
+      const ink = (e) => { const c = colOf(e); const v = [1, 3, 5].map((k) => parseInt(c.slice(k, k + 2), 16)); return 0.299 * v[0] + 0.587 * v[1] + 0.114 * v[2] > 140; };
+      // gradients shared by the element tiles and the model
+      const defsSvg = K.svg("svg", { width: 0, height: 0, "aria-hidden": "true", style: "position:absolute;width:0;height:0;overflow:hidden" });
+      host.append(defsSvg);
+      const defs = K.svg("defs", null, defsSvg);
+      const stops = {};
       Object.keys(EL).forEach((e) => {
         const g = K.svg("radialGradient", { id: gradId + e, cx: "35%", cy: "32%", r: "70%" }, defs);
         K.svg("stop", { offset: "0%", "stop-color": "#ffffff", "stop-opacity": "0.85" }, g);
-        K.svg("stop", { offset: "28%", "stop-color": EL[e].col }, g);
-        K.svg("stop", { offset: "100%", "stop-color": shade(EL[e].col, 0.55) }, g);
+        stops[e] = [K.svg("stop", { offset: "28%" }, g), K.svg("stop", { offset: "100%" }, g)];
       });
+      const icon = (paths) => { const s = K.svg("svg", { viewBox: "0 0 24 24", "aria-hidden": "true" }); paths.forEach((d) => K.svg("path", { d }, s)); return s; };
+
+      const bar = LW.el("div", { class: "lw-mol-bar" });
+      host.append(bar);
+      function section(title) {
+        const head = LW.el("div", { class: "lw-mol-head" }, [LW.el("span", { text: title })]);
+        const sec = LW.el("div", { class: "lw-mol-sec" }, [head]);
+        bar.append(sec);
+        return { sec, head };
+      }
+
+      // tool, with undo and a fresh start in the header
+      const TOOLS = [
+        { id: "add", label: "Anbauen", d: ["M3.5,12a3.5,3.5 0 1,0 7,0a3.5,3.5 0 1,0 -7,0", "M10.5,12H14", "M19,8.5V15.5", "M15.5,12H22.5"] },
+        { id: "swap", label: "Ersetzen", d: ["M4,8H19", "M15.5,4.5L19,8L15.5,11.5", "M20,16H5", "M8.5,12.5L5,16L8.5,19.5"] },
+        { id: "ring", label: "Ring", d: ["M12,4L18.9,8L18.9,16L12,20L5.1,16L5.1,8Z"] },
+        { id: "del", label: "Löschen", d: ["M4.5,12a7.5,7.5 0 1,0 15,0a7.5,7.5 0 1,0 -15,0", "M9.2,9.2L14.8,14.8", "M14.8,9.2L9.2,14.8"] },
+        { id: "stereo", label: "Stereo", d: ["M12,3V5.5", "M12,8V10.5", "M12,13V15.5", "M12,18V20.5", "M3,12L9.5,8V16Z", "M21,12L14.5,8V16Z"] },
+      ];
+      const toolSec = section("Werkzeug");
+      const links = LW.el("span", { class: "lw-mol-links" });
+      const undoBtn = LW.el("button", { class: "lw-mol-link", type: "button", text: "Rückgängig" });
+      const newBtn = LW.el("button", { class: "lw-mol-link", type: "button", text: "Neu" });
+      links.append(undoBtn, newBtn);
+      toolSec.head.append(links);
+      const toolSeg = LW.el("div", { class: "lw-mol-seg", role: "radiogroup", "aria-label": "Werkzeug" });
+      toolSec.sec.append(toolSeg);
+      const toolBtns = TOOLS.map((t) => {
+        const b = LW.el("button", { class: "lw-mol-segbtn", type: "button", role: "radio" });
+        b.append(icon(t.d), LW.el("span", { text: t.label }));
+        b.addEventListener("click", () => setTool(t.id));
+        toolSeg.append(b);
+        return b;
+      });
+
+      // elements as tiles: the atom in its model colour, one stroke per bond it forms, the name below
+      const elSec = section("Element");
+      const elInfo = LW.el("span", { class: "lw-mol-headinfo" });
+      elSec.head.append(elInfo);
+      const elGrid = LW.el("div", { class: "lw-mol-els", role: "radiogroup", "aria-label": "Element" });
+      elSec.sec.append(elGrid);
+      const ARMS = { 1: [0], 2: [38, 142], 3: [90, 210, 330], 4: [45, 135, 225, 315] };
+      const elTiles = ELS.map((e) => {
+        const b = LW.el("button", { class: "lw-mol-el", type: "button", role: "radio", "aria-label": EL[e].name + ", bildet " + bonds(EL[e].val) });
+        const s = K.svg("svg", { viewBox: "-23 -21 46 42", class: "lw-mol-elicon", "aria-hidden": "true" });
+        ARMS[EL[e].val].forEach((a) => { const t = (a * Math.PI) / 180; K.svg("line", { x1: 0, y1: 0, x2: +(18.5 * Math.cos(t)).toFixed(2), y2: +(18.5 * Math.sin(t)).toFixed(2), class: "lw-mol-arm" }, s); });
+        K.svg("circle", { r: 13, fill: "url(#" + gradId + e + ")", stroke: "rgba(0,0,0,0.25)", "stroke-width": 0.6 }, s);
+        const sym = K.text(s, 0, 0.9, e, "lw-mol-elsym");
+        b.append(s, LW.el("span", { class: "lw-mol-elname", text: EL[e].name }));
+        b.addEventListener("click", () => selectEl(e));
+        elGrid.append(b);
+        return { e, b, sym };
+      });
+
+      // bond order
+      const bondSec = section("Bindung");
+      const bondSeg = LW.el("div", { class: "lw-mol-seg", role: "radiogroup", "aria-label": "Bindung" });
+      bondSec.sec.append(bondSeg);
+      const bondBtns = [1, 2, 3].map((o) => {
+        const b = LW.el("button", { class: "lw-mol-segbtn lw-mol-flat", type: "button", role: "radio", "aria-label": BOND[o] });
+        const s = K.svg("svg", { viewBox: "0 0 28 14", class: "lw-mol-bondicon", "aria-hidden": "true" });
+        (o === 1 ? [7] : o === 2 ? [4.5, 9.5] : [2.5, 7, 11.5]).forEach((y) => K.svg("line", { x1: 3, y1: y, x2: 25, y2: y }, s));
+        b.append(s, LW.el("span", { text: ["", "Einfach", "Doppel", "Dreifach"][o] }));
+        b.addEventListener("click", () => { order = o; if (tool !== "add" && tool !== "ring") tool = "add"; pick = null; paintControls(); paint(); });
+        bondSeg.append(b);
+        return b;
+      });
+
+      if (p.blocks && p.blocks.length) {
+        const blockSec = section("Aminosäure anhängen");
+        const blockRow = LW.el("div", { class: "lw-mol-row" });
+        blockSec.sec.append(blockRow);
+        p.blocks.forEach((code) => {
+          if (!BLOCKS.has(code)) return;
+          const b = LW.el("button", { class: "w-btn", type: "button", text: "+ " + code, "aria-label": BLOCKS.get(code).name + " anhängen" });
+          b.addEventListener("click", () => {
+            pushUndo();
+            if (!attachResidue(code)) { undo.pop(); fail("Hier gibt es keine freie Carboxygruppe für eine Peptidbindung."); return; }
+            changed();
+          });
+          blockRow.append(b);
+        });
+      }
+
+      // what the next tap does
+      const sayEl = LW.el("div", { class: "lw-mol-say", "aria-live": "polite" });
+      host.append(sayEl);
+
+      // the model
+      const W = 360, H = 300;
+      const stage = LW.el("div", { class: "lw-mol-stage" });
+      host.append(stage);
+      const svg = K.root(stage, W, H, "Molekül im Raum. Ziehen dreht das Modell, zwei Finger zoomen.");
+      svg.classList.add("lw-mol-svg");
+      const scene = K.svg("g", null, svg);
+      K.text(svg, W / 2, H - 11, "Ziehen dreht · zwei Finger zoomen", "lw-mol-stagehint");
       const view = LW.lab.view3d(svg, { width: W, height: H, az: 25, el: 15, scale: 42, dist: 18, paint: () => paint(), onTap });
-      const viewRow = LW.el("div", { class: "w-btns" });
-      host.append(viewRow);
-      K.segmented(viewRow, [{ id: "kugel", label: "Kugel-Stab" }, { id: "kalotte", label: "Kalotte" }], "kugel", (id) => { model = id; paint(); });
-      const hBtn = K.button(viewRow, "H zeigen", () => { showH = !showH; hBtn.classList.toggle("on", showH); paint(); });
-      hBtn.classList.add("on");
-      K.button(viewRow, "−", () => view.zoom(1 / 1.25));
-      K.button(viewRow, "+", () => view.zoom(1.25));
-      const editRow = LW.el("div", { class: "w-btns" });
-      host.append(editRow);
-      K.button(editRow, "Rückgängig", () => { if (!undo.length) return; S = JSON.parse(undo.pop()); changed(); });
-      K.button(editRow, "Neu", () => { pushUndo(); build(p.start || "C"); changed(); });
-      const msgEl = LW.el("div", { class: "lw-lab-tex err", "aria-live": "polite" });
-      host.append(msgEl);
+
+      // view buttons: zoom and fit in the corner of the stage, model and hydrogens below it
+      const vr = LW.el("div", { class: "lw-mol-zoom" });
+      stage.append(vr);
+      const vbar = LW.el("div", { class: "lw-mol-viewbar" });
+      host.append(vbar);
+      const vl = LW.el("div", { class: "lw-mol-vgroup" });
+      vbar.append(vl);
+      const modelSeg = LW.el("div", { class: "lw-mol-seg small", role: "radiogroup", "aria-label": "Modell" });
+      vl.append(modelSeg);
+      const MODELS = [["kugel", "Kugel-Stab"], ["kalotte", "Kalotte"]];
+      const modelBtns = MODELS.map(([id, t]) => {
+        const b = LW.el("button", { class: "lw-mol-segbtn", type: "button", role: "radio", text: t });
+        b.addEventListener("click", () => { model = id; paintControls(); paint(); });
+        modelSeg.append(b);
+        return b;
+      });
+      const vbtn = (parent, content, label, onClick) => {
+        const b = LW.el("button", { class: "lw-mol-vbtn", type: "button", "aria-label": label });
+        if (typeof content === "string") b.textContent = content; else b.append(content);
+        b.addEventListener("click", onClick);
+        parent.append(b);
+        return b;
+      };
+      const hBtn = vbtn(vl, "H-Atome", "Wasserstoffatome zeigen", () => { showH = !showH; paintControls(); paint(); });
+      vbtn(vr, "+", "Vergrößern", () => view.zoom(1.25));
+      vbtn(vr, "−", "Verkleinern", () => view.zoom(1 / 1.25));
+      vbtn(vr, icon(["M4,9V4H9", "M15,4H20V9", "M20,15V20H15", "M9,20H4V15"]), "Einpassen", () => { fitView(true); paint(); });
+
       const out = LW.el("div", { class: "lw-mol-info" });
       host.append(out);
       const goals = task ? LW.lab.goals(host, task.conditions || [], (c) => [].concat(c).every(holds)) : null;
 
-      function say(t) { msg = t; msgEl.textContent = t; }
+      undoBtn.addEventListener("click", () => { if (!undo.length) return; S = JSON.parse(undo.pop()); pick = null; changed(); });
+      newBtn.addEventListener("click", () => { pushUndo(); build(p.start || "C"); if (p.startStereo) applyStereo(p.startStereo); pick = null; fitted = null; changed(); });
+
+      let coloured = false;
+      /** Atom colours for the current mode; returns whether they changed. */
+      function paintColours() {
+        const dk = isDark();
+        if (coloured && dk === darkNow) return false;
+        darkNow = dk; coloured = true;
+        Object.keys(stops).forEach((e) => { stops[e][0].setAttribute("stop-color", colOf(e)); stops[e][1].setAttribute("stop-color", shade(colOf(e), 0.55)); });
+        elTiles.forEach((t) => t.sym.classList.toggle("ink", ink(t.e)));
+        return true;
+      }
+      paintColours();
+      // once the widget is on the page its colours are known for sure; later the system may switch modes
+      requestAnimationFrame(() => { if (paintColours()) paint(); });
+      if (darkMQ && darkMQ.addEventListener) {
+        const onScheme = () => { if (!host.isConnected) { darkMQ.removeEventListener("change", onScheme); return; } if (paintColours()) paint(); };
+        darkMQ.addEventListener("change", onScheme);
+      }
+      function setTool(id) {
+        tool = id; pick = null;
+        if (id !== "ring" && order > EL[elSel].val) order = EL[elSel].val;
+        paintControls(); paint();
+      }
+      function selectEl(e) {
+        elSel = e; pick = null;
+        if (tool !== "add" && tool !== "swap") tool = "add";
+        if (order > EL[e].val) order = EL[e].val;
+        paintControls(); paint();
+      }
+      function paintControls() {
+        toolBtns.forEach((b, k) => { const on = TOOLS[k].id === tool; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); });
+        elTiles.forEach((t) => { const on = t.e === elSel; t.b.classList.toggle("on", on); t.b.setAttribute("aria-checked", String(on)); });
+        elInfo.textContent = EL[elSel].name + " · " + bonds(EL[elSel].val);
+        bondBtns.forEach((b, k) => {
+          const o = k + 1, on = o === order;
+          b.disabled = tool !== "ring" && o > EL[elSel].val;
+          b.classList.toggle("on", on);
+          b.setAttribute("aria-checked", String(on));
+        });
+        elSec.sec.classList.toggle("idle", tool !== "add" && tool !== "swap");
+        bondSec.sec.classList.toggle("idle", tool !== "add" && tool !== "ring");
+        modelBtns.forEach((b, k) => { const on = MODELS[k][0] === model; b.classList.toggle("on", on); b.setAttribute("aria-checked", String(on)); });
+        hBtn.classList.toggle("on", showH);
+        hBtn.setAttribute("aria-pressed", String(showH));
+        undoBtn.disabled = !undo.length;
+        hint();
+      }
       function hint() {
-        const H2 = { add: "Tippe ein Atom an: Das gewählte Element wird mit der gewählten Bindung angebaut. Tippe eine Bindung an, um sie zu ändern.",
-          swap: "Tippe ein Atom an, um es durch das gewählte Element zu ersetzen.", ring: "Tippe zwei Atome nacheinander an, um sie zu verbinden.",
-          del: "Tippe ein Atom an, um es zu entfernen.", stereo: "Tippe ein Stereozentrum (R oder S) oder eine Doppelbindung (E oder Z) an, um die Konfiguration umzukehren." };
-        say(""); msgEl.classList.remove("err"); msgEl.textContent = H2[tool]; msgEl.classList.add("lw-mol-hint");
+        const nm = "<b>" + LW.esc(EL[elSel].name) + "</b>", bd = "<b>" + BOND[order] + "</b>";
+        const T = {
+          add: "Atom oder H antippen: Dort kommt " + nm + " mit einer " + bd + " dazu. Eine Bindung antippen macht sie zur gewählten Bindung.",
+          swap: "Atom antippen: Es wird zu " + nm + ". Ein H antippen setzt " + nm + " an seine Stelle.",
+          ring: pick == null ? "Zwei Atome nacheinander antippen: Eine " + bd + " zwischen ihnen schließt den Ring." : "Jetzt das zweite Atom antippen. Das erste noch einmal antippen bricht ab.",
+          del: "Atom antippen: Es verschwindet samt seinen Wasserstoffen. Zerfällt das Molekül dabei, bleibt der größere Teil.",
+          stereo: "Stereozentrum (R oder S) oder Doppelbindung (E oder Z) antippen: Die Konfiguration kehrt sich um.",
+        };
+        sayEl.classList.remove("err");
+        sayEl.innerHTML = T[tool];
+      }
+      function fail(t) { sayEl.classList.add("err"); sayEl.textContent = t; }
+      function fitView(force) {
+        const r = Math.max(1.3, ...S.atoms.map((a) => len(a.p)), ...S.hs.map((h) => len(h.p))) + 0.6;
+        if (force || fitted == null || Math.abs(view.cam.scale - fitted) < 1e-6) { view.fit(r); fitted = view.cam.scale; }
       }
       function onTap(target) {
-        const ai = target && target.dataset ? target.dataset.atom : null, hi = target && target.dataset ? target.dataset.h : null, bi = target && target.dataset ? target.dataset.bond : null;
-        msgEl.classList.remove("lw-mol-hint"); msgEl.classList.add("err");
-        let ok = null;
+        const ds = (target && target.dataset) || {};
+        const ai = ds.atom != null ? +ds.atom : null, hi = ds.h != null ? +ds.h : null, bi = ds.bond != null ? +ds.bond : null;
+        if (ai == null && hi == null && bi == null) return;
+        const BN = ["", "Einfach", "Doppel", "Dreifach"];
+        let ok = false, err = null;
         pushUndo();
         if (tool === "add") {
-          if (ai != null) ok = attach(+ai, elSel, order) || (say("Dieses Atom hat keine freie Bindung mehr für eine " + ["", "Einfach", "Doppel", "Dreifach"][order] + "bindung."), false);
-          else if (hi != null) { const h = S.hs[+hi]; ok = attach(h.at, elSel, order, h) || (say("Hier ist keine " + ["", "Einfach", "Doppel", "Dreifach"][order] + "bindung möglich."), false); }
-          else if (bi != null) {
-            const b = S.bonds[+bi];
-            ok = false;
-            for (let t = 1; t <= 3 && !ok; t++) { const o = ((b.o + t - 1) % 3) + 1; if (o !== b.o && setOrder(+bi, o)) ok = true; }
-            if (!ok) say("Die Bindung lässt sich hier nicht ändern: Es fehlen freie Bindungen.");
+          if (ai != null) { ok = attach(ai, elSel, order); if (!ok) err = "Dieses Atom hat keine freie Bindung mehr für eine " + BN[order] + "bindung."; }
+          else if (hi != null) { const h = S.hs[hi]; ok = attach(h.at, elSel, order, h); if (!ok) err = "Hier passt keine " + BN[order] + "bindung: Dem Atom fehlen freie Bindungen."; }
+          else {
+            // a bond becomes the chosen bond; if it already is one, it takes the next possible order
+            const b = S.bonds[bi];
+            if (b.o !== order) ok = setOrder(bi, order);
+            else for (let t = 1; t <= 2 && !ok; t++) ok = setOrder(bi, ((b.o + t - 1) % 3) + 1);
+            if (!ok) err = "Diese Bindung lässt sich nicht zur " + BN[order] + "bindung machen: Den Atomen fehlen freie Bindungen.";
           }
-        } else if (tool === "swap" && ai != null) ok = replace(+ai, elSel) || (say(EL[elSel].name + " hat dafür zu wenige Bindungen."), false);
-        else if (tool === "del" && ai != null) ok = removeAtom(+ai) || (say("Das letzte Atom bleibt stehen."), false);
-        else if (tool === "ring" && ai != null) {
-          if (pick == null) { pick = +ai; undo.pop(); paint(); return; }
-          ok = ringBond(pick, +ai, order) || (say("Diese beiden Atome lassen sich nicht verbinden."), false);
+        } else if (tool === "swap") {
+          if (ai != null) {
+            if (S.atoms[ai].el === elSel) err = "Das Atom ist schon " + EL[elSel].name + ".";
+            else { ok = replace(ai, elSel); if (!ok) err = EL[elSel].name + " bildet nur " + bonds(EL[elSel].val) + ", dieses Atom hat aber mehr."; }
+          } else if (hi != null) { const h = S.hs[hi]; ok = attach(h.at, elSel, 1, h); if (!ok) err = "Dieses H lässt sich nicht ersetzen."; }
+          else err = "Zum Ersetzen ein Atom oder ein H antippen, keine Bindung.";
+        } else if (tool === "del") {
+          if (ai != null) { ok = removeAtom(ai); if (!ok) err = "Das letzte Atom bleibt stehen."; }
+          else if (hi != null) err = "Wasserstoffe ergänzt das Labor selbst. Lösche das Atom, an dem das H hängt, oder ersetze das H.";
+          else err = "Zum Löschen ein Atom antippen. Eine Mehrfachbindung wird mit »Anbauen« und »Einfach« wieder zur Einfachbindung.";
+        } else if (tool === "ring") {
+          if (ai == null) { undo.pop(); fail("Für einen Ring zwei Atome antippen, keine Wasserstoffe oder Bindungen."); return; }
+          if (pick == null || pick === ai) { pick = pick == null ? ai : null; undo.pop(); hint(); paint(); return; }
+          ok = ringBond(pick, ai, order);
+          if (!ok) err = "Diese beiden Atome lassen sich nicht verbinden: Sie sind schon gebunden, oder einem fehlt eine freie Bindung.";
           pick = null;
         } else if (tool === "stereo") {
-          if (ai != null) ok = (info && info.st.centres.some((c) => c.i === +ai) && invertCentre(+ai)) || (say("Das ist kein Stereozentrum, oder es liegt in einem Ring."), false);
-          else if (bi != null) ok = (info && info.st.dbs.some((d) => d.k === +bi) && flipDouble(+bi)) || (say("Diese Doppelbindung hat keine E/Z-Isomerie."), false);
+          if (ai != null) { ok = !!(info && info.st.centres.some((c) => c.i === ai)) && invertCentre(ai); if (!ok) err = "Das ist kein Stereozentrum, oder es liegt in einem Ring."; }
+          else if (bi != null) { ok = !!(info && info.st.dbs.some((d) => d.k === bi)) && flipDouble(bi); if (!ok) err = "Diese Bindung hat keine E/Z-Isomerie."; }
+          else err = "Ein Stereozentrum oder eine Doppelbindung antippen.";
         }
-        if (!ok) { undo.pop(); paint(); return; }
-        say("");
+        if (!ok) { undo.pop(); paint(); if (err) fail(err); return; }
         relax(160);
         changed();
       }
@@ -1190,7 +1345,7 @@
           items.push({ d: P[i].d, draw: () => {
             const c = K.svg("circle", { cx: P[i].x, cy: P[i].y, r: Math.max(3, r), fill: "url(#" + gradId + a.el + ")", stroke: pick === i ? "var(--accent)" : "rgba(0,0,0,0.35)", "stroke-width": pick === i ? 3 : 0.6 }, scene);
             c.dataset.atom = i;
-            if (a.el !== "C" && r > 8) { const t = K.text(scene, P[i].x, P[i].y + 0.5, a.el, "lw-mol-label"); t.dataset.atom = i; }
+            if (a.el !== "C" && r > 8) { const t = K.text(scene, P[i].x, P[i].y + 0.5, a.el, "lw-mol-label" + (ink(a.el) ? " ink" : "")); t.dataset.atom = i; }
             const sc = I.st.centres.find((x) => x.i === i);
             if (sc && (tool === "stereo" || model !== "kalotte")) { const t = K.text(scene, P[i].x + r + 6, P[i].y - r - 2, sc.rs, "lw-mol-stereo"); t.dataset.atom = i; }
           } });
@@ -1221,8 +1376,10 @@
       function changed(silent) {
         info = null;
         analyse();
-        view.fit(Math.max(1.6, ...S.atoms.map((a) => len(a.p)), ...S.hs.map((h) => len(h.p))) + 0.6);
+        fitView(false);
         describe();
+        paintControls();
+        paintColours();
         paint();
         if (goals) goals.paint();
         if (!silent) ctx.changed();

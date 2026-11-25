@@ -28,7 +28,7 @@
     conds.push({ c: "ziel " + smiles, show: "Struktur von " + name });
     return conds;
   }
-  const BUILD = "Tippe ein Atom an, um das gewählte Element anzubauen; eine Bindung antippen ändert ihre Ordnung. Wasserstoffatome ergänzt das Labor selbst.";
+  const BUILD = "Mit dem Werkzeug »Anbauen« ein Atom oder ein H antippen: Dort kommt das gewählte Element mit der gewählten Bindung dazu. Eine Bindung antippen macht sie zur gewählten Bindung. Wasserstoffatome ergänzt das Labor selbst.";
 
   // ---------------------------------------------------------------- hydrocarbons
   const ALK1 = [
@@ -54,7 +54,7 @@
     ["Propin", "CC#C", "Drei C-Atome, Dreifachbindung am Kettenende."],
     ["But-1-in", "C#CCC", "Vier C-Atome, Dreifachbindung zwischen C1 und C2."],
     ["Buta-1,3-dien", "C=CC=C", "Vier C-Atome mit zwei Doppelbindungen, ab C1 und ab C3."],
-    ["Cyclopropan", "C1CC1", "Drei C-Atome im Ring: Kette aus drei C bauen, dann mit »Ring schließen« das erste mit dem letzten verbinden."],
+    ["Cyclopropan", "C1CC1", "Drei C-Atome im Ring: Kette aus drei C bauen, dann mit dem Werkzeug »Ring« das erste mit dem letzten verbinden."],
     ["Cyclohexan", "C1CCCCC1", "Sechs C-Atome im Ring, nur Einfachbindungen."],
     ["Cyclohexen", "C1=CCCCC1", "Sechsring mit einer Doppelbindung."],
     ["Methylcyclohexan", "CC1CCCCC1", "Sechsring mit einer Methylgruppe."],
@@ -108,7 +108,7 @@
     const conds = named(name.replace(/ \(.*\)$/, "").replace(/^\([EZ]\)-/, ""), smi, extra);
     if (st) conds.push({ c: "ez " + st, show: "Konfiguration " + st + " (" + (st === "E" ? "entgegen" : "zusammen") + ")" });
     return mol("Baue **" + name + "**.", conds, { smiles: smi, stereo: st || undefined },
-      st ? BUILD + " Mit »Stereo umkehren« und einem Tipp auf die Doppelbindung wechselst du zwischen E und Z." : BUILD,
+      st ? BUILD + " Mit dem Werkzeug »Stereo« und einem Tipp auf die Doppelbindung wechselst du zwischen E und Z." : BUILD,
       why + " Summenformel " + F(C.formula(C.parseSmiles(smi))) + ".");
   }
   gen("lab-alkane", {
@@ -229,7 +229,7 @@
         const [name, smi, st, why] = G.pick(ST2);
         const conds = named(name.replace(/^\([RS]\)-/, "").replace(/ \(.*\)$/, ""), smi, []);
         conds.push({ c: "stereo " + st, show: "Konfiguration " + st });
-        return mol("Baue **" + name + "**. Das Labor zeigt am Stereozentrum R oder S; mit »Stereo umkehren« tauschst du zwei Reste.", conds, { smiles: smi, stereo: st }, CIP, why + " " + CIP);
+        return mol("Baue **" + name + "**. Das Labor zeigt am Stereozentrum R oder S; mit dem Werkzeug »Stereo« tauschst du zwei Reste.", conds, { smiles: smi, stereo: st }, CIP, why + " " + CIP);
       }
       if (level === 3) {
         const [name, smi, st] = G.pick(ST3);
