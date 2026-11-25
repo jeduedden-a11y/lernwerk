@@ -3,9 +3,11 @@
  *
  *   versuch: params: exp (fadenstrahlrohr, millikan, photoeffekt, franckhertz, elektronenbeugung, gitter, federpendel,
  *                    entladung, titration), plus per experiment: acid ("salzsaeure" | "essigsaeure"), lines (grating)
- *            scope:  n (measurements), value (result), err (relative deviation from the literature value), and the
- *                    current settings of the experiment
- *            goals:  e.g. { "when": "n >= 5 && err < 0.08", "solve": {} }; solve() takes a complete series.
+ *            scope:  n (measurements), value (result), err (relative deviation from the literature value), the current
+ *                    settings and what follows from them: fadenstrahlrohr r (cm), B (mT), v (10⁶ m/s); gitter a1 (cm),
+ *                    alpha (degrees), kmax; federpendel T (s), f (Hz); titration pH, Veq (mL); elektronenbeugung lam (pm)
+ *            goals:  e.g. { "when": "n >= 5 && err < 0.08", "solve": {} }; solve() takes a complete series and then applies
+ *                    solve.set, e.g. { "set": { "U": 250, "I": 1.75 } }. titration also takes ca (acid concentration).
  */
 (function () {
   "use strict";
@@ -64,6 +66,7 @@
     k: 0.78e-3, // T per A of the Helmholtz pair
     radius(s) { const B = this.k * s.I; return Math.sqrt((2 * s.U * ME) / E) / B; },
     ready(s) { return this.radius(s) > 0.055 ? "Der Strahl trifft den Glaskolben: Spulenstrom erhöhen oder Spannung senken." : true; },
+    derived(s) { return { r: this.radius(s) * 100, B: this.k * s.I * 1000, v: Math.sqrt((2 * E * s.U) / ME) / 1e6 }; },
     measure(s, r) { const B = this.k * s.I, rr = Math.round((this.radius(s) + gauss(r) * 0.0008) * 1000) / 10; return { U: s.U, I: s.I, B: B * 1000, r: rr, em: (2 * s.U) / (B * B * (rr / 100) * (rr / 100)) / 1e11 }; },
     columns: [["U", "U in V", 0], ["I", "I in A", 2], ["B", "B in mT", 3], ["r", "r in cm", 1], ["em", "e/m in 10¹¹ C/kg", 2]],
     plot: { x: (row) => ((row.B / 1000) ** 2) * ((row.r / 100) ** 2) * 1e9, y: (row) => 2 * row.U, xl: "B²r² in 10⁻⁹ T²m²", yl: "2U in V", origin: true },
@@ -249,6 +252,7 @@
     vars: [{ id: "U", label: "Beschleunigungsspannung", min: 2, max: 5, step: 0.1, value: 4, unit: "kV", digits: 1 }],
     L: 0.135, d: [213e-12, 123e-12],
     lambda(U) { return H / Math.sqrt(2 * ME * E * U * 1000); },
+    derived(s) { return { lam: this.lambda(s.U) * 1e12 }; },
     radius(U, d) { const th = Math.asin(this.lambda(U) / (2 * d)); return this.L * Math.tan(2 * th); },
     measure(s, r) { const l = this.lambda(s.U); return { U: s.U, lam: l * 1e12, r1: Math.round((this.radius(s.U, this.d[0]) + gauss(r) * 0.0003) * 1000) / 10, r2: Math.round((this.radius(s.U, this.d[1]) + gauss(r) * 0.0003) * 1000) / 10 }; },
     columns: [["U", "U in kV", 1], ["lam", "λ in pm", 1], ["r1", "r₁ in cm", 1], ["r2", "r₂ in cm", 1]],
@@ -279,6 +283,7 @@
     title: "Wellenlänge eines Lasers am Gitter",
     vars: [{ id: "e", label: "Abstand Gitter–Schirm", min: 1, max: 3, step: 0.1, value: 1.5, unit: "m", digits: 1 }],
     init(s, r, p) { s.lines = p.lines || 300; s.lam = p.lambda || [632.8, 532, 650][Math.floor(r() * 3)]; },
+    derived(s) { const g = 1e-3 / s.lines, sin = (s.lam * 1e-9) / g; return { a1: this.a1(s) * 100, alpha: (Math.asin(Math.min(1, sin)) * 180) / Math.PI, kmax: Math.floor(g / (s.lam * 1e-9)) }; },
     a1(s) { const g = 1e-3 / s.lines, sin = (s.lam * 1e-9) / g; return s.e * Math.tan(Math.asin(sin)); },
     measure(s, r) { return { e: s.e, a1: Math.round((this.a1(s) + gauss(r) * 0.002) * 1000) / 10 }; },
     columns: [["e", "e in m", 1], ["a1", "a₁ in cm", 1]],
@@ -318,6 +323,7 @@
     vars: [{ id: "m", label: "Masse", min: 50, max: 300, step: 10, value: 100, unit: "g", digits: 0 }],
     D: 24,
     T(s) { return 2 * Math.PI * Math.sqrt(s.m / 1000 / this.D); },
+    derived(s) { const T = this.T(s); return { T, f: 1 / T }; },
     measure(s, r) { const t10 = Math.round((10 * this.T(s) + gauss(r) * 0.08) * 100) / 100; return { m: s.m, t10, T: t10 / 10, T2: (t10 / 10) ** 2 }; },
     columns: [["m", "m in g", 0], ["t10", "10 T in s", 2], ["T", "T in s", 3], ["T2", "T² in s²", 4]],
     plot: { x: (row) => row.m / 1000, y: (row) => row.T2, xl: "m in kg", yl: "T² in s²", origin: true },
@@ -379,7 +385,8 @@
   EXP.titration = {
     title: "Titration mit Natronlauge",
     vars: [{ id: "V", label: "Zugegebene Natronlauge", min: 0, max: 40, step: 0.1, value: 0, unit: "mL", digits: 1 }],
-    init(s, r, p) { s.weak = p.acid === "essigsaeure"; s.ca = Math.round((0.08 + r() * 0.06) * 1000) / 1000; s.Va = 20; s.cb = 0.1; s.Ka = 1.75e-5; },
+    init(s, r, p) { s.weak = p.acid === "essigsaeure"; const ca = Math.round((0.08 + r() * 0.06) * 1000) / 1000; s.ca = p.ca || ca; s.Va = 20; s.cb = 0.1; s.Ka = 1.75e-5; },
+    derived(s) { return { pH: this.pH(s, s.V), Veq: (s.ca * s.Va) / s.cb }; },
     pH(s, V) {
       const Vt = (s.Va + V) / 1000, na = (s.cb * V) / 1000 / Vt, ca = (s.ca * s.Va) / 1000 / Vt;
       // charge balance: [H+] + [Na+] = [OH-] + [A-]
@@ -563,7 +570,7 @@
         const out = ev && ev.out;
         const value = out && out.value != null ? out.value : 0;
         const err = out && out.value != null && out.lit ? Math.abs(out.value - out.lit) / out.lit : 1;
-        return Object.assign({}, s, { n: rows.length, value, err });
+        return Object.assign({}, s, X.derived ? X.derived(s) : {}, { n: rows.length, value, err });
       }
       function tick(now) {
         if (!svg.isConnected) return;
@@ -574,6 +581,7 @@
         draw();
         raf = requestAnimationFrame(tick);
       }
+      function setVar(k, v) { if (k in s) { s[k] = v; if (sliders[k] && sliders[k].set) sliders[k].set(v); draw(); } }
       draw();
       paintData();
       raf = requestAnimationFrame(tick);
@@ -586,25 +594,33 @@
           for (const h of (goal && goal.hints) || []) { try { if (LW.expr(h.when)(sc)) return { correct: false, detail: h.text }; } catch (e) { /* ignore */ } }
           return { correct: false, detail: (goal && goal.message) || (sc.n < (X.minRows || 2) ? "Nimm zuerst mehr Messwerte auf." : "Die Auswertung weicht noch zu stark ab: prüfe die Messwerte oder nimm weitere auf.") };
         },
-        solve() {
-          rows = [];
-          if (X.auto) {
-            X.auto.forEach((a) => {
-              const st = Object.assign({}, s, a);
-              if (X.autoSet) X.autoSet(st, a);
-              if (X.newDrop) X.newDrop(st, r);
-              rows.push(X.measure(st, r));
-            });
-          } else {
-            // Millikan: several drops, each held in suspension
-            for (let k = 0; k < 6; k++) { X.newDrop(s, r); s.U = X.float(s); rows.push(X.measure(s, r)); }
+        solve(goal) {
+          const set = goal && goal.solve && goal.solve.set, when = goal && goal.when;
+          // a complete series; with a goal, a new series until the scatter happens to meet it (rare, but measured values vary)
+          for (let attempt = 0; attempt < 25; attempt++) {
+            rows = [];
+            if (X.auto) {
+              X.auto.forEach((a) => {
+                const st = Object.assign({}, s, a);
+                if (X.autoSet) X.autoSet(st, a);
+                if (X.newDrop) X.newDrop(st, r);
+                rows.push(X.measure(st, r));
+              });
+            } else {
+              // Millikan: several drops, each held in suspension
+              for (let k = 0; k < 6; k++) { X.newDrop(s, r); s.U = X.float(s); rows.push(X.measure(s, r)); }
+            }
+            if (set) Object.keys(set).forEach((k) => setVar(k, set[k]));
+            let ok = !when;
+            if (when) { try { ok = !!LW.expr(when)(scope()); } catch (e) { ok = true; } }
+            if (ok) break;
           }
           note = "Eine vollständige Messreihe ist eingetragen.";
           draw();
           paintData();
         },
-        getVar: (k) => s[k],
-        setVar(k, v) { if (k in s) { s[k] = v; if (sliders[k] && sliders[k].set) sliders[k].set(v); draw(); } },
+        getVar: (k) => scope()[k],
+        setVar,
         lock() { locked = true; host.querySelectorAll("button, input").forEach((b) => { b.disabled = true; }); },
         leave() { cancelAnimationFrame(raf); },
       };
