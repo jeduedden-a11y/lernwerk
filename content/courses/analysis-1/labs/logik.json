@@ -1,0 +1,65 @@
+{
+  "id": "lab-logik",
+  "title": "Logiklabor",
+  "subtitle": "Formeln, Wahrheitstafeln, Normalformen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Tippe eine aussagenlogische Formel mit den Tasten ein: $\\neg$, $\\land$, $\\lor$, $\\rightarrow$, $\\leftrightarrow$. Die Wahrheitstafel entsteht beim Tippen, darunter die disjunktive Normalform.\n\nZwei Formeln sind **äquivalent**, wenn ihre Spalten in jeder Zeile übereinstimmen; eine **Tautologie** ist in jeder Zeile wahr. Du kannst auch »und«, »oder«, »nicht« und -> tippen."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Probiere De Morgan, Kontraposition und die Implikation aus. Wann ist $p \\rightarrow q$ falsch?",
+      "widget": "logiklabor",
+      "params": {
+        "vars": [
+          "p",
+          "q",
+          "r"
+        ],
+        "formula": "(p→q)↔(¬q→¬p)"
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Forme $p \\rightarrow q$ äquivalent um, **ohne** $\\rightarrow$.",
+      "widget": "logiklabor",
+      "params": {
+        "vars": [
+          "p",
+          "q"
+        ],
+        "formula": "p→q",
+        "target": "p→q"
+      },
+      "goal": {
+        "when": "(aeq == 1) && (imp == 0)",
+        "list": [
+          {
+            "when": "aeq == 1",
+            "show": "äquivalent zu $p \\rightarrow q$"
+          },
+          {
+            "when": "imp == 0",
+            "show": "ohne $\\rightarrow$"
+          }
+        ],
+        "solve": {
+          "formula": "¬p∨q"
+        }
+      },
+      "hint": "Eine Implikation ist nur falsch, wenn die Prämisse wahr und die Folgerung falsch ist.",
+      "explain": "$p \\rightarrow q \\equiv \\neg p \\lor q$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** baust du Formeln zu vorgegebenen Wahrheitstafeln, formst Formeln ohne bestimmte Junktoren um und baust Tautologien und Kontradiktionen."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "lab-zufall",
+  "title": "Zufallslabor",
+  "subtitle": "Urnen, Baumdiagramme, Simulation",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Fülle die Urne, wähle die Zahl der Züge und ob zurückgelegt wird. Das Labor rechnet die Wahrscheinlichkeit des Ereignisses mit den Pfadregeln aus, zeigt bei wenigen Pfaden das Baumdiagramm und simuliert auf Knopfdruck tausend Durchgänge.\n\nDie relative Häufigkeit der Simulation pendelt sich bei der berechneten Wahrscheinlichkeit ein: das Gesetz der großen Zahlen."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Verändere die Urne und die Ziehart. Wie ändert sich $P$?",
+      "widget": "urnenlabor",
+      "params": {
+        "r": 3,
+        "b": 2,
+        "g": 1,
+        "colors": 3,
+        "k": 2,
+        "repl": false,
+        "editK": true,
+        "editRepl": true,
+        "event": {
+          "type": "gleich"
+        }
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Gesetz der großen Zahlen",
+      "md": "Die relative Häufigkeit nähert sich der Wahrscheinlichkeit, die absolute Abweichung aber nicht.",
+      "widget": "lln",
+      "params": {
+        "p": "1/6",
+        "event": "Sechs",
+        "unit": "Würfe"
+      }
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Zwei Kugeln **ohne Zurücklegen**: Baue eine Urne (rot und blau), bei der **beide rot** mit Wahrscheinlichkeit $\\frac16$ sind.",
+      "widget": "urnenlabor",
+      "params": {
+        "r": 1,
+        "b": 1,
+        "colors": 2,
+        "k": 2,
+        "repl": false,
+        "event": {
+          "type": "alle",
+          "color": 0
+        }
+      },
+      "goal": {
+        "when": "(abs(P - 1/6) < 1e-9)",
+        "list": [
+          {
+            "when": "abs(P - 1/6) < 1e-9",
+            "show": "$P(\\text{beide rot}) = \\frac16$"
+          }
+        ],
+        "solve": {
+          "r": 2,
+          "b": 2
+        }
+      },
+      "hint": "$\\frac{r}{N} \\cdot \\frac{r-1}{N-1} = \\frac16$.",
+      "explain": "Zum Beispiel 2 rote und 2 blaue: $\\frac24 \\cdot \\frac13 = \\frac16$; auch 4 rote und 5 blaue passen."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** baust du Urnen zu vorgegebenen Wahrscheinlichkeiten, mit und ohne Zurücklegen, mit zwei und drei Farben."
+    }
+  ]
+}

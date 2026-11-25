@@ -1,0 +1,126 @@
+{
+  "id": "lab-prozesse",
+  "title": "Prozesslabor",
+  "subtitle": "Übergangsmatrizen und Populationen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Ein Prozess wechselt in jedem Schritt zwischen Zuständen. In der **Übergangsmatrix** steht in Spalte $j$, mit welcher Wahrscheinlichkeit es von $j$ in die anderen Zustände geht; jede Spalte summiert sich zu 1. Die Verteilung nach $n$ Schritten ist $M^n \\vec v_0$.\n\nDie **stationäre Verteilung** ändert sich durch einen Schritt nicht mehr: $M\\vec s = \\vec s$. Bei Populationsmodellen (Leslie) stehen oben die Geburtenraten, darunter die Überlebensraten; der größte Eigenwert sagt, ob der Bestand wächst."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Verändere die Übergänge und die Zahl der Schritte. Wohin strebt die Verteilung?",
+      "widget": "prozesslabor",
+      "params": {
+        "states": [
+          "A",
+          "B",
+          "C"
+        ],
+        "M": [
+          [
+            0.6,
+            0.2,
+            0.1
+          ],
+          [
+            0.3,
+            0.6,
+            0.3
+          ],
+          [
+            0.1,
+            0.2,
+            0.6
+          ]
+        ],
+        "v0": [
+          1,
+          0,
+          0
+        ],
+        "n": 3,
+        "edit": "all"
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Ergänze die fehlenden Einträge (je einer pro Spalte), sodass jede Spalte die Summe 1 hat.",
+      "widget": "prozesslabor",
+      "params": {
+        "states": [
+          "A",
+          "B",
+          "C"
+        ],
+        "M": [
+          [
+            0.5,
+            0.2,
+            0
+          ],
+          [
+            0,
+            0.6,
+            0.3
+          ],
+          [
+            0.2,
+            0,
+            0.6
+          ]
+        ],
+        "v0": [
+          1,
+          0,
+          0
+        ],
+        "edit": [
+          "m21",
+          "m32",
+          "m13"
+        ]
+      },
+      "goal": {
+        "when": "(valid == 1)",
+        "list": [
+          {
+            "when": "valid == 1",
+            "show": "alle Spaltensummen 1"
+          }
+        ],
+        "solve": {
+          "M": [
+            [
+              0.5,
+              0.2,
+              0.1
+            ],
+            [
+              0.3,
+              0.6,
+              0.3
+            ],
+            [
+              0.2,
+              0.2,
+              0.6
+            ]
+          ]
+        }
+      },
+      "hint": "Fehlender Eintrag = 1 minus Summe der übrigen in der Spalte.",
+      "explain": "$m_{21} = 0{,}3$, $m_{32} = 0{,}2$, $m_{13} = 0{,}1$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** vervollständigst du Matrizen, suchst Zeitpunkte bei absorbierenden Zuständen, baust Matrizen mit vorgegebener stationärer Verteilung und stabile Leslie-Modelle."
+    }
+  ]
+}

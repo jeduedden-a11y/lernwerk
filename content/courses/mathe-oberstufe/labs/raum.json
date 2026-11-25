@@ -1,0 +1,147 @@
+{
+  "id": "lab-raum",
+  "title": "Raumlabor",
+  "subtitle": "Geraden und Ebenen im Raum",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Stelle Punkte, Geraden ($\\vec x = \\vec p + t\\,\\vec u$) und Ebenen ($n_1x + n_2y + n_3z = d$) mit den Reglern ein. Das Labor zeigt, wie sie zueinander liegen: Schnittpunkt, parallel, identisch, windschief, dazu Abstände und Winkel.\n\nZiehe über das Bild, um den Raum zu drehen; zwei Finger zoomen."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Freies Labor",
+      "md": "Verändere $g$, $E$ und $P$ und beobachte die Lagebeziehungen.",
+      "widget": "raumlabor",
+      "params": {
+        "objects": [
+          {
+            "id": "g",
+            "type": "gerade",
+            "p": [
+              1,
+              0,
+              2
+            ],
+            "u": [
+              1,
+              1,
+              -1
+            ],
+            "edit": true
+          },
+          {
+            "id": "E",
+            "type": "ebene",
+            "n": [
+              1,
+              2,
+              2
+            ],
+            "d": 4,
+            "edit": true
+          },
+          {
+            "id": "P",
+            "type": "punkt",
+            "p": [
+              2,
+              1,
+              0
+            ],
+            "edit": true
+          }
+        ],
+        "range": 5
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Stelle $E$ so ein, dass sie durch $A(1 \\mid 0 \\mid 0)$, $B(0 \\mid 2 \\mid 0)$ und $C(0 \\mid 0 \\mid 2)$ geht.",
+      "widget": "raumlabor",
+      "params": {
+        "objects": [
+          {
+            "id": "A",
+            "type": "punkt",
+            "p": [
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "B",
+            "type": "punkt",
+            "p": [
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "id": "C",
+            "type": "punkt",
+            "p": [
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "id": "E",
+            "type": "ebene",
+            "n": [
+              0,
+              0,
+              1
+            ],
+            "d": 0,
+            "edit": true
+          }
+        ],
+        "range": 4
+      },
+      "goal": {
+        "when": "(on_A_E == 1) && (on_B_E == 1) && (on_C_E == 1)",
+        "list": [
+          {
+            "when": "on_A_E == 1",
+            "show": "$A$ liegt in $E$"
+          },
+          {
+            "when": "on_B_E == 1",
+            "show": "$B$ liegt in $E$"
+          },
+          {
+            "when": "on_C_E == 1",
+            "show": "$C$ liegt in $E$"
+          }
+        ],
+        "solve": {
+          "objects": [
+            {
+              "id": "E",
+              "n": [
+                2,
+                1,
+                1
+              ],
+              "d": 2
+            }
+          ]
+        }
+      },
+      "hint": "Ein Normalenvektor steht senkrecht auf $\\vec{AB}$ und $\\vec{AC}$.",
+      "explain": "$\\vec{AB} \\times \\vec{AC} = (4, 2, 2)$, gekürzt $(2, 1, 1)$; $d = 2 \\cdot 1 = 2$: $E\\colon 2x + y + z = 2$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** legst du Ebenen durch Punkte, stellst Geraden parallel, schneidend oder windschief ein, baust parallele Ebenen im vorgegebenen Abstand und Lotgeraden."
+    }
+  ]
+}

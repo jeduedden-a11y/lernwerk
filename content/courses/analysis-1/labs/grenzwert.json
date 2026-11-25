@@ -1,0 +1,115 @@
+{
+  "id": "lab-grenzwert",
+  "title": "Grenzwertlabor",
+  "subtitle": "ε-N und ε-δ zum Anfassen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Konvergenz heißt: Zu **jedem** $\\varepsilon > 0$ gibt es ein $N$, ab dem alle Folgenglieder im $\\varepsilon$-Schlauch um den Grenzwert liegen. Im Labor ziehst du $\\varepsilon$ und $N$ und siehst sofort, welche Glieder herausfallen (rot).\n\nBei Funktionen spielt $\\delta$ die Rolle von $N$: Stetig in $x_0$ heißt, zu jedem $\\varepsilon$ gibt es ein $\\delta$, sodass der Graph über dem $\\delta$-Streifen ganz im $\\varepsilon$-Band bleibt. Tippe eigene Folgen und Funktionen ein."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Folgen",
+      "md": "Tippe eine Folge ein, verkleinere $\\varepsilon$ und suche das passende $N$.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "folge",
+        "term": "(2n+1)/(n+3)",
+        "eps": 0.3,
+        "N": 5
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Für $a_n = \\frac{2n+1}{n+3}$ und $\\varepsilon = 0{,}1$: Finde das **kleinste** $N$, ab dem alle Glieder im Schlauch um $2$ liegen.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "folge",
+        "term": "(2n+1)/(n+3)",
+        "editable": false,
+        "eps": 0.5,
+        "N": 1,
+        "nmax": 60
+      },
+      "goal": {
+        "when": "(abs(eps - 0.1) < 0.001) && (ok == 1) && (N == Nmin)",
+        "list": [
+          {
+            "when": "abs(eps - 0.1) < 0.001",
+            "show": "$\\varepsilon = 0{,}1$"
+          },
+          {
+            "when": "ok == 1",
+            "show": "alle Glieder ab $N$ im Schlauch"
+          },
+          {
+            "when": "N == Nmin",
+            "show": "kleinstes solches $N$"
+          }
+        ],
+        "solve": {
+          "eps": 0.1,
+          "N": 48
+        }
+      },
+      "hint": "$|a_n - 2| = \\frac{5}{n+3}$. Wann ist das kleiner als $0{,}1$?",
+      "explain": "$\\frac{5}{n+3} < 0{,}1 \\iff n > 47$, also $N = 48$."
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Funktionen",
+      "md": "Wähle $x_0$, $\\varepsilon$ und $\\delta$. Probiere auch $\\operatorname{sgn}(x)$ bei $x_0 = 0$: Dort hilft kein $\\delta$.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "funktion",
+        "term": "x^2",
+        "x0": 1,
+        "eps": 0.5,
+        "delta": 0.3
+      }
+    },
+    {
+      "id": "w4",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "$f(x) = \\sqrt x$ bei $x_0 = 4$ mit $\\varepsilon = 0{,}2$: Stelle ein $\\delta$ ein, das passt und mindestens 80 % des größten möglichen ist.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "funktion",
+        "term": "sqrt(x)",
+        "editable": false,
+        "x0": 4,
+        "eps": 0.2,
+        "delta": 1.2
+      },
+      "goal": {
+        "when": "(works == 1) && (delta >= 0.8 * dmax)",
+        "list": [
+          {
+            "when": "works == 1",
+            "show": "$\\delta$ passt"
+          },
+          {
+            "when": "delta >= 0.8 * dmax",
+            "show": "mindestens 80 % des größten $\\delta$"
+          }
+        ],
+        "solve": {
+          "delta": 0.7
+        }
+      },
+      "hint": "$|\\sqrt x - 2| < 0{,}2$ heißt $3{,}24 < x < 4{,}84$.",
+      "explain": "Links ist der Abstand $0{,}76$, rechts $0{,}84$: Das größte $\\delta$ ist $0{,}76$; jedes $\\delta$ ab etwa $0{,}61$ bis $0{,}76$ erfüllt die Aufgabe."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** suchst du kleinste $N$ zu verschiedenen Folgen und $\\varepsilon$, große $\\delta$ für stetige Funktionen und ein $\\varepsilon$, das die Unstetigkeit einer Sprungfunktion zeigt."
+    }
+  ]
+}

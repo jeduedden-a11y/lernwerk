@@ -1,0 +1,72 @@
+{
+  "id": "lab-folgen",
+  "title": "Folgen- und Reihenlabor",
+  "subtitle": "Folgen und Reihen eintippen und untersuchen",
+  "steps": [
+    {
+      "id": "t1",
+      "type": "text",
+      "md": "Tippe eine Folge $a_n$ ein: Das Labor zeigt die ersten Glieder, schätzt den Grenzwert und prüft Monotonie. Im Reihenmodus siehst du die Partialsummen $s_n = a_1 + \\dots + a_n$.\n\nOb eine Reihe konvergiert, erkennt man an den Partialsummen. $a_k \\to 0$ ist dafür nötig, aber nicht genug: Die harmonische Reihe $\\sum \\frac1k$ divergiert trotzdem."
+    },
+    {
+      "id": "w1",
+      "type": "widget",
+      "label": "Folgen",
+      "md": "Probiere $\\left(1 + \\frac1n\\right)^n$, $\\frac{(-1)^n}{n}$ oder $\\sqrt[n]{n}$ (als n^(1/n)).",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "folge",
+        "term": "(1+1/n)^n",
+        "eps": 0.1,
+        "N": 1
+      }
+    },
+    {
+      "id": "w2",
+      "type": "widget",
+      "label": "Reihen",
+      "md": "Vergleiche $\\sum \\frac1k$, $\\sum \\frac{1}{k^2}$ und $\\sum 0{,}5^k$.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "reihe",
+        "term": "1/k^2",
+        "nmax": 40
+      }
+    },
+    {
+      "id": "w3",
+      "type": "widget",
+      "label": "Aufgabe",
+      "md": "Baue eine **geometrische Reihe** $\\sum_{k \\ge 1} a_k$ mit der Summe 2.",
+      "widget": "grenzlabor",
+      "params": {
+        "mode": "reihe",
+        "term": "1/k",
+        "nmax": 40
+      },
+      "goal": {
+        "when": "(sconv == 1) && (abs(S - 2) < 0.002)",
+        "list": [
+          {
+            "when": "sconv == 1",
+            "show": "die Reihe konvergiert"
+          },
+          {
+            "when": "abs(S - 2) < 0.002",
+            "show": "Summe 2"
+          }
+        ],
+        "solve": {
+          "term": "2*0,5^k"
+        }
+      },
+      "hint": "$\\sum_{k \\ge 1} a q^k = \\frac{aq}{1-q}$ für $|q| < 1$.",
+      "explain": "Zum Beispiel $a_k = 2 \\cdot 0{,}5^k$: $\\frac{2 \\cdot 0{,}5}{0{,}5} = 2$."
+    },
+    {
+      "id": "t2",
+      "type": "text",
+      "md": "Unter **Aufgaben** baust du Folgen mit vorgegebenem Startwert, Grenzwert und Monotonie und Reihen mit vorgegebener Summe oder Divergenz."
+    }
+  ]
+}
